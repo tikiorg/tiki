@@ -365,110 +365,39 @@ class StructLib extends TikiLib {
     }
 	}
 
-	// no html ! to rewritte !
-	function get_subtree_toc($page_ref_id, &$html, $level = '') {
-
+	// that is intended to replace the get_subtree_toc and get_subtree_toc_slide
+	// it's used only in {toc} thing hardcoded in parse tikilib->parse -- (mose)
+	function build_subtree_toc($id,$slide=false) {
 		$ret = array();
-		$first = true;
-		//$level++;
-		$sublevel = 0;
-		$query  = "select `page_ref_id`, `pageName`, `page_alias` ";
-    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
-    $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? order by ".$this->convert_sortmode("pos_asc");
-		$result = $this->query($query,array($page_ref_id));
-		$subs = array();
-
-		while ($res = $result->fetchRow()) {
-			if ($first) {
-				$html .= '<ul>';
-
-				$first = false;
+		$cant = $this->getOne("select count(*) from `tiki_structures` where `parent_id`=?",array((int)$id));
+		if ($cant) {
+			$query = "select `page_ref_id`, `pageName`, `page_alias` from `tiki_structures` ts, `tiki_pages` tp ";
+			$query.= "where ts.`page_id`=tp.`page_id` and `parent_id`=? order by ".$this->convert_sortmode("pos_asc");
+			$result = $this->query($query,array((int)$id));
+			while ($res = $result->fetchRow()) {
+				if ($res['page_ref_id'] != $id) {
+					$sub = $this->build_subtree_toc($res['page_ref_id']);
+					if (is_array($sub)) {
+						$res['sub'] = $sub;	
+					}
+				}
+				$back[] = $res;
 			}
-
-			$sublevel++;
-
-			if ($level) {
-				$plevel = $level . '.' . $sublevel;
-			} else {
-				$plevel = $sublevel;
-			}
-
-      $child_id = $res["page_ref_id"];
-			$html .= "<li style='list-style:disc outside;'><a class='link' href='tiki-index.php?page_ref_id=$child_id'>$plevel&nbsp;";
-      $pageAlias = $res["page_alias"];
-      if (empty($pageAlias)) {
-        $html .= $res["pageName"];
-      }
-      else {
-        $html .= $pageAlias;
-      }
-			$html .= "</a></li>";
-
-			$subs[] = $this->get_subtree_toc($child_id, $html, $plevel);
+		} else {
+			return false;
 		}
-
-		if (!$first) {
-			$html .= '</ul>';
-		}
-
-		$aux["name"] = $page_ref_id;
-		$aux["cant"] = count($subs);
-		$aux["pages"] = $subs;
-		$ret[] = $aux;
-		return $ret;
+		return $back;
 	}
 
-	function get_subtree_toc_slide($structure, $page, &$html, $level = '') {
-
-		$ret = array();
-		$first = true;
-		//$level++;
-		$sublevel = 0;
-		$query = "select `page`, `page_alias` from `tiki_structures` where `parent`=? order by ".$this->convert_sortmode("pos_asc");
-		$result = $this->query($query,array($page));
-		$subs = array();
-
-		while ($res = $result->fetchRow()) {
-			if ($first) {
-				$html .= '<ul>';
-
-				$first = false;
-			}
-
-			$sublevel++;
-
-			if ($level) {
-				$plevel = $level . '.' . $sublevel;
-			} else {
-				$plevel = $sublevel;
-			}
-
-			$upage = urlencode($res["page"]);
-			$html .= "<li style='list-style:disc outside;'><a class='link' href='tiki-slideshow2.php?page=$upage'>$plevel&nbsp;";
-			$pageAlias = $res["page_alias"];
-      if (empty($pageAlias)) {
-        $html .= $res["page"];
-      }
-      else {
-        $html .= $pageAlias;
-      }
-//$html.="&nbsp;[<a class='link' href='tiki-index.php?page=${res["page"]}'>view</a>|<a  class='link' href='tiki-editpage.php?page=${res["page"]}'>edit</a>]";
-			$html .= "</a></li>";
-
-			$subs[] = $this->get_subtree_toc($structure, $res["page"], $html, $plevel);
-		}
-
-		if (!$first) {
-			$html .= '</ul>';
-		}
-
-		$aux["name"] = $page;
-		$aux["cant"] = count($subs);
-		$aux["pages"] = $subs;
-		$ret[] = $aux;
-		return $ret;
+	function get_toc($page_ref_id) {
+		global $smarty;
+		$structure_tree = $this->build_subtree_toc($page_ref_id);
+		$smarty->assign('structure_tree',$structure_tree);
+		return $smarty->fetch("structures_toc.tpl");
 	}
-
+	// end of replacement
+	
+	
 	function page_is_in_structure($pageName) {
     $query  = "select count(*) ";
     $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
