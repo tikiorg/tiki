@@ -1821,6 +1821,7 @@ CREATE TABLE tiki_mailin_accounts (
   smtp varchar(255) default NULL,
   useAuth char(1) default NULL,
   smtpPort int(4) default NULL,
+  anonymous char(1) NOT NULL default 'y',
   PRIMARY KEY  (accountId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
