@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.18 2004-02-17 01:36:16 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.19 2004-02-17 01:42:43 mose Exp $
 Displays a module inlined in page
 
 Parameters
@@ -123,7 +123,6 @@ function wikiplugin_module($data, $params) {
 		} else {
 			$data.= "$out</div>";
 		}
-		var_dump($data);
 	} else {
         // \todo Baad practice to use hardcoded style!! ;]
 		$data = "<div style='float:$align;color:#AA2200;'>" . tra("Sorry no such module"). "<br/><b>$module</b></div>" . $data;
