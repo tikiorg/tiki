@@ -4288,12 +4288,12 @@ class TikiLib {
 	        $foo = parse_url($_SERVER["REQUEST_URI"]);
 		    $machine =httpPrefix().$foo["path"];
 	        $smarty->assign('mail_machine',$machine);
-	        $parts = explode($foo['path']);
+	        $parts = explode('/',$foo['path']);
 	        if(count($parts)>1) unset($parts[count($parts)-1]);
-	        $smarty->assign('mail_machine_raw',implode('/',$parts));
+	        $smarty->assign('mail_machine_raw',httpPrefix().implode('/',$parts));
 	        $smarty->assign('mail_pagedata',$edit_data);
 	        $mail_data = $smarty->fetch('mail/user_watch_wiki_page_changed.tpl');
-	        mail($not['email'], tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);          
+	        @mail($not['email'], tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);          
         }
       }
     }  
