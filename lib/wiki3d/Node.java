@@ -1,20 +1,20 @@
 package wiki3d;
 import java.awt.AlphaComposite;
-import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
-import java.text.AttributedString;
+import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
 public class Node extends Vertex {
 	int relativeBallSize, ballSize;
+	int relativeTextSize, textSize;
 
 	public boolean mouseover = false;
 	boolean focussed = true;
@@ -47,6 +47,9 @@ public class Node extends Vertex {
 
 		relativeBallSize = Config.ballsize;
 		ballSize = Config.ballsize;
+
+		relativeTextSize = Config.textsize;
+		textSize = Config.textsize;
 
 		y = length();
 		x = length();
@@ -157,17 +160,17 @@ public class Node extends Vertex {
 		x = x + (dx);
 		y = y + (dy);
 		z = z + (dz);
-		
+
 		adjustPosition();
 	}
-	
+
 	public void moveTo(float x, float y, float z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		adjustPosition();
 	}
-	
+
 	public void adjustPosition() {
 		if (x > Config.xmax) {
 			x = Config.xmax;
@@ -196,14 +199,20 @@ public class Node extends Vertex {
 		}
 		moveBy(sp.x, sp.y, sp.z);
 	}
-	
+
 	public void changeInProjection(int u, int v) {
-		
+
 	}
 
 	synchronized public void proj() {
 		relativeBallSize =
 			(int) Math.round((double) ballSize * FOV / (-z + cameraZ));
+		relativeTextSize =
+			(int) Math.round((double) textSize * FOV / (-z + cameraZ));
+		if (this.centered()) {
+			relativeTextSize = (int)(relativeTextSize * 1.5);
+		}
+
 		//diameter reduced to projection
 		//System.out.println("ZC"+ZC+"Z"+Z+"b"+b);
 		if (relativeBallSize < Config.minimumBallSize)
@@ -281,19 +290,7 @@ public class Node extends Vertex {
 		if (scale < 0.1)
 			scale = 0.1;
 
-		g.setColor(Config.graphstringcolor);
-		Set linkSet = links.keySet();
-
-		for (Iterator it = linkSet.iterator(); it.hasNext();) {
-			Node neighbour = graph.nodeFromName((String) it.next());
-			if (neighbour != null) {
-				g.drawLine(u, v, neighbour.u, neighbour.v);
-			}
-		}
-
-		AffineTransform at = graphic.getTransform();
-
-		AlphaComposite al2 = (AlphaComposite) graphic.getComposite();
+		AlphaComposite alphaMemory = (AlphaComposite) graphic.getComposite();
 
 		AlphaComposite al =
 			AlphaComposite.getInstance(
@@ -302,24 +299,35 @@ public class Node extends Vertex {
 
 		graphic.setComposite(al);
 
-		Color cl = graphic.getColor();
+		g.setColor(Config.graphstringcolor);
+		Set linkSet = links.keySet();
 
-		Stroke s = graphic.getStroke();
-
-		at.setToScale(scale, scale);
+		for (Iterator it = linkSet.iterator(); it.hasNext();) {
+			Node neighbour = graph.nodeFromName((String) it.next());
+			if (neighbour != null && neighbour.z > z) {
+				g.drawLine(u, v, neighbour.u, neighbour.v);
+			}
+		}
 
 		graphic.setColor(Config.linkballcolor);
 		graphic.setComposite(al);
 		graphic.fillOval(U, V, relativeBallSize, relativeBallSize);
-		AffineTransform at2 = new AffineTransform();
+		graphic.setColor(Config.ballBorderColor);
+		graphic.drawOval(U, V, relativeBallSize, relativeBallSize);
+		AffineTransform at = new AffineTransform(40, 0, 0, 4, 00, 0);
 
-		at2.setToScale(scale, scale);
-		FontRenderContext frc = new FontRenderContext(at2, true, true);
+		FontRenderContext frc = new FontRenderContext(at, true, true);
 
-		TextLayout l =
-			new TextLayout((new AttributedString(name)).getIterator(), frc);
-		l.draw(graphic, U, V);
-		graphic.setComposite(al2);
+		Font font =
+			new Font(null, Font.PLAIN, (int) (relativeTextSize / 5) * 5);
+
+		TextLayout l = new TextLayout(name, font, frc);
+		//(new AttributedString(name)).getIterator(), font, frc);
+		Rectangle2D textBounds = l.getBounds();
+
+		l.draw(graphic, (int) (u - textBounds.getWidth() / 2), V);
+
+		graphic.setComposite(alphaMemory);
 	}
 
 	public void remove() {

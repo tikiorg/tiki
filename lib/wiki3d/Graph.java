@@ -66,7 +66,7 @@ public class Graph extends Vector {
 
 	}
 
-	synchronized public void paint(Graphics g) {
+	synchronized public void paint(Graphics g) {		
 		Collections.sort(this, getStrategy());
 		for (int i = 0; i < size(); i++) {
 			try {
@@ -133,12 +133,8 @@ public class Graph extends Vector {
 		rotation.setIdentity();
 		rotation.xrot(-xtheta);
 		rotation.yrot(-ytheta);
-
-		//accumulatedRotation.mul(rotation); //mul(rotation);
 		
 		nodePositioner.setIdentity();
-		//nodePositioner.mul(accumulatedRotation);
-		//nodePositioner.translate(origin.x, origin.y, origin.z);
 		
 	}
 
