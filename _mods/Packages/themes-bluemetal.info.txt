@@ -1,0 +1,52 @@
+contributor:
+$Author: mose $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-09-29 20:13:22 $
+
+files: 
+themes/bluemetal/theme/styles/bluemetal.css styles/bluemetal.css
+themes/bluemetal/theme/styles/bluemetal/blue_barbg.gif styles/bluemetal/blue_barbg.gif
+themes/bluemetal/theme/styles/bluemetal/blue_barleft.gif styles/bluemetal/blue_barleft.gif
+themes/bluemetal/theme/styles/bluemetal/blue_barright.gif styles/bluemetal/blue_barright.gif
+themes/bluemetal/theme/styles/bluemetal/blue_botbg.gif styles/bluemetal/blue_botbg.gif
+themes/bluemetal/theme/styles/bluemetal/blue_bottombg.gif styles/bluemetal/blue_bottombg.gif
+themes/bluemetal/theme/styles/bluemetal/blue_bottomleft.gif styles/bluemetal/blue_bottomleft.gif
+themes/bluemetal/theme/styles/bluemetal/blue_bottomright.gif styles/bluemetal/blue_bottomright.gif
+themes/bluemetal/theme/styles/bluemetal/blue_cornerbg.gif styles/bluemetal/blue_cornerbg.gif
+themes/bluemetal/theme/styles/bluemetal/blue_leftbg.gif styles/bluemetal/blue_leftbg.gif
+themes/bluemetal/theme/styles/bluemetal/blue_rightbg.gif styles/bluemetal/blue_rightbg.gif
+themes/bluemetal/theme/styles/bluemetal/blue_rtsidebg.gif styles/bluemetal/blue_rtsidebg.gif
+themes/bluemetal/theme/styles/bluemetal/blue_topbg.gif styles/bluemetal/blue_topbg.gif
+themes/bluemetal/theme/styles/bluemetal/blue_topleft.gif styles/bluemetal/blue_topleft.gif
+themes/bluemetal/theme/styles/bluemetal/blue_topleftbg.gif styles/bluemetal/blue_topleftbg.gif
+themes/bluemetal/theme/styles/bluemetal/blue_topright.gif styles/bluemetal/blue_topright.gif
+themes/bluemetal/theme/styles/bluemetal/blue_toprightbg.gif styles/bluemetal/blue_toprightbg.gif
+themes/bluemetal/theme/styles/bluemetal/nav_m.gif styles/bluemetal/nav_m.gif
+themes/bluemetal/theme/styles/bluemetal/page_0.gif styles/bluemetal/page_0.gif
+themes/bluemetal/theme/styles/bluemetal/page_back.png styles/bluemetal/page_back.png
+themes/bluemetal/theme/styles/bluemetal/tikibuttonmetal.gif styles/bluemetal/tikibuttonmetal.gif
+themes/bluemetal/theme/styles/bluemetal/tile_back.gif styles/bluemetal/tile_back.gif
+themes/bluemetal/theme/styles/bluemetal/topbgsmall.gif styles/bluemetal/topbgsmall.gif
+themes/bluemetal/theme/templates/styles/bluemetal/error.tpl templates/styles/bluemetal/error.tpl
+themes/bluemetal/theme/templates/styles/bluemetal/error_ticket.tpl templates/styles/bluemetal/error_ticket.tpl
+themes/bluemetal/theme/templates/styles/bluemetal/index.php templates/styles/bluemetal/index.php
+themes/bluemetal/theme/templates/styles/bluemetal/tiki-editpage.tpl templates/styles/bluemetal/tiki-editpage.tpl
+themes/bluemetal/theme/templates/styles/bluemetal/tiki-show_page.tpl templates/styles/bluemetal/tiki-show_page.tpl
+themes/bluemetal/theme/templates/styles/bluemetal/tiki-user_menu.tpl templates/styles/bluemetal/tiki-user_menu.tpl
+themes/bluemetal/theme/templates/styles/bluemetal/tiki.tpl templates/styles/bluemetal/tiki.tpl
+
+author:
+colorado
+
+licence:
+GNU/GPL
+
+Description: 
+Theme borrowed to another cms.
+
+Changelog:
+1 initial package
