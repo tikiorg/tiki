@@ -130,14 +130,15 @@ class HistLib extends TikiLib {
 		return $ret;
 	}
 	
-	function get_page_latest_version($page) {
+	function get_page_latest_version($page, $data=null) {
 
-		$query = "select `version` from `tiki_history` where `pageName`=? order by `version` desc";
+		$query = "select `version`, `data` from `tiki_history` where `pageName`=? order by `version` desc";
 		$result = $this->query($query,array($page),1);
 		$ret = array();
 		
 		if ($res = $result->fetchRow()) {
 			$ret = $res['version'] + 1;
+			$data= $res['data'];
 		} elseif ($this->page_exists($page)) {
 			$ret =  1;
 		} else {
