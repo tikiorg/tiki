@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.13 2003-10-17 16:31:30 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.14 2004-06-14 19:15:41 teedog Exp $ *}
 
 <a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a><br /><br />
 {if $preview}
@@ -30,6 +30,7 @@
 <form action="tiki-pagehistory.php" method="post">
 <input type="hidden" name="page" value="{$page|escape}" />
 <div align="center">
+<b>{tr}Legend:{/tr}</b> {tr}v=view, b=rollback, c=compare with current, d=diff to current, s=source{/tr}
 <table border="1" cellpadding="0" cellspacing="0">
 <tr>
 {if $tiki_p_remove eq 'y'}
