@@ -3929,6 +3929,13 @@ class TikiLib {
 
 	return $line;
     }
+    
+    //Updates a dynamic variable found in some object
+    /*Shared*/ function update_dynamic_variable($name,$value) {
+    	$query = "replace into tiki_dynamic_variables(name,data) values(?,?)";
+    	$this->query($query,Array($name,$value));
+    	return true;
+    }
 
     //PARSEDATA
     function parse_data($data) {
@@ -4089,8 +4096,43 @@ class TikiLib {
 		$data = str_replace($rsss[0][$i], $cookie, $data);
 	    }
 	}
-
-	// Replace dynamic content occurrences
+	
+	// Replace dynamic variables
+	// Dynamic variables are similar to dynamic content but they are editable
+	// from the page directly, intended for short data, not long text but text
+	// will work too
+	if (preg_match_all("/%([^%]+)%/",$data,$dvars)) {
+		// remove repeated elements
+		$dvars = array_unique($dvars[1]);
+		// Now replace each dynamic variable by a pair composed of the
+		// variable value and a text field to edit the variable. Each 
+		foreach($dvars as $dvar) {
+			$query = "select data from `tiki_dynamic_variables` where `name`=?";
+			$result = $this->query($query,Array($dvar));
+			if($result->numRows()) {
+				$value = $result->fetchRow();
+				$value = $value["data"];
+			} else {
+				//Default value is NULL
+				$value = "NaV";
+			}
+			// Now build 2 divs
+			$id = 'dyn_'.$dvar;
+			$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'><a onClick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable').": $dvar'>$value</a></span>";
+			$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' /></span>";
+			$html = $span1.$span2;
+			//It's important to replace only once
+			$data = preg_replace("/%$dvar%/",$html,$data,1);
+			//Further replacements only with the value
+			$data = str_replace("%$dvar%",$value,$data);			
+			
+		}
+		//At the end put an update button
+		//<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables').'"/></div>
+		$data='<form method="post" name="dyn_vars">'.$data.'<div style="display:none;"><input type="submit" name="_dyn_update" value="'.tra('Update variables').'"/></div></form>';
+	}
+	
+		// Replace dynamic content occurrences
 	if (preg_match_all("/\{content +id=([0-9]+)\}/", $data, $dcs)) {
 	    for ($i = 0; $i < count($dcs[0]); $i++) {
 		$repl = $this->get_actual_content($dcs[1][$i]);
