@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/wikigraph/graphviz/tiki-wiki_graph.php,v 1.1 2005-02-24 14:56:23 ang23 Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/wikigraph/graphviz/tiki-wiki_graph.php,v 1.2 2005-02-25 10:52:31 mhausi Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,8 @@ include_once ("lib/graphviz/GraphViz.php");
 include_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/graphviz/wikigraphlib.php');
-
+global $dbTiki;
+$wikigraphlib = new WikiGraphLib($dbTiki);
 if(!isset($_REQUEST['level'])) $_REQUEST['level'] = 0;
 if(!isset($_REQUEST['nodesep'])) $_REQUEST['nodesep'] = ".1";
 if(!isset($_REQUEST['rankdir'])) $_REQUEST['rankdir'] = "LR";
@@ -51,8 +52,8 @@ $garg = array(
 );
 
 
-$str = $wikilib->wiki_get_link_structure($_REQUEST['page'], $_REQUEST['level']);
+$str = $wikigraphlib->wiki_get_link_structure($_REQUEST['page'], $_REQUEST['level']);
 $graph = new Image_GraphViz();
-$wikilib->wiki_page_graph($str, $graph, $garg);
+$wikigraphlib->wiki_page_graph($str, $graph, $garg);
 $graph->image();
 ?>

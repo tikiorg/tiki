@@ -1,5 +1,23 @@
 <?php
 //these are the functions in pre-BRANCH-19 that have been in use for wikigraph
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
+
+if( !defined( 'PLUGINS_DIR' ) ) {
+   define('PLUGINS_DIR', 'lib/wiki-plugins');
+}
+
+class WikiGraphLib extends TikiLib {
+
+    function WikiLib($db) {
+        if (!$db) {
+           die ("Invalid db object passed to WikiLib constructor");
+        }
+        $this->db = $db;
+    }
+
 
     function wiki_page_graph(&$str, &$graph, $garg) {
         $page = $str['name'];
@@ -64,6 +82,6 @@
 
         return $aux;
     }
-
+}
 
 ?>

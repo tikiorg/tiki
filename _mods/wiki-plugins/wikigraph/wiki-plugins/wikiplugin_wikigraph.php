@@ -40,6 +40,8 @@ function wikiplugin_wikigraph($data, $params) {
 	global $tikilib;
 	global $page;
 	global $wikilib;
+	global $dbTiki;
+	$wikigraphlib = new WikiGraphLib($dbTiki);
 	$add = "";
 	extract ($params);
   if(!isset($level)) $level = 0;
@@ -86,7 +88,8 @@ $garg = array(
 ));
 
 	$ret .= "<div align='center'><img border='0' src='tiki-wiki_graph.php?page=".urlencode($data)."&amp;level=$level$add' alt='graph' usemap='#$mapname' />";
-	$mapdata = $wikilib->get_graph_map($data, $level, $garg);
+	$mapdata = $wikigraphlib->get_graph_map($data, $level, $garg);
+	//$mapdata = $wikilib->get_graph_map($data, $level, $garg);
 	$mapdata = preg_replace("/\n|\r/", '', $mapdata);
 	$ret .= "<map name='$mapname'>$mapdata</map></div>";
 	return $ret;
