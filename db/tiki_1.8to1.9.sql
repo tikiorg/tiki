@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.22 2004-01-31 11:57:06 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.23 2004-02-04 12:00:47 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -143,3 +143,9 @@ ALTER TABLE `tiki_user_votings` ADD optionId int(10) NOT NULL default '0';
 
 # Added on 29 Jan 2004 by Swillie, to hold choice for displaying user avatar on post heading
 ALTER TABLE `tiki_blogs` ADD `show_avatar` char(1) default NULL;
+
+# added on 2004-02-04 by mose for more power in trackers
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_pending', 'Can view trackers pending items', 'editors', 'trackers');
+
+
+
