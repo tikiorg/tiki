@@ -1,11 +1,3 @@
-H1 {
-	text-align: center;
-	font-family: Arial, Helvetica, sans-serif;
-}
-H2 {
-	font-family: Geneva, Arial, Helvetica, sans-serif;
-}
-CAPTION { font-weight: bold }
 DIV.qindex { width: 100%;
              background-color: #eeeeff;
              border: 4px solid #eeeeff;
@@ -45,12 +37,6 @@ TD.mdname1 { background-color: #f2f2ff; font-weight: bold; color: #602020; }
 TD.mdname { background-color: #f2f2ff; font-weight: bold; color: #602020; width: 600px; }
 DIV.groupHeader { margin-left: 16px; margin-top: 12px; margin-bottom: 6px; font-weight: bold }
 DIV.groupText { margin-left: 16px; font-style: italic; font-size: smaller }
-BODY {
-	background: white;
-	color: black;
-	margin-right: 20px;
-	margin-left: 20px;
-}
 TD.indexkey { 
    background-color: #eeeeff; 
    font-weight: bold; 
