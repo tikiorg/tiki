@@ -13,7 +13,7 @@ function smarty_function_gallery($params, &$smarty)
     }
     $img = $tikilib->get_random_image($id);
     print('<center>');
-    print('<table width="98%" border="0" cellpadding="0" cellspacing="0">');
+    print('<table  border="0" cellpadding="0" cellspacing="0">');
     print('<tr>');
     print('<td align=center>');
     print('<a href="tiki-browse_image.php?galleryId='.$img['galleryId'].'&amp;imageId='.$img['imageId'].'"><img alt="thumbnail" class="athumb" src="show_image.php?id='.$img['imageId'].'&amp;thumb=1" /></a><br/>');    
@@ -26,7 +26,7 @@ function smarty_function_gallery($params, &$smarty)
 ?>
 <!--
 <center>
-<table width="98%" border="0" cellpadding="0" cellspacing="0">
+<table  border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td align=center>
 <a href="tiki-browse_image.php?galleryId=<?php echo $img['galleryId']; ?>&amp;imageId=<?php echo $img['imageId']; ?>"><img alt="thumbnail" class="athumb" src="show_image.php?id=<?php echo $img['imageId']; ?>&amp;thumb=1" /></a><br/>

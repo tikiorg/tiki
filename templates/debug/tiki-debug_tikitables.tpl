@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_tikitables.tpl,v 1.2 2003-08-01 10:31:14 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_tikitables.tpl,v 1.3 2003-09-25 01:05:22 rlpowell Exp $ *}
 {* Show Tiki tables *}
 
 {if count($command_result) > 0} {* Can it be == 0 ?? *}
-<table width="100%" id="tikitables">
+<table  id="tikitables">
 <caption>Tables in Tiki DB</caption>
 {section name=i loop=$command_result}
   {* make row new start *}

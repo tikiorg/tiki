@@ -1,6 +1,6 @@
 <h2>{tr}Copyrights{/tr}: <a href="tiki-index.php?page={$page|escape:"url"}">{$page}</a></h2>
 
-<table border="0" width="100%">
+<table border="0" >
 {section name=i loop=$copyrights}
   <tr><td class="formcolor">
     <form action="copyrights.php?page={$page}" method="post">

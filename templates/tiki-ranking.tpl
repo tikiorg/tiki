@@ -20,9 +20,9 @@
 {$rankings[ix].title} ({$rankings[ix].y})
 </div>
 <div class="cbox-data">
-<table width="100%">
+<table >
 {section name=xi loop=$rankings[ix].data}
-<tr><td class="form" align="left" width="2%">{$smarty.section.xi.index_next})</td><td  class="form" align="left"><a class="link" href="{$rankings[ix].data[xi].href}">{$rankings[ix].data[xi].name}</a></td><td  class="form" align="right">{$rankings[ix].data[xi].hits}</td></tr>
+<tr><td class="form" align="left" >{$smarty.section.xi.index_next})</td><td  class="form" align="left"><a class="link" href="{$rankings[ix].data[xi].href}">{$rankings[ix].data[xi].name}</a></td><td  class="form" align="right">{$rankings[ix].data[xi].hits}</td></tr>
 {/section}
 </table>
 </div>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.17 2003-09-23 09:59:55 fukuchi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.18 2003-09-25 01:05:21 rlpowell Exp $ *}
 
 <a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a><br /><br />
 [{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner)}
@@ -88,25 +88,25 @@
 
 <tr>
 {if $tiki_p_admin_file_galleries eq 'y'}
-<td width="2%" class="heading">&nbsp;</td>
+<td  class="heading">&nbsp;</td>
 {/if}
 {if $gal_info.show_id eq 'y'}
-	<td width="4%" class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'fileId_desc'}fileId_asc{else}fileId_desc{/if}">{tr}ID{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'fileId_desc'}fileId_asc{else}fileId_desc{/if}">{tr}ID{/tr}</a></td>
 {/if}
 <td class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}Name{/tr}</a></td>
 {if $gal_info.show_size eq 'y'}
-	<td width="12%" style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Filesize{/tr}</a></td>
+	<td  style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Filesize{/tr}</a></td>
 {/if}
 {if $gal_info.show_description eq 'y'}
-	<td width="25%" class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
 {/if}
 {if $gal_info.show_created eq 'y'}
-	<td width="16%" class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
+	<td  class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
 {/if}
 {if $gal_info.show_dl eq 'y'}
-	<td style="text-align:right;" width="5%" class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}Dls{/tr}</a></td>
+	<td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}Dls{/tr}</a></td>
 {/if}
-<td width="8%" class="heading">{tr}Actions{/tr}</td>
+<td  class="heading">{tr}Actions{/tr}</td>
 </tr>
 
 
@@ -117,7 +117,7 @@
 <tr>
 
 {if $tiki_p_admin_file_galleries eq 'y'}
-<td width="2%" style="text-align:center;" class="{cycle advance=false}">
+<td  style="text-align:center;" class="{cycle advance=false}">
 	<input type="checkbox" name="file[]" value="{$images[changes].fileId|escape}"  {if $smarty.request.file and in_array($images[changes].fileId,$smarty.request.file)}checked="checked"{/if} />
 </td>
 {/if}

@@ -7,9 +7,9 @@
 <input type="button" value="set" onMouseOver="return overlib('das');" onMouseOut="nd();" />
 -->
 <!-- onClick='return overlib(\"".$repl."\",STICKY,CAPTION,\"Spellchecker suggestions\");'-->
-<table width="99%" border="0">
+<table  border="0">
 <tr>
-<td width="45%">
+<td >
 <div class="cbox">
 <div class="cbox-title">
 What is Tiki?

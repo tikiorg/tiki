@@ -30,7 +30,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <table class="normal">
 <tr>
-<td width="2%" class="heading" ><input type="submit" name="del" value="x " /></td>
+<td  class="heading" ><input type="submit" name="del" value="x " /></td>
 <td class="heading" >{tr}message{/tr}</td>
 <td class="heading" >{tr}Reported by{/tr}</td>
 </tr>

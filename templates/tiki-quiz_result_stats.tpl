@@ -36,9 +36,9 @@ Answer:<br />
 <h2>{tr}User answers{/tr}</h2>
   <table class="normal">
   <tr>
-   <td width="70%" class="heading">{tr}Question{/tr}</td>
-   <td width="30%" class="heading">{tr}Answer{/tr}</td>
-   <td width="30%" class="heading">{tr}Points{/tr}</td>
+   <td  class="heading">{tr}Question{/tr}</td>
+   <td  class="heading">{tr}Answer{/tr}</td>
+   <td  class="heading">{tr}Points{/tr}</td>
   </tr>
 {cycle print=false values="odd,even"}
 {section name=ix loop=$questions}

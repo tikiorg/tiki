@@ -3947,7 +3947,8 @@ class TikiLib {
 
 	// Extract [link] sections (to be re-inserted later)
 	$noparsedlinks = array();
-	preg_match_all("/\[([^\]]*)\]/", $data, $noparseurl);
+	// Added handling for [[foo] sections.  -rlpowell
+	preg_match_all("/[^\[]\[([^\[][^\]]*)\]/", $data, $noparseurl);
 
 	foreach (array_unique($noparseurl[1])as $np) {
 	    $key = md5($this->genPass());

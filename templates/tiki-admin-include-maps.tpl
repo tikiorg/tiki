@@ -3,7 +3,7 @@
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php?page=maps" method="post">
-<table width="100%">
+<table >
 <tr><td class="form">{tr}full path to mapfiles{/tr}:</td><td><input type="text" name="map_path" value="{$map_path|escape}" /></td></tr>
 <tr><td class="form">{tr}default mapfile{/tr}:</td><td><input type="text" name="default_map" value="{$default_map}" /> </td></tr>
 <tr><td class="form">{tr}Wiki Page for Help{/tr}:</td><td><input type="text" name="map_help" value="{$map_help}" /> </td></tr>

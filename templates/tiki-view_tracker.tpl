@@ -155,7 +155,7 @@
 {section name=user loop=$items}
 <tr>
 {if $tracker_info.showStatus eq 'y'}
-<td style="text-align:center;" width="2%" class="{cycle advance=false}">
+<td style="text-align:center;"  class="{cycle advance=false}">
 {if $items[user].status eq 'o'}
 <img src='img/icons/ofo.gif' border='0' alt='{tr}open{/tr}' title='{tr}open{/tr}' />
 {else}
@@ -195,7 +195,7 @@
 <td class="{cycle advance=false}">{$items[user].lastModif|tiki_short_datetime}</td>
 {/if}
 {if $tracker_info.useComments eq 'y'}
-<td width="5%" style="text-align:right;" class="{cycle advance=false}">{$items[user].comments}</td>
+<td  style="text-align:right;" class="{cycle advance=false}">{$items[user].comments}</td>
 {/if}
 </tr>
 {cycle print=false}

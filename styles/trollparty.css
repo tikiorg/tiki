@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.5 2003-08-15 03:08:57 mose Exp $
+$Id: trollparty.css,v 1.6 2003-09-25 01:05:19 rlpowell Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -108,18 +108,20 @@ TD#leftcolumn
 {
 vertical-align: top;
 width: 180px;
+border-right: 1px solid #003388;
 }
 
 TD#rightcolumn
 {
 vertical-align: top;
 width: 180px;
+border-left: 1px solid #003388;
 }
 
 TD#centercolumn
 {
 vertical-align: top;
-width: auto;
+width: 100%;
 border-left: 1px solid #003388;
 border-right: 1px solid #003388;
 }
@@ -129,9 +131,9 @@ centercolumn
 */
 DIV#tiki-center
 {
-margin-top: 12px;
-margin-left: 20px;
-margin-right: 20px;
+margin-top: 0;
+margin-left: 0;
+margin-right: 0;
 padding-left: 0;
 padding-right: 0;
 }

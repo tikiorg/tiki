@@ -2,9 +2,9 @@
 [<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{/tr}</a>
 |<a href="tiki-imexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
 
-<table width="100%">
+<table >
 <tr>
-  <td valign="top" width="50%">
+  <td valign="top" >
   <form action="tiki-edit_languages.php" method="post">
   <div class="cbox">
   <div class="cbox-title">{tr}Edit and create languages{/tr}</div>

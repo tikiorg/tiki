@@ -17,9 +17,9 @@
 
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
-<table width="100%">
+<table >
 <tr>
-  <!--The line below was <td valign="top" width="50%"> for no real reason-->
+  <!--The line below was <td valign="top" > for no real reason-->
   <td valign="top">
   <div class="cbox">
   <div class="cbox-title">{tr}User Information{/tr}</div>
@@ -131,7 +131,7 @@
   </div>
   </div>
   </td>
-  <!--The line below was <td valign="top" width="50%"> for no real reason-->
+  <!--The line below was <td valign="top" > for no real reason-->
   <td valign="top">
   <!--
   <div class="cbox">

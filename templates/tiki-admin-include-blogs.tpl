@@ -3,7 +3,7 @@
   <div class="cbox-data">
     <div class="simplebox">
       <form action="tiki-admin.php?page=blogs" method="post">
-        <table width="100%"><tr>
+        <table ><tr>
           <td class="form">{tr}Home Blog (main blog){/tr}</td>
           <td><select name="homeBlog">
               {section name=ix loop=$blogs}
@@ -20,7 +20,7 @@
     <div class="simplebox">
       {tr}Blog features{/tr}<br />
       <form action="tiki-admin.php?page=blogs" method="post">
-        <table width="100%"><tr>
+        <table ><tr>
           <td class="form">{tr}Rankings{/tr}:</td>
           <td><input type="checkbox" name="feature_blog_rankings"
               {if $feature_blog_rankings eq 'y'}checked="checked"{/if}/></td>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.18 2003-09-09 11:54:20 traivor Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.19 2003-09-25 01:05:20 rlpowell Exp $ *}
 
 <br />
 {if $comments_show eq 'y'}
@@ -62,13 +62,13 @@
   <tr>
   	<td class="odd">
   		<a name="threadId{$comments_coms[com].threadId}"></a>
-  		<table width="100%">
+  		<table >
   			<tr>
 			  	<td>
 			    	<span class="commentstitle">{$comments_coms[com].title}</span><br />
 			  		{tr}by{/tr} {$comments_coms[com].userName} {tr}on{/tr} {$comments_coms[com].commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$comments_coms[com].average|string_format:"%.2f"}]
 			  	</td>
-			  	<td valign="top" style="text-align:right;" width="20%">
+			  	<td valign="top" style="text-align:right;" >
 			    	{if $tiki_p_vote_comments eq 'y' or $tiki_p_remove_comments eq 'y' or $tiki_p_edit_comments eq 'y'}
 			  			{tr}Vote{/tr}: 
 			  				<a class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[com].threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
@@ -176,7 +176,7 @@
       <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
       </td>
       {if $feature_smileys eq 'y'}
-      <td width="20%" class="formcolor">{tr}Smileys{/tr}</td>
+      <td  class="formcolor">{tr}Smileys{/tr}</td>
       {/if}
     </tr>
     <tr>

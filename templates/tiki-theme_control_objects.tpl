@@ -91,9 +91,9 @@
 <table class="normal">
 <tr>
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
-<td class="heading" width="80%"><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
-<td class="heading" width="80%"><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading" width="10%"><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}theme{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-theme_control_objects.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}theme{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

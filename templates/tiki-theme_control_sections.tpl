@@ -74,8 +74,8 @@
 <table class="normal">
 <tr>
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
-<td class="heading" width="80%"><a class="tableheading" href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">{tr}section{/tr}</a></td>
-<td class="heading" width="10%"><a class="tableheading" href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}theme{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">{tr}section{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="tiki-theme_control_sections.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}theme{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

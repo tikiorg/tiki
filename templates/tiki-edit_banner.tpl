@@ -3,8 +3,8 @@
 <form action="tiki-edit_banner.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="bannerId" value="{$bannerId|escape}" />
 <div class="simplebox">
-  <table width="100%"><tr><td>
-  <table width="100%">
+  <table ><tr><td>
+  <table >
   <tr>
      <td class="form">{tr}URL to link the banner{/tr}</td><td><input type="text" name="url" value="{$url|escape}" /></td>
    </tr>
@@ -43,7 +43,7 @@
 
 
 <div class="simplebox">
-<table width="100%">
+<table >
 <tr><td colspan="2" class="form">{tr}Show the banner only between these dates{/tr}:</td></tr>
 <tr><td class="form">{tr}From date{/tr}:</td><td>{html_select_date time=$fromDate prefix="fromDate_" end_year="+2"}</td></tr>
 <tr><td class="form">{tr}To date{/tr}:</td><td>{html_select_date time=$toDate prefix="toDate_" end_year="+2"}</td></tr>
@@ -77,7 +77,7 @@
 
 <div class="simplebox">
 {tr}Select ONE method for the banner{/tr}
-<table border="1" width="100%">
+<table border="1" >
   <tr>
   <td><input type="radio" name="use" value="useHTML" {if $use eq 'useHTML'}checked="checked"{/if}/></td>
   <td class="form">{tr}Use HTML{/tr}

@@ -83,7 +83,7 @@ TD#rightcolumn {
 TD#centercolumn {
 	background:    #FFFFCC;
 	vertical-align:   top;
-	width:   auto;
+	width:   100%;
 }
 
 /* And this is what lies inside the centercolumn */

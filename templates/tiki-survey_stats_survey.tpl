@@ -14,8 +14,8 @@
   </tr>
   {if $channels[ix].type eq 'r'}
     <tr>
-      <td width="20%" class="odd">Votes:</td>
-      <td width="20%" class="odd">{$channels[ix].votes}</td>
+      <td  class="odd">Votes:</td>
+      <td  class="odd">{$channels[ix].votes}</td>
     </tr>
     <tr>
       <td class="odd">{tr}Average{/tr}:</td>
@@ -23,8 +23,8 @@
     </tr>
   {elseif $channels[ix].type eq 's'}
     <tr>
-      <td width="30%" class="odd">Votes:</td>
-      <td width="70%" class="odd">{$channels[ix].votes}</td>
+      <td  class="odd">Votes:</td>
+      <td  class="odd">{$channels[ix].votes}</td>
     </tr>
     <tr>
       <td class="odd">{tr}Average{/tr}:</td>
@@ -33,10 +33,10 @@
   {else}
     {section name=jx loop=$channels[ix].qoptions}
     <tr>
-      <td width="30%" class="odd">{$channels[ix].qoptions[jx].qoption}</td>
-      <td width="10%" class="odd">{$channels[ix].qoptions[jx].votes}</td>
-      <td width="10%" class="odd">{$channels[ix].qoptions[jx].average|string_format:"%.2f"}</td>
-      <td width="50%" class="odd"><img src="img/leftbar.gif" alt="<" /><img alt="-" src="img/mainbar.gif" height="14" width="{$channels[ix].qoptions[jx].width}" /><img src="img/rightbar.gif" alt=">" /></td>
+      <td  class="odd">{$channels[ix].qoptions[jx].qoption}</td>
+      <td  class="odd">{$channels[ix].qoptions[jx].votes}</td>
+      <td  class="odd">{$channels[ix].qoptions[jx].average|string_format:"%.2f"}</td>
+      <td  class="odd"><img src="img/leftbar.gif" alt="<" /><img alt="-" src="img/mainbar.gif" height="14" width="{$channels[ix].qoptions[jx].width}" /><img src="img/rightbar.gif" alt=">" /></td>
     </tr>
     {/section}
   {/if}

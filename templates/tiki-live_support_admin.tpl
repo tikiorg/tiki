@@ -43,7 +43,7 @@
 <h3>{tr}Online operators{/tr}</h3>
 <table class="normal">
 	<tr>
-		<td width="2%" class="heading" style="text-align:center;">	
+		<td  class="heading" style="text-align:center;">	
 		{tr}Operator{/tr}
 		</td>
 		<td class="heading" colspan='2'>
@@ -53,12 +53,12 @@
 {cycle values='odd,even' print=false}	
 {section name=ix loop=$online_operators}
 <tr>
-		<td width="2%" class="{cycle advance=false}" style="text-align:center;">
+		<td  class="{cycle advance=false}" style="text-align:center;">
 			{$online_operators[ix].user|avatarize}<br />	
 			<b>{$online_operators[ix].user}</b>
 		</td>
 		<td class="{cycle advance=false}">
-			<table width="100%">
+			<table >
 				<tr>
 					<td>{tr}Accepted requests{/tr}:</td>
 					<td>{$online_operators[ix].accepted_requests}</td>
@@ -89,7 +89,7 @@
 {cycle values='odd,even' print=false}
 <table class="normal">
 	<tr>
-		<td width="2%" class="heading" style="text-align:center;">	
+		<td  class="heading" style="text-align:center;">	
 		{tr}Operator{/tr}
 		</td>
 		<td class="heading" colspan='2'>
@@ -98,12 +98,12 @@
 	</tr>
 {section name=ix loop=$offline_operators}
 	<tr>
-		<td width="2%" class="{cycle advance=false}" style="text-align:center;">
+		<td  class="{cycle advance=false}" style="text-align:center;">
 			{$offline_operators[ix].user|avatarize}<br />	
 			<b>{$offline_operators[ix].user}</b>
 		</td>
 		<td class="{cycle advance=false}">
-			<table width="100%">
+			<table >
 				<tr>
 					<td>{tr}Accepted requests{/tr}:</td>
 					<td>{$offline_operators[ix].accepted_requests}</td>

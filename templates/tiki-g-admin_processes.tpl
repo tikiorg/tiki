@@ -110,12 +110,12 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td style="text-align:center;" width="5%" class="heading"><input type="submit" name="delete" value="x " /></td>
-<td width="55%" class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-<td width="10%" class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}">{tr}version{/tr}</a></td>
-<td width="5%" class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isActive_desc'}isActive_asc{else}isActive_desc{/if}">{tr}act{/tr}</a></td>
-<td width="5%" class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isActive_desc{/if}">{tr}val{/tr}</a></td>
-<td width="20%" class="heading" >{tr}Action{/tr}</td>
+<td style="text-align:center;"  class="heading"><input type="submit" name="delete" value="x " /></td>
+<td  class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
+<td  class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}">{tr}version{/tr}</a></td>
+<td  class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isActive_desc'}isActive_asc{else}isActive_desc{/if}">{tr}act{/tr}</a></td>
+<td  class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isValid_desc'}isValid_asc{else}isActive_desc{/if}">{tr}val{/tr}</a></td>
+<td  class="heading" >{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.10 2003-09-12 00:40:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.11 2003-09-25 01:05:15 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.10 2003-09-12 00:40:12 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.11 2003-09-25 01:05:15 rlpowell Exp $
 include_once ("tiki-setup_base.php");
 
 if (($tiki_p_admin_drawings != 'y') && ($tiki_p_edit_drawings != 'y')) {
@@ -31,7 +31,7 @@ $path = $_REQUEST["path"];
 	</head>
 
 	<body>
-		<applet archive = "lib/jgraphpad/jgraphpad.jar" code = "org.jgraph.JGraphpad.class" width="100%" height="40">
+		<applet archive = "lib/jgraphpad/jgraphpad.jar" code = "org.jgraph.JGraphpad.class"  height="40">
 			<param name = "drawpath" value = "<?php echo $path?>/img/wiki/<?php echo $tikidomain.$name?>.pad_xml">
 
 			<param name = "gifpath" value = "<?php echo $path?>/img/wiki/<?php echo $tikidomain.$name?>.gif">

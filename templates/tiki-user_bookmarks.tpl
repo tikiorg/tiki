@@ -19,7 +19,7 @@
 <table class="normal">
 <tr>
   <td class="heading">{tr}name{/tr}</td>
-  <td width="8%" class="heading">{tr}action{/tr}</td>
+  <td  class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$folders}
@@ -36,9 +36,9 @@
 <h3>{tr}Bookmarks{/tr}</h3>
 <table class="normal">
 <tr>
-  <td width="45%" class="heading">{tr}name{/tr}</td>
-  <td width="45%" class="heading">{tr}url{/tr}</td>
-  <td width="10%"class="heading">{tr}action{/tr}</td>
+  <td  class="heading">{tr}name{/tr}</td>
+  <td  class="heading">{tr}url{/tr}</td>
+  <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$urls}
@@ -63,11 +63,11 @@
 <h3>{tr}Admin folders and bookmarks{/tr}</h3>
 <table class="normal" cellpadding="0" cellspacing="0">
 <tr> 
-  <td width="50%">
+  <td >
     <b>{tr}Add or edit folder{/tr}</b>
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder=0">{tr}new{/tr}</a>
     <!-- form to add a category -->
-    <table width="100%">
+    <table >
       <form action="tiki-user_bookmarks.php" method="post">
       <input type="hidden" name="editfolder" value="{$editfolder|escape}" />
       <input type="hidden" name="parentId" value="{$parentId|escape}" />
@@ -80,11 +80,11 @@
       </form>
     </table>
   </td>
-  <td width="50%">
+  <td >
     <!-- form to add a url -->
     <b>{tr}Add or edit a URL{/tr}</b>
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl=0">{tr}new{/tr}</a>
-    <table width="100%">
+    <table >
       <form action="tiki-user_bookmarks.php" method="post">
       <input type="hidden" name="editurl" value="{$editurl|escape}" />
       <input type="hidden" name="parentId" value="{$parentId|escape}" />

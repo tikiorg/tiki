@@ -13,7 +13,7 @@
 <a class="link" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
 <br /><br />
 <div class="posthead">
-<table width="100%"><tr><td align="left">
+<table ><tr><td align="left">
 <span class="posthead">
 {if $blog_data.use_title eq 'y'}
 	{$post_info.title}<br />
@@ -49,7 +49,7 @@
 	</div>
 {/if}
 <hr/>
-<table width="100%">
+<table >
 <tr><td>
 <small>
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>

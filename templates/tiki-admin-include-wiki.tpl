@@ -2,7 +2,7 @@
 <div class="cbox-title">{tr}Wiki settings{/tr}</div>
 <div class="cbox-data">
     <table>
-    <tr><td width="60%" valign="top">
+    <tr><td  valign="top">
     <div class="simplebox">
     {tr}Dumps{/tr}:<br />
     <a class="link" href="tiki-admin.php?page=wiki&dump=1">{tr}Generate dump{/tr}</a><br />
@@ -226,11 +226,11 @@
 
     </td>
     
-    <td width="40%" valign="top">
+    <td  valign="top">
     <div class="simplebox">
     {tr}Wiki Features{/tr}:<br />
     <form action="tiki-admin.php?page=wiki" method="post">
-    <table width="100%">
+    <table >
     <tr><td class="form">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Dump{/tr}:</td><td><input type="checkbox" name="feature_dump" {if $feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
@@ -316,7 +316,7 @@
     <div class="simplebox">
     {tr}Wiki Watch{/tr}:<br />
     <form action="tiki-admin.php?page=wiki" method="post">
-    <table width="100%">
+    <table >
 <!--    <tr><td class="form">{tr}Enable watch by default for author{/tr}:</td><td><input type="checkbox" name="wiki_watch_author" {if $wiki_watch_author eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Enable watches on comments{/tr}:</td><td><input type="checkbox" name="wiki_watch_comments" {if $wiki_watch_comments eq 'y'}checked="checked"{/if}/></td></tr>-->
     <tr><td class="form">{tr}Enable watches when I am the editor{/tr}:</td><td><input type="checkbox" name="wiki_watch_editor" {if $wiki_watch_editor eq 'y'}checked="checked"{/if}/></td></tr>

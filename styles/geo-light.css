@@ -108,7 +108,7 @@ TD#rightcolumn {
 
 TD#centercolumn {
 	vertical-align:    top;
-	width:   auto;
+	width:   100%;
 	border-left:   1px solid #999970;
 	border-right:   1px solid #999970;
 }

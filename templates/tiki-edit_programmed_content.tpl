@@ -53,8 +53,8 @@
 {/if}
 {/if}
 <td class="{$class}">&nbsp;{$listpages[changes].pId}&nbsp;</td>
-<td width="34%" class="{$class}">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
-<td width="40%" class="{$class}">&nbsp;{$listpages[changes].data}&nbsp;</td>
+<td  class="{$class}">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
+<td  class="{$class}">&nbsp;{$listpages[changes].data}&nbsp;</td>
 <td class="{$class}">
 <a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;remove={$listpages[changes].pId}">{tr}Remove{/tr}</a>
 <a class="link" href="tiki-edit_programmed_content.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;contentId={$contentId}&amp;edit={$listpages[changes].pId}">{tr}Edit{/tr}</a>

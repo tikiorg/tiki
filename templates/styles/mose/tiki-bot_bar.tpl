@@ -1,4 +1,4 @@
-<table cellpadding="3" width="100%">
+<table cellpadding="3" >
 <tr>
 <td>
 <a target="_blank" href="http://www.w3.org/Style/CSS/"><img alt="css" border="0" src="img/css.gif" width="62" height="22"/></a>
@@ -9,7 +9,7 @@
 <td>
 <a target="_blank" href="http://www.php.net"><img border="0" alt="php" src="img/php.png" width="62" height="22"/></a>
 </td>
-<td width="100%">
+<td >
 <div align="center" style="color:#727272;font-size:80%;">
 <small>[ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; 
 [ {$num_queries} {tr}database queries used{/tr} ]<br />

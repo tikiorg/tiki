@@ -120,11 +120,11 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td width="2%" class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
+<td  class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
 <td class="heading">{tr}Title{/tr}</td>
 <td width="" class="heading">{tr}User/IP{/tr}</a></td>
 <td width="" class="heading">{tr}Sections{/tr}</a></td>
-<td width="12%" class="heading">{tr}Action{/tr}</a></td>
+<td  class="heading">{tr}Action{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

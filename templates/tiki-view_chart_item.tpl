@@ -3,46 +3,46 @@
 {cycle values="odd,even" print=false}
 <table class="normal">
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Chart{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Chart{/tr}</td>
 	<td class="{cycle }"><b><a class="link" href="tiki-view_chart.php?chartId={$chart_info.chartId}">{$chart_info.title}</a></b></td>
 </tr>
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Item{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Item{/tr}</td>
 	<td class="{cycle }"><b>{$info.title}</b></td>
 </tr>
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Description{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Description{/tr}</td>
 	<td class="{cycle }">{$info.description}</td>
 </tr>
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Permanency{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Permanency{/tr}</td>
 	<td class="{cycle }">{$info.perm}</td>
 </tr>
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Position{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Position{/tr}</td>
 	<td class="{cycle }">{$info.position}</td>
 </tr>
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Previous{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Previous{/tr}</td>
 	<td class="{cycle }">{$info.lastPosition}</td>
 </tr>
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Dif{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Dif{/tr}</td>
 	<td class="{cycle }">{$info.dif}</td>
 </tr>
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Best Position{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Best Position{/tr}</td>
 	<td class="{cycle }">{$info.best}</td>
 </tr>
 {if $chart_info.showVotes eq 'y'}
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Votes{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Votes{/tr}</td>
 	<td class="{cycle }">{$info.votes}</td>
 </tr>
 {/if}
 {if $chart_info.showAverage eq 'y'}
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Average{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Average{/tr}</td>
 	<td class="{cycle }">{$info.average}</td>
 </tr>
 {/if}
@@ -52,7 +52,7 @@
 	and
 	($chart_info.singleItemVotes eq 'n' or $user_voted_item eq 'n'))}
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Vote this item{/tr}</td>
+	<td  class="{cycle advance=false}">{tr}Vote this item{/tr}</td>
 	<td class="{cycle}">
 		<form method="post">
 		<input type="hidden" name="itemId" value="{$info.itemId|escape}">

@@ -16,10 +16,10 @@
 </div>
 {/if}
 <div class="articleheading">
-<table width="100%" cellpadding="0" cellspacing="0">
+<table  cellpadding="0" cellspacing="0">
 <tr>
 {if $listpages[ix].isfloat eq 'n'}
-<td width="25%" valign="top">
+<td  valign="top">
 {else}
 <td valign="top">
 {/if}
@@ -33,14 +33,14 @@
 <img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
 {/if}
 {if $listpages[ix].isfloat eq 'n'}
-</td><td width="75%" valign="top">
+</td><td  valign="top">
 {/if}
 <span class="articleheading">{$listpages[ix].parsed_heading}</span>
 </td></tr>
 </table>
 </div>
 <div class="articletrailer">
-<table width="100%">
+<table >
 <tr>
 <td>
 (<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a> - {if $listpages[ix].comments_cant eq 1}{tr}1 Comment{/tr}{else}{$listpages[ix].comments_cant} {tr}comments{/tr}{/if})

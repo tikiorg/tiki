@@ -28,26 +28,26 @@ Errors:<br/>
 	<tr>
 		<td class="formcolor">{tr}Map{/tr}</td>
 		<td class="formcolor">
-		  <table border="1" width="100%">
+		  <table border="1" >
 		  	<tr>
-		  		<td class="formcolor" width="50%">
+		  		<td class="formcolor" >
 		  		{tr}Users{/tr}:
 				<input type="text" size="10" name="find_users" value="{$find_users|escape}" />
 				<input type="submit" name="findusers" value="{tr}filter{/tr}" />	  
 		  		</td>
-		  		<td class="formcolor" width="50%">
+		  		<td class="formcolor" >
 	  			{tr}Roles{/tr}:<br/>		  		
 		  		</td>
 		  	</tr>
 		  	<tr>
-		  		<td class="formcolor" width="50%">
+		  		<td class="formcolor" >
 					<select name="user[]" multiple="multiple" size="10">
 					{section name=ix loop=$users}
 					<option value="{$users[ix].user|escape}">{$users[ix].user}</option>
 					{/section}
 					</select>
 		  		</td>
-		  		<td class="formcolor" width="50%">
+		  		<td class="formcolor" >
 
 					<select name="role[]" multiple="multiple" size="10">
 					{section name=ix loop=$roles}

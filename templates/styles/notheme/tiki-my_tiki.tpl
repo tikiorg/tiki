@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.2 2003-08-14 00:48:27 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.3 2003-09-25 01:05:30 rlpowell Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a><br/><br/>
 {include file=tiki-mytiki_bar.tpl}
@@ -11,7 +11,7 @@
   	{tr}User Pages{/tr}
   </div>
   <div class="cbox-data">
-  <table width="100%">
+  <table >
   {section name=ix loop=$user_pages}
   <tr><td>
   <a class="link" title="{$user_pages[ix].pageName}" href="tiki-index.php?page={$user_pages[ix].pageName|escape:"url"}">{$user_pages[ix].pageName|truncate:30:"(...)"}</a>
@@ -28,7 +28,7 @@
   <div class="cbox">
   <div class="cbox-title">{tr}User Galleries{/tr}</div>
   <div class="cbox-data">
-  <table width="100%">
+  <table >
   {section name=ix loop=$user_galleries}
   <tr><td>
   <a class="link" href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
@@ -45,7 +45,7 @@
   <div class="cbox">
   <div class="cbox-title">{tr}Assigned items{/tr}</div>
   <div class="cbox-data">
-  <table width="100%">
+  <table >
   {section name=ix loop=$user_items}
   <tr><td>
   <b>{$user_items[ix].value}</b> {tr}at tracker{/tr} {$user_items[ix].name}  
@@ -62,7 +62,7 @@
 {if $mytiki_msgs eq 'y'}
   <div class="cbox">
   <div class="cbox-title">{tr}Unread Messages{/tr}</div>
-  <table width="100%">
+  <table >
   {section name=ix loop=$msgs}
   <tr><td>
   <a class="link" href="messu-read.php?offset=0&amp;flag=&amp;flagval=&amp;find=&amp;sort_mode=date_desc&amp;priority=&amp;msgId={$msgs[ix].msgId}">{$msgs[ix].subject}</a>
@@ -75,7 +75,7 @@
 {if $mytiki_tasks eq 'y'}
   <div class="cbox">
   <div class="cbox-title">{tr}Tasks{/tr}</div>
-  <table width="100%">
+  <table >
   {section name=ix loop=$tasks}
   <tr><td>
   <a class="link" href="tiki-user_tasks.php?taskId={$tasks[ix].taskId}">{$tasks[ix].title}</a>
@@ -90,7 +90,7 @@
 {if $mytiki_blogs eq 'y'}
   <div class="cbox">
   <div class="cbox-title">{tr}User Blogs{/tr}</div>
-  <table width="100%">
+  <table >
   {section name=ix loop=$user_blogs}
   <tr><td>
   <a class="link" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>

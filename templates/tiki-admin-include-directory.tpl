@@ -3,7 +3,7 @@
   <div class="cbox-data">
     <div class="simplebox">
       <form action="tiki-admin.php?page=directory" method="post">
-        <table width="100%"><tr>
+        <table ><tr>
           <td class="form">{tr}Number of columns per page when listing categories{/tr}</td>
           <td><select name="directory_columns">
               <option value="1" {if $directory_columns eq 1}selected="selected"{/if}>1</option>

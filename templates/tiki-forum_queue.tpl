@@ -121,7 +121,7 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <table class="normal">
 <tr>
-<td width="2%" class="heading" >&nbsp;</td>
+<td  class="heading" >&nbsp;</td>
 <td class="heading" >{tr}message{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}

@@ -19,7 +19,7 @@
 {$message}
 {else}
 <form action="messu-broadcast.php" method="post">
-<table class="normal" width="70%">
+<table class="normal" >
   <tr>
     <td class="formcolor">{tr}Group{/tr}:</td>
     <td class="formcolor">
@@ -50,7 +50,7 @@
   </tr>
 </table>
 <br />
-<table class="normal" width="70%">
+<table class="normal" >
   <tr>
     <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea></td>
   </tr>

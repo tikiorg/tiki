@@ -8,7 +8,7 @@
 <br/><br/>
 <table class="normal">
 <tr><td class="formcolor" colspan="2">
-<table width="100%"><tr><td>
+<table ><tr><td>
 <a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$first}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First{/tr}' title='{tr}First{/tr}' /></a>
 {if $prev_article > 0}<a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$prev_article}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Prev{/tr}' title='{tr}Prev{/tr}' /></a>{/if}
 {if $prev_article > 0 and $next_article > 0}&nbsp;-&nbsp;{/if}

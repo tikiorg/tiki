@@ -5,7 +5,7 @@
 <div class="bloginfo">
 {tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br />
 {tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br /><br />
-<table width="100%">
+<table >
 <tr>
 	<td>
 		({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
@@ -57,7 +57,7 @@
 {section name=ix loop=$listpages}
 <div>
 <div class="posthead">
-<table width="100%"><tr><td align="left">
+<table ><tr><td align="left">
 <span class="posthead">
 {if $use_title eq 'y'}
 	{$listpages[ix].title}<br />
@@ -82,7 +82,7 @@
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}read more{/tr} ({$listpages[ix].pages} {tr}pages{/tr})</a>
 {/if}
 <hr/>
-<table width="100%"><tr><td>
+<table ><tr><td>
 <small>
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}Permalink{/tr}</a>
  ({tr}referenced by{/tr}: {$listpages[ix].trackbacks_from_count} {tr}posts{/tr} / {tr}references{/tr}: {$listpages[ix].trackbacks_to_count} {tr}posts{/tr})

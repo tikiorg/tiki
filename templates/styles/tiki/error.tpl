@@ -1,7 +1,7 @@
 {include file="header.tpl"}
 
 {if $feature_bidi eq 'y'}
-<table dir="rtl" width="100%"><tr><td>
+<table dir="rtl" ><tr><td>
 {/if}
 
 <div id="tiki-main">

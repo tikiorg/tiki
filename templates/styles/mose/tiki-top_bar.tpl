@@ -1,5 +1,5 @@
 <div id="tiki-top">
-<table cellpadding="0" cellspacing="0" border="0" id="tiki-top" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" id="tiki-top" >
 <tr><td align="center" width="180" bgcolor="#000000">
 <a href="http://{$http_domain}" title="{tr}back to homepage{/tr} {$siteTitle}" class="linkh">{$siteTitle}</a>
 </td>

@@ -64,9 +64,9 @@
 			</table>
 		{/if}
 	{else}
-		<table width="100%">
+		<table >
 			<tr>
-				<td width="2%" style="text-align:center;" valign="top">
+				<td  style="text-align:center;" valign="top">
 					<b>{tr}User:{/tr}</b><br />
 					{if $req_info.tiki_user}
 						{$req_info.tiki_user|avatarize}<br />
@@ -78,7 +78,7 @@
 				<td valign="top">
 					<i>{$req_info.reason}</i>
 				</td>
-				<td width="2%" style="text-align:center;" valign="top">
+				<td  style="text-align:center;" valign="top">
 					<b>{tr}Operator:{/tr}</b><br />
 					{$req_info.operator|avatarize}<br />
 					<b>{$req_info.operator}</b>				

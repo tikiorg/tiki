@@ -3,7 +3,7 @@
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php?page=trackers" method="post">
-<table width="100%">
+<table >
 <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="y" {if $t_use_db eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="n" {if $t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="t_use_dir" value="{$t_use_dir|escape}" /> </td></tr>
 <tr><td align="center" colspan="2"><input type="submit" name="trkset" value="{tr}Set prefs{/tr}" /></td></tr>    

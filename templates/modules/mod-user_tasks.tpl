@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.8 2003-09-05 21:00:58 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.9 2003-09-25 01:05:23 rlpowell Exp $ *}
 
 {if $feature_tasks eq 'y' and $user}
 <div class="box">
@@ -11,7 +11,7 @@
 <input style="font-size: 9px;" type="submit" name="modTasksSave" value="{tr}add{/tr}" />
 </form>
 <form action="{$ownurl}" method="post">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table  border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modTasks}
 <tr><td class="module">
 <input type="checkbox" name="modTasks[{$modTasks[ix].taskId}]" />

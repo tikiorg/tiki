@@ -6,12 +6,12 @@
 <h3>{tr}Workitem information{/tr}</h3>
 <table class="normal">
 <tr>
-	<td width="25%" class="odd"><b>id</b></td>
-	<td width="75%" class="odd">{$wi.itemId}</td>
+	<td  class="odd"><b>id</b></td>
+	<td  class="odd">{$wi.itemId}</td>
 </tr>
 <tr>
-	<td width="25%" class="odd"><b>#</b></td>
-	<td width="75%" class="odd">{$wi.orderId}</td>
+	<td  class="odd"><b>#</b></td>
+	<td  class="odd">{$wi.orderId}</td>
 </tr>
 <tr>
 	<td class="odd"><b>Process</b></td>
@@ -39,8 +39,8 @@
 <h3>{tr}Properties{/tr}</h3>
 <table class="normal">
 <tr>
-	<td width="25%" class="heading">{tr}Property{/tr}</td>
-	<td width="75%" class="heading">{tr}Value{/tr}</td>
+	<td  class="heading">{tr}Property{/tr}</td>
+	<td  class="heading">{tr}Value{/tr}</td>
 </tr>
 {foreach from=$wi.properties item=item key=key}
 <tr>

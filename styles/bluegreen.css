@@ -80,6 +80,7 @@ TD#centercolumn {
 	padding-right:    2px;
 	background:   #99AAAE;
 	vertical-align:   top;
+	width: 100%;
 }
 
 /* And this is what lies inside the centercolumn */

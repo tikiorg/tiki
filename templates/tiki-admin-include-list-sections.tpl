@@ -1,20 +1,20 @@
 <div class="cbox">
   <div class="cbox-title">{tr}Sections{/tr}</div>
   <div class="cbox-data">
-    <table width="100%"><tr>
-      <td width="25%" style="text-align:center;"><a
+    <table ><tr>
+      <td  style="text-align:center;"><a
           href="tiki-admin.php?page=features" class="link"><img border='0'
           src='img/icons/admin_features.png' alt='icon' /><br/>
           {tr}Features{/tr}</a></td>
-      <td width="25%" style="text-align:center;"><a
+      <td  style="text-align:center;"><a
           href="tiki-admin.php?page=general" class="link"><img border='0'
           src='img/icons/admin_general.png' alt='icon' /><br/>
           {tr}General{/tr}</a></td>
-      <td width="25%" style="text-align:center;"><a
+      <td  style="text-align:center;"><a
           href="tiki-admin.php?page=login" class="link"><img border='0'
           src='img/icons/admin_login.png' alt='icon' /><br/>
           {tr}Login{/tr}</a></td>
-      <td width="25%" style="text-align:center;"><a
+      <td  style="text-align:center;"><a
           href="tiki-admin.php?page=wiki" class="link"><img border='0'
           src='img/icons/admin_wiki.png' alt='icon' /><br/>
           {tr}Wiki{/tr}</a></td>
