@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 12. July 2003
+// Last modified: 5. October 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -54,6 +54,7 @@ function HAWIKI_error($error_msg)
   // throw out error message via HAWHAW and terminate
 
   $error_deck = new HAW_deck(HAWIKI_TITLE);
+  $error_deck->enable_session();
 
   $error_text = new HAW_text($error_msg);
   $error_deck->add_text($error_text);
@@ -114,6 +115,7 @@ class HAWIKI_page
     }
 
     $this->deck = new HAW_deck(HAWIKI_TITLE);
+    $this->deck->enable_session();
     $this->deck->set_width(HAWIKI_DISP_WIDTH);
     $this->deck->set_height(HAWIKI_DISP_HEIGHT);
     $this->deck->set_disp_bgcolor(HAWIKI_DISP_BGCOLOR);
@@ -530,6 +532,17 @@ class HAWIKI_page
           break;
         }
 
+        case HAWIKI_TOKEN_WIKIVOICE:
+        {
+          if ($this->debugflags & HAWIKI_DEBUG_PARSER)
+            printf("<b>WikiVoice-Plugin:</b> cmd: %s, data: %s<br>\n", $po["params"]["cmd"], $po["data"]);
+
+          include_once($po["php_name"]);
+          $this = $po["func_name"]($po["data"], $po["params"], $this);
+
+          break;
+        }
+
         default:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
@@ -576,14 +589,6 @@ class HAWIKI_page
     {
       // jingle has been set by hawiki user
       $this->deck->set_voice_jingle($this->link_jingle);
-    }
-    else
-    {
-      if (file_exists(getcwd() . "/lib/hawhaw/link.wav"))
-      {
-        // default wav file available ==> use it!
-        $this->deck->set_voice_jingle("./lib/hawhaw/link.wav");
-      }
     }
 
     // output appropriate markup language

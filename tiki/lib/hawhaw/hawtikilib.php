@@ -1,7 +1,7 @@
 <?php
 
 // HAWHAW function library for TikiWiki
-// Last modified: 12. July 2003
+// Last modified: 27. September 2003
 
 require_once("lib/hawhaw/hawhaw.inc");
 require_once("lib/hawhaw/hawiki_cfg.inc");
@@ -27,12 +27,40 @@ function HAWTIKI_date($timestamp)
 
 function HAWTIKI_index($info)
 {
-  $wikiPage = new HAWIKI_page($info["data"],"tiki-index.php?mode=mobile&page=", $_REQUEST['page']);
+  // determine title and url switch for navigation links
+  if ($_REQUEST['frame'] == 'no')
+  {
+    $framearg = '&frame=no';
+    $title = '';
+  }
+  else
+  {
+    $framearg = '';
+    $title = $_REQUEST['page'];
+  }
 
-  $wikiPage->set_navlink(tra("Wiki Home"), "tiki-index.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
-  $wikiPage->set_navlink(tra("Home"), "tiki-mobile.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+  // determine url switch for jingle playing at links
+  if ($_REQUEST['jingle'] == 'no')
+    $jinglearg = '&jingle=no';
+  else
+    $jinglearg = '';
+
+  $wikiPage = new HAWIKI_page($info['data'],"tiki-index.php?mode=mobile$framearg$jinglearg&page=", $title);
+
+  if ($_REQUEST['frame'] != 'no')
+  {
+    // create standard hawiki deck with title and navigation links
+    $wikiPage->set_navlink(tra('Wiki Home'), "tiki-index.php?mode=mobile$jinglearg", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+    $wikiPage->set_navlink(tra('Home'), 'tiki-mobile.php', HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+  }
+
+  if ($_REQUEST['jingle'] != 'no')
+  {
+    // play standard jingle before link text is spoken
+    $wikiPage->set_link_jingle("lib/hawhaw/link.wav");
+  }
+
   $wikiPage->set_smiley_dir("img/smiles");
-  $wikiPage->set_link_jingle("lib/hawhaw/link.wav");
   $wikiPage->set_hawimconv("lib/hawhaw/hawimconv.php");
 
   $wikiPage->display();
@@ -63,6 +91,7 @@ function HAWTIKI_view_blog_post($post_info)
 function HAWTIKI_list_blogs($listpages, $tiki_p_read_blog)
 {
   $blogsList = new HAW_deck(HAWIKI_TITLE, HAW_ALIGN_CENTER);
+  $blogsList->enable_session();
 
   $title = new HAW_text(hawtra("Blogs"), HAW_TEXTFORMAT_BOLD);
   $blogsList->add_text($title);
@@ -95,6 +124,7 @@ function HAWTIKI_list_blogs($listpages, $tiki_p_read_blog)
 function HAWTIKI_view_blog($listpages, $blog_data)
 {
   $blogList = new HAW_deck(HAWIKI_TITLE, HAW_ALIGN_CENTER);
+  $blogList->enable_session();
 
   $title = new HAW_text(HAWIKI_specchar($blog_data['title']), HAW_TEXTFORMAT_BOLD);
   $blogList->add_text($title);
