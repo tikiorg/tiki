@@ -61,6 +61,7 @@
 {if $blog_list_lastmodif eq 'y'}
 	<td class="bloglistlastModif{cycle advance=false}">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td><!--tiki_date_format:"%d of %b [%H:%M]"-->
 {/if}
+{if $blog_list_user ne 'disabled'}
 {if $blog_list_user eq 'link'}
 	<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
 {elseif $blog_list_user eq 'avatar'}
@@ -68,6 +69,7 @@
 	&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
 {elseif $blog_list_user eq 'text'}
 	<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user}&nbsp;</td>
+{/if}
 {/if}
 {if $blog_list_posts eq 'y'}
 	<td style="text-align:right;" class="bloglistposts{cycle advance=false}">&nbsp;{$listpages[changes].posts}&nbsp;</td>
