@@ -19,8 +19,8 @@
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table class="normal">
 <tr><td class="formcolor"><label for="menus_name">{tr}Name{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="menus_name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor"><label for="menus_desc">{tr}Description{/tr}:</label></td><td><textarea name="description" id="menus_desc" rows="4" cols="40">{$description|escape}</textarea></td></tr>
-<tr><td class="formcolor"><label for="menus_type">{tr}Type{/tr}:</label></td><td>
+<tr><td class="formcolor"><label for="menus_desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea name="description" id="menus_desc" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor"><label for="menus_type">{tr}Type{/tr}:</label></td><td class="formcolor">
 <select name="type" id="menus_type">
 <option value="d" {if $type eq 'd'}selected="selected"{/if}>{tr}dynamic collapsed{/tr}</option>
 <option value="e" {if $type eq 'e'}selected="selected"{/if}>{tr}dynamic extended{/tr}</option>
