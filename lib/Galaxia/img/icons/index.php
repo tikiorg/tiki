@@ -34,8 +34,8 @@ sort($gifs);
 page_head();
 
 for ($i = 0; $i < sizeof($gifs); $i++) {
-  echo("<img src='$gifs[$i]' border=1 alt=''>
-  <font color=black>$gifs[$i]</font><br>\n");
+  echo("<img src='$gifs[$i]' border=1 alt='' />
+  <font color=black>$gifs[$i]</font><br/>\n");
 }
 
 page_tail();

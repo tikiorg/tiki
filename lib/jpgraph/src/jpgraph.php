@@ -4,7 +4,7 @@
 // Description:	PHP4 Graph Plotting library. Base module.
 // Created: 	2001-01-08
 // Author:	Johan Persson (johanp@aditus.nu)
-// Ver:		$Id: jpgraph.php,v 1.1 2003-04-25 18:43:35 lrargerich Exp $
+// Ver:		$Id: jpgraph.php,v 1.2 2003-11-19 00:35:56 gongo Exp $
 //
 // License:	This code is released under QPL 1.0 
 // Copyright (C) 2001,2002,2003 Johan Persson 
@@ -1232,7 +1232,7 @@ class Graph {
 
 		// Construct wrapper HTML and write to file and send it back to browser
 		$htmlwrap = $this->GetHTMLImageMap($aCSIMName)."\n".
-		    '<img src="'.CSIMCACHE_HTTP_DIR.$baseimg.'" ISMAP USEMAP="#'.$aCSIMName.'" border='.$aBorder.'>'."\n";
+		    '<img src="'.CSIMCACHE_HTTP_DIR.$baseimg.'" ISMAP USEMAP="#'.$aCSIMName.'" border='.$aBorder.' />'."\n";
 		if($fh =  @fopen($basecsim,'w') ) {
 		    fwrite($fh,$htmlwrap);
 		    fclose($fh);
@@ -1262,7 +1262,7 @@ class Graph {
 		
 		echo $this->GetHTMLImageMap($aCSIMName);
 
-		echo "<img src='".$aScriptName.$urlarg."' ISMAP USEMAP='#".$aCSIMName."' border=$aBorder>";
+		echo "<img src='".$aScriptName.$urlarg."' ISMAP USEMAP='#".$aCSIMName."' border=$aBorder />";
 	    }
 	}
 	else {
