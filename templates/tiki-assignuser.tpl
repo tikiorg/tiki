@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.10 2003-08-07 19:42:24 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.11 2004-01-21 05:42:30 mose Exp $ *}
 
 <a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br/><br/>
 <h3>{tr}User Information{/tr}</h3>
@@ -35,6 +35,7 @@
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="assign_user" value="{$assign_user|escape}" />
    </form>
    </td>
 </tr>
