@@ -14,6 +14,11 @@ if(!$user) {
   die;  
 }
 
+if($tiki_p_notepad != 'y') {
+  $smarty->assign('msg',tra("Permission denied to use this feature"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
 
 
 if(!isset($_REQUEST["noteId"])) {

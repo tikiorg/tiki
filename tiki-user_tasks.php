@@ -14,6 +14,13 @@ if(!$user) {
   die;  
 }
 
+if($tiki_p_tasks != 'y') {
+  $smarty->assign('msg',tra("Permission denied to use this feature"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
+
+
 
 $comp_array = Array();
 $comp_array_p = Array();

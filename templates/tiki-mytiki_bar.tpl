@@ -19,7 +19,7 @@
 </a></td>
 {/if}
 
-{if $feature_tasks eq 'y'}
+{if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 <td valign="top"><a class="link" href="tiki-user_tasks.php">
 <img  width="48" height="48" border="0" src="img/mytiki/tasks.gif" alt="{tr}Tasks{/tr}" /><br/>
 <div align="center"><small>{tr}Tasks{/tr}</small></div>
@@ -27,7 +27,7 @@
 {/if}
 
 
-{if $feature_user_bookmarks eq 'y'}
+{if $feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
 <td valign="top"><a class="link" href="tiki-user_bookmarks.php">
 <img  width="48" height="48" border="0" src="img/mytiki/bookmarks.gif" alt="{tr}Bookmarks{/tr}" /><br/>
 <div align="center"><small>{tr}Bookmarks{/tr}</small></div>
@@ -36,7 +36,7 @@
 
 
 
-{if $user_assigned_modules eq 'y'}
+{if $user_assigned_modules eq 'y' and $tiki_p_configure_modules eq 'y'}
 <td valign="top"><a class="link" href="tiki-user_assigned_modules.php">
 <img  width="48" height="48" border="0" src="img/mytiki/modules.gif" alt="{tr}Modules{/tr}" /><br/>
 <div align="center"><small>{tr}Modules{/tr}</small></div>
@@ -44,28 +44,28 @@
 {/if}
 
 
-{if $feature_newsreader eq 'y'}
+{if $feature_newsreader eq 'y' and $tiki_p_newsreader eq 'y'}
 <td valign="top"><a class="link" href="tiki-newsreader_servers.php">
 <img  width="48" height="48" border="0" src="img/mytiki/news.gif" alt="{tr}Newsreader{/tr}" /><br/>
 <div align="center"><small>{tr}Newsreader{/tr}</small></div>
 </a></td>
 {/if}
 
-{if $feature_webmail eq 'y'}
+{if $feature_webmail eq 'y' and $tiki_p_use_webmail eq 'y'}
 <td valign="top"><a class="link" href="tiki-webmail.php">
 <img  width="48" height="48" border="0" src="img/mytiki/webmail.gif" alt="{tr}Webmail{/tr}" /><br/>
 <div align="center"><small>{tr}Webmail{/tr}</small></div>
 </a></td>
 {/if}
 
-{if $feature_notepad eq 'y'}
+{if $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <td valign="top"><a class="link" href="tiki-notepad_list.php">
 <img  width="48" height="48" border="0" src="img/mytiki/notes.gif" alt="{tr}Notepad{/tr}" /><br/>
 <div align="center"><small>{tr}Notepad{/tr}</small></div>
 </a></td>
 {/if}
 
-{if $feature_userfiles eq 'y'}
+{if $feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}
 <td valign="top"><a class="link" href="tiki-userfiles.php">
 <img  width="48" height="48" border="0" src="img/mytiki/myfiles.gif" alt="{tr}MyFiles{/tr}" /><br/>
 <div align="center"><small>{tr}MyFiles{/tr}</small></div>

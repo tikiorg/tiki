@@ -306,6 +306,13 @@ $feature_custom_home = 'n';
 
 $w_use_db = 'y';
 $w_use_dir = '';
+$uf_use_db = 'y';
+$uf_use_dir = '';
+$smarty->assign('uf_use_db',$uf_use_db);
+$smarty->assign('uf_use_dir',$uf_use_dir);
+$userfiles_quota = 30;
+$smarty->assign('userfiles_quota',$userfiles_quota);
+
 $feature_wiki_attachments = 'n';
 $feature_page_title = 'y';
 
