@@ -1,5 +1,6 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] File galleries: duplicate uploads are prevented.
 * [NEW] Articles: topic or article image can 'float' around text optionally.
 * [NEW] Forums: columns to be listed in topic listing can be
   configured per-forum.

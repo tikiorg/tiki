@@ -9,16 +9,13 @@ if($feature_charts != 'y') {
   die;  
 }
 
-/*
 if($tiki_p_admin_charts != 'y') {
   $smarty->assign('msg',tra("Permission denied"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
-*/
 
-// Check if we are editing an existing process
-// if so retrieve the process info and assign it.
+
 if(!isset($_REQUEST['chartId'])) $_REQUEST['chartId'] = 0;
 if($_REQUEST["chartId"]) {
   $info = $chartlib->get_chart($_REQUEST["chartId"]);
@@ -43,7 +40,6 @@ if($_REQUEST["chartId"]) {
   );
 }
 
-$smarty->assign_by_ref('chart_info',$info);
 $smarty->assign('chartId',$_REQUEST['chartId']);
 $smarty->assign('info',$info);
 if(isset($_REQUEST["delete"])) {
@@ -51,8 +47,6 @@ if(isset($_REQUEST["delete"])) {
     $chartlib->remove_chart($item);
   }
 }
-
-
 
 if(isset($_REQUEST['save'])) {
     $vars = Array();

@@ -1,6 +1,6 @@
 {if $tiki_p_read_comments eq 'y'}
 <br/>
-({$comments_cant} {tr}comments{/tr})
+<small>({$comments_cant} {tr}comments{/tr})</small>
 {if $comments_show eq 'y'}
 [<a href="javascript:show('comzoneopen');" class="opencomlink">{tr}Show comments{/tr}</a>|
 <a href="javascript:hide('comzoneopen');" class="opencomlink">{tr}Hide comments{/tr}</a>]

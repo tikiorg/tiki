@@ -1,3 +1,10 @@
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_charts','charts','Can admin charts','admin');
+
+## Change to track duplicate file uploads in file galleries
+alter table tiki_files add hash char(32);
+
+##
+
 ### Changes in articles
 alter table tiki_articles add isfloat char(1);
 update tiki_articles set isfloat='n';
@@ -67,6 +74,7 @@ create table tiki_chart_items(
   description text,
   chartId integer(14) not null,
   created integer(14),
+  URL varchar(250),
   votes integer(14),
   points integer(14),
   average decimal(4,2),
