@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.59 2004-03-09 23:43:52 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.60 2004-03-10 10:00:58 melmut Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -107,7 +107,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if( (!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"])) ){
       if($tiki_p_admin_forum=='y' || $commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
         //Replace things between square brackets by links
-        $_REQUEST["comments_data"]=strip_tags($_REQUEST["comments_data"]);
+	#$_REQUEST["comments_data"]=strip_tags($_REQUEST["comments_data"]);
         if($tiki_p_admin_forum != 'y') {
           $_REQUEST["comment_topictype"]='n';
         }

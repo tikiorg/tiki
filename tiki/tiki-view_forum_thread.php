@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.58 2004-03-09 23:41:14 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.59 2004-03-10 10:00:59 melmut Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -234,7 +234,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 
 		if ($commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
 		    //Replace things between square brackets by links
-		    $_REQUEST["comments_data"] = strip_tags($_REQUEST["comments_data"]);
+		    #$_REQUEST["comments_data"] = strip_tags($_REQUEST["comments_data"]);
 
 		    if ($forum_info['forum_use_password'] == 'a' && $_REQUEST['password'] != $forum_info['forum_password']) {
 			$smarty->assign('msg', tra("Wrong password. Cannot post comment"));
