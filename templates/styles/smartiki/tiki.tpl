@@ -52,9 +52,12 @@
 </td>
 {/if}
 </tr></table>
-<div id="tiki-bottom">
-{include file="tiki-bot_bar.tpl"}
-</div>
+{if $feature_bot_bar eq 'y'}
+  <div id="tiki-bottom">
+  {include file="tiki-bot_bar.tpl"}
+  </div>
+{/if}
+
 
 {if $feature_bidi eq 'y'}
 </td></tr></table>
