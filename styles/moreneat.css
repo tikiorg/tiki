@@ -1076,6 +1076,10 @@ div.messureadbody {
 
 
 /* calendar styles */
+#calendar
+{
+width:100%;
+}
 .Cal0, 
 .Cal1, 
 .Cal2
