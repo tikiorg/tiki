@@ -1,16 +1,21 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.11 2003-08-11 19:38:20 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.12 2003-08-13 23:59:59 zaufi Exp $
  *
  * \brief Manage user assigned modules
- // useful only if the feature "A user can assign modules has been set" ($user_assigned_modules)
-///
-/// The first time, a user displays the page to assign modules(tiki-user_assigned_modules.php), 
-/// the list of modules are copied from tiki_modules to tiki_user_assigned_modules
-/// This list is rebuilt if the user asks for a "restore default"
-*
  */
+include_once ('lib/debug/debugger.php');
 
+/**
+ * \brief Class to manage user assigned modules
+ *
+ * Useful only if the feature "A user can assign modules has been set" ($user_assigned_modules)
+ *
+ * The first time, a user displays the page to assign modules(tiki-user_assigned_modules.php), 
+ * the list of modules are copied from tiki_modules to tiki_user_assigned_modules
+ * This list is rebuilt if the user asks for a "restore default"
+ *
+ */
 class UserModulesLib extends TikiLib {
 	function UserModulesLib($db) {
 		# this is probably uneeded now
@@ -241,21 +246,27 @@ class UserModulesLib extends TikiLib {
     /// Function to swap (up/down) two adjacent modules
     function swap_adjacent($name, $user, $op)
     {
-	    $query = "select `ord`, position from `tiki_user_assigned_modules` where `name`='$name' and user='$user'";
-    	$r = $this->query($query);
+        global $debugger;
+        // Get position and order of module to swap
+	    $query = "select `ord`,`position` from `tiki_user_assigned_modules` where `name`=? and user=?";
+    	$r = $this->query($query, array($name, $user));
         $cur = $r->fetchRow();
-        //
-	    $query = "select `name`, ord from `tiki_user_assigned_modules` where `position`='".$cur['position']."' and ord".$op."'".$cur['ord']."' and user='$user' order by ord desc";
-        $r = $this->query($query);
+        $debugger->msg('Source: '.$name.', '.print_r($cur, true));
+        // Get name and order of module to swap with
+	    $query = "select `name`,`ord` from `tiki_user_assigned_modules` where `position`=? and ord".$op."? and user=? order by ord ".($op == '<' ? 'desc' : '');
+        $r = $this->query($query, array($cur['position'], $cur['ord'], $user));
         $swap = $r->fetchRow();
+        $debugger->msg(print_r($swap, true));
         if (!empty($swap))
         {
             // Swap 2 adjacent modules
-            $query = "update `tiki_user_assigned_modules` set `ord`=".$swap['ord']." where `name`='$name' and user='$user'";
-  	        $r = $this->query($query);
-            $query = "update `tiki_user_assigned_modules` set `ord`=".$cur['ord']." where `name`='".$swap['name']."' and user='$user'";
-  	        $r = $this->query($query);
+            $query = "update `tiki_user_assigned_modules` set `ord`=? where `name`=? and user=?";
+  	        $r = $this->query($query, array($swap['ord'], $name, $user));
+            $query = "update `tiki_user_assigned_modules` set `ord`=? where `name`=? and user=?";
+  	        $r = $this->query($query, array($cur['ord'], $swap['name'], $user));
         }
+        else
+            $debugger->msg("No adjacent module to swap with...");
  	}
 	/// Add a module to all the user who have assigned module and who don't have already this module
 	function add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type) {
