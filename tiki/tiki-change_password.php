@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.9 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.10 2004-03-18 19:28:26 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,6 +71,8 @@ if (isset($_REQUEST["change"])) {
 ask_ticket('change-password');
 
 // Display the template
+global $language;
+$language = $tikilib->get_user_preference($_REQUEST["user"], "language", $language);
 $smarty->assign('mid', 'tiki-change_password.tpl');
 $smarty->display("tiki.tpl");
 
