@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.62 2004-01-30 09:13:07 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.63 2004-01-30 20:03:10 damosoft Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -52,7 +52,7 @@
     </td>
 	{if $feature_backlinks eq 'y' and $backlinks}
       <td style="text-align:right;">
-      <form href="tiki-index.php">
+      <form method="tiki-index.php">
 	  <select name="page" onchange="page.form.submit()">
 	    <option value="{$page}">{tr}backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}
@@ -64,7 +64,7 @@
 	{/if}
 	{if count($showstructs) > 1}
   	  <td style="text-align:right;">
-      <form href="tiki-index.php">
+      <form method="tiki-index.php">
 	  <select name="page_ref_id" onchange="page_ref_id.form.submit()">
 	    <option>{tr}Structures{/tr}...</option>
 		{section name=struct loop=$showstructs}
