@@ -81,8 +81,9 @@
       <tr><td class="even">{tr}Created{/tr}:</td><td class="even">{$created|tiki_long_datetime}</td></tr>
       <tr><td class="odd">{tr}Hits{/tr}:</td><td class="odd">{$hits}</td></tr>
       <tr><td class="even">{tr}Description{/tr}:</td><td class="even">{$description}</td></tr>
+      <tr><td class="odd">{tr}Author{/tr}:</td><td class="odd">{$image_user}</td></tr>
       {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-        <tr><td class="odd">{tr}Move image{/tr}:</td><td class="odd">
+        <tr><td class="even">{tr}Move image{/tr}:</td><td class="odd">
         <form action="tiki-browse_image.php" method="post">
         <input type="hidden" name="imageId" value="{$imageId|escape}"/>
         <input type="hidden" name="galleryId" value="{$galleryId|escape}"/>
