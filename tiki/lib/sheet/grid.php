@@ -637,7 +637,6 @@ class TikiSheetSerializeHandler extends TikiSheetDataHandler
 class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 {
 	var $sheetId;
-	var $db;
 	var $readDate;
 	
 	/** Constructor {{{2
@@ -645,19 +644,20 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	 * @param $sheetId The ID of the sheet in the database.
 	 * @param $db The database link to use.
 	 */
-	function TikiSheetDatabaseHandler( $sheetId, $db )
+	function TikiSheetDatabaseHandler( $sheetId )
 	{
 		$this->sheetId = $sheetId;
-		$this->db = $db;
 		$this->readDate = time();
 	}
 
 	// _load {{{2
 	function _load( &$sheet )
 	{
-		$result = mysql_query( "SELECT rowIndex, columnIndex, value, calculation, width, height FROM tiki_sheet_values WHERE {$this->readDate} >= begin AND ( end IS NULL OR end > {$this->readDate} )", $this->db );
+		global $tikilib;
+		
+		$result = $tikilib->query( "SELECT `rowIndex`, `columnIndex`, `value`, `calculation`, `width`, `height` FROM `tiki_sheet_values` WHERE ? >= `begin` AND ( `end` IS NULL OR `end` > ? )", array( (int)$this->readDate, (int)$this->readDate ) );
 
-		while( $row = mysql_fetch_assoc( $result ) )
+		while( $row = $result->fetchRow() )
 		{
 			extract( $row );
 			$sheet->initCell( $rowIndex, $columnIndex );
@@ -672,9 +672,10 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
+		global $tikilib;
 		// Load the current database state {{{3
 		$current = &new TikiSheet;
-		$handler = &new TikiSheetDatabaseHandler( $this->sheetId, $this->db );
+		$handler = &new TikiSheetDatabaseHandler( $this->sheetId );
 		$current->import( $handler );
 
 		// Find differences {{{3
@@ -689,9 +690,13 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 
 		$stamp = time();
 
+		$updates = array();
+		$updates[] = $stamp;
+		$updates[] = $this->sheetId;
+
+		// Update the database {{{3
 		if( is_array( $mods ) )
 		{
-			// Update the database {{{3
 			foreach( $mods as $coord )
 			{
 				extract( $coord );
@@ -700,20 +705,25 @@ class TikiSheetDatabaseHandler extends TikiSheetDataHandler
 				$width = $sheet->mergeInfo[$row][$col]['width'];
 				$height = $sheet->mergeInfo[$row][$col]['height'];
 
-				$updates[] = "( rowIndex = $row AND columnIndex = $col )";
+				$updates[] = $row;
+				$updates[] = $col;
 
 				if( !$sheet->isEmpty( $row, $col ) )
-					$inserts[] = "( {$this->sheetId}, $stamp, $row, $col, "
-						. ( $value == '' ? 'null' : "'$value'" ) . ", "
-						. ( $calc == '' ? 'null' : "'$calc'" ) . ", '$width', '$height' )";
+					$inserts[] = array( $this->sheetId, $stamp, $row, $col, $value, $calc, $width, $height );
 
 			}
 		}
+
+		$updates[] = $sheet->getRowCount();
+		$updates[] = $sheet->getColumnCount();
+
+		$conditions = str_repeat( "( rowIndex = ? AND columnIndex = ? ) OR ", ( sizeof($updates) - 4 ) / 2 );
 			
-		$result = mysql_query( "UPDATE tiki_sheet_values SET end = $stamp WHERE sheetId = {$this->sheetId} AND end IS NULL AND ( " . ( sizeof( $updates ) > 0 ? implode( " OR ", $updates ) . " OR " : '' ) . "rowIndex >= " . $sheet->getRowCount() . " OR columnIndex >= " . $sheet->getColumnCount() . " )", $this->db );
+		$tikilib->query( "UPDATE `tiki_sheet_values` SET `end` = ? WHERE `sheetId` = ? AND `end` IS NULL AND ( {$conditions}`rowIndex` >= ? OR `columnIndex` >= ? )", $updates );
 
 		if( sizeof( $inserts ) > 0 )
-			$result = mysql_query( "INSERT INTO tiki_sheet_values (sheetId, begin, rowIndex, columnIndex, value, calculation, width, height ) VALUES" . implode( ", ", $inserts ), $this->db);
+			foreach( $inserts as $values )
+				$tikilib->query( "INSERT INTO tiki_sheet_values (sheetId, begin, rowIndex, columnIndex, value, calculation, width, height ) VALUES( ?, ?, ?, ?, ?, ?, ?, ? )", $values ); 
 
 		// }}}3
 
@@ -828,4 +838,58 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 		return "0.1-dev";
 	}
 } // }}}1
+
+// TikiWiki Sheet Library {{{1
+
+class SheetLib extends TikiLib
+{
+	function get_sheet_info( $sheetId ) // {{{2
+	{
+		$result = $this->query( "SELECT * FROM `tiki_sheets` WHERE `sheetId` = ?", array( $sheetId ) );
+
+		return $result->fetchRow();
+	}
+
+	function list_sheets( $offset = 0, $maxRecord = -1, $sort_mode = 'title_desc', $find = '' ) // {{{2
+	{
+		switch( $sort_mode )
+		{
+			case "title_desc":
+			default:
+				$sort = "`title`, `description`";
+		}
+
+		$result = $this->query( "SELECT * FROM `tiki_sheets ORDER BY $sort`", array(), $offset, $maxRecord );
+
+		while( $row = $result->fetchRow() )
+			$results['data'][] = $row;
+
+		$results['cant'] = $this->getOne( "SELECT COUNT(*) FROM `tiki_sheets`", array() );
+
+		return $results;
+	}
+
+	function remove_sheet( $sheetId ) // {{{2
+	{
+		$this->query( "DELETE FROM `tiki_sheets` WHERE `sheetId` = ?", array( $sheetId ) );
+	}
+
+	function replace_sheet( $sheetId, $title, $description, $author ) // {{{2
+	{
+		if( $sheetId == 0 )
+		{
+			$this->query( "INSERT INTO `tiki_sheets` ( `title`, `description`, `author` ) VALUES( ?, ?, ? )", array( $title, $description, $author ) );
+
+			return $this->getOne( "SELECT MAX(`sheetId`) FROM `tiki_sheets` WHERE `author` = ?", array( $author ) );
+		}
+		else
+		{
+			$this->query( "UPDATE `tiki_sheets` SET `title` = ?, `description` = ?, `author` = ? WHERE `sheetId` = ?", array( $title, $description, $author, $sheetId ) );
+
+			return $sheetId;
+		}
+	}
+
+} // }}}1
+
 ?>
