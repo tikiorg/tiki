@@ -4,7 +4,7 @@
 
 echo '<html><body><pre><p>';
 if (isset($_REQUEST['error']) and !is_null($_REQUEST['error'])) {
-	echo $_REQUEST['error'];
+	echo strip_tags($_REQUEST['error']);
 } else {
 	echo 'There was an unsepecified error.  Please go back and try again.';
 }
