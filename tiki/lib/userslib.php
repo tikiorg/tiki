@@ -693,6 +693,7 @@ function get_included_groups($group) {
 	    $aux["groupDesc"] = $res["groupDesc"];
 	    $perms = $this->get_group_permissions($aux["groupName"]);
 	    $aux["perms"] = $perms;
+		$aux["permcant"] = count($perms);
 	    $groups = $this->get_included_groups($aux["groupName"]);
 	    $aux["included"] = $groups;
 	    $ret[] = $aux;

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.44 2004-03-04 05:13:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.45 2004-03-13 12:21:35 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -87,10 +87,7 @@ class="prevnext">{tr}All{/tr}</a>
 {/section}
 </td>
 <td>
-{capture assign=over}{section name=grs loop=$users[user].perms}{$users[user].perms[grs]}(<a class="link"
-href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName|escape:"url"}&amp;action=remove">x</a>)<br />{/section}{/capture}
-<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}permissions{/tr}" {popup text="<br />$over"|escape:"javascript"|escape:"html"
-sticky="true" caption="{tr}Permissions{/tr}" closetext="{tr}close{/tr}" right="true"}><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key.gif" /> ({$smarty.section.grs.total})</a>
+<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}permissions{/tr}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key.gif" /> {$users[user].permcant}</a>
 </td>
 <td style="width: 20px;">
 {if $users[user].groupName !== 'Anonymous'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" 
