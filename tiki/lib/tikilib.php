@@ -2500,8 +2500,9 @@ class TikiLib {
 	}
 
 	/*shared*/
-	function get_assigned_modules($position) {
-		$query = "select `params`,`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups` from `tiki_modules` where `position`= ? order by `ord` asc";
+	function get_assigned_modules($position, $displayed="n") {
+		$filter = ($displayed != 'n')? "(`type` is null or `type` !='h') and ": ""; 
+		$query = "select `params`,`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups` from `tiki_modules` where $filter `position`= ? order by `ord` asc";
 
 		$result = $this->query($query, array($position));
 		$ret = array();
