@@ -238,6 +238,8 @@ $smarty->assign('mytiki_items',$tikilib->get_user_preference($user,'mytiki_items
 $smarty->assign('mytiki_msgs',$tikilib->get_user_preference($user,'mytiki_msgs'),'y');
 $smarty->assign('mytiki_tasks',$tikilib->get_user_preference($user,'mytiki_tasks'),'y');
 
+$section='mytiki';
+include_once('tiki-section_options.php');
 
 $smarty->assign('mid','tiki-my_tiki.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

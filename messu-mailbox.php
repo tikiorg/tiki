@@ -73,6 +73,9 @@ if($offset>0) {  $smarty->assign('prev_offset',$offset - $maxRecords);  } else {
 $smarty->assign_by_ref('items',$items["data"]);
 
 
+$section='user_messages';
+include_once('tiki-section_options.php');
+
 include_once('tiki-mytiki_shared.php');
 
 

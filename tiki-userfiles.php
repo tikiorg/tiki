@@ -86,11 +86,6 @@ $smarty->assign('cellsize',$cellsize);
 $smarty->assign('percentage',$percentage);
 
 
-
-
-
-
-
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'created_desc'; 
 } else {

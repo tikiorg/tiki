@@ -126,6 +126,9 @@ if(isset($_REQUEST['send'])) {
   $smarty->assign('message',$message);
 }
 
+$section='user_messages';
+include_once('tiki-section_options.php');
+
 
 include_once('tiki-mytiki_shared.php');
 

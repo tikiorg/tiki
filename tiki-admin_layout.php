@@ -15,7 +15,7 @@ if($tiki_p_admin != 'y') {
     die;
 }
 
-$sections=Array('wiki','galleries','file_galleries','cms','blogs','forums','chat','categories','games','faqs','html_pages','quizzes','surveys','webmail','trackers');
+$sections=Array('wiki','galleries','file_galleries','cms','blogs','forums','chat','categories','games','faqs','html_pages','quizzes','surveys','webmail','trackers','featured_links','directory','user_messages','newsreader','mytiki');
 
 $sections_smt	= Array();
 for($i=0;$i<count($sections);$i++) {

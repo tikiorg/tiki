@@ -94,6 +94,8 @@ if($offset>0) {
 }
 $smarty->assign_by_ref('channels',$channels["data"]);
 
+$section='newsreader';
+include_once('tiki-section_options.php');
 
 include_once('tiki-mytiki_shared.php');
 

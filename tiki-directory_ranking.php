@@ -34,6 +34,8 @@ if($items["cant"] > ($offset+$maxRecords)) {  $smarty->assign('next_offset',$off
 if($offset>0) {  $smarty->assign('prev_offset',$offset - $maxRecords);  } else {  $smarty->assign('prev_offset',-1); }
 $smarty->assign_by_ref('items',$items["data"]);
 
+$section='directory';
+include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-directory_ranking.tpl');

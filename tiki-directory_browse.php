@@ -87,6 +87,9 @@ if($categ_info['allowSites']=='y') {
   $smarty->assign_by_ref('items',$items["data"]);
 }
 
+$section='directory';
+include_once('tiki-section_options.php');
+
 // Related categs
 $related = $dirlib->dir_list_related_categories($_REQUEST['parent'],0,-1,'name_desc','');
 $smarty->assign_by_ref('related',$related['data']);
