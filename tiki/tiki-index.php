@@ -374,6 +374,10 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
 	die;
 }
 
+// Flag for 'page bar' that currently 'Page view' mode active
+// so it is needed to show comments & attachments panels
+$smarty->assign('show_page','y');
+
 // Display the Index Template
 $smarty->assign('dblclickedit','y');
 $smarty->assign('mid','tiki-show_page.tpl');

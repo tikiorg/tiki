@@ -53,10 +53,24 @@
 {if $feature_wiki_discuss eq 'y'}
 <td><div class="button2"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&comments_postComment=post&comments_title={$page}&comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."}&comment_topictype=n" class="linkbut">{tr}discuss{/tr}</a></div></td>
 {/if}
+
 {if $edit_page eq 'y'}
 <td><div class="button2"><a href="javascript:flip('edithelpzone');" class="linkbut">{tr}Wiki quick help{/tr}</a></div>
 </td>
 {/if}
+
+{if $show_page eq 'y'}
+{if $comments_show eq 'y'}
+<td><div class="button2"><a href="javascript:flip('comzoneopen');" class="linkbut">{tr}comments{/tr}</a></div></td>
+{else}
+<td><div class="button2"><a href="javascript:flip('comzone');" class="linkbut">{tr}comments{/tr}</a></div></td>
+{/if}
+{/if}
+
+{if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
+<td><div class="button2"><a href="javascript:flip('attzone');" class="linkbut">{tr}attachments{/tr}</a></div></td>
+{/if}
+
 </tr>
 </table>
 </div>
