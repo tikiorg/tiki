@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.20 2003-10-16 20:27:07 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.21 2003-10-16 20:55:57 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.20 2003-10-16 20:27:07 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.21 2003-10-16 20:55:57 dheltzel Exp $
 session_start();
 
 // Define and load Smarty components
@@ -88,34 +88,47 @@ function setup_help(){
 */
 
 function create_dirs(){
-	// Create directories as needed
+/*  old list of dirs
+$dirs = array(
+	'backups',
+	'dump',
+	'img/wiki',
+	'img/wiki_up',
+	'modules/cache',
+	'temp',
+	'templates_c',
+);
+*/
 	$dirs=array(
-		"backups",
-		"db",
-		"dump",
-		"img/wiki",
-		"img/wiki_up",
-		"modules/cache",
-		"temp",
-		"templates_c",
-		"var",
-		"var/log",
-		"var/log/irc",
-		"templates",
-		"styles",
-		"lib/Galaxia/processes");
+		'backups',
+		'db',
+		'dump',
+		'img/wiki',
+		'img/wiki_up',
+		'modules/cache',
+		'temp',
+		'templates_c',
+		'var',
+		'var/log',
+		'var/log/irc',
+		'templates',
+		'styles',
+		'lib/Galaxia/processes');
 
-	print "Checking directories:<br>";
 	foreach ($dirs as $dir) {
+		// Create directories as needed
 		if (!is_dir($dir)) {
-			echo "Creating $dir directory.<br>";
 			@mkdir($dir,02775);
 		}
 		@chmod($dir,02775);
+		// Check again and report problems
 		if (!is_dir($dir)) {
-			print "problem with $dir<br>";
+			$ret .= "The directory '$docroot/$dir' does not exist.\n";
+		} else if (!is_writeable($dir)) {
+			$ret .= "The directory '$docroot/$dir' is not writeable.\n";
 		}
 	}
+	return $ret;
 }
 
 function isWindows() {
@@ -176,9 +189,6 @@ class Smarty_Sterling extends Smarty {
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
 	}
 }
-
-// Added to clear the Smarty cache before the install
-//clean_cache();
 
 if (isset($_REQUEST['kill'])) {
 	@$removed = rename('tiki-install.php', 'tiki-install.done');
@@ -278,6 +288,7 @@ if (!$wwwgroup) {
 	$wwwgroup = 'nobody (or the group account the web server is running under)';
 }
 
+/*
 // First checking writeable directories
 $dirs = array(
 	'backups',
@@ -299,6 +310,8 @@ foreach ($dirs as $dir) {
 		$errors .= "The directory '$docroot/$dir' is not writeable by $wwwuser.\n";
 	}
 }
+*/
+$errors .= create_dirs();
 
 if ($errors) {
 	$PHP_CONFIG_FILE_PATH = PHP_CONFIG_FILE_PATH;
@@ -635,9 +648,5 @@ $smarty->display("tiki.tpl");
 
 //print "<hr>";
 //setup_help();
-//print "<hr>";
-//create_dirs();
-// Added to clear the Smarty cache after the install
-//clean_cache();
 
 ?>
