@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.113 2003-10-07 20:29:27 dheltzel Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.114 2003-10-10 11:04:02 traivor Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,7 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 --
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [MOD] Improved thread display of comments
 * [NEW] newsletter enhancements - per newsletter determine whether users can
   subscribe, whether the address must be validated, and whether to include an
   unsubscribe msg when a newsletter is sent. Removed frequency as unused.
