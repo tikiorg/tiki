@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.17 2003-10-02 23:40:54 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.18 2003-10-03 05:33:00 mose Exp $
 2003 - created and maintained by mose@feu.org
 */
 
@@ -13,8 +13,14 @@ body {
 }
 
 table {
+padding: 0;
+margin: 0;
+border-spacing: 0;
 }
-
+tr, td {
+padding: 0;
+margin: 0;
+}
 /*
 GENERAL LAYOUT 
 */
@@ -48,7 +54,7 @@ This is the header
 }
 
 #tiki-top .center {
-	padding-left: 15px;
+	padding-left: 25px;
 }
 
 #tiki-top .link {
@@ -83,7 +89,10 @@ DIV#tiki-bot {
 	background:   #DED6C6;
 	padding-bottom:   0px;
 }
-
+DIV#tiki-bot > table{
+	width:100%;
+	margin: 0;
+}
 /* 
 The three columns 
 */
@@ -91,22 +100,19 @@ TD#leftcolumn {
 	vertical-align:   top;
 	background:   #DED6C6;
 	width:   180px;
-	border-right:   1px solid #ffffff;
 }
 
 TD#rightcolumn {
 	vertical-align:   top;
 	background:   #DED6C6;
 	width:   180px;
-	border-left:   1px solid #ffffff;
 }
 
 TD#centercolumn {
 	background:   #EFEFE7;
 	vertical-align:   top;
 	border-top:   1px solid #5A4A39;
-	border-left:   1px solid #5A4A39;
-	border-right:   1px solid #5A4A39;
+	padding-top: 10px;
 }
 
 /* 
@@ -114,8 +120,8 @@ centercolumn
 */
 DIV#tiki-center {
 	vertical-align:   top;
-	margin-left:    12px;
-	margin-right:   12px;
+	margin-left:    25px;
+	margin-right:   25px;
 }
 
 div#debugconsole {
@@ -317,7 +323,9 @@ div.separator {
 	margin-top:   2px;
 	width:   170px;
 }
-
+div.separator:hover {
+	background: #dada89;
+}
 /* 
 Links in menus 
 */
@@ -344,19 +352,16 @@ Links in menus
 Links to extend/collapse menus 
 */
 .separator {
-	font-size:    10px;
 	color:   black;
 	text-decoration:   none;
 }
 
 .separator:active {
-	font-size:    10px;
 	color:   black;
 	text-decoration:   none;
 }
 
 .separator:hover {
-	font-size:    10px;
 	color:   black;
 	text-decoration:   none;
 }
@@ -508,7 +513,7 @@ table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, tabl
 	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread {
 	border: 1px solid #5A4A39;
 	width: 100%;
-	margin: 10px;
+	border-spacing: 2px;
 }
 
 TABLE.normalnoborder {
@@ -802,16 +807,16 @@ Wiki action buttons (the buttons displayed at the
 end of each page to edit/print/remove/etc a page 
 */
 div.button2 {
-	font-size:    10px;
 	color:   Black;
 	font-weight:   bold;
 	background:   white;
 	border:   1px solid black;
-	padding-left:   0.1em;
-	padding-right:   0.1em;
+	margin:   0.0ex 0px;
+	margin-left: 3px;
+	padding-left:   0.3em;
+	padding-right:   0.3em;
 	padding-top:   0.1em;
 	padding-bottom:   0.1em;
-	margin:   0.0ex 0px;
 }
 
 /* 
@@ -834,8 +839,8 @@ Links in buttons
 .linkbut:hover {
 	font-size:    11px;
 	color:   black;
-	background:   #CCCCCC;
-	text-decoration:   underline;
+	background:   #CCCC66;
+	text-decoration:   none;
 }
 
 /* 
