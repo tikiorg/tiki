@@ -22,12 +22,12 @@
 <tr><td class="galform">{tr}Images per row{/tr}:</td><td class="galform"><input type="text" name="rowImages" value="{$rowImages}" /></td></tr>
 <tr><td class="galform">{tr}Thumbnails size X{/tr}:</td><td class="galform"><input type="text" name="thumbSizeX" value="{$thumbSizeX}" /></td></tr>
 <tr><td class="galform">{tr}Thumbnails size Y{/tr}:</td><td class="galform"><input type="text" name="thumbSizeY" value="{$thumbSizeY}" /></td></tr>      
-<tr><td class="galform">{tr}Availible scales{/tr}:</td><td class="galform">
+<tr><td class="galform">{tr}Available scales{/tr}:</td><td class="galform">
 {section  name=scales loop=$scaleinfo}
 {tr}Remove{/tr}:<input type="checkbox" name="{$scaleinfo[scales].xsize}x{$scaleinfo[scales].ysize}" />
 {$scaleinfo[scales].xsize}x{$scaleinfo[scales].ysize}<br>
 {sectionelse}
-{tr}No scales availible{/tr}
+{tr}No scales available{/tr}
 {/section}
 </td></tr>
 <tr><td class="galform">{tr}Add scaled images size X x Y{/tr}:</td><td class="galform"><input type="text" name="scaleSizeX" size=4 />x<input type="text" name="scaleSizeY" size=4 /></td></tr>

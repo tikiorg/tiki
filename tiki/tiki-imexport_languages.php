@@ -25,7 +25,7 @@ while ($res=$result->fetchRow()) {
 $smarty->assign_by_ref('languages',$languages);
 
 
-// Get availible languages from Disk
+// Get available languages from Disk
 $languages_files=Array();
 $h=opendir("lang/");
 while($file=readdir($h)) {

@@ -828,7 +828,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $this->filename=$res["filename"];
 
 
-    # build scaled images or thumb if not availible
+    # build scaled images or thumb if not available
     if ($itype != 'o' && !isset($this->imageId))
       {
         if($newsize=$this->rebuild_image($id,$itype,$xsize,$ysize)) {

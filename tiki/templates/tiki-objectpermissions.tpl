@@ -7,7 +7,7 @@
 {section  name=pg loop=$page_perms}
 <tr><td class="odd">{$page_perms[pg].groupName}</td><td class="odd">{$page_perms[pg].permName}</td><td class="odd">(<a class="link" href="tiki-objectpermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&perm={$page_perms[pg].permName}&group={$page_perms[pg].groupName}">remove</a>)</td></tr>
 {sectionelse}
-<tr><td>{tr}No indivual permissions global permissions apply{/tr}</td></tr>
+<tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
 {/section}
 </table>
 <h3>{tr}Assign permissions to this object{/tr}</h3>
