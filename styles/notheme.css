@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.14 2004-04-29 22:31:47 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.15 2004-06-20 16:01:14 mose Exp $
  *
  * My second theme :)
  * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
@@ -26,6 +26,21 @@
 	clear:both;
 	}
 	
+/* ********************* TRACKERS *********************************** */
+.statuson {
+	padding: 1px;
+	margin: 1px;
+	border: 1px inset #666666;
+	-moz-border-radius: 20px;
+	vertcal-align: middle;
+	background-color: #bbaa99;
+}
+.statusoff {
+	padding: 1px;
+	margin: 2px;
+	vertcal-align: middle;
+}
+
 
 /* tiki tabs */
 
