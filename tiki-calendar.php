@@ -467,27 +467,31 @@ for ($i=0;$i<=$numberofweeks;$i++) {
 		$ddayend = mktime(0,0,0,1,(7*($wee))+$w-1,$focus_year);
 		$cell[$i][$w]['day'] = $dday;
 		if (isset($listevents["$dday"])) {
+			$e = 0;
 			foreach ($listevents["$dday"] as $le) {
-				$leday["{$le['time']}"] = $le;
+				$leday["{$le['time']}$e"] = $le;
 				$smarty->assign_by_ref('cellextra',$le["extra"]);
 				$smarty->assign_by_ref('cellhead',$le["head"]);
 				$smarty->assign_by_ref('cellprio',$le["prio"]);
 				$smarty->assign_by_ref('cellcalname',$le["calname"]);
 				$smarty->assign_by_ref('cellname',$le["name"]);
 				$smarty->assign_by_ref('celldescription',$le["description"]);
-				$leday["{$le['time']}"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
+				$leday["{$le['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
+				$e++;
 			}
 		}
 		if (isset($listtikievents["$dday"])) {
+			$e = 0;
 			foreach ($listtikievents["$dday"] as $lte) {
-				$leday["{$lte['time']}"] = $lte;
+				$leday["{$lte['time']}$e"] = $lte;
 				$smarty->assign('cellextra',"");
 				$smarty->assign_by_ref('cellhead',$lte["head"]);
 				$smarty->assign_by_ref('cellprio',$lte["prio"]);
 				$smarty->assign_by_ref('cellcalname',$lte["calname"]);
 				$smarty->assign_by_ref('cellname',$lte["name"]);
 				$smarty->assign_by_ref('celldescription',$lte["description"]);
-				$leday["{$lte['time']}"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
+				$leday["{$lte['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
+				$e++;
 			}
 		}
 		if (is_array($leday)) {
