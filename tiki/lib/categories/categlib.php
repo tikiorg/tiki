@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.24 2003-12-31 02:34:13 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.25 2003-12-31 11:38:35 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -44,7 +44,8 @@ class CategLib extends TikiLib {
 			}
       
       $catpath = $this->get_category_path($res["categId"]);
-			foreach ($categpath as $cat) {
+			
+			foreach ($catpath as $cat) {
 				$tepath[] = $cat['name'];
 			}
 			$categpath = implode("::",$tepath);
