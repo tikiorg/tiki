@@ -7,7 +7,7 @@
       {tr}logged as{/tr}: {$smarty.session.user}<br/>
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a>
     {else}
-     <form name="loginbox" action="tiki-login.php" method="post" {if $feature_challenge eq 'y'}onSubmit="doChallengeResponse()"{/if}> 
+     <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onSubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}
      <script language="javascript" src="lib/md5.js"></script>   
      {literal}
@@ -59,6 +59,22 @@
           <td valign="bottom">&nbsp;</td>
           {/if}
           </tr>
+          {if $http_login_url ne '' or $https_login_url ne ''}
+          <tr>
+          <td valign="bottom">
+            <a class="link" href="{$http_login_url}">{tr}standard{/tr}</a> |
+            <a class="link" href="{$https_login_url}">{tr}secure{/tr}</a>
+          </td>
+          </tr>
+          {/if}
+          {if $show_stay_in_ssl_mode eq 'y'}
+          <tr><td><span class="user-box-text">{tr}stay in ssl mode{/tr}:&nbsp;</span>
+            <input type="checkbox" name="stay_in_ssl_mode" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} />
+          </td>
+          </tr>
+          {else}
+          <input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode}" />
+          {/if}
           </table>
         </td>
       </tr>

@@ -1541,5 +1541,15 @@ No newsletters will be sent to you until the subscription is confirmed.",
 "You have to provide a name to the file" => "You have to provide a name to the file",
 "No item indicated" => "No item indicated",
 "No post indicated" => "No post indicated",
+'Allow secure (https) login' => 'Allow secure (https) login',
+'Require secure (https) login' => 'Require secure (https) login',
+'HTTP server name' => 'HTTP server name',
+'HTTP port' => 'HTTP port',
+'HTTPS server name' => 'HTTPS server name',
+'HTTPS port' => 'HTTPS port',
+'HTTPS URL prefix' => 'HTTPS URL prefix',
+'standard' => 'standard', # http login
+'secure' => 'secure', # https login
+'stay in ssl mode' => 'stay in ssl mode',
 "##end###" => "###end###");
 ?>
