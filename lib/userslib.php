@@ -743,7 +743,7 @@ class UsersLib extends TikiLib {
 	$cant = 0;
 	$ret = array();
 	while ($res = $result->fetchRow()) {
-		if ($group && $this->group_has_permission($group, $aux['permName'])) {
+		if ($group && $this->group_has_permission($group, $res['permName'])) {
 			$hasPerm = 'y';
 		} else {
 			$hasPerm = 'n';
@@ -874,7 +874,7 @@ class UsersLib extends TikiLib {
     $now=date("U");
     $new_pass_due=$now+(60*60*24*$pass_due);
     $query = "insert into `users_users`(`login`,`password`,`email`,`provpass`,`registrationDate`,`hash`,`pass_due`,`created`) values(?,?,?,?,?,?,?,?)";
-    $result = $this->query($queryi,array($user,$pass,$email,$provpass,$now,$hash,$new_pass_due,$now));
+    $result = $this->query($query,array($user,$pass,$email,$provpass,$now,$hash,$new_pass_due,$now));
     $this->assign_user_to_group($user,'Registered');
     return true;
   }
