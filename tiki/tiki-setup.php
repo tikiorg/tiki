@@ -412,6 +412,17 @@ $useRegisterPasscode = $tikilib->get_preference("useRegisterPasscode",'n');
 $registerPasscode = $tikilib->get_preference("registerPasscode",'');
 $useUrlIndex = $tikilib->get_preference("useUrlIndex",'n');
 $urlIndex = $tikilib->get_preference("useUrlIndex",'');
+$wikiHomePage = $tikilib->get_preference("wikiHomePage",'HomePage');
+$smarty->assign('wikiHomePage',$wikiHomePage);
+
+$wiki_page_regex = $tikilib->get_preference('wiki_page_regex','strict');
+$smarty->assign('wiki_page_regex',$wiki_page_regex);
+if($wiki_page_regex == 'strict') {
+  $page_regex = '[A-Za-z0-9_][\.: A-Za-z0-9_\-]*[A-Za-z0-9_]';	
+} else {
+  $page_regex = '[A-Za-z0-9_\x80-\xFF][\.: A-Za-z0-9_\-\x80-\xFF]*[A-Za-z0-9_\x80-\xFF]';	
+}
+
 
 
 $validateUsers = $tikilib->get_preference("validateUsers",'n');

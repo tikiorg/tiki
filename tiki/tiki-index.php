@@ -23,13 +23,19 @@ if(!isset($_SESSION["thedate"])) {
 
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {
-  $_REQUEST["page"]='HomePage';
-  $page = 'HomePage';
-  $smarty->assign('page','HomePage'); 
+  $_REQUEST["page"]=$wikiHomePage;
+  $page = $wikiHomePage;
+  $smarty->assign('page',$wikiHomePage); 
 } else {
   $page = $_REQUEST["page"];
   $smarty->assign_by_ref('page',$_REQUEST["page"]); 
 }
+if(!$tikilib->page_exists($wikiHomePage)) {
+  $tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization'); 
+}
+
+
+
 
 require_once('tiki-pagesetup.php');
 

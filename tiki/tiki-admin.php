@@ -558,7 +558,15 @@ if(isset($_REQUEST["articlecomprefs"])) {
   }
 }
 
+if(isset($_REQUEST["setwikihome"])) {
+  $tikilib->set_preference('wikiHomePage',$_REQUEST["wikiHomePage"]);
+  $smarty->assign('wikiHomePage',$_REQUEST["wikiHomePage"]);
+}
 
+if(isset($_REQUEST["setwikiregex"])) {
+  $tikilib->set_preference('wiki_page_regex',$_REQUEST["wiki_page_regex"]);
+  $smarty->assign('wiki_page_regex',$_REQUEST["wiki_page_regex"]);	
+}
 
 if(isset($_REQUEST["wikifeatures"])) {
   if(isset($_REQUEST["feature_lastChanges"]) && $_REQUEST["feature_lastChanges"]=="on") {
@@ -577,6 +585,8 @@ if(isset($_REQUEST["wikifeatures"])) {
     $smarty->assign("feature_wiki_comments",'n');
   }
   
+  
+  
   if(isset($_REQUEST["feature_wiki_pictures"]) && $_REQUEST["feature_wiki_pictures"]=="on") {
     $tikilib->set_preference("feature_wiki_pictures",'y'); 
     $smarty->assign("feature_wiki_pictures",'y');
@@ -592,7 +602,7 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_wiki_description",'n');
     $smarty->assign("feature_wiki_description",'n');
   }
-  
+      
   if(isset($_REQUEST["wiki_spellcheck"]) && $_REQUEST["wiki_spellcheck"]=="on") {
     $tikilib->set_preference("wiki_spellcheck",'y'); 
     $smarty->assign("wiki_spellcheck",'y');

@@ -7974,7 +7974,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function parse_data($data) 
   {
-    
+    global $page_regex;
     global $feature_hotwords;
     global $cachepages;
     global $ownurl_father;
@@ -8208,6 +8208,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     // Links to internal pages
     // If they are parenthesized then don't treat as links
     // Prevent ))PageName(( from being expanded    \"\'
+    
+    //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
     preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
     //print_r($pages);
     foreach(array_unique($pages[2]) as $page) {
@@ -8223,7 +8225,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/","$1"."$2"."$3",$data);
       
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
-    preg_match_all("/\(\(([A-Za-z0-9_\-]+)\|([^\)]+)\)\)/",$data,$pages);
+    preg_match_all("/\(\(($page_regex)\|([^\)]+)\)\)/",$data,$pages);
     for($i=0;$i<count($pages[1]);$i++) {
       if($desc = $this->page_exists_desc($pages[1][$i])) {
         $repl = "<a title='$desc' href='tiki-index.php?page=".$pages[1][$i]."' class='wiki'>".$pages[2][$i]."</a>";
@@ -8237,7 +8239,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }
     
     // New syntax for wiki pages ((name)) Where name can be anything
-    preg_match_all("/\(\(([A-Za-z0-9_\-]+)\)\)/",$data,$pages);
+    preg_match_all("/\(\(($page_regex)\)\)/",$data,$pages);
     foreach(array_unique($pages[1]) as $page) {
       if($desc = $this->page_exists_desc($page)) {
         $repl = "<a title='$desc' href='tiki-index.php?page=$page' class='wiki'>$page</a>";
@@ -8488,10 +8490,11 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
    
 
   function get_pages($data) {
+    global $page_regex;
     preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
-    preg_match_all("/\(\(([A-Za-z0-9_\-]+)\)\)/",$data,$pages2);
-    preg_match_all("/\(\(([A-Za-z0-9_\-]+)\|([^\)]+)\)\)/",$data,$pages3);
-    $pages = array_unique(array_merge($pages[1],$pages2[1],$pages3[1]));
+    preg_match_all("/\(\(($page_regex)\)\)/",$data,$pages2);
+    preg_match_all("/\(\(($page_regex)\|([^\)]+)\)\)/",$data,$pages3);
+    $pages = array_unique(array_merge($pages[2],$pages2[1],$pages3[1]));
     return $pages;
   }
 
