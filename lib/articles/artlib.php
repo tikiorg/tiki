@@ -144,31 +144,17 @@ class ArtLib extends TikiLib {
 		$size = strlen($body);
 
 		if ($subId) {
-			// Update the article
-			$query = "update `tiki_submissions` set
-                `title` = ?,
-                `authorName` = ?,
-                `topicId` = ?,
-                `topicName` = ?,
-                `size` = ?,
-                `useImage` = ?,
-                `isfloat` = ?,
-                `image_name` = ?,
-                `image_type` = ?,
-                `image_size` = ?,
-                `image_data` = ?,
-                `image_x` = ?,
-                `image_y` = ?,
-                `heading` = ?,
-                `body` = ?,
-                `publishDate` = ?,
-                `created` = ?,
-                `author` = ? ,
-                `type` = ?,
-                `rating` = ?
-                where `subId` = ?";
+			// Update the article:
 
-			$result = $this->query($query,array($title,$authorName,(int) $topicId,$topicName,(int) $size,$useImage,$isfloat,$imgname,$imgtype,(int) $imgsize,$imgdata,(int) $image_x,(int) $image_y,$heading,$body,(int) $publishDate,(int) $now,$user,$type,(float) $rating,(int) $subId));
+			// remove old version ...
+			$query = "delete from `tiki_submissions` where `subId` `?";
+			$result = $this->query($query,array($subId));
+
+			// ... and insert a new one
+			$query = "insert into `tiki_submissions`(`title`,`authorName`,`topicId`,`useImage`,`image_name`,`image_size`,`image_type`,`image_data`,`publishDate`,`created`,`heading`,`body`,`hash`,`author`,`reads`,`votes`,`points`,`size`,`topicName`,`image_x`,`image_y`,`type`,`rating`,`isfloat`,`subId`)
+                         values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+			$result = $this->query($query,array($title,$authorName,(int) $topicId,$useImage,$imgname,(int) $imgsize,$imgtype,$imgdata,(int) $publishDate,(int) $now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,(int) $image_y,$type,(float) $rating,$isfloat));
 		} else {
 			// Insert the article
 			$query = "insert into `tiki_submissions`(`title`,`authorName`,`topicId`,`useImage`,`image_name`,`image_size`,`image_type`,`image_data`,`publishDate`,`created`,`heading`,`body`,`hash`,`author`,`reads`,`votes`,`points`,`size`,`topicName`,`image_x`,`image_y`,`type`,`rating`,`isfloat`)
