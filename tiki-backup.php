@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-backup.php,v 1.12 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-backup.php,v 1.13 2004-05-06 00:47:10 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,12 +18,14 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+$path = 'backups';
+if ($tikidomain) { $path.= "/$tikidomain"; }
 
 if (isset($_REQUEST["generate"])) {
 	check_ticket('backup');
 	$filename = md5($tikilib->genPass()). '.sql';
 
-	$backuplib->backup_database("backups/$tikidomain$filename");
+	$backuplib->backup_database("$path/$filename");
 }
 
 $smarty->assign('restore', 'n');
@@ -39,7 +41,7 @@ if (isset($_REQUEST["rrestore"])) {
   $area = 'delbackup';
   if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
     key_check($area);
-		$backuplib->restore_database("backups/$tikidomain" . basename($_REQUEST["rrestore"]));
+		$backuplib->restore_database("$path/" . basename($_REQUEST["rrestore"]));
 	} else {
 		key_get($area);
 	}
@@ -49,7 +51,7 @@ if (isset($_REQUEST["remove"])) {
   $area = 'delbackup';
   if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
     key_check($area);
-		$filename = "backups/$tikidomain" . basename($_REQUEST["remove"]);
+		$filename = "$path/" . basename($_REQUEST["remove"]);
 		unlink ($filename);
 	} else {
 		key_get($area);
@@ -61,7 +63,7 @@ if (isset($_REQUEST["upload"])) {
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 		$fp = fopen($_FILES['userfile1']['tmp_name'], "r");
 
-		$fw = fopen("backups/$tikidomain" . $_FILES['userfile1']['name'], "w");
+		$fw = fopen("$path/" . $_FILES['userfile1']['name'], "w");
 
 		while (!feof($fp)) {
 			$data = fread($fp, 4096);
@@ -84,21 +86,21 @@ if (isset($_REQUEST["upload"])) {
 // And put them in an array with the filemtime of
 // each file activated
 $backups = array();
-$h = opendir("backups/$tikidomain");
+$h = opendir($path);
 
 while ($file = readdir($h)) {
 	if (strstr($file, "sql")) {
 		$row["filename"] = $file;
 
-		$row["created"] = filemtime("backups/$tikidomain$file");
-		$row["size"] = filesize("backups/$tikidomain$file") / 1000000;
+		$row["created"] = filemtime("$path/$file");
+		$row["size"] = filesize("$path/$file") / 1000000;
 		$backups[] = $row;
 	}
 }
 
 closedir ($h);
 $smarty->assign_by_ref('backups', $backups);
-$smarty->assign('tikidomain', $tikidomain);
+
 ask_ticket('backup');
 
 $smarty->assign('mid', 'tiki-backup.tpl');

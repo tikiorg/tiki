@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.8 2004-04-26 17:55:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.9 2004-05-06 00:47:10 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// $Id: tiki-edit_css.php,v 1.8 2004-04-26 17:55:12 mose Exp $
+// $Id: tiki-edit_css.php,v 1.9 2004-05-06 00:47:10 mose Exp $
 include_once ("tiki-setup.php");
 
 include_once ("lib/csslib.php");
@@ -78,7 +78,7 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 	$action = 'edit';
 
 	//	$data = implode("",file("$styledir/$editstyle.css"));
-	if (isset($tikidomain) and is_file("$styledir/$tikidomain/$editstyle.css")) {
+	if ($tikidomain and is_file("$styledir/$tikidomain/$editstyle.css")) {
 		$data = load_css2_file("$styledir/$tikidomain/$editstyle.css", $styledir);
 	} else {
 		$data = load_css2_file("$styledir/$editstyle.css", $styledir);
@@ -88,7 +88,7 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 	$action = 'display';
 
 	$data = '';
-	if (isset($tikidomain) and is_dir("$styledir/$tikidomain")) {
+	if ($tikidomain and is_dir("$styledir/$tikidomain")) {
 		$fp = fopen("$styledir/$tikidomain/$editstyle.css", "w");
 	} else {
 		$fp = fopen("$styledir/$editstyle.css", "w");
@@ -112,7 +112,7 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 $smarty->assign('action', $action);
 $smarty->assign('data', $data);
 
-if (isset($tikidomain) and is_file("$styledir/$tikidomain/$editstyle.css")) {
+if ($tikidomain and is_file("$styledir/$tikidomain/$editstyle.css")) {
 	$cssdata = $csslib->browse_css("$styledir/$tikidomain/$editstyle.css");
 } else {
 	$cssdata = $csslib->browse_css("$styledir/$editstyle.css");
@@ -133,7 +133,7 @@ if ($_REQUEST["try"]) {
 }
 
 $list = $csslib->list_css($styledir);
-if (isset($tikidomain) and is_dir("$styledir/$tikidomain")) {
+if ($tikidomain and is_dir("$styledir/$tikidomain")) {
 	$list = array_unique(array_merge($list,$csslib->list_css("$styledir/$tikidomain")));
 }
 $smarty->assign('list', $list);

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.14 2004-04-09 16:27:14 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.15 2004-05-06 00:47:10 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,7 +54,6 @@ function erase_dir_content($path) {
 function cache_templates($path,$newlang) {
 	global $language;
 	global $smarty;
-	global $tikidomain;
 	$oldlang=$language;
 	$language=$newlang;
 	if (!$path or !is_dir($path)) return 0;
@@ -108,7 +107,11 @@ if (isset($_GET['do'])) {
 }
 
 if (isset($_GET['compiletemplates'])) {
-	cache_templates('templates',$tikidomain.$_GET['compiletemplates']);
+	$ctempl = 'templates';
+	if ($tikidomain) {
+		$ctempl.= "/$tikidomain";
+	}
+	cache_templates($ctempl,$_GET['compiletemplates']);
 	$logslib->add_log('system','compiled templates');
 }
 
@@ -126,8 +129,8 @@ $smarty->assign('modules', $modules);
 
 $templates=array();
 foreach($languages as $clang) {
-	if(is_dir("templates_c/$tikidomain".$clang["value"])) {
-		$templates[$clang["value"]] = du("templates_c/$tikidomain".$clang["value"]);
+	if(is_dir("templates_c/$tikidomain/".$clang["value"])) {
+		$templates[$clang["value"]] = du("templates_c/$tikidomain/".$clang["value"]);
 	} else {
 		$templates[$clang["value"]] = du("templates_c/", substr($tikidomain.$clang["value"], 1));
 	}
