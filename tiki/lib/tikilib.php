@@ -1364,7 +1364,8 @@ function add_pageview() {
 	return $retval;
     }
 
-    /*shared*/
+/* moved to commentslib.php a while ago
+    //shared
     function list_forums($offset, $maxRecords, $sort_mode, $find) {
 	$bindvars = array();
 	if ($find) {
@@ -1413,6 +1414,7 @@ function add_pageview() {
 	$retval["cant"] = $cant;
 	return $retval;
     }
+*/
 
     /*shared*/
     function remove_object($type, $id) {
