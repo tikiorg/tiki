@@ -1,6 +1,6 @@
 <?php
 
-$tikiId = "TikiWiki"; // TODO: make configurable and add version number 
+$tikiId = "Tiki CMS/Groupware 1.8"; // TODO: make configurable and add version number 
 
 $rss_use_css = false; // default is: do not use css
 if (isset($_REQUEST["css"])) {
