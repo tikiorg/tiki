@@ -12,14 +12,14 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_hotwords.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
-<br/><br/>
 </table>
+</div>
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'word_desc'}word_asc{else}word_desc{/if}">{tr}Word{/tr}</a></td>
@@ -57,7 +57,7 @@
 &nbsp;[<a class="prevnext" class="link" href="tiki-admin_hotwords.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_hotwords.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

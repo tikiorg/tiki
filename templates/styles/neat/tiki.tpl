@@ -6,6 +6,9 @@
 <div id="tiki-main">
   {if $user}
 	  <div id="tiki-top-menu">
+			{if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
+			  &nbsp;<a class="tikitopmenu" href="javascript:toggle('debugconsole');">{tr}debug{/tr}</a> //
+			{/if}
 		  {if $feature_userPreferences eq 'y'}
 		  	&nbsp;&nbsp;<img src='styles/neat/user.gif' /><a class="tikitopmenu" href="tiki-user_preferences.php">{tr}Preferences{/tr}</a>
 		  {/if}
@@ -51,7 +54,7 @@
 	  <div id="usermenu">
 	  	&nbsp;&nbsp;<a href="tiki-usermenu.php?url={$smarty.server.REQUEST_URI|escape:"url"}"><img src='img/icons/add.gif' border='0' alt='{tr}add{/tr}' title='{tr}add{/tr}' /></a>
 	  	{section name=ix loop=$usr_user_menus}
-  			&nbsp;&nbsp;<img style="vertical-align:bottom;" src="styles/neat/logoIcon.gif" /><a {if $usr_user_menus[ix].mode eq 'n'}target='_new'{/if} href="{$usr_user_menus[ix].url}" class="tikitopmenu2">{$usr_user_menus[ix].name}</a>
+  			&nbsp;&nbsp;<img style="vertical-align:bottom;" src="styles/neat/logoIcon.gif" /><a {if $usr_user_menus[ix].mode eq 'n'}target='_blank'{/if} href="{$usr_user_menus[ix].url}" class="tikitopmenu2">{$usr_user_menus[ix].name}</a>
   		{/section}
   		
 	  </div>

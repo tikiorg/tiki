@@ -3,7 +3,7 @@
  
 class HtmlPagesLib extends TikiLib {
 
-  function HtmlPagesLib($db) 
+  function HtmlPagesLib($db)
   {
     # this is probably uneeded now
     if(!$db) {
@@ -23,7 +23,8 @@ class HtmlPagesLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (name like '%".$find."%' or content like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (name like $findesc or content like $findesc)";
     } else {
       $mid="";
     }
@@ -46,7 +47,8 @@ class HtmlPagesLib extends TikiLib {
     $pageName = addslashes($pageName);
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where pageName='$pageName' and (name like '%".$find."%' or content like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where pageName='$pageName' and (name like $findesc or content like $findesc)";
     } else {
       $mid=" where pageName='$pageName'";
     }

@@ -6,12 +6,12 @@
 {if $receivedPageId > 0}
 <h2>{tr}Edit received page{/tr}</h2>
 <form action="tiki-received_pages.php" method="post">
-<input type="hidden" name="receivedPageId" value="{$receivedPageId}" />
+<input type="hidden" name="receivedPageId" value="{$receivedPageId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="pageName" value="{$pageName}" /></td></tr>
-<tr><td class="formcolor">{tr}Data{/tr}:</td><td class="formcolor"><textarea name="data" rows="10" cols="60">{$data}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="pageName" value="{$pageName|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Data{/tr}:</td><td class="formcolor"><textarea name="data" rows="10" cols="60">{$data|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor">
-<input type="text" name="comment" value="{$comment}" />
+<input type="text" name="comment" value="{$comment|escape}" />
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
@@ -26,7 +26,7 @@
    <form method="get" action="tiki-received_pages.php">
      <input type="text" name="find" />
      <input type="submit" name="search" value="{tr}find{/tr}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

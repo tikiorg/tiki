@@ -4,8 +4,8 @@
 </div>
 <div class="box-data">
     {if $user}
-      {tr}logged as{/tr}: {$smarty.session.user}<br/>
-      <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br/>
+      {tr}logged as{/tr}: {$smarty.session.user}<br />
+      <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
       {if $tiki_p_admin eq 'y'}
         <form action="{$login_url}" method="post">
         {tr}user{/tr}:
@@ -18,7 +18,7 @@
      {if $feature_challenge eq 'y'}
      <script language="javascript" src="lib/md5.js"></script>   
      {literal}
-     <script language="javascript">
+     <script language='Javascript' type='text/javascript'>
      <!--
      function doChallengeResponse() {
        document.loginbox.zoofoo.value=MD5(document.loginbox.pass.value);
@@ -39,7 +39,7 @@
      // -->
     </script>
     {/literal}
-     <input type="hidden" name="challenge" value="{$challenge}" />
+     <input type="hidden" name="challenge" value="{$challenge|escape}" />
      <input type="hidden" name="zoofoo" value="" />
      <input type="hidden" name="response" value="" />
      {/if}
@@ -53,7 +53,7 @@
           <tr><td><input type="password" name="pass" size="20" /></td></tr>
           <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
           {if $rememberme ne 'disabled'}
-          <tr><td class="module">{tr}Remember me{/tr} <input type="checkbox" name="rme" /></td></tr>
+          <tr><td class="module">{tr}Remember me{/tr} <input type="checkbox" name="rme" value="on"/></td></tr>
           {/if}
           <tr>
           {if $allowRegister eq 'y' and $forgotPass eq 'y'}
@@ -91,7 +91,7 @@
       </table>
 
       {if $show_stay_in_ssl_mode ne 'y'}
-        <input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode}" />
+        <input type="hidden" name="stay_in_ssl_mode" value="{$stay_in_ssl_mode|escape}" />
       {/if}
       </form>
     {/if}

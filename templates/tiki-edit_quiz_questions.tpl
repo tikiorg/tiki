@@ -6,23 +6,23 @@
 |<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br/><br/>
 <h2>{tr}Create/edit questions for quiz{/tr}: <a href="tiki-edit_quiz.php?quizId={$quiz_info.quizId}" class="pagetitle">{$quiz_info.name}</a></h2>
 <form action="tiki-edit_quiz_questions.php" method="post">
-<input type="hidden" name="quizId" value="{$quizId}" />
-<input type="hidden" name="questionId" value="{$questionId}" />
+<input type="hidden" name="quizId" value="{$quizId|escape}" />
+<input type="hidden" name="questionId" value="{$questionId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea name="question" rows="5" cols="40">{$question}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea name="question" rows="5" cols="40">{$question|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Position{/tr}:</td><td class="formcolor"><select name="position">{html_options values=$positions output=$positions selected=$position}</select></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Reuse question{/tr}</h2>
 <form action="tiki-edit_quiz_questions.php" method="post">
-<input type="hidden" name="quizId" value="{$quizId}" />
+<input type="hidden" name="quizId" value="{$quizId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Question{/tr}:</td>
 <td class="formcolor">
 <select name="usequestionid">
 {section name=ix loop=$questions}
-<option value="{$questions[ix].questionId}">{$questions[ix].question}</option>
+<option value="{$questions[ix].questionId|escape}">{$questions[ix].question}</option>
 {/section}
 </select>
 </td></tr>
@@ -36,10 +36,10 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-edit_quiz_questions.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
-     <input type="hidden" name="quizId" value="{$quizId}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="quizId" value="{$quizId|escape}" />
    </form>
    </td>
 </tr>

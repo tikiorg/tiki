@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/tiki.tpl,v 1.3 2003-07-13 00:03:47 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/tiki.tpl,v 1.4 2003-08-01 10:31:17 redflo Exp $ *}
 {* Index we display a wiki page here *}
 
 {include file="header.tpl"}
@@ -58,16 +58,11 @@
   </div><!-- div id="tiki-mid" -->
 
   {if $feature_bot_bar eq 'y'}
-    <div id="tiki-bot">
+    <div id="tiki-bot" {$add_style}>
       {include file="tiki-bot_bar.tpl"}
     </div><!-- bottom -->
   {/if}
 
 </div><!-- tiki-main -->
-
-{* Include debugging console. Note it shoudl be processed as near as possible to the end of file *}
-
-{php}  include_once("tiki-debug_console.php"); {/php}
-{include file="tiki-debug_console.tpl"}
 
 {include file="footer.tpl"}

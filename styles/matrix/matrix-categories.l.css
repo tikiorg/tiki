@@ -1,0 +1,29 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.l.css,v 1.2 2003-08-01 10:31:07 redflo Exp $
+ *
+ * Backgrounds for light version of 'Matrix' theme
+ *
+ */
+
+/* Get styles w/o backgrounds */
+@import "matrix-categories.css";
+
+/*
+ * Define backgrounds (the only difference between two themes)
+ */
+
+table.catobjects
+{
+  background: #507050;
+}
+
+table.tcategpath,
+div.treenode:hover
+{
+  background: #404040;
+}
+
+div.tree#top
+{
+  background: #202020;
+}

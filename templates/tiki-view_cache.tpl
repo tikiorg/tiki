@@ -4,17 +4,20 @@
 <html>
   <head>
   <base href="{$info.url}" />
+	<title>Cached: {$info.url}</title>
   </head>
   <body>
-<br/>
+<br />
 <div align="center">
-<table  border="1" bgcolor="#EAEAEA" width="100%" border="0" cellpadding="0" cellspacing="0">
+<table bgcolor="#EAEAEA" width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr><td class="heading">{tr}URL{/tr}</td><td class="text">{$info.url}</td></tr>
-<tr><td class="heading">{tr}Cached{/tr}</td><td class="text">{$info.refresh|tiki_long_datetime}</td>
-<tr><td class="text" colspan="2"><br/>{tr}This is a cached version of the page.{/tr}</td></tr>
+<tr><td class="heading">{tr}Cached{/tr}</td><td class="text">{$info.refresh|tiki_long_datetime}</td></tr>
+<tr><td class="text" colspan="2"><br />{tr}This is a cached version of the page.{/tr} 
+<a class="wikicache" href="{$ggcacheurl}">({tr}Click here to view the Google cache of the page instead.{/tr})</a>
+</td></tr>
 </table>
 </div>
-<br/>
+<br />
 <div class="cachedpage">
 {$info.data}
 </div>

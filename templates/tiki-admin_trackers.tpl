@@ -1,19 +1,19 @@
-<a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a><br /><br />
 [<a href="tiki-list_trackers.php" class="link">{tr}List trackers{/tr}</a>
 {if $tiki_p_admin_trackers eq 'y'}
 |<a href="tiki-admin_trackers.php" class="link">{tr}Admin trackers{/tr}</a>
 {/if}
-]<br/><br/>
+]<br /><br />
 
 <h2>{tr}Create/edit trackers{/tr}</h2>
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName=tracker%20{$name}&amp;objectType=Tracker&amp;permType=trackers&amp;objectId={$trackerId}">{tr}There are individual permissions set for this tracker{/tr}</a>
 {/if}
 <form action="tiki-admin_trackers.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId}" />
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Show status when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show creation date when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show lastModif date when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
@@ -28,9 +28,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_trackers.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -54,7 +54,7 @@
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].items}</td>
-<td width=16%" class="{cycle}">
+<td width="16%" class="{cycle}">
    <a class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;trackerId={$channels[user].trackerId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
    <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='img/icons/ico_table.gif' alt='{tr}fields{/tr}' title='{tr}fields{/tr}' border='0' /></a>
    {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Tracker%20{$channels[user].name}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}"><img src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /></a>{if $channels[user].individual eq 'y'}){/if}
@@ -72,7 +72,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_trackers.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_trackers.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

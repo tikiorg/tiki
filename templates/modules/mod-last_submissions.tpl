@@ -9,7 +9,7 @@
 {if $tiki_p_edit_submission eq 'y'}
 <tr><td  width="5%" class="module" valign="top">{$smarty.section.ix.index_next})</td><td class="module">&nbsp;<a class="linkmodule" href="tiki-edit_submission.php?subId={$modLastSubmissions[ix].subId}">{$modLastSubmissions[ix].title}</a></td></tr>
 {else}
-<tr><td  width="5%" class="module" valign="top">{$smarty.section.ix.index_next})</td>&nbsp;{$modLastSubmissions[ix].title}</td></tr>
+<tr><td  width="5%" class="module" valign="top">{$smarty.section.ix.index_next})</td><td class="module">&nbsp;{$modLastSubmissions[ix].title}</td></tr>
 {/if}
 {/section}
 </table>

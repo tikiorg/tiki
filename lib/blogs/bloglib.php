@@ -37,7 +37,7 @@ class BlogLib extends TikiLib {
       $data=str_replace($preparse[1][$idx].$pp.$preparse[4][$idx],$key,$data);
       $idx=$idx+1;
     }
-    $parts = explode("\n...page...\n",$data);
+    $parts = explode("...page...",$data);
     return count($parts);
   }
   
@@ -59,7 +59,7 @@ class BlogLib extends TikiLib {
       $idx=$idx+1;
     }
     // Get slides
-    $parts = explode("\n...page...\n",$data);
+    $parts = explode("...page...",$data);
     if(substr($parts[$i-1],1,5)=="<br/>") $ret=substr($parts[$i-1],6);
     else $ret=$parts[$i-1];
     // Replace back <PRE> sections
@@ -226,7 +226,8 @@ class BlogLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where blogId=$blogId and (data like '%".$find."%') ";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where blogId=$blogId and (data like $findesc) ";
     } else {
       $mid=" where blogId=$blogId ";
     }
@@ -260,7 +261,8 @@ class BlogLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (data like '%".$find."%') ";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (data like $findesc) ";
     } else {
       $mid="";
     }
@@ -395,7 +397,8 @@ class BlogLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where user=$user and (data like '%".$find."%') ";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where user=$user and (data like $findesc) ";
     } else {
       $mid=' where user=$user ';
     }

@@ -1,7 +1,7 @@
 <?php
 class TagLineLib extends TikiLib {
 
-  function TagLineLib($db) 
+  function TagLineLib($db)
   {
     # this is probably uneeded now
     if(!$db) {
@@ -14,7 +14,8 @@ class TagLineLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (cookie like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (cookie like $findesc)";
     } else {
       $mid="";
     }

@@ -1,12 +1,12 @@
-<a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a><br /><br />
 [<a href="tiki-admin_polls.php?setlast=1" class="link">{tr}Set last poll as current{/tr}</a>|
 <a href="tiki-admin_polls.php?closeall=1" class="link">{tr}Close all polls but last{/tr}</a>|
 <a href="tiki-admin_polls.php?activeall=1" class="link">{tr}Activate all polls{/tr}</a>]
 <h2>{tr}Create/edit Polls{/tr}</h2>
 <form action="tiki-admin_polls.php" method="post">
-<input type="hidden" name="pollId" value="{$pollId}" />
+<input type="hidden" name="pollId" value="{$pollId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title}" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Active{/tr}:</td><td class="formcolor">
 <select name="active">
 <option value='a' {if $active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
@@ -27,9 +27,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_polls.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -76,7 +76,7 @@
 {/if}
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admin_polls.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -86,7 +86,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_polls.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_polls.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

@@ -1,10 +1,23 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.5 2003-07-15 17:24:39 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.6 2003-08-01 10:31:07 redflo Exp $
+ *
+ * General HTML redefinitions
+ * There is no Tiki related things -- just pure HTML redefinitions
  *
  */
 
 /*
- * General HTML redefinitions
+ * Following too notes I found at
+ * http://www.w3schools.com/css/tryit.asp?filename=trycss_link
+ *
+ * Note: a:hover MUST come after a:link and a:visited in the CSS
+ *       definition in order to be effective!!
+ * Note: a:active MUST come after a:hover in the CSS definition
+ *       in order to be effective!!
+ */
+
+/*
+ * Document defaults
  */
 body
 {
@@ -20,16 +33,22 @@ body
   font-size: 11px;
 }
 
-a.link, a.link:active, :link, :link:active,
-a.link:visited, :link:visited
+a.link, a.link:visited,
+ :link,  :link:visited
 {
   color: #00E000;
   text-decoration: none;
 }
-a.link:hover, :link:hover, :link:visited:hover, a.link:visited:hover
+a.link:visited:hover, a.link:hover,
+ :link:visited:hover,  :link:hover
 {
   color: #00F000;
   text-decoration: underline;
+}
+a.link:active, :link:active
+{
+  color: #00E000;
+  text-decoration: none;
 }
 
 hr
@@ -65,7 +84,11 @@ small
 }
 
 /* Prevent forms from generating unwanted padding or margins */
-form { margin: 0px; padding: 0px; }
+form
+{
+  margin: 0px;
+  padding: 0px;
+}
 
 /* General form elements */
 input, textarea, select
@@ -86,4 +109,19 @@ span.warn
 pre, code
 {
   font: normal 12px courier, Fixed;
+}
+pre
+{
+  white-space: pre;
+}
+
+/* No borders for images */
+img
+{
+  border: none;
+}
+/* Expand all text editors to max size */
+textarea
+{
+  width: 99%;
 }

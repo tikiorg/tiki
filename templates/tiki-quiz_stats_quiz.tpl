@@ -1,10 +1,10 @@
-<a class="pagetitle" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}Stats for quiz{/tr}:{$quiz_info.name}</a><br/><br/>
+<a class="pagetitle" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}Stats for quiz{/tr}:{$quiz_info.name}</a><br /><br />
 [<a class="link" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
 |<a class="link" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
 |<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
 |<a class="link" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
 {if $tiki_p_admin_quizzes eq 'y'}|<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;clear={$quizId}">{tr}clear stats{/tr}</a>{/if}
-|<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br/><br/>
+|<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br /><br />
 <h2>{tr}Quiz stats{/tr}</h2>
 <div  align="center">
 <table class="normal">
@@ -50,7 +50,7 @@
 &nbsp;[<a class="prevnext" href="tiki-quiz_stats.php?quizId={$quizId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-quiz_stats.php?quizId={$quizId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
@@ -62,7 +62,7 @@
 
 <h2>{tr}Stats for this quiz Questions {/tr}</h2>
 {section name=ix loop=$questions}
-  Q: {$questions[ix].question}<br/>
+  Q: {$questions[ix].question}<br />
   <table class="normal">
   <tr>
    <td width="70%" class="heading">{tr}Option{/tr}</td>
@@ -76,5 +76,5 @@
     <td class="odd">{$questions[ix].options[jx].avg|string_format:"%.2f"}%</td>
   </tr>
   {/section}
-</table><br/>
+</table><br />
 {/section}

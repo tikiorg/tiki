@@ -4,6 +4,7 @@
 {/if}
 </h1>{/if}
 <table width="100%">
+{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
 <tr>
 <td>
 {if $feature_wiki_description}
@@ -13,42 +14,64 @@
 <small>(cached)</small>
 {/if}
 </td>
-<td style="text-align:right;">
-
-
-
-{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
-<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img border="0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
-{/if}
-
-
-{if $feature_backlinks eq 'y'}
-<a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}"><img border="0" src="img/icons/ico_link.gif" alt='{tr}backlinks{/tr}' /></a>
-{/if}
-
-{if $cached_page eq 'y'}
-<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img border="0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
-{/if}
-
-<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img border="0" src="img/icons/ico_print.gif" alt='{tr}print{/tr}' /></a>
-
-{if $feature_wiki_pdf eq 'y'}
-<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}"><img border="0" src="img/icons/ico_pdf.gif" alt='{tr}pdf{/tr}' /></a>
-{/if}
-
-{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
-{/if}
-
-{if $user and $feature_user_watches eq 'y'}
-	{if $user_watching_page eq 'n'}
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&watch_object={$page|escape:"url"}&watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
-	{else}
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&watch_object={$page|escape:"url"}&watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
-	{/if}
-{/if}
-
+<td align="right">
+{$display_catpath}
 </td>
+</tr>
+{else}
+<tr>
+<td>
+{if $feature_wiki_description}
+<small>{$description}</small>
+{/if}
+{if $cached_page eq 'y'}
+<small>(cached)</small>
+{/if}
+</td>
+<td>
+</td>
+</tr>
+{/if}
+<tr>
+<td>
+</td>
+
+{if $print_page !== 'y'}
+	<td style="text-align:right;">
+
+	{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
+	<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img border="0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
+	{/if}
+
+
+	{if $feature_backlinks eq 'y'}
+	<a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}"><img border="0" src="img/icons/ico_link.gif" alt='{tr}backlinks{/tr}' /></a>
+	{/if}
+
+	{if $cached_page eq 'y'}
+	<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img border="0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
+	{/if}
+
+	<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img border="0" src="img/icons/ico_print.gif" alt='{tr}print{/tr}' /></a>
+
+	{if $feature_wiki_pdf eq 'y'}
+	<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?page={$page|escape:"url"}"><img border="0" src="img/icons/ico_pdf.gif" alt='{tr}pdf{/tr}' /></a>
+	{/if}
+
+	{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+	<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+	{/if}
+
+	{if $user and $feature_user_watches eq 'y'}
+		{if $user_watching_page eq 'n'}
+			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&watch_object={$page|escape:"url"}&watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
+		{else}
+			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&watch_object={$page|escape:"url"}&watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
+		{/if}
+	{/if}
+	</td>
+{/if}
+
 </tr>
 </table>
 <div class="wikitext">{if $structure eq 'y'}
@@ -57,7 +80,7 @@
 </div>
 {/if}{$parsed}
 {if $pages > 1}
-	<br/>
+	<br />
 	<div align="center">
 		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
 
@@ -81,6 +104,7 @@
 
 <p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
 {if $wiki_feature_copyrights  eq 'y'}
+{if $wikiLicensePage}
 {if $wikiLicensePage == $page}
 {if $tiki_p_edit_copyrights eq 'y'}
 <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
@@ -89,11 +113,10 @@
 <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
 {/if}
 {/if}
-{if $wiki_extras eq 'y'}
-{if $feature_wiki_attachments eq 'y'}
-{include file=attachments.tpl}
 {/if}
-{if $feature_wiki_comments eq 'y'}
-{include file=comments.tpl}
+{if $print_page eq 'y'}
+<p><div class="editdate" align="center">{tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page{$page|escape:"url"}</div></p>
 {/if}
+{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
+{$display_catobjects}
 {/if}

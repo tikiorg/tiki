@@ -84,7 +84,8 @@ if($_REQUEST["taskId"]) {
 }
 
 if(isset($_REQUEST['save'])) {
-  $date = $tikilib->make_server_time(0,0,0,$_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"],$tikilib->get_display_timezone($user));
+  $dc =& $tikilib->get_date_converter($user);
+  $date = $dc->getServerDateFromDisplayDate(mktime(0,0,0, $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]));
   if($_REQUEST['status']=='c') {
     $_REQUEST['percentage']=100;
     $completed = $date;

@@ -1,10 +1,21 @@
-<div id=attzone>
-{if $tiki_p_wiki_view_attachments eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.4 2003-08-01 10:31:08 redflo Exp $ *}
 
-{* Show table only if count of attached files > 0 *}
+{* Don't even generate DIV if no any needed rights *}
+{if $tiki_p_wiki_view_attachments == 'y'
+ || $tiki_p_wiki_admin_attachments == 'y'
+ || $tiki_p_wiki_attach_files == 'y'}
+<div id="attzone">
 
-{if count($atts) gt 0}
+{* Generate table if view permissions granted
+ * and if count of attached files > 0
+ *}
+
+{if ($tiki_p_wiki_view_attachments == 'y'
+  || $tiki_p_wiki_admin_attachments == 'y') 
+  && count($atts) > 0}
+
  <table class="normal">
+ <caption> {tr}List of attached files{/tr} </caption>
  <tr>
   <td width="28%" class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a>
@@ -35,10 +46,11 @@
 </tr>
 {/section}
 </table>
-{/if}
+{/if}{* Generate table if view ... attached files > 0 *}
 
 
 {* It is allow to attach files or current user have admin rights *}
+
 {if $tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
 <form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
 <table class="normal">
@@ -54,5 +66,5 @@
 </form>
 {/if}{* $tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y' *}
 
-{/if}{* $tiki_p_wiki_view_attachments eq 'y' or $tiki_p_wiki_admin_attachments eq 'y' *}
 </div>
+{/if}

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.5 2003-07-15 17:24:39 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.6 2003-08-01 10:31:07 redflo Exp $
  *
  */
 
@@ -40,8 +40,13 @@ div.titlebar
   font-size: 20px;
   padding-left: 5px;
   border: 1px outset #00B000;
+  margin-top: 35px;
 }
-
+/* Do not add space before top page -=title=- */
+div.wikitext > div.titlebar:first-child
+{
+  margin-top: 5px;
+}
 
 /* The bar where the actions for a page are displayed */
 div#page-bar { margin-left: 5px; }
@@ -56,10 +61,9 @@ div.button2
   background: transparent;
   font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  font-weight : bold;
+  text-align: center;
   border: 1px solid lightgreen;
-  padding: 0.1em;
-  margin: 0.0ex 0px;
+  margin: 0px;
 }
 div.button2:hover { color: #001000; background: lightgreen; }
 
@@ -69,13 +73,17 @@ div.button2:hover { color: #001000; background: lightgreen; }
   color: #00D000;
   text-decoration: none;
 }
-.linkbut:hover, .linkbut:visited:hover
+.linkbut:hover, .linkbut:visited:hover, .highlight:hover
 {
   color: #001000;
   text-decoration: none;
   background: lightgreen;
 }
-
+.highlight
+{
+  color: black;
+  background-color: lightgreen;
+}
 
 /* When a cached version of an external link is displayed */
 div.cache
@@ -149,11 +157,6 @@ div.wiki-edithelp
   padding: 6px;
   color: #001000;
 }
-/* tabs in help panel (all content in tables so right align will be applied only to links */
-div.wiki-edithelp > div#wikihelp-tab,
-div.wiki-edithelp > div#wikiplhelp-tab
-{
-}
 
 /* Wiki structures navigation bar */
 div.tocnav
@@ -170,64 +173,11 @@ div.tocnav
 .tocnavlink:hover { color: lightgreen; text-decoration: none; background-color: green; }
 
 
-/* Links to open and close the comments area */
-.opencomlink, .opencomlink:active
-{
-  color: #00E000;
-  text-decoration: none;
-}
-.opencomlink:hover
-{
-  color: #00E000;
-  background: green;
-  text-decoration: none;
-}
-
 /* The whole comment (attachment) area when it is visible and when it is not */
-#edithelpzone { display: none;  }
-#attzone      { display: none; margin-top: 10px; }
-#comzone      { display: none;  }
-#comzoneopen  { display: block; }
-
-/* Post comment form */
-div.commentspost
-{
- display: inherit;
-}
-
-/* Cell in the post form */
-TD.comform
-{
-  color: #001000;
-  border: 1px outset #00A000;
-  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  vertical-align: center;
-  text-align: left;
-}
-
-/* Help box*/
-div.commentsedithelp
-{
-  color: #001000;
-  border: 1px outset #00A000;
-  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  margin: 1px;
-  padding: 4px;
-  vertical-align: center;
-}
-
-/* The toolbar where the ordering number of comments and find box are found */
-div.commentstoolbar
-{
-  border: 1px outset #00A000;
-  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 4px;
-}
+#edithelpzone { display: none;  margin-top: 10px; }
+#attzone      { display: none;  margin-top: 10px; }
+#comzone      { display: none;  margin-top: 10px; }
+#comzoneopen  { display: block; margin-top: 10px; }
 
 /* The comment title */
 span.commentstitle
@@ -235,32 +185,6 @@ span.commentstitle
   font-weight: bold;
   font-size: 12px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-}
-
-/* The comment */
-div.commentscomment
-{
-  margin-bottom: 10px;
-}
-/* The header for a comment */
-div.commentheader
-{
-  color: #001000;
-  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 12px;
-}
-div.commentscomment > div.commentheader
-{
-  border: 1px outset #00A000;
-}
-
-/* The text */
-div.commenttext
-{
-
-  border: 1px outset #00A000;
-  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 11px;
 }
 
 /* Links in comments and in the comment header */
@@ -327,7 +251,7 @@ table.userstory
 
 /* Links to wiki pages without descriptions */
 :link[title='no description'],
-:link[title='no description']:visited,
+:link[title='no description']:visited
 {
   color: #E0E0E0;
   text-decoration: none;
@@ -343,6 +267,6 @@ table.userstory
 :link[title~='Updated']:after
 {
   display: marker;
-  /*content: url(img/hot.png);*/
+  content: url(img/hot.png);
 }
 */

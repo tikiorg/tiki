@@ -87,8 +87,10 @@ $inc = array();
 list($groupname,$groupdesc,$groupperms) = array('','','');
 if (isset($_REQUEST["group"]) and $_REQUEST["group"]) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
-	$groupname = $re["groupName"];
-	$groupdesc = $re["groupDesc"];
+	if(isset($re["groupName"]))
+		$groupname = $re["groupName"];
+	if(isset($re["groupDesc"]))
+		$groupdesc = $re["groupDesc"];
 	$groupperms = $re["perms"];
 	$rs = $userlib->get_included_groups($_REQUEST["group"]);
 	foreach ($users["data"] as $r) {

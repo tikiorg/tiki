@@ -68,7 +68,8 @@ class ThemeControlLib extends TikiLib {
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (theme like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (theme like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -91,7 +92,8 @@ class ThemeControlLib extends TikiLib {
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" where (theme like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (theme like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -114,7 +116,8 @@ class ThemeControlLib extends TikiLib {
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (theme like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (theme like $findesc)";  
     } else {
       $mid=""; 
     }

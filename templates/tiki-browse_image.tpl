@@ -1,5 +1,5 @@
 {if ($popup != "") }
-  <script language=javascript>
+  <script language='Javascript' type='text/javascript'>
 	window.resizeTo({$winx},{$winy});
   </script>
 {/if}
@@ -36,7 +36,7 @@
     {/if}
     <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$lastId}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink"><img src='img/icons2/nav_last.gif' border='0' alt='{tr}last image{/tr}' title='{tr}last image{/tr}' /></a>    
   </div>
-  <br>
+  <br />
 {/if}   
 
   <div class="showimage" {if ($popup) }height=400{/if}>
@@ -83,11 +83,11 @@
       {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
         <tr><td class="odd">{tr}Move image{/tr}:</td><td class="odd">
         <form action="tiki-browse_image.php" method="post">
-        <input type="hidden" name="imageId" value="{$imageId}"/>
-        <input type="hidden" name="galleryId" value="{$galleryId}"/>
+        <input type="hidden" name="imageId" value="{$imageId|escape}"/>
+        <input type="hidden" name="galleryId" value="{$galleryId|escape}"/>
         <select name="newgalleryId">
           {section name=idx loop=$galleries}
-            <option value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
+            <option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
           {/section}
         </select>
         <input type="submit" name="move_image" value="{tr}move{/tr}" />

@@ -9,7 +9,7 @@ if($tiki_p_admin != 'y') {
 }
 
 if(!isset($_REQUEST["referer"])) {
-  $_REQUEST["referer"]=$_SERVER["HTTP_REFERER"];
+  $_REQUEST["referer"]=$_SERVER['HTTP_REFERER'];
 }
 $smarty->assign('referer',$_REQUEST["referer"]);
 

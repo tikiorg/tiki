@@ -59,7 +59,7 @@
   				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].name}"><img src='img/icons2/down.gif' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' /></a>
   				  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].name}"><img src='img/icons2/nav_dot_right.gif' alt='{tr}left{/tr}' title='{tr}move to left column{/tr}' border='0' /></a>
 				  {if $modules[ix].name ne 'application_menu' and $modules_r[ix].name ne 'login_box'}
-  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].name}"><img src='img/icons2/delete.gif' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' /></a> 
+  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].name}"><img src='img/icons2/delete.gif' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' /></a> 
   				  {/if}
 
 				
@@ -81,7 +81,7 @@
 <td class="formcolor">
 <select name="module">
 {section name=ix loop=$assignables}
-<option value="{$assignables[ix].name}">{$assignables[ix].name}</option>
+<option value="{$assignables[ix].name|escape}">{$assignables[ix].name}</option>
 {/section}
 </select>
 </td>
@@ -100,7 +100,7 @@
 <td class="formcolor">
 <select name="order">
 {section name=ix loop=$orders}
-<option value="{$orders[ix]}">{$orders[ix]}</option>
+<option value="{$orders[ix]|escape}">{$orders[ix]}</option>
 {/section}
 </select>
 </td>

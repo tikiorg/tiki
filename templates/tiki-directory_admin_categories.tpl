@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-directory_admin_categories.php?parent={$parent}">{tr}Admin directory categories{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-directory_admin_categories.php?parent={$parent}">{tr}Admin directory categories{/tr}</a><br /><br />
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
 {* Navigation bar to admin, admin related, etc *}
@@ -9,25 +9,30 @@
 <select name="parent" onChange="javascript:path.submit();">
 <option value="0">{tr}Top{/tr}</option>
 {section name=ix loop=$categs}
-<option value="{$categs[ix].categId}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path}</option>
+<option value="{$categs[ix].categId|escape}" {if $parent eq $categs[ix].categId}selected="selected"{/if}>{$categs[ix].path}</option>
 {/section}
 </select>
 <input type="submit" name="go" value="{tr}go{/tr}" />
 </form>
 
 {* Dislay a form to add or edit a category *}
-<h2>{tr}Add or edit a category{/tr}</h2>
+{if $categId eq 0}
+<h2>{tr}Add a directory category{/tr}</h2>
+{else}
+<h2>{tr}Edit this directory category{/tr}: {$info.name}</h2>
+<a href="tiki-directory_admin_categories.php">{tr}Add a directory category{/tr}</a>
+{/if}
 <form action="tiki-directory_admin_categories.php" method="post">
-<input type="hidden" name="parent" value="{$parent}" />
-<input type="hidden" name="categId" value="{$categId}" />
+<input type="hidden" name="parent" value="{$parent|escape}" />
+<input type="hidden" name="categId" value="{$categId|escape}" />
 <table class="normal">
   <tr>
     <td class="formcolor">{tr}Name{/tr}:</td>
-    <td class="formcolor"><input type="text" name="name" value="{$info.name}" />
+    <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" />
   </tr>
   <tr>
     <td class="formcolor">{tr}Description{/tr}:</td>
-    <td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description}</textarea></td>
+    <td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
   </tr>
   <tr>
     <td class="formcolor">{tr}Children type{/tr}:</td>
@@ -66,11 +71,12 @@
       <select name="editorGroup">
         <option value="">{tr}None{/tr}</option>
         {section name=ux loop=$groups}
-        <option value="{$groups[ux].groupName}" {if $editorGroup eq $groups[ux].groupName}selected="selected"{/if}>{$groups[ux].groupName}</option>
+        <option value="{$groups[ux].groupName|escape}" {if $editorGroup eq $groups[ux].groupName}selected="selected"{/if}>{$groups[ux].groupName}</option>
         {/section}
       </select>
     </td>
   </tr>
+  {include file=categorize.tpl}
   <tr>
     <td class="formcolor">&nbsp;</td>
     <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" />
@@ -119,7 +125,7 @@
 &nbsp;[<a class="prevnext" href="tiki-directory_admin_categories.php?parent={$parent}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-directory_admin_categories.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

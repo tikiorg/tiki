@@ -1,7 +1,7 @@
 <?php
 class HotwordsLib extends TikiLib {
 
-  function HotwordsLib($db) 
+  function HotwordsLib($db)
   {
     # this is probably uneeded now
     if(!$db) {
@@ -14,7 +14,8 @@ class HotwordsLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (word like '%".$find."%') ";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (word like $findesc) ";
     } else {
       $mid='';
     }

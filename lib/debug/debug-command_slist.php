@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_slist.php,v 1.1 2003-07-13 00:35:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_slist.php,v 1.2 2003-08-01 10:30:55 redflo Exp $
  *
  * \brief List of Smarty vars
  *
@@ -10,7 +10,7 @@
 require_once('lib/debug/debugger-ext.php');
 
 /**
- * \brief Debugger command to print smatry vars
+ * \brief Debugger command to list smatry vars
  */
 class DbgSList extends DebuggerCommand
 {
@@ -22,19 +22,19 @@ class DbgSList extends DebuggerCommand
   /// \b Must have function to provide help to debugger console
   function description()
   {
-    return 'Display list of Smatry variables. Better to specify partial name or very long list of vars will returns.';
+    return 'Display list of Smarty variables. Better to specify partial name or very long list of vars will returns.';
   }
   /// \b Must have function to provide help to debugger console
   function syntax()
   {
     return 'slist [partial-name]';
   }
-  /// \b Must have function to show exampla of usage of given command
+  /// \b Must have function to show example of usage of given command
   function example()
   {
     return 'slist'."\n".'slist auth'."\n".'slist ^wiki'."\n".'slist .+admin.*';
   }
-  /// Execute command with given set of arguments. Must return string of result.
+  /// Execute command with given set of arguments.
   function execute($params)
   {
     $this->set_result_type(HTML_RESULT);
@@ -49,7 +49,7 @@ class DbgSList extends DebuggerCommand
     $len = strlen($mask);
     foreach ($tpl_vars as $key => $val)
       if (!$len || $len && preg_match('/'.$mask.'/', $key))
-	$vars[] = $key;
+  	$vars[] = $key;
     sort($vars);
     //
     $result = '<table border=0>';
@@ -59,13 +59,13 @@ class DbgSList extends DebuggerCommand
     {
       if (($idx % 3) == 0)
       {
-	$result .= $row.'</tr>';
-	$row = '<tr><td>$'.$var.'</td>';
-	$idx = 1;
+	      $result .= $row.'</tr>';
+      	$row = '<tr><td>$'.$var.'</td>';
+      	$idx = 1;
       }
       else
       {
-	$row .= '<td>$'.$var.'</td>';
+      	$row .= '<td>$'.$var.'</td>';
         $idx++;
       }
     }

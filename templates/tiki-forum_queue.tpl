@@ -6,13 +6,13 @@
 {if $smarty.request.qId and $form eq 'y'}
 <h3>{tr}Edit queued message{/tr}</h3>
 <form method="post" action="tiki-forum_queue.php">
-<input type="hidden" name="forumId" value="{$forumId}" />
-<input type="hidden" name="qId" value="{$smarty.request.qId}" />
+<input type="hidden" name="forumId" value="{$forumId|escape}" />
+<input type="hidden" name="qId" value="{$smarty.request.qId|escape}" />
 <table class="normal">
 <tr>
 	<td class="formcolor">{tr}title{/tr}</td>
 	<td class="formcolor">
-		<input type="text" name="title" value="{$msg_info.title}" />
+		<input type="text" name="title" value="{$msg_info.title|escape}" />
 	</td>
 </tr>
 {if $msg_info.parentId > 0}
@@ -21,7 +21,7 @@
 	<td class="formcolor">
 		<select name="parentId">
 			{section name=ix loop=$topics}
-			<option value="{$topics[ix].threadId}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title}</option>
+			<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title}</option>
 			{/section}
 		</select>
 	</td>
@@ -33,7 +33,7 @@
 		<select name="parentId">
 			<option value="0" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{tr}None, this is a thread message{/tr}</option>
 			{section name=ix loop=$topics}
-			<option value="{$topics[ix].threadId}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title}</option>
+			<option value="{$topics[ix].threadId|escape}" {if $topics[ix].threadId eq $msg_info.parentId}selected="selected"{/if}>{$topics[ix].title}</option>
 			{/section}
 		</select>
 	</td>
@@ -43,7 +43,7 @@
 	<tr>
 		<td class="formcolor">{tr}summary{/tr}</td>
 		<td class="formcolor">
-			<input type="text" name="summary" value="{$msg_info.summary}" />
+			<input type="text" name="summary" value="{$msg_info.summary|escape}" />
 		</td>
 	</tr>
 {/if}
@@ -78,7 +78,7 @@
 <tr>
 	<td class="formcolor">{tr}data{/tr}</td>
 	<td class="formcolor">
-		<textarea rows="6" cols="60" name="data">{$msg_info.data}</textarea>
+		<textarea rows="6" cols="60" name="data">{$msg_info.data|escape}</textarea>
 	</td>
 </tr>
 <tr>
@@ -98,14 +98,14 @@
 
 {* FILTERING FORM *}
 <form action="tiki-forum_queue.php" method="post">
-<input type="hidden" name="forumId" value="{$forumId}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="forumId" value="{$forumId|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 <tr>
 <td>
 	<small>{tr}find{/tr}</small>
-	<input size="8" type="text" name="find" value="{$find}" />
+	<input size="8" type="text" name="find" value="{$find|escape}" />
 	<input type="submit" name="filter" value="{tr}filter{/tr}" />
 </td>
 </tr>
@@ -115,15 +115,14 @@
 
 {*LISTING*}
 <form action="tiki-forum_queue.php" method="post">
-<input type="hidden" name="forumId" value="{$forumId}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="find" value="{$find}" />
+<input type="hidden" name="forumId" value="{$forumId|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
 <table class="normal">
 <tr>
 <td width="2%" class="heading" >&nbsp;</td>
 <td class="heading" >{tr}message{/tr}</td>
-</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

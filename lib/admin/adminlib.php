@@ -14,7 +14,8 @@ class AdminLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (dsn like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (dsn like $findesc)";
     } else {
       $mid="";
     }
@@ -78,7 +79,8 @@ class AdminLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (extwiki like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (extwiki like $findesc)";
     } else {
       $mid="";
     }
@@ -268,9 +270,12 @@ class AdminLib extends TikiLib {
     $query = "select * from tiki_pages";
     $result=$this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query = "replace into tiki_tags(tagName,pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
-                values('$tagname','".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."','".$res["description"]."')";
-      $result2=$this->query($query);
+		$data = $this->qstr($res["data"]);
+		$pageName = $this->qstr($res["pageName"]);
+		$description = $this->qstr($res["description"]);
+        $query = "replace into tiki_tags(tagName,pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
+                values('$tagname',$pageName,".$res["hits"].",$data,".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."',$description)";
+        $result2=$this->query($query);
     }
     $action = "created tag: $tagname";
     $t = date("U");

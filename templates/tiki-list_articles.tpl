@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.10 2003-08-01 10:31:10 redflo Exp $ *}
+
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
 [{if $tiki_p_edit_article eq 'y'}<a class="link" href="tiki-edit_article.php">{tr}edit new article{/tr}</a>|{/if}
 <a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>]
@@ -7,9 +9,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-list_articles.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <select name="type">
      <option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
      <option value='Article' {if $find_type eq 'Article'}selected="selected"{/if}>{tr}Article{/tr}</option>
@@ -18,7 +20,7 @@
      <select name="topic">
      <option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
      {section name=ix loop=$topics}
-     <option value="{$topics[ix].topicId}" {if $find_topic eq $topics[ix].topicId}selected="selected"{/if}>{tr}{$topics[ix].name}{/tr}</option>
+     <option value="{$topics[ix].topicId|escape}" {if $find_topic eq $topics[ix].topicId}selected="selected"{/if}>{tr}{$topics[ix].name}{/tr}</option>
      {/section}
      </select>
    </form>
@@ -26,36 +28,36 @@
 </tr>
 </table>
 
-<table class="listarticles">
+<table class="normal">
 <tr>
 {if $art_list_title eq 'y'}
-	<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
 {/if}
 {if $art_list_topic eq 'y'}	
-	<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a></td>
 {/if}
 {if $art_list_date eq 'y'}
-	<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a></td>
 {/if}
 {if $art_list_author eq 'y'}
-	<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}AuthorName{/tr}</a></td>
+	<td class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}AuthorName{/tr}</a></td>
 {/if}
 {if $art_list_reads eq 'y'}
-	<td style="text-align:right;" class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'reads_desc'}reads_asc{else}reads_desc{/if}">{tr}Reads{/tr}</a></td>
+	<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'reads_desc'}reads_asc{else}reads_desc{/if}">{tr}Reads{/tr}</a></td>
 {/if}
 {if $art_list_size eq 'y'}
-	<td style="text-align:right;" class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
+	<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
 {/if}
 {if $art_list_img eq 'y'}
-	<td class="listartheading">{tr}Img{/tr}</td>
+	<td class="heading">{tr}Img{/tr}</td>
 {/if}
-<td width="7%" class="listartheading">{tr}Action{/tr}</td>
+<td width="7%" class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
 {if $art_list_title eq 'y'}
-	<td class="listarttitle{cycle advance=false}">
+	<td class="{cycle advance=false}">
 	{if $tiki_p_read_article eq 'y'}
 		<a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">
 	{/if}
@@ -67,24 +69,24 @@
 	</td>
 {/if}
 {if $art_list_topic eq 'y'}	
-	<td class="listarttopic{cycle advance=false}">{$listpages[changes].topicName}</td>
+	<td class="{cycle advance=false}">{$listpages[changes].topicName}</td>
 {/if}
 {if $art_list_date eq 'y'}
-	<td class="listartpublishDate{cycle advance=false}">{$listpages[changes].publishDate|tiki_short_datetime}</td>
+	<td class="{cycle advance=false}">{$listpages[changes].publishDate|tiki_short_datetime}</td>
 {/if}
 {if $art_list_author eq 'y'}	
-	<td class="listartauthor{cycle advance=false}">{$listpages[changes].authorName}</td>
+	<td class="{cycle advance=false}">{$listpages[changes].authorName}</td>
 {/if}
 {if $art_list_reads eq 'y'}
-	<td style="text-align:right;" class="listartreads{cycle advance=false}">{$listpages[changes].reads}</td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].reads}</td>
 {/if}
 {if $art_list_size eq 'y'}
-	<td style="text-align:right;" class="listartsize{cycle advance=false}">{$listpages[changes].size|kbsize}</td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].size|kbsize}</td>
 {/if}
 {if $art_list_img eq 'y'}
-	<td class="listarthasimage{cycle advance=false}">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
+	<td class="{cycle advance=false}">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
 {/if}
-<td class="listartactions{cycle}">
+<td class="{cycle}">
 {if $tiki_p_edit_article eq 'y'}
 	<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}

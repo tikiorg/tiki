@@ -1002,7 +1002,7 @@ CREATE TABLE tiki_drawings (
 DROP TABLE IF EXISTS tiki_dsn;
 CREATE TABLE tiki_dsn (
   dsnId int(12) NOT NULL auto_increment,
-  name varchar(20) NOT NULL default '',
+  name varchar(200) NOT NULL default '',
   dsn varchar(255) default NULL,
   PRIMARY KEY  (dsnId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -1041,7 +1041,7 @@ CREATE TABLE tiki_eph (
 DROP TABLE IF EXISTS tiki_extwiki;
 CREATE TABLE tiki_extwiki (
   extwikiId int(12) NOT NULL auto_increment,
-  name varchar(20) NOT NULL default '',
+  name varchar(200) NOT NULL default '',
   extwiki varchar(255) default NULL,
   PRIMARY KEY  (extwikiId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -1105,7 +1105,7 @@ CREATE TABLE tiki_faqs (
 DROP TABLE IF EXISTS tiki_featured_links;
 CREATE TABLE tiki_featured_links (
   url varchar(200) NOT NULL default '',
-  title varchar(40) default NULL,
+  title varchar(200) default NULL,
   description text,
   hits int(8) default NULL,
   position int(6) default NULL,
@@ -1159,7 +1159,7 @@ DROP TABLE IF EXISTS tiki_files;
 CREATE TABLE tiki_files (
   fileId int(14) NOT NULL auto_increment,
   galleryId int(14) NOT NULL default '0',
-  name varchar(40) NOT NULL default '',
+  name varchar(200) NOT NULL default '',
   description text,
   created int(14) default NULL,
   filename varchar(80) default NULL,
@@ -1455,7 +1455,7 @@ CREATE TABLE tiki_hotwords (
 
 DROP TABLE IF EXISTS tiki_html_pages;
 CREATE TABLE tiki_html_pages (
-  pageName varchar(40) NOT NULL default '',
+  pageName varchar(200) NOT NULL default '',
   content longblob,
   refresh int(10) default NULL,
   type char(1) default NULL,
@@ -1493,7 +1493,7 @@ DROP TABLE IF EXISTS tiki_images;
 CREATE TABLE tiki_images (
   imageId int(14) NOT NULL auto_increment,
   galleryId int(14) NOT NULL default '0',
-  name varchar(40) NOT NULL default '',
+  name varchar(200) NOT NULL default '',
   description text,
   created int(14) default NULL,
   user varchar(200) default NULL,
@@ -1802,7 +1802,7 @@ CREATE TABLE tiki_menu_options (
   optionId int(8) NOT NULL auto_increment,
   menuId int(8) default NULL,
   type char(1) default NULL,
-  name varchar(20) default NULL,
+  name varchar(200) default NULL,
   url varchar(255) default NULL,
   position int(4) default NULL,
   PRIMARY KEY  (optionId)
@@ -1819,7 +1819,7 @@ CREATE TABLE tiki_menu_options (
 DROP TABLE IF EXISTS tiki_menus;
 CREATE TABLE tiki_menus (
   menuId int(8) NOT NULL auto_increment,
-  name varchar(20) NOT NULL default '',
+  name varchar(200) NOT NULL default '',
   description text,
   type char(1) default NULL,
   PRIMARY KEY  (menuId)
@@ -3180,7 +3180,7 @@ CREATE TABLE tiki_webmail_messages (
 DROP TABLE IF EXISTS tiki_wiki_attachments;
 CREATE TABLE tiki_wiki_attachments (
   attId int(12) NOT NULL auto_increment,
-  page varchar(40) NOT NULL default '',
+  page varchar(200) NOT NULL default '',
   filename varchar(80) default NULL,
   filetype varchar(80) default NULL,
   filesize int(14) default NULL,
@@ -3345,7 +3345,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_html_pages', 'Can edit HTML pages', 'editors', 'html pages');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_shoutbox', 'Can view shoutbox', 'basic', 'shoutbox');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_shoutbox', 'Can admin shoutbox (Edit/remove msgs)', 'editors', 'shoutbox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_post_shoutbox', 'Can pot messages in shoutbox', 'basic', 'shoutbox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_post_shoutbox', 'Can post messages in shoutbox', 'basic', 'shoutbox');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_suggest_faq', 'Can suggest faq questions', 'basic', 'faqs');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_content_templates', 'Can edit content templates', 'editors', 'content templates');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_content_templates', 'Can use content templates', 'registered', 'content templates');
@@ -3468,8 +3468,10 @@ CREATE TABLE users_users (
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 ### ADministrator account
-insert into users_users(email,login,password,realname,hash) values('','admin','admin','System Administrator',md5('admin'));
+insert into users_users(email,login,password,realname,hash) values('','admin','admin','System Administrator',md5('adminadmin'));
 update users_users set currentLogin=lastLogin,registrationDate=lastLogin;
 # --------------------------------------------------------
 
 
+# for debugger console
+INSERT INTO tiki_preferences(name,value) VALUES ('feature_debugger_console','n');

@@ -15,7 +15,7 @@
 <form id='objform' action="tiki-theme_control_objects.php" method="post">
 <select name="type" onChange="javascript:document.getElementById('objform').submit();">
 {section name=ix loop=$types}
-<option value="{$types[ix]}" {if $type eq $types[ix]}selected="selected"{/if}>{$types[ix]}</option>
+<option value="{$types[ix]|escape}" {if $type eq $types[ix]}selected="selected"{/if}>{$types[ix]}</option>
 {/section}
 </select>
 <!--<input type="submit" name="settype" value="{tr}set{/tr}" />-->
@@ -29,14 +29,14 @@
   <td class="formcolor">
     <select name="objdata">
       {section name=ix loop=$objects}
-      <option value="{$objects[ix].objId}|{$objects[ix].objName}">{$objects[ix].objName}</option>
+      <option value="{$objects[ix].objId|escape}|{$objects[ix].objName}">{$objects[ix].objName}</option>
       {/section}
     </select>
   </td>
   <td class="formcolor">
     <select name="theme">
       {section name=ix loop=$styles}
-      <option value="{$styles[ix]}">{$styles[ix]}</option>
+      <option value="{$styles[ix]|escape}">{$styles[ix]}</option>
       {/section}
     </select>
   </td>
@@ -52,15 +52,15 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-theme_control_objects.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
 </table>
 <form action="tiki-theme_control_objects.php" method="post">
-<input type="hidden" name="type" value="{$type}" />
+<input type="hidden" name="type" value="{$type|escape}" />
 <table class="normal">
 <tr>
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>

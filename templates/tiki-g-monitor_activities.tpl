@@ -7,8 +7,8 @@
 
 {* FILTERING FORM *}
 <form id="filterf" action="tiki-g-monitor_activities.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 <tr>
 <td>
@@ -36,13 +36,13 @@
 
 <tr>
 <td >
-	<input size="8" type="text" name="find" value="{$find}" />
+	<input size="8" type="text" name="find" value="{$find|escape}" />
 </td>
 <td >
 	<select name="filter_process" onChange='javascript:getElementById("filterf").submit();'>
 	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$all_procs name=ix}
-	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId}">{$all_procs[ix].name} {$all_procs[ix].version}</option>
+	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId|escape}">{$all_procs[ix].name} {$all_procs[ix].version}</option>
 	{/section}
 	</select>
 </td>
@@ -50,7 +50,7 @@
 	<select name="filter_activity">
 	<option {if '' eq $smarty.request.filter_activity}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$all_acts name=ix}
-	<option {if $all_acts[ix].activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$all_acts[ix].activityId}">{$all_acts[ix].name}</option>
+	<option {if $all_acts[ix].activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$all_acts[ix].activityId|escape}">{$all_acts[ix].name}</option>
 	{/section}
 	</select>
 </td>
@@ -58,7 +58,7 @@
 	<select name="filter_type">
 	<option {if '' eq $smarty.request.filter_type}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$types name=ix}
-	<option {if $types[ix] eq $smarty.request.filter_type}selected="selected"{/if} value="{$types[ix]}">{$types[ix]}</option>
+	<option {if $types[ix] eq $smarty.request.filter_type}selected="selected"{/if} value="{$types[ix]|escape}">{$types[ix]}</option>
 	{/section}
 	</select>
 </td>
@@ -87,10 +87,10 @@
 
 {*LISTING*}
 <form action="tiki-g-monitor_activities.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
 <td width="1%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'type_desc'}{sameurl sort_mode='type_asc'}{else}{sameurl sort_mode='type_desc'}{/if}">&nbsp;</a></td>
@@ -136,10 +136,10 @@
 	<td class="{cycle}" style="text-align:right;">
 		<table width="100%">
 		<tr>
- 		 <td text-align:right;"><a style="color:green;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=active&amp;filter_activity={$items[ix].activityId}">{$items[ix].active_instances}</a></td>
-		 <td text-align:right;"><a style="color:black;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=completed&amp;filter_activity={$items[ix].activityId}">{$items[ix].completed_instances}</a></td>
-		 <td text-align:right;"><a style="color:grey;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=aborted&amp;filter_activity={$items[ix].activityId}">{$items[ix].aborted_instances}</a></td>
-		 <td text-align:right;"><a style="color:red;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=exception&amp;filter_activity={$items[ix].activityId}">{$items[ix].exception_instances}</a></td>
+ 		 <td style="text-align:right;"><a style="color:green;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=active&amp;filter_activity={$items[ix].activityId}">{$items[ix].active_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:black;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=completed&amp;filter_activity={$items[ix].activityId}">{$items[ix].completed_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:grey;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=aborted&amp;filter_activity={$items[ix].activityId}">{$items[ix].aborted_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:red;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=exception&amp;filter_activity={$items[ix].activityId}">{$items[ix].exception_instances}</a></td>
 
 		</tr>
 		</table>

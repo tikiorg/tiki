@@ -1,6 +1,6 @@
 <div class="articletitle">
-<span class="titlea">{$title}</span><br/>
-<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br/>
+<span class="titlea">{$title}</span><br />
+<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br />
 </div>
 
 {if $type eq 'Review'}
@@ -70,5 +70,13 @@
 {/if}
 </div>
 {if $feature_article_comments eq 'y'}
+{if $tiki_p_read_comments eq 'y'}
+<div id="page-bar">
+<table>
+<tr><td>
+<div class="button2"><a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></div>
+</td></tr></table>
+</div>
 {include file=comments.tpl}
+{/if}
 {/if}

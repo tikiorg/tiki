@@ -8,10 +8,10 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-quiz_stats.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
-     <input type="hidden" name="quizId" value="{$quizId}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="quizId" value="{$quizId|escape}" />
    </form>
    </td>
 </tr>

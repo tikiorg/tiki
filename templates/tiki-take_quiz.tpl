@@ -1,13 +1,13 @@
 <form name="aform" action="tiki-take_quiz.php" method="post">
-<input type="hidden" name="quizId" value="{$quizId}" />
-<input id='timeleft' name="timeleft" type="hidden" value={$quiz_info.timeLimitsec} /><br/>
+<input type="hidden" name="quizId" value="{$quizId|escape}" />
+<input id='timeleft' name="timeleft" type="hidden" value={$quiz_info.timeLimitsec} /><br />
 {if $quiz_info.timeLimited eq 'y'}
 {tr}Time Left{/tr}:<input id='minleft' name="minleft" type="text" size="3" value=0 />:<input size="3" id='secleft' name="secleft" type="text" value=0 />
 {/if}
 
 {if $ans eq 'n'}
 {if $quiz_info.timeLimited eq 'y'}
-<script>
+<script language='Javascript' type='text/javascript'>
 {literal}
 var itid;
 function settimeleft() {
@@ -34,7 +34,7 @@ settimeleft(itid);
 <div class="quizquestion">{$questions[ix].question}</div>
 <div class="quizoptions">
   {section name=jx loop=$questions[ix].options}
-  <input type="radio" value="{$questions[ix].options[jx].optionId}" name="question_{$questions[ix].questionId}">{$questions[ix].options[jx].optionText}<br/>
+  <input type="radio" value="{$questions[ix].options[jx].optionId|escape}" name="question_{$questions[ix].questionId}">{$questions[ix].options[jx].optionText}<br />
   {/section}
 </div>  
 </div>  

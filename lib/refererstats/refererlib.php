@@ -20,7 +20,8 @@ class RefererLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (referer like '%".$find."%')";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (referer like $findesc)";
     } else {
       $mid="";
     }

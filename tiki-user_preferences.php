@@ -42,7 +42,7 @@ $smarty->assign('url_visit',httpPrefix().$foo2);
 
 if(isset($_REQUEST["prefs"])) {
   // setting preferences
-  if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
+//  if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
   if($change_theme == 'y') {
   if (isset($_REQUEST["style"])) $tikilib->set_user_preference($userwatch,'theme',$_REQUEST["style"]);
   }
@@ -79,6 +79,16 @@ if(isset($_REQUEST["prefs"])) {
   die;
 }
 
+if(isset($_REQUEST['chgemail'])) {
+  // check user's password
+  if(!$userlib->validate_user($userwatch,$_REQUEST['pass'],'','')) {
+    $smarty->assign('msg',tra("Invalid password.  You current password is required to change your email address."));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;
+  }
+  $userlib->change_user_email($userwatch,$_REQUEST['email'],$_REQUEST['pass']);
+}
+
 if(isset($_REQUEST["chgpswd"])) {
   if($_REQUEST["pass1"]!=$_REQUEST["pass2"]) {
     $smarty->assign('msg',tra("The passwords didn't match"));
@@ -101,7 +111,7 @@ if(isset($_REQUEST["chgpswd"])) {
   
   // Check this code
   if($pass_chr_num == 'y') {
-    if(!preg_match_all("[0-9]+",$_REQUEST["pass1"],$foo) || !preg_match_all("[A-Za-z]+",$_REQUEST["pass1"],$foo)) {
+    if(!preg_match_all("/[0-9]+/",$_REQUEST["pass1"],$foo) || !preg_match_all("/[A-Za-z]+/",$_REQUEST["pass1"],$foo)) {
       $smarty->assign('msg',tra("Password must contain both letters and numbers"));
       $smarty->display("styles/$style_base/error.tpl");
       die; 	
@@ -226,6 +236,7 @@ while($file=readdir($h)) {
   }
 }
 closedir($h);
+sort($flags);
 $smarty->assign('flags',$flags);
 
 
@@ -254,10 +265,11 @@ if($feature_messages=='y' && $tiki_p_messages=='y') {
   $smarty->assign('unread',$unread);
 }
 
-$timezone_options = $tikilib->get_timezone_list(true);
-$smarty->assign_by_ref('timezone_options',$timezone_options);
-$server_time = new Date();
-$display_timezone = $tikilib->get_user_preference($userwatch,'display_timezone', $server_time->tz->getID());
+//$timezone_options = $tikilib->get_timezone_list(true);
+//$smarty->assign_by_ref('timezone_options',$timezone_options);
+//$server_time = new Date();
+$display_timezone = $tikilib->get_user_preference($userwatch,'display_timezone', "UTC");
+if ($display_timezone != "UTC") $display_timezone = "Local";
 $smarty->assign_by_ref('display_timezone',$display_timezone);
 
 $smarty->assign('mid','tiki-user_preferences.tpl');

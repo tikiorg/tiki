@@ -14,10 +14,10 @@
 <div class="simplebox">{$mail_msg}</div>
 {/if}
 <form action="tiki-view_tracker.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId}" />
-<input type="hidden" name="itemId" value="{$itemId}" />
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+<input type="hidden" name="itemId" value="{$itemId|escape}" />
 {section name=ix loop=$fields}
-<input type="hidden" name="{$fields[ix].name}" value="{$fields[ix].value}" />
+<input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
 {/section}
 
 {if $tiki_p_create_tracker_items eq 'y'}
@@ -30,7 +30,7 @@
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$users}
-<option value="{$users[ux].user}">{$users[ux].user}</option>
+<option value="{$users[ux].user|escape}">{$users[ux].user}</option>
 {/section}
 </select>
 {/if}
@@ -38,15 +38,15 @@
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
-<option value="{$groups[ux].groupName}">{$groups[ux].groupName}</option>
+<option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
 {/section}
 </select>
 {/if}
 {if $ins_fields[ix].type eq 't'}
-<input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value}" />
+<input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />
 {/if}
 {if $ins_fields[ix].type eq 'a'}
-<textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value}</textarea>
+<textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
 {/if}
 {if $ins_fields[ix].type eq 'f'}
 {html_select_date prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value display_seconds=false}
@@ -54,7 +54,7 @@
 {if $ins_fields[ix].type eq 'd'}
 <select name="ins_{$ins_fields[ix].name}">
 {section name=jx loop=$ins_fields[ix].options_array}
-<option value="{$ins_fields[ix].options_array[jx]}" {if $ins_fields[ix].value eq $ins_fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
+<option value="{$ins_fields[ix].options_array[jx]|escape}" {if $ins_fields[ix].value eq $ins_fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
 {/section}
 </select>
 {/if}
@@ -71,7 +71,7 @@
 
 <h3>{tr}Tracker Items{/tr}</h3>
 <form action="tiki-view_tracker.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId}" />
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal">
 <tr><td class="heading" colspan="2">{tr}Filters{/tr}</td></tr>
 <tr><td class="formcolor">{tr}Status{/tr}</td>
@@ -87,34 +87,34 @@
 <tr><td class="formcolor">{$fields[ix].name}</td>
 <td class="formcolor">
 {if $fields[ix].type eq 't' or $fields[ix].type eq 'a'}
-<input type="text" name="{$fields[ix].name}" value="{$fields[ix].value}" />
+<input type="text" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
 {/if}
 {if $fields[ix].type eq 'u'}
-<select name="{$fields[ix].name}">
+<select name="{$fields[ix].name|escape}">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 {section name=ux loop=$users}
-<option value="{$users[ux].user}">{$users[ux].user}</option>
+<option value="{$users[ux].user|escape}">{$users[ux].user}</option>
 {/section}
 </select>
 {/if}
 {if $fields[ix].type eq 'g'}
-<select name="{$fields[ix].name}">
+<select name="{$fields[ix].name|escape}">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 {section name=ux loop=$groups}
-<option value="{$groups[ux].groupName}">{$groups[ux].groupName}</option>
+<option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
 {/section}
 </select>
 {/if}
 {if $fields[ix].type eq 'd'}
-<select name="{$fields[ix].name}">
+<select name="{$fields[ix].name|escape}">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 {section name=jx loop=$fields[ix].options_array}
-<option value="{$fields[ix].options_array[jx]}" {if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
+<option value="{$fields[ix].options_array[jx]|escape}" {if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
 {/section}
 </select>
 {/if}
 {if $fields[ix].type eq 'c'}
-<select name="{$fields[ix].name}">
+<select name="{$fields[ix].name|escape}">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 <option value="y" {if $fields[ix].value eq 'y'}selected="selected"{/if}>{tr}checked{/tr}</option>
 <option value="n" {if $fields[ix].value eq 'n'}selected="selected"{/if}>{tr}unchecked{/tr}</option>
@@ -150,6 +150,7 @@
 {if $tracker_info.useComments eq 'y'}
 <td class="heading">{tr}coms{/tr}</td>
 {/if}
+</tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr>
@@ -171,7 +172,7 @@
 {else}
 {$items[user].field_values[ix].value}
 {/if}
-{if $tiki_p_modify_tracker_items eq 'y'}</a>{/if}
+{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}</a>{/if}
 {if $tiki_p_admin_trackers eq 'y'}
  [<a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}">x</a>]
 {/if}

@@ -425,7 +425,8 @@ class ActivityManager extends BaseManager {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where pId=$pId and ((name like '%".$find."%') or (description like '%".$find."%'))";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where pId=$pId and ((name like $findesc) or (description like $findesc))";
     } else {
       $mid=" where pId=$pId ";
     }

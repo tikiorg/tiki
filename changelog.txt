@@ -1,11 +1,145 @@
+
+Tikiwiki Changelog
+------------------
+
 Version 1.8 --
 
 * [NEW] Support for PostgreSQL (support for other databases coming soon!)
 * [NEW] Added Real-time IRC (Internet Relay Chat) logging
 
+
 Version 1.7 -Eta Carinae-
+<http://tikiwiki.org/tiki-index.php?page=ReleaseProcess1.7>
 
 * [FIX] Added form to edit groups and change included groups
+* [FIX] fixed bug where attachments to wiki pages with title of over 40 chars failed
+* [NEW] CATORPHANS plugin that displays uncategorized objects
+* [NEW] much more informative and user-friendly Tiki installer
+* [FIX] changed field maxlength from 40 to 200 for some fields (names or pagenames)
+  in tiki_featured_links, tiki_files, tiki_html_pages, tiki_html_pages_dynamic_zones,
+  tiki_images, tiki_wiki_attachments
+* [FIX] changed name field maxlength from 20 to 200 for tiki_dsn, tiki_extwiki, 
+  tiki_menu_options, tiki_menus in database
+* [NEW] all RSS feeds are converted to UTF-8. If you have iconv or recode 
+  even non-latin fonts could be displayed!
+* [NEW] "admin" user can no longer be removed from tiki-adminuser.php
+* [NEW] user is presented with link to installer if tiki fails to connect to db
+* [NEW] tiki installer warns user if it fails to rename tiki-install.php
+* [FIX] fixed a typo in forums that produced a blocking error
+* [FIX] fixed Smarty bugs related to smarty.request variables and register_globals setting 
+* [FIX] fixed bug where admins can su to a user that doesn't exist
+* [FIX] fixed bug where selecting "categorize this object" then clicking 
+  preview in wiki edit will cause the categorize checkbox to become deselected 
+  if the page is not already categorized
+* [FIX] fixed bug where changing email prevents user from logging on again
+* [FIX] fixed bug where comment area (comzone) takes 2 clicks to show the first time
+* [FIX] fixed bug where user email changes are not propagated in watches
+  but watches should just use the email in users_users and not duplicate 
+  the email in tiki_user_watches
+* [FIX] fixed error in Admin/General after setting home forum
+* [FIX] fixed bug where Live Support didn't work for clients who are logged in
+* [FIX] fixed bug in Live Support where msgs sent by operator to client are 
+  marked with client's username
+* [FIX] fixed a bug in debugger 
+* [FIX] fixed bug where current site theme is not selected on Admin/General
+* [FIX] fixed bug where su (superuser) function doesn't work if you are logged 
+  in using the "remember me" feature
+* [FIX] fixed bug where default values of the form are not correctly set after adding 
+  a dir categ on tiki-directory_admin_categories.php
+* [FIX] fixed bug where tiki-install.php rejected all admin passwords, 
+  making reinstallation or upgrades impossible
+* [FIX] fixed bug where tiki stores clear text passwords by default 
+  even when that option appears to be disabled by default
+* [FIX] fixed bug where editing directory sites from a search query results in a mysql error
+* [FIX] fixed the find function in adminuser panel
+- (rc4) -------------------------------------------------------
+* [NEW] new theme named "notheme" that uses only browser-defined colors
+* [NEW] design of a new theme intended to be the official Tiki theme: tiki.css
+* [NEW] new directory in doc/ named devtools/ that contains packaging 
+  and tiki developers tools 
+* [NEW] Plugin {SORT()} to sort content in wiki pages
+* [NEW] New category tree in category admin panel
+* [NEW] added optionnal display of current category path and objects in wiki page
+* [NEW] edit structures page now shows a filterable list of wiki pages
+* [NEW] new layout for admin panels
+* [NEW] clarified forms that are serving as edit forms vs. create forms 
+  on over a dozen pages
+* [NEW] go offline in Live Support when logging out of Tiki
+* [NEW] directory categories can now be categorized
+* [NEW] multiple wiki pages can be categorized at once
+* [FIX] moved .htaccess (url-rewriting) to doc directory
+* [NEW] new avatars management and selection
+* [NEW] tikihelp use in admin features panel to link to online docs
+* [FIX] Removing wiki pages now also removes them from structures
+* [FIX] Fixed bugged normal/wysiwyg editor toggle in tiki-assign_modules.php
+  and in blog editor
+* [FIX]  Categorize list is shown and categorize checkbox is checked on 
+  the wiki edit page if that page is categorized
+* [FIX] Fixed the missing routines of "email scrambling"
+* [FIX] Fixed 150+ unescaped search and other input strings
+* [FIX] Fixed bug in anti-bot/anti-automatic registration feature
+* [FIX] No more database errors when using forum
+* [FIX] Fixed forum attachment download bug
+* [FIX] fixed blog post title lost in preview
+* [FIX] no more br-tags in tables
+* [FIX] Password matching on letters and numbers now works
+* [FIX] No more new categories without a name
+* [FIX] Fixed the un-categorize problem
+* [FIX] Deleting structures and wiki pages works now as expected
+* [FIX] Fixed Semaphore bugs about locking and concurrent editing
+* [NEW] RSS have their own stylesheet now and can be displayed in browser
+* [FIX] RSS feeds fixed and valid !
+* [NEW] Usage of WikiWords can be switched on/off
+* [FIX] feeding a tiki forum from a mailing list works now
+- (rc3) -----------------------------------------------------
+* [NEW] Wiki syntax for -+monospaced+- words
+* [NEW] Wiki syntax {maketoc} -- make TOC of headers on current page
+* [NEW] Improved and bugfixed wiki lists parser
+* [NEW] Collapsable wiki headers (append -/+ after !)
+* [NEW] Collapsable wiki lists (append -/+ after first item of list */# )
+* [NEW] Continued list paragraphs (use '+' instead of */# to continue list item )
+* [NEW] Automonospace wiki feature now can be enabled/disabled (RFE #?????)
+* [NEW] Full HTML headers from 1 to 6 ('!' to '!!!!!!')
+* [NEW] WikiPagesLinks with updated sign /use ((WikiPage|description|timeout_in_sec)) /
+* [NEW] Wiki -=title=- auto aligment (just try to align it with spaces in source :)
+* [NEW] Added a BOX plugin to display theme-styled box in wiki page
+* [NEW] Improved help system for wiki plugins
+* [NEW] New themes: Akwa and Matrix (take a look at styles/README.matrix)
+* [NEW] Catpath plugin
+* [NEW] link to Google cache in Tiki's cache view in case local Tiki cache 
+  is outdated or broken
+* [FIX] print mode is cleaner, without page bar and icons
+* [NEW] remembers where user logged in from and sends user back after login
+* [FIX] google plugin fixed by removing the javascript redirection.
+* [FIX] fixed the search engine so it responds in seconds not ten.
+* [FIX] Fixed tiki-read_article.php permission bug
+- (rc2) -------------------------------------------------------
+* [FIX] general utf-8 mail encoding
+* [FIX] bad category link for articles
+* [FIX] user hash generated from password only, now uses login and email too
+* [FIX] double-click wiki quick help and comments bug
+* [FIX] 4 out of 6 batch file upload bug
+* [FIX] ignored auth method bug with webserver auth
+* [FIX] anonymous username bug in live support
+* [FIX] webmail small but efficient fixes
+* [FIX] fixed display of comment and attachment buttons
+* [NEW] improved multi-host setup
+* [FIX] massive html fixes
+* [FIX] remember me feature fixed
+* [FIX] improved conflict detection when editing wiki pages
+* [NEW] Tiki Debugger Console for tiki developers or admins
+* [NEW] plugin category added
+* [NEW] new modules mod-who_is_there and mod-search_wiki_page
+* [FIX] install script upgraded for non-root usage
+* [NEW] mail sender is now configurable
+* [NEW] added Geo and Trollparty theme
+- (rc1) ------------------------------------------------------------
+* [NEW] generation of pdf documents from wiki pages
+* [NEW] added matrix, moreneat and mose theme.
+* [FIX] all sent mails are utf-8 encoded now for intl sake 
+* [FIX] added sender email address to outgoing mails
+* [FIX] added form to edit groups and change included groups
+>>>>>>> 1.94.2.10
 * [NEW] Added an Edit CSS feature, with fancy display of css and fast editor form
 * [NEW] Added a setup_virtual.sh for virtual hosting, and changed internal code accordingly
 * [NEW] Added a general Calendar feature for tiki content browsing and groups calendar

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger-ext.php,v 1.1 2003-07-13 00:35:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger-ext.php,v 1.2 2003-08-01 10:30:55 redflo Exp $
  *
  * \brief Base class for external debugger command
  *
@@ -15,25 +15,59 @@ require_once('lib/debug/debugger-common.php');
  */
 class DebuggerCommand extends ResultType
 {
-  /// \b Must have function to announce command name in debugger console
+  /**
+   * \brief Must have function to announce command name in debugger console
+   *
+   * Assume interface extension if no name provided
+   */
   function name()
   {
-    return "";
+    return '';
+  }
+  /**
+   * \brief Must have function to provide help to debugger console
+   *
+   * Used as title foe interface extentions
+   */
+  function description()
+  {
+    return 'No help available for '.$this->name();
   }
   /// \b Must have function to provide help to debugger console
-  function help()
+  function syntax()
   {
-    return "No help available";
+    return $this->name();
   }
   /// \b Must have functio to show exampla of usage of given command
   function example()
   {
-    return "No example available";
+    return 'No example available for '.$this->name();
   }
   /// Execute command with given set of arguments. Must return string of result.
   function execute($params)
   {
-    return "No result";
+    return 'No result';
+  }
+  /// Say to debugger is this command need to draw some interface on console...
+  function have_interface()
+  {
+    return false;
+  }
+  /// Return HTML code of our interface to debugger
+  function draw_interface()
+  {
+    return '';
+  }
+  /// Function to return caption string to draw plugable tab in interface
+  function caption()
+  {
+    return 'caption';
   }
 }
+
+// Also developer must provide factory function
+// so debugger can create an instance of command handler
+// It must be called 'dbg_command_factory_[your-cmd-name]'
+// which is returns handler instance...
+
 ?>

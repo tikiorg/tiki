@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
 </a>
-<br/><br/>
+<br /><br />
 
 [{if $system eq 'n'}
 	{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
@@ -17,10 +17,11 @@
   | <a href="tiki-list_gallery.php?galleryId={$galleryId}" class="gallink">{tr}list gallery{/tr}</a> {if $rss_image_gallery eq 'y'}| <a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="gallink">RSS</a>{/if}]  
 
 {if strlen($description) > 0}
-	<br/><br/>
-	{$description}
+	<div class="imgaldescr">
+	  {$description}
+  </div>
 {/if}
-<br/><br/>
+<br /><br />
 
 
 	<span class="sorttitle">{tr}Sort Images by{/tr}</span>
@@ -36,14 +37,14 @@
       <tr>
         {section name=idx loop=$images}
           <td align="center" {if (($smarty.section.idx.index / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
-          &nbsp;&nbsp;<br/>
+          &nbsp;&nbsp;<br />
           
           {if $nextx==0}
           <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$images[idx].imageId}&amp;thumb=1" /></a>
 	  {else}
           <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$images[idx].imageId}&amp;thumb=1" /></a>
 	  {/if}
-          <br/>
+          <br />
           <small class="caption">{$images[idx].name}
           <br />
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
@@ -57,7 +58,7 @@
             	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$images[idx].imageId}" title="{tr}edit{/tr}"><img src='img/icons2/admin_move.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
           {/if}
           <a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;desp=$smarty.section.idx.index&amp;offset=$offset&amp;imageId=$images[idx].imageId&amp;popup=1"} class="gallink"><img src='img/icons2/admin_unhide.gif' border='0' alt='{tr}popup{/tr}' title='{tr}popup{/tr}' /></a>
-          <br/>
+          <br />
          ({$images[idx].xsize}x{$images[idx].ysize})[{$images[idx].hits} {tr}hits{/tr}]</small>
          </td>
          {if $smarty.section.idx.index % $rowImages eq $rowImages2}
@@ -82,7 +83,7 @@
       &nbsp;&nbsp;[<a class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
       {/if}
       {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxImages}
 <a class="prevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
@@ -93,5 +94,15 @@
   </div>
 </div>
 {if $feature_image_galleries_comments eq 'y'}
+{if $tiki_p_read_comments eq 'y'}
+<div id="page-bar">
+<table>
+<tr><td>
+<div class="button2">
+<a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a>
+</div>
+</td></tr></table>
+</div>
 {include file=comments.tpl}
+{/if}
 {/if}

@@ -32,7 +32,7 @@ print('<head>');
 if(isset($_REQUEST["channelId"])) {
   $messages = $chatlib->get_messages($_REQUEST["channelId"],$lastMessage,$_REQUEST["enterTime"]); 
   if(count($messages)>0) {
-    print("<script>");
+    print("<script language='Javascript' type='text/javascript'>");
     foreach ($messages as $msg) {
       
         if($msg["poster"]!=$_REQUEST["nickname"]) {
@@ -40,7 +40,7 @@ if(isset($_REQUEST["channelId"])) {
         } else {
           $classt='blue'; 
         }
-        $parsed = $tikilib->parse_comment_data($msg["data"]);
+        $parsed = htmlspecialchars($tikilib->parse_comment_data($msg["data"]), ENT_QUOTES);
         $prmsg="<span style=\"color:$classt;\">".$msg["posterName"].": ".$parsed."</span><br/>";
         //$com = "top.document.frames[0].document.write('".$prmsg."');";
         $com = "top.chatdata.document.write('".$prmsg."');";
@@ -60,7 +60,7 @@ if(isset($_REQUEST["channelId"])) {
 
 $messages = $chatlib->get_private_messages($_REQUEST["nickname"]); 
 if(count($messages)>0) {
-  print("<script>");
+  print("<script language='Javascript' type='text/javascript'>");
   foreach ($messages as $msg) {
     $classt='red';
     $parsed = $tikilib->parse_comment_data($msg["data"]);

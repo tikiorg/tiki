@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.5 2003-07-15 17:24:38 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.6 2003-08-01 10:31:06 redflo Exp $
  *
  */
 
@@ -29,7 +29,7 @@ div.simplebox
   font-size: 12px;
 }
 /* Change color to light if simplebox placed on tiki-center
- * which is darkest than usual wiki-page background...
+ * which is darkest than usual ltgreen background...
  */
 div#tiki-center > div.simplebox
 {
@@ -43,7 +43,6 @@ div.box
   margin-bottom: 6px;
   border: 1px outset #00A000;
   padding-bottom: 10px;
-  overflow: hidden;
   width: 170px;
 }
 
@@ -80,17 +79,17 @@ td.module
 }
 
 /* Links in modules */
-.cboxtlink, .cboxtlink:active, .linkmodule, .linkmodule:active
+.linkmodule, .linkmodule:active
 {
   color: #00E000;
   text-decoration: none;
 }
-.cboxtlink:visited, .linkmodule:visited
+.linkmodule:visited
 {
   color: #00B000;
   text-decoration: none;
 }
-.cboxtlink:hover, .linkmodule:hover, .cboxtlink:visited:hover, .linkmodule:visited:hover
+.linkmodule:hover, .linkmodule:visited:hover
 {
   color: #00FF00;
   text-decoration: underline;
@@ -100,6 +99,7 @@ td.module
 /* Now the boxes for the rest of Tiki (non-modules */
 div.cbox
 {
+  color: #001000;
   margin-top: 20px;
   padding-left: 2px;
   padding-right: 2px;
@@ -140,6 +140,23 @@ div.cbox-data
 {
 }
 
+/* Links in cboxes */
+.cboxtlink, .cboxtlink:active
+{
+  color: #003000;
+  text-decoration: none;
+}
+.cboxtlink:visited
+{
+  color: #002000;
+  text-decoration: none;
+}
+.cboxtlink:hover, .cboxtlink:visited:hover
+{
+  color: #00FF00;
+  text-decoration: underline;
+}
+
 /*
  * Menus
  *
@@ -164,7 +181,6 @@ div.separator + div[id]
   padding-left: 3ex;
 }
 
-
 /* Links in menus */
 .linkmenu, .linkmenu:active, .linkmenu:visited, .linkmenu:hover
 .separator, .separator:active, .separator:visited, .separator:hover
@@ -177,7 +193,7 @@ div.separator + div[id]
 
 
 /* Links to collapse menus for example the main menu can be completely collapsed*/
-.flip
-.flip:active
-.flip:hover
+.flip {}
+.flip:active {}
+.flip:hover {}
 

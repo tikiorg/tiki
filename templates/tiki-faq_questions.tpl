@@ -1,49 +1,49 @@
-<a class="pagetitle" href="tiki-faq_questions.php?faqId={$faqId}">{tr}Admin FAQ{/tr}: {$faq_info.title}</a><br/><br/>
+<a class="pagetitle" href="tiki-faq_questions.php?faqId={$faqId}">{tr}Admin FAQ{/tr}: {$faq_info.title}</a><br /><br />
 [<a href="tiki-list_faqs.php" class="link">{tr}List FAQs{/tr}</a>
 |<a href="tiki-view_faq.php?faqId={$faqId}" class="link">{tr}View FAQ{/tr}</a>
 |<a href="tiki-list_faqs.php?faqId={$faqId}" class="link">{tr}Edit this FAQ{/tr}</a>
-|<a class="link" href="tiki-faq_questions.php?faqId={$faqId}">{tr}new question{/tr}</a>]<br/><br/>
+|<a class="link" href="tiki-faq_questions.php?faqId={$faqId}">{tr}new question{/tr}</a>]<br /><br />
 <h2>{tr}Edit FAQ questions{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post">
-<input type="hidden" name="questionId" value="{$questionId}" />
-<input type="hidden" name="faqId" value="{$faqId}" />
+<input type="hidden" name="questionId" value="{$questionId|escape}" />
+<input type="hidden" name="faqId" value="{$faqId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor" ><textarea type="text" rows="2" cols="60" name="question">{$question}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor" ><textarea type="text" rows="2" cols="60" name="question">{$question|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
 {assign var=area_name value="faqans"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
 </tr>
-<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor" ><textarea id='faqans' type="text" rows="8" cols="60" name="answer">{$answer}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Answer{/tr}:</td><td class="formcolor" ><textarea id='faqans' type="text" rows="8" cols="60" name="answer">{$answer|escape}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor" ><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Use a question from another FAQ{/tr}</h2>
 <form action="tiki-faq_questions.php" method="post">
-<input type="hidden" name="questionId" value="{$questionId}" />
-<input type="hidden" name="faqId" value="{$faqId}" />
+<input type="hidden" name="questionId" value="{$questionId|escape}" />
+<input type="hidden" name="faqId" value="{$faqId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Filter{/tr}</td><td class="formcolor"><input type="text" name="filter" value="{$filter}" /><input type="submit" name="filteruseq" value="{tr}filter{/tr}" /></td></tr>
+<tr><td class="formcolor">{tr}Filter{/tr}</td><td class="formcolor"><input type="text" name="filter" value="{$filter|escape}" /><input type="submit" name="filteruseq" value="{tr}filter{/tr}" /></td></tr>
 <tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor" >
 <select name="usequestionId">
 {section name=ix loop=$allq}
-<option value="{$allq[ix].questionId}">{$allq[ix].question}</option>
+<option value="{$allq[ix].questionId|escape}">{$allq[ix].question}</option>
 {/section}
 </select>
 </td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="useq" value="{tr}use{/tr}" /></td></tr>
 </table>
 </form>
-<br/>
+<br />
 <h2>{tr}FAQ questions{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-faq_questions.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -66,7 +66,7 @@
 </tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-faq_questions.php?find={$find}&amp;faqId={$faqId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -76,7 +76,7 @@
 &nbsp;[<a class="prevnext" href="tiki-faq_questions.php?find={$find}&amp;faqId={$faqId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-faq_questions.php?find={$find}&amp;faqId={$faqId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

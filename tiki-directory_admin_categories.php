@@ -61,7 +61,18 @@ if(isset($_REQUEST["remove"])) {
 if(isset($_REQUEST["save"])) {
   if(isset($_REQUEST["allowSites"])&&$_REQUEST["allowSites"]=='on') $_REQUEST["allowSites"]='y'; else $_REQUEST["allowSites"]='n';
   if(isset($_REQUEST["showCount"])&&$_REQUEST["showCount"]=='on') $_REQUEST["showCount"]='y'; else $_REQUEST["showCount"]='n';
-  $dirlib->dir_replace_category($_REQUEST["parent"],$_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["childrenType"], $_REQUEST["viewableChildren"], $_REQUEST["allowSites"], $_REQUEST["showCount"], $_REQUEST["editorGroup"]);
+  $categId = $dirlib->dir_replace_category($_REQUEST["parent"],$_REQUEST["categId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["childrenType"], $_REQUEST["viewableChildren"], $_REQUEST["allowSites"], $_REQUEST["showCount"], $_REQUEST["editorGroup"]);
+  
+  $cat_type='directory';
+  $cat_objid = $categId;
+  $cat_desc = substr($_REQUEST['description'],0,200);
+  $cat_name = $_REQUEST['name'];
+  $cat_href='tiki-directory_browse.php?parent='.$cat_objid;
+  include_once("categorize.php");
+  
+  if ($_REQUEST["categId"]) {
+	  $info = $dirlib->dir_get_category($_REQUEST["categId"]);
+  }
 }
 
 // Listing: categories in the parent category
@@ -86,6 +97,10 @@ $smarty->assign_by_ref('groups',$groups["data"]);
 
 $categs = $dirlib->dir_get_all_categories(0,-1,'name asc',$find);
 $smarty->assign('categs',$categs);
+
+$cat_type='directory';
+$cat_objid = $_REQUEST['categId'];
+include_once("categorize_list.php");
 
 // Display the template
 $smarty->assign('mid','tiki-directory_admin_categories.tpl');

@@ -1,14 +1,17 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-minical_prefs.php">{tr}Mini Calendar: Preferences{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-minical_prefs.php">{tr}Mini Calendar: Preferences{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
-<br/>
-[<a class="link" href="tiki-minical.php#add">{tr}Add{/tr}</a>]
-[<a class="link" href="tiki-minical_prefs.php">{tr}Prefs{/tr}</a>]
-[<a class="link" href="tiki-minical.php?view=daily">{tr}Daily{/tr}</a> | 
-<a class="link" href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a> |
-<a class="link" href="tiki-minical.php?view=list">{tr}List{/tr}</a>]
+<br />
+<table border="0">
+<tr>
+<td><div class="button2"><a class="linkbut" href="tiki-minical.php#add">{tr}Add{/tr}</a></div></td>
+<td><div class="button2"><a class="linkbut" href="tiki-minical_prefs.php">{tr}Prefs{/tr}</a></div></td>
+<td><div class="button2"><a class="linkbut" href="tiki-minical.php?view=daily">{tr}Daily{/tr}</a></div></td>
+<td><div class="button2"><a class="linkbut" href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a></div></td>
+<td><div class="button2"><a class="linkbut" href="tiki-minical.php?view=list">{tr}List{/tr}</a></div></td>
+</tr>
+</table>
 
-<br/>
 <h3>{tr}Preferences{/tr}</h3>
 <form action="tiki-minical_prefs.php" method="post">
 <table class="normal">
@@ -97,8 +100,9 @@
   <td class="formcolor">
 	<input type="submit" name="addtopic" value="{tr}add topic{/tr}" />
   </td>
-</table>
+</tr></table>
 </form>
+{if count($topics) > 0}
 <div class="simplebox">
 <table width="100%">
 <tr>
@@ -131,4 +135,4 @@
     {/section}
 </table>
 </div>
- 
+{/if}

@@ -22,9 +22,9 @@ if($tiki_p_read_blog != 'y') {
 }
 
 $allrankings = Array(
-  Array( 'name'=> tra('Top visited blogs'), 'value'=> tra('blog_ranking_top_blogs')),
-  Array( 'name'=> tra('Last posts'), 'value'=> tra('blog_ranking_last_posts')),
-  Array( 'name'=> tra('Top active blogs'), 'value'=> tra('blog_ranking_top_active_blogs'))
+  Array( 'name'=> tra('Top visited blogs'), 'value'=> 'blog_ranking_top_blogs'),
+  Array( 'name'=> tra('Last posts'),        'value'=> 'blog_ranking_last_posts'),
+  Array( 'name'=> tra('Top active blogs'),  'value'=> 'blog_ranking_top_active_blogs')
 );
 $smarty->assign('allrankings',$allrankings);
 

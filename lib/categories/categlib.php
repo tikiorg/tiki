@@ -1,4 +1,10 @@
 <?php
+/** \file
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.9 2003-08-01 10:30:54 redflo Exp $
+ *
+ * \brief Categiries support class
+ *
+ */
 class CategLib extends TikiLib {
 
   function CategLib($db) 
@@ -15,7 +21,8 @@ class CategLib extends TikiLib {
     $cats = $this->get_object_categories($type,$objid);
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (name like '%".$find."%' or description like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }
@@ -42,10 +49,10 @@ class CategLib extends TikiLib {
   {
     $path = '';
     $info = $this->get_category($categId);
-    $path = '<a class="categpath" href=tiki-admin_categories.php?parentId="'.$info["categId"].'">'.$info["name"].'</a>';
+    $path = '<a class="categpath" href="tiki-admin_categories.php?parentId='.$info["categId"].'">'.$info["name"].'</a>';
     while($info["parentId"]!=0) {
       $info = $this->get_category($info["parentId"]);
-      $path = $path = '<a class="categpath" href=tiki-admin_categories.php?parentId="'.$info["categId"].'">'.$info["name"].'</a>'.'>'.$path;
+      $path = $path = '<a class="categpath" href="tiki-admin_categories.php?parentId='.$info["categId"].'">'.$info["name"].'</a>'.'>'.$path;
     }
     return $path;
   }
@@ -54,10 +61,10 @@ class CategLib extends TikiLib {
   {
     $path = '';
     $info = $this->get_category($categId);
-    $path = '<a class="categpath" href=tiki-browse_categories.php?parentId="'.$info["categId"].'">'.$info["name"].'</a>';
+    $path = '<a class="categpath" href="tiki-browse_categories.php?parentId='.$info["categId"].'">'.$info["name"].'</a>';
     while($info["parentId"]!=0) {
       $info = $this->get_category($info["parentId"]);
-      $path = $path = '<a class="categpath" href=tiki-browse_categories.php?parentId="'.$info["categId"].'">'.$info["name"].'</a>'.'>'.$path;
+      $path = $path = '<a class="categpath" href="tiki-browse_categories.php?parentId='.$info["categId"].'">'.$info["name"].'</a>'.'>'.$path;
     }
     return $path;
   }
@@ -97,11 +104,11 @@ class CategLib extends TikiLib {
     return true;
   }
   
-    function update_category($categId,$name,$description)
+    function update_category($categId,$name,$description,$parentId)
   {
     $name = addslashes($name);
     $description = addslashes($description);
-    $query = "update tiki_categories set name='$name', description='$description' where categId=$categId";
+    $query = "update tiki_categories set name='$name', parentId='$parentId', description='$description' where categId=$categId";
     $result = $this->query($query);
   }
 
@@ -177,7 +184,8 @@ class CategLib extends TikiLib {
     }
     $cond.=" )";
     if($find) {
-      $mid=" and (name like '%".$find."%' or description like '%".$find."% ')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }
@@ -206,7 +214,8 @@ class CategLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (name like '%".$find."%' or description like '%".$find."% ')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }
@@ -330,6 +339,19 @@ class CategLib extends TikiLib {
     }
     $this->categorize($catObjectId,$categId);
   }
+  
+  function categorize_directory($directoryId, $categId)
+  {
+    // Check if we already have this object in the tiki_categorized_objects page
+    $catObjectId=$this->is_categorized('directory',$directoryId);
+    if(!$catObjectId) {
+      // The page is not cateorized
+      $info = $this->get_directory($directoryId);
+      $href = 'tiki-directory_browse.php?parent='.$directoryId;
+      $catObjectId = $this->add_categorized_object('directory',$directoryId,$info["description"],$info["name"],$href);
+    }
+    $this->categorize($catObjectId,$categId);
+  }
 
   function categorize_gallery($galleryId, $categId)
   {
@@ -402,7 +424,7 @@ class CategLib extends TikiLib {
   
   function get_all_categories()
   {
-    $query =" select name,categId from tiki_categories order by name";
+    $query =" select name,categId,parentId from tiki_categories order by name";
     $result = $this->query($query);
     $ret=Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -410,16 +432,22 @@ class CategLib extends TikiLib {
     }
     return $ret;
   }
-
-
-  
-  
-
-
-
-  
-  
-  
+  // Same as get_all_categories + it also get info about count of objects
+  function get_all_categories_ext()
+  {
+    $ret=Array();
+    $query = "select * from tiki_categories order by name";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $id = $res["categId"];
+      $query = "select count(*) from tiki_categories where parentId=$id";
+      $res["children"]=$this->getOne($query);
+      $query = "select count(*) from tiki_category_objects where categId=$id";
+      $res["objects"]=$this->getOne($query);
+      $ret[]=$res;
+    }
+    return $ret;
+  }
 }
 
 $categlib= new CategLib($dbTiki);

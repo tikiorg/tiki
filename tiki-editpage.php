@@ -438,6 +438,12 @@ $smarty->assign_by_ref('plugins',$plugins);
 // to show 'wiki quick help'
 $smarty->assign('edit_page','y');
 
+// Set variables so the preview page will keep the newly inputted category information
+if (isset($_REQUEST['cat_categorize'])) {
+	if ($_REQUEST['cat_categorize'] == 'on') {
+		$smarty->assign('categ_checked','y');
+	}
+}
 
 // Display the Index Template
 $smarty->assign('mid','tiki-editpage.tpl');

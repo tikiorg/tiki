@@ -30,7 +30,7 @@
 			<div id="tiki-center">
 			{include file=$mid}
 			{if $show_page_bar eq 'y'}
-			{include file="tiki-page_bar.tpl}
+			{include file="tiki-page_bar.tpl"}
 			{/if}
 			</div>
 		</td>			

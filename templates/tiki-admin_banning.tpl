@@ -1,30 +1,30 @@
 <a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
-<br/><br/>
+<br /><br />
 <h3>{tr}Add or edit a rule{/tr}</h3>
 <form action="tiki-admin_banning.php" method="post">
-<input type="hidden" name="banId" value="{$banId}" />
+<input type="hidden" name="banId" value="{$banId|escape}" />
 <table class="normal">
 <tr>
 	<td class="formcolor">{tr}Rule title{/tr}</td>
 	<td class="formcolor">
-		<input type="text" name="title" value="{$info.title}" maxlength="200" />
+		<input type="text" name="title" value="{$info.title|escape}" maxlength="200" />
 	</td>
 </tr>
 <tr>
 	<td class="formcolor">{tr}Username regex matching{/tr}:</td>
 	<td class="formcolor">
 		<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if} />
-		<input type="text" name="user" value="{$info.user}" />
+		<input type="text" name="user" value="{$info.user|escape}" />
 	</td>
 </tr>
 <tr>
 	<td class="formcolor">{tr}IP regex matching{/tr}:</td>
 	<td class="formcolor">
 		<input type="radio" name="mode" value="ip" {if $info.mode eq 'ip'}checked="checked"{/if} />
-		<input type="text" name="ip1" value="{$info.ip1}" size="3" />.
-		<input type="text" name="ip2" value="{$info.ip2}" size="3" />.
-		<input type="text" name="ip3" value="{$info.ip3}" size="3" />.
-		<input type="text" name="ip4" value="{$info.ip4}" size="3" />
+		<input type="text" name="ip1" value="{$info.ip1|escape}" size="3" />.
+		<input type="text" name="ip2" value="{$info.ip2|escape}" size="3" />.
+		<input type="text" name="ip3" value="{$info.ip3|escape}" size="3" />.
+		<input type="text" name="ip4" value="{$info.ip4|escape}" size="3" />
 	</td>
 </tr>
 <tr>
@@ -78,7 +78,7 @@
 <tr>
 	<td class="formcolor">{tr}Custom message to the user{/tr}</td>
 	<td class="formcolor">
-		<textarea rows="4" cols="40" name="message">{$info.message}</textarea>
+		<textarea rows="4" cols="40" name="message">{$info.message|escape}</textarea>
 	</td>
 </tr>
 <tr>
@@ -92,15 +92,15 @@
 
 
 <form method="post" action="tiki-admin_banning.php">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-{tr}Find{/tr}:<input type="text" name="find" value="{$find}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+{tr}Find{/tr}:<input type="text" name="find" value="{$find|escape}" />
 </form>
 <h3>{tr}Rules{/tr}:</h3>
 <form method="post" action="tiki-admin_banning.php">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
 <td width="2%" class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
@@ -151,7 +151,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_banning.php?offset={$next_offset}&amp;find={$find}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_banning.php offset=$selector_offset">

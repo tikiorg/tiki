@@ -1,6 +1,11 @@
 <?php
 include_once('lib/usermodules/usermoduleslib.php');
 
+/*
+ * Menu controls currently deactivated
+ * include_once('tiki-module_controls.php');
+ */
+
 clearstatcache();
 $now=date("U");
 

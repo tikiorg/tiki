@@ -1,7 +1,7 @@
 <?php
 class LsAdminlib extends Tikilib{
 
-  function LsAdminlib($db) 
+  function LsAdminlib($db)
   {
     if(!$db) {
       die("Invalid db object passed to LsAdminlib constructor");  
@@ -53,7 +53,8 @@ class LsAdminlib extends Tikilib{
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" where (data like '%".$find."%' or username like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (data like $findesc or username like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -96,7 +97,8 @@ class LsAdminlib extends Tikilib{
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" where (reason like '%".$find."%' or user like '%".$find."%' or operator like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (reason like $findesc or user like $findesc or operator like $findesc)";  
     } else {
       $mid=""; 
     }

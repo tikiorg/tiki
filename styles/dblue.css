@@ -28,6 +28,7 @@ DIV#tiki-main {  background: #EFEFE7;  height: 100%;  width: 100%;  margin-top: 
 
 /* This is the header */
 DIV#tiki-top {  background-color: #100852; color: white; height: 14px;  padding-right: 0px;  width: 100%; }
+DIV#tiki-top a { color: white; text-decoration: none; }
 
 /* This is the middle */
 DIV#tiki-mid {  background: #EFEFE7;  height: auto;  padding-bottom: 0px; }
@@ -43,6 +44,22 @@ TD#centercolumn { padding-right: 2px;background: #EFEFFF;  vertical-align: top; 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  padding-right: 5px; }
 
+div#debugconsole {
+  position: absolute;
+  background-color: #eeddcc;
+  color: #009000;
+  top: 0px;
+  left: 20px;
+  right: 310px;
+  height: auto;
+  width: auto;
+  z-index: 1;
+  padding: 5px;
+  border: 6px ridge #996600;
+  font-size: 12px;
+} 
+span.on-option { color: #00C000; }
+span.off-option { color: #005000; }
 
 /********************************************* GENERAL STYLE PROPERTIES **********************************************/
 
@@ -221,6 +238,19 @@ td.listfilesheading, td.listartheading, td.forumheading, td.thead
   height: 20px;
   padding-left: 2px;
   padding-right: 5px;
+}
+
+TD.button
+{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  color: white; font-size: 11px; font-weight : bold;
+  background-color: #5a4a39; 
+  background-image: url(dblue/back1.jpeg);  
+  height: 20px;
+  padding-left: 2px;
+  padding-right: 5px;
+  text-align: center; 
+  vertical-align: middle;
 }
 
 /* Links to view an object from a table listing objects can be generalized to this link */
@@ -590,7 +620,7 @@ div.articletrailer {
   background: white;
   border: 1px solid black;
   border-bottom: 1px solid black;
-  border-top: 1px thin blue;
+  border-top: thin solid blue;
   margin-bottom: 20px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -792,9 +822,9 @@ td.tdcategpath {
   padding-right: 5px;}
 
 /* Links to up/top categories */
-.categpath {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : white;  text-decoration: none;}
-.categpath:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : white;  text-decoration: none;}
-.categpath:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #00FFFF;  text-decoration: none;}
+.categpath {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
+.categpath:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
+.categpath:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
 
 /* Table with the subcategories */
 table.subcats { padding-top: 20px; padding-bottom: 20px; width: 97%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 1px; background: #B5C6DE;}
@@ -806,13 +836,13 @@ td.tdsubcat {width: 25%; background: #B5C6DE;}
 .categlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : #00FFFF; text-decoration: underline;font-weight: bold;}
 
 table.catobjects { width: 97%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 0px;}
-td.categobjectsname {
+td.categobjectsnameeven,td.categobjectsnameodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
   color: white;
   background: #4284B6;
 }
-td.categobjectsdata {
+td.categobjectsdataeven,td.categobjectsdataodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
   background-color: #B5C6DE;
@@ -1113,7 +1143,7 @@ font-size: 11px;
 }
 a.caltabon:hover
 {
-background-color: none;
+background-color: transparent;
 }
 div#tab, div#tabcal, div#tabnav
 {
@@ -1152,7 +1182,7 @@ background-color: #100852;
 .calfocus
 {
 font-size:7px;
-background-color: none;
+background-color: transparent;
 }
 .calfocus a
 {
@@ -1525,11 +1555,61 @@ background-color: #DAAAAA;
 background-color: #DA9A9A;
 }
 
-/* To set initial state for 'wiki quick help' panel
- * just set display to 'none' (hidden) or 'block' (show)
- * /
 div#edithelpzone { display: none;  }
-/* To set initial state for 'attachments' table
- * just set display to 'none' (hidden) or 'block' (show)
- * /
 div#attzone      { display: none; margin-top: 10px; }
+div#attzoneopen      { display: block; margin-top: 10px; }
+.highlight { background-color: #FFAAAA; color: #000000; }
+
+/*
+ * Caption in tables.
+ * Currently in Attachments and comments only.
+ */
+caption
+{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight : bold;
+  text-align: right;
+}
+
+/* trees */
+div.tree
+{
+  text-align: left;
+  padding-left: 1.5em;
+}
+/* Root of tree (outer div) */
+div.tree#top
+{
+  border: 1px outset #00E000;
+  padding: 10px 1.5em 20px 1.5em;
+}
+
+/* Wiki editpage textarea */
+textarea.wikiedit
+{
+	width: 100%;
+}
+/* help links style */
+a.tikihelp, a.tikihelp:visited {
+color: inherit;
+border: inherit;
+background-color: inherit;
+font-size: inherit;
+font-weight: inherit;
+margin: inherit;
+padding: inherit;
+text-decoration: inherit;
+}
+a.tikihelp:hover {
+color: #224466;
+border: inherit;
+background-color: inherit;
+font-size: inherit;
+font-weight: inherit;
+margin: inherit;
+padding: inherit;
+cursor: help;
+text-decoration: inherit;
+}
+

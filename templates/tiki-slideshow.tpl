@@ -4,7 +4,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-  <link rel="stylesheet" href="styles/slideshows/{$slide_style}">
+  <link rel="stylesheet" href="styles/slideshows/{$slide_style}" />
   <title>{$slide_title}</title>
   </head>
   <body bgcolor="#7d554b">

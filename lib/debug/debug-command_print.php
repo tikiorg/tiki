@@ -1,11 +1,14 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_print.php,v 1.1 2003-07-13 00:35:40 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_print.php,v 1.2 2003-08-01 10:30:55 redflo Exp $
 //
-// Command to print PHP variables to debug console
+// \brief Command to print PHP variables to debug console
 //
 require_once('lib/debug/debugger-ext.php');
 
+/**
+ * \brief Command to print PHP variables to debug console
+ */
 class DbgPrint extends DebuggerCommand
 {
   /// \b Must have function to announce command name in debugger console
@@ -28,26 +31,20 @@ class DbgPrint extends DebuggerCommand
   {
     return 'print $_REQUEST'."\n".'print $_SERVER["REQUEST_URI"] $my_private_variable';
   }
-  /// Execute command with given set of arguments. Must return string of result.
+  /// Execute command with given set of arguments.
   function execute($params)
   {
+    global $debugger;
+    require_once('lib/debug/debugger.php');
+    //
     $this->set_result_type(TEXT_RESULT);
     $result = '';
     $vars = explode(" ", $params);
     foreach ($vars as $v)
     {
-      $vv = str_replace("$","",trim($v));
-      if (strlen($vv) == 0) continue;
-      // Make var global... strip [] if needed
-      $global = (($pos = strpos($v, '[')) == false) ? $v : substr($v, 0, $pos);
-      global $$global;
-      //
-      $expr = "\$result .= print_r($v, true);";
+      if (strlen(str_replace("$", "", trim($v))) == 0) continue;
       $result .= $v.' = ';
-      $php_errormsg='';
-      @eval($expr);
-      if (strlen($php_errormsg)) $result .= "\n\t".$php_errormsg;
-      $result .= "\n";
+      $result .= trim($debugger->str_var_dump($v))."\n";
     }
     return $result;
   }

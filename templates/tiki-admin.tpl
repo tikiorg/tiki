@@ -1,5 +1,10 @@
 {popup_init src="lib/overlib.js"}
-<h2><a class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a></h2>
+<h2><a class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a>
+{if $feature_help}
+<a title='help' href='http://tikiwiki.org/tiki-index.php?page=TikiAdminSettings' target="help"><img
+border='0' src='img/icons/help.gif' alt='help' /></a>
+{/if}
+</h2>
 {if $smarty.get.page == "features"}
   {include file="tiki-admin-include-anchors.tpl"}
   {include file="tiki-admin-include-features.tpl"}

@@ -3,7 +3,7 @@ include_once('lib/notifications/notificationlib.php');
  
 class TrackerLib extends TikiLib {
     
-  function TrackerLib($db) 
+  function TrackerLib($db)
   {
     parent::TikiLib($db);
   }
@@ -87,7 +87,8 @@ class TrackerLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where itemId=$itemId and (filename like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where itemId=$itemId and (filename like $findesc)";  
     } else {
       $mid=" where itemId=$itemId "; 
     }
@@ -179,7 +180,8 @@ class TrackerLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (title like $findesc or data like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -348,7 +350,8 @@ class TrackerLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (name like '%".$find."%' or description like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (name like $findesc or description like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -372,7 +375,8 @@ class TrackerLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where trackerId=$trackerId and (name like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where trackerId=$trackerId and (name like $findesc)";  
     } else {
       $mid=" where trackerId=$trackerId "; 
     }

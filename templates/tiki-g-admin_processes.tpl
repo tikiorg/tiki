@@ -18,20 +18,20 @@
 </div>
 {/if}
 <form action="tiki-g-admin_processes.php" method="post">
-<input type="hidden" name="version" value="{$info.version}" />
-<input type="hidden" name="pid" value="{$info.pId}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="version" value="{$info.version|escape}" />
+<input type="hidden" name="pid" value="{$info.pId|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 	<tr>
 		<td class="formcolor">{tr}Process Name{/tr}</td>
-		<td class="formcolor"><input type="text" maxlength="80" name="name" value="{$info.name}" /> {tr}ver:{/tr}{$info.version}</td>
+		<td class="formcolor"><input type="text" maxlength="80" name="name" value="{$info.name|escape}" /> {tr}ver:{/tr}{$info.version}</td>
 	</tr>
 	<tr>
 	 	<td class="formcolor">{tr}Description{/tr}</td>
-	 	<td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description}</textarea></td>
+	 	<td class="formcolor"><textarea rows="5" cols="60" name="description">{$info.description|escape}</textarea></td>
 	</tr>
 	<tr>
 		<td class="formcolor"><a {popup text="$is_active_help"}>{tr}is active?{/tr}</a></td>
@@ -56,14 +56,14 @@
 
 <h3>{tr}List of processes{/tr} ({$cant})</h3>
 <form action="tiki-g-admin_processes.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find|escape}" />
 {tr}Process{/tr}:
 <select name="filter_name">
 <option value="">{tr}All{/tr}</option>
 {section loop=$all_procs name=ix}
-<option  value="{$all_procs[ix].name}">{$all_procs[ix].name}</option>
+<option  value="{$all_procs[ix].name|escape}">{$all_procs[ix].name}</option>
 {/section}
 </select>
 
@@ -77,10 +77,10 @@
 <input type="submit" name="filter" value="{tr}filter{/tr}" />
 </form>
 <form action="tiki-g-admin_processes.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
 <td style="text-align:center;" width="5%" class="heading"><input type="submit" name="delete" value="x " /></td>

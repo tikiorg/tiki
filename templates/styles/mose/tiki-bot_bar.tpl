@@ -7,7 +7,7 @@
 <a href="http://validator.w3.org/check/referer"><img border="0" src="img/valid-xhtml10.png" alt="Valid XHTML 1.0!" height="22" width="62" /></a>
 </td>
 <td>
-<a target="_blank"href="http://www.php.net"><img border="0" alt="php" src="img/php.png" width="62" height="22"/></a>
+<a target="_blank" href="http://www.php.net"><img border="0" alt="php" src="img/php.png" width="62" height="22"/></a>
 </td>
 <td width="100%">
 <div align="center">

@@ -1,9 +1,15 @@
 <?php
+//
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.11 2003-08-01 10:30:44 redflo Exp $
+//
+
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/categories/categlib.php');
 include_once('lib/filegals/filegallib.php');
 include_once('lib/polls/polllib.php');
+include_once('lib/tree/categ_admin_tree.php');
+include_once('lib/directory/dirlib.php');
 
 if(!isset($polllib)) {
   $polllib = new PollLib($dbTiki);
@@ -30,40 +36,48 @@ $smarty->assign('parentId',$_REQUEST["parentId"]);
 
 if(isset($_REQUEST["addpage"])) {
   // Here we categorize a page
-  $categlib->categorize_page($_REQUEST["pageName"],$_REQUEST["parentId"]);
+  // $categlib->categorize_page($_REQUEST["pageName"],$_REQUEST["parentId"]);
+	// add multiple pages at once
+	foreach ($_REQUEST['pageName'] as $value) {
+		$categlib->categorize_page($value,$_REQUEST["parentId"]);
+	}
 }
 if(isset($_REQUEST["addpoll"])) {
-  // Here we categorize a page
+  // Here we categorize a poll
   $categlib->categorize_poll($_REQUEST["pollId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addfaq"])) {
-  // Here we categorize a page
+  // Here we categorize a faq
   $categlib->categorize_faq($_REQUEST["faqId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addquiz"])) {
-  // Here we categorize a page
+  // Here we categorize a quiz
   $categlib->categorize_quiz($_REQUEST["quizId"],$_REQUEST["parentId"]);
 }
 
 if(isset($_REQUEST["addforum"])) {
-  // Here we categorize a page
+  // Here we categorize a forum
   $categlib->categorize_forum($_REQUEST["forumId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addgallery"])) {
-  // Here we categorize a page
+  // Here we categorize an image gallery
   $categlib->categorize_gallery($_REQUEST["galleryId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addfilegallery"])) {
-  // Here we categorize a page
+  // Here we categorize a file gallery
   $categlib->categorize_file_gallery($_REQUEST["file_galleryId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addarticle"])) {
-  // Here we categorize a page
+  // Here we categorize an article
   $categlib->categorize_article($_REQUEST["articleId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addblog"])) {
-  // Here we categorize a page
+  // Here we categorize a blog
   $categlib->categorize_blog($_REQUEST["blogId"],$_REQUEST["parentId"]);
+}
+if(isset($_REQUEST["adddirectory"])) {
+  // Here we categorize a directory category
+  $categlib->categorize_directory($_REQUEST["directoryId"],$_REQUEST["parentId"]);
 }
 
 
@@ -83,10 +97,10 @@ if(isset($_REQUEST["removeCat"])) {
   $categlib->remove_category($_REQUEST["removeCat"]);
 }
 
-if(isset($_REQUEST["save"])) {
+if(isset($_REQUEST["save"])&& isset($_REQUEST["name"]) && strlen($_REQUEST["name"])>0) {
   // Save
   if($_REQUEST["categId"]) {
-    $categlib->update_category($_REQUEST["categId"],$_REQUEST["name"],$_REQUEST["description"]);
+    $categlib->update_category($_REQUEST["categId"],$_REQUEST["name"],$_REQUEST["description"],$_REQUEST["parentId"]);
   } else {
     $categlib->add_category($_REQUEST["parentId"],$_REQUEST["name"],$_REQUEST["description"]);
   }
@@ -111,8 +125,26 @@ if($_REQUEST["parentId"]) {
 $smarty->assign('path',$path);
 $smarty->assign('father',$father);
 
-$children = $categlib->get_child_categories($_REQUEST["parentId"]);
-$smarty->assign_by_ref('children',$children);
+// Convert $childrens
+//$debugger->var_dump('$children');
+$ctall = $categlib->get_all_categories_ext();
+$tree_nodes = array();
+foreach ($ctall as $c)
+{
+  $tree_nodes[] = array(
+    "id"=>$c["categId"],
+    "parent"=>$c["parentId"],
+    "data"=>'<a class="catname" href="tiki-admin_categories.php?parentId='.$c["categId"].'" title="'.tra('Child categories').':'.$c["children"].' '.tra('Objects in category').':'.$c["objects"].'">'.$c["name"].'</a>',
+    "edit"=>'<a class="link" href="tiki-admin_categories.php?parentId='.$c["parentId"].'&amp;categId='.$c["categId"].'#editcreate" title="'.tra('edit').'"><img border="0" src="img/icons/edit.gif"></a>',
+    "remove"=>'<a class="link" href="tiki-admin_categories.php?parentId='.$c["parentId"].'&amp;removeCat='.$c["categId"].'" title="'.tra('remove').'"><img  border="0" src="img/icons2/delete.gif"></a>',
+    "children"=>$c["children"],
+    "objects"=>$c["objects"]
+  );
+}
+//$debugger->var_dump('$tree_nodes');
+$tm = new CatAdminTreeMaker("admcat");
+$res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
+$smarty->assign('tree', $res);
 
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'name_asc'; 
@@ -160,6 +192,9 @@ if($offset>0) {
   $smarty->assign('prev_offset',-1); 
 }
 
+$categories = $categlib->get_all_categories();
+$smarty->assign_by_ref('categories',$categories);
+
 $galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects) ;
 $smarty->assign_by_ref('galleries',$galleries["data"]);
 
@@ -186,6 +221,9 @@ $smarty->assign_by_ref('quizzes',$quizzes["data"]);
 
 $articles = $tikilib->list_articles(0,-1,'title_asc', $find_objects, '',$user);
 $smarty->assign_by_ref('articles',$articles["data"]);
+
+$directories = $dirlib->dir_list_all_categories(0,-1,'name_asc', $find_objects);
+$smarty->assign_by_ref('directories',$directories["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_categories.tpl');

@@ -1,11 +1,11 @@
-<a class="pagetitle" href="tiki-list_contents.php">{tr}Dynamic content system{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-list_contents.php">{tr}Dynamic content system{/tr}</a><br /><br />
 <h3>{tr}Create or edit content block{/tr}</h3><a class="link" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
 <form action="tiki-list_contents.php" method="post">
-<input type="hidden" name="contentId" value="{$contentId}" />
+<input type="hidden" name="contentId" value="{$contentId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Description{/tr}:</td>
 <td class="formcolor">
-<textarea rows="5" cols="40" name="description">{$description}</textarea>
+<textarea rows="5" cols="40" name="description">{$description|escape}</textarea>
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor">
 <input type="submit" name="save" value="{tr}save{/tr}" />
@@ -17,9 +17,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-list_contents.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -68,7 +68,7 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
@@ -79,7 +79,7 @@
 &nbsp;[<a class="prevnext" href="tiki-list_contents.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-list_contents.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

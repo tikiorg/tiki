@@ -18,6 +18,9 @@ if(!$user) {
    die;
 }
 
+if(!isset($_REQUEST["showall"])) $_REQUEST["showall"] = 'n';
+$smarty->assign('showall',$_REQUEST["showall"]);
+
 $userwatch=$user;
 if(isset($_REQUEST["view_user"])) {
   if($_REQUEST["view_user"]<>$user) {
@@ -84,12 +87,14 @@ if(isset($_REQUEST["uselib"])) {
 $avatars=Array();
 $h=opendir("img/avatars/");
 while($file=readdir($h)) {
-  if($file!='.' && $file!='..' ) {
+  if($file!='.' && $file!='..' && substr($file,0,1)!="." && $file!="CVS") {
     $avatars[]='img/avatars/'.$file;
   }
 }
 closedir($h);
 $smarty->assign_by_ref('avatars',$avatars);
+$smarty->assign_by_ref('numav',count($avatars));
+$smarty->assign('yours',rand(0,count($avatars)));
 
 include_once('tiki-mytiki_shared.php');
 

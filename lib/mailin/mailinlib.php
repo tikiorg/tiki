@@ -15,7 +15,8 @@ class MailinLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (account like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (account like $findesc)";  
     } else {
       $mid="  "; 
     }
@@ -37,7 +38,8 @@ class MailinLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where active='y' and (account like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where active='y' and (account like $findesc)";  
     } else {
       $mid=" where active='y'"; 
     }

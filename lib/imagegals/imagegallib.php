@@ -1,7 +1,7 @@
 <?php
 class ImageGalsLib extends TikiLib {
 
-  function ImageGalsLib($db) 
+  function ImageGalsLib($db)
   {
     # this is probably uneeded now
     if(!$db) {
@@ -711,7 +711,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";
+   	  $findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }
@@ -749,7 +750,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }
@@ -783,7 +785,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $sort_mode = str_replace("_"," ",$sort_mode);
 
     if($find) {
-      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }

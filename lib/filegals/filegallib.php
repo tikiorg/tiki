@@ -70,10 +70,11 @@ class FileGalLib extends TikiLib {
     }
 
     if($find) {
+      $find = $this->qstr('%'.$find.'%');
       if(empty($whuser)) {
-        $whuser = "where name like '%".$find."%' or description like '%".$find.".%'";
+        $whuser = "where name like $find or description like $find";
       } else {
-        $whuser .= " and name like '%".$find."%' or description like '%".$find.".%'";
+        $whuser .= " and name like $find or description like $find";
       }
     }
 

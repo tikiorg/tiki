@@ -7,7 +7,7 @@
 <br/><br/>
 <div align="center">
 <form action="tiki-directory_search.php" method="post">
-<input type="hidden" name="parent" value="{$parent}" />
+<input type="hidden" name="parent" value="{$parent|escape}" />
 {tr}Find{/tr}: 
 <select name="how">
 <option value="or">{tr}any{/tr}</option>
@@ -73,7 +73,7 @@
 <b>{tr}Links{/tr}</b><br/>
 <div class="dirlistsites">
 <form method="post" action="tiki-directory_browse.php">
-<input type="hidden" name="parent" value="{$parent}" />
+<input type="hidden" name="parent" value="{$parent|escape}" />
 {tr}Sort by{/tr}: <select name="sort_mode">
 <option value="name_desc" {if $sort_mode eq 'name_desc'}selected="selected"{/if}>{tr}name (desc){/tr}</option>
 <option value="name_asc" {if $sort_mode eq 'name_asc'}selected="selected"{/if}>{tr}name (asc){/tr}</option>
@@ -90,9 +90,9 @@
 {section name=ix loop=$items}
 <div class="dirsite">
 <img alt="flag" src="img/flags/{$items[ix].country}.gif" />
-<a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_new'{/if}>{$items[ix].name}</a>
+<a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
 {if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">edit</a>]{/if} 
-{if $cachepages eq 'y'}(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_new">{tr}cache{/tr}</a>){/if}
+{if $cachepages eq 'y'}(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}cache{/tr}</a>){/if}
 <br/>
 <span class="dirsitedesc">{$items[ix].description}</span><br/>
 {assign var=fsfs value=1}

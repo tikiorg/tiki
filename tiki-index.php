@@ -5,6 +5,7 @@ require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
 include_once('lib/wiki/histlib.php');
+include_once('lib/categories/categlib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -179,7 +180,8 @@ $slides = split("-=[^=]+=-",$info["data"]);
 if(count($slides)>1) {
 	$smarty->assign('show_slideshow','y');
 } else {
-	$slides = explode("\n...page...\n",$info["data"]);
+	$slides = explode("...page...",$info["data"]);
+	
 	if(count($slides)>1) {
 		$smarty->assign('show_slideshow','y');
 	} else {
@@ -308,6 +310,7 @@ if($feature_wiki_attachments == 'y') {
 
   $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
   $smarty->assign('atts',$atts["data"]);
+  $smarty->assign('atts_count',count($atts["data"]));
 }
 
 
@@ -381,14 +384,44 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
   HAWTIKI_index($info);
 }
 
+// Check to see if page is categorized
+$objId = urldecode($_REQUEST['page']);
+$is_categorized = $categlib->is_categorized('wiki page',$objId);
+
+
+// Display category path or not (like {catpath()})
+if ($is_categorized) {
+	$smarty->assign('is_categorized','y');
+	if(isset($feature_categorypath) and $feature_categories == 'y') {
+		if ($feature_categorypath == 'y') {
+			$cats = $categlib->get_object_categories('wiki page',$objId);
+			$display_catpath = $tikilib->get_categorypath($cats);
+			$smarty->assign('display_catpath',$display_catpath);
+		}
+	}
+	// Display current category objects or not (like {category()})
+	if (isset($feature_categoryobjects) and $feature_categories == 'y') {
+		if ($feature_categoryobjects == 'y') {
+			$catids = $categlib->get_object_categories('wiki page', $objId);
+			$display_catobjects = $tikilib->get_categoryobjects($catids);
+			$smarty->assign('display_catobjects',$display_catobjects);
+		}
+	}
+} else {
+	$smarty->assign('is_categorized','n');
+}
+
 // Flag for 'page bar' that currently 'Page view' mode active
 // so it is needed to show comments & attachments panels
 $smarty->assign('show_page','y');
 
 // Display the Index Template
 $smarty->assign('dblclickedit','y');
+$smarty->assign('print_page','n');
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
+$smarty->assign('categorypath',$feature_categorypath);
+$smarty->assign('categoryobjects',$feature_categoryobjects);
 $smarty->display("styles/$style_base/tiki.tpl");
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);

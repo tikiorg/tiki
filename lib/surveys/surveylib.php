@@ -2,7 +2,7 @@
  
 class SurveyLib extends TikiLib {
     
-  function SurveyLib($db) 
+  function SurveyLib($db)
   {
     parent::TikiLib($db);
   }
@@ -81,7 +81,7 @@ class SurveyLib extends TikiLib {
       $result = $this->query($query);
   
       $queryid = "select max(surveyId) from tiki_surveys where created=$now";
-      $quizId = $this->getOne($queryid);  
+      $surveyId = $this->getOne($queryid);  
     }
     return $surveyId;
   }
@@ -170,7 +170,8 @@ class SurveyLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where surveyId=$surveyId and (question like '%".$find."%'";  
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where surveyId=$surveyId and (question like $findesc";  
     } else {
       $mid=" where surveyId=$surveyId "; 
     }
@@ -218,7 +219,8 @@ class SurveyLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where (question like '%".$find."%'";  
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where (question like $findesc";  
     } else {
       $mid=" "; 
     }

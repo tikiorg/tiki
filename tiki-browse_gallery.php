@@ -93,7 +93,7 @@ if(isset($_REQUEST["remove"])) {
 }
 
 if(isset($_REQUEST["rebuild"])) {
- // To remove an image the user must be the owner or admin
+ // To rebuild thumbnails the user must be the owner or admin
   if(($tiki_p_admin_galleries != 'y') && (!$user || $user!=$gal_info["user"])) {
     $smarty->assign('msg',tra("Permission denied you cannot rebuild thumbnails in this gallery"));
     $smarty->display("styles/$style_base/error.tpl");

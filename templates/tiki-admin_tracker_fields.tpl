@@ -1,17 +1,17 @@
-<a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin tracker{/tr}: {$tracker_info.name}</a><br /><br />
 [<a href="tiki-list_trackers.php" class="link">{tr}List trackers{/tr}</a>
 {if $tiki_p_admin_trackers eq 'y'}
 |<a href="tiki-admin_trackers.php" class="link">{tr}Admin trackers{/tr}</a>
 |<a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="link">{tr}Edit this tracker{/tr}</a>
 {/if}
 |<a href="tiki-view_tracker.php?trackerId={$trackerId}" class="link">{tr}View this tracker items{/tr}</a>
-]<br/><br/>
+]<br /><br />
 <h2>{tr}Edit tracker fields{/tr}</h2>
 <form action="tiki-admin_tracker_fields.php" method="post">
-<input type="hidden" name="fieldId" value="{$fieldId}" />
-<input type="hidden" name="trackerId" value="{$trackerId}" />
+<input type="hidden" name="fieldId" value="{$fieldId|escape}" />
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name}" /></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
 <select name="type" id='trkfldtype' onChange="javascript:chgTrkFld();">
 <option value="c" {if $type eq 'c'}selected="selected"{/if}>{tr}checkbox{/tr}</option>
@@ -23,7 +23,7 @@
 <option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}date and time{/tr}</option>
 </select>
 </td></tr>
-<tr id='trkfldoptions' {if $type eq 'd'}style="display:block;"{else}style="display:none;"{/if}><td class="formcolor">{tr}Options (separated by commas used in dropdowns only){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$options}" /></td></tr>
+<tr id='trkfldoptions' {if $type eq 'd'}style="display:block;"{else}style="display:none;"{/if}><td class="formcolor">{tr}Options (separated by commas used in dropdowns only){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$options|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Is column visible when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column links to edit/view item?{/tr}</td><td class="formcolor"><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
@@ -35,9 +35,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_tracker_fields.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -64,7 +64,7 @@
 </tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admin_tracker_fields.php?find={$find}&amp;trackerId={$trackerId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -74,7 +74,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_tracker_fields.php?find={$find}&amp;trackerId={$trackerId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_tracker_fields.php?find={$find}&amp;trackerId={$trackerId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

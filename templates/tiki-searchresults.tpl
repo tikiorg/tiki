@@ -30,14 +30,14 @@
  | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=articles">{tr}articles{/tr}</a>
 {/if}
 ]
-<br/><br/>
+<br /><br />
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
 <form class="forms" method="post" action="tiki-searchresults.php">
     {tr}Find{/tr}: <input id="fuser" name="words" size="14" type="text" accesskey="s" />
-    <input type="hidden" name="where" value="{$where}" />
+    <input type="hidden" name="where" value="{$where|escape}" />
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/>
 </form>
-<br/><br/>
+<br /><br />
 {section  name=search loop=$results}
 <a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> ({tr}Hits{/tr}: {$results[search].hits})
 {if $feature_search_fulltext eq 'y'}
@@ -47,9 +47,9 @@
 &nbsp;({$results[search].type})
 {/if}
 
-<br/>
+<br />
 <div class="searchdesc">{$results[search].data|strip_tags}</div>
-<div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|tiki_long_datetime}</div><br/>
+<div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|tiki_long_datetime}</div><br />
 {sectionelse}
 {tr}No pages matched the search criteria{/tr}
 {/section}

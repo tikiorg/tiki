@@ -43,7 +43,8 @@ class NotepadLib extends TikiLib {
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (name like '%".$find."%' or data like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or data like $findesc)";  
     } else {
       $mid=""; 
     }

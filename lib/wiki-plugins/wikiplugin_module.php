@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.8 2003-07-06 11:07:50 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.9 2003-08-01 10:31:03 redflo Exp $
 Displays a module inlined in page
 
 Parameters
@@ -32,7 +32,7 @@ function wikiplugin_module($data,$params) {
 	if(!isset($np)) {$np='0';}
   if(!isset($module)) {
 		$out = '<form class="box" id="modulebox">';
-		$out.= '<br><select name="choose">';
+		$out.= '<br /><select name="choose">';
 		$out.= '<option value="">'.tra('Please choose a module').'</option>';
 		$out.= '<option value="" style="background-color:#bebebe;">'.tra('to be used as argument').'</option>';
 		$out.= '<option value="" style="background-color:#bebebe;">{MODULE(module=>name_of_module)}</option>';

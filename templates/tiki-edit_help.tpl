@@ -1,13 +1,23 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.11 2003-08-01 10:31:09 redflo Exp $ *}
+{* Show wiki syntax and plugins help *}
+{* TODO: Add links to add samples to edit form *}
+
 <div class="wiki-edithelp" width="100%" id='edithelpzone' >
-<p>
-<a class="wiki">{tr}TextFormattingRules{/tr}</a>
-</p>
+<div id="wikihelp-tab">
+{if count($plugins) ne 0}
+  <div style="text-align: right;">
+    <a href="javascript:hide('wikihelp-tab');show('wikiplhelp-tab');">{tr}Show Plugins Help{/tr}</a>
+    <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">[x]</a>
+  </div>
+{/if}
+<br />
+
 <table width=100%>
 <tr><td width=20%><strong>{tr}Emphasis{/tr}:</strong></td><td> '<strong></strong>' {tr}for{/tr} <em>{tr}italics{/tr}</em>, _<em></em>_ {tr}for{/tr} <strong>{tr}bold{/tr}</strong>, '<strong></strong>'_<em></em>_ {tr}for{/tr} <em><strong>{tr}both{/tr}</strong></em></td></tr>
 <tr><td><strong>{tr}Lists{/tr}:</strong></td><td> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}term{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr><td><strong>{tr}Wiki References{/tr}:</strong></td><td> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr} )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
 {if $feature_drawings eq 'y'}
-<tr><td><strong>{tr}Drawings{/tr}:</strong></td><td> "{literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}</td></tr>
+<tr><td><strong>{tr}Drawings{/tr}:</strong></td><td> {literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}</td></tr>
 {/if}
 <tr><td><strong>{tr}External links{/tr}:</strong></td><td> {tr}use square brackets for an{/tr} {tr}external link{/tr}: [URL] {tr}or{/tr} [URL|{tr}link_description{/tr}] {tr}or{/tr} [URL|{tr}description{/tr}|nocache].</td></tr>
 <tr><td><strong>{tr}Multi-page pages{/tr}:</strong></td><td>{tr}use ...page... to separate pages{/tr}</td></tr>
@@ -23,10 +33,16 @@
 <tr><td><strong>{tr}Center{/tr}:</strong></td><td> "::{tr}some text{/tr}::" {tr}Will display the text centered{/tr}</td></tr>
 <tr><td><strong>{tr}Non parsed sections{/tr}:</strong></td><td> "~np~ {tr}data{/tr} ~/np~" {tr}Prevents parsing data{/tr}</td></tr>
 </table>
+</div>
+
 {if count($plugins) ne 0}
-<p>
-<a class="wiki">{tr}PluginsHelp{/tr}</a>
-</p>
+<div id="wikiplhelp-tab" style="display:none;">
+  <div style="text-align: right;">
+    <a href="javascript:hide('wikiplhelp-tab');show('wikihelp-tab');">{tr}Show Text Formatting Rules{/tr}</a>
+    <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">[x]</a>
+  </div>
+<br />
+
 <table width=100%>
 {section name=i loop=$plugins}
  <tr>
@@ -35,5 +51,6 @@
  </tr>
 {/section}
 </table>
+</div>
 {/if}
 </div>

@@ -1,6 +1,6 @@
-<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
+<br /><br />
 <table width="100%">
 <tr>
   <!--The line below was <td valign="top" width="50%"> for no real reason-->
@@ -10,26 +10,25 @@
   <div class="cbox-data">
   <div class="simplebox">
   <form action="tiki-user_preferences.php" method="post">
-  <input type="hidden" name="view_user" value="{$userwatch}" />
-  <input type="hidden" name="user" value="{$userwatch}" /> 
+  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
+  <input type="hidden" name="user" value="{$userwatch|escape}" /> 
   <table>
   <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
-  <tr><td class="form">{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email}" /></td>
   <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td><input type="checkbox" name="email_isPublic" {if $email_isPublic eq 'y'}checked="checked"{/if} /></td></tr>
   </td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td>
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   <select name="country">
   {section name=ix loop=$flags}
-  <option name="{$flags[ix]}" {if $country eq $flags[ix]}selected="selected"{/if}>{$flags[ix]}</option>
+  <option name="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>{$flags[ix]}</option>
   {/section}
   </select>
   </td></tr>
   {if $change_theme eq 'y'}
   <tr><td class="form">{tr}Theme{/tr}:</td><td><select name="style">
         {section name=ix loop=$styles}
-        <option value="{$styles[ix]}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
+        <option value="{$styles[ix]|escape}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
         {/section}
         </select>
 		{if $feature_editcss and $tiki_p_create_css}
@@ -41,11 +40,11 @@
   <tr><td  class="form">{tr}Language{/tr}:</td><td>
         <select name="language">
         {section name=ix loop=$languages}
-        <option value="{$languages[ix]}" {if $language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
+        <option value="{$languages[ix]|escape}" {if $language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
         {/section}
         </select></td></tr>
   {/if}      
-  <tr><td class="form">{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName}" /></td></tr>
+  <tr><td class="form">{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
   <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td>
   <select name="userbreadCrumb">
@@ -57,15 +56,15 @@
   <option value="10" {if $userbreadCrumb eq 10}selected="selected"{/if}>10</option>
   </select>
   </td></tr>
-  <tr><td class="form">{tr}HomePage{/tr}:</td><td><input type="text" name="homePage" value="{$homePage}" /></td></tr>
+  <tr><td class="form">{tr}HomePage{/tr}:</td><td><input type="text" name="homePage" value="{$homePage|escape}" /></td></tr>
   {if $feature_wiki eq 'y'}
   <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
   {/if}
   
-  <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>
-  <select name='display_timezone'>
-  	{html_options options=$timezone_options selected=$display_timezone}
-  </select>
+  <tr><td class="form">{tr}Displayed time zone{/tr}:</td>
+  <td>
+  <input type="radio" name="display_timezone" value="UTC" {if $display_timezone eq 'UTC'}checked="checked"{/if}/> {tr}UTC{/tr}
+  <input type="radio" name="display_timezone" value="Local" {if $display_timezone ne 'UTC'}checked="checked"{/if}/> {tr}Local{/tr}
   </td>
   </tr>
   <tr><td class="form">{tr}User information{/tr}:</td><td>
@@ -86,16 +85,28 @@
   </table>
   </form>
   </div>
+  
+  <div class="simplebox">
+  {tr}Change your email{/tr}<br />
+  <form action="tiki-user_preferences.php" method="post">
+  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
+  <table>
+  <tr><td class="form">{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
+  <tr><td>{tr}Password{/tr}:</td><td><input type="password" name="pass" /></td></tr>
+  <tr><td align="center" colspan="2"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
+  </table>
+  </form>
+  </div>
     
   <div class="simplebox">
-  {tr}Change your password{/tr}<br/>
+  {tr}Change your password{/tr}<br />
   <form action="tiki-user_preferences.php" method="post">
-  <input type="hidden" name="view_user" value="{$userwatch}" />
+  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table>
   <tr><td>{tr}Old password{/tr}:</td><td><input type="password" name="old" /></td></tr>
   <tr><td>{tr}New password{/tr}:</td><td><input type="password" name="pass1" /></td></tr>
   <tr><td>{tr}Again please{/tr}:</td><td><input type="password" name="pass2" /></td></tr>
-  <tr><td align="center" colspan="2"><input type="submit" name="chgpswd" value="{tr}change{/tr}"></td></tr>
+  <tr><td align="center" colspan="2"><input type="submit" name="chgpswd" value="{tr}change password{/tr}"></td></tr>
   </table>
   </form>
   </div>
@@ -169,7 +180,7 @@
 
   
 
-<br/>
+<br />
 
 
 {if $feature_tasks eq 'y'}
@@ -213,7 +224,7 @@
   
   {/if}
 
-<br/>
+<br />
 
     <div class="cbox">
       <div class="cbox-title">{tr}My Tiki{/tr}</div>

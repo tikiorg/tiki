@@ -1,15 +1,15 @@
-<a href="tiki-admin_mailin.php" class="pagetitle">{tr}Mailin accounts{/tr}</a><br/><br/>
-<a class="link" href="tiki-mailin.php">Mailin</a><br/><br/>
+<a href="tiki-admin_mailin.php" class="pagetitle">{tr}Mailin accounts{/tr}</a><br /><br />
+<a class="link" href="tiki-mailin.php">Mailin</a><br /><br />
 <h3>{tr}Add new mail account{/tr}</h3>
 <form action="tiki-admin_mailin.php" method="post">
-<input type="hidden" name="accountId" value="{$accountId}" />
+<input type="hidden" name="accountId" value="{$accountId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Account name{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="account" value="{$info.account}" /></td></tr>
-<tr><td class="formcolor">{tr}POP server{/tr}</td><td class="formcolor"><input type="text" name="pop" value="{$info.pop}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="port" size="7" value="{$info.port}" /></td></tr>
-<tr><td class="formcolor">{tr}SMTP server{/tr}</td><td class="formcolor"><input type="text" name="smtp" value="{$info.smtp}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="smtpPort" size="7" value="{$info.smtpPort}" /></td></tr>
+<tr><td class="formcolor">{tr}Account name{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="account" value="{$info.account|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}POP server{/tr}</td><td class="formcolor"><input type="text" name="pop" value="{$info.pop|escape}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="port" size="7" value="{$info.port}" /></td></tr>
+<tr><td class="formcolor">{tr}SMTP server{/tr}</td><td class="formcolor"><input type="text" name="smtp" value="{$info.smtp|escape}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="smtpPort" size="7" value="{$info.smtpPort}" /></td></tr>
 <tr><td class="formcolor">{tr}SMTP requires authentication{/tr}</td><td  colspan="3" class="formcolor">{tr}Yes{/tr}<input type="radio" name="useAuth" value="yes" {if $info.useAuth eq 'y'}checked="checked"{/if} /> {tr}No{/tr}<input type="radio" name="useAuth" value="no" {if $info.useAuth eq 'n'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Username{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username}" /></td></tr>
-<tr><td class="formcolor">{tr}Password{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="pass" value="{$info.pass}" /></td></tr>
+<tr><td class="formcolor">{tr}Username{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Password{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="pass" value="{$info.pass|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}</td><td colspan="3" class="formcolor">
 <select name="type">
 <option value="wiki-get" {if $info.type eq 'wiki-get'}selected="selected"{/if}>{tr}wiki-get{/tr}</option>
@@ -32,11 +32,11 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
-<td class="{cycle advance=false}"><a href="tiki-admin_mailin.php" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
+<tr><td class="{cycle advance=false}"><a href="tiki-admin_mailin.php" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
 [<a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" class="link">x</a>|<a href="tiki-admin_mailin.php?accountId={$accounts[ix].accountId}" class="tablename">edit</a>]
 </td>
 <td class="{cycle}">{$accounts[ix].type}</td>
 </tr>
 {/section}
 </table>
-<br/><br/>
+<br /><br />

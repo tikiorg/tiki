@@ -1,7 +1,7 @@
-<a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
-{if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder{/tr}: {$path}<br/>
+<br /><br />
+{if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder{/tr}: {$path}<br />
 <h3>{tr}Folders{/tr}</h3>
 <table class="normal">
 <tr>
@@ -46,7 +46,7 @@
 </tr>
 {/section}
 </table>
-<br/>
+<br />
 <h3>{tr}Admin folders and bookmarks{/tr}</h3>
 <table class="normal" cellpadding="0" cellspacing="0">
 <tr> 
@@ -56,10 +56,10 @@
     <!-- form to add a category -->
     <table width="100%">
       <form action="tiki-user_bookmarks.php" method="post">
-      <input type="hidden" name="editfolder" value="{$editfolder}" />
-      <input type="hidden" name="parentId" value="{$parentId}" />
+      <input type="hidden" name="editfolder" value="{$editfolder|escape}" />
+      <input type="hidden" name="parentId" value="{$parentId|escape}" />
       <tr><td class="formcolor">{tr}name{/tr}:</td>
-          <td class="formcolor"><input type="text" name="foldername" value="{$foldername}" /></td>
+          <td class="formcolor"><input type="text" name="foldername" value="{$foldername|escape}" /></td>
       </tr>
       <tr><td class="formcolor">&nbsp;</td>
           <td class="formcolor"><input type="submit" name="addfolder" value="{tr}add{/tr}" /></td>
@@ -73,13 +73,13 @@
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl=0">{tr}new{/tr}</a>
     <table width="100%">
       <form action="tiki-user_bookmarks.php" method="post">
-      <input type="hidden" name="editurl" value="{$editurl}" />
-      <input type="hidden" name="parentId" value="{$parentId}" />
+      <input type="hidden" name="editurl" value="{$editurl|escape}" />
+      <input type="hidden" name="parentId" value="{$parentId|escape}" />
       <tr><td class="formcolor">{tr}Name{/tr}:</td>
-          <td class="formcolor"><input type="text" name="urlname" value="{$urlname}" /></td>
+          <td class="formcolor"><input type="text" name="urlname" value="{$urlname|escape}" /></td>
       </tr>
       <tr><td class="formcolor">{tr}URL{/tr}:</td>
-          <td class="formcolor"><input type="text" name="urlurl" value="{$urlurl}" /></td>
+          <td class="formcolor"><input type="text" name="urlurl" value="{$urlurl|escape}" /></td>
       </tr>
       <tr><td class="formcolor">&nbsp;</td>
           <td class="formcolor"><input type="submit" name="addurl" value="{tr}add{/tr}" /></td>

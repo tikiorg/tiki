@@ -9,7 +9,7 @@ class ProductInfo {
     {
         print '<table border="1">';
         foreach ($this->Details as $detail) {
-            print '<tr><td>'.$detail->listDisplay($type).'</tr></td>';
+            print '<tr><td>'.$detail->listDisplay($type).'</td></tr>';
         }
         print '</table>';
     }

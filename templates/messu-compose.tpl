@@ -1,20 +1,20 @@
-<a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a><br/><br/>
+<a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
-<br/><br/>
+<br /><br />
 {if $sent}
 {$message}
 {else}
 <form action="messu-compose.php" method="post">
 <table class="normal" width="70%">
   <tr>
-    <td class="formcolor">{tr}To{/tr}:</td><td class="formcolor"><input type="text" name="to" value="{$to}" />&nbsp;<input type="submit" name="send" value="{tr}send{/tr}" /></td>
+    <td class="formcolor">{tr}To{/tr}:</td><td class="formcolor"><input type="text" name="to" value="{$to|escape}" />&nbsp;<input type="submit" name="send" value="{tr}send{/tr}" /></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}CC{/tr}:</td><td class="formcolor"><input type="text" name="cc" value="{$cc}" /></td>
+    <td class="formcolor">{tr}CC{/tr}:</td><td class="formcolor"><input type="text" name="cc" value="{$cc|escape}" /></td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}BCC{/tr}:</td><td class="formcolor"><input type="text" name="bcc" value="{$bcc}" /></td>
+    <td class="formcolor">{tr}BCC{/tr}:</td><td class="formcolor"><input type="text" name="bcc" value="{$bcc|escape}" /></td>
   </tr>
   <tr>
     <td class="formcolor">{tr}Priority{/tr}:</td><td class="formcolor">
@@ -28,15 +28,15 @@
     </td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" name="subject" value="{$subject}" size="80" maxlength="255"/></td>
+    <td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" name="subject" value="{$subject|escape}" size="80" maxlength="255"/></td>
   </tr>
 </table>
-<br/>
+<br />
 <table class="normal" width="70%">
   <tr>
-    <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body}</textarea></td>
+    <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea></td>
   </tr>
 </table>
 </form>
 {/if}
-<br/><br/>
+<br /><br />

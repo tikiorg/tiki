@@ -1,11 +1,13 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-orphan_pages.tpl,v 1.11 2003-08-01 10:31:11 redflo Exp $ *}
+
 <a href="tiki-orphan_pages.php" class="pagetitle">{tr}Orphan Pages{/tr}</a><br/><br/>
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>
    <td class="findtitle">
    <form method="get" action="tiki-orphan_pages.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" name="search" value="{tr}find{/tr}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -51,7 +53,7 @@
 	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
 {/if}
 </tr>
-{cycle values="odd,even" print=false}
+{cycle values="even,odd" print=false}
 {section name=changes loop=$listpages}
 <tr>
 {if $wiki_list_name eq 'y'}
@@ -107,8 +109,9 @@
 	{/if}
 {/if}
 {if $wiki_list_size eq 'y'}
-	<td style="text-align:right;" class="{cycle}">{$listpages[changes].len|kbsize}</td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].len|kbsize}</td>
 {/if}
+       {cycle print=false}
 </tr>
 {sectionelse}
 <tr><td colspan="16">

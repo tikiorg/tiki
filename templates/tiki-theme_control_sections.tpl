@@ -1,14 +1,14 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-theme_control_sections.php">{tr}Theme Control Center: sections{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-theme_control_sections.php">{tr}Theme Control Center: sections{/tr}</a><br /><br />
 <div class="simplebox">
-<b>{tr}Theme is selected as follows{/tr}:</b><br/>
-1. {tr}If a theme is assigned to the individual object that theme is used.{/tr}<br/>
-2. {tr}If not then if a theme is assigned to the object's category that theme is used{/tr}<br/>
-3. {tr}If not then a theme for the section is used{/tr}<br/>
-4. {tr}If none of the above was selected the user theme is used{/tr}<br/>
-5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}<br/>
+<b>{tr}Theme is selected as follows{/tr}:</b><br />
+1. {tr}If a theme is assigned to the individual object that theme is used.{/tr}<br />
+2. {tr}If not then if a theme is assigned to the object's category that theme is used{/tr}<br />
+3. {tr}If not then a theme for the section is used{/tr}<br />
+4. {tr}If none of the above was selected the user theme is used{/tr}<br />
+5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}<br />
 </div>
-<br/><br/>
+<br /><br />
 [<a class="link" href="tiki-theme_control_objects.php">{tr}Control by Object{/tr}</a>
 | <a class="link" href="tiki-theme_control.php">{tr}Control by Categories{/tr}</a>]
 <h3>{tr}Assign themes to sections{/tr}</h3>
@@ -23,14 +23,14 @@
   <td class="formcolor">
     <select name="section">
       {section name=ix loop=$sections}
-      <option value="{$sections[ix]}">{$sections[ix]}</option>
+      <option value="{$sections[ix]|escape}">{$sections[ix]}</option>
       {/section}
     </select>
   </td>
   <td class="formcolor">
     <select name="theme">
       {section name=ix loop=$styles}
-      <option value="{$styles[ix]}">{$styles[ix]}</option>
+      <option value="{$styles[ix]|escape}">{$styles[ix]}</option>
       {/section}
     </select>
   </td>
@@ -61,4 +61,4 @@
 {/section}
 </table>
 </form>
-<br/> <br/> <br/> 
+<br /> <br /> <br /> 

@@ -1,13 +1,13 @@
-<a href="tiki-directory_admin.php" class="pagetitle">{tr}Directory Administration{/tr}</a><br/><br/>
+<a href="tiki-directory_admin.php" class="pagetitle">{tr}Directory Administration{/tr}</a><br /><br />
 {include file=tiki-directory_admin_bar.tpl}
-<br/><br/>
-<b>{tr}Statistics{/tr}</b><br/><br/>
-{tr}There are{/tr} {$stats.invalid} {tr}invalid sites{/tr}<br/>
-{tr}There are{/tr} {$stats.valid} {tr}valid sites{/tr}<br/>
-{tr}There are{/tr} {$stats.categs} <a class="link" href="tiki-directory_admin_categories.php">{tr}categories{/tr}</a><br/>
-{tr}Users have visited{/tr} {$stats.visits} {tr}sites from the directory{/tr}<br/>
-{tr}Users have searched{/tr} {$stats.searches} {tr}times from the directory{/tr}<br/>
-<br/><br/>
+<br /><br />
+<b>{tr}Statistics{/tr}</b><br /><br />
+{tr}There are{/tr} {$stats.invalid} {tr}invalid sites{/tr}<br />
+{tr}There are{/tr} {$stats.valid} {tr}valid sites{/tr}<br />
+{tr}There are{/tr} {$stats.categs} <a class="link" href="tiki-directory_admin_categories.php">{tr}categories{/tr}</a><br />
+{tr}Users have visited{/tr} {$stats.visits} {tr}sites from the directory{/tr}<br />
+{tr}Users have searched{/tr} {$stats.searches} {tr}times from the directory{/tr}<br />
+<br /><br />
 <h2>{tr}Menu{/tr}</h2>
 <ul>
  {if $tiki_p_admin_directory_cats eq 'y'}<li><a class="link" href="tiki-directory_admin_categories.php">{tr}Admin categories{/tr}</a></li>{/if}

@@ -1,15 +1,20 @@
-<a class="pagetitle" href="tiki-admin_menus.php">{tr}Admin Menus{/tr}</a><br/>
-<h2>{tr}Create/edit Menus{/tr}</h2>
+<a class="pagetitle" href="tiki-admin_menus.php">{tr}Admin Menus{/tr}</a><br />
+{if $menuId > 0}
+<h2>{tr}Edit this Menu:{/tr} {$name}</h2>
+<a href="tiki-admin_menus.php">{tr}Create new Menu{/tr}</a>
+{else}
+<h2>{tr}Create new Menu{/tr}</h2>
+{/if}
 <form action="tiki-admin_menus.php" method="post">
-<input type="hidden" name="menuId" value="{$menuId}" />
+<input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
 <select name="type">
 <option value="d" {if $type eq 'd'}selected="selected"{/if}>{tr}dynamic colapsed{/tr}</option>
 <option value="e" {if $type eq 'e'}selected="selected"{/if}>{tr}dynamic extended{/tr}</option>
-<option velue="f" {if $type eq 'f'}selected="selected"{/if}>{tr}fixed{/tr}</option>
+<option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}fixed{/tr}</option>
 </select>
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
@@ -21,9 +26,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_menus.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -76,7 +81,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_menus.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_menus.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

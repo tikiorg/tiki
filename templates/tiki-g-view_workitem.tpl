@@ -1,7 +1,7 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <a class="pagetitle" href="tiki-g-view_workitem.php?itemId={$smarty.request.itemId}">{tr}Browsing Workitem{/tr}</a>
-<br/><br/>
+<br /><br />
 {include file=tiki-g-monitor_bar.tpl}
 <h3>{tr}Workitem information{/tr}</h3>
 <table class="normal">

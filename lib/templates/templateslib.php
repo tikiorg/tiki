@@ -15,7 +15,8 @@ class TemplatesLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (content like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (content like $findesc)";
     } else {
       $mid="";
     }

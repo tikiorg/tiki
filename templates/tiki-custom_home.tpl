@@ -1,5 +1,5 @@
 {popup_init src="lib/overlib.js"}
-<script>
+<script language='Javascript' type='text/javascript'>
 {popup text="foo"}
 </script>
 <!--

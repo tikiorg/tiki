@@ -2,7 +2,7 @@
 <form action="{$rpage}" method="post">
 <select name="which">
 {section name=ix loop=$allrankings}
-<option value="{$allrankings[ix].value}" {if $which eq $allrankings[ix].value}selected="selected"{/if}>{$allrankings[ix].name}</option>
+<option value="{$allrankings[ix].value|escape}" {if $which eq $allrankings[ix].value}selected="selected"{/if}>{$allrankings[ix].name}</option>
 {/section}
 </select>
 <select name="limit">

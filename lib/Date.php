@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Date.php,v 1.4 2003-05-02 19:14:44 lrargerich Exp $
+// $Id: Date.php,v 1.5 2003-08-01 10:30:52 redflo Exp $
 //
 // Date Class
 //
@@ -273,16 +273,16 @@ class Date
                 $nextchar = substr($format,$strpos + 1,1);
                 switch($nextchar) {
                     case "a":
-                        $output .= Date_Calc::getWeekdayAbbrname($this->day,$this->month,$this->year);
+                        $output .= tra(Date_Calc::getWeekdayAbbrname($this->day,$this->month,$this->year));
                         break;
                     case "A":
-                        $output .= Date_Calc::getWeekdayFullname($this->day,$this->month,$this->year);
+                        $output .= tra(Date_Calc::getWeekdayFullname($this->day,$this->month,$this->year));
                         break;
                     case "b":
-                        $output .= Date_Calc::getMonthAbbrname($this->month);
+                        $output .= tra(Date_Calc::getMonthAbbrname($this->month));
                         break;
                     case "B":
-                        $output .= Date_Calc::getMonthFullname($this->month);
+                        $output .= tra(Date_Calc::getMonthFullname($this->month));
                         break;
                     case "C":
                         $output .= sprintf("%02d",intval($this->year/100));

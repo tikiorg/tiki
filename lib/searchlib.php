@@ -108,7 +108,8 @@ class SearchLib Extends TikiLib {
       'pageName'	=> 'pageName',
       'search'    => array(),
     );
-    $this->pageRank();
+		// that pagerank re-calculation was speed handicap (timex30)
+    //$this->pageRank();
     return $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
   }
 
@@ -242,8 +243,9 @@ class SearchLib Extends TikiLib {
 
   function find_posts($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
+		global $user;
   	$site_timezone_shortname = $this->get_site_timezone_shortname();
-  	$site_time_difference = $this->get_site_time_difference(/* $user */);
+  	$site_time_difference = $this->get_site_time_difference($user);
     # TODO localize?
     $pagename = "CONCAT(b.title, ' [', ".
     	"DATE_FORMAT(FROM_UNIXTIME(p.created + $site_time_difference), ".

@@ -4,9 +4,9 @@
   <td class="chatchannels" width="20%" valign="top">
   <div class="chattitle">{tr}Active Channels{/tr}:</div>
   {section name=chan loop=$channels}
-    <a class="link" href="tiki-chatroom.php?nickname={$nickname}&amp;channelId={$channels[chan].channelId}">{$channels[chan].name}</a><br/>
+    <a class="link" href="tiki-chatroom.php?nickname={$nickname}&amp;channelId={$channels[chan].channelId}">{$channels[chan].name}</a><br />
   {/section}
-  <br/>
+  <br />
   <div class="chattitle">{tr}Users in this channel{/tr}:</div>
   <iframe frameborder="0" height="200" scrolling="auto" marginwidth="0" marginheight="0" width="100%" src="tiki-chat_users.php?channelId={$channelId}"></iframe>
   </td>
@@ -18,8 +18,8 @@
   <td width="20%" valign="top">
     <div class="texthead">{tr}Channel Information{/tr}<a class="link" href="chat.php">(re)</a></div>
     <div class="text">
-    {tr}Channel{/tr}: {$channel_info.name}<br/>
-    {tr}Ratio{/tr}: {$channel_info.ratio} <br/><br/>
+    {tr}Channel{/tr}: {$channel_info.name}<br />
+    {tr}Ratio{/tr}: {$channel_info.ratio} <br /><br />
     {tr}Desc{/tr}: {$channel_info.description}
     </div>
   </td>
@@ -37,10 +37,10 @@
 <tr>
   <td class="tdchatform">
    <small>
-   {tr}Use :nickname:message for private messages{/tr}<br/> 
-   {tr}Use [URL|description] or [URL] for links{/tr}<br/>
+   {tr}Use :nickname:message for private messages{/tr}<br /> 
+   {tr}Use [URL|description] or [URL] for links{/tr}<br />
    {if $feature_smileys eq 'y'}
-   {tr}Use (:name:) for smileys{/tr} (smile, biggrin, cool, evil, frown, rolleyes, confused, cry, eek, exclaim, idea, mad, surprised, lol, redface, neutral, sad, twisted, wink)"<br/>
+   {tr}Use (:name:) for smileys{/tr} (smile, biggrin, cool, evil, frown, rolleyes, confused, cry, eek, exclaim, idea, mad, surprised, lol, redface, neutral, sad, twisted, wink)<br />
    {/if}
    </small>
   </td>

@@ -77,7 +77,8 @@ class ProcessMonitor extends Base {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where ((name like '%".$find."%') or (description like '%".$find."%'))";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where ((name like $findesc) or (description like $findesc))";
     } else {
       $mid="";
     }
@@ -117,7 +118,8 @@ class ProcessMonitor extends Base {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where ((name like '%".$find."%') or (description like '%".$find."%'))";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where ((name like $findesc) or (description like $findesc))";
     } else {
       $mid="";
     }
@@ -154,7 +156,8 @@ class ProcessMonitor extends Base {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where ((properties like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where ((properties like $findesc)";
     } else {
       $mid="";
     }
@@ -289,7 +292,8 @@ class ProcessMonitor extends Base {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and ((properties like '%".$find."%') or (name like '%".$find."%'))";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and ((properties like $findesc) or (name like $findesc))";
     } else {
       $mid="";
     }

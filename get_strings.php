@@ -1,19 +1,32 @@
 <?php
-
+/** \file
+ * $Header: /cvsroot/tikiwiki/tiki/get_strings.php
+ * \brief Update the language.php files
+ * \param lang the abbrevaitaion of the language - if no parameter all the languages are processed
+ */
 require_once('tiki-setup.php');
 
 if($tiki_p_admin != 'y') {
   die("You need to be admin to run this script");
 }
 
-// Cambiar lo que busca segun sea .php o .tpl
-
-$languages = Array('cn','de','dk','en','fr','he','it','nl','no','pl','ru','sp','sw','tw');
-//$languages = Array('it','pl');
+///Get the languages where the language.php has to be updated
+$languages = Array();
+if (isset ($_REQUEST["lang"])) {
+  $languages[] = $_REQUEST["lang"];
+}
+else {
+  $languages = Array('cn','de','dk','en','fr','he','it','nl','no','pl','ru','sp','sw','tw');
+}    	
+print("Languages:");
+foreach($languages as $sel) {
+   print($sel );
+}
+print("</br>");
 
 $files = Array();
 
-// tpl directories - look for all the .tpl files
+/// Get the tpl files: the filenames end with tpl and the files are in the directory templates/ and tempaltes/*/
 $dirs = Array('templates/');
 chdir('templates/');// see bug on is_dir on php.net
 $handle=opendir('.');
@@ -35,7 +48,7 @@ foreach ($dirs as $dir) {
   closedir($handle);
 }
 
-//php directories - look for all the .php files
+/// get the php files: the filenames end with php and the files are located in the list of directories ./, modules/; lib/, lib/*/, Smarty/plugins/
 $dirs=Array('./', 'modules/', 'lib/', 'Smarty/plugins/');
 chdir('lib/');
 $handle=opendir('.');
@@ -60,10 +73,12 @@ foreach ($dirs as $dir) {
 foreach($languages as $sel) {
 unset($lang);
 unset($used);
-require("lang/$sel/language.php");
+include("lang/$sel/language.php");
+$nbTrads=count($lang);
 $fw = fopen("lang/$sel/new_language.php",'w+');
 print("&lt;?php\n<br/>\$lang=Array(\n<br/>");
-fwrite($fw,"<?php\n\$lang=Array(\n");
+// the generated comment coding:utf-8 is for the benefit of emacs
+fwrite($fw,"<?php\n// -*- coding:utf-8 -*-\n\$lang=Array(\n");
 foreach($files as $file) {
   $fp = fopen($file,"r");
   $data = fread($fp,filesize($file));
@@ -104,18 +119,21 @@ foreach($files as $file) {
       $used[$word] = 1;
     if(isset($lang[$word])) {
       print('<b>"'.$word.'" => "'.$lang[$word].'",'."</b>\n<br/>");   
-      //fwrite($fw,'"'.$word.'" => "'.$lang[$word].'",'."\n");
     } else {
       print('<b>+++"'.$word.'" => "'.$word.'",'."</b>\n<br/>");  
       $lang[$word]=$word;
-      //fwrite($fw,'"'.$word.'" => "'.$word.'",'."\n");
     }
   }
 }
-print('"'.'##end###'.'" => "'.'###end###'.'"'.");?&gt;\n<br/>");  
+print('"'.'##end###'.'" => "'.'###end###'.'"'.");?&gt;\n<br/>");
+$nb = 0;  
 foreach($lang as $key=>$val) {
+  if ($key == '##end###' && $val == '###end###')
+     continue;
   // backslash $ and \n
   fwrite($fw,'"'.str_replace("\$", "\\\$", str_replace("\n", "\\n", $key)).'" => "'.str_replace("\$", "\\\$", str_replace("\n", "\\n", $val)).'",');
+  if (++$nb == $nbTrads)
+     fwrite($fw, "//##First new line");
   if (isset($used[$key]))
      fwrite($fw, "\n");
   else
@@ -124,7 +142,7 @@ foreach($lang as $key=>$val) {
 fwrite($fw,'"'.'##end###'.'" => "'.'###end###'.'");'."\n".'?>'."\n");  
 fclose($fw);
 @unlink("lang/$sel/old.php");
-rename("lang/$sel/language.php","lang/$sel/old.php");
+@rename("lang/$sel/language.php","lang/$sel/old.php");
 rename("lang/$sel/new_language.php","lang/$sel/language.php");
 }
 ?>

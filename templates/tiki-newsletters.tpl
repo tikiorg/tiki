@@ -1,9 +1,9 @@
-<a href="tiki-newsletters.php" class="pagetitle">{tr}Newsletters{/tr}</a><br/><br/>
+<a href="tiki-newsletters.php" class="pagetitle">{tr}Newsletters{/tr}</a><br /><br />
 {if $subscribed eq 'y'}
-{tr}Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.{/tr}<br/><br/>
+{tr}Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.{/tr}<br /><br />
 {/if}
 {if $unsub eq 'y'}
-{tr}Your email address was removed from the list of subscriptors.{/tr}<br/><br/>
+{tr}Your email address was removed from the list of subscriptors.{/tr}<br /><br />
 {/if}
 
 {if $confirm eq 'y'}
@@ -23,7 +23,7 @@
 {/if}
 {if $subscribe eq 'y'}
 <form method="post" action="tiki-newsletters.php">
-<input type="hidden" name="nlId" value="{$nlId}" />
+<input type="hidden" name="nlId" value="{$nlId|escape}" />
 <table class="normal">
 <tr>
   <td colspan="2" class="heading">{tr}Subscribe to newsletter{/tr}</td>
@@ -39,10 +39,10 @@
 {if $tiki_p_subscribe_email eq 'y'}
 <tr>
   <td class="even">{tr}Email:{/tr}</td>
-  <td class="even"><input type="text" name="email" value="{$email}" /></td>
+  <td class="even"><input type="text" name="email" value="{$email|escape}" /></td>
 </tr>
 {else}
-  <input type="hidden" name="email" value="{$email}" />
+  <input type="hidden" name="email" value="{$email|escape}" />
 {/if}
 <tr>
   <td class="even">&nbsp;</td>
@@ -58,9 +58,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_newsletters.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -89,7 +89,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_newsletters.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_newsletters.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

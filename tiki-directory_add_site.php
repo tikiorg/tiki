@@ -54,7 +54,7 @@ if($_REQUEST["siteId"]) {
   $info["name"]='';
   $info["description"]='';
   $info["url"]='';
-  $info["country"]='United_States';
+  $info["country"]='None';
   $info["isValid"]='y';
 }
 $smarty->assign_by_ref('info',$info);

@@ -13,21 +13,21 @@ Errors:<br/>
 
 <h3>{tr}Add or edit an activity{/tr} <a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={$sort_mode}&amp;activityId=0">{tr}new{/tr}</a></h3>
 <form action="tiki-g-admin_activities.php" method="post">
-<input type="hidden" name="pid" value="{$pid}" />
-<input type="hidden" name="activityId" value="{$info.activityId}" />
-<input type="hidden" name="where2" value="{$where2}" />
-<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="pid" value="{$pid|escape}" />
+<input type="hidden" name="activityId" value="{$info.activityId|escape}" />
+<input type="hidden" name="where2" value="{$where2|escape}" />
+<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
   <td class="formcolor">{tr}name{/tr}</td>
-  <td class="formcolor"><input type="text" name="name" value="{$info.name}" /></td>
+  <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
 </tr>
 <tr>
   <td class="formcolor">{tr}description{/tr}</td>
-  <td class="formcolor"><textarea name="description" rows="4" cols="60">{$info.description}</textarea></td>
+  <td class="formcolor"><textarea name="description" rows="4" cols="60">{$info.description|escape}</textarea></td>
 </tr>
 <tr>  
   <td class="formcolor">{tr}type{/tr}</td>
@@ -55,7 +55,7 @@ Errors:<br/>
 				{tr}Add transition from:{/tr}<br/>
 				<select name="add_tran_from[]" multiple="multiple" size="5">
 				{section name=ix loop=$items}
-				<option value="{$items[ix].activityId}" {if $items[ix].from eq 'y'}selected="selected"{/if}>{$items[ix].name|adjust:30}</option>
+				<option value="{$items[ix].activityId|escape}" {if $items[ix].from eq 'y'}selected="selected"{/if}>{$items[ix].name|adjust:30}</option>
 				{/section}			
 				</select>
 			</td>
@@ -63,7 +63,7 @@ Errors:<br/>
 				{tr}Add transition to:{/tr}<br/>
 				<select name="add_tran_to[]" multiple="multiple" size="5">
 				{section name=ix loop=$items}
-				<option value="{$items[ix].activityId}" {if $items[ix].to eq 'y'}selected="selected"{/if}>{$items[ix].name|adjust:30}</option>
+				<option value="{$items[ix].activityId|escape}" {if $items[ix].to eq 'y'}selected="selected"{/if}>{$items[ix].name|adjust:30}</option>
 				{/section}			
 				</select>
 			</td>
@@ -89,7 +89,7 @@ Errors:<br/>
   <select name="userole">
   <option value="">{tr}add new{/tr}</option>
   {section loop=$all_roles name=ix}
-  <option value="{$all_roles[ix].roleId}">{$all_roles[ix].name}</option>
+  <option value="{$all_roles[ix].roleId|escape}">{$all_roles[ix].name}</option>
   {/section}
   </select>
   {/if}
@@ -107,11 +107,11 @@ Errors:<br/>
 <h3>{tr}Process activities{/tr}</h3>
 	
 <form action="tiki-g-admin_activities.php" method="post">
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="pid" value="{$pid}" />
-<input type="hidden" name="activityId" value="{$info.activityId}" />
-<input type="hidden" name="where2" value="{$where2}" />
-<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="pid" value="{$pid|escape}" />
+<input type="hidden" name="activityId" value="{$info.activityId|escape}" />
+<input type="hidden" name="where2" value="{$where2|escape}" />
+<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 <table>
 <tr>
 	<td>
@@ -132,7 +132,7 @@ Errors:<br/>
 </tr>			
 <tr>
 	<td>	
-		<input size="8" type="text" name="find" value="{$find}" />
+		<input size="8" type="text" name="find" value="{$find|escape}" />
 	</td>
 	<td>
 		<select name="filter_type">
@@ -167,13 +167,13 @@ Errors:<br/>
 </table>	
 </form>
 <form action="tiki-g-admin_activities.php" method="post">
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="where2" value="{$where2}" />
-<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
-<input type="hidden" name="pid" value="{$pid}" />
-<input type="hidden" name="activityId" value="{$info.activityId}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="where2" value="{$where2|escape}" />
+<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
+<input type="hidden" name="pid" value="{$pid|escape}" />
+<input type="hidden" name="activityId" value="{$info.activityId|escape}" />
 <table class="normal">
 <tr>
 <td style="text-align:center;" width="7%" class="heading"><input type="submit" name="delete_act" value="x " /></td>
@@ -238,28 +238,28 @@ Errors:<br/>
 	<td width="50%">
 		<h3>{tr}List of transitions{/tr}</h3>
 			<form action="tiki-g-admin_activities.php" method="post" id='filtran'>
-			<input type="hidden" name="pid" value="{$pid}" />
-			<input type="hidden" name="activityId" value="{$info.activityId}" />
-			<input type="hidden" name="find" value="{$find2}" />
-			<input type="hidden" name="where" value="{$where2}" />
-			<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
+			<input type="hidden" name="pid" value="{$pid|escape}" />
+			<input type="hidden" name="activityId" value="{$info.activityId|escape}" />
+			<input type="hidden" name="find" value="{$find2|escape}" />
+			<input type="hidden" name="where" value="{$where2|escape}" />
+			<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 			{tr}From:{/tr}<select name="filter_tran_name" onChange="javascript:document.getElementById('filtran').submit();">
 			<option value="" {if $filter_tran_name eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
 			{section name=ix loop=$items}
-			<option value="{$items[ix].activityId}" {if $filter_tran_name eq $items[ix].activityId}selected="selected"{/if}>{$items[ix].name}</option>
+			<option value="{$items[ix].activityId|escape}" {if $filter_tran_name eq $items[ix].activityId}selected="selected"{/if}>{$items[ix].name}</option>
 			{/section}
 			</select>
 <!--			<input type="submit" name="filter_tran" value="{tr}filter{/tr}" /> -->
 			</form>
 			
 			<form action="tiki-g-admin_activities.php" method="post">
-			<input type="hidden" name="pid" value="{$pid}" />
-			<input type="hidden" name="activityId" value="{$info.activityId}" />
-			<input type="hidden" name="find" value="{$find2}" />
-			<input type="hidden" name="where" value="{$where2}" />
-			<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-			<input type="hidden" name="where2" value="{$where2}" />
-			<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
+			<input type="hidden" name="pid" value="{$pid|escape}" />
+			<input type="hidden" name="activityId" value="{$info.activityId|escape}" />
+			<input type="hidden" name="find" value="{$find2|escape}" />
+			<input type="hidden" name="where" value="{$where2|escape}" />
+			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+			<input type="hidden" name="where2" value="{$where2|escape}" />
+			<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 			<table class="normal">
 			<tr>
 			<td class="heading" width="5%"><input type="submit" name="delete_tran" value="{tr}x{/tr} " /></td>
@@ -296,13 +296,13 @@ Errors:<br/>
 	<td class="formcolor" width="50%">
 		<h3>{tr}Add a transition{/tr}</h3>
 		<form action="tiki-g-admin_activities.php" method="post">
-		<input type="hidden" name="pid" value="{$pid}" />
-		<input type="hidden" name="activityId" value="{$info.activityId}" />
-		<input type="hidden" name="find" value="{$find2}" />
-		<input type="hidden" name="where" value="{$where2}" />
-		<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-		<input type="hidden" name="where2" value="{$where2}" />
-		<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
+		<input type="hidden" name="pid" value="{$pid|escape}" />
+		<input type="hidden" name="activityId" value="{$info.activityId|escape}" />
+		<input type="hidden" name="find" value="{$find2|escape}" />
+		<input type="hidden" name="where" value="{$where2|escape}" />
+		<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+		<input type="hidden" name="where2" value="{$where2|escape}" />
+		<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 		<table class="normal">
 		<tr>
 		  <td class="formcolor">
@@ -311,7 +311,7 @@ Errors:<br/>
 		  <td>
 		  <select name="actFromId">
 		  {section name=ix loop=$items}
-		  <option value="{$items[ix].activityId}">{$items[ix].name}</option>
+		  <option value="{$items[ix].activityId|escape}">{$items[ix].name}</option>
 		  {/section}
 		  </select>
 		  </td>
@@ -323,7 +323,7 @@ Errors:<br/>
 		  <td>
 		   <select name="actToId">
 		  {section name=ix loop=$items}
-		  <option value="{$items[ix].activityId}">{$items[ix].name}</option>
+		  <option value="{$items[ix].activityId|escape}">{$items[ix].name}</option>
 		  {/section}
 		  </select>
 		  </td>

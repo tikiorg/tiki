@@ -7,9 +7,9 @@
 
 {* FILTERING FORM *}
 <form action="tiki-g-monitor_workitems.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="filter_instance" value="{$filter_instance}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="filter_instance" value="{$filter_instance|escape}" />
 <table>
 <tr>
 <td>
@@ -34,13 +34,13 @@
 
 <tr>
 <td >
-	<input size="8" type="text" name="find" value="{$find}" />
+	<input size="8" type="text" name="find" value="{$find|escape}" />
 </td>
 <td >
 	<select name="filter_process">
 	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$all_procs name=ix}
-	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId}">{$all_procs[ix].name} {$all_procs[ix].version}</option>
+	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId|escape}">{$all_procs[ix].name} {$all_procs[ix].version}</option>
 	{/section}
 	</select>
 </td>
@@ -48,18 +48,18 @@
 	<select name="filter_activity">
 	<option {if '' eq $smarty.request.filter_activity}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$all_procs name=ix}
-	<option {if $all_acts[ix].activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$all_acts[ix].activityId}">{$all_acts[ix].name}</option>
+	<option {if $all_acts[ix].activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$all_acts[ix].activityId|escape}">{$all_acts[ix].name}</option>
 	{/section}
 	</select>
 </td>
 <td >
-	<input type="text" name="filter_instance" value="{$smarty.request.filter_instance}" size="4" />
+	<input type="text" name="filter_instance" value="{$smarty.request.filter_instance|escape}" size="4" />
 </td>
 <td >
 	<select name="filter_user">
 	<option {if '' eq $smarty.request.filter_user}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$users name=ix}
-	<option {if $users[ix] eq $smarty.request.filter_user}selected="selected"{/if} value="{$users[ix]}">{$users[ix]}</option>
+	<option {if $users[ix] eq $smarty.request.filter_user}selected="selected"{/if} value="{$users[ix]|escape}">{$users[ix]}</option>
 	{/section}
 	</select>
 </td>
@@ -74,10 +74,10 @@
 
 {*LISTING*}
 <form action="tiki-g-monitor_workitems.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'itemId_desc'}{sameurl sort_mode='itemId_asc'}{else}{sameurl sort_mode='itemId_desc'}{/if}">{tr}Id{/tr}</a></td>
@@ -88,7 +88,6 @@
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'started_desc'}{sameurl sort_mode='started_asc'}{else}{sameurl sort_mode='started_desc'}{/if}">{tr}Start{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'duration_desc'}{sameurl sort_mode='duration_asc'}{else}{sameurl sort_mode='duration_desc'}{/if}">{tr}time{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='user_desc'}{/if}">{tr}User{/tr}</a></td>
-</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.21 2003-08-01 10:31:09 redflo Exp $ *}
+
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a><br/><br/>
 <h3>{tr}Add a new user{/tr}</h3>
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
@@ -37,58 +39,41 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-adminusers.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
 		 {tr}Number of displayed rows{/tr}
-		 <input type="text" size="4" name="numrows" value="{$numrows}">
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+		 <input type="text" size="4" name="numrows" value="{$numrows|escape}">
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
 </table>
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}email{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'currentLogin_desc'}currentLogin_asc{else}currentLogin_desc{/if}">{tr}last_login{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'currentLogin_desc'}currentLogin_asc{else}currentLogin_desc{/if}">{tr}Last login{/tr}</a></td>
 <td class="heading">{tr}Groups{/tr}</td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
+{cycle print=false values="even,odd"}
 {section name=user loop=$users}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$users[user].user}</td>
-<td class="odd">{$users[user].email}</td>
-<td class="odd">{$users[user].currentLogin|tiki_long_datetime}</td>
-<td class="odd">
+<td class="{cycle advance=false}">{$users[user].user}</td>
+<td class="{cycle advance=false}">{$users[user].email}</td>
+<td class="{cycle advance=false}">{if $users[user].currentLogin eq ''}{tr}Never{/tr}{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
+<td class="{cycle advance=false}">
 {foreach from=$users[user].groups item=grs}
 {$grs}
 {if $grs != "Anonymous"}
 (<a class="link"href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs}">x</a>)
 {/if}&nbsp;
 {/foreach}
-<td class="odd"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}">{tr}delete{/tr}</a><br/>
+<td class="{cycle}">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}">{tr}delete{/tr}</a><br/>{/if}
                                    <a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}">{tr}assign group{/tr}</a><br/>
                                    <a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}">{tr}view info{/tr}</a>
                                    </td>
 </tr>
-{else}
-<tr>
-<td class="even">{$users[user].user}</td>
-<td class="even">{$users[user].email}</td>
-<td class="even">{$users[user].currentLogin|tiki_long_datetime}</td>
-<td class="even">
-{foreach from=$users[user].groups item=grs}
-{$grs}
-{if $grs != "Anonymous"}
-(<a class="link"href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs}">x</a>)
-{/if}&nbsp;
-{/foreach}
-<td class="even"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}">{tr}delete{/tr}</a><br/>
-                 <a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}">{tr}assign group{/tr}</a><br/>
-                 <a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}">{tr}view info{/tr}</a></td>
-</tr>
-{/if}
 {/section}
 </table>
 <br/>

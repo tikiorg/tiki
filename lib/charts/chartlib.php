@@ -344,7 +344,8 @@ class ChartLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where ((title like '%".$find."%') or (description like '%".$find."%'))";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where ((title like $findesc) or (description like $findesc))";
     } else {
       $mid="";
     }
@@ -378,7 +379,8 @@ class ChartLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where ((title like '%".$find."%') or (description like '%".$find."%'))";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where ((title like $findesc) or (description like $findesc))";
     } else {
       $mid="";
     }

@@ -69,7 +69,7 @@ if(isset($_REQUEST["upload"])) {
   $error_msg='';
   if(!empty($_REQUEST["url"])) {
     // Get the image from a URL
-    $fp = fopen($_REQUEST["url"],"r");
+    $fp = @fopen($_REQUEST["url"],"r");
     if($fp) {
       $data = fread($fp, 1000000);
       fclose($fp);

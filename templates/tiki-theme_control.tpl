@@ -23,14 +23,14 @@
   <td class="formcolor">
     <select name="categId">
       {section name=ix loop=$categories}
-      <option value="{$categories[ix].categId}">{$categories[ix].name}</option>
+      <option value="{$categories[ix].categId|escape}">{$categories[ix].name}</option>
       {/section}
     </select>
   </td>
   <td class="formcolor">
     <select name="theme">
       {section name=ix loop=$styles}
-      <option value="{$styles[ix]}">{$styles[ix]}</option>
+      <option value="{$styles[ix]|escape}">{$styles[ix]}</option>
       {/section}
     </select>
   </td>
@@ -46,9 +46,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-theme_control.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

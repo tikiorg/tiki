@@ -7,14 +7,14 @@
 <h3>{tr}List of messages{/tr} ({$cant})</h3>
 {* FILTERING FORM *}
 <form action="tiki-forums_reported.php" method="post">
-<input type="hidden" name="forumId" value="{$forumId}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="forumId" value="{$forumId|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 <tr>
 <td>
 	<small>{tr}find{/tr}</small>
-	<input size="8" type="text" name="find" value="{$find}" />
+	<input size="8" type="text" name="find" value="{$find|escape}" />
 	<input type="submit" name="filter" value="{tr}filter{/tr}" />
 </td>
 </tr>
@@ -24,16 +24,15 @@
 
 {*LISTING*}
 <form action="tiki-forums_reported.php" method="post">
-<input type="hidden" name="forumId" value="{$forumId}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="find" value="{$find}" />
+<input type="hidden" name="forumId" value="{$forumId|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
 <table class="normal">
 <tr>
 <td width="2%" class="heading" ><input type="submit" name="del" value="x " /></td>
 <td class="heading" >{tr}message{/tr}</td>
 <td class="heading" >{tr}Reported by{/tr}</td>
-</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger-common.php,v 1.1 2003-07-13 00:35:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger-common.php,v 1.2 2003-08-01 10:30:55 redflo Exp $
  *
  * \brief Commonly used stuff
  *
@@ -10,11 +10,11 @@
 
 /// Result not available
 define('NO_RESULT',   0);
-/// Command returns text/plain
+/// Command returns text/plain. execute() must return string type.
 define('TEXT_RESULT', 1);
-/// Command returns text/html
+/// Command returns text/html. execute() must return string type.
 define('HTML_RESULT', 2);
-/// Command need tpl file to display result
+/// Command need tpl file to display result. execute() may return any type.
 define('TPL_RESULT',  3);
 
 /**

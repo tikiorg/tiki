@@ -91,39 +91,49 @@ if($tiki_p_admin_forum == 'y') {
 
 
 	if(isset($_REQUEST['delsel_x'])) {
-	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
-	    $commentslib->remove_comment($topic);
-	    $commentslib->register_remove_post($_REQUEST['forumId'], 0);
-	  }
+		if (isset($_REQUEST['forumtopic'])) {	
+		  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+		    $commentslib->remove_comment($topic);
+	    	$commentslib->register_remove_post($_REQUEST['forumId'], 0);
+		  }
+		}
 	}
 	
 	if(isset($_REQUEST['locksel_x'])) {
-	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
-	    $commentslib->lock_comment($topic);
-	  }
+		if (isset($_REQUEST['forumtopic'])) {	
+		  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+		    $commentslib->lock_comment($topic);
+		  }
+		}
 	}
 	
 	if(isset($_REQUEST['unlocksel_x'])) {
-	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
-	    $commentslib->unlock_comment($topic);
-	  }
+		if (isset($_REQUEST['forumtopic'])) {	
+		  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+		    $commentslib->unlock_comment($topic);
+		  }
+		}
 	}
 	
 	if(isset($_REQUEST['movesel'])) {
-	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
-	    // To move a topic you just have to change the object
-	    $obj = 'forum'.$_REQUEST['moveto'];
-	    $commentslib->set_comment_object($topic,$obj);
-	  }
+		if (isset($_REQUEST['forumtopic'])) {
+		  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+		    // To move a topic you just have to change the object
+		    $obj = 'forum'.$_REQUEST['moveto'];
+		    $commentslib->set_comment_object($topic,$obj);
+		  }
+		}
 	}
 	
 	if(isset($_REQUEST['mergesel'])) {
-	  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
-	    // To move a topic you just have to change the object
-	    if($topic != $_REQUEST['mergetopic']) {
+		if (isset($_REQUEST['forumtopic'])) {
+		  foreach(array_values($_REQUEST['forumtopic']) as $topic) {
+		    // To move a topic you just have to change the object
+	    	if($topic != $_REQUEST['mergetopic']) {
 			$commentslib->set_parent($topic,$_REQUEST['mergetopic']);
+	    	}
+		  }
 		}
-	  }
 	}
 
 }
@@ -168,6 +178,8 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
           $_REQUEST["comment_topictype"]='n';
         }
         
+		if ($forum_info['topic_summary'] != 'y') $_REQUEST['comment_topicsummary']='';          
+		if ($forum_info['topic_smileys'] != 'y') $_REQUEST['comment_topicsmiley']='';          
         
         if($forum_info['forum_use_password'] != 'n' && $_REQUEST['password']!=$forum_info['forum_password']) {
             $smarty->assign('msg',tra("Wrong password. Cannot post comment"));
@@ -454,8 +466,10 @@ if(isset($_REQUEST["comments_previewComment"])) {
   $smarty->assign('comment_title',$_REQUEST["comments_title"]);
   $smarty->assign('comment_data',$_REQUEST["comments_data"]);
   $smarty->assign('comment_topictype',$_REQUEST["comment_topictype"]);
-  $smarty->assign('comment_topicsummary',$_REQUEST["comment_topicsummary"]);
-  $smarty->assign('comment_topicsmiley',$_REQUEST["comment_topicsmiley"]);
+  if ($forum_info['topic_summary'] == 'y')
+	  $smarty->assign('comment_topicsummary',$_REQUEST["comment_topicsummary"]);
+  if ($forum_info['topic_smileys'] == 'y')
+	  $smarty->assign('comment_topicsmiley',$_REQUEST["comment_topicsmiley"]);
   $smarty->assign('openpost','y');
   $smarty->assign('comment_preview','y');
 }

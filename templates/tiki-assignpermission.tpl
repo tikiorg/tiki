@@ -1,30 +1,30 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.33 2003-07-12 00:25:15 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.34 2003-08-01 10:31:09 redflo Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
-<a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a><br/><br/>
+<a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a><br /><br />
 <h3>{tr}Group Information{/tr}</h3>
 <table class="normal">
 <tr><td class="even">{tr}Name{/tr}:</td><td class="odd">{$group_info.groupName}</td></tr>
 <tr><td class="even">{tr}Desc{/tr}:</td><td class="odd">{$group_info.groupDesc}</td></tr>
 <tr><td class="even">{tr}Permissions{/tr}:</td><td class="odd">
 {section name=grp loop=$group_info.perms}
-{$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}(<a class="link" href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group}&amp;action=remove">x</a>){/if}&nbsp;<br/>
+{$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}(<a class="link" href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group}&amp;action=remove">x</a>){/if}&nbsp;<br />
 {/section}
 </td></tr>
 </table>
-<br/>
+<br />
 
 <form method="post" action="tiki-assignpermission.php">
-<input type="hidden" name="group" value="{$group}" />
-<input type="hidden" name="type" value="{$type}" />
+<input type="hidden" name="group" value="{$group|escape}" />
+<input type="hidden" name="type" value="{$type|escape}" />
 {tr}Create level{/tr}:<input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}create{/tr}" />
 </form>
-<br/>
-<br/>
+<br />
+<br />
 <form method="post" action="tiki-assignpermission.php">
-<input type="hidden" name="group" value="{$group}" />
-<input type="hidden" name="type" value="{$type}" />
+<input type="hidden" name="group" value="{$group|escape}" />
+<input type="hidden" name="type" value="{$type|escape}" />
 <select name="oper">
 <option value="assign">{tr}assign{/tr}</option>
 <option value="remove">{tr}remove{/tr}</option>
@@ -36,15 +36,15 @@
 <input type="submit" name="allper" value="{tr}update{/tr}" />
 </form>
 
-<br/><br/>
+<br /><br />
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="post" action="tiki-assignpermission.php">
-     <input type="text" name="find" value="{$find}" />
-     <input type="hidden" name="group" value="{$group}" />
+     <input type="text" name="find" value="{$find|escape}" />
+     <input type="hidden" name="group" value="{$group|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -53,8 +53,8 @@
 
 
 <form name="tiki-assignpermission.php" method="post">
-<input type="hidden" name="group" value="{$group}" />
-<input type="hidden" name="type" value="{$type}" />
+<input type="hidden" name="group" value="{$group|escape}" />
+<input type="hidden" name="type" value="{$type|escape}" />
 <input type="submit" name="update" value="{tr}update{/tr}" />
 <table class="normal">
 <tr>
@@ -71,7 +71,7 @@
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=comm">{tr}Comm{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=games">{tr}Games{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=quizzes">{tr}Quizzes{/tr}</a>
-   ]<br/>
+   ]<br />
    [
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=cms">{tr}Cms{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=faqs">{tr}FAQs{/tr}</a>|
@@ -82,7 +82,7 @@
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=drawings">{tr}Drawings{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=html%20pages">{tr}HTML pages{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=trackers">{tr}Trackers{/tr}</a>
-   ]<br/>
+   ]<br />
    [
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=surveys">{tr}Surveys{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=webmail">{tr}Webmail{/tr}</a>|
@@ -147,7 +147,7 @@
 {/section}
 </table>
 </form>
-<br/>
+<br />
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
@@ -158,7 +158,7 @@
 &nbsp;[<a class="prevnext" href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

@@ -84,6 +84,22 @@ $display_timezone = $tikilib->get_user_preference($userwatch,'display_timezone',
 $smarty->assign_by_ref('display_timezone',$display_timezone);
 
 $userinfo = $userlib->get_user_info($userwatch);
+if($tikilib->get_user_preference($userwatch,'email is public') == 'y') {
+  switch($tikilib->get_user_preference($userwatch,'scrambling method',
+				       'unicode')) {
+  case 'strtr':
+    $trans = array("@" => tra("(AT)"),
+		   "." => tra("(DOT)"));
+    $userinfo['email'] = strtr($userinfo['email'],$trans);
+    break;
+  default:
+    $encoded = '';
+    for ($i=0; $i < strlen($userinfo['email']); $i++) {
+      $encoded .= '&#'.ord($userinfo['email'][$i]).';';
+    }
+    $userinfo['email'] = $encoded;
+  }
+}
 $smarty->assign_by_ref('userinfo',$userinfo);
 
 

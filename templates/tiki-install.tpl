@@ -1,6 +1,8 @@
 <div style="margin-left:180px;margin-right:180px;">
-<h1>Tiki installer v1.6 -Tau Ceti-</h1>
+<h1>Tiki installer v1.7 -Eta Carinae- <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
+border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 <a href="tiki-install.php?restart=1" class="link">reload</a><br/><br/>
+{*
 {if $can_write eq 'n'}
   <b>We have problems!</b><br/>
   The following directories must be writeable by Tiki, please
@@ -15,7 +17,7 @@
   dump<br/>
   temp<br/><br/>
   <a href="tiki-install.php" class="link">try again!</a>
-{else}
+*}
 	{if $dbcon eq 'n'}
 	  <b>Tiki cannot find a database connection</b><br/>
 	  Please enter your database connection info<br/><br/>
@@ -91,7 +93,7 @@
 		    Update database using script: 
 		    <select name="file">
 		    {section name=ix loop=$files}
-		    <option value="{$files[ix]}">{$files[ix]}</option>
+		    <option value="{$files[ix]|escape}">{$files[ix]}</option>
 		    {/section}
 		    </select>
 		    <input type="submit" name="update" value="update" />
@@ -103,6 +105,18 @@
 			{* we are not logged then no admin account found and user not logged*}
 			<b>This site has an admin account configured</b><br/>
 		    Please enter your admin password to continue<br/><br/>
+
+     <form name="loginbox" action="tiki-install.php" method="post"> 
+          <table>
+          <tr><td class="module">{tr}user{/tr}:</td></tr>
+          <tr><td>admin</td></tr>
+          <tr><td class="module">{tr}pass{/tr}:</td></tr>
+          <tr><td><input type="password" name="pass" size="20" /></td></tr>
+          <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
+          </table>
+      </form>
+
+{*
 		  	<form action="tiki-install.php" method="post">
 		  	<table class="normal">
 		  		<tr>
@@ -114,7 +128,8 @@
 		  			<td class="formcolor"><input type="submit" name="login" value="login" /></td>
 		  		</tr>
 		    </table>
-		    </form>  
+		    </form>
+*}
 		  {/if}
     	{else}
     		<b>Print operations executed successfully</b><br/>
@@ -135,5 +150,5 @@
     	{/if}
 	{/if}
 
-{/if}
+{*{/if}*}
 </div>

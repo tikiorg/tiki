@@ -7,15 +7,15 @@
 {if $zone}
 <h2>{tr}Edit zone{/tr}</h2>
 <form action="tiki-admin_html_page_content.php" method="post">
-<input type="hidden" name="pageName" value="{$pageName}" />
-<input type="hidden" name="zone" value="{$zone}" />
+<input type="hidden" name="pageName" value="{$pageName|escape}" />
+<input type="hidden" name="zone" value="{$zone|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Zone{/tr}:</td><td class="formcolor">{$zone}</td></tr>
 <tr><td class="formcolor">{tr}Content{/tr}:</td><td class="formcolor">
 {if $type eq 'ta'}
-<textarea rows="5" cols="60" name="content">{$content}</textarea>
+<textarea rows="5" cols="60" name="content">{$content|escape}</textarea>
 {else}
-<input type="text" name="content" value="{$content}" />
+<input type="text" name="content" value="{$content|escape}" />
 {/if}
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
@@ -29,17 +29,17 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_html_page_content.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
-     <input type="hidden" name="pageName" value="{$pageName}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="pageName" value="{$pageName|escape}" />
    </form>
    </td>
 </tr>
 </table>
 <form action="tiki-admin_html_page_content.php" method="post">
-<input type="hidden" name="pageName" value="{$pageName}" />
-<input type="hidden" name="zone" value="{$zone}" />
+<input type="hidden" name="pageName" value="{$pageName|escape}" />
+<input type="hidden" name="zone" value="{$zone|escape}" />
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}zone{/tr}</a></td>
@@ -53,9 +53,9 @@
 <!--<td class="odd">{$channels[user].content|truncate:250:"(...)":true}</td>-->
 <td class="odd">
 {if $channels[user].type eq 'ta'}
-<textarea name="{$channels[user].zone}" cols="20" rows="4">{$channels[user].content}</textarea>
+<textarea name="{$channels[user].zone|escape}" cols="20" rows="4">{$channels[user].content|escape}</textarea>
 {else}
-<input type="text" name="{$channels[user].zone}" value="{$channels[user].content}" />
+<input type="text" name="{$channels[user].zone|escape}" value="{$channels[user].content|escape}" />
 {/if}
 </td>
 <td class="odd">
@@ -68,9 +68,9 @@
 <!--<td class="even">{$channels[user].content|truncate:250:"(...)":true}</td>-->
 <td class="even">
 {if $channels[user].type eq 'ta'}
-<textarea name="{$channels[user].zone}" cols="20" rows="4">{$channels[user].content}</textarea>
+<textarea name="{$channels[user].zone|escape}" cols="20" rows="4">{$channels[user].content|escape}</textarea>
 {else}
-<input type="text" name="{$channels[user].zone}" value="{$channels[user].content}" />
+<input type="text" name="{$channels[user].zone|escape}" value="{$channels[user].content|escape}" />
 {/if}
 </td>
 <td class="even">

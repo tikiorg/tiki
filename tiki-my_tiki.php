@@ -51,7 +51,8 @@ $foo2=str_replace("tiki-user_preferences","tiki-index",$foo["path"]);
 $smarty->assign('url_edit',httpPrefix().$foo1);
 $smarty->assign('url_visit',httpPrefix().$foo2);
 
-
+/*
+// This code should be in tiki-user_preferences.php; remove it if you are sure there's no danger
 if(isset($_REQUEST["prefs"])) {
   // setting preferences
   if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
@@ -113,6 +114,7 @@ if(isset($_REQUEST["chgpswd"])) {
   
   $userlib->change_user_password($userwatch,$_REQUEST["pass1"]);
 }
+*/
 
 if(isset($_REQUEST['messprefs'])) {
   $tikilib->set_user_preference($userwatch,'mess_maxRecords',$_REQUEST['mess_maxRecords']);

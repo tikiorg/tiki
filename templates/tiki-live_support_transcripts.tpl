@@ -1,8 +1,8 @@
-<a href="tiki-live_support_transcripts.php" class="pagetitle">{tr}Support chat transcripts{/tr}</a><br/><br/>
+<a href="tiki-live_support_transcripts.php" class="pagetitle">{tr}Support chat transcripts{/tr}</a><br /><br />
 <a class="link" href="tiki-live_support_admin.php">{tr}back to admin{/tr}</a>
 <h2>{tr}Support requests{/tr}</h2>
 <form method="get" action="tiki-live_support_transcripts.php">
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 <tr>
 	<td>{tr}find{/tr}</td>
@@ -12,12 +12,12 @@
 </tr>
 
 <tr>
-	<td><input type="text" name="find" value="{$find}" /></td>
+	<td><input type="text" name="find" value="{$find|escape}" /></td>
 	<td>
 		<select name="filter_user">
 			<option value="" {if $filter_user eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
 			{section name=ix loop=$users}
-				<option value="{$users[ix]}" {if $users[ix] eq $filter_user}selected="selected"{/if}>{$users[ix]}</option>
+				<option value="{$users[ix]|escape}" {if $users[ix] eq $filter_user}selected="selected"{/if}>{$users[ix]}</option>
 			{/section}
 		</select>
 	</td>
@@ -25,7 +25,7 @@
 		<select name="filter_operator">
 			<option value="" {if $filter_operator eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
 			{section name=ix loop=$operators}
-				<option value="{$operators[ix]}" {if $operators[ix] eq $filter_operator}selected="selected"{/if}>{$users[ix]}</option>
+				<option value="{$operators[ix]|escape}" {if $operators[ix] eq $filter_operator}selected="selected"{/if}>{$users[ix]}</option>
 			{/section}
 		</select>
 	</td>
@@ -63,7 +63,7 @@
 &nbsp;[<a class="prevnext" href="tiki-live_support_transcripts.php?offset={$next_offset}&amp;find={$find}&amp;sort_mode={$sort_mode}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-live_support_transcripts.php?offset={$selector_offset}&amp;find={$find}&amp;sort_mode={$sort_mode}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}">

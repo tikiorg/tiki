@@ -22,9 +22,9 @@ if($tiki_p_view_image_gallery != 'y') {
 }
 
 $allrankings = Array(
-  Array( 'name'=> 'Top galleries', 'value'=> tra('gal_ranking_top_galleries')),
-  Array( 'name'=> 'Top images', 'value'=>tra('gal_ranking_top_images')),
-  Array( 'name'=> 'Last images', 'value'=>tra('gal_ranking_last_images')),
+  Array( 'name'=> tra('Top galleries'), 'value'=> 'gal_ranking_top_galleries'),
+  Array( 'name'=> tra('Top images'), 'value'=>'gal_ranking_top_images'),
+  Array( 'name'=> tra('Last images'), 'value'=>'gal_ranking_last_images'),
 );
 $smarty->assign('allrankings',$allrankings);
 

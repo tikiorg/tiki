@@ -1,9 +1,8 @@
-<a name="webmail"></a>
 <div class="cbox">
 <div class="cbox-title">{tr}Webmail{/tr}</div>
 <div class="cbox-data">
 <div class="simplebox">
-<form action="tiki-admin.php" method="post">
+<form action="tiki-admin.php?page=webmail" method="post">
 <table width="100%">
 <tr><td class="form">{tr}Allow viewing HTML mails?{/tr}:</td><td><input type="checkbox" name="webmail_view_html" {if $webmail_view_html eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Maximum size for each attachment{/tr}:</td><td><select name="webmail_max_attachment">

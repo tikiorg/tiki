@@ -16,7 +16,7 @@ class CalendarLib extends TikiLib {
 		$mid = '';
 		$sort_mode = str_replace("_"," ",$sort_mode);
 		if ($find) {
-			$mid = "where name like '%".$find."%'";
+			$mid = "where name like $findesc";
 		}
 		$query = "select * from tiki_calendars $mid order by $sort_mode limit $offset,$maxRecords";
 		$result = $this->query($query);

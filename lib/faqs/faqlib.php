@@ -7,7 +7,7 @@
  
 class FaqLib extends TikiLib {
 
-  function FaqLib($db) 
+  function FaqLib($db)
   {
     # this is probably uneeded now
     if(!$db) {
@@ -30,7 +30,8 @@ class FaqLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (question like '%".$find."%' or answer like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (question like $findesc or answer like $findesc)";
     } else {
       $mid="";
     }
@@ -52,7 +53,8 @@ class FaqLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (question like '%".$find."%' or answer like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (question like $findesc or answer like $findesc)";
     } else {
       $mid="";
     }
@@ -152,7 +154,8 @@ class FaqLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where faqId=$faqId and (question like '%".$find."%' or answer like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where faqId=$faqId and (question like $findesc or answer like $findesc)";
     } else {
       $mid=" where faqId=$faqId ";
     }

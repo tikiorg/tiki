@@ -1,10 +1,10 @@
-<a class="pagetitle" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{$chart_info.title}</a><br/>
+<a class="pagetitle" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{$chart_info.title}</a><br />
 {if $chart_info.hits > 0}
 <small>{tr}viewed{/tr} {$chart_info.hits} {tr}times{/tr}</small>
-<br/><br/>
+<br /><br />
 {/if}
 {if strlen($chart_info.description)}
-{$chart_info.description}<br/><br/><br/>
+{$chart_info.description}<br /><br /><br />
 {/if}
 {if $tiki_p_admin_charts eq 'y'}
 <a href="tiki-admin_charts.php?chartId={$smarty.request.chartId}"><img src='img/icons/config.gif' border='0' alt='{tr}edit chart{/tr}' title='{tr}edit chart{/tr}' /></a>
@@ -13,7 +13,7 @@
 <a href="tiki-charts.php"><img src='img/icons/ico_table.gif' border='0' alt='{tr}list charts{/tr}' title='{tr}list charts{/tr}' /></a>
 <a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}"><img border='0' src='img/icons/today.gif' alt='{tr}last chart{/tr}' title='{tr}last chart{/tr}' /></a>
 {if $chart_info.frequency > 0}
-    <br/>
+    <br />
 	{if $prevPeriod > 0}
 	<a href="tiki-view_chart.php?chartId={$smarty.request.chartId}&amp;period={$prevPeriod}"><img border='0' src='img/icons/toleft.gif' alt='{tr}previous chart{/tr}' title='{tr}previous chart{/tr}' ></a>
 	{/if}
@@ -43,7 +43,7 @@
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].position}</td>
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].lastPosition}</td>
 	<td style="text-align:right;" class="{cycle advance=false}">{$items[ix].perm}</td>
-	<td class="{cycle advance=false}"><a class="link" target="_new" href="{$items[ix].URL}">{$items[ix].title}</a>
+	<td class="{cycle advance=false}"><a class="link" target="_blank" href="{$items[ix].URL}">{$items[ix].title}</a>
 	{if $items[ix].dif ne 'new' and $items[ix].dif eq $max_dif}
 		<img src='img/icons/popular.gif' alt='{tr}cool{/tr}' />
 	{/if}
@@ -89,7 +89,7 @@
 <tr>
 <td>
 <form method="post">
-{tr}find{/tr}: <input size="15" type="text" name="find" value="{$smarty.request.find}" />
+{tr}find{/tr}: <input size="15" type="text" name="find" value="{$smarty.request.find|escape}" />
 <input type="submit" name="findb" value="{tr}find{/tr}" />
 </form>
 </td>
@@ -98,7 +98,7 @@
 <select name="itemId" onChange="javascript:document.getElementById('selit').submit();">
 <option value="">{tr}Select something to vote on{/tr}</option>
 {section name=ix loop=$all_items}
-<option value="{$all_items[ix].itemId}">{$all_items[ix].title}</option>
+<option value="{$all_items[ix].itemId|escape}">{$all_items[ix].title}</option>
 {/section}
 </select>
 </form>

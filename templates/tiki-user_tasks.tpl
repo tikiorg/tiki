@@ -9,9 +9,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-user_tasks.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -40,7 +40,7 @@
 <td style="text-align:right;{if $channels[user].status eq 'c'}text-decoration:line-through;{/if}" class="prio{$channels[user].priority}">
 <select name="task_perc[{$channels[user].taskId}]">
 	{section name=zz loop=$percs}
-		<option value="{$percs[zz]}" {if $channels[user].percentage eq $percs[zz]}selected="selected"{/if}>{$percs[zz]}%</option>	
+		<option value="{$percs[zz]|escape}" {if $channels[user].percentage eq $percs[zz]}selected="selected"{/if}>{$percs[zz]}%</option>	
 	{/section}
 </select>
 </td>
@@ -80,18 +80,18 @@
 
 <h3>{tr}Add or edit a task{/tr}</h3>
 <form action="tiki-user_tasks.php" method="post">
-<input type="hidden" name="taskId" value="{$taskId}" />
-<input type="hidden" name="tasks_useDates" value="{$tasks_useDates}" />
-<input type="hidden" name="Date_Day" value="{$Date_Day}" />
-<input type="hidden" name="Date_Month" value="{$Date_Month}" />
-<input type="hidden" name="Date_Year" value="{$Date_Year}" />
+<input type="hidden" name="taskId" value="{$taskId|escape}" />
+<input type="hidden" name="tasks_useDates" value="{$tasks_useDates|escape}" />
+<input type="hidden" name="Date_Day" value="{$Date_Day|escape}" />
+<input type="hidden" name="Date_Month" value="{$Date_Month|escape}" />
+<input type="hidden" name="Date_Year" value="{$Date_Year|escape}" />
 <table class="normal">
   <tr><td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="title" value="{$info.title}" /></td>
+      <td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" /></td>
   </tr>
   <tr><td class="formcolor">{tr}Description{/tr}</td>
       <td class="formcolor">
-        <textarea rows="10" cols="80" name="description">{$info.description}</textarea>
+        <textarea rows="10" cols="80" name="description">{$info.description|escape}</textarea>
       </td>
   </tr>
   {if $tasks_useDates eq 'y'}

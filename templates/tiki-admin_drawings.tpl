@@ -1,4 +1,6 @@
-<a class="pagetitle" href="tiki-admin_drawings.php">{tr}Edit drawings{/tr}</a><br/><br/>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.6 2003-08-01 10:31:09 redflo Exp $ *}
+
+<a class="pagetitle" href="tiki-admin_drawings.php">{tr}Edit drawings{/tr}</a><br /><br />
 
 {if $preview eq 'y'}
 <div align="center">
@@ -10,17 +12,17 @@
 
 
 <form method="post" action="tiki-admin_drawings.php">
-<input type="hidden" name="ver" value="{$smarty.request.ver}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-{tr}Find{/tr}:<input type="text" name="find" value="{$find}" />
+<input type="hidden" name="ver" value="{$smarty.request.ver|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+{tr}Find{/tr}:<input type="text" name="find" value="{$find|escape}" />
 </form>
 <h3>{tr}Available drawings{/tr}:</h3>
 <form method="post" action="tiki-admin_drawings.php">
-<input type="hidden" name="ver" value="{$smarty.request.ver}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="ver" value="{$smarty.request.ver|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
 {if $smarty.request.ver}
@@ -68,7 +70,7 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td colspan="2" class="odd">{tr}No records found{/tr}</td></tr>
+<tr><td colspan="4" class="odd">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 </form>
@@ -80,17 +82,15 @@
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="ver={$smart.request.ver}&amp;offset={$next_offset}&amp;find={$find}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-admin_drawings.php?ver={$smart.request.ver}&amp;offset={$next_offset}&amp;find={$find}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-admin_drawings.php offset=$selector_offset">
+<a class="prevnext" href="tiki-admin_drawings.php?offset={$selector_offset}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
 </div>
 </div> 
-
-

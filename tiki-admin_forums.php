@@ -140,8 +140,8 @@ $smarty->assign('pruneUnrepliedAge',$info["pruneUnrepliedAge"]);
 $smarty->assign('usePruneOld',$info["usePruneOld"]);
 $smarty->assign('pruneMaxAge',$info["pruneMaxAge"]);
 
-$users = $userlib->get_users(0,-1,'login_desc', '');
-$smarty->assign_by_ref('users',$users["data"]);
+$users = $userlib->get_users_names(0,-1,'login_desc', '');
+$smarty->assign_by_ref('users',$users);
 
 if(isset($_REQUEST["remove"])) {
   $commentslib->remove_forum($_REQUEST["remove"]);

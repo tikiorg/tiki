@@ -1,7 +1,7 @@
 <?php
 class EphLib extends TikiLib {
 
-  function EphLib($db) 
+  function EphLib($db)
   {
     # this is probably uneeded now
     if(!$db) {
@@ -63,7 +63,8 @@ class EphLib extends TikiLib {
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" where (filename like '%".$find."%' or title like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (filename like $findesc or title like $findesc)";  
     } else {
       $mid=""; 
     }

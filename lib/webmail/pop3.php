@@ -209,9 +209,10 @@ class POP3{
                 $list = array();
                 $list["has_attachment"] = false;
                 $list["size"] = '';
-                $this->POP3Command("RETR $msg",$this->dummy);
+                //$this->POP3Command("RETR $msg",$this->dummy);
+                $this->POP3Command("TOP $msg 0",$this->dummy);
                 for ($m="";;) {
-                        $line = fgets($this->connection, 100);
+                        $line = fgets($this->connection);
                         $list["size"] += strlen($line);
                         if (trim($line) == "." OR feof($this->connection)) {
                                   break;

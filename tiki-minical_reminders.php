@@ -6,7 +6,7 @@ if(!$minical_reminders) die;
 $refresh=1000*60*1;
 $evs = $minicallib->minical_get_events_to_remind($user,$minical_reminders);
 foreach($evs as $ev) {
-   $command = "<script>alert('event ".$ev['title']." will start at ".date("h:i",$ev['start'])."');</script>";
+   $command = "<script language='Javascript' type='text/javascript'>alert('event ".$ev['title']." will start at ".date("h:i",$ev['start'])."');</script>";
    print($command);
    $minicallib->minical_event_reminded($user,$ev['eventId']);
 }

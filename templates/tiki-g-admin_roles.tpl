@@ -1,31 +1,31 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-g-admin_roles.php?pid={$pid}">{tr}Admin process roles{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-g-admin_roles.php?pid={$pid}">{tr}Admin process roles{/tr}</a><br /><br />
 {include file=tiki-g-proc_bar.tpl}
 {if count($errors) > 0}
 <div class="wikitext">
-Errors:<br/>
+Errors:<br />
 {section name=ix loop=$errors}
-<small>{$errors[ix]}</small><br/>
+<small>{$errors[ix]}</small><br />
 {/section}
 </div>
 {/if}
 
 <h3>{tr}Add or edit a role{/tr} <a class="link" href="tiki-g-admin_roles.php?pid={$pid}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;sort_mode2={$sort_mode2}&amp;find={$find}&amp;roleId=0">{tr}new{/tr}</a></h3>
 <form action="tiki-g-admin_roles.php" method="post">
-<input type="hidden" name="pid" value="{$pid}" />
-<input type="hidden" name="roleId" value="{$info.roleId}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="offset" value="{$offset}" />
+<input type="hidden" name="pid" value="{$pid|escape}" />
+<input type="hidden" name="roleId" value="{$info.roleId|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
 <table class="normal">
 <tr>
   <td class="formcolor">{tr}name{/tr}</td>
-  <td class="formcolor"><input type="text" name="name" value="{$info.name}" /></td>
+  <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
 </tr>
 <tr>
   <td class="formcolor">{tr}description{/tr}</td>
-  <td class="formcolor"><textarea name="description" rows="4" cols="60">{$info.description}</textarea></td>
+  <td class="formcolor"><textarea name="description" rows="4" cols="60">{$info.description|escape}</textarea></td>
 </tr>
 <tr>
   <td class="formcolor">&nbsp;</td>
@@ -38,13 +38,13 @@ Errors:<br/>
 	
 
 <form action="tiki-g-admin_roles.php" method="post">
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="pid" value="{$pid}" />
-<input type="hidden" name="roleId" value="{$info.roleId}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="offset" value="{$offset}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="pid" value="{$pid|escape}" />
+<input type="hidden" name="roleId" value="{$info.roleId|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
 <table class="normal">
 <tr>
 <td width="5%" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
@@ -78,11 +78,11 @@ Errors:<br/>
 {if count($roles) > 0}
 	<h3>{tr}Map users to roles{/tr}</h3>
 	<form method="post" action="tiki-g-admin_roles.php">
-	<input type="hidden" name="pid" value="{$pid}" />
-	<input type="hidden" name="offset" value="{$offset}" />
-	<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-	<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
-	<input type="hidden" name="find" value="{$find}" />
+	<input type="hidden" name="pid" value="{$pid|escape}" />
+	<input type="hidden" name="offset" value="{$offset|escape}" />
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+	<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
+	<input type="hidden" name="find" value="{$find|escape}" />
 	<table class="normal">
 	<tr>
 		<td class="formcolor">{tr}Map{/tr}</td>
@@ -91,11 +91,11 @@ Errors:<br/>
 		  	<tr>
 		  		<td class="formcolor" width="50%">
 		  		{tr}Users{/tr}:
-				<input type="text" size="10" name="find_users" value="{$find_users}" />
+				<input type="text" size="10" name="find_users" value="{$find_users|escape}" />
 				<input type="submit" name="findusers" value="{tr}filter{/tr}" />	  
 		  		</td>
 		  		<td class="formcolor" width="50%">
-	  			{tr}Roles{/tr}:<br/>		  		
+	  			{tr}Roles{/tr}:<br />		  		
 		  		</td>
 		  	</tr>
 		  	<tr>
@@ -103,7 +103,7 @@ Errors:<br/>
 					<select name="user[]" multiple="multiple" size="10">
 					<option value="">"{tr}Anonymous{/tr}"</option>
 					{section name=ix loop=$users}
-					<option value="{$users[ix].user}">{$users[ix].user|adjust:30}</option>
+					<option value="{$users[ix].user|escape}">{$users[ix].user|adjust:30}</option>
 					{/section}
 					</select>
 		  		</td>
@@ -111,7 +111,7 @@ Errors:<br/>
 
 					<select name="role[]" multiple="multiple" size="10">
 					{section name=ix loop=$roles}
-					<option value="{$roles[ix].roleId}">{$roles[ix].name|adjust:30}</option>
+					<option value="{$roles[ix].roleId|escape}">{$roles[ix].name|adjust:30}</option>
 					{/section}
 					</select>	  		
 		  		</td>
@@ -132,11 +132,11 @@ Errors:<br/>
 	{* GROUPS *}
 	<h3>{tr}Map groups to roles{/tr}</h3>
 	<form method="post" action="tiki-g-admin_roles.php">
-	<input type="hidden" name="pid" value="{$pid}" />
-	<input type="hidden" name="offset" value="{$offset}" />
-	<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-	<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
-	<input type="hidden" name="find" value="{$find}" />
+	<input type="hidden" name="pid" value="{$pid|escape}" />
+	<input type="hidden" name="offset" value="{$offset|escape}" />
+	<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+	<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
+	<input type="hidden" name="find" value="{$find|escape}" />
 	<table class="normal">
 	<tr>
 		<td class="formcolor">
@@ -163,7 +163,7 @@ Errors:<br/>
 		<td class="formcolor">
 			<select name="group">
 			{section name=ix loop=$groups}
-			<option value="{$groups[ix].groupName}">{$groups[ix].groupName}</option>
+			<option value="{$groups[ix].groupName|escape}">{$groups[ix].groupName}</option>
 			{/section}
 			</select>
 		</td>
@@ -171,7 +171,7 @@ Errors:<br/>
 		<td class="formcolor">
 			<select name="role">
 			{section name=ix loop=$roles}
-			<option value="{$roles[ix].roleId}">{$roles[ix].name|adjust:30}</option>
+			<option value="{$roles[ix].roleId|escape}">{$roles[ix].name|adjust:30}</option>
 			{/section}
 			</select>	  		
 		</td>
@@ -187,24 +187,24 @@ Errors:<br/>
 	
 {else}
 	<h3>{tr}Warning{/tr}</h3>
-	{tr}No roles are defined yet so no roles can be mapped{/tr}<br/>
+	{tr}No roles are defined yet so no roles can be mapped{/tr}<br />
 {/if}
 
 <h3>{tr}List of mappings{/tr}</h3>
 <form action="tiki-g-admin_roles.php" method="post">
-<input type="hidden" name="pid" value="{$pid}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find}" />
+<input type="hidden" name="pid" value="{$pid|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find|escape}" />
 <input type="submit" name="filter" value="{tr}find{/tr}" />
 </form>
 <form action="tiki-g-admin_roles.php" method="post">
-<input type="hidden" name="pid" value="{$pid}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
+<input type="hidden" name="pid" value="{$pid|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 <table class="normal">
 <tr>
 <td width="4%" class="heading"><input type="submit" name="delete_map" value="{tr}x{/tr} " /></td>
@@ -248,7 +248,7 @@ Errors:<br/>
 &nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">

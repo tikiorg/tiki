@@ -29,7 +29,9 @@ class UsersLib extends TikiLib {
   function set_admin_pass($pass) 
   {
     global $feature_clear_passwords;
-    $hash = md5($pass);
+		$query = "select email from users_users where login='admin'";
+		$email = $this->getOne($query);
+    $hash = md5("admin".$pass.$email);
     if($feature_clear_passwords == 'n') $pass='';
     $query = "update users_users set password='$pass',hash='$hash' where login='admin'"; 
     $result=$this->query($query);
@@ -40,7 +42,6 @@ class UsersLib extends TikiLib {
   {
     $groupName=addslashes($groupName); 
     $objectId = md5($objectType.$objectId);
-    
     $query = "replace into users_objectpermissions(groupName,objectId,objectType,permName) values('$groupName','$objectId','$objectType','$permName')";
     $result = $this->query($query);
     return true;
@@ -51,6 +52,7 @@ class UsersLib extends TikiLib {
     $groups = $this->get_user_groups($user);
     $objectId = md5($objectType.$objectId);
     foreach($groups as $groupName) {
+			$groupName=addslashes($groupName);
       $query = "select permName from users_objectpermissions where groupName='$groupName' and objectId='$objectId' and objectType='$objectType' and permName = '$permName'";
       $result = $this->query($query);
       if($result->numRows()) return true;
@@ -61,6 +63,7 @@ class UsersLib extends TikiLib {
   function remove_object_permission($groupName,$objectId,$objectType,$permName)
   {
     $objectId = md5($objectType.$objectId);
+		$groupName=addslashes($groupName);
     $query = "delete from users_objectpermissions where groupName='$groupName' and objectId='$objectId' and objectType='$objectType' and permName='$permName'";
     $result = $this->query($query);
     return true;
@@ -96,6 +99,7 @@ class UsersLib extends TikiLib {
   }
   
   function group_exists($group) {
+		$group=addslashes($group);
     $query = "select groupName from users_groups where groupName='$group'";
     $result = $this->query($query);
     return $result->numRows();
@@ -167,8 +171,6 @@ class UsersLib extends TikiLib {
         break;
     }
 
-    if($this->debug != false)
-      mail($this->debug, "tiki result", $result,"From: $sender_email");
     // if we aren't using LDAP this will be quick
     if(!$auth_pear ||
        ($auth_pear && $user == "admin" && $skip_admin) )
@@ -190,8 +192,6 @@ class UsersLib extends TikiLib {
     {
       // check the user account
       $result = $this->validate_user_auth($user, $pass);
-      if($this->debug != false)
-        mail($this->debug,"result", $result,"From: $sender_email");
       switch($result)
       {
         case USER_VALID:
@@ -203,26 +203,15 @@ class UsersLib extends TikiLib {
           break;
       }
 
-      $msg = "userAuth: $userAuth\n"
-            ."userAuthPresent: $userAuthPresent\n"
-            ."userTiki: $userTiki\n"
-            ."UserTikiPresent: $userTikiPresent\n";
-      if($this->debug != false)
-        mail($this->debug, "status", $msg,"From: $sender_email");
-
       // start off easy
       // if the user verified in Tiki and Auth, log in
       if($userAuth && $userTiki)
       {
-        if($this->debug != false)
-          mail($this->debug, "exit 1", "","From: $sender_email");
         return $this->update_lastlogin($user);
       }
       // if the user wasn't found in either system, just fail
       elseif(!$userTikiPresent && $userAuthPresent)
       {
-        if($this->debug != false)
-          mail($this->debug, "exit 2", "","From: $sender_email");
         return false;
       }
       // if the user was logged into Tiki but not found in Auth
@@ -233,8 +222,6 @@ class UsersLib extends TikiLib {
         {
           // need to make this better! *********************************************************
           $result = $this->create_user_auth($user, $pass);
-          if($this->debug != false)
-            mail($this->debug, "exit 3", $result,"From: $sender_email");
           // if it worked ok, just log in
           if($result == USER_VALID)
             // before we log in, update the login counter
@@ -258,8 +245,6 @@ class UsersLib extends TikiLib {
       // if the user was logged into Auth but not found in Tiki
       elseif($userAuth && !$userTikiPresent)
       {
-        if($this->debug != false)
-          mail($this->debug, "ok", "4","From: $sender_email");
         // see if we can create a new account
         if($create_tiki)
         {
@@ -284,13 +269,9 @@ class UsersLib extends TikiLib {
           // just say no!
           return false;
       }
-      elseif($this->debug != false)
-        mail($this->debug, "ok", "5","From: $sender_email");
     }
 
     // we will never get here
-    if($this->debug != false)
-      mail($this->debug, "ok", "6","From: $sender_email");
     return false;
   }
 
@@ -351,17 +332,19 @@ class UsersLib extends TikiLib {
 
     global $feature_challenge;
     $user=addslashes($user);
-    $hash=md5($pass);
 
     // first verify that the user exists
-    $query = "select login from users_users where binary login = '$user'";
+    $query = "select email from users_users where binary login = '$user'";
     $result = $this->query($query);
     if(!$result->numRows())
         return USER_NOT_FOUND;
-
-    // next verify the password
+		
+		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $hash=md5($user.$pass.$res["email"]);
+		$hash2 = md5($pass);
+    // next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
     if($feature_challenge=='n' || empty($response)) {
-      $query = "select login from users_users where binary login = '$user' and hash='$hash'";
+      $query = "select login from users_users where binary login = '$user' and (hash='$hash2' or hash='$hash') ";
       $result = $this->query($query);
       if($result->numRows()) {
         $t = date("U");
@@ -477,12 +460,32 @@ class UsersLib extends TikiLib {
     return $status;
   }
 
+  function get_users_names($offset = 0,$maxRecords = -1,$sort_mode = 'login_desc', $find='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    // Return an array of users indicating name, email, last changed pages, versions, lastLogin 
+    if($find) {
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where login like $findesc";
+    } else {
+      $mid='';
+    }
+    $query = "select login from users_users $mid order by $sort_mode limit $offset,$maxRecords";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res["login"];
+    }
+  return($ret);
+  }
+
   function get_users($offset = 0,$maxRecords = -1,$sort_mode = 'login_desc', $find='')
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     // Return an array of users indicating name, email, last changed pages, versions, lastLogin 
     if($find) {
-      $mid=" where login like '%".$find."%'";  
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where login like $findesc";  
     } else {
       $mid=''; 
     }
@@ -517,6 +520,7 @@ class UsersLib extends TikiLib {
   
   function get_included_groups($group)
   {
+		$group=addslashes($group);
     $query = "select includeGroup from tiki_group_inclusion where groupName='$group'";
     $result = $this->query($query);
     $ret=Array();
@@ -531,6 +535,7 @@ class UsersLib extends TikiLib {
   function remove_user_from_group($user,$group) 
   {
     $userid = $this->get_user_id($user);
+		$group=addslashes($group);
     $query = "delete from users_usergroups where userId=$userid and groupName='$group'";
     $result = $this->query($query);
   }
@@ -540,7 +545,8 @@ class UsersLib extends TikiLib {
     $sort_mode = str_replace("_"," ",$sort_mode);
     // Return an array of users indicating name, email, last changed pages, versions, lastLogin 
     if($find) {
-      $mid=" where groupName like '%".$find."%'";  
+			$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where groupName like $findesc";  
     } else {
       $mid=''; 
     }
@@ -585,6 +591,7 @@ class UsersLib extends TikiLib {
 
   function remove_group($group)
   {
+		$group=addslashes($group);
     $query = "delete from users_groups where groupName = '$group'";
     $result =  $this->query($query);
     $query = "delete from tiki_group_inclusion where groupName = '$group' or includeGroup='$group'";
@@ -618,6 +625,7 @@ class UsersLib extends TikiLib {
   
   function get_group_users($group)
   {
+		$group=addslashes($group);
     $query = "select login from users_users uu,users_usergroups ug where uu.userId=ug.userId and groupName='$group'";
     $result = $this->query($query);
     $ret = Array();
@@ -707,10 +715,11 @@ class UsersLib extends TikiLib {
       $mid = " where type='$type' ";
     } 
     if($find) {
+    	$findesc = $this->qstr('%'.$find.'%');
       if($mid) {
-      $mid.=" and permName like '%".$find."%'";  
+      $mid.=" and permName like $findesc";  
       } else {
-      $mid.=" where permName like '%".$find."%'";  
+      $mid.=" where permName like $findesc";  
       }
     } 
     
@@ -742,6 +751,7 @@ class UsersLib extends TikiLib {
   
   function get_group_permissions($group)
   {
+		$group=addslashes($group);
     $query = "select permName from users_grouppermissions where groupName='$group'";
     $result = $this->query($query);
     $ret = Array();
@@ -753,6 +763,7 @@ class UsersLib extends TikiLib {
   
   function assign_permission_to_group($perm,$group) 
   {
+		$group=addslashes($group);
     $query = "replace into users_grouppermissions(groupName,permName) values('$group','$perm')";
     $result = $this->query($query);
     return true;  
@@ -788,6 +799,7 @@ class UsersLib extends TikiLib {
   function group_has_permission($group,$perm) 
   {
     if(!isset($perm,$this->groupperm_cache[$group][$perm])) {
+			$group=addslashes($group);
       $query = "select groupName,permName from users_grouppermissions where groupName='$group' and permName='$perm'";
       $result = $this->query($query);
       $this->groupperm_cache[$group][$perm]=$result->numRows();
@@ -799,6 +811,7 @@ class UsersLib extends TikiLib {
   
   function remove_permission_from_group($perm,$group) 
   {
+		$group=addslashes($group);
     $query = "delete from users_grouppermissions where permName='$perm' and groupName= '$group'";
     $result =  $this->query($query);
     return true;
@@ -806,7 +819,8 @@ class UsersLib extends TikiLib {
   
   function get_group_info($group) 
   {
-    $query = "select * from users_groups where groupName='$group'";
+    $group=addslashes($group);
+		$query = "select * from users_groups where groupName='$group'";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $perms = $this->get_group_permissions($group);
@@ -817,6 +831,7 @@ class UsersLib extends TikiLib {
   function assign_user_to_group($user,$group) 
   {
     $userid = $this->get_user_id($user);
+		$group=addslashes($group);
     $query = "replace into users_usergroups(userId,groupName) values($userid,'$group')";
     $result = $this->query($query);
     return true;  
@@ -825,9 +840,11 @@ class UsersLib extends TikiLib {
   function confirm_user($user)
   {
     global $feature_clear_passwords;
-    
-    $provpass = $this->getOne("select provpass from users_users where login='$user'");
-    $hash=md5($provpass);
+    $query = "select provpass, login, email from users_users where login='$user'";
+    $result = $this->query($query);
+		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $hash=md5($res["login"].$res["provpass"].$res["email"]);
+		$provpass=$res["provpass"];
     if($feature_clear_passwords == 'n') {
       $provpass='';
     }
@@ -839,7 +856,8 @@ class UsersLib extends TikiLib {
   {
     global $pass_due;
     global $feature_clear_passwords;
-    $hash = md5($pass);
+    // Generate a unique hash; this is also done below in set_user_fields()
+    $hash = md5($user.$pass.$email);
     if($feature_clear_passwords == 'n') $pass='';
     if($this->user_exists($user)) return false;  
     $now=date("U");
@@ -850,9 +868,14 @@ class UsersLib extends TikiLib {
     return true;
   }
 
-  function change_user_email($user,$email)
+  function change_user_email($user,$email,$pass)
   {
-    $query = "update users_users set email='$email' where binary login='$user'";
+    $query = "update users_users set email='$email' where /*! binary */ lower(login)='$user'";
+    $result = $this->query($query);
+    $hash = md5($user.$pass.$email);
+    $query = "update users_users set hash='$hash' where /*! binary */ lower(login)='$user'";
+    $result = $this->query($query);
+    $query = "update tiki_user_watches set email='$email' where /*! binary */ lower(user)='$user'";
     $result = $this->query($query);
   }
   
@@ -887,7 +910,9 @@ class UsersLib extends TikiLib {
   function renew_user_password($user)
   {
     $pass = $this->genPass();
-    $hash = md5($pass);
+		$query = "select email from users_users where login='$user'";
+		$email = $this->getOne($query);
+    $hash = md5($user.$pass.$email);
     // Note that tiki-generated passwords are due inmediatley
     $now=date("U");
     $query = "update users_users set password='$pass', hash='$hash',pass_due=$now where binary login='$user'";
@@ -899,7 +924,9 @@ class UsersLib extends TikiLib {
   {
     global $pass_due;
     global $feature_clear_passwords;
-    $hash = md5($pass);
+		$query = "select email from users_users where login='$user'";
+		$email = $this->getOne($query);
+    $hash = md5($user.$pass.$email);
     $now=date("U"); 
     $new_pass_due=$now+(60*60*24*$pass_due);
     if($feature_clear_passwords == 'n') {
@@ -912,6 +939,8 @@ class UsersLib extends TikiLib {
   function add_group($group,$desc)
   {
     if($this->group_exists($group)) return false;  
+		$group=addslashes($group);
+		$desc=addslashes($desc);
     $query = "insert into users_groups(groupName, groupDesc) values('$group','$desc')";
     $result = $this->query($query);
     return true;
@@ -920,6 +949,9 @@ class UsersLib extends TikiLib {
 	function change_group($olgroup,$group,$desc)
 	{
 		if (!$this->group_exists($olgroup)) return $this->add_group($group,$desc);
+		$group=addslashes($group);
+		$olgroup=addslashes($olgroup);
+		$desc=addslashes($desc);
 		$query = "update users_groups set groupName='$group', groupDesc='$desc' where groupName='$olgroup'";
 		$result = $this->query($query);
 		$query = "update users_usergroups set groupName='$group' where groupName='$olgroup'";
@@ -939,6 +971,7 @@ class UsersLib extends TikiLib {
 	
 	function remove_all_inclusions($group) {
 		if(!$this->group_exists($group)) return false;
+		$group=addslashes($group);
 		$query = "delete from tiki_group_inclusion where groupName='$group'";
 		$result = $this->query($query);
 		return true;
@@ -950,7 +983,8 @@ class UsersLib extends TikiLib {
   		if ($feature_clear_passwords == 's') {
   			$q[]="password='".addslashes(strip_tags($u['password']))."'";
   		}
-  		$hash = md5($u['password']);
+		// I don't think there are currently cases where login and email are undefined
+  		$hash = md5($u['login'].$u['password'].$u['email']);
   		$q[]="hash='$hash'";
   	}
   	if (@$u['email']) {

@@ -23,7 +23,7 @@
   </div>
   </div>
   </div>
-</tr>
+</td></tr>
 {if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
 {if $sent}
 {$message}
@@ -34,9 +34,9 @@
   <div class="cbox-title">{tr}Send me a message{/tr}</div>
   <div class="cbox-data">
   <div class="simplebox">
-  <form method="post" action="tiki-user_information.php">
-  <input type="hidden" name="to" value="{$userwatch}" />
-  <input type="hidden" name="view_user" value="{$userwatch}" />
+  <form method="post" action="tiki-user_information.php" name="f">
+  <input type="hidden" name="to" value="{$userwatch|escape}" />
+  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="normalnoborder">
   <tr>
     <td class="form">{tr}Priority{/tr}:</td><td class="form">

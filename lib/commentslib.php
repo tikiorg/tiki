@@ -29,7 +29,8 @@ class Comments extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and reason like '%".$find."%' or user like '%".$find."%'";  
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and reason like $findesc or user like $findesc";  
     } else {
       $mid=""; 
     }
@@ -140,11 +141,12 @@ class Comments extends TikiLib {
   function parse_output(&$obj, &$parts,$i) {  
 	  if(!empty($obj->parts)) {    
 	    for($i=0; $i<count($obj->parts); $i++)      
-	      parse_output($obj->parts[$i], $parts,$i);  
+	      $this->parse_output($obj->parts[$i], $parts,$i);  
 	  }else{    
 	    $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;    
 	    switch($ctype) {    
 	      case 'text/plain':      
+	      case 'TEXT/PLAIN':      
 	        if(!empty($obj->disposition) AND $obj->disposition == 'attachment') {        
 	          $names=split(';',$obj->headers["content-disposition"]);        
 	          $names=split('=',$names[1]);        
@@ -157,6 +159,7 @@ class Comments extends TikiLib {
 	        }      
 	        break;    
 	      case 'text/html':      
+	      case 'TEXT/HTML':      
 	        if(!empty($obj->disposition) AND $obj->disposition == 'attachment') {        
 	          $names=split(';',$obj->headers["content-disposition"]);        
 	          $names=split('=',$names[1]);        
@@ -187,7 +190,7 @@ class Comments extends TikiLib {
 	 include_once ("lib/webmail/htmlMimeMail.php");
   	 $info = $this->get_forum($forumId);
   	 if(!$info["inbound_pop_server"]) return;
-	 $pop3=new POP3($info["inbound_pop_server"],$acc["inbound_pop_user"],$acc["inbound_pop_password"]);  
+	 $pop3=new POP3($info["inbound_pop_server"],$info["inbound_pop_user"],$info["inbound_pop_password"]);  
 	 if(!$pop3) return;
      $pop3->Open();  
      $s = $pop3->Stats() ;  
@@ -197,20 +200,23 @@ class Comments extends TikiLib {
   	   if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      	
   	   $title = addslashes(trim($aux['subject']));
   	   $email = $aux["sender"]["email"];
+	   $message=$pop3->GetMessage($i);
   	   $full = $message["full"];  
        $params = array('input' => $full,
                   'crlf'  => "\r\n", 
                   'include_bodies' => TRUE,
                   'decode_headers' => TRUE, 
                   'decode_bodies'  => TRUE
-                  );  
-       $output = Mail_mimeDecode::decode($params);    
-       parse_output($output, $parts,0);  
+                  ); 
+       $decoder= new Mail_mimeDecode($full);
+       $output = $decoder->decode($params);    
+       unset($parts);
+       $this->parse_output($output, $parts,0);  
        if(isset($parts["text"][0])) $body=$parts["text"][0];
       
        //Todo: check permissions
        
-       $object = md5('forum'.$forumId);
+       $object = 'forum'.$forumId; // post_new_comment does md5()
        // Determine if this is a topic or a thread
        $parentId = $this->getOne("select threadId from tiki_comments where object='$object' and parentId=0 and locate(title,'$title')");
        if(!$parentId) $parentId=0;
@@ -278,7 +284,8 @@ class Comments extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and title like '%".$find."%' or data like '%".$find."%'";  
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and title like $findesc or data like $findesc";  
     } else {
       $mid=""; 
     }
@@ -467,7 +474,8 @@ class Comments extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where name like '%".$find."%' or description like '%".$find."%'";  
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where name like $findesc or description like $findesc";  
     } else {
       $mid=""; 
     }
@@ -512,7 +520,8 @@ class Comments extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where section='$section' name like '%".$find."%' or description like '%".$find."%'";  
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where section='$section' name like $findesc or description like $findesc";  
     } else {
       $mid=" where section='$section' "; 
     }
@@ -826,7 +835,8 @@ class Comments extends TikiLib {
     $query = "select count(*) from tiki_comments where object='$hash' and average<$threshold $time_cond";
     $below = $this->getOne($query);
     if($find) {
-      $mid=" where object='$hash' and parentId=$parentId and type='s' and average>=$threshold and (title like '%".$find."%' or data like '%".$find."%') ";  
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where object='$hash' and parentId=$parentId and type='s' and average>=$threshold and (title like $findesc or data like $findesc) ";  
     } else {
       $mid=" where object='$hash' and parentId=$parentId and type='s' and average>=$threshold "; 
     }
@@ -880,7 +890,8 @@ class Comments extends TikiLib {
     // Now the non-sticky
     $ret = Array();
     if($find) {
-      $mid=" where object='$hash' and parentId=$parentId and type<>'s' and average>=$threshold and (title like '%".$find."%' or data like '%".$find."%') ";  
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where object='$hash' and parentId=$parentId and type<>'s' and average>=$threshold and (title like $findesc or data like $findesc) ";  
     } else {
       $mid=" where object='$hash' and parentId=$parentId and type<>'s' and average>=$threshold "; 
     }

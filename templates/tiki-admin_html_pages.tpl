@@ -2,17 +2,22 @@
 {if $preview eq 'y'}
 <div class="wikitext">{$parsed}</div>
 {/if}
-<h2>{tr}Create/edit HTML pages{/tr}</h2>
+{if $pageName eq ''}
+<h2>{tr}Create new HTML page{/tr}</h2>
+{else}
+<h2>{tr}Edit this HTML page:{/tr} {$pageName}</h2>
+<a href="tiki-admin_html_pages.php">{tr}Create new HTML page{/tr}</a>
+{/if}
 <form action="tiki-admin_html_pages.php" method="post" id='editpageform'>
-<input type="hidden" name="pageName" value="{$pageName}" />
+<input type="hidden" name="pageName" value="{$pageName|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Page name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName}" /></td></tr>
+<tr><td class="formcolor">{tr}Page name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="pageName" value="{$info.pageName|escape}" /></td></tr>
 {if $tiki_p_use_content_templates eq 'y'}
 <tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
 <select name="templateId" onChange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
-<option value="{$templates[ix].templateId}">{tr}{$templates[ix].name}{/tr}</option>
+<option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
 {/section}
 </select>
 </td></tr>
@@ -23,7 +28,7 @@
 <option value='s' {if $info.type eq 's'}selected="selected"{/if}>{tr}Static{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Refresh rate (if dynamic) [secs]{/tr}:</td><td class="formcolor"><input type="text" size="40" name="refresh" value="{$info.refresh}" /></td></tr>
+<tr><td class="formcolor">{tr}Refresh rate (if dynamic) [secs]{/tr}:</td><td class="formcolor"><input type="text" size="40" name="refresh" value="{$info.refresh|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Content{/tr}: ({tr}Use {literal}{{/literal}ed id=name} or {literal}{{/literal}ted id=name} to insert dynamic zones{/tr})</td><td class="formcolor"><textarea name="content" rows="25" cols="60">{$info.content|escape}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
@@ -37,9 +42,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_html_pages.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

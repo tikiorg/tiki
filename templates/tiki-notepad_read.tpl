@@ -8,7 +8,7 @@
 <table>
 <tr><td>
 <form id='formread' action="tiki-notepad_read.php" method="post">
-<input type="hidden" name="noteId" value="{$noteId}" />
+<input type="hidden" name="noteId" value="{$noteId|escape}" />
 <select name="parse_mode" onChange="javascript:document.getElementById('formread').submit();">
 <option value="raw" {if $parse_mode eq 'raw'}selected="selected"{/if}>{tr}Normal{/tr}</option>
 <option value="wiki"{if $parse_mode eq 'wiki'}selected="selected"{/if}>{tr}Wiki{/tr}</option>
@@ -19,13 +19,13 @@
 </td>
 <td>
 <form action="tiki-notepad_read.php" method="post">
-<input type="hidden" name="noteId" value="{$noteId}" />
+<input type="hidden" name="noteId" value="{$noteId|escape}" />
 <input type="submit" name="remove" value="{tr}delete{/tr}" />
 </form>
 </td>
 <td>
 <form action="tiki-notepad_write.php" method="post">
-<input type="hidden" name="noteId" value="{$noteId}" />
+<input type="hidden" name="noteId" value="{$noteId|escape}" />
 <input type="submit" name="write" value="{tr}edit{/tr}" />
 </form>
 </td>
@@ -33,15 +33,15 @@
 <td>
 {if $wiki_exists eq 'n'}
 <form action="tiki-notepad_read.php" method="post">
-<input type="hidden" name="noteId" value="{$noteId}" />
+<input type="hidden" name="noteId" value="{$noteId|escape}" />
 <input type="submit" name="wikify" value="{tr}wiki create{/tr}"/>
-<input size="20" type="text" name="wiki_name" value="{$info.name}" />
+<input size="20" type="text" name="wiki_name" value="{$info.name|escape}" />
 </form>
 {else}
 <form action="tiki-notepad_read.php" method="post">
-<input type="hidden" name="noteId" value="{$noteId}" />
+<input type="hidden" name="noteId" value="{$noteId|escape}" />
 <input type="submit" name="wikify" value="{tr}wiki overwrite{/tr}" />
-<input size="20" type="text" name="wiki_name" value="{$info.name}" />
+<input size="20" type="text" name="wiki_name" value="{$info.name|escape}" />
 <input type="checkbox" name="over" />
 </form>
 {/if}

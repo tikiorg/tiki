@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.3 2003-03-21 13:42:26 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.4 2003-08-01 10:30:44 redflo Exp $
 include_once('lib/categories/categlib.php');
 if($feature_categories == 'y') {
    $smarty->assign('cat_categorize','n');
@@ -16,5 +16,13 @@ if($feature_categories == 'y') {
      }
    }
    $smarty->assign_by_ref('categories',$categories["data"]);
+   
+	// check if this page is categorized
+	if ($categlib->is_categorized($cat_type,$cat_objid)) {
+		$cat_categorize = 'y';
+	} else {
+		$cat_categorize = 'n';
+	}
+	$smarty->assign('cat_categorize',$cat_categorize);
 }
 ?>

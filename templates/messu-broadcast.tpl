@@ -1,7 +1,7 @@
-<a class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a><br/><br/>
+<a class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
-<br/><br/>
+<br /><br />
 {if $sent}
 {$message}
 {else}
@@ -15,7 +15,7 @@
     <option value="all" selected="selected">{tr}All users{/tr}</option>
     {/if}
 	{section name=ix loop=$groups}
-	<option value="{$groups[ix].groupName}">{$groups[ix].groupName}</option>
+	<option value="{$groups[ix].groupName|escape}">{$groups[ix].groupName}</option>
 	{/section}
     </select>
     </td>
@@ -33,15 +33,15 @@
     </td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" name="subject" value="{$subject}" size="80" maxlength="255"/></td>
+    <td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" name="subject" value="{$subject|escape}" size="80" maxlength="255"/></td>
   </tr>
 </table>
-<br/>
+<br />
 <table class="normal" width="70%">
   <tr>
-    <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body}</textarea></td>
+    <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea></td>
   </tr>
 </table>
 </form>
 {/if}
-<br/><br/>
+<br /><br />

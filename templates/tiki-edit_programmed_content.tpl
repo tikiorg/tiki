@@ -1,19 +1,19 @@
-<a class="pagetitle" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Program dynamic content for block{/tr}: {$contentId}</a><br/><br/>
+<a class="pagetitle" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Program dynamic content for block{/tr}: {$contentId}</a><br /><br />
 <h3>{tr}Block description: {/tr}{$description}</h3>
 <h3>{tr}Create or edit content{/tr}</h3>
 {if $pId}
-{tr}You are editing block:{/tr}{$pId}<br/>
+{tr}You are editing block:{/tr}{$pId}<br />
 {/if}
 [<a class="link" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}create new block{/tr}</a>|
-<a class="link" href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a>]<br/>
+<a class="link" href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a>]<br />
 
 <form action="tiki-edit_programmed_content.php" method="post">
-<input type="hidden" name="contentId" value="{$contentId}" />
-<input type="hidden" name="pId" value="{$pId}" />
+<input type="hidden" name="contentId" value="{$contentId|escape}" />
+<input type="hidden" name="pId" value="{$pId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">Description:</td>
 <td class="formcolor">
-<textarea rows="5" cols="40" name="data">{$data}</textarea>
+<textarea rows="5" cols="40" name="data">{$data|escape}</textarea>
 </td></tr>
 <tr><td class="formcolor">{tr}Publishing date{/tr}</td>
 <td class="formcolor">{html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}</td></tr>
@@ -27,9 +27,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-edit_programmed_content.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -66,7 +66,7 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
@@ -77,7 +77,7 @@
 &nbsp;[<a class="prevnext" href="tiki-edit_programmed_content.php?find={$find}&amp;contentId={$contentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-edit_programmed_content.php?find={$find}&amp;contentId={$contentId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

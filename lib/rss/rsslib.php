@@ -96,7 +96,7 @@ class RSSLib extends TikiLib {
     $news = Array();
     $this->buffer = '';
     $this->flag=0;
-    $this->parser=xml_parser_create();
+    $this->parser=xml_parser_create("UTF-8");
     xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false);
     xml_set_object($this->parser,$this);
     xml_set_element_handler($this->parser,"startElementHandler","endElementHandler");
@@ -162,7 +162,54 @@ class RSSLib extends TikiLib {
    return $info["content"];
   }
 
-  
+  function rss_iconv($xmlstr, $tencod = "UTF-8") {
+
+    if(preg_match("/<\?xml.*encoding=\"(.*)\".*\?>/", $xmlstr, $xml_head)) {
+      $sencod=strtoupper($xml_head[1]);
+      switch($sencod) {
+      case "ISO-8859-1":
+	// Use utf8_encode a more standard function
+	$xmlstr = utf8_encode($xmlstr);
+	break;
+      case "UTF-8":
+      case "US-ASCII":
+	// UTF-8 and US-ASCII don't need convertion
+	break;
+      default:
+	// Not supported encoding, we must use iconv() or recode()
+	if(function_exists('iconv')) {
+	  // We have iconv use it
+	  $new_xmlstr=@iconv($sencod,$tencod,$xmlstr);
+	  if($new_xmlstr === FALSE) {
+	    // in_encod -> out_encod not supported, may be misspelled encoding
+	    $sencod=strtr($sencod, array("-" => "",
+					 "_" => "",
+					 " " => ""));
+	    $new_xmlstr=@iconv($sencod,$tencod,$xmlstr);
+	    if($new_xmlstr === FALSE) {
+	      // in_encod -> out_encod not supported, leave it
+	      $tencod = $sencod;
+	      break;
+	    }
+	  }
+	  $xmlstr = $new_xmlstr;
+	  // Fix an iconv bug, a few garbage chars beyound xml...
+	  $xmlstr = preg_replace("/(.*<\/rdf:RDF>).*/s", 
+				 "\$1", $xmlstr);
+	} elseif(function_exists('recode_string')) {
+	  // I don't have recode support could somebody test it?
+	  $xmlstr=@recode_string("$sencod..$tencod", $xmlstr);
+	} else {
+	  // This PHP intallation don't have any EncodConvFunc...
+	  // somebody could create tiki_iconv(...)?
+	}
+      }
+      // Replace header, put the new encoding
+      $xmlstr = preg_replace("/(<\?xml.*)encoding=\".*\"(.*\?>)/", 
+			     "\$1 encoding=\"$tencod\"\$2", $xmlstr);
+    }
+    return $xmlstr;
+  }
 }
 
 $rsslib= new RSSLib($dbTiki);

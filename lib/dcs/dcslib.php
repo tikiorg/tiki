@@ -22,7 +22,8 @@ class DCSLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (description like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (description like $findesc)";
     } else {
       $mid='';
     }
@@ -88,7 +89,8 @@ class DCSLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where contentId=$contentId and (data like '%".$find."%') ";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where contentId=$contentId and (data like $findesc) ";
     } else {
       $mid=" where contentId=$contentId";
     }

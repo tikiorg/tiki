@@ -1154,23 +1154,36 @@ class Smarty
 	 */	
     function _assign_smarty_interface()
     {
-        if ($this->_smarty_vars !== null)
-            return;
 
-        $globals_map = array('g'  => 'HTTP_GET_VARS',
-                             'p'  => 'HTTP_POST_VARS',
-                             'c'  => 'HTTP_COOKIE_VARS',
-                             's'  => 'HTTP_SERVER_VARS',
-                             'e'  => 'HTTP_ENV_VARS');
+        // implemented some more intelligent checking of _smarty_vars
+        // jj - 7/31/03
+        $smarty = $this->_smarty_vars;
+        if ($smarty === null) $smarty = array();
+        if (!isset($smarty['request'])) $smarty['request'] = array();
+        else return;
 
-        $smarty  = array('request'  => array());
+//        $globals_map = array('g'  => 'HTTP_GET_VARS',
+//                             'p'  => 'HTTP_POST_VARS',
+//                             'c'  => 'HTTP_COOKIE_VARS',
+//                             's'  => 'HTTP_SERVER_VARS',
+//                             'e'  => 'HTTP_ENV_VARS');
+// 		changed so the variables work with register_globals off
+
+        $globals_map = array('g'  => $_GET,
+                             'p'  => $_POST,
+                             'c'  => $_COOKIE,
+                             's'  => $_SERVER,
+                             'e'  => $_ENV);
+
 
         foreach (preg_split('!!', strtolower($this->request_vars_order)) as $c) {
             if (isset($globals_map[$c])) {
-                $smarty['request'] = array_merge($smarty['request'], $GLOBALS[$globals_map[$c]]);
+//                $smarty['request'] = array_merge($smarty['request'], $GLOBALS[$globals_map[$c]]);
+                $smarty['request'] = array_merge($smarty['request'], $globals_map[$c]);
             }
         }
-        $smarty['request'] = @array_merge($smarty['request'], $GLOBALS['HTTP_SESSION_VARS']);
+//        $smarty['request'] = @array_merge($smarty['request'], $GLOBALS['HTTP_SESSION_VARS']);
+        $smarty['request'] = @array_merge($smarty['request'], $_SESSION);
 
         $this->_smarty_vars = $smarty;
     }
