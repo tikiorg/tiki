@@ -1,7 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-
+include_once('lib/drawings/drawlib.php');
 
 if($feature_drawings != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
@@ -16,10 +16,19 @@ if($tiki_p_admin_drawings != 'y') {
 }
 
 if(isset($_REQUEST["remove"])) {
-  @unlink("img/wiki/".$_REQUEST["remove"].".gif");
-  @unlink("img/wiki/".$_REQUEST["remove"].".draw");
-  @unlink("img/wiki/".$_REQUEST["remove"].".map");
+  $drawlib->remove_drawing($_REQUEST["remove"]);
 }
+
+if(isset($_REQUEST["removeall"])) {
+  $drawlib->remove_all_drawings($_REQUEST["removeall"]);
+}
+
+if(isset($_REQUEST['del'])) {
+	foreach(array_keys($_REQUEST['draw']) as $id) {
+		$drawlib->remove_drawing($id);	
+	}
+}
+
 
 $pars=parse_url($_SERVER["REQUEST_URI"]);
     $pars_parts=split('/',$pars["path"]);
@@ -30,21 +39,31 @@ $pars=parse_url($_SERVER["REQUEST_URI"]);
 $pars=join('/',$pars);
 $smarty->assign('path',$pars);
 
-// Get templates from the templates directory
-$files=Array();
-$h = opendir("img/wiki");
-while (($file = readdir($h)) !== false) {
-  if(strstr($file,'.gif')) {
-    $files[]=substr($file,0,strlen($file)-4);
-  }
-}  
-closedir($h);
+$smarty->assign('preview','n');
+if(isset($_REQUEST['previewfile'])) {
+	$draw_info = $drawlib->get_drawing($_REQUEST['previewfile']);
+	$smarty->assign('draw_info',$draw_info);
+	$smarty->assign('preview','y');
+}
 
-sort($files);
-$smarty->assign('files',$files);
+// Manage offset here
+if(!isset($_REQUEST["sort_mode"])) {  $sort_mode = 'name_asc'; } else {  $sort_mode = $_REQUEST["sort_mode"];} 
+if(!isset($_REQUEST["offset"])) {  $offset = 0;} else {  $offset = $_REQUEST["offset"]; }$smarty->assign_by_ref('offset',$offset);
+if(isset($_REQUEST["find"])) { $find = $_REQUEST["find"];  } else {  $find = ''; } $smarty->assign('find',$find);
+$smarty->assign_by_ref('sort_mode',$sort_mode);
 
-// Get templates from the templates/modules directori
+if(isset($_REQUEST['ver']) && $_REQUEST['ver']) {
+	$items = $drawlib->list_drawing_history($_REQUEST['ver'],$offset,$maxRecords,$sort_mode,$find);
+} else {
+	$items = $drawlib->list_drawings($offset,$maxRecords,$sort_mode,$find);
+	
+}
 
+$smarty->assign('cant',$items['cant']);
+$cant_pages = ceil($items["cant"] / $maxRecords);$smarty->assign_by_ref('cant_pages',$cant_pages);$smarty->assign('actual_page',1+($offset/$maxRecords));
+if($items["cant"] > ($offset+$maxRecords)) {  $smarty->assign('next_offset',$offset + $maxRecords);} else {  $smarty->assign('next_offset',-1); }
+if($offset>0) {  $smarty->assign('prev_offset',$offset - $maxRecords);  } else {  $smarty->assign('prev_offset',-1); }
+$smarty->assign_by_ref('items',$items["data"]);
 
 $smarty->assign('mid','tiki-admin_drawings.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

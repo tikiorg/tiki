@@ -1,5 +1,9 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Drawings history added. From the admin drawings panel you can view the history,
+  remove versions, etc.
+* [NEW] Drawings jGraphPad replaced jHotDraw, lot of new features and tools to edit
+  drawings which can be included in any parsed tiki object.
 * [NEW] Forums: Breadcrumb added. Links to next/prev topic when browsing threads
   added.
 * [NEW] Forums: Topic summaries added and can be used (optional)
