@@ -22,7 +22,7 @@
 {if $events[e].category != $categ}
   {assign var=categ value=$events[e].category}
 <tr>
-  <td class="even" colspan="3"><b>{$events[e].category}</b></td>
+  <td class="even" colspan="3"><b>{tr}{$events[e].category}{/tr}</b></td>
 </tr>
 {/if}
 
@@ -32,7 +32,7 @@
   {assign var=class value='even'}
 {/if}
 <tr>
-  <td class="{$class}">{$events[e].description}</td>
+  <td class="{$class}">{tr}{$events[e].description}{/tr}</td>
   <td class="{$class}">
     <input type="text" size="3" name="events[{$events[e].event}][score]" value="{$events[e].score}">
   </td>
