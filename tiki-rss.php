@@ -134,9 +134,9 @@ if ($rss_version >= 5)
 	    $about = htmlspecialchars($about);
 	
 			$title = $chg["$titleId"]; 
-		  if ($titleId == "title") { 
+		  if ($id == "blogId") { 
 		    // blog posts have titles, use them 
-		    $title = $title; 
+		    $title = $chg["title"]; 
   		} else if ($titleId == "created") { 
     		// blog post titles are dates, so make them readable 
     		$title = gmdate('D, d M Y H:i:s T', $title); 
