@@ -144,7 +144,7 @@ function smarty_function_html_select_time($params, &$smarty)
         $html_result .= "</select>\n";
     }
 
-    print '<span dir="ltr">'.$html_result.'</span>';
+    return $html_result;
 }
 
 /* vim: set expandtab: */
