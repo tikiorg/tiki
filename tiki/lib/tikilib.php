@@ -333,29 +333,6 @@ class TikiLib {
   }
   /* End of shared listing functions */
 
-  function Rfc2822DateTime ($time = false) {
-    if ($time === false)
-        $time = time();
-    return date('D, j M Y H:i:s ', $time) . $this->TimezoneOffset($time, 'no colon');
-  }
-
-  function TimezoneOffset ($time = false, $no_colon = false) {
-    if ($time === false)
-        $time = time();
-    $secs = date('Z', $time);
-    if ($secs < 0) {
-        $sign = '-';
-        $secs = -$secs;
-    }
-    else {
-        $sign = '+';
-    }
-    $colon = $no_colon ? '' : ':';
-    $mins = intval(($secs + 30) / 60);
-    return sprintf("%s%02d%s%02d",
-                   $sign, $mins / 60, $colon, $mins % 60);
-  }
-
   function MakeWikiZip()
   {
     $zipname         = "wikidb.zip";
@@ -376,7 +353,7 @@ class TikiLib {
   {
     $info=$this->get_page_info($pageName);
     $head = '';
-    $head .= "Date: " . $this->Rfc2822DateTime($info["lastModif"]) . "\r\n";
+    $head .= "Date: " . $this->get_rfc2822_datetime($info["lastModif"]) . "\r\n";
     $head .= sprintf("Mime-Version: 1.0 (Produced by Tiki)\r\n");
     $iter = $this->get_page_history($pageName);
     $parts = array();
@@ -4330,6 +4307,7 @@ class TikiLib {
     // weekdays
     // zone
     // maxImpressions and impressions
+    # TODO localize
     $dw = strtolower(date("D"));
     $hour = date("H").date("i");
     $now = date("U");
@@ -6198,7 +6176,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $aux["name"] = $res["pageName"];
-      $aux["hits"] = date("F d Y (h:i)",$res["lastModif"]);
+      $aux["hits"] = $this->get_long_datetime($res["lastModif"]);
       $aux["href"] = 'tiki-index.php?page='.$res["pageName"];
       $ret[] = $aux;  
     }  
@@ -6215,7 +6193,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $aux["name"] = $res["name"].': '.$res["title"];
-      $aux["hits"] = date("F d Y (h:i)",$res["commentDate"]);
+      $aux["hits"] = $this->get_long_datetime($res["commentDate"]);
       $aux["href"] = 'tiki-view_forum_thread.php?forumId='.$res["forumId"].'&amp;comments_parentId='.$res["threadId"];
       $ret[] = $aux;  
     }  
@@ -6372,7 +6350,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $aux["name"] = $res["name"];
-      $aux["hits"] = date("F d Y (h:i)",$res["created"]);
+      $aux["hits"] = $this->get_long_datetime($res["created"]);
       $aux["href"] = 'tiki-browse_image.php?imageId='.$res["imageId"];
       $ret[] = $aux;  
     }  
@@ -6389,7 +6367,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $aux["name"] = $res["filename"];
-      $aux["hits"] = date("F d Y (h:i)",$res["created"]);
+      $aux["hits"] = $this->get_long_datetime($res["created"]);
       $aux["href"] = 'tiki-download_file.php?fileId='.$res["fileId"];
       $ret[] = $aux;  
     }  
@@ -6459,7 +6437,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $q = "select title from tiki_blogs where blogId=".$res["blogId"];
       $name = $this->getOne($q);
       $aux["name"] = $name;
-      $aux["hits"] = date("F d Y (h:i)",$res["created"]);
+      $aux["hits"] = $this->get_long_datetime($res["created"]);
       $aux["href"] = 'tiki-view_blog.php?blogId='.$res["blogId"];
       $ret[] = $aux;  
     }  
@@ -7327,7 +7305,14 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function find_posts($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
-    static $search_posts = array(
+  	$site_timezone_shortname = $this->get_site_timezone_shortname();
+  	$site_time_difference = $this->get_site_time_difference(/* $user */);
+    # TODO localize?
+    $pagename = "CONCAT(b.title, ' [', ".
+    	"DATE_FORMAT(FROM_UNIXTIME(p.created + $site_time_difference), ".
+    	"'%M %d %Y %h:%i'), ' $site_timezone_shortname', '] by: ', p.user)";
+
+    $search_posts = array(
       'from'      => 'tiki_blog_posts p LEFT JOIN tiki_blogs b ON b.blogId = p.blogId',
       'name'      => 'p.data',	# to simplify the logic, won't hurt performance
       'data'      => 'p.data',
@@ -7336,7 +7321,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'lastModif' => 'p.created',
       'href'      => 'tiki-read_article.php?articleId=%d',
       'id'        => array('p.blogId'),
-      'pageName'  => 'CONCAT(b.title, " [", DATE_FORMAT(p.created, "%M %d %Y %h:%i"), "] by: ", p.user)',
+      'pageName'  => $pagename,
       'search'    => array(),
     );
     return $this->_find($search_posts, $words, $offset, $maxRecords, $fulltext);
@@ -8290,7 +8275,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   }
 
   # TODO rename get_site_timezone()
-  function get_display_timezone($user = null) {
+  function get_display_timezone($user = false) {
   	static $display_timezone = false;
   	
     if (!$display_timezone) {
@@ -8356,7 +8341,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $short_datetime_format;
   }
 
-  function server_time_to_site_time($timestamp, $user = null) {
+  function server_time_to_site_time($timestamp, $user = false) {
 	$date = new Date($timestamp);
 	$date->setTZbyID($this->get_server_timezone());
 	$date->convertTZbyID($this->get_display_timezone($user));
@@ -8366,10 +8351,11 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   /**
   
   */
-  function get_site_date($timestamp, $user = null) {
+  function get_site_date($timestamp, $user = false) {
 	static $localed = false;
 
 	if (!$localed) {
+		# breaks the RFC 2822 code
 #		@setlocale(LC_TIME, $tikilib->get_locale($user));
 		$localed = true;
 	}
@@ -8423,17 +8409,41 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   # TODO rename to server_time_to_site_time()
   
-  function get_site_time($timestamp, $user = null) {
+  function get_site_time($timestamp, $user = false) {
     $date = $this->get_site_date($timestamp, $user);
     return $date->getTime();
   }
 
-  function date_format($format, $timestamp, $user = null) {
+  function date_format($format, $timestamp, $user = false) {
     $date = $this->get_site_date($timestamp, $user);
    	return $date->format($format);
   }
 
-  function get_site_timezone_shortname($user = null) {
+  function get_long_date($timestamp, $user = false) {
+    return $this->date_format($this->get_long_date_format(), $timestamp, $user);
+  }
+
+  function get_short_date($timestamp, $user = false) {
+    return $this->date_format($this->get_short_date_format(), $timestamp, $user);
+  }
+
+  function get_long_time($timestamp, $user = false) {
+    return $this->date_format($this->get_long_time_format(), $timestamp, $user);
+  }
+
+  function get_short_time($timestamp, $user = false) {
+    return $this->date_format($this->get_short_time_format(), $timestamp, $user);
+  }
+
+  function get_long_datetime($timestamp, $user = false) {
+    return $this->date_format($this->get_long_datetime_format(), $timestamp, $user);
+  }
+
+  function get_short_datetime($timestamp, $user = false) {
+    return $this->date_format($this->get_short_datetime_format(), $timestamp, $user);
+  }
+
+  function get_site_timezone_shortname($user = false) {
     static $timezone_shortname;
     
     if (!$timezone_shortname) {
@@ -8444,10 +8454,51 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $timezone_shortname;
   }
 
+  function get_server_timezone_shortname($user = false) {
+    static $timezone_shortname;
+    
+    if (!$timezone_shortname) {
+      $timezone_shortname = date('%Z');
+    }
+    
+    return $timezone_shortname;
+  }
+
+  /**
+  	get_site_time_difference - Return the number of seconds needed to add to a 
+  	'system' time to return a 'site' time.
+  */
+  function get_site_time_difference($user = false) {
+    static $difference = false;
+    
+    if ($difference === false) {
+      $server_tzid	= $this->get_server_timezone();
+      $site_tzid	= $this->get_display_timezone($user);
+#print "<pre>";      
+#printf("server_tzid='%s', site_tzid='%s'", $server_tzid, $site_tzid);
+      $server_tz	=& new Date_TimeZone($server_tzid);
+      $site_tz		=& new Date_TimeZone($site_tzid);
+      
+#printf("server_tz=");
+#print_r($server_tz);
+#printf("site_tz=");
+#print_r($site_tz);
+      $now =& new Date();
+      $server_offset = $server_tz->getOffset($now);
+      $site_offset = $site_tz->getOffset($now);
+#printf("server_offset='%s', site_offset='%s'", $server_offset, $site_offset);
+      $difference = intval(($site_offset - $server_offset) / 1000);
+#printf("difference=%s", $difference);
+    }
+    
+    return $difference;
+  }
+
+
   /**
     Timezone saavy replacement for mktime()
   */
-  function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = null) {
+  function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
   	global $user; # ugh!
 
 	if ($year <= 69)
@@ -8476,7 +8527,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   /**
     Timezone saavy replacement for mktime()
   */
-  function make_server_time($hour, $minute, $second, $month, $day, $year, $timezone_id = null) {
+  function make_server_time($hour, $minute, $second, $month, $day, $year, $timezone_id = false) {
   	global $user; # ugh!
 
 	if ($year <= 69)
@@ -8503,8 +8554,40 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   	return $date->getTime();
   }
 
+  /**
+	Per http://www.w3.org/TR/NOTE-datetime
+  */
+  function get_iso8601_datetime($timestamp, $user = false) {
+    return $this->date_format('%Y-%m-%dT%H:%M:%S%O', $timestamp, $user);
+  }
 
-  function get_language($user = null) {
+  function get_rfc2822_datetime($timestamp = false, $user = false) {
+    if (!$timestamp)
+        $timestamp = time();
+
+    # can't be localized!
+    #return date('D, j M Y H:i:s ', $time) . $this->timezone_offset($time, 'no colon');
+    return $this->date_format('%a, %e %b %Y %H:%M:%S', $timestamp, $user) .
+    	$this->get_rfc2822_timezone_offset($timestamp, $user);
+  }
+
+  function get_rfc2822_timezone_offset($time = false, $no_colon = false, $user = false) {
+    if ($time === false)
+        $time = time();
+    $secs = $this->date_format('%Z', $time, $user);
+    if ($secs < 0) {
+        $sign = '-';
+        $secs = -$secs;
+    }
+    else {
+        $sign = '+';
+    }
+    $colon = $no_colon ? '' : ':';
+    $mins = intval(($secs + 30) / 60);
+    return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
+  }
+  
+  function get_language($user = false) {
   	static $language = false;
   	
     if (!$language) {
@@ -8519,7 +8602,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $language;
   }
 
-  function get_locale($user = null) {
+  function get_locale($user = false) {
   	static $locale = false;
   	
   	static $locales = array(
