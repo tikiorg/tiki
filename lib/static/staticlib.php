@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.7 2004-07-30 20:32:46 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.8 2004-07-30 21:01:24 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,12 +48,29 @@ class StaticLib extends TikiLib {
 	// build the static html page
 	function update_page($pagename) {
 		
-		global $smarty, $wiki_realtime_static_path, $wikiHomePage, $style, $style_base, $tiki_p_edit, $feature_categories, $feature_categorypath, $feature_categoryobjects;
+		global $smarty, $wiki_realtime_static_path, $wikiHomePage, $style, $style_base, $feature_categories, $feature_categorypath, $feature_categoryobjects;
 		
 		// variable for whether an error occured
 		$display_error = FALSE;
 		
-		global $tiki_p_admin, $tiki_p_view;
+		// what permissions should be used to generate static pages?
+		global $userlib;
+		require_once('lib/userslib.php');
+		global $dbTiki;
+		$userlib = new UsersLib($dbTiki);
+		$static_group = "anonymous";
+		$user = NULL;
+		$perms = $userlib->get_group_permissions($static_group);
+		foreach ($perms as $perm) {
+			$smarty->assign("$perm", 'y');
+			$$perm = 'y';
+		}
+		if (empty($tiki_p_admin)) {
+			$tiki_p_admin = 'n';
+		}
+		if (empty($tiki_p_view_wiki_history)) {
+			$tiki_p_view_wiki_history = 'n';
+		}
 		
 		global $wikilib;
 		require_once('lib/wiki/wikilib.php');
@@ -75,8 +92,10 @@ class StaticLib extends TikiLib {
 		require_once('tiki-pagesetup.php');
 		
 		$objId = urldecode($page);
-		if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
+		if ($tiki_p_admin != 'y' && $feature_categories == 'y' && empty($object_has_perms)) {
 			// Check to see if page is categorized
+			global $categlib;
+			include_once('lib/categories/categlib.php');
 			$perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
 		   	if (is_array($perms_array)) {
 		   		$is_categorized = TRUE;
@@ -144,7 +163,7 @@ class StaticLib extends TikiLib {
 			}
 		}
 
-		global $feature_wiki_dblclickedit, $feature_wiki_page_footer, $tiki_p_view_wiki_history;
+		global $feature_wiki_dblclickedit, $feature_wiki_page_footer;
 		$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
 		$smarty->assign('tiki_p_view_wiki_history',$tiki_p_view_wiki_history);
 		$smarty->assign('is_a_wiki_page', 'y');
