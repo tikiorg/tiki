@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
-[{if $tiki_p_edit_article eq 'y'}<a class="link" href="tiki-edit_article.php">edit new article</a>|{/if}
-<a class="link" href="tiki-view_articles.php">view articles</a>]
+[{if $tiki_p_edit_article eq 'y'}<a class="link" href="tiki-edit_article.php">{tr}edit new article{/tr}</a>|{/if}
+<a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>]
 <br/><br/>
 <div align="center">
 <table class="findtable">
