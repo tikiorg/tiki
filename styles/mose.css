@@ -1,6 +1,6 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.29 2003-12-26 01:08:52 mose Exp $
-2003 - created and maintained by mose@feu.org
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.30 2003-12-27 21:19:21 mose Exp $
+2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
 sand light: #EFEFE7;
@@ -19,7 +19,7 @@ body {
 H1 H2 H3 {
 	font-weight:    bold;
 	font-family:   Arial, Helvetica, sans-serif;
-	margin:   0;
+	margin:   0px;
 }
 
 H1 {
@@ -367,8 +367,25 @@ div.separator:hover {
   margin-top: 3px;
   padding-top: 3px;
 } 
-
-
+/* style for rss lists in modules or in wiki */
+.rsslist {
+	background-color: #ffffff;
+	margin: 0;
+	margin-right: 10px;
+	padding: 1px;
+	border: 1px solid #dadac9;
+}
+.rssitem {
+	padding: 1px 6px 1px 6px;
+	border-top: 1px dashed #dadac9;
+}
+.rssitem:first-child {
+	border-top: 0;
+}
+.rssdate {
+	color: #999999;
+	font-style: italic;
+}
 /* 
 Links to extend/collapse menus 
 */
@@ -581,26 +598,16 @@ When the page title is a link this is the style
 */
 .pagetitle, .forumspagetitle {
 	font-weight:    bold;
-	font-size:   18px;
+	font-size:   20px;
 	font-family:   Arial, Helvetica, sans-serif;
 	color:   #534333;
 	background-color:   #eeeeee;
 }
 
 a.pagetitle, a.forumspagetitle {
-	font-weight:    bold;
-	font-size:   18px;
-	font-family:   Arial, Helvetica, sans-serif;
-	color:   #534333;
-	background-color:   #eeeeee;
 }
 
 a.pagetitle:hover, a.forumspagetitle:hover {
-	font-weight:    bold;
-	font-size:   18px;
-	font-family:   Arial, Helvetica, sans-serif;
-	color:   black;
-	background-color:   #eeeeee;
 }
 
 /* 
@@ -739,11 +746,26 @@ cached version (cache) is displayed using this style
 
 table.wikitable {
 	width: 100%;
-	border: 1px solid black;
+	border: 1px solid #B5A58C;
+	border-spacing: 0;
 }
 
-td.wikicell {
+table.wikitable tr {
 	background-color: #EFEFEF;
+}
+table.wikitable tr:hover {
+	background-color: #dfddd9;
+}
+td.wikicell {
+	border-top: 1px solid #ffffff;
+	border-left: 1px dashed #cccccc;
+	padding: 3px;
+}
+table.wikitable tr:first-child td.wikicell {
+	border-top: 0;
+}
+td.wikicell:first-child {
+	border-left: 0;
 }
 
 /* 
@@ -757,7 +779,15 @@ div.wikitext {
 	margin: 1px 0 1px 0;
 	clear:   both;
 }
-
+div.wikitext pre {
+	font-family: monospace;
+	padding: 4px;
+	background-color: #FFFFFF;
+	color: #666666;
+	border: 1px dashed #cccccc;
+	margin: 0;
+	width: auto;
+}
 /* 
 Links to wiki pages 
 */
@@ -2484,12 +2514,28 @@ a.tikihelp:hover {
 	cursor:   help;
 	text-decoration:   inherit;
 }
-
-div.catlists {
-	margin-top: 15px;
-	border: 1px solid #424242;
+div.catbox {
+	clear: both;
 }
-
+div.catlists {
+	margin-right: 5px;
+	border: 1px solid #424242;
+	display: inline;
+	width: auto;
+}
+.catlists .cbox-title {
+	width: auto;
+}
+.catlists .cbox-data {
+	width: auto;
+}
+.catlists .cbox-data a {
+	display: block;
+	padding-bottom: 1px;
+}
+.catlists .cbox-data a:hover {
+	padding-bottom: 0px;
+}
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
     display: none;
