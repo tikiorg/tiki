@@ -126,7 +126,7 @@
 <tr><td class="heading" colspan="2">{tr}Blog Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Weblogs{/tr}</td><td class="even" style="text-align:right;">{$blog_stats.blogs}</td></tr>
 <tr><td class="odd">{tr}Total posts{/tr}</td><td class="odd" style="text-align:right;">{$blog_stats.posts}</td></tr>
-<tr><td class="even">{tr}Average posts pero weblog{/tr}</td><td class="even" style="text-align:right;">{$blog_stats.ppb|string_format:"%.2f"}</td></tr>
+<tr><td class="even">{tr}Average posts per weblog{/tr}</td><td class="even" style="text-align:right;">{$blog_stats.ppb|string_format:"%.2f"}</td></tr>
 <tr><td class="odd">{tr}Total size of blog posts{/tr}</td><td class="odd" style="text-align:right;">{$blog_stats.size}</td></tr>
 <tr><td class="even">{tr}Average posts size{/tr}</td><td class="even" style="text-align:right;">{$blog_stats.bpp|string_format:"%.2f"}</td></tr>
 <tr><td class="odd">{tr}Visits to weblogs{/tr}</td><td class="odd" style="text-align:right;">{$blog_stats.visits}</td></tr>
