@@ -134,118 +134,12 @@ class SearchLib extends TikiLib {
 			'id' => array('pageName'),
 			'pageName' => 'pageName',
 			'search' => array(),
-	);
+		);
 
-  function SearchLib($db) 
-  {
-  	# this is probably uneeded now
-    if(!$db) {
-      die("Invalid db object passed to SearchLib constructor");  
-    }
-    $this->db = $db;  
-  }
-  
-  function register_search($words)
-  {
-   $words=addslashes($words);
-   $words = preg_split("/\s/",$words);
-   foreach($words as $word) {
-     $word=trim($word);
-     $cant = $this->getOne("select count(*) from tiki_search_stats where term='$word'");
-     if($cant) {
-       $query = "update tiki_search_stats set hits=hits+1 where term='$word'";
-     } else {
-       $query = "insert into tiki_search_stats(term,hits) values('$word',1)";
-     }
-
-     $result = $this->query($query);
-   }
-  }
-
-  function _find($h, $words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
-    $words = trim($words);
-    $sql = sprintf('SELECT %s AS name, LEFT(%s, 240) AS data, %s AS hits, %s AS lastModif, %s	AS pageName',
-      $h['name'], $h['data'], $h['hits'], $h['lastModif'], $h['pageName']);
-    $id = $h['id'];
-    for ($i = 0; $i < count($id); ++$i)
-      $sql .= ',' . $id[$i] . ' AS id' . ($i + 1);
-    if (count($id) < 2)
-      $sql .= ',1 AS id2';
-    $sql2 = ' FROM ' . $h['from'] . ' WHERE 1';
-    $search_fields = array($h['name']);
-   	if ($h['data'] && $h['name'] != $h['data'])
-	    array_push($search_fields, $h['data']);
-    $orderby = (isset($h['orderby']) ? $h['orderby'] : $h['hits']);
-    if ($fulltext) {
-	   	if (count($h['search']))
-    		if (!preg_match('/\./', $h['search'][0]))
-    			$search_fields = array_merge($search_fields, $h['search']);
-		$qwords = $this->db->quote($words);
-    	$sqlft = 'MATCH(' . join(',', $search_fields) . ') AGAINST (' . $qwords . ')';
-    	$sql2 .= ' AND ' . $sqlft . ' >= 0';
-    	$sql .= ', ' . $sqlft . ' AS relevance';
-	    $orderby = 'relevance desc, ' . $orderby;
-#		if (count($h['search'])) {
-#	    	$sqlft = ' MATCH(' . join(',', $h['search']) . ') AGAINST (' . $qwords . ')';
-#	    	$sql2 .= ' OR ' . $sqlft . ' > 0';
-#	    	$sql .= ', ' . $sqlft . ' AS score2';
-#		}
-	} else if ($words) {
-	  $sql .= ', -1 AS relevance';
-      $vwords = split(' ',$words);
-      foreach ($vwords as $aword) {
-        //$aword = $this->db->quote('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
-        $aword = $this->db->quote('.*'.strtoupper($aword).'.*');
-        $sql2 .= ' AND (';
-        for ($i = 0; $i < count($search_fields); ++$i) {
-          if ($i)
-            $sql2 .= ' OR ';
-          $sql2 .= 'UPPER(' . $search_fields[$i] . ') REGEXP ' . $aword;
-        }
-        $sql2 .= ')';
-      }
-    } else {
-    	$sql .= ', -1 AS relevance';
-    }
-
-    $cant = $this->getOne('SELECT COUNT(*)' . $sql2);
-    if (!$cant) {
-      return array('data' => array(), 'cant' => 0);
-    }
-    $sql .= $sql2 . ' ORDER BY ' . $orderby . ' DESC LIMIT ' . $offset . ',' . $maxRecords;
-    $result = $this->query($sql);
-    $ret = Array();
-    while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $href = sprintf(urldecode($h['href']), $res['id1'], $res['id2']);
-      $ret[] = array(
-        'pageName'  => $res["pageName"],
-        'data'      => $res["data"],
-        'hits'      => $res["hits"],
-        'lastModif' => $res["lastModif"],
-        'href'      => $href,
-        'relevance' => round($res["relevance"], 3),
-      );
-    }
-    return array('data' => $ret, 'cant' => $cant);
-  }
-
-  function find_wikis($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
-  {
-    static $search_wikis = array(
-      'from'      => 'tiki_pages',
-      'name'      => 'pageName',
-      'data'      => 'data',
-      'hits'      => 'pageRank',
-      'lastModif'	=> 'lastModif',
-      'href'      => 'tiki-index.php?page=%s',
-      'id'        => array('pageName'),
-      'pageName'	=> 'pageName',
-      'search'    => array(),
-    );
-	// that pagerank re-calculation was speed handicap (timex30)
-	//$this->pageRank();
-	return $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
-}
+		// that pagerank re-calculation was speed handicap (timex30)
+		//$this->pageRank();
+		return $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
+	}
 
 	function find_galleries($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
 		static $search_galleries = array(
