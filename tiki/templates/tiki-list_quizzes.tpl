@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-list_quizzes.php">Quizzes</a><br/><br/>
+<a class="pagetitle" href="tiki-list_quizzes.php">{tr}Quizzes{/tr}</a><br/><br/>
 {if $tiki_p_view_quiz_stats eq 'y'}
 <a class="link" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a><br/><br/>
 {/if}
