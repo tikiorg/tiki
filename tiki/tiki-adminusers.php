@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.17 2004-01-21 07:07:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.18 2004-01-27 18:36:35 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,7 +85,7 @@ function batchImportUsers() {
 	@$smarty->assign('discardlist', $discarded);
 }
 
-if (isset($groupTracker) and $groupTracker  == 'y') {
+if (isset($userTracker) and $userTracker  == 'y') {
 	include_once('lib/trackers/trackerlib.php');
 }
 
@@ -181,36 +181,33 @@ if ($offset > 0) {
 
 list($username,$usermail,$usersTrackerId) = array('','','');
 if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
-	if (!is_int($_REQUEST["user"])) {
+	if (ereg("^[a-zA-Z]",$_REQUEST["user"])) {
 		$_REQUEST["user"] = $userlib->get_user_id($_REQUEST["user"]);
 	}
 	$re = $userlib->get_usertracker($_REQUEST["user"]);
-	$username = $re['login'];
-	$usermail = $re['email'];
 	
-	//	var_dump($re);
 	if ($userTracker == 'y') {
 		if ($re['usersTrackerId']) {
 			$usersTrackerId = $re["usersTrackerId"];
+			$username = $re['login'];
+			$usermail = $re['email'];
 			$fields = $trklib->list_tracker_fields($usersTrackerId, 0, -1, 'position_asc', '');
 			$info = $trklib->get_item($usersTrackerId,'Login',$username);
 			for ($i = 0; $i < count($fields["data"]); $i++) {
-				if ($fields["data"][$i]["type"] != 'h') {
-					$name = ereg_replace("[^a-zA-Z0-9]","",$fields["data"][$i]["name"]);
-					$ins_name = 'ins_' . $name;
-					if ($fields["data"][$i]["type"] == 'c') {
-						if (!isset($info["$name"])) $info["$name"] = 'n';
-					} else {
-						if (!isset($info["$name"])) $info["$name"] = '';
-					}
-					$ins_fields["data"][$i]["value"] = $info["$name"];
-					if ($fields["data"][$i]["type"] == 'a') {
-						$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
-					}
+				$name = $fields["data"][$i]["fieldId"];
+				if ($fields["data"][$i]["type"] == 'c') {
+					if (!isset($info["$name"])) $info["$name"] = 'n';
+				} else {
+					if (!isset($info["$name"])) $info["$name"] = '';
+				}
+				$fields["data"][$i]["value"] = $info["$name"];
+				if ($fields["data"][$i]["type"] == 'a') {
+					$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
 				}
 			}
-			$smarty->assign_by_ref('fields', $fields["data"]);
-			$smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
+			$smarty->assign('fields', $fields["data"]);
+			$useritemId = $info["itemId"];
+			$smarty->assign('useritemId', $useritemId);
 		}
 	}
 	if (!isset($_REQUEST["action"])) {
@@ -220,6 +217,10 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");	
 	$_REQUEST["user"] = 0;
 }
+if (isset($_REQUEST['add'])) {
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+}
+
 
 $smarty->assign('user', $_REQUEST["user"]);
 $smarty->assign('username', $username);

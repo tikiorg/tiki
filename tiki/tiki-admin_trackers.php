@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.14 2004-01-25 14:55:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.15 2004-01-27 18:36:35 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,14 +26,15 @@ if ($tiki_p_admin_trackers != 'y') {
 if (!isset($_REQUEST["trackerId"])) {
 	$_REQUEST["trackerId"] = 0;
 }
-
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 
 $smarty->assign('individual', 'n');
-
 if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	$smarty->assign('individual', 'y');
 }
+
+$status_types = $trklib->status_types();
+$smarty->assign('status_types', $status_types);
 
 $info = array();
 $info["name"] = '';
@@ -41,7 +42,7 @@ $info["description"] = '';
 $info["showCreated"] = '';
 $info["showStatus"] = '';
 $info["showStatusAdminOnly"] = '';
-$info["newItemsClosed"] = '';
+$info["newItemStatus"] = '';
 $info["showLastModif"] = '';
 $info["useComments"] = '';
 $info["useAttachments"] = '';
@@ -60,7 +61,7 @@ $smarty->assign('description', $info["description"]);
 $smarty->assign('showCreated', $info["showCreated"]);
 $smarty->assign('showStatus', $info["showStatus"]);
 $smarty->assign('showStatusAdminOnly', $info["showStatusAdminOnly"]);
-$smarty->assign('newItemsClosed', $info["newItemsClosed"]);
+$smarty->assign('newItemStatus', $info["newItemStatus"]);
 $smarty->assign('showLastModif', $info["showLastModif"]);
 $smarty->assign('useComments', $info["useComments"]);
 $smarty->assign('useAttachments', $info["useAttachments"]);
@@ -105,8 +106,8 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["showStatusAdminOnly"] = 'y';
 	}
 	
-	if (isset($_REQUEST["newItemsClosed"]) && $_REQUEST["newItemsClosed"] == 'on') {
-		$tracker_options["newItemsClosed"] = 'y';
+	if (isset($_REQUEST["newItemStatus"]) && $_REQUEST["newItemStatus"] == 'on') {
+		$tracker_options["newItemStatus"] = 'y';
 	}
 
 	if (isset($_REQUEST["useComments"]) && $_REQUEST["useComments"] == 'on') {
@@ -144,13 +145,12 @@ if (isset($_REQUEST["save"])) {
 		}
 		$tracker_options[" orderAttachments"] = $orderat;
 	}
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
-
 	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
 	$smarty->assign('trackerId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');
 	$smarty->assign('ui',array());
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -158,13 +158,13 @@ if (!isset($_REQUEST["sort_mode"])) {
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
+$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
 }
-
 $smarty->assign_by_ref('offset', $offset);
 
 if (isset($_REQUEST["find"])) {
@@ -172,10 +172,8 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
-
 $smarty->assign('find', $find);
 
-$smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $trklib->list_trackers($offset, $maxRecords, $sort_mode, $find);
 
 for ($i = 0; $i < count($channels["data"]); $i++) {

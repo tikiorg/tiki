@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.32 2004-01-26 23:41:11 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.33 2004-01-27 18:36:37 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -21,7 +21,7 @@
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}List{/tr}</span>
 <span id="tab{cycle name=tabs}" class="tab">{tr}Add/Edit{/tr}</span>
-{if $ins_fields}
+{if $fields}
 <span id="tab{cycle name=tabs}" class="tab">{tr}More info{/tr}</span>
 {/if}
 {if $memberslist}
@@ -47,6 +47,7 @@
 </tr></table>
 </form>
 
+{if $cant_pages > 1}
 <div align="center">
 {section name=ini loop=$initials}
 {if $initial and $initials[ini] eq $initial}
@@ -59,6 +60,7 @@ class="prevnext">{$initials[ini]}</a> .
 <a href="tiki-admingroups.php?initial={if $find}&amp;find={$find|escape:"url"}{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
 class="prevnext">{tr}All{/tr}</a>
 </div>
+{/if}
 
 <table class="normal">
 <tr>
@@ -94,6 +96,7 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 </tr>
 {/section}
 </table>
+{if $cant_pages > 1}
 <br />
 <div class="mini" align="center">
 {if $prev_offset >= 0}
@@ -112,6 +115,7 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 {/section}
 {/if}
 </div>
+{/if}
 </div>
 
 {* ----------------------- tab with form --------------------------------------- *}
@@ -173,11 +177,11 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 </div>
 
 {* ----------------------- tab with more --------------------------------------- *}
-{if $ins_fields}
+{if $fields}
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}Additionnal information{/tr}</h3>
 <table class="normal">
-{section name=ix loop=$ins_fields}
+{section name=ix loop=$fields}
 {if $fields[ix].type eq 'h'}
 </table>
 <h3>{$fields[ix].label}</h3>
@@ -185,18 +189,19 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 {elseif $fields[ix].type ne 'x'}
 <tr class="formcolor"><td>{$fields[ix].label}</td>
 <td>
-{if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
-{$ins_fields[ix].value|date_format:$daformat}
-{elseif $ins_fields[ix].type eq 'a'}
-{$ins_fields[ix].pvalue}
+{if $fields[ix].type eq 'f' or $fields[ix].type eq 'j'}
+{$fields[ix].value|date_format:$daformat}
+{elseif $fields[ix].type eq 'a'}
+{$fields[ix].pvalue}
 {else}
-{$ins_fields[ix].value}
+{$fields[ix].value}
 {/if}
 </td>
 </tr>
 {/if}
 {/section}
 </table>
+<span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$groupTrackerId}&amp;itemId={$useritemId}&amp;show=mod" class="linkbut">{tr}Edit informations{/tr}</a></span>
 </div>
 {/if}
 

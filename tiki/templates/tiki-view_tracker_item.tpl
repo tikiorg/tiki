@@ -30,10 +30,14 @@
 </div>
 
 {cycle name=content values="1,2,3,4,5" print=false advance=false}
-{* --- tab with view --- *}
+{* ---------------------------------------------------- tab with view --- *}
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}View item{/tr}</h3>
 <table class="normal">
+{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
+{assign var=ustatus value=$items[user].status|default:"c"}
+<tr class="formcolor"><td>{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td><td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td></tr>
+{/if}
 {section name=ix loop=$ins_fields}
 
 {if $ins_fields[ix].type eq 'h'}
@@ -103,7 +107,7 @@
 </table>
 </div>
 
-{* --- tab with comments --- *}
+{* -------------------------------------------------- tab with comments --- *}
 {if $tracker_info.useComments eq 'y'}
 <div id="content{cycle name=content}" class="content">
 {if $tiki_p_comment_tracker_items eq 'y'}
@@ -133,7 +137,7 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 </div>
 {/if}
 
-{* --- tab with attachements --- *}
+{* ---------------------------------------- tab with attachements --- *}
 {if $tracker_info.useAttachments eq 'y'}
 <div id="content{cycle name=content}" class="content">
 {if $tiki_p_attach_trackers eq 'y'}
@@ -199,7 +203,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 </div>
 {/if}
 
-{* --- tab with edit --- *}
+{* --------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_modify_tracker_items eq 'y'}
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}Edit item{/tr}</h3>
@@ -209,16 +213,18 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 {section name=ix loop=$fields}
 <input type="hidden" name="{$fields[ix].id|escape}" value="{$fields[ix].value|escape}" />
 {/section}
-<table>
-<tr><td>{tr}Status{/tr}</td>
+
+<table class="normal">
+{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
+<tr class="formcolor"><td>{tr}Status{/tr}</td>
 <td>
 <select name="status">
-<option value="o" {if $item_info.status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
-<option value="c" {if $item_info.status eq 'c'}selected="selected"{/if}>{tr}closed{/tr}</option>
+{foreach key=st item=stdata from=$status_types}
+<option value="{$st}"{if $item_info.status eq $st} selected="selected"{/if} style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:20px;">{$stdata.label}</option>
+{/foreach}
 </select>
 </td></tr>
-</table>
-<table class="normal">
+{/if}
 {section name=ix loop=$ins_fields}
 
 {if $ins_fields[ix].type ne 'x'}

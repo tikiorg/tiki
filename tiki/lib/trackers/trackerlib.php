@@ -7,121 +7,12 @@ class TrackerLib extends TikiLib {
 		parent::TikiLib($db);
 	}
 
-	/* Tiki tracker construction options */
-	// Return an array with items assigned to the user or a user group
-	/* that method is already in tikilib. isn't it a duplicate ?
-	
-	function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '', $initial = '') {
-		$filters = array();
-
-		if ($fields) {
-			for ($i = 0; $i < count($fields["data"]); $i++) {
-				$fieldId = $fields["data"][$i]["fieldId"];
-				$filters[$fieldId] = $fields["data"][$i];
-			}
-		}
-		$csort_mode = '';
-		if (substr($sort_mode,0,2) == "f_") {
-			list($a,$csort_mode,$corder) = split('_',$sort_mode);
-		}
-		$mid = " where tti.`trackerId`=? ";
-		$bindvars = array((int) $trackerId);
-
-		if ($status) {
-			$mid.= " and tti.`status`=? ";
-			$bindvars[] = $status;
-		}
-		if ($initial) {
-			$mid.= "and ttif.`value` like ?";
-			$bindvars[] = $initial.'%';
-		}
-		if (!$sort_mode) {
-			for ($i = 0; $i < count($fields["data"]); $i++) {
-				if ($fields['data'][$i]['isMain'] == 'y') {
-					$csort_mode = $fields['data'][$i]['name'];
-					break;
-				}
-			}
-		}
-
-		if ($csort_mode) {
-			$sort_mode = $csort_mode."_desc";
-			$bindvars[] = $csort_mode;
-			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
-			$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? order by ttif.`value`";
-			$query_cant = "select count(*) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
-			$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? ";
-		} else {
-			if (!$sort_mode) {
-				$sort_mode = "lastModif_desc";
-			}
-			$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convert_sortmode($sort_mode);
-			$query_cant = "select count(*) from `tiki_tracker_items` tti $mid ";
-		}
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$fields = array();
-
-			$itid = $res["itemId"];
-			$query2 = "select ttif.`fieldId`,`name`,`value`,`type`,`isTblVisible`,`isMain`,`position` 
-				from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf 
-				where ttif.`fieldId`=ttf.`fieldId` and `itemId`=? order by `position` asc";
-			$result2 = $this->query($query2,array((int) $res["itemId"]));
-			$pass = true;
-
-			$kx = "";
-			while ($res2 = $result2->fetchRow()) {
-				// Check if the field is visible!
-				$fieldId = $res2["fieldId"];
-
-				if (count($filters) > 0) {
-					if ($filters["$fieldId"]["value"]) {
-						if ($filters["$fieldId"]["type"] == 'a' || $filters["$fieldId"]["type"] == 't') {
-							if (!stristr($res2["value"], $filters["$fieldId"]["value"]))
-								$pass = false;
-						} else {
-							if (strtolower($res2["value"]) != strtolower($filters["$fieldId"]["value"])) {
-								$pass = false;
-							}
-						}
-					}
-					if (ereg_replace("[^a-zA-Z0-9]","",$res2["name"]) == $csort_mode) {
-						$kx = $res2["value"].$itid;
-					}
-				}
-				$fields[] = $res2;
-			}
-			$res["field_values"] = $fields;
-			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
-			if ($pass) {
-				$kl = $kx.$itid;
-				$ret["$kl"] = $res;
-			}
-		}
-
-		ksort($ret);
-		//$ret=$this->sort_items_by_condition($ret,$sort_mode);
-		$retval = array();
-		$retval["data"] = array_values($ret);
-		$retval["cant"] = $cant;
-		return $retval;
-	}
-	*/
-
 	function add_item_attachment_hit($id) {
-		global $count_admin_pvs;
-
-		global $user;
-
-		if ($count_admin_pvs == 'y' || $user != 'admin') {
+		global $count_admin_pvs, $user;
+		if ($user != 'admin' || $count_admin_pvs == 'y' ) {
 			$query = "update `tiki_tracker_item_attachments` set `downloads`=`downloads`+1 where `attId`=?";
-
 			$result = $this->query($query,array((int) $id));
 		}
-
 		return true;
 	}
 	
@@ -130,18 +21,16 @@ class TrackerLib extends TikiLib {
 	}
 
 	function list_item_attachments($itemId, $offset, $maxRecords, $sort_mode, $find) {
-
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
 			$mid = " where `itemId`=? and (`filename` like ?)";
 			$bindvars=array((int) $itemId,$findesc);
 		} else {
 			$mid = " where `itemId`=? ";
 			$bindvars=array((int) $itemId);
 		}
-
-		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`downloads`,`created`,`comment`,`longdesc`,`version` from `tiki_tracker_item_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`downloads`,`created`,`comment`,`longdesc`,`version` ";
+		$query.= " from `tiki_tracker_item_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_attachments` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -160,32 +49,23 @@ class TrackerLib extends TikiLib {
 	function item_attach_file($itemId, $name, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc) {
 		$comment = strip_tags($comment);
 		$now = date("U");
-		$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,`comment`,`path`,`version`,`longdesc`)
-    values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,";
+		$query.= "`comment`,`path`,`version`,`longdesc`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array((int) $itemId,$name,$size,$type,$data,(int) $now,0,$user,$comment,$fhash,$version,$longdesc));
 	}
 
 	function get_item_attachment($attId) {
 		$query = "select * from `tiki_tracker_item_attachments` where `attId`=?";
-
 		$result = $this->query($query,array((int) $attId));
-
-		if (!$result->numRows())
-			return false;
-
+		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function remove_item_attachment($attId) {
 		global $t_use_dir;
-
 		$path = $this->getOne("select `path` from `tiki_tracker_item_attachments` where `attId`=?",array((int) $attId));
-
-		if ($path) {
-			@unlink ($t_use_dir . $path);
-		}
-
+		if ($path) @unlink ($t_use_dir . $path);
 		$query = "delete from `tiki_tracker_item_attachments` where `attId`=?";
 		$result = $this->query($query,array((int) $attId));
 	}
@@ -233,15 +113,12 @@ class TrackerLib extends TikiLib {
 
 	function remove_item_comment($commentId) {
 		$query = "delete from `tiki_tracker_item_comments` where `commentId`=?";
-
 		$result = $this->query($query,array((int) $commentId));
 	}
 
 	function list_item_comments($itemId, $offset, $maxRecords, $sort_mode, $find) {
-
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
 			$mid = " and (`title` like ? or `data` like ?)";
 			$bindvars = array((int) $itemId,$findesc,$findesc);
 		} else {
@@ -269,12 +146,8 @@ class TrackerLib extends TikiLib {
 
 	function get_item_comment($commentId) {
 		$query = "select * from `tiki_tracker_item_comments` where `commentId`=?";
-
 		$result = $this->query($query,array((int) $commentId));
-
-		if (!$result->numRows())
-			return false;
-
+		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();
 		return $res;
 	}
@@ -640,6 +513,12 @@ class TrackerLib extends TikiLib {
 		return $type;
 	}
 	
+	function status_types() {
+		$status['o'] = array('label'=>tra('open'),'image'=>'img/icons2/status_open.gif');
+		$status['c'] = array('label'=>tra('closed'),'image'=>'img/icons2/status_closed.gif');
+		$status['p'] = array('label'=>tra('pending'),'image'=>'img/icons2/status_pending.gif');
+		return $status;
+	}
 }
 
 $trklib = new TrackerLib($dbTiki);
