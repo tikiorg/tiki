@@ -1,4 +1,7 @@
-<a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="forumspagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.41 2003-11-15 06:34:24 zaufi Exp $ *}
+
+<a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
+
 <br/><br/>
 {if $unread > 0}
 	<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br/><br/></a>
@@ -24,7 +27,7 @@ a moderator approves it.{/tr}</small>
 
 <table class="normal">
 <tr>
-  <td class="viewthreadl" >
+  <td class="odd" >
   <div align="center">
   {if $forum_info.ui_avatar eq 'y'}
   {$thread_info.userName|avatarize}<br/>
@@ -41,7 +44,7 @@ a moderator approves it.{/tr}</small>
   {/if}
   </div>
   </td>
-  <td class="viewthreadr" >
+  <td class="odd" >
   <table >
   <tr>
   	<td>
@@ -94,7 +97,7 @@ a moderator approves it.{/tr}</small>
   </td>
   </tr>
 <tr>
-  <td class="viewthreadr" style="text-align:center;">
+  <td class="odd" style="text-align:center;">
   	&nbsp;
   	{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
 	  <a class="admlink" href="messu-compose.php?to={$thread_info.userName}&amp;subject=Re:{$thread_info.title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
@@ -111,8 +114,8 @@ a moderator approves it.{/tr}</small>
   	{/if}
 
   </td>
-  <td class="viewthreadr">  
-  <table style="vertical-align: bottom;">
+  <td class="odd">  
+  <table class="commentinfo">
   <tr>
     <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
     {if $forum_info.vote_threads eq 'y'}
@@ -185,10 +188,10 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
     <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
-    <table class="forumformtable">	
+    <table class="normal">
     <tr>
-      <td class="forumform">{tr}Title{/tr}</td>
-      <td class="forumform"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
+      <td class="formcolor">{tr}Title{/tr}</td>
+      <td class="formcolor"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
     </tr>
     {if $forum_info.forum_use_password eq 'a'}
     <tr>
@@ -208,25 +211,25 @@ a moderator approves it.{/tr}</small>
 {/if}
     {if $feature_smileys eq 'y'}
     <tr>
-      <td class="forumform">{tr}Smileys{/tr}</td>
-      <td class="forumform">{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl"}</td>
+      <td class="formcolor">{tr}Smileys{/tr}</td>
+      <td class="formcolor">{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl"}</td>
      </tr>
     {/if}
     <tr>
-      <td class="forumform">Comment</td>
-      <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="80">{$comment_data|escape}</textarea></td>
+      <td class="formcolor">Comment</td>
+      <td class="formcolor"><textarea id='editpost' name="comments_data" rows="8" cols="80">{$comment_data|escape}</textarea></td>
     </tr>
     {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
     <tr>
-	  <td class="forumform">{tr}Attach file{/tr}</td>
-	  <td class="forumform">
+	  <td class="formcolor">{tr}Attach file{/tr}</td>
+	  <td class="formcolor">
 	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />
 	  </td>   
     </tr>
     {/if}
     <tr>
-      <td class="forumform">{tr}Post{/tr}</td>
-      <td class="forumform">
+      <td class="formcolor">{tr}Post{/tr}</td>
+      <td class="formcolor">
       <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
       <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
       <input type="button" name="comments_postComment" value="{tr}cancel{/tr}" onclick="hide('{$postclass}');"/></td>
@@ -348,13 +351,13 @@ a moderator approves it.{/tr}</small>
 
 <table class="normal" >
 <tr>
-  <td class="forumheading">{tr}author{/tr}</td>
-  <td class="forumheading">{tr}message{/tr}</td>
+  <td class="heading">{tr}author{/tr}</td>
+  <td class="heading">{tr}message{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$comments_coms}
 <tr>
-  <td  class="threads{cycle advance=false}l" >
+  <td  class="{cycle advance=false}" >
   <div align="center">
   {if $forum_info.ui_avatar eq 'y'}
   {$comments_coms[ix].userName|avatarize}<br/>
@@ -372,7 +375,7 @@ a moderator approves it.{/tr}</small>
 
   </div>
   </td>
-  <td  class="threads{cycle advance=false}r" >
+  <td  class="{cycle advance=false}" >
   <table >
   <tr>
   	<td>
@@ -427,7 +430,7 @@ a moderator approves it.{/tr}</small>
   </td>
   </tr>
   <tr>
-  <td style="text-align:center;" class="threads{cycle advance=false}r">
+  <td style="text-align:center;" class="{cycle advance=false}">
     &nbsp;
     {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
 	  <a class="admlink" href="messu-compose.php?to={$comments_coms[ix].userName}&amp;subject=Re:{$comments_coms[ix].title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
@@ -444,8 +447,8 @@ a moderator approves it.{/tr}</small>
   	{/if}
 
   </td>
-  <td class="threads{cycle}r">
-  <table style="border: 1px solid black;" >
+  <td class="{cycle}">
+  <table class="commentinfo">
   <tr>
     <td style="font-size:8pt;">
     {tr}on{/tr}: {$comments_coms[ix].commentDate|tiki_short_datetime}  
