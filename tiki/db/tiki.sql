@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2005-03-13 10:16:42 $
-# $Author: ohertel $
+# $Date: 2005-03-18 11:28:49 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4665,6 +4665,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_spellcheck','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_top_bar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_uses_slides','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style', 'old');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('limitedGoGroupHome', 'y');
 
 # default sizes for mailbox, read box and mail archive
 # in messages per user and box (0=unlimited)
