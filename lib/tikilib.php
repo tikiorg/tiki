@@ -2190,13 +2190,15 @@ class TikiLib {
 
 	/*shared*/
 	function list_user_blogs($user, $include_public = false) {
-		$query = "select * from `tiki_blogs` where `user`='$user'";
+		$query = "select * from `tiki_blogs` where `user`=?";
+		$bindvars=array($user);
 
 		if ($include_public) {
-			$query .= " or public='y'";
+			$query .= " or `public`=?";
+			$bindvars[]='y';
 		}
 
-		$result = $this->query($query);
+		$result = $this->query($query,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -2208,30 +2210,31 @@ class TikiLib {
 
 	/*shared*/
 	function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (`data` like $findesc) ";
+			$mid = " where (`data` like ?) ";
+			$bindvars=array($findesc);
 		} else {
 			$mid = '';
+			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_blog_posts` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
 			$blogId = $res["blogId"];
 
-			$query = "select `title`  from `tiki_blogs` where `blogId`=$blogId";
+			$query = "select `title`  from `tiki_blogs` where `blogId`=?";
 			$hash = md5('postId' . $res["postId"]);
-			$cant_com = $this->getOne("select count(*) from `tiki_comments` where `object`='$hash'");
+			$cant_com = $this->getOne("select count(*) from `tiki_comments` where `object`=?",array($hash));
 			$res["comments"] = $cant_com;
-			$res["blogTitle"] = $this->getOne($query);
+			$res["blogTitle"] = $this->getOne($query,array($blogId));
 			$res["size"] = strlen($res["data"]);
 			$ret[] = $res;
 		}
