@@ -3550,14 +3550,14 @@ class TikiLib {
 	        }
 	      }
 	      for ($i = 0; $i < count($tables[0]); $i++) {
-	        $repl = '<table class="wikitable" border="1">';
+	        $repl = '<table class="wikitable">';
 	        for ($j = 0; $j < count($cols[$i]); $j++) {
 	          $ncols = count($cols[$i][$j]);
 	          if ($ncols == 1 && !$cols[$i][$j][0])
 	            continue;
 	          $repl .= '<tr>';
 	          for ($k = 0; $k < $ncols; $k++) {
-	            $repl .= '<td';
+	            $repl .= '<td class="wikicell" ';
 	            if ($k == $ncols - 1 && $ncols < $maxcols)
 	              $repl .= ' colspan=' . ($maxcols-$k);
 	            $repl .= '>' . $cols[$i][$j][$k] . '</td>';
@@ -3584,14 +3584,14 @@ class TikiLib {
 	        }
 	      }
 	      for ($i = 0; $i < count($tables[0]); $i++) {
-	        $repl = '<table class="wikitable" border="1">';
+	        $repl = '<table class="wikitable">';
 	        for ($j = 0; $j < count($cols[$i]); $j++) {
 	          $ncols = count($cols[$i][$j]);
 	          if ($ncols == 1 && !$cols[$i][$j][0])
 	            continue;
 	          $repl .= '<tr>';
 	          for ($k = 0; $k < $ncols; $k++) {
-	            $repl .= '<td';
+	            $repl .= '<td class="wikicell" ';
 	            if ($k == $ncols - 1 && $ncols < $maxcols)
 	              $repl .= ' colspan=' . ($maxcols-$k);
 	            $repl .= '>' . $cols[$i][$j][$k] . '</td>';

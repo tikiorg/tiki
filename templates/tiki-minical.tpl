@@ -36,6 +36,8 @@
 [<a class="link" href="tiki-minical.php?view=daily">{tr}Daily{/tr}</a> | 
 <a class="link" href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a> |
 <a class="link" href="tiki-minical.php?view=list">{tr}List{/tr}</a>]
+[<a class="link" href="tiki-minical_export.php">{tr}Export{/tr}</a>
+ | <a class="link" href="tiki-minical_prefs.php?import=1">{tr}Import{/tr}</a>]
 <br/><br/>
 <!-- Time here -->
 <!--[{$pdate_h|date_format:"%H"}:{$pdate_h|date_format:"%M"}]-->

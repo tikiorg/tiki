@@ -71,6 +71,15 @@
 </table>
 </form>
 
+<h3>{tr}Import CSV file{/tr}</h3>
+<form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
+<table class="normal">
+<tr>
+  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"><input type="submit" name="import" value="{tr}import{/tr}" /></td>
+</tr>
+</table>
+</form>
+
 <h3>{tr}Admin topics{/tr}</h3>
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
 <table class="normal">

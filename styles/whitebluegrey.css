@@ -475,6 +475,15 @@ div.cachedpage {
 	text-decoration: none;
 }
 
+table.wikitable {
+  border: 1px solid black;
+}
+
+td.wikicell {
+  background-color: #EFEFEF;
+}
+
+
 /* Text in wiki pages is displayed using the following style */
 div.wikitext {
   background: white;
