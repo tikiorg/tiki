@@ -2947,6 +2947,7 @@ CREATE TABLE tiki_tracker_fields (
   type char(1) default NULL,
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,
+  isSearchable char(1) default NULL,
   PRIMARY KEY  (fieldId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3516,6 +3517,8 @@ CREATE TABLE users_groups (
   groupName varchar(30) NOT NULL default '',
   groupDesc varchar(255) default NULL,
   groupHome varchar(255),
+	usersTrackerId int(11),
+	groupTrackerId int(11),
   PRIMARY KEY  (groupName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
@@ -3981,7 +3984,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_use_lib','gd');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('groupTracker','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('groupTrackerId','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('home_file_gallery','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('http_domain','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('http_port','80');
@@ -4067,7 +4069,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_assigned_modules',
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useRegisterPasscode','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTracker','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTrackerId','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useUrlIndex','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateUsers','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('eponymousGroups','n');

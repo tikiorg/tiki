@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.2 2004-01-01 18:40:18 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.3 2004-01-04 09:09:10 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -36,7 +36,12 @@ ALTER TABLE tiki_trackers ADD orderAttachments varchar(255) NOT NULL default 'fi
 
 # added on 2004-01-01 by mose (user and groups dedicated trackers pref)
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('groupTracker','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('groupTrackerId','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTracker','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTrackerId','0');
+
+ALTER TABLE `users_groups` ADD `usersTrackerId` INT(11) ;
+ALTER TABLE `users_groups` ADD `groupTrackerId` INT(11) ;
+
+# added on 2004-01-03 by mose 
+ALTER TABLE `tiki_tracker_fields` ADD `isSearchable` CHAR(1) NOT NULL default 'y';
+
 
