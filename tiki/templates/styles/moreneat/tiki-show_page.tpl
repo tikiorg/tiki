@@ -175,7 +175,7 @@
 {/if}
 {/if}
 
-{if $feature_multilingual eq 'y'and $tiki_p_edit eq 'y'}
+{if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
      <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
 {/if}
 

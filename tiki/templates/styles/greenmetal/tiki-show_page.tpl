@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.7 2004-06-12 13:10:41 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.8 2004-06-14 20:46:25 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
@@ -170,7 +170,7 @@
 <span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
 {/if}
 
-{if $feature_multilingual eq 'y'and $tiki_p_edit eq 'y'}
+{if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y'}
      <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
 {/if}
 
