@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.58 2004-07-29 17:38:15 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.59 2004-08-11 18:55:37 sylvieg Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -2818,6 +2818,7 @@ border-color: #A9B8C2;
 color: black;
 background-color: #ccffcc;
 }
+.diffchar{color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {

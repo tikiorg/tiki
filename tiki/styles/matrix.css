@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.css,v 1.17 2004-07-01 21:07:52 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.css,v 1.18 2004-08-11 18:55:36 sylvieg Exp $
  *
  * My first TIKI theme :)
  *
@@ -247,6 +247,7 @@ border-color: #A9B8C2;
 color: black;
 background-color: #ccffcc;
 }
+.diffchar{color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {

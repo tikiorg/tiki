@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.34 2004-07-11 10:27:48 damosoft Exp $
+$Id: trollparty.css,v 1.35 2004-08-11 18:55:39 sylvieg Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -3121,6 +3121,7 @@ border-color: #A9B8C2;
 color: black;
 background-color: #ccffcc;
 }
+.diffchar{color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {

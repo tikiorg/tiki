@@ -1981,6 +1981,7 @@ border-color: #A9B8C2;
 color: black;
 background-color: #ccffcc;
 }
+.diffchar{color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {

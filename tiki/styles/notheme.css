@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.17 2004-07-11 10:27:48 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.18 2004-08-11 18:55:37 sylvieg Exp $
  *
  * My second theme :)
  * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
@@ -130,6 +130,7 @@ border-color: #A9B8C2;
 color: black;
 background-color: #ccffcc;
 }
+.diffchar{color: red;}
 
 /**** coloration for QUOTE plugin *****/
 .quoteheader {
