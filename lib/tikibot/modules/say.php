@@ -42,7 +42,7 @@ class say extends Wollabot_Module {
 		$where = array_shift($params["message_exploded"]);
 		$param = implode(" ", $params["message_exploded"]);
 
-		if ((!strstr($target, "#")) && ($this->is_op($where, $who)) && $param) {
+		if ((strstr($target, "#")) && ($this->is_op($target, $who)) && $param) {
 			$this->send_privmsg($where,$param);
 			$this->wollabot->print_log("$who Said '".$param."' to '".$where."'");
 		}
