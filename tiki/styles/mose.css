@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.43 2004-04-09 03:55:07 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.44 2004-04-29 13:20:45 sylvieg Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -275,6 +275,7 @@ in a cell with the following style
 TD.module {
 	color:   black;
 	text-align:   left;
+	font-size: 11px;
 }
 
 /* 
