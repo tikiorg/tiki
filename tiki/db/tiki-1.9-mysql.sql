@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.20 2004-04-29 20:06:16 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.21 2004-05-01 16:22:25 ggeller Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2509,7 +2509,7 @@ CREATE TABLE tiki_quiz_stats_sum (
 # Table structure for table `tiki_quizzes`
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
+# Last update: April 29, 2004
 #
 
 DROP TABLE IF EXISTS tiki_quizzes;
@@ -2524,6 +2524,12 @@ CREATE TABLE tiki_quizzes (
   timeLimit int(14) default NULL,
   created int(14) default NULL,
   taken int(10) default NULL,
+  immediateFeedback char(1) default NULL,
+  showAnswers char(1) default NULL,
+  shuffleQuestions char(1) default NULL,
+  shuffleAnswers char(1) default NULL,
+  publishDate int(14) default NULL,
+  expireDate` int(14) default NULL,
   PRIMARY KEY  (quizId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -2735,6 +2741,16 @@ CREATE TABLE tiki_sessions (
 # --------------------------------------------------------
 
 # Tables for TikiSheet
+CREATE TABLE tiki_sheet_layout (
+  sheetId int(8) NOT NULL default '0',
+  begin int(10) NOT NULL default '0',
+  end int(10) default NULL,
+  headerRow int(4) NOT NULL default '0',
+  footerRow int(4) NOT NULL default '0',
+  className varchar(64) default NULL,
+  UNIQUE KEY sheetId (sheetId,begin)
+) TYPE=MyISAM;
+
 CREATE TABLE tiki_sheet_values (
   sheetId int(8) NOT NULL default '0',
   begin int(10) NOT NULL default '0',
@@ -4186,6 +4202,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('long_time_format','%H:%
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxArticles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('maxRecords','10');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_directories','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_articles','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_blog','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('max_rss_blogs','10');
@@ -4212,6 +4229,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('registerPasscode','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rememberme','disabled');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('remembertime','7200');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rnd_num_reg','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_directories','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_articles','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blog','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blogs','y');
