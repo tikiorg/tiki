@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.51 2004-06-09 21:23:39 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.52 2004-06-17 14:40:26 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,14 +66,8 @@ if (isset($_REQUEST["prefs"])) {
 			$tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["mystyle"]);
 	}
 
-	if (isset($_REQUEST["realName"]))
-		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
-
 	if (isset($_REQUEST["userbreadCrumb"]))
 		$tikilib->set_user_preference($userwatch, 'userbreadCrumb', $_REQUEST["userbreadCrumb"]);
-
-	if (isset($_REQUEST["homePage"]))
-		$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
 
 	if ($change_language == 'y') {
 		if (isset($_REQUEST["language"])) {
@@ -99,17 +93,6 @@ if (isset($_REQUEST["prefs"])) {
 		$smarty->assign_by_ref('display_timezone', $_REQUEST['display_timezone']);
 	}
 
-	if (isset($_REQUEST["lat"])) {
-		$smarty->assign('lat', floatval($_REQUEST["lat"]));
-		$tikilib->set_user_preference($userwatch, 'lat', floatval($_REQUEST["lat"]));
-	}
-
-	if (isset($_REQUEST["lon"])) {
-		$smarty->assign('lon', floatval($_REQUEST["lon"]));
-		$tikilib->set_user_preference($userwatch, 'lon', floatval($_REQUEST["lon"]));
-	}
-
-	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
 	$tikilib->set_user_preference($userwatch, 'user_information', $_REQUEST['user_information']);
 
 	if (isset($_REQUEST['user_dbl']) && $_REQUEST['user_dbl'] == 'on') {
@@ -136,6 +119,28 @@ if (isset($_REQUEST["prefs"])) {
 
 	header ("location: tiki-user_preferences.php?view_user=$userwatch");
 	die;
+}
+
+if (isset($_REQUEST['info'])) {
+	check_ticket('user-prefs');
+
+	if (isset($_REQUEST["realName"]))
+		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
+
+	if (isset($_REQUEST["homePage"]))
+		$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
+
+	if (isset($_REQUEST["lat"])) {
+		$smarty->assign('lat', floatval($_REQUEST["lat"]));
+		$tikilib->set_user_preference($userwatch, 'lat', floatval($_REQUEST["lat"]));
+	}
+
+	if (isset($_REQUEST["lon"])) {
+		$smarty->assign('lon', floatval($_REQUEST["lon"]));
+		$tikilib->set_user_preference($userwatch, 'lon', floatval($_REQUEST["lon"]));
+	}
+
+	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
 }
 
 if (isset($_REQUEST['chgemail'])) {
