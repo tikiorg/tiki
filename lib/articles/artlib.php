@@ -312,12 +312,19 @@ class ArtLib extends TikiLib {
 		if ($show_expdate == 'on') {$show_expdate = 'y';} else {$show_expdate = 'n';}
 		if ($show_reads == 'on') {$show_reads = 'y';} else {$show_reads = 'n';}
 
+		$query = "select count(*) from `tiki_article_types` where `type`=?";
+		$rowcnt = $this->getOne($query,array($type));
+
+		// if the type already exists, delete it first
+		if ($rowcnt > 0) {
+			$query = "delete from `tiki_article_types` where `type`=?";
+			$result = $this->query($query,array($type));
+		}
+
 		$query = "insert into `tiki_article_types`(`type`,`use_ratings`,`show_pre_publ`,`show_post_expire`,`heading_only`,`allow_comments`,`show_image`,`show_avatar`,`show_author`,`show_pubdate`,`show_expdate`,`show_reads`)
                      values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads));
 
-		//$query = "select max(`topicId`) from `tiki_topics` where `created`=? and `name`=?";
-		//$topicId = $this->getOne($query,array((int) $now,$name));
 		return true;
 	}
 
