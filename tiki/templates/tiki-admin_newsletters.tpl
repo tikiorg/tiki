@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_newsletters.php">Admin newsletters</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a><br/><br/>
 [<a class="link" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>
 |<a class="link" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a>
 ]<br/><br/>

@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_survey_questions.php?surveyId={$surveyId}">Edit survey questions</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_survey_questions.php?surveyId={$surveyId}">{tr}Edit survey questions{/tr}</a><br/><br/>
 [<a class="link" href="tiki-list_surveys.php">{tr}List surveys{/tr}</a>
 |<a class="link" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
 |<a class="link" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}this survey stats{/tr}</a>

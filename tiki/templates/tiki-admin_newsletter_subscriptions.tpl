@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">Admin newsletter subscriptions</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a><br/><br/>
 [<a class="link" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>
  |<a class="link" href="tiki-admin_newsletters.php">{tr}admin newsletters{/tr}</a> 
  |<a class="link" href="tiki-send_newsletters.php?nlId={$nlId}">{tr}send newsletters{/tr}</a>

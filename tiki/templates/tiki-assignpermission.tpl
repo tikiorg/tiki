@@ -1,9 +1,9 @@
 <a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a><br/><br/>
 <h3>{tr}Group Information{/tr}</h3>
 <table class="normal">
-<tr><td class="even">Name:</td><td class="odd">{$group_info.groupName}</td></tr>
-<tr><td class="even">Desc:</td><td class="odd">{$group_info.groupDesc}</td></tr>
-<tr><td class="even">Permissions:</td><td class="odd">
+<tr><td class="even">{tr}Name{/tr}:</td><td class="odd">{$group_info.groupName}</td></tr>
+<tr><td class="even">{tr}Desc{/tr}:</td><td class="odd">{$group_info.groupDesc}</td></tr>
+<tr><td class="even">{tr}Permissions{/tr}:</td><td class="odd">
 {section name=grp loop=$group_info.perms}
 {$group_info.perms[grp]}{if $group_info.perms[grp] != "Anonymous"}(<a class="link" href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$group_info.perms[grp]}&amp;group={$group}&amp;action=remove">x</a>){/if}&nbsp;<br/>
 {/section}
@@ -15,7 +15,7 @@
 <form method="get" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group}" />
 <input type="hidden" name="type" value="{$type}" />
-{tr}Create level:{/tr}<input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}create{/tr}" />
+{tr}Create level{/tr}:<input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}create{/tr}" />
 </form>
 <br/>
 <br/>

@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_drawings.php">Edit drawings & pictures</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_drawings.php">{tr}Edit drawings &amp; pictures{/tr}</a><br/><br/>
 
 <h3>{tr}Available drawings{/tr}:</h3>
 <table class="normal">
