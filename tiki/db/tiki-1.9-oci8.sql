@@ -557,6 +557,7 @@ CREATE TABLE "tiki_blog_posts" (
   "data_size" number(11) default '0' NOT NULL,
   "created" number(14) default NULL,
   "user" varchar(200) default NULL,
+  "priv" varchar(1) default NULL,
   "trackbacks_to" clob,
   "trackbacks_from" clob,
   "title" varchar(80) default NULL,
@@ -2845,6 +2846,19 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin','tiki-mantis-admin.php',198,'feature_mantis','tiki_p_mantis_admin','');
 
 
+-- Tiki Jukebox
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '');
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','View Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '');
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Upload Tracks','tiki-jukebox_upload.php',630,'feature_jukebox','tiki_p_jukebox_upload', '');
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '');
+
+
 -- --------------------------------------------------------
 --
 -- Table structure for table `tiki_menus`
@@ -4005,6 +4019,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "isMain" char(1) default NULL,
   "isTblVisible" char(1) default NULL,
   "isSearchable" char(1) default NULL,
+  "isPublic" char(1) default NULL,
   PRIMARY KEY ("fieldId")
 )   ;
 
@@ -4118,6 +4133,24 @@ BEGIN
 SELECT "tiki_tracker_items_sequ".nextval into :NEW."itemId" FROM DUAL;
 END;
 /
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `tiki_tracker_options`
+--
+-- Creation: Jul 03, 2003 at 07:42 PM
+-- Last update: Jul 08, 2003 at 01:48 PM
+--
+DROP TABLE "tiki_tracker_options";
+
+
+CREATE TABLE "tiki_tracker_options" (
+  "trackerId" number(12) default '0' NOT NULL,
+  "name" varchar(80) default NULL,
+  "value" clob default NULL,
+  PRIMARY KEY (trackerId,name(30))
+)  ;
+
 
 -- --------------------------------------------------------
 --
@@ -4729,8 +4762,8 @@ CREATE TABLE "users_groups" (
   "groupName" varchar(255) default '' NOT NULL,
   "groupDesc" varchar(255) default NULL,
   "groupHome" varchar(255),
-	usersTrackerId number(11),
-	groupTrackerId number(11),
+  "usersTrackerId" number(11),
+  "groupTrackerId" number(11),
   PRIMARY KEY ("groupName")
 ) ;
 
@@ -4866,6 +4899,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_packager', 'Can admin packages/packager', 'admin', 'packages');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_approve_submission', 'Can approve submissions', 'editors', 'cms');
@@ -5223,6 +5259,25 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_install_package', 'Can install packages', 'admin', 'packages');
+
+
+-- TikiJukebox permissions - Damosoft aka Damian
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox');
 
 
 -- --------------------------------------------------------
@@ -6507,6 +6562,120 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('dynamic
 
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif');
+
+
+--
+-- Tiki Jukebox tables
+--
+DROP TABLE "tiki_jukebox_genres";
+
+CREATE SEQUENCE "tiki_jukebox_genres_sequ" INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE "tiki_jukebox_genres" (
+  "genreId" number(14) NOT NULL,
+  "genreName" varchar(80),
+  "genreDescription" clob,
+  PRIMARY KEY (genreId)
+)   ;
+
+CREATE TRIGGER "tiki_jukebox_genres_trig" BEFORE INSERT ON "tiki_jukebox_genres" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_jukebox_genres_sequ".nextval into :NEW."genreId" FROM DUAL;
+END;
+/
+
+DROP TABLE "tiki_jukebox_albums";
+
+CREATE SEQUENCE "tiki_jukebox_albums_sequ" INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE "tiki_jukebox_albums" (
+  "albumId" number(14) NOT NULL,
+  "title" varchar(80) default NULL,
+  "description" clob,
+  "created" number(14),
+  "lastModif" number(14),
+  "user" varchar(200),
+  "visits" number(14),
+  "public" char(1),
+  "genreId" number(14),
+  PRIMARY KEY(albumId)
+)   ;
+
+CREATE TRIGGER "tiki_jukebox_albums_trig" BEFORE INSERT ON "tiki_jukebox_albums" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_jukebox_albums_sequ".nextval into :NEW."albumId" FROM DUAL;
+END;
+/
+
+DROP TABLE "tiki_jukebox_tracks";
+
+CREATE SEQUENCE "tiki_jukebox_tracks_sequ" INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE "tiki_jukebox_tracks" (
+  "trackId" number(14) NOT NULL,
+  "albumId" number(14),
+  "artist" varchar(200),
+  "title" varchar(200),
+  "created" number(14),
+  "url" varchar(255),
+  "filename" varchar(80),
+  "filesize" number(14),
+  "filetype" varchar(250),
+  "genreId" number(14),
+  "plays" number(14),
+  PRIMARY KEY(trackId)
+)  ;
+
+CREATE TRIGGER "tiki_jukebox_tracks_trig" BEFORE INSERT ON "tiki_jukebox_tracks" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_jukebox_tracks_sequ".nextval into :NEW."trackId" FROM DUAL;
+END;
+/
+
+--
+-- End of tiki jukebox tables
+--
+--
+-- moved from tiki-mysql autogenerated file into here
+--
+DROP TABLE "hw_assignments";
+
+
+CREATE TABLE `hw_assignments` (
+  `articleId` number(8) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `state` char(1) default 's',
+  `authorName` varchar(60) default NULL,
+  `topicId` number(14) default NULL,
+  `topicName` varchar(40) default NULL,
+  `size` number(12) default NULL,
+  `useImage` char(1) default NULL,
+  `image_name` varchar(80) default NULL,
+  `image_type` varchar(80) default NULL,
+  `image_size` number(14) default NULL,
+  `image_x` number(4) default NULL,
+  `image_y` number(4) default NULL,
+  `image_data` blob,
+  `publishDate` number(14) default NULL,
+  `expireDate` number(14) default NULL,
+  `created` number(14) default NULL,
+  `heading` clob,
+  `body` clob,
+  `hash` varchar(32) default NULL,
+  `author` varchar(200) default NULL,
+  `reads` number(14) default NULL,
+  `votes` number(8) default NULL,
+  `points` number(14) default NULL,
+  `type` varchar(50) default NULL,
+  `rating` decimal(3,2) default NULL,
+  `isfloat` char(1) default NULL,
+  PRIMARY KEY ("`articleId`")
+  KEY `title` (`title`),
+  KEY `heading` (`heading`(255)),
+  KEY `body` (`body`(255)),
+  KEY `reads` (`reads`),
+  FULLTEXT KEY `ft` (`title`,`heading`,`body`)
+) ;
 
 
 ;
