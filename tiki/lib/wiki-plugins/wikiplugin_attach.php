@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.4 2004-02-05 08:36:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.5 2004-02-21 16:30:15 mose Exp $
 // Displays an attachment or a list of attachments
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -21,7 +21,7 @@ function wikiplugin_attach($data, $params) {
 	if (!isset($num)) $num = 0;
 	if (!$atts['cant']) {
 		return "''".tra('no attachment on this page.')."''";
-	} elseif ($num > 0 and $num < $atts['cant']) {
+	} elseif ($num > 0 and $num < ($atts['cant']+1)) {
 		$loop[] = $num;
 	} else {
 		$loop = range(1,$atts['cant']);
