@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.188 2004-01-07 14:16:17 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.189 2004-01-08 19:01:32 ggeller Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1331,6 +1331,14 @@ $smarty->assign('mnu_wikimenu', 'display:none;');
 if (isset($_COOKIE["wikimenu"])) {
     if ($_COOKIE["wikimenu"] == 'o') {
         $smarty->assign('mnu_wikimenu', 'display:block;');
+    }
+}
+
+$smarty->assign('mnu_homeworkmenu', 'display:none;');
+
+if (isset($_COOKIE["homeworkmenu"])) {
+    if ($_COOKIE["homeworkmenu"] == 'o') {
+        $smarty->assign('mnu_homeworkmenu', 'display:block;');
     }
 }
 
