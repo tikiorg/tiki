@@ -227,10 +227,12 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 <h3>{tr}Insert new item{/tr}</h3>
 <table class="normal">
 {section name=ix loop=$ins_fields}
-{if $ins_fields[ix].type ne 'x'}
-<tr class="formcolor"><td>{$ins_fields[ix].name}</td>
+
+{if $ins_fields[ix].type ne 'x' and $ins_fields[ix].type ne 'h'}
+<tr class="formcolor"><td>{$ins_fields[ix].label}</td>
 <td>
 {/if}
+
 {if $ins_fields[ix].type eq 'u'}
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
@@ -238,48 +240,43 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 <option value="{$users[ux]|escape}">{$users[ux]}</option>
 {/section}
 </select>
-{/if}
 
-{if $ins_fields[ix].type eq 'g'}
+{elseif $ins_fields[ix].type eq 'g'}
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
 {/section}
 </select>
-{/if}
 
-{if $ins_fields[ix].type eq 'i'}
+{elseif $ins_fields[ix].type eq 'h'}
+</table>
+<h3>{$ins_fields[ix].label}</h3>
+<table class="normal">
+
+{elseif $ins_fields[ix].type eq 'i'}
 <input type="file" name="ins_{$ins_fields[ix].name}"/>
-{/if}
 
-{if $ins_fields[ix].type eq 't'}
+{elseif $ins_fields[ix].type eq 't'}
 <input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />
-{/if}
 
-{if $ins_fields[ix].type eq 'a'}
+{elseif $ins_fields[ix].type eq 'a'}
 <textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
-{/if}
 
-{if $ins_fields[ix].type eq 'f'}
+{elseif $ins_fields[ix].type eq 'f'}
 {html_select_date prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value display_seconds=false}
-{/if}
 
-{if $ins_fields[ix].type eq 'd'}
+{elseif $ins_fields[ix].type eq 'd'}
 <select name="ins_{$ins_fields[ix].name}">
 {section name=jx loop=$ins_fields[ix].options_array}
 <option value="{$ins_fields[ix].options_array[jx]|escape}" {if $ins_fields[ix].value eq $ins_fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
 {/section}
 </select>
-{/if}
 
-
-{if $ins_fields[ix].type eq 'c'}
+{elseif $ins_fields[ix].type eq 'c'}
 <input type="checkbox" name="ins_{$ins_fields[ix].name}" {if $ins_fields[ix].value eq 'y'}checked="checked"{/if}/>
-{/if}
 
-
-{if $ins_fields[ix].type eq 'j'}
+{elseif $ins_fields[ix].type eq 'j'}
 <input type="hidden" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|default:$smarty.now}" id="ins_{$ins_fields[ix].name}" />
 <span id="disp_{$ins_fields[ix].name}" class="daterow">{$ins_fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
 <script type="text/javascript">
