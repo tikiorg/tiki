@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.13 2004-04-29 13:55:19 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.14 2004-04-29 22:31:47 mose Exp $
  *
  * My second theme :)
  * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
@@ -56,6 +56,7 @@
 }
 
 .tabcontent {
+	z-index : 200;
 	position: relative;
 	border: 1px solid #999999;
 	padding: 6px 2px 2px 2px;

@@ -4612,6 +4612,7 @@ div#rules-copy-panel {
 	background-color: #CCCCCC;
 }
 .tabcontent {
+	z-index : 200;
 	position: relative;
 	border: 1px solid #999999;
 	padding: 6px 2px 2px 2px;
