@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.3 2004-01-03 00:28:56 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.4 2004-01-31 18:54:51 mose Exp $
 
 Tikiwiki CSRF protection.
 also called : anti-banana-skin (oops)
@@ -93,6 +93,7 @@ function ask_ticket($area) {
 	$_SESSION['antisurf'] =  $area; 
 }
 function check_ticket($area) { 
+	if (!isset($_SESSION['antisurf'])) $_SESSION['antisurf'] = '';
 	if ($_SESSION['antisurf'] != $area) { 
 		/* that part is optionnal, it sends a mail of alert
 		$body = "\nCSRF: ";
