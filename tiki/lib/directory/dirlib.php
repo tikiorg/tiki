@@ -101,6 +101,9 @@ class DirLib extends TikiLib {
 
 		    if ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 		    	global $categlib;
+				if (!is_object($categlib)) {
+					include_once('lib/categories/categlib.php');
+				}
 		    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 		    	$perms_array = $categlib->get_object_categories_perms($user, 'directory', $res['categId']);
 		    	if ($perms_array) {

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.42 2004-06-14 01:13:00 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.43 2004-06-15 15:49:52 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -835,6 +835,7 @@ class CategLib extends TikiLib {
 
 }
 
+global $dbTiki;
 $categlib = new CategLib($dbTiki);
 
 ?>

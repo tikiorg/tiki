@@ -123,6 +123,9 @@ class FileGalLib extends TikiLib {
 		    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 		    	// no forum permissions so now we check category permissions
 		    	global $categlib;
+				if (!is_object($categlib)) {
+					include_once('lib/categories/categlib.php');
+				}
 		    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 		    	$perms_array = $categlib->get_object_categories_perms($user, 'file gallery', $res['galleryId']);
 		    	if ($perms_array) {

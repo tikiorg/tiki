@@ -523,6 +523,9 @@ class TikiLib extends TikiDB {
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	    	// no quiz permissions so now we check category permissions
 	    	global $categlib;
+			if (!is_object($categlib)) {
+				include_once('lib/categories/categlib.php');
+			}
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'quiz', $res['quizId']);
 	    	if ($perms_array) {
@@ -627,6 +630,9 @@ class TikiLib extends TikiDB {
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	    	// no tracker permissions so now we check category permissions
 	    	global $categlib;
+			if (!is_object($categlib)) {
+				include_once('lib/categories/categlib.php');
+			}
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'tracker', $res['trackerId']);
 	    	if ($perms_array) {
@@ -694,6 +700,9 @@ class TikiLib extends TikiDB {
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	    	// no forum permissions so now we check category permissions
 	    	global $categlib;
+			if (!is_object($categlib)) {
+				include_once('lib/categories/categlib.php');
+			}
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'survey', $res['surveyId']);
 	    	if ($perms_array) {
@@ -1215,7 +1224,10 @@ function add_pageview() {
 	    global $tiki_p_admin;
 
 		if ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	global $categlib;
+			global $categlib;
+			if (!is_object($categlib)) {
+				include_once('lib/categories/categlib.php');
+			}
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'faq', $res['faqId']);
 	    	if ($perms_array) {

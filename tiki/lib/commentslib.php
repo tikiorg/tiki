@@ -771,10 +771,11 @@ class Comments extends TikiLib {
 			}
 	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	    	// no forum permissions so now we check category permissions
-		global $dbTiki;
-		include_once ("lib/categories/categlib.php");
-		$categlib = new CategLib($dbTiki);
-		unset($tiki_p_view_categories); // unset this var in case it was set previously
+	    	global $categlib;
+			if (!is_object($categlib)) {
+				include_once('lib/categories/categlib.php');
+			}
+			unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'forum', $res['forumId']);
 	    	if ($perms_array) {
 	    		$is_categorized = TRUE;
