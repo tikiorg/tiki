@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.41 2004-02-01 18:20:27 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.42 2004-02-03 06:13:53 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -13,7 +13,7 @@
 
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
-{if $username}
+{if $userinfo}
 <span class="button2"><a href="tiki-adminusers.php?add=1" class="linkbut">{tr}Add a new user{/tr}</a></span>
 {/if}
 <br /><br /><br />
@@ -23,8 +23,8 @@
 {* ---------------------- tabs -------------------- *}
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Users{/tr}</span>
-{if $username}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Edit user{/tr} <i>{$username}</i></span>
+{if $userinfo}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Edit user{/tr} <i>{$userinfo.login}</i></span>
 {if $fields}
 <span id="tab{cycle name=tabs}" class="tab">{tr}More info{/tr}</span>
 {/if}
@@ -120,25 +120,35 @@ title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/de
 {/if}
 
 </div>
-</div>
 {/if}
 </div>
 
 {* ---------------------- tab with form -------------------- *}
 <div id="content{cycle name=content}" class="content">
+{if $userinfo.login}
+<h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
+{else}
 <h2>{tr}Add a new user{/tr}</h2>
-
+{/if}
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
-<tr class="formcolor"><td>{tr}User{/tr}:</td><td><input type="text" name="name"  value="{$username|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}User{/tr}:</td><td><input type="text" name="name"  value="{$userinfo.login|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Pass{/tr}:</td><td><input type="password" name="pass" /></td></tr>
 <tr class="formcolor"><td>{tr}Again{/tr}:</td><td><input type="password" name="pass2" /></td></tr>
-<tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30"  value="{$usermail|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Batch upload (CSV file){/tr}:</td><td><input type="file" name="csvlist"
-/><br />{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked="checked" /></td></tr>
+<tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30"  value="{$userinfo.email|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Created{/tr}:</td><td>{$userinfo.created|tiki_long_datetime}</td></tr>
+<tr class="formcolor"><td>{tr}Registration{/tr}:</td><td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td></tr>
+<tr class="formcolor"><td>{tr}Last login{/tr}:</td><td>{if $userinfo.lastLogin}{$userinfo.lastLogin|tiki_long_datetime}{/if}</td></tr>
+{if $userinfo}
 <tr class="formcolor"><td>&nbsp;</td><td>
-<input type="hidden" name="oluser" value="{$user|escape}">
-<input type="submit" name="newuser" value="{tr}Add{/tr}" /></td></tr>
+<input type="hidden" name="user" value="{$userinfo.userId|escape}">
+<input type="submit" name="edituser" value="{tr}Save{/tr}" />
+{else}
+<tr class="formcolor"><td>{tr}Batch upload (CSV file){/tr}:</td><td><input type="file" name="csvlist"/><br />{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked="checked" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td>
+<input type="submit" name="newuser" value="{tr}Add{/tr}" />
+{/if}
+</td></tr>
 </table>
 </form>
 <br />
