@@ -38,26 +38,34 @@ if ($user) {
 				if (!$cc_id) {
 					$smarty->assign('msg',"You need to select a currency to record your transaction.");
 				} else {
-					if ($cclib->user_exists($from_user)) {
-						if ($cclib->is_registered($from_user,$cc_id)) {
-							$from = true;
-						} else {
-							$smarty->assign('msg',"User $from_user not registered in $cc_id.");
-						}
+				
+					if ($from_user == $to_user) {
+						$smarty->assign('msg',"Both accounts are the same.");
 					} else {
-						$smarty->assign('msg',"User $from_user not found");
-					}
-					if ($from) {
-						if ($cclib->user_exists($to_user)) {
-							if ($cclib->is_registered($to_user,$cc_id)) {
-								$to = true;
+						
+						if ($cclib->user_exists($from_user)) {
+							if ($cclib->is_registered($from_user,$cc_id)) {
+								$from = true;
 							} else {
-								$smarty->assign('msg',"User $to_user not registered in $cc_id.");
+								$smarty->assign('msg',"User $from_user not registered in $cc_id.");
 							}
 						} else {
-							$smarty->assign('msg',"User $to_user not found.");
+							$smarty->assign('msg',"User $from_user not found");
 						}
+						if ($from) {
+							if ($cclib->user_exists($to_user)) {
+								if ($cclib->is_registered($to_user,$cc_id)) {
+									$to = true;
+								} else {
+									$smarty->assign('msg',"User $to_user not registered in $cc_id.");
+								}
+							} else {
+								$smarty->assign('msg',"User $to_user not found.");
+							}
+						}
+					
 					}
+
 				}
 				if ($from and $to) {
 					$cclib->record_transaction($cc_id,$from_user,$to_user,$_REQUEST['tr_amount'],$_REQUEST['tr_item']);
