@@ -32,7 +32,7 @@
 <tr>
 {if $tiki_p_remove eq 'y'}
 <td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
-{else}
+{/if}
 <td class="heading">{tr}Date{/tr}</td>
 <td class="heading">{tr}Version{/tr}</td>
 <td class="heading">{tr}User{/tr}</td>
