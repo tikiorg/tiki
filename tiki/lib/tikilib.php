@@ -23,6 +23,77 @@ class TikiLib {
   
   
   /* Tiki tracker construction options */
+  function add_item_attachment_hit($id) 
+  {
+    $query = "update tiki_tracker_item_attachments set downloads=downloads+1 where attId=$id";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    return true;                        
+  }
+  
+  function get_item_attachment_owner($attId)
+  {
+    return $this->db->getOne("select user from tiki_tracker_item_attachments where attId=$attId");
+  }
+  
+  function list_item_attachments($itemId,$offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where itemId=$itemId and (filename like '%".$find."%')";  
+    } else {
+      $mid=" where itemId=$itemId "; 
+    }
+    $query = "select user,attId,itemId,filename,filesize,filetype,downloads,created,comment from tiki_tracker_item_attachments $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_tracker_item_attachments $mid";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function item_attach_file($itemId,$name,$type,$size, $data, $comment, $user,$fhash)
+  {
+    $data = addslashes($data);
+    $name = addslashes($name);
+    $comment = addslashes(strip_tags($comment));
+    $now = date("U");
+    $query = "insert into tiki_tracker_item_attachments(itemId,filename,filesize,filetype,data,created,downloads,user,comment,path)
+    values($itemId,'$name',$size,'$type','$data',$now,0,'$user','$comment','$fhash')";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
+  function get_item_attachment($attId)
+  {
+    $query = "select * from tiki_tracker_item_attachments where attId=$attId";
+    $result = $this->db->query($query);
+    if(!$result->numRows()) return false;
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
+  function remove_item_attachment($attId)
+  {
+    global $t_use_dir;
+    $path = $this->db->getOne("select path from tiki_tracker_item_attachments where attId=$attId");
+    if($path) {
+      @unlink($t_use_dir.$path);
+    }
+    $query = "delete from tiki_tracker_item_attachments where attId='$attId'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
+  
   function replace_item_comment($commentId,$itemId,$title,$data,$user)
   {
     $title=addslashes(strip_tags($title));
@@ -319,19 +390,19 @@ class TikiLib {
   }
 
   // Inserts or updates a tracker  
-  function replace_tracker($trackerId, $name, $description,$showCreated,$showLastModif,$useComments)
+  function replace_tracker($trackerId, $name, $description,$showCreated,$showLastModif,$useComments,$useAttachments)
   {
     $description = addslashes($description);
     $name = addslashes($name);
         
     if($trackerId) {
-      $query = "update tiki_trackers set name='$name',description='$description', useComments='$useComments', showCreated='$showCreated',showLastModif='$showLastModif' where trackerId=$trackerId";
+      $query = "update tiki_trackers set name='$name',description='$description', useAttachments='$useAttachments',useComments='$useComments', showCreated='$showCreated',showLastModif='$showLastModif' where trackerId=$trackerId";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query, $result);
     } else {
       $now = date("U");
-      $query = "replace into tiki_trackers(name,description,created,lastModif,items,showCreated,showLastModif,useComments)
-                values('$name','$description',$now,$now,0,'$showCreated','$showLastModif','$useComments')";
+      $query = "replace into tiki_trackers(name,description,created,lastModif,items,showCreated,showLastModif,useComments,useAttachments)
+                values('$name','$description',$now,$now,0,'$showCreated','$showLastModif','$useComments','$useAttachments')";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query, $result);
       $trackerId=$this->db->getOne("select max(trackerId) from tiki_trackers where name='$name' and created=$now");
@@ -4918,10 +4989,10 @@ class TikiLib {
     if($find) {
       $mid=" where contentId=$contentId and (data like '%".$find."%') ";  
     } else {
-      $mid="where contentId=$contentId"; 
+      $mid=" where contentId=$contentId"; 
     }
     $query = "select * from tiki_programmed_content $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_programmed_content where $mid";
+    $query_cant = "select count(*) from tiki_programmed_content $mid";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
     $cant = $this->db->getOne($query_cant);
