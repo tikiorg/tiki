@@ -207,6 +207,14 @@ class GUI extends Base {
 	$this->query($query);
   }
 
+  function gui_resume_instance($user,$activityId,$instanceId)
+  {
+    // Users can only resume instances belonging to them
+	if(!$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instance_activities where activityId=$activityId and instanceId=$instanceId and user='$user'")) return false;	
+    $query = "update ".GALAXIA_TABLE_PREFIX."instances set status='active' where instanceId=$instanceId";
+	$this->query($query);
+  }
+
   
   function gui_send_instance($user,$activityId,$instanceId)
   {
