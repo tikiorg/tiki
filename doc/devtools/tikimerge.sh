@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.3 2004-01-02 23:19:28 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.4 2004-05-12 13:15:30 damosoft Exp $
 #
 # That script is done for fast merging fixes that are done on branch
 # refer to http://tikiwiki.org/tiki-index.php?page=CvsBranch18
@@ -39,7 +39,6 @@ done
 echo "cvs ci -m'Instant-Auto-Merge from BRANCH to HEAD' $FILES"
 echo "cvs -q tag -r BRANCH-1-8-HEAD -F MERGE-BRANCH-1-8-to-HEAD $FILES"
 echo "cvs -q up -r BRANCH-1-8 -dP $FILES"
-echo "rm -f mergelog"
 
 echo "# Done."
 exit 0

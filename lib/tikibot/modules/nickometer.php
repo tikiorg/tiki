@@ -1,5 +1,5 @@
 <?php /* 
-$Header: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/nickometer.php,v 1.2 2003-11-18 01:34:56 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/lib/tikibot/modules/nickometer.php,v 1.3 2004-05-12 13:15:32 damosoft Exp $
 
 Lame nickometer for wollabot 
 */
@@ -42,6 +42,7 @@ class nickometer extends Wollabot_Module {
 		$this->wollabot->print_log("NICKOMETER: Testing '$nick' for '$target'");
 
 		$special_cost = array(
+		'gaim'			=> 300,
 		'69'			=> 500,
 		'dea?th'		=> 500,
 		'dark'			=> 400,
@@ -50,6 +51,8 @@ class nickometer extends Wollabot_Module {
 		'fuck'			=> 500,
 		'sh[i1]t'		=> 500,
 		'coo[l1]'		=> 500,
+		'cheal'		=> 500,
+		'healer'		=> 500,
 		'kew[l1]'		=> 500,
 		'lame'			=> 500,
 		'dood'			=> 500,
@@ -67,7 +70,7 @@ class nickometer extends Wollabot_Module {
 
 		foreach ($special_cost as $special => $cost) {
 			$special_pattern = $special;
-			if (ereg($special, $nick)) $this->punish($cost, "special");
+			if (eregi($special, $nick)) $this->punish($cost, "special");
 		}
 		
 		$clean = eregi_replace("[^A-Z0-9]", "", $nick);
