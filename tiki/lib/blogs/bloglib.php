@@ -276,7 +276,7 @@ class BlogLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$hash = md5('post' . $res["postId"]);
+			$hash = 'post' . $res["postId"];
 
 			$cant_com = $this->getOne("select count(*) from `tiki_comments` where `object`=?",array($hash));
 			$res["comments"] = $cant_com;

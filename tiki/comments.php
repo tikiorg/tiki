@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.14 2003-09-27 20:16:09 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.15 2003-10-01 01:24:18 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,8 +103,8 @@ if (!isset($comments_prefix_var)) {
     $comments_prefix_var = '';
 }
 
-if (!isset($comments_object_var) || (!$comments_object_var) || !isset($_REQUEST[$comments_object_var])) {
-    die ("the comments_object_var variable is not set or cannot be found as a REQUEST variable");
+if (!isset($_REQUEST[$comments_object_var])) {
+    die ("The comments_object_var variable cannot be found as a REQUEST variable");
 }
 
 $comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
