@@ -253,8 +253,9 @@ onmouseover="this.style.textDecoration='underline';"
 {if $feature_jscalendar eq 'y'}
 <form action="tiki-calendar.php" method="get" class="daterow">
 <img src="img/icons/calendar.gif" width="16" height="16" vspace="2" hspace="2" align="top"
-/><input type="hidden" id="todate" name="todate" value="{$focusdate}"><span style="font-weight:bold;cursor:pointer;" title="{tr}Date Selector{/tr}" id="datrigger">{$focusdate|tiki_short_date}</span>
-<input type="submit" name="action" value="{tr}Go{/tr}" class="linkbut">
+/><input type="hidden" id="todate" name="todate" value="{$focusdate}" /><span style="font-weight:bold;cursor:pointer;" title="{tr}Date Selector{/tr}" id="datrigger">{$focusdate|tiki_short_date}</span>
+<input type="hidden" name="viewmode" value="{$viewmode}" />
+<input type="submit" name="action" value="{tr}Go{/tr}" class="linkbut" />
 </form>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
@@ -290,9 +291,20 @@ href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}
 
 <table cellpadding="0" cellspacing="0" border="0"  id="caltable">
 {if $viewmode eq 'day'}
-<tr><td></td>
-<td> nums</td><td>rows</td>
-</tr>
+<tr><td width="42" class="heading">{tr}Hours{/tr}</td><td class="heading">{tr}Events{/tr}</td></tr>
+{cycle values="odd,even" print=false}
+{section name=h loop=$hours}
+<tr><td width="42" class="{cycle advance=false}">{$hours[h]}{tr}h{/tr}</td>
+<td class="{cycle}">
+{section name=hr loop=$hrows[h]}
+<div class="Cal{$hrows[h][hr].type}">
+{$hours[h]}:{$hrows[h][hr].mins} : 
+<a href="{$hrows[h][hr].url}" class="linkmenu">{$hrows[h][hr].name}</a>
+{$hrows[h][hr].description}
+</div>
+{/section}
+</td></tr>
+{/section}
 {else}
 <tr><td width="2%">&nbsp;</td>
 {section name=dn loop=$daysnames}
