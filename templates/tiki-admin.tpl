@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 <h2><a class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a></h2>
-[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+[<a href="#features" class="link">{tr}feat{/tr}</a> |
 <a href="#general" class="link">{tr}gral{/tr}</a> |
 <a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
@@ -13,8 +13,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <a name="features"></a>
@@ -115,8 +115,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -249,8 +249,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -323,8 +323,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -523,8 +523,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -600,8 +600,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -674,8 +674,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -739,8 +739,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -781,8 +781,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -864,8 +864,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -927,8 +927,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -972,8 +972,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
@@ -1004,8 +1004,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <a name="webmail"></a>
@@ -1045,8 +1045,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <a name="directory"></a>
@@ -1096,8 +1096,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <a name="userfiles"></a>
@@ -1134,8 +1134,8 @@
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
 <a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
-<a href="#webmail" class="link">{tr}webmail{/tr}</a>|
-<a href="#directory" class="link">{tr}directory{/tr}|
+<a href="#webmail" class="link">{tr}webmail{/tr}</a> |
+<a href="#directory" class="link">{tr}directory{/tr}</a> |
 <a href="#userfiles" class="link">{tr}userfiles{/tr}</a>
 ]
 <div class="cbox">
