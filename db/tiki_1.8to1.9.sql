@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.72 2004-06-14 05:44:31 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.73 2004-06-15 11:29:47 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -575,3 +575,9 @@ ALTER TABLE users_score RENAME TO tiki_users_score;
 ALTER TABLE users_users ADD score int4 NOT NULL default 0;
 ALTER TABLE users_users ADD KEY (score);
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_score','n');
+
+# Added June 15th sylvie
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Community','tiki-list_users.php','187','feature_friends','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Member list','tiki-list_users.php','188','feature_friends','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Friendship Network','tiki-friends.php','189','feature_friends','','');
+
