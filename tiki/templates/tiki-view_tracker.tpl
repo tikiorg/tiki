@@ -124,7 +124,7 @@ class="prevnext">{tr}All{/tr}</a>
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-<td class="third auto" width="20" style="width:20px;">
+<td class="heading auto" style="width:20px;">
 {if $status eq 'o'}
 {html_image file=img/icons2/dotgrey.gif title="{tr}closed{/tr}" alt="{tr}closed{/tr}" link="tiki-view_tracker.php?trackerId=$trackerId&status=c"}
 {else}
@@ -283,11 +283,6 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 <option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
 {/section}
 </select>
-
-{elseif $fields[ix].type eq 'h'}
-</table>
-<h3>{$fields[ix].name}</h3>
-<table class="normal">
 
 {elseif $fields[ix].type eq 'e'}
 {assign var=fca value=$fields[ix].options}

@@ -6,8 +6,8 @@
 <h3>{tr}Details{/tr}</h3>
 <table class="normal">
 {foreach key=l item=v from=$info}
-<tr><td class="formcolor">{$l}</td>
-<td class="formcolor">
+<tr class="formcolor"><td>{$l}</td>
+<td>
 {$v}
 </td>
 </tr>
