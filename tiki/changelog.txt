@@ -4,7 +4,7 @@ Tikiwiki Changelog
 
 Version 1.8 --
 
-* [NEW] Support for PostgreSQL (support for other databases coming soon!)
+* [NEW] Replace PEAR::DB with ADOdb to support PostgreSQL, Oracle, MSSQL, etc.
 * [NEW] Added Real-time IRC (Internet Relay Chat) logging
 
 
