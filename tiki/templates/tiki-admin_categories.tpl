@@ -1,18 +1,18 @@
-<a class="pagetitle" href="tiki-admin_categories.php">Admin categories</a>
+<a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 <h3>{tr}Current category{/tr}: {$path}</h3>
 <table class="normalnoborder" cellpadding="0" cellspacing="0">
 <tr>
   <td valign="top">
     <div class="cbox">
       <div class="cbox-title">
-      {tr}Child categories{/tr} [<a href="tiki-admin_categories.php?parentId={$father}" class="cboxtlink">up</a>|<a href="tiki-admin_categories.php?parentId=0" class="cboxtlink">top</a>] 
+      {tr}Child categories{/tr} [<a href="tiki-admin_categories.php?parentId={$father}" class="cboxtlink">{tr}up{/tr}</a>|<a href="tiki-admin_categories.php?parentId=0" class="cboxtlink">{tr}top{/tr}</a>] 
       </div>
       <div class="cbox-data">
         <table class="normal">
         <tr>
-          <td class="heading">name</td>
-          <td class="heading">subs</td>
-          <td class="heading">objs</td>
+          <td class="heading">{tr}name{/tr}</td>
+          <td class="heading">{tr}subs{/tr}</td>
+          <td class="heading">{tr}objs{/tr}</td>
           <td class="heading">&nbsp;</td>
         </tr>
         {section name=ix loop=$children}
@@ -27,7 +27,7 @@
             {$children[ix].objects}
           </td>
           <td>
-            [<a class="link" href="tiki-admin_categories.php?parentId={$children[ix].parentId}&amp;categId={$children[ix].categId}">e</a>|<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeCat={$children[ix].categId}">x</a>]
+            [<a class="link" href="tiki-admin_categories.php?parentId={$children[ix].parentId}&amp;categId={$children[ix].categId}">{tr}edit{/tr}</a>|<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeCat={$children[ix].categId}">{tr}x{/tr}</a>]
           </td>
         </tr>
         {/section}
@@ -44,7 +44,7 @@
   <td valign="top">
     <div class="cbox">
       <div class="cbox-title">
-      {tr}Edit or add category{/tr}  [<a href="tiki-admin_categories.php?parentId={$parentId}" class="cboxtlink">new</a>]
+      {tr}Edit or add category{/tr}  [<a href="tiki-admin_categories.php?parentId={$parentId}" class="cboxtlink">{tr}new{/tr}</a>]
       </div>
       <div class="cbox-data">
       <form action="tiki-admin_categories.php" method="post">
@@ -72,7 +72,7 @@
       <div class="cbox-data">
       
       <table class="findtable">
-      <tr><td class="findtable">Find</td>
+      <tr><td class="findtable">{tr}Find{/tr}</td>
       <td class="findtable">
         <form method="get" action="tiki-admin_categories.php">
         <input type="text" name="find" />
@@ -95,7 +95,7 @@
       <tr>
         <td class="even"><a class="link" href="{$objects[ix].href}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{$objects[ix].type}</td>
-        <td class="even">[<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}">x</a>]</td>
+        <td class="even">[<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}">{tr}x{/tr}</a>]</td>
       </tr>
       {/section}
       </table>
@@ -128,7 +128,7 @@
       </div>
       <div class="cbox-data">
       <table class="findtable">
-      <tr><td class="findtable">Find</td>
+      <tr><td class="findtable">{tr}Find{/tr}</td>
       <td>
         <form method="get" action="tiki-admin_categories.php">
         <input type="text" name="find_objects" />
@@ -145,47 +145,47 @@
       <input type="hidden" name="parentId" value="{$parentId}" />
       <table>
         <tr>
-          <td class="form">page:</td>
+          <td class="form">{tr}page{/tr}:</td>
           <td class="form"><select name="pageName">{section name=ix loop=$pages}<option value="{$pages[ix].pageName}">{$pages[ix].pageName|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addpage" value="{tr}add{/tr}" /></td>
         </tr>
         <tr>
-          <td class="form">article:</td>
+          <td class="form">{tr}article{/tr}:</td>
           <td class="form"><select name="articleId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId}">{$articles[ix].title|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addarticle" value="{tr}add{/tr}" /></td>
         </tr>
         <tr>
-          <td class="form">blog:</td>
+          <td class="form">{tr}blog{/tr}:</td>
           <td class="form"><select name="blogId">{section name=ix loop=$blogs}<option value="{$blogs[ix].blogId}">{$blogs[ix].title|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addblog" value="{tr}add{/tr}" /></td>
         </tr>
         <tr>
-          <td class="form">image gal:</td>
+          <td class="form">{tr}image gal{/tr}:</td>
           <td class="form"><select name="galleryId">{section name=ix loop=$galleries}<option value="{$galleries[ix].galleryId}">{$galleries[ix].name|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addgallery" value="{tr}add{/tr}" /></td>
         </tr>
         <tr>
-          <td class="form">file gal:</td>
+          <td class="form">{tr}file gal{/tr}:</td>
           <td class="form"><select name="file_galleryId">{section name=ix loop=$file_galleries}<option value="{$file_galleries[ix].galleryId}">{$file_galleries[ix].name|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addfilegallery" value="{tr}add{/tr}" /></td>
         </tr>
         <tr>
-          <td class="form">forum:</td>
+          <td class="form">{tr}forum{/tr}:</td>
           <td class="form"><select name="forumId">{section name=ix loop=$forums}<option value="{$forums[ix].forumId}">{$forums[ix].name|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addforum" value="{tr}add{/tr}" /></td>
         </tr>
         <tr>
-          <td class="form">poll:</td>
+          <td class="form">{tr}poll{/tr}:</td>
           <td class="form"><select name="pollId">{section name=ix loop=$polls}<option value="{$polls[ix].pollId}">{$polls[ix].title|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addpoll" value="{tr}add{/tr}" /></td>
         </tr>        
         <tr>
-          <td class="form">faq:</td>
+          <td class="form">{tr}faq{/tr}:</td>
           <td class="form"><select name="faqId">{section name=ix loop=$faqs}<option value="{$faqs[ix].faqId}">{$faqs[ix].title|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addfaq" value="{tr}add{/tr}" /></td>
         </tr>        
         <tr>
-          <td class="form">quiz:</td>
+          <td class="form">{tr}quiz{/tr}:</td>
           <td class="form"><select name="quizId">{section name=ix loop=$quizzes}<option value="{$quizzes[ix].quizId}">{$quizzes[ix].name|truncate:20:"(...)":true}</option>{/section}</select></td>
           <td class="form"><input type="submit" name="addquiz" value="{tr}add{/tr}" /></td>
         </tr>        

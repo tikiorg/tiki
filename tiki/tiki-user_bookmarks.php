@@ -30,7 +30,7 @@ if($_REQUEST["parentId"]) {
   $p_info = $tikilib->get_folder($_REQUEST["parentId"],$user);
   $father = $p_info["parentId"];
 } else {
-  $path = "TOP";
+  $path = tra("TOP");
   $father = 0;
 }
 $smarty->assign('parentId',$_REQUEST["parentId"]);
