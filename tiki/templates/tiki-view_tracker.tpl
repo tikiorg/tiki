@@ -161,7 +161,7 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 </td>
 {elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="auto">
-{$items[user].field_values[ix].value|default:"&nbsp;"}
+{$items[user].field_values[ix].value|truncate:26:"..."|default:"&nbsp;"}
 </td>
 {/if}
 {/if}
