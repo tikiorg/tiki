@@ -428,7 +428,7 @@ class CalendarLib extends TikiLib {
 	
 	function get_item($calitemId)
 	{
-		$query = "select i.calitemId as calitemId, i.calendarId as calendarId, i.user as user, i.start as start, i.end as end, t.groupname as groupname, t.name as calname, ";
+		$query = "select i.calitemId as calitemId, i.calendarId as calendarId, i.user as user, i.start as start, i.end as end, t.name as calname, ";
 		$query.= "i.locationId as locationId, l.name as locationName, i.categoryId as categoryId, c.name as categoryName, i.priority as priority, ";
 		$query.= "i.status as status, i.url as url, i.lang as lang, i.name as name, i.description as description, i.created as created, i.lastModif as lastModif, ";
 		$query.= "t.customlocations as customlocations, t.customcategories as customcategories, t.customlanguages as customlanguages, t.custompriorities as custompriorities, ";
