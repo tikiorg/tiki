@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.21 2004-09-15 03:05:49 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.22 2004-09-15 03:22:07 mose Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -124,4 +124,19 @@ alter table tiki_polls add column (
 	KEY reldate (releaseDate),
 	KEY active (active)
 );
+
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_item_comments','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_submissions','n');
+update users_permissions set type='polls' where permName='tiki_p_vote_poll'; 
+
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_admin', 'Admin has all polls perms', 'admin', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_edit', 'Can modify polls', 'editors', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_create', 'Can create new polls', 'editors', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_submit', 'Can propose new polls', 'registered', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_item_submit', 'Can propose new poll items', 'editors', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_view_submissions', 'Can browse polls submissions', 'registered', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_view', 'Can view polls', 'basic', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_view_comments', 'Can view polls', 'basic', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_add_comment', 'Can add coments to polls', 'registered', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_poll_add_item_comment', 'Can add comments to poll items', 'registered', 'polls');
 
