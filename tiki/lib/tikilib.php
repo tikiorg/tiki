@@ -4132,16 +4132,16 @@ function parse_data($data) {
 	    if ($desc = $this->page_exists_desc($pages[1][$i])) {
 		$uri_ref = "tiki-index.php?page=" . urlencode($pages[1][$i]);
 
-		$repl = "<a title=\"$desc\" href='$uri_ref' class='wiki'>" . (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . "</a>";
+		$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki">' . (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '</a>';
 
 		// Check is timeout expired?
 		if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
 		    // Append small 'new' image. TODO: possible 'updated' image more suitable...
-		    $repl .= "&nbsp;<img src='img/icons/new.gif'>";
+		    $repl .= '&nbsp;<img src="img/icons/new.gif" border="0">';
 	    } else {
 		$uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
 
-		$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . "<a href='$uri_ref' class='wiki'>?</a>";
+		$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" class="wiki">?</a>';
 	    }
 
 	    $data = preg_replace($pattern, "$repl", $data);
@@ -4263,26 +4263,26 @@ function parse_data($data) {
 
 	//print("todo el tag es: ".$page_parse."<br/>");
 	//print_r($imgdata);
-	$repl = "<img alt='" . tra('Image') . "' src='".$imgdata["src"]."' border='0' ";
+	$repl = '<img alt="' . tra('Image') . '" src="'.$imgdata["src"].'" border="0" ';
 
 	if ($imgdata["width"])
-	    $repl .= " width='" . $imgdata["width"] . "'";
+	    $repl .= ' width="' . $imgdata["width"] . '"';
 
 	if ($imgdata["height"])
-	    $repl .= " height='" . $imgdata["height"] . "'";
+	    $repl .= ' height="' . $imgdata["height"] . '"';
 
-	$repl .= " /></div>";
+	$repl .= ' />';
 
 	if ($imgdata["link"]) {
-	    $repl = "<a href='" . $imgdata["link"] . "'>" . $repl . "</a>";
+	    $repl = '<a href="' . $imgdata["link"] . '">' . $repl . '</a>';
 	}
 
 	if ($imgdata["desc"]) {
-	    $repl = "<table cellpadding='0' cellspacing='0'><tr><td>" . $repl . "</td></tr><tr><td class='mini'>" . $imgdata["desc"] . "</td></tr></table>";
+	    $repl = '<table cellpadding="0" cellspacing="0"><tr><td>' . $repl . '</td></tr><tr><td class="mini">' . $imgdata["desc"] . '</td></tr></table>';
 	}
 
 	if ($imgdata["align"]) {
-	    $repl = "<div align='" . $imgdata["align"] . "'>" . $repl;
+	    $repl = '<div align="' . $imgdata["align"] . '">' . $repl . "</div>";
 	}
 
 	$data = str_replace($page_parse, $repl, $data);
