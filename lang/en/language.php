@@ -2162,5 +2162,6 @@ from Admin->General
 "Use single spaces to indent structure levels" => "Use single spaces to indent structure levels",
 "tree" => "tree",
 "Admin structures" => "Admin structures",
+"IRC log" => "IRC log",
 "##end###" => "###end###");
 ?>

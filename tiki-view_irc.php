@@ -65,9 +65,16 @@ $irc_log_rows = array();
 
 $name_hash = array();
 
+$irc_log_channel = '';
+$irc_log_time	 = '';
+
 if (is_file($fullname)) {
 	$file = basename($fullname);
-	list($yymmdd, $channel) = split('_', $file);
+	list($yymmdd, $irc_log_channel) = split('_', $file);
+	$irc_log_time = mktime(12, 0, 0, substr($yymmdd, 2, 2), substr($yymmdd, 4, 2), substr($yymmdd, 0, 2));
+	list($irc_log_channel, $junk) = split('\.', $irc_log_channel);
+	$irc_log_channel = '#' . $irc_log_channel;
+
 	$yy = substr($yymmdd, 0, 2);
 	$mm = substr($yymmdd, 2, 2);
 	$dd = substr($yymmdd, 4, 2);
@@ -133,14 +140,11 @@ if (is_file($fullname)) {
 	}
 }
 
-#print "<pre>\n";
-#print_r($_REQUEST);
-#exit;
-#print_r($irc_log_rows);
-
-$smarty->assign('irc_log_options', $irc_log_options);
-$smarty->assign('irc_log_selected', $irc_log_selected);
-$smarty->assign('irc_log_rows', $irc_log_rows);
+$smarty->assign('irc_log_channel',	$irc_log_channel);
+$smarty->assign('irc_log_time', 	$irc_log_time);
+$smarty->assign('irc_log_options',	$irc_log_options);
+$smarty->assign('irc_log_rows',		$irc_log_rows);
+$smarty->assign('irc_log_selected',	$irc_log_selected);
 
 // Display the template
 $smarty->assign('mid','tiki-view_irc.tpl');
