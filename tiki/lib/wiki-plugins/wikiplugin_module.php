@@ -12,6 +12,7 @@ function wikiplugin_module($data,$params) {
   extract($params);
   if(!isset($module)) {$module='last_modif_pages';}
   if(!isset($align)) {$align='left';}
+  if(!isset($max)) {$max='10';}
   //If you want line numbering use something like this:
   //$lines = explode("\n",$code);
   //print_r($lines);
@@ -21,6 +22,7 @@ function wikiplugin_module($data,$params) {
 	$nocache= 'templates/modules/mod-'.$module.'.tpl.nocache';
 	if((!file_exists($cachefile)) || (file_exists($nocache)) || ( (time() - filemtime($cachefile))>$cache_time )){
 		if(file_exists($phpfile)) {
+			$module_rows = $max;
 			include_once($phpfile);
 		}
 		$template_file = 'templates/'.$template;
