@@ -256,7 +256,8 @@ if(isset($_SESSION['install-logged']) && $_SESSION['install-logged']=='y') {
 	  $smarty->assign('dbdone','y');
 	}
 	if(isset($_REQUEST['update'])) {
-	  print("update");
+	  process_sql_file($_REQUEST['file']);
+	  $smarty->assign('dbdone','y');
 	}
 }
 

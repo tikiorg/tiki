@@ -1,5 +1,7 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Install script added, unzip the files and point your browser to
+  tiki-install.php
 * [NEW] Initial LDAP support has been added using PEAR::Auth.  This will be
   expanded in future releases and is completely optional.
 * [NEW] Graphviz integration, a plugin can be used to visualize a navigable 
