@@ -3,7 +3,7 @@
 ### Inter-user messages
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_messages','messu','Can use the messaging system');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_broadcast','messu','Can boradcast messages');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_broadcast','messu','Can broadcast messages');
 
 drop table if exists messu_messages;
 create table messu_messages(
@@ -64,7 +64,7 @@ alter table tiki_pages add cache_timestamp integer(14);
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory','directory','Can admin the directory');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_directory','directory','Can use the directory');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_cats','directory','Can admin directory categories');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_sites','directory','Can admin directory sites');
+REPLACE INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_directory_sites','directory','Can admin directory sites');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_submit_link','directory','Can submit sites to the directory');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_autosubmit_link','directory','Submited links are valid');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_validate_links','directory','Can validate submited links');
