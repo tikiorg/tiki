@@ -1,11 +1,11 @@
 contributor:
-$Author: damosoft $
+$Author: mose $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2004-10-28 18:55:33 $
+$Date: 2004-11-01 17:25:23 $
 
 files: 
 themes/redgrey/styles/redgrey.css styles/redgrey.css
@@ -24,10 +24,6 @@ Unknown!
 
 Description: 
 A rip of the Fedora* themes
-
-configuration:
-color,color,red
-type of design,type,plain
 
 Changelog:
 1 initial package
