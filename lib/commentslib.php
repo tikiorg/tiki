@@ -297,7 +297,8 @@ class Comments extends TikiLib {
 		    // post
 		    $this->post_new_comment($object, $parentId,
 			    $userName, $title, $body,
-			    $in_reply_to, $message_id
+			    $message_id,
+			    $in_reply_to
 			    );
 
 		    $pop3->DeleteMessage($i);
@@ -408,9 +409,10 @@ class Comments extends TikiLib {
     function approve_queued($qId) {
 	$info = $this->queue_get($qId);
 
+	$message_id = '';
 	$threadId = $this->post_new_comment(
 		'forum' . $info['forumId'], $info['parentId'], $info['user'], $info['title'], $info['data'], $info['type'],
-		$info['summary'], $info['topic_smiley']);
+		$info['summary'], $info['topic_smiley'], $message_id);
 	$this->remove_queued($qId);
 
 	if ($threadId) {
@@ -1258,7 +1260,7 @@ class Comments extends TikiLib {
     // the old comment instead, if it finds one.  The threadId is
     // returned in the $getold variable iteslf. -Robin
     function post_new_comment($objectId, $parentId, $userName,
-	    $title, $data, $in_reply_to = '', $message_id = '', $type = 'n',
+	    $title, $data, &$message_id, $in_reply_to = '', $type = 'n',
 	    $summary = '', $smiley = '', $getold = false
 	    )
     {

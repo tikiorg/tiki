@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.29 2003-09-27 09:28:23 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.30 2003-09-27 20:16:09 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -331,10 +331,12 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 				$in_reply_to = '';
 			    }
 
+			    $message_id = '';
+
 			    $threadId = $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"],
 				    $user, $_REQUEST["comments_title"],
 				    $_REQUEST["comments_data"],
-				    $in_reply_to, &$message_id
+				    $message_id, $in_reply_to
 				    );
 
 			    // PROCESS ATTACHMENT HERE        

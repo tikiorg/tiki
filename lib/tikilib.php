@@ -86,15 +86,35 @@ class TikiLib {
 	}
     }
 
+    // Queries the database, *returning* an error if one occurs, rather
+    // than exiting while printing the error.
+    // -rlpowell
+    function queryError( $query, &$error, $values = null, $numrows = -1,
+	    $offset = -1 )
+    {
+	$this->convert_query($query);
+
+	if ($numrows == -1 && $offset == -1)
+	    $result = $this->db->Execute($query, $values);
+	else
+	    $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+
+	if (!$result )
+	{
+	    $error = $this->db->ErrorMsg();
+	    $result=false;
+	}
+
+	//count the number of queries made
+	$this->num_queries++;
+
+	return $result;
+    }
+
     // Queries the database reporting an error if detected
     // 
     function query($query, $values = null, $numrows = -1,
-	    $offset = -1, $reporterrors = true, $had_sql_error = false )
-	    // Using had_sql_error: you can do query( ..., false,
-	    // &$error), and $error will get filled with 'true' if there
-	    // was an error in the query call. Needs to be used with
-	    // $reporterrors = false to stop the error from ending
-	    // execution.  -rlpowell
+	    $offset = -1, $reporterrors = true )
     {
 	$this->convert_query($query);
 
@@ -113,13 +133,8 @@ class TikiLib {
 	{
 	    if ($reporterrors)
 	    {
-		$had_sql_error = true; // won't help much 8)
 		$this->sql_error($query, $values, $result);
-	    } else {
-		$had_sql_error = true;
 	    }
-	} else {
-	    $had_sql_error = false;
 	}
 
 
@@ -2942,9 +2957,9 @@ class TikiLib {
 	{
 	    $refresh = date("U");
 	    $query = "insert into `tiki_link_cache`(`url`,`data`,`refresh`) values(?,?,?)";
-	    $result = $this->query($query, array($url,$data,$refresh),
-		    -1, -1, false, &$error );
-	    if( $error )
+	    $result = $this->queryError($query, $error,
+		    array($url,$data,$refresh) );
+	    if( isset( $error ) )
 	    {
 		return false;
 	    } else {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.29 2003-09-27 09:28:06 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.30 2003-09-27 20:16:09 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -349,6 +349,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			if (!isset($_REQUEST['comment_topicsmiley']))
 			    $_REQUEST['comment_topicsmiley'] = '';
 
+			$message_id = '';
 			$threadId =
 			    $commentslib->post_new_comment(
 				    $comments_objectId,
@@ -356,7 +357,8 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				    ($_REQUEST["comments_data"]),
 				    $_REQUEST["comment_topictype"],
 				    $_REQUEST["comment_topicsummary"],
-				    $_REQUEST['comment_topicsmiley']
+				    $_REQUEST['comment_topicsmiley'],
+				    $message_id
 				    );
 
 			if ( ! $threadId )
