@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.12 2003-10-29 05:19:59 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.13 2003-11-08 14:50:21 nhuffschmid Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -132,6 +132,12 @@ $smarty->assign_by_ref('types', $types);
 
 $section = 'cms';
 include_once ('tiki-section_options.php');
+
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
+	include_once ("lib/hawhaw/hawtikilib.php");
+
+	HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRecords, $listpages["cant"]);
+}
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_articles.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.5 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mobile.php,v 1.6 2003-11-08 14:50:21 nhuffschmid Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,7 +31,7 @@ if ($_REQUEST['content'] == "about") {
 	$TikiPage->add_link($home);
 } else {
 	// HAWIKI main menu
-	$title = new HAW_text(HAWIKI_TITLE, HAW_TEXTFORMAT_BOLD);
+	$title = new HAW_text(HAWIKI_TITLE, HAW_TEXTFORMAT_BOLD | HAW_TEXTFORMAT_BIG);
 
 	$TikiPage->add_text($title);
 
@@ -49,6 +49,12 @@ if ($_REQUEST['content'] == "about") {
 
 	if ($feature_blogs == 'y') {
 		$linkset->add_link($blogs);
+	}
+
+	$articles = new HAW_link(hawtra("Articles"), "tiki-list_articles.php?mode=mobile");
+
+	if ($feature_articles == 'y') {
+		$linkset->add_link($articles);
 	}
 
 	//$about = new HAW_link(hawtra("About"),"tiki-index.php?page=AboutHawiki&mode=mobile");
