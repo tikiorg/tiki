@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.49 2003-12-07 17:40:44 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.50 2003-12-21 17:47:30 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br/><br/>
 {if $forum_info.show_description eq 'y'}
@@ -354,7 +354,7 @@ a moderator approves it.{/tr}</small>
   </tr></table>
   </td>
   {if $forum_info.topics_list_replies eq 'y'}
-  	<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].replies.numReplies}</td>
+  	<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].replies}</td>
   {/if}
   {if $forum_info.topics_list_reads eq 'y'}
   	<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].hits}</td>
@@ -364,7 +364,7 @@ a moderator approves it.{/tr}</small>
   {/if}
   {if $forum_info.topics_list_lastpost eq 'y'}
   	  <td class="{cycle advance=false}">{$comments_coms[ix].lastPost|tiki_short_datetime}<!--date_format:"%b %d [%H:%M]"-->
-	  {if $comments_coms[ix].replies.numReplies}
+	  {if $comments_coms[ix].replies}
 	  <br/>
 	  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     
 	  {/if}

@@ -464,29 +464,21 @@ class Comments extends TikiLib {
 		$time_cond = '';
 		$bind_time = array();
 	}
-
-	$old_sort_mode = '';
-	if (in_array($sort_mode, array(
-			'replies_desc',
-			'replies_asc',
-			'lastPost_desc',
-			'lastPost_asc'
-			))) {
-	    $old_offset = $offset;
-
-	    $old_maxRecords = $max;
-	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'title_desc';
-	    $offset = 0;
-	    $maxRecords = -1;
-	}
-
-
+	
 	$ret = array();
 	foreach (array('=', '<>') as $stickytest) {
-		$query = "select * from `tiki_comments` where `object`=?
-			and `type` $stickytest ?  and `objectType` = 'forum'
-			and `parentId` = ? $time_cond
+		$query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
+			a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
+			a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,
+			a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,
+			greatest(max(b.`commentDate`),a.`commentDate`) as `lastPost`,
+			count(b.`threadId`) as `replies`
+			from `tiki_comments` a left join `tiki_comments` b 
+			on b.`parentId`=a.`threadId`
+			where a.`object`=?
+			and a.`type` $stickytest ?  and a.`objectType` = 'forum'
+			and a.`parentId` = ? $time_cond
+			group by a.`threadId`
 			order by ".$this->convert_sortmode($sort_mode).
 			", `threadId`";
 		$result = $this->query($query, array_merge(array($forumId, 's', 0),
@@ -494,50 +486,21 @@ class Comments extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 		    $tid = $res['threadId'];
-		    // When was this topic last posted to?
-		    $query = "select max(`commentDate`) from `tiki_comments`
-			    where `parentId` = ?";
-		    $res['lastPost'] = $this->getOne($query, array($tid));
-		    if (!$res['lastPost']) {
-			    $res['lastPost'] = $res['commentDate'];
-		    } else {
-			    $query = "select * from `tiki_comments`
+		    if ($res["lastPost"]!=$res["commentDate"]) {
+		    	// last post data is for tiki-view_forum.php. 
+			// you can see the title and author of last post
+		    	$query = "select * from `tiki_comments`
 				    where `parentId` = ? and `commentDate` = ?
 				    order by `threadId` desc";
-			    $r2 = $this->query($query, array($tid,
-						    $res['lastPost']));
-			    $res['lastPostData'] = $r2->fetchRow();
+		    	$r2 = $this->query($query, array($tid, $res['lastPost']));
+		    	$res['lastPostData'] = $r2->fetchRow();
 		    }
-
-		    // How many replies to this topic?
-		    $query = "select count(*) from `tiki_comments`
-			    where `parentId` = ?";
-		    $res['replies']['numReplies'] = $this->getOne($query,
-				    array($tid));
 
 		    // Has the user read it?
 		    $res['is_marked'] = $this->is_marked($tid);
 		    $ret[] = $res;
 		}
 	}
-
-	if ($old_sort_mode) {
-		if ($old_sort_mode == 'replies_asc') {
-		    usort($ret, 'compare_replies');
-		} elseif ($old_sort_mode == 'replies_desc') {
-		    usort($ret, 'r_compare_replies');
-		} elseif ($old_sort_mode == 'lastPost_asc') {
-		    usort($ret, 'compare_lastPost');
-		} elseif ($old_sort_mode == 'lastPost_desc') {
-		    usort($ret, 'r_compare_lastPost');
-		}
-
-		$ret = array_slice($ret, $old_offset, $old_maxRecords);
-	}
-
-//	print("<pre>");
-//	print_r($ret);
-//	print("</pre>");
 
 	return $ret;
     }
@@ -1331,7 +1294,7 @@ class Comments extends TikiLib {
 	$object = explode( ":", $objectId, 2);
 
 	$query = "update `tiki_comments`
-	    set `objectType` = ?, object`=? where `threadId`=? or
+	    set `objectType` = ?, `object`=? where `threadId`=? or
 	    `parentId`=?";
 	$this->query($query, array( $object[0], $object[1],
 	(int) $threadId, (int) $threadId ) );

@@ -11,6 +11,23 @@ body {
 	margin-right: 0px;
 	}
 
+span.tabbut {
+	border-top: 1px solid #99bec6;
+	border-left: 1px solid #99bec6;
+	border-right: 1px solid #99bec6;
+	color: #225566;
+	margin-left:0px;
+	padding-left:2px;
+	padding-right:2px;
+	background-color: #E4E7EA;
+}
+
+.tablink {
+color: #225566; 
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   
+text-decoration: none;
+}
+
 /* GENERAL LAYOUT EXPLANATION
  *
  * The tiki application is enclosed as a whole in tiki-main tiki-main contains three divs: tiki-top, 
@@ -34,18 +51,18 @@ DIV#tiki-top a { color: #E4E7EA; text-decoration: none; }
 DIV#tiki-mid { height: auto; padding-bottom: 0px; }
 
 /* And this is the footer */
-DIV#tiki-bot { background-image: url(bluemetal/page_back.png); padding: 2px 2px 2px 2px; }
+DIV#tiki-bot { background-image: url(bluemetal/page_back.png); padding: 2px 2px 2px 2px; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 9px; color: #cccccc;}
 
 /* The three columns */
 
-TD#leftcolumn { padding-left: 2px; padding-right: 2px; vertical-align: top; width: 180px; }
+TD#leftcolumn { padding-left: 2px; padding-right: 2px; vertical-align: top; width: 170px; }
 
-TD#rightcolumn { background-color: #BBBFC5; border-left : 1px dashed #CCCCBB; padding-left: 5px; vertical-align: top; width: 180px; }
+TD#rightcolumn { background-color: #BBBFC5; border-left : 1px dashed #CCCCBB; padding-left: 5px; vertical-align: top; width: 160px; }
 	
-TD#centercolumn { vertical-align: top; }
+TD#centercolumn { vertical-align: top; width: 100%}
 
 /* And this is what lies inside the centercolumn */
-DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  padding-right: 5px; }
+DIV#tiki-center {  margin-left: 5px;  margin-right: 5px;  padding-left: 5px;  padding-right: 5px; }
 
 /* Lets build the book interface */
 
@@ -110,7 +127,7 @@ span.off-option { color: #005000; }
 div.box {  
   margin-left: 4px;  margin-right: 4px;  margin-top: 4px;  margin-bottom: 10px;
   padding-bottom: 10px;  overflow: hidden; 
-  width: 170px;
+  width: 160px;
 }
 
 /* Boxes are divided in title and data, this is the title */
@@ -123,7 +140,7 @@ div.box-title {
   text-align: center;
   padding-left: 0px;  padding-right: 0px;
   margin-bottom: 1px;
-  width: 170px;
+  width: 160px;
 }
 
 /* And this is the data */
@@ -132,7 +149,7 @@ div.box-data {
   color: black;
   margin-left: 5px;  margin-right: 5px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  
-  width: 170px;
+  width: 160px;
 }
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */
@@ -152,7 +169,7 @@ TD.module {
 /* Now the boxes for the rest of Tiki (non-modules */
 div.cbox {  
   margin-left: 4px;  
-  margin-right: 8px;  
+  margin-right: 4px;  
   margin-top: 4px;  
   margin-bottom: 0px;
   border: 1px solid black;  
@@ -482,7 +499,7 @@ div.wikitext {
   background: #E4E7EA;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;   font-size: 13px;
   border: 1px solid black;
-  padding-left: 1px; padding-right: 1px; padding-top: 1px;padding-bottom: 1px;
+  padding-left: 20px; padding-right: 20px; padding-top: 20px;padding-bottom: 20px;
   margin-left: 1px; margin-right: 1px; margin-top: 5px; margin-bottom: 5px;
   width: 100%;
   clear: both;
@@ -498,7 +515,7 @@ p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Hel
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp { background: #E4E7EA; border: 1px solid black;  font-size: smaller; padding: 6pt;}
 
-.wikitopline { width: 100%; }
+.wikitopline { width: 90%; }
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
@@ -671,10 +688,10 @@ div.articletitle {
 div.articleheading {
   background: #E4E7EA;
   border: 1px solid black;
-  padding-left: 0.8em; 
-  padding-right: 0.8em; 
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  padding-left: 2.8em; 
+  padding-right: 2.8em; 
+  padding-top: 2.5em;
+  padding-bottom: 2.5em;
   border-bottom: 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -693,19 +710,15 @@ div.articletrailer {
 }
 
 /* Text in the article heading */
-div.articleheadingtext {  
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  
-	font-size: 12px;
-	display: inline;
-}
+span.articleheading {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;}
 
 
 /* The body */
 div.articlebody {
   background: #E4E7EA;
   border: 1px solid black;
-  padding-left: 0.8em; 
-  padding-right: 0.8em; 
+  padding-left: 2.8em; 
+  padding-right: 2.8em; 
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   margin: 10px 0px;
@@ -1248,7 +1261,7 @@ border: 1px solid black;
 }
 .calfocus
 {
-font-size: 9px;
+font-size:7px;
 background-color: transparent;
 }
 .calfocus a
@@ -1258,7 +1271,7 @@ text-decoration: none;
 }
 .calfocuson
 {
-font-size: 9px;
+font-size:7px;
 background-color: #f3e498;
 }
 .calfocuson a
@@ -1550,6 +1563,28 @@ font-family: monospace;
 background-color: #E4E7EA;
 }
 
+.viewmodeon
+{background-color: #6A5A49;
+color: #E4E7EA;
+text-decoration: none;
+padding-left: 10px;
+padding-right: 10px;
+}
+
+.viewmodeoff
+{
+background-color: #E4E7EA;
+color: #000000;
+text-decoration: none;
+padding-left: 10px;
+padding-right: 10px;
+}
+
+.viewmodeoff:hover
+{
+background-color: #FFFF00;
+color: #000000;
+}
 .calweb
 {
 font-weight: bold;
@@ -1599,61 +1634,6 @@ background-color: #DAAAAA;
 {
 background-color: #DA9A9A;
 }
-div.tabrow {
-	margin-left: 29px;
-	background-color: #efefef;
-	border: 1px solid #787878;
-	border-bottom: 0;
-	font-size: 11px;
-}
-td.middle {
-	vertical-align: middle; 
-}
-.daterow {
-	margin-left: 10px;
-}
-.mininotes {
-	font-size: 80%;
-	color:#666666;
-}
-.opaque
-{
-	background-color: #ffffff;
-	width: auto;
-	border: 1px solid #666666;
-	padding: 1px; 
-}
-.opaque .box-title,
-.opaque, .box-data 
-{
-	width: auto;
-}
-.calcontent {
-	min-height: 60px;
-}
-.viewmodeon {
-	padding-left:   0px;
-	padding-right:   0px;
-}
-.viewmodeoff {
-	padding-left:   0px;
-	padding-right:   0px;
-}
-a.viewmodeon img {
-	margin: 0;
-padding: 0;
-}
-a.viewmodeoff img {
-	margin: 0;
-padding: 0;
-}
-.caltable {
-	width: 100%;
-}
-
-/*
- * help zone
- */
 
 div#edithelpzone { display: none;  }
 div#attzone      { display: none; margin-top: 10px; }

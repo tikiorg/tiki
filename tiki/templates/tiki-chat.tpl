@@ -1,6 +1,7 @@
 <br /><br /><br /><br />
 <div align="center">
 <h1>{tr}Welcome to the Tiki Chat Rooms{/tr}</h1>
+{if $channels[0] ne ""}
 <h2>{tr}Please select a chat channel{/tr}</h2>
 <form action="tiki-chatroom.php" method="post">
 <select name="channelId">
@@ -13,4 +14,7 @@
 {/if}
 <input type="submit" name="enter" value="{tr}enter chat room{/tr}" />
 </form>
+{else}
+<h3>{tr}There are no channels setup, please contact a site admin{/tr}</h3>
+{/if}
 </div>

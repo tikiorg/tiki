@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.22 2003-12-14 08:29:56 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.23 2003-12-21 17:47:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -147,7 +147,7 @@ if ($tiki_p_post_comments == 'y') {
 			$_REQUEST["comment_rating"], $_REQUEST["comments_data"]);
 		}
 	    }
-	    if (($feature_user_watches == 'y') && ($wiki_watch_comments == 'y')) {
+	    if (($feature_user_watches == 'y') && ($wiki_watch_comments == 'y') && (isset($_REQUEST["page"]))) {
 		$nots = $commentslib->get_event_watches('wiki_page_changed', $_REQUEST["page"]);
 		foreach ($nots as $not) {
 			if ($wiki_watch_editor != 'y' && $not['user'] == $user) break;

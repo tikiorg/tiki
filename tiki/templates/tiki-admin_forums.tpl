@@ -14,7 +14,7 @@
 
 <!-- beginning of next bit -->
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=forums"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<a href="tiki-admin.php?page=forums"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
 {/if}
 
 
@@ -91,11 +91,11 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Default ordering for threads{/tr}:</td><td class="formcolor">
 <select name="threadOrdering">
-<option value="commentDate_desc" {if $topicOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date (desc){/tr}</option>
-<option value="commentDate_asc" {if $topicOrdering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Date (asc){/tr}</option>
-<option value="average_desc" {if $topicOrdering eq 'average_desc'}selected="selected"{/if}>{tr}Score (desc){/tr}</option>
-<option value="title_desc" {if $topicOrdering eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
-<option value="title_asc" {if $topicOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
+<option value="commentDate_desc" {if $threadOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date (desc){/tr}</option>
+<option value="commentDate_asc" {if $threadOrdering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Date (asc){/tr}</option>
+<option value="average_desc" {if $threadOrdering eq 'average_desc'}selected="selected"{/if}>{tr}Score (desc){/tr}</option>
+<option value="title_desc" {if $threadOrdering eq 'title_desc'}selected="selected"{/if}>{tr}Title (desc){/tr}</option>
+<option value="title_asc" {if $threadOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
 </select>
 </td></tr>
 <tr><td class="formcolor"><input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email{/tr}:</td><td class="formcolor"><input type="text" name="mail" value="{$mail|escape}" /></td></tr>
@@ -300,9 +300,9 @@
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 <td class="{cycle advance=false}">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src='img/icons/config.gif' alt="{tr}edit{/tr}" title="{tr}edit{/tr}" border='0' /></a>
-   <a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" title="{tr}permissions{/tr}" /></a>
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}"><img src='img/icons2/delete.gif' alt="{tr}remove{/tr}" title="{tr}remove{/tr}" border='0' /></a>
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+   <a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /></a>
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
 {/if}
 </td>
 </tr>
@@ -310,12 +310,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>] 
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>
-

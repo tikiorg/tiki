@@ -2,8 +2,8 @@
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2003-08-07 04:34:14 $
-* CVS Revision...: $Revision: 1.6 $
+* Last Modified..: $Date: 2003-12-21 17:47:28 $
+* CVS Revision...: $Revision: 1.7 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -194,8 +194,7 @@ class htmlMimeMail {
 		if (!is_null($helo))
 			$this->smtp_params['helo'] = $helo;
 
-		if (!is_null($auth))
-			$this->smtp_params['auth'] = $auth;
+		$this->smtp_params['auth'] = ("y" == $auth);
 
 		if (!is_null($user))
 			$this->smtp_params['user'] = $user;
@@ -879,7 +878,7 @@ class htmlMimeMail {
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.6 $
+* @version $Revision: 1.7 $
 * @package Mail
 */
 class Mail_mimePart {
@@ -1169,7 +1168,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.6 $
+* @version $Revision: 1.7 $
 * @package Mail
 */
 class Mail_RFC822 {

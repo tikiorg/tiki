@@ -1,5 +1,4 @@
-{* Index we display a wiki page here *}
-{include file="header.tpl"}
+{* Index we display a wiki page here *} {include file="header.tpl"} <br>
 <div id="tiki-main">
 {if $feature_top_bar eq 'y'}
 <div id="tiki-top">
@@ -22,15 +21,20 @@
 		 alt="" border="0" /></td>
 		  <td><table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr> 
-                  <td height="0" colspan="3"id="page21"> <div align="left"> </div>
-                    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                      <tr> 
-                        <td width="80" height="31" align="center" valign="middle"> 
-<div align="left"><a href="http://TikiWiki.org"><img alt="" src="http://tikiwiki.org/img/wiki_up/tikibutton2.png" width="80" height="31" name="" border="0"></a></div></td>
-                        <td width="100%" align="center" valign="middle"></td>
-                      </tr>
-                    </table>
-                    </td>
+                  <td height="32" colspan="3"id="page21"> 
+<div align="left"> 
+                            
+                      <table width="100%" height="32" border="0" align="CENTER" cellpadding="0" cellspacing="0">
+<tr>
+                                
+                          <td width="80" height="31"><img src="http://tikiwiki.org/img/wiki_up/tikibutton2.png" width="80" height="31" align="absbottom"></td>
+                                <td width="100%" valign="BOTTOM" align="CENTER">
+<div align="center"></div></td>
+                                
+                          <td></td>
+                              </tr>
+                            </table>
+</div></td>
                 </tr>
                 <tr> 
                   <td width="18" height="22" align="left" id="page16"> <img src="styles/bluemetal/page_0.gif" width="18" height="22" alt="" /></td>
@@ -60,9 +64,13 @@
                         <td id="page36"><img src="styles/bluemetal/page_0.gif" width="4" height="1" alt="" border="0" /></td>
                       </tr>
                     </table></td>
-                  <td width="100%" rowspan="3" id="page24"> <div id="tiki-center"> 
-                      {include file=$mid} {if $show_page_bar eq 'y'} {include 
-                      file="tiki-page_bar.tpl"} {/if} </div></td>
+                  <td id="page24" width="100%" rowspan="3"> 
+                    <div id="tiki-center"> {if $pagetop_msg ne ''} <span class="pagetop_msg">{$pagetop_msg}</span> 
+                      {/if} 
+                      <!-- content -->
+                      {include file=$mid} 
+                      <!-- end of content -->
+                    </div></td>
 					  {if $feature_right_column eq 'y'}
                   <td id="rightcolumn" rowspan="3"> {section name=homeix loop=$right_modules} 
                     {$right_modules[homeix].data} {/section}</td>
@@ -74,7 +82,7 @@
       </table>
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr> 
-          <td width="46" id="page31"><img src="styles/bluemetal/page_0.gif" width="46" height="29" alt="" border="0" /></td>
+            <td width="46" height="29" id="page31"><img src="styles/bluemetal/page_0.gif" width="46" height="29" alt="" border="0" /></td>
           <td WIDTH="100%" id="page30"></td>
           <td width="46" id="page35"> <div align="right"><a href="javascript:scroll(0,0);"><img src="styles/bluemetal/page_0.gif" width="46" height="29" alt="" border="0" /></a></div></td>
         </tr>

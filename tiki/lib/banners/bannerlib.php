@@ -93,7 +93,7 @@ class BannerLib extends TikiLib {
 	function add_click($bannerId) {
 		$query = "update `tiki_banners` set `clicks` = `clicks` + 1 where `bannerId`=?";
 
-		$result = $this->query($queryi,array($bannerId));
+		$result = $this->query($query,array((int)$bannerId));
 	}
 
 	function list_banners($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $user) {

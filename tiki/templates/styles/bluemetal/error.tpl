@@ -25,8 +25,8 @@
                   <td height="0" colspan="3"id="page21"> <div align="left"> </div>
                     <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
                       <tr> 
-                        <td width="80" height="31" align="center" valign="middle"> 
-<div align="left"><a href="http://TikiWiki.org"><img src="http://tikiwiki.org/img/wiki_up/tikibutton2.png" alt="" name="" width="80" height="31" border="0"></a></div></td>
+                        <td width="158" height="97" align="center" valign="middle"> 
+<div align="left"><a href="http://AmericanTalkRadio.com" target="_self"><img src="http://ColoradosChoice.com/AmericanTalkRadioBlueBack.gif" alt="" width="157" height="97" border="0" /></a></div></td>
                         <td width="100%" align="center" valign="middle"></td>
                       </tr>
                     </table>
@@ -66,9 +66,11 @@
                   <div class="cbox-title">{tr}Error{/tr}</div>
                   <div class="cbox-data">{$msg}<br />
                     <br />
-                    <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br />
+                    <a href="javascript:history.back()" class="linkmenu">{tr}Go 
+                    back{/tr}</a><br />
                     <br />
-                    <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a></div>
+                    <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home 
+                    page{/tr}</a></div>
                 </div></div></td>
 					  {if $feature_right_column eq 'y'}
                   <td id="rightcolumn" rowspan="3"> {section name=homeix loop=$right_modules} 

@@ -213,17 +213,20 @@ if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' &&
 }
 }
 
-$slides = split("-=[^=]+=-",$info["data"]);
-if(count($slides)>1) {
-	$smarty->assign('show_slideshow','y');
-} else {
-	$slides = explode("...page...",$info["data"]);
-	
+if ($wiki_uses_slides == 'y') {
+	$slides = split("-=[^=]+=-",$info["data"]);
 	if(count($slides)>1) {
 		$smarty->assign('show_slideshow','y');
 	} else {
-		$smarty->assign('show_slideshow','n');
+		$slides = explode("...page...",$info["data"]);
+		if(count($slides)>1) {
+			$smarty->assign('show_slideshow','y');
+		} else {
+			$smarty->assign('show_slideshow','n');
+		}
 	}
+} else {
+	$smarty->assign('show_slideshow','n');
 }
 
 if(isset($_REQUEST['refresh'])) {

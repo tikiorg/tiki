@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.96 2003-12-19 06:34:21 wolff_borg Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.97 2003-12-21 17:47:21 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -862,4 +862,10 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','View Bugs','tiki-mantis-view_bugs.php',192,'feature_mantis','tiki_p_mantis_view','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin','tiki-mantis-admin.php',198,'feature_mantis','tiki_p_mantis_admin','');
 
+# added on 2003-16-19 by mose (typo reported by xenfasa)
+UPDATE tiki_menu_options set `url`='tiki-forum_rankings.php' where `url`='tiki-forums_rankings.php';
+
+# added on 2003-12-20 by gmuslera
+# Updating the URL for games to tiki-list_games.php instead of tiki-games.php
+UPDATE tiki_menu_options SET `url` = 'tiki-list_games.php' WHERE `url`='tiki-games.php';
 

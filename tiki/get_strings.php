@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.27 2003-11-22 21:30:13 docekal Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.28 2003-12-21 17:47:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,7 +208,8 @@ foreach ($languages as $sel) {
 
   $unused     = $lang;
   $dictionary = $lang;
-
+  $old_umask = umask(0); // we set umask to zero value to allow proper chmod later
+  
   $fw = fopen("lang/$sel/new_language.php",'w');
   
   print("&lt;");
@@ -386,14 +387,14 @@ foreach ($languages as $sel) {
 
   unset ($unused['']);
   if (count ($unused) > 0) {
-    writeFile_and_User ($fw, "// ### start of unused words\n");
-    writeFile_and_User ($fw, "// ### please remove manually!\n");
+    writeFile_and_User ($fw, "// ### start of *probably* unused words (they can be generated dynamically!)\n");
+    writeFile_and_User ($fw, "// ### please remove manually only if you know what you are doing!\n");
     foreach ($unused as $key => $val) {
       writeTranslationPair ($fw, $key, $val);
       addToWordlist ($wordlist, $val);
       writeFile_and_User ($fw, "\n");
     }
-    writeFile_and_User ($fw, "// ### end of unused words\n\n");
+    writeFile_and_User ($fw, "// ### end of *probably* unused words\n\n");
   }
 
   unset ($to_translate['']);
@@ -423,7 +424,7 @@ foreach ($languages as $sel) {
 	  }
 	  
 	  if ($dist < 1 + strlen ($key)/5) {
-	    $closeText = " // ## CLOSE: $closeEnglish=>$closeTrans";
+	    $closeText = ' // ## CLOSE: "'.addphpslashes ($closeEnglish).'" => "'.addphpslashes ($closeTrans).'"';
 	  }
 	}
 
@@ -486,10 +487,12 @@ foreach ($languages as $sel) {
     }
 
     fclose ($fw);
-  }
+  }  
 
   @unlink ("lang/$sel/old.php");
   rename ("lang/$sel/language.php","lang/$sel/old.php");
   rename ("lang/$sel/new_language.php","lang/$sel/language.php");
+  chmod ("lang/$sel/language.php", 0664); // chmod the file to be writeable also by group
+  umask($old_umask); // we set umask back to original value
 }
 ?>

@@ -119,7 +119,7 @@ class BanLib extends TikiLib {
   			`user`=?,
   			`date_from` = ?,
   			`date_to` = ?,
-  			`user_dates` = ?,
+  			`use_dates` = ?,
   			`message` = ?
   			where `banId`=?
   		";
@@ -134,8 +134,8 @@ class BanLib extends TikiLib {
 			$banId = $this->getOne("select max(`banId`) from `tiki_banning` where `created`=?",array($now));
 		}
 
-		$query = "delete from `tiki_banning_sections` where `banId`=? and `section`=?";
-		$this->query($query,array($banId,$section));
+		$query = "delete from `tiki_banning_sections` where `banId`=?";
+		$this->query($query,array($banId));
 
 		foreach ($sections as $section) {
 			$query = "insert into `tiki_banning_sections`(`banId`,`section`) values(?,?)";

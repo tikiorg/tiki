@@ -1,4 +1,9 @@
-{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
+{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
+  {if $structure eq 'y' and $page_info.page_alias ne ''}
+    {$page_info.page_alias}
+  {else}
+    {$page}
+  {/if}</a>
 {if $lock}
 <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
@@ -68,6 +73,27 @@
   {/if}
 {/if}
 
+{if $feature_backlinks eq 'y' and $backlinks}
+  <select name="page" onchange="go(this)">
+    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks{/tr}...</option>
+	{section name=back loop=$backlinks}
+	  <option value="tiki-index.php?page={$backlinks[back].fromPage|escape:"url"}">{$backlinks[back].fromPage}</option>
+	{/section}
+  </select>
+{/if}
+{if count($showstructs) ne 0}
+  <select name="page" onchange="go(this)">
+    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}Structures{/tr}...</option>
+	{section name=struct loop=$showstructs}
+	  <option value="tiki-index.php?page_ref_id={$showstructs[struct].req_page_ref_id}">
+{if $showstructs[struct].page_alias} 
+	{$showstructs[struct].page_alias}
+{else}
+	{$showstructs[struct].pageName}
+{/if}</option>
+	{/section}
+  </select>
+{/if}
 {/if}
 </td>
 
@@ -146,36 +172,57 @@
 
 {/if}
 
-<div class="wikitext">{if $structure eq 'y'}
+<div class="wikitext">
+{if $structure eq 'y'}
 <div class="tocnav">
 <table width='100%'>
-{foreach from=$struct_prev_next item=struct name=str key=key}
-	<tr>
-		<td width='33%'>
-			{if $struct.prev_page}
-				<a class="tocnavlink" href="tiki-index.php?page={$struct.prev_page}&amp;structID={$key}">&lt;&lt; 
-					{if $struct.prev_page_alias}
-						{$struct.prev_page_alias}
-					{else}
-						{$struct.prev_page}
-					{/if} 
-				</a>
+<tr>
+	<td>
+	{section loop=$structure_path name=ix}
+		{if $structure_path[ix].parent_id}->{/if}
+		<a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
+		{if $structure_path[ix].page_alias}
+			{$structure_path[ix].page_alias}
+		{else}
+			{$structure_path[ix].pageName}
+		{/if}
+		</a>
+	{/section}
+	</td>
+</tr>
+<tr>
+	<td width='33%'>
+		{if $prev_info and $prev_info.page_ref_id}
+			<a class="tocnavlink" href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}">&lt;&lt; 
+				{if $prev_info.page_alias}
+					{$prev_info.page_alias}
+				{else}
+					{$prev_info.pageName}
+				{/if} 
+			</a>
 
-			{else}
-				&nbsp;
-			{/if}
-		</td>
-		<td align='center' width='33%'>
-{*			<a class="tocnavlink" href="tiki-index.php?page=">{$key}</a> *}
-			{$key}
-		</td>
-		<td align='right' width='33%'>
-			{if $struct.next_page}
-				<a class="tocnavlink" href="tiki-index.php?page={$struct.next_page}&amp;structID={$key}">
-					{if $struct.next_page_alias}
-						{$struct.next_page_alias}
+		{else}
+			&nbsp;
+		{/if}
+	</td>
+	<td align='center' width='33%'>
+	{if $parent_info}
+		<a class="tocnavlink" href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}">
+	        {if $parent_info.page_alias}
+			{$parent_info.page_alias}
+		{else}
+			{$parent_info.pageName}
+		{/if}
+		</a>
+	{/if}
+	</td>
+	<td align='right' width='33%'>
+		{if $next_info and $next_info.page_ref_id}
+				<a class="tocnavlink" href="tiki-index.php?page_ref_id={$next_info.page_ref_id}">
+					{if $next_info.page_alias}
+						{$next_info.page_alias}
 					{else}
-						{$struct.next_page}
+						{$next_info.pageName}
 					{/if} 
 					&gt;&gt;
 				</a>
@@ -183,7 +230,6 @@
 				&nbsp;
 			{/if}</td>
 	</tr>
-{/foreach}
 </table>
 </div>
 {/if}{$parsed}

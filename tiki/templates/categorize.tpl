@@ -8,7 +8,7 @@
   {if count($categories) gt 0}
    <select name="cat_categories[]" multiple="multiple" size="5">
    {section name=ix loop=$categories}
-    <option value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}selected="selected"{/if}>{$categories[ix].name}</option>
+    <option value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}selected="selected"{/if}>{$categories[ix].categpath}</option>
    {/section}
    </select><br/>
    {tr}categorize this object{/tr}:
