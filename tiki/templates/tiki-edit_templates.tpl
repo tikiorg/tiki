@@ -1,4 +1,5 @@
 <a class="pagetitle" href="tiki-edit_templates.php?mode=listing">Edit templates</a><br/><br/>
+{if $template}<h2>{tr}Template{/tr}: {$template}</h2>{/if}
 {if $mode eq 'listing'}
 <h3>Available templates:</h3>
 <table border="1" cellpadding="0" cellspacing="0" width="97%">
@@ -23,7 +24,7 @@
 {if $mode eq 'editing'}
 <a class="link" href="tiki-edit_templates.php">{tr}Template listing{/tr}</a><br/>
 <form action="tiki-edit_templates.php" method="post">
-<textarea name="data" rows="20" cols="80">{$data}</textarea>
+<textarea name="data" rows="20" cols="80">{$data|escape}</textarea>
 <div align="center">
 <input type="hidden" name="template" value="{$template}" />
 <input type="submit" name="save" value="{tr}save{/tr}" />

@@ -49,12 +49,13 @@ $group_info = $userlib->get_group_info($group);
 $smarty->assign_by_ref('group_info',$group_info);
 
 if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'type_desc'; 
+  $sort_mode = 'type_asc'; 
 } else {
   $sort_mode = $_REQUEST["sort_mode"];
 } 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
+$maxRecords=9999;
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
 // if sortMode is not set then use lastModif_desc

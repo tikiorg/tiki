@@ -235,7 +235,9 @@ $feature_messages = 'n';
 $smarty->assign('feature_messages',$feature_messages);
 
 $rememberme = $tikilib->get_preference('rememberme','disabled');
+$smarty->assign('rememberme',$rememberme);
 $remembertime = $tikilib->get_preference('remembertime',7200);
+$smarty->assign('remembertime',$remembertime);
 
 $feature_wiki_description = 'n';
 $smarty->assign('feature_wiki_description',$feature_wiki_description);
