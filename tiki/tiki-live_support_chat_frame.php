@@ -1,3 +1,12 @@
+<?php
+
+// $Header$
+
+// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "DTD/xhtml1-transitional.dtd">
@@ -7,4 +16,4 @@
     <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
   </head>
   <body style="margin-left:4px;"></body>
-</html>  
+</html>
