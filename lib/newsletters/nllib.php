@@ -63,16 +63,18 @@ class NlLib extends TikiLib {
     $this->update_users($nlId);    
   }
 
-  function newsletter_subscribe($nlId,$email) 
-  {
+
+ function newsletter_subscribe($nlId,$email)
+ {
     global $smarty;
     global $user;
-    $email=addslashes($email);  	 
-    // Generate a code and store it and send an email with the
+    $email=addslashes($email);
+    // Generate a code and store it and send an email  with the
     // URL to confirm the subscription put valid as 'n'
     $foo = parse_url($_SERVER["REQUEST_URI"]);
-    $url_subscribe = httpPrefix().$foo["path"];
-    $code = md5($this->genPass());
+    $foopath=preg_replace('/tiki-admin_newsletter_subscriptions.php/','tiki-newsletters.php',$foo["path"]);
+    $url_subscribe = httpPrefix().$foopath;
+    $code = md5($this->genPass()); 
     $now = date("U");
     $query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed)
     values($nlId,'$email','$code','n',$now)";
