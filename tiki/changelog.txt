@@ -64,7 +64,8 @@ Version 1.3 -d-
   has no individual permissions then it will be displayed to all the groups. But if you want you can assign the
   tiki_p_read_topic permission to some groups for a topic and only those groups will be able to read that topic.
 * [NEW] A mini-popup window can be opened when editing objects to help the user insert special characters in the
-  text, specially latin characters, accents, etc. This is taken from the horde project and submited by Marc Laporte.      
+  text, specially latin characters, accents, etc. This is taken from the horde project and submited by Marc Laporte.
+* [CHG] Tiki is now using Smarty 2.3.1 the last stable Smarty release        
 
 Version 1.2 -Antares-
 
