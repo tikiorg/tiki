@@ -9,6 +9,8 @@ class TrackerLib extends TikiLib {
 
 	/* Tiki tracker construction options */
 	// Return an array with items assigned to the user or a user group
+	/* that method is already in tikilib. isn't it a duplicate ?
+	
 	function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '', $initial = '') {
 		$filters = array();
 
@@ -107,6 +109,7 @@ class TrackerLib extends TikiLib {
 		$retval["cant"] = $cant;
 		return $retval;
 	}
+	*/
 
 	function add_item_attachment_hit($id) {
 		global $count_admin_pvs;
@@ -121,7 +124,7 @@ class TrackerLib extends TikiLib {
 
 		return true;
 	}
-
+	
 	function get_item_attachment_owner($attId) {
 		return $this->getOne("select `user` from `tiki_tracker_item_attachments` where `attId`=?",array((int) $attId));
 	}

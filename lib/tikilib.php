@@ -544,139 +544,168 @@ function get_tracker($trackerId) {
 
 function list_trackers($offset, $maxRecords, $sort_mode, $find) {
 
-		if ($find) {
-			$findesc = '%' . $find . '%';
+	if ($find) {
+		$findesc = '%' . $find . '%';
 
-			$mid = " where (`name` like ? or `description` like ?)";
-			$bindvars=array($findesc,$findesc);
-		} else {
-			$mid = "";
-			$bindvars=array();
-		}
-
-		$query = "select * from `tiki_trackers` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_trackers` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-
-		$list = array();
-		while ($res = $result->fetchRow()) {
-			$qu = "select count(*) from`tiki_tracker_items` where `trackerId`=? ";
-			$res['items'] = $this->getOne($qu,array((int)$res['trackerId']));
-			$ret[] = $res;
-			$list[$res['trackerId']] = $res['name'];
-		}
-
-		$retval = array();
-		$retval["list"] = $list;
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
+		$mid = " where (`name` like ? or `description` like ?)";
+		$bindvars=array($findesc,$findesc);
+	} else {
+		$mid = "";
+		$bindvars=array();
 	}
+
+	$query = "select * from `tiki_trackers` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_trackers` $mid";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
+	$ret = array();
+
+	$list = array();
+	while ($res = $result->fetchRow()) {
+		$qu = "select count(*) from`tiki_tracker_items` where `trackerId`=? ";
+		$res['items'] = $this->getOne($qu,array((int)$res['trackerId']));
+		$ret[] = $res;
+		$list[$res['trackerId']] = $res['name'];
+	}
+
+	$retval = array();
+	$retval["list"] = $list;
+	$retval["data"] = $ret;
+	$retval["cant"] = $cant;
+	return $retval;
+}
 
 /*shared*/
 function list_surveys($offset, $maxRecords, $sort_mode, $find) {
 
-    if ($find) {
-	$findesc = '%' . $find . '%';
+	if ($find) {
+$findesc = '%' . $find . '%';
 
-	$mid = " where (`name` like ? or `description` like ?)";
-	$bindvars=array($findesc,$findesc);
-    } else {
-	$mid = " ";
-	$bindvars=array();
-    }
+$mid = " where (`name` like ? or `description` like ?)";
+$bindvars=array($findesc,$findesc);
+	} else {
+$mid = " ";
+$bindvars=array();
+	}
 
-    $query = "select * from `tiki_surveys` $mid order by ".$this->convert_sortmode($sort_mode);
-    $query_cant = "select count(*) from `tiki_surveys` $mid";
-    $result = $this->query($query,$bindvars,$maxRecords,$offset);
-    $cant = $this->getOne($query_cant,$bindvars);
-    $ret = array();
+	$query = "select * from `tiki_surveys` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_surveys` $mid";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
+	$ret = array();
 
-    while ($res = $result->fetchRow()) {
-	$res["questions"] = $this->getOne("select count(*) from `tiki_survey_questions` where `surveyId`=?",array((int) $res["surveyId"]));
+	while ($res = $result->fetchRow()) {
+$res["questions"] = $this->getOne("select count(*) from `tiki_survey_questions` where `surveyId`=?",array((int) $res["surveyId"]));
 
-	$ret[] = $res;
-    }
+$ret[] = $res;
+	}
 
-    $retval = array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
+	$retval = array();
+	$retval["data"] = $ret;
+	$retval["cant"] = $cant;
+	return $retval;
 }
 
 /*shared*/
-function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '') {
-    $filters = array();
+function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '', $initial = '') {
+	$filters = array();
 
-    if ($fields) {
-	for ($i = 0; $i < count($fields["data"]); $i++) {
-	    $fieldId = $fields["data"][$i]["fieldId"];
-
-	    $type = $fields["data"][$i]["type"];
-	    $value = $fields["data"][$i]["value"];
-	    $aux["value"] = $value;
-	    $aux["type"] = $type;
-	    $filters[$fieldId] = $aux;
-	}
-    }
-
-    $mid = " where `trackerId`=? ";
-    $bindvars = array((int)$trackerId);
-
-    if ($status) {
-	$mid .= " and `status`=? ";
-	$bindvars[] = $status;
-    }
-
-    $query = "select * from `tiki_tracker_items` $mid order by ".$this->convert_sortmode($sort_mode);
-    $query_cant = "select count(*) from `tiki_tracker_items` $mid";
-    $result = $this->query($query,$bindvars,$maxRecords,$offset);
-    $cant = $this->getOne($query_cant, $bindvars);
-    $ret = array();
-
-    while ($res = $result->fetchRow()) {
-	$fields = array();
-
-	$itid = $res["itemId"];
-	$query2 = "select ttif.`fieldId`,`name`,`value`,`type`,`isTblVisible`,`isMain` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf ";
-	$query2.= " where ttif.`fieldId`=ttf.`fieldId` and `itemId`=? order by ".$this->convert_sortmode("fieldId_asc");
-	$result2 = $this->query($query2,array((int) $res["itemId"]));
-	$pass = true;
-
-	while ($res2 = $result2->fetchRow()) {
-	    // Check if the field is visible!
-	    $fieldId = $res2["fieldId"];
-
-	    if (count($filters) > 0) {
-		if (isset($filters["$fieldId"]["value"])) {
-		    if ($filters["$fieldId"]["type"] == 'a' || $filters["$fieldId"]["type"] == 't') {
-			if (!strstr($res2["value"], $filters["$fieldId"]["value"]))
-			    $pass = false;
-		    } else {
-			if ($res2["value"] != $filters["$fieldId"]["value"])
-			    $pass = false;
-		    }
+	if ($fields) {
+		for ($i = 0; $i < count($fields["data"]); $i++) {
+			$fieldId = $fields["data"][$i]["fieldId"];
+			$filters[$fieldId] = $fields["data"][$i];
 		}
-	    }
+	}
+	$csort_mode = '';
+	if (substr($sort_mode,0,2) == "f_") {
+		list($a,$csort_mode,$corder) = split('_',$sort_mode);
+	}
+	$mid = " where tti.`trackerId`=? ";
+	$bindvars = array((int) $trackerId);
 
-	    $fields[] = $res2;
+	if ($status) {
+		$mid.= " and tti.`status`=? ";
+		$bindvars[] = $status;
+	}
+	if ($initial) {
+		$mid.= "and ttif.`value` like ?";
+		$bindvars[] = $initial.'%';
+	}
+	if (!$sort_mode) {
+		for ($i = 0; $i < count($fields["data"]); $i++) {
+			if ($fields['data'][$i]['isMain'] == 'y') {
+				$csort_mode = $fields['data'][$i]['name'];
+				break;
+			}
+		}
 	}
 
-	$res["field_values"] = $fields;
-	$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int)$itid));
+	if ($csort_mode) {
+		$sort_mode = $csort_mode."_desc";
+		$bindvars[] = $csort_mode;
+		$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+		$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? order by ttif.`value`";
+		$query_cant = "select count(*) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+		$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? ";
+	} else {
+		if (!$sort_mode) {
+			$sort_mode = "lastModif_desc";
+		}
+		$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_tracker_items` tti $mid ";
+	}
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
+	$ret = array();
 
-	if ($pass)
-	    $ret[] = $res;
-    }
+	while ($res = $result->fetchRow()) {
+		$fields = array();
 
-    //$ret=$this->sort_items_by_condition($ret,$sort_mode);
-    $retval = array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
+		$itid = $res["itemId"];
+		$query2 = "select ttif.`fieldId`,`name`,`value`,`type`,`isTblVisible`,`isMain`,`position` 
+			from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf 
+			where ttif.`fieldId`=ttf.`fieldId` and `itemId`=? order by `position` asc";
+		$result2 = $this->query($query2,array((int) $res["itemId"]));
+		$pass = true;
+
+		$kx = "";
+		while ($res2 = $result2->fetchRow()) {
+			// Check if the field is visible!
+			$fieldId = $res2["fieldId"];
+
+			if (count($filters) > 0) {
+				if ($filters["$fieldId"]["value"]) {
+					if ($filters["$fieldId"]["type"] == 'a' || $filters["$fieldId"]["type"] == 't') {
+						if (!stristr($res2["value"], $filters["$fieldId"]["value"]))
+							$pass = false;
+					} else {
+						if (strtolower($res2["value"]) != strtolower($filters["$fieldId"]["value"])) {
+							$pass = false;
+						}
+					}
+				}
+				if (ereg_replace("[^a-zA-Z0-9]","",$res2["name"]) == $csort_mode) {
+					$kx = $res2["value"].$itid;
+				}
+			}
+			$fields[] = $res2;
+		}
+		$res["field_values"] = $fields;
+		$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
+		if ($pass) {
+			$kl = $kx.$itid;
+			$ret["$kl"] = $res;
+		}
+	}
+
+	ksort($ret);
+	//$ret=$this->sort_items_by_condition($ret,$sort_mode);
+	$retval = array();
+	$retval["data"] = array_values($ret);
+	$retval["cant"] = $cant;
+	return $retval;
 }
+
 
 /*shared*/
 // \todo remove all hardcoded html in get_user_avatar()
