@@ -17,6 +17,9 @@ if(!isset($_REQUEST["imageId"])) {
 }
 
 // get info for scaled images
+if (!isset($_REQUEST["galleryId"])) {
+	$_REQUEST["galleryId"] = $tikilib->get_preference("home_gallery","0");
+}
 $scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
 $sxsize=0;
 $sysize=0;
