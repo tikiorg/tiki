@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.27 2004-05-07 14:52:28 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.28 2004-06-09 21:07:27 teedog Exp $ *}
 
 {tikimodule title="{tr}Login{/tr}" name="login_box"}
 
@@ -13,6 +13,9 @@
         <input type="submit" name="actsu" value="{tr}set{/tr}" />
         </form>
       {/if}
+	{elseif $auth_method eq 'cas' && $showloginboxes neq 'y'}
+		<b><a class="linkmodule" href="tiki-login.php">{tr}Login through CAS{/tr}</a></b><br />
+		<a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
     {else}
      <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}
@@ -85,7 +88,7 @@
           {if $show_stay_in_ssl_mode eq 'y'}
             <tr>
               <td class="module">
-                <label for="login-stayssl">{tr}stay in ssl mode{/tr}:</label> 
+                <label for="login-stayssl">{tr}stay in ssl mode{/tr}:</label>?
                 <input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} />
               </td>
             </tr>
