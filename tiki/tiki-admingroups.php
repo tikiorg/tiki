@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.28 2004-02-14 01:00:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.29 2004-03-02 07:11:54 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,19 +18,30 @@ if ($user != 'admin') {
 	}
 }
 
-list($ag_utracker,$ag_gtracker) = array(0,0);
-if (isset($groupTracker) and $groupTracker  == 'y') {
+list($trackers,$ag_utracker,$ag_ufield,$ag_gtracker,$ag_gfield) = array(array(),0,0,0,0);
+
+if (isset($groupTracker) and $groupTracker == 'y') {
 	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
-	$smarty->assign('trackers', $trackers);
-
-	if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
-		$ag_utracker = $_REQUEST["userstracker"];
-	}
 	if (isset($_REQUEST["groupstracker"]) and isset($trackers[$_REQUEST["groupstracker"]])) {
 		$ag_gtracker = $_REQUEST["groupstracker"];
+		if (isset($_REQUEST["groupfield"]) and $_REQUEST["groupfield"]) {
+			$ag_gfield = $_REQUEST["groupfield"];
+		}
 	}
 }
+
+if (isset($userTracker) and $userTracker == 'y') {
+	if (!isset($trackerlist)) $trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
+	$trackers = $trackerlist['list'];
+	if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
+		$ag_utracker = $_REQUEST["userstracker"];
+		if (isset($_REQUEST["usersfield"]) and $_REQUEST["usersfield"]) {
+			$ag_ufield = $_REQUEST["usersfield"];
+		}
+	}
+}
+$smarty->assign('trackers', $trackers);
 
 $ag_home = '';
 if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
@@ -59,7 +70,7 @@ if (isset($_REQUEST["newgroup"])) {
 // modification
 if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"])) {
 	check_ticket('admin-groups');
-	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker);
+	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {
 		foreach ($_REQUEST["include_groups"] as $include) {
@@ -125,7 +136,7 @@ $smarty->assign('find', $find);
 $users = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
 
 $inc = array();
-list($groupname,$groupdesc,$grouphome,$userstrackerid,$grouptrackerid,$groupperms,$trackerinfo,$memberlist) = array('','','','','','','','');
+list($groupname,$groupdesc,$grouphome,$userstrackerid,$usersfieldid,$grouptrackerid,$groupfieldid,$groupperms,$trackerinfo,$memberlist) = array('','','','','','','','','','');
 
 if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	$re = $userlib->get_group_info($_REQUEST["group"]);
@@ -140,53 +151,73 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 		$grouphome = $re["groupHome"];
 
 	if ($userTracker == 'y') {
-		if(isset($re["usersTrackerId"])) {
+		if (isset($re["usersTrackerId"]) and $re["usersTrackerId"]) {
 			$userstrackerid = $re["usersTrackerId"];
+		}
+		if (isset($re["usersFieldId"]) and $re["usersFieldId"]) {
+			$usersfieldid = $re["usersFieldId"];
 		}
 	}
 
 	if ($groupTracker == 'y') {	
-		if($re["groupTrackerId"]) {
+		if (isset($re["groupTrackerId"]) and $re["groupTrackerId"])  {
 			include_once('lib/trackers/trackerlib.php');
 			$grouptrackerid = $re["groupTrackerId"];
 			$fields = $trklib->list_tracker_fields($grouptrackerid, 0, -1, 'position_asc', '');
-			$info = $trklib->get_item($grouptrackerid,'groupName',$groupname);
-			$groupitemId = $info["itemId"];
-			$smarty->assign('groupitemId', $groupitemId);
-			for ($i = 0; $i < count($fields["data"]); $i++) {
-				if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin) {
-					$name = $fields["data"][$i]["fieldId"];
-					if ($fields["data"][$i]["type"] != 'h') {
-						if ($fields["data"][$i]["type"] == 'c') {
-							if (!isset($info["$name"])) $info["$name"] = 'n';
-						} else {
-							if (!isset($info["$name"])) $info["$name"] = '';
-						}
-						if ($fields["data"][$i]["type"] == 'e') {
-							include_once('lib/categories/categlib.php');
-							$k = $fields["data"][$i]["options"];
-							$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
-							if (!isset($cat)) {
-								$cat = $categlib->get_object_categories("tracker ".$grouptrackerid,$groupitemId);
+			$gfields = $fields;
+			if (isset($re["groupFieldId"]) and $re["groupFieldId"])  {
+				$groupfieldid = $re["groupFieldId"];
+				$info = $trklib->get_item($grouptrackerid,$groupfieldid,$groupname);
+				$groupitemId = $info["itemId"];
+				$smarty->assign('groupitemId', $groupitemId);
+				for ($i = 0; $i < count($fields["data"]); $i++) {
+					if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin) {
+						$name = $fields["data"][$i]["fieldId"];
+						if ($fields["data"][$i]["type"] != 'h') {
+							if ($fields["data"][$i]["type"] == 'c') {
+								if (!isset($info["$name"])) $info["$name"] = 'n';
+							} else {
+								if (!isset($info["$name"])) $info["$name"] = '';
 							}
-							foreach ($cat as $c) {
-								$fields["data"][$i]["cat"]["$c"] = 'y';
+							if ($fields["data"][$i]["type"] == 'e') {
+								include_once('lib/categories/categlib.php');
+								$k = $fields["data"][$i]["options"];
+								$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+								if (!isset($cat)) {
+									$cat = $categlib->get_object_categories("tracker ".$grouptrackerid,$groupitemId);
+								}
+								foreach ($cat as $c) {
+									$fields["data"][$i]["cat"]["$c"] = 'y';
+								}
+							} elseif  ($fields["data"][$i]["type"] == 'r') {
+								$fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info["$name"]);
+								$fields["data"][$i]["value"] = $info["$name"];
+								$fields["data"][$i]["type"] = 't';
+							} elseif ($fields["data"][$i]["type"] == 'a') {
+								$fields["data"][$i]["value"] = $info["$name"];
+								$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+							} else {
+								$fields["data"][$i]["value"] = $info["$name"];
 							}
-						} elseif  ($fields["data"][$i]["type"] == 'r') {
-							$fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info["$name"]);
-							$fields["data"][$i]["value"] = $info["$name"];
-							$fields["data"][$i]["type"] = 't';
-						} elseif ($fields["data"][$i]["type"] == 'a') {
-							$fields["data"][$i]["value"] = $info["$name"];
-							$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
-						} else {
-							$fields["data"][$i]["value"] = $info["$name"];
 						}
 					}
 				}
 			}
 			$smarty->assign_by_ref('fields', $fields["data"]);
 		}
+		$groupFields = array();
+		if ($grouptrackerid) {
+			$groupFields = $gfields;
+		}
+		$smarty->assign_by_ref('groupFields', $groupFields['data']);
+	}
+
+	if ($userTracker == 'y') {
+		$usersFields = array();
+		if ($userstrackerid) {
+			$usersFields = $trklib->list_tracker_fields($userstrackerid, 0, -1, 'position_asc', '');
+		}
+		$smarty->assign_by_ref('usersFields', $usersFields['data']);
 	}
 
 	$groupperms = $re["perms"];
@@ -200,17 +231,18 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 			$inc["$rr"] = "y";
 		}
 	}
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1,80)),"tab2");
 } else {
 	$allgroups = $userlib->list_all_groups();
 	foreach ($allgroups as $rr) {
 		$inc["$rr"] = "n";
 	}
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1,80)),"tab1");
 	$_REQUEST["group"] = 0;
 }
 if (isset($_REQUEST['add'])) {
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1,80)),"tab2");
 }
 
 if ($_REQUEST['group']) {
@@ -225,10 +257,14 @@ $smarty->assign('group', $_REQUEST["group"]);
 $smarty->assign('groupname', $groupname);
 $smarty->assign('groupdesc', $groupdesc);
 $smarty->assign('grouphome',$grouphome);
-if (isset($groupTracker) and $groupTracker  == 'y') {
+if (isset($groupTracker) and $groupTracker == 'y') {
 	$smarty->assign('grouptrackerid',$grouptrackerid);
+	$smarty->assign('groupfieldid',$groupfieldid);
 }
-$smarty->assign('userstrackerid',$userstrackerid);
+if (isset($userTracker) and $userTracker == 'y') {
+	$smarty->assign('userstrackerid',$userstrackerid);
+	$smarty->assign('usersfieldid',$usersfieldid);
+}
 $smarty->assign('groupperms', $groupperms);
 
 $cant_pages = ceil($users["cant"] / $numrows);

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.31 2004-03-01 17:21:28 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.32 2004-03-02 07:11:53 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -240,4 +240,7 @@ CREATE TABLE `tiki_shoutbox_words` (
 # --------------------------------------------------------
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Shoutbox','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','');
 # --------------------------------------------------------
+
+# added on 2004-03-02 by mose for more details in groups
+ALTER TABLE `users_groups` ADD `usersFieldId` INT( 11 ), ADD `groupFieldId` INT( 11 );
 
