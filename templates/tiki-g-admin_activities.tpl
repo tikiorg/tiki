@@ -78,7 +78,7 @@ Errors:<br/>
   {section name=ix loop=$roles}
   {$roles[ix].name}[<a class="link" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;where={$where}&amp;activityId={$info.activityId}&amp;pid={$pid}&amp;remove_role={$roles[ix].roleId}">x</a>]<br/>
   {sectionelse}
-  {tr}No roles acociated to this activity{/tr}
+  {tr}No roles associated to this activity{/tr}
   {/section}
   </td>
 </tr>
