@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.122 2003-08-12 01:22:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.123 2003-08-12 10:59:44 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -883,8 +883,8 @@ $registerPasscode = $tikilib->get_preference("registerPasscode", '');
 $useUrlIndex = $tikilib->get_preference("useUrlIndex", 'n');
 $urlIndex = $tikilib->get_preference("urlIndex", '');
 $use_proxy = $tikilib->get_preference("use_proxy", 'n');
-$proxy_host = $tikilib->get_preference("use_host", '');
-$proxy_port = $tikilib->get_preference("use_port", '');
+$proxy_host = $tikilib->get_preference("proxy_host", '');
+$proxy_port = $tikilib->get_preference("proxy_port", '');
 $wikiHomePage = $tikilib->get_preference("wikiHomePage", 'HomePage');
 $smarty->assign('wikiHomePage', $wikiHomePage);
 
