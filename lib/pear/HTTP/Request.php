@@ -43,8 +43,8 @@
 // echo $a->getResponseBody();
 //
 
-require_once('Net/Socket.php');
-require_once('Net/URL.php');
+require_once('lib/pear/Net/Socket.php');
+require_once('lib/pear/Net/URL.php');
 
 define('HTTP_REQUEST_METHOD_GET',     'GET',     true);
 define('HTTP_REQUEST_METHOD_HEAD',    'HEAD',    true);
