@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.82 2004-05-28 10:27:45 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.83 2004-05-28 14:05:55 chris_holman Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -682,10 +682,10 @@ if (isset($_REQUEST["save"])) {
   	if (isset($_REQUEST['current_page_id']) ) {
       $page_info = $structlib->s_get_page_info($_REQUEST['current_page_id']);
       if (isset($_REQUEST["add_child"]) ) { 
-  	  	$structlib->s_create_page($_REQUEST['current_page_id'], null, $_REQUEST["page"], '');
+  	  	$page_ref_id = $structlib->s_create_page($_REQUEST['current_page_id'], null, $_REQUEST["page"], '');
       }
       else {
-	  	  $structlib->s_create_page($page_info["parent_id"], $_REQUEST['current_page_id'], $_REQUEST["page"], '');
+	  	  $page_ref_id = $structlib->s_create_page($page_info["parent_id"], $_REQUEST['current_page_id'], $_REQUEST["page"], '');
       }
 		  $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
   	} 
