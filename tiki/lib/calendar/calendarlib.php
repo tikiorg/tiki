@@ -185,7 +185,7 @@ class CalendarLib extends TikiLib {
 							"prio" => "",
 							"time" => $tstart,
 							"type" => "gal",
-							"url" => "tiki-view_image.php?galleryId=".$res["galid"]."&imageId=".$res["imageid"],
+							"url" => "tiki-browse_image.php?galleryId=".$res["galid"]."&imageId=".$res["imageid"],
 							"name" => $res["name"],
 							"head" => "<b>".date("H:i",$res["created"])."</b> ".tra("in")." <b>".addslashes($res["galname"])."</b>",
 							"description" => tra("new image uploaded by")." ".$res["user"]
