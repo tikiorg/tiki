@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.8 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.9 2003-12-01 11:13:46 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,14 +15,12 @@ include_once ('lib/tasks/tasklib.php');
 // User preferences screen
 if ($feature_userPreferences != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -35,7 +33,6 @@ if (isset($_REQUEST["view_user"])) {
 			$userwatch = $_REQUEST["view_user"];
 		} else {
 			$smarty->assign('msg', tra("You dont have permission to view other users data"));
-
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -43,19 +40,7 @@ if (isset($_REQUEST["view_user"])) {
 		$userwatch = $user;
 	}
 }
-
 $smarty->assign('userwatch', $userwatch);
-
-$smarty->assign('mytiki_wiki', 'display:none;');
-$smarty->assign('mytiki_wiki_open', 'n');
-
-if (isset($_COOKIE["mytiki_wiki"])) {
-	if ($_COOKIE["mytiki_wiki"] == 'o') {
-		$smarty->assign('mytiki_wiki', 'display:block;');
-
-		$smarty->assign('mytiki_wiki_open', 'y');
-	}
-}
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-user_preferences", "tiki-editpage", $foo["path"]);
@@ -63,73 +48,8 @@ $foo2 = str_replace("tiki-user_preferences", "tiki-index", $foo["path"]);
 $smarty->assign('url_edit', httpPrefix(). $foo1);
 $smarty->assign('url_visit', httpPrefix(). $foo2);
 
-/*
-// This code should be in tiki-user_preferences.php; remove it if you are sure there's no danger
-if(isset($_REQUEST["prefs"])) {
-  // setting preferences
-  if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
-  if($change_theme == 'y') {
-  if (isset($_REQUEST["style"])) $tikilib->set_user_preference($userwatch,'theme',$_REQUEST["style"]);
-  }
-  if (isset($_REQUEST["realName"])) $tikilib->set_user_preference($userwatch,'realName',$_REQUEST["realName"]);
-  if (isset($_REQUEST["userbreadCrumb"])) $tikilib->set_user_preference($userwatch,'userbreadCrumb',$_REQUEST["userbreadCrumb"]);
-  if (isset($_REQUEST["homePage"])) $tikilib->set_user_preference($userwatch,'homePage',$_REQUEST["homePage"]);
-  if($change_language == 'y') {
-	if (isset($_REQUEST["language"])) {
-	  $tikilib->set_user_preference($userwatch,'language',$_REQUEST["language"]);
-	  $smarty->assign('language',$_REQUEST["language"]);
-	  include('lang/'.$_REQUEST["language"].'/language.php');
-	}
-  }
-  if (isset($_REQUEST["style"])) $smarty->assign('style',$_REQUEST["style"]);
-  if (isset($_REQUEST["language"]))$smarty->assign('language',$_REQUEST["language"]);
-	
-  if(isset($_REQUEST['display_timezone'])) {
-	$tikilib->set_user_preference($userwatch,'display_timezone',$_REQUEST['display_timezone']); 
-	$smarty->assign_by_ref('display_timezone',$_REQUEST['display_timezone']);
-  }
-  $tikilib->set_user_preference($userwatch,'country',$_REQUEST["country"]);
-  $tikilib->set_user_preference($userwatch,'user_information',$_REQUEST['user_information']);
-  header("location: tiki-user_preferences.php?view_user=$userwatch");
-  die;
-}
-
-if(isset($_REQUEST["chgpswd"])) {
-  if($_REQUEST["pass1"]!=$_REQUEST["pass2"]) {
-	$smarty->assign('msg',tra("The passwords didn't match"));
-	$smarty->display("error.tpl");
-	die;
-  }
-  
-  if(!$userlib->validate_user($userwatch,$_REQUEST["old"],'','')) {
-	$smarty->assign('msg',tra("Invalid old password"));
-	$smarty->display("error.tpl");
-	die;
-  }
-  
-  //Validate password here
-  if(strlen($_REQUEST["pass1"])<$min_pass_length) {
-	$smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
-	$smarty->display("error.tpl");
-	die; 	
-  }
-  
-  // Check this code
-  if($pass_chr_num == 'y') {
-	if(!preg_match_all("[0-9]+",$_REQUEST["pass1"],$foo) || !preg_match_all("[A-Za-z]+",$_REQUEST["pass1"],$foo)) {
-	  $smarty->assign('msg',tra("Password must contain both letters and numbers"));
-	  $smarty->display("error.tpl");
-	  die; 	
-	}
-  }
-
-  
-  $userlib->change_user_password($userwatch,$_REQUEST["pass1"]);
-}
-*/
 if (isset($_REQUEST['messprefs'])) {
 	$tikilib->set_user_preference($userwatch, 'mess_maxRecords', $_REQUEST['mess_maxRecords']);
-
 	$tikilib->set_user_preference($userwatch, 'minPrio', $_REQUEST['minPrio']);
 
 	if (isset($_REQUEST['allowMsgs']) && $_REQUEST['allowMsgs'] == 'on') {
@@ -253,7 +173,6 @@ $smarty->assign('user_information', $user_information);
 
 if ($feature_messages == 'y' && $tiki_p_messages == 'y') {
 	$unread = $tikilib->user_unread_messages($userwatch);
-
 	$smarty->assign('unread', $unread);
 }
 
