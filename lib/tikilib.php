@@ -2473,6 +2473,7 @@ function add_pageview() {
 	return $res;
     }
 
+/* Moved to artlib.php
     function replace_article($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, 
 	    $heading, $body, $publishDate, $expireDate, $user, $articleId, $image_x, $image_y, $type, 
 	    $topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n') {
@@ -2520,6 +2521,7 @@ function add_pageview() {
 
 	return $articleId;
     }
+*/
 
     /*shared*/
     function get_topic_image($topicId) {

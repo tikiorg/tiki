@@ -167,6 +167,55 @@ class ArtLib extends TikiLib {
 		return $id;
 	}
 
+	// moved from tikilib.php
+    function replace_article($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, 
+	    $heading, $body, $publishDate, $expireDate, $user, $articleId, $image_x, $image_y, $type, 
+	    $topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n') {
+
+		if ($expireDate < $publishDate) {
+		    $expireDate = $publishDate;
+		}
+		$hash = md5($title . $heading . $body);
+		$now = date("U");
+		if(empty($imgdata)) $imgdata='';
+		// Fixed query. -rlpowell
+		$query = "select `name`  from `tiki_topics` where `topicId` = ?";
+		$topicName = $this->getOne($query, array($topicId) );
+		$size = strlen($body);
+
+		// Fixed query. -rlpowell
+		if ($articleId) {
+		    // Update the article
+		    $query = "update `tiki_articles` set `title` = ?, `authorName` = ?, `topicId` = ?, `topicName` = ?, `size` = ?, `useImage` = ?, `image_name` = ?, ";
+		    $query.= " `image_type` = ?, `image_size` = ?, `image_data` = ?, `isfloat` = ?, `image_x` = ?, `image_y` = ?, `heading` = ?, `body` = ?, ";
+		    $query.= " `publishDate` = ?, `expireDate` = ?, `created` = ?, `author` = ?, `type` = ?, `rating` = ?, `topline`=?, `subtitle`=?, `linkto`=?, ";
+		    $query.= " `image_caption`=?, `lang`=?  where `articleId` = ?";
+
+		    $result = $this->query($query, array(
+				$title, $authorName, (int) $topicId, $topicName, (int) $size, $useImage, $imgname, $imgtype, (int) $imgsize, $imgdata, $isfloat,
+				(int) $image_x, (int) $image_y, $heading, $body, (int) $publishDate, (int) $expireDate, (int) $now, $user, $type, (float) $rating, 
+				$topline, $subtitle, $linkto, $image_caption, $lang, (int) $articleId ) );
+		} else {
+		    // Fixed query. -rlpowell
+		    // Insert the article
+		    $query = "insert into `tiki_articles` (`title`, `authorName`, `topicId`, `useImage`, `image_name`, `image_size`, `image_type`, `image_data`, ";
+		    $query.= " `publishDate`, `expireDate`, `created`, `heading`, `body`, `hash`, `author`, `reads`, `votes`, `points`, `size`, `topicName`, ";
+		    $query.= " `image_x`, `image_y`, `type`, `rating`, `isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`) ";
+		    $query.= " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	
+		    $result = $this->query($query, array(
+				$title, $authorName, (int) $topicId, $useImage, $imgname, (int) $imgsize, $imgtype, $imgdata, (int) $publishDate, (int) $expireDate, (int) $now, $heading,
+				$body, $hash, $user, 0, 0, 0, (int) $size, $topicName, (int) $image_x, (int) $image_y, $type, (float) $rating, $isfloat,
+				$topline, $subtitle, $linkto, $image_caption, $lang));
+
+		    // Fixed query. -rlpowell
+		    $query2 = "select max(`articleId`) from `tiki_articles` where `created` = ? and `title`=? and `hash`=?";
+		    $articleId = $this->getOne($query2, array( (int) $now, $title, $hash ) );
+		}
+
+		return $articleId;
+    }
+
 	function add_topic($name, $imagename, $imagetype, $imagesize, $imagedata) {
 		$now = date("U");
 
