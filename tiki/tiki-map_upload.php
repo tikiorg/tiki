@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.1 2003-08-26 05:51:32 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.2 2003-10-12 19:49:15 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,10 +40,14 @@ $smarty->assign('dir', $dir);
 
 //Do we have a file to upload?
 if (isset($_REQUEST["upload"])) {
-  if(!move_uploaded_file($_FILES['userfile']['tmp_name'], $directory_path."/".$_FILES['userfile']['name'])) {
-    $smarty->assign('msg',tra("Could not upload the file"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;
+  for ($i = 1; $i <= 6; $i++) {
+    if(isset($_FILES["userfile$i"]) && is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
+      if(!move_uploaded_file($_FILES["userfile$i"]['tmp_name'], $directory_path."/".$_FILES["userfile$i"]['name'])) {
+        $smarty->assign('msg',tra("Could not upload the file"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;
+      }
+    }
   }
 }
 
