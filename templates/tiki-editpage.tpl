@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.52 2004-05-28 10:27:46 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.53 2004-06-10 20:48:22 teedog Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -149,6 +149,13 @@
 
 <tr class="formcolor"><td>&nbsp;</td><td><input type="hidden" name="page" value="{$page|escape}" />
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td></tr>
+
+{if $feature_antibot eq 'y' && $anon_user eq 'y'}
+<tr><td class="formcolor">{tr}Anti-Bot verification code{/tr}:</td>
+<td class="formcolor"><img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/></td></tr>
+<tr><td class="formcolor">{tr}Enter the code you see above{/tr}:</td>
+<td class="formcolor"><input type="text" maxlength="8" size="8" name="antibotcode" /></td></tr>
+{/if}
 
 {if $wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="tiki-index.php?page={$wikiLicensePage}">{tr}{$wikiLicensePage}{/tr}</a></td></tr>

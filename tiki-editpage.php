@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.84 2004-06-08 21:52:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.85 2004-06-10 20:48:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,6 +26,15 @@ if ($tiki_p_view != 'y') {
 
   $smarty->display("error.tpl");
   die;
+}
+
+// Anti-bot feature: if enabled, anon user must type in a code displayed in an image
+if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_antibot == 'y') {
+	if((!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 // Get the page from the request var or default it to HomePage
@@ -770,6 +779,11 @@ include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $smarty->assign('quicktagscant', $quicktags["cant"]);
+$smarty->assign('feature_antibot', "$feature_antibot");
+if (!$user or $user == 'anonymous') {
+	$smarty->assign('anon_user', 'y');
+}
+
 ask_ticket('edit-page');
 
 // Display the Index Template

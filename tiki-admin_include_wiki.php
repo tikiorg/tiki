@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.24 2004-05-28 13:12:44 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.25 2004-06-10 20:48:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -499,6 +499,16 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$tikilib->set_preference("feature_sandbox", 'n');
 
 		$smarty->assign("feature_sandbox", 'n');
+	}
+
+	if (isset($_REQUEST["feature_antibot"]) && $_REQUEST["feature_antibot"] == "on") {
+		$tikilib->set_preference("feature_antibot", 'y');
+
+		$smarty->assign("feature_antibot", 'y');
+	} else {
+		$tikilib->set_preference("feature_antibot", 'n');
+
+		$smarty->assign("feature_antibot", 'n');
 	}
 
 	if (isset($_REQUEST["feature_backlinks"]) && $_REQUEST["feature_backlinks"] == "on") {
