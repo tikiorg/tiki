@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.216 2004-05-05 21:33:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.217 2004-05-05 23:24:57 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1238,7 +1238,11 @@ if ($feature_userPreferences == 'y') {
             $user_style = $tikilib->get_user_preference($user, 'theme', $style);
 
             if ($user_style) {
-                $style = "$tikidomain/$user_style";
+								if (is_file("styles/$tikidomain/$user_style")) {
+									$style = "$tikidomain/$user_style";
+								} else {
+									$style = "$user_style";
+								}
             }
         }
 
