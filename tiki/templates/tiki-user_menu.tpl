@@ -5,13 +5,14 @@
   {if $opensec eq 'y'}</div>{/if}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:icntoggle('userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');"><img src="img/icons/fo.gif" border="0" name="userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}icn" alt=''/></a>&nbsp;
-  {else}<a class='separator' href="javascript:toggle('userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');">[-]</a>{/if} 
+  <a class='separator' href="javascript:icntoggle('userm{$menu_info.menuId}{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');"><img 
+	src="img/icons/fo.gif" border="0" name="userm{$menu_info.menuId}{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}icn" alt=''/></a>&nbsp;
+  {else}<a class='separator' href="javascript:toggle('userm{$menu_info.menuId}{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');">[-]</a>{/if} 
   <a href="{$channels[ix].url}" class="separator">{tr}{$channels[ix].name}{/tr}</a>
-  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');">[+]</a>{/if} 
+  {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('userm{$menu_info.menuId}{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');">[+]</a>{/if} 
   </div>
   {assign var=opensec value='y'}
-  <div {if $menu_info.type eq 'd'}style="display:none;"{/if} id='userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}'>
+  <div {if $menu_info.type eq 'd'}style="display:none;"{/if} id='userm{$menu_info.menuId}{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}'>
 {else}
   <div>&nbsp;<a href="{$channels[ix].url}" class="linkmenu">{tr}{$channels[ix].name}{/tr}</a></div>
 {/if}
