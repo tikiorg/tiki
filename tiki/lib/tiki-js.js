@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.28 2003-11-23 22:03:12 gongo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.29 2003-11-24 06:10:45 sylvieg Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -449,7 +449,7 @@ function confirmTheLink(theLink, theMsg)
  * \width = nb pixels to add to the width
  * \formid = form id (needs to have 2 input rows and cols
  **/
-function textareaSize(elementId, height, width, formId) {
+function textareasize(elementId, height, width, formId) {
 	textarea = document.getElementById(elementId);
 	form = document.getElementById(formId);
 	if (textarea && height != 0 && textarea.rows + height > 5) {
