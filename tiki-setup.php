@@ -908,7 +908,14 @@ if ($https_login == 'y' || $https_login_required == 'y') {
 
 if(!file_exists('templates_c/preferences.php')) {
   $prefs = $tikilib->get_all_preferences();
-  $fw=fopen('templates_c/preferences.php',"wb");
+  $fw=@fopen('templates_c/preferences.php',"wb");
+  if (!$fw) {
+  	if (isset($php_errormsg)) {
+  		die($php_errormsg);
+  	}
+  	fopen('templates_c/preferences.php',"wb");
+  	die;
+  }
   fwrite($fw,'<?php'."\n");
   foreach($prefs as $name => $val) {
     $$name = $val;
