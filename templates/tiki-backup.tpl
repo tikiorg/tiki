@@ -8,28 +8,17 @@
 <td class="heading">{tr}Size{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=user loop=$backups}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd"><a class="link" href="backups/{$backups[user].filename}" title="{$backups[user].filename}">{$backups[user].filename|truncate:20:"(...)":true}</a></td>
-<td class="odd">{$backups[user].created|tiki_short_datetime}</td>
-<td class="odd">{$backups[user].size|string_format:"%.2f"} Mb</td>
-<td class="odd">
+<td class="{cycle advance=false}"><a class="link" href="backups/{$tikidomain}{$backups[user].filename}" title="{$backups[user].filename}">{$backups[user].filename|truncate:20:"(...)":true}</a></td>
+<td class="{cycle advance=false}">{$backups[user].created|tiki_short_datetime}</td>
+<td class="{cycle advance=false}">{$backups[user].size|string_format:"%.2f"} Mb</td>
+<td class="{cycle}">
    <a class="link" href="tiki-backup.php?remove={$backups[user].filename}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-backup.php?restore={$backups[user].filename}">{tr}restore{/tr}</a>
 </td>
 </tr>
-{else}
-<tr>
-<td class="even"><a class="link" href="backups/{$backups[user].filename}" title="{$backups[user].filename}">{$backups[user].filename|truncate:20:"(...)":true}</a></td>
-<td class="even">{$backups[user].created|tiki_short_datetime}</td>
-<td class="even">{$backups[user].size|string_format:"%.2f"} Mb</td>
-<td class="even">
-   <a class="link" href="tiki-backup.php?remove={$backups[user].filename}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-backup.php?restore={$backups[user].filename}">{tr}restore{/tr}</a>
-</td>
-</tr>
-{/if}
 {/section}
 </table>
 <br/>
