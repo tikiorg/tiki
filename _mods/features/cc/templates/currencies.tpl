@@ -4,8 +4,13 @@
 
 {if $tiki_p_cc_create eq 'y' or $tiki_p_cc_admin eq 'y'}
 <span class="button2"><a href="cc.php?page=currencies&amp;new=1" class="linkbut">Create new currency</a></span>
-<br /><br />
 {/if}
+&nbsp;&nbsp;&nbsp;
+<span class="button2"><a href="cc.php?page=currencies&amp;local=n" class="linkbut{if $local eq 'n'} highlight{/if}">Global Currencies</a></span>
+<span class="button2"><a href="cc.php?page=currencies&amp;local=y" class="linkbut{if $local eq 'y'} highlight{/if}">Local Currencies</a></span>
+</div>
+
+<br />
 
 {if $msg}<div class="simplebox">{$msg}</div>{/if}
 
@@ -43,6 +48,10 @@ Register an existing unlisted currency
 <th align="left"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_name_{if $smarty.request.sort_mode eq 'cc_name_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Name{/tr}</a></th>
 <th align="left"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_description_{if $smarty.request.sort_mode eq 'cc_description_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Description{/tr}</a></th>
 <th align="left"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=owner_id_{if $smarty.request.sort_mode eq 'owner_id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Owner{/tr}</a></th>
+{if $local eq 'n'}
+<th align="left"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cpun_{if $smarty.request.sort_mode eq 'cpun_desc'}asc{else}desc{/if}{if
+$userid}&amp;user={$userid}{/if}" title="{tr}Currency Provider Unique Name{/tr}">{tr}CPUN{/tr}</a></th>
+{/if}
 <th align="center"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=requires_approval_{if $smarty.request.sort_mode eq 'requires_approval_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Approval?{/tr}</a></th>
 <th align="center"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=listed_{if $smarty.request.sort_mode eq 'listed_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Listed?{/tr}</a></th>
 <th align="right"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=population_{if $smarty.request.sort_mode eq 'population_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Population{/tr}</a></th>
@@ -70,10 +79,17 @@ style="background-color : #eee;"
 <img src="img/cc/currency.png" width="9" height="10" border="0" alt="{tr}Examine{/tr}" />
 <b>{$it.cc_name}</b></a></td>
 <td>{$it.cc_description}</td>
+{if $it.cpun}
+<td>{$it.owner_id}</td>
+{else}
 <td>{$it.owner_id|userlink}</td>
-<td align="center">{$it.requires_approval}</td>
-<td align="center">{$it.listed}</td>
-<td align="center">{$it.population}</td>
+{/if}
+{if $local eq 'n'}
+<td><b>{$it.cpun|default:"<i style='color:#999;'>$cc_cpun</i>"}</b></td>
+{/if}
+<td style="text-align:center;">{$it.requires_approval}</td>
+<td style="text-align:center;">{$it.listed}</td>
+<td style="text-align:center;">{$it.population}</td>
 <td align="right">
 {if $ccuser.registered_cc.$ccid.approved eq 'y'}
 <a href="cc.php?page=currencies&amp;unregister={$it.id}" title="{tr}Unregister{/tr}"><img src="img/cc/unregister_c.png" width="20" height="12" border="0" alt="{tr}Unregister{/tr}" /></a>
@@ -84,7 +100,7 @@ style="background-color : #eee;"
 {else}
 <a href="cc.php?page=currencies&amp;register={$it.id}" title="{tr}Register{/tr}"><img src="img/cc/register_c.png" width="20" height="12" border="0" alt="{tr}Register{/tr}" /></a>
 {/if}
-{if $tiki_p_cc_admin eq 'y' or $it.owner_id eq $user}
+{if !$it.cpun and ($tiki_p_cc_admin eq 'y' or $it.owner_id eq $user)}
 <a href="cc.php?page=currencies&amp;cc_id={$it.id}" title="{tr}Edit{/tr}"><img src="img/cc/edit_c.png" width="20" height="12" border="0" alt="{tr}Edit{/tr}" /></a>
 {/if}
 
