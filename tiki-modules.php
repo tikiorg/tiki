@@ -190,8 +190,8 @@ for ($i = 0; $i < count($right_modules); $i++) {
     if ($pass == 'y') {
         $cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
 
-	$phpfile = 'templates/modules/mod-' . $r["name"] . '.php';
-	$template = 'templates/modules/mod-' . $r["name"] . '.tpl';
+	$phpfile = 'modules/mod-' . $r["name"] . '.php';
+	$template = 'modules/mod-' . $r["name"] . '.tpl';
 	$nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
 
         if (!$r["rows"])
@@ -212,7 +212,7 @@ for ($i = 0; $i < count($right_modules); $i++) {
             }
 
             //print("Template file: $template<br/>");
-            if (file_exists($template)) {
+            if (file_exists('templates/'.$template)) {
                 //print("FETCH<br/>");
                 $data = $smarty->fetch($template);
             } else {
