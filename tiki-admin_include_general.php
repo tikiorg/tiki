@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.9 2003-08-15 21:15:30 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.10 2003-08-22 02:43:44 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,6 +27,7 @@ if (isset($_REQUEST["prefs"])) {
 		"site_closed",
 		"useGroupHome",
 		"useUrlIndex",
+		"use_load_threshold",
 		"use_proxy",
 		"session_db"
 	);
@@ -45,6 +46,8 @@ if (isset($_REQUEST["prefs"])) {
 		"proxy_host",
 		"proxy_port",
 		"session_lifetime",
+		"load_threshold",
+		"site_busy_msg",
 		"site_closed_msg"
 	);
 
@@ -168,7 +171,10 @@ $smarty->assign("title", $tikilib->get_preference("title", ""));
 $smarty->assign("popupLinks", $tikilib->get_preference("popupLinks", 'n'));
 $smarty->assign("style_site", $tikilib->get_preference("style", "default.css"));
 $smarty->assign("site_closed", $tikilib->get_preference("site_closed", "n"));
-$smarty->assign("site_closed_msg", $tikilib->get_preference("site_closed_msg", "Site is down for maintainance."));
+$smarty->assign('site_closed_msg', $tikilib->get_preference('site_closed_msg', 'Site is closed for maintainance; please come back later.'));
+$smarty->assign('use_load_threshold', $tikilib->get_preference('use_load_threshold', 'n'));
+$smarty->assign('load_threshold', $tikilib->get_preference('load_threshold', 3));
+$smarty->assign('site_busy_msg', $tikilib->get_preference('site_busy_msg', 'Server is currently too busy; please come back later.'));
 
 // Get information for alternate homes
 $smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $home_forum);
