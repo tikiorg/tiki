@@ -33,13 +33,13 @@
 <br /><br />
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
 <form class="forms" method="get" action="tiki-searchindex.php">
-    {tr}Find{/tr}: <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
+    {tr}Find{/tr}: <input name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
     <input type="hidden" name="where" value="{$where|escape}" />
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/>
 </form>
 <br /><br />
 {section  name=search loop=$results}
-{tr}{$results[search].location}{/tr}:&nbsp;<a href="{$results[search].href}&amp;highlight={$words}" class="wiki">{$results[search].pageName|strip_tags}</a> ({tr}Hits{/tr}: {$results[search].hits})
+{tr}{$results[search].location}{/tr}:&nbsp;<a href="{$results[search].href}&amp;highlight={$words}" class="wiki">{$results[search].pageName|strip_tags|escape}</a> ({tr}Hits{/tr}: {$results[search].hits})
 {if $feature_search_fulltext eq 'y'}
 	{if $results[search].relevance <= 0}
 		&nbsp;({tr}Simple search{/tr})
@@ -52,7 +52,7 @@
 {/if}
 
 <br />
-<div class="searchdesc">{$results[search].data|strip_tags}</div>
+<div class="searchdesc">{$results[search].data|strip_tags|escape}</div>
 <div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|tiki_long_datetime}</div><br />
 {sectionelse}
 {tr}No pages matched the search criteria{/tr}
