@@ -7,7 +7,7 @@
           <td class="form">{tr}Home Blog (main blog){/tr}</td>
           <td><select name="homeBlog">
               {section name=ix loop=$blogs}
-                <option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $home_blog}selected="selected"{/if}>{$blogs[ix].title|truncate:20:"(...)":true}</option>
+                <option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $home_blog}selected="selected"{/if}>{$blogs[ix].title|truncate:20:"...":true}</option>
               {/section}
               </select></td>
         </tr><tr>
