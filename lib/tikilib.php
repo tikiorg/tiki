@@ -149,8 +149,13 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     }
 
     //echo "\n</pre>\n";
-    if (!$result && $reporterrors)
-	$this->sql_error($query, $values, $result);
+    if (!$result) {
+        if ($reporterrors) {
+                $this->sql_error($query, $values, $result);
+        } else {
+                return $result;
+        }
+    }
 
     $res = $result->fetchRow();
 
@@ -244,8 +249,13 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     $result = $this->db->SelectLimit($query, 1, $offset, $values);
 
     //echo "\n</pre>\n";
-    if (!$result && $reporterrors)
-	$this->sql_error($query, $values, $result);
+    if (!$result) {
+    	if ($reporterrors) {
+		$this->sql_error($query, $values, $result);
+	} else {
+		return $result;
+	}
+    }
 
     $res = $result->fetchRow();
 
