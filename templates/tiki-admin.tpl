@@ -53,6 +53,9 @@ border='0' src='img/icons/help.gif' alt='help' /></a>
 {elseif $smarty.get.page == "userfiles"}
   {include file="tiki-admin-include-anchors.tpl"}
   {include file="tiki-admin-include-userfiles.tpl"}
+{elseif $smarty.get.page == "maps"}
+  {include file="tiki-admin-include-anchors.tpl"}
+  {include file="tiki-admin-include-maps.tpl"}
 {else}
   {include file="tiki-admin-include-list-sections.tpl"}
 {/if}

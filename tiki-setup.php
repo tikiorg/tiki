@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.119 2003-08-07 20:33:29 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.120 2003-08-08 04:48:15 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -828,7 +828,10 @@ $smarty->assign('feature_wiki', $feature_wiki);
 $smarty->assign('feature_articles', $feature_articles);
 $smarty->assign('feature_submissions', $feature_submissions);
 $smarty->assign('feature_blogs', $feature_blogs);
+
 $smarty->assign('feature_maps',$feature_maps);
+$map_path = $tikilib->get_preference("map_path",'');
+$default_map = $tikilib->get_preference("default_map",'');
 
 $smarty->assign('feature_wiki_comments', $feature_wiki_comments);
 $smarty->assign('wiki_comments_default_ordering', $wiki_comments_default_ordering);
@@ -1047,7 +1050,7 @@ if ($https_login == 'y' || $https_login_required == 'y') {
 	$stay_in_ssl_mode = isset($_REQUEST['stay_in_ssl_mode']) ? $_REQUEST['stay_in_ssl_mode'] : '';
 
 	if ($https_login_required == 'y') {
-		# only show "Stay in SSL checkbox if we're not already in HTTPS mode
+		# only show "Stay in SSL checkbox if we're not already in HTTPS mode"
 		$show_stay_in_ssl_mode = !$https_mode ? 'y' : 'n';
 
 		$smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
@@ -1072,7 +1075,7 @@ if ($https_login == 'y' || $https_login_required == 'y') {
 		$smarty->assign('http_login_url', $http_login_url);
 
 		$smarty->assign('https_login_url', $https_login_url);
-		# only show "Stay in SSL checkbox if we're not already in HTTPS mode
+		# only show "Stay in SSL checkbox if we're not already in HTTPS mode"
 		$show_stay_in_ssl_mode = $https_mode ? 'y' : 'n';
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.3 2003-08-07 10:39:55 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.4 2003-08-08 04:48:15 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,12 +15,7 @@ if(@$feature_maps != 'y') {
   die;
 }
 
-if ($tiki_p_map_edit != 'y') {
-	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
-	die;
-}
 
 if (!isset($_REQUEST["mode"])) {
 	$mode = 'listing';
@@ -30,9 +25,8 @@ if (!isset($_REQUEST["mode"])) {
 
 // Validate to prevent editing any file
 if (isset($_REQUEST["mapfile"])) {
-	if ((substr($_REQUEST["mapfile"], 0, 7) != '../map/') || (strstr(substr($_REQUEST["mapfile"], 3), '..'))) {
+	if (strstr($_REQUEST["mapfile"], '..')) {
 		$smarty->assign('msg', tra("You dont have permission to do that"));
-
 		$smarty->display('error.tpl');
 		die;
 	}
@@ -41,7 +35,7 @@ if (isset($_REQUEST["mapfile"])) {
 $smarty->assign('tiki_p_map_create', $tiki_p_map_create);
 
 if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
-	$newmapfile = $_REQUEST["newmapfile"];
+	$newmapfile = $map_path.$_REQUEST["newmapfile"];
 
 	if (!preg_match('/\.map$/i', $newmapfile)) {
 		$smarty->assign('msg', tra("mapfile name incorrect"));
@@ -50,7 +44,6 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 		die;
 	}
 
-	$newmapfile = '../map/' . $newmapfile;
 	$fp = @fopen($newmapfile, "r");
 
 	if ($fp) {
@@ -72,9 +65,24 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 
 	fclose ($fp);
 }
+$smarty->assign('tiki_p_map_delete', $tiki_p_map_delete);
+if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
+  if(! unlink($map_path.$_REQUEST["mapfile"]))
+  {
+		$smarty->assign('msg', tra("You dont have permission to delete the mapfile"));
+		$smarty->display("styles/$style_base/error.tpl");  
+		die;
+  }
+  $mode='listing';
+}
 
 if (isset($_REQUEST["save"])) {
-	$fp = fopen($_REQUEST["mapfile"], "w");
+if ($tiki_p_map_edit != 'y') {
+	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
+}
+	$fp = fopen($map_path.$_REQUEST["mapfile"], "w");
 
 	if (!$fp) {
 		$smarty->assign('msg', tra("You dont have permission to write the mapfile"));
@@ -87,33 +95,38 @@ if (isset($_REQUEST["save"])) {
 	fclose ($fp);
 }
 
-if (isset($_REQUEST["mapfile"])) {
-	$mode = 'editing';
-
-	$fp = fopen($_REQUEST["mapfile"], "r");
+if ((isset($_REQUEST["mapfile"])) && ($mode=='editing')) {
+if ($tiki_p_map_edit != 'y') {
+	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
+}
+ $mapfile = $map_path .$_REQUEST["mapfile"];
+ 
+	$fp = fopen($mapfile, "r");
 
 	if (!$fp) {
 		$smarty->assign('msg', tra("You dont have permission to read the mapfile"));
-
 		$smarty->display("styles/$style_base/error.tpl");
 		die;
 	}
 
-	$data = fread($fp, filesize($_REQUEST["mapfile"]));
+	$data = fread($fp, filesize($mapfile));
 	fclose ($fp);
 	$smarty->assign('data', $data);
 	$smarty->assign('mapfile', $_REQUEST["mapfile"]);
 }
 
 $smarty->assign('mode', $mode);
+$smarty->assign('mode', $mode);
 
 // Get templates from the templates directory
 $files = array();
-$h = opendir("../map/");
+$h = opendir($map_path);
 
 while (($file = readdir($h)) !== false) {
 	if (preg_match('/\.map$/i', $file)) {
-		$files[] = "../map/" . $file;
+		$files[] = $file;
 	}
 }
 
@@ -121,6 +134,11 @@ closedir ($h);
 
 sort ($files);
 $smarty->assign('files', $files);
+$smarty->assign('tiki_p_map_edit', $tiki_p_map_edit);
+
+$foo = parse_url($_SERVER["REQUEST_URI"]);
+$foo1 = str_replace("tiki-map_edit.php", "tiki-map.phtml", $foo["path"]);
+$smarty->assign('url_browse', httpPrefix(). $foo1);
 
 // Get templates from the templates/modules directori
 $smarty->assign('mid', 'map/tiki-map_edit.tpl');
