@@ -320,6 +320,66 @@ class WikiLib extends TikiLib {
 	$retval["cant"] = $cant;
 	return $retval;
     }
+	function list_all_attachements($offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
+		if ($find) {
+			$findesc = '%' . $find . '%';
+			$mid = " where `filename` like ?";
+			$bindvars=array($findesc);
+		} else {
+			$mid = "";
+			$bindvars=array();
+		}
+		$query = "select `user`,`attId`,`page`,`filename`,`filesize`,`filetype`,`downloads`,`created`,`comment`,`path` ";
+		$query.= " from `tiki_wiki_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_wiki_attachments` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
+	}
+		
+	function file_to_db($path,$attId) {
+		if (is_file($path)) {
+			$fp = fopen($path,'rb');
+			$data = '';
+			while (!feof($fp)) {
+				$data .= fread($fp, 8192 * 16);
+			}
+			fclose ($fp);
+			$query = "update `tiki_wiki_attachments` set `data`=?,`path`=? where `attId`=?";
+			if ($this->query($query,array($data,'',(int)$attId))) {
+				unlink($path);
+			}
+		}
+	}
+
+	function db_to_file($path,$attId) {
+		$fw = fopen($path,'wb');
+		$data = $this->getOne("select `data` from `tiki_wiki_attachments` where `attId`=?",array((int)$attId));
+		if ($data) {
+			fwrite($fw, $data);
+		}
+		fclose ($fw);
+		if (is_file($path)) {
+			$query = "update `tiki_wiki_attachments` set `data`=?,`path`=? where `attId`=?";
+			$this->query($query,array('',basename($path),(int)$attId));
+		}
+	}
+
+	function get_item_attachment($attId) {
+		$query = "select * from `tiki_wiki_attachments` where `attId`=?";
+		$result = $this->query($query,array((int) $attId));
+		if (!$result->numRows()) return false;
+		$res = $result->fetchRow();
+		return $res;
+	}
+
 
     // Functions for wiki page footnotes
     function get_footnote($user, $page) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.13 2004-02-09 18:20:19 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.14 2004-03-08 03:20:31 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,25 +60,6 @@ if (isset($_REQUEST["wikiprefs"])) {
 		$tikilib->set_preference("wiki_comments_default_ordering", $_REQUEST["wiki_comments_default_ordering"]);
 
 		$smarty->assign('wiki_comments_default_ordering', $_REQUEST["wiki_comments_default_ordering"]);
-	}
-}
-
-if (isset($_REQUEST["wikiattprefs"])) {
-	check_ticket('admin-inc-wiki');
-	$tikilib->set_preference('w_use_db', $_REQUEST["w_use_db"]);
-
-	$tikilib->set_preference('w_use_dir', $_REQUEST["w_use_dir"]);
-	$smarty->assign('w_use_db', $_REQUEST["w_use_db"]);
-	$smarty->assign('w_use_dir', $_REQUEST["w_use_dir"]);
-
-	if (isset($_REQUEST["feature_wiki_attachments"]) && $_REQUEST["feature_wiki_attachments"] == "on") {
-		$tikilib->set_preference("feature_wiki_attachments", 'y');
-
-		$smarty->assign('feature_wiki_attachments', 'y');
-	} else {
-		$tikilib->set_preference("feature_wiki_attachments", 'n');
-
-		$smarty->assign('feature_wiki_attachments', 'n');
 	}
 }
 
