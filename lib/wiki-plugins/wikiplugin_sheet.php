@@ -17,7 +17,7 @@
 function wikiplugin_sheet_help() {
 	return tra("TikiSheet").":<br />~np~{SHEET(id=>)}".tra("Sheet Heading")."{SHEET}~/np~";
 }
-function wikiplugin_example($data, $params) {
+function wikiplugin_sheet($data, $params) {
 	extract ($params);
 
 	if (!isset($id)) {
