@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.11 2004-03-12 01:36:24 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.12 2004-03-19 19:08:13 ggeller Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -7647,6 +7647,7 @@ go
 -- Homework tables start
 --
 -- Created Feb 22, 2004
+-- Revised Mar 19, 2004
 --
 
 -- DROP TABLE "hw_actionlog"
@@ -7671,53 +7672,43 @@ go
 
 
 CREATE TABLE "hw_assignments" (
-articleId numeric(8 ,0) identity,
+assignmentId numeric(8 ,0) identity,
   "title" varchar(80) default NULL NULL,
-  "state" char(1) default 's',
-  "authorName" varchar(60) default NULL NULL,
-  "topicId" numeric(14,0) default NULL NULL,
-  "topicName" varchar(40) default NULL NULL,
-  "size" numeric(12,0) default NULL NULL,
-  "useImage" char(1) default NULL NULL,
-  "image_name" varchar(80) default NULL NULL,
-  "image_type" varchar(80) default NULL NULL,
-  "image_size" numeric(14,0) default NULL NULL,
-  "image_x" numeric(4,0) default NULL NULL,
-  "image_y" numeric(4,0) default NULL NULL,
-  "image_data" image default '',
-  "publishDate" numeric(14,0) default NULL NULL,
-  "expireDate" numeric(14,0) default NULL NULL,
-  "created" numeric(14,0) default NULL NULL,
+  "teacherName" varchar(40) default '' NOT NULL,
+  "created" numeric(14,0) default '0' NOT NULL,
+  "dueDate" numeric(14,0) default NULL NULL,
+  "modified" numeric(14,0) default '0' NOT NULL,
   "heading" text default '',
   "body" text default '',
-  "hash" varchar(32) default NULL NULL,
-  "author" varchar(200) default NULL NULL,
-  "reads" numeric(14,0) default NULL NULL,
-  "votes" numeric(8,0) default NULL NULL,
-  "points" numeric(14,0) default NULL NULL,
-  "type" varchar(50) default NULL NULL,
-  "rating" decimal(3,2) default NULL NULL,
-  "isfloat" char(1) default NULL NULL,
-  PRIMARY KEY ("articleId")
-
-
-
-
+  "deleted" numeric(4,0) default '0' NOT NULL,
+  PRIMARY KEY ("assignmentId")
 
 ) 
 go
 
 
-CREATE  INDEX "hw_assignments_title" ON "hw_assignments"("title")
+CREATE  INDEX "hw_assignments_dueDate" ON "hw_assignments"("dueDate")
 go
-CREATE  INDEX "hw_assignments_heading" ON "hw_assignments"("heading")
+
+-- DROP TABLE "hw_grading_queue"
 go
-CREATE  INDEX "hw_assignments_body" ON "hw_assignments"("body")
+
+
+CREATE TABLE "hw_grading_queue" (
+id numeric(14 ,0) identity,
+  "status" numeric(4,0) default NULL NULL,
+  "submissionDate" numeric(14,0) default NULL NULL,
+  "userLogin" varchar(40) default '' NOT NULL,
+  "userIp" varchar(15) default NULL NULL,
+  "pageId" numeric(14,0) default NULL NULL,
+  "pageDate" numeric(14,0) default NULL NULL,
+  "pageVersion" numeric(14,0) default NULL NULL,
+  "assignmentId" numeric(14,0) default NULL NULL,
+  PRIMARY KEY ("id")
+) 
 go
-CREATE  INDEX "hw_assignments_reads" ON "hw_assignments"("reads")
-go
-CREATE  INDEX "hw_assignments_ft" ON "hw_assignments"("title","heading","body")
-go
+
+
 
 -- DROP TABLE "hw_grading_queue"
 go

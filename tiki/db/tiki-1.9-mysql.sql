@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.14 2004-03-12 01:36:09 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.15 2004-03-19 19:08:13 ggeller Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4333,6 +4333,7 @@ CREATE TABLE tiki_jukebox_tracks (
 # Homework tables start
 #
 # Created Feb 22, 2004
+# Revised Mar 19, 2004
 #
 
 DROP TABLE IF EXISTS hw_actionlog;
@@ -4348,39 +4349,31 @@ CREATE TABLE hw_actionlog (
 
 DROP TABLE IF EXISTS hw_assignments;
 CREATE TABLE hw_assignments (
-  articleId int(8) NOT NULL auto_increment,
+  assignmentId int(8) NOT NULL auto_increment,
   title varchar(80) default NULL,
-  state char(1) default 's',
-  authorName varchar(60) default NULL,
-  topicId int(14) default NULL,
-  topicName varchar(40) default NULL,
-  size int(12) default NULL,
-  useImage char(1) default NULL,
-  image_name varchar(80) default NULL,
-  image_type varchar(80) default NULL,
-  image_size int(14) default NULL,
-  image_x int(4) default NULL,
-  image_y int(4) default NULL,
-  image_data longblob,
-  publishDate int(14) default NULL,
-  expireDate int(14) default NULL,
-  created int(14) default NULL,
+  teacherName varchar(40) NOT NULL default '',
+  created int(14) NOT NULL default '0',
+  dueDate int(14) default NULL,
+  modified int(14) NOT NULL default '0',
   heading text,
   body text,
-  hash varchar(32) default NULL,
-  author varchar(200) default NULL,
-  reads int(14) default NULL,
-  votes int(8) default NULL,
-  points int(14) default NULL,
-  type varchar(50) default NULL,
-  rating decimal(3,2) default NULL,
-  isfloat char(1) default NULL,
-  PRIMARY KEY  (articleId),
-  KEY title (title),
-  KEY heading (heading(255)),
-  KEY body (body(255)),
-  KEY reads (reads),
-  FULLTEXT KEY ft (title,heading,body)
+  deleted tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (assignmentId),
+  KEY dueDate (dueDate)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS hw_grading_queue;
+CREATE TABLE hw_grading_queue (
+  id int(14) NOT NULL auto_increment,
+  status int(4) default NULL,
+  submissionDate int(14) default NULL,
+  userLogin varchar(40) NOT NULL default '',
+  userIp varchar(15) default NULL,
+  pageId int(14) default NULL,
+  pageDate int(14) default NULL,
+  pageVersion int(14) default NULL,
+  assignmentId int(14) default NULL,
+  PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS hw_grading_queue;

@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.11 2004-03-12 01:36:09 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.12 2004-03-19 19:08:13 ggeller Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -5672,6 +5672,7 @@ END;
 -- Homework tables start
 --
 -- Created Feb 22, 2004
+-- Revised Mar 19, 2004
 --
 DROP TABLE "hw_actionlog";
 
@@ -5690,46 +5691,46 @@ DROP TABLE "hw_assignments";
 
 CREATE SEQUENCE "hw_assignments_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "hw_assignments" (
-  "articleId" number(8) NOT NULL,
+  "assignmentId" number(8) NOT NULL,
   "title" varchar(80) default NULL,
-  "state" char(1) default 's',
-  "authorName" varchar(60) default NULL,
-  "topicId" number(14) default NULL,
-  "topicName" varchar(40) default NULL,
-  "size" number(12) default NULL,
-  "useImage" char(1) default NULL,
-  "image_name" varchar(80) default NULL,
-  "image_type" varchar(80) default NULL,
-  "image_size" number(14) default NULL,
-  "image_x" number(4) default NULL,
-  "image_y" number(4) default NULL,
-  "image_data" blob,
-  "publishDate" number(14) default NULL,
-  "expireDate" number(14) default NULL,
-  "created" number(14) default NULL,
+  "teacherName" varchar(40) default '' NOT NULL,
+  "created" number(14) default '0' NOT NULL,
+  "dueDate" number(14) default NULL,
+  "modified" number(14) default '0' NOT NULL,
   "heading" clob,
   "body" clob,
-  "hash" varchar(32) default NULL,
-  "author" varchar(200) default NULL,
-  "reads" number(14) default NULL,
-  "votes" number(8) default NULL,
-  "points" number(14) default NULL,
-  "type" varchar(50) default NULL,
-  "rating" decimal(3,2) default NULL,
-  "isfloat" char(1) default NULL,
-  PRIMARY KEY ("articleId")
+  "deleted" number(4) default '0' NOT NULL,
+  PRIMARY KEY ("assignmentId")
 ) ;
 
 CREATE TRIGGER "hw_assignments_trig" BEFORE INSERT ON "hw_assignments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
 BEGIN
-SELECT "hw_assignments_sequ".nextval into :NEW."articleId" FROM DUAL;
+SELECT "hw_assignments_sequ".nextval into :NEW."assignmentId" FROM DUAL;
 END;
 /
-CREATE  INDEX "hw_assignments_title" ON "hw_assignments"("title");
-CREATE  INDEX "hw_assignments_heading" ON "hw_assignments"("heading");
-CREATE  INDEX "hw_assignments_body" ON "hw_assignments"("body");
-CREATE  INDEX "hw_assignments_reads" ON "hw_assignments"("reads");
-CREATE  INDEX "hw_assignments_ft" ON "hw_assignments"("title","heading","body");
+CREATE  INDEX "hw_assignments_dueDate" ON "hw_assignments"("dueDate");
+
+DROP TABLE "hw_grading_queue";
+
+CREATE SEQUENCE "hw_grading_queue_sequ" INCREMENT BY 1 START WITH 1;
+CREATE TABLE "hw_grading_queue" (
+  "id" number(14) NOT NULL,
+  "status" number(4) default NULL,
+  "submissionDate" number(14) default NULL,
+  "userLogin" varchar(40) default '' NOT NULL,
+  "userIp" varchar(15) default NULL,
+  "pageId" number(14) default NULL,
+  "pageDate" number(14) default NULL,
+  "pageVersion" number(14) default NULL,
+  "assignmentId" number(14) default NULL,
+  PRIMARY KEY ("id")
+) ;
+
+CREATE TRIGGER "hw_grading_queue_trig" BEFORE INSERT ON "hw_grading_queue" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "hw_grading_queue_sequ".nextval into :NEW."id" FROM DUAL;
+END;
+/
 
 DROP TABLE "hw_grading_queue";
 
