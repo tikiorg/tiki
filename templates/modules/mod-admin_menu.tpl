@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.23 2003-11-23 03:15:06 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.24 2004-03-01 17:21:29 damosoft Exp $ *}
 
 {tikimodule title="{tr}Admin Menu{/tr}" name="admin_menu"}
 {if $tiki_p_admin eq 'y' or 
@@ -69,6 +69,7 @@
     {/if}
     {if $tiki_p_admin_shoutbox eq 'y'}
       &nbsp;<a href="tiki-shoutbox.php" class="linkmenu">{tr}Shoutbox{/tr}</a><br />
+      &nbsp;<a href="tiki-admin_shoutbox_words.php" class="linkmenu"{tr}Shoutbox Words{/tr}</a><br />
     {/if}
     {if $tiki_p_view_referer_stats eq 'y'}
     &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br />

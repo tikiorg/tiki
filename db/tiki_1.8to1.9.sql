@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.30 2004-02-28 03:47:02 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.31 2004-03-01 17:21:28 damosoft Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -227,4 +227,17 @@ CREATE TABLE tiki_logs (
   KEY logtype (logtype)
 ) TYPE=MyISAM;
 
+#
+# Table structure for table `tiki_shoutbox_words`
+#
+# Added by damian aka damosoft
+
+CREATE TABLE `tiki_shoutbox_words` (
+  word VARCHAR( 40 ) NOT NULL ,
+  qty INT DEFAULT '0' NOT NULL ,
+  PRIMARY KEY ( `word` )
+) TYPE=MyISAM;
+# --------------------------------------------------------
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Shoutbox','tiki-admin_shoutbox_words.php',1191,'','tiki_p_admin_shoutbox','');
+# --------------------------------------------------------
 
