@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.20 2004-02-06 10:38:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.21 2004-02-06 20:07:26 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,7 +63,8 @@ if ($_REQUEST["fieldId"]) {
 	$info["isMain"] = 'n';
 	$info["isSearchable"] = 'n';
 	$info["isTblVisible"] = 'n';
-	$info["isPublic"] = 'y';
+	$info["isPublic"] = 'n';
+	$info["isHidden"] = 'n';
 }
 
 $smarty->assign('name', $info["name"]);
@@ -74,15 +75,17 @@ $smarty->assign('isMain', $info["isMain"]);
 $smarty->assign('isSearchable', $info["isSearchable"]);
 $smarty->assign('isTblVisible', $info["isTblVisible"]);
 $smarty->assign('isPublic', $info["isPublic"]);
+$smarty->assign('isHidden', $info["isHidden"]);
 
 
 if (isset($_REQUEST["remove"])) {
 	check_ticket('admin-tracker-fields');
-	$trklib->remove_tracker_field($_REQUEST["remove"]);
+	$trklib->remove_tracker_field($_REQUEST["remove"],$_REQUEST["trackerId"]);
 }
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-tracker-fields');
+	
 	if (isset($_REQUEST["isMain"]) && $_REQUEST["isMain"] == 'on') {
 		$isMain = 'y';
 	} else {
@@ -107,9 +110,15 @@ if (isset($_REQUEST["save"])) {
 		$isPublic = 'n';
 	}
 
+	if (isset($_REQUEST["isHidden"]) && $_REQUEST["isHidden"] == 'on') {
+		$isHidden = 'y';
+	} else {
+		$isHidden = 'n';
+	}
+
 	//$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
 	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
-		$isTblVisible, $isPublic, $_REQUEST["position"], $_REQUEST["options"]);
+		$isTblVisible, $isPublic, $isHidden, $_REQUEST["position"], $_REQUEST["options"]);
 	$smarty->assign('fieldId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('type', '');
@@ -118,6 +127,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('isSearchable', $isSearchable);
 	$smarty->assign('isTblVisible', $isTblVisible);
 	$smarty->assign('isPublic', $isPublic);
+	$smarty->assign('isHidden', $isHidden);
 	$smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
 }
 
