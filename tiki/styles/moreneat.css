@@ -176,12 +176,17 @@ div.box-data {
 
 /* Menus */
 /* Separators are used to sepparate menu areas in the application menu and user created menus*/
-div.separator {
+div.separator, div.separatorline {
   background: white;
   color: black; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;
   margin-left: 2px;  margin-right: 2px;  margin-top: 6px;  margin-bottom: 2px;
   width: 90%;
 }
+.separatorline, .optionline {
+  border-top: 1px solid #dedede;
+  margin-top: 2px;
+  padding-top: 2px;
+} 
 
 /* Links in menus */
 .linkmenu, .rsslink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #436976; text-decoration: none;}
