@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.6 2004-05-17 16:05:36 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.7 2004-05-18 21:01:31 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -82,6 +82,8 @@ $cat_type = 'quiz';
 $cat_objid = $_REQUEST["quizId"];
 include_once ("categorize_list.php");
 
+$dc = &$tikilib->get_date_converter($user);
+
 if (isset($_REQUEST["preview"]) || isset($_REQUEST["xmlview"])|| isset($_REQUEST["textview"])) {
 	echo "line: ".__LINE__."<br>";
 	echo "Sorry, this is only a prototype at present.<br>";
@@ -92,32 +94,94 @@ if (isset($_REQUEST["preview"]) || isset($_REQUEST["xmlview"])|| isset($_REQUEST
 	die;
 }
 
+function	fetchYNOption(&$quiz, $_REQUEST, $option){
+	if (isset($_REQUEST[$option]) && $_REQUEST[$option] == 'on'){
+		$quiz[$option] = 'y';
+	} else {
+		$quiz[$option] = 'n';
+	}
+}
+
 if (isset($_REQUEST["save"])) {
+// 	foreach ($_REQUEST as $key => $val){
+// 		echo $key." = ".$val."<br>";
+// 	}
+// 	die;
+
 	check_ticket('edit-quiz-question');
 	$cat_href = "tiki-quiz.php?quizId=" . $cat_objid;
 	$cat_name = $_REQUEST["name"];
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
+	//	$cat_objid = $_REQUEST["quizId"];
 	include_once ("categorize.php");
 
 	echo "line: ".__LINE__."<br>";
 	echo "Sorry, this is only a prototype at present.<br>";
 
-	foreach ($_REQUEST as $key => $request){
-		echo $key." = ".$request."<br>";
+	$quiz = array();
+
+	if (!isset($_REQUEST['online']) && !($_REQUEST["online"] =! "choice_online" || $_REQUEST["online"] =! "choice_offline")){
+		echo "line: ".__LINE__."<br>";
+		echo 'Invalid value for $_REQUEST["online"].  Is your tpl file correct?<br>';
+		die;
+	}
+	if ($_REQUEST["online"] == "choice_online"){
+		$quiz["online"] = "y";
+	}
+	else if ($_REQUEST["online"] == "choice_offline"){
+		$quiz["online"] = "n";
 	}
 
-	$quiz = array();
-	if ($_REQUEST["online"] == "online"){
-		$quiz["online"] = "T";
-	}
-	else {
-		$quiz["online"] = "F";
-	}
 	$quiz["name"] = $_REQUEST["name"];
-	echo '$quiz = '."<br>";
-	foreach ($quiz as $key => $request){
-		echo $key." = ".$request."<br>";
-	}
+	$quiz["description"] = $_REQUEST["description"];
+
+  $quiz["datePub"] = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"],
+    $_REQUEST["publish_Minute"], 0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], 
+    $_REQUEST["publish_Year"]));
+
+  $quiz["dateExp"] = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"],
+    $_REQUEST["expire_Minute"], 0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], 
+    $_REQUEST["expire_Year"]));
+ 
+	$fields = array('shuffleAnswers',
+									'shuffleQuestions',
+									'multiSession',
+									'additionalQuestions',
+									'limitDisplay',
+									'timeLimited',
+									'canRepeat',
+									'additionalQuestions',
+									'forum');
+	foreach ($fields as $field){
+		fetchYNOption(&$quiz, $_REQUEST, $field);
+		echo '$quiz["'.$field.'"] = '.$quiz[$field]."<br>";
+ 	}
+
+	$quiz['questionsPerPage'] = $_REQUEST['questionsPerPage'];
+	echo '$quiz["questionsPerPage"] = '.$quiz["questionsPerPage"]."<br>";
+
+	$quiz['timeLimit'] = $_REQUEST['timeLimit'];
+	echo '$quiz["timeLimit"] = '.$quiz["timeLimit"]."<br>";
+
+	$quiz['repetitions'] = $_REQUEST['repetitions'];
+	echo '$quiz["repetitions"] = '.$quiz["repetitions"]."<br>";
+
+	$quiz['grading-method'] = $_REQUEST['grading-method'];
+	echo '$quiz["grading-method"] = '.$quiz["grading-method"]."<br>";
+
+	$quiz['showScore'] = $_REQUEST['showScore'];
+	echo '$quiz["showScore"] = '.$quiz["showScore"]."<br>";
+
+	$quiz['showCorrectAnswers'] = $_REQUEST['showCorrectAnswers'];
+	echo '$quiz["showCorrectAnswers"] = '.$quiz["showCorrectAnswers"]."<br>";
+
+	$quiz['publishStats'] = $_REQUEST['publishStats'];
+	echo '$quiz["publishStats"] = '.$quiz["publishStats"]."<br>";
+
+	$quiz['forumName'] = $_REQUEST['forumName'];
+	echo '$quiz["forumName"] = '.$quiz["forumName"]."<br>";
+
+	die;
 
 	// Have to parse the data and bail out if there is an error.
 	//
@@ -152,25 +216,30 @@ ask_ticket('edit-quiz-question');
 
 // GGG scaffolding -start
 
-$quiz['name'] = "Test Chapter 01";
-$quiz['description'] = "Quiz on Chapter 01 of Tom Sawyer";
+$smarty->assign('online_choices', array(
+			'choice_offline' => 'Offline',
+			'choice_online'  => 'Online'));
+$smarty->assign('online', 'choice_offline');
 
 $quiz['online'] = "n";
 
-$quiz['taken'] = 'y';
+$quiz['name'] = "Chapter 01";
+$quiz['description'] = "Quiz on Chapter 01 of Tom Sawyer";
 $quiz['version'] = 'x';
 
+// The taken and history stuff has to come from the database.
+$quiz['taken'] = 'y';
 $quiz['history'] = array();
-$quiz['history'][] = "Version 1 was taken by 1 student(s).";
-$quiz['history'][] = "Version 2 was taken by 2 student(s).";
-$quiz['history'][] = "Version 3 was taken by 3 student(s).";
 $quiz['history'][] = "and so on...";
+$quiz['history'][] = "Version 3 was attempted by student(s) 3 time(s).";
+$quiz['history'][] = "Version 2 was attempted by student(s) 2 time(s).";
+$quiz['history'][] = "Version 1 was attempted by student(s) 1 time(s).";
 
 // The default publish date to be Jan 1, of this year at midnight.
-$quiz['publishDate'] = mktime(0, 0, 0, 1, 1,  date("Y"));
+$quiz['datePub'] = mktime(0, 0, 0, 1, 1,  date("Y"));
 
 // The default expire date to be 10 years after the default publish date
-$quiz['expireDate'] = mktime(0, 0, 0, 1, 1,  date("Y")+10);
+$quiz['dateExp'] = mktime(0, 0, 0, 1, 1,  date("Y")+10);
 
 $quiz['grading'] = "machine";
 
@@ -216,7 +285,6 @@ for ($i = 1; $i <= 10; $i++){
 	$repetitions[] = $i;
 }
 $repetitions[] = "Unlimited";
-$qpp[] = "Unlimited";
 $smarty->assign('repetitions', $repetitions);
 $smarty->assign('qpp', $qpp);
 

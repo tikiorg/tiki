@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.9 2004-05-17 16:05:37 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.10 2004-05-18 21:01:33 ggeller Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -28,11 +28,9 @@
  				<div id="status" style="display:none;">
 					<table class="normal">
 						<tr>
-							{if $quiz.online eq 'y'}
-								<td class="formcolor" colspan=2><strong>{tr}This quiz is currently published (online).{/tr}</strong>&nbsp&nbsp&nbsp<input type="checkbox" name="offline" id="offline" /><label for="offline">{tr}Unpublish this quiz. (Take it offline.){/tr}</td>
-							{else}
-								<td class="formcolor" colspan=2><strong>{tr}This quiz is currently unpublished (offline).{/tr}</strong>&nbsp&nbsp&nbsp<input type="checkbox" name="online" id="online" /><label for="online">{tr}Publish this quiz. (Take it online.){/tr}</td>
-							{/if}
+							<td class="formcolor">
+								{html_radios name="online" options=$online_choices selected=$online}
+							</td>
 						</tr>
 						{if $quiz.taken eq 'y'}
 							<tr>
@@ -41,8 +39,7 @@
 							</tr>
 							{foreach from=$quiz.history item=history}
 								<tr>
-									<td class="formcolor" colspan=2>{$history}
-									</td>
+									<td class="formcolor" colspan=2>{$history}</td>
 								</tr>
 							{/foreach}
 						{/if}
@@ -69,13 +66,13 @@
 						<tr class="formcolor">
       				<td>{tr}Publication Date{/tr}</td>
       				<td>
-								{html_select_date prefix="publish_" time=$quiz.publishDate start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="publish_" time=$quiz.publishDate display_seconds=false} HRS&nbsp;{$siteTimeZone} 
+								{html_select_date prefix="publish_" time=$quiz.datePub start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="publish_" time=$quiz.dateExp display_seconds=false} HRS&nbsp;{$siteTimeZone} 
 							</td>
 						</tr>
 						<tr class="formcolor">
 							<td>{tr}Expiration Date{/tr}</td>
 							<td>
-								{html_select_date prefix="expire_" time=$quiz.expireDate start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="expire_" time=$quiz.expireDate display_seconds=false} HRS&nbsp;{$siteTimeZone}
+								{html_select_date prefix="expire_" time=$quiz.dateExp start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="expire_" time=$quiz.dateExp display_seconds=false} HRS&nbsp;{$siteTimeZone}
 							</td>
 						</tr>
 					</table>
@@ -100,14 +97,14 @@
   						<td class="formcolor"><input type="checkbox" name="limitDisplay" id="quiz-display-limit" {if $limitDisplay eq 'y'}checked="checked"{/if} /><label for="quiz-display-limit">{tr}Limit questions displayed per page to {/tr}</label><select name="questionsPerPage" id="quiz-perpage">{html_options values=$qpp selected=$quiz.questionsPerPage output=$qpp}</select>{tr}&nbsp question(s).{/tr}</td>
 						</tr>
 						<tr>
-  						<td class="formcolor"><input type="checkbox" name="timeLimited" id="quiz-timelimit" {if $timeLimited eq 'y'}checked="checked"{/if} /><label for="quiz-timelimit">{tr}Impose a time limit of {/tr}</label><select name="quiz.timeLimit" id="quiz-maxtime">{html_options values=$mins selected=$timeLimit output=$mins}</select> {tr}minutes{/tr}</td>
+  						<td class="formcolor"><input type="checkbox" name="timeLimited" id="timelimit" {if $timeLimited eq 'y'}checked="checked"{/if} /><label for="timelimit">{tr}Impose a time limit of {/tr}</label><select name="timeLimit" id="quiz-maxtime">{html_options values=$mins selected=$timeLimit output=$mins}</select> {tr}minutes{/tr}</td>
 						</tr>
 						<tr>
 							<td class="formcolor"><input type="checkbox" name="multiSession" id="quiz-multi-session" {if $quiz.multiSession eq 'y'}checked="checked"{/if} /><label for="quiz-multi-session">{tr}Allow students to store partial results and return to quiz.{/tr}</td>
 						</tr>
 						<tr>
-							<td class="formcolor"><input type="checkbox" name="canRepeat" id="quiz-repeat" {if $canRepeat eq 'y'}checked="checked"{/if} /><label for="quiz-repeat">{tr}Allow students to retake this quiz {/tr}
-							<select name="timeLimit" id="quiz-repeat">{html_options values=$repetitions selected=$repetitionLimit output=$repetitions}</select> {tr}times{/tr}</td>
+							<td class="formcolor"><input type="checkbox" name="canRepeat" id="repeat" {if $canRepeat eq 'y'}checked="checked"{/if} /><label for="repeat">{tr}Allow students to retake this quiz {/tr}</label>
+							<select name="repetitions" id="quiz-repeat">{html_options values=$repetitions selected=$repetitionLimit output=$repetitions}</select> {tr}times{/tr}</td>
 						</tr>
 					</table>
 			  </div>
@@ -126,15 +123,15 @@
               </td>
 						</tr>
 						<tr>
-							<td colspan=2 class="formcolor"><label for="show-machine-graded-score">{tr}Show students their score {/tr}</label><select name="show-machine-graded-score" id="show-machine-graded-score">{html_options values=$optionsShowScore selected=$quiz.showScore output=$optionsShowScore}</select>
+							<td colspan=2 class="formcolor"><label for="showScore">{tr}Show students their score {/tr}</label><select name="showScore" id="showScore">{html_options values=$optionsShowScore selected=$quiz.showScore output=$optionsShowScore}</select>
               </td>
 						</tr>
 						<tr>
-							<td colspan=2 class="formcolor"><label for="show-correct-answers">{tr}Show students the correct answers {/tr}</label><select name="show-correct-answers" id="show-correct-answers">{html_options values=$optionsShowScore selected=$quiz.showCorrectAnswers output=$optionsShowScore}</select>
+							<td colspan=2 class="formcolor"><label for="showCorrectAnswers">{tr}Show students the correct answers {/tr}</label><select name="showCorrectAnswers" id="showCorrectAnswers">{html_options values=$optionsShowScore selected=$quiz.showCorrectAnswers output=$optionsShowScore}</select>
               </td>
 						</tr>
 						<tr>
-							<td colspan=2 class="formcolor"><label for="publish-stats">{tr}Publish statistics {/tr}</label><select name="publish-stats" id="publish-shata">{html_options values=$optionsShowScore selected=$quiz.publishStats output=$optionsShowScore}</select>
+							<td colspan=2 class="formcolor"><label for="publishStats">{tr}Publish statistics {/tr}</label><select name="publishStats" id="publishStats">{html_options values=$optionsShowScore selected=$quiz.publishStats output=$optionsShowScore}</select>
 						</tr>
 					</table>
 			  </div>
@@ -153,7 +150,7 @@
 					</table>
 					<table class="normal">
 						<tr>
-							<td colspan="2" class="formcolor"><input type="checkbox" name="forum" id="forum" {if $forum eq 'y'}checked="checked"{/if} /><label for="forum">{tr}Link quiz to forum named: {/tr}<input type="text" name="forum-name" id="forum-name" value="{$quiz_info.nameForum|escape}" size="40"></td>
+							<td colspan="2" class="formcolor"><input type="checkbox" name="forum" id="forum" {if $forum eq 'y'}checked="checked"{/if} /><label for="forum">{tr}Link quiz to forum named: {/tr}</label><input type="text" name="forumName" id="forumName" value="{$quiz_info.nameForum|escape}" size="40"></td>
 						</tr>
 				  </table>
 			  </div>
@@ -170,7 +167,7 @@
         {tr}Edit:{/tr}
       </td>
       <td class="formcolor">
-        <textarea class="wikiedit" name="input_data" rows="20" cols="80" id='subheading' wrap="virtual" ></textarea>
+        <textarea class="wikiedit" name="input_data" rows="10" {* rows="20" *} cols="80" id='subheading' wrap="virtual" ></textarea>
       </td>
     </tr>
 		<tr class="formcolor">
