@@ -50,12 +50,9 @@ if($tiki_p_read_blog != 'y') {
 
 
 $blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
-if($user) {
-  if($user == $blog_data["user"]) {
+$ownsblog = 'n';
+if($user && $user == $blog_data["user"]) {
     $ownsblog = 'y';
-  } else {
-    $ownsblog = 'n';
-  }
 }
 $smarty->assign('ownsblog',$ownsblog);
 if(!$blog_data) {
