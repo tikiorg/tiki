@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.40 2003-10-20 04:35:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.41 2003-10-22 22:15:46 traivor Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,8 @@ session_start();
 
 // in the case of tikis on same domain we have to distinguish the realm
 // changed cookie and session variable name by a name made with siteTitle 
-$cookie_site = urlencode($tikilib->get_preference('siteTitle','tikiwiki'));
+$cookie_site = ereg_replace("[^a-zA-Z0-9]", "",
+			$tikilib->get_preference('siteTitle','tikiwiki'));
 $user_cookie_site = 'tiki-user-'.$cookie_site;
 
 // check if the remember me feature is enabled
