@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.63 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.64 2004-04-02 20:53:42 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -444,7 +444,7 @@ if ($user) {
 }
 
 if ($tracker_info["useComments"] == 'y') {
-	if ($tiki_p_admin_trackers == 'y') and isset($_REQUEST["remove_comment"])) {
+	if ($tiki_p_admin_trackers == 'y' and isset($_REQUEST["remove_comment"])) {
 		$area = 'deltrackercomment';
 		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
 			key_check($area);
