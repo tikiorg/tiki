@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.48 2004-02-17 06:52:42 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.49 2004-02-19 00:36:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,6 +18,21 @@ if ($feature_trackers != 'y') {
 	die;
 }
 
+if (($userTracker == 'y') and isset($_REQUEST['trackerId']) and $_REQUEST['trackerId'] == 'user') {
+	
+}
+
+if (($groupTracker == 'y') and isset($_REQUEST['trackerId']) and $_REQUEST['trackerId'] == 'group') {
+	
+}
+
+if (!isset($_REQUEST["trackerId"])) {
+	$smarty->assign('msg', tra("No tracker indicated"));
+	$smarty->display("error.tpl");
+	die;
+}
+$smarty->assign('trackerId', $_REQUEST["trackerId"]);
+
 if (!isset($_REQUEST["itemId"])) {
 	$smarty->assign('msg', tra("No item indicated"));
 	$smarty->display("error.tpl");
@@ -27,13 +42,6 @@ if (!isset($_REQUEST["itemId"])) {
 $smarty->assign('itemId', $_REQUEST["itemId"]);
 $item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 $smarty->assign('item_info', $item_info);
-
-if (!isset($_REQUEST["trackerId"])) {
-	$smarty->assign('msg', tra("No tracker indicated"));
-	$smarty->display("error.tpl");
-	die;
-}
-$smarty->assign('trackerId', $_REQUEST["trackerId"]);
 
 $smarty->assign('individual', 'n');
 if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
