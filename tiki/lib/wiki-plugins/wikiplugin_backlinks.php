@@ -2,7 +2,7 @@
     /**
     * Include the library {@link PluginsLib}
     */
-    require_once TIKI_LIB_PATH."/wiki/pluginslib.php";
+    require_once "lib/wiki/pluginslib.php";
     /**
     * Backlinks plugin
     * List all pages which link to specific pages (same as tiki-backlinks.php)
@@ -20,7 +20,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.9 $
+    * @version $Revision: 1.10 $
     */
     class WikiPluginBackLinks extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -39,7 +39,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.9 $");
+                "\$Revision: 1.10 $");
         }
         function run ($data, $params) {
             global $wikilib;

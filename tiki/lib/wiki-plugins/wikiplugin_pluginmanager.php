@@ -2,7 +2,7 @@
     /**
     * Include the library {@link PluginsLib}
     */
-    require_once TIKI_LIB_PATH."/wiki/pluginslib.php";
+    require_once "lib/wiki/pluginslib.php";
     /**
     * Plugin Manager
     * Provides a list of plugins on this wiki.
@@ -16,7 +16,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.3 $
+    * @version $Revision: 1.4 $
     */
     class WikiPluginPluginManager extends PluginsLib {
         var $expanded_params = array("info");
@@ -28,7 +28,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.3 $");
+                "\$Revision: 1.4 $");
         }
         function getDescription() {
             return tra("Provides a list of plugins on this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
