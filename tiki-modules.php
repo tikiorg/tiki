@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.20 2003-11-23 01:55:54 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.21 2003-11-23 05:44:28 gmuslera Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,6 +22,8 @@ function process_modules(&$modules)
     global $tikidomain;
     global $language;
     global $tikilib;
+    global $dbTiki;
+
     //
     if ($user != 'admin') $user_groups = $userlib->get_user_groups($user);
     else
