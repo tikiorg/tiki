@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.104 2004-06-11 20:49:17 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.105 2004-06-13 02:42:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,9 @@
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
-include_once('lib/categories/categlib.php');
+if ($feature_categories == 'y') {
+	include_once('lib/categories/categlib.php');
+}
 
 if($feature_wiki != 'y') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
@@ -91,23 +93,25 @@ $smarty->assign('page_ref_id', $page_ref_id);
 
 require_once('tiki-pagesetup.php');
 
-// Check to see if page is categorized
-$objId = urldecode($page);
-$is_categorized = $categlib->is_categorized('wiki page',$objId);
+if ($feature_categories == 'y') {
+	// Check to see if page is categorized
+	$objId = urldecode($page);
+	$is_categorized = $categlib->is_categorized('wiki page',$objId);
 
-if ($is_categorized) {
-	$parents = $categlib->get_object_categories('wiki page',$objId);
-	require_once('tiki-categsetup.php');
-	// Only consider parent category permissions if child object has no permissions
-	if (!$object_has_perms && $tiki_p_view_categories != 'y') {
-		if (!isset($user)){
-			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-			$smarty->assign('errortitle',tra("Please login"));
-	    } else {
-			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-    	} 
-	    $smarty->display("error.tpl");
-	    die;  
+	if ($is_categorized) {
+		$parents = $categlib->get_object_categories('wiki page',$objId);
+		require_once('tiki-categsetup.php');
+		// Only consider parent category permissions if child object has no permissions
+		if (!$object_has_perms && $tiki_p_view_categories != 'y') {
+			if (!isset($user)){
+				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+				$smarty->assign('errortitle',tra("Please login"));
+		    } else {
+				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	    	} 
+		    $smarty->display("error.tpl");
+		    die;  
+		}
 	}
 }
 
@@ -501,7 +505,7 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
 }
 
 // Display category path or not (like {catpath()})
-if ($is_categorized) {
+if (isset($is_categorized) && $is_categorized) {
     $smarty->assign('is_categorized','y');
     if(isset($feature_categorypath) and $feature_categories == 'y') {
 	if ($feature_categorypath == 'y') {

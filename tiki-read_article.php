@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.32 2004-06-13 02:31:34 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.33 2004-06-13 02:42:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,9 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
-include_once('lib/categories/categlib.php');
+if ($feature_categories == 'y') {
+	include_once('lib/categories/categlib.php');
+}
 
 if ($feature_articles != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
@@ -35,22 +37,24 @@ if (!isset($_REQUEST["articleId"])) {
 
 // no need to check articleId; if it doesn't exist script would have died above
 // if (isset($_REQUEST["articleId"])) {
-	
-$objId = $_REQUEST['articleId'];
-$is_categorized = $categlib->is_categorized('article',$objId);
 
-if ($is_categorized) {
-	$parents = $categlib->get_object_categories('article',$objId);
-	require_once('tiki-categsetup.php');
-	if ($tiki_p_view_categories != 'y') {
-		if (!isset($user)){
-			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
-			$smarty->assign('errortitle',tra("Please login"));
-	    } else {
-			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-    	}
-	    $smarty->display("error.tpl");
-	    die;
+if ($feature_categories == 'y') {
+	$objId = $_REQUEST['articleId'];
+	$is_categorized = $categlib->is_categorized('article',$objId);
+
+	if ($is_categorized) {
+		$parents = $categlib->get_object_categories('article',$objId);
+		require_once('tiki-categsetup.php');
+		if ($tiki_p_view_categories != 'y') {
+			if (!isset($user)){
+				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+				$smarty->assign('errortitle',tra("Please login"));
+		    } else {
+				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+	    	}
+		    $smarty->display("error.tpl");
+		    die;
+		}
 	}
 }
 	
@@ -174,7 +178,7 @@ if ($feature_article_comments == 'y') {
 }
 
 // Display category path or not (like {catpath()})
-if ($is_categorized) {
+if (isset($is_categorized) && $is_categorized) {
   $smarty->assign('is_categorized','y');
   if(isset($feature_categorypath) and $feature_categories == 'y') {
     if ($feature_categorypath == 'y') {
