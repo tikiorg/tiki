@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.8 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.9 2003-10-16 20:17:56 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -73,7 +73,7 @@ if (isset($_REQUEST["create_from_tree"])) {
 
 		// Is there smth else 'cept spaces?
 		if (strlen($line = trim($line))) {
-			var_dump ($tabs);
+			//var_dump ($tabs);
 
 			$parents[$tabs + 1] = $line;
 			$parent = $parents[$tabs];
