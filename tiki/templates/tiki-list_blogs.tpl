@@ -47,7 +47,7 @@
 {section name=changes loop=$listpages}
 <tr>
 {if $blog_list_title eq 'y'}
-	<td class="bloglistname{cycle advance=false}">&nbsp;{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }<a class="blogname" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].title}">{/if}{$listpages[changes].title|truncate:20:"(...)":true}{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }</a>{/if}&nbsp;</td>
+	<td class="bloglistname{cycle advance=false}">&nbsp;{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }<a class="blogname" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].title}">{/if}{$listpages[changes].title|truncate:20:"...":true}{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }</a>{/if}&nbsp;</td>
 {/if}
 {if $blog_list_description eq 'y'}
 	<td class="bloglistdescription{cycle advance=false}">&nbsp;{$listpages[changes].description}&nbsp;</td>

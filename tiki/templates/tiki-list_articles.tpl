@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.15 2003-09-25 01:05:21 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.16 2003-10-11 14:30:46 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
 
@@ -78,7 +78,7 @@
 	{if $tiki_p_read_article eq 'y'}
 		<a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">
 	{/if}
-	{$listpages[changes].title|truncate:20:"(...)":true}
+	{$listpages[changes].title|truncate:20:"...":true}
 	{if $listpages[changes].type eq 'Review'}(r){/if}
 	{if $tiki_p_read_article eq 'y'}
 		</a>
