@@ -78,7 +78,7 @@ from Admin->General
 {/section}
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Cache Time{/tr}(secs)</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache}" /></td></tr>
+<tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache}" /></td></tr>
 <tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows}" /></td></tr>
 <tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params}" /></td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
