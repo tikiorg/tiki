@@ -1,6 +1,11 @@
+Version 1.8 --
+
+* [NEW] Support for PostgreSQL (support for other databases coming soon!)
+* [NEW] Added Real-time IRC (Internet Relay Chat) logging
+
 Version 1.7 -Eta Carinae-
 
-* [FIX] added form to edit groups and change included groups
+* [FIX] Added form to edit groups and change included groups
 * [NEW] Added an Edit CSS feature, with fancy display of css and fast editor form
 * [NEW] Added a setup_virtual.sh for virtual hosting, and changed internal code accordingly
 * [NEW] Added a general Calendar feature for tiki content browsing and groups calendar
