@@ -8,22 +8,6 @@ if($feature_wiki != 'y') {
   die;  
 }
 
-
-include_once("tiki-pagesetup.php");
-
-include_once('lib/wiki/wikilib.php');
-
-
-// Now check permissions to access this page
-
-  if($tiki_p_admin_wiki != 'y') {
-    $smarty->assign('msg',tra("Permission denied you cannot assign permissions for this page"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;  
-  }
-
-
-
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {
   $smarty->assign('msg',tra("No page indicated"));
@@ -34,6 +18,9 @@ if(!isset($_REQUEST["page"])) {
   $smarty->assign_by_ref('page',$_REQUEST["page"]); 
 }
 
+include_once("tiki-pagesetup.php");
+
+include_once('lib/wiki/wikilib.php');
 $creator = $wikilib->get_creator($page);
 $smarty->assign('creator',$creator);
 
@@ -44,6 +31,16 @@ if($wiki_creator_admin == 'y') {
 	   $smarty->assign( 'tiki_p_admin_wiki', 'y' );
 	}
 }
+
+
+// Now check permissions to access this page
+
+  if($tiki_p_admin_wiki != 'y') {
+    $smarty->assign('msg',tra("Permission denied you cannot assign permissions for this page"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;  
+  }
+
 
 
 if(isset($_REQUEST["addemail"])) {
