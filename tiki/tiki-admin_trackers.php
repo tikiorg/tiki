@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.37 2004-09-08 19:51:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.38 2004-10-28 01:03:55 chealer Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -338,8 +338,12 @@ setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);
 $smarty->assign('uses_tabs', 'y');
 
-// block for categorization
+// block for categories
 include_once ("categorize_list.php");
+if (!isset($cats)) {
+	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
+}
+$smarty->assign('catsdump', implode(',',$cats));
 
 ask_ticket('admin-trackers');
 

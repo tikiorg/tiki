@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.65 2004-10-25 14:23:03 chealer Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.66 2004-10-28 01:03:55 chealer Exp $
  *
  * \brief Categories support class
  *
@@ -361,15 +361,17 @@ class CategLib extends TikiLib {
 		return $ret;
 	}
 
-	function remove_object_from_category($catObjectId, $categId) {
+	function remove_object_from_category($catObjectId, $categId, $check_uncategorize=true) {
 		global $cachelib;
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
 		$result = $this->query($query,array($catObjectId,$categId));
+		if ($check_uncategorize) {
 		$query = "select count(*) from `tiki_category_objects` where `catObjectId`=?";
 		$cant = $this->getOne($query,array((int) $catObjectId));
 		if (!$cant) {
 			$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
 			$result = $this->query($query,array((int) $catObjectId));
+		}
 		}
 		$cachelib->invalidate('allcategs');
 	}

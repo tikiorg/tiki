@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.14 2004-06-16 01:16:25 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.15 2004-10-28 01:03:55 chealer Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,53 +13,39 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
   die;
 }
 
-global $feature_categories;
-
 if ($feature_categories == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
-	$smarty->assign('cat_categorize', 'n');
-
+	include_once ('lib/categories/categlib.php');
+	
+	//handles categories when importing objects
 	if (isset($_REQUEST['import']) and isset($_REQUEST['categories'])) {
 		$_REQUEST["cat_categories"] = split(',',$_REQUEST['categories']);
 		$_REQUEST["cat_categorize"] = 'on';
 	}
 
-	if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
-		$smarty->assign('cat_categorize', 'y');
-		$categlib->uncategorize_object($cat_type, $cat_objid);
-
-		if (isset($_REQUEST["cat_categories"])) {
-			foreach ($_REQUEST["cat_categories"] as $cat_acat) {
-				if ($cat_acat) {
-					$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
-
-					if (!$catObjectId) {
-						// The object is not cateorized  
-						$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
-					}
-
-					$categlib->categorize($catObjectId, $cat_acat);
-				}
-			}
+	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
+	// Recategorize trying to minimize queries
+	if (!isset($_REQUEST["cat_categorize"]) || !isset($_REQUEST["cat_categories"])) {
+		if (count($cats) != 0) {
+			$categlib->uncategorize_object($cat_type, $cat_objid);
 		}
 	} else {
-		$categlib->uncategorize_object($cat_type, $cat_objid);
-	}
-	
-	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
-	$categories = $categlib->list_categs();
-	$num_categories = count($categories);
-	for ($i = 0; $i < $num_categories; $i++) {
-		if (in_array($categories[$i]["categId"], $cats)) {
-			$categories[$i]["incat"] = 'y';
-		} else {
-			$categories[$i]["incat"] = 'n';
+		$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
+		if (!$catObjectId) {
+			// The object is not categorized  
+			$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
+		}
+		foreach ($_REQUEST["cat_categories"] as $cat) {
+			//Avoids categorizing in TOP (not sure why) and if already categorized
+			if ($cat && !in_array($cat, $cats)) {
+				$categlib->categorize($catObjectId, $cat);
+			}
+		}
+		foreach ($cats as $cat) {
+			if (!in_array($cat, $_REQUEST["cat_categories"])) {
+				$categlib->remove_object_from_category($catObjectId, $cat, 0);
+			}
 		}
 	}
-	$smarty->assign_by_ref('categories', $categories["data"]);
 }
 
 ?>
