@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.31 2003-09-28 18:00:53 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.32 2003-09-28 22:19:15 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -591,12 +591,25 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $smarty->assign('comment_topicsmiley', '');
 }
 
-if ($tiki_p_admin_forum == 'y') {
-    if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
-	$comments_show = 'y';
+if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"]))
+{
+    if ($tiki_p_admin_forum == 'y'
+            || ($commentslib->user_can_edit_post(
+                    $user,
+                    $_REQUEST["comments_threadId"]
+                    )
+                && $tiki_p_forum_post == 'y')
+       )
+    {
+        $comments_show = 'y';
 
-	$commentslib->remove_comment($_REQUEST["comments_threadId"]);
-	$commentslib->register_remove_post($_REQUEST['forumId'], 0);
+        $commentslib->remove_comment($_REQUEST["comments_threadId"]);
+        $commentslib->register_remove_post($_REQUEST["forumId"], 0);
+    } else { // user can't edit this post
+        $smarty->assign('msg', tra('You are not permitted to remove someone else\'s post!'));
+
+        $smarty->display("styles/$style_base/error.tpl");
+        die;
     }
 }
 
