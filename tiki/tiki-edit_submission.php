@@ -265,6 +265,7 @@ if(isset($_REQUEST["save"])) {
   $body = $tikilib->capture_images($body);
   $heading = $tikilib->capture_images($heading);
   // If page exists
+  assert($_REQUEST["topicId"]);
   $tikilib->replace_submission(strip_tags($_REQUEST["title"],'<a><pre><p><img><hr>'),
                             $_REQUEST["authorName"],
                             $_REQUEST["topicId"],

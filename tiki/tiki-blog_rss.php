@@ -43,9 +43,10 @@ print('>');
         // LOOP collecting last changes to the wiki
         foreach($changes["data"] as $chg) {
           print('<rdf:li resource="'.$read.'?blogId='.$_REQUEST["blogId"].'">'."\n");
-          print('<title>'.date("F d Y (h:i)",$chg["created"]).'</title>'."\n");
+          print('<title>'.
+          $tikilib->date_format($tikilib->get_long_datetime_format(),$chg["created"]).'</title>'."\n");
           print('<link>'.$read.'?blogId='.$_REQUEST["blogId"].'</link>'."\n");
-          $data = date("m/d/Y h:i",$chg["created"]);
+          $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["created"]);
           print('<description>'.$chg["data"].'</description>'."\n");
           print('</rdf:li>'."\n");
         }        

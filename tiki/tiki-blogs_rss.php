@@ -38,9 +38,10 @@ print('>');
         
         foreach($changes["data"] as $chg) {
           print('<rdf:li resource="'.$read.'?blogId='.$chg["blogId"].'">'."\n");
-          print('<title>'.$chg["blogtitle"].': '.date("m/d/Y h:i",$chg["created"]).'</title>'."\n");
+          print('<title>'.$chg["blogtitle"].': '.
+          $tikilib->date_format(($tikilib->get_short_datetime_format(), $chg["created"]).'</title>'."\n");
           print('<link>'.$read.'?blogId='.$chg["blogId"].'</link>'."\n");
-          $data = date("m/d/Y h:i",$chg["created"]);
+          $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["created"]);
           print('<description>'.$chg["data"].'</description>'."\n");
           print('</rdf:li>'."\n");
         }        

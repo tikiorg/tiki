@@ -42,9 +42,10 @@ print('>');
         
         foreach($changes["data"] as $chg) {
           print('<rdf:li resource="'.$read.'?parentId='.$chg["threadId"].'">'."\n");
-          print('<title>'.$chg["title"].': '.date("m/d/Y h:i",$chg["commentDate"]).'</title>'."\n");
+          print('<title>'.$chg["title"].': '.
+          	$tikilib->date_format($tikilib->get_short_datetime_format(),$chg["commentDate"]).'</title>'."\n");
           print('<link>'.$read.'?parentId='.$chg["threadId"].'</link>'."\n");
-          $data = date("m/d/Y h:i",$chg["commentDate"]);
+          $data = $tikilib->date_format($tikilib->get_short_datetime_format(),$chg["commentDate"]);
           print('<description>'.$chg["data"].'</description>'."\n");
           print('</rdf:li>'."\n");
         }        
