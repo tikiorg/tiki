@@ -21,6 +21,92 @@ class TikiLib {
     die;
   }
   
+  /* Webmails */
+  function current_webmail_account($user,$accountId)
+  {
+    $query = "update tiki_user_mail_accounts set current='n' where user='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $query = "update tiki_user_mail_accounts set current='y' where user='$user' and accountId=$accountId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
+  function list_webmail_accounts($user,$offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where user='$user' and (account like '%".$find."%')";  
+    } else {
+      $mid=" where user='$user'"; 
+    }
+    $query = "select * from tiki_user_mail_accounts $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_user_mail_accounts $mid";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function replace_webmail_account($accountId, $user, $account, $pop, $port, $username, $pass, $msgs)
+  {
+    $account=addslashes($account);
+    $username=addslashes($username);
+    $pass=addslashes($pass);
+    // Check the name
+ 
+    if($accountId) {
+      $query = "update tiki_user_mail_accounts set user='$user', account='$account', pop='$pop', port=$port, username='$username', pass='$pass',msgs=$msgs where accountId=$accountId and user='$user'";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);
+    } else {
+      $query = "replace into tiki_user_mail_accounts(user,account,pop,port,username,pass,msgs)
+                values('$user','$account','$pop',$port,'$username','$pass',$msgs)";
+                $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    }
+  
+    return true;
+  }
+  
+  function get_current_webmail_account($user)
+  {
+    $query = "select * from tiki_user_mail_accounts where current='y' and user='$user'";
+    $result = $this->db->query($query);
+    if(!$result->numRows()) return false;
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
+  function remove_webmail_account($user,$accountId) 
+  {
+    $query = "delete from tiki_user_mail_accounts where accountId=$accountId and user='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    return true;
+  }
+  
+  function get_webmail_account($user,$accountId)
+  {
+    $query = "select * from tiki_user_mail_accounts where accountId=$accountId and user='$user'";
+    $result = $this->db->query($query);
+    if(!$result->numRows()) return false;
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
+    
+  /* Webmail */
+
   
   /* Tiki tracker construction options */
   // Return an array with items assigned to the user or a user group

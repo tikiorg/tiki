@@ -14,10 +14,12 @@
      <script language="javascript">
      <!--
      function doChallengeResponse() {
+       document.loginbox.zoofoo.value=MD5(document.loginbox.pass.value);
        str = document.loginbox.user.value + 
        MD5(document.loginbox.pass.value) +
        document.loginbox.challenge.value;
        document.loginbox.pass.value = MD5(str);
+       
        /*
        document.login.password.value = "";
        document.logintrue.username.value = document.login.username.value;
@@ -31,6 +33,7 @@
     </script>
     {/literal}
      <input type="hidden" name="challenge" value="{$challenge}" />
+     <input type="hidden" name="zoofoo" value="" />
      {/if}
       <table border="0">
       <tr>
