@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.28 2004-06-09 21:07:27 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.29 2004-06-09 21:11:42 teedog Exp $ *}
 
 {tikimodule title="{tr}Login{/tr}" name="login_box"}
 
@@ -14,8 +14,10 @@
         </form>
       {/if}
 	{elseif $auth_method eq 'cas' && $showloginboxes neq 'y'}
-		<b><a class="linkmodule" href="tiki-login.php">{tr}Login through CAS{/tr}</a></b><br />
-		<a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
+		<b><a class="linkmodule" href="tiki-login.php">{tr}Login through CAS{/tr}</a></b>
+		{if $cas_skip_admin eq 'y'}
+		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
+		{/if}
     {else}
      <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}
