@@ -1,8 +1,20 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.35 2003-08-08 05:29:21 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.36 2003-08-17 23:10:05 dgdaniels Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
-<a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a><br /><br />
+<a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
+{if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Article{/tr}">
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
+
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-assignpermission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
+
+
+
 <h3>{tr}Group Information{/tr}</h3>
 <table class="normal">
 <tr><td class="even">{tr}Name{/tr}:</td><td class="odd">{$group_info.groupName}</td></tr>
