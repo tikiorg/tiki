@@ -66,7 +66,6 @@ Please enter your database connection info<br /><br />
 <input type="text" name="host" value="localhost" />
 </td><td>
 Hostname or IP for your MySQL database, example: localhost if running in the same machine as tiki<br />
-If you use Oracle, insert your TNS Name here<br />
 If you use SQLite, insert the path and filename to your database file
 </td>
 </tr>
@@ -95,7 +94,9 @@ Database password
 <input type="text" name="name" />
 </td><td>
 The name of the database where tiki will create tables. You can create the database using mysqladmin, or PHPMyAdmin or ask your
-hosting service to create a MySQL database.  Normally Tiki tables won't conflict with other product names. 
+hosting service to create a MySQL database.  Normally Tiki tables won't conflict with other product names.<br />
+If you use Oracle, you can put your TNS Name here and leave hostname empty
+or you override tnsnames.ora and put your SID here and fill your hostname:port above.
 </td>
 </tr>
 			
