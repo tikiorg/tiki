@@ -3634,24 +3634,14 @@ function add_pageview() {
 	if ($this->page_exists($name))
 	    return false;
 
-	if(!$lang)
-	    $lang = "NULL";
-	$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`lang`) ";
-	$query.= " values(?,?,?,?,?,?,?,?,?,?,?,?)";
-	$result = $this->query($query, array(
-		    $name,
-		    (int)$hits,
-		    $data,
-		    (int)$lastModif,
-		    $comment,
-		    1,
-		    $user,
-		    $ip,
-		    $description,
-		    $user,
-		    (int)strlen($data),
-		    $lang
-		    ));
+	if ($lang) {	// not sure it is necessary
+		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`lang`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data), $lang ));
+	}
+	else  {
+		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`) values(?,?,?,?,?,?,?,?,?,?,?)";	
+		$result = $this->query($query, array($name, (int)$hits, $data, (int)$lastModif, $comment, 1, $user, $ip, $description, $user, (int)strlen($data)));
+	}
 
 	$this->clear_links($name);
 
@@ -5262,11 +5252,13 @@ function add_pageview() {
 	    sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
 	}
 
-	if(!$lang)
-	    $lang = "NULL";
-
-	$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where `pageName`=?";
-	$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$lang,$pageName));
+	if ($lang) {// not sure it is necessary
+		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where `pageName`=?";
+		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$lang,$pageName));
+	} else {
+		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? where `pageName`=?";
+		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$pageName));
+	}
 	// Parse edit_data updating the list of links from this page
 	$this->clear_links($pageName);
 
@@ -5316,9 +5308,6 @@ function add_pageview() {
 	if (!$this->page_exists($pageName))
 	    return false;
 
-	if(!$lang)
-	    $lang = "NULL";
-
 	$t = date("U");
 	$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
 	$result = $this->query($query, array( $pageName,(int) $version) );
@@ -5331,8 +5320,13 @@ function add_pageview() {
 	$info = $this->get_page_info($pageName);
 
 	if ($version >= $info["version"]) {
-	    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where `pageName`=?";
-	    $result = $this->query($query, array( $edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $lang, $pageName ) );
+	    if ($lang) { // not sure it is necessary
+		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where `pageName`=?";
+		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $lang, $pageName));
+	    } else {
+		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=? where `pageName`=?";
+		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $pageName));
+	    }
 	    // Parse edit_data updating the list of links from this page
 	    $this->clear_links($pageName);
 
