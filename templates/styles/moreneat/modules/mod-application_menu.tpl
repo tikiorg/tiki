@@ -238,6 +238,18 @@
   </div>
 {/if}
 
+{if $feature_maps eq 'y'}
+  <div class="separator">
+  <a class="separator" href="javascript:toggle('mapsmenu');">::</a>
+  <a href="tiki-map.phtml" class="separator">{tr}Maps{/tr}</a>
+  </div>
+  <div id="mapsmenu" style="{$mnu_mapsmenu}">
+  {if $tiki_p_map_edit eq 'y'}
+  &nbsp;<a href="tiki-map_edit.php" class="linkmenu">{tr}Edit mapfiles{/tr}</a><br />
+  {/if}
+  </div>
+{/if}
+
 {if $feature_quizzes eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('quizmenu');">::</a>
