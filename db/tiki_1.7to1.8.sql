@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.30 2003-10-13 04:12:23 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.31 2003-10-13 21:22:50 ohertel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -409,3 +409,10 @@ ALTER TABLE tiki_newsletters ADD allowUserSub char(1) DEFAULT 'y' AFTER `users`;
 ALTER TABLE tiki_newsletters ADD unsubMsg char(1) DEFAULT 'y' AFTER `allowAnySub`;
 ALTER TABLE tiki_newsletters ADD validateAddr char(1) DEFAULT 'y' AFTER `unsubMsg`;
 UPDATE tiki_newsletters SET allowUserSub = 'y', unsubMsg = 'y', validateAddr = 'y';
+
+# new switches for rss modules
+ALTER TABLE tiki_rss_modules ADD showTitle char(1) DEFAULT 'n' AFTER `lastUpdated`;
+ALTER TABLE tiki_rss_modules ADD showPubDate char(1) DEFAULT 'n' AFTER `showTitle`;
+
+
+

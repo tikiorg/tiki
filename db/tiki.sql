@@ -2345,6 +2345,8 @@ CREATE TABLE tiki_rss_modules (
   url varchar(255) NOT NULL default '',
   refresh int(8) default NULL,
   lastUpdated int(14) default NULL,
+  showTitle char(1) default 'n',
+  showPubDate char(1) default 'n',
   content longblob,
   PRIMARY KEY  (rssId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
