@@ -963,14 +963,18 @@ class ImageGalsLib extends TikiLib {
 		if ($xsize != 0) {
 			$mid = "and d.`xsize`=? ";
 			$bindvars=array($id,$itype,$xsize);
-		} elseif ($ysize != 0) {
+		} 
+		if ($ysize != 0) {
 			$mid .= "and d.`ysize`=? ";
 			$bindvars=array($id,$itype,$ysize);
-		} elseif ($xsize != 0 && $ysize == $xsize) {
+		} 
+		if ($xsize != 0 && $ysize == $xsize) {
 			// we don't know yet.
 			$mid = "and greatest(d.`xsize`,d.`ysize`) = greatest(?,?) ";
 			$bindvars=array($id,$itype,$xsize,$ysize);
-		} else {
+		}
+		
+		if(!is_array($bindvars)) {
 			$bindvars=array($id,$itype);
 		}
 
@@ -1006,14 +1010,18 @@ class ImageGalsLib extends TikiLib {
 		if ($xsize != 0) {
 			$mid = "and d.`xsize`=? ";
 			$bindvars=array($id,$itype,$xsize);
-		} elseif ($ysize != 0) {
+		} 
+		if ($ysize != 0) {
 			$mid .= "and d.`ysize`=? ";
 			$bindvars=array($id,$itype,$ysize);
-		} elseif ($xsize != 0 && $ysize == $xsize) {
+		} 
+		if ($xsize != 0 && $ysize == $xsize) {
 			// we don't know yet.
 			$mid = "and greatest(d.`xsize`,d.`ysize`) = greatest(?,?) ";
 			$bindvars=array($id,$itype,$xsize,$ysize);
-		} else {
+		}
+		
+		if(!is_array($bindvars)) {
 			$bindvars=array($id,$itype);
 		}
 
@@ -1201,7 +1209,7 @@ class ImageGalsLib extends TikiLib {
 	function get_gallery_info($id) {
 		$query = "select * from `tiki_galleries` where `galleryId`=?";
 
-		$result = $this->query($query,array($id));
+		$result = $this->query($query,array((int) $id));
 		$res = $result->fetchRow();
 		return $res;
 	}
