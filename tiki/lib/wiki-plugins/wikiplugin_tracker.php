@@ -69,9 +69,15 @@ function wikiplugin_tracker($data, $params) {
 				if (in_array($f['fieldId'],$optional)) {
 					$f['name'] = "<i>".$f['name']."</i>";
 				}
-				if ($f['type'] == 't') {
+				if ($f['type'] == 't' or $f['type'] == 'n') {
 					$back.= "<tr><td>".$f['name']."</td><td>";
-					$back.= '<input type="text" size="30" name="track['.$f["fieldId"].']" value=""/>';
+					$back.= '<input type="text" size="30" name="track['.$f["fieldId"].']" value=""';
+					if (isset($f['options_array'][1])) {
+						$back.= 'size="'.$f['options_array'][1].'" maxlength="'.$f['options_array'][1].'"';
+					} else {
+						$back.= 'size="30"';
+					}
+					$back.= '/>';
 				} elseif ($f['type'] == 'r') {
 					$list = $trklib->get_all_items($f['options_array'][0],$f['options_array'][1],'o');
 					$back.= "<tr><td>".$f['name']."</td><td>";
