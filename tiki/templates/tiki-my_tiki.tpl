@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.10 2004-03-15 21:27:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.11 2004-04-08 22:55:12 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -17,36 +17,6 @@
 
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
-
-
-
-<div class="tabs">
-	{if $mytiki_pages eq 'y'}
-		<span id="tab1" class="tab tabActive">{tr}My Pages{/tr}</span>
-	{/if}
-	{if $mytiki_gals eq 'y'}
-		<span id="tab2" class="tab">{tr}My galleries{/tr}</span>
-	{/if}
-	{if $mytiki_items eq 'y'}
-		<span id="tab3" class="tab">{tr}My items{/tr}</span>
-	{/if}
-	{if $mytiki_msgs eq 'y'}
-		<span id="tab4" class="tab">{tr}My messages{/tr}</span>
-	{/if}
-	{if $mytiki_tasks eq 'y'}
-		<span id="tab5" class="tab">{tr}My tasks{/tr}</span>
-	{/if}
-	{if $mytiki_blogs eq 'y'}
-		<span id="tab6" class="tab">{tr}My blogs{/tr}</span>
-	{/if}
-    {if $feature_workflow eq 'y'}
-      {if $tiki_p_use_workflow eq 'y'}
-        {if $mytiki_workflow eq 'y'}
-          <span id="tab7" class="tab">{tr}My workflow{/tr}</span>
-        {/if}
-      {/if}
-    {/if}
-</div>
 
 {if $mytiki_pages eq 'y'}
 <div id="content1" class="content">

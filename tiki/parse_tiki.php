@@ -1,4 +1,4 @@
-<?php // $Header: /cvsroot/tikiwiki/tiki/parse_tiki.php,v 1.3 2004-03-18 02:34:18 mose Exp $
+<?php // $Header: /cvsroot/tikiwiki/tiki/parse_tiki.php,v 1.4 2004-04-08 22:55:06 mose Exp $
 
 // heaviled modified get_strings.php
 // dedicated as a tool for use in an eventual test suite
@@ -74,7 +74,7 @@ if (isset($_REQUEST['all'])) $display = 'block';
 <html><head><style>
 pre { padding : 10px; border: 1px solid #666666; background-color: #efefef; }
 .dir { font-weight : bold; background-color: #ffffff; cursor : pointer; }
-.box { padding : 10px; border : 1px solid #999999; background-color: #f6f6f6; display : <? echo $display ?>; }
+.box { padding : 10px; border : 1px solid #999999; background-color: #f6f6f6; display : <?php echo $display ?>; }
 .file { font-weight : bold; }
 .php { background-color: #AACCFF; }
 .smarty { background-color: #FFccAA; }
@@ -89,9 +89,9 @@ pre { padding : 10px; border: 1px solid #666666; background-color: #efefef; }
 .size, .rev, .tag { background-color: #ededed; } 
 </style><script type="text/javascript" src="lib/tiki-js.js"></script></head>
 <body><form action="parse_tiki.php" method="post"><input type="submit" name="action" value="process" /></form>
-<a href="<? echo $logfile; ?>">raw report</a>
+<a href="<?php echo $logfile; ?>">raw report</a>
 <pre>
-<?
+<?php
 if (isset($_POST['action'])) {
 	$files = $dirs = array();
 	collect('.');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.67 2004-04-08 16:18:38 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.68 2004-04-08 22:55:06 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,132 +9,53 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+	die();
 }
 
-//print("tiki-setup_base 1: before include setup.php: ".$tiki_timer->elapsed()."<br />");
-# switch smarty with commenting either line
-#require_once("setup.php"); // smarty 2.4.1
-require_once("setup_smarty.php"); // smarty 2.6.0rc1
+// ---------------------------------------------------------------------
+// basic php conf adjustment
 
-require_once("db/tiki-db.php"); // smarty 2.6.0rc1
-//print("tiki-setup_base 2: before include tikilib.php: ".$tiki_timer->elapsed()."<br />");
+// xhtml compliance
+ini_set('arg_separator.output', '&amp;');
+
+// URL session handling is not safe or pretty 
+// better avoid using trans_sid for security reasons
+ini_set('session.use_only_cookies', 1);  
+ini_set('url_rewriter.tags', ''); 
+
+// use shared memory for sessions (useful in shared space)
+// ini_set('session.save_handler', 'mm');
+// ... or if you use turck mmcache
+// ini_set('session.save_handler', 'mmcache');
+// ... or if you just cant to store sessions in file
+// ini_set('session.save_handler', 'files');
+
+// ---------------------------------------------------------------------
+// inclusions of mandatory stuff and setup
+require_once("lib/tikiticketlib.php");
+require_once("db/tiki-db.php"); 
+require_once("setup_smarty.php"); 
 require_once("lib/tikilib.php");
 require_once("lib/cache/cachelib.php");
 require_once("lib/logs/logslib.php");
 
-//print("tiki-setup_base 3: before rest of tiki-setup_base: ".$tiki_timer->elapsed()."<br />");
 $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
-
-// set session lifetime
-$session_lifetime = $tikilib->get_preference('session_lifetime','0');
-if ($session_lifetime > 0) {
-    ini_set('session.gc_maxlifetime',$session_lifetime*60);
-}
-
-// is session data  stored in DB or in filesystem?
-$session_db = $tikilib->get_preference('session_db','n');
-if ($session_db == 'y') {
-    include('db/local.php');
-    $ADODB_SESSION_DRIVER=$db_tiki;
-    $ADODB_SESSION_CONNECT=$host_tiki;
-    $ADODB_SESSION_USER=$user_tiki;
-    $ADODB_SESSION_PWD=$pass_tiki;
-    $ADODB_SESSION_DB=$dbs_tiki;
-    unset($db_tiki);
-    unset($host_tiki);
-    unset($user_tiki);
-    unset($pass_tiki);
-    unset($dbs_tiki);
-    ini_set('session.save_handler','user');
-    include('session/adodb-session.php');
-}
-
-if ( $tikilib->get_preference('sessions_onlycookie','disabled')=='enabled' ) {
-    ini_set('url_rewriter.tags', '');  // stop URL session handling rewrites because session.use_trans_sid cannot be reset from code and next line doesn't stop rewrites
-    ini_set('session.use_only_cookies', true);  // URL session handling is not safe or pretty - better to have none.
-}
-
-if ( $tikilib->get_preference('sessions_silent','disabled')=='disabled' or !empty($_COOKIE) ) {
-    // enabing silent sessions mean a session is only started when a cookie is presented
-    session_start();
-}
-
-// in the case of tikis on same domain we have to distinguish the realm
-// changed cookie and session variable name by a name made with siteTitle 
-$cookie_site = ereg_replace("[^a-zA-Z0-9]", "",
-			$tikilib->get_preference('siteTitle','tikiwiki'));
-$user_cookie_site = 'tiki-user-'.$cookie_site;
-
-// check if the remember me feature is enabled
-$rememberme = $tikilib->get_preference('rememberme', 'disabled');
-
-// if remember me is enabled, check for cookie where auth hash is stored
-// user gets logged in as the first user in the db with a matching hash
-if ($rememberme != 'disabled') {
-    if (isset($_COOKIE["$user_cookie_site"])) {
-        if (!isset($user)and !isset($_SESSION["$user_cookie_site"])) {
-            $user = $userlib->get_user_by_hash($_COOKIE["$user_cookie_site"]);
-            $_SESSION["$user_cookie_site"] = $user;
-        }
-    }
-}
-
-// check what auth metod is selected. default is for the 'tiki' to auth users
-$auth_method = $tikilib->get_preference('auth_method', 'tiki');
-
-// if the auth method is 'web site', look for the username in $_SERVER
-
-// if the server is IIS and they are using integrated login, the users set up by the admin might not be the same string as what IIS sends
-// to solve this, we try a couple of variations in order, from most secure to least, to see if one matches.
-if ($auth_method == 'ws') {
-    if (isset($_SERVER['REMOTE_USER'])) {
-        if ($userlib->user_exists($_SERVER['REMOTE_USER'])) {
-            $_SESSION["$user_cookie_site"] = $_SERVER['REMOTE_USER'];
-        }elseif	($userlib->user_exists(str_replace("\\\\", "\\",$_SERVER['REMOTE_USER']))) {
-        	// Check for the domain\username with just one backslash
-        	$_SESSION["$user_cookie_site"] = str_replace("\\\\", "\\",$_SERVER['REMOTE_USER']);
-        }elseif ($userlib->user_exists(substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2))){
-        	// Check for the username without the domain name
-        	$_SESSION["$user_cookie_site"] = substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2);
-        }
-    }
-}
-
-// if the username is already saved in the session, pull it from there
-if (isset($_SESSION["$user_cookie_site"])) {
-    $user = $_SESSION["$user_cookie_site"];
-} else {
-    $user = NULL;
-}
-
+=======
+>>>>>>> 1.44.2.14
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
 
-// helper functions
-function make_clean(&$var) {
+function make_clean(&$var,$gpc=false) {
 	if ( is_array($var) ) {
 		foreach ( $var as $key=>$val ) {
-			make_clean($var[$key]);
+			make_clean($var[$key],$gpc);
 		}
 	} else {
-//		$var = htmlspecialchars($var, ENT_QUOTES);
-		$var = htmlspecialchars($var); // ideally use ENT_QUOTES but this is too aggressive for names like o'doyle etc.
+		if ($gpc) $var = stripslashes($var);
+		$var = preg_replace("~</?\s*(script|embed|object|applet)[^>]*>~si","",$var);
 	}
-}
-
-// call this from anywhere to restore a variable passed in $_GET
-function get_unclean($var) {
-	if ( is_array($var) ) {
-		foreach ( $var as $key=>$val ) {
-			$ret[$key] = get_unclean($val);
-		}
-	} else {
-//		$ret = strtr($encoded,array_flip(get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES)));
-		$ret = strtr($encoded,array_flip(get_html_translation_table(HTML_SPECIALCHARS))); // ENT_QUOTES needs to match make_clean
-	}
-	return $ret;
 }
 
 // deal with register_globals
@@ -148,16 +69,11 @@ if ( ini_get('register_globals') ) {
 		}
 	}
 }
-
-// deal with attempted <script> attacks and any other trash in URI
-// note that embedded tags in post, post files and cookie must be handled
-// specifically by code as they might be valid!
-make_clean($_GET);
+make_clean($_GET,get_magic_quotes_gpc());
+make_clean($_POST,get_magic_quotes_gpc());
+make_clean($_COOOKIE,get_magic_quotes_gpc());
 make_clean($_SERVER['QUERY_STRING']);
 make_clean($_SERVER['REQUEST_URI']);
-
-// rebuild in a safe order
-$_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
 
 // deal with old request globals
 // Tiki uses them (admin for instance) so compatibility is required
@@ -202,7 +118,7 @@ function varcheck($array) {
   if (isset($array) and is_array($array)) {
     foreach ($array as $rq=>$rv) {
       if (!preg_match($patterns['vars'],$rq)) {
-        die(tra("Invalid variable name : "). htmlspecialchars($rq));
+        //die(tra("Invalid variable name : "). htmlspecialchars($rq));
       } else {
         if (is_array($rv)) {
           varcheck($rv);
@@ -217,7 +133,90 @@ function varcheck($array) {
 }
 varcheck($_REQUEST);
 
+// rebuild $_REQUEST after sanity check
+//unset($_REQUEST);
+//$_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
+
+// ---------------------------------------------------------------------
+if (isset($_SERVER["REQUEST_URI"])) {
+  ini_set('session.cookie_path', str_replace( "\\", "/", dirname($_SERVER["REQUEST_URI"])));
+}
+
+// set session lifetime
+$session_lifetime = $tikilib->get_preference('session_lifetime','0');
+if ($session_lifetime > 0) {
+	ini_set('session.gc_maxlifetime',$session_lifetime*60);
+}
+
+// is session data  stored in DB or in filesystem?
+$session_db = $tikilib->get_preference('session_db','n');
+if ($session_db == 'y') {
+	include('db/local.php');
+	$ADODB_SESSION_DRIVER=$db_tiki;
+	$ADODB_SESSION_CONNECT=$host_tiki;
+	$ADODB_SESSION_USER=$user_tiki;
+	$ADODB_SESSION_PWD=$pass_tiki;
+	$ADODB_SESSION_DB=$dbs_tiki;
+	unset($db_tiki);
+	unset($host_tiki);
+	unset($user_tiki);
+	unset($pass_tiki);
+	unset($dbs_tiki);
+	ini_set('session.save_handler','user');
+	include('session/adodb-session.php');
+}
+
+if ( $tikilib->get_preference('sessions_silent','disabled')=='disabled' or !empty($_COOKIE) ) {
+	// enabing silent sessions mean a session is only started when a cookie is presented
+	session_start();
+}
+
+// in the case of tikis on same domain we have to distinguish the realm
+// changed cookie and session variable name by a name made with siteTitle 
+$cookie_site = ereg_replace("[^a-zA-Z0-9]", "",
+$tikilib->get_preference('siteTitle','tikiwiki'));
+$user_cookie_site = 'tiki-user-'.$cookie_site;
+
+// check if the remember me feature is enabled
+$rememberme = $tikilib->get_preference('rememberme', 'disabled');
+
+// if remember me is enabled, check for cookie where auth hash is stored
+// user gets logged in as the first user in the db with a matching hash
+if (($rememberme != 'disabled') 
+	and (isset($_COOKIE["$user_cookie_site"])) 
+	and (!isset($user) and !isset($_SESSION["$user_cookie_site"]))) {
+	$user = $userlib->get_user_by_hash($_COOKIE["$user_cookie_site"]);
+	$_SESSION["$user_cookie_site"] = $user;
+}
+
+// check what auth metod is selected. default is for the 'tiki' to auth users
+$auth_method = $tikilib->get_preference('auth_method', 'tiki');
+
+// if the auth method is 'web site', look for the username in $_SERVER
+if (($auth_method == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
+	if ($userlib->user_exists($_SERVER['REMOTE_USER'])) {
+		$_SESSION["$user_cookie_site"] = $_SERVER['REMOTE_USER'];
+	} elseif ($userlib->user_exists(str_replace("\\\\", "\\",$_SERVER['REMOTE_USER']))) {
+		// Check for the domain\username with just one backslash
+		$_SESSION["$user_cookie_site"] = str_replace("\\\\", "\\",$_SERVER['REMOTE_USER']);
+	} elseif ($userlib->user_exists(substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2))){
+		// Check for the username without the domain name
+		$_SESSION["$user_cookie_site"] = substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2);
+	}																						 
+}
+
+// if the username is already saved in the session, pull it from there
+if (isset($_SESSION["$user_cookie_site"])) {
+	$user = $_SESSION["$user_cookie_site"];
+} else {
+	$user = NULL;
+}
+
 // --------------------------------------------------------------
+
+if (isset($_REQUEST['highlight'])) {
+  $smarty->load_filter('output','highlight');
+}
 
 /** translate a English string
  * @param $content - English string

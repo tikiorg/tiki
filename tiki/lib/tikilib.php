@@ -3385,8 +3385,7 @@ function get_user_preference($user, $name, $default = '') {
 }
 
 function set_user_preference($user, $name, $value) {
-    global $user_preferences;
-	make_clean($value);
+	global $user_preferences;
 	$user_preferences[$user][$name] = $value;
 	$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
 	$bindvars=array($user,$name);
@@ -3834,23 +3833,21 @@ function parse_first(&$data, &$preparsed, &$noparsed) {
 
 // Replace hotwords in given line
 function replace_hotwords($line, $words) {
-    global $feature_hotwords;
+	global $feature_hotwords;
+	global $feature_hotwords_nw;
+	$hotw_nw = ($feature_hotwords_nw == 'y') ? "target='_blank'" : '';
 
-    global $feature_hotwords_nw;
-    $hotw_nw = ($feature_hotwords_nw == 'y') ? "target='_blank'" : '';
-
-    // Replace Hotwords
-    if ($feature_hotwords == 'y') {
-  foreach ($words as $word => $url) {
-      // \b is a word boundary, \s is a space char
-      $line = preg_replace("/^$word(\b)/i","<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
-      $line = preg_replace("/(=(\"|')[^\"']*)$word(\b)([^\"']*(\"|'))/i","$1 :::::$word$3$4",$line);
-      $line = preg_replace("/ $word(\b)/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
-      $line = preg_replace("/:::::$word(\b)/i"," $word$1",$line);
-  }
-    }
-
-    return $line;
+	// Replace Hotwords
+	if ($feature_hotwords == 'y') {
+		foreach ($words as $word => $url) {
+			// \b is a word boundary, \s is a space char
+			$line = preg_replace("/^$word(\b)/i","<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
+			$line = preg_replace("/(=(\"|')[^\"']*)$word(\b)([^\"']*(\"|'))/i","$1 :::::$word$3$4",$line);
+			$line = preg_replace("/\s$word(\b)/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
+			$line = preg_replace("/:::::$word(\b)/i"," $word$1",$line);
+		}
+	}
+	return $line;
 }
 
 //Updates a dynamic variable found in some object

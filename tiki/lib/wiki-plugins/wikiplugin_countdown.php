@@ -25,9 +25,9 @@ function wikiplugin_countdown($data, $params) {
 	}
 
 	if (isset($localtime) && $localtime == 'on')
-		$tz = $_COOKIE['tz_offset'];
-	else
 		$tz = 0;
+	else
+		$tz = $_COOKIE['tz_offset'];
 
 	$now = strtotime ("now") + $tz;
 	$then = strtotime ($enddate);

@@ -1,42 +1,18 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.21 2004-04-03 09:36:39 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.22 2004-04-08 22:55:06 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-require_once('tiki-setup.php');
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
-  //smarty is not there - we need setup
-  $smarty->assign('msg',tra("This script cannot be called directly"));
-  $smarty->display("error.tpl");
-  die;
+  header("location: index.php");
+	die();
 }
 
-if (isset($_SERVER["REQUEST_URI"])) {
-  ini_set('session.cookie_path', str_replace( "\\", "/", dirname($_SERVER["REQUEST_URI"])));
-}
-$ticket = '';
-require_once("lib/tikiticketlib.php");
-
-// Set the separator for PHP generated tags to be &amp; instead of &
-// This is necessary for XHTML compliance
-ini_set("arg_separator.output","&amp;");
-
-//ini_set('register_globals','off');
-
-// Remove automatic quotes added to POST/COOKIE by PHP
-if (get_magic_quotes_gpc()) {
-	foreach ($_REQUEST as $k => $v) {
-		if (!is_array($_REQUEST[$k])) $_REQUEST[$k] = stripslashes($v);
-	}
-}
-
-// Define and load Smarty components
-
-// let smarty define SMARTY_DIR so it's an absolute path :
+// uncomment and adapt the following line if you use smarty external to tiki
 // define('SMARTY_DIR', 'lib/smarty/');
 
 require_once ( 'lib/smarty/libs/Smarty.class.php');
@@ -104,26 +80,7 @@ class Smarty_TikiWiki extends Smarty {
 	}
 }
 
-if (!isset($tikidomain))
-	$tikidomain = "";
-
-if (!isset($feature_ticketlib2))
-	$feature_ticketlib2 = "y";
-
 $smarty = new Smarty_TikiWiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
-/*
-if ($feature_ticketlib2 == 'y') {
-	$smarty->load_filter('output', 'ticket');
-}
-*/
-//$smarty->load_filter('output','trimwhitespace');
-
-if (isset($_REQUEST['highlight'])) {
-	$smarty->load_filter('output','highlight');
-}
-
-// Count number of online users using:
-// print($GLOBALS["PHPSESSID"]);
-
+// $smarty->load_filter('output','trimwhitespace');
 ?>

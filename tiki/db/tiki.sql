@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.175 2004-04-03 08:00:08 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.176 2004-04-08 22:55:08 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4007,7 +4007,10 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_smileys','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_stats','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_submissions','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_surveys','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_tabs','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_tasks','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ticketlib','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ticketlib2','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_theme_control','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_top_bar','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_trackers','n');

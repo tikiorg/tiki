@@ -15,24 +15,25 @@
 </div>
 <br /><br />
 
-
+{if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false}
-<div class="tabs">
-<span id="tab{cycle name=tabs}" class="tab tabActive">{tr}View{/tr}</span>
+<div id="page-bar">
+<span id="tab{cycle name=tabs advance=false}" class="button2"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}View{/tr}</a></span>
 {if $tracker_info.useComments eq 'y'}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Comments{/tr}</span>
+<span id="tab{cycle name=tabs advance=false}" class="button2"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}Comments{/tr}</a></span>
 {/if}
 {if $tracker_info.useAttachments eq 'y'}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Attachments{/tr}</span>
+<span id="tab{cycle name=tabs advance=false}" class="button2"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}Attachments{/tr}</a></span>
 {/if}
 {if $tiki_p_modify_tracker_items eq 'y'}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Edit{/tr}</span>
+<span id="tab{cycle name=tabs advance=false}" class="button2"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}Edit{/tr}</a></span>
 {/if}
 </div>
+{/if}
 
-{cycle name=content values="1,2,3,4,5" print=false advance=false}
-{* ---------------------------------------------------- tab with view --- *}
-<div id="content{cycle name=content}" class="content">
+{cycle name=content values="1,2,3,4,5" print=false advance=false assign=focustab}
+{* --- tab with view --- *}
+<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h3>{tr}View item{/tr}</h3>
 <table class="normal">
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
@@ -127,7 +128,7 @@
 
 {* -------------------------------------------------- tab with comments --- *}
 {if $tracker_info.useComments eq 'y'}
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 {if $tiki_p_comment_tracker_items eq 'y'}
 <h3>{tr}Add a comment{/tr}</h3>
 <form action="tiki-view_tracker_item.php" method="post">
@@ -156,7 +157,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 
 {* ---------------------------------------- tab with attachements --- *}
 {if $tracker_info.useAttachments eq 'y'}
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};" {/if}>
 {if $tiki_p_attach_trackers eq 'y'}
 <h3>{tr}Attach a file to this item{/tr}</h3>
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
@@ -221,7 +222,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}delete{/tr}"  hspace="2" vspace=
 
 {* --------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_modify_tracker_items eq 'y'}
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h3>{tr}Edit item{/tr}</h3>
 <form action="tiki-view_tracker_item.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
