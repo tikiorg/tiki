@@ -1,32 +1,22 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.25 2003-11-10 02:26:52 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.26 2003-11-19 15:06:22 sylvieg Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
 <!-- the help link info --->
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=UserAdministrationScreen" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin users{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin users tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!-- begin -->
 
-
-
-
 <br/><br/>
-<h3>{tr}Add a new user{/tr}</h3>
-
-
-
-
-
+<h2>{tr}Add a new user{/tr}</h2>
 
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
@@ -45,7 +35,7 @@
 </table>
 <br/>
 {if (($added != "") || ($discarded != "")) }
-	<h3>{tr}Batch Upload Results{/tr}</h3>
+	<h2>{tr}Batch Upload Results{/tr}</h2>
 	{tr}Added users{/tr}: {$added}
 	{if ($discarded != "") }
 		 - {tr}Rejected users{/tr}: {$discarded}<br/><br/>
@@ -58,8 +48,7 @@
 	{/if}
 {/if}
 
-<h3>
-<h3>{tr}Users{/tr}</h3>
+<h2>{tr}Users{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
