@@ -38,7 +38,7 @@
 {if $feature_likePages eq 'y'}
 <td><div class="button2"><a href="tiki-likepages.php?page={$page}" class="linkbut">{tr}like pages{/tr}</a></div></td>
 {/if}
-{if $canundo eq 'y'}
+{if $feature_wiki_undo eq 'y' and $canundo eq 'y'}
 <td><div class="button2"><a href="tiki-index.php?page={$page}&amp;undo=1" class="linkbut">{tr}undo{/tr}</a></div></td>
 {/if}
 </tr>
