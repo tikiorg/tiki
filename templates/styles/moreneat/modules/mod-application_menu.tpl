@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.34 2004-06-14 06:07:35 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.35 2004-06-20 11:43:26 ohertel Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -358,7 +358,7 @@
   </div>
   <div id='ephmenu' style="{$mnu_ephmenu}">
   {if $tiki_p_eph_admin eq 'y'}
-  &nbsp;<a href="tiki-eph_admin.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  &nbsp;<a href="tiki-eph_admin.php" class="linkmenu">{tr}Ephemerides Admin{/tr}</a><br/>
   {/if}
   </div>
 {/if}
@@ -371,7 +371,7 @@
   </div>
   <div id='chartmenu' style="{$mnu_chartmenu}">
   {if $tiki_p_admin_charts eq 'y'}
-  &nbsp;<a href="tiki-admin_charts.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  &nbsp;<a href="tiki-admin_charts.php" class="linkmenu">{tr}Charts Admin{/tr}</a><br/>
   {/if}
   </div>
 {/if}
@@ -389,7 +389,7 @@
   &nbsp;<a href="tiki-jukebox_tracks.php" class="linkmenu">{tr}Tracks{/tr}</a><br />
   {/if}
   {if $tiki_p_jukebox_admin eq 'y'}
-  &nbsp;<a href="tiki-jukebox_admin.php" class="linkmenu">{tr}Admin{/tr}</a><br />
+  &nbsp;<a href="tiki-jukebox_admin.php" class="linkmenu">{tr}Jukebox Admin{/tr}</a><br />
   {/if}
   </div>
 {/if}
