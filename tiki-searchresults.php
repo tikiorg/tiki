@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.21 2003-10-08 04:11:54 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.22 2003-10-26 20:35:21 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -161,9 +161,10 @@ if ((!isset($_REQUEST["words"])) || (empty($_REQUEST["words"]))) {
 
 	$smarty->assign('words', '');
 } else {
-	$results = $searchlib->$find_where($_REQUEST["words"], $offset, $maxRecords, $fulltext);
+	$words = strip_tags($_REQUEST["words"]);
+	$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext);
 
-	$smarty->assign('words', $_REQUEST["words"]);
+	$smarty->assign('words', $words);
 }
 
 //if ($fulltext == 'y') {
