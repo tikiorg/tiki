@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.15 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.16 2003-11-11 08:43:04 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,14 +17,12 @@ include_once ('lib/calendar/calendarlib.php');
 # 	$tiki_p_add_events
 if ($feature_calendar != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
-
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
 }
 
 if ($tiki_p_view_calendar != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view the calendar"));
-
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
 }
@@ -57,7 +55,6 @@ $listcals = $outsess;
 */
 function dropthat($value) {
 	global $match;
-
 	return ($value != $match);
 }
 
