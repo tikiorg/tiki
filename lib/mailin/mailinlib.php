@@ -75,10 +75,25 @@ class MailinLib extends TikiLib {
       $query = "update `tiki_mailin_accounts` set `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `type`=?, `active`=?, `anonymous`=?, `attachments`=?, `article_topicId`=?, `article_type`=?, `discard_after`=? where `accountId`=?";
       $result = $this->query($query,$bindvars);
     } else {
-      $bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$attachments,(int)$article_topicId,$article_type);
-      $query = "delete from `tiki_mailin_accounts` where `account`=? and `pop`=? and `port`=? and `smtpPort`=? and `username`=? and `pass`=? and `smtp`=? and `useAuth`=? and `type`=? and `active`=? and `anonymous`=? and `attachments`=? and `article_topicId`=?, `article_type`=?";
+      $bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,$anonymous,$attachments,(int)$article_topicId);
+	$mid = "";
+	$mid2 = "";
+	$mid3 = "";
+	if ($article_type) {
+		$bindvars[] = $article_type;
+		$mid .= "and `article_type`=?";
+		$mid2 .= ", `article_type`";
+		$mid3 .= ",?";
+	}
+	if ($discard_after) {
+		$bindvars[] = $discard_after;
+		$mid .= "and `discard_after`=?";
+		$mid2 .= ", `discard_after`";
+		$mid3 .= ",?";
+	}
+      $query = "delete from `tiki_mailin_accounts` where `account`=? and `pop`=? and `port`=? and `smtpPort`=? and `username`=? and `pass`=? and `smtp`=? and `useAuth`=? and `type`=? and `active`=? and `anonymous`=? and `attachments`=? and `article_topicId`=? $mid";
       $result = $this->query($query,$bindvars,-1,-1,false);
-      $query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`type`,`active`,`anonymous`,`attachments`,`article_topicId`,`article_type`, `discard_after) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      $query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`type`,`active`,`anonymous`,`attachments`,`article_topicId` $mid2) values(?,?,?,?,?,?,?,?,?,?,?,?,? $mid3)";
       $result = $this->query($query,$bindvars);
     }
     return true;
