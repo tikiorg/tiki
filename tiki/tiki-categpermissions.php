@@ -68,6 +68,10 @@ $smarty->assign_by_ref('groups', $groups['data']);
 $perms = $userlib->get_permissions(0, -1, 'permName_desc', 'categories');
 $smarty->assign_by_ref('perms', $perms['data']);
 
+// Get the category path
+$path = $categlib->get_category_path($categId);
+$smarty->assign_by_ref('path', $path);
+
 ask_ticket('category-perms');
 
 $smarty->assign('mid', 'tiki-categpermissions.tpl');
