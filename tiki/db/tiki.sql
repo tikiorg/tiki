@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.169 2004-03-12 01:29:14 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.170 2004-03-12 01:34:04 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2740,7 +2740,7 @@ DROP TABLE IF EXISTS tiki_shoutbox_words;
 CREATE TABLE tiki_shoutbox_words (
   word VARCHAR( 40 ) NOT NULL ,
   qty INT DEFAULT '0' NOT NULL ,
-  PRIMARY KEY (word)
+  PRIMARY KEY  (word)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3088,7 +3088,7 @@ CREATE TABLE tiki_tracker_options (
   trackerId int(12) NOT NULL default '0',
   name varchar(80) NOT NULL default '',
   value text default NULL,
-  PRIMARY KEY (trackerId)
+  PRIMARY KEY  (trackerId,name(30))
 ) TYPE=MyISAM ;
 # --------------------------------------------------------
 
@@ -3783,7 +3783,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 # Homework permissions - ggeller
 INSERT INTO users_permissions(permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editor','homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
 
@@ -4292,7 +4292,7 @@ CREATE TABLE tiki_jukebox_genres (
   genreId int(14) unsigned NOT NULL auto_increment,
   genreName varchar(80),
   genreDescription text,
-  PRIMARY KEY (genreId)
+  PRIMARY KEY  (genreId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_jukebox_albums;
@@ -4306,7 +4306,7 @@ CREATE TABLE tiki_jukebox_albums (
   visits int(14),
   public char(1),
   genreId int(14),
-  PRIMARY KEY (albumId)
+  PRIMARY KEY  (albumId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_jukebox_tracks;
@@ -4322,7 +4322,7 @@ CREATE TABLE tiki_jukebox_tracks (
   filetype varchar(250),
   genreId int(14),
   plays int(14),
-  PRIMARY KEY (trackId)
+  PRIMARY KEY  (trackId)
 ) TYPE=MyISAM AUTO_INCREMENT=1;
 
 #
