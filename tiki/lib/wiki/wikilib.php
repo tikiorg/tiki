@@ -238,8 +238,8 @@ class WikiLib extends TikiLib {
 		$this->query($query, array( $newId, $oldId ) );
 	
 		// theme_control_objects(objId,name)
-		$query = "update `tiki_theme_control_objects` set `objId`='newId',name=? where `objId`=?";
-		$this->query($query, array( $newName, $oldId ) );
+		$query = "update `tiki_theme_control_objects` set `objId`=?, name=? where `objId`=?";
+		$this->query($query, array( $newId, $newName, $oldId ) );
 	
 		$query = "update `tiki_wiki_attachments` set `page`=? where `page`=?";
 		$this->query($query, array( $newName, $oldName ) );
