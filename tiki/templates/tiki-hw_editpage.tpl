@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_editpage.tpl,v 1.1 2004-02-05 05:19:00 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_editpage.tpl,v 1.2 2004-02-05 19:10:00 ggeller Exp $ *}
 
-{if $preview}
+{* {if $preview}
   <h2>{tr}Preview{/tr}: {$homeworkTitle}</h2>
   <div  class="wikitext">{$parsed}</div>
-{/if}
+{/if} *}
 
 <h1>
   {$homeworkTitle}
@@ -47,10 +47,12 @@
 
     <input type="hidden" name="page" value="{$page|escape}" />
 
-    <tr class="formcolor">
-      <td class="formcolor">&nbsp;</td>
-      <td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
-    </tr>
+    {* GGG No preview for the prototype
+      <tr class="formcolor">
+        <td class="formcolor">&nbsp;</td>
+        <td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
+      </tr>
+    *}
 
     <tr class="formcolor">
       <td class="formcolor">
