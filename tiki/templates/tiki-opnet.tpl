@@ -69,7 +69,7 @@
 				{section name=chooseformtype loop=$available_formtype}
 				<option value="{$available_formtype[chooseformtype].id|escape}" {if $available_formtype[chooseformtype].id eq $parentform}selected="selected"{/if}>{$available_formtype[chooseformtype].name}</option>
 				{/section}
-				</select>
+				</select><br/>
 				<a href="tiki-opnet_result?parentform={$parentform}&youcango=Apply">Here you can see the results of this form filled out by others about you</a>
 				</td></tr>
 				<tr><td class="form">
