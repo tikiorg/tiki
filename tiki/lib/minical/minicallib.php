@@ -6,7 +6,6 @@ class MiniCalLib extends TikiLib {
 		if (!$db) {
 			die ("Invalid db object passed to MiniCalLib constructor");
 		}
-
 		$this->db = $db;
 	}
 
@@ -26,76 +25,57 @@ class MiniCalLib extends TikiLib {
 			$aux['start'] = $start;
 			$end_p = $start + $interval;
 			$aux['end'] = $end_p;
-			$query = "select * from tiki_minical_events where user='$user' and start>=$start and start<$end_p order by start asc";
+			$query = "select * from `tiki_minical_events` where `user`=? and `start`>=? and `start`<? order by ".$this->convert_sortmode("start_asc");
 			//print($query);print("<br/>");
-			$result = $this->query($query);
+			$result = $this->query($query,array($user,(int)$start,(int)$end_p));
 			$events = array();
 
-			while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+			while ($res = $result->fetchRow()) {
 				$res['end'] = $res['start'] + $res['duration'];
-
 				$res2 = array();
-
 				if ($res['topicId']) {
-					$query2 = "select topicId,isIcon,path,name from tiki_minical_topics where topicId=" . $res['topicId'];
-
-					$result = $this->query($query2);
-					$res2 = $result->fetchRow(DB_FETCHMODE_ASSOC);
+					$query2 = "select `topicId`,`isIcon`,`path,name` from `tiki_minical_topics` where `topicId`=?";
+					$result = $this->query($query2, array((int)$res['topicId']));
+					$res2 = $result->fetchRow();
 				}
-
 				$res['topic'] = $res2;
 				$events[] = $res;
 			}
-
 			$aux['events'] = $events;
 			$slots[] = $aux;
 			$start += $interval;
 		}
-
 		return $slots;
 	}
 
 	function minical_upload_topic($user, $topicname, $name, $type, $size, $data, $path) {
-		$topicname = addslashes($topicname);
-
-		$data = addslashes($data);
-
 		if (strlen($data) == 0) {
 			$isIcon = 'y';
 		} else {
 			$isIcon = 'n';
 		}
-
-		$query = "insert into tiki_minical_topics(user,name,filename,filetype,filesize,data,isIcon,path)
-              values('$user','$topicname','$name','$type',$size,'$data','$isIcon','$path')";
-		$this->query($query);
+		$query = "insert into `tiki_minical_topics`(`user`,`name`,`filename`,`filetype`,`filesize`,`data`,`isIcon`,`path`) values(?,?,?,?,?,?,?,?)";
+		$this->query($query, array($user,$topicname,$name,$type,(int)$size,$data,$isIcon,$path));
 	}
 
 	function minical_list_topics($user, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
-
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
-
+		$bindvars = array($user);
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " and (name like $findesc or filename like $findesc)";
+			$mid = " and (`name` like ? or `filename` like ?)";
+			$bindvars[] = "%$find%";
+			$bindvars[] = "%$find%";
 		} else {
-			$mid = " ";
+			$mid = "";
 		}
 
-		$query = "select isIcon,path,name,topicId from tiki_minical_topics where 
-user='$user' $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_minical_topics where 
-user='$user' $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select `isIcon`,`path`,`name`,`topicId` from `tiki_minical_topics` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_minical_topics` where `user`=? $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
-
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
-
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
@@ -103,44 +83,35 @@ user='$user' $mid";
 	}
 
 	function minical_get_topic($user, $topicId) {
-		$query = "select * from tiki_minical_topics where user='$user' and topicId=$topicId";
-
-		$result = $this->query($query);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select * from `tiki_minical_topics` where `user`=? and `topicId`=?";
+		$result = $this->query($query,array($user,(int)$topicId));
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function minical_list_events($user, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
-
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
-
+		$bindvars = array($user);
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " and (title like $findesc or description like $findesc)";
+			$mid = " and (`title` like ? or `description` like ?)";
+			$bindvars[] = "%$find%";
+			$bindvars[] = "%$find%";
 		} else {
-			$mid = " ";
+			$mid = "";
 		}
 
-		$query = "select * from tiki_minical_events where 
-user='$user' $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_minical_events where 
-user='$user' $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_minical_events` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_minical_events` where `user`=? $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$res2 = array();
-
 			if ($res['topicId']) {
-				$query2 = "select topicId,isIcon,path,name from tiki_minical_topics where topicId=" . $res['topicId'];
-
-				$result2 = $this->query($query2);
-				$res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC);
+				$query2 = "select `topicId`,`isIcon`,`path`,`name` from `tiki_minical_topics` where `topicId`=?";
+				$result2 = $this->query($query2,array((int)$res['topicId']));
+				$res2 = $result2->fetchRow();
 			}
-
 			$res['topic'] = $res2;
 			$ret[] = $res;
 		}
@@ -152,42 +123,30 @@ user='$user' $mid";
 	}
 
 	function minical_list_events_from_date($user, $offset, $maxRecords, $sort_mode, $find, $pdate) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
-
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
-
+		$bindvars = array((int)$pdate,$user);
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " and (title like $findesc or description like $findesc)";
+			$mid = " and (`title` like ? or `description` like ?)";
+			$bindvars[] = "%$find%";
+			$bindvars[] = "%$find%";
 		} else {
-			$mid = " ";
+			$mid = "";
 		}
-
-		$query = "select * from tiki_minical_events where start>$pdate
-and user='$user' $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_minical_events where 
-start>$pdate and user='$user' $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_minical_events` where `start`>? and `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_minical_events` where `start`>? and `user`=? $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
-
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$res2 = array();
-
 			if ($res['topicId']) {
-				$query2 = "select topicId,isIcon,path,name from tiki_minical_topics where topicId=" . $res['topicId'];
-
-				$result2 = $this->query($query2);
-				$res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC);
+				$query2 = "select `topicId`,`isIcon`,`path`,`name` from `tiki_minical_topics` where `topicId`=?";
+				$result2 = $this->query($query2,array((int)$res['topicId']));
+				$res2 = $result2->fetchRow();
 			}
-
 			$res['topic'] = $res2;
-			$res['start'] += $this->get_site_time_difference(
-				$user); //added by WellsWang to Solove Mini Cal Upcoming Events wrong TimeZone Problem
+			$res['start'] += $this->get_site_time_difference($user); //added by WellsWang to Solove Mini Cal Upcoming Events wrong TimeZone Problem
 			$ret[] = $res;
 		}
-
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
@@ -195,80 +154,58 @@ start>$pdate and user='$user' $mid";
 	}
 
 	function minical_get_event($user, $eventId) {
-		$query = "select * from tiki_minical_events where 
-user='$user' and eventId='$eventId'";
-
-		$result = $this->query($query);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select * from `tiki_minical_events` where `user`=? and `eventId`=?";
+		$result = $this->query($query,array($user,(int)$eventId));
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function minical_remove_topic($user, $topicId) {
-		$query = "delete from tiki_minical_topics where user='$user' and topicId=$topicId";
-
-		$this->query($query);
+		$query = "delete from `tiki_minical_topics` where `user`=? and `topicId`=?";
+		$this->query($query,array($user,(int)$topicId));
 	}
 
 	function minical_event_reminded($user, $eventId) {
-		$query = "update tiki_minical_events set reminded='y' where user='$user' and eventId=$eventId";
-
-		$this->query($query);
+		$query = "update `tiki_minical_events` set `reminded`=? where `user`=? and `eventId`=?";
+		$this->query($query,array("y",$user,(int)$eventId));
 	}
 
 	function minical_replace_event($user, $eventId, $title, $description, $start, $duration, $topicId) {
-		$title = addslashes($title);
-
-		$description = addslashes($description);
 		$now = date("U");
-
 		if ($eventId) {
-			$query = "update tiki_minical_events set
-      topicId=$topicId,end=$start+$duration,title='$title', description='$description',start=$start,duration=$duration,reminded='n'
-      where user='$user' and 
-      eventId=$eventId";
-
-			$this->query($query);
+			$query = "update `tiki_minical_events` set `topicId`=?,`end`=?,`title`=?,`description`=?,`start`=?,`duration`=?,`reminded`=?  where `user`=? and `eventId`=?";
+			$this->query($query,array((int)$topicId,$start+$duration,$title,$description,(int)$start,(int)$duration,"n",$user,(int)$eventId));
 			return $eventId;
 		} else {
-			$query = "insert into tiki_minical_events(user,title,description,start,duration,end,topicId,reminded)
-      values('$user','$title','$description',$start,$duration,$start+$duration,$topicId,'n')";
-
-			$this->query($query);
-			$Id = $this->getOne("select max(eventId) from 
-tiki_minical_events where user='$user' and start=$start");
+			$query = "insert into `tiki_minical_events`(`user`,`title`,`description`,`start`,`duration`,`end`,`topicId`,`reminded`) values(?,?,?,?,?,?,?,?)";
+			$this->query($query,array($user,$title,$description,(int)$start,(int)$duration,$start+$duration,(int)$topicId,"n"));
+			$Id = $this->getOne("select max(`eventId`) from `tiki_minical_events` where `user`=? and `start`=?",array($user,(int)$start));
 			return $Id;
 		}
 	}
 
 	function minical_remove_event($user, $eventId) {
-		$query = "delete from tiki_minical_events where user='$user' 
-    and eventId=$eventId";
-
-		$this->query($query);
+		$query = "delete from `tiki_minical_events` where `user`=? and `eventId`=?";
+		$this->query($query,array($user,(int)$eventId));
 	}
 
 	function minical_get_events_to_remind($user, $rem) {
 		// Search for events that are not reminded and will start
 		// in less than $rem
 		$limit = date("U") + $rem;
-
 		$now = date("U");
-		$query = "select * from tiki_minical_events where user='$user' and reminded<>'y' and start<=$limit and start>$now";
-		$result = $this->query($query);
+		$query = "select * from `tiki_minical_events` where `user`=? and `reminded`<>? and `start`<=? and `start`>?";
+		$result = $this->query($query,array($user,'y',(int)$limit,(int)$now));
 		$ret = array();
-
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
-
 		return $ret;
 	}
 
 	function minical_remove_old($user, $pdate) {
-		$query = "delete from tiki_minical_events where user='$user' 
-    and start<$pdate";
-
-		$this->query($query);
+		$query = "delete from `tiki_minical_events` where `user`=? and `start`<?";
+		$this->query($query,array($user,(int)$pdate));
 	}
 }
 
