@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.214 2004-05-01 01:06:19 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.215 2004-05-02 04:18:21 rlpowell Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -471,6 +471,7 @@ $file_galleries_comments_default_ordering = 'points_desc';
 $file_galleries_comments_per_page = 10;
 
 $feature_poll_comments = 'n';
+$feature_poll_anonymous = 'n';
 $poll_comments_default_ordering = 'points_desc';
 $poll_comments_per_page = 10;
 
@@ -1568,10 +1569,23 @@ if ($feature_warn_on_edit == 'y') {
 
 if (isset($_REQUEST["pollVote"])) {
     if ($tiki_p_vote_poll == 'y' && isset($_REQUEST["polls_optionId"])) {
-	// Poll vote must happen first!
-        $tikilib->poll_vote($user, $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
+	$tikilib->register_user_vote($user, 'poll' . $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
 
-        $tikilib->register_user_vote($user, 'poll' . $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
+	if( $feature_poll_anonymous == 'y' )
+	{
+	    $tikilib->poll_vote($user, $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
+	} else {
+	    if (in_array($_REQUEST["polls_pollId"], $_SESSION["votes"])) {
+		$update = true;
+	    } else {
+		$update = false;
+	    }
+
+	    if( $update )
+	    {
+		$tikilib->poll_vote($user, $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
+	    }
+	}
     }
 
     $pollId = $_REQUEST["polls_pollId"];
@@ -1592,13 +1606,13 @@ if (count($query) > 0) {
     $first = 1;
 
     foreach ($query as $name => $val) {
-        if ($first) {
-            $first = false;
+	if ($first) {
+	    $first = false;
 
-            $father .= '?' . $name . '=' . $val;
-        } else {
-            $father .= '&amp;' . $name . '=' . $val;
-        }
+	    $father .= '?' . $name . '=' . $val;
+	} else {
+	    $father .= '&amp;' . $name . '=' . $val;
+	}
     }
 
     $father .= '&amp;';
