@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.4 2003-08-13 01:02:18 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.5 2003-08-28 20:07:51 sylvieg Exp $ *}
 
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
 <div class="debugconsole" id="debugconsole" style="{$debugconsole_style}">
@@ -18,12 +18,12 @@
   </tr>
   <tr>
     <td class="formcolor">{tr}Command{/tr}:</td>
-    <td class="formcolor"><input type="text" name="command" size=90 value='{$command|escape:"html"}'></td>
+    <td class="formcolor"><input type="text" name="command" size="90" value='{$command|escape:"html"}' /></td>
   </tr>
   <tr>
     <td class="formcolor"></td>
     <td class="formcolor">
-      <input type="submit" name="exec" value="{tr}exec{/tr}"> &nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="submit" name="exec" value="{tr}exec{/tr}" /> &nbsp;&nbsp;&nbsp;&nbsp;
       <small>{tr}Type <code>help</code> to get list of available commands{/tr}</small>
     </td>
   </tr>
