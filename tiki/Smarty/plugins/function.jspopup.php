@@ -9,7 +9,12 @@ function smarty_function_jspopup($params, &$smarty)
         $smarty->trigger_error("assign: missing href parameter");
         return;
     }
-    print("href='#' onClick='javascript:window.open(\"$href\",\"\",\"menubar=no,scrollbars=yes,resizable=yes,height=600,width=400\");' ");
+    if(!isset($scrollbars)) $scrollbars='yes';
+    if(!isset($scrollbars)) $menubar='no';
+    if(!isset($resizable))  $resizable='yes';
+    if(!isset($height)) $height='600';
+    if(!isset($width)) $width='400';
+    print("href='#' onClick='javascript:window.open(\"$href\",\"\",\"menubar=$menubar,scrollbars=$scrollbars,resizable=$resizable,height=$height,width=$width\");' ");
 }
 
 /* vim: set expandtab: */
