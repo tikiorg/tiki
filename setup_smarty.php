@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.1 2003-09-03 17:56:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.2 2003-09-04 10:20:17 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 require_once ("db/tiki-db.php");
 
 error_reporting (E_ALL);
-ini_set('register_globals','off');
+//ini_set('register_globals','off');
 
 // Remove automatic quotes added to POST/COOKIE by PHP
 if (get_magic_quotes_gpc()) {
@@ -19,8 +19,11 @@ if (get_magic_quotes_gpc()) {
 }
 
 // Define and load Smarty components
-define('SMARTY_DIR', 'lib/smarty/');
-require_once (SMARTY_DIR . 'Smarty.class.php');
+
+// let smarty define SMARTY_DIR so it's an absolute path :
+// define('SMARTY_DIR', 'lib/smarty/');
+
+require_once ('lib/smarty/Smarty.class.php');
 
 class Smarty_TikiWiki extends Smarty {
 	
@@ -29,10 +32,12 @@ class Smarty_TikiWiki extends Smarty {
 		$this->compile_dir = "templates_c/$tikidomain";
 		$this->config_dir = "configs/";
 		$this->cache_dir = "cache/$tikidomain";
-		$this->caching = false;
+		$this->caching = 0;
 		$this->assign('app_name', 'TikiWiki');
-		$this->plugins_dir = array("plugins","plugins_tiki");
-
+		$this->plugins_dir = array(
+			SMARTY_DIR."plugins",
+			dirname(SMARTY_DIR)."/smarty_tiki"
+		);
 	}
 
 	function _smarty_include($params) {
