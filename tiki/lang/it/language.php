@@ -460,6 +460,7 @@ la pagina non viene memorizzata.",//perhaps not used
 "Wiki" => "Wiki",
 "XMLRPC API" => "XMLRPC API",
 "Edit templates" => "Modifica template",
+"Edit Templates" => "Modifica template",
 "Index page" => "Pagina indice",//perhaps not used
 "Home Gallery (main gallery)" => "Galleria principale",
 "Galleries features" => "Preferenze Gallerie",
@@ -1119,6 +1120,7 @@ In questo caso è necessario aumentare il massimo tempo di esecuzione dello scri
 "Shoutbox" => "Shoutbox",
 "Drawings" => "Disegni",
 "Referer stats" => "Statistiche dei referer",
+"Referer Stats" => "Statistiche dei referer",
 "General Layout options" => "Opzioni del layout generale",
 "Layout per section" => "Layout per sezione",
 "Admin layout per section" => "Amministrazione layout per sezione",
@@ -1597,6 +1599,7 @@ Nessuna newsletters verrà inviata prima della conferma della richiesta di abbon
 "Mini calendar" => "Mini calendario",
 "Ephemerides" => "effemeridi",
 "Theme control" => "Controllo tema",
+"Theme Control" => "Controllo tema",
 "OS" => "OS",
 "Unix" => "Unix",
 "Windows" => "Windows",
@@ -2520,7 +2523,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature.",//perhap
 "Process form" => "Process form",
 "Set Next act" => "Set Next act",
 "If:SetNextact" => "If:SetNextact",
-"Swicth construct" => "Swicth construct",
+"Switch construct" => "Switch construct",
 "Map process roles" => "Map process roles",
 "admin processes" => "admin processes",
 "admin activities" => "admin activities",
@@ -2967,5 +2970,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature.",//perhap
 "Missing db param" => "Missing db param",
 "There is an error in the plugin data" => "There is an error in the plugin data",
 "Displays a snippet of code.\nSet optional paramater -+ln+- to 1 if you need line numbering feature." => "Displays a snippet of code.\nSet optional paramater -+ln+- to 1 if you need line numbering feature.",
+"Change your email" => "Change your email",
+"Edit this assigned module:" => "Edit this assigned module:",
 "##end###" => "###end###");
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.11 2003-08-16 20:33:09 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.12 2003-08-18 08:42:22 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -175,21 +175,16 @@ $smarty->assign_by_ref('games', $games);
 
 $smarty->assign('play', 'n');
 
-if (isset($_REQUEST["game"])) {
-	$gamelib->add_game_hit($_REQUEST["game"]);
-
-	$game = $_REQUEST["game"];
-	$parts = explode('.', $game);
-
-	if ($parts[0]) {
-		$source = 'games/flash/' . implode('.', array(
-			$parts[0],
-			$parts[1]
-		));
-
-		$smarty->assign('source', $source);
-		$smarty->assign('play', 'y');
-	}
+if(isset($_REQUEST["game"])) {
+ $gamelib->add_game_hit($_REQUEST["game"]);
+ $game = $_REQUEST["game"];
+ $parts=explode('.',$game);
+ if ($parts[0])
+ {
+   $source='games/flash/'.implode('.',Array($parts[0],$parts[1]));
+   $smarty->assign('source',$source);
+   $smarty->assign('play','y');
+ }
 }
 
 $section = 'games';

@@ -460,6 +460,7 @@ to preview the appeareance of the page, no versions are stored for this page." =
 "Wiki" => "Wiki",
 "XMLRPC API" => "XMLRPC API",
 "Edit templates" => "編輯 templates",
+"Edit Templates" => "編輯 templates",
 "Index page" => "Index page",//perhaps not used
 "Home Gallery (main gallery)" => "Home Gallery (主�?總覽)",
 "Galleries features" => "Galleries features",
@@ -1120,6 +1121,7 @@ from your php.ini file",//perhaps not used
 "Shoutbox" => "Shoutbox",
 "Drawings" => "Drawings",
 "Referer stats" => "Referer stats",
+"Referer Stats" => "Referer stats",
 "General Layout options" => "一般版�?��?�項",
 "Layout per section" => "�?section的版�?�數",
 "Admin layout per section" => "管�?��?section的版�?�數",
@@ -1598,6 +1600,7 @@ No newsletters will be sent to you until the subscription is confirmed." => "�?
 "Mini calendar" => "迷你月曆",
 "Ephemerides" => "Ephemerides",
 "Theme control" => "佈景控制",
+"Theme Control" => "佈景控制",
 "OS" => "作業系統",
 "Unix" => "Unix",
 "Windows" => "Windows",
@@ -2516,7 +2519,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature.",//perhap
 "Process form" => "Process form",
 "Set Next act" => "Set Next act",
 "If:SetNextact" => "If:SetNextact",
-"Swicth construct" => "Swicth construct",
+"Switch construct" => "Switch construct",
 "Map process roles" => "Map process roles",
 "admin processes" => "admin processes",
 "admin activities" => "admin activities",
@@ -2965,5 +2968,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature.",//perhap
 "Missing db param" => "Missing db param",
 "There is an error in the plugin data" => "There is an error in the plugin data",
 "Displays a snippet of code.\nSet optional paramater -+ln+- to 1 if you need line numbering feature." => "Displays a snippet of code.\nSet optional paramater -+ln+- to 1 if you need line numbering feature.",
+"Change your email" => "Change your email",
+"Edit this assigned module:" => "Edit this assigned module:",
 "##end###" => "###end###");
 ?>

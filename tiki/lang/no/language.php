@@ -460,6 +460,7 @@ $lang=Array(
 "Wiki" => "Wiki",
 "XMLRPC API" => "XMLRPC API",
 "Edit templates" => "Redigera mallar",
+"Edit Templates" => "Redigera mallar",
 "Index page" => "Indexsida",//perhaps not used
 "Home Gallery (main gallery)" => "Hemgalleri (huvudgalleri)",
 "Galleries features" => "Gallerifunktioner",
@@ -1119,6 +1120,7 @@ from your php.ini file" => "Att skapa en säkerhetskopia kan ta lång tid. Om kopi
 "Shoutbox" => "Megafon",
 "Drawings" => "Teckningar",
 "Referer stats" => "Hänvisningsstatistik",
+"Referer Stats" => "Hänvisningsstatistik",
 "General Layout options" => "Generella layout-inställningar",
 "Layout per section" => "Layout per sektion",
 "Admin layout per section" => "Administrera layout per sektion",
@@ -1643,6 +1645,7 @@ Inga nyhetsbrev kommer att skickas innan du bekräftat prenumerationen.",//perhap
 "Mini calendar" => "Mini calendar",
 "Ephemerides" => "Ephemerides",
 "Theme control" => "Theme control",
+"Theme Control" => "Theme control",
 "OS" => "OS",
 "Unix" => "Unix",
 "Windows" => "Windows",
@@ -2520,7 +2523,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature.",//perhap
 "Process form" => "Process form",
 "Set Next act" => "Set Next act",
 "If:SetNextact" => "If:SetNextact",
-"Swicth construct" => "Swicth construct",
+"Switch construct" => "Switch construct",
 "Map process roles" => "Map process roles",
 "admin processes" => "admin processes",
 "admin activities" => "admin activities",
@@ -2968,5 +2971,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature.",//perhap
 "to be used as argument" => "to be used as argument",
 "Missing db param" => "Missing db param",
 "There is an error in the plugin data" => "There is an error in the plugin data",
+"Change your email" => "Change your email",
+"Edit this assigned module:" => "Edit this assigned module:",
 "##end###" => "###end###");
 ?>

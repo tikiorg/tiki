@@ -192,15 +192,14 @@ TD.module {
 }
 
 /* Now the boxes for the rest of Tiki (non-modules) */
-div.cbox {
-	background-color:    white;
-	border:   1px solid #84aa00;
-	margin-top:   4px;
-	margin-left:   4px;
-	margin-right:   8px;
-	margin-bottom:   0px;
-	overflow:   hidden;
-	padding-bottom:   10px;
+div.cbox { 
+  background-color: white; 
+  border: 1px solid #84aa00; 
+  margin-top: 4px; 
+  margin-left: 4px; 
+  margin-right: 8px; 
+  margin-bottom: 0px;
+  padding-bottom: 10px; 
 }
 
 /* Boxes are divided in title and data, this is the title */
@@ -250,13 +249,13 @@ div.cbox-title {
 
 /* And this is the data */
 div.cbox-data {
-	background-color:    white;
-	color:   black;
-	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   11px;
-	margin-left:   5px;
-	margin-right:   5px;
-	overflow:   hidden;
+  background-color: white;
+  color: black;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-bottom: 1px;
 }
 
 /* Some boxes are identified by an ID, for example the boxes in the main

@@ -460,6 +460,7 @@ to preview the appeareance of the page, no versions are stored for this page.",/
 "Wiki" => "Wiki",
 "XMLRPC API" => "XMLRPC API",
 "Edit templates" => "Edytuj szablon",
+"Edit Templates" => "Edytuj szablon",
 "Index page" => "Strona ",//perhaps not used
 "Home Gallery (main gallery)" => "Galeria Domowa (główna galeria)",
 "Galleries features" => "Galeria cechy",
@@ -910,6 +911,7 @@ to preview the appeareance of the page, no versions are stored for this page.",/
 "HTML pages" => "HTML pages",
 "Drawings" => "Drawings",
 "Referer stats" => "Referer stats",
+"Referer Stats" => "Referer stats",
 "Trackers" => "Trackers",
 "Surveys" => "Surveys",
 "Webmail" => "Webmail",
@@ -1712,6 +1714,7 @@ to preview the appeareance of the page, no versions are stored for this page.",/
 "Mini calendar" => "Mini calendar",
 "Ephemerides" => "Ephemerides",
 "Theme control" => "Theme control",
+"Theme Control" => "Theme control",
 "OS" => "OS",
 "Unix" => "Unix",
 "Windows" => "Windows",
@@ -2505,7 +2508,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature.",//perhap
 "Process form" => "Process form",
 "Set Next act" => "Set Next act",
 "If:SetNextact" => "If:SetNextact",
-"Swicth construct" => "Swicth construct",
+"Switch construct" => "Switch construct",
 "Map process roles" => "Map process roles",
 "admin processes" => "admin processes",
 "admin activities" => "admin activities",
@@ -2954,5 +2957,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature.",//perhap
 "to be used as argument" => "to be used as argument",
 "Missing db param" => "Missing db param",
 "There is an error in the plugin data" => "There is an error in the plugin data",
+"Change your email" => "Change your email",
+"Edit this assigned module:" => "Edit this assigned module:",
 "##end###" => "###end###");
 ?>

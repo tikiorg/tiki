@@ -604,7 +604,7 @@ class ProcessManager extends BaseManager {
      // Prevent a disaster
 	 if(trim($dir) == '/'|| trim($dir)=='.' || trim($dir)=='templates' || trim($dir)=='templates/') return false;
      $h = opendir($dir);
-     while(($file = readdir($h)) !== false) {
+     while(($file = readdir($h)) != false) {
        if(is_file($dir.'/'.$file)) {
          unlink($dir.'/'.$file);
        } else {
