@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.27 2003-09-25 01:05:22 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.28 2003-10-19 22:53:01 sylvieg Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -104,7 +104,7 @@ if (!strstr($father,"?")) {
         <tr>
 {php}
           for ($i=0;$i<7;$i++) {
-            $dayW = $c->dayOfWeekStrFromNo($i+1);
+            $dayW = tra($c->dayOfWeekStrFromNo($i+1));
             $dayp = mb_substr($dayW,0,1);
             print("<td class=\"date\" align=\"center\">$dayp</td>");
           }
