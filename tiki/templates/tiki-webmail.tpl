@@ -68,7 +68,6 @@
 {section name=ix loop=$accounts}
 <td class="{cycle advance=false}"><a href="tiki-webmail.php?section=settings&amp;current={$accounts[ix].accountId}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
 [&nbsp;&nbsp;<a href="tiki-webmail.php?section=settings&amp;remove={$accounts[ix].accountId}" class="link" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this contact?{/tr}')" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;|<a href="tiki-webmail.php?section=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>]
 </td>
 <td class="{cycle advance=false}">{$accounts[ix].pop} ({$accounts[ix].port})</td>
@@ -280,7 +279,6 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <td class="{cycle advance=false}">{$channels[user].lastName}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email}</a>
 [&nbsp;&nbsp;<a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this contact?{/tr}')" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;]
 </td>
 <td class="{cycle advance=false}">{$channels[user].nickname}</td>

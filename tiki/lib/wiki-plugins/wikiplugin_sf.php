@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.3 2003-11-23 22:03:14 gongo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.4 2004-03-31 07:38:43 mose Exp $
  *
  * TikiWiki SF auto-links.
  * 
@@ -53,7 +53,7 @@ function get_artifact_label($gid,$atid,$aid,$reload=false) {
 }
 
 function wikiplugin_sf($data, $params) {
-
+	if (function_exists("curl_init")) {
 	# customize that (or extract it in a db)
 	$sftags['bugs'] = array('64258','506846');
 	$sftags['rfe'] = array('64258','506849');
@@ -79,6 +79,9 @@ function wikiplugin_sf($data, $params) {
 	$label = get_artifact_label($sf_group_id,$sf_atid,$aid);
 	//$back = "[http://sf.net/tracker/index.php?func=detail&amp;aid=$aid&amp;group_id=$sf_group_id&amp;atid=$sf_atid|$tag:#$aid: $label|nocache]";
 	$back = "<a href='http://sf.net/tracker/index.php?func=detail&amp;aid=$aid&amp;group_id=$sf_group_id&amp;atid=$sf_atid' target='_blank' title='$tag:#$aid' class='wiki'>$label</a>";
+	} else {
+		$back = "SF plugin : You need php-curl module to be loaded to use that feature.";
+	}
 
 	return $back;
 }

@@ -156,7 +156,8 @@ function make_clean(&$var) {
 			make_clean($var[$key]);
 		}
 	} else {
-		$var = htmlspecialchars($var, ENT_QUOTES);
+//		$var = htmlspecialchars($var, ENT_QUOTES);
+		$var = htmlspecialchars($var); // ideally use ENT_QUOTES but this is too aggressive for names like o'doyle etc.
 	}
 }
 
@@ -167,7 +168,8 @@ function get_unclean($var) {
 			$ret[$key] = get_unclean($val);
 		}
 	} else {
-		$ret = strtr($encoded,array_flip(get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES)));
+//		$ret = strtr($encoded,array_flip(get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES)));
+		$ret = strtr($encoded,array_flip(get_html_translation_table(HTML_SPECIALCHARS))); // ENT_QUOTES needs to match make_clean
 	}
 	return $ret;
 }

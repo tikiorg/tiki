@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.18 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.19 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -110,16 +110,19 @@ $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 $tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
 
 if (isset($_REQUEST["remove"])) {
-		check_ticket('list-fgal');
 	// To remove an image the user must be the owner or admin
 	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot remove files from this gallery"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
-
-	$filegallib->remove_file($_REQUEST["remove"]);
+  $area = 'delfile';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$filegallib->remove_file($_REQUEST["remove"]);
+  } else {
+    key_get($area);
+  }
 }
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_validate_sites.php,v 1.11 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_validate_sites.php,v 1.12 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,14 +33,24 @@ if (isset($_REQUEST["validate"]) && isset($_REQUEST['sites'])) {
 }
 
 if (isset($_REQUEST["remove"])) {
-	check_ticket('dir-validate');
-	$dirlib->dir_remove_site($_REQUEST["remove"]);
+  $area = 'deldirvalidate';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$dirlib->dir_remove_site($_REQUEST["remove"]);
+	} else {
+		key_get($area);
+	}
 }
 
 if (isset($_REQUEST["del"]) && isset($_REQUEST['sites'])) {
-	check_ticket('dir-validate');
-	foreach (array_keys($_REQUEST["sites"])as $siteId) {
-		$dirlib->dir_remove_site($siteId);
+	$area = 'deldirvalidate';
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
+                foreach (array_keys($_REQUEST["sites"])as $siteId) {
+			$dirlib->dir_remove_site($siteId);
+		}
+	} else {
+		key_get($area);
 	}
 }
 

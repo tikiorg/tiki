@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.8 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_queue.php,v 1.9 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -133,10 +133,14 @@ if (isset($_REQUEST['qId'])) {
 	}
 
 	if (isset($_REQUEST['remove'])) {
-	check_ticket('forum-queue');
-		$smarty->assign('form', 'n');
-
-		$commentslib->remove_queued($_REQUEST['qId']);
+		$area = 'delcomment';
+	  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+  	  key_check($area);
+			$smarty->assign('form', 'n');
+			$commentslib->remove_queued($_REQUEST['qId']);
+		  } else {
+		    key_get($area);
+  		}
 	}
 
 	if (isset($_REQUEST['saveapp'])) {

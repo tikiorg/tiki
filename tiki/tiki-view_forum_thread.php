@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.61 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.62 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -166,8 +166,13 @@ if($tiki_p_admin_forum == 'y') {
     }
 
     if (isset($_REQUEST['remove_attachment'])) {
-	check_ticket('view-forum');
-	$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
+			$area = 'delforumattach';
+			if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+				key_check($area);
+				$commentslib->remove_thread_attachment($_REQUEST['remove_attachment']);
+			} else {
+				key_get($area);
+			}
     }
 
     if(isset($_REQUEST['movesel'])) {
@@ -587,14 +592,18 @@ if (isset($_REQUEST["comments_previewComment"])) {
     $smarty->assign('comment_preview', 'y');
 }
 
-if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"]))
-{
-    if ($tiki_p_admin_forum == 'y')
-    {
-	$comments_show = 'y';
+if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
+    if ($tiki_p_admin_forum == 'y') {
+			$area = 'delforumcomment';
+			if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+				key_check($area);
+				$comments_show = 'y';
+				$commentslib->remove_comment($_REQUEST["comments_threadId"]);
+				$commentslib->register_remove_post($_REQUEST["forumId"], $_REQUEST["comments_parentId"]);
+			} else {
+				key_get($area);
+			}
 
-	$commentslib->remove_comment($_REQUEST["comments_threadId"]);
-	$commentslib->register_remove_post($_REQUEST["forumId"], $_REQUEST["comments_parentId"]);
     } else { // user can't edit this post
 	$smarty->assign('msg', tra('Only an admin can remove a thread.'));
 

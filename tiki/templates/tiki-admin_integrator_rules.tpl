@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.19 2004-02-05 19:22:25 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.20 2004-03-31 07:38:44 mose Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -159,7 +159,7 @@
       <td class="{cycle advance=false}">{$rules[rule].casesense|escape}</td>
       <td class="{if (strlen($rules[rule].description) > 0)}{cycle advance=false}{else}{cycle}{/if}">
         <a href="tiki-admin_integrator_rules.php?action=edit&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" title="{tr}edit{/tr}"><img alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
-        &nbsp;&nbsp;<a href="tiki-admin_integrator_rules.php?action=rm&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this rule?{/tr}')" 
+        &nbsp;&nbsp;<a href="tiki-admin_integrator_rules.php?action=rm&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}"
 title="{tr}delete{/tr}"><img alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
       </td>
 

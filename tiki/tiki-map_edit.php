@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.11 2004-03-29 21:26:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.12 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,13 +83,18 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 
 $smarty->assign('tiki_p_map_delete', $tiki_p_map_delete);
 if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
-  if(! unlink($map_path.$_REQUEST["mapfile"]))
-  {
-		$smarty->assign('msg', tra("You dont have permission to delete the mapfile"));
-		$smarty->display("error.tpl");  
-		die;
-  }
-  $mode='listing';
+	$area = 'delmap';
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
+		if(! unlink($map_path.$_REQUEST["mapfile"])) {
+			$smarty->assign('msg', tra("You dont have permission to delete the mapfile"));
+			$smarty->display("error.tpl");  
+			die;
+		}
+		$mode='listing';
+	} else {
+		key_get($area);
+	}
 }
 
 if (isset($_REQUEST["save"])) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail_contacts.php,v 1.7 2004-03-28 07:32:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail_contacts.php,v 1.8 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,8 +33,13 @@ if ($_REQUEST["contactId"]) {
 $smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
-	check_ticket('webmail-contact');
-	$webmaillib->remove_contact($_REQUEST["remove"], $user);
+	$area = "delwebmailcontact";
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
+		$webmaillib->remove_contact($_REQUEST["remove"], $user);
+	} else {
+		key_get($area);
+	}
 }
 
 if (isset($_REQUEST["save"])) {

@@ -147,7 +147,6 @@
 <td>{$channels[user].groupname}</td>
 <td>
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}"
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this menu?{/tr}')"
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>
 	<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
@@ -164,7 +163,6 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <td>{$channels[user].groupname}</td>
 <td>
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this menu?{/tr}')" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>

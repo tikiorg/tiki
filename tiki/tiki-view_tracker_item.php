@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.62 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.63 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -444,11 +444,14 @@ if ($user) {
 }
 
 if ($tracker_info["useComments"] == 'y') {
-	if ($tiki_p_admin_trackers == 'y') {
-		if (isset($_REQUEST["remove_comment"])) {
-			check_ticket('view-trackers-items');
+	if ($tiki_p_admin_trackers == 'y') and isset($_REQUEST["remove_comment"])) {
+		$area = 'deltrackercomment';
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
 			$trklib->remove_item_comment($_REQUEST["remove_comment"]);
-		}
+		} else {
+  	  key_get($area);
+	  }
 	}
 	if (isset($_REQUEST["commentId"])) {
 		$comment_info = $trklib->get_item_comment($_REQUEST["commentId"]);
@@ -483,7 +486,13 @@ if ($tracker_info["useAttachments"] == 'y') {
 		check_ticket('view-trackers-items');
 		$owner = $trklib->get_item_attachment_owner($_REQUEST["removeattach"]);
 		if (($user && ($owner == $user)) || ($tiki_p_wiki_admin_attachments == 'y')) {
-			$trklib->remove_item_attachment($_REQUEST["removeattach"]);
+			$area = 'deltrackerattach';
+			if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+				key_check($area);
+				$trklib->remove_item_attachment($_REQUEST["removeattach"]);
+			} else {
+    		key_get($area);
+		  }
 		}
 	}
 	if (isset($_REQUEST["attach"]) && ($tiki_p_attach_trackers == 'y')) {

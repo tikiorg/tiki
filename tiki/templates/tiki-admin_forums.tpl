@@ -303,7 +303,7 @@
    <a title="{tr}configure/options{/tr}" class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
    <a title="{tr}permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key.gif" /></a>
    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this forum?{/tr}')"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 {/if}
 </td>
 </tr>
@@ -311,11 +311,11 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this fo
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>] 
+[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
- [<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+[<a class="prevnext" href="tiki-admin_forums.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

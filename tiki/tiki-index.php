@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.91 2004-03-27 21:23:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.92 2004-03-31 07:38:41 mose Exp $
 
 // Initialization
 
@@ -217,17 +217,23 @@ if($tiki_p_admin_wiki == 'y') {
 
 // Process an undo here
 if(isset($_REQUEST["undo"])) {
-	check_ticket('index');
-if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove=='y')) )) {
-  // Remove the last version	
-  $wikilib->remove_last_version($page);
-  // If page was deleted then re-create
-  if(!$tikilib->page_exists($page)) {
-    $tikilib->create_page($page,0,'',date("U"),'Tiki initialization'); 
-  }
-  // Restore page information
-  $info = $tikilib->get_page_info($page);  	
-}
+	if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' && $info["user"]==$user)||($tiki_p_remove=='y')) )) {
+		$area = 'delundopage';
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+
+			// Remove the last version	
+			$wikilib->remove_last_version($page);
+			// If page was deleted then re-create
+			if(!$tikilib->page_exists($page)) {
+				$tikilib->create_page($page,0,'',date("U"),'Tiki initialization'); 
+			}
+			// Restore page information
+			$info = $tikilib->get_page_info($page);  	
+		} else {
+			key_get($area);
+		}
+	}	
 }
 
 if ($wiki_uses_slides == 'y') {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.46 2004-03-15 21:27:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.47 2004-03-31 07:38:44 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -77,7 +77,7 @@
 </table>
 </td>
 {/if}
-{if $tiki_p_use_HTML eq 'y'}
+{if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
 {/if}
 {if $wiki_spellcheck eq 'y'}

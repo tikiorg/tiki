@@ -4814,6 +4814,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_warn_on_edit','
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml','n');
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_comments','n');

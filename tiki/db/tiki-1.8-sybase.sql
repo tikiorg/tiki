@@ -6522,6 +6522,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n')
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n')
 go
 

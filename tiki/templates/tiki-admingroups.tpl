@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.45 2004-03-13 12:21:35 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.46 2004-03-31 07:38:44 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -90,8 +90,7 @@ class="prevnext">{tr}All{/tr}</a>
 <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}permissions{/tr}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key.gif" /> {$users[user].permcant}</a>
 </td>
 <td style="width: 20px;">
-{if $users[user].groupName !== 'Anonymous'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this group?{/tr}')" 
+{if $users[user].groupName ne 'Anonymous'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/delete.gif" /></a>{/if}
 </td>
 </tr>

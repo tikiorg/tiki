@@ -1,93 +1,11 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.7 2004-03-29 21:26:30 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.8 2004-03-31 07:38:43 mose Exp $
 
 Tikiwiki CSRF protection.
-also called : anti-banana-skin (oops)
+also called Sea-Surfing
 
-Install:
-- copy tikiticketlib.php in lib/tikiticketlib.php (or anywhere to your taste)
-- add at the very top of setup.php, under session_start();
-    include "lib/tikiticketlib.php"; 
-  or anywhere your taste previous stated something else
-
-
-= CLOSING
-
-  ask_ticket('something');
-
-- for marking where begins an edit or admin area 
-  that requires protection.
-
-- on most administrative pages that ticket request 
-  should occur AFTER all active tests for modification
-
-- some pages include the edit and display part in same 
-  place. In such case use the ask_ticket at the end of 
-  conditionnal block that determines we are in edit mode.
-
-
-= OPENING
-
-  check_ticket('something');
-
-- for testing if the right ticket have been generated
-
-- that call should occur just after the test of $_REQUEST
-  variables to see if something is due to be modified.
-
-- if the check fails, it sends a mail to apache admin with 
-  faulty link and referer so the problem can be tracked.
-
-= EXAMPLE
-
-# file tiki-admin_cookies.php
-<?php
-require_once ('tiki-setup.php');
-include_once ('lib/taglines/taglinelib.php');
-
-if ($tiki_p_edit_cookies != 'y') {
-  $smarty->assign('msg', tra("You dont have permission to use this feature"));
-  $smarty->display("error.tpl");
-  die;
-}
-
-# insert protection here, with arbitrary string "admin_coojie"
-ask_ticket('admin_cookie');
-
-# ... snip ...
-
-if (isset($_REQUEST["remove"])) {
-	# verify the protection before action
-	check_ticket('admin_cookie'); //   <--------------- protected
-	$taglinelib->remove_cookie($_REQUEST["remove"]);
-}
-
-if (isset($_REQUEST["removeall"])) {
-	# verify the protection before action
-	check_ticket('admin_cookie'); //   <--------------- protected
-  $taglinelib->remove_all_cookies();
-}
-
-if (isset($_REQUEST["upload"])) {
-	# verify the protection before action
-	check_ticket('admin_cookie'); //   <--------------- protected
-  if (isset($_FILES['userfile1']) && 
-	  is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-    $fp = fopen($_FILES['userfile1']['tmp_name'], "r");
-# ... snip ...
-
-if (isset($_REQUEST["save"])) {
-	# verify the protection before action
-	check_ticket('admin_cookie'); //   <--------------- protected
-  $taglinelib->replace_cookie($_REQUEST["cookieId"], $_REQUEST["cookie"]);
-# ... snip ...
-
-$smarty->assign('mid', 'tiki-admin_cookies.tpl');
-$smarty->display("tiki.tpl");
-?>
-
-please ask admins@tikiwiki.org if you are lost with a complicated case.
-
+please report to security@tikiwiki.org 
+if you find a better way to handle sea surfing nastiness
 */
 
 //this script may only be included - so its better to die if called directly.
@@ -95,25 +13,17 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
+// obsolete: will be removed soon
 function ask_ticket($area) {
-	$_SESSION['antisurf'] =  $area; 
+	//$_SESSION['antisurf'] =  $area; 
+	return true;
 }
+
+// obsolete: will be removed soon
 function check_ticket($area) { 
+	/*
 	if (!isset($_SESSION['antisurf'])) $_SESSION['antisurf'] = '';
 	if ($_SESSION['antisurf'] != $area) { 
-		/* that part is optionnal, it sends a mail of alert
-		$body = "\nCSRF: ";
-		if (isset($_SERVER["SCRIPT_URI"]) and $_SERVER["SCRIPT_URI"]) {
-			$body.= $_SERVER["SCRIPT_URI"];
-		} else {
-			$body.= $_SERVER["HTTP_HOST"];
-		}
-		if (isset($_SERVER["QUERY_STRING"]) and $_SERVER["QUERY_STRING"]) {
-			$body.= "?".$_SERVER["QUERY_STRING"];
-		}
-		$body.= "\nfrom: ".$_SERVER["HTTP_REFERER"]."\n";
-		@mail($_SERVER['SERVER_ADMIN'],"[CSRF] alert",$body);
-		*/
 		global $smarty, $feature_ticketlib;
 		$_SESSION['antisurf'] =  $area; 
 		if ($feature_ticketlib == 'y') {
@@ -125,5 +35,33 @@ function check_ticket($area) {
 		die;
 		}
 	}
+	*/
+	return true;
 }
+
+// new valid function for ticketing :
+
+function key_get($area) {
+	global $smarty;
+	$_SESSION["ticket_$area"] = time();
+	$smarty->assign('confirmaction', $_SERVER['REQUEST_URI']);
+	$smarty->display("confirm.tpl");
+	die();
+}
+
+function key_check($area) {
+	global $_SESSION;
+	if (isset($_SESSION["ticket_$area"])
+		and $_SESSION["ticket_$area"] < date('U')
+		and $_SESSION["ticket_$area"] > (date('U')-(60*15))) {
+		return true;
+	}
+	global $smarty;
+	unset($_SESSION["ticket_$area"]);
+	$smarty->assign('msg',tra('Sea Surfing (CSRF) detected. Operation blocked.'));
+	$smarty->assign('nocreate',1);
+	$smarty->display("error.tpl");
+	die();
+}
+
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.14 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.15 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -121,8 +121,13 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 }
 
 if (isset($_REQUEST["removeZone"])) {
-	check_ticket('edit-banner');
-	$bannerlib->banner_remove_zone($_REQUEST["removeZone"]);
+  $area = 'delbannerzone';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$bannerlib->banner_remove_zone($_REQUEST["removeZone"]);
+  } else {
+    key_get($area);
+  }
 }
 
 // Now assign if the set button was pressed

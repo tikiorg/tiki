@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.7 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.8 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,6 +54,10 @@ if (isset($_REQUEST["upload"])) {
 //Do we have a file to delete?
 if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
   if ($_REQUEST["action"]=="delete") {
+		$area = "delmapupload";
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+					
     if (is_file($directory_path."/".$_REQUEST["file"]) &&
         !preg_match("/^\./", $_REQUEST["file"])) {
       if ($tiki_p_map_delete !='y') {
@@ -62,6 +66,9 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
         die;      
       }
       unlink($directory_path."/".$_REQUEST["file"]);
+			} else {
+				key_get($area);
+			}
     } else {
         $smarty->assign('msg',tra("File not found"));
         $smarty->display("error.tpl");
@@ -91,6 +98,10 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
     }
   }
   if ($_REQUEST["action"]=="deldir") {
+		$area = "delmapdir";
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+					
     if(!preg_match("/^\./", $_REQUEST["directory"]) || 
        !preg_match("/\.\//", $_REQUEST["directory"])){
       if ($tiki_p_map_delete !='y') {
@@ -104,6 +115,9 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
         die;      
       }
     }
+		} else {
+			key_get($area);
+		}
   }  
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.12 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.13 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,20 +32,34 @@ if (!isset($_REQUEST["eventId"]))
 	$_REQUEST["eventId"] = 0;
 
 if (isset($_REQUEST['remove'])) {
-	check_ticket('minical');
-	$minicallib->minical_remove_event($user, $_REQUEST['remove']);
+  $area = 'delminicalevent';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$minicallib->minical_remove_event($user, $_REQUEST['remove']);
+  } else {
+    key_get($area);
+  }
 }
 
 if (isset($_REQUEST['remove2'])) {
-	check_ticket('minical');
+  $area = 'delminicalevent2';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
 	$minicallib->minical_remove_event($user, $_REQUEST['eventId']);
+  } else {
+    key_get($area);
 }
 
 if (isset($_REQUEST['delete'])) {
-	check_ticket('minical');
+  $area = 'delminical';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
 	foreach (array_keys($_REQUEST["event"])as $ev) {
 		$minicallib->minical_remove_event($user, $ev);
 	}
+  } else {
+    key_get($area);
+  }
 }
 
 if (isset($_REQUEST['day']) && isset($_REQUEST['mon']) && isset($_REQUEST['year'])) {
@@ -70,7 +84,13 @@ $smarty->assign('pdate', $pdate);
 $smarty->assign('pdate_h', $pdate_h);
 
 if (isset($_REQUEST['removeold'])) {
-	$minicallib->minical_remove_old($user, $pdate_h);
+  $area = 'delminicaloldevents';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$minicallib->minical_remove_old($user, $pdate_h);
+  } else {
+    key_get($area);
+  }
 }
 
 // corrections by Wells Wang

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.5 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.6 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,7 +86,13 @@ if (isset($_REQUEST['action']) && isset($_REQUEST['copyrightId'])) {
 	} elseif ($_REQUEST['action'] == 'down') {
 		$copyrightslib->down_copyright($_REQUEST['copyrightId']);
 	} elseif ($_REQUEST['action'] == 'delete') {
-		$copyrightslib->remove_copyright($_REQUEST['copyrightId']);
+		$area = 'delcopyright';
+		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+			key_check($area);
+			$copyrightslib->remove_copyright($_REQUEST['copyrightId']);
+		} else {
+			key_get($area);
+		}
 	}
 }
 

@@ -83,7 +83,6 @@
 <td class="odd">{$channels[user].created|tiki_short_datetime}</td>
 <td class="odd">
    &nbsp;&nbsp;<a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this HTML page?{/tr}')" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
    <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>
@@ -97,7 +96,6 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <td class="even">{$channels[user].created|tiki_short_datetime}</td>
 <td class="even">
    &nbsp;&nbsp;<a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this HTML page?{/tr}')" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
    <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>

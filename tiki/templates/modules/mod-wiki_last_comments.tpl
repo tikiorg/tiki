@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-wiki_last_comments.tpl,v 1.3 2004-03-07 23:12:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-wiki_last_comments.tpl,v 1.4 2004-03-31 07:38:45 mose Exp $ *}
 
-{if $feature_forums eq 'y'}
+{if $feature_wiki eq 'y'}
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` wiki comments{/tr}" assign="tpl_module_title"}
 {else}

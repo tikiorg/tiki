@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.20 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.21 2004-03-31 07:38:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -212,7 +212,6 @@ if (isset($_REQUEST["edit"])) {
 }
 
 if (isset($_REQUEST["removegal"])) {
-	check_ticket('galleries');
 	if ($tiki_p_admin_galleries != 'y') {
 		$info = $imagegallib->get_gallery_info($_REQUEST["removegal"]);
 
@@ -223,8 +222,13 @@ if (isset($_REQUEST["removegal"])) {
 			die;
 		}
 	}
-
-	$imagegallib->remove_gallery($_REQUEST["removegal"]);
+  $area = 'delgal';
+  if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+    key_check($area);
+		$imagegallib->remove_gallery($_REQUEST["removegal"]);
+  } else {
+    key_get($area);
+  }
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
