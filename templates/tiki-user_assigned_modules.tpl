@@ -26,10 +26,10 @@
   <td class="even">{$modules[ix].position}</td>
   <td class="even">
   {if $modules[ix].name ne 'application_menu' and $modules[ix].name ne 'login_box'}
-  <a class="link" href="tiki-user_assigned_modules.php?unassign={$modules[ix].name}">{tr}unassign{/tr}</a>
+  <a class="link" href="tiki-user_assigned_modules.php?unassign={$modules[ix].name}">{tr}unassign{/tr}</a> |
   {/if}
-  <a class="link" href="tiki-user_assigned_modules.php?up={$modules[ix].name}">{tr}up{/tr}</a>
-  <a class="link" href="tiki-user_assigned_modules.php?down={$modules[ix].name}">{tr}down{/tr}</a>
+  <a class="link" href="tiki-user_assigned_modules.php?up={$modules[ix].name}">{tr}up{/tr}</a> |
+  <a class="link" href="tiki-user_assigned_modules.php?down={$modules[ix].name}">{tr}down{/tr}</a> |
   {if $modules[ix].position eq 'l'}
   <a class="link" href="tiki-user_assigned_modules.php?right={$modules[ix].name}">{tr}move{/tr}</a>
   {else}

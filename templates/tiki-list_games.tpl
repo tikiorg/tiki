@@ -1,5 +1,5 @@
 <a class="pagetitle" href="tiki-list_games.php">{tr}Games{/tr}</a><br/><br/>
-<small>{tr}All games are from{/tr} <a class="link" href="http://www.miniclip.com">www.miniclip.com</a> {tr}visit the site for more games and fun{/tr}</small><br/><br/>
+<small>{tr}All games are from{/tr} <a class="link" href="http://www.miniclip.com">www.miniclip.com</a>. {tr}visit the site for more games and fun{/tr}</small><br/><br/>
 {if $tiki_p_admin_games eq 'y'}
 <a href="tiki-list_games.php?uploadform=1" class="link">{tr}Upload a game{/tr}</a><br/><br/>
 {/if}

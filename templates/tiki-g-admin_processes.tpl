@@ -1,10 +1,10 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <a class="pagetitle" href="tiki-g-admin_processes.php">{tr}Admin processes{/tr}</a>
-{helplink page="HomePage}
+{helplink page="HomePage"}
 <br/><br/>
 {include file=tiki-g-monitor_bar.tpl}
-<h3>{tr}Add or edit a process{/tr} <a class="link" href="tiki-g-admin_processes.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">new</a>
+<h3>{tr}Add or edit a process{/tr} <a class="link" href="tiki-g-admin_processes.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">{tr}new{/tr}</a>
 </h3>
 {if $pid > 0}
 {include file=tiki-g-proc_bar.tpl}

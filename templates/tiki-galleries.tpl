@@ -49,7 +49,7 @@
 {/if}
 <h2>{tr}Available Galleries{/tr}</h2>
 {if $tiki_p_create_galleries eq 'y'}
-<a class="gallink" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">create new gallery</a><br/><br/>
+<a class="gallink" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br/><br/>
 {/if}
 <div align="center">
 <table class="findtable">
@@ -87,7 +87,7 @@
 {if $gal_list_visits eq 'y'}   
 <td class="gallistheading"><a class="gallistheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></td>
 {/if}
-<td class="gallistheading">Actions</td>
+<td class="gallistheading">{tr}Actions{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$galleries}
