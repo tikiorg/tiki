@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_student_assignments.php,v 1.4 2004-03-12 20:58:25 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_student_assignments.php,v 1.5 2004-06-16 06:12:08 teedog Exp $
 
 // Copyright (c) 2004, George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -57,7 +57,8 @@ $listpages = $homeworklib->hw_assignments_list(0, $maxArticles /* , $sort_mode, 
 // print_r($listpages);
 // die;
 
-for ($i = 0; $i < count($listpages["cant"]); $i++) {
+$temp_max = count($listpages["cant"]);
+for ($i = 0; $i < $temp_max; $i++) {
   $listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
   // $listpages["data"][$i]["show_author"] = 'n';
   // $listpages["data"][$i]["show_expdate"] = 'y';

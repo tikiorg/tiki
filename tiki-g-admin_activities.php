@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.9 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.10 2004-06-16 06:12:08 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -286,7 +286,8 @@ $activities = $activityManager->list_activities($_REQUEST['pid'], 0, -1, $_REQUE
 
 //Now check if the activity is or not part of a transition
 if (isset($_REQUEST['activityId'])) {
-	for ($i = 0; $i < count($activities["data"]); $i++) {
+	$temp_max = count($activities["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
 		$id = $activities["data"][$i]['activityId'];
 
 		$activities["data"][$i]['to']
@@ -298,7 +299,8 @@ if (isset($_REQUEST['activityId'])) {
 
 // Set activities
 if (isset($_REQUEST["update_act"])) {
-	for ($i = 0; $i < count($activities["data"]); $i++) {
+	$temp_max = count($activities["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
 		$id = $activities["data"][$i]['activityId'];
 
 		if (isset($_REQUEST['activity_inter']["$id"])) {
