@@ -1,5 +1,11 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] SnowChekMail the function used to validate email addresses can be disabled if
+  you configure your system as Windows in the main admin panel.
+* [NEW] My Tiki section added as a refurbished user_preferences section, this new section
+  includes user_preferences, modules, bookmarks, tasks and all the per-user sections of
+  Tiki.
+* [NEW] Wiki plugin added: SPLIT used to split a wiki page in two columns.
 * [NEW] Wiki plugin added: SQL can be used to display the result of an SQL query to the
   tiki database, useful for reports and others. If you don't use tiki as an intranet you
   may want to remove this plugin for security reasons (!!).
@@ -8,7 +14,7 @@ Version 1.6 -Tau Ceti-
 * [NEW] Wiki page footnotes, wiki pages can have footnotes, footnotes are kept at user
   level (each user only sees his footnotes for each page). This allow users to keep his
   private comments and notes for Wiki pages. 
-* [NEW] Plugins added to normal distribution: code, split, avatar, center
+* [NEW] Plugins added to normal distribution: code, avatar, center
 * [NEW] Plugins can be nested
 * [NEW] Plugins are re-entrant, a plugin can generate another plugin code. 
 * [NEW] Wiki structures can be used to generate slide shows
