@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.32 2003-11-23 03:15:06 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.33 2004-02-23 02:28:49 chealer Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -22,7 +22,7 @@ if(isset($_REQUEST["mon"])) {
 
 if(isset($_REQUEST["year"])) {
  $year = $_REQUEST["year"];
-} 
+}
 
 $thedate = mktime(23,59,59,$mon,$day,$year);
 $_SESSION["thedate"] = $thedate;
@@ -60,11 +60,7 @@ if (count($query)>0) {
   $father.='?';
 }
 
-if (!strstr($father,"?")) {
-  $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y");
-} else {
-  $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y");
-}
+$todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y");
 {/php}
 
 {tikimodule title="{tr}Calendar{/tr}-{tr}Filter{/tr}" name="calendar"}
@@ -73,12 +69,16 @@ if (!strstr($father,"?")) {
     <tr>
       <td align="center">
 {php}
-        $mong=$mon-1;
-        $url="$father"."day=$day&amp;mon=$mong&amp;year=$year";
+        $pmonth = $mon -1;
+	$nmonth = $mon +1;
+	$pyear = $year;
+	$nyear = $year;
+	if ($pmonth == 0) {$pyear -= 1; $pmonth += 12;}
+	if ($nmonth == 13) {$nyear += 1; $nmonth -= 12;}
+        $url="$father"."day=$day&amp;mon=$pmonth&amp;year=$pyear";
         print( "<a class=\"nav\" href=\"".$url."\"> &lt; </a>" );
         print( $v );
-        $mong=$mon+1;
-        $url="$father"."day=$day&amp;mon=$mong&amp;year=$year";
+        $url="$father"."day=$day&amp;mon=$nmonth&amp;year=$nyear";
         print( "<a class=\"nav\" href=\"".$url."\"> &gt; </a>" );
         print( "&nbsp;" );
         $mong=$year-1;
