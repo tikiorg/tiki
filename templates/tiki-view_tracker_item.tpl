@@ -142,9 +142,9 @@
 <h3>{tr}Comments{/tr}</h3>
 {section name=ix loop=$comments}
 <b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
-  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}Click here to edit this comment{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}" 
+  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this comment?{/tr}')" 
-title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;]{/if}
+title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;]{/if}
 <br />
 <small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br />
 {$comments[ix].parsed}
@@ -187,10 +187,10 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 <td nowrap="nowrap" class="auto">
 {if $attextra eq 'y'}
 {assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}
-<a class="tablename" href="#" title="{tr}More Info{/tr}"
+<a class="tablename" href="#" title="{tr}more info{/tr}"
 onClick="window.open('http://{$http_domain}{$http_prefix}{$link|escape:"javascript"}','newin','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');return
-true;"><img src="img/icons/question.gif" border="0" alt="{tr}More Info{/tr}"  hspace="2" vspace="1" /></a>{/if}<a 
-class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}Download{/tr}"><img src="img/icons/icon38.gif" border="0" alt="{tr}Download{/tr}" hspace="8" vspace="O" /></a>
+true;"><img src="img/icons/question.gif" border="0" alt="{tr}question{/tr}"  hspace="2" vspace="1" /></a>{/if}<a 
+class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}" title="{tr}download{/tr}"><img src="img/icons/icon38.gif" border="0" alt="{tr}download{/tr}" hspace="8" vspace="O" /></a>
 </td>
 {foreach key=k item=x from=$attfields}
 {if $x eq 'created'}
@@ -205,8 +205,8 @@ class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId
 {/foreach}
 <td>
 {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
-<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}erase{/tr}"><img
-src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="0" /></a>
+<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}" title="{tr}delete{/tr}"><img
+src="img/icons2/delete.gif" border="0" alt="{tr}delete{/tr}"  hspace="2" vspace="0" /></a>
 {/if}
 </td>
 </tr>

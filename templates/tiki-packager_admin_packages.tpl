@@ -6,8 +6,8 @@
 {if $feature_help eq 'y'}</a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-packager_admin_packages.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Packager Admin{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' />{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-packager_admin_packages.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Packager Admin{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' />{/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 <br />
 
@@ -73,13 +73,13 @@ class="prevnext">{tr}All{/tr}</a>
 <tr class="{cycle name=mfRows advance=false }">
 <td align="center">
 <input type="radio" name='package' value="{$manifests[mf]}"/></td>
-<td align="center"><a class="link" href="{$myURL}?package={$manifests[mf]}" title="{tr}Click here to edit this manifest{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a></td>
+<td align="center"><a class="link" href="{$myURL}?package={$manifests[mf]}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a></td>
 <td align="center"><input type="checkbox" value="{$manifests[mf]}" name="packages[]" /></td>
 <td><a class="link" href="{$myURL}?package={$manifests[mf]}" title="{tr}Click here to edit this manifest{/tr}">{$manifests[mf]}</a></td>
 <td>
 <a class="link" href="{$myURL}?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete-package&amp;package={$manifests[mf]}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this manifest?{/tr}')" 
-title={tr}"Click here to delete this manifest"{/tr}><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>
 </td>
 </tr>
 {/section}

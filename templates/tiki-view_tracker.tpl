@@ -179,14 +179,14 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
 <td  style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$trackerId}{section name=mix loop=$fields}{if
 $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}&amp;show=att" 
-link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
+link="{tr}list attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
 /></a>{$items[user].attachments}</td>
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
 <td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section 
 name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this tracker item?{/tr}');" 
-title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a></td>
+title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a></td>
 {/if}
 </tr>
 {/section}

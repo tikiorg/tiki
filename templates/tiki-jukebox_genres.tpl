@@ -3,7 +3,7 @@
 <a class="linkbut" href="tiki-jukebox_genres.php?edit_mode=1&amp;genreId=0">{tr}create new genre{/tr}</a>
 {/if}
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=jukebox"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<a href="tiki-admin.php?page=jukebox" title="{tr}configure listing{/tr}"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" /></a>
 {/if}
 <br /><br />
 {if $tiki_p_jukebox_genres eq 'y'}
@@ -53,7 +53,7 @@
 	<td class="jukeboxlisttitle{cycle advance=false}">{$listgenres[changes].genreName|escape}</td>
 	<td class="jukeboxlistdescription{cycle advance=false}">{$listgenres[changes].genreDescription|escape}</td>
 	<td class="jukeboxlistaction{cycle advance=false}">
-	<a class="link" href="tiki-jukebox_genres.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;genreId={$listgenres[changes].genreId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>&nbsp;&nbsp;<a class="link" href="tiki-jukebox_genres.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listgenres[changes].genreId}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this genre?{/tr}')" title="Click here to delete this genre"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+	<a title="{tr}edit{/tr}" class="link" href="tiki-jukebox_genres.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;genreId={$listgenres[changes].genreId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>&nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-jukebox_genres.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listgenres[changes].genreId}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this genre?{/tr}')" ><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 	</td>
 </tr>
 {sectionelse}
