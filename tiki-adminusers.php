@@ -38,13 +38,13 @@ global $userlib, $smarty;
     // Process user array
     $added = 0;
     foreach ($userrecs as $u) {
-    	if (@!$u['login']) {
+    	if (empty($u['login'])) {
     		$discarded[] = discardUser($u,tra("User login is required"));
     	}
-    	elseif (@!$u['password']) {
+    	elseif (empty($u['password'])) {
     		$discarded[] = discardUser($u,tra("Password is required"));
     	}
-    	elseif (@!$u['email']) {
+    	elseif (empty($u['email'])) {
     		$discarded[] = discardUser($u,tra("Email is required"));
     	}
     	elseif ($userlib->user_exists($u['login']) and (!$_REQUEST['overwrite'])) {
