@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.36 2004-01-27 18:36:37 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.37 2004-01-28 03:37:41 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -163,28 +163,80 @@ title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/de
 {/if}
 </div>
 
-{if $fields}
+{* ---------------------- tab with more info -------------------- *}
+{if $username and $fields}
 <div id="content{cycle name=content}" class="content">
 <table class="normal">
+
+{* copypaste from templates/tiki-view_tracker_item.tpl s/ins_fields/fields/g *}
 {section name=ix loop=$fields}
+
 {if $fields[ix].type eq 'h'}
 </table>
-<h3>{$fields[ix].label}</h3>
+<h3>{$fields[ix].name}</h3>
 <table class="normal">
+
 {elseif $fields[ix].type ne 'x'}
+{if $fields[ix].type eq 'c' or $fields[ix].type eq 't' and $fields[ix].options_array[0] eq '1'}
+<tr class="formcolor"><td class="formlabel">{$fields[ix].name}</td><td>
+{elseif $stick eq 'y'}
+<td class="formlabel right">{$fields[ix].name}</td><td>
+{else}
 <tr class="formcolor"><td>{$fields[ix].name}</td>
-<td>
+<td colspan="3">
+{/if}
 {if $fields[ix].type eq 'f' or $fields[ix].type eq 'j'}
-{$fields[ix].value|date_format:$daformat}
+{$fields[ix].value|date_format:$daformat}</td></tr>
+
 {elseif $fields[ix].type eq 'a'}
 {$fields[ix].pvalue}
-{else}
-{$fields[ix].value|default:"&nbsp;"}
-{/if}
+
+{elseif $fields[ix].type eq 'e'}
+{assign var=fca value=$fields[ix].options}
+<table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
+{foreach key=ku item=iu from=$fields[ix].$fca}
+<td width="50%" nowrap="nowrap"><tt>{if $fields[ix].value.$ku eq 'y'}X&nbsp;{else}&nbsp;&nbsp;{/if}</tt>{$iu.name}</td>{cycle name=$fca}
+{/foreach}
+</table></td></tr>
+
+{elseif $fields[ix].type eq 'c'}
+{$fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
+{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
-</tr>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+
+{elseif $fields[ix].type eq 't'}
+{if $fields[ix].options_array[2]}
+{$fields[ix].value|default:"0"} <span class="formunit">&nbsp;{$fields[ix].options_array[2]}</span>
+{else}
+{$fields[ix].value}
+{/if}
+{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+</td>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+
+{else}
+{$fields[ix].value}
+{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+</td>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+{/if}
 {/if}
 {/section}
+{* end of copypasted block *}
+
 </table>
 <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$usersTrackerId}&amp;itemId={$useritemId}&amp;show=mod" class="linkbut">{tr}Edit informations{/tr}</a></span>
 </div>

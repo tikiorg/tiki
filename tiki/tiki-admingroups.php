@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.22 2004-01-27 18:36:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.23 2004-01-28 03:37:40 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,37 +148,36 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	}
 
 	if ($groupTracker == 'y') {	
-		if(isset($re["groupTrackerId"])) {
-			$grouptrackerid = $re["groupTrackerId"];
+		if($re["groupTrackerId"]) {
 			include_once('lib/trackers/trackerlib.php');
+			$grouptrackerid = $re["groupTrackerId"];
 			$fields = $trklib->list_tracker_fields($grouptrackerid, 0, -1, 'position_asc', '');
 			$info = $trklib->get_item($grouptrackerid,'groupName',$groupname);
 			for ($i = 0; $i < count($fields["data"]); $i++) {
+				$name = $fields["data"][$i]["fieldId"];
 				if ($fields["data"][$i]["type"] != 'h') {
-					$name = ereg_replace("[^a-zA-Z0-9]","",$fields["data"][$i]["name"]);
-					$ins_name = 'ins_' . $name;
 					if ($fields["data"][$i]["type"] == 'c') {
 						if (!isset($info["$name"])) $info["$name"] = 'n';
 					} else {
 						if (!isset($info["$name"])) $info["$name"] = '';
 					}
-					$ins_fields["data"][$i]["value"] = $info["$name"];
+					$fields["data"][$i]["value"] = $info["$name"];
 					if ($fields["data"][$i]["type"] == 'a') {
-						$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+						$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
 					}
 				}
 			}
 			//	 var_dump($ins_fields['data']);
 			$smarty->assign_by_ref('fields', $fields["data"]);
-			$smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
 		}
 	}
-	
+
 	$groupperms = $re["perms"];
+	
+	$allgroups = $userlib->list_all_groups();
 	$rs = $userlib->get_included_groups($_REQUEST["group"]);
 
-	foreach ($users["data"] as $r) {
-		$rr = $r["groupName"];
+	foreach ($allgroups as $rr) {
 		$inc["$rr"] = "n";
 		if (in_array($rr, $rs)) {
 			$inc["$rr"] = "y";
@@ -188,8 +187,15 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
 	}
 } else {
+	$allgroups = $userlib->list_all_groups();
+	foreach ($allgroups as $rr) {
+		$inc["$rr"] = "n";
+	}
 	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 	$_REQUEST["group"] = 0;
+}
+if (isset($_REQUEST['add'])) {
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
 }
 
 if ($_REQUEST['group']) {

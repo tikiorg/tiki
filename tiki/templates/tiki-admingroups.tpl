@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.33 2004-01-27 18:36:37 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.34 2004-01-28 03:37:41 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -15,17 +15,24 @@
 
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
+{if $groupname}
+<span class="button2"><a href="tiki-admingroups.php?add=1" class="linkbut">{tr}Add new group{/tr}</a></span>
+{/if}
 <br /><br /><br />
 
 {cycle name=tabs values="1,2,3,4" print=false advance=false}
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}List{/tr}</span>
-<span id="tab{cycle name=tabs}" class="tab">{tr}Add/Edit{/tr}</span>
+{if $groupname}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Edit group{/tr} <i>{$groupname}</i></span>
 {if $fields}
 <span id="tab{cycle name=tabs}" class="tab">{tr}More info{/tr}</span>
 {/if}
 {if $memberslist}
 <span id="tab{cycle name=tabs}" class="tab">{tr}Members{/tr}</span>
+{/if}
+{else}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Add a new group{/tr}</span>
 {/if}
 </div>
 
@@ -120,11 +127,10 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 
 {* ----------------------- tab with form --------------------------------------- *}
 <div id="content{cycle name=content}" class="content">
-{if $groupname eq ''}
-<h3>{tr}Add New Group{/tr}</h3>
+{if $groupname}
+<h3>{tr}Edit group{/tr} {$groupname}</h3>
 {else}
-<h3>{tr}Edit this group:{/tr} {$groupname}</h3>
-<a href="tiki-admingroups.php">{tr}Add new group{/tr}</a>
+<h3>{tr}Add new group{/tr}</h3>
 {/if}
 <form action="tiki-admingroups.php" method="post">
 <table class="normal">
@@ -132,10 +138,9 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 <tr class="formcolor"><td><label for="groups_desc">{tr}Description{/tr}:</label></td><td><textarea rows="5" cols="20" name="desc" id="groups_desc">{$groupdesc}</textarea></td></tr>
 <tr class="formcolor"><td><label for="groups_inc">{tr}Include{/tr}:</label></td><td>
 <select name="include_groups[]" id="groups_inc" multiple="multiple" size="4">
-{section name=ix loop=$users}
-{assign var=inced value=$users[ix].groupName}
-<option value="{$inced|escape}" {if $inc.$inced eq 'y'} selected="selected"{/if}>{$inced}</option>
-{/section}
+{foreach key=gr item=yn from=$inc}
+<option value="{$gr|escape}" {if $yn eq 'y'} selected="selected"{/if}>{$gr|truncate:"52":" ..."}</option>
+{/foreach}
 </select>
 </td></tr>
 <tr class="formcolor"><td><label for="groups_home">{tr}Home page{/tr}</label></td><td><input type="text" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
@@ -177,36 +182,87 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 </div>
 
 {* ----------------------- tab with more --------------------------------------- *}
-{if $fields}
+{if $groupname and $fields}
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}Additionnal information{/tr}</h3>
 <table class="normal">
+
+{* copypaste from templates/tiki-view_tracker_item.tpl s/ins_fields/fields/g *}
 {section name=ix loop=$fields}
+
 {if $fields[ix].type eq 'h'}
 </table>
-<h3>{$fields[ix].label}</h3>
+<h3>{$fields[ix].name}</h3>
 <table class="normal">
+
 {elseif $fields[ix].type ne 'x'}
-<tr class="formcolor"><td>{$fields[ix].label}</td>
-<td>
+{if $fields[ix].type eq 'c' or $fields[ix].type eq 't' and $fields[ix].options_array[0] eq '1'}
+<tr class="formcolor"><td class="formlabel">{$fields[ix].name}</td><td>
+{elseif $stick eq 'y'}
+<td class="formlabel right">{$fields[ix].name}</td><td>
+{else}
+<tr class="formcolor"><td>{$fields[ix].name}</td>
+<td colspan="3">
+{/if}
 {if $fields[ix].type eq 'f' or $fields[ix].type eq 'j'}
-{$fields[ix].value|date_format:$daformat}
+{$fields[ix].value|date_format:$daformat}</td></tr>
+
 {elseif $fields[ix].type eq 'a'}
 {$fields[ix].pvalue}
+
+{elseif $fields[ix].type eq 'e'}
+{assign var=fca value=$fields[ix].options}
+<table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
+{foreach key=ku item=iu from=$fields[ix].$fca}
+<td width="50%" nowrap="nowrap"><tt>{if $fields[ix].value.$ku eq 'y'}X&nbsp;{else}&nbsp;&nbsp;{/if}</tt>{$iu.name}</td>{cycle name=$fca}
+{/foreach}
+</table></td></tr>
+
+{elseif $fields[ix].type eq 'c'}
+{$fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
+{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+</td>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+
+{elseif $fields[ix].type eq 't'}
+{if $fields[ix].options_array[2]}
+{$fields[ix].value|default:"0"} <span class="formunit">&nbsp;{$fields[ix].options_array[2]}</span>
 {else}
 {$fields[ix].value}
 {/if}
+{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
-</tr>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+
+{else}
+{$fields[ix].value}
+{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+</td>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+{/if}
 {/if}
 {/section}
+{* end of copypasted block *}
+
 </table>
 <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$groupTrackerId}&amp;itemId={$useritemId}&amp;show=mod" class="linkbut">{tr}Edit informations{/tr}</a></span>
 </div>
 {/if}
 
 {* ----------------------- tab with memberlist --------------------------------------- *}
-{if $memberslist}
+{if $groupname and $memberslist}
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}Members List{/tr}: {$groupname}</h3>
 <table class="normal"><tr>

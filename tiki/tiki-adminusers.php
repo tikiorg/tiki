@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.18 2004-01-27 18:36:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.19 2004-01-28 03:37:40 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,9 +8,6 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-include_once('lib/modules/modlib.php');
-include_once ('lib/userprefs/scrambleEmail.php');
-include_once ('lib/userprefs/userprefslib.php');
 
 if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
@@ -83,10 +80,6 @@ function batchImportUsers() {
 		$smarty->assign('discarded', count($discarded));
 	}
 	@$smarty->assign('discardlist', $discarded);
-}
-
-if (isset($userTracker) and $userTracker  == 'y') {
-	include_once('lib/trackers/trackerlib.php');
 }
 
 
@@ -188,6 +181,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	
 	if ($userTracker == 'y') {
 		if ($re['usersTrackerId']) {
+			include_once('lib/trackers/trackerlib.php');
 			$usersTrackerId = $re["usersTrackerId"];
 			$username = $re['login'];
 			$usermail = $re['email'];
