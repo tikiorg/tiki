@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.5 2004-08-11 18:34:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.6 2004-08-12 16:04:48 sylvieg Exp $
 
-function diff2($page1, $page2) {
+function diff2($page1, $page2, $type='sidediff') {
 	$page1 = split("\n", $page1);
 	$page2 = split("\n", $page2);
 	$z = new Text_Diff($page1, $page2);
@@ -10,13 +10,15 @@ function diff2($page1, $page2) {
 	} else {
 //echo "<pre>";print_r($z);echo "</pre>";
 		require_once('renderer.php');
-		global $feature_wiki_diff_style;
-		if (!empty($feature_wiki_diff_style) && $feature_wiki_diff_style == 'sidebyside') {
-			require_once('renderer_sidebyside.php');
-			$renderer = new Text_Diff_Renderer_sidebyside;
-		} else {
+		if ($type == 'unidiff') {
 			require_once('renderer_unified.php');
 			$renderer = new Text_Diff_Renderer_unified;	
+		} else if ($type == 'minsidediff') {
+			require_once('renderer_sidebyside.php');
+			$renderer = new Text_Diff_Renderer_sidebyside(2);
+		} else {
+			require_once('renderer_sidebyside.php');
+			$renderer = new Text_Diff_Renderer_sidebyside(sizeof($page1));
 		}
 		$html = $renderer->render($z);
 	}
