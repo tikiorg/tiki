@@ -44,7 +44,7 @@ function subavt() {
   </td>
 </tr>
 </table>
-<h2>{tr}Pick avatar from the library</h2>
+<h2>{tr}Pick avatar from the library{/tr}</h2>
 <form action="tiki-pick_avatar.php" method="post">
 <input id=avatar type="hidden" name="avatar" value="img/avatars/000.gif" />
 <table class="normal">

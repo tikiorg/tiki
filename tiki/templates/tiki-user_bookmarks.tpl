@@ -1,8 +1,9 @@
-<a class="pagetitle" href="tiki-user_bookmarks.php">User Bookmarks</a><br/><br/>
+<a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a><br/><br/>
 [<a href="tiki-user_preferences.php" class="link">{tr}User Preferences{/tr}</a>
 {if $feature_user_bookmarks eq 'y'}|<a href="tiki-user_bookmarks.php" class="link">{tr}User Bookmarks{/tr}</a>{/if}
+|<a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a>
 {if $user_assigned_modules eq 'y'}|<a href="tiki-user_assigned_modules.php" class="link">{tr}Configure modules{/tr}</a>{/if}]<br/><br/>
-{if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">top</a>] {/if}Current folder: {$path}<br/>
+{if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">top</a>] {/if}{tr}Current folder{/tr}: {$path}<br/>
 <table class="normal">
 <tr>
   <td class="heading">{tr}name{/tr}</td>
