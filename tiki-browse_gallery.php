@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.24 2004-08-22 01:37:25 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.25 2004-08-22 22:49:29 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -197,6 +197,9 @@ if ($_REQUEST["galleryId"] == 0) {
 	$info["name"] = 'System';
 	$info["public"] = 'y';
 	$info["description"] = 'System Gallery';
+	$info['sortorder'] = 'created';
+	$info['sortdirection'] = 'desc';
+	$info['galleryimage'] = 'last';
 	$smarty->assign('system', 'y');
 } else {
 	$info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
@@ -265,8 +268,17 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
-$images = $imagegallib->get_images($offset, $maxImages, $sort_mode, $find, $_REQUEST["galleryId"]);
-$cant_pages = ceil($images["cant"] / $maxImages);
+
+// get subgalleries first
+$subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, $find, $_REQUEST["galleryId"]);
+$remainingImages = $maxImages-count($subgals['data']);
+$newoffset = $offset -$subgals['cant'];
+$images = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
+$smarty->assign('num_objects',count($subgals['data'])+count($images['data']));
+$smarty->assign('num_subgals',count($subgals['data']));
+echo "num_subgals: ".count($subgals['data']);
+$smarty->assign('num_images',count($images['data']));
+$cant_pages = ceil(($subgals['cant']+$images['cant']) / $maxImages);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxImages));
 
@@ -284,6 +296,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('images', $images["data"]);
+$smarty->assign_by_ref('subgals', $subgals['data']);
 
 if ($feature_image_galleries_comments == 'y') {
 	$comments_per_page = $image_galleries_comments_per_page;

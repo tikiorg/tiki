@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.16 2004-08-22 01:37:26 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.17 2004-08-22 22:49:33 redflo Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -76,3 +76,11 @@ ALTER TABLE tiki_galleries ADD COLUMN (
 	sortdirection VARCHAR(4) NOT NULL DEFAULT 'desc',
 	galleryimage VARCHAR(20) NOT NULL DEFAULT 'first'
 );
+
+ALTER TABLE tiki_galleries ADD COLUMN (
+	parentgallery int(14) NOT NULL default -1
+);
+
+#
+# End Imagegals enhancements
+#
