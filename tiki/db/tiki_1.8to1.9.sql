@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.45 2004-04-27 17:57:24 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.46 2004-04-28 04:28:53 ggeller Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -320,3 +320,121 @@ UPDATE `tiki_quicktags` set `tagcategory`='wiki';
 #added on 2004-4-26 sylvie
 DELETE FROM `tiki_preferences` WHERE `name`='email_encoding';
 ALTER TABLE `tiki_pages` ADD `lang` VARCHAR( 16 ) AFTER `page_size` ;
+
+#added on 2004-4-27 ggeller
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Homework','tiki-hw_teacher_assignments.php','270','feature_homework','tiki_p_hw_teacher','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','272','feature_homework','tiki_p_hw_teacher','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Grading Queue','tiki-hw_teacher_grading_queue.php','274','feature_homework','tiki_p_hw_teacher','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Last Changes','tiki-hw_teacher_last_changes.php','276','feature_homework','tiki_p_hw_teacher','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Homework','tiki-hw_student_assignments.php','280','feature_homework','tiki_p_hw_student','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','282','feature_homework','tiki_p_hw_student','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Last Changes','tiki-hw_teacher_assignments.php','284','feature_homework','tiki_p_hw_student','');
+
+#added on 2004-4-27 ggeller
+INSERT INTO users_permissions(permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
+
+#
+# Homework tables start
+#
+#added on 2004-4-27 ggeller
+#
+
+DROP TABLE IF EXISTS hw_actionlog;
+CREATE TABLE hw_actionlog (
+  action varchar(255) NOT NULL default '',
+  lastModif int(14) NOT NULL default '0',
+  pageId int(14) default NULL,
+  user varchar(200) default NULL,
+  ip varchar(15) default NULL,
+  comment varchar(200) default NULL,
+  PRIMARY KEY  (lastModif)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS hw_assignments;
+CREATE TABLE hw_assignments (
+  assignmentId int(8) NOT NULL auto_increment,
+  title varchar(80) default NULL,
+  teacherName varchar(40) NOT NULL default '',
+  created int(14) NOT NULL default '0',
+  dueDate int(14) default NULL,
+  modified int(14) NOT NULL default '0',
+  heading text,
+  body text,
+  deleted tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (assignmentId),
+  KEY dueDate (dueDate)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS hw_grading_queue;
+CREATE TABLE hw_grading_queue (
+  id int(14) NOT NULL auto_increment,
+  status int(4) default NULL,
+  submissionDate int(14) default NULL,
+  userLogin varchar(40) NOT NULL default '',
+  userIp varchar(15) default NULL,
+  pageId int(14) default NULL,
+  pageDate int(14) default NULL,
+  pageVersion int(14) default NULL,
+  assignmentId int(14) default NULL,
+  PRIMARY KEY  (id)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS hw_grading_queue;
+CREATE TABLE hw_grading_queue (
+  id int(14) NOT NULL auto_increment,
+  status int(4) default NULL,
+  submissionDate int(14) default NULL,
+  userLogin varchar(40) NOT NULL default '',
+  userIp varchar(15) default NULL,
+  pageId int(14) default NULL,
+  pageDate int(14) default NULL,
+  pageVersion int(14) default NULL,
+  assignmentId int(14) default NULL,
+  PRIMARY KEY  (id)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS hw_history;
+CREATE TABLE hw_history (
+  id int(14) NOT NULL default '0',
+  version int(8) NOT NULL default '0',
+  lastModif int(14) NOT NULL default '0',
+  user varchar(200) NOT NULL default '',
+  ip varchar(15) NOT NULL default '',
+  comment varchar(200) default NULL,
+  data text,
+  PRIMARY KEY  (id,version)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS hw_pages;
+CREATE TABLE hw_pages (
+  id int(14) NOT NULL auto_increment,
+  assignmentId int(14) NOT NULL default '0',
+  studentName varchar(200) NOT NULL default '',
+  data text,
+  description varchar(200) default NULL,
+  lastModif int(14) default NULL,
+  user varchar(200) default NULL,
+  comment varchar(200) default NULL,
+  version int(8) NOT NULL default '0',
+  ip varchar(15) default NULL,
+  flag char(1) default NULL,
+  points int(8) default NULL,
+  votes int(8) default NULL,
+  cache text,
+  wiki_cache int(10) default '0',
+  cache_timestamp int(14) default NULL,
+  page_size int(10) unsigned default '0',
+  lockUser varchar(200) default NULL,
+  lockExpires int(14) default '0',
+  PRIMARY KEY  (studentName,assignmentId),
+  KEY id (id),
+  KEY assignmentId (assignmentId),
+  KEY studentName (studentName)
+) TYPE=MyISAM;
+
+#
+# Homework tables end
+#
