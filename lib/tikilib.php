@@ -1882,9 +1882,9 @@ function user_has_voted($user, $id) {
 	    $ret = false;
 	}
     } else {
-	$query = "select `user` from `tiki_user_votings` where `user`=? and `id`=?";
-	$result = $this->query($query,array($user,(int)$id));
-	if ($result->numRows()) {
+	$query = "select count(*) from `tiki_user_votings` where `user`=? and `id`=?";
+	$result = $this->getOne($query,array($user,(int)$id));
+	if ($result) {
 	    $ret = true;
 	} else {
 	    $ret = false;
