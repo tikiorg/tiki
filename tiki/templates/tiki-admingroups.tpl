@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.40 2004-02-14 01:00:11 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.41 2004-02-21 20:34:57 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -98,7 +98,7 @@ sticky="true" caption="{tr}Permissions{/tr}" closetext="{tr}close{/tr}" right="t
 <td style="width: 20px;">
 {if $users[user].groupName !== 'Anonymous'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this group?{/tr}')" 
-title="{tr}delete{/tr}"><img border="0" alt="{tr}demove{/tr}" src="img/icons2/delete.gif" /></a>{/if}
+title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/delete.gif" /></a>{/if}
 </td>
 </tr>
 {/section}

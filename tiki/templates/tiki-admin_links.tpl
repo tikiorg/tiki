@@ -38,7 +38,7 @@
 <td class="{cycle advance=false}">{$links[user].position}</td>
 <td class="{cycle advance=false}">{$links[user].type}</td>
 <td class="{cycle}">
- <a title="{tr}delete{/tr}" class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}"><img border="0" alt="{tr}demove{/tr}" src="img/icons2/delete.gif" /></a>
+ <a title="{tr}delete{/tr}" class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/delete.gif" /></a>
  <a title="{tr}edit{/tr}" class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
