@@ -98,7 +98,7 @@ class ArtLib extends TikiLib {
 
 		$this->replace_article($data["title"], $data["authorName"], $data["topicId"], $data["useImage"], $data["image_name"],
 			$data["image_size"], $data["image_type"], $data["image_data"], $data["heading"], $data["body"], $data["publishDate"], $data["expireDate"],
-			$data["author"], 0, $data["image_x"], $data["image_y"], $data["type"],  $data["topline"],  $data["subtitle"],  $data["linkto"],  $data["caption_image"],  
+			$data["author"], 0, $data["image_x"], $data["image_y"], $data["type"],  $data["topline"],  $data["subtitle"],  $data["linkto"],  $data["image_caption"],  
 			$data["lang"], $data["rating"], $data['isfloat']);
 		$this->remove_submission($subId);
 	}
