@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.25 2004-02-06 23:48:12 lueders Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.26 2004-02-11 14:59:24 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -152,4 +152,6 @@ ALTER TABLE `tiki_tracker_fields` CHANGE `isPublic` `isPublic` CHAR( 1 ) DEFAULT
 ALTER TABLE `tiki_tracker_fields` ADD `isHidden` varchar ( 1 ) DEFAULT 'n' NOT NULL ;
 UPDATE `tiki_tracker_fields` set `isHidden`='y' where `isHidden`='';
 
+# added on 2004-02-10 by mose for more power to dennis daniels
+ALTER TABLE `tiki_trackers` CHANGE `name` `name` VARCHAR( 255 ) DEFAULT NULL ;
 
