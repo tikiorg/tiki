@@ -116,7 +116,8 @@ $games=Array();
 $h=opendir("games/thumbs");
 while($file=readdir($h)) {
   $game=Array();
-  if($file!='.' && $file!='..' && !strstr($file,'txt') ) {
+  // LeChuckdaPirate added "is_file" so folders don't be taken as games...
+  if(is_file("games/thumbs/$file") && $file!='.' && $file!='..' && !strstr($file,'txt') ) {
     if(file_exists("games/thumbs/$file".'.txt')) {
       $fp = fopen("games/thumbs/$file".'.txt',"rb");
       $data = fread($fp,filesize("games/thumbs/$file".'.txt'));
