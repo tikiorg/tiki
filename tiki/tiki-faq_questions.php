@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.10 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.11 2003-12-04 09:01:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -138,6 +138,11 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 
 $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '');
 $smarty->assign_by_ref('suggested', $suggested["data"]);
+
+include_once ('lib/quicktags/quicktagslib.php');
+$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
+$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+
 
 // Display the template
 $smarty->assign('mid', 'tiki-faq_questions.tpl');
