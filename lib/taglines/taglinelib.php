@@ -6,31 +6,25 @@ class TagLineLib extends TikiLib {
 		if (!$db) {
 			die ("Invalid db object passed to TaglineLib constructor");
 		}
-
 		$this->db = $db;
 	}
 
 	function list_cookies($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where (cookie like $findesc)";
+			$mid = " where (`cookie` like ?)";
+			$bindvars = array('%' . $find . '%');
 		} else {
 			$mid = "";
+			$bindvars = array();
 		}
-
-		$query = "select * from tiki_cookies $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_cookies $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_cookies` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_cookies` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
-
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
-
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
@@ -41,39 +35,35 @@ class TagLineLib extends TikiLib {
 		$cookie = addslashes($cookie);
 		// Check the name
 		if ($cookieId) {
-			$query = "update tiki_cookies set cookie='$cookie' where cookieId=$cookieId";
+			$query = "update `tiki_cookies` set `cookie`=? where `cookieId`=?";
+			$bindvars = array($cookie,(int)$cookieId);
 		} else {
-			$query = "replace into tiki_cookies(cookie)
-                values('$cookie')";
+			$query = "replace into `tiki_cookies`(`cookie`) values(?)";
+			$bindvars = array($cookie);
 		}
-
-		$result = $this->query($query);
+		$result = $this->query($query,$bindvars);
 		return true;
 	}
 
 	function remove_cookie($cookieId) {
-		$query = "delete from tiki_cookies where cookieId=$cookieId";
-
-		$result = $this->query($query);
+		$query = "delete from `tiki_cookies` where `cookieId`=?";
+		$result = $this->query($query,array((int)$cookieId));
 		return true;
 	}
 
 	function get_cookie($cookieId) {
-		$query = "select * from tiki_cookies where cookieId=$cookieId";
-
-		$result = $this->query($query);
-
+		$query = "select * from `tiki_cookies` where `cookieId`=?";
+		$result = $this->query($query,array((int)$cookieId));
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function remove_all_cookies() {
-		$query = "delete from tiki_cookies";
-
-		$result = $this->query($query);
+		$query = "delete from `tiki_cookies`";
+		$result = $this->query($query,array());
 	}
 }
 
