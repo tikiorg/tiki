@@ -83,6 +83,7 @@
   <td class="{cycle advance=false}">{$sheets[changes].description}</td>
   <td class="{cycle advance=false}">{$sheets[changes].author}</td>
   <td class="{cycle}">
+    <a class="gallink" href="tiki-history_sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/history_layer.gif' alt='{tr}History{/tr}' title='{tr}History{/tr}' border='0' /></a>
     <a class="gallink" href="tiki-export_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/export.gif' alt='{tr}Export{/tr}' title='{tr}Export{/tr}' border='0' /></a>
   {if $tiki_p_admin_sheet eq 'y' or ($author and $sheets[changes].author eq $author) or ($tiki_p_admin eq 'y') }
     <a class="gallink" href="tiki-import_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/import.gif' alt='{tr}Import{/tr}' title='{tr}Import{/tr}' border='0' /></a>
