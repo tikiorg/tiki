@@ -2602,17 +2602,16 @@ class TikiLib {
 
     /*shared*/
     function get_featured_links($max = 10) {
-	$query = "select * from `tiki_featured_links`
-	    where `position`>0 order by `position` asc limit 0, ?";
+			$query = "select * from `tiki_featured_links` where `position` > 0 order by `position` asc limit 0, ?";
 
-	$result = $this->query($query, array( $max ) );
-	$ret = array();
+			$result = $this->query($query, array( (int) $max ) );
+			$ret = array();
 
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
-	}
+			while ($res = $result->fetchRow()) {
+					$ret[] = $res;
+			}
 
-	return $ret;
+			return $ret;
     }
 
     function update_session($sessionId) {
