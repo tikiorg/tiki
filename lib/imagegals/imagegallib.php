@@ -513,7 +513,6 @@ class ImageGalsLib extends TikiLib {
 
 		if ($gal_use_db == 'y') {
 			// Prepare to store data in database
-			$data = addslashes($this->image);
 		} else {
 			// Store data in directory
 			switch ($this->type) {
@@ -551,7 +550,7 @@ class ImageGalsLib extends TikiLib {
 
 		$this->filename = $this->xsize . "x" . $this->ysize . "_" . $this->name; // rebuild filename for downloading images
 		// insert data
-		$fn = addslashes($this->filename);
+		$fn = $this->filename;
 
 		if ($overwrite) {
 			//overwrites all except the colums of the primary key
@@ -715,17 +714,13 @@ class ImageGalsLib extends TikiLib {
 		global $gal_use_db;
 
 		global $gal_use_dir;
-		$name = addslashes(strip_tags($name));
-		$filename = addslashes($filename);
-		$description = addslashes(strip_tags($description));
+		$name = strip_tags($name);
+		$description = strip_tags($description);
 		$now = date("U");
 		$path = '';
 
 		if ($gal_use_db == 'y') {
 			// Prepare to store data in database
-			$data = addslashes($data);
-
-			$t_data = addslashes($t_data);
 		} else {
 			// Store data in directory
 			$fhash = md5(uniqid($filename));
