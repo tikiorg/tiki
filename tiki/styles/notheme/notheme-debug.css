@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.12 2003-11-15 06:42:15 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.13 2003-11-16 19:32:00 zaufi Exp $
  *
  * Debug console used styles.
  *
@@ -142,4 +142,8 @@ div.debugconsole td.formcolor {
 div.debugconsole pre {
     margin: 0px;
     padding: 0px;
+}
+/* Add space to left of 2nd column of log table */
+div.debugconsole table#log td + td {
+    padding-left: 1em;
 }
