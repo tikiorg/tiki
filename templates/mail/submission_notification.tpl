@@ -1,11 +1,11 @@
-A new article was submitted by {$mail_user} to {$mail_site} at {$mail_date|tiki_short_datetime}
-You can edit the submission following this link: {$mail_machine}?subId={$mail_subId}
+{tr}A new article was submitted by {$mail_user} to {$mail_site} at {$mail_date|tiki_short_datetime}{/tr}
+{tr}You can edit the submission following this link: {$mail_machine}?subId={$mail_subId}{/tr}
 
-Title: {$mail_title}
+{tr}Title:{/tr} {$mail_title}
 
-Heading:
+{tr}Heading:{/tr}
 {$mail_heading}
 
-Body:
+{tr}Body:{/tr}
 {$mail_body}
             
