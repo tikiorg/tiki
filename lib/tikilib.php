@@ -5611,6 +5611,31 @@ class TikiLib extends TikiDB {
 			    return $this->format_language_list($languages);
 			}
 
+			function list_styles() {
+			    global $tikidomain;
+
+			    $sty = array();
+			    $h = opendir("styles/");
+			    while ($file = readdir($h)) {
+				if (strstr($file, ".css") and substr($file,0,1) != '.') {
+				    $sty[$file] = 1;
+				}
+			    }
+			    closedir($h);
+			    if ($tikidomain) {
+				$h = opendir("styles/$tikidomain");
+				while ($file = readdir($h)) {
+				    if (strstr($file, ".css") and substr($file,0,1) != '.') {
+					$sty["$file"] = 1;
+				    } 
+				} 
+				closedir($h);				
+			    }
+			    $styles = array_keys($sty);
+			    sort($styles);
+			    return $styles;
+			}
+
 			// Comparison function used to sort languages by their name in the
 			// current locale.
 			function formatted_language_compare($a, $b) {

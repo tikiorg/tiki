@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.17 2004-04-21 08:07:45 telenieko Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.18 2004-05-30 04:38:14 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,6 +22,18 @@ if (isset($_REQUEST["loginprefs"])) {
 	$tikilib->set_preference("change_language", 'y');
     } else {
 	$tikilib->set_preference("change_language", 'n');
+    }
+
+    if (isset($_REQUEST["available_languages"])) {
+	$tikilib->set_preference("available_languages", serialize($_REQUEST["available_languages"]));
+    } else {
+	$tikilib->set_preference("available_languages", serialize(array()));
+    }
+
+    if (isset($_REQUEST["available_styles"])) {
+	$tikilib->set_preference("available_styles", serialize($_REQUEST["available_styles"]));
+    } else {
+	$tikilib->set_preference("available_styles", serialize(array()));
     }
 
     if (isset($_REQUEST["eponymousGroups"]) &&
@@ -375,6 +387,16 @@ if (isset($_REQUEST["auth_pam"])) {
     }
 }
 
+
+// Get list of available languages
+$languages = array();
+$languages = $tikilib->list_languages();
+$smarty->assign_by_ref("languages", $languages);
+
+$smarty->assign("styles", $tikilib->list_styles());
+
+$smarty->assign("available_languages", unserialize($tikilib->get_preference("available_languages")));
+$smarty->assign("available_styles", unserialize($tikilib->get_preference("available_styles")));
 
 $smarty->assign("userTracker", $tikilib->get_preference("userTracker", "n"));
 $smarty->assign("groupTracker", $tikilib->get_preference("groupTracker", "n"));

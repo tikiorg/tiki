@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.48 2004-05-07 21:40:47 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.49 2004-05-30 04:38:14 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -270,30 +270,13 @@ $smarty->assign('minPrio', $minPrio);
 $userinfo = $userlib->get_user_info($userwatch);
 $smarty->assign_by_ref('userinfo', $userinfo);
 
-$sty = array();
-$h = opendir("styles/");
-while ($file = readdir($h)) {
-	if (strstr($file, ".css") and substr($file,0,1) != '.') {
-		$sty[$file] = 1;
-	}
-}
-closedir($h);
-if ($tikidomain) {
-	$h = opendir("styles/$tikidomain");
-	while ($file = readdir($h)) {
-  	if (strstr($file, ".css") and substr($file,0,1) != '.') {
-	    $sty["$file"] = 1;
-		} 
-	} 
-	closedir($h);				
-}
-$styles = array_keys($sty);
-sort($styles);
-$smarty->assign_by_ref('styles',$styles);
+$smarty->assign_by_ref('styles',$tikilib->list_styles());
+$smarty->assign("available_styles", unserialize($tikilib->get_preference("available_styles")));
 
 $languages = array();
 $languages = $tikilib->list_languages();
 $smarty->assign_by_ref('languages', $languages);
+$smarty->assign("available_languages", unserialize($tikilib->get_preference("available_languages")));
 
 // Get user pages
 $user_pages = $tikilib->get_user_pages($userwatch, -1);
