@@ -526,12 +526,15 @@ class TikiLib extends TikiDB {
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'quiz', $res['quizId']);
 	    	if ($perms_array) {
+	    		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
 		    		$$perm = $value;
 		    	}
+	    	} else {
+	    		$is_categorized = FALSE;
 	    	}
 
-	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 	    		$add = FALSE;
 	    	}
 	    }
@@ -627,12 +630,15 @@ class TikiLib extends TikiDB {
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'tracker', $res['trackerId']);
 	    	if ($perms_array) {
+	    		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
 		    		$$perm = $value;
 		    	}
+	    	} else {
+	    		$is_categorized = FALSE;
 	    	}
 
-	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 	    		$add = FALSE;
 	    	}
 	    }
@@ -691,12 +697,15 @@ class TikiLib extends TikiDB {
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'survey', $res['surveyId']);
 	    	if ($perms_array) {
+	    		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
 		    		$$perm = $value;
 		    	}
+	    	} else {
+	    		$is_categorized = FALSE;
 	    	}
 
-	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 	    		$add = FALSE;
 	    	}
 	    }
@@ -1210,12 +1219,15 @@ function add_pageview() {
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'faq', $res['faqId']);
 	    	if ($perms_array) {
+	    		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
 		    		$$perm = $value;
 		    	}
+	    	} else {
+	    		$is_categorized = FALSE;
 	    	}
 
-	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 	    		$add = FALSE;
 	    	}
 	    }
@@ -2301,12 +2313,15 @@ function add_pageview() {
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $res['blogId']);
 	    	if ($perms_array) {
+	    		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
 		    		$$perm = $value;
 		    	}
+	    	} else {
+	    		$is_categorized = FALSE;
 	    	}
 
-	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 	    		$add = FALSE;
 	    	}
 	    }
@@ -2481,12 +2496,15 @@ function add_pageview() {
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'article', $res['articleId']);
 	    	if ($perms_array) {
+	    		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
 		    		$$perm = $value;
 		    	}
+	    	} else {
+	    		$is_categorized = FALSE;
 	    	}
 
-	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 	    		$add = FALSE;
 	    	}
 	    }
@@ -3239,12 +3257,15 @@ function add_pageview() {
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
 	    	$perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $res['galleryId']);
 	    	if ($perms_array) {
+	    		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
 		    		$$perm = $value;
 		    	}
+	    	} else {
+	    		$is_categorized = FALSE;
 	    	}
 
-	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 	    		$add = FALSE;
 	    	}
 	    }
