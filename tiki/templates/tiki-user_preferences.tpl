@@ -33,7 +33,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 
   <div class="cbox">
-  <div class="cbox-title">{tr}Personal information{/tr}</div>
+  <div class="cbox-title">{tr}Personal Information{/tr}</div>
   <div class="cbox-data">
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
@@ -175,15 +175,18 @@
   </div>
 
   <div class="cbox">
+  <div class="cbox-title">{tr}Account Information{/tr}</div>
   <div class="cbox-data">
-{tr}Leave fields blank to keep current information{/tr}
+  {if $auth_method neq 'cas' || ($cas_skip_admin eq 'y' && $user eq 'admin')}
+  {tr}Leave "New password" and "Confirm new password" fields blank to keep current password{/tr}
+  {/if}
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
-  <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
+  <tr><td class="form">{tr}Email address{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
 {if $auth_method neq 'cas' || ($cas_skip_admin eq 'y' && $user eq 'admin')}
   <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
-  <tr><td class="form">{tr}Again please{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
+  <tr><td class="form">{tr}Confirm new password{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
   {if $tiki_p_admin ne 'y' or $userwatch eq $user}
     <tr><td class="form">{tr}Current password (required){/tr}:</td><td class="form"><input type="password" name="pass" /></td></tr>
   {/if}
