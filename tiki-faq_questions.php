@@ -68,7 +68,7 @@ $smarty->assign('question',$info["question"]);  // moved from above
 $smarty->assign('answer',$info["answer"]);      // moved from above
 
 if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'question_asc'; 
+  $sort_mode = 'position,questionId_asc'; 
 } else {
   $sort_mode = $_REQUEST["sort_mode"];
 } 
@@ -97,7 +97,7 @@ if(isset($_REQUEST["approve_suggested"])) {
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 $channels = $faqlib->list_faq_questions($_REQUEST["faqId"],0,-1,$sort_mode,$find);
-$allq = $faqlib->list_all_faq_questions(0,-1,'question_asc',$_REQUEST["filter"]);
+$allq = $faqlib->list_all_faq_questions(0,-1,'position,questionId_asc',$_REQUEST["filter"]);
 $smarty->assign_by_ref('allq',$allq["data"]);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
