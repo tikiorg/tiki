@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.60 2004-03-10 10:00:58 melmut Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.61 2004-03-11 23:40:13 mose Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -100,7 +100,7 @@ if(!isset($comments_prefix_var)) {
 if(!isset($comments_object_var) || (!$comments_object_var) || !isset($_REQUEST[$comments_object_var])){
    die("the comments_object_var variable is not set or cannot be found as a REQUEST variable");
 }
-$comments_objectId = $comments_prefix_var.$_REQUEST["$comments_object_var"];
+$comments_objectId = $comments_prefix_var.':'.$_REQUEST["$comments_object_var"];
 // Process a post form here 
 if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
   if(isset($_REQUEST["comments_postComment"])) {
