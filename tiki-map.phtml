@@ -101,6 +101,7 @@ $map = ms_newMapObj($map_path.$mapfile);
 
 restore_error_handler();
 
+$smarty->assign("page",$map->name." Map");
  
 $layerbol=FALSE;
 if (isset($_REQUEST['size']))
