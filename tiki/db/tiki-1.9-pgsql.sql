@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.20 2004-06-03 18:57:08 ggeller Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.21 2004-06-05 15:17:28 ggeller Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3002,7 +3002,7 @@ CREATE TABLE "tiki_quizzes" (
 	sForum varchar(80) default NULL,
 	sPrologue text,
 	sData text,
-	sEpilogue text
+	sEpilogue text,
   PRIMARY KEY ("quizId"," nVersion")
 )   ;
 
