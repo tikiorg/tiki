@@ -117,9 +117,9 @@ class UsersLib extends TikiLib {
 
 	$query = "select `groupName`, `permName`
 	    from `users_objectpermissions`
-	    where `objectId` = '$objectId' and
+	    where `objectId` = ? and
 	    `objectType` = ?";
-	$bindvars($objectId, $objectType);
+	$bindvars = array($objectId, $objectType);
 	$result = $this->query($query, $bindvars);
 	$ret = array();
 

@@ -84,7 +84,8 @@ class NlLib extends TikiLib {
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
 			$url_subscribe = httpPrefix(). $foopath;
-			$query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed) values($nlId,'$email','$code','n',$now)";
+			$query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed)
+			   values($nlId,'$email','$code','n',$now)";
 			$result = $this->query($query);
 			// Now send an email to the address with the confirmation instructions
 			$smarty->assign('mail_date', date("U"));
@@ -95,8 +96,9 @@ class NlLib extends TikiLib {
 			$mail_data = $smarty->fetch('mail/confirm_newsletter_subscription.tpl');
 			@mail($email, tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"], $mail_data,
 				"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
-		} else
-			$query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed) values($nlId,'$email','$code','y',$now)";
+		} else {
+			$query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed)
+			   values($nlId,'$email','$code','y',$now)";
 		}
 		$this->update_users($nlId);
 	}
