@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.51 2004-02-20 06:14:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.52 2004-02-23 09:56:50 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,22 +18,37 @@ if ($feature_trackers != 'y') {
 	die;
 }
 
-if (($userTracker == 'y') and isset($_REQUEST['trackerId']) and $_REQUEST['trackerId'] == 'user') {
-	
+
+if ($userTracker == 'y') {
+	if (isset($_REQUEST['trackerId']) and $_REQUEST['trackerId'] == ' user') {
+		$_REQUEST['trackerId'] = $userlib->get_usertrackerid($group);
+		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],'Login',$user);
+	} elseif (isset($_REQUEST["usertracker"]) and $tiki_p_admin == 'y') {
+		$thatgroup = $userlib->get_user_default_group($_REQUEST["usertracker"]);
+		$_REQUEST["trackerId"] = $userlib->get_usertrackerid($thatgroup);
+		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],'Login',$_REQUEST["usertracker"]);
+	}
 }
 
-if (($groupTracker == 'y') and isset($_REQUEST['trackerId']) and $_REQUEST['trackerId'] == 'group') {
-	
+if ($groupTracker == 'y') {
+	if (isset($_REQUEST['trackerId']) and $_REQUEST['trackerId'] == ' group') {
+		$_REQUEST['trackerId'] = $userlib->get_grouptrackerid($group);
+		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],'groupName',$group);
+	} elseif (isset($_REQUEST["grouptracker"]) and $tiki_p_admin == 'y') {
+		$_REQUEST["trackerId"] = $userlib->get_grouptrackerid($_REQUEST["grouptracker"]);
+		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],'groupName',$_REQUEST["grouptracker"]);
+	}
 }
 
-if (!isset($_REQUEST["trackerId"])) {
+if (!isset($_REQUEST["trackerId"]) or !$_REQUEST["trackerId"]) {
 	$smarty->assign('msg', tra("No tracker indicated"));
 	$smarty->display("error.tpl");
 	die;
 }
+
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 
-if (!isset($_REQUEST["itemId"])) {
+if (!isset($_REQUEST["itemId"]) or !$_REQUEST["itemId"]) {
 	$smarty->assign('msg', tra("No item indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -134,7 +149,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 
 	} elseif ($fields["data"][$i]["type"] == 'u' and isset($fields["data"][$i]["options"]) and $user)	{
-		if (isset($_REQUEST["$ins_id"])) {
+		if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]["options"] < 1 or $tiki_p_admin_trackers == 'y')) {
 			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
 			if ($fields["data"][$i]["options"] == 2) {
@@ -339,6 +354,16 @@ if ($_REQUEST["itemId"]) {
 					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($ins_fields["data"][$i]["options_array"][0],$ins_fields["data"][$i]["options_array"][1],$info["$fid"]);
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 					$ins_fields["data"][$i]["type"] = 't';
+				} elseif ($fields["data"][$i]["type"] == 'u') {
+					if ($fields["data"][$i]['options'] == 2 and !$info["$fid"]) {
+						$ins_fields["data"][$i]["defvalue"] = $user;
+					}
+					$ins_fields["data"][$i]["value"] = $info["$fid"];
+				} elseif ($fields["data"][$i]["type"] == 'g') {
+					if ($fields["data"][$i]['options'] == 2 and !$info["$fid"]) {
+						$ins_fields["data"][$i]["defvalue"] = $group;
+					}
+					$ins_fields["data"][$i]["value"] = $info["$fid"];
 				} elseif ($fields["data"][$i]["type"] == 'a') {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
 					$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$fid"]);

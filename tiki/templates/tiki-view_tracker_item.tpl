@@ -283,7 +283,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <select name="ins_{$ins_fields[ix].id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
-<option value="{$groups[ux]|escape}" {if $ins_fields[ix].value eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
+<option value="{$groups[ux]|escape}" {if $ins_fields[ix].value|default:$ins_fields[ix].pvalue eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
 {/section}
 </select>
 {elseif $ins_fields[ix].options}
