@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.15 2003-11-10 04:33:18 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.16 2003-11-10 16:28:33 sylvieg Exp $
  *
  * Admin interface for rules management
  *
@@ -152,7 +152,7 @@ if (isset($_REQUEST["action"]))
         if ($ruleID != 0) $integrator->remove_rule($ruleID);
         break;
     default:
-        $smarty->assign('msg', tra("Requested action in not supportted on repository"));
+        $smarty->assign('msg', tra("Requested action in not supported on repository"));
         $smarty->display("styles/$style_base/error.tpl");
         die; break;
     }
