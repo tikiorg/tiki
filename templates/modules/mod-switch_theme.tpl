@@ -1,8 +1,5 @@
-<div class="box">
-<div class="box-title">
+{tikimodule name="switch_theme"}
 {tr}Style{/tr}: {$style}
-</div>
-<div class="box-data">
 <form method="get" action="tiki-switch_theme.php" target="_self">
 <select name="theme" size="1" onchange="this.form.submit();">
 {section name=ix loop=$styleslist}
@@ -10,5 +7,4 @@
 {/section}
 </select>
 </form>
-</div>
-</div>
+{/tikimodule}
