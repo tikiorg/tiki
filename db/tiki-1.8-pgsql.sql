@@ -5083,9 +5083,7 @@ CREATE TABLE "users_users" (
   "login" varchar(40) NOT NULL default '',
   "password" varchar(30) default '',
   "provpass" varchar(30) default NULL,
-  "realname" varchar(80) default NULL,
   "default_group" varchar(255),
-  "homePage" varchar(200) default NULL,
   "lastLogin" bigint default NULL,
   "currentLogin" bigint default NULL,
   "registrationDate" bigint default NULL,
@@ -5093,7 +5091,6 @@ CREATE TABLE "users_users" (
   "pass_due" bigint default NULL,
   "hash" varchar(32) default NULL,
   "created" bigint default NULL,
-  "country" varchar(80) default NULL,
   "avatarName" varchar(80) default NULL,
   "avatarSize" bigint default NULL,
   "avatarFileType" varchar(250) default NULL,
@@ -5106,10 +5103,13 @@ CREATE TABLE "users_users" (
 
 -- --------------------------------------------------------
 ------ Administrator account
-INSERT INTO "users_users" ("email","login","password","realname","hash") VALUES ('','admin','admin','System Administrator','f6fdffe48c908deb0f4c3bd36c032e72');
+INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
 
 
 UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin";
+
+
+INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator'); 
 
 
 -- --------------------------------------------------------

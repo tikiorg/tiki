@@ -6444,9 +6444,7 @@ userId numeric(8 ,0) identity,
   "login" varchar(40) default '' NOT NULL,
   "password" varchar(30) default '',
   "provpass" varchar(30) default NULL NULL,
-  "realname" varchar(80) default NULL NULL,
   "default_group" varchar(255) default '',
-  "homePage" varchar(200) default NULL NULL,
   "lastLogin" numeric(14,0) default NULL NULL,
   "currentLogin" numeric(14,0) default NULL NULL,
   "registrationDate" numeric(14,0) default NULL NULL,
@@ -6454,7 +6452,6 @@ userId numeric(8 ,0) identity,
   "pass_due" numeric(14,0) default NULL NULL,
   "hash" varchar(32) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
-  "country" varchar(80) default NULL NULL,
   "avatarName" varchar(80) default NULL NULL,
   "avatarSize" numeric(14,0) default NULL NULL,
   "avatarFileType" varchar(250) default NULL NULL,
@@ -6469,7 +6466,7 @@ go
 
 -- --------------------------------------------------------
 ------ Administrator account
-INSERT INTO "users_users" ("email","login","password","realname","hash") VALUES ('','admin','admin','System Administrator','f6fdffe48c908deb0f4c3bd36c032e72')
+INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72')
 go
 
 
@@ -6477,6 +6474,10 @@ go
 UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin"
 go
 
+
+
+INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator')
+go
 
 
 -- --------------------------------------------------------
