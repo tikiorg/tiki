@@ -247,7 +247,7 @@
 			</tr>
 			<tr>
 				<td>
-				<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Directory{/tr}: <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" />
+				<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Path{/tr}: <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" />
 				</td>
 			</tr>
 			<tr>
