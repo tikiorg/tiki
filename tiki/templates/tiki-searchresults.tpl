@@ -1,35 +1,33 @@
-<h2>{tr}Search results{/tr}:</h2>
-{tr}Search in{/tr}:
-[
-<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=pages">{tr}All{/tr}</a>
+<h1>{tr}Search results{/tr}:</h1>
+{tr}Search in{/tr}:<br />
+<a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=pages">{tr}All{/tr}</a>
 {if $feature_wiki eq 'y'}
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=wikis">{tr}Wiki{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=wikis">{tr}Wiki{/tr}</a>
 {/if}
 {if $feature_galleries eq 'y'}
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=galleries">{tr}galleries{/tr}</a>
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=images">{tr}images{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=galleries">{tr}galleries{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=images">{tr}images{/tr}</a>
 {/if}
 {if $feature_file_galleries eq 'y'}
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=files">{tr}files{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=files">{tr}files{/tr}</a>
 {/if}
 {if $feature_forums eq 'y'}
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=forums">{tr}forums{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=forums">{tr}forums{/tr}</a>
 {/if}
 {if $feature_faqs eq 'y'}
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=faqs">{tr}faqs{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=faqs">{tr}faqs{/tr}</a>
 {/if}
 {if $feature_blogs eq 'y'}
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=blogs">{tr}blogs{/tr}</a>
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=posts">{tr}blog posts{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=blogs">{tr}blogs{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=posts">{tr}blog posts{/tr}</a>
 {/if}
 {if $feature_directory eq 'y'}
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=directory">{tr}directory{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=directory">{tr}directory{/tr}</a>
 {/if}
 
 {if $feature_articles eq 'y'}
- | <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=articles">{tr}articles{/tr}</a>
+ <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=articles">{tr}articles{/tr}</a>
 {/if}
-]
 <br /><br />
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
 <form class="forms" method="get" action="tiki-searchresults.php">
@@ -61,11 +59,11 @@
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="link" href="tiki-searchresults.php?where={$where}&amp;words={$words}&amp;offset={$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="linkbut" href="tiki-searchresults.php?where={$where}&amp;words={$words}&amp;offset={$prev_offset}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="link" href="tiki-searchresults.php?where={$where}&amp;words={$words}&amp;offset={$next_offset}">{tr}next{/tr}</a>]
+&nbsp;[<a class="linkbut" href="tiki-searchresults.php?where={$where}&amp;words={$words}&amp;offset={$next_offset}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>
