@@ -1929,27 +1929,29 @@ class TikiLib {
 
 	/*shared*/
 	function get_file($id) {
-		$query = "select `path` ,`galleryId`,`filename`,`filetype`,`data` from `tiki_files` where `fileId`='$id'";
+		$query = "select `path` ,`galleryId`,`filename`,`filetype`,`data` from `tiki_files` where `fileId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array((int) $id));
 		$res = $result->fetchRow();
 		return $res;
 	}
 
 	/*Shared*/
 	function get_files($offset, $maxRecords, $sort_mode, $find, $galleryId) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$mid = " where `galleryId`=$galleryId and (`name` like '%" . $find . "%' or `description` like '%" . $find . "%')";
+			$findesc='%' . $find . '%';
+			$mid = " where `galleryId`=? and (`name` like ? or `description` like ?)";
+			$bindvars=array((int) $galleryId,$findesc,$findesc);
 		} else {
-			$mid = "where `galleryId`=$galleryId";
+			$mid = "where `galleryId`=?";
+			$bindvars=array((int) $galleryId);
 		}
 
-		$query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads` from `tiki_files` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads` from `tiki_files` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_files` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -1969,9 +1971,9 @@ class TikiLib {
 		global $user;
 
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
-			$query = "update `tiki_files` set `downloads`=downloads+1 where `fileId`=$id";
+			$query = "update `tiki_files` set `downloads`=`downloads`+1 where `fileId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array((int) $id));
 		}
 
 		return true;
@@ -1984,9 +1986,9 @@ class TikiLib {
 		global $user;
 
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
-			$query = "update `tiki_file_galleries` set `hits`=hits+1 where `galleryId`=$id";
+			$query = "update `tiki_file_galleries` set `hits`=`hits`+1 where `galleryId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array((int) $id));
 		}
 
 		return true;
@@ -1994,9 +1996,9 @@ class TikiLib {
 
 	/*shared*/
 	function get_file_gallery($id) {
-		$query = "select * from `tiki_file_galleries` where `galleryId`='$id'";
+		$query = "select * from `tiki_file_galleries` where `galleryId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array((int) $id));
 		$res = $result->fetchRow();
 		return $res;
 	}
