@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.238 2004-06-19 08:08:04 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.239 2004-06-19 10:55:56 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -183,7 +183,6 @@ to delete them for you if needed.
     }
 }
 
-TikiSetup::check($tikidomain);
 TikiSetup::prependIncludePath('lib');
 TikiSetup::prependIncludePath('lib/pear');
 
@@ -222,6 +221,7 @@ global $num_queries;
 $num_queries=0;
 
 include_once ("tiki-setup_base.php");
+TikiSetup::check($tikidomain);
 //print("tiki-setup: before rest of tiki-setup:".$tiki_timer->elapsed()."<br />");
 
 if ( $user ) { // load users_users and user_preferences cache for logged-in user
