@@ -342,67 +342,59 @@ class TrackerLib extends TikiLib {
 		global $notificationlib;
 		global $sender_email;
 		$now = date("U");
-		$query = "update `tiki_trackers` set `lastModif`=? where `trackerId`=?";
-		$result = $this->query($query,array((int) $now,(int) $trackerId));
-
 		if ($itemId) {
 			$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
-
 			$result = $this->query($query,array($status,(int) $now,(int) $itemId));
 		} else {
-			$this->getOne("delete from `tiki_tracker_items` where `itemId`=?",array((int) $itemId),false);
 			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`) values(?,?,?,?)";
-
 			$result = $this->query($query,array((int) $trackerId,(int) $now,(int) $now,$status));
 			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $now,(int) $trackerId));
 		}
-
 		$the_data = '';
 
 		for ($i = 0; $i < count($ins_fields["data"]); $i++) {
-			$name = $ins_fields["data"][$i]["name"];
-
 			$fieldId = $ins_fields["data"][$i]["fieldId"];
 			$value = $ins_fields["data"][$i]["value"];
-			// Now check if the item is 0 or not
+			if (isset($ins_fields["data"][$i]["name"])) {
+				$name = $ins_fields["data"][$i]["name"];
+			} else {
+				$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
+			}
 			$the_data .= "$name = $value\n";
 
 			if ($itemId) {
 				$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
-
-				$result = $this->query($query,array($value,(int) $itemId,(int) $fieldId));
+				$this->query($query,array($value,(int) $itemId,(int) $fieldId));
 			} else {
-				// We add an item
-				$this->getOne("delete from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?",array((int) $new_itemId,(int) $fieldId),false);
 				$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
-
-				$result = $this->query($query,array((int) $new_itemId,(int) $fieldId,$value));
+				$this->query($query,array((int) $new_itemId,(int) $fieldId,$value));
 			}
 		}
-
-		$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+		include_once('lib/notifications/notificationlib.php');	
 		$emails = $notificationlib->get_mail_events('tracker_modified', $trackerId);
 		$emails2 = $notificationlib->get_mail_events('tracker_item_modified', $itemId);
 		$emails = array_merge($emails, $emails2);
-		$smarty->assign('mail_date', date("U"));
-		$smarty->assign('mail_user', $user);
-		$smarty->assign('mail_action', 'New item added or modified:' . $itemId . ' at tracker ' . $trackerName);
-		$smarty->assign('mail_data', $the_data);
-
-		foreach ($emails as $email) {
-			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
-
-			@mail($email, tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], $mail_data,
-				"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+		if (count($emails) > 0) {
+			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?",array((int) $trackerId));
+			$smarty->assign('mail_date', $now);
+			$smarty->assign('mail_user', $user);
+			if ($itemId) {
+				$smarty->assign('mail_action', tra('Modification of item $itemId in tracker $trackerName'));
+			} else {
+				$smarty->assign('mail_action', tra('New item $itemId in tracker $trackerName'));
+			}
+			$smarty->assign('mail_data', $the_data);
+			foreach ($emails as $email) {
+				$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
+				@mail($email, tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], $mail_data,
+					"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+			}
 		}
-
 		$cant_items = $this->getOne("select count(*) from `tiki_tracker_items` where `trackerId`=?",array((int) $trackerId));
-		$query = "update `tiki_trackers` set `items`=? where `trackerId`=?";
-		$result = $this->query($query,array($cant_items,(int) $trackerId));
+		$query = "update `tiki_trackers` set `items`=?,`lastModif`=?  where `trackerId`=?";
+		$result = $this->query($query,array((int)$cant_items,(int) $now,(int) $trackerId));
 
-		if (!$itemId)
-			$itemId = $new_itemId;
-
+		if (!$itemId) $itemId = $new_itemId;
 		return $itemId;
 	}
 
