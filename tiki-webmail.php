@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.21 2004-03-28 07:32:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.22 2004-05-26 18:06:57 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,6 +48,9 @@ function parse_output(&$obj, &$parts, $i) {
 				$aux['part'] = $i;
 				$parts['attachments'][] = $aux;
 			} else {
+				if($obj->ctype_parameters['charset'] == "iso-8859-1" || $obj->ctype_parameters['charset'] == "ISO-8859-1")
+				$parts['text'][] = utf8_encode($obj->body);
+			else
 				$parts['text'][] = $obj->body;
 			}
 
@@ -63,7 +66,10 @@ function parse_output(&$obj, &$parts, $i) {
 				$aux['part'] = $i;
 				$parts['attachments'][] = $aux;
 			} else {
-				$parts['html'][] = $obj->body;
+				if($obj->ctype_parameters['charset'] == "iso-8859-1" || $obj->ctype_parameters['charset'] == "ISO-8859-1")
+					$parts['html'][] = utf8_encode($obj->body);
+				else
+					$parts['html'][] = $obj->body;
 			}
 
 			break;
@@ -353,6 +359,9 @@ if ($_REQUEST["section"] == 'mailbox') {
 
 		for ($i = 1; $i <= $mailsum; $i++) {
 			$aux = $pop3->ListMessage($i);
+			if (stristr($aux['subject'], "=?iso-8859-1?b?") == $aux['subject']) {
+				$aux["subject"] = utf8_encode(base64_decode(eregi_replace("=\?iso-8859-1\?b\?(.*)\?=", "\\1", $aux["subject"])));
+			}
 
 			$aux["msgid"] = $i;
 			$aux["realmsgid"] = $pop3->GetMessageID($i);
@@ -366,7 +375,6 @@ if ($_REQUEST["section"] == 'mailbox') {
 			if (!strstr($aux["sender"]["name"], ' '))
 				$aux["sender"]["name"] = substr($aux["sender"]["name"], 0, 25);
 
-			$aux["sender"]["name"] = htmlspecialchars($aux["sender"]["name"]);
 			$aux["subject"] = htmlspecialchars($aux["subject"]);
 
 			if ($_REQUEST["filter"] == 'unread' && $aux["isRead"] == 'n') {
@@ -395,6 +403,10 @@ if ($_REQUEST["section"] == 'mailbox') {
 			$aux = $filtered[$i];
 		} else {
 			$aux = $pop3->ListMessage($i);
+
+			if (stristr($aux['subject'], "=?iso-8859-1?b?") == $aux['subject']) {
+				$aux["subject"] = utf8_encode(base64_decode(eregi_replace("=\?iso-8859-1\?b\?(.*)\?=", "\\1", $aux["subject"])));
+			}
 
 			//print_r($aux);print("<br />");
 			$aux["realmsgid"] = $pop3->GetMessageID($i);
