@@ -29,8 +29,6 @@
 {else}
 <img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
 {/if}
-{else}
-<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
 {/if}
 {if $listpages[ix].isfloat eq 'n'}
 </td><td  valign="top">

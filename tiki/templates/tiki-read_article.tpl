@@ -26,8 +26,6 @@
   {else}
     <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
   {/if}
-{else}
-  <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 {/if}
 {if $isfloat eq 'n'}
 </td><td  valign="top">
