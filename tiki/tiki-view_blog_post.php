@@ -175,6 +175,7 @@ if($user
 }
 
 if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
+/*
   require_once("lib/hawhaw/hawhaw.inc");
   require_once("lib/hawhaw/hawiki_cfg.inc");
   require_once("lib/hawhaw/hawiki_parser.inc");
@@ -188,6 +189,9 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
   $BlogPost->set_hawimconv("lib/hawhaw/hawimconv.php");
   $BlogPost->display();
   die;
+  */
+  include_once("lib/hawhaw/hawtikilib.php");
+  HAWTIKI_view_blog_post($post_info);
 }
 
 

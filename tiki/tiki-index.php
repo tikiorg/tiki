@@ -16,7 +16,7 @@ if($feature_wiki != 'y') {
 
 // Create the HomePage if it doesn't exist
 if(!$tikilib->page_exists($wikiHomePage)) {
-  $tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization'); 
+  $tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization');
 }
 
 if(!isset($_SESSION["thedate"])) {
@@ -359,13 +359,14 @@ $sameurl_elements=Array('pageName','page');
 //echo $info["data"];
 
 if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
+/*
 	require_once("lib/hawhaw/hawhaw.inc");
 	require_once("lib/hawhaw/hawiki_cfg.inc");
 	require_once("lib/hawhaw/hawiki_parser.inc");
 	require_once("lib/hawhaw/hawiki.inc");
 	error_reporting(E_ALL & ~E_NOTICE);
 	$myWiki = new HAWIKI_page($info["data"],"tiki-index.php?mode=mobile&page=");
-	
+
 	$myWiki->set_navlink(tra("Home Page"), "tiki-index.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
 	$myWiki->set_navlink(tra("Menu"), "tiki-mobile.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
 	$myWiki->set_smiley_dir("img/smiles");
@@ -374,6 +375,9 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
 
 	$myWiki->display();
 	die;
+  */
+  include_once("lib/hawhaw/hawtikilib.php");
+  HAWTIKI_index($info);
 }
 
 // Flag for 'page bar' that currently 'Page view' mode active
