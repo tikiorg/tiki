@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.57 2004-03-15 21:27:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.58 2004-03-15 21:57:29 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br /><br />
 {if $forum_info.show_description eq 'y'}
@@ -103,14 +103,14 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
     <table class="normal">
-    <tr>
-      <td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
+    <tr class="formcolor">
+      <td>{tr}Title{/tr}</td>
+      <td><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
     </tr>      
     {if $forum_info.forum_use_password ne 'n'}
-    <tr>
-    	<td class='formcolor'>{tr}Password{/tr}</td>
-    	<td class='formcolor'>
+    <tr class="formcolor">
+    	<td>{tr}Password{/tr}</td>
+    	<td>
     		<input type="password" name="password" />
     	</td>
     </tr>
