@@ -161,10 +161,12 @@ if($_REQUEST["section"]=='read') {
     }
   }
 
-  if(isset($output->headers["cc"])) {
-    $cc_addresses = $output->headers["cc"];
+  if(isset($output->headers["cc"])||ereg(',',$output->headers["to"])) {
+    $cc_addresses = "";
+    if (isset($output->headers["cc"])) $cc_addresses .= $output->headers["cc"];
     //add addresses to cc from "to" field (for 'reply to all')
-    if (ereg(',',$output->headers["to"])) $cc_addresses .= ",".$output->headers["to"];
+    if ($cc_addresses!="") $cc_addresses .= ",";
+    $cc_addresses .= $output->headers["to"];
     $cc_addresses = split(',',$cc_addresses);
     for($i=0;$i<count($cc_addresses);$i++) {
       preg_match("/<([^>]+)>/",$cc_addresses[$i],$add);
