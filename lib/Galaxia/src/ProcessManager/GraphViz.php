@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.6 2004-01-20 16:51:13 halon Exp $
+// $Id: GraphViz.php,v 1.7 2004-01-25 02:12:37 halon Exp $
 //
 
 /**
@@ -154,8 +154,8 @@ class Process_GraphViz {
     
     function image_and_map($format = 'png') {
         if ($file = $this->saveParsedGraph()) {
-            $outputfile = '"'.GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid.'.'.$format.'"';
-            $outputfile2 = '"'.GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid.'.map'.'"';
+            $outputfile = $file . '.' . $format;
+            $outputfile2 = $file . '.' . 'map';
             if(!isset($this->graph['directed'])) $this->graph['directed']=true;
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
             $command .= " -T$format -o $outputfile $file";
@@ -172,7 +172,7 @@ class Process_GraphViz {
     
     function map() {
         if ($file = $this->saveParsedGraph()) {
-            $outputfile2 = '"'.GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid.'.map'.'"';
+            $outputfile2 = $file . '.' . 'map';
 
             $command = $this->dotCommand;
             $command.= " -Tcmap -o$outputfile2 $file";
@@ -180,7 +180,7 @@ class Process_GraphViz {
             $fr = fopen($outputfile2,"r");
             $map = fread($fr,filesize($outputfile2));
             fclose($fr);
-            
+
             //@unlink($outputfile2);
             @unlink($file);
             return $map;
@@ -448,8 +448,7 @@ class Process_GraphViz {
     function saveParsedGraph($file = '') {
         $parsedGraph = $this->parse();
         if (!empty($parsedGraph)) {
-            //$file = GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid;
-            $file = 'temp/'.md5(uniqid("."));
+            $file = GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid;
 
             if ($fp = @fopen($file, 'w')) {
                 @fputs($fp, $parsedGraph, strlen($parsedGraph));
