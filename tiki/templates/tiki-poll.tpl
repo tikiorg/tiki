@@ -6,7 +6,9 @@
 {/section}
 <div align="center">
 <input type="submit" name="pollVote" value="{tr}vote{/tr}" /><br/>
-<a class="linkmodule" href="tiki-poll_results.php?pollId={$menu_info.pollId}">{tr}Results{/tr}</a>
+<a class="linkmodule" href="tiki-poll_results.php?pollId={$menu_info.pollId}">{tr}View Results{/tr}</a><br />
+({tr}Votes{/tr}: {$menu_info.votes})
+{if $feature_poll_comments and $comments}<br />({tr}Comments{/tr}: {$comments}){/if}
 </div>
 </form>
 
