@@ -9,51 +9,46 @@ class NotepadLib extends TikiLib {
 		if (!$db) {
 			die ("Invalid db object passed to NotepadLib constructor");
 		}
-
 		$this->db = $db;
 	}
 
 	function get_note($user, $noteId) {
-		$query = "select * from tiki_user_notes where user='$user' and noteId='$noteId'";
-
-		$result = $this->query($query);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select * from `tiki_user_notes` where `user`=? and `noteId`=?";
+		$result = $this->query($query,array($user,(int)$noteId));
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function set_note_parsing($user, $noteId, $mode) {
-		$query = "update tiki_user_notes set parse_mode='$mode' where user='$user' and noteId=$noteId";
-
-		$this->query($query);
+		$query = "update `tiki_user_notes` set `parse_mode`=? where `user`=? and `noteId`=?";
+		$this->query($query, array($mode,$user,(int)$noteId));
 		return true;
 	}
 
 	function remove_note($user, $noteId) {
-		$query = "delete from tiki_user_notes where user='$user' and noteId=$noteId";
-
-		$this->query($query);
+		$query = "delete from `tiki_user_notes` where `user`=? and `noteId`=?";
+		$this->query($query, array($user,(int)$noteId));
 	}
 
 	function list_notes($user, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
 
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
-
+		$bindvars = array($user);
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " and (name like $findesc or data like $findesc)";
+			$findesc = '%'.$find.'%';
+			$mid = " and (`name` like ? or `data` like ?)";
+			$bindvars[] = $findesc;
+			$bindvars[] = $findesc;
 		} else {
 			$mid = "";
 		}
 
-		$query = "select * from tiki_user_notes where user='$user' $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_user_notes where user='$user' $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_user_notes` where `user`='$user' $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_user_notes` where `user`=? $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$res['size'] = strlen($res['data']);
 
 			$ret[] = $res;
