@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.44 2004-04-16 15:42:19 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.45 2004-04-27 17:57:24 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -316,3 +316,7 @@ ALTER TABLE `tiki_untranslated` CHANGE `lang` `lang` char(16) NOT NULL default '
 ALTER TABLE `tiki_quicktags` ADD `tagcategory` CHAR( 255 ) AFTER `tagicon` ;
 ALTER TABLE `tiki_quicktags` ADD INDEX `tagcategory` (`tagcategory`);
 UPDATE `tiki_quicktags` set `tagcategory`='wiki';
+
+#added on 2004-4-26 sylvie
+DELETE FROM `tiki_preferences` WHERE `name`='email_encoding';
+ALTER TABLE `tiki_pages` ADD `lang` VARCHAR( 16 ) AFTER `page_size` ;
