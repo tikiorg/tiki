@@ -305,12 +305,12 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {elseif $ins_fields[ix].type eq 't'}
 {if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]}&nbsp;</span>{/if}
-<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}"{/if} />
+<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}" maxlength="{$ins_fields[ix].options_array[1]}"{/if} />
 {if $ins_fields[ix].options_array[3]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[3]}</span>{/if}
 
 {elseif $ins_fields[ix].type eq 'n'}
 {if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]}&nbsp;</span>{/if}
-<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}"{/if} />
+<input type="text" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|escape}" {if $ins_fields[ix].options_array[1]}size="{$ins_fields[ix].options_array[1]}" maxlength="{$ins_fields[ix].options_array[1]}"{/if} />
 {if $ins_fields[ix].options_array[3]}<span class="formunit">&nbsp;{$ins_fields[ix].options_array[3]}</span>{/if}
 
 {elseif $ins_fields[ix].type eq 'a'}
