@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.36 2004-02-01 21:42:24 musus Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.37 2004-02-03 02:12:37 musus Exp $
 
 MoreNeat theme
 */
@@ -330,12 +330,12 @@ input[type=submit]:hover {
 TD {color: Black;  font-size: 11px; vertical-align: top;}
 
 /* Cells in forms without background color (inside a div for example) */
-TD.form 
+.form 
 { color: Black;  font-size: 10px; vertical-align: top; text-align: left;}
 TD.formbor 
 { border: 1px solid #8CACBB; color: Black;  font-size: 10px; vertical-align: top; text-align: left;}
 /* Cells in forms using a background color */
-TD.formcolor, td.galform , td.editblogform, td.editfgalform, TD.comform,td.forumform
+.formcolor, .galform , .editblogform, .editfgalform, .comform,.forumform
 { border: 1px solid #8CACBB; color: black;   background: #C7D0D9; font-size: 10px; vertical-align: top; text-align: left;}
 
 /* The table */
@@ -484,7 +484,7 @@ div.searchdate {  font-size: 10px; color : #333333;}
 {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;font-size: 12px; color : black; text-decoration: underline;}
 
 /* Warning background/color */
-span.warn {  color: red;}
+.attention {  color: red;}
 
 
 /***********************************************  THE WIKI ***********************************************************/

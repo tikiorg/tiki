@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.10 2004-01-04 06:22:08 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.11 2004-02-03 02:00:06 musus Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -262,4 +262,7 @@ a.removeTab{
 	clear:both;
 	}
 	
-
+/* Warning color */
+.attention {
+	color: red;
+}
