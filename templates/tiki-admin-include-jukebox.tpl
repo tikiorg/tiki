@@ -44,31 +44,31 @@
         <table class="admin"><tr>
           <td class="form"><label for="jukebox-album-title">{tr}Title{/tr}</label></td>
           <td class="form"><input type="checkbox" name="jukebox_album_list_title" id="jukebox-album-title"
-              {if $jukebox_album_list_title eq 'y'}checked="checked"{/if}></td>
+              {if $jukebox_album_list_title eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="jukebox-album-desc">{tr}Description{/tr}</label></td>
           <td class="form"><input type="checkbox" name="jukebox_album_list_description" id="jukebox-album-desc"
-              {if $jukebox_album_description eq 'y'}checked="checked"{/if}></td>
+              {if $jukebox_album_list_description eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="jukebox-album-creation">{tr}Creation date{/tr}</label></td>
           <td class="form"><input type="checkbox" name="jukebox_album_list_created" id="jukebox-album-creation"
-              {if $jukebox_album_list_created eq 'y'}checked="checked"{/if}></td>
+              {if $jukebox_album_list_created eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="jukebox-album-lastmod">{tr}Last modification time{/tr}</label></td>
           <td class="form"><input type="checkbox" name="jukebox_album_list_lastmodif" id="jukebox-album-lastmod"
-              {if $jukebox_album_list_lastmodif eq 'y'}checked="checked"{/if}></td>
+              {if $jukebox_album_list_lastmodif eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="jukebox-album-user">{tr}User{/tr}</label></td>
           <td class="form"><input type="checkbox" name="jukebox_album_list_user" id="jukebox-album-user"
-              {if $jukebox_album_list_user eq 'y'}checked="checked"{/if}></td>
+              {if $jukebox_album_list_user eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="jukebox-album-tracks">{tr}Tracks{/tr}</label></td>
           <td class="form"><input type="checkbox" name="jukebox_album_list_tracks" id="jukebox-album-tracks"
-              {if $jukebox_album_list_tracls eq 'y'}checked="checked"{/if}></td>
+              {if $jukebox_album_list_tracks eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form"><label for="jukebox-album-visits">{tr}Visits{/tr}</label></td>
           <td class="form"><input type="checkbox" name="jukebox_album_list_visits" id="jukebox-album-visits"
-              {if $feature_album_list_visits eq 'y'}checked="checked"{/if}></td>
+              {if $jukebox_album_list_visits eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="jukeboxalbumlistconf"
               value="{tr}Change preferences{/tr}" /></td>
