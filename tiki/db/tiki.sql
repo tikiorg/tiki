@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2004-07-17 13:28:04 $
-# $Author: mose $
+# $Date: 2004-07-17 16:14:04 $
+# $Author: giottomx $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4670,45 +4670,43 @@ CREATE TABLE tiki_users_score (
 # Community tables end
 #
 
-
-
 #
 # Tables of the Opinion-Network
 #
 
 DROP TABLE IF EXISTS tiki_opnet_question;
 CREATE TABLE tiki_opnet_question (
-	id INT(10) NOT NULL AUTO_INCREMENT,
-	which_formtype INT(10) NOT NULL,
-	question_str VARCHAR(100) NOT NULL,
-	PRIMARY KEY (id) 
+	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+	formtype INT(10) NOT NULL,
+	question VARCHAR( 100 ) NOT NULL ,
+PRIMARY KEY ( id ) 
 );
 
 DROP TABLE IF EXISTS tiki_opnet_formtype;
 CREATE TABLE tiki_opnet_formtype (
-	id INT( 10 ) NOT NULL AUTO_INCREMENT,
-	name VARCHAR(30) NOT NULL,
-	timestamp INT(14) NOT NULL,
-	PRIMARY KEY (id) 
+	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+	name VARCHAR( 30 ) NOT NULL ,
+	timestamp INT( 14 ) NOT NULL,
+PRIMARY KEY ( id ) 
 );
 
 DROP TABLE IF EXISTS tiki_opnet_answer;
 CREATE TABLE tiki_opnet_answer (
-	id INT(10) NOT NULL AUTO_INCREMENT,
-	id_question INT(10) NOT NULL,
-	id_filledform INT(10) NOT NULL,
-	value TEXT NOT NULL,
-	PRIMARY KEY (id) 
+	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+	question_id INT( 10 ) NOT NULL ,
+	filledform_id INT( 10 ) NOT NULL ,
+	value TEXT NOT NULL ,
+PRIMARY KEY ( id ) 
 );
 
 DROP TABLE IF EXISTS tiki_opnet_filledform;
 CREATE TABLE tiki_opnet_filledform (
-	id INT(10) NOT NULL AUTO_INCREMENT,
-	who INT(10) NOT NULL,
-	about_who INT(10) NOT NULL,
-	which_form INT(10) NOT NULL,
-	timestamp INT(14) NOT NULL,
-	PRIMARY KEY (id) 
+	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+	who VARCHAR( 40 ) NOT NULL ,
+	about_who VARCHAR( 40 ) NOT NULL ,
+	formtype INT( 10 ) NOT NULL ,
+	timestamp INT( 14 ) NOT NULL,
+PRIMARY KEY ( id ) 
 );
 
 #
