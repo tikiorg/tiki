@@ -5,16 +5,12 @@ function refresh_search_index() {
   session_write_close();
 
   // check if we have to run. Run every n-th click:
-  global $search_refresh_rate, $tiki_p_admin;
+  global $search_refresh_rate;
   //$search_refresh_rate=1; //debug
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
   // check if we should refresh the search index for all wiki pages
-  if ($tiki_p_admin == 'y' && basename($_SERVER['HTTP_REFERER']) == 'tiki-admin.php?page=search' &&
-  	!empty($_REQUEST['refresh_index_now']) && $_REQUEST['refresh_index_now'] == 'y') {
-  	require_once(dirname(__FILE__).'/refresh-functions.php');
-  	refresh_index_wiki_all();
-  } elseif(rand(1,$search_refresh_rate)==1) {
+  if(rand(1,$search_refresh_rate)==1) {
     require_once(dirname(__FILE__).'/refresh-functions.php');
     // get a random location
     $locs=array();

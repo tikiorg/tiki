@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.7 2004-07-14 19:10:14 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.8 2004-07-14 19:36:27 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,6 +22,13 @@ if (isset($_REQUEST["searchprefs"])) {
 	simple_set_int("search_syll_age");
 	simple_set_int("search_lru_purge_rate");
 	simple_set_int("search_lru_length");
+}
+
+global $tiki_p_admin;
+if ($tiki_p_admin == 'y' && basename($_SERVER['HTTP_REFERER']) == 'tiki-admin.php?page=search' &&
+	!empty($_REQUEST['refresh_index_now']) && $_REQUEST['refresh_index_now'] == 'y') {
+  	require_once('lib/search/refresh-functions.php');
+  	refresh_index_wiki_all();
 }
 
 if (!empty($_REQUEST['refresh_index_now'])) {
