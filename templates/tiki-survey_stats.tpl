@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-survey_stats.php">{tr}Stats for surveys{/tr}</a><br /><br />
-[&nbsp;<a class="link" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a>
-&nbsp;|&nbsp;<a class="link" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
-&nbsp;|&nbsp;<a class="link" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a>&nbsp;]<br /><br />
+<a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a>
+<a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
+<a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a><br /><br />
 <h2>{tr}Surveys{/tr}</h2>
 <div  align="center">
 <table class="findtable">

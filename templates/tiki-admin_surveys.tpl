@@ -4,15 +4,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Surveys" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Surveys{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin surveys tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!--- beginning of next bit --->
 
@@ -25,9 +23,9 @@
 
 
 <br /><br />
-[<a class="link" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a>
-|<a class="link" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
-]<br /><br />
+<a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a>
+<a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
+<br /><br />
 {if $info.surveyId > 0}
 <h2>{tr}Edit this Survey:{/tr} {$info.name}</h2>
 <a href="tiki-admin_surveys.php">Create new survey</a>

@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-list_surveys.php">{tr}Surveys{/tr}</a><br/><br/>
 {if $tiki_p_view_survey_stats eq 'y'}
-<a class="link" href="tiki-survey_stats.php">{tr}Survey stats{/tr}</a><br/><br/>
+<a class="linkbut" href="tiki-survey_stats.php">{tr}Survey stats{/tr}</a><br/><br/>
 {/if}
 <table class="normal">
 <tr>

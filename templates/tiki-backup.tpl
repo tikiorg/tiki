@@ -3,15 +3,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Backups" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin backups{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-backup.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin admin tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!-- begin -->
 
@@ -60,7 +58,7 @@
 <strong>{tr}Create new backup{/tr}</strong><br/>
 <i>{tr}Creating backups may take a long time. If the process is not completed you will see a blank screen. If so you need to increment the maximum script execution time from your php.ini file{/tr}</i>
 <br/><br/>
-<a href="tiki-backup.php?generate=1" class="link">{tr}Click here to create a new backup{/tr}</a>
+<a href="tiki-backup.php?generate=1" class="linkbut">{tr}Create new backup{/tr}</a>
 </div>
 <br/>
 <div class="simplebox">

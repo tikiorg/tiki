@@ -1,10 +1,10 @@
 <a class="pagetitle" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}Stats for quiz{/tr}:{$quiz_info.name}</a><br /><br />
-[<a class="link" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
-|<a class="link" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
-|<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
-|<a class="link" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
-{if $tiki_p_admin_quizzes eq 'y'}|<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;clear={$quizId}">{tr}clear stats{/tr}</a>{/if}
-|<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br /><br />
+<a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
+<a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
+<a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
+<a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
+{if $tiki_p_admin_quizzes eq 'y'}<a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;clear={$quizId}">{tr}clear stats{/tr}</a>{/if}
+<a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br /><br />
 <h2>{tr}Quiz stats{/tr}</h2>
 <div  align="center">
 <table class="normal">

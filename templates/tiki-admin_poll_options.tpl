@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-admin_poll_options.php?pollId={$pollId}">{tr}Admin Polls{/tr}: {$menu_info.title}</a><br/><br/>
-[<a href="tiki-admin_polls.php" class="link">{tr}List polls{/tr}</a>|
-<a href="tiki-admin_polls.php?pollId={$pollId}" class="link">{tr}Edit this poll{/tr}</a>]
+<a href="tiki-admin_polls.php" class="linkbut">{tr}List polls{/tr}</a>
+<a href="tiki-admin_polls.php?pollId={$pollId}" class="linkbut">{tr}Edit this poll{/tr}</a>
 <h2>{tr}Preview poll{/tr}</h2>
 <div align="center">
 <div style="text-align:left;width:130px;" class="cbox">

@@ -15,11 +15,11 @@
 
 
 <br /><br />
-[&nbsp;<a href="tiki-list_trackers.php" class="link">{tr}List trackers{/tr}</a>
+<a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a>
 {if $tiki_p_admin_trackers eq 'y'}
-&nbsp;|&nbsp;<a href="tiki-admin_trackers.php" class="link">{tr}Admin trackers{/tr}</a>
+<a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a>
 {/if}
-&nbsp;]<br /><br />
+<br /><br />
 
 <h2>{tr}Create/edit trackers{/tr}</h2>
 {if $individual eq 'y'}

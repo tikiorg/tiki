@@ -4,8 +4,8 @@
 {if $pId}
 {tr}You are editing block:{/tr}{$pId}<br />
 {/if}
-[<a class="link" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}create new block{/tr}</a>|
-<a class="link" href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a>]<br />
+<a class="linkbut" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}create new block{/tr}</a>
+<a class="linkbut" href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a><br />
 
 <form action="tiki-edit_programmed_content.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId|escape}" />

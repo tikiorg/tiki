@@ -3,15 +3,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=DynamicContent" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin DynamicContent{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-list_contents.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin DynamicContent tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!-- begin -->
 
@@ -20,7 +18,7 @@
 
 
 <br /><br />
-<h3>{tr}Create or edit content block{/tr}</h3><a class="link" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
+<h3>{tr}Create or edit content block{/tr}</h3><a class="linkbut" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
 <form action="tiki-list_contents.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId|escape}" />
 <table class="normal">
