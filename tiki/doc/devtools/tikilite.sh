@@ -2,6 +2,8 @@
 # originall written by mose@feu.org
 # maintained by wolff_borg@yahoo.com.au
 
+# ############################################################
+#
 # HOWTO create TikiWiki-Lite ?
 # --------------------------
 #
@@ -23,14 +25,31 @@
 #   2. Execute doc/devtools/tikilite.sh script again 
 #
 # ############################################################
-# special operation for a liteer tikiwiki
 #
+# HOWTO modify this file
+# ----------------------
+#
+# The structure is faily simple, removals are done on a per feature basis,
+# with an indication of dependancies.
+#
+# Any dependancies found in multiple features, should be moved to the bottom
+# of the file.
+#
+# Whether you are fixing a feature, creating a new feature or uncommenting
+# a disabled feature, the standard should remain the same.
+#
+# ############################################################
+
 LANG_DEF="en"
 THEME_DEF="moreneat"
 
+echo "Removing duplicate Date lib..."
+rm -rf lib/Date
 
-echo "Removing Thumbs.db ..." 
-find -name Thumbs.db -exec rm -f {} \;
+echo "Removing AdoDB tests..."
+rm -rf lib/adodb/tests
+
+echo
 
 echo "Removing DB extras..."
 rm -rf db/oracle
@@ -39,46 +58,92 @@ rm -rf db/pgsql
 echo "Removing Avatars..."
 find img/avatars/ -type f -name '*.gif' | grep -v 000 | xargs -- rm -f
 
-echo "Removing custom images..."
+# Used in the spell checking
+# Had DB dependancies that need to be fixed
+# Needs checking for sql tables in DB
+echo "Removing Bablotron..."
+# Dependancies on PEAR::DB
+rm -rf lib/bablotron.php
+
+echo "Removing Custom images..."
 rm -rf img/custom
 
-echo "Remove languages except default..."
-find lang -type f -name language.php | grep -v "/$LANG_DEF/" | xargs -- rm -rf
+echo "Removing Languages except default..."
+find lang/* -type d | grep -v "/$LANG_DEF" | xargs -- rm -rf
 
-echo "Remove Galaxia..."
+echo "Removing Galaxia..."
 rm -rf lib/Galaxia
 
-echo "Remove iCal..."
+echo "Removing iCal..."
 rm -rf lib/calendar/iCal
 
-echo "Remove SOAP example..."
-rm -rf lib/pear/SOAP/example
+echo "Removing jsCalendar..."
+rm -rf lib/jscalendar
 
-echo "Remove PDF fonts..."
-find lib/pdflib/fonts -type f -name "*.afm" | grep -v php_Helvetica | grep -v php_Courier | xargs -- rm -f
-
-# or just
-echo "Remove pdflib..."
+echo "Removing PDF generation..."
 rm -rf lib/pdflib
 
+#echo "Removing PDF fonts..."
+#find lib/pdflib/fonts -type f -name "*.afm" | grep -v php_Helvetica | grep -v php_Courier | xargs -- rm -f
+
+echo "Removing PHPOpenTracker..."
+# Dependancies on PEAR::DB
+rm -rf lib/phpOpenTracker
+
 # Couldn't find any reference to these files anywhere?
-echo "Remove popups..."
+echo "Removing Popups..."
 rm -rf popups
 
-echo "Remove styles except default..."
+echo "Removing Styles except default..."
 find styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
 find styles/ -type f -name "*.css" | grep -v $THEME_DEF | xargs -- rm -f
 find templates/styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
 
-echo "Remove Webmail..."
+echo "Removing IRC..."
+rm -rf var/log/irc
+rm -rf tiki-view_irc.php
+rm -rf lib/irc
+rm -rf templates/tiki-view_irc.tpl
+
+echo "Removing SQL..."
+# Dependancies on PEAR::DB
+rm -rf lib/wiki-plugins/wikiplugin_sql.php
+
+echo "Removing Webmail..."
+rm -rf tiki-admin_include_webmail.php
+rm -rf tiki-webmail.php
+rm -rf tiki-webmail_contacts.php
+rm -rf tiki-webmail_download_attachment.php
+rm -rf img/icons/admin_webmail.png
+rm -rf img/mytiki/webmail.gif
+rm -rf img/webmail
+rm -rf templates/tiki-admin-include-webmail.tpl
+rm -rf templates/tiki-webmail.tpl
+rm -rf templates/tiki-webmail_contacts.tpl
 rm -rf lib/webmail
 rm -rf temp/mail_attachs
 
-echo "Remove tests..."
+echo "Removing WS Server..."
+rm -rf lib/pear/SOAP
+rm -rf tiki-ws_client.php
+rm -rf tiki-ws_server.php
+
+echo "Removing Tests..."
+rm -rf tiki-tests.php
 rm -rf tests
 
-echo "Remove tikimovies..."
+echo "Removing TikiMovies..."
+rm -rf tiki-listmovies.php
+rm -rf templates/tiki-listmovies.tpl
 rm -rf tikimovies
+
+# ############################################################
+# Dependancies
+
+echo "Removing PEAR::DB..."
+rm -rf lib/pear/DB
+rm -rf lib/pear/DB.php
+
 
 # ############################################################
 
