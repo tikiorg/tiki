@@ -1905,6 +1905,11 @@ textarea.tshoutbox {
 }
 
 /* calendar styles */
+#calendar
+{
+width:100%;
+}
+
 .Cal0, .Cal1, .Cal2 {
 	border-top:    1px dashed #cccccc;
 	color:   #425262;

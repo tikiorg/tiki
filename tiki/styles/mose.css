@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.21 2003-10-21 22:54:13 zaufi Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.22 2003-11-07 23:00:36 mose Exp $
 2003 - created and maintained by mose@feu.org
 */
 
@@ -2090,6 +2090,11 @@ div.messureadbody {
 }
 
 /* calendar styles */
+#calendar
+{
+width:100%;
+}
+
 
 /* Cal$x is the status of the event */
 .Cal0, .Cal1, .Cal2 {
