@@ -4648,9 +4648,7 @@ class TikiLib extends TikiDB {
 	    
 	    // Use largest version +1 in history table rather than tiki_page because versions used to be bugged
 	    //    $old_version = $info["version"];
-			if (!is_object($histlib)) {
-	    	include_once ("lib/wiki/histlib.php");
-			}
+	     global $histlib; include_once ("lib/wiki/histlib.php");
 	    $old_version = $histlib->get_page_latest_version($pageName, &$old_data);
 	   
 	    if (!$minor && $pageName != 'SandBox') {
@@ -4722,7 +4720,7 @@ class TikiLib extends TikiDB {
 				$edit_data = diff2($old_data , $edit_data, $feature_wiki_email_diff_style);
 			}
 			$smarty->assign('feature_wiki_email_diff_style', $feature_wiki_email_diff_style);
-			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
+			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $old_version, $edit_data, $machine);
 		}
 
 		global $feature_score;
