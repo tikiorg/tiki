@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.10 2003-11-08 21:29:03 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.11 2003-11-12 00:05:28 zaufi Exp $
  *
  * Debug console used styles.
  *
@@ -137,4 +137,9 @@ div.debugconsole .separator:visited:hover {
 
 div.debugconsole td.formcolor {
 	background-color: Window;
+}
+
+div.debugconsole pre {
+    margin: 0px;
+    padding: 0px;
 }
