@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.94 2004-07-20 18:40:12 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.95 2004-07-21 19:47:43 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -570,7 +570,14 @@ if (isset($_REQUEST["lang"])) {
 }
 $smarty->assign('lang', $pageLang);
 
-$smarty->assign_by_ref('pagedata',htmldecode($edit_data));
+$edit_data_htmldecoded = htmldecode($edit_data);
+$smarty->assign_by_ref('pagedata',$edit_data_htmldecoded);
+
+if (($tiki_p_use_HTML == 'y' || $tiki_p_admin == 'y') && $feature_wiki_allowhtml == 'y' && $edit_data == $edit_data_htmldecoded) {
+	$smarty->assign('allowhtml', 'y');
+} else {
+	$smarty->assign('allowhtml', 'n');
+}
 
 // apply the optional post edit filters before preview
 $parsed = $tikilib->apply_postedit_handlers($edit_data);
