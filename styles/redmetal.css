@@ -57,7 +57,7 @@ DIV#tiki-bot { background-image: url(redmetal/page_back.png); padding: 2px 2px 2
 
 TD#leftcolumn { padding-left: 2px; padding-right: 2px; vertical-align: top; width: 170px; }
 
-TD#rightcolumn { background-color: #C7BCBF; border-left : 1px dashed #CCCCBB; padding-left: 5px; vertical-align: top; width: 160px; }
+TD#rightcolumn { background-color: #C7BCBF; border-left : 1px dashed #CCCCBB; padding-left: 5px; vertical-align: top; width: 160px; padding-right: 5px; }
 	
 TD#centercolumn { vertical-align: top; width: 100%}
 

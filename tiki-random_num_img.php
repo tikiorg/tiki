@@ -5,7 +5,10 @@
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-session_start();
+
+//session_start();
+// hmm. to many session tweaks in setup_smarty ... we need to call this
+require_once('tiki-setup.php');
 
 //random_number.php
 $img_number = imagecreate(95, 30);

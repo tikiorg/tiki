@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.19 2003-12-21 17:47:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.20 2003-12-24 01:17:26 redflo Exp $ *}
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">
@@ -78,7 +78,9 @@
 </td>
 <td class="{cycle}">
 {if $users[user].groupName !== 'Anonymous'}
-<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName}" title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this group?{/tr}')" 
+title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>
 {/if}
 <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}" title="Click here to assign permissions to this group"><img border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /></a>
 <a class="link" href="tiki-admingroups.php?group={$users[user].groupName}" title="Click here to edit this group"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>

@@ -190,7 +190,7 @@ TD.module {
 
 /* Now the boxes for the rest of Tiki (non-modules */
 div.cbox {
-	background:    white;
+	background-color:    white;
 	margin-left:   4px;
 	margin-right:   4px;
 	margin-top:   4px;
@@ -242,7 +242,7 @@ div.cbox-title {
 /* And this is the data */
 div.cbox-data {
 	overflow:    hidden;
-	background:   white;
+	background-color:   white;
 	margin-left:   5px;
 	margin-right:   5px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -257,7 +257,7 @@ div.cbox-data {
 /* Menus */
 /* Separators are used to separate menu areas in the application menu and user created menus*/
 div.separator {
-	background:    #c7d0d9;
+	background-color:    #c7d0d9;
 	color:   black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
@@ -372,12 +372,12 @@ div.simplebox {
 	margin-top:   5px;
 	margin-bottom:   5px;
 	padding-left:   2px;
+	padding-right:   2px;
 	padding-top:   2px;
 	padding-bottom:   2px;
-	padding-right:   2px;
 	color:   black;
 	border:   1px solid black;
-	background:   white;
+	background-color:   white;
 	width:   98%;
 	font-family:   Verdana, Arial, Helvetica, sans-serif;
 	font-size:   11px;
@@ -426,7 +426,7 @@ TD.form {
 TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
 	color:    black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background:   #b5c1cc;
+	background-color:   #b5c1cc;
 	font-size:   10px;
 	vertical-align:   top;
 	text-align:   left;
@@ -486,7 +486,6 @@ a.tablename:active, a.galname:active, .a.imagename:active, a.blogname:active, a.
 	a.forumname:active {
 	text-decoration:    none;
 	color:   black;
-	text-decoration:   none;
 }
 
 a.tablename:hover, a.galname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover {
@@ -547,7 +546,8 @@ td.findtable {
 /* Odd rows in several listings */
 TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd, td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd, td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd, td.bloglistcreatedodd, td.bloglistlastModifodd, td.bloglistuserodd, td.bloglistpublicodd, td.bloglistpostsodd, td.bloglistvisitsodd, td.bloglistactivityodd, td.bloglistactionsodd, td.listfgalnameodd, td.listfgaldescriptionodd, td.listfgalcreatedodd, td.listfgallastModifodd, td.listfgaluserodd, td.listfgalfilesodd, td.listfgalvisitsodd, td.listfgalactionsodd, td.listfilesnameodd, td.listfilesdescriptionodd, td.listfilesidodd, td.listfilesfilenameodd, td.listfilesfilesizeodd, td.listfilescreatedodd, td.listfilesdlsodd, td.listfilesnameodd, td.listfilesuserodd, td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd, td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd, td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd, td.topicauthorodd {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
+/*	font-size:   10px;  */
+	font-size:   12px;  /* Remarked line above & added this line because (I assume) the different font-sizes between odd & even rows was a mistake.  If I'm wrong & the 10px font size is in fact correct, I appologize.  Feel free to unremark the above line & get rid of this line. */
 	color:   black;
 	background-color:   #c7d0d9;
 	vertical-align:   top;
@@ -708,7 +708,7 @@ DIV#page-bar {
 	font-size:   10px;
 	color:   Black;
 	font-weight:   bold;
-	background:   white;
+	background-color:   white;
 	border:   1px solid black;
 	padding-left:   0.1em;
 	padding-right:   0.1em;
@@ -722,14 +722,14 @@ DIV#page-bar {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
-	background:   white;
+	background-color:   white;
 	text-decoration:   none;
 }
 
 .linkbut:active {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	background:   white;
+	background-color:   white;
 	color:   black;
 	text-decoration:   none;
 }
@@ -738,13 +738,13 @@ DIV#page-bar {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
-	background:   #c7d0d9;
+	background-color:   #c7d0d9;
 	text-decoration:   underline;
 }
 
 /* When a cached version of an external link is displayed */
 div.cache {
-	background:    #EFEFEF;
+	background-color:    #EFEFEF;
 	border:   1px solid black;
 	padding-left:   0.1em;
 	padding-right:   0.1em;
@@ -796,7 +796,7 @@ td.wikicell {
 
 /* Text in wiki pages is displayed using the following style */
 div.wikitext {
-	background:    white;
+	background-color:    white;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	border:   1px solid black;
@@ -835,7 +835,7 @@ p.editdate {
 
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	font-size:   smaller;
 	padding:   6pt;
@@ -846,7 +846,7 @@ div.wiki-edithelp {
 /* Gallery description */
 div.galdesc {
 	color:    white;
-	background:   #b5c1cc;
+	background-color:   #b5c1cc;
 	border:   1px solid white;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -859,18 +859,18 @@ div.galdesc {
 
 /* Container for the whole gallery */
 div.browsegallery {
-	background:    #EFEFFF;
+	background-color:    #EFEFFF;
 	width:   100%;
 }
 
 /* You can set a different background color for odd and even rows in the thumbnails table */
 /* Thumbnails in odd rows are shown inside oddthumb tds */
 TD.oddthumb {
-	background: #b5c1cc;
+	background-color: #b5c1cc;
 }
 
 TD.eventhumb {
-	background: #c7d0d9;
+	background-color: #c7d0d9;
 }
 
 /* Gallery Title */
@@ -941,7 +941,7 @@ td.imageinfo {
 
 /* The whole container for the browse image screen (may be useful for a fancy background) */
 div.browseimage {
-	background:    #EFEFFF;
+	background-color:    #EFEFFF;
 	width:   100%;
 }
 
@@ -1036,7 +1036,7 @@ span.posthead {
 /* The post body */
 div.postbody {
 	overflow:    hidden;
-	background:   white;
+	background-color:   white;
 	border:   1px solid black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
@@ -1064,7 +1064,7 @@ div.blogtitle {
 
 /* The weblog information */
 div.bloginfo {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -1078,7 +1078,7 @@ div.bloginfo {
 
 /* Weblog description */
 div.blogdesc {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -1092,7 +1092,7 @@ div.blogdesc {
 
 /* Links to post/edit/rss feed for the webelog are contained inside this div */
 div.blogtools {
-	background:    white;
+	background-color:    white;
 	border:   1px solid black;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
@@ -1109,7 +1109,7 @@ div.blogtools {
 /* Listing contents of a file gallery (listing files) */
 div.fgaldesc {
 	color:    black;
-	background:   #b5c1cc;
+	background-color:   #b5c1cc;
 	border:   1px solid gray;
 	padding-left:   0.8em;
 	padding-right:   0.8em;

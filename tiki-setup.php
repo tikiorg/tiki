@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.179 2003-12-19 04:13:38 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.180 2003-12-24 01:17:23 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,6 +13,13 @@
 /*!
     \static
 */
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],"tiki-setup.php")!=FALSE) {
+  die("This script cannot be called directly");
+}
+
+
 include_once("lib/init/initlib.php");
 
 

@@ -232,8 +232,9 @@ CREATE TABLE messu_messages (
 
 DROP TABLE IF EXISTS sessions;
 CREATE TABLE sessions(
-  SESSKEY varchar(32) NOT NULL default '',
-  EXPIRY int(11) unsigned NOT NULL default '0',
+  SESSKEY char(32) NOT NULL,
+  EXPIRY int(11) unsigned NOT NULL,
+  EXPIREREF varchar(64),
   DATA text NOT NULL,
   PRIMARY KEY  (SESSKEY),
   KEY EXPIRY (EXPIRY)

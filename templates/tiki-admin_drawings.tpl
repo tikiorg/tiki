@@ -1,17 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.12 2003-12-10 23:08:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.13 2003-12-24 01:17:26 redflo Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=DrawingsDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Drawings{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=DrawingsDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Drawings{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_drawings.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Drawings tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_drawings.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Drawings tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
 
 <!-- begin -->
 
@@ -72,15 +71,13 @@
 </td>
 <td class="{cycle}">
 {if $smarty.request.ver}
-	<a href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;remove={$items[user].drawId}" class="link"><img src='img/icons2/delete.gif' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' border='0' /></a>
+	<a href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;remove={$items[user].drawId}" class="link"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
 {else}
-	<a href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;removeall={$items[user].name}" class="link"><img src='img/icons2/delete.gif' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' border='0' /></a>
+	<a href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;removeall={$items[user].name}" class="link"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
 {/if}
 <a href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;previewfile={$items[user].drawId}" class="link"><img src='img/icons/ico_img.gif' border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
 {if not $smarty.request.ver}
-<a class="link" href='#' onClick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$items[user].name}','','menubar=no,width=252,height=25');">
-	<img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' />
-</a>
+<a class="link" href='#' onClick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$items[user].name}','','menubar=no,width=252,height=25');"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 {/if}
 </td>
 </tr>
@@ -108,4 +105,4 @@
 {/section}
 {/if}
 </div>
-</div> 
+</div>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.23 2003-12-21 17:47:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.24 2003-12-24 01:17:23 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,6 +14,17 @@
 // Setup URLS for the Comments next and prev buttons and use variables that
 // cannot be aliased by normal tiki variables.
 // Traverse each _REQUEST data adn put them in an array
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],"comments.php")!=FALSE) {
+  //smarty is not there - we need setup
+  require_once('tiki-setup.php');
+  $smarty->assign('msg',tra("This script cannot be called directly"));
+  $smarty->display("error.tpl");
+  die;
+}
+
+
 require_once ('lib/tikilib.php'); # httpScheme()
 
 if (!isset($comments_per_page)) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.46 2003-12-19 11:52:33 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.47 2003-12-24 01:17:23 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,7 +41,7 @@ if ($session_db == 'y') {
     unset($pass_tiki);
     unset($dbs_tiki);
     ini_set('session.save_handler','user');
-    include('adodb-session.php');
+    include('session/adodb-session.php');
 }
 session_start();
 

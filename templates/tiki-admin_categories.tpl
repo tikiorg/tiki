@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.12 2003-12-10 23:08:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.13 2003-12-24 01:17:26 redflo Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -6,13 +6,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=CategoryAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin categories{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin categories tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
 
 <!-- begin -->
 
@@ -25,7 +25,7 @@
   <td class="tdcategpath">{tr}Current category{/tr}: {$path} </td>
   <td class="tdcategpath" align="right">
   <table><tr><td>
-  {* Don't show 'TOP' button if we already on TOP but resserve space to avoid visual effects on change view *}
+  {* Don't show 'TOP' button if we already on TOP but reserve space to avoid visual effects on change view *}
   <div class="button2" style="visibility:{if $parentId ne '0'}visible{else}hidden{/if}">
       <a class="linkbut" href="tiki-browse_categories.php?parentId=0">{tr}top{/tr}</a>
     </div>
@@ -71,7 +71,7 @@
 				</td></tr>
         <tr><td class="form">{tr}Name{/tr}:</td><td class="form"><input type="text" name="name" value="{$name|escape}" /></td></tr>
         <tr><td class="form">{tr}Description{/tr}:</td><td class="form"><textarea rows="4" cols="16" name="description">{$description|escape}</textarea></td></tr>
-        <tr><td class="form" align="center" colspan="2"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
+        <tr><td class="form" align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
       </table>
       </form>
       </div>
