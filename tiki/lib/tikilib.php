@@ -3714,15 +3714,29 @@ class TikiLib extends TikiDB {
 
 		if (strstr($pages[1][$i], ':')) {
 		    $wexs = explode(':', $pages[1][$i]);
-
-		    if (count($wexs) == 2) {
+		    
+            if (count($wexs) == 2) {
 			$wkname = $wexs[0];
 
 			if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-			    $wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
-
-			    $wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
-			    $data = preg_replace($pattern, "$wkurl", $data);
+			    $result = $this->db->query("select `extwiki`, `extwikiId`  from `tiki_extwiki` where `name`=?",array($wkname));
+                $tuple = $result->fetchRow();
+                $wkurl = '<a ';
+                //Insert the description
+                if(!empty($pages[5][$i])) {
+                    $wkurl .= 'title="' . $pages[5][$i] . '" ';
+                } 
+                //External wikis have a user defined url
+                if (!empty($tuple["extwiki"])) {
+			        $wkurl .=  'href="' . str_replace('$page', urlencode($wexs[1]), $tuple["extwiki"]) . 
+                               '" class="wiki external">' . 
+                               $wexs[1] . '</a>';
+			    }
+                //local wiki's dont
+                else {
+			        $wkurl .= 'href="tiki-index.php?wiki_id=' . $tuple["extwikiId"] . '&page=' . urlencode($wexs[1]) .   '" class="wiki">' . $wexs[1] . '</a>';
+                }
+                $data = preg_replace($pattern, "$wkurl", $data);
 			    $repl2 = false;
 			}
 		    }
@@ -3796,9 +3810,24 @@ class TikiLib extends TikiDB {
 			$wkname = $wexs[0];
 
 			if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-			    $wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
+			    $result = $this->db->query("select `extwiki`, `extwikiId`  from `tiki_extwiki` where `name`=?",array($wkname));
+                $tuple = $result->fetchRow();
 
-			    $wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
+                //External wikis have a user defined url
+                if (!empty($tuple["extwiki"])) {
+			    $wkurl =  '<a href="' . 
+                           str_replace('$page', urlencode($wexs[1]), $tuple["extwiki"]) . 
+                           '" class="wiki external">' . 
+                           $wexs[1] . '</a>';
+			    }
+                //local wiki's dont
+                else {
+			        $wkurl = '<a href="tiki-index.php?wiki_id=' . $tuple["extwikiId"] . 
+                             '&page=' . urlencode($wexs[1]) . '" class="wiki">' . 
+                             $wexs[1] . '</a>';
+                }
+
+#			    $wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $tuple["extwiki"]). '" class="wiki external">' . $wexs[1] . '</a>';
 			    $data = preg_replace("/\(\($page_parse\)\)/", "$wkurl", $data);
 			    $repl2 = false;
 			}
