@@ -1,6 +1,8 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/chat/chatlib.php');
+
 if($feature_chat!='y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
@@ -39,20 +41,20 @@ $enterTime = date("U");
 if($tiki_p_admin_chat == 'y') {
   $nickname = '@'.$nickname;
 }
-$tikilib->user_to_channel($nickname,$channelId);
+$chatlib->user_to_channel($nickname,$channelId);
 $smarty->assign('nickname',$nickname);
 $smarty->assign('channelId',$_REQUEST["channelId"]);
 $smarty->assign('now',date("U"));
-$info = $tikilib->get_channel($_REQUEST["channelId"]);
+$info = $chatlib->get_channel($_REQUEST["channelId"]);
 $refresh=$info["refresh"];
 $name=$info["name"];
 //session_register('refresh');
 $smarty->assign('channelName',$name);
 $smarty->assign_by_ref('channelInfo',$info);
 $smarty->assign('refresh',$refresh);
-$channels = $tikilib->list_active_channels(0,-1,'name_desc','');
+$channels = $chatlib->list_active_channels(0,-1,'name_desc','');
 $smarty->assign_by_ref('channels',$channels["data"]);
-$chatusers = $tikilib->get_chat_users($channelId);
+$chatusers = $chatlib->get_chat_users($channelId);
 $smarty->assign_by_ref('chatusers',$chatusers);
 
 $section='chat';

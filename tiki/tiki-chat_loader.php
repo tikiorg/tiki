@@ -1,5 +1,7 @@
 <?php
 include_once('tiki-setup.php');
+include_once('lib/chat/chatlib.php');
+
 if($feature_chat!='y') {
   die;  
 }
@@ -12,7 +14,7 @@ if($tiki_p_chat!='y') {
 // set lastMessage in the session
 //refresh_user($user);
 // :TODO: use a preference here instead of 10 minutes
-$tikilib->purge_messages(10); 
+$chatlib->purge_messages(10); 
 if(isset($_REQUEST["refresh"])) {
   $refresh = $_REQUEST["refresh"];
 } else {
@@ -28,7 +30,7 @@ print('<head>');
 //prune_users();
 //update_channel_ratio($channelId);
 if(isset($_REQUEST["channelId"])) {
-  $messages = $tikilib->get_messages($_REQUEST["channelId"],$lastMessage,$_REQUEST["enterTime"]); 
+  $messages = $chatlib->get_messages($_REQUEST["channelId"],$lastMessage,$_REQUEST["enterTime"]); 
   if(count($messages)>0) {
     print("<script>");
     foreach ($messages as $msg) {
@@ -56,7 +58,7 @@ if(isset($_REQUEST["channelId"])) {
 }
 
 
-$messages = $tikilib->get_private_messages($_REQUEST["nickname"]); 
+$messages = $chatlib->get_private_messages($_REQUEST["nickname"]); 
 if(count($messages)>0) {
   print("<script>");
   foreach ($messages as $msg) {

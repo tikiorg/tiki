@@ -1,7 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-
+include_once('lib/banners/bannerlib.php');
 
 // CHECK FEATURE BANNERS HERE
 if($feature_banners != 'y') {
@@ -25,7 +25,7 @@ if(isset($_REQUEST["remove"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $tikilib->remove_banner($_REQUEST["remove"]);  
+  $bannerlib->remove_banner($_REQUEST["remove"]);  
 }
 
 
@@ -71,7 +71,7 @@ if($tiki_p_admin_banners == 'y') {
   $who = $user;
 }
 */
-$listpages = $tikilib->list_banners($offset,$maxRecords,$sort_mode,$find,$who);
+$listpages = $bannerlib->list_banners($offset,$maxRecords,$sort_mode,$find,$who);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

@@ -43,6 +43,7 @@
 </table>
 </form>
 <div class="mini">
+<div align="center">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-user_tasks.php?tasks_useDates={$tasks_useDates}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
@@ -58,6 +59,7 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
+</div>
 </div>
 
 

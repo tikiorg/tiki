@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
+include_once('lib/banners/bannerlib.php');
 
 if($feature_banners != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -16,7 +17,7 @@ if(!isset($_REQUEST["bannerId"])) {
   die;  
 }
 
-$info = $tikilib->get_banner($_REQUEST["bannerId"]);
+$info = $bannerlib->get_banner($_REQUEST["bannerId"]);
 if(!$info) {
   $smarty->assign('msg',tra("Banner not found"));
   $smarty->display("styles/$style_base/error.tpl");

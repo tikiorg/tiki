@@ -2,7 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/wiki/exportlib.php');
-
+include_once('lib/admin/adminlib.php');
 include_once ("lib/webmail/htmlMimeMail.php");
 include_once ("lib/ziplib.php");
 
@@ -13,10 +13,10 @@ if($tiki_p_admin != 'y') {
 }
 
 if(isset($_REQUEST["rmvorphimg"])) {
-  $tikilib->remove_orphan_images();
+  $adminlib->remove_orphan_images();
 }
 if(isset($_REQUEST["rmvunusedpic"])) {
-  $tikilib->remove_unused_pictures();	
+  $adminlib->remove_unused_pictures();	
 }
 
 if(isset($_REQUEST["layout_ss"])) {
