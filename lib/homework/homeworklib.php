@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.17 2004-05-04 23:00:54 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.18 2004-05-05 00:23:29 ggeller Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -38,81 +38,76 @@ class HomeworkLib extends TikiLib {
 			$tiki_p_hw_student = 'y';
 		}
 		else if (isset($tiki_p_hw_grader) && $tiki_p_hw_grader == 'y'){
-	  $tiki_p_hw_student = 'y';
+			$tiki_p_hw_student = 'y';
+		}
 	}
-  }
 
-  // Called by:
-  //   tiki-hw_student_assignments.php
-  //   tiki-hw_teacher_assignments.php
-  // Data:
-  //   tiki_hw_assignments table - read only
-  // Arguments:
-  //   offset     - read only - starting point in the vector
-  //   maxRecords - read only - maximum number of records to return
-  // Returns:
-  //   Array with count of results and a data vector, sorted by the due date
-  // TODO: Test with a lot of rows in the table and different values of offset and maxRecords
-  function hw_assignments_list($offset = 0, $maxRecords = -1) {
-    $bindvars=array();
-	//    $query = 'select `tiki_hw_assignments`.* from `tiki_hw_assignments` ORDER BY `dueDate`';
-	$query = 'select `tiki_hw_assignments`.* from `tiki_hw_assignments` WHERE deleted = 0 ORDER BY `dueDate`';
-    $result = $this->query($query,$bindvars,$maxRecords,$offset);
-    $ret = array();
+	// Called by:
+	//   tiki-hw_student_assignments.php
+	//   tiki-hw_teacher_assignments.php
+	// Data:
+	//   tiki_hw_assignments table - read only
+	// Arguments:
+	//   offset     - read only - starting point in the vector
+	//   maxRecords - read only - maximum number of records to return
+	// Returns:
+	//   Array with count of results and a data vector, sorted by the due date
+	// TODO: Test with a lot of rows in the table and different values of offset and maxRecords
+	function hw_assignments_list($offset = 0, $maxRecords = -1) {
+		$bindvars=array();
+		$query = 'select `tiki_hw_assignments`.* from `tiki_hw_assignments` WHERE deleted = 0 ORDER BY `dueDate`';
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$ret = array();
     
-    $cant = 0;
-    while ($res = $result->fetchRow()) {
-      $ret[] = $res;
-      $cant++;
-    }
-    
-    $retval = array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  // Called by: tiki-hw_teacher_assignment_edit.php
-  function hw_assignment_store(&$assignment_data) {
-	if ($assignment_data["assignmentId"] == 0){ // new assignment
-	  $data = array($assignment_data["title"],
-                      $assignment_data["teacherName"],
-                      $assignment_data["created"],
-                      $assignment_data["dueDate"],
-                      $assignment_data["modified"],
-                      $assignment_data["heading"],
-                      $assignment_data["body"],
-                      0);
-	  $query = "insert into `tiki_hw_assignments` (`title`, `teacherName`, `created`, `dueDate`, 
-          `modified`, `heading`, `body`, `deleted`)";
-	  $query.= " values (?, ?, ?, ?, ?, ?, ?, ?)";
-	  $result = $this->query($query,$data);
-	}
-	else { // Revise existing assignment
-	  $data = array($assignment_data["title"],
-                      $assignment_data["teacherName"],
-                      $assignment_data["dueDate"],
-                      $assignment_data["modified"],
-                      $assignment_data["heading"],
-                      $assignment_data["body"],
-                      $assignment_data["assignmentId"]);
-	  $query = "update `tiki_hw_assignments` set `title` = ?, `teacherName` = ?,
-               `dueDate` = ?, `modified` = ?, `heading` = ?, `body` = ? where assignmentId = ?";
-	  $result = $this->query($query,$data);
+		$cant = 0;
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+			$cant++;
+		}
+		
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
 	}
 
-    return 'HW_OK';
-  }
+	// Called by: tiki-hw_teacher_assignment_edit.php
+	function hw_assignment_store(&$assignment_data) {
+		if ($assignment_data["assignmentId"] == 0){ // new assignment
+			$data = array($assignment_data["title"],
+										$assignment_data["teacherName"],
+										$assignment_data["created"],
+										$assignment_data["dueDate"],
+										$assignment_data["modified"],
+										$assignment_data["heading"],
+										$assignment_data["body"],
+										0);
+			$query = "insert into `tiki_hw_assignments` (`title`, `teacherName`, `created`, `dueDate`, 
+        `modified`, `heading`, `body`, `deleted`)";
+			$query.= " values (?, ?, ?, ?, ?, ?, ?, ?)";
+			$result = $this->query($query,$data);
+		}
+		else { // Revise existing assignment
+			$data = array($assignment_data["title"],
+										$assignment_data["teacherName"],
+										$assignment_data["dueDate"],
+										$assignment_data["modified"],
+										$assignment_data["heading"],
+										$assignment_data["body"],
+										$assignment_data["assignmentId"]);
+			$query = "update `tiki_hw_assignments` set `title` = ?, `teacherName` = ?,
+        `dueDate` = ?, `modified` = ?, `heading` = ?, `body` = ? where assignmentId = ?";
+			$result = $this->query($query,$data);
+		}
+		return 'HW_OK';
+	}
 
-  // See if $studentName is a user with $tiki_p_hw_student
-  // Stub for now.
-  // Called by tiki-hw_page.php
-  function hw_is_student($studentName){
-		//    global $ggg_tracer;
-    // $ggg_tracer->outln(__FILE__." line: ".__LINE__." In homeworklib.php,  hw_is_student.");
-    // $ggg_tracer->outln(' $studentName = '.$studentName);
-    return true;
-  }
+	// See if $studentName is a user with $tiki_p_hw_student
+	// Stub for now.
+	// Called by tiki-hw_page.php
+	function hw_is_student($studentName){
+		return true;
+	}
 
   // Called by: tiki-hw_student_last_changes.php
   //            tiki-hw_teacher_last_changes.php
@@ -244,10 +239,6 @@ class HomeworkLib extends TikiLib {
   // $nVersion - ro - index into hw_history
   // Called by: tiki-hw_rollback.php
   function hw_page_version_exists($pageId, $nVersion){
-	//    global $ggg_tracer;
-	//    $ggg_tracer->outln(__FILE__." line: ".__LINE__." In homeworklib.php,  hw_page_version_exists.");
-	//    $ggg_tracer->outln(' $pageId = '.$pageId);
-	//    $ggg_tracer->outln(' $nVersion = '.$nVersion);
     $query = "select `id`, `version`, `lastModif`, `user`, `ip`, `comment`, `data` from `tiki_hw_history` where `id`=? and `version`= ?";
     $result = $this->query($query,array($pageId, $nVersion));
 
@@ -263,10 +254,6 @@ class HomeworkLib extends TikiLib {
   // Called by: tiki-hw_pagehistory.php
   //            tiki-hw_rollback.php
   function hw_page_get_version($pageId, $nVersion){
-	//    global $ggg_tracer;
-	//    $ggg_tracer->outln(__FILE__." line: ".__LINE__." In homeworklib.php,  hw_page_get_version.");
-	//    $ggg_tracer->outln(' $pageId = '.$pageId);
-	//    $ggg_tracer->outln(' $nVersion = '.$nVersion);
     $query = "select `id`, `version`, `lastModif`, `user`, `ip`, `comment`, `data` from `tiki_hw_history` where `id`=? and `version`= ?";
     $result = $this->query($query,array($pageId, $nVersion));
 	
@@ -306,10 +293,6 @@ class HomeworkLib extends TikiLib {
   // Adapted from histlib.php, remove version
   // Called by: tiki-hw_pagehistory.php
   function hw_page_remove_version($pageId,$version, $comment=""){
-	//    global $ggg_tracer;
-	//    $ggg_tracer->outln(__FILE__." line: ".__LINE__." In homeworklib.php, remove_version.");
-	//    $ggg_tracer->outln(' $pageId = '.$pageId);
-	//    $ggg_tracer->outln(' $version = '.$version);
     global $user;
     $query = "delete from `tiki_hw_history` where `id`=? and `version`=?";
     $result = $this->query($query,array($pageId,$version));
@@ -346,19 +329,9 @@ class HomeworkLib extends TikiLib {
   // Called by: tiki-hw_page.php
   function hw_grading_queue_submit($pageId, $pageDate, $pageVersion, $assignmentId){
     global $user;
-		//    global $ggg_tracer;
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' submit detected! ');
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $pageId = '.$pageId);
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $pageDate = '.$pageDate);
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $pageVersion = '.$pageVersion);
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $assignmentId = '.$assignmentId);
-    
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $user = '.$user);
-    
     $ipAddr = $_SERVER["REMOTE_ADDR"];
     
     $date = date('U');
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $date = '.$date);
     // If this page is in the que, mark that entry as deleted.
     // Add this page to the que.
     $query = "INSERT INTO `tiki_hw_grading_queue` (
@@ -452,9 +425,6 @@ class HomeworkLib extends TikiLib {
   // GGG - stub
   // Need to use the id for the page, get the assignment number, etc. etc.
   function hw_grading_queue($pageId) {
-		//	global $ggg_tracer;
-		//	$ggg_tracer->outln(__FILE__." line: ".__LINE__.' In hw_grading queue stub. ');
-		//	$ggg_tracer->outln(__FILE__." line: ".__LINE__.' $pageId = '.$pageId);
 	return 0;
   }
   
@@ -467,8 +437,6 @@ class HomeworkLib extends TikiLib {
   //
   // $pageID - The index in hw_pages
   function hw_page_unlock($pageId) {
-		//	global $ggg_tracer;
-		//	$ggg_tracer->outln(__FILE__." line ".__LINE__.' function hw_page_unlock is only a stub!');
   }
 
   // Grab a homework wiki-like page based on the user (student) and
@@ -480,9 +448,6 @@ class HomeworkLib extends TikiLib {
   //  $studentName - the name of the student
   //  $assignmentId - index shared with hw_assignment table
   function hw_page_fetch(&$info, $studentName, $assignmentId) {
-	// global $ggg_tracer;
-	// $ggg_tracer->outln(__FILE__." line: ".__LINE__.": in hw_page_fetch.");
-
 	global $tiki_p_hw_student;
 	global $smarty;
 	$info = array();
@@ -501,11 +466,7 @@ class HomeworkLib extends TikiLib {
 	}
 
 	$query = "select * from `tiki_hw_pages` where `studentName`=? and `assignmentId`=?";
-	// $ggg_tracer->out(__FILE__." line: ".__LINE__.': $query = ');
-	// $ggg_tracer->outvar($query);
     $result = $this->query($query, array("$studentName","$assignmentId"));
-	// $ggg_tracer->out(__FILE__." line: ".__LINE__.': $result = ');
-	// $ggg_tracer->outvar($result);
 
 	// while (!$result->EOF) {
 	//   for ($i=0, $max=$result->FieldCount(); $i < $max; $i++)
@@ -515,11 +476,9 @@ class HomeworkLib extends TikiLib {
 	// }
 
     if (!$result->numRows()){
-	  // $ggg_tracer->outln(__FILE__." line: ".__LINE__);
       return false;
 	}
     else{
-	  // $ggg_tracer->outln(__FILE__." line: ".__LINE__);
 	  $info = $result->fetchRow();
       return true;
 	}
@@ -535,7 +494,6 @@ class HomeworkLib extends TikiLib {
   //  $lock   read-only  - lock the page
   //  returns status,    - "HW_OK", "HW_INVALID_ID", or "HW_PAGE_LOCKED"
   function hw_page_fetch_by_id(&$info, $id, $lock=false) {
-	// global $ggg_tracer;
 
 	global $tiki_p_hw_student;
 	global $smarty;
@@ -548,11 +506,7 @@ class HomeworkLib extends TikiLib {
 	}
 
 	$query = "select * from `tiki_hw_pages` where `id`=?";
-	// $ggg_tracer->out(__FILE__." line: ".__LINE__.': $query = ');
-	// $ggg_tracer->outvar($query);
     $result = $this->query($query, array("$id"));
-	// $ggg_tracer->out(__FILE__." line: ".__LINE__.': $result = ');
-	// $ggg_tracer->outvar($result);
 
     if (!$result->numRows()){
       return "HW_INVALID_ID";
@@ -570,7 +524,6 @@ class HomeworkLib extends TikiLib {
     // and some code in tiki-setup_base.php
     // probably want something like lockExpires = date + session.gc_maxlifetime + 60;
 
-    // $ggg_tracer->outln(__FILE__." line: ".__LINE__);
     $info = $result->fetchRow();
     return "HW_OK";
   }
@@ -586,10 +539,6 @@ class HomeworkLib extends TikiLib {
   // $unlock (ro) - ulnlock page?
   //
   function hw_page_update($pageId, $data, $comment, $unlock = true) {
-    //    global $ggg_tracer;
-    //    $ggg_tracer->outln(__FILE__." line: ".__LINE__.": in hw_page_update.");
-    //    $ggg_tracer->outln("Have to update the version number!");
-    //    $ggg_tracer->outln("Have to update the time stamp!");
     
     $oldInfo = array();
     $status = $this->hw_page_fetch_by_id(&$oldInfo, $pageId, false);
@@ -620,12 +569,6 @@ class HomeworkLib extends TikiLib {
 
   // Have to make a primary key of
   function hw_page_create($user,$assignmentId) {
-		//    global $ggg_tracer;
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.": in hw_page_create.");
-    // $ggg_tracer->out(__FILE__." line: ".__LINE__.': $user = ');
-    // $ggg_tracer->outvar($user);
-    // $ggg_tracer->out(__FILE__." line: ".__LINE__.': $assignmentId = ');
-    // $ggg_tracer->outvar($assignmentId);
     $theDate = date("U");
     $ipAddr = $_SERVER["REMOTE_ADDR"];
     $query = "INSERT INTO `hw_pages` (
@@ -639,9 +582,6 @@ class HomeworkLib extends TikiLib {
 
     $query.= " values(?,?,?,?,?,?)";
 
-    // $ggg_tracer->out(__FILE__." line: ".__LINE__.': $query = ');
-    // $ggg_tracer->outvar($query);
-
     $val = array(
 		 'assignmentId'=>$assignmentId,
 		 'studentName'=>$user,
@@ -649,9 +589,6 @@ class HomeworkLib extends TikiLib {
 		 'lastModif'=>"$theDate",
 		 'version'=>0,
 		 'ip'=>$ipAddr );
-    
-    // $ggg_tracer->out(__FILE__." line: ".__LINE__.': $val = ');
-    // $ggg_tracer->outvar($val);
     
     // With the right settings, query checks result.
     // More checking would be good, though.
@@ -672,8 +609,6 @@ class HomeworkLib extends TikiLib {
   // Stub for now
   // Called by tiki-hw_rollback.php
   function hw_page_exists($pageId) {
-		//    global $ggg_tracer;
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.': In hw_page_exists!');
     return true;
   }
 
@@ -681,8 +616,6 @@ class HomeworkLib extends TikiLib {
   // Called by tiki-hw_rollback.php
   function hw_page_use_version($page, $version, $comment = ''){
     global $user;
-		//    global $ggg_tracer;
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.': In hw_page_use_version!');
 	$query = "select * from `tiki_hw_history` where `id`=? and `version`=?";
 	$result = $this->query($query,array($page,$version));
 	if (!$result->numRows())
@@ -696,29 +629,6 @@ class HomeworkLib extends TikiLib {
 	$result = $this->query($query,array($action,$page,$t,$user,$_SERVER["REMOTE_ADDR"],$comment));
 	return true;
   }
-
-
-  /*
-  // Stub for now
-  // Called by tiki-hw_rollback.php
-  function hw_page_use_version($page, $version, $comment = ''){
-    global $user;
-		//    global $ggg_tracer;
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.': In hw_page_use_version!');
-	$query = "select * from `tiki_hw_history` where `id`=? and `version`=?";
-	$result = $this->query($query,array($page,$version));
-	if (!$result->numRows())
-		return false;
-	$res = $result->fetchRow();
-	$query = "update `tiki_hw_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=? where `id`=?";
-	$result = $this->query($query,array($res["data"],$res["lastModif"],$res["user"],$res["comment"],$res["ip"],$page));
-	$action = "Changed actual version to $version";
-	$t = date("U");
-	$query = "insert into `tiki_hw_actionlog`(`action`,`pageId`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-	$result = $this->query($query,array($action,$page,$t,$user,$_SERVER["REMOTE_ADDR"],$comment));
-	return true;
-  }
-  */
 
   // Fetch a list of all the pages for $assignmentId
   // Called by:
@@ -742,129 +652,13 @@ class HomeworkLib extends TikiLib {
   }
   
   function assignment_store($id,$dueDate,$data,$user,$ip,$description){
-	//	global $ggg_tracer;
-	//	$ggg_tracer->outln("$id = ".$id);
-	//	$ggg_tracer->outln("$dueDate = ".$dueDate);
-	//	$ggg_tracer->outln("$data = ".$data);
-	//	$ggg_tracer->outln("$user = ".$user);
-	//	$ggg_tracer->outln("$ip = ".$ip);
-	//	$ggg_tracer->outln("$description = ".$description);
   }
 
   function create_assignment($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '') {
-
-	//	$ggg_tracer->outln("In create_assignment...");
-	//	$ggg_tracer->outln("$name = ".$name);
-	//	$ggg_tracer->outln("$hits = ".$hits);
-	//	$ggg_tracer->outln("$data = ".$data);
-	//	$ggg_tracer->outln("$lastModif = ".$lastModif);
-	//	$ggg_tracer->outln("$comment = ".$comment);
-	//	$ggg_tracer->outln("$user = ".$user);
-	//	$ggg_tracer->outln("$ip = ".$ip);
-	//	$ggg_tracer->outln("$description = ".$description);
-//     global $smarty;
-//     global $dbTiki;
-//     global $notificationlib;
-//     global $sender_email;
-//     include_once ('lib/notifications/notificationlib.php');
-//     include_once ("lib/commentslib.php");
-
-//     $commentslib = new Comments($dbTiki);
-
-//     // Collect pages before modifying data
-//     $pages = $this->get_pages($data);
-	
-//     if ($this->page_exists($name))
-// 	  return false;
-
-//     $query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`) ";
-//     $query.= " values(?,?,?,?,?,?,?,?,?,?,?)";
-//     $result = $this->query($query, array(
-// 		$name,
-// 		(int)$hits,
-// 		$data,
-// 		(int)$lastModif,
-// 		$comment,
-// 		1,
-// 		$user,
-// 		$ip,
-// 		$description,
-// 		$user,
-// 		(int)strlen($data)
-// 		));
-
-//     $this->clear_links($name);
-
-//     // Pages are collected before adding slashes
-//     foreach ($pages as $a_page) {
-// 	  $this->replace_link($name, $a_page);
-//     }
-
-//     // Update the log
-//     if ($name != 'SandBox') {
-// 	$action = "Created";
-
-// 	$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-// 	$result = $this->query($query, array(
-// 		    $action,
-// 		    $name,
-// 		    (int)$lastModif,
-// 		    $user,
-// 		    $ip,
-// 		    $comment
-// 		    ));
-//     }
-
-//     $emails = $notificationlib->get_mail_events('wiki_page_changes', '*');
-
-//     foreach ($emails as $email) {
-// 	$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-
-// 	$smarty->assign('mail_page', $name);
-// 	$smarty->assign('mail_date', date("U"));
-// 	$smarty->assign('mail_user', $user);
-// 	$smarty->assign('mail_comment', $comment);
-// 	$smarty->assign('mail_last_version', 1);
-// 	$smarty->assign('mail_data', $data);
-// 	$foo = parse_url($_SERVER["REQUEST_URI"]);
-// 	$machine = httpPrefix(). dirname( $foo["path"] );
-// 	$smarty->assign('mail_machine', $machine);
-// 	$smarty->assign('mail_pagedata', $data);
-// 	$mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
-
-// 	if( $this->get_preference('wiki_forum') )
-// 	{
-// 	    $forums = $commentslib->list_forums( 0, 1,
-// 		    'name_asc',
-// 		    $this->get_preference('wiki_forum') );
-//     if ($forums) {
-// 	    $forumEmail = $forums["data"][0]["outbound_from"];
-
-// 	    @mail($email, $name, $mail_data,
-// 		    "From: $forumEmail\r\nContent-type: text/plain;charset=utf-8\r\n"
-// 		 );
-//     }
-// 	} else {
-// 	    @mail($email, tra('Wiki page'). ' ' . $name . '
-// 		    ' . tra('changed'), $mail_data,
-// 		    "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n"
-// 		 );
-// 	}
-//     }
-
     return true;
 }
 
 function update_assignment($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false) {
-  //  global $ggg_tracer;
-  //  $ggg_tracer->outln("In update_assignment...");
-  //  $ggg_tracer->outln("$pageName = ".$pageName);
-  //  $ggg_tracer->outln("$edit_data = ".$edit_data);
-  //  $ggg_tracer->outln("$edit_comment = ".$edit_comment);
-  //  $ggg_tracer->outln("$edit_user = ".$edit_user);
-  //  $ggg_tracer->outln("$edit_ip = ".$edit_ip);
-  //  $ggg_tracer->outln("$description = ".$description);
-  //  $ggg_tracer->outln("$minor = ".$minor);
 //     global $smarty;
 
 //     global $dbTiki;
@@ -1039,16 +833,10 @@ function get_assignment($articleId) {
 	from `tiki_hw_assignments`, `tiki_article_types`, `users_users` where `tiki_hw_assignments`.`articleId`=?";
     //$query = "select * from `tiki_hw_assignments` where `articleId`=?";
     $result = $this->query($query,array((int)$articleId));
-//    	global $ggg_tracer;
-//  	$ggg_tracer->outln(__FILE__." line: ".__LINE__);
-// 	$ggg_tracer->outln('$result = '.$result);
-// 	$ggg_tracer->outln('$result->numRows() = '.$result->numRows());
     if ($result->numRows()) {
-//  	$ggg_tracer->outln(__FILE__." line: ".__LINE__." Found an assignment.");
 	$res = $result->fetchRow();
 	$res["entrating"] = floor($res["rating"]);
     } else {
-//  	$ggg_tracer->outln(__FILE__." line: ".__LINE__." Failed to find an assignment.");
 	return false;
     }
     return $res;
@@ -1056,8 +844,6 @@ function get_assignment($articleId) {
 
  function replace_assignment($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $articleId, $image_x, $image_y, $type, $rating = 0, $isfloat = 'n') {
    
-//    global $ggg_tracer;
-//    $ggg_tracer->outln(__FILE__." line: ".__LINE__);
 
    if ($expireDate < $publishDate) {
      $expireDate = $publishDate;
