@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-mailin.php,v 1.3 2003-09-22 23:25:37 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-mailin.php,v 1.4 2003-10-19 23:57:25 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -253,7 +253,7 @@ foreach ($accs['data'] as $acc) {
 				} else {
 					$data = 'Page not found';
 				}
-			} elseif ($method == 'APPEND') {
+			} elseif ($method == 'APPEND' || $method == 'PREPEND') {
 				if (!$tikilib->page_exists($page)) {
 					print ("Page: $page has been created");
 
@@ -262,7 +262,7 @@ foreach ($accs['data'] as $acc) {
 				} else {
 					$info = $tikilib->get_page_info($page);
 
-					$tikilib->update_page($page, $info['data'] . $body,
+					$tikilib->update_page($page, ($method=='APPEND' ? $info['data'] . $body : $body . $info['data']),
 						"Created by email from " . $acc["account"], $aux["sender"]["email"], '0.0.0.0', '');
 					print ("Page: $page has been updated");
 				}
