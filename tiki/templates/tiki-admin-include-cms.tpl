@@ -62,11 +62,9 @@
     </div>
     
     <div class="simplebox">
-      {tr}Fields to display:{/tr}<br />
+      {tr}Fields to display on {/tr}<a href="tiki-list_articles.php" class="link">{tr}List articles{/tr}</a> page:<br />
       <form method="post" action="tiki-admin.php?page=cms">
         <table><tr>
-          <td class="form"><a href="tiki-list_articles.php" class="link">{tr}List articles{/tr}</a></td>
-        </tr><tr>
           <td class="form">{tr}Title{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_title"
               {if $art_list_title eq 'y'}checked="checked"{/if} /></td>
