@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.16 2004-01-18 04:53:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.17 2004-01-21 07:07:22 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -181,6 +181,9 @@ if ($offset > 0) {
 
 list($username,$usermail,$usersTrackerId) = array('','','');
 if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
+	if (!is_int($_REQUEST["user"])) {
+		$_REQUEST["user"] = $userlib->get_user_id($_REQUEST["user"]);
+	}
 	$re = $userlib->get_usertracker($_REQUEST["user"]);
 	$username = $re['login'];
 	$usermail = $re['email'];
