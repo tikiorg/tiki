@@ -320,6 +320,7 @@
     <tr><td class="form">{tr}Use WikiWords{/tr}:</td><td><input type="checkbox" name="feature_wikiwords" {if $feature_wikiwords eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Accept dashes and underscores in WikiWords{/tr}:</td><td><input type="checkbox" name="feature_wikiwords_usedash" {if $feature_wikiwords_usedash eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Link plural WikiWords to their singular forms{/tr}:</td><td><input type="checkbox" name="feature_wiki_plurals" {if $feature_wiki_plurals eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use JavaScript tooltips for wiki links{/tr}:</td><td><input type="checkbox" name="feature_wiki_jstooltips" {if $feature_wiki_jstooltips eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use Wiki paragraph formatting{/tr}:</td><td><input type="checkbox" name="feature_wiki_paragraph_formatting" {if $feature_wiki_paragraph_formatting eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Page creators are admin of their pages{/tr}:</td><td><input type="checkbox" name="wiki_creator_admin" {if $wiki_creator_admin eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Tables syntax{/tr}:</td><td>

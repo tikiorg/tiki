@@ -4525,7 +4525,12 @@ class TikiLib extends TikiDB {
 		    if (!array_key_exists($page_parse, $words)) {
 			if ($desc = $this->page_exists_desc($page_parse)) {
 			    //$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-			    $repl = '<a title="' . htmlspecialchars($desc) . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
+			    global $feature_wiki_jstooltips;
+				if (!empty($feature_wiki_jstooltips) && $feature_wiki_jstooltips == 'y') {
+				    $repl = '<a href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki" onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $page_parse . '</a>';
+				} else {
+				    $repl = '<a title="' . htmlspecialchars($desc) . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
+				}
 			} elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
 # Link plural topic names to singular topic names if the plural
 # doesn't exist, and the language is english
