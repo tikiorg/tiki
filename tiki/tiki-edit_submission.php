@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.29 2003-11-11 18:03:25 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.30 2003-11-11 18:14:45 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,7 +104,7 @@ if (isset($_REQUEST["subId"])) {
 	$imgname = $article_data["image_name"];
 
 	if ($hasImage == 'y') {
-		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["articleId"];
+		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["subId"];
 		$fp = fopen($tmpfname, "wb");
 		if ($fp) {
 			fwrite($fp, $data);
@@ -210,7 +210,7 @@ if (isset($_REQUEST["preview"])) {
 	}
 
 	if ($hasImage == 'y') {
-		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["articleId"];
+		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["subId"];
 		$fp = fopen($tmpfname, "wb");
 		if ($fp) {
 			fwrite($fp, $data);
