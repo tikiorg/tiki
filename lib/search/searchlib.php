@@ -50,10 +50,15 @@ class SearchLib extends TikiLib {
 	}
 
 	function &find_exact_all($words,$offset, $maxRecords) {
-	  echo "not implemented";
+	  $wikiresults=$this->find_exact_wiki($words,$offset, $maxRecords);
+	  $fcommresults=$this->find_exact_forumcomments($words,$offset, $maxRecords);
+
+	  return (array_merge($wikiresults,$fcommresults));
 	}
 
 	function &find_exact_wiki($words,$offset, $maxRecords) {
+	  global $feature_wiki;
+	  if ($feature_wiki == 'y') {
 	  $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
 	  	p.`data`, p.`hits`, p.`lastModif` from
 	        `tiki_searchindex` s, `tiki_pages` p  where `searchword` in
@@ -61,9 +66,10 @@ class SearchLib extends TikiLib {
 		s.`page`=p.`pageName`";
 	  $result=$this->query($query,$words,$maxRecords,$offset);
 
-	  $querycant="select count(*) from `tiki_searchindex` where
+	  $querycant="select count(*) from `tiki_searchindex` s, `tiki_pages` p where
 	  	`searchword` in
-		(".implode(',',array_fill(0,count($words),'?')).")";
+		(".implode(',',array_fill(0,count($words),'?')).") and
+		s.`page`=p.`pageName`";
 	  $cant=$this->getOne($querycant,$words);
 
 	  $ret=array();
@@ -80,7 +86,42 @@ class SearchLib extends TikiLib {
           }
 
           return array('data' => $ret,'cant' => $cant);
+	  } else {
+	  return array('data' => array(),'cant' => 0);
+	  }
         }
+
+	function &find_exact_forumcomments($words,$offset, $maxRecords) {
+	  global $feature_forums;
+	  if ($feature_forums == 'y') {
+	  $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+	  	f.`data`,f.`hits`,f.`commentDate`,f.`object` from
+		`tiki_searchindex` s, `tiki_comments` f where `searchword` in
+		(".implode(',',array_fill(0,count($words),'?')).") and
+		s.`page`=f.`threadId`";
+	  $result=$this->query($query,$words,$maxRecords,$offset);
+
+	  $querycant="select count(*) from `tiki_searchindex` s, `tiki_comments` f where `searchword` in
+	  	(".implode(',',array_fill(0,count($words),'?')).") and
+		s.`page`=f.`threadId`";
+	  $cant=$this->getOne($querycant,$words);
+	  $ret=array();
+	  while ($res = $result->fetchRow()) {
+	    $href = "tiki-view_forum_thread.php?comments_parentId=".urlencode($res["page"])."&amp;forumId=".urlencode($res["object"]);
+	    $ret[] = array(
+	      'pageName' => $res["page"],
+	      'data' => substr($res["data"],0,250),
+	      'hits' => $res["hits"],
+	      'lastModif' => $res["commentDate"],
+	      'href' => $href,
+	      'relevance' => $res["count"]
+	    );
+	  }
+	  return array('data' => $ret,'cant' => $cant);
+	  }else {
+	  return array('data' => array(),'cant' => 0);
+	  }
+	}
 
 
 } # class SearchLib
