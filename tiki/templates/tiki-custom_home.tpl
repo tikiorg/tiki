@@ -78,7 +78,7 @@ Testing Tiki
 <li>You can enter the <a href="tiki-chat.php" class="link">chatrooms</a> to test our chatting system maybe you should invite a friend to test it</li>
 <li>From the <a href="tiki-list_games.php" class="link">games</a> section you can play some flash games</li>
 <li>If you are not logged you can <a href="tiki-register.php" class="link">register</a> as a new user and test features available to registered users
-such as steting user preferences, user bookmarks or configuring modules</li>
+such as setting user preferences, user bookmarks or configuring modules</li>
 <li>If you are curious visit the <a href="tiki-stats.php" class="link">stats</a> page</li>
 <li>The <a href="tiki-view_articles.php" class="link">articles</a> section will show a demo article that you can read and comment</li>
 <li>If you want to test editing an article or review you can <a href="tiki-edit_submission.php" class="link">write a submission</a></li>

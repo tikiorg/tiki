@@ -418,6 +418,14 @@ class TrackerLib extends TikiLib {
                 values($trackerId,'$name','$type','$isMain','$isTblVisible','$options')";
       $result = $this->query($query);
       $fieldId=$this->getOne("select max(fieldId) from tiki_tracker_fields where trackerId=$trackerId and name='$name'");
+      // Now add the field to all the existing items
+      $query = "select itemId from tiki_tracker_items where trackerId=$trackerId";
+      $result = $this->query($query);
+      while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+        $itemId = $res['itemId'];
+        $query2 = "replace into tiki_tracker_item_fields(itemId,fieldId,value) values($itemId,$fieldId,'')";
+        $this->query($query2);
+      }
     }
     return $fieldId;
   }

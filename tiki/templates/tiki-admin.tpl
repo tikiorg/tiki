@@ -131,6 +131,13 @@
 {/if}
 </select>
 </td></tr>
+<tr><td class="form">{tr}OS{/tr}</td><td>
+<select name="system_os">
+<option value="unix" {if $system_os eq 'unix'}selected="selected"{/if}>{tr}Unix{/tr}</option>
+<option value="windows" {if $system_os eq 'windows'}selected="selected"{/if}>{tr}Windows{/tr}</option>
+<option value="unknown" {if $system_os eq 'unknown'}selected="selected"{/if}>{tr}Unknown/Other{/tr}</option>
+</select>
+</td></tr>
 <tr><td class="form">{tr}Use URI as Home Page{/tr}:</td><td><input type="checkbox" name="useUrlIndex" {if $useUrlIndex eq 'y'}checked="checked"{/if}/><input type="text" name="urlIndex" value="{$urlIndex}"/></td></tr>
 <tr><td class="form">{tr}Open external links in new window{/tr}:</td><td><input type="checkbox" name="popupLinks" {if $popupLinks eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use gzipped output{/tr}:</td><td><input type="checkbox" name="feature_obzip" {if $feature_obzip eq 'y'}checked="checked"{/if}/></td></tr>
@@ -537,8 +544,8 @@
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_image_galleries_comments" {if $feature_image_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use database to store images{/tr}:</td><td><input type="radio" name="gal_use_db" value="y" {if $gal_use_db eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use a directory to store images{/tr}:</td><td><input type="radio" name="gal_use_db" value="n" {if $gal_use_db eq 'n'}checked="checked"{/if}/> {tr}Directory path{/tr}:<input type="text" name="gal_use_dir" value="{$gal_use_dir}" /> </tr>
-    <tr><td class="form">{tr}Uploaded image names must match regex{/tr}:</td><td><input type="text" name="gal_match_regex" value="{$fgal_match_regex}"/></td></tr>
-    <tr><td class="form">{tr}Uploaded image names cannot match regex{/tr}:</td><td><input type="text" name="gal_nmatch_regex" value="{$fgal_nmatch_regex}"/></td></tr>
+    <tr><td class="form">{tr}Uploaded image names must match regex{/tr}:</td><td><input type="text" name="gal_match_regex" value="{$gal_match_regex}"/></td></tr>
+    <tr><td class="form">{tr}Uploaded image names cannot match regex{/tr}:</td><td><input type="text" name="gal_nmatch_regex" value="{$gal_nmatch_regex}"/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>

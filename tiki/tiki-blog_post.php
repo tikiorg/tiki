@@ -42,7 +42,7 @@ if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
   
   // If the user owns the weblog then he can edit
   $blog_data = $tikilib->get_blog($data["blogId"]);
-  if($user && $user=$blog_data["user"]) {
+  if($user && $user==$blog_data["user"]) {
     $data["user"] = $user;
   } 
   
@@ -115,7 +115,7 @@ if(isset($_REQUEST["save"])) {
   if($_REQUEST["postId"]>0) {
     $data = $tikilib->get_post($_REQUEST["postId"]);
     $blog_data = $tikilib->get_blog($data["blogId"]);
-    if($user && $user=$blog_data["user"]) {
+    if($user && $user==$blog_data["user"]) {
       $data["user"] = $user;
     } 
     if($data["user"]!=$user || !$user) {

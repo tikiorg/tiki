@@ -51,7 +51,7 @@ if(isset($_REQUEST["register"])) {
   
   // Check this code
   if($pass_chr_num == 'y') {
-    if(!preg_match_all("[0-9]+",$_REQUEST["pass"],$foo) || !preg_match_all("[A-Za-z]+",$_REQUEST["pass"],$foo)) {
+    if(!preg_match_all("/[0-9]+/",$_REQUEST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_REQUEST["pass"],$foo)) {
       $smarty->assign('msg',tra("Password must contain both letters and numbers"));
       $smarty->display("styles/$style_base/error.tpl");
       die; 	
@@ -74,14 +74,16 @@ if(isset($_REQUEST["register"])) {
     }
   }
   
-  if($validateUsers=='y') {
-    $ret = $tikilib->SnowCheckMail($_REQUEST["email"]);
-    if(!$ret[0]) {
-      $smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
-      $smarty->display("styles/$style_base/error.tpl");
-      die;
+  if($system_os != 'windows') {
+    if($validateUsers=='y') {
+      $ret = $tikilib->SnowCheckMail($_REQUEST["email"]);
+      if(!$ret[0]) {
+        $smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;
+      }
     }
-  }
+  } 
   
   if($validateUsers == 'y') {
     $apass = addslashes(substr(md5($tikilib->genPass()),0,25));

@@ -4820,10 +4820,12 @@ class TikiLib {
   {
     $query = "select blogId from tiki_blog_posts where postId=$postId";
     $blogId = $this->getOne($query);
-    $query = "delete from tiki_blog_posts where postId=$postId";
-    $result = $this->query($query);
-    $query = "update tiki_blogs set posts=posts-1 where blogId=$blogId";
-    $result = $this->query($query);
+    if($blogId) {
+      $query = "delete from tiki_blog_posts where postId=$postId";
+      $result = $this->query($query);
+      $query = "update tiki_blogs set posts=posts-1 where blogId=$blogId";
+      $result = $this->query($query);
+    }
     return true;
   }
 
@@ -6268,7 +6270,11 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         default:
           $ext='';
         }
-
+      // If the image was a .gif then the thumbnail has 0 bytes if the thumbnail
+      // is empty then use the full image as thumbnail
+      if($ext==".thumb" && filesize($gal_use_dir.$res["path"].$ext)==0 ) {
+        $ext='';
+      }
       @$fp = fopen($gal_use_dir.$res["path"].$ext,'rb');
       if(!$fp) {die;}
       while(!feof($fp)) {
@@ -7241,7 +7247,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $aux["len"] = $res["len"];
       $aux["comment"] = $res["comment"];
       $aux["version"] = $res["version"];
-      $aux["flag"] = $res["flag"] == 'y' ? tra('locked') : tra('unlocked');
+      $aux["flag"] = $res["flag"] == 'L' ? tra('locked') : tra('unlocked');
       $aux["versions"] = $this->getOne("select count(*) from tiki_history where pageName='$page'");
       $aux["links"] = $this->getOne("select count(*) from tiki_links where fromPage='$page'");
       $aux["backlinks"] = $this->getOne("select count(*) from tiki_links where toPage='$page'");
@@ -8733,7 +8739,7 @@ function parse_data($data)
   }
 
   function invalidate_cache($page) {
-    $pageName = addslashes($pageName);
+    $page = addslashes($page);
     $query = "update tiki_pages set cache_timestamp=0 where pageName='$page'";
     $this->query($query);
   }

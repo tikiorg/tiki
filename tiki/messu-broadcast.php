@@ -70,7 +70,7 @@ if(isset($_REQUEST['send'])) {
         if($messulib->get_user_preference($a_user,'allowMsgs','y')) {
           $users[] = $a_user;
         } else {
-          $message.="User $a_user cant receive messages<br/>";
+          $message.="User $a_user can not receive messages<br/>";
         }
       } else {
         $message.="Invalid user: $a_user<br/>";

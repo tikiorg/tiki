@@ -113,6 +113,25 @@ $smarty->assign('find',$find);
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 $channels = $nllib->list_newsletters($offset,$maxRecords,$sort_mode,$find);
 
+for($i=0;$i<count($channels["data"]);$i++) {
+  if($userlib->object_has_one_permission($channels["data"][$i]["nlId"],'newsletters')) {
+    $channels["data"][$i]["individual"]='y';
+    if($userlib->object_has_permission($user,$channels["data"][$i]["nlId"],'newsletter','tiki_p_subscribe_newsletters')) {
+      $channels["data"][$i]["individual_tiki_p_subscribe_newsletters"]='y';
+    } else {
+      $channels["data"][$i]["individual_tiki_p_subscribe_newsletters"]='n';
+    }
+    
+    if($tiki_p_admin=='y' || $userlib->object_has_permission($user,$channels["data"][$i]["nlId"],'newsletter','tiki_p_admin_newsletters')) {
+      $channels["data"][$i]["individual_tiki_p_subscribe_newsletters"]='y';
+    } 
+  } else {
+    $channels["data"][$i]["individual"]='n';
+  }
+}
+
+
+
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));
