@@ -55,11 +55,11 @@ DIV#tiki-bot { background-image: url(bluemetal/page_back.png); padding: 2px 2px 
 
 /* The three columns */
 
-TD#leftcolumn { padding-left: 2px; padding-right: 2px; vertical-align: top; width: 170px; }
+TD#leftcolumn { padding-left: 5px; padding-right: 5px; vertical-align: top; }
 
-TD#rightcolumn { background-color: #BBBFC5; border-left : 1px dashed #CCCCBB; padding-left: 5px; vertical-align: top; width: 160px; padding-right: 5px; }
+TD#rightcolumn { background-color: #BBBFC5; border-left : 1px dashed #CCCCBB; padding-left: 0px; vertical-align: top; padding-right: 0px; }
 	
-TD#centercolumn { vertical-align: top; width: 100%}
+TD#centercolumn { vertical-align: top;}
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {  margin-left: 5px;  margin-right: 5px;  padding-left: 5px;  padding-right: 5px; }
@@ -125,8 +125,8 @@ span.off-option { color: #005000; }
 /* Modules (modules are those boxes in the left/right columns) */
 
 div.box {  
-  margin-left: 4px;  margin-right: 4px;  margin-top: 4px;  margin-bottom: 10px;
-  padding-bottom: 10px;  overflow: hidden; 
+  margin-left: 4px;  margin-right: 4px;  margin-top: 4px;  margin-bottom: 4px;
+  padding-bottom: 10px;  overflow: hidden;
   width: 160px;
 }
 
@@ -147,8 +147,8 @@ div.box-title {
 div.box-data {
   overflow: hidden;
   color: black;
-  margin-left: 5px;  margin-right: 5px;
-  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  
+ /* margin-left: 5px;  margin-right: 5px;*/
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;
   width: 160px;
 }
 
@@ -158,6 +158,7 @@ TD.module {
 	font-size: 10px;
 	color: black;
 	text-align: left;
+  margin-left: 5px;  margin-right: 5px;	
 	}
 
 /* Links in modules */
@@ -168,9 +169,9 @@ TD.module {
 
 /* Now the boxes for the rest of Tiki (non-modules */
 div.cbox {  
-  margin-left: 4px;  
-  margin-right: 4px;  
-  margin-top: 4px;  
+  margin-left: 7px;  
+  margin-right: 7px;  
+  margin-top: 7px;  
   margin-bottom: 0px;
   border: 1px solid black;  
   padding-bottom: 10px;  
@@ -198,7 +199,8 @@ div.cbox-title {
 /* And this is the data */
 div.cbox-data {
   overflow: hidden;
-  margin-left: 5px;  margin-right: 5px;
+  width: 100%;
+  margin-left: 0px;  margin-right: 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: black;
 }
 
@@ -221,7 +223,7 @@ div.separator {
 	margin-right: 2px;
 	margin-top: 6px;
 	margin-bottom: 2px;
-	width: 90%;
+	width: 100%;
 	}
 
 /* Links in menus */
@@ -243,7 +245,7 @@ div.separator {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #333366;
-	padding-left: 2px;
+	padding-left: 1px;
 	text-decoration: underline;
 	}
 /* style for rss lists in modules or in wiki */
@@ -289,19 +291,56 @@ div.imagerank {  margin-left: 5px;  margin-right: 5px;  margin-bottom: 10px;  ma
 /* A simple box is just a div with a border around and some margin 
  * used for example in the admin screen */
 div.simplebox {  
-  margin-left: 1px;  margin-right: 1px;  margin-top: 5px;  margin-bottom: 5px;
-  padding-left: 2px;  padding-top: 2px;  padding-bottom: 2px;  padding-right: 2px;
+  margin-left: 5px;  margin-right: 5px;  margin-top: 5px;  margin-bottom: 5px;
+  padding-left: 5px;  padding-top: 5px;  padding-bottom: 5px;  padding-right: 5px;
   color: black;
   border: 1px solid black; 
   font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px;
+  width: 100%;
 }
 
 /* Prevent forms from generating unwanted padding or margins */
 FORM {  margin : 0px 0px 0px 0px;  padding-bottom : 0px;  padding-left : 0px;  padding-right : 0px;  padding-top : 0px;}
 
 /* General form elements */
-input,textarea, select {color : #000000; font: normal 11px Verdana, Arial, Helvetica, sans-serif; }
-input { text-indent : 2px; }
+input {color : #000000; 
+  background: #E4E7EA; 
+  font: normal 10px Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #999999;
+}
+input[type=submit] { color : #000000; background: #E4E7EA;
+  -moz-border-radius: 0.8em;}
+input[type=submit]:hover { color: #000000; 
+  background: #E4E7EA;
+  background-image: url(mods/tab-active.jpg);
+}
+select {color : #000000; 
+  background: #E4E7EA; 
+  font: normal 10px Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #999999;
+}
+textarea {color : #000000; 
+  background: #E4E7EA; 
+  font: normal 10px Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #999999;
+}
+checkbox {color : #000000; 
+  background: #E4E7EA;
+}
+radio {color : #000000; 
+  background: #E4E7EA;
+  border: 1px solid #E4E7EA; 
+}
+file {color : #000000; 
+  background: #E4E7EA; 
+  font: normal 10px Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #999999;
+}
+textarea {color : #000000; 
+  background: #E4E7EA; 
+  font: normal 10px Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #999999;
+}
 
 /* General tables */
 /* These styles apply to tables used to display common listings such as the wiki page listing, last changes,
@@ -321,17 +360,17 @@ TD {color: Black; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; fo
 .editfgalform td, 
 .comform td,
 .forumform td
-{ color: Black; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  background: #DED6C6; font-size: 11px; vertical-align: top; text-align: left;}
+{ color: Black; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  background: #A8BFD5; font-size: 11px; vertical-align: top; text-align: left;}
 
 
 /* The table */
 table.listgallery, table.creategalform,TABLE.normal,table.gallerylisting, table.bloglist, table.editblogform, table.jukeboxlist,
 table.editfgalform, table.listfgal, table.listfiles, table.listarticles,table.forumstable,table.forumformtable,
 table.viewthread
-{  border-color: #5A4A39;  border-style: solid;  border-width: 1px;  width: 97%;}
+{  border-color: #5A4A39;  border-style: solid;  border-width: 1px;  width: 95%;}
 
 
-TABLE.normalnoborder {  width: 97%;}
+TABLE.normalnoborder {  width: 100%;}
 
 /* Table headings */
 TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading 
@@ -358,7 +397,7 @@ th.listfilesheading, th.listartheading, th.forumheading, th.thead
 TD.button
 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  color: E4E7EA; font-size: 11px; font-weight : bold;
+  color: #E4E7EA; font-size: 11px; font-weight : bold;
   background-color: #000066; 
   padding-left: 2px;
   padding-right: 5px;
@@ -380,7 +419,6 @@ a.forumnameread:hover
 { text-decoration: underline; }
 
 
-
 /* Links in table headings */
 .tableheading,.gallistheading, .listgalheading, .bloglistheading, .llisfgalheading,
 .llistfileslink,.llistart,.lforumheading
@@ -393,7 +431,7 @@ a.forumnameread:hover
 {  font-family: Verdana, Arial, Helvetica, sans-serif;  color: #CCCCCC;   font-size: 11px; font-weight : bold;  text-decoration: none;}
 
 /* When a find button is provided for a listing the table form is displayed in a table with the following style */
-table.findtable { width: 97%; margin-bottom: 20px; padding-bottom: 10px;}
+table.findtable { width: 95%; margin-bottom: 20px; padding-bottom: 10px;}
 .findtable td { font-family: Verdana, Arial, Helvetica, sans-serif;  font-size: 11px;}
 
 /* Odd rows in several listings */
@@ -569,14 +607,14 @@ div.wikitext {
 p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 /* The edit-help used to display the wiki syntax when editing a page */
-div.wiki-edithelp { background: #E4E7EA; border: 1px solid black;  font-size: smaller; padding: 6pt;}
+div.wiki-edithelp { background: #E4E7EA; border: 1px solid black;  font-size: smaller; padding: 6pt; width: 95%;}
 
-.wikitopline { width: 90%; }
+.wikitopline { width: 95%; }
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
 /* Gallery description */
-div.galdesc {  background: #EFEFEF;  border: 1px solid black;  padding-left: 0.8em; padding-right: 0.8em; padding-top: 0.5em;  padding-bottom: 0.5em;  margin: 0.5ex 0px;  width: 97%;  clear: both;}
+div.galdesc {  background: #EFEFEF;  border: 1px solid black;  padding-left: 0.8em; padding-right: 0.8em; padding-top: 0.5em;  padding-bottom: 0.5em;  margin: 0.5ex 0px;  width: 95%;  clear: both;}
 
 /* Container for the whole gallery */
 div.browsegallery {background: #EFEFE7; width: 100%;}
@@ -718,7 +756,7 @@ div.fgaldesc {
   border: 1px solid black;
   padding-left: 0.8em; padding-right: 0.8em; padding-top: 0.5em;  padding-bottom: 0.5em;
   margin: 0.5ex 0px;
-  width: 97%;
+  width: 95%;
   clear: both;
 }
 
@@ -758,7 +796,7 @@ div.articletrailer {
   background: #E4E7EA;
   border: 1px solid black;
   border-bottom: 1px solid black;
-  border-top: thin solid blue;
+  border-top: thin solid #A8BFD5;
   margin-bottom: 20px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -843,7 +881,7 @@ div.commentstoolbar {
   background: #A8BFD5;
   color: black;
   margin-bottom: 20px;
-  width: 97%;
+  width: 95%;
   border: 1px solid black;
   padding-top: 2px;
   padding-left: 2px;
@@ -856,7 +894,7 @@ div.commentscomment {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
   margin-bottom: 20px;
-  width: 97%;
+  width: 95%;
 }
 /* The header for a comment */
 div.commentheader {
@@ -864,7 +902,7 @@ div.commentheader {
   border: 0px solid blue;
   font-size: 11px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-  width: 97%;
+  width: 95%;
 }
 
 
@@ -873,7 +911,7 @@ div.commenttext {
   font-size: 11px;
   margin-left: 5px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-  width: 97%;
+  width: 95%;
 }
 
 /* Links in the comment header */
@@ -906,7 +944,7 @@ div.pollresults {
   padding-left: 5px;
 }
 
-table.pollresults {   width: 97%;}
+table.pollresults {   width: 95%;}
 td.pollr {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px;  color: black;}
 /* MODULES */
 
@@ -915,7 +953,7 @@ td.pollr {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-siz
 /* Title for the forums page */
 div.forumspagetitle {  margin-top: 10px;  margin-bottom: 40px;}
 
-table.threads { width: 97%;}
+table.threads { width: 95%;}
 
 td.viewthreadl { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 30px; vertical-align: top;}
 td.viewthreadr { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 30px; vertical-align: top;}
@@ -946,7 +984,7 @@ td.forumtoolbar { font-family: Verdana, Arial, Helvetica, sans-serif; color: bla
 
 /************************************************ CATEGORIES **************************************************************/
 
-table.tcategpath { margin-bottom: 40px; border-color: #000000;  border-style: solid;  border-width: 1px;  width: 97%;}
+table.tcategpath { margin-bottom: 40px; border-color: #000000;  border-style: solid;  border-width: 1px;  width: 95%;}
 
 /* Table containing the category path */
 td.tdcategpath { 
@@ -964,15 +1002,15 @@ td.tdcategpath {
 .categpath:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : blue;  text-decoration: none;}
 
 /* Table with the subcategories */
-table.subcats { padding-top: 20px; padding-bottom: 20px; width: 100%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 1px;}
-td.tdsubcat {width: 25%;}
+table.subcats { padding-top: 20px; padding-bottom: 20px; width: 95%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 1px;}
+td.tdsubcat {width: 20%;}
 
 /* Links to subcategories */
 .categlink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: none; font-weight: bold;}
 .categlink:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: none;font-weight: bold;}
 .categlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : blue; text-decoration: none;font-weight: bold;}
 
-table.catobjects { width: 100%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 0px;}
+table.catobjects { width: 95%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 0px;}
 td.categobjectsnameeven,td.categobjectsnameodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -996,7 +1034,7 @@ div.faqlistquestions {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
   border: 1px solid black;
-  width: 98%;
+  width: 100%;
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -1007,7 +1045,7 @@ div.faqqa {
   color: black;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
-  width: 97%;
+  width: 95%;
   border: 1px solid black;
   margin-bottom: 20px;
   padding-top: 5px;
@@ -1020,14 +1058,14 @@ div.faqquestion {
   margin-bottom: 5px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
-  width: 97%;
+  width: 95%;
 }
 
 /* The answer */
 div.faqanswer {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
-  width: 97%;
+  width: 95%;
 }
 
 /***************************************************** QUIZZES **************************************************************/
@@ -1139,7 +1177,7 @@ div.dirlistsites {
   padding-bottom: 10px;
   border: 0.5px solid black;
   margin-top: 10px;
-  width: 100%;
+  width: 95%;
 }
 
 /* each site in the list of sites */
@@ -1712,13 +1750,18 @@ caption
 div.tree
 {
   text-align: left;
-  padding-left: 1.5em;
+  padding-left: .1em;
 }
 /* Root of tree (outer div) */
 div.tree#top
 {
-  border: 1px outset #00E000;
-  padding: 10px 1.5em 20px 1.5em;
+  margin-left: 4px;  
+  margin-right: 4px;  
+  margin-top: 4px;  
+  margin-bottom: 0px;
+  border: 1px solid black;  
+  padding-bottom: 5px;  
+  overflow: hidden;
 }
 
 /* Wiki editpage textarea */
@@ -1792,7 +1835,7 @@ div#rules-copy-panel {
   font-weight:bold;
 } 
 
-TABLE.admin { width: 100%; }
+TABLE.admin { width: 95%; }
 table.commentinfo { width: 100%; background-color: #FFF7E6; }
 div#loadstats {
   background-color: #dedede;
