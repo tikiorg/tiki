@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_loader.php,v 1.8 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_loader.php,v 1.9 2003-11-15 14:33:05 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,8 +56,8 @@ if (isset($_REQUEST["channelId"])) {
 			} else {
 				$classt = 'blue';
 			}
-
-			$parsed = htmlspecialchars($tikilib->parse_comment_data($msg["data"]), ENT_QUOTES);
+			//the order seems to be imported to parse the smile ans special characteres
+$parsed = $tikilib->parse_comment_data(htmlspecialchars($msg["data"]));
 			$prmsg = "<span style=\"color:$classt;\">" . $msg["posterName"] . ": " . $parsed . "</span><br/>";
 			//$com = "top.document.frames[0].document.write('".$prmsg."');";
 			$com = "top.chatdata.document.write('" . $prmsg . "');";
