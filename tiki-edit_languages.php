@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.5 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.6 2003-10-14 10:27:12 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -92,11 +92,11 @@ if (isset($_REQUEST["add_tran"])) {
 		$add_tran_source = addslashes(htmlentities(strip_tags($add_tran_source), ENT_NOQUOTES));
 
 		$add_tran_tran = addslashes(htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES));
-		$query = "insert into tiki_language values ('" . $add_tran_source . "','" . $edit_language . "','" . $add_tran_tran . "')";
-		$result = $tikilib->query($query);
+		$query = "insert into `tiki_language` values (?,?,?)";
+		$result = $tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran);
 		// remove from untranslated Table
-		$query = "delete from tiki_untranslated where source='" . $add_tran_source . "' and lang='" . $edit_language . "'";
-		$result = $tikilib->query($query);
+		$query = "delete from `tiki_untranslated` where `source`=? and `lang`=?";
+		$result = $tikilib->query($query,array($add_tran_source,$edit_language));
 	}
 }
 
