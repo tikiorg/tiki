@@ -46,7 +46,10 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 </title>
 
 <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
-{if $favicon}<link rel="icon" href="{$favicon}" />{/if}
+{if $favicon}
+<link rel="icon" href="{$favicon}" type="{$favicon_type}" />
+<link rel="shortcut icon" href="{$favicon}" type="{$favicon_type}" />
+{/if}
 {* --- jscalendar block --- *}
 {if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
 <link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
