@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.11 2003-10-19 16:41:06 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.12 2003-10-29 00:00:10 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -225,9 +225,9 @@ class TikiIntegrator extends TikiLib
         $rules = $this->list_rules($srcID);
         // 
         foreach ($rules as $rule)
-            $this->add_replace_rule($dstID, 0, $rule["srch"], $rule["repl"],
-                                    $rule["type"], $rule["casesense"],
-                                    $rule["rxmod"], $rule["description"]);
+            $this->add_replace_rule($dstID, 0, $rule["ord"], $rule["srch"], $rule["repl"],
+                                    $rule["type"], $rule["casesense"], $rule["rxmod"],
+                                    $rule["description"]);
     }
 }
 
