@@ -61,9 +61,9 @@
 <td class="formcolor">{tr}Question{/tr}:</td>
 <td class="formcolor" >
 <select name="usequestionId">
-{section name=ix loop=$allq|escape}
+{section name=ix loop=$allq}
 {* Ok, here's where you change the truncation field for this field * }
-<option value="{$allq[ix].questionId|truncate:20:"":true}">{$allq[ix].question|truncate:110:"":true}</option>
+<option value="{$allq[ix].questionId|escape|truncate:20:"":true}">{$allq[ix].question|escape|truncate:110:"":true}</option>
 {/section}
 </select>
 </td>
