@@ -60,6 +60,7 @@
 <tr><td class="form">{tr}Workflow engine{/tr}:</td><td><input type="checkbox" name="feature_workflow" {if $feature_workflow eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use PHPOpenTracker{/tr}:</td><td><input type="checkbox" name="feature_phpopentracker" {if $feature_phpopentracker eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Charts{/tr}:</td><td><input type="checkbox" name="feature_charts" {if $feature_charts eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}User watches{/tr}:</td><td><input type="checkbox" name="feature_user_watches" {if $feature_user_watches eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>

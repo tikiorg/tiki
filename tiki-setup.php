@@ -348,6 +348,9 @@ $smarty->assign('feature_theme_control',$feature_theme_control);
 $feature_workflow = 'n';
 $smarty->assign('feature_workflow',$feature_workflow);
 $feature_charts = 'n';
+$feature_user_watches = 'n';
+$smarty->assign('feature_user_watches',$feature_user_watches);
+
 $smarty->assign('feature_charts',$feature_charts);
 $feature_phpopentracker = 'n';
 $smarty->assign('feature_phpopentracker',$feature_phpopentracker);

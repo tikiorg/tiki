@@ -1402,6 +1402,15 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_workflow",'n');
   }
 
+  if(isset($_REQUEST["feature_user_watches"]) && $_REQUEST["feature_user_watches"]=="on") {
+    $tikilib->set_preference("feature_user_watches",'y'); 
+    $smarty->assign("feature_user_watches",'y');
+  } else {
+    $tikilib->set_preference("feature_user_watches",'n');
+    $smarty->assign("feature_user_watches",'n');
+  }
+
+
   if(isset($_REQUEST["feature_charts"]) && $_REQUEST["feature_charts"]=="on") {
     $tikilib->set_preference("feature_charts",'y'); 
     $smarty->assign("feature_charts",'y');

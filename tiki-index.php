@@ -299,6 +299,21 @@ if($feature_theme_control == 'y') {
 	include('tiki-tc.php');
 }
 
+// Watches
+if($feature_user_watches == 'y') {
+	if($user && isset($_REQUEST['watch_event'])) {
+	  if($_REQUEST['watch_action']=='add') {
+	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+	  } else {
+	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+	  }
+	}
+	$smarty->assign('user_watching_page','n');
+	if($user && $watch = $tikilib->get_user_event_watches($user,'wiki_page_changed',$page)) {
+		$smarty->assign('user_watching_page','y');
+	}
+}
+
 
 // Display the Index Template
 $smarty->assign('dblclickedit','y');

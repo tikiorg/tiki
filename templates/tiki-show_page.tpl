@@ -36,6 +36,14 @@
 <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 {/if}
 
+{if $user and $feature_user_watches eq 'y'}
+	{if $user_watching_page eq 'n'}
+		<a href="{sameurl watch_event='wiki_page_changed' watch_object=$page watch_action='add'}"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
+	{else}
+		<a href="{sameurl watch_event='wiki_page_changed' watch_object=$page watch_action='remove'}"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
+	{/if}
+{/if}
+
 </td>
 </tr>
 </table>
