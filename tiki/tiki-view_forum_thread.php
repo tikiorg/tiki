@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.26 2003-08-21 00:51:20 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.27 2003-09-18 01:34:48 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -605,6 +605,11 @@ if (!isset($_REQUEST['time_control']))
 $commentslib->set_time_control($_REQUEST['time_control']);
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"], $comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"], $_REQUEST['comments_threshold']);
 $replies_cant = $comments_coms['cant'];
+
+// Was getting an error about comments_cant variable not found.  Not
+// certain this is the right solution, so apologies in advance if this
+// breaks something. -rlpowell
+$comments_cant = $commentslib->count_comments($comments_objectId);
 $smarty->assign('comments_below',$comments_coms["below"]);
 $smarty->assign('comments_cant',$comments_cant);
 $smarty->assign('replies_cant',$replies_cant);
