@@ -1,5 +1,5 @@
-/* 
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.11 2004-04-29 22:31:47 mose Exp $
+/*
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.12 2004-06-21 02:42:35 dgdaniels Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -1938,3 +1938,9 @@ a.phplm:hover	{
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace;
+padding : 2ex;
+background-color : #f0ead8;
+margin : 1ex; border : 1px dashed #adacaf; }
