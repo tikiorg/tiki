@@ -25,16 +25,16 @@ function smarty_block_tr($params, $content, &$smarty)
   } else {
     global $tikilib;
     global $language;
-    $query="select tran from tiki_language where source='".addslashes($content)."' and lang='".$language."'";
-    $result=$tikilib->db->query($query);
-    $res=$result->fetchRow(DB_FETCHMODE_ASSOC);
+    $query="select `tran` from `tiki_language` where `source`=? and `lang`=?";
+    $result=$tikilib->query($query,array($content,$language));
+    $res=$result->fetchRow();
     if(!$res) { echo $content ; return; }
     if(!isset($res["tran"])) {
       global $record_untranslated;
       if ($record_untranslated=='y') {
-        $query="insert into tiki_untranslated (source,lang) values('".addslashes($content)."','".$language."')";
+        $query="insert into `tiki_untranslated` (`source`,`lang`) values(?,?)";
         //No eror checking here
-        $tikilib->db->query($query);
+        $tikilib->query($query,array($content,$language),-1,-1,false);
         }
       echo $content;
     }
