@@ -4,14 +4,14 @@ require_once('tiki-setup.php');
 
 if($layout_section != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -80,7 +80,7 @@ $smarty->assign('sections',$sections_smt);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_layout.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 ?>
 

@@ -5,7 +5,7 @@ require_once('tiki-setup.php');
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
 }
@@ -196,7 +196,7 @@ $smarty->assign_by_ref('left',$left);
 $smarty->assign_by_ref('right',$right);
 
 $smarty->assign('mid','tiki-admin_modules.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 
 ?>

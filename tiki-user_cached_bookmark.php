@@ -4,20 +4,20 @@ require_once('tiki-setup.php');
 
 if(!$user) {
     $smarty->assign('msg',tra("You must log in to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
 
 if($feature_user_bookmarks != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["urlid"])) {
   $smarty->assign('msg',tra("No url indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 } 
 

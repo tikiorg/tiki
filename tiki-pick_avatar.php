@@ -6,13 +6,13 @@ require_once('tiki-setup.php');
 
 if($feature_userPreferences != 'y') {
    $smarty->assign('msg',tra("This feature is disabled"));
-   $smarty->display('error.tpl');
+   $smarty->display("styles/$style_base/error.tpl");
    die;
 }
 
 if(!$user) {
    $smarty->assign('msg',tra("You are not logged in"));
-   $smarty->display('error.tpl');
+   $smarty->display("styles/$style_base/error.tpl");
    die;
 }
 
@@ -23,7 +23,7 @@ if(isset($_REQUEST["view_user"])) {
       $userwatch = $_REQUEST["view_user"];
     } else {
       $smarty->assign('msg',tra("You dont have permission to view other users data"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;
     }
   } else {
@@ -93,5 +93,5 @@ $avatar = $tikilib->get_user_avatar($user);
 $smarty->assign('avatar',$avatar);
 
 $smarty->assign('mid','tiki-pick_avatar.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

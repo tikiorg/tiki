@@ -86,6 +86,6 @@ require_once('tiki-setup.php');
   }
   $smarty->assign_by_ref('channels',$channels["data"]);
 
-$smarty->display('tiki-webmail_contacts.tpl');
+$smarty->display("styles/$style_base/tiki-webmail_contacts.tpl");
 
 ?>

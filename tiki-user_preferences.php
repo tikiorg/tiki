@@ -6,13 +6,13 @@ require_once('tiki-setup.php');
 
 if($feature_userPreferences != 'y') {
    $smarty->assign('msg',tra("This feature is disabled"));
-   $smarty->display('error.tpl');
+   $smarty->display("styles/$style_base/error.tpl");
    die;
 }
 
 if(!$user) {
    $smarty->assign('msg',tra("You are not logged in"));
-   $smarty->display('error.tpl');
+   $smarty->display("styles/$style_base/error.tpl");
    die;
 }
 
@@ -23,7 +23,7 @@ if(isset($_REQUEST["view_user"])) {
       $userwatch = $_REQUEST["view_user"];
     } else {
       $smarty->assign('msg',tra("You dont have permission to view other users data"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;
     }
   } else {
@@ -59,20 +59,20 @@ if(isset($_REQUEST["prefs"])) {
 if(isset($_REQUEST["chgpswd"])) {
   if($_REQUEST["pass1"]!=$_REQUEST["pass2"]) {
     $smarty->assign('msg',tra("The passwords didn't match"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   
   if(!$userlib->validate_user($_REQUEST["user"],$_REQUEST["pass"],'','')) {
     $smarty->assign('msg',tra("Invalid old password"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   
   //Validate password here
   if(strlen($_REQUEST["pass1"])<$min_pass_length) {
     $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die; 	
   }
   
@@ -80,7 +80,7 @@ if(isset($_REQUEST["chgpswd"])) {
   if($pass_chr_num == 'y') {
     if(!preg_match_all("[0-9]+",$_REQUEST["pass1"],$foo) || !preg_match_all("[A-Za-z]+",$_REQUEST["pass1"],$foo)) {
       $smarty->assign('msg',tra("Password must contain both letters and numbers"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die; 	
     }
   }
@@ -145,5 +145,5 @@ $smarty->assign('avatar',$avatar);
 
 
 $smarty->assign('mid','tiki-user_preferences.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

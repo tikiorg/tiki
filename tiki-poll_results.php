@@ -4,13 +4,13 @@ require_once('tiki-setup.php');
 
 if($feature_polls != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["pollId"])) {
     $smarty->assign('msg',tra("No poll indicated"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -48,5 +48,5 @@ $smarty->assign_by_ref('options',$options["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-poll_results.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

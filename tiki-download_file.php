@@ -4,14 +4,14 @@ require_once('tiki-setup_base.php');
 /*
 if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 */
 
 if(!isset($_REQUEST["fileId"])) {
   $smarty->assign('msg',tra("No file"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 $info = $tikilib->get_file($_REQUEST["fileId"]);
@@ -47,7 +47,7 @@ if($tiki_p_admin_file_galleries == 'y') {
 
 if($tiki_p_download_files != 'y') {
   $smarty->assign('msg',tra("You cant download files"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 

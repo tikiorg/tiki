@@ -6,14 +6,14 @@ require_once('tiki-setup.php');
 // CHECK FEATURE BANNERS HERE
 if($feature_banners != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 // IF NOT LOGGED aND NOT ADMIN BAIL OUT
 if(!$user) {
   $smarty->assign('msg',tra("You are not logged in"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -22,7 +22,7 @@ if(!$user) {
 if(isset($_REQUEST["remove"])) {
   if($tiki_p_admin_banners != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot remove banners"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $tikilib->remove_banner($_REQUEST["remove"]);  
@@ -94,5 +94,5 @@ $smarty->assign_by_ref('listpages',$listpages["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-list_banners.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -12,7 +12,7 @@ if($feature_blogs != 'y') {
 /*
 if($feature_listPages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 */
@@ -21,14 +21,14 @@ if($feature_listPages != 'y') {
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view pages"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 */
 
 if($tiki_p_blog_admin != 'y') {
   $smarty->assign('msg',tra("You cannot admin blogs"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -91,5 +91,5 @@ $smarty->assign_by_ref('listpages',$listpages["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-list_posts.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

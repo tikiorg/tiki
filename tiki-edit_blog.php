@@ -4,14 +4,14 @@ require_once('tiki-setup.php');
 
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 // Now check permissions to access this page
 if($tiki_p_create_blogs != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot create or edit blogs"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -54,7 +54,7 @@ if(isset($_REQUEST["blogId"]) && $_REQUEST["blogId"]>0) {
   if($data["user"]!=$user || !$user) {
     if($tiki_p_blog_admin != 'y') {
       $smarty->assign('msg',tra("Permission denied you cannot edit this blog"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;  
     }
   }
@@ -92,5 +92,5 @@ include_once("categorize_list.php");
 // Display the Index Template
 $smarty->assign('mid','tiki-edit_blog.tpl');
 $smarty->assign('show_page_bar','n');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

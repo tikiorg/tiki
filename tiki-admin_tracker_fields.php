@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_trackers != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -12,14 +12,14 @@ if($feature_trackers != 'y') {
 // To admin tracker fields the user must have permission to admin trackers
 if($tiki_p_admin_trackers != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
 
 if(!isset($_REQUEST["trackerId"])) {
     $smarty->assign('msg',tra("No tracker indicated"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -113,5 +113,5 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_tracker_fields.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

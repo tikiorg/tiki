@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_articles != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -13,7 +13,7 @@ if($feature_articles != 'y') {
 
 if(!isset($_REQUEST["articleId"])) {
   $smarty->assign('msg',tra("No article indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 
 }
@@ -24,14 +24,14 @@ if(isset($_REQUEST["articleId"])) {
   $article_data = $tikilib->get_article($_REQUEST["articleId"]);
   if(!$article_data) {
     $smarty->assign('msg',tra("Article not found"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
 
   if($userlib->object_has_one_permission($article_data["topicId"],'topic')) {
     if(!$userlib->object_has_permission($user,$article_data["topicId"],'topic','tiki_p_topic_read')) {
       $smarty->assign('msg',tra("Permision denied"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;  
     }
   }
@@ -40,7 +40,7 @@ if(isset($_REQUEST["articleId"])) {
   
   if( ($article_data["publishDate"]>date("U")) && ($tiki_p_admin != 'y') ){
     $smarty->assign('msg',tra("Article is not published yet"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $smarty->assign('title',$article_data["title"]);
@@ -88,5 +88,5 @@ include_once('tiki-section_options.php');
 // Display the Index Template
 $smarty->assign('mid','tiki-read_article.tpl');
 $smarty->assign('show_page_bar','n');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -5,13 +5,13 @@ require_once('tiki-setup.php');
 
 if($feature_surveys != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["surveyId"])) {
   $smarty->assign('msg',tra("No survey indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 $smarty->assign('surveyId',$_REQUEST["surveyId"]);
@@ -37,7 +37,7 @@ if($userlib->object_has_one_permission($_REQUEST["surveyId"],'survey')) {
 
 if($tiki_p_admin_surveys != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -127,5 +127,5 @@ $smarty->assign('positions',$positions);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_survey_questions.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

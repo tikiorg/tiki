@@ -4,14 +4,14 @@ require_once('tiki-setup.php');
 
 if($feature_faqs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 
 if($tiki_p_view_faqs != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -36,7 +36,7 @@ $smarty->assign('canSuggest',$info["canSuggest"]);
 if(isset($_REQUEST["remove"])) {
   if($tiki_p_admin_faqs != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   $tikilib->remove_faq($_REQUEST["remove"]);
@@ -45,7 +45,7 @@ if(isset($_REQUEST["remove"])) {
 if(isset($_REQUEST["save"])) {
   if($tiki_p_admin_faqs != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   if(isset($_REQUEST["canSuggest"])&&$_REQUEST["canSuggest"]=='on') {
@@ -118,5 +118,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-list_faqs.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

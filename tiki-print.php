@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -40,7 +40,7 @@ if(isset($_REQUEST["action"])) {
 // If the page doesn't exist then display an error
 if(!$tikilib->page_exists($page)) {
   $smarty->assign('msg',tra("Page cannot be found"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -48,7 +48,7 @@ if(!$tikilib->page_exists($page)) {
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view this page"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -79,6 +79,6 @@ $smarty->assign_by_ref('lastUser',$info["user"]);
 
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
-$smarty->display('tiki-print.tpl');
+$smarty->display("styles/$style_base/tiki-print.tpl");
 
 ?>

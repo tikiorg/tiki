@@ -4,13 +4,13 @@ require_once('tiki-setup.php');
 
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["blogId"])) {
   $smarty->assign('msg',tra("No blog indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -43,7 +43,7 @@ if($tiki_p_blog_admin == 'y') {
 
 if($tiki_p_read_blog != 'y') {
   $smarty->assign('msg',tra("Permission denied you cant view this section"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -57,7 +57,7 @@ if($user && $user == $blog_data["user"]) {
 $smarty->assign('ownsblog',$ownsblog);
 if(!$blog_data) {
   $smarty->assign('msg',tra("Blog not found"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 $tikilib->add_blog_hit($_REQUEST["blogId"]);
@@ -78,7 +78,7 @@ if(isset($_REQUEST["remove"])) {
     if(!$user || $data["user"]!=$user) {
       if($tiki_p_blog_admin != 'y') {
         $smarty->assign('msg',tra("Permission denied you cannot remove the post"));
-        $smarty->display('error.tpl');
+        $smarty->display("styles/$style_base/error.tpl");
         die;  
       }
     } 
@@ -174,5 +174,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-view_blog.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

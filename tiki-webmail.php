@@ -5,13 +5,13 @@ require_once('tiki-setup.php');
 
 if($feature_webmail != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($tiki_p_use_webmail != 'y') {
   $smarty->assign('msg',tra("Permission denied to use this feature"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -64,7 +64,7 @@ function parse_output(&$obj, &$parts,$i) {
     
 if(!$user) {  
   $smarty->assign('msg',tra("You are not logged in"));  
-  $smarty->display('error.tpl');  
+  $smarty->display("styles/$style_base/error.tpl");  
   die;
 }
 
@@ -608,5 +608,5 @@ if($_REQUEST["section"]=='contacts') {
 $section='webmail';
 include_once('tiki-section_options.php');
 
-$smarty->assign('mid','tiki-webmail.tpl');$smarty->display('tiki.tpl');
+$smarty->assign('mid','tiki-webmail.tpl');$smarty->display("styles/$style_base/tiki.tpl");
 ?>

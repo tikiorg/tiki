@@ -4,14 +4,14 @@ require_once('tiki-setup.php');
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 
 if(!isset($_REQUEST["imageId"])) {
   $smarty->assign('msg',tra("No image indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 $info = $tikilib->get_image($_REQUEST["imageId"]);
@@ -53,7 +53,7 @@ if($tiki_p_admin_galleries == 'y') {
 
 if($tiki_p_view_image_gallery != 'y') {
   $smarty->assign('msg',tra("Permission denied you cant view this section"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -106,7 +106,7 @@ $gal_info = $tikilib->get_gallery($info["galleryId"]);
 if(isset($_REQUEST["move_image"])) {
   if($tiki_p_admin_galleries!='y' && (!$user || $user!=$gal_info["user"]) ) {
     $smarty->assign('msg',tra("Permission denied you cannot move images from this gallery"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $tikilib->move_image($_REQUEST["imageId"],$_REQUEST["galleryId"]);
@@ -135,5 +135,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-browse_image.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

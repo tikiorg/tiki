@@ -5,7 +5,7 @@ require_once('tiki-setup.php');
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
 }
@@ -15,12 +15,12 @@ if(isset($_REQUEST["newuser"])) {
   // Check if the user already exists
   if($_REQUEST["pass"] != $_REQUEST["pass2"]) {
     $smarty->assign('msg',tra("The passwords dont match"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   } else {
     if($userlib->user_exists($_REQUEST["name"])) {
       $smarty->assign('msg',tra("User already exists"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;
     } else {
       $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"]);
@@ -86,5 +86,5 @@ $smarty->assign_by_ref('users',$users["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-adminusers.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

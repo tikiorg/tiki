@@ -4,13 +4,13 @@ require_once('tiki-setup.php');
 
 if($feature_quizzes != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["quizId"])) {
   $smarty->assign('msg',tra("No quiz indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -38,7 +38,7 @@ $quiz_info=$tikilib->get_quiz($_REQUEST["quizId"]);
 
 if($tiki_p_take_quiz != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -49,7 +49,7 @@ if($user) {
     // Check if user has taken this quiz
     if($tikilib->user_has_taken_quiz($user,$_REQUEST["quizId"])) {
       $smarty->assign('msg',tra("You cannot take this quiz twice"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;
     } else {
       $tikilib->user_takes_quiz($user,$_REQUEST["quizId"]);
@@ -75,7 +75,7 @@ if(isset($_REQUEST["timeleft"])) {
       // Check if user has taken this quiz
       if($tikilib->user_has_taken_quiz($user,$_REQUEST["quizId"])) {
         $smarty->assign('msg',tra("You cannot take this quiz twice"));
-        $smarty->display('error.tpl');
+        $smarty->display("styles/$style_base/error.tpl");
         die;
       } else {
         $tikilib->user_takes_quiz($user,$_REQUEST["quizId"]);
@@ -90,7 +90,7 @@ if(isset($_REQUEST["timeleft"])) {
   if($quiz_info["timeLimited"]=='y') {
     if($elapsed > $quiz_info["timeLimit"]*60) {
       $smarty->assign('msg',tra("Quiz time limit excedeed quiz cannot be computed"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;
     }
   }  
@@ -147,5 +147,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-take_quiz.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

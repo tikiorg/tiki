@@ -5,14 +5,14 @@ require_once('tiki-setup.php');
 
 if($feature_referer_stats != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 
 if($tiki_p_view_referer_stats != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -23,7 +23,7 @@ if(isset($_REQUEST["clear"])) {
 /*
 if($tiki_p_take_quiz != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 */
@@ -74,5 +74,5 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-referer_stats.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

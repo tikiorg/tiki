@@ -7,7 +7,7 @@ require_once('tiki-setup.php');
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
 }
@@ -15,7 +15,7 @@ if($user != 'admin') {
 
 if(!isset($_REQUEST["assign_user"])) {
   $smarty->assign('msg',tra("Unknown user"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die; 
 }
 $assign_user=$_REQUEST["assign_user"];
@@ -23,7 +23,7 @@ $smarty->assign_by_ref('assign_user',$assign_user);
 
 if(!$userlib->user_exists($assign_user)) {
   $smarty->assign('msg',tra("User doesnt exist"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -84,5 +84,5 @@ $smarty->assign_by_ref('users',$users["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-assignuser.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

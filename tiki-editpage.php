@@ -5,13 +5,13 @@ require_once('tiki-setup.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view this section"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -19,7 +19,7 @@ if($tiki_p_view != 'y') {
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {
   $smarty->assign('msg',tra("No page indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 } else {
   $page = $_REQUEST["page"];
@@ -94,7 +94,7 @@ if(substr($page,0,8)=="UserPage") {
   if($user != $name) {
     if($tiki_p_admin != 'y') { 
       $smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;
     }
   }
@@ -102,7 +102,7 @@ if(substr($page,0,8)=="UserPage") {
 
 if($_REQUEST["page"]=='SandBox' && $feature_sandbox!='y') {
   $smarty->assign('msg',tra("The SandBox is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;	
 }
 
@@ -113,7 +113,7 @@ if(!isset($_REQUEST["comment"])) {
 /*
 if(!page_exists($page)) {
   $smarty->assign('msg',tra("Page cannot be found"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 */
@@ -125,7 +125,7 @@ include_once("tiki-pagesetup.php");
 if($page != 'SandBox') {
 if($tiki_p_edit != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot edit this page"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 }
@@ -136,7 +136,7 @@ $info = $tikilib->get_page_info($page);
 
 if($info["flag"]=='L') {
   $smarty->assign('msg',tra("Cannot edit page because it is locked"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -148,13 +148,13 @@ if($tiki_p_admin != 'y') {
   if($userlib->object_has_one_permission($page,'wiki page')) {
     if(!$userlib->object_has_permission($user,$page,'wiki page','tiki_p_edit')) {
       $smarty->assign('msg',tra("Permission denied you cannot edit this page"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;  
     }
   } else {
     if($tiki_p_edit != 'y')  {
       $smarty->assign('msg',tra("Permission denied you cannot edit this page"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;  
     }
   }
@@ -175,7 +175,7 @@ if(!$user && $anonCanEdit<>'y') {
   header("location: tiki-index.php");
   die;
   //$smarty->assign('msg',tra("Anonymous users cannot edit pages"));
-  //$smarty->display('error.tpl');
+  //$smarty->display("styles/$style_base/error.tpl");
   //die;
 }
 */
@@ -314,6 +314,6 @@ include_once('tiki-section_options.php');
 // Display the Index Template
 $smarty->assign('mid','tiki-editpage.tpl');
 $smarty->assign('show_page_bar','y');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_trackers != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -14,7 +14,7 @@ $smarty->assign('itemId',$_REQUEST["itemId"]);
 
 if(!isset($_REQUEST["trackerId"])) {
     $smarty->assign('msg',tra("No tracker indicated"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 $smarty->assign('trackerId',$_REQUEST["trackerId"]);
@@ -39,7 +39,7 @@ if($userlib->object_has_one_permission($_REQUEST["trackerId"],'tracker')) {
 
 if($tiki_p_view_trackers != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -201,5 +201,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-view_tracker.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

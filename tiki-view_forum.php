@@ -4,13 +4,13 @@ require_once('tiki-setup.php');
 
 if($feature_forums != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["forumId"])) {
   $smarty->assign('msg',tra("No forum indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -47,7 +47,7 @@ if($userlib->object_has_one_permission($_REQUEST["forumId"],'forum')) {
 }
 if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -127,7 +127,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
         }
       } else {
         $smarty->assign('msg',tra("Please wait 2 minutes between posts"));
-        $smarty->display('error.tpl');
+        $smarty->display("styles/$style_base/error.tpl");
         die;  
       }
     }
@@ -246,5 +246,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-view_forum.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -7,7 +7,7 @@ include_once ("lib/ziplib.php");
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -1138,7 +1138,7 @@ if(isset($_REQUEST["createtag"])) {
   // Check existance
   if($tikilib->tag_exists($_REQUEST["tagname"])) {
       $smarty->assign('msg',tra("Tag already exists"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;  
   }
   $tikilib->create_tag($_REQUEST["tagname"]);  
@@ -1147,7 +1147,7 @@ if(isset($_REQUEST["restoretag"])) {
   // Check existance
   if(!$tikilib->tag_exists($_REQUEST["tagname"])) {
       $smarty->assign('msg',tra("Tag not found"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;    
   }
   $tikilib->restore_tag($_REQUEST["tagname"]);  
@@ -1161,7 +1161,7 @@ if(isset($_REQUEST["removetag"])) {
 if(isset($_REQUEST["newadminpass"])) {
   if($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
      $smarty->assign('msg',tra("The passwords dont match"));
-     $smarty->display('error.tpl');
+     $smarty->display("styles/$style_base/error.tpl");
      die;    
   }
   $userlib->set_admin_pass($_REQUEST["adminpass"]);
@@ -1277,5 +1277,5 @@ $smarty->assign_by_ref('title',$title);
 $smarty->assign_by_ref('maxRecords',$maxRecords);
 // Display the template
 $smarty->assign('mid','tiki-admin.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

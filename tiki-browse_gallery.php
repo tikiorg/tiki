@@ -4,19 +4,19 @@ require_once('tiki-setup.php');
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($_REQUEST["galleryId"]==0 && $tiki_p_admin_galleries != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot access this gallery"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["galleryId"])) {
   $smarty->assign('msg',tra("No gallery indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -49,7 +49,7 @@ if($tiki_p_admin_galleries == 'y') {
 
 if($tiki_p_view_image_gallery != 'y') {
   $smarty->assign('msg',tra("Permission denied you cant view this section"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -63,7 +63,7 @@ $gal_info = $tikilib->get_gallery($_REQUEST["galleryId"]);
 /*
 if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
   $smarty->assign('msg',tra("Permission denied you cannot browse this gallery"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 */
@@ -85,7 +85,7 @@ if(isset($_REQUEST["remove"])) {
   // To remove an image the user must be the owner or admin
   if(($tiki_p_admin_galleries != 'y')  && (!$user || $user!=$gal_info["user"])) {
     $smarty->assign('msg',tra("Permission denied you cannot remove images from this gallery"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $tikilib->remove_image($_REQUEST["remove"]);
@@ -95,7 +95,7 @@ if(isset($_REQUEST["rebuild"])) {
  // To remove an image the user must be the owner or admin
   if(($tiki_p_admin_galleries != 'y') && (!$user || $user!=$gal_info["user"])) {
     $smarty->assign('msg',tra("Permission denied you cannot remove images from this gallery"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $tikilib->rebuild_thumbnails($_REQUEST["rebuild"]);
@@ -197,5 +197,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-browse_gallery.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

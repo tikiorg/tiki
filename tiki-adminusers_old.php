@@ -12,12 +12,12 @@ if(isset($_REQUEST["newuser"])) {
   // Check if the user already exists
   if($_REQUEST["pass"] != $_REQUEST["pass2"]) {
     $smarty->assign('msg',tra("The passwords dont match"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   } else {
     if($tikilib->user_exists($_REQUEST["name"])) {
       $smarty->assign('msg',tra("User already exists"));
-      $smarty->display('error.tpl');
+      $smarty->display("styles/$style_base/error.tpl");
       die;
     } else {
       $tikilib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"]);
@@ -72,6 +72,6 @@ $smarty->assign_by_ref('users',$users["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-adminusers.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

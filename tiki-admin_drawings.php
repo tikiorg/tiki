@@ -5,13 +5,13 @@ require_once('tiki-setup.php');
 
 if($feature_drawings != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
 if($tiki_p_admin_drawings != 'y') {
   $smarty->assign('msg',tra("You dont have permission to use this feature"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -47,5 +47,5 @@ $smarty->assign('files',$files);
 
 
 $smarty->assign('mid','tiki-admin_drawings.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -5,14 +5,14 @@ require_once('tiki-setup.php');
 
 if($feature_shoutbox != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 
 if($tiki_p_view_shoutbox != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
 }
 
@@ -25,7 +25,7 @@ $smarty->assign('msgId',$_REQUEST["msgId"]);
 if($_REQUEST["msgId"]) {
   if($tiki_p_admin_shoutbox != 'y') {
     $smarty->assign('msg',tra("You dont have permission to edit messages"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   $info = $tikilib->get_shoutbox($_REQUEST["msgId"]);
@@ -96,5 +96,5 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-shoutbox.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -5,19 +5,19 @@ require_once('tiki-setup.php');
 
 if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($_REQUEST["galleryId"]==0) {
   $smarty->assign('msg',tra("Unexistant gallery"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if(!isset($_REQUEST["galleryId"])) {
   $smarty->assign('msg',tra("No gallery indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -63,7 +63,7 @@ if($tiki_p_admin_file_galleries == 'y') {
 
 if($tiki_p_view_file_gallery != 'y') {
   $smarty->assign('msg',tra("Permission denied you cant view this section"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -78,7 +78,7 @@ if(isset($_REQUEST["remove"])) {
   // To remove an image the user must be the owner or admin
   if($tiki_p_admin_file_galleries != 'y' && (!$user || $user!=$gal_info["user"])) {
     $smarty->assign('msg',tra("Permission denied you cannot remove files from this gallery"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
   $tikilib->remove_file($_REQUEST["remove"]);
@@ -154,5 +154,5 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid','tiki-list_file_gallery.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

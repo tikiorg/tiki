@@ -6,13 +6,13 @@ require_once('lib/tikilib.php'); # httpScheme()
 // CHECK FEATURE BANNERS AND ADMIN PERMISSION HERE
 if($feature_banners != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($tiki_p_admin_banners != 'y') {
   $smarty->assign('msg',tra("You dont have permissions to edit banners"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -20,13 +20,13 @@ if(isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"]>0) {
   $info = $tikilib->get_banner($_REQUEST["bannerId"]);
   if(!$info) {
     $smarty->assign('msg',tra("Banner not found"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   // Check user is admin or the client
   if( ($user != $info["client"]) && ($tiki_p_admin_banners != 'y') ){
     $smarty->assign('msg',tra("You dont have permission to edit this banner"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
   $smarty->assign('bannerId',$info["bannerId"]);
@@ -240,5 +240,5 @@ $smarty->assign_by_ref('clients',$clients["data"]);
 
 // Display the template
 $smarty->assign('mid','tiki-edit_banner.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

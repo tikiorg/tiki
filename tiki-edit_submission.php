@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_submissions != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -12,7 +12,7 @@ if($feature_submissions != 'y') {
 // Now check permissions to access this page
 if($tiki_p_submit_article != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot send submissions"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -55,7 +55,7 @@ if(isset($_REQUEST["subId"])) {
 if($_REQUEST["subId"]>0) {
   if($tiki_p_edit_submission != 'y') {
     $smarty->assign('msg',tra("Permission denied you cannot edit submissions"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
 }
@@ -304,5 +304,5 @@ $smarty->assign_by_ref('templates',$templates["data"]);
 // Display the Index Template
 $smarty->assign('mid','tiki-edit_submission.tpl');
 $smarty->assign('show_page_bar','n');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

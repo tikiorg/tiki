@@ -4,19 +4,19 @@ require_once('tiki-setup.php');
 
 if($feature_forums != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($feature_forum_rankings != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
 if($tiki_p_forum_read != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view this section"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -64,5 +64,5 @@ $smarty->assign_by_ref('rankings',$rankings);
 $smarty->assign('rpage','tiki-forum_rankings.php');
 // Display the template
 $smarty->assign('mid','tiki-ranking.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>

@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
@@ -13,7 +13,7 @@ if($feature_wiki != 'y') {
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
+    $smarty->display("styles/$style_base/error.tpl");
     die;
   }
 }
@@ -21,13 +21,13 @@ if($user != 'admin') {
 // We have to get the variable ruser as the user to check
 if(!isset($_REQUEST["ruser"])) {
   $smarty->assign('msg',tra("No user indicated"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
 if(!user_exists($_REQUEST["ruser"])) {
   $smarty->assign('msg',tra("Unexistant user"));
-  $smarty->display('error.tpl');
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
@@ -47,5 +47,5 @@ $history = $tikilib->get_user_versions($_REQUEST["ruser"]);
 $smarty->assign_by_ref('history',$history);
 
 $smarty->assign('mid','tiki-userversions.tpl');
-$smarty->display('tiki.tpl');
+$smarty->display("styles/$style_base/tiki.tpl");
 ?>
