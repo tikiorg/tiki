@@ -1212,6 +1212,12 @@ div.articletitle {
 	clear: both;
 }
 
+/* type image for articles */
+.articletypeimage {
+	border: 0px;
+	padding-right: 0.8em;
+}
+
 /* The article heading */
 div.articleheading {
 	background-color: white;
