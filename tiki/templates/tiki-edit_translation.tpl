@@ -1,6 +1,6 @@
-<h1>{tr}Edit translation: {/tr}<a href="tiki-index.php?page={$page|escape:url}">{$page}</a></h1>
+<h1>{tr}Edit Translation: {/tr}<a href="tiki-index.php?page={$page|escape:url}">{$page}</a></h1>
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=TranslationEdit" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit translations{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="http://tikiwiki.org/tiki-index.php?page=TranslationDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit translations{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-edit_translations.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}edit translations template{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
@@ -26,10 +26,10 @@
 <form action="tiki-edit_translation.php" method="post">
 <input type="hidden" name="page" value="{$page|escape}" />
 
-<table class="normal">
+<h2>{tr}Language{/tr}</h2>
+<table>
 <tr>
-	<td class="heading">{tr}Language{/tr}</td>
-	<td class="form"><select name="lang" size="1">
+	<td><select name="lang" size="1">
 	{if !$lang || $lang == "NULL"}
 	<option value="">{tr}Unknown{/tr}</option>
 	{/if}
@@ -56,9 +56,10 @@
 	<td><input type="submit" name="detach" value="{tr}detach{/tr}" /><br /></td></tr>
 	{/section}
 	</table>
-	<input name="srcName" size="80" type="text" value="{$srcName}" /><input type="submit" class="wikiaction"  value="{tr}add a page to the set{/tr}"/> 
+	<table><tr><td>
+	<input name="srcName" size="60" type="text" value="{$srcName}" /> <input type="submit" class="wikiaction"  value="{tr}add the page to the set{/tr}"/></td></tr></table>
 {else}
-	{tr}Translation of the page:{/tr} <input name="srcName" size="80" type="text" value="{$srcName}" />
+	{tr}Translation of the page:{/tr} <input name="srcName" size="60" type="text" value="{$srcName}" />
 	<br />
 	<input type="submit" class="wikiaction"  value="{tr}go{/tr}"/> 
 {/if}
