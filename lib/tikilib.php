@@ -2844,7 +2844,7 @@ function get_links($data) {
     $links = array();
 
     // Ignore things like [[foo]. -Robin
-    if (preg_match_all("/[^\[]\[([^\[\|\]]+)(\||\])/", $data, $r1)) {
+    if (preg_match_all("/[^\[]*\[([^\[\|\]]+)(\||\])/", $data, $r1)) {
 	$res = $r1[1];
 
 	$links = array_unique($res);
@@ -4145,7 +4145,7 @@ function parse_data($data) {
     // Extract [link] sections (to be re-inserted later)
     $noparsedlinks = array();
     // Added handling for [[foo] sections.  -rlpowell
-    preg_match_all("/[^\[]\[([^\[][^\]]*)\]/", $data, $noparseurl);
+    preg_match_all("/[^\[]*\[([^\[][^\]]*)\]/", $data, $noparseurl);
 
     foreach (array_unique($noparseurl[1])as $np) {
 	$key = md5($this->genPass());
