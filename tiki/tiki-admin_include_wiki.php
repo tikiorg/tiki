@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.12 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.13 2004-02-09 18:20:19 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,6 +12,9 @@ if (isset($_REQUEST["dump"])) {
 	error_reporting (E_ERROR | E_WARNING);
 	$adminlib->dump();
 }
+
+// Included for the forum dropdown
+include_once ("lib/commentslib.php");
 
 if (isset($_REQUEST["createtag"])) {
 	check_ticket('admin-inc-wiki');
@@ -595,6 +598,11 @@ if(isset($_REQUEST["wikisetwatch"])) {
   }
 }
 
+if ($feature_forums == 'y') {
+	$commentslib = new Comments($dbTiki);
+	$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
+	$smarty->assign_by_ref("all_forums", $all_forums["data"]);
+}
 
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.11 2004-02-03 02:00:06 musus Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.12 2004-02-09 18:20:22 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -89,7 +89,7 @@ form {
 .right {
  /*margin-left: 80%;*/
  /*float: right;*/
-}     
+}
 
 
 /* we use this e.g. for <br /> to clear all instead of <br clear="all" /> */
@@ -101,6 +101,7 @@ form {
  * modules
  */
 .box {
+ background-color: #ddeeff;
  border: dashed 0.2em #abcdef;
  margin: 0.2em;
 }
@@ -143,13 +144,20 @@ div.box-title table {
 .removemod {
  background: transparent url('simple/delete.gif') no-repeat center;
 }
+
 /*
  * common page classes
  */
+.linkbut {
+ font-size: 0.8em;
+}
 .pagetitle {
  display: block;
  text-align: center;
  font-size: 1.3em;
+}
+.titlebar {
+ background-color: #abcdef;
 }
 /*
  * content boxes
@@ -160,6 +168,9 @@ div.box-title table {
 /*
  * wiki pages
  */
+.wikitext {
+ background-color: #ffffff;
+}
 .wiki-edithelp {
  display: none;
 }
@@ -193,7 +204,7 @@ div.box-title table {
  display: none;
 }
 /* TikiIntegrator: By default copy rules dialog not shown */
-div#rules-copy-panel {
+#rules-copy-panel {
     display: none;
 }
 /* for tabs */

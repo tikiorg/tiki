@@ -73,8 +73,8 @@ class UsersLib extends TikiLib {
 	foreach ($groups as $groupName) {
 	    $query = "select count(*)
 		from `users_objectpermissions`
-		where `groupName` = ? and objectId = ?
-		and objectType = ? and permName = ?";
+		where `groupName` = ? and `objectId` = ?
+		and `objectType` = ? and `permName` = ?";
 
 	    $bindvars = array($groupName, $objectId, $objectType,
 		    $permName);

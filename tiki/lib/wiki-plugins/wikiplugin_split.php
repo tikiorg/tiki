@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.14 2003-11-20 23:21:31 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.15 2004-02-09 18:20:22 mose Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -46,12 +46,14 @@ function wikiplugin_split($data, $params) {
     $fixedsize = (!isset($fixedsize) || $fixedsize == 'y' || $fixedsize == 1 ? true : false);
     $joincols  = (!isset($joincols)  || $joincols  == 'y' || $joincols  == 1 ? true : false);
     // Split data by rows and cells
-	$sections = preg_split("/@{3,}+/", $data);
+//	$sections = preg_split("/\@{3,}+/", $data);
+	$sections = preg_split("/@@@+/", $data);
     $rows = array();
     $maxcols = 0;
     foreach ($sections as $i)
     {
-        $rows[] = preg_split("/-{3,}+/", $i);
+//        $rows[] = preg_split("/-{3,}+/", $i);
+	$rows[] = preg_split("/---+/", $i);
         $maxcols = max($maxcols, count(end($rows)));
     }
 
@@ -77,8 +79,9 @@ function wikiplugin_split($data, $params) {
             $idx++;
             // Add cell to table
     		$result .= '<td valign="top"'.($fixedsize ? ' width="'.$columnSize.'%"' : '').$colspan.'>'
-                     . ((substr($i, 0, 1) == "\n") || (substr($i, 0, 1) == "\r") ? $i : "\n".$i)
-                     . ((substr($i, -1) == "\n") || (substr($i, -1) == "\r") ? '' : "\n")
+			.preg_replace("/\\n/", "<br />", $i)
+//                     . ((substr($i, 0, 1) == "\n") || (substr($i, 0, 1) == "\r") ? $i : "\n".$i)
+//                     . ((substr($i, -1) == "\n") || (substr($i, -1) == "\r") ? '' : "\n")
                      . '</td>';
         }
         

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.52 2004-02-01 19:25:46 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.53 2004-02-09 18:20:22 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br /><br />
 {if $forum_info.show_description eq 'y'}
@@ -6,8 +6,9 @@
 <br /><br />
 {/if}
 
-<a class="link" href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
+<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> -&gt; <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
 <br /><br />
+
 {if $openpost eq 'y'}
 {assign var="postclass" value="forumpostopen"}
 {else}

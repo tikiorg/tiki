@@ -107,7 +107,14 @@
     {tr}Discuss pages on forums{/tr}: </td><td>
     <input type="checkbox" name="feature_wiki_discuss" {if $feature_wiki_discuss eq 'y'}checked="checked"{/if}/> </td></tr>
     <tr><td class="form">{tr}Forum{/tr}:</td><td class="form">
-    <input maxlength="20" size="10" type="text" name="wiki_forum" value="{$wiki_forum|escape}"/></td></tr>
+{*    <input maxlength="20" size="10" type="text" name="wiki_forum" value="{$wiki_forum|escape}"/> *}
+	<select name="wiki_forum">
+{section name=ix loop=$all_forums}
+<option value="{$all_forums[ix].name|escape}" {if $all_forums[ix].name eq $wiki_forum}selected="selected"{/if}>{$all_forums[ix].name}</option>
+{/section}
+</select>
+
+</td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikidiscussprefs" value="{tr}Change preferences{/tr}" />
     </td>
     </tr></table>

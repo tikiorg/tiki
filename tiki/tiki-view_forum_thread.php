@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.54 2004-01-28 14:38:05 hsaelens Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.55 2004-02-09 18:20:19 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -416,7 +416,8 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 
 			    // outbound_from is redundant with sender_email: can be merged to simplify
 			    $from = $forum_info["outbound_from"]? $forum_info["outbound_from"]: $sender_email;
-			    if ($forum_info["outbound_address"]) {
+			    $forum_info["outbound_address"]=trim($forum_info["outbound_address"]);
+			    if ($forum_info["outbound_address"] && !empty($forum_info["outbound_address"])) {
 				if( $in_reply_to )
 				{
 				    $in_reply_line = "In-Reply-To: <" . $in_reply_to . ">\r\n";

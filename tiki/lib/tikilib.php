@@ -3953,7 +3953,7 @@ function parse_data($data) {
     // Underlined text
     $data = preg_replace("/===([^\=]+)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
     // Center text
-    $data = preg_replace("/::([^\:]+)::/", "<div align=\"center\">$1</div>", $data);
+    $data = preg_replace("/::(.+?)::/", "<div align=\"center\">$1</div>", $data);
 
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
     preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
@@ -4071,6 +4071,7 @@ function parse_data($data) {
 # Others, excluding ending ss like address(es)
 		    $plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
 		    if($desc = $this->page_exists_desc($plural_tmp)) {
+//			$repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
 			$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
 		    } else {
 			$repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";

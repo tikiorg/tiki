@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.4 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.5 2004-02-09 18:20:19 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,6 +30,12 @@ if (isset($_REQUEST["galfeatures"])) {
 	$smarty->assign('gal_use_db', $_REQUEST["gal_use_db"]);
 	$tikilib->set_preference("gal_use_lib", $_REQUEST["gal_use_lib"]);
 	$smarty->assign('gal_use_lib', $_REQUEST["gal_use_lib"]);
+
+	// Check for last character being a / or a \
+	if (substr($_REQUEST["gal_use_dir"], -1) != "\\" && substr($_REQUEST["gal_use_dir"], -1) != "/" && $_REQUEST["gal_use_dir"] != "") {
+		$_REQUEST["gal_use_dir"] .= "/";
+	}
+
 	$tikilib->set_preference("gal_use_dir", $_REQUEST["gal_use_dir"]);
 	$smarty->assign('gal_use_dir', $_REQUEST["gal_use_dir"]);
 

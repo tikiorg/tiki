@@ -360,18 +360,20 @@ class StructLib extends TikiLib {
 	function fetch_toc($structure_tree,$showdesc,$numbering) {
 		global $smarty;
 		$ret='';
-		$ret.=$smarty->fetch("structures_toc-startul.tpl");
-		foreach($structure_tree as $leaf) {
-			//echo "<br />";print_r($leaf);echo "<br />";
-			$smarty->assign_by_ref('structure_tree',$leaf);
-			$smarty->assign('showdesc',$showdesc);
-			$smarty->assign('numbering',$numbering);
-			$ret.=$smarty->fetch("structures_toc-leaf.tpl");
-			if(isset($leaf["sub"]) && is_array($leaf["sub"])) {
-				$ret.=$this->fetch_toc($leaf["sub"],$showdesc,$numbering);
+		if ($structure_tree != '') {
+			$ret.=$smarty->fetch("structures_toc-startul.tpl");
+			foreach($structure_tree as $leaf) {
+				//echo "<br />";print_r($leaf);echo "<br />";
+				$smarty->assign_by_ref('structure_tree',$leaf);
+				$smarty->assign('showdesc',$showdesc);
+				$smarty->assign('numbering',$numbering);
+				$ret.=$smarty->fetch("structures_toc-leaf.tpl");
+				if(isset($leaf["sub"]) && is_array($leaf["sub"])) {
+					$ret.=$this->fetch_toc($leaf["sub"],$showdesc,$numbering);
+				}
 			}
+			$ret.=$smarty->fetch("structures_toc-endul.tpl");
 		}
-		$ret.=$smarty->fetch("structures_toc-endul.tpl");
 		return $ret;
 	}
 	// end of replacement

@@ -98,7 +98,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 <input type="hidden" name="start" value="{$start|escape}" />
 <select name="action">
-<option value="flag">{tr}Mark as Flagged{/tr}</option>
+<option value="flag">{tr}Mark as flagged{/tr}</option>
 <option value="unflag">{tr}Mark as unflagged{/tr}</option>
 <option value="read">{tr}Mark as read{/tr}</option>
 <option value="unread">{tr}Mark as unread{/tr}</option>

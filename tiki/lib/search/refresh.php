@@ -41,7 +41,6 @@ function refresh_search_index() {
     }
     global $feature_galleries;
     if ($feature_galleries == 'y') {
-      $fpd=fopen(TikiInit::tempDir()."/tikidebug",'a');fwrite($fpd,"f_gal on\n");fclose($fpd);
       $locs[]="random_refresh_imggals";
       $locs[]="random_refresh_img";
     }
