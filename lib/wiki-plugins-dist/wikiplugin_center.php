@@ -5,13 +5,12 @@
 // {CENTER()}
 //  data
 // {CENTER}
+function wikiplugin_center($data, $params) {
+	global $tikilib;
 
-function wikiplugin_center($data,$params) {
-  global $tikilib;
-  extract($params);
-  $data = '<div align="center">'.trim($data).'</div>';
-  return $data;
+	extract ($params);
+	$data = '<div align="center">' . trim($data). '</div>';
+	return $data;
 }
-
 
 ?>

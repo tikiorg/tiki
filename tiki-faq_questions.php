@@ -1,129 +1,146 @@
 <?php
+
+// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.8 2003-08-07 04:33:57 rossta Exp $
+
+// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 // Initialization
-require_once('tiki-setup.php');
-include_once('lib/faqs/faqlib.php');
+require_once ('tiki-setup.php');
 
-if($feature_faqs != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("styles/$style_base/error.tpl");
-  die;  
+include_once ('lib/faqs/faqlib.php');
+
+if ($feature_faqs != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled"));
+
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
-if($tiki_p_admin_faqs != 'y') {
-    $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;
+if ($tiki_p_admin_faqs != 'y') {
+	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
-if(!isset($_REQUEST["faqId"])) {
-    $smarty->assign('msg',tra("No menu indicated"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;
+if (!isset($_REQUEST["faqId"])) {
+	$smarty->assign('msg', tra("No menu indicated"));
+
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
-
-$smarty->assign('faqId',$_REQUEST["faqId"]);
+$smarty->assign('faqId', $_REQUEST["faqId"]);
 $faq_info = $tikilib->get_faq($_REQUEST["faqId"]);
-$smarty->assign('faq_info',$faq_info);
+$smarty->assign('faq_info', $faq_info);
 
-if(!isset($_REQUEST["questionId"])) {
-    $_REQUEST["questionId"]=0;
+if (!isset($_REQUEST["questionId"])) {
+	$_REQUEST["questionId"] = 0;
 }
-$smarty->assign('questionId',$_REQUEST["questionId"]);
 
+$smarty->assign('questionId', $_REQUEST["questionId"]);
 
-if($_REQUEST["questionId"]) {
-  $info = $faqlib->get_faq_question($_REQUEST["questionId"]);
+if ($_REQUEST["questionId"]) {
+	$info = $faqlib->get_faq_question($_REQUEST["questionId"]);
 } else {
-  $info = Array();
-  $info["question"]='';
-  $info["answer"]='';
+	$info = array();
+
+	$info["question"] = '';
+	$info["answer"] = '';
 }
 // $smarty->assign('question',$info["question"]);  AWC moved this
 // $smarty->assign('answer',$info["answer"]);      AWC moved this
-
-if(isset($_REQUEST["remove"])) {
-  $faqlib->remove_faq_question($_REQUEST["remove"]);
+if (isset($_REQUEST["remove"])) {
+	$faqlib->remove_faq_question($_REQUEST["remove"]);
 }
 
-if(!isset($_REQUEST["filter"])) {$_REQUEST["filter"]='';}
-$smarty->assign('filter',$_REQUEST["filter"]);
-
-if(isset($_REQUEST["useq"])) {
-  $quse = $faqlib->get_faq_question($_REQUEST["usequestionId"]);
-  $faqlib->replace_faq_question($_REQUEST["faqId"], 0, $quse["question"], $quse["answer"]);
-  $info = $faqlib->get_faq_question($_REQUEST["questionId"]);  // AWC added
+if (!isset($_REQUEST["filter"])) {
+	$_REQUEST["filter"] = '';
 }
 
-if(isset($_REQUEST["save"])) {
-   $faqlib->replace_faq_question($_REQUEST["faqId"], $_REQUEST["questionId"], $_REQUEST["question"], $_REQUEST["answer"]);
-   $info["question"]='';
-   $info["answer"]='';
-   //$smarty->assign('question',$info["question"]);  AWC moved this
-   //$smarty->assign('answer',$info["answer"]);      AWC moved this
-   $smarty->assign('questionId',0);
+$smarty->assign('filter', $_REQUEST["filter"]);
+
+if (isset($_REQUEST["useq"])) {
+	$quse = $faqlib->get_faq_question($_REQUEST["usequestionId"]);
+
+	$faqlib->replace_faq_question($_REQUEST["faqId"], 0, $quse["question"], $quse["answer"]);
+	$info = $faqlib->get_faq_question($_REQUEST["questionId"]); // AWC added
 }
 
-$smarty->assign('question',$info["question"]);  // moved from above
-$smarty->assign('answer',$info["answer"]);      // moved from above
+if (isset($_REQUEST["save"])) {
+	$faqlib->replace_faq_question($_REQUEST["faqId"], $_REQUEST["questionId"], $_REQUEST["question"], $_REQUEST["answer"]);
 
-if(!isset($_REQUEST["sort_mode"])) {
-  $sort_mode = 'position,questionId_asc'; 
+	$info["question"] = '';
+	$info["answer"] = '';
+	//$smarty->assign('question',$info["question"]);  AWC moved this
+	//$smarty->assign('answer',$info["answer"]);      AWC moved this
+	$smarty->assign('questionId', 0);
+}
+
+$smarty->assign('question', $info["question"]); // moved from above
+$smarty->assign('answer', $info["answer"]);     // moved from above
+
+if (!isset($_REQUEST["sort_mode"])) {
+	$sort_mode = 'position,questionId_asc';
 } else {
-  $sort_mode = $_REQUEST["sort_mode"];
-} 
+	$sort_mode = $_REQUEST["sort_mode"];
+}
 
-if(!isset($_REQUEST["offset"])) {
-  $offset = 0;
+if (!isset($_REQUEST["offset"])) {
+	$offset = 0;
 } else {
-  $offset = $_REQUEST["offset"]; 
+	$offset = $_REQUEST["offset"];
 }
-$smarty->assign_by_ref('offset',$offset);
 
-if(isset($_REQUEST["find"])) {
-  $find = $_REQUEST["find"];  
+$smarty->assign_by_ref('offset', $offset);
+
+if (isset($_REQUEST["find"])) {
+	$find = $_REQUEST["find"];
 } else {
-  $find = ''; 
-}
-$smarty->assign('find',$find);
-
-if(isset($_REQUEST["remove_suggested"])) {
-  $faqlib->remove_suggested_question($_REQUEST["remove_suggested"]);
-}
-if(isset($_REQUEST["approve_suggested"])) {
-  $faqlib->approve_suggested_question($_REQUEST["approve_suggested"]);
+	$find = '';
 }
 
+$smarty->assign('find', $find);
 
-$smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $faqlib->list_faq_questions($_REQUEST["faqId"],0,-1,$sort_mode,$find);
-$allq = $faqlib->list_all_faq_questions(0,-1,'position,questionId_asc',$_REQUEST["filter"]);
-$smarty->assign_by_ref('allq',$allq["data"]);
+if (isset($_REQUEST["remove_suggested"])) {
+	$faqlib->remove_suggested_question($_REQUEST["remove_suggested"]);
+}
+
+if (isset($_REQUEST["approve_suggested"])) {
+	$faqlib->approve_suggested_question($_REQUEST["approve_suggested"]);
+}
+
+$smarty->assign_by_ref('sort_mode', $sort_mode);
+$channels = $faqlib->list_faq_questions($_REQUEST["faqId"], 0, -1, $sort_mode, $find);
+$allq = $faqlib->list_all_faq_questions(0, -1, 'position,questionId_asc', $_REQUEST["filter"]);
+$smarty->assign_by_ref('allq', $allq["data"]);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages',$cant_pages);
-$smarty->assign('actual_page',1+($offset/$maxRecords));
-if($channels["cant"] > ($offset+$maxRecords)) {
-  $smarty->assign('next_offset',$offset + $maxRecords);
+$smarty->assign_by_ref('cant_pages', $cant_pages);
+$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+
+if ($channels["cant"] > ($offset + $maxRecords)) {
+	$smarty->assign('next_offset', $offset + $maxRecords);
 } else {
-  $smarty->assign('next_offset',-1); 
+	$smarty->assign('next_offset', -1);
 }
+
 // If offset is > 0 then prev_offset
-if($offset>0) {
-  $smarty->assign('prev_offset',$offset - $maxRecords);  
+if ($offset > 0) {
+	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
-  $smarty->assign('prev_offset',-1); 
+	$smarty->assign('prev_offset', -1);
 }
 
-$smarty->assign_by_ref('channels',$channels["data"]);
+$smarty->assign_by_ref('channels', $channels["data"]);
 
-
-$suggested = $faqlib->list_suggested_questions(0,-1,'created_desc','');
-$smarty->assign_by_ref('suggested',$suggested["data"]);
-
-
+$suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '');
+$smarty->assign_by_ref('suggested', $suggested["data"]);
 
 // Display the template
-$smarty->assign('mid','tiki-faq_questions.tpl');
+$smarty->assign('mid', 'tiki-faq_questions.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
+
 ?>

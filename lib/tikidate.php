@@ -16,9 +16,7 @@
  * Created by: Jeremy Jongsma (jjongsma@tickchat.com)
  * Created on: Sat Jul 26 11:51:31 CDT 2003
  */
-
-class TikiDate
-{
+class TikiDate {
 	/**
 	 * UTC offset to use for display
 	 */
@@ -33,9 +31,9 @@ class TikiDate
 	 * Default constructor
 	 * $_display_offset: desired offset for date display, in minutes
 	 */
-	function TikiDate($_display_offset = 0)
-	{
+	function TikiDate($_display_offset = 0) {
 		$this->display_offset = $_display_offset;
+
 		$this->server_offset = intval(date("Z"));
 	}
 
@@ -44,8 +42,7 @@ class TikiDate
 	 * $timestamp: UTC timestamp to convert.
 	 * returns: Display-offset timestamp.
 	 */
-	function getDisplayDateFromUTC ($_timestamp)
-	{
+	function getDisplayDateFromUTC($_timestamp) {
 		return $_timestamp + $this->display_offset;
 	}
 
@@ -54,8 +51,7 @@ class TikiDate
 	 * $timestamp: Display timestamp to convert.
 	 * returns: UTC timestamp.
 	 */
-	function getUTCFromDisplayDate ($_timestamp)
-	{
+	function getUTCFromDisplayDate($_timestamp) {
 		return $_timestamp - $this->display_offset;
 	}
 
@@ -64,8 +60,7 @@ class TikiDate
 	 * $timestamp: UTC timestamp to convert.
 	 * returns: Server timestamp.
 	 */
-	function getServerDateFromUTC ($_timestamp)
-	{
+	function getServerDateFromUTC($_timestamp) {
 		return $_timestamp + $this->server_offset;
 	}
 
@@ -74,8 +69,7 @@ class TikiDate
 	 * $timestamp: Server timestamp to convert.
 	 * returns: UTC timestamp.
 	 */
-	function getUTCFromServerDate ($_timestamp)
-	{
+	function getUTCFromServerDate($_timestamp) {
 		return $_timestamp - $this->server_offset;
 	}
 
@@ -84,8 +78,7 @@ class TikiDate
 	 * $timestamp: Display timestamp to convert.
 	 * returns: Server timestamp.
 	 */
-	function getServerDateFromDisplayDate ($_timestamp)
-	{
+	function getServerDateFromDisplayDate($_timestamp) {
 		return $this->getServerDateFromUTC($this->getUTCFromDisplayDate($_timestamp));
 	}
 
@@ -94,26 +87,28 @@ class TikiDate
 	 * $timestamp: Server timestamp to convert.
 	 * returns: Display timestamp.
 	 */
-	function getDisplayDateFromServerDate ($_timestamp)
-	{
+	function getDisplayDateFromServerDate($_timestamp) {
 		return $this->getDisplayDateFromUTC($this->getUTCFromServerDate($_timestamp));
 	}
 
 	/**
 	 * Retrieve a current UTC timestamp.
 	 */
-	function getUTCTime ()
-	{
+	function getUTCTime() {
 		return time() - $this->server_offset;
 	}
-	
+
 	/**
 	 * Get the name of the current timezone.
 	 *
 	 * Currently, only "UTC" or an empty string (Local).
 	 */
-	 function getTzName() {
-	 	if ($this->display_offset == 0) return "UTC";
-		else return "";
-	 }
+	function getTzName() {
+		if ($this->display_offset == 0)
+			return "UTC";
+		else
+			return "";
+	}
 }
+
+?>

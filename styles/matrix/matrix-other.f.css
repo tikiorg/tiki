@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.f.css,v 1.3 2003-08-02 20:39:17 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.f.css,v 1.4 2003-08-07 04:34:18 rossta Exp $
  *
  * Backgrounds for full featured 'Matrix' theme
  *
@@ -11,19 +11,14 @@
 /*
  * Define backgrounds (the only difference between two themes)
  */
-div.messureadbody,
-div.messureadhead,
-div.messureadhead td[style="font-weight:bold;"] + td
-{
-  background: url(img/dark.png) repeat;
+div.messureadbody, div.messureadhead, div.messureadhead td[style = "font-weight:bold;"] + td {
+	background: url(img/dark.png) repeat;
 }
 
-div.messureadhead td[style="font-weight:bold;"]
-{
-  background: url(img/ltgreen.png) repeat;
+div.messureadhead td[style = "font-weight:bold;"] {
+	background: url(img/ltgreen.png) repeat;
 }
 
-div.shoutboxmsg
-{
-  background: url(img/grey.png) repeat;
+div.shoutboxmsg {
+	background: url(img/grey.png) repeat;
 }

@@ -17,33 +17,32 @@ more: #333300;
 blue links: #2255aa;
 
 */
-body
-{
-font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-background-color: #e1e2b9;
-margin-top: 0px;
-margin-left: 0px;
-margin-bottom: 0px;
-margin-right: 0px;
-background-image: url(/styles/localis/backmap.png);
-background-position: bottom right;
-background-repeat: no-repeat;
-background-attachment: fixed;
+body {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background-color:   #e1e2b9;
+	margin-top:   0px;
+	margin-left:   0px;
+	margin-bottom:   0px;
+	margin-right:   0px;
+	background-image:   url(/styles/localis/backmap.png);
+	background-position:   bottom right;
+	background-repeat:   no-repeat;
+	background-attachment:   fixed;
 }
-a
-{
-color: #2255aa;
-text-decoration: none;
+
+a {
+	color:    #2255aa;
+	text-decoration:   none;
 }
-a:hover
-{
-color: #000000;
-text-decoration: none;
+
+a:hover {
+	color:    #000000;
+	text-decoration:   none;
 }
-a:visited
-{
-color: #114499;
-text-decoration: none;
+
+a:visited {
+	color:    #114499;
+	text-decoration:   none;
 }
 
 /* 
@@ -67,97 +66,101 @@ GENERAL LAYOUT
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {
-height: 100%;
-width: 100%;
-margin: 0px;
-background-image: url(/styles/localis/fond2tete.png);
-background-position: top left;
-background-repeat: no-repeat;
-background-attachment: fixed;
+	height:    100%;
+	width:   100%;
+	margin:   0px;
+	background-image:   url(/styles/localis/fond2tete.png);
+	background-position:   top left;
+	background-repeat:   no-repeat;
+	background-attachment:   fixed;
 }
 
 /* 
 This is the header 
 */
-DIV#tiki-top
-{
-font-size: 10px;
-padding-right: 5px;
-padding-left: 6px;
-border-bottom: 1px dashed #777750;
+DIV#tiki-top {
+	font-size:    10px;
+	padding-right:   5px;
+	padding-left:   6px;
+	border-bottom:   1px dashed #777750;
 }
-DIV#tiki-top a { color: black; text-decoration: none; }
+
+DIV#tiki-top a {
+	color:    black;
+	text-decoration:   none;
+}
 
 /* 
 This is the middle 
 */
-DIV#tiki-mid
-{
-height: auto;
-padding-bottom: 0px;
+DIV#tiki-mid {
+	height:    auto;
+	padding-bottom:   0px;
 }
 
 /* 
 And this is the footer 
 */
-DIV#tiki-bot
-{
-padding-top: 5px;
-margin-top: 0px;
-padding-bottom: 0px;
+DIV#tiki-bot {
+	padding-top:    5px;
+	margin-top:   0px;
+	padding-bottom:   0px;
 }
 
 /* 
 The three columns 
 */
-TD#leftcolumn
-{
-vertical-align: top;
-width: 180px;
-border-right: 1px solid #ffffff;
+TD#leftcolumn {
+	vertical-align:    top;
+	width:   180px;
+	border-right:   1px solid #ffffff;
 }
 
-TD#rightcolumn
-{
-vertical-align: top;
-width: 180px;
-border-left: 1px solid #ffffff;
+TD#rightcolumn {
+	vertical-align:    top;
+	width:   180px;
+	border-left:   1px solid #ffffff;
 }
 
-TD#centercolumn
-{
-vertical-align: top;
-width: auto;
-border-left: 1px solid #999970;
-border-right: 1px solid #999970;
+TD#centercolumn {
+	vertical-align:    top;
+	width:   auto;
+	border-left:   1px solid #999970;
+	border-right:   1px solid #999970;
 }
 
 /* 
 centercolumn 
 */
-DIV#tiki-center
-{
-margin-left: 0;
-margin-right: 0;
-padding-left: 0;
-padding-right: 0;
+DIV#tiki-center {
+	margin-left:    0;
+	margin-right:   0;
+	padding-left:   0;
+	padding-right:   0;
 }
+
 div#debugconsole {
-  position: absolute;
-  background-color: #cecece;
-  color: #009000;
-  top: 0px;
-  left: 20px;
-  right: 310px;
-  height: auto;
-  width: auto;
-  z-index: 1;
-  padding: 5px;
-  border: 6px ridge #996600;
-  font-size: 12px;
-} 
-span.on-option { color: #00C000; }
-span.off-option { color: #005000; }
+	position:    absolute;
+	background-color:   #cecece;
+	color:   #009000;
+	top:   0px;
+	left:   20px;
+	right:   310px;
+	height:   auto;
+	width:   auto;
+	z-index:   1;
+	padding:   5px;
+	border:   6px ridge #996600;
+	font-size:   12px;
+}
+
+span.on-option {
+	color: #00C000;
+}
+
+span.off-option {
+	color: #005000;
+}
 
 /*
 GENERAL STYLE PROPERTIES 
@@ -173,138 +176,125 @@ class is used for other boxes
 Boxes used for modules 
 (modules are those boxes in the left/right columns) 
 */
-div.box 
-{
-/*background: #e1e2b9; */
-padding-top: 3px;
-overflow: hidden;
-width: 180px;
-margin-top: 13px;
+div.box {
+	/*background: #e1e2b9; */
+	padding-top:    3px;
+	overflow:   hidden;
+	width:   180px;
+	margin-top:   13px;
 }
 
 /* 
 Boxes are divided in title and data, this is the title 
 */
-div.box-title 
-{
-border-bottom: 1px dashed #999970;
-font-size: 10px;
-overflow: hidden;
-text-align: left;
-padding-left: 6px;
-padding-right: 6px;
-margin-bottom: 1px;
-width: 180px;
+div.box-title {
+	border-bottom:    1px dashed #999970;
+	font-size:   10px;
+	overflow:   hidden;
+	text-align:   left;
+	padding-left:   6px;
+	padding-right:   6px;
+	margin-bottom:   1px;
+	width:   180px;
 }
 
 /* 
 And this is the data 
 */
-div.box-data 
-{
-color: #777750;
-overflow: hidden;
-margin-left: 15px;
-margin-right: 5px;
-font-size: 11px;
-width: 160px;
+div.box-data {
+	color:    #777750;
+	overflow:   hidden;
+	margin-left:   15px;
+	margin-right:   5px;
+	font-size:   11px;
+	width:   160px;
 }
 
-div.box-data li:before
-{
-content: "- ";
-color: #772200;
-font-weight: bold;
+div.box-data li:before {
+	content:    "- ";
+	color:   #772200;
+	font-weight:   bold;
 }
 
-div.box-data li
-{
-border-top: 1px solid #f1f1c9;
-border-bottom: 1px solid #b1b299;
+div.box-data li {
+	border-top:    1px solid #f1f1c9;
+	border-bottom:   1px solid #b1b299;
 }
 
 /* 
 When modules display a list of items each item is enclosed 
 in a cell with the following style 
 */
-.module
-{
-font-size: 10px;
-text-align: left;
+.module {
+	font-size:    10px;
+	text-align:   left;
 }
 
 /* 
 Links in modules 
 */
-.linkmodule 
-{
-font-size: 11px;
-color : #2255aa;
-text-decoration: none;
+.linkmodule {
+	font-size:    11px;
+	color:   #2255aa;
+	text-decoration:   none;
 }
 
-.linkmodule:hover
-{
-font-size: 11px;
-color : #000000;
-text-decoration: none;
-background: #f1f1c9;
+.linkmodule:hover {
+	font-size:    11px;
+	color:   #000000;
+	text-decoration:   none;
+	background:   #f1f1c9;
 }
 
 /* 
 Now the boxes for the rest of Tiki (non-modules 
 */
-div.cbox
-{
-background: #f1f1c9;
-margin-top: 4px;
-margin-bottom: 0px;
-padding-bottom: 10px;
-overflow: hidden;
-width: 100%;
+div.cbox {
+	background:    #f1f1c9;
+	margin-top:   4px;
+	margin-bottom:   0px;
+	padding-bottom:   10px;
+	overflow:   hidden;
+	width:   100%;
 }
 
 /* 
 Boxes are divided in title and data, this is the title 
 */
-div.cbox-title
-{
-border-bottom: 1px dashed #b1b299;
-font-size: 10px;
-overflow: hidden;
-text-align: left;
-padding-left: 10px;
-padding-right: 0px;
-margin-bottom: 0px;
-width: 100%;
+div.cbox-title {
+	border-bottom:    1px dashed #b1b299;
+	font-size:   10px;
+	overflow:   hidden;
+	text-align:   left;
+	padding-left:   10px;
+	padding-right:   0px;
+	margin-bottom:   0px;
+	width:   100%;
 }
 
 /* 
 When there's a link in a cbox-title 
 */
-.cboxtlink
-{
-font-size: 11px;
-color : #2255aa;
-text-decoration: none;
+.cboxtlink {
+	font-size:    11px;
+	color:   #2255aa;
+	text-decoration:   none;
 }
 
-.cboxtlink:hover
-{
-font-size: 11px;
-color : #000000;
-background-color: #f1f1c9;
+.cboxtlink:hover {
+	font-size:    11px;
+	color:   #000000;
+	background-color:   #f1f1c9;
 }
 
 /* 
 And this is the data 
 */
-div.cbox-data
-{
-overflow: hidden;
-font-size: 11px;
-color: black;
-width: 100%;
+div.cbox-data {
+	overflow:    hidden;
+	font-size:   11px;
+	color:   black;
+	width:   100%;
 }
 
 /* 
@@ -314,7 +304,6 @@ none to make the menu appear collapsed initially,
 change this to 'block' if you want it to be extended fully 
 */
 
-
 /* 
 Menus
 */
@@ -323,169 +312,149 @@ Menus
 Separators are used to sepparate menu areas in the application 
 menu and user created menus
 */
-div.separator
-{
-font-size: 10px;
-margin-top: 4px;
-margin-bottom: 2px;
-padding-bottom: 2px;
-border-bottom: 1px dashed #777750;
-width: 100%;
+div.separator {
+	font-size:    10px;
+	margin-top:   4px;
+	margin-bottom:   2px;
+	padding-bottom:   2px;
+	border-bottom:   1px dashed #777750;
+	width:   100%;
 }
 
 /* 
 Links in menus 
 */
-.linkmenu,
-.rsslink
-{
-font-size: 11px;
-color : #2255aa;
-text-decoration: none;
+.linkmenu, .rsslink {
+	font-size:    11px;
+	color:   #2255aa;
+	text-decoration:   none;
 }
 
-.linkmenu:hover,
-.rsslink:hover
-{
-font-size: 11px;
-color : black;
-background: #f1f1c9;
+.linkmenu:hover, .rsslink:hover {
+	font-size:    11px;
+	color:   black;
+	background:   #f1f1c9;
 }
 
 /* 
 Links to extend/collapse menus 
 */
-.separator
-{
-font-size: 10px;
-color : #595930;
-text-decoration: none;
+.separator {
+	font-size:    10px;
+	color:   #595930;
+	text-decoration:   none;
 }
 
-.separator:hover
-{
-font-size: 10px;
-color : black;
-background: #f1f1c9;
-text-decoration: none;
+.separator:hover {
+	font-size:    10px;
+	color:   black;
+	background:   #f1f1c9;
+	text-decoration:   none;
 }
 
 /* 
 Links to collapse menus for example the main menu 
 can be completely collapsed
 */
-.flip
-{
-font-size: 10px;
-color : black;
-text-decoration: none;
+.flip {
+	font-size:    10px;
+	color:   black;
+	text-decoration:   none;
 }
 
-.flip:active
-{
-font-size: 13px;
-font-weight: bold;
+.flip:active {
+	font-size:    13px;
+	font-weight:   bold;
 }
 
-.flip:hover
-{
-color : #000000;
-background: #f1f1c9;
-text-decoration: none;
+.flip:hover {
+	color:    #000000;
+	background:   #f1f1c9;
+	text-decoration:   none;
 }
 
 /* 
 Banners of type text (textadds) are displayed 
 as links using the following style 
 */
-.bannertext
-{
-font-size: 10px;
-text-decoration: none;
+.bannertext {
+	font-size:    10px;
+	text-decoration:   none;
 }
 
-.bannertext:hover
-{
-font-size: 10px;
-text-decoration: none;
+.bannertext:hover {
+	font-size:    10px;
+	text-decoration:   none;
 }
 
 /* 
 Some boxes uses thumbnails this is the image style 
 */
-div.imagerank
-{
-margin-bottom: 10px;
-margin-top: 10px;
+div.imagerank {
+	margin-bottom:    10px;
+	margin-top:   10px;
 }
 
 /* 
 A simple box is just a div with a border around and 
 some margin. used for example in the admin screen 
 */
-div.simplebox
-{
-margin-top: 5px;
-margin-bottom: 5px;
-padding-left: 2px;
-padding-top: 2px;
-padding-bottom: 2px;
-padding-right: 2px;
-color: black;
-border: 1px solid #777750;
-background: #f1f1c9;
-width: 100%;
-font-size: 10px;
+div.simplebox {
+	margin-top:    5px;
+	margin-bottom:   5px;
+	padding-left:   2px;
+	padding-top:   2px;
+	padding-bottom:   2px;
+	padding-right:   2px;
+	color:   black;
+	border:   1px solid #777750;
+	background:   #f1f1c9;
+	width:   100%;
+	font-size:   10px;
 }
 
 /* 
 Prevent forms from generating unwanted padding or margins 
 */
-FORM
-{
-margin : 0px 0px 0px 0px;
-padding-bottom : 0px;
-padding-left : 0px;
-padding-right : 0px;
-padding-top : 0px;
+FORM {
+	margin:    0px 0px 0px 0px;
+	padding-bottom:   0px;
+	padding-left:   0px;
+	padding-right:   0px;
+	padding-top:   0px;
 }
 
 /* 
 General form elements 
 */
-input, 
-select
-{
-color : #000000;
-background-color: #f1f1c9;
-font: normal 10px Verdana, Arial, Helvetica, sans-serif;
-border: 1px solid #999970;
+input, select {
+	color:    #000000;
+	background-color:   #f1f1c9;
+	font:   normal 10px Verdana, Arial, Helvetica, sans-serif;
+	border:   1px solid #999970;
 }
 
-textarea
-{
-color : #000000;
-background-color: #f1f1c9;
-border: 1px solid #999970;
-font: normal 12px fixed, courier, monospace;
+textarea {
+	color:    #000000;
+	background-color:   #f1f1c9;
+	border:   1px solid #999970;
+	font:   normal 12px fixed, courier, monospace;
 }
 
-input
-{
-text-indent : 2px;
+input {
+	text-indent: 2px;
 }
 
-input[type=submit]
-{
-background-color: #b1b299;
-border: 1px solid #595930;
-text-indent: 0;
+input[type = submit] {
+	background-color:    #b1b299;
+	border:   1px solid #595930;
+	text-indent:   0;
 }
-input[type=submit]:hover
-{
-color: #000000;
-background-color: #f1f1c9;
-border: 1px solid #2255aa;
+
+input[type = submit]:hover {
+	color:    #000000;
+	background-color:   #f1f1c9;
+	border:   1px solid #2255aa;
 }
 /* 
 General tables
@@ -498,362 +467,176 @@ listings in admin screens, etc.
 /* 
 Cells where nothing is specified 
 */
-TD
-{
-vertical-align: top;
+TD {
+	vertical-align: top;
 }
 
 /* 
 Cells in forms without background color 
 (inside a div for example) 
 */
-TD.form
-{
-font-size: 11px;
-vertical-align: top;
-text-align: left;
+TD.form {
+	font-size:    11px;
+	vertical-align:   top;
+	text-align:   left;
 }
 
 /* 
 Cells in forms using a background color 
 */
-TD.formcolor,
-td.galform,
-td.editblogform,
-td.editfgalform,
-TD.comform,
-td.forumform
-{
-background: #d1d2a9;
-font-size: 11px;
-vertical-align: top;
-text-align: left;
+TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+	background:    #d1d2a9;
+	font-size:   11px;
+	vertical-align:   top;
+	text-align:   left;
 }
 
 /* 
 The table 
 */
-table.listgallery,
-table.creategalform,
-TABLE.normal,
-table.gallerylisting,
-table.bloglist,
-table.editblogform,
-table.editfgalform,
-table.listfgal,
-table.listfiles,
-table.listarticles,
-table.forumstable,
-table.forumformtable,
-table.viewthread
-{
-border-color: #777750;
-border-style: solid;
-border-width: 1px;
-width: 100%;
+table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.bloglist, table.editblogform, table.editfgalform,
+	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread {
+	border-color:    #777750;
+	border-style:   solid;
+	border-width:   1px;
+	width:   100%;
 }
 
-TABLE.normalnoborder
-{
-width: 100%;
+TABLE.normalnoborder {
+	width: 100%;
 }
 
 /* 
 Table headings 
 */
-TD.heading,
-td.gallistheading,
-td.listgalheading,
-td.bloglistheading,
-td.listfgalheading,
-td.listfilesheading,
-td.listartheading,
-td.forumheading,
-td.thead
-{
-font-size: 11px;
-font-weight : bold;
-padding-left: 2px;
-padding-right: 5px;
-border-bottom: 1px dashed #777750;
+TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.listfilesheading, td.listartheading,
+	td.forumheading, td.thead {
+	font-size:    11px;
+	font-weight:   bold;
+	padding-left:   2px;
+	padding-right:   5px;
+	border-bottom:   1px dashed #777750;
 }
 
-TD.button
-{
-font-size: 11px;
-font-weight : bold;
-padding-left: 2px;
-padding-right: 5px;
-border-bottom: 1px dashed #777750;
-text-align: center; 
-vertical-align: middle;
+TD.button {
+	font-size:    11px;
+	font-weight:   bold;
+	padding-left:   2px;
+	padding-right:   5px;
+	border-bottom:   1px dashed #777750;
+	text-align:   center;
+	vertical-align:   middle;
 }
 
 /* 
 Links to view an object from a table listing objects can be generalized to this link 
 */
-a.tablename,
-a.galname,
-a.imagename,
-a.blogname,
-a.fgalname,
-a.artname,
-a.forumname
-{
-font-weight: bold;
-font-size: 12px ;
-letter-spacing: 1px;
-text-decoration: none;
+a.tablename, a.galname, a.imagename, a.blogname, a.fgalname, a.artname, a.forumname {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	text-decoration:   none;
 }
 
-a.tablename:active,
-a.galname:active,
-a.imagename:active,
-a.blogname:active,
-a.fgalname:active,
-a.artname:active,
-a.forumname:active
-{
-text-decoration: none;
+a.tablename:active, a.galname:active, a.imagename:active, a.blogname:active, a.fgalname:active, a.artname:active,
+	a.forumname:active {
+	text-decoration: none;
 }
 
-a.tablename:hover,
-a.galname:hover,
-a.imagename:hover,
-a.blogname:hover,
-a.fgalname:hover,
-a.artname:hover,
-a.forumname:hover
-{
-text-decoration: underline;
+a.tablename:hover, a.galname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover {
+	text-decoration: underline;
 }
 
 /* 
 Links in table headings 
 */
-.tableheading,
-.gallistheading, 
-.listgalheading, 
-.bloglistheading, 
-.llisfgalheading,
-.llistfileslink,
-.llistart,
-.lforumheading
-{
-font-size: 11px;
-font-weight : bold;
-text-decoration: none;
+.tableheading, .gallistheading, .listgalheading, .bloglistheading, .llisfgalheading, .llistfileslink, .llistart, .lforumheading {
+	font-size:    11px;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
-.tableheading:active,
-.gallistheading:active,
-.listgalheading:active,
-.bloglistheading:active, 
-.llisfgalheading:active,
-.llistfileslink:active,
-.llistart:active,
-.lforumheading:active
-{
-font-size: 11px;
-font-weight : bold;
-text-decoration: none;
+.tableheading:active, .gallistheading:active, .listgalheading:active, .bloglistheading:active, .llisfgalheading:active, .
+	llistfileslink:active, .llistart:active, .lforumheading:active {
+	font-size:    11px;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
-.tableheading:hover,
-.gallistheading:hover,
-.listgalheading:hover, 
-.bloglistheading:hover, 
-.llisfgalheading:hover,
-.llistfileslink:hover, 
-.llistart:hover,
-.lforumheading:hover
-{
-font-size: 11px;
-font-weight : bold;
-text-decoration: none;
+.tableheading:hover, .gallistheading:hover, .listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover, .
+	llistfileslink:hover, .llistart:hover, .lforumheading:hover {
+	font-size:    11px;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
 /* 
 When a find button is provided for a listing the table 
 form is displayed in a table with the following style 
 */
-table.findtable
-{
-width: 100%;
-margin-bottom: 20px;
-padding-bottom: 10px;
+table.findtable {
+	width:    100%;
+	margin-bottom:   20px;
+	padding-bottom:   10px;
 }
 
-td.findtable
-{
-font-size: 11px;
+td.findtable {
+	font-size: 11px;
 }
 
 /* 
 Odd rows in several listings 
 */
-TD.odd,
-td.gallistnameodd,
-td.gallistdescriptionodd,
-td.gallistcreatedodd,
-td.gallistlastModifodd,
-td.gallistuserodd,
-td.gallistimagesodd,
-td.gallisthitsodd,
-td.gallistactionsodd,
-td.listgalidodd,
-td.listgalnameodd,
-td.listgalcreatedodd,
-td.listgalhitsodd,
-td.listgaluserodd,
-td.listgalfilesizeodd,
-td.bloglistnameodd,
-td.bloglistdescriptionodd,
-td.bloglistcreatedodd,
-td.bloglistlastModifodd,
-td.bloglistuserodd,
-td.bloglistpublicodd,
-td.bloglistpostsodd,
-td.bloglistvisitsodd,
-td.bloglistactivityodd,
-td.bloglistactionsodd,
-td.listfgalnameodd,
-td.listfgaldescriptionodd,
-td.listfgalcreatedodd,
-td.listfgallastModifodd,
-td.listfgaluserodd,
-td.listfgalfilesodd,
-td.listfgalvisitsodd,
-td.listfgalactionsodd,
-td.listfilesnameodd,
-td.listfilesdescriptionodd,
-td.listfilesidodd,
-td.listfilesfilenameodd,
-td.listfilesfilesizeodd,
-td.listfilescreatedodd,
-td.listfilesdlsodd,
-td.listfilesnameodd,
-td.listfilesuserodd,
-td.listfilesactionsodd,
-td.listarttitleodd,
-td.listarttopicodd,
-td.listartpublishDateodd,
-td.listartauthorodd,
-td.listartreadsodd,
-td.listarthasimageodd,
-td.listartuseimageodd,
-td.listartactionsodd,
-td.listartsizeodd,
-td.forumstableodd,
-td.forumstableinfoodd,
-td.topictitleodd,
-td.topicrepliesodd,
-td.topicreadsodd,
-td.topicscoreodd,
-td.topiclastpostodd,
-td.topicauthorodd
-{
-font-size: 12px;
-background-color: #d9d9b0;
-vertical-align: top;
-text-align: left;
+TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
+	td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
+	td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,
+	td.bloglistcreatedodd, td.bloglistlastModifodd, td.bloglistuserodd, td.bloglistpublicodd, td.bloglistpostsodd,
+	td.bloglistvisitsodd, td.bloglistactivityodd, td.bloglistactionsodd, td.listfgalnameodd, td.listfgaldescriptionodd,
+	td.listfgalcreatedodd, td.listfgallastModifodd, td.listfgaluserodd, td.listfgalfilesodd, td.listfgalvisitsodd,
+	td.listfgalactionsodd, td.listfilesnameodd, td.listfilesdescriptionodd, td.listfilesidodd, td.listfilesfilenameodd,
+	td.listfilesfilesizeodd, td.listfilescreatedodd, td.listfilesdlsodd, td.listfilesnameodd, td.listfilesuserodd,
+	td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd,
+	td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
+	td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd,
+	td.topicauthorodd {
+	font-size:    12px;
+	background-color:   #d9d9b0;
+	vertical-align:   top;
+	text-align:   left;
 }
 
 /* 
 Even rows in several listings 
 */
-TD.even,
-td.gallistnameeven,
-td.gallistdescriptioneven,
-td.gallistcreatedeven,
-td.gallistlastModifeven,
-td.gallistusereven,
-td.gallistimageseven,
-td.gallisthitseven,
-td.gallistactionseven,
-td.listgalideven,
-td.listgalnameeven,
-td.listgalcreatedeven,
-td.listgalhitseven,
-td.listgalusereven,
-td.listgalfilesizeeven,
-td.bloglistnameeven,
-td.bloglistdescriptioneven,
-td.bloglistcreatedeven,
-td.bloglistlastModifeven,
-td.bloglistusereven,
-td.bloglistpubliceven,
-td.bloglistpostseven,
-td.bloglistvisitseven,
-td.bloglistactivityeven,
-td.bloglistactionseven,
-td.listfgalnameeven,
-td.listfgaldescriptioneven,
-td.listfgalcreatedeven,
-td.listfgallastModifeven,
-td.listfgalusereven,
-td.listfgalfileseven,
-td.listfgalvisitseven,
-td.listfgalactionseven,
-td.listfilesnameeven ,
-td.listfilesdescriptioneven,
-td.listfilesideven,
-td.listfilesfilenameeven,
-td.listfilesfilesizeeven,
-td.listfilescreatedeven,
-td.listfilesdlseven,
-td.listfilesnameeven,
-td.listfilesusereven,
-td.listfilesactionseven,
-td.listarttitleeven,
-td.listarttopiceven,
-td.listartpublishDateeven,
-td.listartauthoreven,
-td.listartreadseven,
-td.listarthasimageeven,
-td.listartuseimageeven,
-td.listartactionseven,
-td.listartsizeeven,
-td.forumstableeven,
-td.forumstableinfoeven,
-td.topictitleeven,
-td.topicreplieseven,
-td.topicreadseven,
-td.topicscoreeven,
-td.topiclastposteven,
-td.topicauthoreven
-{
-font-size: 12px;
-background-color: #d1d2a9;
-vertical-align: top;
-text-align: left;
+TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven, td.gallistimageseven, td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven, td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven, td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven, td.bloglistvisitseven, td.bloglistactivityeven, td.bloglistactionseven, td.listfgalnameeven, td.listfgaldescriptioneven, td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven, td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven, td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven, td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven, td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven, td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven, td.topiclastposteven, td.topicauthoreven {
+	font-size:    12px;
+	background-color:   #d1d2a9;
+	vertical-align:   top;
+	text-align:   left;
 }
 
-TD.odddark
-{
-font-size: 12px;
-color : Black;
-background-color: #e1e2b9;
-vertical-align: top;
-text-align: left;
+TD.odddark {
+	font-size:    12px;
+	color:   Black;
+	background-color:   #e1e2b9;
+	vertical-align:   top;
+	text-align:   left;
 }
 
-TD.evendark
-{
-font-size: 12px;
-color : Black;
-background-color: #b1b299;
-vertical-align: top;
-text-align: left;
+TD.evendark {
+	font-size:    12px;
+	color:   Black;
+	background-color:   #b1b299;
+	vertical-align:   top;
+	text-align:   left;
 }
 
-TD.third
-{
-font-size: 12px;
-color : Black;
-background-color: #d1d2a9;
-vertical-align: top;
-text-align: left;
+TD.third {
+	font-size:    12px;
+	color:   Black;
+	background-color:   #d1d2a9;
+	vertical-align:   top;
+	text-align:   left;
 }
 
 /* 
@@ -863,382 +646,314 @@ Titles
 /* 
 When the page title is a link this is the style 
 */
-.pagetitle, 
-.forumspagetitle
-{
-font-weight: bold;
-font-size: 18px;
-font-family: Arial, Helvetica, sans-serif;
-color : #595930;
+.pagetitle, .forumspagetitle {
+	font-weight:    bold;
+	font-size:   18px;
+	font-family:   Arial, Helvetica, sans-serif;
+	color:   #595930;
 }
 
-a.pagetitle,
-a.forumspagetitle
-{
-font-weight: bold;
-font-size: 18px;
-font-family:  Arial, Helvetica, sans-serif;
-text-decoration: none;
-color : #595930;
+a.pagetitle, a.forumspagetitle {
+	font-weight:    bold;
+	font-size:   18px;
+	font-family:   Arial, Helvetica, sans-serif;
+	text-decoration:   none;
+	color:   #595930;
 }
 
-a.pagetitle:hover,
-a.forumspagetitle:hover
-{
-font-weight: bold;
-font-size: 18px;
-font-family:  Arial, Helvetica, sans-serif;
-text-decoration: underline;
-color : black;
-background-color: #f1f1c9;
+a.pagetitle:hover, a.forumspagetitle:hover {
+	font-weight:    bold;
+	font-size:   18px;
+	font-family:   Arial, Helvetica, sans-serif;
+	text-decoration:   underline;
+	color:   black;
+	background-color:   #f1f1c9;
 }
 
 /* 
 Non-linking titles (three levels) 
 */
-
-H1, H2, H3
-{
-font-family:  Arial, Helvetica, sans-serif;
-color: #595930;
-padding-left:10px;
-padding-right:10px;
+H1, H2, H3 {
+	font-family:    Arial, Helvetica, sans-serif;
+	color:   #595930;
+	padding-left:   10px;
+	padding-right:   10px;
 }
 
-.wikitext H1, 
-.wikitext H2, 
-.wikitext H3
-{
-font-weight: bold;
-margin:0;
-margin-top: 7px;
-padding-left:0px;
-padding-right:0px;
+.wikitext H1, .wikitext H2, .wikitext H3 {
+	font-weight:    bold;
+	margin:   0;
+	margin-top:   7px;
+	padding-left:   0px;
+	padding-right:   0px;
 }
 
-.wikitext H1
-{
-font-size: 18px;
-color: #595930;
-}
-.wikitext H2
-{
-font-size: 16px;
-color: #696940;
+.wikitext H1 {
+	font-size:    18px;
+	color:   #595930;
 }
 
-.wikitext H3
-{
-font-size: 14px;
-color: #797950;
+.wikitext H2 {
+	font-size:    16px;
+	color:   #696940;
+}
+
+.wikitext H3 {
+	font-size:    14px;
+	color:   #797950;
 }
 /* 
 Links where no special link style apply 
 (usually with the general application background)
 */
-.link,
-.gallink,
-.bloglink,
-.fgallink,
-.trailer,
-.opencomlink,
-.commentslink,
-.admlink,
-.forumbutlink
-{
-font-size: 11px;
-color : #2255aa;
-text-decoration: none;
+.link, .gallink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink, .admlink, .forumbutlink {
+	font-size:    11px;
+	color:   #2255aa;
+	text-decoration:   none;
 }
 
-.link:hover,
-.gallink:hover,
-.bloglink:hover,
-.fgallink:hover,
-.trailer:hover,
-.opencomlink:hover,
-.commentslink:hover,
-.admlink:hover,
-.forumbutlink:hover
-{
-font-size: 11px;
-color : black;
-background-color: #f1f1c9;
+.link:hover, .gallink:hover, .bloglink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover, .commentslink:hover, .admlink:hover, .forumbutlink:hover {
+	font-size:    11px;
+	color:   black;
+	background-color:   #f1f1c9;
 }
 
 /* 
 Search results display a date using the following style
 */
-div.searchdate
-{
-font-size: 10px;
-color : #333333;
+div.searchdate {
+	font-size:    10px;
+	color:   #333333;
 }
 
 /* 
 Pagination for listings 
 */
-.mini
-{
-font-size: 10px;
-color : 333300;
+.mini {
+	font-size:    10px;
+	color:   333300;
 }
 
 /* 
 prev & next buttons in pagination 
 */
-.prevnext,
-.galprevnext,
-.blogprevnext,
-.fgalprevnext,
-.artprevnext,
-.forumprevnext
-{
-font-size: 12px;
-color : 333300;
+.prevnext, .galprevnext, .blogprevnext, .fgalprevnext, .artprevnext, .forumprevnext {
+	font-size:    12px;
+	color:   333300;
 }
 
-.prevnext:hover,
-.galprevnext:hover,
-.blogprevnext:hover,
-.fgalprevnext:hover,
-.artprevnext:hover,
-.forumprevnext:hover
-{
-font-size: 12px;
-color : black;
-background-color: #f1f1c9;
+.prevnext:hover, .galprevnext:hover, .blogprevnext:hover, .fgalprevnext:hover, .artprevnext:hover, .forumprevnext:hover {
+	font-size:    12px;
+	color:   black;
+	background-color:   #f1f1c9;
 }
 
 /* 
 Warning background/color 
 */
-span.warn
-{
-color: red;
+span.warn {
+	color: red;
 }
 
 /*
 THE WIKI 
 */
-
-div.titlebar
-{
-background: #B5A58C;
-color: white;
-border: 1px solid white;
-padding-left: 1px;
-padding-right: 1px;
-padding-top: 1px;
-padding-bottom: 1px;
-margin: 1px 1px;
-width: 99%;
-clear: both;
-font-weight: bold;
+div.titlebar {
+	background:    #B5A58C;
+	color:   white;
+	border:   1px solid white;
+	padding-left:   1px;
+	padding-right:   1px;
+	padding-top:   1px;
+	padding-bottom:   1px;
+	margin:   1px 1px;
+	width:   99%;
+	clear:   both;
+	font-weight:   bold;
 }
 
 /* 
 The bar where the actions for a page are displayed 
 */
-DIV#page-bar
-{	
-margin-left: 0px;
+DIV#page-bar {
+	margin-left: 0px;
 }
 
 /* 
 Wiki action buttons (the buttons displayed at the 
 end of each page to edit/print/remove/etc a page 
 */
-div.button2
-{
-border-top: 1px dashed #777750;
-font-size: 10px;
-margin: 0;
-margin-right: 10px;
+div.button2 {
+	border-top:    1px dashed #777750;
+	font-size:   10px;
+	margin:   0;
+	margin-right:   10px;
 }
 
 /* 
 Links in buttons 
 */
-.linkbut
-{
-padding-left: 5px;
-padding-right: 5px;
-padding-top: 2px;
-padding-bottom: 2px;
-font-size: 11px;
-color: #2255aa;
-text-decoration: none;
+.linkbut {
+	padding-left:    5px;
+	padding-right:   5px;
+	padding-top:   2px;
+	padding-bottom:   2px;
+	font-size:   11px;
+	color:   #2255aa;
+	text-decoration:   none;
 }
 
-.linkbut:hover
-{
-border-top: 1px solid #595930;
-font-size: 11px;
-color: black;
-background-color: #f1f1c9;
+.linkbut:hover {
+	border-top:    1px solid #595930;
+	font-size:   11px;
+	color:   black;
+	background-color:   #f1f1c9;
 }
 
-div.button2top
-{
-border-bottom: 1px dashed #777750;
-display: inline;
-font-size: 10px;
-margin: 0;
-margin-right: 10px;
+div.button2top {
+	border-bottom:    1px dashed #777750;
+	display:   inline;
+	font-size:   10px;
+	margin:   0;
+	margin-right:   10px;
 }
 
-.linkbuttop
-{
-padding-left: 5px;
-padding-right: 5px;
-padding-top: 2px;
-padding-bottom: 2px;
-font-size: 11px;
-color: #2255aa;
-text-decoration: none;
+.linkbuttop {
+	padding-left:    5px;
+	padding-right:   5px;
+	padding-top:   2px;
+	padding-bottom:   2px;
+	font-size:   11px;
+	color:   #2255aa;
+	text-decoration:   none;
 }
 
-.linkbuttop:hover
-{
-border-bottom: 1px solid #595930;
-font-size: 11px;
-color: black;
-background-color: #f1f1c9;
+.linkbuttop:hover {
+	border-bottom:    1px solid #595930;
+	font-size:   11px;
+	color:   black;
+	background-color:   #f1f1c9;
 }
 
 /* 
 When a cached version of an external link is displayed 
 */
-div.cache
-{
-background: #f1f1c9;
-border: 1px solid black;
-padding-left: 0.1em;
-padding-right: 0.1em;
-padding-top: 0.1em;
-padding-bottom: 0.1em;
-margin: 0.1ex 0px;
-width: 100%;
+div.cache {
+	background:    #f1f1c9;
+	border:   1px solid black;
+	padding-left:   0.1em;
+	padding-right:   0.1em;
+	padding-top:   0.1em;
+	padding-bottom:   0.1em;
+	margin:   0.1ex 0px;
+	width:   100%;
 }
 
-div.cachedpage
-{
-border: 1px solid black;
-padding-left: 0.1em;
-padding-right: 0.1em;
-padding-top: 0.1em;
-padding-bottom: 0.1em;
-margin: 0.1ex 0px;
-width: 100%;
+div.cachedpage {
+	border:    1px solid black;
+	padding-left:   0.1em;
+	padding-right:   0.1em;
+	padding-top:   0.1em;
+	padding-bottom:   0.1em;
+	margin:   0.1ex 0px;
+	width:   100%;
 }
 
 /* 
 When an external link is cached a small link to the 
 cached version (cache) is displayed using this style 
 */
-.wikicache
-{	
-font-size: 8px;	
-color : #595959;
-text-decoration: none;
+.wikicache {
+	font-size:    8px;
+	color:   #595959;
+	text-decoration:   none;
 }
 
-.wikicache:hover
-{
-font-size: 8px;
-color : #000000;
-background-color: #f1f1c9;
+.wikicache:hover {
+	font-size:    8px;
+	color:   #000000;
+	background-color:   #f1f1c9;
 }
 
-table.wikitable
-{
-border: 1px solid #777750;
+table.wikitable {
+	border: 1px solid #777750;
 }
 
-td.wikicell
-{
-background-color: #e1e2b9;
+td.wikicell {
+	background-color: #e1e2b9;
 }
 
 /* 
 Text in wiki pages is displayed using the following style 
 */
-div.wikitext
-{
-background-color: #f1f1c9;
-font-size: 12px;
-padding-left: 10px;
-padding-right: 10px;
-padding-top: 3px;
-padding-bottom: 3px;
-margin-left: 0px;
-margin-right: 0px;
-margin-top: 1px;
-margin-bottom: 1px;
-width: 100%;
-clear: both;
+div.wikitext {
+	background-color:    #f1f1c9;
+	font-size:   12px;
+	padding-left:   10px;
+	padding-right:   10px;
+	padding-top:   3px;
+	padding-bottom:   3px;
+	margin-left:   0px;
+	margin-right:   0px;
+	margin-top:   1px;
+	margin-bottom:   1px;
+	width:   100%;
+	clear:   both;
 }
 
 /* 
 Links to wiki pages 
 */
-.wiki
-{
-color: #2255aa;;
-text-decoration: none;
+.wiki {
+	color:    #2255aa;;
+	text-decoration:   none;
 }
 
-.wiki:hover
-{color: black;
-background-color: #ffffff;
+.wiki:hover {
+	color:    black;
+	background-color:   #ffffff;
 }
 
-hr
-{
-size: 1px;
-border: 0;
-display: none;
+hr {
+	size:    1px;
+	border:   0;
+	display:   none;
 }
 /* 
 Date displayed for last modification date of pages 
 */
-.editdate
-{
-font-size: smaller;
-text-align: right;
-margin-bottom: -18px;
-margin-top: 0px;
-padding-left: 10px;
-padding-right: 10px;
-color: #777750;
-background: #d1d2a9;
-font-family:  Helvetica, Arial, sans-serif;
+.editdate {
+	font-size:    smaller;
+	text-align:   right;
+	margin-bottom:   -18px;
+	margin-top:   0px;
+	padding-left:   10px;
+	padding-right:   10px;
+	color:   #777750;
+	background:   #d1d2a9;
+	font-family:   Helvetica, Arial, sans-serif;
 }
 /*
 
 */
-.toptitledesc
-{
-font-size: smaller;
-padding-left: 10px;
-color: #333300;
-background: #d1d2a9;
-font-family:  Helvetica, Arial, sans-serif;
+.toptitledesc {
+	font-size:    smaller;
+	padding-left:   10px;
+	color:   #333300;
+	background:   #d1d2a9;
+	font-family:   Helvetica, Arial, sans-serif;
 }
-
 
 /* 
 The edit-help used to display the wiki 
 syntax when editing a page 
 */
-div.wiki-edithelp
-{
-background: #f1f1c9;
-border: 1px solid black;
-width: 94%;
-font-size: smaller;
-padding: 6pt;
+div.wiki-edithelp {
+	background:    #f1f1c9;
+	border:   1px solid black;
+	width:   94%;
+	font-size:   smaller;
+	padding:   6pt;
 }
 
 /*
@@ -1248,24 +963,22 @@ IMAGE GALLERIES
 /* 
 Gallery description 
 */
-div.galdesc
-{
-border: 1px solid black;
-padding-left: 0.8em;
-padding-right: 0.8em;
-padding-top: 0.5em;
-padding-bottom: 0.5em;
-margin: 0.5ex 0px;
-width: 100%;
-clear: both;
+div.galdesc {
+	border:    1px solid black;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin:   0.5ex 0px;
+	width:   100%;
+	clear:   both;
 }
 
 /* 
 Container for the whole gallery 
 */
-div.browsegallery
-{
-width: 100%;
+div.browsegallery {
+	width: 100%;
 }
 
 /* 
@@ -1276,641 +989,564 @@ for odd and even rows in the thumbnails table
 /* 
 Thumbnails in odd rows are shown inside oddthumb tds 
 */
-TD.oddthumb
-{
-background: #c1c299;
+TD.oddthumb {
+	background: #c1c299;
 }
 
-TD.eventhumb
-{
-background: #d1d2a9;
+TD.eventhumb {
+	background: #d1d2a9;
 }
 
 /* 
 Gallery Title 
 */
-div.gallerytitle
-{
-font-weight: bold;
-font-size: 18px;
-font-family:  Arial, Helvetica, sans-serif;
-color : black;
+div.gallerytitle {
+	font-weight:    bold;
+	font-size:   18px;
+	font-family:   Arial, Helvetica, sans-serif;
+	color:   black;
 }
 
-div.adminoptions
-{
-margin-top: 5px;
-margin-bottom: 5px;
-padding-top: 10px;
-padding-bottom: 10px;
+div.adminoptions {
+	margin-top:    5px;
+	margin-bottom:   5px;
+	padding-top:   10px;
+	padding-bottom:   10px;
 }
 
-div.sortoptions
-{
-margin-top: 5px;
-margin-bottom: 5px;
-padding-top: 10px;
-padding-bottom: 10px;
+div.sortoptions {
+	margin-top:    5px;
+	margin-bottom:   5px;
+	padding-top:   10px;
+	padding-bottom:   10px;
 }
 
-span.sorttitle
-{
+span.sorttitle {
 }
 
-span.sortoptions
-{
+span.sortoptions {
 }
 
 /* 
 Container for thumbnails 
 */
-div.thumbnails
-{
-border : 1px solid Black;
-margin-top: 10px;
-margin-bottom: 10px;
+div.thumbnails {
+	border:    1px solid Black;
+	margin-top:   10px;
+	margin-bottom:   10px;
 }
 
 /* 
 Thumbnails images 
 */
-img.athumb
-{
-border : 1px solid Silver;
+img.athumb {
+	border: 1px solid Silver;
 }
 
-.caption
-{
+.caption {
 }
 
 /* 
 No records found text  
 (displayed in the table when no records) 
 */
-p.norecords
-{
-font-weight : bold;
+p.norecords {
+	font-weight: bold;
 }
 
 /* 
 Browsing an image 
 */
-table.imageinfo
-{
-border-color: black;
-border-style: solid;
-border-width: 1px;
-width: 100%;
+table.imageinfo {
+	border-color:    black;
+	border-style:   solid;
+	border-width:   1px;
+	width:   100%;
 }
 
-td.imageinfo
-{
-font-size: 12px;
-color : Black;
-background-color: #DED6C6;
-vertical-align: top;
-text-align: left;
+td.imageinfo {
+	font-size:    12px;
+	color:   Black;
+	background-color:   #DED6C6;
+	vertical-align:   top;
+	text-align:   left;
 }
 
 /* 
 The whole container for the browse image screen (may be useful for a fancy background) 
 */
-div.browseimage
-{
-width: 100%;
+div.browseimage {
+	width: 100%;
 }
 
-div.imagetitle
-{font-weight: bold;
-font-size: 26px;
-font-family:  Arial, Helvetica, sans-serif;
-color : black;
+div.imagetitle {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   Arial, Helvetica, sans-serif;
+	color:   black;
 }
 
-div.gallerylink
-{
+div.gallerylink {
 }
 
-div.showimage
-{
-text-align: center;
-margin-top: 5px;
-margin-bottom: 5px;
+div.showimage {
+	text-align:    center;
+	margin-top:   5px;
+	margin-bottom:   5px;
 }
 
-div.imageinfo
-{
-text-align: center;
-margin-top: 10px;
-margin-bottom: 10px;
+div.imageinfo {
+	text-align:    center;
+	margin-top:   10px;
+	margin-bottom:   10px;
 }
 
-td.imageinfo
-{
+td.imageinfo {
 }
 
-table.tableinfo
-{
-text-align: center;
+table.tableinfo {
+	text-align: center;
 }
 
-div.linksinfo
-{
-font-size: 9px;
-color : Black;
-text-align: center;
-border: 1px solid black;
-margin-top: 10px;
-margin-bottom: 10px;
+div.linksinfo {
+	font-size:    9px;
+	color:   Black;
+	text-align:   center;
+	border:   1px solid black;
+	margin-top:   10px;
+	margin-bottom:   10px;
 }
 
 /******************************************************* WEBLOGS **********************************************************/
 
 /* The header of a weblog post */
-div.posthead
-{
-background-color: #f1f1c9;
-font-size: 12px;
-font-weight: bold;
-overflow: hidden;
-border-bottom: 1px dashed #777750;
-text-align: center;
-padding-left: 0px;
-padding-right: 0px;
-margin-bottom: 0px;
+div.posthead {
+	background-color:    #f1f1c9;
+	font-size:   12px;
+	font-weight:   bold;
+	overflow:   hidden;
+	border-bottom:   1px dashed #777750;
+	text-align:   center;
+	padding-left:   0px;
+	padding-right:   0px;
+	margin-bottom:   0px;
 }
 
 /* The font used in the heading of the weblog */
-span.posthead
-{
-color: #333300;
-font-weight: bold;
+span.posthead {
+	color:    #333300;
+	font-weight:   bold;
 }
 
 /* Links in the weblog post heading (edit/remove) */
 /* When there's a link in a cbox-title */
-.blogt
-{
+.blogt {
 }
 
-.blogt:active
-{
+.blogt:active {
 }
 
-.blogt:hover
-{
+.blogt:hover {
 }
 
 /* The post body */
-div.postbody
-{
-overflow: hidden;
-font-size: 11px;
-color: #333300;
-padding-left: 5px;
-padding-top: 5px;
-padding-bottom: 5px;
-margin-bottom: 10px;
+div.postbody {
+	overflow:    hidden;
+	font-size:   11px;
+	color:   #333300;
+	padding-left:   5px;
+	padding-top:   5px;
+	padding-bottom:   5px;
+	margin-bottom:   10px;
 }
 
 /* The weblog title */
-div.blogtitle
-{
-color: #595930;
-font-weight : bold;
-font-size: 18px;
-padding-left: 2px;
-padding-right: 5px;
-margin-top: 10px;
-border-bottom: 0px;
+div.blogtitle {
+	color:    #595930;
+	font-weight:   bold;
+	font-size:   18px;
+	padding-left:   2px;
+	padding-right:   5px;
+	margin-top:   10px;
+	border-bottom:   0px;
 }
 
 /* The weblog information */
-div.bloginfo
-{
-padding-left: 0.8em;
-padding-right: 0.8em;
-padding-top: 0.1em;
-padding-bottom: 0.5em;
-margin-bottom: 10px;
-font-size: 11px;
-clear: both;
+div.bloginfo {
+	padding-left:    0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.1em;
+	padding-bottom:   0.5em;
+	margin-bottom:   10px;
+	font-size:   11px;
+	clear:   both;
 }
 
 /* Weblog description */
-div.blogdesc
-{
-padding-left: 0.8em;
-padding-right: 0.8em;
-padding-top: 0.1em;
-padding-bottom: 0.1em;
-margin-bottom: 10px;
-font-size: 11px;
-clear: both;
+div.blogdesc {
+	padding-left:    0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.1em;
+	padding-bottom:   0.1em;
+	margin-bottom:   10px;
+	font-size:   11px;
+	clear:   both;
 }
 
 /* Links to post/edit/rss feed for the webelog are contained inside this div */
-div.blogtools
-{
-padding-left: 0.8em;
-padding-right: 0.8em;
-padding-top: 0.1em;
-padding-bottom: 0.1em;
-margin-bottom: 10px;
-font-size: 10px;
-clear: both;
+div.blogtools {
+	padding-left:    0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.1em;
+	padding-bottom:   0.1em;
+	margin-bottom:   10px;
+	font-size:   10px;
+	clear:   both;
 }
 
 /**************************************************** FILE GALLERIES ****************************************************/
 
 /* Listing contents of a file gallery (listing files) */
-div.fgaldesc
-{
-padding-left: 0.8em;
-padding-right: 0.8em;
-padding-top: 0.5em;
-padding-bottom: 0.5em;
-margin: 0.5ex 0px;
-width: 100%;
-clear: both;
+div.fgaldesc {
+	padding-left:    0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin:   0.5ex 0px;
+	width:   100%;
+	clear:   both;
 }
 
 /****************************************************** CMS ***************************************************************/
 
 /* The article title bar */
-div.articletitle
-{
-color: #595930;
-font-size: 11px;
-font-weight : bold;
-padding-left: 0.8em;
-padding-right: 0.8em;
-padding-top: 0.5em;
-padding-bottom: 0.5em;
-margin-top: 3px;
-clear: both;
+div.articletitle {
+	color:    #595930;
+	font-size:   11px;
+	font-weight:   bold;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin-top:   3px;
+	clear:   both;
 }
 
 /* The article heading */
-div.articleheading
-{
-border-top: 1px dashed #777750;
-padding-left: 0.8em;
-padding-right: 0.8em;
-padding-top: 0.5em;
-padding-bottom: 0.5em;
-border-bottom: 0px;
-font-size: 11px;
-clear: both;
+div.articleheading {
+	border-top:    1px dashed #777750;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	border-bottom:   0px;
+	font-size:   11px;
+	clear:   both;
 }
 
-div.articletrailer
-{
-border-top: 1px dashed #999999;
-padding-left: 0.8em;
-padding-right: 0.8em;
-padding-top: 0.1em;
-padding-bottom: 0.1em;
-margin-bottom: 10px;
-font-size: 9px;
-text-align: right;
-clear: both;
+div.articletrailer {
+	border-top:    1px dashed #999999;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.1em;
+	padding-bottom:   0.1em;
+	margin-bottom:   10px;
+	font-size:   9px;
+	text-align:   right;
+	clear:   both;
 }
 
 /* Text in the article heading */
-span.articleheading
-{
-font-size: 12px;
+span.articleheading {
+	font-size: 12px;
 }
 
 /* The body */
-div.articlebody
-{
-background: #f1f1c9;
-padding-left: 0.8em;
-padding-right: 0.8em;
-padding-top: 0.5em;
-padding-bottom: 0.5em;
-margin: 10px 0px;
-font-size: 12px;
-clear: both;
+div.articlebody {
+	background:    #f1f1c9;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin:   10px 0px;
+	font-size:   12px;
+	clear:   both;
 }
 
 /* The article title */
-span.titlea
-{
-font-size: 18px;
-font-weight: bold;
+span.titlea {
+	font-size:    18px;
+	font-weight:   bold;
 }
 
 /* The author, date and number of reads */
-span.titleb
-{
-font-size: 10px;
-font-weight: normal;
+span.titleb {
+	font-size:    10px;
+	font-weight:   normal;
 }
 
 /* The trailer */
-span.trailer
-{
-font-size: 10px;
-font-weight: bold;
+span.trailer {
+	font-size:    10px;
+	font-weight:   bold;
 }
 
 /******************************************************* CALENDAR **********************************************************/
 
 /* LINKS TO DAYS IN THE CALENDAR */
-.day
-{
-font-size: 9px;
-text-decoration: none;
-color : black;
+.day {
+	font-size:    9px;
+	text-decoration:   none;
+	color:   black;
 }
 
-.day:active
-{
-font-size: 9px;
-text-decoration: none;
-color : black;
+.day:active {
+	font-size:    9px;
+	text-decoration:   none;
+	color:   black;
 }
 
-.day:hover
-{
-font-size: 9px;
-color : black;
-background-color: #f1f1c9;
-text-decoration: none;
+.day:hover {
+	font-size:    9px;
+	color:   black;
+	background-color:   #f1f1c9;
+	text-decoration:   none;
 }
 
-.day:link
-{
-font-size: 9px;
-text-decoration: none;
-color : black;
+.day:link {
+	font-size:    9px;
+	text-decoration:   none;
+	color:   black;
 }
 
-.day:visited
-{
-font-size: 9px;
-text-decoration: none;
-color : black;
+.day:visited {
+	font-size:    9px;
+	text-decoration:   none;
+	color:   black;
 }
 
 /* LINKS FOR TODAY */
-.today
-{
-font-size: 9px;
-color : black;
-font-weight : bold;
-text-decoration: none;
+.today {
+	font-size:    9px;
+	color:   black;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
-.today:active
-{
-font-size: 9px;
-color : black;
-font-weight : bold;
-text-decoration: none;
+.today:active {
+	font-size:    9px;
+	color:   black;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
-.today:hover
-{
-font-size: 9px;
-color : black;
-text-decoration: none;
-font-weight : bold;
-background: #f1f1c9;
+.today:hover {
+	font-size:    9px;
+	color:   black;
+	text-decoration:   none;
+	font-weight:   bold;
+	background:   #f1f1c9;
 }
 
 /* Links to change month, year or go to today */
-
-.nav
-{
-font-size: 9px;
-color : black;
-font-weight : bold;
-text-decoration: none;
+.nav {
+	font-size:    9px;
+	color:   black;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
-.nav:active
-{
-font-size: 9px;
-color : black;
-font-weight : bold;
-text-decoration: none;
+.nav:active {
+	font-size:    9px;
+	color:   black;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
-.nav:hover
-{
-font-size: 9px;
-color : black;
-text-decoration: none;
-font-weight : bold;
-background: #f1f1c9;
+.nav:hover {
+	font-size:    9px;
+	color:   black;
+	text-decoration:   none;
+	font-weight:   bold;
+	background:   #f1f1c9;
 }
 
-.changedate
-{
-font-size: 8px;
-background-color: #f1f1c9;
-color : black;
-font-weight : bold;
+.changedate {
+	font-size:    8px;
+	background-color:   #f1f1c9;
+	color:   black;
+	font-weight:   bold;
 }
 
-.date
-{
-font-size: 9px;
-background-color: #f1f1c9;
-color : Black;
-font-weight : bold;
+.date {
+	font-size:    9px;
+	background-color:   #f1f1c9;
+	color:   Black;
+	font-weight:   bold;
 }
 
 /*************************************************** COMMENTS **************************************************************/
 
 /* The whole comment area when it is visible and when it is not */
-#comzone
-{
-display: none;
-margin-left: 1px;
-margin-right: 1px;
-margin-top: 5px;
-margin-bottom: 5px;
-padding-left: 2px;
-padding-right: 2px;
+#comzone {
+	display:    none;
+	margin-left:   1px;
+	margin-right:   1px;
+	margin-top:   5px;
+	margin-bottom:   5px;
+	padding-left:   2px;
+	padding-right:   2px;
 }
 
-#comzoneopen
-{
-display: block;
-margin-left: 1px;
-margin-right: 1px;
-margin-top: 5px;
-margin-bottom: 5px;
-padding-left: 2px;
-padding-right: 2px;
+#comzoneopen {
+	display:    block;
+	margin-left:   1px;
+	margin-right:   1px;
+	margin-top:   5px;
+	margin-bottom:   5px;
+	padding-left:   2px;
+	padding-right:   2px;
 }
 
 /* Post comment form */
-div.commentspost
-{
-display: inherit;
-border: 1px solid black;
-margin-top: 10px;
-margin-right: 10px;
-padding-right: 0px;
-padding-top: 0px;
-padding-bottom: 0px;
-margin-bottom: 10px;
-width: 100%;
+div.commentspost {
+	display:    inherit;
+	border:   1px solid black;
+	margin-top:   10px;
+	margin-right:   10px;
+	padding-right:   0px;
+	padding-top:   0px;
+	padding-bottom:   0px;
+	margin-bottom:   10px;
+	width:   100%;
 }
 
 /* Help box*/
-div.commentsedithelp
-{
-border: 1px solid black;
-font-size: smaller;
-width: 100%;
+div.commentsedithelp {
+	border:    1px solid black;
+	font-size:   smaller;
+	width:   100%;
 }
 
 /* The toolbar where the ordering number of comments and find box are found */
-div.commentstoolbar
-{
-background: #b1b299;
-color: black;
-margin-bottom: 20px;
-width: 100%;
-padding-top: 2px;
-padding-left: 2px;
+div.commentstoolbar {
+	background:    #b1b299;
+	color:   black;
+	margin-bottom:   20px;
+	width:   100%;
+	padding-top:   2px;
+	padding-left:   2px;
 }
 
 /* The comment title */
-span.commentstitle
-{
-font-weight: bold;
-font-size: 12px;
-width: 100%;
+span.commentstitle {
+	font-weight:    bold;
+	font-size:   12px;
+	width:   100%;
 }
 
 /* The comment */
-div.commentscomment
-{
-font-size: 11px;
-margin-bottom: 20px;
-width: 100%;
+div.commentscomment {
+	font-size:    11px;
+	margin-bottom:   20px;
+	width:   100%;
 }
 
 /* The header for a comment */
-div.commentheader
-{
-border-bottom: 1px dashed #777750;
-font-size: 11px;
+div.commentheader {
+	border-bottom:    1px dashed #777750;
+	font-size:   11px;
 }
 
 /* The text */
-div.commenttext
-{
-font-size: 11px;
-margin-left: 5px;
+div.commenttext {
+	font-size:    11px;
+	margin-left:   5px;
 }
 
 /* Links in the comment header */
-.commentshlink
-{
-font-size: 11px;
-color : black;
-text-decoration: none;
+.commentshlink {
+	font-size:    11px;
+	color:   black;
+	text-decoration:   none;
 }
 
-.commentshlink:active
-{
-font-size: 11px;
-color : black;
-text-decoration: none;
+.commentshlink:active {
+	font-size:    11px;
+	color:   black;
+	text-decoration:   none;
 }
 
-.commentshlink:hover
-{
-font-size: 11px;
-color : black;
-text-decoration: underline;
+.commentshlink:hover {
+	font-size:    11px;
+	color:   black;
+	text-decoration:   underline;
 }
 
 /************************************************************ CHAT *********************************************************/
-
-table.chatroom
-{
-border-color: #595930;
-border-style: solid;
-border-width: 2px;
-width: 100%;
+table.chatroom {
+	border-color:    #595930;
+	border-style:   solid;
+	border-width:   2px;
+	width:   100%;
 }
 
-td.chatchannels
-{
-background: #e1e2b9;
-font-size: 11px;
-color: black;
+td.chatchannels {
+	background:    #e1e2b9;
+	font-size:   11px;
+	color:   black;
 }
 
-td.chatarea
-{
-padding-left: 0px;
-margin-left: 0px;
-font-size: 11px;
-color: black;
-background: #f1f1c9;
+td.chatarea {
+	padding-left:    0px;
+	margin-left:   0px;
+	font-size:   11px;
+	color:   black;
+	background:   #f1f1c9;
 }
 
-table.chatform
-{
-border-color: #00639C;
-border-style: solid;
-border-width: 2px;
-width: 100%;
-border-top:0px;
+table.chatform {
+	border-color:    #00639C;
+	border-style:   solid;
+	border-width:   2px;
+	width:   100%;
+	border-top:   0px;
 }
 
-td.tdchatform
-{
-color: Black;
-background: #d1d2a9;
-font-size: 11px;
-vertical-align: top;
-text-align: left;
+td.tdchatform {
+	color:    Black;
+	background:   #d1d2a9;
+	font-size:   11px;
+	vertical-align:   top;
+	text-align:   left;
 }
 
-span.chnormal
-{
-color: red;
-font-size: 11px;
+span.chnormal {
+	color:    red;
+	font-size:   11px;
 }
 
-span.chuser
-{
-color: blue;
-font-size: 11px;
-font-weight: bold;
+span.chuser {
+	color:    blue;
+	font-size:   11px;
+	font-weight:   bold;
 }
 
 /********************************************************** POLLS ********************************************************/
-
-div.pollresults
-{
-width: 100%;
-margin-top: 5px;
-font-size: 14px;
-padding-left: 5px;
+div.pollresults {
+	width:    100%;
+	margin-top:   5px;
+	font-size:   14px;
+	padding-left:   5px;
 }
 
-table.pollresults
-{
-width: 100%;
+table.pollresults {
+	width: 100%;
 }
 
-td.pollr
-{
-font-size: 11px;
-color: black;
+td.pollr {
+	font-size:    11px;
+	color:   black;
 }
 
 /* MODULES */
@@ -1918,1037 +1554,917 @@ color: black;
 /***************************************************** FORUMS *****************************************************/
 
 /* Title for the forums page */
-div.forumspagetitle
-{
-margin-top: 10px;
-margin-bottom: 40px;
+div.forumspagetitle {
+	margin-top:    10px;
+	margin-bottom:   40px;
 }
 
-table.threads
-{
-width: 100%;
+table.threads {
+	width: 100%;
 }
 
-td.viewthreadl
-{
-font-size: 11px;
-background-color: #f1f1c9;
-height: 30px;
-vertical-align: top;
+td.viewthreadl {
+	font-size:    11px;
+	background-color:   #f1f1c9;
+	height:   30px;
+	vertical-align:   top;
 }
 
-td.viewthreadr
-{
-font-size: 11px;
-background-color: #f1f1c9;
-height: 30px;
-vertical-align: top;
+td.viewthreadr {
+	font-size:    11px;
+	background-color:   #f1f1c9;
+	height:   30px;
+	vertical-align:   top;
 }
 
 /* Cells for the threads table */
-td.threadsevenl
-{
-font-size: 12px;
-background-color: #f1f1c9;
-vertical-align: top;
+td.threadsevenl {
+	font-size:    12px;
+	background-color:   #f1f1c9;
+	vertical-align:   top;
 }
 
-td.threadsevenr
-{
-font-size: 13px;
-background-color: #d1d2a9;
-vertical-align: top;
+td.threadsevenr {
+	font-size:    13px;
+	background-color:   #d1d2a9;
+	vertical-align:   top;
 }
 
-td.threadsoddl
-{
-font-size: 12px;
-background-color: #c1c299;
-vertical-align: top;
+td.threadsoddl {
+	font-size:    12px;
+	background-color:   #c1c299;
+	vertical-align:   top;
 }
 
-td.threadsoddr
-{
-font-size: 13px;
-background-color: #c1c299;
-vertical-align: top;
+td.threadsoddr {
+	font-size:    13px;
+	background-color:   #c1c299;
+	vertical-align:   top;
 }
 
-td.threadseparator
-{
-background-color: #d1d2a9;
-height: 5px;
+td.threadseparator {
+	background-color:    #d1d2a9;
+	height:   5px;
 }
 
-#forumpost
-{
-display: none;
+#forumpost {
+	display: none;
 }
 
-#forumpostopen
-{
-display: block;
+#forumpostopen {
+	display: block;
 }
 
-div.forumtoolbar
-{
-width: 100%;
-margin-bottom: 20px;
-border: 0px;
+div.forumtoolbar {
+	width:    100%;
+	margin-bottom:   20px;
+	border:   0px;
 }
 
-td.forumtoolbar
-{
-color: black;
-font-size: 11px;
-font-weight : bold;
-text-decoration: none;
-vertical-align: bottom;
+td.forumtoolbar {
+	color:    black;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+	vertical-align:   bottom;
 }
 
-.toolbarlink
-{
-font-size: 11px;
-font-weight : bold;
-text-decoration: none;
+.toolbarlink {
+	font-size:    11px;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
-.toolbarlink:active
-{
-font-size: 11px;
-font-weight : bold;
-text-decoration: none;
+.toolbarlink:active {
+	font-size:    11px;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
-.toolbarlink:hover
-{
-font-size: 11px;
-font-weight : bold;
-text-decoration: none;
+.toolbarlink:hover {
+	font-size:    11px;
+	font-weight:   bold;
+	text-decoration:   none;
 }
 
 /* Links to vote */
-.forumvotelink
-{
-font-size: 12px;
-color : black;
+.forumvotelink {
+	font-size:    12px;
+	color:   black;
 }
 
-.forumvotelink:active
-{
-font-size: 12px;
-color : black;
+.forumvotelink:active {
+	font-size:    12px;
+	color:   black;
 }
 
-.forumvotelink:hover
-{
-font-size: 12px;
-color : black;
+.forumvotelink:hover {
+	font-size:    12px;
+	color:   black;
 }
 
 /************************************************ CATEGORIES **************************************************************/
-
-table.tcategpath
-{
-margin-bottom: 40px;
-border-style: solid;
-border-width: 1px;
-width: 100%;
+table.tcategpath {
+	margin-bottom:    40px;
+	border-style:   solid;
+	border-width:   1px;
+	width:   100%;
 }
 
 /* Table containing the category path */
-td.tdcategpath
-{
-font-size: 13px;
-font-weight : bold;
-padding-left: 2px;
-margin: 0px;
-border-spacing: 0px;
-padding-right: 5px;
+td.tdcategpath {
+	font-size:    13px;
+	font-weight:   bold;
+	padding-left:   2px;
+	margin:   0px;
+	border-spacing:   0px;
+	padding-right:   5px;
 }
 
 /* Links to up/top categories */
-.categpath
-{
-font-size: 12px;
-text-decoration: none;
+.categpath {
+	font-size:    12px;
+	text-decoration:   none;
 }
 
 /* Table with the subcategories */
-table.subcats
-{
-padding-top: 20px;
-padding-bottom: 20px;
-width: 100%;
-border-spacing: 0px;
-padding-right: 0px;
-margin-bottom: 10px;
+table.subcats {
+	padding-top:    20px;
+	padding-bottom:   20px;
+	width:   100%;
+	border-spacing:   0px;
+	padding-right:   0px;
+	margin-bottom:   10px;
 }
 
-td.tdsubcat
-{
-width: 25%;
+td.tdsubcat {
+	width: 25%;
 }
 
 /* Links to subcategories */
-.categlink
-{
-font-size: 11px;
-color : black;
-text-decoration: none;
-font-weight: bold;
+.categlink {
+	font-size:    11px;
+	color:   black;
+	text-decoration:   none;
+	font-weight:   bold;
 }
 
-table.catobjects
-{
-width: 100%;
-border-spacing: 0px;
-padding-right: 0px;
-margin-bottom: 10px;
+table.catobjects {
+	width:    100%;
+	border-spacing:   0px;
+	padding-right:   0px;
+	margin-bottom:   10px;
 }
 
-td.categobjectsnameeven,td.categobjectsnameodd
-{
-font-size: 11px;
-background-color: #d1d2a9;
+td.categobjectsnameeven, td.categobjectsnameodd {
+	font-size:    11px;
+	background-color:   #d1d2a9;
 }
 
-td.categobjectsdataeven,td.categobjectsdataodd
-{
-font-size: 11px;
-background-color: #d1d2a9;
+td.categobjectsdataeven, td.categobjectsdataodd {
+	font-size:    11px;
+	background-color:   #d1d2a9;
 }
 
-.catname
-{
-font-size: 11px;
-color : black;
-text-decoration: none;
+.catname {
+	font-size:    11px;
+	color:   black;
+	text-decoration:   none;
 }
 
 /***************************************************** FAQS **************************************************************/
 /* The list of questions */
-div.faqlistquestions
-{
-color: black;
-font-size: 11px;
-width: 100%;
-padding-top: 5px;
-padding-bottom: 5px;
+div.faqlistquestions {
+	color:    black;
+	font-size:   11px;
+	width:   100%;
+	padding-top:   5px;
+	padding-bottom:   5px;
 }
 
 /* Container for question-answer block */
-div.faqqa
-{
-background: #d1d2a9;
-color: black;
-font-size: 12px;
-width: 100%;
-margin-bottom: 20px;
-padding-top: 5px;
-padding-bottom: 5px;
-padding-left: 5px;
+div.faqqa {
+	background:    #d1d2a9;
+	color:   black;
+	font-size:   12px;
+	width:   100%;
+	margin-bottom:   20px;
+	padding-top:   5px;
+	padding-bottom:   5px;
+	padding-left:   5px;
 }
 
 /* The question */
-div.faqquestion
-{
-margin-bottom: 5px;
-font-size: 12px;
-width: 100%;
+div.faqquestion {
+	margin-bottom:    5px;
+	font-size:   12px;
+	width:   100%;
 }
 
 /* The answer */
-div.faqanswer
-{
-font-size: 12px;
-width: 100%;
+div.faqanswer {
+	font-size:    12px;
+	width:   100%;
 }
 
 /***************************************************** QUIZZES **************************************************************/
-
-
-
-div.questionblock
-{
-margin-bottom: 10px;
+div.questionblock {
+	margin-bottom: 10px;
 }
 
-div.quizquestion
-{
-font-size: 12px;
-margin-bottom: 5px;
+div.quizquestion {
+	font-size:    12px;
+	margin-bottom:   5px;
 }
 
-div.quizoptions
-{
-font-size: 12px;
+div.quizoptions {
+	font-size: 12px;
 }
 
-div.quizdescription
-{
-font-size: 12px;
-border: 1px solid black;
-margin-bottom: 10px;
+div.quizdescription {
+	font-size:    12px;
+	border:   1px solid black;
+	margin-bottom:   10px;
 }
 
-div.quizanswer
-{
-font-size: 12px;
-border: 1px solid black;
-margin-bottom: 10px;
+div.quizanswer {
+	font-size:    12px;
+	border:   1px solid black;
+	margin-bottom:   10px;
 }
 
 /***************************************************** SHOUTBOX **************************************************************/
-div.shoutboxmsg
-{
-font-size: 12px;
-border: 1px solid black;
-background: white;
-margin-bottom: 0px;
-padding-left: 2px;
-padding-right: 2px;
-padding-top: 1px;
-padding-bottom: 1px;
+div.shoutboxmsg {
+	font-size:    12px;
+	border:   1px solid black;
+	background:   white;
+	margin-bottom:   0px;
+	padding-left:   2px;
+	padding-right:   2px;
+	padding-top:   1px;
+	padding-bottom:   1px;
 }
 
-div.shoutboxmodmsg
-{
-font-size: 10px;
-margin-bottom: 4px;
-padding-left: 2px;
-padding-right: 2px;
-padding-top: 1px;
-padding-bottom: 1px;
+div.shoutboxmodmsg {
+	font-size:    10px;
+	margin-bottom:   4px;
+	padding-left:   2px;
+	padding-right:   2px;
+	padding-top:   1px;
+	padding-bottom:   1px;
 }
 
-textarea.tshoutbox
-{
-color: #000000;
-font-size: 10px;
-width: 90%;
+textarea.tshoutbox {
+	color:    #000000;
+	font-size:   10px;
+	width:   90%;
 }
 
 /*************************************************** WIKI TOCS ***************************************************/
-
-div.tocnav
-{
-font-size: 10px;
-background: #f1f1c9;
-padding-bottom: 5px;
-padding-top: 5px;
-margin-bottom: 2px;
+div.tocnav {
+	font-size:    10px;
+	background:   #f1f1c9;
+	padding-bottom:   5px;
+	padding-top:   5px;
+	margin-bottom:   2px;
 }
 
-.tocnavlink
-{
-color:black;
-text-decoration: none;
+.tocnavlink {
+	color:    black;
+	text-decoration:   none;
 }
 
-.tocnavlink:hover
-{color: black;
-background-color: #f1f1c9;
-text-decoration:none;
+.tocnavlink:hover {
+	color:    black;
+	background-color:   #f1f1c9;
+	text-decoration:   none;
 }
 
 /*************************************************** DIRECTORY ***************************************************/
 /* The list of categories */
-div.dircategs
-{
-border: 0.5px solid black;
-padding-bottom: 5px;
-padding-top: 5px;
-padding-left: 5px;
+div.dircategs {
+	border:    0.5px solid black;
+	padding-bottom:   5px;
+	padding-top:   5px;
+	padding-left:   5px;
 }
 
 /* Links to categories */
-.dirlink
-{
-font-size: 12px;
-color : black;
-text-decoration: underline;
-font-weight: bold;
+.dirlink {
+	font-size:    12px;
+	color:   black;
+	text-decoration:   underline;
+	font-weight:   bold;
 }
 
 /* Links to subcategories */
-
-.dirsublink
-{
-font-size: 10px;
-color : black;
-text-decoration: underline;
+.dirsublink {
+	font-size:    10px;
+	color:   black;
+	text-decoration:   underline;
 }
 
 /* The list of sites in any category */
-div.dirlistsites
-{
-padding-left: 5px;
-padding-top: 5px;
-padding-bottom: 10px;
-margin-top: 10px;
-width: 100%;
+div.dirlistsites {
+	padding-left:    5px;
+	padding-top:   5px;
+	padding-bottom:   10px;
+	margin-top:   10px;
+	width:   100%;
 }
 
 /* each site in the list of sites */
-div.dirsite
-{
-margin-bottom: 10px;
+div.dirsite {
+	margin-bottom: 10px;
 }
 
-span.dirsitedesc
-{
+span.dirsitedesc {
 }
 
-span.dirsitetrail
-{font-size: 10px;
+span.dirsitetrail {
+	font-size: 10px;
 }
 
-span.dirsitecats
-{
+span.dirsitecats {
 }
 
 /* Links to sites */
-.dirsitelink
-{
-font-size: 11px;
-color : black;
+.dirsitelink {
+	font-size:    11px;
+	color:   black;
 }
 
 /* Related categories */
-div.dirrelated
-{
-margin-top: 10px;
-padding-top: 5px;
-padding-bottom: 5px;
-padding-left: 5px;
-margin-left: 5px;
+div.dirrelated {
+	margin-top:    10px;
+	padding-top:   5px;
+	padding-bottom:   5px;
+	padding-left:   5px;
+	margin-left:   5px;
 }
 
 /* Footer with stats for the directory */
-td.dirfooter
-{
-font-size: 9px;
+td.dirfooter {
+	font-size: 9px;
 }
 
-div.dirfooter
-{
-margin-top: 10px;
-border: 1px solid black;
+div.dirfooter {
+	margin-top:    10px;
+	border:   1px solid black;
 }
 
 /*************************************************** MESSAGES ***************************************************/
 /* Links for priority colors */
-td.prio1
-{
-font-size: 11px;
-padding-left: 2px;
-background-color: #DAD0D0;
+td.prio1 {
+	font-size:    11px;
+	padding-left:   2px;
+	background-color:   #DAD0D0;
 }
 
-td.prio2
-{
-font-size: 11px;
-padding-left: 2px;
-background-color: #DAC0C0;
+td.prio2 {
+	font-size:    11px;
+	padding-left:   2px;
+	background-color:   #DAC0C0;
 }
 
-td.prio3
-{
-font-size: 11px;
-padding-left: 2px;
-background-color: #DABABA;
+td.prio3 {
+	font-size:    11px;
+	padding-left:   2px;
+	background-color:   #DABABA;
 }
 
-td.prio4
-{
-font-size: 11px;
-padding-left: 2px;
-background-color: #DAAAAA;
+td.prio4 {
+	font-size:    11px;
+	padding-left:   2px;
+	background-color:   #DAAAAA;
 }
 
-td.prio5
-{
-font-size: 11px;
-padding-left: 2px;
-background-color: #DA8A8A;
+td.prio5 {
+	font-size:    11px;
+	padding-left:   2px;
+	background-color:   #DA8A8A;
 }
 
 /* Div containing links to flag/unflag messages when reading a message */
-div.messureadflag
-{
-background-color: #CCCCCC;
-padding-left: 5px;
+div.messureadflag {
+	background-color:    #CCCCCC;
+	padding-left:   5px;
 }
 
 /* Header when reading a message */
-div.messureadhead
-{
-background-color: #DEDEDE;
-margin-top: 2px;
+div.messureadhead {
+	background-color:    #DEDEDE;
+	margin-top:   2px;
 }
 
 /* Message body when reading */
-div.messureadbody
-{
-margin-top: 5px;
+div.messureadbody {
+	margin-top: 5px;
 }
 
 /* Links to read emails (the subject in the mailbox listing) */
-.readlink
-{
-font-size: 10px;
+.readlink {
+	font-size: 10px;
 }
 
 /* calendar styles */
-.Cal0, 
-.Cal1, 
-.Cal2
-{
-border-top:1px dashed #cccccc;
-color: #425262;
-font-size:10px;
-padding-right:0px;
-}
-.Cal0:before
-{
-content: "? ";
+.Cal0, .Cal1, .Cal2 {
+	border-top:    1px dashed #cccccc;
+	color:   #425262;
+	font-size:   10px;
+	padding-right:   0px;
 }
 
-.Cal1:before
-{
-content: "+ ";
-background-color: #FFCC77;
+.Cal0:before {
+	content: "? ";
 }
 
-.Cal2:before
-{
-content: "X ";
-background-color: #eeeeaa;
+.Cal1:before {
+	content:    "+ ";
+	background-color:   #FFCC77;
+}
+
+.Cal2:before {
+	content:    "X ";
+	background-color:   #eeeeaa;
 }
 /* misc cal styles */
-.caltitle
-{
-font-weight: bold;
-color: #425262;
+.caltitle {
+	font-weight:    bold;
+	color:   #425262;
 }
-.caltab
-{
-padding-left: 10px;
-padding-right: 10px;
-border-bottom: 1px dashed #777750;
-color: #000000;
+
+.caltab {
+	padding-left:    10px;
+	padding-right:   10px;
+	border-bottom:   1px dashed #777750;
+	color:   #000000;
 }
-a.caltab
-{
-text-decoration: none;
-font-weight: bold;
-font-size: 11px;
-color: #2255aa;
+
+a.caltab {
+	text-decoration:    none;
+	font-weight:   bold;
+	font-size:   11px;
+	color:   #2255aa;
 }
-a.caltab:hover
-{
-background-color: #f1f1c9;
-border-bottom: 1px dashed #000000;
+
+a.caltab:hover {
+	background-color:    #f1f1c9;
+	border-bottom:   1px dashed #000000;
 }
-.caltabon
-{
-padding-left: 10px;
-padding-right: 10px;
-background-color: #f1f1c9;
-border-bottom: 1px dashed #777750;
-color: #000000;
+
+.caltabon {
+	padding-left:    10px;
+	padding-right:   10px;
+	background-color:   #f1f1c9;
+	border-bottom:   1px dashed #777750;
+	color:   #000000;
 }
-a.caltabon
-{
-text-decoration: none;
-font-weight: bold;
-font-size: 11px;
-color: #000000;
+
+a.caltabon {
+	text-decoration:    none;
+	font-weight:   bold;
+	font-size:   11px;
+	color:   #000000;
 }
-a.caltabon:hover
-{
-background-color: transparent;
+
+a.caltabon:hover {
+	background-color: transparent;
 }
-div#tab, div#tabcal, div#tabnav
-{
-margin-top: 10px;
-margin-left: 30px;
+
+div#tab, div#tabcal, div#tabnav {
+	margin-top:    10px;
+	margin-left:   30px;
 }
-div#tab
-{
-margin-bottom: 15px;
+
+div#tab {
+	margin-bottom: 15px;
 }
-div.tabcal, div.tabnav
-{
-padding: 10px;
-background-color: #f1f1c9;
-font-size: 11px;
+
+div.tabcal, div.tabnav {
+	padding:    10px;
+	background-color:   #f1f1c9;
+	font-size:   11px;
 }
 /* checkboxes background is required for rollover display */
-.calcheckbox
-{
-}
-.caltoggle
-{
-font-size: 9px;
-margin-bottom: 7px;
-}
-#opaque
-{
-background-color: #e1e2b9;
-}
-.calfocus
-{
-font-size:7px;
-background-color: transparent;
-}
-.calfocus a
-{
-text-decoration: none;
-color: #000000;
-}
-.calfocuson
-{
-font-size:7px;
-background-color: #f1f1c9;
-}
-.calfocuson a
-{
-text-decoration: none;
-color: #000000;
+.calcheckbox {
 }
 
-.Calwiki
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-margin-top: 0;
+.caltoggle {
+	font-size:    9px;
+	margin-bottom:   7px;
 }
 
-.Calwiki a
-{
-color: #443F39;
+#opaque {
+	background-color: #e1e2b9;
 }
 
-.Calwiki:before
-{
-content: "w";
-font-family: monospace;
-background-color: #ffffff;
+.calfocus {
+	font-size:    7px;
+	background-color:   transparent;
 }
 
-.Calblog
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.calfocus a {
+	text-decoration:    none;
+	color:   #000000;
 }
 
-.Calblog a
-{
-color: #443039;
+.calfocuson {
+	font-size:    7px;
+	background-color:   #f1f1c9;
 }
 
-.Calblog:before
-{
-content: "b";
-font-family: monospace;
-background-color: #ffffff;
+.calfocuson a {
+	text-decoration:    none;
+	color:   #000000;
 }
 
-.Calgal
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calwiki {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+	margin-top:   0;
 }
 
-.Calgal a
-{
-color: #303F49;
+.Calwiki a {
+	color: #443F39;
 }
 
-.Calgal:before
-{
-content: "i";
-font-family: monospace;
-background-color: #ffffff;
+.Calwiki:before {
+	content:    "w";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Calart
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calblog {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Calart a
-{
-color: #304F30;
+.Calblog a {
+	color: #443039;
 }
 
-.Calart:before
-{
-content: "a";
-font-family: monospace;
-background-color: #ffffff;
+.Calblog:before {
+	content:    "b";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Calforum
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calgal {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Calforum a
-{
-color: #304F30;
+.Calgal a {
+	color: #303F49;
 }
 
-.Calforum:before
-{
-content: "o";
-font-family: monospace;
-background-color: #ffffff;
+.Calgal:before {
+	content:    "i";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Caldir
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calart {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Caldir a
-{
-color: #304F30;
+.Calart a {
+	color: #304F30;
 }
 
-.Caldir:before
-{
-content: "d";
-font-family: monospace;
-background-color: #ffffff;
+.Calart:before {
+	content:    "a";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Calfgal
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calforum {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Calfgal a
-{
-color: #304F30;
+.Calforum a {
+	color: #304F30;
 }
 
-.Calfgal:before
-{
-content: "f";
-font-family: monospace;
-background-color: #ffffff;
+.Calforum:before {
+	content:    "o";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Calfaq
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Caldir {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Calfaq a
-{
-color: #304F30;
+.Caldir a {
+	color: #304F30;
 }
 
-.Calfaq:before
-{
-content: "q";
-font-family: monospace;
-background-color: #ffffff;
+.Caldir:before {
+	content:    "d";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Calquiz
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calfgal {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Calquiz a
-{
-color: #304F30;
+.Calfgal a {
+	color: #304F30;
 }
 
-.Calquiz:before
-{
-content: "z";
-font-family: monospace;
-background-color: #ffffff;
+.Calfgal:before {
+	content:    "f";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Caltrack
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calfaq {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Caltrack a
-{
-color: #304F30;
+.Calfaq a {
+	color: #304F30;
 }
 
-.Caltrack:before
-{
-content: "t";
-font-family: monospace;
-background-color: #ffffff;
+.Calfaq:before {
+	content:    "q";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Calsurv
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calquiz {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Calsurv a
-{
-color: #304F30;
+.Calquiz a {
+	color: #304F30;
 }
 
-.Calsurv:before
-{
-content: "s";
-font-family: monospace;
-background-color: #ffffff;
+.Calquiz:before {
+	content:    "z";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Calnl
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Caltrack {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Calnl a
-{
-color: #304F30;
+.Caltrack a {
+	color: #304F30;
 }
 
-.Calnl:before
-{
-content: "n";
-font-family: monospace;
-background-color: #ffffff;
+.Caltrack:before {
+	content:    "t";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Caleph
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calsurv {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Caleph a
-{
-color: #304F30;
+.Calsurv a {
+	color: #304F30;
 }
 
-.Caleph:before
-{
-content: "e";
-font-family: monospace;
-background-color: #ffffff;
+.Calsurv:before {
+	content:    "s";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.Calchart
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
+.Calnl {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.Calchart a
-{
-color: #304F30;
+.Calnl a {
+	color: #304F30;
 }
 
-.Calchart:before
-{
-content: "c";
-font-family: monospace;
-background-color: #ffffff;
+.Calnl:before {
+	content:    "n";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-.viewmodeon
-{background-color: #d1d2a9;
-color: #ffffff;
-text-decoration: none;
-padding-left: 10px;
-padding-right: 10px;
+.Caleph {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-.viewmodeoff
-{
-color: #595930;
-text-decoration: none;
-padding-left: 10px;
-padding-right: 10px;
+.Caleph a {
+	color: #304F30;
 }
 
-.viewmodeoff:hover
-{
-background-color: #f1f1c9;
-color: #000000;
-}
-.calweb
-{
-font-weight: bold;
-font-size: 10px;
-text-decoration: none;
-padding-left: 3px;
-padding-right: 3px;
-color: #336699;
-}
-.calweb:hover
-{
-color: #996633;
-}
-.calprio1
-{
-background-color: #DAE0E0;
-}
-.calprio2
-{
-background-color: #DADCDC;
-}
-.calprio3
-{
-background-color: #DAD0D0;
-}
-.calprio4
-{
-background-color: #DACACA;
-}
-.calprio5
-{
-background-color: #DAC0D0;
-}
-.calprio6
-{
-background-color: #DABABA;
-}
-.calprio7
-{
-background-color: #DAB0B0;
-}
-.calprio8
-{
-background-color: #DAAAAA;
-}
-.calprio9
-{
-background-color: #DA9A9A;
-}
-.calprio1 a,
-.calprio2 a,
-.calprio3 a,
-.calprio4 a,
-.calprio5 a,
-.calprio6 a,
-.calprio7 a,
-.calprio8 a,
-.calprio9 a
-{
-color: #000000;
+.Caleph:before {
+	content:    "e";
+	font-family:   monospace;
+	background-color:   #ffffff;
 }
 
-#opaque
-{
-background-color: #f1f1c9;
-padding: 3px;
-border-bottom: 1px solid #b1b299;
-border-left: 1px solid #b1b299;
-border-top: 1px solid #f1f1c9;
-border-right: 1px solid #f1f1c9;
+.Calchart {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
 }
 
-div#edithelpzone { display: none;  }
-div#attzone      { display: none; margin-top: 10px; }
-div#attzoneopen      { display: block; margin-top: 10px; }
+.Calchart a {
+	color: #304F30;
+}
 
-.highlight { background-color: #FFAAAA; color: #000000; }
+.Calchart:before {
+	content:    "c";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.viewmodeon {
+	background-color:    #d1d2a9;
+	color:   #ffffff;
+	text-decoration:   none;
+	padding-left:   10px;
+	padding-right:   10px;
+}
+
+.viewmodeoff {
+	color:    #595930;
+	text-decoration:   none;
+	padding-left:   10px;
+	padding-right:   10px;
+}
+
+.viewmodeoff:hover {
+	background-color:    #f1f1c9;
+	color:   #000000;
+}
+
+.calweb {
+	font-weight:    bold;
+	font-size:   10px;
+	text-decoration:   none;
+	padding-left:   3px;
+	padding-right:   3px;
+	color:   #336699;
+}
+
+.calweb:hover {
+	color: #996633;
+}
+
+.calprio1 {
+	background-color: #DAE0E0;
+}
+
+.calprio2 {
+	background-color: #DADCDC;
+}
+
+.calprio3 {
+	background-color: #DAD0D0;
+}
+
+.calprio4 {
+	background-color: #DACACA;
+}
+
+.calprio5 {
+	background-color: #DAC0D0;
+}
+
+.calprio6 {
+	background-color: #DABABA;
+}
+
+.calprio7 {
+	background-color: #DAB0B0;
+}
+
+.calprio8 {
+	background-color: #DAAAAA;
+}
+
+.calprio9 {
+	background-color: #DA9A9A;
+}
+
+.calprio1 a, .calprio2 a, .calprio3 a, .calprio4 a, .calprio5 a, .calprio6 a, .calprio7 a, .calprio8 a, .calprio9 a {
+	color: #000000;
+}
+
+#opaque {
+	background-color:    #f1f1c9;
+	padding:   3px;
+	border-bottom:   1px solid #b1b299;
+	border-left:   1px solid #b1b299;
+	border-top:   1px solid #f1f1c9;
+	border-right:   1px solid #f1f1c9;
+}
+
+div#edithelpzone {
+	display: none;
+}
+
+div#attzone {
+	display:    none;
+	margin-top:   10px;
+}
+
+div#attzoneopen {
+	display:    block;
+	margin-top:   10px;
+}
+
+.highlight {
+	background-color:    #FFAAAA;
+	color:   #000000;
+}
 
 /*
  * Caption in tables.
  * Currently in Attachments and comments only.
  */
-caption
-{
-  font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px;
-  font-weight : bold;
-  text-align: right;
+caption {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	font-weight:   bold;
+	text-align:   right;
 }
 
 /* trees */
-div.tree
-{
-  text-align: left;
-  padding-left: 1.5em;
+div.tree {
+	text-align:    left;
+	padding-left:   1.5em;
 }
 /* Root of tree (outer div) */
-div.tree#top
-{
-  border: 1px outset #00E000;
-  padding: 10px 1.5em 20px 1.5em;
+div.tree#top {
+	border:    1px outset #00E000;
+	padding:   10px 1.5em 20px 1.5em;
 }
 
 /* Wiki editpage textarea */
-textarea.wikiedit
-{
+textarea.wikiedit {
 	width: 100%;
 }
 /* help links style */
 a.tikihelp, a.tikihelp:visited {
-color: inherit;
-border: inherit;
-background-color: inherit;
-font-size: inherit;
-font-weight: inherit;
-margin: inherit;
-padding: inherit;
-text-decoration: inherit;
-}
-a.tikihelp:hover {
-color: #224466;
-border: inherit;
-background-color: inherit;
-font-size: inherit;
-font-weight: inherit;
-margin: inherit;
-padding: inherit;
-cursor: help;
-text-decoration: inherit;
+	color:    inherit;
+	border:   inherit;
+	background-color:   inherit;
+	font-size:   inherit;
+	font-weight:   inherit;
+	margin:   inherit;
+	padding:   inherit;
+	text-decoration:   inherit;
 }
 
+a.tikihelp:hover {
+	color:    #224466;
+	border:   inherit;
+	background-color:   inherit;
+	font-size:   inherit;
+	font-weight:   inherit;
+	margin:   inherit;
+	padding:   inherit;
+	cursor:   help;
+	text-decoration:   inherit;
+}

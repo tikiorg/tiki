@@ -107,7 +107,7 @@ div.box {
 
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
-  font-family: Arial, Helvetica, sans-serif;  
+	font-family: Arial, Helvetica, sans-serif;  
 	font-size: 10px;
 	background-image: url(/styles/akwa/aqua-tab.png);
 	border: 1px solid #999999;
@@ -115,7 +115,7 @@ div.box-title {
 	color: #425262;
 	border-bottom: 0;
 	-moz-border-radius: 0px 42px 0px 00px;
-  overflow: hidden;
+	overflow: hidden;
 }
 
 /* And this is the data */

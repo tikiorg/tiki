@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.2 2003-08-01 10:31:08 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.3 2003-08-07 04:34:19 rossta Exp $
  *
  */
 
@@ -16,65 +16,56 @@
 /*
  * General HTML redefinitions
  */
-body
-{
-  color: WindowText;
-  background: Background;
-  margin: 0px;
+body {
+	color:    WindowText;
+	background:   Background;
+	margin:   0px;
 }
 
-hr
-{
-  border: 1px outset ThreeDShadow;
+hr {
+	border: 1px outset ThreeDShadow;
 /*  width: 100%;
   height: 2px;*/
 }
 
 /* Headers */
-h1
-{
-  text-transform: uppercase;
+h1 {
+	text-transform: uppercase;
 }
-h2, h3, h4
-{
-  font-variant: small-caps;
+
+h2, h3, h4 {
+	font-variant: small-caps;
 }
-h5, h6
-{
-  font-weight: bold;
+
+h5, h6 {
+	font-weight: bold;
 }
 
 /* Description on wiki pages */
-small
-{
-  font-size: small;
+small {
+	font-size: small;
 }
 
 /* Prevent forms from generating unwanted padding or margins */
-form
-{
-  margin: 0px;
-  padding: 0px;
+form {
+	margin:    0px;
+	padding:   0px;
 }
-
 
 /* Code fragments */
-pre, code
-{
-  font: normal 12px courier, monospace;
+pre, code {
+	font: normal 12px courier, monospace;
 }
-pre
-{
-  white-space: pre;
+
+pre {
+	white-space: pre;
 }
 
 /* No borders for images */
-img
-{
-  border: none;
+img {
+	border: none;
 }
 /* Expand all text editors to max size */
-textarea
-{
-  width: 99%;
+textarea {
+	width: 99%;
 }

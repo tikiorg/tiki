@@ -5,66 +5,61 @@
 <?xml-stylesheet href="http://YOURDOMAIN/lib/rss/rss-style.css" type="text/css"?>
 
 */
-
-rss, channel, item, title, description, link
-{
-  display: block;
+rss, channel, item, title, description, link {
+	display: block;
 }
 
-image, language, managingEditor, webMaster, docs, copyright,
-lastBuildDate, pubDate, rating, day, hour,
-skipDays, skipHours, textinput, name
-{
-  display: none;
+image, language, managingEditor, webMaster, docs, copyright, lastBuildDate, pubDate, rating, day, hour, skipDays, skipHours,
+	textinput, name {
+	display: none;
 }
 
 channel, item {
-        z-index:1; 
-        border:1px solid black; 
-        padding:5px;
-	width:95%;
-        margin-top:3px;
+	z-index:    1;
+	border:   1px solid black;
+	padding:   5px;
+	width:   95%;
+	margin-top:   3px;
 }
 
 RDF {
-	max-width:50em;
-	min-width:12em;
-	display:block;
-	margin-right:0;
-	margin-left:0;
-	padding-right:2%;
-	padding-left:2%;
+	max-width:    50em;
+	min-width:   12em;
+	display:   block;
+	margin-right:   0;
+	margin-left:   0;
+	padding-right:   2%;
+	padding-left:   2%;
 }
 
-channel>title {
-  font-family: Geneva, Arial, sans-serif;
-  font-weight: bold;
-  text-align: center;
-  font-size:1.4em;
-  padding-bottom:0.5em;
+channel > title {
+	font-family:    Geneva, Arial, sans-serif;
+	font-weight:   bold;
+	text-align:   center;
+	font-size:   1.4em;
+	padding-bottom:   0.5em;
 }
 
-channel>description {
-  margin-top: 6pt;
-  font-style: italic;
-  font-family: Times, "Times New Roman", serif;
-  font-size:1.2em;
+channel > description {
+	margin-top:    6pt;
+	font-style:   italic;
+	font-family:   Times, "Times New Roman", serif;
+	font-size:   1.2em;
 }
 
-item>title {
-	text-align:left;
-        margin-top:5px;
-        margin-bottom:3px;
-        font-family: Geneva, Arial, sans-serif;
-        font-size:1.2em;
+item > title {
+	text-align:    left;
+	margin-top:   5px;
+	margin-bottom:   3px;
+	font-family:   Geneva, Arial, sans-serif;
+	font-size:   1.2em;
 }
 
 date {
-          margin-left: 1em;
+	margin-left: 1em;
 }
 
 link {
-  text-decoration: underline;
-  margin-left: 1em;
+	text-decoration:    underline;
+	margin-left:   1em;
 }
-

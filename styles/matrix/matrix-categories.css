@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.css,v 1.5 2003-08-04 04:29:51 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.css,v 1.6 2003-08-07 04:34:18 rossta Exp $
  *
  * Define styles for: Categories
  *
@@ -10,88 +10,79 @@
  */
 
 /* Table containing the category path */
-table.tcategpath
-{
-  width: 100%;
-  margin-bottom: 30px;
+table.tcategpath {
+	width:    100%;
+	margin-bottom:   30px;
 }
-td.tdcategpath
-{
-  vertical-align: middle;
+
+td.tdcategpath {
+	vertical-align: middle;
 }
 /* Links to up/top categories */
 /* Links to subcategories */
-.categpath, .categpath:visited, .categpath:active,
-.categlink, .categlink:visited, .categlink:active,
-.catname,   .catname:visited,   .catname:active
-{
-  color: #00B000;
-  text-decoration: none;
+.categpath, .categpath:visited, .categpath:active, .categlink, .categlink:visited, .categlink:active, .catname, .catname:visited, .
+	catname:active {
+	color:    #00B000;
+	text-decoration:   none;
 }
-.categpath:hover, .categpath:visited:hover,
-.categlink:hover, .categlink:visited:hover,
-.catname:hover,   .catname:visited:hover
-{
-  color: #00F000;
-  text-decoration: none;
+
+.categpath:hover, .categpath:visited:hover, .categlink:hover, .categlink:visited:hover, .catname:hover, .catname:visited:hover {
+	color:    #00F000;
+	text-decoration:   none;
 }
 
 /* Table with the subcategories (old way to show subcategories) */
-table.subcats
-{
-}
-td.tdsubcat:hover
-{
+table.subcats {
 }
 
-table.catobjects
-{
-  color: #001000;
-  width: 100%;
-  border: 2px ridge #00B000;
+td.tdsubcat:hover {
 }
 
-td.categobjectsnameeven,td.categobjectsdataodd {}
-td.categobjectsdataeven,td.categobjectsdataodd {}
+table.catobjects {
+	color:    #001000;
+	width:   100%;
+	border:   2px ridge #00B000;
+}
+
+td.categobjectsnameeven, td.categobjectsdataodd {
+}
+
+td.categobjectsdataeven, td.categobjectsdataodd {
+}
 
 /* trees */
-div.tree
-{
-  text-align: left;
-  padding-left: 1.5em;
+div.tree {
+	text-align:    left;
+	padding-left:   1.5em;
 }
 /* Root of tree (outer div) */
-div.tree#top
-{
-  border: 2px ridge #00B000;
-  padding: 10px 1em 20px 1em;
+div.tree#top {
+	border:    2px ridge #00B000;
+	padding:   10px 1em 20px 1em;
 }
 
 /* Initail state for categorization form on wiki edit page */
-div#categorizator
-{
-  display: none;
+div#categorizator {
+	display: none;
 }
 
 /* Categories lists below WikiPages */
-div.catlists
-{
-  margin: 10px 0px 0px 0px;
-  padding: 0px;
-  font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
-  border: 1px outset #00B000;
+div.catlists {
+	margin:    10px 0px 0px 0px;
+	padding:   0px;
+	font-family:   "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+	border:   1px outset #00B000;
 }
 
-div.catlists div.cbox-title
-{
-  font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-variant: small-caps;
-  text-transform: none;
-  margin: 0px;
-  padding: 0px 5px;
+div.catlists div.cbox-title {
+	font-family:    "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-variant:   small-caps;
+	text-transform:   none;
+	margin:   0px;
+	padding:   0px 5px;
 }
-div.catlists div.cbox-data
-{
-  margin: 0px;
-  padding: 0px 5px;
+
+div.catlists div.cbox-data {
+	margin:    0px;
+	padding:   0px 5px;
 }

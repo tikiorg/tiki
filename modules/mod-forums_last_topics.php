@@ -1,5 +1,8 @@
 <?php
-include_once('lib/rankings/ranklib.php');
+
+include_once ('lib/rankings/ranklib.php');
+
 $ranking = $ranklib->forums_ranking_last_topics($module_rows);
-$smarty->assign('modForumsLastTopics',$ranking["data"]);
+$smarty->assign('modForumsLastTopics', $ranking["data"]);
+
 ?>

@@ -1,13 +1,19 @@
 <?php
-$separator='';
-$current_path=ini_get('include_path');
-if(strstr($current_path, ';')) {
-	$separator=';'; 
+
+$separator = '';
+
+$current_path = ini_get('include_path');
+
+if (strstr($current_path, ';')) {
+	$separator = ';';
 } else {
-	$separator=':'; 
+	$separator = ':';
 }
-if($separator=='') $separator = ':'; // guess
-ini_set('include_path', dirname(dirname(__FILE__)).'/lib/pear'.$separator.$current_path);
+
+if ($separator == '')
+	$separator = ':'; // guess
+
+ini_set('include_path', dirname(dirname(__FILE__)). '/lib/pear' . $separator . $current_path);
 
 //$api_tiki        = 'pear';
 $api_tiki       = 'adodb';
@@ -18,7 +24,6 @@ $user_tiki   = 'root';
 $pass_tiki   = '';
 $dbs_tiki    = 'tiki';
 $tikidomain  = '';
-
 
 /*
 CVS Developers: Do not change any of the above.
@@ -67,34 +72,38 @@ if (isset($host_map[$HTTP_HOST])) {
 }
 
 */
+$file = dirname(__FILE__). '/local.php';
 
-$file = dirname(__FILE__) . '/local.php';
 if (file_exists($file))
-	require_once($file);
+	require_once ($file);
 
 if (preg_match('/^adodb$/i', $api_tiki)) {
-        ini_set('include_path', $current_path.$separator.'lib/adodb');
-       error_reporting(E_ALL); # show any error messages triggered
-	define('ADODB_FORCE_NULLS',1);
-        define('ADODB_ASSOC_CASE', 2);
+	ini_set('include_path', $current_path . $separator . 'lib/adodb');
+
+	error_reporting (E_ALL);       # show any error messages triggered
+	define('ADODB_FORCE_NULLS', 1);
+	define('ADODB_ASSOC_CASE', 2);
 	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
-        include_once('adodb.inc.php');
-        //include_once('adodb-error.inc.php');
-        //include_once('adodb-errorhandler.inc.php');
-        //include_once('adodb-errorpear.inc.php');
-        include_once('adodb-pear.inc.php');
-        if ($db_tiki == 'pgsql') {
-                $db_tiki = 'postgres7';
-        }
-	if ($db_tiki == 'sybase') {
-	  // avoid database change messages
-	  ini_set('sybct.min_server_severity','11');
+	include_once ('adodb.inc.php');
+	//include_once('adodb-error.inc.php');
+	//include_once('adodb-errorhandler.inc.php');
+	//include_once('adodb-errorpear.inc.php');
+	include_once ('adodb-pear.inc.php');
+
+	if ($db_tiki == 'pgsql') {
+		$db_tiki = 'postgres7';
 	}
+
+	if ($db_tiki == 'sybase') {
+		// avoid database change messages
+		ini_set('sybct.min_server_severity', '11');
+	}
+
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
-	// ADODB_FETCH_BOTH appears to be buggy for null values
+// ADODB_FETCH_BOTH appears to be buggy for null values
 } else {
-        // Database connection for the tiki system
-        include_once('DB.php');
+	// Database connection for the tiki system
+	include_once ('DB.php');
 }
 
 //doesn't work with adodb. adodb doesn't let you inherit
@@ -103,38 +112,39 @@ class tikiDB extends ADOConnection {
   var $dbversion;
 }
 */
-
-$dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";    
+$dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 //$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
 $dbTiki = &ADONewConnection($db_tiki);
-if(!$dbTiki->Connect($host_tiki,$user_tiki,$pass_tiki,$dbs_tiki)){
-  print "
+
+if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+	print "
 <pre>
 Unable to login to the '$db_tiki' database '$dbs_tiki' on '$host_tiki' as user '$user_tiki'
 ";
-print $dbTiki->ErrorMsg();
-exit;
-} 
 
-if($db_tiki=='sybase') {
-  $dbTiki->Execute("set quoted_identifier on");
+	print $dbTiki->ErrorMsg();
+	exit;
+}
+
+if ($db_tiki == 'sybase') {
+	$dbTiki->Execute("set quoted_identifier on");
 }
 
 // set db version
 //$dbTiki->dbversion=$dbversion_tiki;
 
 // Forget db info so that malicious PHP may not get password etc.
-$host_tiki   = NULL;
-$user_tiki   = NULL;
-$pass_tiki   = NULL;
-$dbs_tiki    = NULL;
+$host_tiki = NULL;
+$user_tiki = NULL;
+$pass_tiki = NULL;
+$dbs_tiki = NULL;
 
-unset($host_map);
-unset($api_tiki);
-unset($db_tiki);
-unset($host_tiki);
-unset($user_tiki);
-unset($pass_tiki);
-unset($dbs_tiki);
+unset ($host_map);
+unset ($api_tiki);
+unset ($db_tiki);
+unset ($host_tiki);
+unset ($user_tiki);
+unset ($pass_tiki);
+unset ($dbs_tiki);
 
 ?>

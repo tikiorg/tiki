@@ -1,278 +1,322 @@
 <?php
+
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.27 2003-08-07 04:33:57 rossta Exp $
+
+// Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 // Initialization
-require_once('tiki-setup.php');
+require_once ('tiki-setup.php');
 
 // User preferences screen
+if ($feature_userPreferences != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled"));
 
-if($feature_userPreferences != 'y') {
-   $smarty->assign('msg',tra("This feature is disabled"));
-   $smarty->display("styles/$style_base/error.tpl");
-   die;
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
-if(!$user) {
-   $smarty->assign('msg',tra("You are not logged in"));
-   $smarty->display("styles/$style_base/error.tpl");
-   die;
+if (!$user) {
+	$smarty->assign('msg', tra("You are not logged in"));
+
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
-$userwatch=$user;
-if(isset($_REQUEST["view_user"])) {
-  if($_REQUEST["view_user"]<>$user) {
-    if($tiki_p_admin == 'y') {
-      $userwatch = $_REQUEST["view_user"];
-    } else {
-      $smarty->assign('msg',tra("You dont have permission to view other users data"));
-      $smarty->display("styles/$style_base/error.tpl");
-      die;
-    }
-  } else {
-    $userwatch = $user;
-  }
-}
-$smarty->assign('userwatch',$userwatch);
+$userwatch = $user;
 
+if (isset($_REQUEST["view_user"])) {
+	if ($_REQUEST["view_user"] <> $user) {
+		if ($tiki_p_admin == 'y') {
+			$userwatch = $_REQUEST["view_user"];
+		} else {
+			$smarty->assign('msg', tra("You dont have permission to view other users data"));
+
+			$smarty->display("styles/$style_base/error.tpl");
+			die;
+		}
+	} else {
+		$userwatch = $user;
+	}
+}
+
+$smarty->assign('userwatch', $userwatch);
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$foo1=str_replace("tiki-user_preferences","tiki-editpage",$foo["path"]);
-$foo2=str_replace("tiki-user_preferences","tiki-index",$foo["path"]);
-$smarty->assign('url_edit',httpPrefix().$foo1);
-$smarty->assign('url_visit',httpPrefix().$foo2);
+$foo1 = str_replace("tiki-user_preferences", "tiki-editpage", $foo["path"]);
+$foo2 = str_replace("tiki-user_preferences", "tiki-index", $foo["path"]);
+$smarty->assign('url_edit', httpPrefix(). $foo1);
+$smarty->assign('url_visit', httpPrefix(). $foo2);
 
+if (isset($_REQUEST["prefs"])) {
+	// setting preferences
+	//  if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
+	if ($change_theme == 'y') {
+		if (isset($_REQUEST["style"]))
+			$tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["style"]);
+	}
 
-if(isset($_REQUEST["prefs"])) {
-  // setting preferences
-//  if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
-  if($change_theme == 'y') {
-  if (isset($_REQUEST["style"])) $tikilib->set_user_preference($userwatch,'theme',$_REQUEST["style"]);
-  }
-  if (isset($_REQUEST["realName"])) $tikilib->set_user_preference($userwatch,'realName',$_REQUEST["realName"]);
-  if (isset($_REQUEST["userbreadCrumb"])) $tikilib->set_user_preference($userwatch,'userbreadCrumb',$_REQUEST["userbreadCrumb"]);
-  if (isset($_REQUEST["homePage"])) $tikilib->set_user_preference($userwatch,'homePage',$_REQUEST["homePage"]);
-  if($change_language == 'y') {
-    if (isset($_REQUEST["language"])) {
-      $tikilib->set_user_preference($userwatch,'language',$_REQUEST["language"]);
-      $smarty->assign('language',$_REQUEST["language"]);
-      include('lang/'.$_REQUEST["language"].'/language.php');
-    }
-  }
-  if (isset($_REQUEST["style"])) $smarty->assign('style',$_REQUEST["style"]);
-  if (isset($_REQUEST["language"]))$smarty->assign('language',$_REQUEST["language"]);
-    
-  if(isset($_REQUEST['display_timezone'])) {
-    $tikilib->set_user_preference($userwatch,'display_timezone',$_REQUEST['display_timezone']); 
-    $smarty->assign_by_ref('display_timezone',$_REQUEST['display_timezone']);
-  }
-  $tikilib->set_user_preference($userwatch,'country',$_REQUEST["country"]);
-  $tikilib->set_user_preference($userwatch,'user_information',$_REQUEST['user_information']);
-  if(isset($_REQUEST['user_dbl'])&&$_REQUEST['user_dbl']=='on') {
-    $tikilib->set_user_preference($userwatch,'user_dbl','y');
-    $smarty->assign('user_dbl','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'user_dbl','n');
-    $smarty->assign('user_dbl','n');
-  }
-  $email_isPublic = isset($_REQUEST['email_isPublic']) ? 'y':'n';
-  $tikilib->set_user_preference($userwatch,'email is public',$email_isPublic);
-  
-  header("location: tiki-user_preferences.php?view_user=$userwatch");
-  die;
+	if (isset($_REQUEST["realName"]))
+		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
+
+	if (isset($_REQUEST["userbreadCrumb"]))
+		$tikilib->set_user_preference($userwatch, 'userbreadCrumb', $_REQUEST["userbreadCrumb"]);
+
+	if (isset($_REQUEST["homePage"]))
+		$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
+
+	if ($change_language == 'y') {
+		if (isset($_REQUEST["language"])) {
+			$tikilib->set_user_preference($userwatch, 'language', $_REQUEST["language"]);
+
+			$smarty->assign('language', $_REQUEST["language"]);
+			include ('lang/' . $_REQUEST["language"] . '/language.php');
+		}
+	}
+
+	if (isset($_REQUEST["style"]))
+		$smarty->assign('style', $_REQUEST["style"]);
+
+	if (isset($_REQUEST["language"]))
+		$smarty->assign('language', $_REQUEST["language"]);
+
+	if (isset($_REQUEST['display_timezone'])) {
+		$tikilib->set_user_preference($userwatch, 'display_timezone', $_REQUEST['display_timezone']);
+
+		$smarty->assign_by_ref('display_timezone', $_REQUEST['display_timezone']);
+	}
+
+	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
+	$tikilib->set_user_preference($userwatch, 'user_information', $_REQUEST['user_information']);
+
+	if (isset($_REQUEST['user_dbl']) && $_REQUEST['user_dbl'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'user_dbl', 'y');
+
+		$smarty->assign('user_dbl', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'user_dbl', 'n');
+
+		$smarty->assign('user_dbl', 'n');
+	}
+
+	$email_isPublic = isset($_REQUEST['email_isPublic']) ? 'y' : 'n';
+	$tikilib->set_user_preference($userwatch, 'email is public', $email_isPublic);
+
+	header ("location: tiki-user_preferences.php?view_user=$userwatch");
+	die;
 }
 
-if(isset($_REQUEST['chgemail'])) {
-  // check user's password
-  if(!$userlib->validate_user($userwatch,$_REQUEST['pass'],'','')) {
-    $smarty->assign('msg',tra("Invalid password.  You current password is required to change your email address."));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;
-  }
-  $userlib->change_user_email($userwatch,$_REQUEST['email'],$_REQUEST['pass']);
+if (isset($_REQUEST['chgemail'])) {
+	// check user's password
+	if (!$userlib->validate_user($userwatch, $_REQUEST['pass'], '', '')) {
+		$smarty->assign('msg', tra("Invalid password.  You current password is required to change your email address."));
+
+		$smarty->display("styles/$style_base/error.tpl");
+		die;
+	}
+
+	$userlib->change_user_email($userwatch, $_REQUEST['email'], $_REQUEST['pass']);
 }
 
-if(isset($_REQUEST["chgpswd"])) {
-  if($_REQUEST["pass1"]!=$_REQUEST["pass2"]) {
-    $smarty->assign('msg',tra("The passwords didn't match"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;
-  }
-  
-  if(!$userlib->validate_user($userwatch,$_REQUEST["old"],'','')) {
-    $smarty->assign('msg',tra("Invalid old password"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;
-  }
-  
-  //Validate password here
-  if(strlen($_REQUEST["pass1"])<$min_pass_length) {
-    $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die; 	
-  }
-  
-  // Check this code
-  if($pass_chr_num == 'y') {
-    if(!preg_match_all("/[0-9]+/",$_REQUEST["pass1"],$foo) || !preg_match_all("/[A-Za-z]+/",$_REQUEST["pass1"],$foo)) {
-      $smarty->assign('msg',tra("Password must contain both letters and numbers"));
-      $smarty->display("styles/$style_base/error.tpl");
-      die; 	
-    }
-  }
+if (isset($_REQUEST["chgpswd"])) {
+	if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
+		$smarty->assign('msg', tra("The passwords didn't match"));
 
-  
-  $userlib->change_user_password($userwatch,$_REQUEST["pass1"]);
+		$smarty->display("styles/$style_base/error.tpl");
+		die;
+	}
+
+	if (!$userlib->validate_user($userwatch, $_REQUEST["old"], '', '')) {
+		$smarty->assign('msg', tra("Invalid old password"));
+
+		$smarty->display("styles/$style_base/error.tpl");
+		die;
+	}
+
+	//Validate password here
+	if (strlen($_REQUEST["pass1"]) < $min_pass_length) {
+		$smarty->assign('msg', tra("Password should be at least"). ' ' . $min_pass_length . ' ' . tra("characters long"));
+
+		$smarty->display("styles/$style_base/error.tpl");
+		die;
+	}
+
+	// Check this code
+	if ($pass_chr_num == 'y') {
+		if (!preg_match_all("/[0-9]+/", $_REQUEST["pass1"], $foo) || !preg_match_all("/[A-Za-z]+/", $_REQUEST["pass1"], $foo)) {
+			$smarty->assign('msg', tra("Password must contain both letters and numbers"));
+
+			$smarty->display("styles/$style_base/error.tpl");
+			die;
+		}
+	}
+
+	$userlib->change_user_password($userwatch, $_REQUEST["pass1"]);
 }
 
-if(isset($_REQUEST['messprefs'])) {
-  $tikilib->set_user_preference($userwatch,'mess_maxRecords',$_REQUEST['mess_maxRecords']);
-  $tikilib->set_user_preference($userwatch,'minPrio',$_REQUEST['minPrio']);
-  if(isset($_REQUEST['allowMsgs'])&&$_REQUEST['allowMsgs']=='on') {
-    $tikilib->set_user_preference($userwatch,'allowMsgs','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'allowMsgs','n');
-  }
-  
+if (isset($_REQUEST['messprefs'])) {
+	$tikilib->set_user_preference($userwatch, 'mess_maxRecords', $_REQUEST['mess_maxRecords']);
+
+	$tikilib->set_user_preference($userwatch, 'minPrio', $_REQUEST['minPrio']);
+
+	if (isset($_REQUEST['allowMsgs']) && $_REQUEST['allowMsgs'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'allowMsgs', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'allowMsgs', 'n');
+	}
 }
 
-if(isset($_REQUEST['mytikiprefs'])) {
-  if(isset($_REQUEST['mytiki_pages'])&&$_REQUEST['mytiki_pages']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_pages','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_pages','n');
-  }
-  if(isset($_REQUEST['mytiki_blogs'])&&$_REQUEST['mytiki_blogs']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_blogs','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_blogs','n');
-  }
-  if(isset($_REQUEST['mytiki_gals'])&&$_REQUEST['mytiki_gals']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_gals','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_gals','n');
-  }
-  if(isset($_REQUEST['mytiki_msgs'])&&$_REQUEST['mytiki_msgs']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_msgs','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_msgs','n');
-  }
-  if(isset($_REQUEST['mytiki_tasks'])&&$_REQUEST['mytiki_tasks']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_tasks','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_tasks','n');
-  }
-  if(isset($_REQUEST['mytiki_items'])&&$_REQUEST['mytiki_items']=='on') {
-    $tikilib->set_user_preference($userwatch,'mytiki_items','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'mytiki_items','n');
-  }
+if (isset($_REQUEST['mytikiprefs'])) {
+	if (isset($_REQUEST['mytiki_pages']) && $_REQUEST['mytiki_pages'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_pages', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_pages', 'n');
+	}
+
+	if (isset($_REQUEST['mytiki_blogs']) && $_REQUEST['mytiki_blogs'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_blogs', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_blogs', 'n');
+	}
+
+	if (isset($_REQUEST['mytiki_gals']) && $_REQUEST['mytiki_gals'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_gals', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_gals', 'n');
+	}
+
+	if (isset($_REQUEST['mytiki_msgs']) && $_REQUEST['mytiki_msgs'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_msgs', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_msgs', 'n');
+	}
+
+	if (isset($_REQUEST['mytiki_tasks']) && $_REQUEST['mytiki_tasks'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_tasks', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_tasks', 'n');
+	}
+
+	if (isset($_REQUEST['mytiki_items']) && $_REQUEST['mytiki_items'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_items', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_items', 'n');
+	}
 }
 
-$smarty->assign('mytiki_pages',$tikilib->get_user_preference($userwatch,'mytiki_pages'),'y');
-$smarty->assign('mytiki_blogs',$tikilib->get_user_preference($userwatch,'mytiki_blogs'),'y');
-$smarty->assign('mytiki_gals',$tikilib->get_user_preference($userwatch,'mytiki_gals'),'y');
-$smarty->assign('mytiki_items',$tikilib->get_user_preference($userwatch,'mytiki_items'),'y');
-$smarty->assign('mytiki_msgs',$tikilib->get_user_preference($userwatch,'mytiki_msgs'),'y');
-$smarty->assign('mytiki_tasks',$tikilib->get_user_preference($userwatch,'mytiki_tasks'),'y');
+$smarty->assign('mytiki_pages', $tikilib->get_user_preference($userwatch, 'mytiki_pages'), 'y');
+$smarty->assign('mytiki_blogs', $tikilib->get_user_preference($userwatch, 'mytiki_blogs'), 'y');
+$smarty->assign('mytiki_gals', $tikilib->get_user_preference($userwatch, 'mytiki_gals'), 'y');
+$smarty->assign('mytiki_items', $tikilib->get_user_preference($userwatch, 'mytiki_items'), 'y');
+$smarty->assign('mytiki_msgs', $tikilib->get_user_preference($userwatch, 'mytiki_msgs'), 'y');
+$smarty->assign('mytiki_tasks', $tikilib->get_user_preference($userwatch, 'mytiki_tasks'), 'y');
 
+if (isset($_REQUEST['tasksprefs'])) {
+	$tikilib->set_user_preference($userwatch, 'tasks_maxRecords', $_REQUEST['tasks_maxRecords']);
 
-
-if(isset($_REQUEST['tasksprefs'])) {
-  $tikilib->set_user_preference($userwatch,'tasks_maxRecords',$_REQUEST['tasks_maxRecords']);
-  if(isset($_REQUEST['tasks_useDates'])&&$_REQUEST['tasks_useDates']=='on') {
-    $tikilib->set_user_preference($userwatch,'tasks_useDates','y');
-  } else {
-    $tikilib->set_user_preference($userwatch,'tasks_useDates','n');
-  }
+	if (isset($_REQUEST['tasks_useDates']) && $_REQUEST['tasks_useDates'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'tasks_useDates', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'tasks_useDates', 'n');
+	}
 }
 
-$tasks_maxRecords = $tikilib->get_user_preference($userwatch,'tasks_maxRecords');
-$tasks_useDates = $tikilib->get_user_preference($userwatch,'tasks_useDates');
-$smarty->assign('tasks_maxRecords',$tasks_maxRecords);
-$smarty->assign('tasks_useDates',$tasks_useDates);
+$tasks_maxRecords = $tikilib->get_user_preference($userwatch, 'tasks_maxRecords');
+$tasks_useDates = $tikilib->get_user_preference($userwatch, 'tasks_useDates');
+$smarty->assign('tasks_maxRecords', $tasks_maxRecords);
+$smarty->assign('tasks_useDates', $tasks_useDates);
 
-$mess_maxRecords = $tikilib->get_user_preference($userwatch,'mess_maxRecords',20);
-$smarty->assign('mess_maxRecords',$mess_maxRecords);
-$allowMsgs = $tikilib->get_user_preference($userwatch,'allowMsgs','y');
-$smarty->assign('allowMsgs',$allowMsgs);
-$minPrio = $tikilib->get_user_preference($userwatch,'minPrio',6);
-$smarty->assign('minPrio',$minPrio);
-
+$mess_maxRecords = $tikilib->get_user_preference($userwatch, 'mess_maxRecords', 20);
+$smarty->assign('mess_maxRecords', $mess_maxRecords);
+$allowMsgs = $tikilib->get_user_preference($userwatch, 'allowMsgs', 'y');
+$smarty->assign('allowMsgs', $allowMsgs);
+$minPrio = $tikilib->get_user_preference($userwatch, 'minPrio', 6);
+$smarty->assign('minPrio', $minPrio);
 
 $userinfo = $userlib->get_user_info($userwatch);
-$smarty->assign_by_ref('userinfo',$userinfo);
+$smarty->assign_by_ref('userinfo', $userinfo);
 
-$styles=Array();
-$h=opendir("styles/");
-while($file=readdir($h)) {
-  if(strstr($file,"css")) {
-    $styles[]=$file;
-  }
+$styles = array();
+$h = opendir("styles/");
+
+while ($file = readdir($h)) {
+	if (strstr($file, "css")) {
+		$styles[] = $file;
+	}
 }
-closedir($h);
-$smarty->assign_by_ref('styles',$styles);
 
-$languages=Array();
+closedir ($h);
+$smarty->assign_by_ref('styles', $styles);
+
+$languages = array();
 $languages = $tikilib->list_languages();
-$smarty->assign_by_ref('languages',$languages);
+$smarty->assign_by_ref('languages', $languages);
 
 // Get user pages
-$user_pages = $tikilib->get_user_pages($userwatch,-1);
-$user_blogs = $tikilib->list_user_blogs($userwatch,false);
+$user_pages = $tikilib->get_user_pages($userwatch, -1);
+$user_blogs = $tikilib->list_user_blogs($userwatch, false);
 $user_galleries = $tikilib->get_user_galleries($userwatch, -1);
-$smarty->assign_by_ref('user_pages',$user_pages);
-$smarty->assign_by_ref('user_blogs',$user_blogs);
-$smarty->assign_by_ref('user_galleries',$user_galleries);
+$smarty->assign_by_ref('user_pages', $user_pages);
+$smarty->assign_by_ref('user_blogs', $user_blogs);
+$smarty->assign_by_ref('user_galleries', $user_galleries);
 
 $user_items = $tikilib->get_user_items($userwatch);
-$smarty->assign_by_ref('user_items',$user_items);
-
+$smarty->assign_by_ref('user_items', $user_items);
 
 // Get flags here
-$flags=Array();
-$h=opendir("img/flags/");
-while($file=readdir($h)) {
-  if(strstr($file,".gif")) {
-    $parts = explode('.',$file);
-    $flags[]=$parts[0];
-  }
-}
-closedir($h);
-sort($flags);
-$smarty->assign('flags',$flags);
+$flags = array();
+$h = opendir("img/flags/");
 
+while ($file = readdir($h)) {
+	if (strstr($file, ".gif")) {
+		$parts = explode('.', $file);
+
+		$flags[] = $parts[0];
+	}
+}
+
+closedir ($h);
+sort ($flags);
+$smarty->assign('flags', $flags);
 
 // Get preferences
-$style = $tikilib->get_user_preference($userwatch,'theme',$style);
-$language = $tikilib->get_user_preference($userwatch,'language',$language);
-$smarty->assign_by_ref('style',$style);
-$realName = $tikilib->get_user_preference($userwatch,'realName','');
-$country = $tikilib->get_user_preference($userwatch,'country','Other');
-$smarty->assign('country',$country);
-$anonpref = $tikilib->get_preference('userbreadCrumb',4);
-$userbreadCrumb = $tikilib->get_user_preference($userwatch,'userbreadCrumb',$anonpref);
-$smarty->assign_by_ref('realName',$realName);
-$smarty->assign_by_ref('userbreadCrumb',$userbreadCrumb);
-$homePage = $tikilib->get_user_preference($userwatch,'homePage','');
-$smarty->assign_by_ref('homePage',$homePage);
-$smarty->assign('email_isPublic',$tikilib->get_user_preference($userwatch,'email is public','n'));
+$style = $tikilib->get_user_preference($userwatch, 'theme', $style);
+$language = $tikilib->get_user_preference($userwatch, 'language', $language);
+$smarty->assign_by_ref('style', $style);
+$realName = $tikilib->get_user_preference($userwatch, 'realName', '');
+$country = $tikilib->get_user_preference($userwatch, 'country', 'Other');
+$smarty->assign('country', $country);
+$anonpref = $tikilib->get_preference('userbreadCrumb', 4);
+$userbreadCrumb = $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $anonpref);
+$smarty->assign_by_ref('realName', $realName);
+$smarty->assign_by_ref('userbreadCrumb', $userbreadCrumb);
+$homePage = $tikilib->get_user_preference($userwatch, 'homePage', '');
+$smarty->assign_by_ref('homePage', $homePage);
+$smarty->assign('email_isPublic', $tikilib->get_user_preference($userwatch, 'email is public', 'n'));
 $avatar = $tikilib->get_user_avatar($userwatch);
-$smarty->assign('avatar',$avatar);
+$smarty->assign('avatar', $avatar);
 
-$user_information = $tikilib->get_user_preference($userwatch,'user_information','public');
-$smarty->assign('user_information',$user_information);
+$user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
+$smarty->assign('user_information', $user_information);
 
-if($feature_messages=='y' && $tiki_p_messages=='y') {
-  $unread = $tikilib->user_unread_messages($userwatch);
-  $smarty->assign('unread',$unread);
+if ($feature_messages == 'y' && $tiki_p_messages == 'y') {
+	$unread = $tikilib->user_unread_messages($userwatch);
+
+	$smarty->assign('unread', $unread);
 }
 
 //$timezone_options = $tikilib->get_timezone_list(true);
 //$smarty->assign_by_ref('timezone_options',$timezone_options);
 //$server_time = new Date();
-$display_timezone = $tikilib->get_user_preference($userwatch,'display_timezone', "UTC");
-if ($display_timezone != "UTC") $display_timezone = "Local";
-$smarty->assign_by_ref('display_timezone',$display_timezone);
+$display_timezone = $tikilib->get_user_preference($userwatch, 'display_timezone', "UTC");
 
-$smarty->assign('mid','tiki-user_preferences.tpl');
+if ($display_timezone != "UTC")
+	$display_timezone = "Local";
+
+$smarty->assign_by_ref('display_timezone', $display_timezone);
+
+$smarty->assign('mid', 'tiki-user_preferences.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

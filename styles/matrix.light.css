@@ -1,16 +1,24 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.light.css,v 1.4 2003-08-01 10:31:05 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.light.css,v 1.5 2003-08-07 04:34:18 rossta Exp $
  *
  * My first TIKI theme :)
  *
  */
 
 @import "matrix/matrix-general.css";
+
 @import "matrix/matrix-tc.css";
+
 @import "matrix/matrix-wiki.l.css";
+
 @import "matrix/matrix-box.l.css";
+
 @import "matrix/matrix-table.l.css";
+
 @import "matrix/matrix-categories.l.css";
+
 @import "matrix/matrix-dir.l.css";
+
 @import "matrix/matrix-other.l.css";
+
 @import "matrix/matrix-debug.css";
