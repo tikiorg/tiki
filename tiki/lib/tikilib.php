@@ -1773,6 +1773,9 @@ class TikiLib {
 
   function capture_images($data)
   {
+    global $dbTiki;
+   	global $imagegallib;
+  	include_once('lib/imagegals/imagegallib.php');
     $cacheimages = $this->get_preference("cacheimages",'y');
     if($cacheimages != 'y') return $data;
     preg_match_all("/src=\"([^\"]+)\"/",$data,$reqs1);
@@ -1825,7 +1828,7 @@ class TikiLib {
               imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
             } else {
               $t = imagecreate($tw,$ty);
-              $this->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
+              $imagegallib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
             }
             // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
             //$tmpfname = 'temp.jpg';
@@ -1840,11 +1843,11 @@ class TikiLib {
             $t_type = $t_pinfo["extension"];
             $t_type='image/'.$t_type;
 
-            $imageId = $this->insert_image(0,'','',$name, $type, $data, $size, $size_x, $size_y, 'admin',$t_data,$t_type);
+            $imageId = $imagegallib->insert_image(0,'','',$name, $type, $data, $size, $size_x, $size_y, 'admin',$t_data,$t_type);
             //print("Imagen generada en $imageId<br/>");
           } else {
             //print("No GD detected generating image without thumbnail<br/>");
-            $imageId = $this->insert_image(0,'','',$name, $type, $data, $size, 100, 100, 'admin','','');
+            $imageId = $imagegallib->insert_image(0,'','',$name, $type, $data, $size, 100, 100, 'admin','','');
       //print("Imagen en $imageId<br/>");
           }
           // Now change it!
@@ -4198,7 +4201,9 @@ class TikiLib {
       $smarty->assign('mail_comment',$edit_comment);
       $smarty->assign('mail_last_version',$version);
       $smarty->assign('mail_data',$edit_data);
-      $smarty->assign('mail_machine',$_SERVER["REQUEST_URI"]);
+      $foo = parse_url($_SERVER["REQUEST_URI"]);
+	  $machine =httpPrefix().$foo["path"];
+      $smarty->assign('mail_machine',$machine);
       $smarty->assign('mail_pagedata',$edit_data);
       $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
       @mail($email, tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);

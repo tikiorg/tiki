@@ -24,7 +24,7 @@ if(isset($_REQUEST["view"])) {
 }
 
 if($_REQUEST["rssId"]) {
-  $info = $tikilib->get_rss_module($_REQUEST["rssId"]);
+  $info = $rsslib->get_rss_module($_REQUEST["rssId"]);
 } else {
   $info = Array();
   $info["name"]='';

@@ -183,6 +183,7 @@ if(isset($_REQUEST["quote"])) {
   $qdata = implode("\n",$quoted_lines);
   $qdata = '> '.$quote_info["userName"].":\n".$qdata;
   $smarty->assign('comment_data',$qdata);
+  $smarty->assign('comment_title',tra('Re:').$quote_info["title"]);
   $smarty->assign('openpost','y');
 }
 
