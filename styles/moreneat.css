@@ -109,7 +109,8 @@ DIV#tiki-bot {  padding-top: 10px;  margin-top: 0px;  background: #C7D0D9; borde
 /* The three columns */
 TD#leftcolumn {  padding-left: 2px; padding-right: 2px; vertical-align: top;  width: 180px;}
 TD#rightcolumn {  padding-left: 2px; vertical-align: top;   width: 180px;}
-TD#centercolumn { padding-right: 12px; vertical-align: top;  width: 100%; }
+TD#centercolumn { padding-right: 12px; vertical-align: top; }
+TABLE#tikimidtbl { width: 100%; }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  padding-right: 5px; }
