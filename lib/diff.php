@@ -42,6 +42,16 @@ class _WikiDiffEngine
 	$n_to = sizeof($to_lines);
 	$endskip = 0;
 
+        // Ignore differences in line endings
+        for ($i = 0; $i < $n_from; $i++)
+          {
+            $from_lines[$i] = rtrim($from_lines[$i]);
+          }
+        for ($i = 0; $i < $n_to; $i++)
+          {
+            $to_lines[$i] = rtrim($to_lines[$i]);
+          }
+
 	// Ignore trailing and leading matching lines.
 	while ($n_from > 0 && $n_to > 0)
 	  {
@@ -819,8 +829,8 @@ class WikiDiffFormatter
 
   function format ($diff, $from_lines)
       {
-	$html = '<table  bgcolor="black" ' .
-		'cellspacing="2" cellpadding="2" border="0"><br />';
+	$html = '<table style="background-color: black" ' .
+		'cellspacing="2" cellpadding="2" border="0">';
 	$html .= $this->_format($diff->edits, $from_lines);
 	$html .= "</table>\n";
 
@@ -927,20 +937,20 @@ class WikiDiffFormatter
 	reset($lines);
 	while (list ($junk, $line) = each($lines))
 	  {
-	    $html .= "<tr bgcolor=\"$color\"><td><tt>$prefix</tt>";
-	    $html .= "<tt>" . htmlspecialchars($line) . "</tt></td></tr>\n";
+	    $html .= "<tr style=\"background-color: $color\"><td><tt>$prefix</tt>";
+	    $html .= "<tt>$line</tt></td></tr>\n";
 	  }
 	return $html;
       }
 
   function _emit_diff ($xbeg,$xlen,$ybeg,$ylen,$hunks)
       {
-	$html = '<tr><td><table  bgcolor="white"'
-	      . ' cellspacing="0" border="0" cellpadding="4"><br />'
+	$html = '<tr><td><table style="background-color: white"'
+	      . ' cellspacing="0" border="0" cellpadding="4">'
 	      . '<tr bgcolor="#cccccc"><td><tt>'
 	      . $this->_diff_header($xbeg, $xlen, $ybeg, $ylen)
 	      . "</tt></td></tr>\n<tr><td>\n"
-	      . '<table  cellspacing="0" border="0" cellpadding="2"><br />';
+	      . '<table cellspacing="0" border="0" cellpadding="2">';
 
 	$prefix = array('c' => $this->context_prefix,
 			'a' => $this->adds_prefix,
