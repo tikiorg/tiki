@@ -3715,6 +3715,17 @@ function add_pageview() {
 	else
 	    return $result->fetchRow();
     }
+    function get_page_info_from_id($page_id) {
+	$query = "select * from `tiki_pages` where `page_id`=?";
+
+	$result = $this->query($query, array($pageName));
+
+	if (!$result->numRows())
+	    return false;
+	else
+	    return $result->fetchRow();
+    }
+
 
     function get_page_name_from_id($page_id) {
 	$query = "select `pageName`  from `tiki_pages` where `page_id`=?";
