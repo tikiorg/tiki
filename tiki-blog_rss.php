@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.16 2003-10-09 21:18:44 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.17 2003-10-11 09:42:48 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -89,13 +89,11 @@ print "\n";
 
 if ($rss_version == 2) {
 	print '<image>'."\n";
-} else {
-	print '<image rdf:about="'.htmlspecialchars($url).'" rdf:url="'.htmlspecialchars($img).'">'."\n";
+	print "<title>".rawurlencode($title)."</title>\n";
+	print "<link>".htmlspecialchars($home)."</link>\n";
+	print "<url>".htmlspecialchars($url)."</url>\n";
+	print "</image>\n\n";
 }
-print "<title>".rawurlencode($title)."</title>\n";
-print "<link>".htmlspecialchars($home)."</link>\n";
-print "<url>".htmlspecialchars($url)."</url>\n";
-print "</image>\n\n";
 
 if ($rss_version == 1) {
 	print "<items>\n";
