@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_code.php,v 1.4 2003-06-30 02:44:35 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_code.php,v 1.5 2003-06-30 03:43:51 zaufi Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -15,9 +15,10 @@ function wikiplugin_code_help()
 
 function wikiplugin_code($data,$params)
 {
+  $code=htmlspecialchars($data);
   extract($params);
   if(isset($ln)&&$ln==1) {
-    $lines = explode("\n",$data);
+    $lines = explode("\n",$code);
     $i=1;	                                // current line number
     $code='';
     // Will skip leading and trailing empty lines
@@ -36,7 +37,7 @@ function wikiplugin_code($data,$params)
       $i++;
     } 
     $code=rtrim($code);
-  } else $code=$data;
+  } //else $code=$data;
 
   // Wrap listing into div
   $data = "<div class='codelisting'><pre>".$code."</pre></div>";
