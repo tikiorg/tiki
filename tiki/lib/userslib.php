@@ -1562,12 +1562,16 @@ function get_included_groups($group) {
 		    ));
 
 	// that block stays here for a time (compatibility)
-	$hash = md5($user . $pass);
-	$query = "update `users_users` set `hash`=?  where " . $this->convert_binary(). " `login`=?";
-	$result = $this->query($query, array(
-		    $hash,
-		    $user
-		    ));
+	// lfagundes - only if pass is provided, admin doesn't need it
+	// is this still necessary?
+	if (!empty($pass)) {
+	    $hash = md5($user . $pass);
+	    $query = "update `users_users` set `hash`=?  where " . $this->convert_binary(). " `login`=?";
+	    $result = $this->query($query, array(
+						 $hash,
+						 $user
+						 ));
+	}
 
 	$query = "update `tiki_user_watches` set `email`=? where " . $this->convert_binary(). " `user`=?";
 	$result = $this->query($query, array( $email, $user));

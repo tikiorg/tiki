@@ -44,6 +44,7 @@
   <input type="hidden" name="user" value="{$userwatch|escape}" /> 
   <table>
   <tr><td class="form">{tr}Name{/tr}:</td><td class="form">{$userinfo.login}</td></tr>
+  <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td class="form">
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   <select name="country">
@@ -56,7 +57,6 @@
   </td></tr>
   <tr><td class="form">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   <tr><td class="form">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lon" value="{$lon|escape}" /></td></tr> 
-  <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
   <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
   {if $feature_wiki eq 'y'}
@@ -87,34 +87,21 @@
 
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 
-  {tr}Change your email{/tr}<br />
+{tr}Leave fields blank to keep current information{/tr}
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
   <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
-  {if $auth_method neq 'cas'}
-    <tr><td class="form">{tr}Password{/tr}:</td class="form"><td class="form"><input type="password" name="pass" /></td></tr>
-  {/if}
-  <tr><td colspan="2" class="button"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
-  </table>
-  </form>
-
 {if $auth_method neq 'cas'}
-
-  {tr}Change your password{/tr}<br />
-  <form action="tiki-user_preferences.php" method="post">
-  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <table class="admin">
-  {if $tiki_p_admin ne 'y' or $userwatch eq $user}
-   <tr><td class="form">{tr}Old password{/tr}:</td><td class="form"><input type="password" name="old" /></td></tr>
-  {/if}
   <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
   <tr><td class="form">{tr}Again please{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
-  <tr><td colspan="2" class="button"><input type="submit" name="chgpswd" value="{tr}change password{/tr}"></td></tr>
+  {if $tiki_p_admin ne 'y' or $userwatch eq $user}
+    <tr><td class="form">{tr}Current password (required){/tr}:</td><td class="form"><input type="password" name="pass" /></td></tr>
+  {/if}
+{/if}
+  <tr><td colspan="2" class="button"><input type="submit" name="chgadmin" value="{tr}change administrative info{/tr}"></td></tr>
   </table>
   </form>
-
-{/if}
 
 </div>
 
