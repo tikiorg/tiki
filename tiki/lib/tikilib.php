@@ -3444,7 +3444,8 @@ function parse_pp_np(&$data, &$preparsed, &$noparsed) {
     $state = true;
     $skip = false;
 
-    for ($i = 0; $i < strlen($data); $i++) {
+    $dlength=strlen($data);
+    for ($i = 0; $i < $dlength; $i++) {
 	$tag5 = substr($data, $i, 5);
 
 	$tag4 = substr($tag5, 0, 4);
