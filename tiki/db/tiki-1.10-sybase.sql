@@ -2,8 +2,8 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2004-07-27 21:20:24 $
--- $Author: teedog $
+-- $Date: 2004-09-21 23:12:18 $
+-- $Author: ggeller $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
@@ -1827,7 +1827,7 @@ go
 -- Table structure for table tiki_galleries
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:59 PM
+-- Last update: Sep 18, 2004 at 11:56 PM
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
@@ -1842,6 +1842,7 @@ CREATE TABLE "tiki_galleries" (
   "created" numeric(14,0) default NULL NULL,
   "lastModif" numeric(14,0) default NULL NULL,
   "visible" char(1) default NULL NULL,
+  "geographic" char(1) default NULL NULL,
   "theme" varchar(60) default NULL NULL,
   "user" varchar(200) default NULL NULL,
   "hits" numeric(14,0) default NULL NULL,
@@ -1850,6 +1851,20 @@ CREATE TABLE "tiki_galleries" (
   "thumbSizeX" numeric(10,0) default NULL NULL,
   "thumbSizeY" numeric(10,0) default NULL NULL,
   "public" char(1) default NULL NULL,
+  "sortorder" varchar(20) default 'created' NOT NULL,
+  "sortdirection" varchar(4) default 'desc' NOT NULL,
+  "galleryimage" varchar(20) default 'first' NOT NULL,
+  "parentgallery" numeric(14,0) default -1 NOT NULL,
+  "showname" char(1) default 'y' NOT NULL,
+  "showimageid" char(1) default 'n' NOT NULL,
+  "showdescription" char(1) default 'n' NOT NULL,
+  "showcreated" char(1) default 'n' NOT NULL,
+  "showuser" char(1) default 'n' NOT NULL,
+  "showhits" char(1) default 'y' NOT NULL,
+  "showxysize" char(1) default 'y' NOT NULL,
+  "showfilesize" char(1) default 'n' NOT NULL,
+  "showfilename" char(1) default 'n' NOT NULL,
+  "defaultscale" varchar(10) NOT NULL DEFAULT 'o',
   PRIMARY KEY ("galleryId")
 )   
 go
@@ -1878,9 +1893,8 @@ go
 
 CREATE TABLE "tiki_galleries_scales" (
   "galleryId" numeric(14,0) default '0' NOT NULL,
-  "xsize" numeric(11,0) default '0' NOT NULL,
-  "ysize" numeric(11,0) default '0' NOT NULL,
-  PRIMARY KEY ("galleryId","xsize","ysize")
+  "scale" numeric(11,0) default '0' NOT NULL,
+  PRIMARY KEY ("galleryId","scale")
 ) 
 go
 
@@ -2030,7 +2044,7 @@ go
 -- Table structure for table tiki_images
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:29 PM
+-- Last update: Sep 18, 2004 at 08:29 PM
 -- Last check: Jul 03, 2003 at 07:42 PM
 --
 
@@ -2043,6 +2057,8 @@ CREATE TABLE "tiki_images" (
   "galleryId" numeric(14,0) default '0' NOT NULL,
   "name" varchar(200) default '' NOT NULL,
   "description" text default '',
+  "lat" float default NULL NULL,
+  "lon" float default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   "user" varchar(200) default NULL NULL,
   "hits" numeric(14,0) default NULL NULL,
@@ -2461,6 +2477,7 @@ CREATE TABLE "tiki_mailin_accounts" (
   "attachments" char(1) default 'n' NOT NULL,
   "article_topicId" numeric(4,0) default NULL NULL,
   "article_type" varchar(50) default NULL NULL,
+  "discard_after" varchar(255) default NULL NULL,
   PRIMARY KEY ("accountId")
 )   
 go
@@ -2553,7 +2570,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','MyTiki home','tiki-my_tiki.php.php',51,'','','Registered')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','MyTiki home','tiki-my_tiki.php',51,'','','Registered')
 go
 
 
@@ -2796,7 +2813,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-blogs_rankings.php',460,'feature_blogs,feature_blog_rankings','tiki_p_read_blog','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-blog_rankings.php',460,'feature_blogs,feature_blog_rankings','tiki_p_read_blog','')
 go
 
 
@@ -2868,6 +2885,23 @@ go
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Upload file','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','')
+go
+
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Genres Admin','tiki-jukebox_genres.php',630,'feature_jukebox','tiki_p_jukebox_genres', '')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Jukebox Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '')
 go
 
 
@@ -3206,25 +3240,6 @@ go
 
 
 
--- Tiki Jukebox
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '')
-go
-
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '')
-go
-
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Genres Admin','tiki-jukebox_genres.php',630,'feature_jukebox','tiki_p_jukebox_genres', '')
-go
-
-
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Jukebox Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '')
-go
-
-
-
 -- --------------------------------------------------------
 
 --
@@ -3511,7 +3526,7 @@ CREATE TABLE "tiki_pages" (
   "pageRank" decimal(4,3) default NULL NULL,
   "creator" varchar(200) default NULL NULL,
   "page_size" numeric(10,0) default 0,
-  "lang" varchar(16) default null,
+  "lang" varchar(16) default NULL NULL,
   PRIMARY KEY ("page_id")
 )  
 go
@@ -3585,14 +3600,22 @@ go
 CREATE TABLE "tiki_polls" (
   "pollId" numeric(8 ,0) identity,
   "title" varchar(200) default NULL NULL,
+  "description" text default '',
   "votes" numeric(8,0) default NULL NULL,
   "active" char(1) default NULL NULL,
   "publishDate" numeric(14,0) default NULL NULL,
-  PRIMARY KEY ("pollId")
+  "releaseDate" numeric(14,0) default NULL NULL,
+  PRIMARY KEY ("pollId")		
 )   
 go
 
 
+CREATE  INDEX "tiki_polls_pubdate" ON "tiki_polls"("publishDate")
+go
+CREATE  INDEX "tiki_polls_reldate" ON "tiki_polls"("releaseDate")
+go
+CREATE  INDEX "tiki_polls_active" ON "tiki_polls"("active")
+go
 -- --------------------------------------------------------
 
 --
@@ -5119,6 +5142,7 @@ go
 CREATE TABLE "tiki_user_votings" (
   "user" varchar(200) default '' NOT NULL,
   "id" varchar(255) default '' NOT NULL,
+  "optionId" numeric(10,0) default 0 NOT NULL,
   PRIMARY KEY ("user","id")
 ) 
 go
@@ -5457,7 +5481,9 @@ go
 
 
 -- --------------------------------------------------------
--- Data set
+-- 
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_abort_instance', 'Can abort a process instance', 'editors', 'workflow')
 go
 
@@ -5542,11 +5568,19 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_mailin', 'Can admin mail-in accounts', 'admin', 'tiki')
 go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_newsletters', 'Can admin newsletters', 'admin', 'newsletters')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_packager', 'Can admin packages/packager', 'admin', 'packages')
 go
 
 
@@ -5583,10 +5617,6 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_workflow', 'Can admin workflow processes', 'admin', 'workflow')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_packager', 'Can admin packages/packager', 'admin', 'packages')
 go
 
 
@@ -5710,11 +5740,19 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki')
+go
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_html_pages', 'Can edit HTML pages', 'editors', 'html pages')
 go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_languages', 'Can edit translations and create new languages', 'editors', 'tiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages')
 go
 
 
@@ -5767,6 +5805,50 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_forums_report', 'Can report msgs to moderator', 'registered', 'forums')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_install_package', 'Can install packages', 'admin', 'packages')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community')
 go
 
 
@@ -5823,6 +5905,46 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_play_games', 'Can play games', 'basic', 'games')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_add_comment', 'Can add coments to polls', 'registered', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_add_item_comment', 'Can add comments to poll items', 'registered', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_admin', 'Admin has all polls perms', 'admin', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_create', 'Can create new polls', 'editors', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_edit', 'Can modify polls', 'editors', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_item_submit', 'Can propose new poll items', 'editors', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_submit', 'Can propose new polls', 'registered', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_view', 'Can view polls', 'basic', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_view_comments', 'Can view polls', 'basic', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_poll_view_submissions', 'Can browse polls submissions', 'registered', 'polls')
 go
 
 
@@ -5982,7 +6104,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can browse categories', 'registered', 'tiki')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can browse categories', 'basic', 'tiki')
 go
 
 
@@ -6011,6 +6133,10 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_image_gallery', 'Can view image galleries', 'basic', 'image galleries')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki')
 go
 
 
@@ -6070,7 +6196,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'tiki')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls')
 go
 
 
@@ -6094,58 +6220,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_package', 'Can create packages with packager', 'admin', 'packages')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_user_information', 'Can view user info on tiki-user_information.php', 'registered', 'tiki')
 go
 
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_install_package', 'Can install packages', 'admin', 'packages')
-go
-
-
-
--- TikiJukebox permissions - Damosoft aka Damian
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox')
-go
-
-
-
--- Homework permissions - ggeller
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework')
-go
-
-
-
--- Community permissions
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community')
-go
 
 
 
@@ -6212,7 +6289,7 @@ CREATE TABLE "users_users" (
   "avatarData" image default '',
   "avatarLibName" varchar(200) default NULL NULL,
   "avatarType" char(1) default NULL NULL,
-  "score" int4 default 0 NOT NULL,
+  "score" numeric(4,0) default 0 NOT NULL,
   PRIMARY KEY ("userId")
 )   
 go
@@ -6235,8 +6312,8 @@ go
 
 
 -- --------------------------------------------------------
+-- 
 
--- Inserts of all default values for preferences
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('allowRegister','n')
 go
 
@@ -6245,19 +6322,15 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('anonCanEdit','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('article_comments_default_ordering','points_desc')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('article_comments_per_page','10')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_author','y')
 go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_date','y')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_expire','y')
 go
 
 
@@ -6285,11 +6358,15 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_type','y')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_expire','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_visible','y')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_visible','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('article_comments_default_ordering','points_desc')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('article_comments_per_page','10')
 go
 
 
@@ -6362,6 +6439,14 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('auth_skip_admin','y')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_languages','a:0:{}')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_styles','a:0:{}')
 go
 
 
@@ -6449,6 +6534,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('cms_top_bar','n')
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('contact_anon','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('contact_user','admin')
 go
 
@@ -6458,6 +6547,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_map','pacific.map')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('direct_pagination','n')
 go
 
 
@@ -6477,11 +6570,15 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('directory_validate_urls
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('direct_pagination','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('display_timezone','EST')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('display_timezone','EST')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('email_encoding','utf-8')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('eponymousGroups','n')
 go
 
 
@@ -6493,19 +6590,15 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('faq_comments_per_page',
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_autolinks','y')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_maps','n')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_article_comments','n')
 go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_articles','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_autolinks','y')
 go
 
 
@@ -6533,11 +6626,11 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_blog_comments',
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_blogposts_comments','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_blog_rankings','y')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_blog_rankings','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_blogposts_comments','n')
 go
 
 
@@ -6609,6 +6702,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_debugger_consol
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_detect_language','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_directory','n')
 go
 
@@ -6625,11 +6722,11 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_dynamic_content
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_editcss','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_edit_templates','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_edit_templates','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_editcss','n')
 go
 
 
@@ -6649,11 +6746,11 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_featuredLinks',
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_file_galleries_comments','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_file_galleries','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_file_galleries','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_file_galleries_comments','n')
 go
 
 
@@ -6673,19 +6770,23 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_forum_rankings'
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_forums','n')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_forum_topicd','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_galleries','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_forums','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_friends','n')
 go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_gal_rankings','y')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_galleries','y')
 go
 
 
@@ -6697,11 +6798,15 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_history','y')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_hotwords_nw','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_homework','n')
 go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_hotwords','y')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_hotwords_nw','n')
 go
 
 
@@ -6741,6 +6846,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_live_support','
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_maps','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_menusfolderstyle','n')
 go
 
@@ -6777,11 +6886,11 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_page_title','y'
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_phpopentracker','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_phplayers','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_comments','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_phpopentracker','n')
 go
 
 
@@ -6789,11 +6898,19 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_anonymous'
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_polls','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_comments','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_phplayers','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_item_comments','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_submissions','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_polls','n')
 go
 
 
@@ -6817,15 +6934,19 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_sandbox','y')
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_score','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_search','y')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_search_fulltext','y')
 go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_search_stats','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_search','y')
 go
 
 
@@ -6861,15 +6982,15 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_tasks','n')
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_theme_control','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_ticketlib','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_ticketlib2','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_theme_control','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_ticketlib2','y')
 go
 
 
@@ -6881,18 +7002,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_trackers','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_bookmarks','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_userfiles','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_usermenu','n')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_userPreferences','n')
 go
 
@@ -6901,7 +7010,19 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_userVersions','
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_bookmarks','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_watches','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_userfiles','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_usermenu','n')
 go
 
 
@@ -6917,11 +7038,11 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki','y')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_open_as_structure','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml','n')
 go
 
 
@@ -6957,6 +7078,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_notepad','
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_open_as_structure','n')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_pdf','n')
 go
 
@@ -6981,10 +7106,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_undo','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_usrlock','n')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_userpage','y')
 go
 
@@ -6993,11 +7114,11 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_userpage_p
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wikiwords','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_usrlock','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wikiwords','y')
 go
 
 
@@ -7193,11 +7314,11 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('keep_versions','1')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('language','en')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('lang_use_db','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('lang_use_db','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('language','en')
 go
 
 
@@ -7225,7 +7346,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('maxRecords','10')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_directories','10')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('maxVersions','0')
 go
 
 
@@ -7238,6 +7359,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_blogs','10')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_directories','10')
 go
 
 
@@ -7257,10 +7382,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_forums','10')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_mapfiles','10')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_image_galleries','10')
 go
 
@@ -7269,11 +7390,11 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_image_gallery',
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_wiki','10')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_mapfiles','10')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('maxVersions','0')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_wiki','10')
 go
 
 
@@ -7333,10 +7454,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('rnd_num_reg','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_directories','y')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_articles','y')
 go
 
@@ -7349,31 +7466,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_blogs','y')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_default_version','2')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_language','en-us')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_editor','')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_publisher','')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_webmaster','')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_creator','')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_css','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_directories','y')
 go
 
 
@@ -7385,15 +7478,11 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_file_gallery','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_forums','y')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_forum','y')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_mapfiles','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_forums','y')
 go
 
 
@@ -7405,31 +7494,39 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_image_gallery','n')
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_mapfiles','y')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_wiki','y')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('sender_email','')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_creator','')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('email_encoding','utf-8')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_css','y')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_refresh_rate','5')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_default_version','2')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_min_wordlength','3')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_editor','')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_max_syllwords','100')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_language','en-us')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_purge_rate','5')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_publisher','')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rssfeed_webmaster','')
 go
 
 
@@ -7437,7 +7534,27 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_length','100
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_purge_rate','5')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_max_syllwords','100')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_min_wordlength','3')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_refresh_rate','5')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_syll_age','48')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('sender_email','')
 go
 
 
@@ -7469,19 +7586,19 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('system_os','unix')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('tikiIndex','tiki-index.php')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('tmpDir','temp')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('t_use_db','y')
 go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('t_use_dir','')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('tikiIndex','tiki-index.php')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('tmpDir','temp')
 go
 
 
@@ -7497,23 +7614,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('urlIndex','')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('use_proxy','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_assigned_modules','n')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('useRegisterPasscode','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('userfiles_quota','30')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('userTracker','n')
 go
 
 
@@ -7521,7 +7622,23 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('useUrlIndex','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateUsers','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('use_proxy','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('userTracker','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_assigned_modules','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_list_order','score_desc')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('userfiles_quota','30')
 go
 
 
@@ -7529,7 +7646,15 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateEmail','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('eponymousGroups','n')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateUsers','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_db','y')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_dir','')
 go
 
 
@@ -7546,6 +7671,18 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('webserverauth','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('wikiHomePage','HomePage')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('wikiLicensePage','')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('wikiSubmitNotice','')
 go
 
 
@@ -7581,15 +7718,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_forum_id','')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('wikiHomePage','HomePage')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_left_column','y')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('wikiLicensePage','')
 go
 
 
@@ -7653,10 +7782,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_spellcheck','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('wikiSubmitNotice','')
-go
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_top_bar','n')
 go
 
@@ -7665,52 +7790,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_uses_slides','n')
 go
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_db','y')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_dir','')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_homework','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_detect_language','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_languages','a:0:{}')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_styles','a:0:{}')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_friends','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_score','n')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_list_order','score_desc')
-go
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('contact_anon','n')
-go
-
-
-
 -- Dynamic variables
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki')
-go
-
-
 
 --
 -- Table structure for table 'tiki_integrator_reps'
@@ -7788,15 +7868,6 @@ go
 --
 -- Integrator permissions
 --
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki')
-go
-
-
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki')
-go
-
-
-
 --
 -- Table structures for table 'tiki_quicktags'
 -- 
@@ -7888,6 +7959,55 @@ go
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif','wiki')
 go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New wms Metadata','METADATA\r\n    "wms_name" "myname"\r\n   "wms_srs" "EPSG:4326"\r\n   "wms_server_version" " "\r\n   "wms_layers" "mylayers"\r\n   "wms_request" "myrequest"\r\n   "wms_format" " "\r\n   "wms_time" " "\r\n END', 'img/icons/admin_metatags.png','maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Class', 'CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n NAME "myclass" \r\nEND --end of class', 'img/icons/mini_triangle.gif','maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Projection','PROJECTION\r\n "init=epsg:4326"\r\nEND','images/ico_mode.gif','maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Query','--\r\n-- Start of query definitions\r\n--\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','img/icons/questions.gif','maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Scalebar','--\r\n-- Start of scalebar\r\n--\r\nSCALEBAR\r\n IMAGECOLOR 255 255 255\r\n STYLE 1\r\n SIZE 400 2\r\n COLOR 0 0 0\r\n UNITS KILOMETERS\r\n INTERVALS 5\r\n STATUS ON\r\nEND','img/icons/desc_length.gif','maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Layer','LAYER\r\n NAME\r\n TYPE\r\n STATUS ON\r\n DATA "mydata"\r\nEND --end of layer', 'images/ed_copy.gif', 'maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Label','LABEL\r\n COLOR\r\n ANGLE\r\n FONT arial\r\n TYPE TRUETYPE\r\n POSITION\r\n PARTIALS TRUE\r\n SIZE 6\r\n BUFFER 0\r\n OUTLINECOLOR \r\nEND --end of label', 'img/icons/fontfamily.gif', 'maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Reference','--\r\n--start of reference\r\n--\r\n REFERENCE\r\n SIZE 120 60\r\n STATUS ON\r\n EXTENT -180 -90 182 88\r\n OUTLINECOLOR 255 0 0\r\n IMAGE "myimagedata"\r\n COLOR -1 -1 -1\r\nEND','images/ed_image.gif','maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Legend','--\r\n--start of Legend\r\n--\r\n LEGEND\r\n KEYSIZE 18 12\r\n POSTLABELCACHE TRUE\r\n STATUS ON\r\nEND','images/ed_about.gif','maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Web','--\r\n-- Start of web interface definition\r\n--\r\nWEB\r\n TEMPLATE "myfile/url"\r\n MINSCALE 1000\r\n MAXSCALE 40000\r\n IMAGEPATH "myimagepath"\r\n IMAGEURL "mypath"\r\nEND','img/icons/ico_link.gif','maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Outputformat','OUTPUTFORMAT\r\n NAME\r\n DRIVER " "\r\n MIMETYPE "myimagetype"\r\n IMAGEMODE RGB\r\n EXTENSION "png"\r\nEND','img/icons/opera.gif','maps')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New Mapfile','--\r\n-- Start of mapfile\r\n--\r\nNAME MYMAPFLE\r\n STATUS ON\r\nSIZE \r\nEXTENT\r\nUNITS \r\nSHAPEPATH " "\r\nIMAGETYPE " "\r\nFONTSET " "\r\nIMAGECOLOR -1 -1 -1\r\n\r\n--remove this text and add objects here\r\n\r\nEND -- end of mapfile','img/icons/global.gif','maps')
+go
+
 
 
 
@@ -8197,7 +8317,7 @@ CREATE TABLE "tiki_opnet_question" (
   "id" INT( 10 ) NOT NULL AUTO_INCREMENT ,
   "formtype" INT(10) NOT NULL,
   "question" VARCHAR( 100 ) NOT NULL ,
-PRIMARY KEY ( id ) 
+  PRIMARY KEY ( id ) 
 )
 go
 
@@ -8211,7 +8331,7 @@ CREATE TABLE "tiki_opnet_formtype" (
   "id" INT( 10 ) NOT NULL AUTO_INCREMENT ,
   "name" VARCHAR( 30 ) NOT NULL ,
   "timestamp" INT( 14 ) NOT NULL,
-PRIMARY KEY ( id ) 
+  PRIMARY KEY ( id ) 
 )
 go
 
@@ -8226,7 +8346,7 @@ CREATE TABLE "tiki_opnet_answer" (
   "question_id" INT( 10 ) NOT NULL ,
   "filledform_id" INT( 10 ) NOT NULL ,
   "value" TEXT NOT NULL ,
-PRIMARY KEY ( id ) 
+  PRIMARY KEY ( id ) 
 )
 go
 
@@ -8242,7 +8362,7 @@ CREATE TABLE "tiki_opnet_filledform" (
   "about_who" VARCHAR( 40 ) NOT NULL ,
   "formtype" INT( 10 ) NOT NULL ,
   "timestamp" INT( 14 ) NOT NULL,
-PRIMARY KEY ( id ) 
+  PRIMARY KEY ( id ) 
 )
 go
 
@@ -8251,6 +8371,7 @@ go
 --
 -- Opinion-Network tables END
 --
+
 go
 
 
