@@ -22,7 +22,7 @@
 {$message}
 {else}
 <form action="messu-compose.php" method="post">
-<table class="normal" width="70%">
+<table class="normal" >
   <tr>
     <td class="formcolor">{tr}To{/tr}:</td><td class="formcolor"><input type="text" name="to" value="{$to|escape}" />&nbsp;<input type="submit" name="send" value="{tr}send{/tr}" /></td>
   </tr>
@@ -48,7 +48,7 @@
   </tr>
 </table>
 <br />
-<table class="normal" width="70%">
+<table class="normal" >
   <tr>
     <td style="text-align: center;" class="formcolor"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea></td>
   </tr>

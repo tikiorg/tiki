@@ -48,7 +48,7 @@ if (isset($_REQUEST['minx']) && isset($_REQUEST['miny'])
   $my_extent->setextent($map->extent->minx,$map->extent->miny,$map->extent->maxx,$map->extent->maxy);
 }
 $query=FALSE;
-$map_querymsg='<table border="1" width="100%">';
+$map_querymsg='<table border="1" >';
 if (isset($_REQUEST['zoom']))
 {
   $zoom=$_REQUEST['zoom'];

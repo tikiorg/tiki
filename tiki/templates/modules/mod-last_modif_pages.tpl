@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.11 2003-08-21 17:47:13 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.12 2003-09-25 01:05:22 rlpowell Exp $ *}
 
 {if $feature_wiki eq 'y'}
  <div class="box">
@@ -6,10 +6,10 @@
     {include file="modules/module-title.tpl" module_title="{tr}Last changes{/tr}" module_name="last_modif_pages"}
   </div>
   <div class="box-data">
-   <table width="100%" border="0" cellpadding="0" cellspacing="0">
+   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastModif}
      <tr>
-      <td width="5%" class="module" valign="top">
+      <td  class="module" valign="top">
        {$smarty.section.ix.index_next})
       </td>
       <td class="module">&nbsp;

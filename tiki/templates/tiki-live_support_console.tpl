@@ -20,7 +20,7 @@
   {/literal}
    	<input type="hidden" id="user" value="{$user|escape}" />
   	<input type="hidden" id="status" value="online" />
-	<table class="normal" width="100%">
+	<table class="normal" >
 		<tr>
 			<td class="heading">{tr}Operator{/tr}: {$user}</td>
 			<td class="heading">{tr}Status{/tr}: <b>{tr}{$status}{/tr}</b></td>

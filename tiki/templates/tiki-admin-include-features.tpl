@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.18 2003-09-21 01:15:27 fukuchi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.19 2003-09-25 01:05:20 rlpowell Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with {tr} which means translate...
@@ -16,22 +16,22 @@
     </div>
 {* the heading of the  box *}
     <div class="cbox-data">
-      <table width="99%"><tr>
+      <table ><tr>
         <td class="heading" colspan=5 align="center">{tr}Tiki sections and features{/tr}</td>
       </tr>
 {* top left wiki ck box ... each of the function option boxes here begin with  td class form *}
 			<tr>
-        <td class="form" width="43%">
+        <td class="form" >
 				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Wiki" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Wiki{/tr}">{/if}
 				{tr}Wiki{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
-        <td width="5%"><input type="checkbox" name="feature_wiki"
+        <td ><input type="checkbox" name="feature_wiki"
             {if $feature_wiki eq 'y'}checked="checked"{/if}/></td>
 {* here's the blank cell *}
-        <td width="4%">&nbsp;</td>
+        <td >&nbsp;</td>
 {* here is the beginning of the new cell for blogs followed by a check box cell *}
-				<td class="form" width="43%">
+				<td class="form" >
 				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Blog" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Wiki{/tr}">{/if}
 				{tr}Blogs{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
@@ -206,7 +206,7 @@
 				{tr}Search{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
-        <td width="5%"><input type="checkbox" name="feature_search"
+        <td ><input type="checkbox" name="feature_search"
             {if $feature_search eq 'y'}checked="checked"{/if}/></td>
       </tr>
 			

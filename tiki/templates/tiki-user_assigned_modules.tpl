@@ -20,23 +20,23 @@
 <br/><br/>
 <a class="link" href="tiki-user_assigned_modules.php?recreate=1">{tr}Restore defaults{/tr}</a><br/><br/>
 <h2>{tr}User assigned modules{/tr}</h2>
-<table width="100%">
+<table >
 <tr>
-	<td width="50%">
+	<td >
 	<b>{tr}Left column{/tr}</b>
 	</td>
-	<td width="50%">
+	<td >
 	<b>{tr}Right column{/tr}</b>
 	</td>
 </tr>
 <tr>
 	<!-- left column -->
-	<td width="50%">
-		<table width="100%" class="normal">
+	<td >
+		<table  class="normal">
 			<tr>
 				<td class="heading">{tr}#{/tr}</td>
 				<td class="heading">{tr}name{/tr}</td>
-				<td width="20%" class="heading">{tr}act{/tr}</td>
+				<td  class="heading">{tr}act{/tr}</td>
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=ix loop=$modules_l}
@@ -59,12 +59,12 @@
 	</td>
 	
 	<!-- right column -->
-	<td width="50%">
-		<table width="100%" class="normal">
+	<td >
+		<table  class="normal">
 			<tr>
 				<td class="heading">{tr}#{/tr}</td>
 				<td class="heading">{tr}name{/tr}</td>
-				<td width="20%" class="heading">{tr}act{/tr}</td>
+				<td  class="heading">{tr}act{/tr}</td>
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=ix loop=$modules_r}

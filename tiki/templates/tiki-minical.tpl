@@ -14,7 +14,7 @@
 </tr>
 </table>
 
-<table class="normal" width="97%">
+<table class="normal" >
 <tr>
 	<td class="formcolor">
 <b>{tr}Upcoming events{/tr}</b><br />
@@ -53,7 +53,7 @@
 {$pdate|tiki_long_date} 
 <a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|date_format:"%d"}&amp;mon={$tomorrow|date_format:"%m"}&amp;year={$tomorrow|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
 </b>
-<table clas="normal" width="97%" >
+<table clas="normal"  >
 {section name=ix loop=$slots}
 <tr>
 	<td class="{cycle}">
@@ -89,13 +89,13 @@
 <a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&year={$prev_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
 <b>{$week_start|date_format:"%b"} {$week_start|date_format:"%d"}-{$week_end|date_format:"%b"} {$week_end|date_format:"%d"}</b>
 <a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&year={$next_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
-<table class="normal" width="97%" >
+<table class="normal"  >
 {section name=ix loop=$slots}
 <tr>
 	<td class="{cycle}">
-	    <table width="100%">
+	    <table >
 	    <tr>
-	    <td width="7%">
+	    <td >
     	<a class="link" href="tiki-minical.php?view=daily&amp;day={$slots[ix].start|date_format:"%d"}&amp;mon={$slots[ix].start|date_format:"%m"}&year={$slots[ix].start|date_format:"%Y"}">{$slots[ix].start|date_format:"%a"}<br />
     	{$slots[ix].start|date_format:"%d"}</a>
     	</td>
@@ -141,7 +141,7 @@
 <input type="hidden" name="view" value="{$view|escape}" />
 <table class="normal">
 <tr>
-<td width="2%" class="heading"><input type="submit" name="delete" value="x " /></td>
+<td  class="heading"><input type="submit" name="delete" value="x " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'start_desc'}start{else}start_desc{/if}">{tr}start{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'duration_desc'}duration_asc{else}duration_desc{/if}">{tr}duration{/tr}</a></td>

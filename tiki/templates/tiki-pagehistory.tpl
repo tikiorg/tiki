@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.11 2003-08-01 10:31:11 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.12 2003-09-25 01:05:21 rlpowell Exp $ *}
 
 <a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a><br /><br />
 {if $preview}
@@ -17,8 +17,8 @@
   <td>{tr}Version{/tr}:{$version}</td>
 </tr>
 <tr>
-  <td valign="top" width="50%"><div class="wikitext">{$parsed}</div></td>
-  <td valign="top" width="50%"><div class="wikitext">{$diff}</div></td>
+  <td valign="top" ><div class="wikitext">{$parsed}</div></td>
+  <td valign="top" ><div class="wikitext">{$diff}</div></td>
 </tr>
 </table>
 {/if}

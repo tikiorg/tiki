@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.5 2003-08-28 20:07:51 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.6 2003-09-25 01:05:21 rlpowell Exp $ *}
 
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
 <div class="debugconsole" id="debugconsole" style="{$debugconsole_style}">
 
 {* Command prompt form *}
 <form method="post" action="{$console_father}">
-<table border="0" width="100%">
+<table border="0" >
   <tr><td colspan="3" align="right">
     <b>{tr}Tiki Debugger Console{/tr}</b>
     <a class="separator" href="javascript:toggle('debugconsole');" title="{tr}Close{/tr}">

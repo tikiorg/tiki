@@ -2,7 +2,7 @@
 {include file="header.tpl"}
 <div id="tiki-main">
   <div id="tiki-mid">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <table border="0" cellpadding="0" cellspacing="0" >
     <tr>
       <td id="centercolumn"><div id="tiki-center">
 
@@ -12,7 +12,7 @@
 <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
 </h1>{/if}
-<table width="100%">
+<table >
 <tr>
 <td>
 {if $feature_wiki_description eq 'y'}

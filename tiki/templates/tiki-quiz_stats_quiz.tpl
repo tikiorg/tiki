@@ -65,9 +65,9 @@
   Q: {$questions[ix].question}<br />
   <table class="normal">
   <tr>
-   <td width="70%" class="heading">{tr}Option{/tr}</td>
-   <td width="30%" class="heading">{tr}Votes{/tr}</td>
-   <td width="30%" class="heading">{tr}Average{/tr}</td>
+   <td  class="heading">{tr}Option{/tr}</td>
+   <td  class="heading">{tr}Votes{/tr}</td>
+   <td  class="heading">{tr}Average{/tr}</td>
   </tr>
   {section name=jx loop=$questions[ix].options}
   <tr>

@@ -2,7 +2,7 @@
 {$userwatch}, {tr}you have requested to download the layer:{/tr}{$layer} {tr}from
 the mapfile:{/tr}{$mapfile}<br><br>
 {tr}Here are the files to download, do not forget to rename them:{/tr}<br>
-<table border="1" cellpadding="0" cellspacing="0" width="97%">
+<table border="1" cellpadding="0" cellspacing="0" >
 {section name=j loop=$files}
 {if $smarty.section.j.index % 2}
 <tr>

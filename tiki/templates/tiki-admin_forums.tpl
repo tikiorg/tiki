@@ -194,7 +194,7 @@
 <tr>
 	<td class="formcolor">{tr}User information display{/tr}</td>
 	<td class="formcolor">
-	<table width="100%">
+	<table >
 	<tr>
 		<td class="formcolor">{tr}avatar{/tr}</td>
 		<td class="formcolor">{tr}flag{/tr}</td>

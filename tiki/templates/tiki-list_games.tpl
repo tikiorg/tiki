@@ -38,7 +38,7 @@
 {if $play eq 'n'}
 {section name=ix loop=$games}
 <table class="normal">
-<tr><td width="12%" class="even">
+<tr><td  class="even">
 <a href="tiki-list_games.php?game={$games[ix].game}"><img border='0' src="games/thumbs/{$games[ix].game}" alt=''/></a>
 {if $tiki_p_admin_games eq 'y'}
 <div align="center"><small>
@@ -46,10 +46,10 @@
 |<a href="tiki-list_games.php?edit={$games[ix].game}" class="link">{tr}edit{/tr}</a>]
 </small></div>
 {/if}
-</td><td class="even" width="83%">
+</td><td class="even" >
 <small>{$games[ix].desc}</small>
 </td>
-<td class="even" width="5%">
+<td class="even" >
 {tr}Played{/tr} {$games[ix].hits} {tr}times{/tr}
 </td>
 </tr>

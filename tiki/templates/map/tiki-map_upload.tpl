@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br/><br/>
 <h3>{tr}{$dir}{/tr}</h3>
-<table border="1" cellpadding="0" cellspacing="0" width="97%">
+<table border="1" cellpadding="0" cellspacing="0" >
 <tr>
 <td class="heading" colspan="2">{tr}Directories{/tr}</a></td>
 </tr>

@@ -77,7 +77,7 @@
 {/if}
 
 {if $section eq 'mailbox'}
-<table width="100%">
+<table >
 <tr>
 <td>
 <a class="link" href="tiki-webmail.php?section=mailbox">{tr}View All{/tr}</a> | <a class="link" href="tiki-webmail.php?section=mailbox&amp;filter=unread">{tr}Unread{/tr}</a> | <a class="link" href="tiki-webmail.php?section=mailbox&amp;filter=flagged">{tr}Flagged{/tr}</a>
@@ -105,12 +105,12 @@
 <br /><br />
 <table class="normal">
 <tr>
-  <td width="2%" class="heading"></td>
-  <td width="2%" class="heading"></td>
-  <td width="20%" class="heading">{tr}sender{/tr}</td>
-  <td width="30%" class="heading">{tr}subject{/tr}</td>
-  <td width="12%" class="heading">{tr}date{/tr}</td>
-  <td width="8%" align="right" class="heading">{tr}size{/tr}</td>
+  <td  class="heading"></td>
+  <td  class="heading"></td>
+  <td  class="heading">{tr}sender{/tr}</td>
+  <td  class="heading">{tr}subject{/tr}</td>
+  <td  class="heading">{tr}date{/tr}</td>
+  <td  align="right" class="heading">{tr}size{/tr}</td>
 </tr>
 {section name=ix loop=$list}
 {if $list[ix].isRead eq 'y'}
@@ -198,7 +198,7 @@
   </td>
 </tr>
 </table>
-<table width="100%">
+<table >
 {if $fullheaders eq 'n'}
 <tr><td class="formcolor">{tr}From{/tr}</td><td class="formcolor">{$headers.from}</td></tr>
 <tr><td class="formcolor">{tr}To{/tr}</td><td class="formcolor">{$headers.to}</td></tr>
@@ -318,7 +318,7 @@
     <input type="hidden" name="attach2type" value="{$attach2type|escape}" />
     <input type="hidden" name="attach3type" value="{$attach3type|escape}" />
     <input type="submit" name="send" value="{tr}send{/tr}" />
-    <table width="100%">
+    <table >
     <tr><td class="formcolor"><a title="{tr}select from address book{/tr}" class="link" href="#" onClick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:</td><td colspan="3" class="formcolor"><input size="69" type="text" id="to" name="to" value="{$to|escape}" /></td></tr>
     <tr><td class="formcolor">{tr}cc{/tr}</td><td class="formcolor"><input id="cc" type="text" name="cc" value="{$cc|escape}" /></td><td class="formcolor">{tr}bcc{/tr}</td><td class="formcolor"><input type="text" name="bcc" value="{$bcc}" id="bcc" /></td></tr>
     <tr><td class="formcolor">{tr}Subject{/tr}</td><td colspan="3" class="formcolor"><input size="69" type="text" name="subject" value="{$subject|escape}" /></td></tr>

@@ -57,9 +57,9 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td width="5%" class="{cycle advance=false}">{$channels[user].questionId}</td>
+<td  class="{cycle advance=false}">{$channels[user].questionId}</td>
 <td class="{cycle advance=false}">{$channels[user].question}</td>
-<td width="8%" class="{cycle}">
+<td  class="{cycle}">
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
 </td>

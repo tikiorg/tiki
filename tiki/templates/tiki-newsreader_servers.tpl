@@ -30,7 +30,7 @@
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-newsreader_servers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'server_desc'}server_asc{else}server_desc{/if}">{tr}server{/tr}</a></td>
-<td width="8%" class="heading">&nbsp;</td>
+<td  class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

@@ -38,7 +38,7 @@
 
 
   <div class="thumbnails">
-    <table class="galtable" width="100%" cellpadding="0" cellspacing="0">
+    <table class="galtable"  cellpadding="0" cellspacing="0">
       <tr>
         {section name=idx loop=$images}
           <td align="center" {if (($smarty.section.idx.index / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>

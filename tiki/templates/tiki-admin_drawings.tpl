@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.8 2003-08-21 00:51:21 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.9 2003-09-25 01:05:21 rlpowell Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 <!-- the help link info --->
@@ -46,12 +46,12 @@
 <table class="normal">
 <tr>
 {if $smarty.request.ver}
-<td width="2%" class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
+<td  class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
 {/if}
 <td class="heading">{tr}Name{/tr}</td>
-<td width="3%" class="heading">{tr}Ver{/tr}</a></td>
-<td width="3%" class="heading">{tr}Versions{/tr}</a></td>
-<td width="12%" class="heading">{tr}Action{/tr}</a></td>
+<td  class="heading">{tr}Ver{/tr}</a></td>
+<td  class="heading">{tr}Versions{/tr}</a></td>
+<td  class="heading">{tr}Action{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-old_articles.tpl,v 1.4 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-old_articles.tpl,v 1.5 2003-09-25 01:05:23 rlpowell Exp $ *}
 
 {if $feature_articles eq 'y'}
 <div class="box">
@@ -6,9 +6,9 @@
 {include file="modules/module-title.tpl" module_title="{tr}Old articles{/tr}" module_name="old_articles"}
 </div>
 <div class="box-data">
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<table  border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modOldArticles}
-<tr><td  width="5%" class="module">{$smarty.section.ix.index_next})&nbsp;<a class="linkmodule" href="tiki-read_article.php?articleId={$modOldArticles[ix].articleId}">{$modOldArticles[ix].title}</a></td></tr>
+<tr><td   class="module">{$smarty.section.ix.index_next})&nbsp;<a class="linkmodule" href="tiki-read_article.php?articleId={$modOldArticles[ix].articleId}">{$modOldArticles[ix].title}</a></td></tr>
 {/section}
 </table>
 </div>

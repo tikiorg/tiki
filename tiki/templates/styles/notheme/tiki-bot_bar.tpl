@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-bot_bar.tpl,v 1.5 2003-08-14 12:48:41 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-bot_bar.tpl,v 1.6 2003-09-25 01:05:30 rlpowell Exp $ *}
 
 {include file="styles/notheme/babelfish.tpl"}
 
-<table width="100%">
+<table >
   <tr>
-    <td width="20%">
+    <td >
     <table>
       <tr>
         <td colspan="2">
@@ -35,7 +35,7 @@
     </table>
     </td>
     <td align="center"> {tr}Page generated in{/tr}: {elapsed} {tr}seconds{/tr}  </td>
-    <td width="20%" align=right>
+    <td  align=right>
     <table>
       <tr>
         <td>

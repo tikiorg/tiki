@@ -1,6 +1,6 @@
 <table cellpadding='0' cellspacing='0'><tr><td>
 <div style="height:20px; padding-top:2px; padding-bottom:2px;border:1px solid black; background-color:white; color:black; font-size:10px;">
-<table width="100%" cellpadding='0' cellspacing='0'>
+<table  cellpadding='0' cellspacing='0'>
 <tr>
 	<td><b>{$proc_info.name}:{$proc_info.version}</b>
 	{if $proc_info.isValid eq 'y'}
@@ -32,9 +32,9 @@
 </tr>
 </table>
 </div>
-</td><td width="10%">
+</td><td >
 <div style="height:20px; padding-top:2px; padding-bottom:2px; border:1px solid black; background-color:white; color:black; font-size:10px;">
-<table width="100%" cellpadding='0' cellspacing='0'>
+<table  cellpadding='0' cellspacing='0'>
 <tr>
 	<td><a class="link" href="tiki-g-monitor_processes.php?filter_process={$pid}"><img border='0' src='lib/Galaxia/img/icons/Process.gif' alt='{tr}monitor{/tr}' title='{tr}monitor processes{/tr}' /></td>	
 	<td><a class="link" href="tiki-g-monitor_activities.php?filter_process={$pid}"><img border='0' src='lib/Galaxia/img/icons/Activity.gif' alt='{tr}monitor{/tr}' title='{tr}monitor activities{/tr}' /></td>	

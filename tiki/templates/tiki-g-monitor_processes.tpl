@@ -91,11 +91,11 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td width="55%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></td>
-<td width="5%" class="heading" >{tr}Activs{/tr}</td>
-<td width="5%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isActive_desc'}{sameurl sort_mode='isActive_asc'}{else}{sameurl sort_mode='isActive_desc'}{/if}">{tr}act{/tr}</a></td>
-<td width="5%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isValid_desc'}{sameurl sort_mode='isValid_asc'}{else}{sameurl sort_mode='isValid_desc'}{/if}">{tr}val{/tr}</a></td>
-<td width="15%" class="heading" >{tr}Instances{/tr}<br/>
+<td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></td>
+<td  class="heading" >{tr}Activs{/tr}</td>
+<td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isActive_desc'}{sameurl sort_mode='isActive_asc'}{else}{sameurl sort_mode='isActive_desc'}{/if}">{tr}act{/tr}</a></td>
+<td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isValid_desc'}{sameurl sort_mode='isValid_asc'}{else}{sameurl sort_mode='isValid_desc'}{/if}">{tr}val{/tr}</a></td>
+<td  class="heading" >{tr}Instances{/tr}<br/>
 </td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -128,7 +128,7 @@
 	</td>
 	
 	<td class="{cycle}" style="text-align:right;">
-		<table width="100%">
+		<table >
 		<tr>
 		 <td style="text-align:right;"><a style="color:green;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=active">{$items[ix].active_instances}</a></td>
 		 <td style="text-align:right;"><a style="color:black;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=completed">{$items[ix].completed_instances}</a></td>

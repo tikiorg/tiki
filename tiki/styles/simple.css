@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.1 2003-09-19 19:38:20 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.2 2003-09-25 01:05:19 rlpowell Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -149,8 +149,22 @@ form {
  ***** Here we define IDs *****
  */
 #modules1 {
- width: 24%;
+    vertical-align:    top;
+    width:   180px;
 }
 #modules2 {
- width: 24%;
+    vertical-align:    top;
+    width:   180px;
+}
+
+/* 
+centercolumn 
+*/
+DIV#maincontent {
+    vertical-align:    top;
+    margin-left:    0;
+    margin-right:   0;
+    padding-left:   0;
+    padding-right:   0;
+    width: 100%;
 }

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.12 2003-09-24 14:02:20 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.13 2003-09-25 01:05:21 rlpowell Exp $ *}
 <a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br/><br/>
 
 {if $feature_help eq 'y'}
@@ -19,14 +19,14 @@
 <span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} (0 {tr}reads{/tr})</span>
 </div>
 <div class="articleheading">
-<table width="100%" cellpadding="0" cellspacing="0">
-<tr><td width="25%" valign="top">
+<table  cellpadding="0" cellspacing="0">
+<tr><td  valign="top">
 {if $useImage eq 'y'}
   <img alt="{tr}Article image{/tr}" border="0" src="received_article_image.php?id={$receivedArticleId}" />
 {else}
   <img alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topic}" />
 {/if}
-</td><td width="75%" valign="top">
+</td><td  valign="top">
 <span class="articleheading">{$parsed_heading}</span>
 </td></tr>
 </table>

@@ -27,7 +27,7 @@
 <b>{tr}Subcategories{/tr}</b><br/>
 {* The table with the subcategories *}
 <div class="dircategs">
-<table  width="100%">
+<table  >
     <tr>
     {section name=numloop loop=$categs}
         <td><a class="dirlink" href="tiki-directory_browse.php?parent={$categs[numloop].categId}">{$categs[numloop].name}</a>

@@ -4,7 +4,7 @@
     <div class="simplebox">
       {tr}CMS features{/tr}<br />
       <form action="tiki-admin.php?page=cms" method="post">
-        <table width="100%"><tr>
+        <table ><tr>
           <td class="form">{tr}Rankings{/tr}:</td>
           <td><input type="checkbox" name="feature_cms_rankings"
               {if $feature_cms_rankings eq 'y'}checked="checked"{/if}/></td>

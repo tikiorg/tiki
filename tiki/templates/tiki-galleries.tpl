@@ -118,7 +118,7 @@
 {if $gal_list_visits eq 'y'}   
 <td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a></td>
 {/if}
-<td width="20%" class="heading">{tr}Actions{/tr}</td>
+<td  class="heading">{tr}Actions{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$galleries}

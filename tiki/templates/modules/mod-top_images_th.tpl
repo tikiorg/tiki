@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images_th.tpl,v 1.6 2003-09-05 20:49:15 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images_th.tpl,v 1.7 2003-09-25 01:05:23 rlpowell Exp $ *}
 
 {if $feature_galleries eq 'y'}
 <div class="box">
@@ -9,7 +9,7 @@
 {section name=ix loop=$modTopImages}
 {if $smarty.section.ix.index < 5}
 <div align="center" class="imagerank">
-<table width="100%" cellpadding="0" cellspacing="0">
+<table  cellpadding="0" cellspacing="0">
 <tr>
 <td align="center">
 <a class="linkmodule" href="tiki-browse_image.php?imageId={$modTopImages[ix].imageId}">

@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.13 2003-08-30 13:04:49 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.14 2003-09-25 01:05:21 rlpowell Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
-<div class="wiki-edithelp" width="100%" id='edithelpzone' >
+<div class="wiki-edithelp"  id='edithelpzone' >
 <div id="wikihelp-tab">
 {if count($plugins) ne 0}
   <div style="text-align: right;">

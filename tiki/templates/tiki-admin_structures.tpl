@@ -48,7 +48,7 @@
 <table class="normal">
 <tr>
   <td class="heading">{tr}Structure{/tr}</td>
-  <td width="11%" class="heading">&nbsp;</td>
+  <td  class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section loop=$channels name=ix}

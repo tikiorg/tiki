@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.26 2003-09-15 13:28:17 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.27 2003-09-25 01:05:22 rlpowell Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -70,7 +70,7 @@ if (!strstr($father,"?")) {
 </div>
 <div class="box-data" style="margin:0px;padding-right:4px;">
 
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <table  border="0" cellspacing="0" cellpadding="0">
     <!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
     <tr>
       <td align="center">
@@ -99,7 +99,7 @@ if (!strstr($father,"?")) {
 {/php}
     <tr>
       <td align="center">
-        <table width="95%" border="0" cellspacing="0" cellpadding="0">
+        <table  border="0" cellspacing="0" cellpadding="0">
         <!-- DAYS OF THE WEEK -->
         <tr>
 {php}

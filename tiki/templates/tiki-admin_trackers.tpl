@@ -77,7 +77,7 @@
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].items}</td>
-<td width="16%" class="{cycle}">
+<td  class="{cycle}">
    <a class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;trackerId={$channels[user].trackerId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
    <a class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='img/icons/ico_table.gif' alt='{tr}fields{/tr}' title='{tr}fields{/tr}' border='0' /></a>
    {if $channels[user].individual eq 'y'}({/if}<a class="link" href="tiki-objectpermissions.php?objectName=Tracker%20{$channels[user].name}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}"><img src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /></a>{if $channels[user].individual eq 'y'}){/if}

@@ -40,7 +40,7 @@
         <h2></h2>
         <font class="links"></font></td></tr>
         <tr><td colspan="3" height="50" bgcolor="#7d554b">
-        <table width="100%" bgcolor="#7d554b"><tr><td width="100">
+        <table  bgcolor="#7d554b"><tr><td width="100">
         <font class="buttons">
         {if $structure eq 'y'}
         <a class="buttons" href="tiki-slideshow2.php?page={$struct_prev}">{$struct_prev}</a></font></td>

@@ -71,6 +71,7 @@ TD#rightcolumn {
 
 TD#centercolumn {
 	vertical-align: top;
+	width: 100%;
 }
 
 /* And this is what lies inside the centercolumn */
@@ -79,6 +80,8 @@ DIV#tiki-center {
 	margin-right:   5px;
 	padding-left:   7px;
 	padding-right:   5px;
+	vertical-align: top;
+	width: 100%;
 }
 
 /* Lets build the book interface */
@@ -116,6 +119,12 @@ TD#page23 {
 
 TD#page24 {
 	background-color: #FFFFEE;
+	vertical-align: top;
+	width: 100%;
+	margin-left:    2px;
+	margin-right:   5px;
+	padding-left:   7px;
+	padding-right:   5px;
 }
 
 TD#page25 {

@@ -140,15 +140,15 @@ TD#centercolumn {
 	padding-right:    12px;
 	background:   white;
 	vertical-align:   top;
-	width:   auto;
+	width:   100%;
 }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {
-	margin-left:    2px;
-	margin-right:   5px;
-	padding-left:   7px;
-	padding-right:   5px;
+	margin-left:    0;
+	margin-right:   0;
+	padding-left:   0;
+	padding-right:   0;
 }
 
 div#debugconsole {

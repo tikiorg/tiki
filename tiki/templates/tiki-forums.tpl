@@ -15,7 +15,7 @@
 </table>
 <table class="forumstable">
 <tr>
-<td width="50%" class="forumheading"><a class="lforumheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
+<td  class="forumheading"><a class="lforumheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 {if $forum_list_topics eq 'y'}
 	<td class="forumheading"><a class="lforumheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
 {/if}	

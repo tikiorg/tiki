@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/module-title.tpl,v 1.7 2003-08-21 19:26:43 zaufi Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/module-title.tpl,v 1.8 2003-09-25 01:05:23 rlpowell Exp $*}
 {* Title bar for module with controls on it *}
 
 {* Draw module controls for logged user only *}
 {if $user and $user_assigned_modules == 'y' and $no_module_controls ne 'y' and $feature_modulecontrols eq 'y'}
-<table width="100%">
+<table >
   <tr>
     <td width="11">
       <a title="{tr}Move module up{/tr}" href="{$current_location}?mc_up={$module_name}"><img src="img/icons2/up.gif" border="0" /></a>

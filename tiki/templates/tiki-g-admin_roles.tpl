@@ -47,9 +47,9 @@ Errors:<br />
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <table class="normal">
 <tr>
-<td width="5%" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
-<td width="20%" class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-<td width="75%" class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
+<td  class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
+<td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
+<td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
@@ -87,19 +87,19 @@ Errors:<br />
 	<tr>
 		<td class="formcolor">{tr}Map{/tr}</td>
 		<td class="formcolor">
-		  <table border="1" width="100%">
+		  <table border="1" >
 		  	<tr>
-		  		<td class="formcolor" width="50%">
+		  		<td class="formcolor" >
 		  		{tr}Users{/tr}:
 				<input type="text" size="10" name="find_users" value="{$find_users|escape}" />
 				<input type="submit" name="findusers" value="{tr}filter{/tr}" />	  
 		  		</td>
-		  		<td class="formcolor" width="50%">
+		  		<td class="formcolor" >
 	  			{tr}Roles{/tr}:<br />		  		
 		  		</td>
 		  	</tr>
 		  	<tr>
-		  		<td class="formcolor" width="50%">
+		  		<td class="formcolor" >
 					<select name="user[]" multiple="multiple" size="10">
 					<option value="">"{tr}Anonymous{/tr}"</option>
 					{section name=ix loop=$users}
@@ -107,7 +107,7 @@ Errors:<br />
 					{/section}
 					</select>
 		  		</td>
-		  		<td class="formcolor" width="50%">
+		  		<td class="formcolor" >
 
 					<select name="role[]" multiple="multiple" size="10">
 					{section name=ix loop=$roles}
@@ -207,9 +207,9 @@ Errors:<br />
 <input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 <table class="normal">
 <tr>
-<td width="4%" class="heading"><input type="submit" name="delete_map" value="{tr}x{/tr} " /></td>
-<td width="48%" class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Role{/tr}</a></td>
-<td width="48%" class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
+<td  class="heading"><input type="submit" name="delete_map" value="{tr}x{/tr} " /></td>
+<td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Role{/tr}</a></td>
+<td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$mapitems}

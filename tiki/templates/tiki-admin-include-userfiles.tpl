@@ -3,7 +3,7 @@
 		<div class="cbox-data">
 			<div class="simplebox">
 				<form action="tiki-admin.php?page=userfiles" method="post">
-				<table width="100%">
+				<table >
 				<tr><td class="form">{tr}Quota (Mb){/tr}</td><td>
 				<input type="text" name="userfiles_quota" value="{$userfiles_quota|escape}" />
 				</td></tr>

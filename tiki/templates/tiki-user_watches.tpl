@@ -16,7 +16,7 @@
 <form action="tiki-user_watches.php" method="post">
 <table class="normal">
 <tr>
-<td style="text-align:center;" width="5%" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
+<td style="text-align:center;"  class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td class="heading">{tr}event{/tr}</td>
 <td class="heading">{tr}object{/tr}</td>
 </tr>

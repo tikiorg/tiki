@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.14 2003-09-24 14:02:20 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.15 2003-09-25 01:05:21 rlpowell Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
 
@@ -68,7 +68,7 @@
 {if $art_list_img eq 'y'}
 	<td class="heading">{tr}Img{/tr}</td>
 {/if}
-<td width="7%" class="heading">{tr}Action{/tr}</td>
+<td  class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}

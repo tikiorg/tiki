@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.20 2003-08-21 00:51:21 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.21 2003-09-25 01:05:21 rlpowell Exp $ *}
 
 <a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -41,7 +41,7 @@
 <tr>
 	<td class="formcolor">{tr}Listing configuration{/tr}</td>
 	<td class="formcolor">
-		<table width="100%">
+		<table >
 			<tr>
 				<td class="formcolor">{tr}icon{/tr}</td>
 				<td class="formcolor">{tr}id{/tr}</td>
@@ -130,7 +130,7 @@
 {if $fgal_list_hits eq 'y'}
 	<td style="text-align:right;"  class="heading"><a class="tableheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
 {/if}
-<td width="15%" class="heading">{tr}Actions{/tr}</td>
+<td  class="heading">{tr}Actions{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$galleries}

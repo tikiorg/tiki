@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_permissions.tpl,v 1.2 2003-08-01 10:31:14 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_permissions.tpl,v 1.3 2003-09-25 01:05:22 rlpowell Exp $ *}
 {* Show permissions table *}
 
 {if count($command_result) > 0} {* Can it be == 0 ?? *}
-<table width="100%" id="permissions">
+<table  id="permissions">
 <caption>Permissions for {if $user}{$user}{else}anonymous{/if}</caption>
 {section name=i loop=$command_result}
   {* make row new start *}

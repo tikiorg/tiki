@@ -104,7 +104,7 @@
 </form>
 {if count($topics) > 0}
 <div class="simplebox">
-<table width="100%">
+<table >
 <tr>
 {section name=numloop loop=$topics}
         <td>

@@ -129,11 +129,11 @@
 <h3>{tr}Attachments{/tr}</h3>
 <table class="normal">
 <tr> 
-  <td width="28%" class="heading">{tr}name{/tr}</td>
-  <td width="27%" class="heading">{tr}uploaded{/tr}</td>
-  <td width="10%" class="heading">{tr}size{/tr}</td>
-  <td width="10%" class="heading">{tr}dls{/tr}</td>
-  <td width="25%" class="heading">{tr}desc{/tr}</td>
+  <td  class="heading">{tr}name{/tr}</td>
+  <td  class="heading">{tr}uploaded{/tr}</td>
+  <td  class="heading">{tr}size{/tr}</td>
+  <td  class="heading">{tr}dls{/tr}</td>
+  <td  class="heading">{tr}desc{/tr}</td>
 </tr> 
 {cycle values="odd,even" print=false}
 {section name=ix loop=$atts}

@@ -20,7 +20,7 @@
 <form action="tiki-usermenu.php" method="post">
 <table class="normal">
 <tr>
-<td width="2%" class="heading"><input type="submit" name="delete" value="x " title="{tr}delete selected{/tr}" /></td>
+<td  class="heading"><input type="submit" name="delete" value="x " title="{tr}delete selected{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Pos{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></td>

@@ -73,6 +73,7 @@ TD#rightcolumn {
 TD#centercolumn {
 	padding-right:    14px;
 	vertical-align:   top;
+	width: 100%;
 }
 
 /* And this is what lies inside the centercolumn */

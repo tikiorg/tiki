@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_admin_tree.php,v 1.3 2003-08-07 04:34:12 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/tree/categ_admin_tree.php,v 1.4 2003-09-25 01:05:18 rlpowell Exp $
  *
  * \brief Categories browse tree
  *
@@ -59,7 +59,7 @@ class CatAdminTreeMaker extends TreeMaker {
 		$this->itemID = $this->prefix . 'id' . $nodeinfo["id"];
 
 		$this->jsscriptblock .= "setFlipWithSign('" . $this->itemID . "'); ";
-		return '<td width="3%"><a class="catname" title="' . tra(
+		return '<td ><a class="catname" title="' . tra(
 			'child categories'). ': ' . $nodeinfo["children"] . ', ' . tra('objects in category'). ': ' . $nodeinfo["objects"] . '" id="flipper' . $this->itemID . '" href="javascript:flipWithSign(\'' . $this->itemID . '\')">[+]</a></td>';
 	}
 

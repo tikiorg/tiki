@@ -3,7 +3,7 @@
   <div class="cbox-data">
     <div class="simplebox">
       <form action="tiki-admin.php?page=fgal" method="post">
-        <table width="100%"><tr>
+        <table ><tr>
           <td class="form">{tr}Home Gallery (main gallery){/tr}</td>
           <td><select name="homeFileGallery">
               {section name=ix loop=$file_galleries}
@@ -20,7 +20,7 @@
     <div class="simplebox">
       {tr}Galleries features{/tr}<br />
       <form action="tiki-admin.php?page=fgal" method="post">
-        <table width="100%"><tr>
+        <table ><tr>
           <td class="form">{tr}Rankings{/tr}:</td>
           <td><input type="checkbox" name="feature_file_galleries_rankings" 
               {if $feature_file_galleries_rankings eq 'y'}checked="checked"{/if}/></td>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.22 2003-09-22 14:26:50 fukuchi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.23 2003-09-25 01:05:21 rlpowell Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 <script type="javascript" src="lib/calendar/dates.js"></script>
@@ -23,7 +23,7 @@
 
 <form class="box" method="get" action="tiki-calendar.php" name="f">
 <div class="tabcal">
-<table border="0" width="100%">
+<table border="0" >
 <tr>
 <td>
 <input type="submit" name="refresh" value="{tr}Refresh{/tr}"/><br />
@@ -106,7 +106,7 @@ onmouseover="this.style.textDecoration='underline';"
 </div>
 
 
-<table cellpadding="0" cellspacing="0" border="0" width="100%" id="calendar">
+<table cellpadding="0" cellspacing="0" border="0"  id="calendar">
 {if $viewmode eq 'day'}
 
 {else}

@@ -4,11 +4,11 @@
   </div>
   <div class="cbox-data">
     <form action="tiki-admin.php?page=general" method="post">
-      <table width="99%"><tr>
+      <table ><tr>
         <td class="heading" colspan=2 
             align="center">{tr}General Preferences{/tr}</td>
       </tr><tr>
-        <td class="form" width="33%">{tr}Theme{/tr}:</td>
+        <td class="form" >{tr}Theme{/tr}:</td>
         <td width="%67%"><select name="site_style">
             {section name=ix loop=$styles}
               <option value="{$styles[ix]|escape}"
@@ -113,13 +113,13 @@
             </select>
         </td>
       </tr></table>
-      <table width="99%"><tr>
+      <table ><tr>
         <td class="heading" colspan=5 
             align="center">{tr}General Settings{/tr}</td>
       </tr><tr>
-        <td class="form" width="43%">
+        <td class="form" >
           {tr}Disallow access to the site (except for those with permission){/tr}:</td>
-        <td width="57%"><input type="checkbox" name="site_closed"
+        <td ><input type="checkbox" name="site_closed"
               {if $site_closed eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
@@ -129,12 +129,12 @@
              value="{$site_closed_msg}" size="60"/></td>
       </tr>
       </table>
-      <table width="99%"><tr>
+      <table ><tr>
         <td colspan=2><hr></td>
       </tr><tr>
-        <td class="form" width="43%">
+        <td class="form" >
           {tr}Disallow access when load is above the threshold (except for those with permission){/tr}:</td>
-        <td width="57%"><input type="checkbox" name="use_load_threshold"
+        <td ><input type="checkbox" name="use_load_threshold"
               {if $use_load_threshold eq 'y'}checked="checked"{/if}/>
       </td>
       </tr><tr>
@@ -145,18 +145,18 @@
         <td><input type="text" name="site_busy_msg" value="{$site_busy_msg}" size="60" /></td>
       </tr>
       </table>
-      <table width="99%"><tr>
+      <table ><tr>
         <td colspan=5><hr></td></tr>
         <tr>
-        <td class="form" width="43%">
+        <td class="form" >
           {tr}Open external links in new window{/tr}:</td>
-        <td width="5%"><input type="checkbox" name="popupLinks"
+        <td ><input type="checkbox" name="popupLinks"
               {if $popupLinks eq 'y'}checked="checked"{/if}/>
         </td>
-        <td width="4%">&nbsp;</td>
-        <td class="form" width="43%">
+        <td >&nbsp;</td>
+        <td class="form" >
           {tr}Display modules to all groups always{/tr}:</td>
-        <td width="5%"><input type="checkbox" name="modallgroups"
+        <td ><input type="checkbox" name="modallgroups"
               {if $modallgroups eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
@@ -190,12 +190,12 @@
               {if $count_admin_pvs eq 'y'}checked="checked"{/if}/>
         </td>
       </tr></table>
-      <table width="99%"><tr>
+      <table ><tr>
         <td colspan=2><hr></td>
       </tr><tr>
-        <td class="form" width="43%">
+        <td class="form" >
           {tr}Server name (for absolute URIs){/tr}:</td>
-        <td width="57%"><input type="text" name="feature_server_name"
+        <td ><input type="text" name="feature_server_name"
                                value="{$feature_server_name|escape}" size="40" /></td>
       </tr><tr>
         <td class="form">{tr}Browser title{/tr}:</td>
@@ -243,12 +243,12 @@
         <td><input size="5" type="text" name="maxRecords"
                    value="{$maxRecords|escape}" />
       </tr></table>
-      <table width="99%"><tr>
+      <table ><tr>
         <td class="heading" colspan=2 
             align="center">{tr}Date and Time Formats{/tr}</td>
       </tr><tr>
-        <td class="form" width="43%">{tr}Long date format{/tr}:</td>
-        <td width="57%"><input type="text" name="long_date_format"
+        <td class="form" >{tr}Long date format{/tr}:</td>
+        <td ><input type="text" name="long_date_format"
              value="{$long_date_format|escape}" size="40"/></td>
       </tr><tr>
         <td class="form">{tr}Short date format{/tr}:</td>
@@ -275,13 +275,13 @@
         </td>
       </tr></table>
 	  <!-- Obsolete from 1.7 timezone changes
-      <table width="99%"><tr>
+      <table ><tr>
         <td class="heading" colspan=2 
             align="center">{tr}Time Zone{/tr}</td>
       </tr><tr>
-        <td class="form" width="43%" style="vertical-align:middle;">
+        <td class="form"  style="vertical-align:middle;">
           {tr}Server time zone{/tr}:</td>
-        <td width="57%">
+        <td >
           <div class="simplebox">{$timezone_server}</div></td>
       </tr><tr>
         <td class="form">{tr}Displayed time zone{/tr}:</td>
@@ -306,9 +306,9 @@
   </div>
   <div class="cbox-data">
     <form method="post" action="tiki-admin.php?page=general">
-      <table width="99%"><tr>
-        <td class="form" width="43%">{tr}New password{/tr}:</td>
-        <td width="57%"><input type="password" name="adminpass" /></td>
+      <table ><tr>
+        <td class="form" >{tr}New password{/tr}:</td>
+        <td ><input type="password" name="adminpass" /></td>
       </tr><tr>
         <td class="form">{tr}Repeat password{/tr}:</td>
         <td><input type="password" name="again" /></td>

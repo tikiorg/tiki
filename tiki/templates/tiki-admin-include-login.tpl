@@ -3,7 +3,7 @@
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php?page=login" method="post">
-<table width="100%">
+<table >
 <tr><td class="form">{tr}Authentication method{/tr}</td><td>
 <select name="auth_method">
 <option value="tiki" {if $auth_method eq 'tiki'} selected="selected"{/if}>{tr}Just Tiki{/tr}</option>
@@ -66,7 +66,7 @@
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php?page=login" method="post">
-<table width="100%">
+<table >
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="auth_create_user_tiki" {if $auth_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Create user if not in Auth?{/tr}</td><td><input type="checkbox" name="auth_create_user_auth" {if $auth_create_user_auth eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_skip_admin" {if $auth_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
