@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.58 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.59 2004-03-29 07:20:42 chealer Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -198,22 +198,13 @@ if(!$cachelib->isCached("allperms")) {
 }
 $allperms = $allperms["data"];
 
-
+//Initializes permissions
 foreach ($allperms as $vperm) {
-    $perm = $vperm["permName"];
+	$perm = $vperm["permName"];
+	$$perm = 'n';
 
-    if ($user != 'admin' && (!$user || !$userlib->user_has_permission($user, 'tiki_p_admin'))) {
-        $$perm = 'n';
-
-        $smarty->assign("$perm", 'n');
-    } else {
-        $$perm = 'y';
-
-        $smarty->assign("$perm", 'y');
-    }
+	$smarty->assign("$perm", 'n');
 }
-
-unset($allperms);
 
 // Permissions
 // Get group permissions here
@@ -378,6 +369,18 @@ if ($tiki_p_admin_cms == 'y') {
     }
 }
 
+//Gives admins all permissions
+if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_admin'))) {
+	foreach ($allperms as $vperm) {
+		$perm = $vperm["permName"];
+		$$perm = 'y';
+
+		$smarty->assign("$perm", 'y');
+	}
+}
+
+unset($allperms);
+
 $tikiIndex = $tikilib->get_preference("tikiIndex", 'tiki-index.php');
 
 $style = $tikilib->get_preference("style", 'moreneat.css');
@@ -395,37 +398,6 @@ $change_language = $tikilib->get_preference("change_language", 'y');
 $change_theme = $tikilib->get_preference("change_theme", 'y');
 
 $language = $tikilib->get_preference('language', 'en');
-
-/* This seems to be done in tiki-setup.php
-if ($feature_userPreferences == 'y') {
-    // Check for FEATURES for the user
-    $user_style = $tikilib->get_preference("style", 'moreneat.css');
-
-    if ($user) {
-        if ($change_theme == 'y') {
-            $user_style = $tikilib->get_user_preference($user, 'theme', $style);
-
-            if ($user_style) {
-                $style = $user_style;
-            }
-        }
-
-        if ($change_language == 'y') {
-            $user_language = $tikilib->get_user_preference($user, 'language', $language);
-
-            if ($user_language) {
-                $language = $user_language;
-            }
-        }
-    }
-
-    $smarty->assign('style', $style);
-    $smarty->assign('language', $language);
-}
-
-$stlstl = explode('.', $style);
-$style_base = $stlstl[0];
-*/
 
 // Fix IIS servers not setting what they should set (ay ay IIS, ay ay)
 if (!isset($_SERVER['QUERY_STRING']))
