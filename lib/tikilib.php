@@ -8583,55 +8583,55 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     
     $rv = $this->find_wikis($words,     $offset, $maxRecords, $fulltext);
     foreach($rv['data'] as $a) {
-      $a['type'] = 'Wiki';
+      $a['type'] = tra('Wiki');
       array_push($data, $a);
     }
     $cant += $rv['cant'];
     $rv = $this->find_galleries($words, $offset, $maxRecords, $fulltext);
     foreach($rv['data'] as $a) {
-      $a['type'] = 'Gallery';
+      $a['type'] = tra('Gallery');
       array_push($data, $a);
     }
     $cant += $rv['cant'];
     $rv = $this->find_faqs($words,      $offset, $maxRecords, $fulltext);
     foreach($rv['data'] as $a) {
-      $a['type'] = 'FAQ';
+      $a['type'] = tra('FAQ');
       array_push($data, $a);
     }
     $cant += $rv['cant'];
     $rv = $this->find_images($words,    $offset, $maxRecords, $fulltext);
     foreach($rv['data'] as $a) {
-      $a['type'] = 'Image';
+      $a['type'] = tra('Image');
       array_push($data, $a);
     }
     $cant += $rv['cant'];
     $rv = $this->find_forums($words,    $offset, $maxRecords, $fulltext);
     foreach($rv['data'] as $a) {
-      $a['type'] = 'Forum';
+      $a['type'] = tra('Forum');
       array_push($data, $a);
     }
     $cant += $rv['cant'];
     $rv = $this->find_files($words,     $offset, $maxRecords, $fulltext);
     foreach($rv['data'] as $a) {
-      $a['type'] = 'File';
+      $a['type'] = tra('File');
       array_push($data, $a);
     }
     $cant += $rv['cant'];
     $rv = $this->find_blogs($words,     $offset, $maxRecords, $fulltext);
     foreach($rv['data'] as $a) {
-      $a['type'] = 'Blog';
+      $a['type'] = tra('Blog');
       array_push($data, $a);
     }
     $cant += $rv['cant'];
     $rv = $this->find_articles($words,  $offset, $maxRecords, $fulltext);
     foreach($rv['data'] as $a) {
-      $a['type'] = 'Article';
+      $a['type'] = tra('Article');
       array_push($data, $a);
     }
     $cant += $rv['cant'];
     $rv = $this->find_posts($words,     $offset, $maxRecords, $fulltext);
     foreach($rv['data'] as $a) {
-      $a['type'] = 'Post';
+      $a['type'] = tra('Post');
       array_push($data, $a);
     }
     $cant += $rv['cant'];
