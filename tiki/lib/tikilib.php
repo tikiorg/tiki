@@ -474,14 +474,13 @@ function compute_quiz_stats() {
 /*shared*/
 function list_quizzes($offset, $maxRecords, $sort_mode, $find) {
 
+	$bindvars = array();
+	$mid = "";
     if ($find) {
 	$findesc = '%' . $find . '%';
 
-	$mid = " where (`name` like $findesc or `description` like $findesc)";
+	$mid = " where (`name` like ? or `description` like ?)";
 	$bindvars = array($findesc,$findesc);
-    } else {
-	$mid = " ";
-	$bindvars=array();
     }
 
     $query = "select * from `tiki_quizzes` $mid order by ".$this->convert_sortmode($sort_mode);
@@ -4546,11 +4545,11 @@ function parse_data($data) {
 	    $rssdata = $rsslib->get_rss_module_content($id);
 	    $items = $rsslib->parse_rss_data($rssdata, $id);
 
-	    $repl = '<ul>';
+	    $repl = '<ul class="rsslist">';
 
 	    for ($j = 1; $j < count($items) && $j < $max; $j++) {
-		$repl .= '<li><a target="_blank" href="' . $items[$j]["link"] . '" class="wiki">' . $items[$j]["title"] . '</a>';
-		$repl .= ' ('.$items[$j]["pubdate"].')';
+		$repl .= '<li class="rssitem"><a target="_blank" href="' . $items[$j]["link"] . '" class="rsslink">' . $items[$j]["title"] . '</a>';
+		if ($items[$j]["pubdate"] <> '') $repl .= ' ('.$items[$j]["pubdate"].')';
 			$repl .= '</li>';
 			}
 

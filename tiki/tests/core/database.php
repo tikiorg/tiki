@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/tests/core/database.php,v 1.2 2003-08-24 00:42:17 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tests/core/database.php,v 1.3 2003-12-28 11:41:45 mose Exp $
  *
  * \brief Database Layer
  *
@@ -67,17 +67,17 @@ class TikiCoreDatabase
     // Reports SQL error from PEAR::db object.
     function sql_error($query, $values, $result)
     {
-        global $ADODB_Database;
-        trigger_error($ADODB_Database." error: ".$this->db->ErrorMsg()." in query:<br/>".$query."<br/>", E_USER_WARNING);
+        global $ADODB_LASTDB;
+        trigger_error($ADODB_LASTDB." error: ".$this->db->ErrorMsg()." in query:<br/>".$query."<br/>", E_USER_WARNING);
         die;
     }
 
     // functions to support DB abstraction
     function convert_query($query)
     {
-        global $ADODB_Database;
+        global $ADODB_LASTDB;
 
-        switch ($ADODB_Database)
+        switch ($ADODB_LASTDB)
         {
         case "oci8":
             $query = preg_replace("/`/", "\"", $query);
@@ -99,9 +99,9 @@ class TikiCoreDatabase
 
     function convert_sortmode($sort_mode)
     {
-        global $ADODB_Database;
+        global $ADODB_LASTDB;
 
-        switch ($ADODB_Database)
+        switch ($ADODB_LASTDB)
         {
         case "pgsql72":
         case "postgres7":
@@ -124,9 +124,9 @@ class TikiCoreDatabase
 
     function convert_binary()
     {
-        global $ADODB_Database;
+        global $ADODB_LASTDB;
 
-        switch ($ADODB_Database)
+        switch ($ADODB_LASTDB)
         {
         case "pgsql72":
         case "oci8":

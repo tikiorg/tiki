@@ -220,6 +220,25 @@ div.separator {
 .linkmenu, .rsslink { font-size: 11px; }
 .linkmenu:active, .rsslink:active { font-size: 11px; }
 .linkmenu:hover, .rsslink:hover { font-size: 11px; background-color: #EFEFEF;}
+/* style for rss lists in modules or in wiki */
+.rsslist {
+  background-color: #ffffff;
+  margin: 0;
+  margin-right: 10px;
+  padding: 1px;
+  border: 1px solid #dadac9;
+}
+.rssitem {
+  padding: 1px 6px 1px 6px;
+  border-top: 1px dashed #dadac9;
+}
+.rssitem:first-child {
+  border-top: 0;
+}
+.rssdate {
+  color: #999999;
+  font-style: italic;
+}
 
 /* Links to extend/collapse menus */
 .separator {  font-size: 10px;  }

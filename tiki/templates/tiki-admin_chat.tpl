@@ -3,14 +3,14 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=ChatAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ChatAdmin{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<a href="http://tikiwiki.org/tiki-index.php?page=ChatAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ChatAdmin{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_chat.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ChatAdmin tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_chat.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ChatAdmin tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
+{/if}
 
 <!-- begin -->
 
@@ -24,7 +24,7 @@
 <tr><td class="formcolor">{tr}Active{/tr}:</td><td class="formcolor"><input type="checkbox" name="active" {if $active eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Refresh rate{/tr}:</td><td class="formcolor">
 <select name="refresh">
-<option value="500" {if $refresh eq 500}selected="selected"{/if}>{tr}half a second{/tr}</option>
+<option value="500" {if $refresh eq 500}selected="selected"{/if}>{tr}Half a second{/tr}</option>
 <option value="1000" {if $refresh eq 1000}selected="selected"{/if}>1 {tr}second{/tr}</option>
 <option value="2000" {if $refresh eq 2000}selected="selected"{/if}>2 {tr}seconds{/tr}</option>
 <option value="3000" {if $refresh eq 3000}selected="selected"{/if}>3 {tr}seconds{/tr}</option>
@@ -69,8 +69,10 @@
 <td class="odd">{$channels[user].active}</td>
 <td class="odd">{$channels[user].refresh}</td>
 <td class="odd">
-   <a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}">{tr}edit{/tr}</a>
+   &nbsp;&nbsp;<a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this channel?{/tr}')" 
+title="{tr}Click here to delete this channel{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+   <a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
@@ -80,7 +82,9 @@
 <td class="even">{$channels[user].active}</td>
 <td class="even">{$channels[user].refresh}</td>
 <td class="even">
-   <a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}">{tr}remove{/tr}</a>
+   &nbsp;&nbsp;<a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this channel?{/tr}')" 
+title="{tr}Click here to delete this channel{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}">{tr}edit{/tr}</a>
 </td>
 </tr>

@@ -14,16 +14,15 @@
 {include file="messu-nav.tpl"}
 </br>
 
-
 {if $sent}
 {$message}
 {else}
 <form action="messu-broadcast.php" method="post">
 <table class="normal" >
   <tr>
-    <td class="formcolor">{tr}Group{/tr}:</td>
+    <td class="formcolor"><label for="broadcast-group">{tr}Group{/tr}:</label></td>
     <td class="formcolor">
-    <select name="group">
+    <select name="group" id="broadcast-group">
     {if $tiki_p_broadcast_all eq 'y'}
     <option value="all" selected="selected">{tr}All users{/tr}</option>
     {/if}
@@ -34,8 +33,8 @@
     </td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Priority{/tr}:</td><td class="formcolor">
-    <select name="priority">
+    <td class="formcolor"><label for="broadcast-priority">{tr}Priority{/tr}:</label></td><td class="formcolor">
+    <select name="priority" id="broadcast-priority">
       <option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
       <option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
       <option value="3" {if $priority eq 3}selected="selected"{/if}>3 -{tr}Normal{/tr}-</option>
@@ -46,7 +45,7 @@
     </td>
   </tr>
   <tr>
-    <td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" name="subject" value="{$subject|escape}" size="80" maxlength="255"/></td>
+    <td class="formcolor"><label for="broadcast-subject">{tr}Subject{/tr}:</label></td><td class="formcolor"><input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255"/></td>
   </tr>
 </table>
 <br />

@@ -139,7 +139,7 @@ class CalendarLib extends TikiLib {
 					"prio" => $res["priority"],
 					"url" => "tiki-calendar.php?todate=$i&amp;editmode=1&amp;calitemId=" . $res["calitemId"],
 					"name" => $res["name"],
-					"extra" => "<div align=right>... " . tra("click to edit"),
+					"extra" => "<div align='right'>... " . tra("click to edit"),
 					"head" => $head,
 					"description" => str_replace("\n|\r", "", $res["description"])
 				);

@@ -72,11 +72,15 @@
 <td class="odd">{$channels[user].created|tiki_short_datetime}</td>
 <td class="odd">
 [{section name=ix loop=$channels[user].sections}
-({$channels[user].sections[ix]} <a class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}">x</a>)
+&nbsp;&nbsp;({$channels[user].sections[ix]} <a class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
+title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
 {/section}]
 </td>
 <td class="odd">
-   <a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+   &nbsp;&nbsp;<a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
+title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
@@ -86,11 +90,15 @@
 <td class="even">{$channels[user].created|tiki_short_datetime}</td>
 <td class="even">
 [{section name=ix loop=$channels[user].sections}
-({$channels[user].sections[ix]} <a class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}">x</a>)
+({$channels[user].sections[ix]} &nbsp;&nbsp;<a class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
+title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
 {/section}]
 </td>
 <td class="even">
-   <a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+   &nbsp;&nbsp;<a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
+title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>

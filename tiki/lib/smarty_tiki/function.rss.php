@@ -18,10 +18,10 @@ function smarty_function_rss($params, &$smarty)
     }
     $data = $rsslib->get_rss_module_content($id);
     $items = $rsslib->parse_rss_data($data, $id);
-		print('<ul style="margin-left: 0.7em;	padding-left: 0.7em;">');
+		print('<ul class="rsslist">');
     for($i=0;$i<count($items) && $i<$max;$i++) {
-       if ($items[$i]["title"] <> '') print('<li><a target="_blank" href="'.$items[$i]["link"].'" class="linkmenu">'.$items[$i]["title"].'</a>');
-       if ($items[$i]["pubdate"] <> '') print(' ('.$items[$i]["pubdate"].')');
+       if ($items[$i]["title"] <> '') print('<li class="rssitem"><a target="_blank" href="'.$items[$i]["link"].'" class="rsslink">'.$items[$i]["title"].'</a>');
+       if ($items[$i]["pubdate"] <> '') print(' <span class="rssdate">('.$items[$i]["pubdate"].')</span>');
        print('</li>');
     }
     print('</ul>');

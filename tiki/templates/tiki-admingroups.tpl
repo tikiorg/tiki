@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.20 2003-12-24 01:17:26 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.21 2003-12-28 11:41:38 mose Exp $ *}
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">
@@ -19,9 +19,9 @@
 {/if}
 <form action="tiki-admingroups.php" method="post">
 <table class="normal">
-<tr><td class="formcolor"><label id="groups_group">{tr}Group{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="groups_group" value="{$groupname|escape}" /></td></tr>
-<tr><td class="formcolor"><label id="groups_desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea rows="5" cols="20" name="desc" id="groups_desc">{$groupdesc}</textarea></td></tr>
-<tr><td class="formcolor"><label id="groups_inc">{tr}Include{/tr}:</label></td><td class="formcolor">
+<tr><td class="formcolor"><label for="groups_group">{tr}Group{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="groups_group" value="{$groupname|escape}" /></td></tr>
+<tr><td class="formcolor"><label for="groups_desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea rows="5" cols="20" name="desc" id="groups_desc">{$groupdesc}</textarea></td></tr>
+<tr><td class="formcolor"><label for="groups_inc">{tr}Include{/tr}:</label></td><td class="formcolor">
 <select name="include_groups[]" id="groups_inc" multiple="multiple" size="4">
 {section name=ix loop=$users}
 {assign var=inced value=$users[ix].groupName}
@@ -29,7 +29,7 @@
 {/section}
 </select>
 </td></tr>
-<tr><td class="formcolor"><label id="groups_home">{tr}Home page{/tr}</label></td><td class="formcolor"><input type="text" name="home" id="groups_home" value="{$grouphome|escape}" />
+<tr><td class="formcolor"><label for="groups_home">{tr}Home page{/tr}</label></td><td class="formcolor"><input type="text" name="home" id="groups_home" value="{$grouphome|escape}" />
 {if $group ne ''}
 <tr><td  class="formcolor"> 
 <input type="hidden" name="olgroup" value="{$group|escape}">
@@ -43,7 +43,7 @@
 <h3>{tr}List of existing groups{/tr}</h3>
 <div align="center">
 <table class="findtable">
-<tr><td class="findtable"><label id="groups_find">{tr}Find{/tr}</label></td>
+<tr><td class="findtable"><label for="groups_find">{tr}Find{/tr}</label></td>
    <td class="findtable">
    <form method="get" action="tiki-admingroups.php">
      <input type="text" name="find" id="groups_find" value="{$find|escape}" />

@@ -47,9 +47,9 @@ class Base extends Observable {
 	}
 
 	function sql_error($query, $values, $result) {
-		global $ADODB_Database;
+		global $ADODB_LASTDB;
 
-		trigger_error($ADODB_Database . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
+		trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
 		// only for debugging.
 		print_r($values);
 		//echo "<br/>";
@@ -58,9 +58,9 @@ class Base extends Observable {
 
 	// functions to support DB abstraction
 	function convert_query(&$query) {
-		global $ADODB_Database;
+		global $ADODB_LASTDB;
 
-		switch ($ADODB_Database) {
+		switch ($ADODB_LASTDB) {
 		case "oci8":
 			$query = preg_replace("/`/", "\"", $query);
 			// convert bind variables - adodb does not do that 
@@ -79,9 +79,9 @@ class Base extends Observable {
 	}
 
 	function convert_sortmode($sort_mode) {
-		global $ADODB_Database;
+		global $ADODB_LASTDB;
 
-		switch ($ADODB_Database) {
+		switch ($ADODB_LASTDB) {
 		case "pgsql72":
 		case "postgres7":
 		case "oci8":
@@ -102,9 +102,9 @@ class Base extends Observable {
 	}
 
 	function convert_binary() {
-		global $ADODB_Database;
+		global $ADODB_LASTDB;
 
-		switch ($ADODB_Database) {
+		switch ($ADODB_LASTDB) {
 		case "pgsql72":
 		case "oci8":
 		case "postgres7":

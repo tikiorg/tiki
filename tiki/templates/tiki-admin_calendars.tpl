@@ -42,7 +42,9 @@
 <td class="{cycle advance=false}">{$cal.customlanguages}</td>
 <td class="{cycle advance=false}">{$cal.custompriorities}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this calendar?{/tr}')" 
+title="Click here to delete this calendar"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" ></a>
    <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>

@@ -19,23 +19,23 @@
 <input type="hidden" name="banId" value="{$banId|escape}" />
 <table class="normal">
 <tr>
-	<td class="formcolor">{tr}Rule title{/tr}</td>
+	<td class="formcolor"><label for="banning-title">{tr}Rule title{/tr}</label></td>
 	<td class="formcolor">
-		<input type="text" name="title" value="{$info.title|escape}" maxlength="200" />
+		<input type="text" name="title" id="banning-title" value="{$info.title|escape}" maxlength="200" />
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Username regex matching{/tr}:</td>
+	<td class="formcolor"><label for="banning-userregex">{tr}Username regex matching{/tr}:</label></td>
 	<td class="formcolor">
 		<input type="radio" name="mode" value="user" {if $info.mode eq 'user'}checked="checked"{/if} />
-		<input type="text" name="user" value="{$info.user|escape}" />
+		<input type="text" name="user" id="banning-userregex" value="{$info.user|escape}" />
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}IP regex matching{/tr}:</td>
+	<td class="formcolor"><label for="banning-ipregex">{tr}IP regex matching{/tr}:</label></td>
 	<td class="formcolor">
 		<input type="radio" name="mode" value="ip" {if $info.mode eq 'ip'}checked="checked"{/if} />
-		<input type="text" name="ip1" value="{$info.ip1|escape}" size="3" />.
+		<input type="text" name="ip1" id="banning-ipregex" value="{$info.ip1|escape}" size="3" />.
 		<input type="text" name="ip2" value="{$info.ip2|escape}" size="3" />.
 		<input type="text" name="ip3" value="{$info.ip3|escape}" size="3" />.
 		<input type="text" name="ip4" value="{$info.ip4|escape}" size="3" />
@@ -44,12 +44,11 @@
 <tr>
 	<td class="formcolor">{tr}Banned from sections{/tr}:</td>
 	<td class="formcolor">
-				
-		
+
 		<table><tr>
 		{section name=ix loop=$sections}
         <td class="formcolor">
-			<input type="checkbox" name="section[{$sections[ix]}]" {if in_array($sections[ix],$info.sections)}checked="checked"{/if} /> {$sections[ix]}
+			<input type="checkbox" name="section[{$sections[ix]}]" id="banning-section" {if in_array($sections[ix],$info.sections)}checked="checked"{/if} /> <label for="banning-section">{$sections[ix]}</label>
         </td>
         {* see if we should go to the next row *}
         {if not ($smarty.section.ix.rownum mod 3)}
@@ -72,9 +71,9 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Rule activated by dates{/tr}</td>
+	<td class="formcolor"><label for="banning-actdates">{tr}Rule activated by dates{/tr}</label></td>
 	<td class="formcolor">
-		<input type="checkbox" name="use_dates" {if $info.use_dates eq 'y'}checked="checked"{/if} />
+		<input type="checkbox" name="use_dates" id="banning-actdates" {if $info.use_dates eq 'y'}checked="checked"{/if} />
 	</td>
 </tr>
 <tr>
@@ -90,7 +89,7 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Custom message to the user{/tr}</td>
+	<td class="formcolor"><label for="banning-mess">{tr}Custom message to the user{/tr}</label></td>
 	<td class="formcolor">
 		<textarea rows="4" cols="40" name="message">{$info.message|escape}</textarea>
 	</td>
@@ -104,11 +103,10 @@
 </table>
 </form>
 
-
 <form method="post" action="tiki-admin_banning.php">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-{tr}Find{/tr}:<input type="text" name="find" value="{$find|escape}" />
+<label for="banning-find">{tr}Find{/tr}:</label><input type="text" name="find" id="banning-find" value="{$find|escape}" />
 </form>
 <h2>{tr}Rules{/tr}:</h2>
 <form method="post" action="tiki-admin_banning.php">
@@ -146,7 +144,9 @@
 {/section}
 </td>
 <td class="{cycle}">
-<a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+<a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this rule?{/tr}')" 
+title="Click here to delete this rule"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" ></a>
 </td>
 </tr>
 {sectionelse}
@@ -158,18 +158,18 @@
 <div class="mini">
 <div align="center">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_banning.php?offset={$prev_offset}&amp;find={$find}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admin_banning.php?offset={$prev_offset}&amp;find={$find}">{tr}prev{/tr}</a>] 
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_banning.php?offset={$next_offset}&amp;find={$find}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="tiki-admin_banning.php?offset={$next_offset}&amp;find={$find}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_banning.php offset=$selector_offset">
-{$smarty.section.foo.index_next}</a>&nbsp;
+{$smarty.section.foo.index_next}</a> 
 {/section}
 {/if}
 </div>

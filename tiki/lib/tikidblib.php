@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.3 2003-11-21 01:50:06 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.4 2003-12-28 11:41:35 mose Exp $
 //
 
 
@@ -46,7 +46,7 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
     //count the number of queries made
     global $num_queries;
     $num_queries++;
-    $this->debugger_log($query, $values);
+    //$this->debugger_log($query, $values);
     return $result;
 }
 
@@ -80,7 +80,7 @@ function query($query, $values = null, $numrows = -1,
     //count the number of queries made
     global $num_queries;
     $num_queries++;
-    $this->debugger_log($query, $values);
+    //$this->debugger_log($query, $values);
     return $result;
 }
 
@@ -108,7 +108,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
     //count the number of queries made
     global $num_queries;
     $num_queries++;
-    $this->debugger_log($query, $values);
+    //$this->debugger_log($query, $values);
 
     if ($res === false)
         return (NULL); //simulate pears behaviour
@@ -120,9 +120,9 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
 // Reports SQL error from PEAR::db object.
 function sql_error($query, $values, $result) {
-    global $ADODB_Database;
+    global $ADODB_LASTDB;
 
-    trigger_error($ADODB_Database . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
+    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
     // only for debugging.
     echo "Values: <br>";
     print_r($values);
@@ -135,9 +135,9 @@ function sql_error($query, $values, $result) {
 
 // functions to support DB abstraction
 function convert_query(&$query) {
-    global $ADODB_Database;
+    global $ADODB_LASTDB;
 
-    switch ($ADODB_Database) {
+    switch ($ADODB_LASTDB) {
         case "oci8":
             $query = preg_replace("/`/", "\"", $query);
 
@@ -179,11 +179,10 @@ function blob_encode(&$blob) {
 }
 
 function convert_sortmode($sort_mode) {
-    global $ADODB_Database;
+    global $ADODB_LASTDB;
 
-    switch ($ADODB_Database) {
-        case "pgsql72":
-            case "postgres7":
+    switch ($ADODB_LASTDB) {
+        case "postgres7":
             case "oci8":
             case "sybase":
             // Postgres needs " " around column names
@@ -214,11 +213,10 @@ function convert_sortmode($sort_mode) {
 }
 
 function convert_binary() {
-    global $ADODB_Database;
+    global $ADODB_LASTDB;
 
-    switch ($ADODB_Database) {
-        case "pgsql72":
-            case "oci8":
+    switch ($ADODB_LASTDB) {
+        case "oci8":
             case "postgres7":
             case "sqlite":
             return;
@@ -234,8 +232,8 @@ function convert_binary() {
 }
 
 function sql_cast($var,$type) {
-    global $ADODB_Database;
-    switch ($ADODB_Database) {
+    global $ADODB_LASTDB;
+    switch ($ADODB_LASTDB) {
     case "sybase":
         switch ($type) {
                 case "int":

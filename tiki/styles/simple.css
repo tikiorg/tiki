@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.8 2003-12-21 17:47:29 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.9 2003-12-28 11:41:37 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -155,7 +155,7 @@ div.box-title table {
  * content boxes
  */
 .cbox-title {
- font-size: large;
+ font-size: medium;
 }
 /*
  * wiki pages
@@ -167,7 +167,7 @@ div.box-title table {
  * articles
  */
 .titlea {
- font-size: large;
+ font-size: medium;
 }
 
 /*
@@ -176,7 +176,7 @@ div.box-title table {
 /*** This can be floated left or right ***/
 #maincontent {
  /*float: right;*/
- /*width: 75%;*/
+ /*width: 70%;*/
  /*position: relative;
  margin: auto;*/
  /*position: absolute;
