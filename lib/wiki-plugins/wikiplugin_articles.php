@@ -17,6 +17,8 @@ function wikiplugin_articles($data,$params) {
 	global $tiki_p_read_article;
 	global $dbTiki;
 	global $feature_multilingual;
+	global $pageLang;
+
 	extract($params);
 	if (($feature_articles !=  'y') || ($tiki_p_read_article != 'y')) {
 		//		the feature is disabled or the user can't read articles
@@ -40,7 +42,7 @@ function wikiplugin_articles($data,$params) {
  	if ($feature_multilingual == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
-		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);
+		$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data'], $pageLang);
 	}
 
 	for ($i = 0; $i < count($listpages["data"]); $i++) {

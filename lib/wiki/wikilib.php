@@ -552,6 +552,12 @@ class WikiLib extends TikiLib {
 	}
 	return ($info["flag"] == 'L')? $info["user"] : null; 
     }
+    function is_editable($page, $user, $info=null) {
+      if ($user == 'admin')
+            return true;
+      else
+            return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;
+    }
 
     function lock_page($page) {
 	global $user;

@@ -169,13 +169,14 @@ class MultilingualLib extends TikiLib {
 	function preferedLangs($langContext = null) {
 		global $user, $language, $tikilib;
 		$langs = array();
-		$langs[] = $language;
-		if (strchr($language, "-")) // add en if en-uk
-			$langs[] = $this->rootLang($language);
 
-		if ($langContext && !in_array($langContext, $langs)) {
-			$langs[] = $langContext;
-			$l = $this->rootLang($langContext);
+		$langs[] = $langContext;
+		if (strchr($langContext, "-")) // add en if en-uk
+			$langs[] = $this->rootLang($langContext);
+
+		if ($language && !in_array($language, $langs)) {
+			$langs[] = $language;
+			$l = $this->rootLang($language);
 			if (!in_array($l, $langs))
 				$langs[] = $l;
 		}

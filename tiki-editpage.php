@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.99 2004-08-12 22:31:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.100 2004-08-16 02:26:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -378,6 +378,7 @@ include_once ("tiki-pagesetup.php");
 // Now check permissions to access this page
 if ($page != 'SandBox') {
   if ($tiki_p_edit != 'y') {
+    $smarty->assign('nocreate', 'y');
     $smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 
     $smarty->display("error.tpl");
@@ -393,6 +394,7 @@ if(isset($info['wiki_cache'])) {
 }
 
 if ($info["flag"] == 'L') {
+  $smarty->assign('nocreate', 'y');
   $smarty->assign('msg', tra("Cannot edit page because it is locked"));
 
   $smarty->display("error.tpl");

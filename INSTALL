@@ -9,7 +9,8 @@ DOCUMENTATION
 * http://tikiwiki.org/InstallTiki for a setup guide
 * http://tikiwiki.org/InstallTikiHelp for what to do in case of problems
 * It might also be helpful to look into the official Manual. Last released documentation, in pdf
-  format (350 pages) (outdated at the time of this writing): http://tikiwiki.org/tiki.pdf
+  format (350 pages) (outdated at the time of this writing):
+  http://prdownloads.sourceforge.net/tikiwiki/tiki16pdfmanual.zip?download
 * TikiWiki also has an active IRC channel: #tikiwiki on irc.freenode.net
 
 The rest of this document includes parts of the online documentation that might be enough to get you running Tiki.

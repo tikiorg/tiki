@@ -22,7 +22,7 @@ function wikiplugin_gauge_help() {
 function wikiplugin_gauge($data, $params) {
 	extract ($params);
 
-	if (!isset($max)) {
+	if (!isset($max) or !$max) {
 		$max = 100;
 	}
 

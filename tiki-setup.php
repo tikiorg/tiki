@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.259 2004-08-12 22:31:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.260 2004-08-16 02:26:41 teedog Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -431,7 +431,7 @@ $smarty->assign('feature_wiki_allowhtml ', $feature_wiki_allowhtml );
 $feature_help = 'y';
 $smarty->assign('feature_help', $feature_help);
 
-$helpurl = "http://doc.tikiwiki.org/tiki-index.php?page=";
+$helpurl = "http://doc.tikiwiki.org/tiki-index.php?best_lang&amp;page=";
 $smarty->assign('helpurl', $helpurl);
 
 $wiki_feature_copyrights = 'n';
@@ -571,6 +571,7 @@ $error_reporting_level = (int)($tikilib->get_preference('error_reporting_level',
 if ($error_reporting_level == 1)
 	$error_reporting_level = ($tiki_p_admin == "y") ? E_ALL: 0;
 error_reporting($error_reporting_level);
+$default_mail_charset="utf-8";
 
 $rememberme = $tikilib->get_preference('rememberme', 'disabled');
 $smarty->assign('rememberme', $rememberme);
@@ -605,6 +606,8 @@ $feature_sheet = 'n';
 $smarty->assign('feature_sheet', $feature_sheet);
 $feature_multilingual = 'y';
 $smarty->assign('feature_multilingual', $feature_multilingual);
+$feature_best_language = 'n';
+$smarty->assign('feature_best_language', $feature_best_language);
 $feature_wiki_userpage = 'y';
 $smarty->assign('feature_wiki_userpage', $feature_wiki_userpage);
 $feature_wiki_userpage_prefix = 'UserPage';
