@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.56 2004-05-02 04:18:21 rlpowell Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.57 2004-05-05 00:31:29 ggeller Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -367,9 +367,11 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 # Homework tables start
 #
 #added on 2004-4-27 ggeller
+#revised  2004-5-03 ggeller
 #
 
-CREATE TABLE hw_actionlog (
+rename table hw_actionlog to tiki_hw_actionlog;
+CREATE TABLE tiki_hw_actionlog (
   action varchar(255) NOT NULL default '',
   lastModif int(14) NOT NULL default '0',
   pageId int(14) default NULL,
@@ -379,7 +381,8 @@ CREATE TABLE hw_actionlog (
   PRIMARY KEY  (lastModif)
 ) TYPE=MyISAM;
 
-CREATE TABLE hw_assignments (
+rename table hw_assignments to tiki_hw_assignments;
+CREATE TABLE tiki_hw_assignments (
   assignmentId int(8) NOT NULL auto_increment,
   title varchar(80) default NULL,
   teacherName varchar(40) NOT NULL default '',
@@ -393,7 +396,8 @@ CREATE TABLE hw_assignments (
   KEY dueDate (dueDate)
 ) TYPE=MyISAM;
 
-CREATE TABLE hw_grading_queue (
+rename table hw_grading_queue to tiki_hw_grading_queue;
+CREATE TABLE tiki_hw_grading_queue (
   id int(14) NOT NULL auto_increment,
   status int(4) default NULL,
   submissionDate int(14) default NULL,
@@ -406,7 +410,8 @@ CREATE TABLE hw_grading_queue (
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
-CREATE TABLE hw_history (
+rename table hw_history to tiki_hw_history;
+CREATE TABLE hw_pages_history (
   id int(14) NOT NULL default '0',
   version int(8) NOT NULL default '0',
   lastModif int(14) NOT NULL default '0',
@@ -417,7 +422,8 @@ CREATE TABLE hw_history (
   PRIMARY KEY  (id,version)
 ) TYPE=MyISAM;
 
-CREATE TABLE hw_pages (
+rename table hw_pages to tiki_hw_pages;
+CREATE TABLE tiki_hw_pages (
   id int(14) NOT NULL auto_increment,
   assignmentId int(14) NOT NULL default '0',
   studentName varchar(200) NOT NULL default '',
