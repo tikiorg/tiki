@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 5. July 2003
+// Last modified: 12. July 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -55,20 +55,21 @@ function HAWIKI_error($error_msg)
 
   $error_deck = new HAW_deck(HAWIKI_TITLE);
 
-  $error_text = new HAW_text(HAWIKI_ERROR . " " . $error_msg);
+  $error_text = new HAW_text($error_msg);
   $error_deck->add_text($error_text);
   $error_deck->create_page();
   exit();
 }
 
 
-function reconvert_html_entities($string)
+function HAWIKI_specchar($string)
 {
-  // convert html entities like &uuml; back to ü
+  // special character handling
+  // utf8_decode and reconvert HTML entities (e.g. &uuml; ==> ü)
 
   $trans = get_html_translation_table(HTML_ENTITIES);
   $trans = array_flip ($trans);
-  return(strtr($string, $trans));
+  return(strtr(utf8_decode($string), $trans));
 }
 
 
@@ -107,7 +108,7 @@ class HAWIKI_page
     if ((strlen($input) == 0) || (strlen($input) > HAWIKI_MAXINPUTCHARS))
     {
       // invalid input size
-      HAWIKI_error(HAWIKI_ERROR_INVWIKISIZE); // script end
+      HAWIKI_error("Error: Invalid wiki size"); // script end
     }
 
     $this->deck = new HAW_deck(HAWIKI_TITLE);
@@ -538,7 +539,7 @@ class HAWIKI_page
 
       $newline = new HAW_text("");
       $this->deck->add_text($newline);
-      $error_text = new HAW_text(HAWIKI_ERROR . " " . HAWIKI_ERROR_INVWIKISYNTAX);
+      $error_text = new HAW_text("Error: Invalid wiki syntax");
       $this->deck->add_text($error_text);
     }
 
@@ -591,7 +592,7 @@ class HAWIKI_page
     //        HAWIKI_NAVLINK_BOTTOM (link is created at bottom of wiki page)
     //        HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM (top AND bottom)
 
-    $arr["label"] = reconvert_html_entities($label);
+    $arr["label"] = HAWIKI_specchar($label);
     $arr["url"]   = $url;
     $arr["pos"]   = $pos;
 

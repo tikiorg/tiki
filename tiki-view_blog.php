@@ -208,7 +208,7 @@ if($feature_user_watches == 'y') {
 
 if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
   include_once("lib/hawhaw/hawtikilib.php");
-  HAWTIKI_view_blog($listpages, $_REQUEST['blogId']);
+  HAWTIKI_view_blog($listpages, $blog_data);
 }
 
 
