@@ -1241,6 +1241,7 @@ class TikiLib extends TikiDB {
 	return $retval;
     }
 
+
     // Functions for polls ////
 	function get_user_vote($id,$user) {
 		return $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
@@ -1464,9 +1465,12 @@ class TikiLib extends TikiDB {
 	}
     }
 
-  function get_user_vote($id,$user) {
+    // comment out duplicate method due to merge error
+    /*
+    function get_user_vote($id,$user) {
 		return $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
 	}
+     */
 	// end of user voting methods		
 
     // FILE GALLERIES ////
@@ -2434,12 +2438,13 @@ class TikiLib extends TikiDB {
 	    }
 	    return $ret;
 	}
-        if ($initial) {                                                                                                                                                   
-                $mid = " where `pageName` like ?";                                                                                                                           
-                $mmid = $mid;
-                $bindvars = array($initial.'%');
-                $mbindvars = $bindvars;
-	}
+        // comment out random stuff from bad merge
+        // if ($initial) {                                                                                                                                                   
+        //        $mid = " where `pageName` like ?";                                                                                                                           
+        //        $mmid = $mid;
+        //        $bindvars = array($initial.'%');
+        //        $mbindvars = $bindvars;
+	// }
 
 	function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
 
