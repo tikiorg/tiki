@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_drawings.php,v 1.9 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_drawings.php,v 1.10 2004-06-16 01:32:04 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,7 +61,8 @@ $pars = parse_url($_SERVER["REQUEST_URI"]);
 $pars_parts = split('/', $pars["path"]);
 $pars = array();
 
-for ($i = 0; $i < count($pars_parts) - 1; $i++) {
+$max = count($pars_parts) - 1;
+for ($i = 0; $i < $max; $i++) {
 	$pars[] = $pars_parts[$i];
 }
 

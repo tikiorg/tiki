@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.14 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.15 2004-06-16 01:34:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,7 +76,8 @@ if (isset($_REQUEST["deactivate"])) {
 
 $topics = $artlib->list_topics();
 
-for ($i = 0; $i < count($topics); $i++) {
+$temp_max = count($topics);
+for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($topics[$i]["topicId"], 'topic')) {
 		$topics[$i]["individual"] = 'y';
 

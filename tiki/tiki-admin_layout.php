@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.11 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.12 2004-06-16 01:32:04 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,7 +50,8 @@ $sections = array(
 
 $sections_smt = array();
 
-for ($i = 0; $i < count($sections); $i++) {
+$temp_max = count($sections);
+for ($i = 0; $i < $temp_max; $i++) {
 	$aux["name"] = $sections[$i];
 
 	$name = $sections[$i];
@@ -110,7 +111,8 @@ foreach ($sections as $section) {
 
 $sections_smt = array();
 
-for ($i = 0; $i < count($sections); $i++) {
+$temp_max = count($sections);
+for ($i = 0; $i < $temp_max; $i++) {
 	$aux["name"] = $sections[$i];
 
 	$name = $sections[$i];

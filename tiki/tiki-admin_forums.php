@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.27 2004-06-06 08:42:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.28 2004-06-16 01:32:04 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -207,7 +207,8 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $commentslib->list_forums($offset, $maxRecords, $sort_mode, $find);
 
-for ($i = 0; $i < count($channels["data"]); $i++) {
+$max = count($channels["data"]);
+for ($i = 0; $i < $max; $i++) {
 	if ($userlib->object_has_one_permission($channels["data"][$i]["forumId"], 'forum')) {
 		$channels["data"][$i]["individual"] = 'y';
 

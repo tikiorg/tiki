@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_html_page_content.php,v 1.8 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_html_page_content.php,v 1.9 2004-06-16 01:32:04 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,7 +63,8 @@ if (isset($_REQUEST["editmany"])) {
 	check_ticket('admin-html-page-content');
 	$zones = $htmlpageslib->list_html_page_content($_REQUEST["pageName"], 0, -1, 'zone_asc', '');
 
-	for ($i = 0; $i < count($zones["data"]); $i++) {
+	$temp_max = count($zones["data"]);
+	for ($i = 0; $i < $temp_max; $i++) {
 		if (isset($_REQUEST[$zones["data"][$i]["zone"]])) {
 			$htmlpageslib->replace_html_page_content($_REQUEST["pageName"], $zones["data"][$i]["zone"],
 				$_REQUEST[$zones["data"][$i]["zone"]]);

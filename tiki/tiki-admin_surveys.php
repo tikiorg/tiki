@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_surveys.php,v 1.12 2004-06-04 03:25:22 dgdaniels Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_surveys.php,v 1.13 2004-06-16 01:34:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -114,7 +114,8 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $srvlib->list_surveys($offset, $maxRecords, $sort_mode, $find);
 
-for ($i = 0; $i < count($channels["data"]); $i++) {
+$temp_max = count($channels["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($channels["data"][$i]["surveyId"], 'survey')) {
 		$channels["data"][$i]["individual"] = 'y';
 
