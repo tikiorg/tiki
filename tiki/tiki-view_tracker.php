@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.15 2003-12-08 21:34:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.16 2003-12-08 21:54:50 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -223,7 +223,7 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["status"]))
-	$_REQUEST["status"] = '';
+	$_REQUEST["status"] = 'o';
 
 $smarty->assign('status', $_REQUEST["status"]);
 
@@ -256,7 +256,7 @@ $section = 'trackers';
 include_once('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
-$smarty->assign('tiki_p_filter_tracker_items', 'y');
+$smarty->assign('tiki_p_filter_tracker_items', 'n');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker.tpl');

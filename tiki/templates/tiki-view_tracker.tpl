@@ -33,7 +33,13 @@
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y'}
-<td class="heading">&nbsp;</td>
+<td class="third">
+{if $status eq 'o'}
+{html_image file=img/icons/ofo.gif title="{tr}closed{/tr}" alt="{tr}closed{/tr}" link="tiki-view_tracker.php?trackerId=$trackerId&status=c"}
+{else}
+{html_image file=img/icons/fo.gif title="{tr}open{/tr}" alt="{tr}open{/tr}" link="tiki-view_tracker.php?trackerId=$trackerId&status=o"}
+{/if}
+</td>
 {/if}
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y'}
@@ -54,7 +60,7 @@
 {section name=user loop=$items}
 <tr>
 {if $tracker_info.showStatus eq 'y'}
-<td style="text-align:center;"  class="{cycle advance=false}">
+<td style="text-align:center;"  class="third">
 {if $items[user].status eq 'o'}
 <img src='img/icons/ofo.gif' border='0' alt='{tr}open{/tr}' title='{tr}open{/tr}' />
 {else}
