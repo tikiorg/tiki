@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.4 2003-08-01 10:31:08 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.5 2003-08-28 19:56:01 sylvieg Exp $ *}
 
 {* Don't even generate DIV if no any needed rights *}
 {if $tiki_p_wiki_view_attachments == 'y'
@@ -56,8 +56,8 @@
 <table class="normal">
 <tr>
  <td class="formcolor">
-   {tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">&nbsp;
-                        <input style="font-size:9px;" size="16 " name="userfile1" type="file">
+   {tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />&nbsp;
+                        <input style="font-size:9px;" size="16 " name="userfile1" type="file" />
    {tr}comment{/tr}:    <input style="font-size:9px;" type="text" name="attach_comment" maxlength="250"/>
                         <input style="font-size:9px;" type="submit" name="attach" value="{tr}attach{/tr}"/>
  </td>
