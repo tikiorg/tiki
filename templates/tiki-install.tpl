@@ -196,7 +196,7 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
     		you decide to remove the script it will be renamed to tiki-install.done<br /><br />
     	{/if}
 	{/if}
-    	{if $dbcon eq 'y'}
+    {if $dbcon eq 'y'}
 	  {if $dbdone eq 'y'} 
 	    <a href="tiki-install.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br />
     	    <a href="tiki-index.php" class="link">Click here to proceed into tiki without removing the script</a><br />
@@ -204,7 +204,7 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 	    <a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
 	  {/if}
 	  <a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
-	{if $pkg_available eq 'y'}
+	  {if $pkg_available eq 'y'}
 		<p><p>
 		<form method="post" action="tiki-install.php">
 		<h1>Tiki packages</h1>
@@ -229,5 +229,6 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 			</td></tr>
 		</table>
 		</form><br/>
+	  {/if}
 	{/if}
 </div>
