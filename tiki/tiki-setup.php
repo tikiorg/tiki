@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.139 2003-09-07 00:07:59 jenolan1701 Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.140 2003-09-09 08:32:23 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -114,7 +114,7 @@ class TikiSetup {
 		if (!$tempdir) {
 			$tempfile = tempnam( false, '' );
 			$tempdir = dirname( $tempfile );
-			unlink( $tempfile );
+			@unlink( $tempfile );
 		}
 
 		return $tempdir;
