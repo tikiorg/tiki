@@ -90,6 +90,7 @@ class ArtLib extends TikiLib {
 	$imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, 
 	$topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n') {
 		global $smarty;
+		global $tikilib;
 		global $dbTiki;
 		global $sender_email;
 
@@ -159,7 +160,7 @@ class ArtLib extends TikiLib {
 		if (count($emails)) {
 			include_once("lib/notifications/notificationemaillib.php");
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = httpPrefix(). $foo["path"];
+			$machine = $tikilib->httpPrefix(). $foo["path"];
 
 			$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 
@@ -225,6 +226,31 @@ class ArtLib extends TikiLib {
 		    if ($feature_score == 'y') {
 			$this->score_event($user, 'article_new');
 		    }		    
+		    global $feature_user_watches, $smarty,$tikilib;
+		    if ($feature_user_watches == 'y') {
+			    $nots = $this->get_event_watches('article_submitted', '*');
+			    if (!isset($_SERVER["SERVER_NAME"])) {
+				    $_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+			    }
+			    if (count($nots)) {
+				    include_once("lib/notifications/notificationemaillib.php");
+
+				    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+				    $smarty->assign('mail_title', $title);
+				    $smarty->assign('mail_postid', $articleId);
+				    $smarty->assign('mail_date', date("U"));
+				    $smarty->assign('mail_user', $user);
+				    $smarty->assign('mail_data', $heading."\n----------------------\n".$body);
+				    $foo = parse_url($_SERVER["REQUEST_URI"]);
+				    $machine = $tikilib->httpPrefix(). $foo["path"];
+				    $smarty->assign('mail_machine', $machine);
+				    $parts = explode('/', $foo['path']);
+				    if (count($parts) > 1)
+					    unset ($parts[count($parts) - 1]);
+				    $smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+				    sendEmailNotification($nots, "watch", "user_watch_article_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_article_post.tpl");
+			    }
+		    }
 		}
 
 		return $articleId;

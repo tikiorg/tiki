@@ -3,13 +3,13 @@
 
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}HtmlPages" target="tikihelp" class="tikihelp" title="{tr}admin HtmlPages{/tr}">
+<a href="{$helpurl}Html+Pages" target="tikihelp" class="tikihelp" title="{tr}admin Html Pages{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_html_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin HtmlPages template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_html_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin Html Pages template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.35 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.36 2005-01-22 22:54:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,8 +29,8 @@ if ($tiki_p_upload_images != 'y') {
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-upload_image", "tiki-browse_image", $foo["path"]);
 $foo2 = str_replace("tiki-upload_image", "show_image", $foo["path"]);
-$smarty->assign('url_browse', httpPrefix(). $foo1);
-$smarty->assign('url_show', httpPrefix(). $foo2);
+$smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
+$smarty->assign('url_show', $tikilib->httpPrefix(). $foo2);
 
 $smarty->assign('show', 'n');
 
@@ -390,6 +390,17 @@ for ($i = 0; $i < $temp_max; $i++) {
 }
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);
+
+if($feature_maps == 'y' && isset($_REQUEST["galleryId"])) {
+	$gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
+	if ($gal_info['geographic'] == 'y') {
+		$smarty->assign('geogallery', 'y');
+	} else {
+		$smarty->assign('geogallery', 'n');
+	}
+} else {
+	$smarty->assign('geogallery', 'n');
+}
 
 $cat_type = 'image';
 $cat_objid = '0';

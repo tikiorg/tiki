@@ -18,7 +18,7 @@ function wikiplugin_example_help() {
 	return tra("Example").":<br />~np~{EXAMPLE(face=> size=>)}".tra("text")."{EXAMPLE}~/np~";
 }
 function wikiplugin_example($data, $params) {
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (!isset($face)) {
 		return ("<b>missing face parameter for plugin</b><br />");

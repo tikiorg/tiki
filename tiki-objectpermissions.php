@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.10 2005-01-01 00:16:34 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.11 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,6 +52,7 @@ $smarty->assign('permType', $_REQUEST["permType"]);
 if (isset($_REQUEST["assign"])) {
 	check_ticket('object-perms');
 	$userlib->assign_object_permission($_REQUEST["group"], $_REQUEST["objectId"], $_REQUEST["objectType"], $_REQUEST["perm"]);
+	$smarty->assign('groupName', $_REQUEST["group"]);
 }
 
 // Process the form to remove a permission from the page
@@ -67,7 +68,7 @@ $page_perms = $userlib->get_object_permissions($_REQUEST["objectId"], $_REQUEST[
 $smarty->assign_by_ref('page_perms', $page_perms);
 
 // Get a list of groups
-$groups = $userlib->get_groups(0, -1, 'groupName_desc');
+$groups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
 $smarty->assign_by_ref('groups', $groups["data"]);
 
 // Get a list of permissions

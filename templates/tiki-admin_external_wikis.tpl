@@ -3,7 +3,7 @@
 
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}ExternalWiki" target="tikihelp" class="tikihelp" title="{tr}admin ExternalWiki{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="{$helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}admin External Wikis{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 

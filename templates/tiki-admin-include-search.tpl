@@ -40,8 +40,26 @@
     <td></td>
 	</tr>
 	{/if}
-	<tr>
 
+	</tr><tr>
+          <td class="heading" colspan="2">{tr}Performance issues{/tr}</td>
+        </tr><tr>
+	<td class="form">
+	{if $feature_help eq 'y'}<a href="{$helpurl}WYSIWYCASearch" target="tikihelp" class="tikihelp" title="{tr}Search may show forbidden results. Much better performance though.{/tr}">{/if}
+		{tr}Ignore individual object permissions{/tr}
+		{if $feature_help eq 'y'}</a>{/if}
+	        :</td>
+          <td><input type="checkbox" name="feature_search_show_forbidden_obj"
+                {if $feature_search_show_forbidden_obj eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
+	<td class="form">
+	{if $feature_help eq 'y'}<a href="{$helpurl}WYSIWYCASearch" target="tikihelp" class="tikihelp" title="{tr}Search may show forbidden results. Much better performance though.{/tr}">{/if}
+		{tr}Ignore category viewing restrictions{/tr}
+		{if $feature_help eq 'y'}</a>{/if}
+	        :</td>
+          <td><input type="checkbox" name="feature_search_show_forbidden_cat"
+                {if $feature_search_show_forbidden_cat eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
           <td class="heading" colspan="2">{tr}Settings for searching content{/tr}</td>
         </tr><tr>
           <td class="form"><label for="search-refresh">{tr}Search refresh rate{/tr}:</label></td>

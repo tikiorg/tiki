@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.20 2004-09-19 19:37:12 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.21 2005-01-22 22:56:21 mose Exp $ *}
 
 <a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br /><br />
 <a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a>
@@ -19,8 +19,8 @@
 <tr><td class="even">{tr}Default Group{/tr}:</td><td class="odd">
 <select name="defaultgroup">
 <option value=""></option>
-{foreach from=$user_info.groups item=grp}
-<option value="{$grp}" {if $grp eq $user_info.default_group}selected="selected"{/if}>{$grp}</option>
+{foreach from=$user_info.groups key=name item=included}
+<option value="{$name}" {if $name eq $user_info.default_group}selected="selected"{/if}>{$name}</option>
 {/foreach}
 </select>
 <input type="hidden" value="{$user_info.login}" name="login">

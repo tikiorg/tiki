@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.24 2004-10-08 10:00:01 damosoft Exp $
+/* $Id: wikiplugin_module.php,v 1.25 2005-01-22 22:55:56 mose Exp $
 Displays a module inlined in page
 
 Parameters
@@ -34,7 +34,7 @@ function wikiplugin_module($data, $params) {
 		$feature_tasks, $feature_user_bookmarks, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib, $language;
 
 	$out = '';
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (!isset($align)) {
 		$align = 'nofloat';

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sub.php,v 1.3 2004-09-19 19:37:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sub.php,v 1.4 2005-01-22 22:55:56 mose Exp $
 
 // Wiki plugin to output <sub>...</sub>
 // - rlpowell
@@ -13,7 +13,7 @@ function wikiplugin_sub($data, $params)
 {
         global $tikilib;
 
-        extract ($params);
+        extract ($params,EXTR_SKIP);
 	return "<sub>$data</sub>";
 }
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.9 2004-09-16 07:48:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/tiki-show_page.tpl,v 1.10 2005-01-22 22:56:28 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -141,7 +141,9 @@
 </tr>
 </table>
 </div>
-{/if}{$parsed}
+{/if}
+{if $feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+{$parsed}
 {if $pages > 1}
 	<br />
 	<div align="center">

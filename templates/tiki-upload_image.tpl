@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.26 2004-10-08 10:00:07 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.27 2005-01-22 22:56:24 mose Exp $ *}
 <a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a><br /><br />
 {* help links *}
 {if $feature_help eq 'y'}
-<a href="{$helpurl}ImageGallery" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
+<a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 {* links to edit *}
@@ -30,7 +30,7 @@
 	<input type="text" size ="50" name="name" /><br/>{tr}or use filename{/tr}: <input type="checkbox" name="use_filename" />
 	</td>
 	</tr>
-  {if $feature_maps eq 'y'}
+  {if $feature_maps eq 'y' && $geogallery eq 'y'}
   <tr><td class="formcolor">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   <tr><td class="formcolor">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="formcolor"><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
   {/if}

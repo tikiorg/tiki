@@ -86,7 +86,9 @@
 {section name=user loop=$channels}
 <tr class="{cycle}">
 <td>{$channels[user].fieldId}</td>
-<td><a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}">{tr}edit{/tr}</a></td>
+<td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "{tr}Rating{/tr}"}
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;fieldId={$channels[user].fieldId}">{tr}edit{/tr}</a>
+{/if}</td>
 <td>{$channels[user].position}</td>
 <td>{$channels[user].name}</td>
 <td>{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
@@ -97,7 +99,9 @@
 <td>{$channels[user].isPublic}</td>
 <td>{$channels[user].isHidden}</td>
 <td>{$channels[user].isMandatory}</td>
-<td><a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}">{tr}remove{/tr}</a></td>
+<td>{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "{tr}Rating{/tr}"}
+<a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}{if $max and $max ne $maxRecords}&amp;max={$max}{/if}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}">{tr}remove{/tr}</a>
+{/if}</td>
 </tr>
 {/section}
 </table>
@@ -133,6 +137,7 @@
 <input type="hidden" name="import" value="1">
 <textarea name="rawmeat" cols="62" rows="32" wrap="soft">
 {section name=user loop=$channels}
+{if $tracker_info.useRatings ne 'y' or $channels[user].name ne "{tr}Rating{/tr}"}
 [FIELD{$channels[user].fieldId}]
 fieldId = {$channels[user].fieldId}
 name = {$channels[user].name}
@@ -145,10 +150,9 @@ isSearchable = {$channels[user].isSearchable}
 isPublic = {$channels[user].isPublic}
 isHidden = {$channels[user].isHidden}
 isMandatory = {$channels[user].isMandatory}
-
+{/if}
 {/section}
 </textarea><br />
-*** Not functionnal yet ***fixed
 <input type="submit" name="save" value="{tr}Import{/tr}" />
 </form>
 

@@ -1,18 +1,34 @@
 <a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserWatches" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}User Preferences{/tr}">
+<a href="{$helpurl}User+Watches" target="tikihelp" class="tikihelp" title="{tr}User Watches{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-user_watches.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}UserPreferences tpl{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-user_watches.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Watches tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
-<h3>{tr}Watches{/tr}</h3>
 
+<h2>{tr}Add Watch{/tr}</h2>
+<form action="tiki-user_watches.php" method="post">
+<table class="normal">
+<tr>
+<td class="formcolor">{tr}Event{/tr}:</td>
+<td class="formcolor">
+<select name="event">
+<option value="article_submitted">{tr}A user submits an article{/tr}</option>
+</select>
+</td>
+</tr>
+<tr><td class="formcolor">&nbsp;</td>
+<td class="formcolor"><input type="submit" name="add" value="{tr}add{/tr}" /></td>
+</tr>
+</table>
+</form>
 
+<h2>{tr}Watches{/tr}</h2>
 <form action="tiki-user_watches.php" method="post" id='formi'>
 {tr}Event{/tr}:<select name="event" onchange="javascript:document.getElementById('formi').submit();">
 <option value"" {if $smarty.request.event eq ''}selected="selected"{/if}>{tr}All{/tr}</option>

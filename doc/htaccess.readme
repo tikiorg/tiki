@@ -20,3 +20,10 @@ to this:
     Options FollowSymLinks
     AllowOverride AuthConfig FileInfo
 </Directory>
+
+or in your virtual host setup:
+
+<Directory /path/to/hosting/space>
+    Options FollowSymLinks
+    AllowOverride AuthConfig FileInfo
+</Directory>

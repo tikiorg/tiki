@@ -70,7 +70,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$smarty->assign('mail_message', $data);
 		$smarty->assign('mail_author', $author);
       	$foo = parse_url($_SERVER["REQUEST_URI"]);
-       	$machine = httpPrefix(). dirname( $foo["path"] );
+       	$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
  		$smarty->assign('mail_machine', $machine);
 		$smarty->assign('forumId', $forum_info["forumId"]);
 		if ($event == "forum_post_topic") {
@@ -145,6 +145,8 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	}
 
 	if (count($nots)) {
+		if (function_exists("html_entity_decode"))
+			$edit_data = html_entity_decode($edit_data);
 		include_once('lib/webmail/tikimaillib.php');
 		$mail = new TikiMail();
        	$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
@@ -155,12 +157,12 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
        	$smarty->assign('mail_last_version', $version);
        	$smarty->assign('mail_data', $edit_data);
        	$foo = parse_url($_SERVER["REQUEST_URI"]);
-       	$machine = httpPrefix(). dirname( $foo["path"] );
+       	$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
        	$smarty->assign('mail_machine', $machine);
        	$parts = explode('/', $foo['path']);
         	if (count($parts) > 1)
            	unset ($parts[count($parts) - 1]);
-       	$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+       	$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
        	$smarty->assign('mail_pagedata', $edit_data);
 		if ($event == 'wiki_page_created')
 			$smarty->assign('new_page', 'y');
@@ -227,4 +229,24 @@ function sendEmailNotification($list, $type, $subjectTpl, $subjectParam, $txtTpl
 	}
 return $sent;		
 }
+function activeErrorEmailNotivation() {
+	set_error_handler("sendErrorEmailNotification");
+}
+function sendErrorEmailNotification($errno, $errstr, $errfile='?', $errline= '?') { echo "EEEE".$errno.$errno & error_reporting();
+	global $tikilib;
+	if (($errno & error_reporting()) == 0) /* ignore error */
+		return;
+	switch($errno) {
+		case E_ERROR: $err = 'FATAL';break;
+		case E_WARNING: $err = 'ERROR';break;
+		case E_NOTICE: $err = 'WARNING';break;
+		default: $err="";
+	}
+	$email = $tikilib->get_user_email('admin');
+//	include_once('lib/webmail/tikimaillib.php');
+//	$mail = new TikiMail();
+	mail($email,
+        "PHP: $errfile, $errline", 
+        "$errfile, Line $errline\n$err($errno)\n$errstr"); 
+} 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.44 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.45 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,12 +11,10 @@ $tikifeedback = array();
 require_once ('tiki-setup.php');
 require_once ('lib/userslib/userslib_admin.php');
 
-if (!($tiki_p_admin_users == 'y')) {
-	if ($tiki_p_admin != 'y') {
-		$smarty->assign('msg', tra("You do not have permission to use this feature"));
-		$smarty->display("error.tpl");
-		die;
-	}
+if (!($user == 'admin' || $tiki_p_admin == 'y' || $tiki_p_admin_users == 'y')) { // temporary patch: tiki_p_admin includes tiki_p_admin_users but if you don't clean the temp/cache each time you sqlupgrade the perms setting is not synchornous with the cache
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
 }
 
 function discardUser($u, $reason) {
@@ -242,7 +240,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 
-$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial);
+$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial,$true);
 
 if (!empty($group_management_mode) || !empty($set_default_groups_mode)) {
 	$arraylen = count($users['data']);

@@ -1,0 +1,1 @@
+{tr}You can unsubscribe from this event following this link{/tr}

@@ -32,5 +32,4 @@ Disallow: tiki-register.php
 Disallow: tiki-login_scr.php
 Disallow: tiki-view_cache.php
 Disallow: tiki-user_information.php
-
-
+Disallow: get_strings.php

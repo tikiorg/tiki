@@ -7,16 +7,22 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function refresh_search_index() {
-  // first write close the session. refreshing can take a huge amount of time
-  session_write_close();
+    // *DON'T* *DO* *THIS*
+    // I just tested, and session_write_close loses the database connection on
+    // my machine!  None of the indexing can succeed after that!
+    // WAS: first write close the session. refreshing can take a huge amount of time
+    // WAS session_write_close();
 
   // check if we have to run. Run every n-th click:
   global $search_refresh_rate;
   //$search_refresh_rate=1; //debug
+    ///iprint "<pre>rate: $search_refresh_rate.</pre>\n";
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
   // check if we should refresh the search index for all wiki pages
   if(rand(1,$search_refresh_rate)==1) {
+    // print "<pre>refreshing</pre>\n";
+
     require_once(dirname(__FILE__).'/refresh-functions.php');
     // get a random location
     $locs=array();
@@ -57,10 +63,10 @@ function refresh_search_index() {
     $locs[]="random_refresh_index_comments";
     // some refreshes to enhance the refreshing stats
     $locs[]="refresh_index_oldest";
-    //print_r($locs);
+    // print_r($locs);
     $location=$locs[rand(0,count($locs)-1)];
     // random refresh
-    //echo "$location";
+    // echo "location to index: $location";
     call_user_func ($location);
   }
 }

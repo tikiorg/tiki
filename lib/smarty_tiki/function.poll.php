@@ -28,7 +28,7 @@ function smarty_function_poll($params, &$smarty) {
     }
     if($id) {
       $menu_info = $polllib->get_poll($id);
-      $channels = $polllib->list_poll_options($id,0,-1,'optionId_asc','');
+      $channels = $polllib->list_poll_options($id);
 			if ($feature_poll_comments == 'y') {
 				$commentslib = new Comments($dbTiki);
 				$comments_count = $commentslib->count_comments("poll:".$menu_info["pollId"]);
@@ -36,7 +36,7 @@ function smarty_function_poll($params, &$smarty) {
 			$smarty->assign('comments', $comments_count);
       $smarty->assign('ownurl','tiki-poll_results.php?pollId='.$id);
       $smarty->assign('menu_info',$menu_info);
-      $smarty->assign('channels',$channels["data"]);
+      $smarty->assign('channels',$channels);
       $smarty->display('tiki-poll.tpl');
     }
 }

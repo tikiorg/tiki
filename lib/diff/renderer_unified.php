@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.6 2004-09-08 19:52:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_unified.php,v 1.7 2005-01-22 22:55:45 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * @package Text_Diff
  */
-class Text_Diff_Renderer_unified extends Text_Diff_Renderer {
+class Text_Diff_Renderer_unified extends Tiki_Text_Diff_Renderer {
 
     function Text_Diff_Renderer_unified($context_lines = 4)
     {
@@ -57,8 +57,9 @@ class Text_Diff_Renderer_unified extends Text_Diff_Renderer {
 
     function _changed($orig, $final)
     {
-        $this->_deleted($orig);
-        $this->_added($final);
+        $lines = diffChar($orig, $final);
+        $this->_deleted(array($lines[0]));
+        $this->_added(array($lines[1]));
     }
 
 }

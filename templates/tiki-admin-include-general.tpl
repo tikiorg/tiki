@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.39 2004-10-08 10:00:03 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.40 2005-01-22 22:56:18 mose Exp $ *}
 
 <script language="JavaScript">
 {literal}
@@ -30,7 +30,7 @@
             align="center">{tr}General Preferences{/tr}</td>
       </tr><tr>
         <td class="form" ><label for="general-theme">{tr}Theme{/tr}:</label></td>
-        <td width="%67%"><select name="site_style" id="general-theme">
+        <td width="67%"><select name="site_style" id="general-theme">
             {section name=ix loop=$styles}
               <option value="{$styles[ix]|escape}"
                 {if $style_site eq $styles[ix]}selected="selected"{/if}>
@@ -51,17 +51,8 @@
             {/section}
             </select>
         </td>
-      </tr><tr>
-        <td class="form" ><label for="general-icontheme">{tr}Icon Theme{/tr}:</label></td>
-        <td width="%67%"><select name="icon_style" id="general-icontheme">
-            {section name=ix loop=$icon_styles}
-              <option value="{$icon_styles[ix]|escape}"
-                {if $icon_style eq $icon_styles[ix]}selected="selected"{/if}>
-                {$icon_styles[ix]}</option>
-            {/section}
-            </select>
-        </td>
-      </tr><tr><td colspan="2"><hr/></td></tr>
+      </tr>
+      <tr><td colspan="2"><hr/></td></tr>
       <tr>
         <td class="form"><label for="general-homepages">{tr}Use group homepages{/tr}:</label></td>
         <td><input type="checkbox" name="useGroupHome" id="general-homepages"
@@ -158,6 +149,13 @@
       <td><select name="default_mail_charset" id="general-charset">
             <option value="utf-8" {if $default_mail_charset eq "utf-8"}selected="selected"{/if}>utf-8</option>
             <option value="iso-8859-1" {if $default_mail_charset eq "iso-8859-1"}selected="selected"{/if}>iso-8859-1</option>
+            </select>
+      </td>
+	</tr><tr>
+      <td class="form"><label for="mail_crlf">{tr}Mail end of line:{/tr}</label></td>
+      <td><select name="mail_crlf" id="mail_crlf">
+            <option value="CRLF" {if $mail_crlf eq "CRLF"}selected="selected"{/if}>CRLF {tr}(standard){/tr}</option>
+            <option value="LF" {if $mail_crlf eq "LF"}selected="selected"{/if}>LF {tr}(some Unix MTA){/tr}</option>
             </select>
       </td>
 	</tr>
@@ -266,6 +264,15 @@
         <td ><input type="text" name="feature_server_name" id="general-server_name"
                                value="{$feature_server_name|escape}" size="40" /></td>
       </tr><tr>
+        <td class="form" >
+          <label for="general-https">{tr}HTTPS Server{/tr}:</label></td>
+        <td ><select name="https" id="general-https">
+             <option value="auto" {if $https=="auto"}selected=selected{/if}>{tr}Automatic (uses HTTPS variable){/tr}</option>
+             <option value="http" {if $https=="http"}selected=selected{/if}>{tr}No{/tr}</option>
+             <option value="https" {if $https=="https"}selected=selected{/if}>{tr}Yes{/tr}</option>
+              </select>
+                               </td>
+      </tr><tr>
         <td class="form"><label for="general-browser_title">{tr}Browser title{/tr}:</label></td>
         <td><input type="text" name="siteTitle" id="general-browser_title" value="{$siteTitle|escape}" size="40" /></td>
       </tr><tr>
@@ -353,38 +360,6 @@
   </div>
 </div>
 <br />
-<div class="cbox">
-	<div class="cbox-title">
-		{tr}Site Identity Settings{/tr}
-	</div>
-	<div class="cbox-data">
-		<form method="post" action="tiki-admin.php?page=general">
-			<table class="admin">
-				<tr>
-					<td class="form"><label for="sitelogo">{tr}Site logo{/tr}:</label></td>
-					<td><input type="text" name="sitelogo_src" id="sitelogo" value="{$sitelogo_src}" size="60" style="width: 90%" /></td>
-				</tr>
-				<tr>
-					<td class="form"><label for="sitelogo_bgcolor">{tr}Site logo background color{/tr}:</label></td>
-					<td><input type="text" name="sitelogo_bgcolor" id="sitelogo_bgcolor" value="{$sitelogo_bgcolor}" size="15" maxlength="15" /></td>
-				</tr>
-				<tr>
-					<td class="form"><label for="sitelogo_title">{tr}Site logo title (on mouse over){/tr}:</label></td>
-					<td><input type="text" name="sitelogo_title" id="sitelogo_title" value="{$sitelogo_title}" size="50" maxlength="50" /></td>
-				</tr>
-				<tr>
-					<td class="form"><label for="sitelogo_alt">{tr}Alt. description (e.g. for text browsers){/tr}:</label></td>
-					<td><input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$sitelogo_alt}" size="50" maxlength="50" /></td>
-				</tr>
-				<tr>
-					<td colspan="2" class="button">
-						<input type="submit" name="siteidentityset" value="{tr}Change preferences{/tr}" />
-					</td>
-				</tr>
-			</table>
-		</form>
-	</div>
-</div>
 <div class="cbox">
   <div class="cbox-title">
     {tr}Register this site at tikiwiki.org{/tr}

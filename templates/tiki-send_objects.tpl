@@ -3,7 +3,7 @@
 
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}SendObjects" target="tikihelp" class="tikihelp" title="{tr}Send Objects{/tr}">
+<a href="{$helpurl}Communcation+Center" target="tikihelp" class="tikihelp" title="{tr}Communcation Center{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 

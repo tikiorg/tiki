@@ -30,7 +30,7 @@ function wikiplugin_fancytable($data, $params) {
 	$trend = "</tr>";
 
 	// Parse the parameters
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (isset($head)) {
 		$parts = explode("~|~", $head);

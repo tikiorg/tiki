@@ -898,24 +898,25 @@ div.showimage {
 
 /* The header of a weblog post */
 div.posthead {
-	background-color:    #CDE2A7;
-	font-size:   13px;
+	background-color:    #DEE7EC;
 	color:   black;
 	font-weight:   bold;
 	overflow:   hidden;
-	border:   1px solid #74AE0B;
+	border:   1px solid #8CACBB;
 	border-bottom:   0px;
-	text-align:   center;
-	padding-left:   0px;
-	padding-right:   0px;
-	margin-bottom:   0px;
+	padding:   0px;
+	margin:   0px;
+}
+div.posthead h3 {
+	margin : 0;
+	padding : 4px;
 }
 
 /* The font used in the heading of the weblog */
 span.posthead {
-	font-size:   13px;
+	font-size:   11px;
 	font-weight:   bold;
-	color:   #578308;
+	color:   #8CACBB;
 }
 
 /* Links in the weblog post heading (edit/remove) */
@@ -942,7 +943,7 @@ span.posthead {
 div.postbody {
 	overflow:    hidden;
 	background:   white;
-	border:   1px solid #74AE0B;
+	border:   1px solid #8CACBB;
 	font-size:   10px;
 	color:   black;
 	padding-left:   5px;
@@ -954,7 +955,6 @@ div.postbody {
 /* The weblog title */
 div.blogtitle {
 	color:   black;
-	font-size:   11px;
 	font-weight:   bold;
 	font-size:   18px;
 	background-color:   #DEE7EC;

@@ -74,10 +74,11 @@ if (!function_exists('galaxia_execute_activity')) {
     {
       // Now execute the code for the activity but we are in a method!
       // so just use an fopen with http mode
+      global $tikilib;
       $parsed = parse_url($_SERVER["REQUEST_URI"]);
-      $URI = httpPrefix().$parsed["path"];
+      $URI = $tikilib->httpPrefix().$parsed["path"];
       $parts = explode('/',$URI);
-      $parts[count($parts)-1] = "tiki-g-run_activity.php?activityId=$activityId&amp;iid=$iid&auto=$auto";
+      $parts[count($parts)-1] = "tiki-g-run_activity.php?activityId=$activityId&iid=$iid&auto=$auto";
       $URI = implode('/',$parts);
       $fp = fopen($URI,"r");
       $data = '';

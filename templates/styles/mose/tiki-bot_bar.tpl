@@ -1,13 +1,13 @@
 <table>
 <tr>
 <td width="70">
-<a target="_blank" href="http://www.w3.org/Style/CSS/"><img alt="css" border="0" src="img/css.gif" width="62" height="22"/></a>
-</td>
-<td width="70">
-<a href="http://validator.w3.org/check/referer"><img border="0" src="img/valid-xhtml10.png" alt="Valid XHTML 1.0!" height="22" width="62" /></a>
+&nbsp;<!-- <a target="_blank" href="http://www.w3.org/Style/CSS/"><img alt="css" border="0" src="img/css.gif" width="62" height="22"/></a> -->
 </td>
 <td width="70">
 <a target="_blank" href="http://www.php.net"><img border="0" alt="php" src="img/php.png" width="62" height="22"/></a>
+</td>
+<td width="70">
+&nbsp;<!-- <a href="http://validator.w3.org/check/referer"><img border="0" src="img/valid-xhtml10.png" alt="Valid XHTML 1.0!" height="22" width="62" /></a> -->
 </td>
 <td >
 <div align="center" style="color:#727272;font-size:80%;">

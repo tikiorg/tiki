@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.4 2004-07-15 21:50:54 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.5 2005-01-22 22:55:56 mose Exp $
 /*
 DEV NOTE
 that plugin is not finished !! -- mose
@@ -29,7 +29,7 @@ function shuf(&$ar) { srand((double) microtime() * 10000000); uksort($ar, "rcmp"
 
 function wikiplugin_miniquiz($data, $params) {
 	global $tikilib, $user, $group;
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (!isset($trackerId)) {
 		return ("<b>missing tracker ID for plugin TRACKER</b><br />");

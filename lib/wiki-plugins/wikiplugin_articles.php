@@ -19,7 +19,7 @@ function wikiplugin_articles($data,$params) {
 	global $feature_multilingual;
 	global $pageLang;
 
-	extract($params);
+	extract($params,EXTR_SKIP);
 	if (($feature_articles !=  'y') || ($tiki_p_read_article != 'y')) {
 		//		the feature is disabled or the user can't read articles
 		return("");
@@ -63,7 +63,7 @@ function wikiplugin_articles($data,$params) {
 
 	// If there're more records then assign next_offset
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
-	
+
 	return "~np~ ".$smarty->fetch('tiki-view_articles.tpl')." ~/np~";
 	//return str_replace("\n","",$smarty->fetch('tiki-view_articles.tpl')); // this considers the hour in the header like a link
 }

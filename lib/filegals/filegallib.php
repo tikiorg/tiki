@@ -31,7 +31,7 @@ class FileGalLib extends TikiLib {
 	}
 
 	function insert_file($galleryId, $name, $description, $filename, $data, $size, $type, $user, $path) {
-		global $fgal_use_db, $fgal_use_dir;
+		global $fgal_use_db, $fgal_use_dir, $tikilib, $fgal_allow_duplicates;
 
 		$name = strip_tags($name);
 
@@ -48,12 +48,20 @@ class FileGalLib extends TikiLib {
 		$description = strip_tags($description);
 		$now = date("U");
 
-		if ($this->getOne("select count(*) from `tiki_files` where `hash`=?",array($checksum)))
+		if ($fgal_allow_duplicates != 'y' &&
+		    $this->getOne("select count(*) from `tiki_files` where `hash`=?",array($checksum)))
 			return false;
 
-		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`downloads`,`path`,`hash`)
-                          values(?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($galleryId,$name,$description,$filename,$size,$type,$data,$user,(int) $now,0,$path,$checksum));
+		$search_data = '';
+		if ($tikilib->get_preference('fgal_enable_auto_indexing','y') != 'n') {
+			$search_data = $this->get_search_text_for_data($data,$path,$type);
+			if ($search_data === false)
+				return false;
+		}			
+		
+		$query = "insert into `tiki_files`(`galleryId`,`name`,`description`,`filename`,`filesize`,`filetype`,`data`,`user`,`created`,`downloads`,`path`,`hash`,`search_data`,`lastModif`,`lastModifUser`)
+                          values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array($galleryId,$name,$description,$filename,$size,$type,$data,$user,(int) $now,0,$path,$checksum,$search_data,(int)$now,$user));
 		$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query,array((int) $now,$galleryId));
 		$query = "select max(`fileId`) from `tiki_files` where `created`=?";
@@ -306,7 +314,7 @@ class FileGalLib extends TikiLib {
 	function get_file_gallery_info($id) {
 		$query = "select * from `tiki_file_galleries` where `galleryId`=?";
 
-		$result = $this->query($query,array($id));
+		$result = $this->query($query,array((int) $id));
 		$res = $result->fetchRow();
 		return $res;
 	}
@@ -431,14 +439,16 @@ class FileGalLib extends TikiLib {
 		return $res;
 	}
 
-	function replace_file($id, $name, $description) {
+	function update_file($id, $name, $description,$user) {
 
 		// Update the fields in the database
 		$name = strip_tags($name);
 
+		$now = date("U");
+
 		$description = strip_tags($description);
-		$query = "update `tiki_files` set `name`=?, `description`=? where `fileId`=?";
-		$result = $this->query($query,array($name,$description,$id));
+		$query = "update `tiki_files` set `name`=?, `description`=?, `lastModif`=?, `lastModifUser`=? where `fileId`=?";
+		$result = $this->query($query,array($name,$description,(int)$now,$user,$id));
 
 		// Get the gallery id for the file and update the last modified field
 		$now = date("U");
@@ -451,6 +461,159 @@ class FileGalLib extends TikiLib {
 		}
 
 		return $result;
+	}
+
+	function replace_file($id, $name, $description, $filename, $data, $size, $type, $user, $path) {
+		global $fgal_use_db, $fgal_use_dir, $tikilib;
+
+		// Update the fields in the database
+		$name = strip_tags($name);
+
+		if ($fgal_use_db == 'n') {
+			if (function_exists('md5_file')) {
+				$checksum = md5_file($fgal_use_dir . $path);
+			} else {
+				$checksum = md5(implode('', file($fgal_use_dir . $path)));
+			}
+		} else {
+			$checksum = md5($data);
+		}
+
+		$description = strip_tags($description);
+		$now = date("U");
+
+		$search_data = '';
+		if ($tikilib->get_preference("fgal_enable_auto_indexing") != 'n') {
+			$search_data = $this->get_search_text_for_data($data,$path,$type);
+			if ($search_data === false)
+				return false;
+		}
+		$oldPath = $this->getOne("select `path` from `tiki_files` where `fileId`=?",array($id));
+		
+		$query = "update `tiki_files` set `name`=?, `description`=?, `filename`=?, `filesize`=?, `filetype`=?, `data`=?, `lastModifUser`=?, `lastModif`=?, `path`=?, `hash`=?, `search_data`=? where `fileId`=?";
+		$result = $this->query($query,array($name,$description,$filename,$size,$type,$data,$user,(int)$now,$path,$checksum,$search_data,$id));
+		if ($result == false)
+			return false;
+			
+		if (!empty($oldPath)) {
+			unlink($fgal_use_dir . $oldPath);
+		}
+		
+		// Get the gallery id for the file and update the last modified field
+		$galleryId = $this->getOne("select `galleryId` from `tiki_files` where `fileId`=?",array($id));
+
+		if ($galleryId) {
+			$query = "update `tiki_file_galleries` set `lastModif`=? where `galleryId`=?";
+
+			$this->query($query,array($now,$galleryId));
+		}
+
+		return $id;
+	}
+
+	function change_file_handler($mime_type,$cmd) {
+		$found = $this->getOne("select `mime_type` from `tiki_file_handlers` where `mime_type`=?",array($mime_type));
+
+		if ($found) {
+			$query = "update `tiki_file_handlers` set `cmd`=? where `mime_type`=?";
+			$result = $this->query($query,array($cmd,$mime_type));
+		}
+		else {
+			$query = "insert into `tiki_file_handlers` (`mime_type`,`cmd`) values (?,?)";
+			$result = $this->query($query,array($mime_type,$cmd));
+		}	
+		
+		return $result;
+	}
+	
+	function delete_file_handler($mime_type) {
+		if ($mime_type == 'default')
+			return false;
+			
+		$query = "delete from `tiki_file_handlers` where `mime_type`=?";
+		$result = $this->query($query,array($mime_type));
+		return (($result) ? true : false);
+	}
+
+	function get_file_handlers() {
+		$query = "select * from `tiki_file_handlers`";
+		$result = $this->query($query);
+		$fileParseApps = array();
+		while ($row = $result->fetchRow()) {
+			$fileParseApps[$row['mime_type']] = $row['cmd'];
+		}
+		
+		return $fileParseApps;
+	}
+
+	function reindex_all_files_for_search_text() {
+		$query = "select fileId, filename, filesize, filetype, data, path from `tiki_files`";
+		$result = $this->query($query);
+		$rows = array();
+		while($row = $result->fetchRow()) {
+			$rows[] = $row;
+		}
+		
+		foreach($rows as $row) {
+			$search_text = $this->get_search_text_for_data($row['data'],$row['path'],$row['filetype']);
+			if ($search_text!==false) {
+				$query = "update `tiki_files` set `search_data`=? where `fileId`=?";
+				$result = $this->query($query,array($search_text,$row['fileId']));
+			}
+		}
+	}
+
+	function get_search_text_for_data($data,$path,$type) {
+		global $fgal_use_dir;
+		
+		if (!isset($data) && !isset($path)) {
+			return false;
+		}
+		
+		$fileParseApps = $this->get_file_handlers();
+
+		$parseApp = '';
+		if (array_key_exists($type,$fileParseApps))
+			$parseApp = $fileParseApps[$type];
+		elseif (array_key_exists('default',$fileParseApps))
+			$parseApp = $fileParseApps['default'];
+
+		if (empty($parseApp))
+			return '';
+			
+		if (empty($path)) {	
+			$tmpfname = tempnam("/tmp", "wiki_");
+			$tmpFile = fopen($tmpfname,'w');
+			if ($tmpFile === false)
+				return false;
+				
+			if (fwrite($tmpFile,$data) === false)
+				return false;
+			fflush($tmpFile);
+			fclose($tmpFile);
+		}
+		else {
+			$tmpfname = $fgal_use_dir . $path;
+		}
+		
+		$cmd = str_replace('%1',$tmpfname,$parseApp);
+		$handle = popen("$cmd","r");
+		if ($handle === false) {
+			if (empty($path))
+				@unlink($tmpfname);
+			return false;
+		}
+			
+		$contents = '';
+		while (!feof($handle)) {
+			$contents .= fread($handle, 8192);
+		}
+		fclose($handle);
+		
+		if (empty($path))
+			@unlink($tmpfname);
+				
+		return $contents;
 	}
 
 	function convert_error_to_string($error) {

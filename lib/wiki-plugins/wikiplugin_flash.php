@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_flash.php,v 1.3 2004-08-26 19:24:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_flash.php,v 1.4 2005-01-22 22:55:56 mose Exp $
 
 // Wiki plugin to display a SWF file
 // damian aka damosoft 30 March 2004
@@ -11,7 +11,7 @@ function wikiplugin_flash_help() {
 
 function wikiplugin_flash($data, $params) {
 	
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" WIDTH=\"$width\" HEIGHT=\"$height\">";
 	$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";

@@ -565,7 +565,7 @@ class DirLib extends TikiLib {
 
 		$words = implode($how, $words);
 		$query = "select * from `tiki_directory_sites` where `isValid`=? and $words  order by ".$this->convert_sortmode($sort_mode);
-		$cant = $this->db->getOne("select count(*) from tiki_directory_sites where `isValid`=? and $words");
+		$cant = $this->db->getOne("select count(*) from tiki_directory_sites where `isValid`=? and $words", $bindvars);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {

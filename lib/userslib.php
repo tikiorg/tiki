@@ -272,12 +272,12 @@ class UsersLib extends TikiLib {
 		);
     }
 
-
     // create a new user in the Auth directory
     function create_user_auth($user, $pass) {
 	global $tikilib, $sender_email;
 
 	$options = array();
+	$options["url"] = $tikilib->get_preference("auth_ldap_url", "");
 	$options["host"] = $tikilib->get_preference("auth_ldap_host", "localhost");
 	$options["port"] = $tikilib->get_preference("auth_ldap_port", "389");
 	$options["scope"] = $tikilib->get_preference("auth_ldap_scope", "sub");
@@ -336,7 +336,7 @@ class UsersLib extends TikiLib {
 	return ($ret);
     }
 
-function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '') {
+function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '', $initial = '', $inclusion=false) {
 	
 	$now = date('U');
 	$mid = '';
@@ -373,7 +373,11 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	    $user = $aux["user"];
 	    $aux["email"] = $res["email"];
 	    $aux["lastLogin"] = $res["lastLogin"];
-	    $groups = $this->get_user_groups($user);
+	    if ($inclusion) {
+	    	$groups = $this->get_user_groups_inclusion($user);
+	    } else {
+	    	$groups = $this->get_user_groups($user);
+	    }
 	    $aux["groups"] = $groups;
 	    $aux["currentLogin"] = $res["currentLogin"];
 	    $aux["age"] = $now - $res["registrationDate"];
@@ -412,7 +416,7 @@ function get_included_groups($group) {
 	}
 }
 
-    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_desc', $find = '', $initial = '') {
+    function get_groups($offset = 0, $maxRecords = -1, $sort_mode = 'groupName_desc', $find = '', $initial = '', $details="y") {
 
 	$mid = "";
 	$mmid = "";
@@ -443,11 +447,13 @@ function get_included_groups($group) {
 
 	    $aux["groupName"] = $res["groupName"];
 	    $aux["groupDesc"] = $res["groupDesc"];
-	    $perms = $this->get_group_permissions($aux["groupName"]);
-	    $aux["perms"] = $perms;
+	    if ($details == "y") {
+	    	$perms = $this->get_group_permissions($aux["groupName"]);
+	    	$aux["perms"] = $perms;
 		$aux["permcant"] = count($perms);
-	    $groups = $this->get_included_groups($aux["groupName"]);
-	    $aux["included"] = $groups;
+	    	$groups = $this->get_included_groups($aux["groupName"]);
+	    	$aux["included"] = $groups;
+	    }
 	    $ret[] = $aux;
 	}
 	
@@ -634,6 +640,8 @@ function get_included_groups($group) {
 		return $ret;
 	}
 	function get_user_default_homepage($user) {
+	    if (!$user) return $this->get_group_home('Anonymous');
+
 		$query = "select `default_group` from `users_users` where `login` = ?";
 		$result = $this->getOne($query, array($user));
 		if (!is_null($result)) {
@@ -641,17 +649,44 @@ function get_included_groups($group) {
 			if ($home != '')
 				return $home;
 		}
-		$query = "select g.`groupHome` from `users_usergroups` as gu, `users_users` as u, `users_groups`as g where gu.`userId`= u.`userId` and u.`login`=? and gu.`groupName`= g.`groupName` and g.`groupHome` != '' and g.`groupHome` is not null";
+		$query = "select g.`groupHome`, g.`groupName` from `users_usergroups` as gu, `users_users` as u, `users_groups`as g where gu.`userId`= u.`userId` and u.`login`=? and gu.`groupName`= g.`groupName` and g.`groupHome` != '' and g.`groupHome` is not null";
 		$result = $this->query($query,array($user));
 		$home = '';
 		while ($res = $result->fetchRow()) {
-			if ($home != '')
-				return '';
+			if ($home != '') {
+				$groups = $this->get_included_groups($res["groupName"]);
+				if (in_array($group, $groups)) {
+					$home = $res["groupHome"];
+					$group = $res["groupName"];
+				}
+			}
 			$home = $res["groupHome"];
+			$group = $res["groupName"];
 		}
 		return $home;
 	}
 
+    //modified get_user_groups() to know if the user is part of the group directly or through groups inclusion
+        function get_user_groups_inclusion($user) {
+	    $userid = $this->get_user_id($user);
+
+	    $query = "select `groupName` from `users_usergroups` where `userId`=?";
+	    $result = $this->query($query, array((int)$userid));
+	    $real = array(); //really assigned groups (not (only) included)
+	    $ret = array();
+	    while ($res = $result->fetchRow()) {
+		$real[] = $res["groupName"];
+		foreach ($this->get_included_groups($res["groupName"]) as $group) {
+			$ret[$group] = "included";
+	        }
+	    }
+	    $ret['Anonymous'] = "included";
+	    foreach ($real as $group) {
+		$ret[$group] = "real";
+	    }
+	    return $ret;
+    }
+    
 	function get_group_home($group) {
 		$query = "select `groupHome` from `users_groups` where `groupName`=?";
 		$result = $this->getOne($query,array($group));
@@ -672,11 +707,15 @@ function get_included_groups($group) {
 	return $ret;
     }
 
-    function get_user_info($user) {
+    function get_user_info($user, $inclusion=false) {
 	$query = "select * from `users_users` where `login`=?";
 	$result = $this->query($query,array($user));
 	$res = $result->fetchRow();
-	$groups = $this->get_user_groups($user);
+	if ($inclusion) {
+		$groups = $this->get_user_groups_inclusion($user);
+	} else {
+		$groups = $this->get_user_groups($user);
+	}
 	$res["groups"] = $groups;
 	$res["age"] = date('U') - $res['registrationDate'];
 	return $res;
@@ -724,8 +763,8 @@ function get_included_groups($group) {
 
     $cachelib->invalidate("allperms");
 
-	$query = "delete from `users_permissions` where `permName` = ?";
-	$result = $this->query($query, array(''));
+	$query = "delete from `users_permissions` where `permName` = ? and `level` = ?";
+	$result = $this->query($query, array('', $level));
 	$query = "insert into `users_permissions`(`permName`, `permDesc`,
 		`type`, `level`) values('','','',?)";
 	$this->query($query, array($level));
@@ -1220,6 +1259,10 @@ function get_included_groups($group) {
 	$this->score_event($user,'friend_new',$friend);
 	$this->score_event($friend,'friend_new',$user);
 
+	global $cachelib;
+	$cachelib->invalidate('friends_count_'.$user);
+	$cachelib->invalidate('friends_count_'.$friend);
+
 	return true;
     }
 
@@ -1274,6 +1317,9 @@ function get_included_groups($group) {
 	$this->query($query, array($user, $friend));
 	$this->query($query, array($friend, $user));
 
+	global $cachelib;
+	$cachelib->invalidate('friends_count_'.$user);
+	$cachelib->invalidate('friends_count_'.$friend);
     }
 
   

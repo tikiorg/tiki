@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.19 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.20 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,7 +60,7 @@ $smarty->assign('subscribe', 'n');
 $smarty->assign('subscribed', 'n');
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$smarty->assign('url_subscribe', httpPrefix(). $foo["path"]);
+$smarty->assign('url_subscribe', $tikilib->httpPrefix(). $foo["path"]);
 
 if (isset($_REQUEST["nlId"])) {
 	$smarty->assign('individual', 'n');

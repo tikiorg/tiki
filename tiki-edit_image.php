@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.13 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_image.php,v 1.14 2005-01-22 22:54:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,8 +37,8 @@ if ($tiki_p_upload_images != 'y') {
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-edit_image", "tiki-browse_image", $foo["path"]);
 $foo2 = str_replace("tiki-edit_image", "show_image", $foo["path"]);
-$smarty->assign('url_browse', httpPrefix(). $foo1);
-$smarty->assign('url_show', httpPrefix(). $foo2);
+$smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
+$smarty->assign('url_show', $tikilib->httpPrefix(). $foo2);
 
 if (isset($_REQUEST["editimage"])) {
 	check_ticket('edit-image');

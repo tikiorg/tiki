@@ -1440,7 +1440,7 @@ class ImageGalsLib extends TikiLib {
                      i.`hits`, i.`path`,i.`lat`, i.`lon`,
                      d.`xsize`,d.`ysize`,d.`type`,d.`filesize`,
                      d.`filetype`,d.`filename`,d.`data`,
-		     d.`xsize` * d.`ysize` as `xysize`
+		     d.`xsize` * d.`ysize` as `xysize`, d.`etag`
                  from `tiki_images` i, `tiki_images_data` d where
                      i.`imageId`=? and d.`imageId`=i.`imageId`
                      and d.`type`=?
@@ -1471,6 +1471,7 @@ class ImageGalsLib extends TikiLib {
 		$this->filesize = $res["filesize"];
 		$this->filetype = $res["filetype"];
 		$this->filename = $res["filename"];
+		$this->etag= $res["etag"];
 
 		# build scaled images or thumb if not available
 		if ($itype != 'o' && !isset($this->imageId)) {
@@ -1515,9 +1516,24 @@ class ImageGalsLib extends TikiLib {
 		if (!isset($this->imagehandle))
 			$this->readimagefromstring();
 
+		// etag checks
+		if($this->etag=='') {
+		   $this->add_etag();
+		}
+
 		return $res;
 	}
 
+   function add_etag() {
+      // stores md5 based etag in the tables
+      // this function assumes that the $this->imageId and other
+      // are loaded before (through $this->get_image() or similar)
+      $etag=md5($this->image);
+      $query='update `tiki_images_data` set `etag`=? where `imageId`=? and `xsize`=? and `ysize`=? and `type`=?';
+      $bindvars=array($etag,(int) $this->imageId,(int) $this->xsize,(int) $this->ysize,$this->type);
+      $this->query($query,$bindvars);
+
+   }
 
    function get_imageid_byname($name) {
 	
@@ -1702,6 +1718,8 @@ class ImageGalsLib extends TikiLib {
 
 	//Capture Images from wiki, blogs, ....
 	function capture_images($data) {
+		global $tmpDir;
+		global $tikilib;
 		$cacheimages = $this->get_preference("cacheimages", 'y');
 
 		if ($cacheimages != 'y')
@@ -1797,7 +1815,7 @@ class ImageGalsLib extends TikiLib {
 						//print("Changing $url to imageId: $imageId");
 						$uri = parse_url($_SERVER["REQUEST_URI"]);
 						$path = str_replace("tiki-editpage", "show_image", $uri["path"]);
-						$page_data = str_replace($url, httpPrefix(). $path . '?id=' . $imageId, $page_data);
+						$page_data = str_replace($url, $tikilib->httpPrefix(). $path . '?id=' . $imageId, $page_data);
 					} // if strlen
 				} // if $fp
 			}

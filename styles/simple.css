@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.30 2004-09-28 12:59:38 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.31 2005-01-22 22:56:15 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -625,3 +625,9 @@ padding : 2px 30px;
 float : right;
 }
 
+/* wiki diff styles */diffheader{background-color:#a9b8c2; font-weight: bold;}
+.diff div {text-align: left; border-top: 1px solid #abcdef; }
+.diffheader {font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffchar {color: red;}

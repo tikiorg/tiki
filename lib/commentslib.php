@@ -228,7 +228,8 @@ class Comments extends TikiLib {
 	}
     }
 
-    function process_inbound_mail($forumId) {
+    function process_inbound_mail($forumId)
+    {
 	require_once ("lib/webmail/pop3.php");
 
 	require_once ("lib/mail/mimelib.php");
@@ -251,20 +252,49 @@ class Comments extends TikiLib {
 	$s = $pop3->Stats();
 	$mailsum = $s["message"];
 
-	for ($i = 1; $i <= $mailsum; $i++) {
-	    $aux = $pop3->ListMessage($i);
+	// Close for now; will re-open in a bit.
+	$pop3->close();
 
-	    // If the connection is done. --rlpowell
+
+	for ($i = 1; $i <= $mailsum; $i++) {
+
+	    // Just changed the code to close and re-open the POP3 session for
+	    // each message; it used to try to retrieve everything in one
+	    // session.
+	    //
+	    // We close and re-open for each message because POP3 won't
+	    // delete mail until the client quits (so you can back out of
+	    // accidental deletions in a real user client).  This doesn't apply
+	    // here, and as it stands if the mailbox gets very full, we end up
+	    // hitting the mailbox over and over without changing anything,
+	    // because eventually the session times out.
+	    //
+	    // As a side effect, $i doesn't really get used (we're always
+	    // retrieving the first message).
+	    //
+	    // -Robin Powell, 8 Nov 2004
+
+	    $pop3->Open();
+
+	    $aux = $pop3->ListMessage( 1 );
+
+	    // If the connection is done, or the mail has an error, or whatever,
+	    // we try to delete the current mail (because something is wrong with it)
+	    // and continue on. --rlpowell
 	    if( $aux == -1 )
 	    {
-		break;
+		$pop3->DeleteMessage( 1 );
+
+		$pop3->close();
+
+		continue;
 	    }
 
 	    if (empty($aux["sender"]["name"]))
 		$aux["sender"]["name"] = $aux["sender"]["email"];
 
 	    $email = $aux["sender"]["email"];
-	    $message = $pop3->GetMessage($i);
+	    $message = $pop3->GetMessage( 1 );
 	    $full = $message["full"];
 
 	    $output = mime::decode($full);
@@ -272,11 +302,11 @@ class Comments extends TikiLib {
 	    //$this->parse_output($output, $parts, 0);
 
 	    if (isset($output["text"][0])) {
-				$body = $output["text"][0];
+		$body = $output["text"][0];
 	    } elseif (isset($output['parts'][0]["text"][0])) {
-				$body = $output['parts'][0]["text"][0];
+		$body = $output['parts'][0]["text"][0];
 	    } else {
-				$body = "";
+		$body = "";
 	    }
 
 	    // Remove 're:' and [forum]. -rlpowell
@@ -332,14 +362,20 @@ class Comments extends TikiLib {
 	    }
 
 	    // post
-	    $this->post_new_comment( 'forum:' . $forumId,
+	    $threadid = $this->post_new_comment( 'forum:' . $forumId,
 		    $parentId, $userName, $title, $body,
 		    $message_id, $in_reply_to);
 
-	    $pop3->DeleteMessage($i);
+	    /* Force an index refresh of the data */
+	    include_once("lib/search/refresh-functions.php");
+	    refresh_index_comments( $threadid );
+
+	    $pop3->DeleteMessage( 1 );
+
+	    $pop3->close();
+
 	}
 
-	$pop3->close();
     }
 
     /* queue management */

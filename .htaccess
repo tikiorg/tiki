@@ -1,0 +1,4 @@
+<FilesMatch "\.(bak|inc|lib|sh|tpl|sql)$">
+	order deny,allow
+	deny from all
+</FilesMatch>

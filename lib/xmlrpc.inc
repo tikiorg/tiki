@@ -1,7 +1,7 @@
 <?php					// -*-c++-*-
 // by Edd Dumbill (C) 1999-2001
 // <edd@usefulinc.com>
-// $Id: xmlrpc.inc,v 1.1 2002-10-15 15:42:38 lrargerich Exp $
+// $Id: xmlrpc.inc,v 1.2 2005-01-22 22:55:41 mose Exp $
 
 
 // Copyright (c) 1999,2000,2001 Edd Dumbill.
@@ -1009,12 +1009,12 @@ function iso8601_decode($idate, $utc=0) {
 }
 
 /****************************************************************
-* xmlrpc_decode takes a message in PHP xmlrpc object format and *
+* xmlrpc_tkdecode takes a message in PHP xmlrpc object format and *
 * tranlates it into native PHP types.                           *
 *                                                               *
 * author: Dan Libby (dan@libby.com)                             *
 ****************************************************************/
-function xmlrpc_decode($xmlrpc_val) {
+function xmlrpc_tkdecode($xmlrpc_val) {
    $kind = $xmlrpc_val->kindOf();
 
    if($kind == "scalar") {
@@ -1025,7 +1025,7 @@ function xmlrpc_decode($xmlrpc_val) {
       $arr = array();
 
       for($i = 0; $i < $size; $i++) {
-         $arr[]=xmlrpc_decode($xmlrpc_val->arraymem($i));
+         $arr[]=xmlrpc_tkdecode($xmlrpc_val->arraymem($i));
       }
       return $arr; 
    }
@@ -1034,14 +1034,14 @@ function xmlrpc_decode($xmlrpc_val) {
       $arr = array();
 
       while(list($key,$value)=$xmlrpc_val->structeach()) {
-         $arr[$key] = xmlrpc_decode($value);
+         $arr[$key] = xmlrpc_tkdecode($value);
       }
       return $arr;
    }
 }
 
 /****************************************************************
-* xmlrpc_encode takes native php types and encodes them into    *
+* xmlrpc_tkencode takes native php types and encodes them into    *
 * xmlrpc PHP object format.                                     *
 * BUG: All sequential arrays are turned into structs.  I don't  *
 * know of a good way to determine if an array is sequential     *
@@ -1052,7 +1052,7 @@ function xmlrpc_decode($xmlrpc_val) {
 *                                                               *
 * author: Dan Libby (dan@libby.com)                             *
 ****************************************************************/
-function xmlrpc_encode($php_val) {
+function xmlrpc_tkencode($php_val) {
    global $xmlrpcInt;
    global $xmlrpcDouble;
    global $xmlrpcString;
@@ -1068,7 +1068,7 @@ function xmlrpc_encode($php_val) {
       case "object":
          $arr = array();
          while (list($k,$v) = each($php_val)) {
-            $arr[$k] = xmlrpc_encode($v);
+            $arr[$k] = xmlrpc_tkencode($v);
          }
          $xmlrpc_val->addStruct($arr);
          break;

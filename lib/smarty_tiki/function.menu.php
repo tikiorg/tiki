@@ -15,11 +15,9 @@ function smarty_function_menu($params, &$smarty)
     $smarty->caching = true;
 
     if ($user) {
-	$groups = $tikilib->get_user_groups($user);
-	sort($groups, SORT_STRING);
-	$cache_id = "$id:" . implode(":", $groups);
+        $cache_id = "menu$id|" . $tikilib->get_user_cache_id($user);
     } else {
-	$cache_id = $id;
+	$cache_id = "menu$id";
     }
 
     if (!$smarty->is_cached('tiki-user_menu.tpl', "$cache_id")) {

@@ -37,6 +37,7 @@
 </title>
 
 {php} include("lib/tiki-dynamic-js.php"); {/php}
+{if $feature_community_mouseover}{popup_init src="lib/overlib.js"}{/if}
 <script type="text/javascript" src="lib/tiki-js.js"></script>
 {* --- jscalendar block --- *}
 {if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}

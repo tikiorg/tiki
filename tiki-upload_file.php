@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.30 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.31 2005-01-22 22:54:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -28,12 +28,32 @@ if ($tiki_p_upload_files != 'y') {
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-upload_file", "tiki-download_file", $foo["path"]);
-$smarty->assign('url_browse', httpPrefix(). $foo1);
+$smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
 
 if (!isset($_REQUEST["description"]))
 	$_REQUEST["description"] = '';
 
 $smarty->assign('show', 'n');
+
+if (isset($_REQUEST['fileId']))
+	$editFileId = $_REQUEST['fileId'];
+$editFile = false;
+if (!empty($editFileId)) {
+	$fileInfo = $filegallib->get_file_info($editFileId);
+	if (empty($fileInfo) || $fileInfo == null || $fileInfo['galleryId'] != $_REQUEST['galleryId']) {
+		$smarty->assign('msg', tra("Could not find the file requested"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	if (!empty($_REQUEST['name']))
+		$fileInfo['name']=$_REQUEST['name'];
+	if (!empty($_REQUEST['description']))
+		$fileInfo['description']=$_REQUEST['description'];
+
+	$smarty->assign('fileInfo',$fileInfo);
+	$smarty->assign('editFileId',$editFileId);
+	$editFile = true;
+}
 
 // Process an upload here
 if (isset($_REQUEST["upload"])) {
@@ -84,12 +104,13 @@ if (isset($_REQUEST["upload"])) {
 		$smarty->display("error.tpl");
 		die;
 	}
-
+	
 	$error_msg = '';
 
 	$errors = array();
 	$uploads = array();
 
+	$didFileReplace = false;
 	for ($i = 1; $i <= 6; $i++) {
 		// We process here file uploads
 		if (isset($_FILES["userfile$i"]) && !empty($_FILES["userfile$i"]['name'])) {
@@ -131,7 +152,7 @@ if (isset($_REQUEST["upload"])) {
 
 			$file_name = $_FILES["userfile$i"]['name'];
 			$file_tmp_name = $_FILES["userfile$i"]['tmp_name'];
-			$tmp_dest = $tmpDir . "/" . $file_name;
+			$tmp_dest = $tmpDir . "/" . $file_name.".tmp";
 			if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 				$smarty->assign('msg', tra('Errors detected'));
 				$smarty->display("error.tpl");
@@ -170,6 +191,8 @@ if (isset($_REQUEST["upload"])) {
 			}
 
 			fclose ($fp);
+			// remove file after copying it to the right location or database
+			@unlink ($tmp_dest);
 
 			if ($fgal_use_db == 'n') {
 				fclose ($fw);
@@ -195,12 +218,15 @@ if (isset($_REQUEST["upload"])) {
 				$_REQUEST['name'] = $name;
 
 			if (isset($data)) {
-				$fileId
-					= $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $name, $data,
-					$size, $type, $user, $fhash);
+				if ($editFile) {
+					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $user, $fhash);
+					$didFileReplace = true;
+				}
+				else
+					$fileId	= $filegallib->insert_file($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $name, $data, $size, $type, $user, $fhash);
 
 				if (!$fileId) {
-					$errors[] = tra('Upload was not successful (maybe a duplicate file)'). ': ' . $name;
+					$errors[] = tra('Upload was not successful'). ': ' . $name;
 					if ($fgal_use_db == 'n') {
 						@unlink($fgal_use_dir . $fhash);
 					}
@@ -216,6 +242,12 @@ if (isset($_REQUEST["upload"])) {
 				}
 			}
 		}
+	}
+	
+	if ($editFile && !$didFileReplace) {
+		$filegallib->update_file($editFileId, $_REQUEST["name"], $_REQUEST["description"],$user);
+		$fileChangedMessage = tra('File update was succesful').': '.$_REQUEST['name'];
+		$smarty->assign('fileChangedMessage',$fileChangedMessage);
 	}
 
 	$smarty->assign('errors', $errors);

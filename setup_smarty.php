@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.31 2005-01-01 00:16:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.32 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,6 +35,8 @@ class Smarty_TikiWiki extends Smarty {
 		// we cannot use subdirs in safe mode
 		if(ini_get('safe_mode')) {
 			$this->use_sub_dirs = false;
+		} else {
+		   $this->use_sub_dirs = true;
 		}
 	}
 

@@ -5,7 +5,7 @@
 
 {/if}
 {tr}You can view the page by following this link:{/tr}
-{$mail_machine}/tiki-index.php?page={$mail_page|escape:"url"}
+{$mail_machine_raw}/tiki-index.php?page={$mail_page|escape:"url"}
 
 {if $mail_hash}{tr}If you don't want to receive these notifications follow this link:{/tr}
 {$mail_machine_raw}/tiki-user_watches.php?hash={$mail_hash}

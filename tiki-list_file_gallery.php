@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.24 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.25 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -155,7 +155,7 @@ if (isset($_REQUEST["remove"])) {
 }
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
-$smarty->assign('url', httpPrefix(). $foo["path"]);
+$smarty->assign('url', $tikilib->httpPrefix(). $foo["path"]);
 
 // Init smarty variables to blank values
 $smarty->assign('fname', '');
@@ -171,6 +171,7 @@ if (isset($_REQUEST["edit_mode"])and ($_REQUEST['edit_mode'])) {
 
 		$smarty->assign('fileId', $_REQUEST['fileId']);
 		$smarty->assign('galleryId', $_REQUEST['galleryId']);
+		$smarty->assign_by_ref('filename', $info['filename']);
 		$smarty->assign_by_ref('fname', $info['name']);
 		$smarty->assign_by_ref('fdescription', $info['description']);
 	}
@@ -179,7 +180,7 @@ if (isset($_REQUEST["edit_mode"])and ($_REQUEST['edit_mode'])) {
 if (isset($_REQUEST['edit'])) {
 		check_ticket('list-fgal');
 	if ($tiki_p_admin_file_galleries != 'y') {
-		if ($tiki_p_upload_images != 'y') {
+		if ($tiki_p_upload_files != 'y') {
 			// If you can't upload files then you can't edit a file you can't have a file
 			$smarty->assign('msg', tra("Permission denied you can't upload files so you can't edit them"));
 

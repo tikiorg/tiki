@@ -1,12 +1,16 @@
 <?php
-if (isset($_GET['version'])) {
-	$version = $_GET['version'];
+
+$tikiversion='1.9';
+if(!isset($_GET['version'])) {
+   echo "version not given. Using default $tikiversion.<br />";
 } else {
-	$version = 'last';
+   if(preg_match('/\d\.\d/',$_GET['version'])) {
+      $tikiversion=$_GET['version'];
+   }
 }
 
 // read file
-$file="../tiki.sql";
+$file="../tiki-$tikiversion-mysql.sql";
 @$fp = fopen($file,"r");
 if(!$fp) echo "Error opening $file";
 $data = '';
@@ -25,7 +29,7 @@ $statements=preg_split("#(;\n)|(;\r\n)#",$data);
 
 echo "<table>\n";
 // step though statements
-$fp=fopen($version.".to_sybase.sql","w");
+$fp=fopen($tikiversion.".to_sybase.sql","w");
 fwrite($fp,"set quoted_identifier on\ngo\n\n");
 foreach ($statements as $statement)
 {
@@ -76,17 +80,17 @@ function parse($stmt)
   // convert enums
   $stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") enum\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
   // Oracle wants to have "default ... NOT NULL" not "NOT NULL default ..."
-  $stmt=preg_replace("/(.+)(NOT NULL) (default.+),/","$1$3 $2,",$stmt);
+  $stmt=preg_replace("/(.+)(NOT NULL) (default.+),/i","$1$3 $2,",$stmt);
   // sybase is strange. a default null does not say, that you may insert
   // null values! you have to user default null null
-  $stmt=preg_replace("/(.+)(default NULL)(.+)/","$1$2 NULL$3",$stmt);
+  $stmt=preg_replace("/(.+)(default NULL)(.+)/i","$1$2 NULL$3",$stmt);
   // and sybase wants default values everywhere
   // else it will try to insert NULL values
   // what fails if we don't have default null null set :-(
   $stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") (text|varchar\([0-9]+\)|image),/","\n  $1 $2 default '',",$stmt);
   $stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") (numeric\([0-9]+,[0-9]+\)),/","\n  $1 $2 default NULL NULL,",$stmt);
   // same with other constraints
-  $stmt=preg_replace("/(.+)(CHECK.+) (default.+),/","$1$3 $2,",$stmt);
+  $stmt=preg_replace("/(.+)(CHECK.+) (default.+),/i","$1$3 $2,",$stmt);
 
   // quote column names in primary keys
   $stmt=preg_replace("/\n[ \t]+(PRIMARY KEY)  \((.+)\),*/e","quote_prim_cols('$1','$2')",$stmt);

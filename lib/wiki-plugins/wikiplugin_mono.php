@@ -23,7 +23,7 @@ function wikiplugin_mono_help() {
 function wikiplugin_mono($data, $params) {
 	global $tikilib;
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	$code = /* htmlentities( htmlspecialchars(*/ trim($data) /* ) )*/;
 	$code = preg_replace("/\n/", "<br />", $code);

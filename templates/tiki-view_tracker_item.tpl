@@ -42,7 +42,7 @@
 <td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td></tr>
 {/if}
 {section name=ix loop=$ins_fields}
-{if $ins_fields[ix].isPublic eq 'y' or $tiki_p_admin_trackers eq 'y'}
+{if $ins_fields[ix].isHidden ne 'y' or $tiki_p_admin_trackers eq 'y'}
 {if $ins_fields[ix].type eq 'h'}
 </table>
 <h3>{$ins_fields[ix].name}</h3>
@@ -56,21 +56,11 @@
 {else}
 <tr class="formcolor"><td>{$ins_fields[ix].name}
 {if ($ins_fields[ix].type eq 'l')}
-<br><div><a href="tiki-view_tracker.php?trackerId={$ins_fields[ix].trackerId}&amp;vals%5B{$ins_fields[ix].options_array[1]}%5D=
-{section name=ox loop=$ins_fields}
-{if $ins_fields[ox].fieldId eq $ins_fields[ix].options_array[2]}
-{$ins_fields[ox].value}
+<br />
+<a href="tiki-view_tracker.php?trackerId={$ins_fields[ix].trackerId}&amp;filterfield={$ins_fields[ix].options_array[1]}&amp;filtervalue={section name=ox loop=$ins_fields}{if $ins_fields[ox].fieldId eq $ins_fields[ix].options_array[2]}{$ins_fields[ox].value}{/if}{/section}">{tr}Filter Tracker Items{/tr}<br />
 {/if}
-{/section}
-">{tr}Insert new item{/tr}<br> 
-<a href="tiki-view_tracker.php?trackerId={$ins_fields[ix].trackerId}&amp;filterfield={$ins_fields[ix].options_array[1]}&amp;filtervalue=
-{section name=ox loop=$ins_fields}
-{if $ins_fields[ox].fieldId eq $ins_fields[ix].options_array[2]}
-{$ins_fields[ox].value}
-{/if}
-{/section}
-">{tr}Filter{/tr} {tr}Tracker Items{/tr}
-{/if}<br></td>
+
+</td>
 <td colspan="3">
 {/if}
 {if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
@@ -139,6 +129,18 @@
 {else}
 {$ins_fields[ix].value|escape|default:"&nbsp;"}
 {/if}
+
+{elseif $ins_fields[ix].type eq 's' and $ins_fields[ix].name eq "{tr}Rating{/tr}"}
+{$ins_fields[ix].value|default:"<i>{tr}Not rated yet{/tr}</i>"}
+<span class="button2">
+{section name=i loop=$ins_fields[ix].options_array}
+{if $ins_fields[ix].options_array[i] eq $my_rate}
+<b class="linkbut highlight">{$ins_fields[ix].options_array[i]}</b>
+{else}
+<a href="{$smarty.server.REQUEST_URI}&amp;fieldId={$ins_fields[ix].fieldId}&amp;rate={$ins_fields[ix].options_array[i]}" class="linkbut">{$ins_fields[ix].options_array[i]}</a>
+{/if}
+{/section}
+</span>
 
 {else}
 {$ins_fields[ix].value|default:"&nbsp;"}
@@ -277,8 +279,8 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {section name=ix loop=$ins_fields}
-{if $ins_fields[ix].isPublic eq 'y' or $tiki_p_admin_trackers eq 'y'}
-{if $ins_fields[ix].type ne 'x'}
+{if $ins_fields[ix].isHidden ne 'y' or $tiki_p_admin_trackers eq 'y'}
+{if $ins_fields[ix].type ne 'x' and $ins_fields[ix].type ne 's'}
 {if $ins_fields[ix].type eq 'h'}
 </table>
 <h3>{$ins_fields[ix].name}</h3>
@@ -293,6 +295,15 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $ins_fields[ix].type eq 'a' and $ins_fields[ix].options_array[0] eq 1}
 <br />
 {include file=tiki-edit_help_tool.tpl qtnum=$ins_fields[ix].id area_name="area_"|cat:$ins_fields[ix].id}
+{elseif ($ins_fields[ix].type eq 'l' and $tiki_p_create_tracker_items eq 'y')}
+<br />
+<a href="tiki-view_tracker.php?trackerId={$ins_fields[ix].trackerId}&amp;vals%5B{$ins_fields[ix].options_array[1]}%5D=
+{section name=ox loop=$ins_fields}
+{if $ins_fields[ox].fieldId eq $ins_fields[ix].options_array[2]}
+{$ins_fields[ox].value}
+{/if}
+{/section}
+">{tr}Insert new item{/tr}<br /> 
 {/if}
 </td><td colspan="3" nowrap="nowrap">
 {/if}
@@ -386,14 +397,13 @@ align       : "bR"
 {literal} } );{/literal}
 </script>
 {/if}
-{if (($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1')
- and $stick ne 'y'}
+{if (($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1') and $stick ne 'y'}
 </td>{assign var=stick value="y"}
 {else}
 </td></tr>{assign var=stick value="n"}
 {/if}
 
-{else}
+{elseif $ins_fields[ix].type eq 'x'}
 
 {capture name=trkaction}
 {if $ins_fields[ix].options_array[1] eq 'post'}

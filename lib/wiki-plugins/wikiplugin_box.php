@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.13 2004-09-08 19:52:37 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.14 2005-01-22 22:55:56 mose Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -21,18 +21,19 @@ function wikiplugin_box($data, $params) {
 	/* set default values for some args */
 	$title = tra("Message box");
 	
-	// Remove first <ENTER> if exists...
-	if (substr($data, 0, 2) == "\r\n") 
-	$data = substr($data, 2);
-	
-	extract ($params);
-	
-	if (isset($align)) $smarty->assign('plugin_box_align', $align ? $align : '');
-	if (isset($width)) $smarty->assign('plugin_box_width', $width ? $width : '');
-	if (isset($bg)) $smarty->assign('plugin_box_bg',  $bg ? $bg : '');
-	
-	$smarty->assign('plugin_box_title', $title);
-	
+	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
+    
+	extract ($params,EXTR_SKIP);
+	$w    = (isset($width)) ? " width=\"$width\""  : "";
+	$bg   = (isset($bg))    ? " background:$bg;" : "";
+  $al   = (isset($align) && ($align == 'right' || $align == "center")) ? " align=\"$align\"" : "";
+    
+	$begin  = "<table$al$w><tr><td><div class='cbox'".(strlen($bg) > 0 ? " style='$bg'" : "").">";
+	if (isset($title)) {
+    $begin .= "<div class='cbox-title'>$title</div>";
+	}
+	$begin.= "<div class='cbox-data'".(strlen($bg) > 0 ? " style=\"$bg\"" : "").">";
+	$end = "</div></div></td></tr></table>";
 	// Prepend any newline char with br
 	$data = preg_replace("/\\n/", "<br />\n", $data);
 	// Insert "\n" at data begin if absent (so start-of-line-sensitive syntaxes will be parsed OK)

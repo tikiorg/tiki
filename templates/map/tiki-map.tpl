@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.26 2004-10-08 10:00:12 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.27 2005-01-22 22:56:26 mose Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
@@ -10,7 +10,7 @@
 	  <tr>
 	     <td align="center" valign="middle">
 		<table class="normal">
-		  <tr><td>
+		  <tr><td align="center">
 		      	<input type="image" id="map" src="{$image_url}"
 			{if $xsize != ""}width="{$xsize}"{/if} 
 			{if $ysize != ""}height="{$ysize}"{/if} 
@@ -18,7 +18,7 @@
 		  alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
 		  title="{tr}click on the map to zoom or pan, do not drag{/tr}" />
 		  </td></tr>
-		  <tr><td>
+		  <tr><td align="center">
 		 	<img id="scale" src="{$image_scale_url}" border="0" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}" />
 		  </td></tr>
 		  <tr><td align="center">	

@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.22 2004-10-08 10:00:04 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.23 2005-01-22 22:56:21 mose Exp $ *}
 
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
+<a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 

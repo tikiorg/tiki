@@ -31,7 +31,7 @@
  *
  * @package TikiWiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 function wikiplugin_include_help() {
@@ -42,7 +42,7 @@ function wikiplugin_include($data, $params) {
     static $included_pages;
 
 	$max_times = 5;
-    extract ($params);
+    extract ($params,EXTR_SKIP);
 	if (!isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br />");
 	}

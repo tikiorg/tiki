@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.26 2004-10-15 15:54:53 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.27 2005-01-22 22:56:31 mose Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -190,7 +190,7 @@
   </div>
 {/if}
 
-{if $feature_articles eq 'y' or $feature_submissions eq 'y'}
+{if $feature_articles eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
     <a class="separator" href="javascript:icntoggle('cmsmenu');"><img src="img/icons/{$icn_cmsmenu}fo.gif" style="border: 0" name="cmsmenuicn" alt=""/></a>
@@ -428,6 +428,22 @@
   </div>
 {/if}
 
+{if $feature_events eq 'y'}
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class="separator" href="javascript:icntoggle('evmenu');"><img src="img/icons/{$icn_evmenu}fo.gif" style="border: 0" name="evmenuicn" alt=""/></a>
+  {else}<a class="separator" href="javascript:toggle('evmenu');">[-]</a>{/if}
+  <a href="tiki-events.php" class="separator">{tr}Events{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('evmenu');">[+]</a>{/if}
+  </div>
+  <div id="nlmenu" style="{$mnu_evmenu}">
+  {if $tiki_p_admin_events eq 'y'}
+  <a href="tiki-send_events.php" class="linkmenu">{tr}Send events{/tr}</a><br />
+  <a href="tiki-admin_events.php" class="linkmenu">{tr}Admin events{/tr}</a><br />
+  {/if}
+  </div>
+{/if}
+
 {if $feature_eph eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
@@ -562,12 +578,12 @@
       &nbsp;<a href="tiki-admin_integrator.php" class="linkmenu">{tr}Integrator{/tr}</a><br />
     {/if}
     {if $tiki_p_admin eq 'y'}
-      <a href="tiki-import_phpwiki.php" class="linkmenu">{tr}Import PHPWiki Dump{/tr}</a><br />
       <a href="tiki-phpinfo.php" class="linkmenu">{tr}phpinfo{/tr}</a><br />
       <a href="tiki-admin_dsn.php" class="linkmenu">{tr}DSN{/tr}</a><br />
       <a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br />
 		  <a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a><br />
 			<a href="tiki-mods.php" class="linkmenu">{tr}Mods Admin{/tr}</a><br />
+      <a href="tiki-admin_security.php" class="linkmenu">{tr}Security Admin{/tr}</a><br />
     {/if}
     {/sortlinks}
   </div>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_content_templates.php,v 1.14 2005-01-05 19:22:40 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_content_templates.php,v 1.15 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,6 +45,18 @@ if ($_REQUEST["templateId"]) {
 		$info["section_newsletters"] = 'n';
 	}
 
+	if ($templateslib->template_is_in_section($_REQUEST["templateId"], 'events')) {
+		$info["section_events"] = 'y';
+	} else {
+		$info["section_events"] = 'n';
+	}
+
+	if ($templateslib->template_is_in_section($_REQUEST["templateId"], 'admins')) {
+		$info["section_admins"] = 'y';
+	} else {
+		$info["section_admin"] = 'n';
+	}
+
 	if ($templateslib->template_is_in_section($_REQUEST["templateId"], 'cms')) {
 		$info["section_cms"] = 'y';
 	} else {
@@ -59,6 +71,7 @@ if ($_REQUEST["templateId"]) {
 	$info["section_html"] = 'n';
 	$info["section_wiki"] = 'n';
 	$info["section_newsletters"] = 'n';
+	$info["section_event"] = 'n';
 }
 
 $smarty->assign('info', $info);
@@ -112,6 +125,12 @@ if (isset($_REQUEST["preview"])) {
 		$info["section_newsletters"] = 'n';
 	}
 
+	if (isset($_REQUEST["section_events"]) && $_REQUEST["section_events"] == 'on') {
+		$info["section_events"] = 'y';
+	} else {
+		$info["section_events"] = 'n';
+	}
+
 	if (isset($_REQUEST["section_cms"]) && $_REQUEST["section_cms"] == 'on') {
 		$info["section_cms"] = 'y';
 	} else {
@@ -133,6 +152,7 @@ if (isset($_REQUEST["save"])) {
 	$info["section_cms"] = 'n';
 	$info["section_wiki"] = 'n';
 	$info["section_newsletters"] = 'n';
+	$info["section_events"] = 'n';
 	$info["section_html"] = 'n';
 	$smarty->assign('info', $info);
 
@@ -152,6 +172,12 @@ if (isset($_REQUEST["save"])) {
 		$templateslib->add_template_to_section($tid, 'newsletters');
 	} else {
 		$templateslib->remove_template_from_section($tid, 'newsletters');
+	}
+
+	if (isset($_REQUEST["section_events"]) && $_REQUEST["section_events"] == 'on') {
+		$templateslib->add_template_to_section($tid, 'events');
+	} else {
+		$templateslib->remove_template_from_section($tid, 'events');
 	}
 
 	if (isset($_REQUEST["section_cms"]) && $_REQUEST["section_cms"] == 'on') {

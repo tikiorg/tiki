@@ -82,7 +82,7 @@ class RegistrationLib extends TikiLib {
 
 	if ($novalidation != 'yes') {	// Skip the connecting test if it didn't work the first time
 	    // fsockopen function reference : http://www.php.net/manual/en/function.fsockopen.php
-	    $Connect = fsockopen ( $ConnectAddress, 25 );
+	    @$Connect = fsockopen ( $ConnectAddress, 25 );
 
 	    // Success in socket connection
 	    if ($Connect)

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.46 2005-01-01 00:16:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.47 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -72,7 +72,7 @@ if (!isset($_REQUEST['comments_threshold'])) {
 
 $smarty->assign('comments_threshold', $_REQUEST['comments_threshold']);
 // This sets up comments father as the father
-$comments_parsed = parse_url(httpPrefix().$_SERVER["REQUEST_URI"]);
+$comments_parsed = parse_url($tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
 /*
    print "<pre>";
    print_r( $comments_parsed );
@@ -85,7 +85,7 @@ if (!isset($comments_parsed["query"])) {
 }
 
 parse_str($comments_parsed["query"], $comments_query);
-$comments_father = httpPrefix(). $comments_parsed["path"];
+$comments_father = $tikilib->httpPrefix(). $comments_parsed["path"];
 $comments_complete_father = $comments_father;
 
 /*
@@ -142,6 +142,8 @@ if (!isset($_REQUEST[$comments_object_var])) {
 
 $comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
 
+$message_id = '';
+$in_reply_to = '';
 // Process a post form here 
 if ($tiki_p_post_comments == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
@@ -175,7 +177,7 @@ if ($tiki_p_post_comments == 'y') {
 		    $parent_id = $_REQUEST["comments_parentId"];
 		}
 
-		$commentslib->post_new_comment($comments_objectId, $parent_id,
+		$qId = $commentslib->post_new_comment($comments_objectId, $parent_id,
 			$user,
 			$_REQUEST["comments_title"],
 			$_REQUEST["comments_data"],
@@ -185,16 +187,73 @@ if ($tiki_p_post_comments == 'y') {
 		$_REQUEST["comments_reply_threadId"] = 0;
 		$smarty->assign("comments_reply_threadId", 0); // without the flag
 	    } else {
+		$qId = $_REQUEST["comments_threadId"];
 		if ($tiki_p_edit_comments == 'y') {
 		    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
 			    $_REQUEST["comment_rating"], $_REQUEST["comments_data"]);
 		}
 	    }
-
 	    $object = explode(':', $comments_objectId );
 
 	    if( $object[0] == 'forum' )
 	    {
+		// Deal with attachment
+		if (($forum_info['att'] == 'att_all'
+			|| ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y')
+			|| ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y'))
+			&&  isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])){
+				$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+
+				$data = '';
+				$fhash = '';
+
+				if ($forum_info['att_store'] == 'dir') {
+				    $name = $_FILES['userfile1']['name'];
+				    $fhash = md5(uniqid('.'));
+				    // Just in case the directory doesn't have the trailing slash
+				    if (substr($forum_info['att_store_dir'], strlen($forum_info['att_store_dir']) - 1, 1) == '\\') {
+					$forum_info['att_store_dir'] = substr($forum_info['att_store_dir'],
+						0, strlen($forum_info['att_store_dir']) - 1). '/';
+				    } elseif (
+					    substr($forum_info['att_store_dir'], strlen($forum_info['att_store_dir']) - 1, 1) != '/') {
+					$forum_info['att_store_dir'] .= '/';
+				    }
+
+				    @$fw = fopen($forum_info['att_store_dir'] . $fhash, "wb");
+				    if (!$fw) {
+					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
+					$smarty->display("error.tpl");
+					die;
+				    }
+				}
+				while (!feof($fp)) {
+				    if ($forum_info['att_store'] == 'db') {
+					$data .= fread($fp, 8192 * 16);
+				    } else {
+					$data = fread($fp, 8192 * 16);
+					fwrite($fw, $data);
+				    }
+				}
+				fclose ($fp);
+
+				if ($forum_info['att_store'] == 'dir') {
+				    fclose ($fw);
+				    $data = '';
+				}
+
+				$size = $_FILES['userfile1']['size'];
+				$name = $_FILES['userfile1']['name'];
+				$type = $_FILES['userfile1']['type'];
+
+				if ($size > $forum_info['att_max_size']) {
+				    $smarty->assign('msg', tra('Cannot upload this file maximum upload size exceeded'));
+				    $smarty->display("error.tpl");
+				    die;
+				}
+
+				$commentslib->attach_file($qId, 0, $name, $type, $size, $data,
+					$fhash, $forum_info['att_store_dir'], $_REQUEST['forumId']);
+		} /* attachment */
 		// Deal with mail notifications.
 		include_once('lib/notifications/notificationemaillib.php');
 		sendForumEmailNotification('forum_post_thread',
@@ -220,14 +279,14 @@ if ($tiki_p_post_comments == 'y') {
 			$smarty->assign('mail_comment', $_REQUEST["comments_data"]);
 			$smarty->assign('mail_hash', $not['hash']);
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = httpPrefix(). dirname( $foo["path"] );
+			$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
 			$smarty->assign('mail_machine', $machine);
 			$parts = explode('/', $foo['path']);
 
 			if (count($parts) > 1)
 			    unset ($parts[count($parts) - 1]);
 
-			$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+			$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
 			$mail = new TikiMail();
 		    }
 		    global $language;// TODO: optimise by grouping user by language

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.93 2004-12-02 22:41:29 jburleyebuilt Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.94 2005-01-22 22:54:59 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -30,6 +30,10 @@ ALTER TABLE tiki_trackers ADD orderAttachments varchar(255) NOT NULL default 'fi
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('groupTracker','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTracker','n');
 
+# added on 2004-12-06 by burley (new ldap URL preference, optional).
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_url','');
+
+
 ALTER TABLE `users_groups` ADD `usersTrackerId` INT(11) ;
 ALTER TABLE `users_groups` ADD `groupTrackerId` INT(11) ;
 
@@ -59,57 +63,6 @@ ALTER TABLE `tiki_group_inclusion` ADD PRIMARY KEY ( groupName(30),includeGroup(
 
 # added on 2004-01-16 by damosoft: new marking a blog entry as private
 ALTER TABLE `tiki_blog_posts` ADD `priv` VARCHAR( 1 );
-
-# Tiki Jukebox
-
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Jukebox','tiki-jukebox_albums.php',620,'feature_jukebox','tiki_p_jukebox_albums', '');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','View Tracks','tiki-jukebox_tracks.php',625,'feature_jukebox','tiki_p_jukebox_tracks', '');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Upload Tracks','tiki-jukebox_upload.php',630,'feature_jukebox','tiki_p_jukebox_upload', '');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin','tiki-jukebox_admin.php',635,'feature_jukebox','tiki_p_jukebox_admin', '');
-
-# Jukebox permissions - Damosoft aka Damian
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_albums', 'Can view jukebox albums', 'registered', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox');
-
-# Tiki Jukebox tables (damian)
-CREATE TABLE tiki_jukebox_genres (
-        genreId int(14) unsigned NOT NULL auto_increment,
-        genreName varchar(80),
-        genreDescription text,
-        PRIMARY KEY (genreId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-CREATE TABLE tiki_jukebox_albums (
-        albumId int(14) unsigned NOT NULL auto_increment,
-        title varchar(80) default NULL,
-        description text,
-        created int(14),
-        lastModif int(14),
-        user varchar(200),
-        visits int(14),
-        public char(1),
-        genreId int(14),
-        PRIMARY KEY(albumId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-CREATE TABLE tiki_jukebox_tracks (
-        trackId int(14) unsigned NOT NULL auto_increment,
-        albumId int(14),
-        artist varchar(200),
-        title varchar(200),
-        created int(14),
-        url varchar(255),
-        filename varchar(80),
-        filesize int(14),
-        filetype varchar(250),
-        genreId int(14),
-        plays int(14),
-        PRIMARY KEY(trackId)
-) TYPE=MyISAM AUTO_INCREMENT=1;
-
 
 # added on 2004-01-22 by mose, changing trackers options
 CREATE TABLE tiki_tracker_options (
@@ -177,36 +130,36 @@ CREATE TABLE users_score (
 ) TYPE=MyISAM;
 
 
-INSERT INTO tiki_score VALUES ('login',1,0,'General','Login',1);
-INSERT INTO tiki_score VALUES ('login_remain',2,60,'General','Stay logged',2);
-INSERT INTO tiki_score VALUES ('profile_fill',10,0,'General','Fill each profile field',3);
-INSERT INTO tiki_score VALUES ('profile_see',2,0,'General','See other user\'s profile',4);
-INSERT INTO tiki_score VALUES ('profile_is_seen',1,0,'General','Have your profile seen',5);
-INSERT INTO tiki_score VALUES ('friend_new',10,0,'General','Make friends (feature not available yet)',6);
-INSERT INTO tiki_score VALUES ('message_receive',1,0,'General','Receive message',7);
-INSERT INTO tiki_score VALUES ('message_send',2,0,'General','Send message',8);
-INSERT INTO tiki_score VALUES ('article_read',2,0,'Articles','Read an article',9);
-INSERT INTO tiki_score VALUES ('article_comment',5,0,'Articles','Comment an article',10);
-INSERT INTO tiki_score VALUES ('article_new',20,0,'Articles','Publish an article',11);
-INSERT INTO tiki_score VALUES ('article_is_read',1,0,'Articles','Have your article read',12);
-INSERT INTO tiki_score VALUES ('article_is_commented',2,0,'Articles','Have your article commented',13);
-INSERT INTO tiki_score VALUES ('fgallery_new',10,0,'File galleries','Create new file gallery',14);
-INSERT INTO tiki_score VALUES ('fgallery_new_file',10,0,'File galleries','Upload new file to gallery',15);
-INSERT INTO tiki_score VALUES ('fgallery_download',5,0,'File galleries','Download other user\'s file',16);
-INSERT INTO tiki_score VALUES ('fgallery_is_downloaded',5,0,'File galleries','Have your file downloaded',17);
-INSERT INTO tiki_score VALUES ('igallery_new',10,0,'Image galleries','Create a new image gallery',18);
-INSERT INTO tiki_score VALUES ('igallery_new_img',6,0,'Image galleries','Upload new image to gallery',19);
-INSERT INTO tiki_score VALUES ('igallery_see_img',3,0,'Image galleries','See other user\'s image',20);
-INSERT INTO tiki_score VALUES ('igallery_img_seen',1,0,'Image galleries','Have your image seen',21);
-INSERT INTO tiki_score VALUES ('blog_new',20,0,'Blogs','Create new blog',22);
-INSERT INTO tiki_score VALUES ('blog_post',5,0,'Blogs','Post in a blog',23);
-INSERT INTO tiki_score VALUES ('blog_read',2,0,'Blogs','Read other user\'s blog',24);
-INSERT INTO tiki_score VALUES ('blog_comment',2,0,'Blogs','Comment other user\'s blog',25);
-INSERT INTO tiki_score VALUES ('blog_is_read',3,0,'Blogs','Have your blog read',26);
-INSERT INTO tiki_score VALUES ('blog_is_commented',3,0,'Blogs','Have your blog commented',27);
-INSERT INTO tiki_score VALUES ('wiki_new',10,0,'Wiki','Create a new wiki page',28);
-INSERT INTO tiki_score VALUES ('wiki_edit',5,0,'Wiki','Edit an existing page',29);
-INSERT INTO tiki_score VALUES ('wiki_attach_file',3,0,'Wiki','Attach file',30);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('login',1,0,'General','Login',1);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('login_remain',2,60,'General','Stay logged',2);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('profile_fill',10,0,'General','Fill each profile field',3);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('profile_see',2,0,'General','See other user\'s profile',4);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('profile_is_seen',1,0,'General','Have your profile seen',5);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('friend_new',10,0,'General','Make friends (feature not available yet)',6);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('message_receive',1,0,'General','Receive message',7);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('message_send',2,0,'General','Send message',8);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('article_read',2,0,'Articles','Read an article',9);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('article_comment',5,0,'Articles','Comment an article',10);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('article_new',20,0,'Articles','Publish an article',11);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('article_is_read',1,0,'Articles','Have your article read',12);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('article_is_commented',2,0,'Articles','Have your article commented',13);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('fgallery_new',10,0,'File galleries','Create new file gallery',14);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('fgallery_new_file',10,0,'File galleries','Upload new file to gallery',15);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('fgallery_download',5,0,'File galleries','Download other user\'s file',16);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('fgallery_is_downloaded',5,0,'File galleries','Have your file downloaded',17);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('igallery_new',10,0,'Image galleries','Create a new image gallery',18);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('igallery_new_img',6,0,'Image galleries','Upload new image to gallery',19);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('igallery_see_img',3,0,'Image galleries','See other user\'s image',20);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('igallery_img_seen',1,0,'Image galleries','Have your image seen',21);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('blog_new',20,0,'Blogs','Create new blog',22);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('blog_post',5,0,'Blogs','Post in a blog',23);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('blog_read',2,0,'Blogs','Read other user\'s blog',24);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('blog_comment',2,0,'Blogs','Comment other user\'s blog',25);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('blog_is_read',3,0,'Blogs','Have your blog read',26);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('blog_is_commented',3,0,'Blogs','Have your blog commented',27);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('wiki_new',10,0,'Wiki','Create a new wiki page',28);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('wiki_edit',5,0,'Wiki','Edit an existing page',29);
+INSERT INTO tiki_score (event,score,expiration,category,description,ord) VALUES ('wiki_attach_file',3,0,'Wiki','Attach file',30);
 
 
 #
@@ -315,6 +268,7 @@ ALTER TABLE `tiki_untranslated` CHANGE `lang` `lang` char(16) NOT NULL default '
 #added on 2004-04-16 franck
 ALTER TABLE `tiki_quicktags` ADD `tagcategory` CHAR( 255 ) AFTER `tagicon` ;
 ALTER TABLE `tiki_quicktags` ADD INDEX `tagcategory` (`tagcategory`);
+ALTER TABLE `tiki_quicktags` ADD INDEX `taglabel` (`taglabel`);
 
 UPDATE `tiki_quicktags` set `tagcategory`='wiki' where `tagcategory`=NULL;
 
@@ -493,6 +447,8 @@ ALTER TABLE `tiki_quizzes` ADD `sForum` varchar(80) default NULL;
 ALTER TABLE `tiki_quizzes` ADD `sPrologue` text default NULL;
 ALTER TABLE `tiki_quizzes` ADD `sData` text default NULL;
 ALTER TABLE `tiki_quizzes` ADD `sEpilogue` text default NULL;
+ALTER TABLE `tiki_quizzes` ADD `passingperct` int(4) default 0;
+
 
 #
 # Improved Quizzes end
@@ -630,9 +586,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','');
 UPDATE `tiki_menu_options` set `name`='Shoutbox Words' where `position`='1191' and menuId='42';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Score','tiki-admin_score.php',1235,'','tiki_p_admin','');
-UPDATE `tiki_menu_options` set `name`='Tracks' where `position`='625' and menuId='42' and name='View Tracks';
-UPDATE `tiki_menu_options` set `name`='Jukebox Admin' where `position`='635' and menuId='42' and name='Admin';
-UPDATE `tiki_menu_options` set `name`='Genres Admin', `url`='tiki-jukebox_genres.php', `perm`='tiki_p_jukebox_genres' where `url`='tiki-jukebox_upload.php' and menuId='42';
 UPDATE `tiki_menu_options` set `name`='User list' where `url`='tiki-list_users.php' and menuId='42';
 UPDATE `tiki_menu_options` set `section`='feature_articles,feature_cms_rankings'  where `section`='feature_articles,feature_cms_ranking' and menuId='42';
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','');
@@ -673,15 +626,150 @@ ALTER TABLE `tiki_galleries` ADD `geographic` char(1) default NULL AFTER `visibl
 ALTER TABLE `tiki_images` ADD `lat` float default NULL AFTER `description`;
 ALTER TABLE `tiki_images` ADD `lon` float default NULL AFTER `description`;
 
-# added on 30 09 04 00:41:05 by mose
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Packages Admin','tiki-mods.php',1232,'','tiki_p_admin','');
-
 # added on 07 10 04 00:01:12 by mose
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_comments', 'Can view wiki coments', 'basic', 'wiki');
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_comments');
 
 # added on 11 10 04 06:28:29 by more for registration validation by admin
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateRegistration','n');
+
+# added on 2004-10-19 by redflo. ported subgalleries and other new features to 1.9
+ALTER TABLE tiki_galleries ADD COLUMN (
+        sortorder VARCHAR(20) NOT NULL DEFAULT 'created',
+        sortdirection VARCHAR(4) NOT NULL DEFAULT 'desc',
+        galleryimage VARCHAR(20) NOT NULL DEFAULT 'first',
+        parentgallery int(14) NOT NULL default -1,
+        showname char(1) NOT NULL DEFAULT 'y',
+        showimageid char(1) NOT NULL DEFAULT 'n',
+        showdescription char(1) NOT NULL DEFAULT 'n',
+        showcreated char(1) NOT NULL DEFAULT 'n',
+        showuser char(1) NOT NULL DEFAULT 'n',
+        showhits char(1) NOT NULL DEFAULT 'y',
+        showxysize char(1) NOT NULL DEFAULT 'y',
+        showfilesize char(1) NOT NULL DEFAULT 'n',
+        showfilename char(1) NOT NULL DEFAULT 'n',
+        defaultscale varchar(10) NOT NULL DEFAULT 'o'
+);
+
+alter table tiki_galleries_scales add column (scale int(11) NOT NULL default 0);
+update tiki_galleries_scales set scale=greatest(xsize,ysize);
+alter table tiki_galleries_scales drop primary key;
+alter table tiki_galleries_scales drop column xsize;
+alter table tiki_galleries_scales drop column ysize;
+alter table tiki_galleries_scales add primary key (galleryId,scale);
+
+# added on 2004-10-20 by gg. added event registration to 1.9
+
+ALTER TABLE `tiki_calendars` ADD `customevents` ENUM('n','y') DEFAULT 'n' NOT NULL AFTER `customparticipants` ;
+ALTER TABLE `tiki_calendar_items` ADD `evId` INT( 12 ) DEFAULT '0' NOT NULL AFTER `categoryId` ;
+
+CREATE TABLE tiki_event_subscriptions (
+  evId int(12) NOT NULL default '0',
+  email varchar(255) NOT NULL default '',
+  fname varchar(255) NOT NULL default '',
+  lname varchar(255) NOT NULL default '',
+  company varchar(255) NOT NULL default '',
+  code varchar(32) default NULL,
+  valid char(1) default NULL,
+  subscribed int(14) default NULL,
+  PRIMARY KEY  (evId,email)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+CREATE TABLE tiki_events (
+  evId int(12) NOT NULL auto_increment,
+  calitemId int(14) NOT NULL default '0',
+  name varchar(200) default NULL,
+  description text,
+  created int(14) default NULL,
+  lastSent int(14) default NULL,
+  editions int(10) default NULL,
+  users int(10) default NULL,
+  allowUserSub char(1) default 'y',
+  allowAnySub char(1) default NULL,
+  unsubMsg char(1) default 'y',
+  validateAddr char(1) default 'y',
+  frequency int(14) default NULL,
+  PRIMARY KEY  (evId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+CREATE TABLE tiki_sent_events (
+  editionId int(12) NOT NULL auto_increment,
+  evId int(12) NOT NULL default '0',
+  users int(10) default NULL,
+  sent int(14) default NULL,
+  subject varchar(200) default NULL,
+  data longblob,
+  PRIMARY KEY  (editionId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_events', 'Can admin events', 'admin', 'events');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_send_events', 'Can send events', 'editors', 'events');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_subscribe_events', 'Can subscribe to events', 'basic', 'events');
+INSERT INTO tiki_preferences(name,value) VALUES ('feature_events','n');
+
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Events','tiki-events.php',920,'feature_events','','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Send events','tiki-send_events.php',925,'feature_events','tiki_p_send_events','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin events','tiki-admin_events.php',930,'feature_events','tiki_p_admin_events','');
+
+#added on 2004-10-22 by sylvie
+ALTER TABLE `tiki_pages` ADD `lockedby` VARCHAR(200) default NULL;
+ALTER TABLE  `tiki_pages` DROP column `lock`;
+
+#added on 2004-10-23 by sylvie
+UPDATE `tiki_user_watches` set `event`='article_submitted', `object`='*' where `event`='article_post';
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_wiki_diff_style','old');
+
+#added on 2004-10-24 by redflo
+ALTER TABLE `tiki_images_data` ADD `etag` varchar(32) default NULL;
+
+# Now for tiki_project goodies
+# Damo stuff
+CREATE TABLE tiki_projects (
+  projectId int(10) unsigned NOT NULL auto_increment,
+  active char(1) NOT NULL default 'n',
+  projectName varchar(200) NOT NULL default '',
+  projectFriendlyName varchar(200) NOT NULL default '',
+  projectDescription text NOT NULL,
+  Created int(14) default NULL,
+  lastModif int(14) default NULL,
+  PRIMARY KEY  (projectId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+		
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https','auto');
+
+
+CREATE TABLE tiki_projects_preferences (
+  preferenceId int(10) NOT NULL auto_increment,
+  projectId int(10) NOT NULL default '0',
+  name varchar(40) NOT NULL,
+  value varchar(250) default NULL,
+  PRIMARY KEY (preferenceId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS tiki_projects_objects;
+CREATE TABLE tiki_projects_objects (
+  prjobjId int(10) unsigned NOT NULL auto_increment,
+  projectId int(10) NOT NULL,
+  objectType varchar(20) NOT NULL,
+  objectId int(11) NOT NULL,
+  url varchar(250),
+  PRIMARY KEY (prjobjId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+	  
+ALTER TABLE `tiki_quicktags` CHANGE `taginsert` `taginsert` TEXT DEFAULT NULL;
+
+alter table tiki_user_modules add parse char(1) default NULL;
+UPDATE tiki_user_modules SET parse='n' WHERE name='menu_application_menu';
+
+# Now change the mod-application_menu to the database based version
+# added damian aka damosoft
+INSERT IGNORE INTO `tiki_user_modules`(name,title,data, parse)  VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
+UPDATE `tiki_modules` set `name`='mnu_application_menu' where `name`='mod-application_menu' or `name`='application_menu';
+UPDATE `tiki_user_assigned_modules` set `name`='mnu_application_menu' where `name`='mod-application_menu' or `name`='application_menu';
 
 # added on 12 10 04 08:21:46 by mose for wiki_rating system
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_ratings', 'Can view rating of wiki pages', 'basic', 'wiki');
@@ -690,3 +778,109 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_ratings','n');
 CREATE INDEX urlindex ON tiki_link_cache (url(250));
 
+CREATE TABLE `tiki_poll_objects` (
+  `catObjectId` int(11) NOT NULL default '0',
+  `pollId` int(11) NOT NULL default '0',
+  `title` varchar(255) default NULL,
+  PRIMARY KEY  (`catObjectId`,`pollId`)
+) TYPE=MyISAM;
+
+ALTER TABLE `tiki_poll_options` ADD `position` INT( 4 ) DEFAULT '0' NOT NULL AFTER `title` ;
+
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','');
+
+
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tracker_view_ratings', 'Can view rating result for tracker items', 'basic', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_tracker_vote_ratings', 'Can vote a rating for tracker items', 'registered', 'trackers');
+CREATE INDEX urlindex ON tiki_link_cache (url(250));
+
+# added on Nov 02 2004 6:06 PM by as6o for file galleries
+alter table tiki_files add column search_data longtext;
+alter table tiki_files add column lastModif integer(14) DEFAULT NULL;
+alter table tiki_files add column lastModifUser varchar(200) DEFAULT NULL;
+alter table tiki_files drop KEY ft;
+alter table tiki_files add FULLTEXT ft (name, description, search_data);
+
+# added on Nov 02 2004 6:06 PM by as6o for file galleries
+CREATE TABLE tiki_file_handlers (
+	mime_type varchar(64) default NULL,
+	cmd varchar(238) default NULL
+) TYPE=MyISAM;
+
+#Dec 08 2004 sylvieg
+UPDATE `tiki_menu_options` set `url`='tiki-survey_stats.php' where `url`='tiki-surveys_stats.php';
+UPDATE `tiki_menu_options` set `perm`='tiki_p_subscribe_newsletters,tiki_p_send_newsletters,tiki_p_admin_newsletters' where `url`='tiki-newsletters.php';
+
+# 2004-12-10 sylvieg (backport from head)
+ALTER TABLE tiki_mailin_accounts add column (discard_after varchar(255) default NULL);
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_admin_users', 'Can admin users', 'admin', 'user');
+UPDATE tiki_menu_options set perm='tiki_p_admin_users' where menuId=42 && name='Users' && perm='tiki_p_admin';
+
+# better do it in the upgrade as well.
+INSERT IGNORE INTO tiki_preferences (name,value) VALUES ('mail_crlf','LF');
+
+# 2004-12-16 sylvieg (to synchronise update 1.7 to 1.8 and new db)
+ALTER TABLE tiki_blog_posts drop KEY ft;
+ALTER TABLE tiki_blog_posts ADD FULLTEXT KEY ft(data, title);
+ALTER TABLE tiki_blog_posts MODIFY data_size int(11) unsigned NOT NULL default '0';
+
+# 2004-12-18 sylvieg
+ALTER TABLE tiki_calendars ADD personal ENUM ('n', 'y') NOT NULL DEFAULT 'n' AFTER lastmodif;
+
+# 2004-12-31 sylvieg
+UPDATE tiki_menu_options set `perm`='tiki_p_live_support_admin' where `perm`='tiki_p_admin_live_support';
+
+#2005-01-02 sylvieg
+UPDATE tiki_menu_options set `perm`= 'tiki_p_subscribe_events' where `url`='tiki-events.php';
+UPDATE tiki_menu_options set `perm`= 'tiki_p_subscribe_newsletters' where `url`='tiki-newsletters.php';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_send_newsletters','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','');
+
+#2005-01-07 sylvieg
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_timezone','n');
+
+#2005-01-09 sylvieg
+UPDATE tiki_menu_options set `perm`= 'tiki_p_read_article,tiki_p_admin_received_articles', url='tiki-received_articles.php' where `name`='Received articles';
+
+#2005-01-13 sir-b
+UPDATE tiki_user_tasks set title = '-'  where title IS NULL;
+
+ALTER TABLE tiki_user_tasks MODIFY user varchar(200) NOT NULL;
+ALTER TABLE tiki_user_tasks ADD belongs_to integer(14) NOT NULL  AFTER taskId;
+ALTER TABLE tiki_user_tasks ADD task_version integer(4) NOT NULL AFTER belongs_to;
+ALTER TABLE tiki_user_tasks MODIFY title varchar(250) NOT NULL;
+ALTER TABLE tiki_user_tasks MODIFY description text DEFAULT NULL;
+ALTER TABLE tiki_user_tasks MODIFY  date integer(14) NOT NULL;
+ALTER TABLE tiki_user_tasks ADD start integer(14) DEFAULT NULL AFTER date;
+ALTER TABLE tiki_user_tasks ADD end integer(14) DEFAULT NULL AFTER start;
+ALTER TABLE tiki_user_tasks MODIFY status char(1) DEFAULT NULL;
+ALTER TABLE tiki_user_tasks MODIFY priority integer(2) DEFAULT NULL;
+ALTER TABLE tiki_user_tasks MODIFY completed integer(14) DEFAULT NULL;
+ALTER TABLE tiki_user_tasks MODIFY percentage integer(4)  DEFAULT NULL;
+ALTER TABLE tiki_user_tasks ADD lasteditor varchar(200) NOT NULL AFTER percentage;
+ALTER TABLE tiki_user_tasks ADD changes integer(14) DEFAULT NULL AFTER lasteditor;
+ALTER TABLE tiki_user_tasks ADD deleted integer(14) DEFAULT NULL AFTER changes;
+ALTER TABLE tiki_user_tasks ADD creator varchar(200) NOT NULL AFTER deleted;
+ALTER TABLE tiki_user_tasks ADD accepted_creator char(1) DEFAULT NULL AFTER creator;
+ALTER TABLE tiki_user_tasks ADD accepted_user char(1) DEFAULT NULL AFTER accepted_creator;
+ALTER TABLE tiki_user_tasks ADD public_for_group varchar(30) DEFAULT NULL AFTER accepted_user;
+ALTER TABLE tiki_user_tasks ADD rights_by_creator char(1) DEFAULT NULL AFTER public_for_group;
+ALTER TABLE tiki_user_tasks ADD info text DEFAULT NULL AFTER rights_by_creator;
+ALTER TABLE tiki_user_tasks ADD UNIQUE (belongs_to, task_version);
+
+UPDATE tiki_user_tasks SET belongs_to = taskId,  lasteditor = user,  creator = user, task_version = 0;
+
+#2005-01-13 sir-b
+CREATE TABLE tiki_user_tasks_cc (
+  taskId integer(14) NOT NULL,
+  user varchar(200) NOT NULL,
+  PRIMARY KEY (taskId,user)
+) TYPE=MyISAM AUTO_INCREMENT=1;
+
+
+
+#2005-01-13 sir-b
+INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_send', 'Can send tasks to other users', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_receive', 'Can receive tasks from other users', 'registered', 'user');
+INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');

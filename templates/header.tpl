@@ -3,7 +3,6 @@
 You should only modify header.tpl via a text editor through console, or ssh, or FTP edit commands. And only if you know what you are doing ;-)
 
 You are most likely wanting to modify the top of your Tiki site. Please consider modifying tiki-top_bar.tpl which you can do safely via the web-based interface.       --- *}
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -32,15 +31,10 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {* --- tikiwiki block --- *}
 {php} include("lib/tiki-dynamic-js.php"); {/php}
 <script type="text/javascript" src="lib/tiki-js.js"></script>
-{if $feature_wiki_jstooltips eq 'y'}
-	{popup_init src="lib/overlib.js"}
-{/if}
-<link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
-{if $favicon}<link rel="icon" href="{$favicon}" />{/if}
 {include file="bidi.tpl"}
 <title>
 {$siteTitle}
-{if $page ne ''} : {$page|escape}
+{if $page ne ''} : {$page|escape} {* add $description|escape if you want to put the description *}
 {elseif $headtitle} : {$headtitle}
 {elseif $arttitle ne ''} : {$arttitle}
 {elseif $title ne ''} : {$title}
@@ -52,6 +46,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 </title>
 
+<link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
+{if $favicon}<link rel="icon" href="{$favicon}" />{/if}
 {* --- jscalendar block --- *}
 {if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
 <link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
@@ -88,8 +84,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if $uses_tabs eq 'y'}
 {* tabs lib removed because non-free *}
 {/if}
-
-<link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
 
 {* --- Firefox RSS icons --- *}
 {if $feature_wiki eq 'y' and $rss_wiki eq 'y'}
@@ -128,6 +122,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
 {/if}
 
+{if $feature_community_mouseover}{popup_init src="lib/overlib.js"}{/if}
 {if $feature_siteidentity eq 'y'}
 {* Site identity header section *}
 	<div id="siteheader">

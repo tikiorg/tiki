@@ -21,7 +21,7 @@
     * @package TikiWiki
     * @subpackage Plugins
     * @author Claudio Bustos
-    * @version $Revision: 1.8 $
+    * @version $Revision: 1.9 $
     */
 
 //this script may only be included - so its better to die if called directly.
@@ -122,7 +122,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
         function getVersion() {
             return tra("No version indicated");
             //return preg_replace("/[Revision: $]/", '',
-            //                    "\$Revision: 1.8 $");
+            //                    "\$Revision: 1.9 $");
         }
         /**
         * Returns the default arguments for the plugin
@@ -207,6 +207,22 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
                     $sOutput  .= "</table>";
                 }
         return $sOutput;
+        }
+
+        function createList($aData) {
+            $aPrincipalField=array("field"=>"pageName","name"=>"Pages");
+	
+            // Header for info
+            $sOutput = "<table class='normal'><tr><td class='heading'>".tra($aPrincipalField["name"])."</td></tr><tr><td class='even'>";
+            $iCounter=0;		
+            // create a comma separated list of entries
+            foreach($aData as $aPage) {
+              if ($iCounter>0) $sOutput .= ", ";
+              $sOutput  .= "((".$aPage[$aPrincipalField["field"]]."))";
+              $iCounter++;
+            }
+              $sOutput .= "</td></tr></table>";
+            return $sOutput;
         }
     }
 ?>

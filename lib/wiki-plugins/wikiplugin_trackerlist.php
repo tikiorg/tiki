@@ -1,17 +1,15 @@
 <?php
-// Includes a tracker field
-// Usage:
-// {TRACKER()}{TRACKER}
 
 function wikiplugin_trackerlist_help() {
 	$help = tra("Displays the output of a tracker content, fields are indicated with numeric ids.").":\n";
-	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5)}Notice{TRACKERLIST}~/np~";
+	$help.= "~np~{TRACKERLIST(trackerId=>1,fields=>2:4:5,showtitle=>y|n,showlinks=>y|n,showdesc=>y|n,showinitials=>y|n,status=>o|p|c|op|oc|pc|opc,sort_mode=>,max=>,filterfield=>,filtervalue=>)}Notice{TRACKERLIST}~/np~";
 	return $help;
 }
-function wikiplugin_trackerlist($data, $params) {
-	global $smarty, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user;
 
-	extract ($params);
+function wikiplugin_trackerlist($data, $params) {
+	global $smarty, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user, $page;
+
+	extract ($params,EXTR_SKIP);
 
 	if (!isset($trackerId)) {
 		$smarty->assign('msg', tra("missing tracker ID for plugin TRACKER"));
@@ -49,12 +47,24 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		$smarty->assign_by_ref('showdesc', $showdesc);
 		
+		if (!isset($showinitials)) {
+			$showinitials = "n";
+		}
+		$smarty->assign_by_ref('showinitials', $showinitials);
+		
 		if (!isset($status)) {
 			$status = "o";
 		}
 		$tr_status = $status;
 		$smarty->assign_by_ref('tr_status', $tr_status);
 			
+		if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' 
+				and $user and isset($_REQUEST['itemId']) and isset($_REQUEST["rate_$trackerId"]) and isset($_REQUEST['fieldId'])
+				and in_array($_REQUEST["rate_$trackerId"],split(',',$tracker_info['ratingOptions']))) {
+			$trklib->replace_rating($trackerId,$_REQUEST['itemId'],$_REQUEST['fieldId'],$user,$_REQUEST["rate_$trackerId"]);
+			header('Location: tiki-index.php?page='.urlencode($page));
+		}
+		
 		if (isset($_REQUEST['tr_sort_mode'])) {
 			$query_array['tr_sort_mode'] = $_REQUEST['tr_sort_mode'];
 			$sort_mode = $_REQUEST['tr_sort_mode'];
@@ -71,7 +81,7 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		} 
 		$tr_sort_mode = $sort_mode;
-		$smarty->assign_by_ref('sort_mode', $tr_sort_mode);
+		$smarty->assign_by_ref('tr_sort_mode', $tr_sort_mode);
 		
 		if (!isset($max)) {
 			$max = $maxRecords;
@@ -86,25 +96,26 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		$smarty->assign_by_ref('tr_offset',$tr_offset);
 
-		if (isset($_REQUEST["tr_initial"])) {
-			$query_array['tr_initial'] = $_REQUEST['tr_initial'];
-			$tr_initial = $_REQUEST["tr_initial"];
-		} else {
-			$tr_initial = '';
+		if ($showinitials == 'y') {
+			if (isset($_REQUEST["tr_initial"])) {
+				$query_array['tr_initial'] = $_REQUEST['tr_initial'];
+				$tr_initial = $_REQUEST["tr_initial"];
+			} else {
+				$tr_initial = '';
+			}
+			$smarty->assign_by_ref('tr_initial', $tr_initial);
+			$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 		}
-		$smarty->assign_by_ref('tr_initial', $tr_initial);
-		$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 
 		if (!isset($filterfield)) {
 			$filterfield = '';
 		}
-		$smarty->assign_by_ref('filterfield',$filterfield);
 
 		if (!isset($filtervalue)) {
 			$filtervalue = '';
 		}
-		$smarty->assign_by_ref('filterfield',$filtervalue);
-
+		
+		$rated = false;
 		$status_types = $trklib->status_types();
 		$smarty->assign('status_types', $status_types);
 
@@ -114,13 +125,27 @@ function wikiplugin_trackerlist($data, $params) {
 			if (in_array($allfields["data"][$i]['fieldId'],$listfields) and $allfields["data"][$i]['isPublic'] == 'y') {
 				$passfields["{$allfields["data"][$i]['fieldId']}"] = $allfields["data"][$i];
 			}
+			if ($allfields["data"][$i]['name'] == 'page') {
+				$filterfield = $allfields["data"][$i]['fieldId'];
+				$filtervalue = $_REQUEST['page'];
+			}
+			if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' 
+					and $allfields["data"][$i]['type'] == 's' and $allfields["data"][$i]['name'] == tra('Rating')) {
+				$rated = true;
+			}
 		}
+		$smarty->assign_by_ref('filterfield',$filterfield);
+		$smarty->assign_by_ref('filterfield',$filtervalue);
 		$smarty->assign_by_ref('fields', $passfields);
 		
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial);
 			
-			//var_dump($items);
+			if ($rated) {
+				foreach ($items['data'] as $f=>$v) {
+					$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$trackerId.'.'.$items['data'][$f]['itemId'],$user);
+				}
+			}
 
 			$cant_pages = ceil($items["cant"] / $max);
 			$smarty->assign_by_ref('cant_pages', $cant_pages);

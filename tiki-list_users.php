@@ -1,8 +1,9 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.4 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_users.php,v 1.5 2005-01-22 22:54:55 mose Exp $
 
 // Initialization
 require_once('tiki-setup.php');
+include_once ('lib/userprefs/userprefslib.php');
 
 if($feature_friends != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -67,7 +68,33 @@ if($offset>0) {
   $smarty->assign('prev_offset',-1);
 }
 
+//get the distance
+$listdistance = array();
+$listuserscountry = array();
+$listusersgender = array();
+for ($i=0;$i<count($listusers["data"]);$i++) {
+	$userlogin=$listusers["data"][$i]["login"];
+	$distance=$userprefslib->get_userdistance($userlogin,$user);
+	if (is_null($distance)) {
+		$listdistance[]=NULL;
+	} else {
+		$listdistance[]=round($distance,0);
+	}
+	$userprefs=$userprefslib->get_userprefs($userlogin);
+	$country="None";
+	$gender="unknown";
+	for ($j=0;$j<count($userprefs);$j++) {
+			if ($userprefs[$j]["prefName"]=="country") $country=$userprefs[$j]["value"];
+			if ($userprefs[$j]["prefName"]=="gender") $gender=$userprefs[$j]["value"];
+	}
+	$listuserscountry[]=$country;
+	$listusersgender[]=$gender;
+}
+
 $smarty->assign_by_ref('listusers',$listusers["data"]);
+$smarty->assign_by_ref('listdistance',$listdistance);
+$smarty->assign_by_ref('listuserscountry',$listuserscountry);
+$smarty->assign_by_ref('listusersgender',$listusersgender);
 
 $section='users';
 include_once('tiki-section_options.php');

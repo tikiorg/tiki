@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.103 2005-01-05 19:22:40 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.104 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -131,6 +131,14 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_jukebox.php');
 	} else if ($adminPage == "score") {
 		include_once ('tiki-admin_include_score.php');
+	} else if ($adminPage == "projects") {
+		include_once ('tiki-admin_include_projects.php');
+	} else if ($adminPage == "community") {
+		include_once ('tiki-admin_include_community.php');
+	} else if ($adminPage == "siteid") {
+		include_once ('tiki-admin_include_siteid.php');
+	} else if ($adminPage == "calendar") {
+		include_once ('tiki-admin_include_calendar.php');
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/testrpc.php,v 1.9 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/testrpc.php,v 1.10 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,7 @@ if (!$result) {
 	$errorMsg = 'Cannot send message to server maybe the server is down';
 } else {
 	if (!$result->faultCode()) {
-		$blogs = xmlrpc_decode($result->value());
+		$blogs = xmlrpc_tkdecode($result->value());
 
 		print_r ($blogs);
 	} else {

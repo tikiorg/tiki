@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a>
 {if $feature_help eq 'y'}
-<a href="{$helpurl}UserBookmarks" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">
+<a href="{$helpurl}User+Bookmarks" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 {if $feature_view_tpl eq 'y'}

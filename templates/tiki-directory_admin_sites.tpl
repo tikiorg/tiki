@@ -3,7 +3,7 @@
 
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}DirectoryDoc" target="tikihelp" class="tikihelp" title="{tr}Admin Directory Sites{/tr}">
+<a href="{$helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Admin Directory Sites{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.16 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.17 2005-01-22 22:54:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -73,6 +73,7 @@ $info["shuffleQuestions"] = 'n';
 $info["shuffleAnswers"] = 'n';
 $info["questionsPerPage"] = 10;
 $info["timeLimited"] = 'n';
+$info["passingperct"] = '';
 $info["timeLimit"] = 60 * 60;
 
 if (isset($_REQUEST["save"])) {
@@ -144,7 +145,7 @@ if (isset($_REQUEST["save"])) {
 																$_REQUEST["showAnswers"],	$_REQUEST["shuffleQuestions"],
 																$_REQUEST["shuffleAnswers"], $_REQUEST["questionsPerPage"],
 																$_REQUEST["timeLimited"], $_REQUEST["timeLimit"],
-																$publishDate, $expireDate);
+																$publishDate, $expireDate, $_REQUEST["passingperct"]);
 	$cat_type = 'quiz';
 	$cat_objid = $qid;
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
@@ -152,6 +153,9 @@ if (isset($_REQUEST["save"])) {
 	$cat_href = "tiki-take_quiz.php?quizId=" . $cat_objid;
 	include_once ("categorize.php");
 	$_REQUEST["quizId"] = 0;
+	$smarty->assign('quizId', $_REQUEST["quizId"]);
+	$quizId = 0;
+
 } elseif ($_REQUEST["quizId"]) {
 	// GGG Have to change $quizlib->get_quiz to handle publish and expire dates.  Maybe it does automagically!
 	$info = $quizlib->get_quiz($_REQUEST["quizId"]);
@@ -176,6 +180,7 @@ $smarty->assign('shuffleAnswers',$info["shuffleAnswers"]);
 $smarty->assign('questionsPerPage', $info["questionsPerPage"]);
 $smarty->assign('timeLimited', $info["timeLimited"]);
 $smarty->assign('timeLimit', $info["timeLimit"]);
+$smarty->assign('passingperct', $info["passingperct"]);
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delquiz';

@@ -20,7 +20,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.10 $
+    * @version $Revision: 1.11 $
     */
     class WikiPluginBackLinks extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -39,13 +39,13 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.10 $");
+                "\$Revision: 1.11 $");
         }
         function run ($data, $params) {
             global $wikilib;
             $params = $this->getParams($params, true);
             $aInfoPreset = array_keys($this->aInfoPresetNames);
-            extract ($params);
+            extract ($params,EXTR_SKIP);
             /////////////////////////////////
             // Create a valid list for $info
             /////////////////////////////////

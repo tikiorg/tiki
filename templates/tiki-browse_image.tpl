@@ -120,8 +120,13 @@
     <td class="even">
     <small>
     {tr}You can include the image in an HTML page using one of these lines{/tr}:<br /><br />
+    {if $itype eq 'o'}
     &lt;img src="{$url_show}?id={$imageId}" /&gt;<br />
     &lt;img src="{$url_show}?name={$name|escape}" /&gt;<br />
+    {else}
+    &lt;img src="{$url_show}?id={$imageId}&amp;scaled&amp;scalesize={$scalesize}" /&gt;<br />
+    &lt;img src="{$url_show}?name={$name|escape}&amp;scaled&amp;scalesize={$scalesize}" /&gt;<br />
+    {/if}
     </small>
     </td>
   </tr>
@@ -129,8 +134,13 @@
     <td class="even">
     <small>
     {tr}You can include the image in a tiki page using one of these lines{/tr}:<br /><br />
+    {if $itype eq 'o'}
     {literal}{{/literal}img src={$url_show}?id={$imageId} {literal}}{/literal}<br />
     {literal}{{/literal}img src={$url_show}?name={$name|escape} {literal}}{/literal}<br />
+    {else}
+    {literal}{{/literal}img src={$url_show}?id={$imageId}&amp;scaled&amp;scalesize={$scalesize} {literal}}{/literal}<br />
+    {literal}{{/literal}img src={$url_show}?name={$name|escape}&amp;scaled&amp;scalesize={$scalesize} {literal}}{/literal}<br />
+    {/if}
     </small>
     </td>
   </tr>

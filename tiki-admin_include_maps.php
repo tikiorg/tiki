@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.11 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_maps.php,v 1.12 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,6 +14,22 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 include_once ('lib/map/usermap.php');
 
 $map_error="";
+
+if (isset($_REQUEST["mapzone"]))
+{
+  $mapzone=$_REQUEST["mapzone"];
+  $tikilib->set_preference('mapzone',$mapzone);
+}
+
+if (!isset($mapzone))
+{
+	$mapzone=180;
+}
+
+$smarty->assign('checkboxes_mapzone', array(
+            180 => '[-180 180]',
+            360 => '[0 360]'));
+$smarty->assign('mapzone_id', $mapzone);     
 
 $smarty->assign('map_path', $map_path);
 $smarty->assign('default_map', $default_map);
@@ -30,48 +46,7 @@ if (isset($ogr2ogr))
 }
 
 if (isset($_REQUEST["mapuser"])) {
-	if (isset($ogr2ogr) && is_executable($ogr2ogr)) {
-		// User preferences screen
-		if ($feature_userPreferences != 'y') {
-			$map_error=tra("This feature is disabled").": feature_userPreferences";
-		} else {
-			$tdo = "user";
-			if ($tikidomain) $tdo = "$tikidomain.user";
-	      $datastruct="  user Char(20)\n";
-  	      $datastruct.="  realName Char(100)\n";
-  	      $datastruct.="  avatar Char(250)\n";
-  	      // Prepare the data
-  	      $query = "select * from `users_users`";
-			$result = $tikilib->query($query, array());
-			$i=0;
-			$data=array();
-			while ($res = $result->fetchRow()) {
-				$query = "select `value` from `tiki_user_preferences` where (`user` = ?) and (`prefName` = 'lat')";
-				$lat = $tikilib->getOne($query,array($res["login"]));
-				$query = "select `value` from `tiki_user_preferences` where (`user` = ?) and (`prefName` = 'lon')";
-				$lon = $tikilib->getOne($query,array($res["login"]));
-				$query = "select `value` from `tiki_user_preferences` where (`user` = ?) and (`prefName` = 'realName')";
-				$realName = $tikilib->getOne($query,array($res["login"]));
-				if (!isset($realName)) {
-					$realName="";
-				}
-				$login=substr($res["login"],0,20);
-				$realName=substr($realName,0,100);
-				$image=$tikilib->get_user_avatar($res["login"]);
-				if (isset($lat) && isset($lon) && $lat && $lon) {
-					$data[$i][0]=$lat;
-					$data[$i][1]=$lon;
-					$data[$i][2]=$login;
-					$data[$i][3]=$realName;
-					$data[$i][4]=$image;
-					$i++;
-				}
-			}
-			makemap($tdo,$datastruct,$data,3);
-		}
-	} else {
-		$map_error=tra("No valid ogr2ogr executable");
-	}
+	$map_error=$mapslib->makeusermap();
 }
 
 // Setting values if needed
@@ -88,7 +63,7 @@ if ((isset($_REQUEST["map_path"])) && (isset($_REQUEST["default_map"]))
 
 if (($_REQUEST["map_path"]=='') || ($_REQUEST["default_map"]=='')
      || ($_REQUEST["map_help"]=='') || ($_REQUEST["map_comments"]==''))  {
-	$smarty->assign('map_error', tra('All Fields except gdaltindex must be filled'));  
+	$map_error=tra('All Fields except gdaltindex must be filled');  
 }
 } 
 

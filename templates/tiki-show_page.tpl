@@ -1,105 +1,91 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.84 2004-09-16 07:48:15 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.85 2005-01-22 22:56:24 mose Exp $ *}
 
-{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
-  {if $structure eq 'y' and $page_info.page_alias ne ''}
-    {$page_info.page_alias}
-  {else}
-    {$page}
-  {/if}</a>
-  {if $lock and $print_page ne 'y'}
-    <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
-  {/if}
-  </h1>
+{if $feature_page_title eq 'y'}
+<h1><a  href="tiki-index.php?page={$page|escape:'url'}" class="pagetitle">
+{if $structure eq 'y' and $page_info.page_alias ne ''}{$page_info.page_alias}{else}{$page}{/if}</a>
+{if $lock and $print_page ne 'y'}<img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />{/if}
+</h1>
 {/if}
 {if $feature_wiki_pageid eq 'y'}
 	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}
+
 <div class="wikitopline">
-<table>
-  <tr>
-    {if $feature_wiki_description eq 'y' or $cached_page eq 'y'}
-      <td>
-        {if $feature_wiki_description eq 'y'}<small>{$description}</small>{/if}
-        {if $cached_page eq 'y'}<small>(cached)</small>{/if}
-      </td>
-    {/if}
-  {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
-    <td align="right">{$display_catpath}</td>
-    </tr><tr><td>&nbsp;</td>
-  {/if}
-  {if $print_page ne 'y'}
-	<td style="text-align:right;">
+<table><tr>
+<td style="vertical-align:top;">
+&nbsp;
+{if $feature_wiki_description eq 'y'}<small>{$description}</small>{/if}
+{if $cached_page eq 'y'}<small>(cached)</small>{/if}
+</td>
+{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
+	<td style="vertical-align:top;width:100px;">{$display_catpath}</td>
+{/if}
+{if $print_page ne 'y'}
+	<td style="text-align:right;width:142px;" wrap="nowrap">
 	{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
-	  <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
+		<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
 	{/if}       
 	{if $wiki_feature_3d eq 'y'}
-          <a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img border="0" src="img/icons/ico_wiki3d.gif" alt='{tr}3d browser{/tr}' /></a>
-        {/if}
-
+		<a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img border="0" src="img/icons/ico_wiki3d.gif" alt='{tr}3d browser{/tr}' /></a>
+	{/if}
 	{if $cached_page eq 'y'}
-	  <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img style="border: 0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
+		<a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img style="border: 0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
 	{/if}
-
 	<a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/ico_print.gif" alt='{tr}print{/tr}' /></a>
-
 	{if $feature_wiki_pdf eq 'y'}
-	  <a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img style="border: 0" src="img/icons/ico_pdf.gif" alt='{tr}pdf{/tr}' /></a>
+		<a title="{tr}create pdf{/tr}" href="tiki-config_pdf.php?{if $home_info && $home_info.page_ref_id}page_ref_id={$home_info.page_ref_id}{else}page={$page|escape:"url"}{/if}"><img style="border: 0" src="img/icons/ico_pdf.gif" alt='{tr}pdf{/tr}' /></a>
 	{/if}
-
 	{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-	  <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img style="border: 0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+		<a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1"><img style="border: 0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 	{/if}
-
 	{if $user and $feature_user_watches eq 'y'}
-	  {if $user_watching_page eq 'n'}
-          <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
-          {else}
-	    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
-          {/if}
-        {/if}
-        </td>
+		{if $user_watching_page eq 'n'}
+			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
+		{else}
+			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
+		{/if}
+	{/if}
+	</td>
+
 	{if $feature_backlinks eq 'y' and $backlinks}
-      <td style="text-align:right;">
-      <form action="tiki-index.php" method="post">
-	  <select name="page" onchange="page.form.submit()">
-	    <option>{tr}backlinks{/tr}...</option>
+		<td style="text-align:right;width:42px;">
+		<form action="tiki-index.php" method="post">
+		<select name="page" onchange="page.form.submit()">
+		<option>{tr}backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}
-		  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
+		<option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 		{/section}
-	  </select>
-      </form>
-      </td>
+		</select>
+		</form>
+		</td>
 	{/if}
 
-
-        {* If not displaying structure but page is member of 
-	** one or more structures display a list of structures 
-	** the page is a member of. 
-	*}
 	{if !$page_ref_id and count($showstructs) ne 0}
-  	  <td style="text-align:right;">
-      <form action="tiki-index.php" method="post">
-	  <select name="page_ref_id" onchange="page_ref_id.form.submit()">
-	    <option>{tr}Structures{/tr}...</option>
+		<td style="text-align:right;width:42px;">
+		<form action="tiki-index.php" method="post">
+		<select name="page_ref_id" onchange="page_ref_id.form.submit()">
+		<option>{tr}Structures{/tr}...</option>
 		{section name=struct loop=$showstructs}
-		  <option value="{$showstructs[struct].req_page_ref_id}">
-{if $showstructs[struct].page_alias} 
-{$showstructs[struct].page_alias}
-{else}
-{$showstructs[struct].pageName}
-{/if}</option>
+		<option value="{$showstructs[struct].req_page_ref_id}">
+		{if $showstructs[struct].page_alias} 
+			{$showstructs[struct].page_alias}
+		{else}
+			{$showstructs[struct].pageName}
+		{/if}
+		</option>
 		{/section}
-	  </select>
-      </form>
-      </td>
+		</select>
+		</form>
+		</td>
 	{/if}
-{if $feature_multilingual == 'y'}{include file="translated-lang.tpl" td='y'}{/if}
-{*	</td>  *}
-  {else}
-    <td>&nbsp;</td>
-  {/if}
-  </tr>
-</table>
+
+	{if $feature_multilingual == 'y'}
+		{include file="translated-lang.tpl" td='y'}
+	{/if}
+
+	</td>
+{/if}{* <-- end of if $print_page ne 'y' *}
+</tr></table>
 </div>
 
 <div class="wikitext"
@@ -171,7 +157,9 @@
 </tr>
 </table>
 </div>
-{/if}{$parsed}
+{/if}
+{if $feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+{$parsed}
 {if $pages > 1}
 	<br />
 	<div align="center">
@@ -189,7 +177,7 @@
 {/if}
 </div> {* End of main wiki page *}
 
-{if $has_footnote eq 'y'}<div class="wikitext">{$footnote}</div>{/if}
+{if $has_footnote eq 'y'}<div class="wikitext wikifootnote">{$footnote}</div>{/if}
 
 {if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
 <p class="editdate">

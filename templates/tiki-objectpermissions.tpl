@@ -31,7 +31,7 @@
 {tr}to group{/tr}:
 <select name="group">
 {section name=grp loop=$groups}
-<option value="{$groups[grp].groupName|escape}">{$groups[grp].groupName}</option>
+<option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName}</option>
 {/section}
 </select>
 </form>

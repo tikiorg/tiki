@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.14 2004-09-08 19:52:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.15 2005-01-22 22:55:37 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -131,6 +131,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 function sql_error($query, $values, $result) {
     global $ADODB_LASTDB, $smarty;
 
+    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/><pre>\n" . $query . "\n</pre><br/>", E_USER_WARNING);
     // only for debugging.
     //trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
     $outp = "<div class='simplebox'><b>".tra("An error occured in a database query!")."</b></div>";
@@ -150,8 +151,15 @@ function sql_error($query, $values, $result) {
     //if($result===null) echo "<br>\$result is null";
     //if(empty($result)) echo "<br>\$result is empty";
     require_once('tiki-setup.php');
-    $smarty->assign('msg',$outp);
-    $smarty->display("error.tpl");
+    if ($smarty) {
+      $smarty->assign('msg',$outp);
+      $smarty->display("error.tpl");
+    } else {
+      echo $outp;
+    }
+    echo "<pre>";
+    var_dump(debug_backtrace());
+    echo "</pre>";
     die;
 }
 

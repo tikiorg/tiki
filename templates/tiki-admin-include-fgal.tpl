@@ -8,7 +8,7 @@
       <form action="tiki-admin.php?page=fgal" method="post">
         <table class="admin"><tr>
           <td class="form">{tr}Home Gallery (main gallery){/tr}</td>
-          <td><select name="homeFileGallery">
+          <td><select name="home_file_gallery">
               {section name=ix loop=$file_galleries}
                 <option value="{$file_galleries[ix].galleryId|escape}" {if $file_galleries[ix].galleryId eq $home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"...":true}</option>
               {/section}
@@ -30,7 +30,11 @@
           <td class="form">{tr}Comments{/tr}:</td>
           <td><input type="checkbox" name="feature_file_galleries_comments"
               {if $feature_file_galleries_comments eq 'y'}checked="checked"{/if}/></td>
-        </tr><tr>
+        </tr><tr class="form">
+          <td>{tr}Allow same file to be uploaded more than once{/tr}:</td>
+          <td><input type="checkbox" name="fgal_allow_duplicates"
+              {if $fgal_allow_duplicates eq 'y'}checked="checked"{/if}/></td>
+         </tr><tr>
           <td class="form">{tr}Use database to store files{/tr}:</td>
           <td><input type="radio" name="fgal_use_db" value="y"
               {if $fgal_use_db eq 'y'}checked="checked"{/if}/></td>
@@ -61,7 +65,7 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit" name="filegalfeatures"
               value="{tr}Change preferences{/tr}" /></td>
-        </tr></table>
+       </tr></table>
       </form>
     </div>
 
@@ -123,5 +127,29 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
         </tr></table>
       </form>
     </div>
+    
+    <div class="simplebox">
+    	{tr}File galleries search indexing{/tr}<br>
+    	<br>
+    	{tr}Leave command blank to delete handler{/tr}<br>
+    	{tr}Use %1 for where internal file name should be substituted (example: "strings %1" to convert the document to text using the unix strings command){/tr}<br>
+    	<form method="post" action="tiki-admin.php?page=fgal">
+        <table class="admin">
+		<tr class="form">
+          <td>{tr}Enable auto indexing on file upload or change{/tr}</td>
+          <td><input type="checkbox" name="fgal_enable_auto_indexing"
+              {if $fgal_enable_auto_indexing eq 'y'}checked="checked"{/if} /></td>
+        </tr>
+        <tr><td colspan=2><table class="normal">
+        <tr><td class=heading>MIME Type</td><td class=heading>System command</td></tr>
+        {foreach  key=mime item=cmd from=$fgal_handlers}
+        <tr><td class=odd>{$mime}</td><td class=odd><input name="mimes[{$mime}]" type="text" value="{$cmd|escape:html}" size="30"/></td></tr>
+        {/foreach}
+        <tr><td class=odd><input name="newMime" type="text" size="30"/></td><td class=odd><input name=newCmd type="text" size="30"/></td></tr>
+        </table></td></tr>
+        <tr><td colspan="2" align="left"><input type="submit" name="filegalredosearch" value="{tr}Reindex all files for search{/tr}"/></td></tr>
+           <tr><td colspan="2" class="button"><input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" /></td></tr>
+        </table>
+    	</form>
   </div>
 </div>

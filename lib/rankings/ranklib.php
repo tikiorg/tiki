@@ -33,6 +33,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Wiki top pages");
 		$retval["y"] = tra("Hits");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -54,6 +55,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Most relevant pages");
 		$retval["y"] = tra("Relevance");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -66,7 +68,7 @@ class RankLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["pageName"];
 
-			$aux["hits"] = $this->get_long_datetime($res["lastModif"]);
+			$aux["hits"] = $res["lastModif"];
 			$aux["href"] = 'tiki-index.php?page=' . $res["pageName"];
 			$ret[] = $aux;
 		}
@@ -74,6 +76,7 @@ class RankLib extends TikiLib {
 		$ret["data"] = $ret;
 		$ret["title"] = tra("Wiki last pages");
 		$ret["y"] = tra("Modified");
+		$ret["type"] = "date";
 		return $ret;
 	}
 
@@ -89,7 +92,7 @@ class RankLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"] . ': ' . $res["title"];
 
-			$aux["hits"] = $this->get_long_datetime($res["commentDate"]);
+			$aux["hits"] = $res["commentDate"];
 			$aux["href"] = 'tiki-view_forum_thread.php?forumId=' . $res["forumId"] . '&amp;comments_parentId=' . $res["threadId"];
 			$ret[] = $aux;
 		}
@@ -97,6 +100,7 @@ class RankLib extends TikiLib {
 		$ret["data"] = $ret;
 		$ret["title"] = tra("Forums last topics");
 		$ret["y"] = tra("Topic date");
+		$ret["type"] = "date";
 		return $ret;
 	}
 
@@ -122,6 +126,7 @@ class RankLib extends TikiLib {
 		$ret["data"] = $ret;
 		$ret["title"] = tra("Forums last posts");
 		$ret["y"] = tra("Topic date");
+		$retval["type"] = "date";
 		return $ret;
 	}
 
@@ -146,6 +151,7 @@ class RankLib extends TikiLib {
 		$ret["data"] = $ret;
 		$ret["title"] = tra("Forums most read topics");
 		$ret["y"] = tra("Reads");
+		$ret["type"] = "nb";
 		return $ret;
 	}
 
@@ -160,9 +166,9 @@ class RankLib extends TikiLib {
 	    $ret[] = $aux;
         }
 
-	$ret["data"] = $ret;
+	$retval["data"] = $ret;
 
-        return $ret;
+        return $retval;
     }
 
 
@@ -187,6 +193,7 @@ class RankLib extends TikiLib {
 		$ret["data"] = $ret;
 		$ret["title"] = tra("Forums best topics");
 		$ret["y"] = tra("Score");
+		$ret["type"] = "nb";
 		return $ret;
 	}
 
@@ -207,6 +214,7 @@ class RankLib extends TikiLib {
 		$ret["data"] = $ret;
 		$ret["title"] = tra("Forums most visited forums");
 		$ret["y"] = tra("Visits");
+		$ret["type"] = "nb";
 		return $ret;
 	}
 
@@ -227,6 +235,7 @@ class RankLib extends TikiLib {
 		$ret["data"] = $ret;
 		$ret["title"] = tra("Forums with most posts");
 		$ret["y"] = tra("Posts");
+		$ret["type"] = "nb";
 		return $ret;
 	}
 
@@ -247,6 +256,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Wiki top galleries");
 		$retval["y"] = tra("Visits");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -267,6 +277,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Wiki top file galleries");
 		$retval["y"] = tra("Visits");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -287,6 +298,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Wiki top images");
 		$retval["y"] = tra("Hits");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -307,6 +319,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Wiki top files");
 		$retval["y"] = tra("Downloads");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -319,7 +332,7 @@ class RankLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"];
 
-			$aux["hits"] = $this->get_long_datetime($res["created"]);
+			$aux["hits"] = $res["created"];
 			$aux["href"] = 'tiki-browse_image.php?imageId=' . $res["imageId"];
 			$ret[] = $aux;
 		}
@@ -327,6 +340,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Wiki last images");
 		$retval["y"] = tra("Upload date");
+		$retval["type"] = "date";
 		return $retval;
 	}
 
@@ -339,7 +353,7 @@ class RankLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["filename"];
 
-			$aux["hits"] = $this->get_long_datetime($res["created"]);
+			$aux["hits"] = $res["created"];
 			$aux["href"] = 'tiki-download_file.php?fileId=' . $res["fileId"];
 			$ret[] = $aux;
 		}
@@ -347,6 +361,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Wiki last files");
 		$retval["y"] = tra("Upload date");
+		$retval["type"] = "date";
 		return $retval;
 	}
 
@@ -367,6 +382,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Wiki top articles");
 		$retval["y"] = tra("Reads");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -387,6 +403,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Most visited blogs");
 		$retval["y"] = tra("Visits");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -407,6 +424,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Most active blogs");
 		$retval["y"] = tra("Activity");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -421,7 +439,7 @@ class RankLib extends TikiLib {
 
 			$name = $this->getOne($q,array($res["blogId"]));
 			$aux["name"] = $name;
-			$aux["hits"] = $this->get_long_datetime($res["created"]);
+			$aux["hits"] = $res["created"];
 			$aux["href"] = 'tiki-view_blog.php?blogId=' . $res["blogId"];
 			$ret[] = $aux;
 		}
@@ -429,6 +447,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Blogs last posts");
 		$retval["y"] = tra("Post date");
+		$retval["type"] = "date";
 		return $retval;
 	}
 
@@ -448,6 +467,7 @@ class RankLib extends TikiLib {
 		$retval["data"] = $retu;
 		$retval["title"] = tra("Wiki top authors");
 		$retval["y"] = tra("Pages");
+		$retval["type"] = "nb";
 		return $retval;
 	}
 
@@ -467,8 +487,10 @@ class RankLib extends TikiLib {
 		$retval["data"] = $retu;
 		$retval["title"] = tra("Top article authors");
 		$retval["y"] = tra("Articles");
+		$retval["type"] = "nb";
 		return $retval;
 	}
+
 }
 
 $ranklib = new RankLib($dbTiki);

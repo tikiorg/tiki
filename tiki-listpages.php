@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.20 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.21 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -188,6 +188,14 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
+if (isset($_REQUEST["initial"])) {                                                                                                                                        
+        $initial = $_REQUEST["initial"];                                                                                                                                  
+} else {                                                                                                                                                                  
+        $initial = '';                                                                                                                                                    
+}                                                                                                                                                                         
+$smarty->assign('initial', $initial);                                                                                                                                     
+$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
+
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find);
 
@@ -219,11 +227,8 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-$smarty->assign('tiki_p_admin',$tiki_p_admin);
-$smarty->assign('feature_categories', $feature_categories);
-$smarty->assign('tiki_p_admin_categories', $tiki_p_admin_categories);
-
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
+
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 //print_r($listpages["data"]);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.40 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.41 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,7 @@ if ($feature_trackers != 'y') {
 }
 
 if ($tiki_p_admin_trackers != 'y') {
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -90,38 +90,61 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options["newItemStatus"] = 'n';
 	}
+	
+	if (isset($_REQUEST["useRatings"]) 
+		&& ($_REQUEST["useRatings"] == 'on'
+			or $_REQUEST["useRatings"] == 'y')) {
+		$tracker_options["useRatings"] = 'y';
+		if (isset($_REQUEST["ratingOptions"])) {
+			$tracker_options["ratingOptions"] = $_REQUEST["ratingOptions"];
+		} else {
+			$tracker_options["ratingOptions"] = '-2,-1,0,1,2';
+		}
+		if (isset($_REQUEST["showRatings"]) 
+			&& ($_REQUEST["showRatings"] == 'on'
+				or $_REQUEST["showRatings"] == 'y')) {
+			$tracker_options["showRatings"] = 'y';
+		} else {
+			$tracker_options["showRatings"] = 'n';
+		}
+	} else {
+		$tracker_options["useRatings"] = 'n';
+		$tracker_options["ratingOptions"] = '';
+		$tracker_options["showRatings"] = 'n';
+	}
 
 	if (isset($_REQUEST["useComments"]) 
 		&& ($_REQUEST["useComments"] == 'on'
 			or $_REQUEST["useComments"] == 'y')) {
 		$tracker_options["useComments"] = 'y';
+		if (isset($_REQUEST["showComments"]) 
+			&& ($_REQUEST["showComments"] == 'on'
+				or $_REQUEST["showComments"] == 'y')) {
+			$tracker_options["showComments"] = 'y';
+		} else {
+			$tracker_options["showComments"] = 'n';
+		}
 	} else {
 		$tracker_options["useComments"] = 'n';
+		$tracker_options["showComments"] = 'n';
 	}
 
 	if (isset($_REQUEST["useAttachments"]) 
 		&& ($_REQUEST["useAttachments"] == 'on'
 			or $_REQUEST["useAttachments"] == 'y')) {
 		$tracker_options["useAttachments"] = 'y';
+		if (isset($_REQUEST["showAttachments"]) 
+			&& ($_REQUEST["showAttachments"] == 'on'
+				or $_REQUEST["showAttachments"] == 'y')) {
+			$tracker_options["showAttachments"] = 'y';
+		} else {
+			$tracker_options["showAttachments"] = 'n';
+		}
 	} else {
 		$tracker_options["useAttachments"] = 'n';
-	}
-
-	if (isset($_REQUEST["showComments"]) 
-		&& ($_REQUEST["showComments"] == 'on'
-			or $_REQUEST["showComments"] == 'y')) {
-		$tracker_options["showComments"] = 'y';
-	} else {
-		$tracker_options["showComments"] = 'n';
-	}
-
-	if (isset($_REQUEST["showAttachments"]) 
-		&& ($_REQUEST["showAttachments"] == 'on'
-			or $_REQUEST["showAttachments"] == 'y')) {
-		$tracker_options["showAttachments"] = 'y';
-	} else {
 		$tracker_options["showAttachments"] = 'n';
 	}
+
 
 	if (isset($_REQUEST["showLastModif"]) 
 		&& ($_REQUEST["showLastModif"] == 'on'
@@ -226,9 +249,12 @@ $info["showStatus"] = '';
 $info["showStatusAdminOnly"] = '';
 $info["newItemStatus"] = '';
 $info["showLastModif"] = '';
+$info["useRatings"] = '';
+$info["ratingOptions"] = '';
+$info["showRatings"] = '';
 $info["useComments"] = '';
-$info["useAttachments"] = '';
 $info["showComments"] = '';
+$info["useAttachments"] = '';
 $info["showAttachments"] = '';
 $info["defaultOrderKey"] = '';
 $info["defaultOrderDir"] = 'asc';
@@ -263,9 +289,12 @@ $smarty->assign('showStatus', $info["showStatus"]);
 $smarty->assign('showStatusAdminOnly', $info["showStatusAdminOnly"]);
 $smarty->assign('newItemStatus', $info["newItemStatus"]);
 $smarty->assign('showLastModif', $info["showLastModif"]);
+$smarty->assign('useRatings', $info["useRatings"]);
+$smarty->assign('ratingOptions', $info["ratingOptions"]);
+$smarty->assign('showRatings', $info["showRatings"]);
 $smarty->assign('useComments', $info["useComments"]);
-$smarty->assign('useAttachments', $info["useAttachments"]);
 $smarty->assign('showComments', $info["showComments"]);
+$smarty->assign('useAttachments', $info["useAttachments"]);
 $smarty->assign('showAttachments', $info["showAttachments"]);
 $smarty->assign('defaultOrderKey', $info["defaultOrderKey"]);
 $smarty->assign('defaultOrderDir', $info["defaultOrderDir"]);

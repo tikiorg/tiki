@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.39 2004-10-08 10:00:07 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.40 2005-01-22 22:56:24 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -6,7 +6,7 @@
     <tr>
 
 {* Check that page is not locked and edit permission granted. SandBox can be adited w/o perm *}
-{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox')}
+{if (!$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox')) or $tiki_p_admin_wiki eq 'y'}
     <td>
       <div class="button2" >
       <a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}" class="linkbut">

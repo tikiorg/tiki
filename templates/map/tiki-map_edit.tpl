@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.12 2004-08-12 22:31:58 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.13 2005-01-22 22:56:26 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br />
-<a href="http://mapserver.gis.umn.edu/doc42/mapfile-reference.html">http://mapserver.gis.umn.edu/doc42/mapfile-reference.html</a><br /><br />
+<a href="http://mapserver.gis.umn.edu/doc/mapfile-reference.html">http://mapserver.gis.umn.edu/doc/mapfile-reference.html</a><br /><br />
 {if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
 {if $mode eq 'listing'}
 <h3>{tr}Available mapfiles{/tr}:</h3>
@@ -67,6 +67,8 @@
 <a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br /><br />
 <form enctype="multipart/form-data" action="tiki-map_edit.php" method="post" id='editpageform'>
 {assign var=area_name value="mapdata"}
+<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing">{tr}Reload{/tr}</a>&nbsp;&nbsp;
+<a class="link" href="tiki-map_history.php?mapfile={$mapfile}">{tr}History{/tr}</a><br />
 <table class="normal">
 <tr class="formcolor">
 <td>
@@ -81,13 +83,13 @@
 </td></tr>
 </table>
 <div align="center">
-<input type="submit" name="save" value="{tr}save{/tr}" /> 
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> 
 </div>
 </form>
 {if $tiki_p_map_delete eq 'y'}
 <hr />
 <div align="center">
-<form action="tiki-map_edit.php" method="get" id='editpageform'>
+<form class="wikiaction" action="tiki-map_edit.php" method="get" id='editpageform'>
 <input type="hidden" name="mapfile" value="{$mapfile}" />
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 </form>

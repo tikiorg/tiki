@@ -27,7 +27,6 @@
 
 <td valign="top" id="tiki-mid">
 <div id="tiki-center">{include file=$mid}</div>
-</div>
 </td>
 
 {if $rcol eq "y"}

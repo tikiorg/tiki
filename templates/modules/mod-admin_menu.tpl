@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.24 2004-03-01 17:21:29 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.25 2005-01-22 22:56:27 mose Exp $ *}
 
 {tikimodule title="{tr}Admin Menu{/tr}" name="admin_menu"}
 {if $tiki_p_admin eq 'y' or 
@@ -79,6 +79,8 @@
     &nbsp;<a href="tiki-phpinfo.php" class="linkmenu">{tr}phpinfo{/tr}</a><br />
     &nbsp;<a href="tiki-admin_dsn.php" class="linkmenu">{tr}Admin dsn{/tr}</a><br />
     &nbsp;<a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br />
+    &nbsp;<a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a><br />
+    &nbsp;<a href="tiki-admin_security.php" class="linkmenu">{tr}Security Admin{/tr}</a><br />
     {/if}
     {if $tiki_p_admin_code_hilight eq 'y'}
     &nbsp;<a href="tiki-admin_code_syntax.php" class="linkmenu">{tr}Syntax highlighting{/tr}</a><br />

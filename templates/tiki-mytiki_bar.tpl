@@ -15,10 +15,12 @@
 {/if}
 
 {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
-<td valign="top"><a class="link" href="messu-mailbox.php" title="{tr}Messages{/tr}">
+<td valign="top">
+<div align="center">
+<a class="link" href="messu-mailbox.php" title="{tr}Messages{/tr}">
 <img  border="0" src="img/mytiki/messages.gif" alt="{tr}Messages{/tr}" /><br />
-<div align="center"><small>({$unread})</small></div>
-</a></td>
+<small>({$unread})</small>
+</a></div></td>
 {/if}
 
 {if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}

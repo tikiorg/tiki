@@ -2,15 +2,11 @@
 {eval var=$heading}
 {else}
 <div class="blogtitle">{tr}Blog{/tr}: {$title}</div>
+<div class="blogdesc">{tr}Description:{/tr} {$description}</div>
 <div class="bloginfo">
 {tr}Created by{/tr} {$creator|userlink}{tr} on {/tr}{$created|tiki_short_datetime}<br />
-{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br /><br />
-<table >
-<tr>
-	<td>
-		({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
-	</td>
-	<td style="text-align:right;">
+{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br />
+<span style="float:right;">
 		{if $tiki_p_blog_post eq "y"}
 		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
 		<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Post{/tr}' title='{tr}post{/tr}' /></a>
@@ -30,13 +26,9 @@
 		<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this blog{/tr}' title='{tr}stop monitoring this blog{/tr}' src='img/icons/icon_unwatch.png' /></a>
 		{/if}
 		{/if}
-
-		
-	</td>
-</tr>
-</table>	
+</span>
+({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
 </div>
-<div class="blogdesc">{tr}Description:{/tr} {$description}</div>
 {/if}
 {if $use_find eq 'y'}
 <div class="blogtools">

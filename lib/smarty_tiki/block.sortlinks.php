@@ -22,11 +22,13 @@ function smarty_block_sortlinks($params, $content, &$smarty)
 { 
 if ($content) { 
   
-  $links=spliti("\n",$content);
+  $links=split("\n",$content);
   $links2=array();
   foreach ($links as $value) {
     $splitted=preg_split("/[<>]/",$value,-1,PREG_SPLIT_NO_EMPTY);
-    $links2[$splitted[2]]=$value;
+		if (isset($splitted[2])) {
+    	$links2[$splitted[2]]=$value;
+		}
   }
 
   ksort($links2);

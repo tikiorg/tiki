@@ -26,16 +26,16 @@ $urlarray = parse_url($url);
 
 $pagename = substr($urlarray["path"], strrpos($urlarray["path"], '/') + 1);
 
-$home = htmlspecialchars(httpPrefix().str_replace($pagename, $tikiIndex, $urlarray["path"]));
-$img = htmlspecialchars(httpPrefix().str_replace($pagename, "img/tiki.jpg", $urlarray["path"]));
+$home = htmlspecialchars($tikilib->httpPrefix().str_replace($pagename, $tikiIndex, $urlarray["path"]));
+$img = htmlspecialchars($tikilib->httpPrefix().str_replace($pagename, "img/tiki.jpg", $urlarray["path"]));
 
-$read = httpPrefix().str_replace($pagename, "$readrepl", $urlarray["path"]);
+$read = $tikilib->httpPrefix().str_replace($pagename, "$readrepl", $urlarray["path"]);
 
-$url = htmlspecialchars(httpPrefix().$url);
+$url = htmlspecialchars($tikilib->httpPrefix().$url);
 $title = htmlspecialchars($title);
 $desc = htmlspecialchars($desc);
 $url = htmlspecialchars($url);
-$css = htmlspecialchars(httpPrefix().str_replace($pagename, "lib/rss/rss-style.css", $urlarray["path"]));
+$css = htmlspecialchars($tikilib->httpPrefix().str_replace($pagename, "lib/rss/rss-style.css", $urlarray["path"]));
 
 if ($rss_version >= 5)
 {

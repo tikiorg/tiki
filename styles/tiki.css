@@ -99,7 +99,7 @@ margin: 0px 5px;
 }
 
 #topmenu {  
-background-image: url(styles/tiki/mozilla-menubar.png);
+background-image: url(tiki/mozilla-menubar.png);
 margin : 5px;
 height : 22px;
 padding-left : 10px;
@@ -144,7 +144,8 @@ div#debugconsole {
 span.on-option { color: #00C000; }
 span.off-option { color: #005000; }
 
-div.tabt1 {
+div.tabt1,
+div.tabt1:after {
 float : right;
 top: auto;
 border-bottom: 1px solid #46596f;
@@ -172,7 +173,7 @@ span.tabbut {
 .tablink,.tablink:visited {
 font-size: .9em;
 color: #223344;
-padding: 0 6px 1px 6px;
+padding: 0 6px 0px 6px;
 font-weight: normal;
 text-decoration: none;
 border: 1px solid #46596f;
@@ -209,7 +210,7 @@ div.box {
 }
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
-  background-image: url(/styles/tiki/mozilla-menubar.png);
+  background-image: url(tiki/mozilla-menubar.png);
 	padding: 0px 10px 1px 10px;
 	display: inline;
 	background-color: #f3f6f9;
@@ -219,9 +220,12 @@ div.box-title {
 	font-size: .8em;
   text-align: center;
 	clear: both;
+	margin:0;
 }
 div.box-title table {
-    width: 100%;
+  width: 100%;
+	margin:0;
+	padding:0;
 }
 #rightcolumn div .box {
 	text-align: right;
@@ -234,6 +238,7 @@ div.box-data {
 	padding: 5px;
 	font-size: .9em;  
 	text-align: left;
+	margin:0;
 }
 
 /* Menus */
@@ -376,6 +381,9 @@ font-weight: bold;
 input[type=submit]:hover {
 background-color: #ffffff;
 }
+textarea {
+width : 100%;
+}
 /* General tables */
 /* These styles apply to tables used to display common listings such as the wiki page listing, last changes,
    listings in admin screens, etc. */
@@ -384,11 +392,12 @@ background-color: #ffffff;
 table.listgallery, table.creategalform,TABLE.normal,table.gallerylisting, table.bloglist, table.editblogform,
 table.editfgalform, table.listfgal, table.listfiles, table.listarticles,table.forumstable,table.forumformtable,
 table.viewthread, table.jukeboxlist
-{  padding: 0px; margin: 0px; border-collapse: collapse; width: 100%;}
+{  padding: 0px; margin: 0px; border-collapse: collapse;
+ width: 100%;
+ }
 
 
 TABLE.normalnoborder { }
-
 
 /* Cells where nothing is specified */
 TD {vertical-align: top;}
@@ -576,7 +585,7 @@ padding: 1px 6px 1px 6px;
 /***********************************************  THE WIKI ***********************************************************/
 div.titlebar {
   background-color: #C7D0D9;
-	background-image: url(/styles/tiki/mozilla-menubar.png);
+	background-image: url(tiki/mozilla-menubar.png);
   color: #000000;
 	font-size: .9em;
   border: 1px solid #46596f;
@@ -585,7 +594,6 @@ div.titlebar {
   padding: 0 6px 1px 6px; 
   margin: 3px 0 6px 0;
 	font-weight: bold;
-  clear: both;
 }
 
 /* The bar where the actions for a page are displayed */
@@ -825,7 +833,8 @@ font-weight: bold;
 }
 
 /* The author, date and number of reads */
-span.titleb {  
+span.titleb,
+span.titleb:after {  
 float: left;
 font-size: .9em;
 color: #666666;
@@ -919,7 +928,9 @@ div.pollresults {
   padding-left: 5px;
 }
 
-table.pollresults {   width: 100%;}
+table.pollresults { 
+  width: 100%;
+  }
 td.pollr {  color: black;}
 /* MODULES */
 
@@ -1789,6 +1800,7 @@ a.viewmodeoff img {
 	margin: 0;
 padding: 0;
 }
+
 #caltable {
 	width: 100%;
 }
@@ -2037,6 +2049,7 @@ TABLE.admin {
 	margin-bottom: 25px;
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
+	width: 100%;
 }
 
 
@@ -2055,6 +2068,14 @@ TABLE.admin {
   margin: 2px;
   vertcal-align: middle;
 }
+/* wiki diff styles */
+.diff td{border: 1px solid #A9B8C2}
+.diff div {border-top: 1px solid #A9B8C2; }
+.diffheader{background-color:#a9b8c2; font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffbody{background-color:#F2F4F5}
+.diffchar {color: red;}
 
 /**** coloration for c o d e plugin *****/
 .codelisting {
@@ -2150,7 +2171,8 @@ border-top : 1px dashed #999999;
 border-bottom : 1px dashed #999999;
 min-height : 142px;
 }
-.versionav {
+.versionav,
+.versionav:after {
 display : inline;
 float : right;
 border-left : 1px dashed #999999;
@@ -2170,7 +2192,8 @@ padding : 0 10px;
 background-color : #cccccc;
 font-weight : bold;
 }
-.versiontitle {
+.versiontitle,
+.versiontitle:after {
 font-weight : bold;
 border-bottom : 1px dashed #999999;
 border-left : 1px dashed #999999;

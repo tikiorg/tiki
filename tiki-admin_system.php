@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.20 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.21 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,7 +8,7 @@
 require_once ('tiki-setup.php');
 
 function du($path, $begin=null) {
-	if (!$path or !is_dir($path)) return 0;
+	if (!$path or !is_dir($path)) return (array('total' => 0,'cant' =>0));
 	$total = 0; 
 	$cant = 0;
 	$back = array();
@@ -54,6 +54,7 @@ function erase_dir_content($path) {
 function cache_templates($path,$newlang) {
 	global $language;
 	global $smarty;
+	global $tikidomain;
 	$oldlang=$language;
 	$language=$newlang;
 	if (!$path or !is_dir($path)) return 0;
@@ -71,7 +72,11 @@ function cache_templates($path,$newlang) {
 					$file=substr($path."/".$file,10);
 					$comppath=$smarty->_get_compile_path($file);
 					//rewrite the language thing, see setup_smarty.php
-					$comppath=preg_replace("#/".$oldlang."/#","/".$newlang."/",$comppath,1);
+					if ($smarty->use_sub_dirs) {
+					  $comppath=preg_replace("#/".$oldlang."/#","/".$newlang."/",$comppath,1);
+				        } else {
+					   $comppath=preg_replace("#/".$tikidomain.$oldlang."#","/".$tikidomain.$newlang,$comppath,1);
+					}
 					if(!$smarty->_is_compiled($file,$comppath)) {
 						$smarty->_compile_resource($file,$comppath);
 					}
@@ -131,14 +136,36 @@ $smarty->assign('modules', $modules);
 $templates=array();
 
 foreach($languages as $clang) {
-	if(is_dir("templates_c/$tikidomain/")) {
-		$templates[$clang["value"]] = du("templates_c/$tikidomain/", $clang["value"]);
+	if($smarty->use_sub_dirs) { // was if(is_dir("templates_c/$tikidomain/")) ppl with tikidomains should test. redflo
+		$templates[$clang["value"]] = du("templates_c/$tikidomain/".$clang["value"]."/");
 	} else {
 		$templates[$clang["value"]] = du("templates_c/", $tikidomain.$clang["value"]);
 	}
 }
 
 $smarty->assign_by_ref('templates', $templates);
+
+// fixing UTF-8 Errors
+require_once('lib/admin/adminlib.php');
+$tabfields=$adminlib->list_content_tables();
+$smarty->assign_by_ref('tabfields', $tabfields);
+
+if(isset($_REQUEST['utf8it'])) {
+   if($adminlib->check_utf8($_REQUEST['utf8it'],$_REQUEST['utf8if'])) {
+      $smarty->assign('investigate_utf8',tra('No Errors detected'));
+   } else {
+      $smarty->assign('investigate_utf8',tra('Errors detected'));
+   }
+   $smarty->assign('utf8it',$_REQUEST['utf8it']);
+   $smarty->assign('utf8if',$_REQUEST['utf8if']);
+}
+
+if(isset($_REQUEST['utf8ft'])) {
+   $errc=$adminlib->fix_utf8($_REQUEST['utf8ft'],$_REQUEST['utf8ff']);
+   $smarty->assign('errc',$errc);
+   $smarty->assign('utf8ft',$_REQUEST['utf8ft']);
+   $smarty->assign('utf8ff',$_REQUEST['utf8ff']);
+}
 
 $smarty->assign('mid', 'tiki-admin_system.tpl');
 $smarty->display("tiki.tpl");

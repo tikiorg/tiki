@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.28 2004-08-26 19:24:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.29 2005-01-22 22:56:23 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}List Articles{/tr}">
+<a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}List Articles{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 
@@ -133,7 +133,7 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td colspan="6">
+<tr><td class="odd" colspan="11">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}

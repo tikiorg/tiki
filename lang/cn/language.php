@@ -21,6 +21,9 @@
 *******************************************************
 *
 * $Log: not supported by cvs2svn $
+* Revision 1.15  2005/01/05 19:22:44  jburleyebuilt
+* Changed string "You dont" to "You do not".
+*
 * Revision 1.14  2004/08/10 12:30:42  cyantree
 * commit by cyantree
 *
@@ -3630,8 +3633,8 @@ $lang=Array(
 "My Pages" => "我的页�",
 "My galleries" => "我的图库",
 "Featured links" => "功能链接",
-"You do not have permission to use this feature" => "您没有��使用这个功能",
-"Tag already exists" => "Tag已�存在",
+"You do not have permission to use this feature" => "您没有�?��?使用这个功能",
+"Tag already exists" => "Tag已�?存在",
 "Tag not found" => "没有找到Tag",
 "The passwords dont match" => "两个密��匹�",
 "User already exists" => "用户已�存在",

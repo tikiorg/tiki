@@ -185,7 +185,7 @@
 		</tr>
 		<tr>
 			<td class="formcolor">{tr}Password{/tr}:</td>
-			<td><input type="text" name="inbound_pop_password" value="{$inbound_pop_password|escape}" /></td>
+			<td><input type="password" name="inbound_pop_password" value="{$inbound_pop_password|escape}" /></td>
 		</tr>
 		</table>
 	</td>

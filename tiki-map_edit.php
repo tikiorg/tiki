@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.18 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.19 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,7 +52,7 @@ $smarty->assign('tiki_p_map_create', $tiki_p_map_create);
 if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 	$newmapfile = $map_path.$_REQUEST["newmapfile"];
 
-	if (!preg_match('/\.map$/i', $newmapfile)) {
+	if (!preg_match('/\.map$/i', $newmapfile) || preg_match('/\.\./', $_REQUEST["newmapfile"])) {
 		$smarty->assign('msg', tra("mapfile name incorrect"));
 
 		$smarty->display("error.tpl");
@@ -77,7 +77,20 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 		$smarty->display("error.tpl");
 		die;
 	}
-
+	
+	//Create standard header
+	fwrite ($fp,"##TIKIMAPS HEADER: DO NOT MODIFY##\n");
+	fwrite ($fp,"#Mapfile created by tikiwiki\n");
+	fwrite ($fp,"#\n");
+	fwrite ($fp,"#Modified by: ".$user."\n");
+	fwrite ($fp,"#GMT Date: ".gmdate("Ymd His")."\n");
+	fwrite ($fp,"#IP: ".$_REQUEST["REMOTE_ADDR"]."\n");
+	fwrite ($fp,"#\n");
+	fwrite ($fp,"##TIKIMAPS HEADER: END##\n");
+	fwrite ($fp,"\n");
+	fwrite ($fp,"MAP\n");
+	fwrite ($fp,"\n");
+	fwrite ($fp,"END\n");
 	fclose ($fp);
 }
 
@@ -97,6 +110,7 @@ if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
 	}
 }
 
+// Save the mapfile
 if (isset($_REQUEST["save"])) {
 if ($tiki_p_map_edit != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -104,17 +118,62 @@ if ($tiki_p_map_edit != 'y') {
 	die;
 }
 
-  ini_set("display_errors","0");
+	if (!preg_match('/\.map$/i', $_REQUEST["mapfile"])) {
+		$smarty->assign('msg', tra("mapfile name incorrect"));
+		$smarty->display("error.tpl");
+		die;
+	}
+	
+
+  
+  //Get the revision number
+  // Get mapfiles from the mapfiles directory
+	$files = array();
+	$h = opendir($map_path);
+
+	while (($file = readdir($h)) !== false) {
+		if (preg_match('/\.map/i', $file)) {
+			$files[] = $file;
+		}
+	}
+	closedir ($h);
+	sort ($files);
+	
+	for ($i=0;$i<count($files);$i++) {
+  	if (substr($files[$i],0,strlen($_REQUEST["mapfile"]))==$_REQUEST["mapfile"]) {
+  		$suffix=substr($files[$i],strlen($_REQUEST["mapfile"]));
+  		$revision=".".sprintf("%04d",intval(substr($suffix,1))+1);
+  	}
+  }
+	
+	ini_set("display_errors","0");
+  if (!copy($map_path.$_REQUEST["mapfile"],$map_path.$_REQUEST["mapfile"].$revision)) {
+		$smarty->assign('msg', tra("I could not make a copy"));
+		$smarty->display("error.tpl");
+		die;  
+  }
 	$fp = fopen($map_path.$_REQUEST["mapfile"], "w");
   ini_set("display_errors","1");
 	if (!$fp) {
 		$smarty->assign('msg', tra("You do not have permission to write to the mapfile"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
 
-	fwrite($fp, $_REQUEST["pagedata"]);
+	//Create standard header
+	fwrite ($fp,"##TIKIMAPS HEADER: DO NOT MODIFY##\n");
+	fwrite ($fp,"#Mapfile created by tikiwiki\n");
+	fwrite ($fp,"#\n");
+	fwrite ($fp,"#Modified by: ".$user."\n");
+	fwrite ($fp,"#GMT Date: ".gmdate("Ymd His")."\n");
+	fwrite ($fp,"#IP: ".$_REQUEST["REMOTE_ADDR"]."\n");
+	fwrite ($fp,"#\n");
+	$mapfiledata=strstr($_REQUEST["pagedata"],"##TIKIMAPS HEADER: END##");
+	// if the header is not found
+	if ($mapfiledata=="") {
+		$mapfiledata="##TIKIMAPS HEADER: END##\n\n".$_REQUEST["pagedata"];
+	}
+	fwrite($fp, $mapfiledata);
 	fclose ($fp);
 	
 	if ($feature_user_watches == 'y') {
@@ -129,14 +188,14 @@ if ($tiki_p_map_edit != 'y') {
 		     $smarty->assign('mail_user', $user);
 		     $smarty->assign('mail_hash', $not['hash']);
 		     $foo = parse_url($_SERVER["REQUEST_URI"]);
-		     $machine = httpPrefix(). $foo["path"];
+		     $machine = $tikilib->httpPrefix(). $foo["path"];
 		     $smarty->assign('mail_machine', $machine);
 		     $parts = explode('/', $foo['path']);
 
 		     if (count($parts) > 1)
 			      unset ($parts[count($parts) - 1]);
 
-		     $smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+		     $smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
 		     $mail_data = $smarty->fetch('mail/user_watch_map_changed.tpl');
 		     @mail($not['email'], tra('Map'). ' ' . $_REQUEST["mapfile"] . ' ' . tra('changed'), $mail_data, "From: ".$sender_email."\r\nContent-type: text/plain;charset=utf-8\r\n");
 	  }
@@ -159,9 +218,12 @@ if ($tiki_p_map_edit != 'y') {
 		$smarty->display("error.tpl");
 		die;
 	}
-
-	$pagedata = fread($fp, filesize($mapfile));
-	fclose ($fp);
+	if (filesize($mapfile)>0) {
+		$pagedata = fread($fp, filesize($mapfile));
+		fclose ($fp);
+	} else {
+		$pagedata="";
+	}
 	$smarty->assign('pagedata', $pagedata);
 	$smarty->assign('mapfile', $_REQUEST["mapfile"]);
 }
@@ -207,7 +269,7 @@ if($feature_user_watches == 'y') {
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-map_edit.php", "tiki-map.phtml", $foo["path"]);
-$smarty->assign('url_browse', httpPrefix(). $foo1);
+$smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
 
 
 include_once("textareasize.php");

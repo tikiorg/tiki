@@ -1,8 +1,8 @@
 # Command to build: rpmbuild -ba --target noarch tikiwiki.spec
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikiwiki.spec,v 1.6 2004-06-23 22:33:55 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikiwiki.spec,v 1.7 2005-01-22 22:55:01 mose Exp $
 
 %define name tikiwiki
-%define version 1.9.RC1
+%define version 1.9.DR4
 %define release 1
 
 Summary: A PHP-based CMS/Groupware web application with a full Wiki environment
@@ -32,12 +32,16 @@ TikiWiki is an open source CMS/Groupware web application which provides a full W
 mkdir -p $RPM_BUILD_ROOT/var/www/html
 cd $RPM_BUILD_ROOT/var/www/html
 tar xvzf $RPM_SOURCE_DIR/%{name}-%{version}.tar.gz
-mv %{name}-%{version} tiki-1.9.RC1
+mv %{name}-%{version} tiki-%{version}
 # Change file and directory permissions
-cd tiki-1.9.RC1
+cd tiki-%{version}
 find . -name "*.php" -exec chmod 644 {} \;
 find . -name "*.sql" -exec chmod 644 {} \;
+chmod 755 setup.sh
 ./setup.sh apache apache
+find . -type d -exec chmod 755 {} \;
+find . -type f -exec chmod 644 {} \;
+chmod 664 robots.txt tiki-install.php
 # Remove unneeded files
 rm -rf templates_c/*
 rm -f modules/cache/*.cache
@@ -49,13 +53,13 @@ find . -name ".cvsignore" -exec rm -f {} \;
 
 %preun
 # Remove unneeded files
-rm -rf /var/www/html/templates_c/*
-rm -f /var/www/html/modules/cache/*.cache
+rm -rf /var/www/html/tiki-%{version}/templates_c/*
+rm -f /var/www/html/tiki-%{version}/modules/cache/*.cache
 
 %files
-%defattr(-,apache,apache)
-%config /var/www/html/tiki-1.9.RC1/db/tiki-db.php
-#%doc /var/www/html/tiki-1.9.RC1/README
-/var/www/html/tiki-1.9.RC1
+%defattr(-,root,apache)
+%config /var/www/html/tiki-%{version}/db/tiki-db.php
+#%doc /var/www/html/tiki-%{version}/README
+/var/www/html/tiki-%{version}
 
 %changelog

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.105 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.106 2005-01-22 22:54:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -169,10 +169,11 @@ if ($tikidomain) { $wiki_up.= "/$tikidomain"; }
 if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) {
   if (isset($_FILES['picfile1']) && is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
     $picname = $_FILES['picfile1']['name'];
-		if (preg_match('/\.(gif|png|jpe?g)$/i',$picname)) {
+		if (preg_match('/\.(gif|png|jpe?g)$/i',$picname)) { 
     	move_uploaded_file($_FILES['picfile1']['tmp_name'], "$wiki_up/$picname");
+    	$_REQUEST["edit"] = $_REQUEST["edit"] . "{picture file=img/wiki_up/$picname}";
 		}
-  }
+	}
 }
 
 /**
@@ -477,7 +478,7 @@ if ($feature_wiki_footnotes == 'y') {
   }
 }
 
-if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
+if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && !isset($_REQUEST['preview']) && !isset($_REQUEST['save'])) {
   $template_data = $tikilib->get_template($_REQUEST["templateId"]);
   $_REQUEST["edit"] = $template_data["content"];
   $_REQUEST["preview"] = 1;
@@ -490,6 +491,10 @@ if (isset($_REQUEST["categId"]) && $_REQUEST["categId"] > 0) {
 	$smarty->assign('categIdstr',$_REQUEST["categId"]);
 }
 
+if (isset($_REQUEST["ratingId"]) && $_REQUEST["ratingId"] > 0) {
+	$smarty->assign("poll_template",$_REQUEST["ratingId"]);
+}
+
 if(isset($_REQUEST["edit"])) {
   
   if (($feature_wiki_allowhtml == 'y' and $tiki_p_use_HTML == 'y' 
@@ -498,7 +503,6 @@ if(isset($_REQUEST["edit"])) {
   } else {
   $edit_data = htmlspecialchars($_REQUEST["edit"]);
   }
-
 
 } else {
   if (isset($info["data"])) {
@@ -635,6 +639,10 @@ function parse_output(&$obj, &$parts,$i) {
 */
 // Pro
 // Check if the page has changed
+
+$cat_type='wiki page';
+$cat_objid = $_REQUEST["page"];
+
 if (isset($_REQUEST["save"])) {
   check_ticket('edit-page');
   // Check if all Request values are delivered, and if not, set them
@@ -648,12 +656,11 @@ if (isset($_REQUEST["save"])) {
     $wikilib->set_page_cache($_REQUEST['page'],$_REQUEST['wiki_cache']);
   }
   include_once("lib/imagegals/imagegallib.php");
-  $cat_type='wiki page';
-  $cat_objid = $_REQUEST["page"];
   $cat_desc = ($feature_wiki_description == 'y') ? substr($_REQUEST["description"],0,200) : '';
   $cat_name = $_REQUEST["page"];
   $cat_href="tiki-index.php?page=".$cat_objid;
   include_once("categorize.php");
+  include_once("poll_categorize.php");
 
   if ((($feature_wiki_description == 'y')
     && (md5($info["description"]) != md5($_REQUEST["description"])))
@@ -767,6 +774,34 @@ if (isset($_REQUEST["save"])) {
 
 if ($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {
   $templates = $tikilib->list_templates('wiki', 0, -1, 'name_asc', '');
+}
+
+if ($feature_polls =='y' and $feature_wiki_ratings == 'y' && $tiki_p_wiki_admin_ratings == 'y') {
+	function pollnameclean($s) { global $page; if (isset($s['title'])) $s['title'] = substr($s['title'],strlen($page)+2); return $s; }
+	if (!isset($polllib) or !is_object($polllib)) include("lib/polls/polllib_shared.php");
+	if (!isset($categlib) or !is_object($categlib)) include("lib/categories/categlib.php");
+	if (isset($_REQUEST['removepoll'])) {
+		$catObjectId = $categlib->is_categorized($cat_type,$cat_objid);
+		$polllib->remove_object_poll($cat_type,$cat_objid);
+	}
+	$polls_templates = $polllib->get_polls('t');
+	$smarty->assign('polls_templates',$polls_templates['data']);
+	$poll_rated = $polllib->get_rating($cat_type,$cat_objid);
+	if (isset($poll_rated['title'])) {
+		$poll_rated  = array_map('pollnameclean',$poll_rated);
+	}
+	$smarty->assign('poll_rated',$poll_rated);
+	if (isset($_REQUEST['poll_title'])) {
+		$smarty->assign('poll_title',$_REQUEST['poll_title']);
+	}
+	if (isset($_REQUEST['poll_template'])) {
+		$smarty->assign('poll_template',$_REQUEST['poll_template']);
+	}
+	$listpolls = $polllib->get_polls('o',"$page: ");
+	if ($listpolls['data']) {
+		$listpolls['data'] = array_map('pollnameclean',$listpolls['data']);
+	}
+	$smarty->assign('listpolls',$listpolls['data']);
 }
 
 $smarty->assign_by_ref('templates', $templates["data"]);

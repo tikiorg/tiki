@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.17 2005-01-05 19:22:40 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.18 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,7 +66,7 @@ if (isset($_REQUEST["remove"])) {
 		$menulib->remove_menu_option($_REQUEST["remove"]);
 		$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
 		$smarty->assign('position', $maxPos + 1);
-		$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST["menuId"]);
+		$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
   } else {
     key_get($area);
   }
@@ -76,7 +76,7 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('admin-menu-options');
 	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"],
 		$_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"]);
-	$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST["menuId"]);
+	$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
 	$smarty->assign('position', $_REQUEST["position"] + 1);
 	$smarty->assign('name', '');
 	$smarty->assign('optionId', 0);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.16 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.17 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,8 +45,8 @@ $smarty->assign('userwatch', $userwatch);
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-user_preferences", "tiki-editpage", $foo["path"]);
 $foo2 = str_replace("tiki-user_preferences", "tiki-index", $foo["path"]);
-$smarty->assign('url_edit', httpPrefix(). $foo1);
-$smarty->assign('url_visit', httpPrefix(). $foo2);
+$smarty->assign('url_edit', $tikilib->httpPrefix(). $foo1);
+$smarty->assign('url_visit', $tikilib->httpPrefix(). $foo2);
 
 if (isset($_REQUEST['messprefs'])) {
 	check_ticket('my-tiki');
@@ -102,6 +102,7 @@ closedir ($h);*/
 $smarty->assign_by_ref('styles', $tikilib->list_styles());
 
 $languages = array();
+if (is_dir("lang/")) {
 $h = opendir("lang/");
 
 while ($file = readdir($h)) {
@@ -111,6 +112,7 @@ while ($file = readdir($h)) {
 }
 
 closedir ($h);
+}
 $smarty->assign_by_ref('languages', $languages);
 
 // Get user pages

@@ -2857,3 +2857,11 @@ padding : 2px 30px;
 float : right;
 }
 
+/* wiki diff styles */
+.diff td {border: 1px solid ;}
+.diff div{border-top: 1px solid black #8CACBB;}
+.diffheader{background-color:#DEE7EC; font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffbody{background-color:#F2F4F5}
+.diffchar {color: red;}

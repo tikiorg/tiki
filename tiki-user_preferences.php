@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.64 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.65 2005-01-22 22:54:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,16 +58,22 @@ $smarty->assign('userwatch', $userwatch);
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-user_preferences", "tiki-editpage", $foo["path"]);
 $foo2 = str_replace("tiki-user_preferences", "tiki-index", $foo["path"]);
-$smarty->assign('url_edit', httpPrefix(). $foo1);
-$smarty->assign('url_visit', httpPrefix(). $foo2);
+$smarty->assign('url_edit', $tikilib->httpPrefix(). $foo1);
+$smarty->assign('url_visit', $tikilib->httpPrefix(). $foo2);
+
+$smarty->assign('show_mouseover_user_info',
+		$userlib->get_user_preference($user, 'show_mouseover_user_info',$feature_community_mouseover));
+
+$cookietab = 1;
 
 if (isset($_REQUEST["prefs"])) {
 	check_ticket('user-prefs');
 	// setting preferences
 	//  if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
 	if ($change_theme == 'y') {
-		if (isset($_REQUEST["mystyle"]))
+		if (isset($_REQUEST["mystyle"])) {
 			$tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["mystyle"]);
+		}
 	}
 
 	if (isset($_REQUEST["userbreadCrumb"]))
@@ -80,12 +86,6 @@ if (isset($_REQUEST["prefs"])) {
 			$smarty->assign('language', $_REQUEST["language"]);
 			include ('lang/' . $_REQUEST["language"] . '/language.php');
 		}
-	}
-
-	if (isset($_REQUEST["mystyle"])) {
-		$style = $_REQUEST["mystyle"];
-		if ($tikidomain and is_file("$tikidomain/$style")) { $style = "$tikidomain/$style"; }
-		$smarty->assign('style', $style);
 	}
 
 	if (isset($_REQUEST["language"]))
@@ -107,6 +107,26 @@ if (isset($_REQUEST["prefs"])) {
 		$tikilib->set_user_preference($userwatch, 'user_dbl', 'n');
 
 		$smarty->assign('user_dbl', 'n');
+	}
+
+	if (isset($_REQUEST['diff_versions']) && $_REQUEST['diff_versions'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'diff_versions', 'y');
+
+		$smarty->assign('diff_versions', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'diff_versions', 'n');
+
+		$smarty->assign('diff_versions' ,'n');
+	}
+
+	if ($feature_community_mouseover == 'y') {
+	    if (isset($_REQUEST['show_mouseover_user_info']) && $_REQUEST['show_mouseover_user_info'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'show_mouseover_user_info', 'y');
+		$smarty->assign('show_mouseover_user_info','y');
+	    } else {
+		$tikilib->set_user_preference($userwatch, 'show_mouseover_user_info', 'n');
+		$smarty->assign('show_mouseover_user_info','n');
+	    }
 	}
 
 	$email_isPublic = isset($_REQUEST['email_isPublic']) ? $_REQUEST['email_isPublic']: 'n';
@@ -134,18 +154,18 @@ if (isset($_REQUEST['info'])) {
 	if (isset($_REQUEST["homePage"]))
 		$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
 
-	if ($feature_maps == 'y') {
-		if (isset($_REQUEST["lat"])) {
-			$smarty->assign('lat', (float) $_REQUEST["lat"]);
-			$tikilib->set_user_preference($userwatch, 'lat', floatval($_REQUEST["lat"]));
-		}
-		if (isset($_REQUEST["lon"])) {
-			$smarty->assign('lon', (float) $_REQUEST["lon"]);
-			$tikilib->set_user_preference($userwatch, 'lon', floatval($_REQUEST["lon"]));
-		}
+	if (isset($_REQUEST["lat"])) {
+		$smarty->assign('lat', (float) $_REQUEST["lat"]);
+		$tikilib->set_user_preference($userwatch, 'lat', floatval($_REQUEST["lat"]));
+	}
+	if (isset($_REQUEST["lon"])) {
+		$smarty->assign('lon', (float) $_REQUEST["lon"]);
+		$tikilib->set_user_preference($userwatch, 'lon', floatval($_REQUEST["lon"]));
 	}
 
 	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
+
+	$cookietab = 1;
 }
 
 if (isset($_REQUEST['chgadmin'])) {
@@ -204,6 +224,8 @@ if (isset($_REQUEST['chgadmin'])) {
 
 	    $userlib->change_user_password($userwatch, $_REQUEST["pass1"]);
 	}
+
+	$cookietab = 2;
 }
 
 if (isset($_REQUEST['messprefs'])) {
@@ -217,6 +239,8 @@ if (isset($_REQUEST['messprefs'])) {
 	} else {
 		$tikilib->set_user_preference($userwatch, 'allowMsgs', 'n');
 	}
+
+	$cookietab = 3;
 }
 
 if (isset($_REQUEST['mytikiprefs'])) {
@@ -262,6 +286,8 @@ if (isset($_REQUEST['mytikiprefs'])) {
 	} else {
 		$tikilib->set_user_preference($userwatch, 'mytiki_workflow', 'n');
 	}
+
+	$cookietab = 3;
 }
 
 $smarty->assign('mytiki_pages', $tikilib->get_user_preference($userwatch, 'mytiki_pages'), 'y');
@@ -276,11 +302,7 @@ if (isset($_REQUEST['tasksprefs'])) {
 	check_ticket('user-prefs');
 	$tikilib->set_user_preference($userwatch, 'tasks_maxRecords', $_REQUEST['tasks_maxRecords']);
 
-	if (isset($_REQUEST['tasks_useDates']) && $_REQUEST['tasks_useDates'] == 'on') {
-		$tikilib->set_user_preference($userwatch, 'tasks_useDates', 'y');
-	} else {
-		$tikilib->set_user_preference($userwatch, 'tasks_useDates', 'n');
-	}
+	$cookietab = 3;
 }
 
 $tasks_maxRecords = $tikilib->get_user_preference($userwatch, 'tasks_maxRecords');
@@ -334,7 +356,7 @@ sort ($flags);
 $smarty->assign('flags', $flags);
 
 // Get preferences
-//$style = $tikilib->get_user_preference($userwatch, 'theme', $style);
+$style = $tikilib->get_user_preference($userwatch, 'theme', $style);
 //$language = $tikilib->get_user_preference($userwatch, 'language', $language);
 $smarty->assign_by_ref('style', $style);
 $realName = $tikilib->get_user_preference($userwatch, 'realName', '');
@@ -344,6 +366,8 @@ $lat = $tikilib->get_user_preference($userwatch, 'lat', '');
 $smarty->assign('lat', $lat);
 $lon = $tikilib->get_user_preference($userwatch, 'lon', '');
 $smarty->assign('lon', $lon);
+$gender = $tikilib->get_user_preference($userwatch, 'gender', '');
+$smarty->assign('gender', $gender);
 $anonpref = $tikilib->get_preference('userbreadCrumb', 4);
 $userbreadCrumb = $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $anonpref);
 $smarty->assign_by_ref('realName', $realName);
@@ -363,6 +387,8 @@ $smarty->assign_by_ref('mailCharsets', $mailCharsets);
 
 $user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
 $smarty->assign('user_information', $user_information);
+$diff_versions = $tikilib->get_user_preference($userwatch, 'diff_versions', 'n');
+$smarty->assign('diff_versions', $diff_versions);
 
 $usertrackerId = false;
 $useritemId= false;
@@ -393,7 +419,7 @@ if ($feature_messages == 'y' && $tiki_p_messages == 'y') {
 //$timezone_options = $tikilib->get_timezone_list(true);
 //$smarty->assign_by_ref('timezone_options',$timezone_options);
 //$server_time = new Date();
-$display_timezone = $tikilib->get_user_preference($userwatch, 'display_timezone', "UTC");
+$display_timezone = $tikilib->get_display_timezone($userwatch);
 
 if ($display_timezone != "UTC")
 	$display_timezone = "Local";
@@ -402,6 +428,9 @@ $smarty->assign_by_ref('display_timezone', $display_timezone);
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 global $feature_wiki_dblclickedit;
 $smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
+
+setcookie('tab',$cookietab);
+$smarty->assign_by_ref('cookietab',$cookietab);
 
 ask_ticket('user-prefs');
 

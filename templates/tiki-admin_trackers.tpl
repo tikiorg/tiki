@@ -9,9 +9,9 @@
 <img border='0' src='img/icons/info.gif' alt="{tr}edit{/tr}" /></a>{/if}
 <br /><br />
 
-<a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a>
-{if $tiki_p_admin_trackers eq 'y'}
-<span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
+<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
+{if $trackerId}
+<span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields for tracker{/tr} {$name}</a></span>
 {/if}
 <br /><br />
 
@@ -138,12 +138,22 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{/if}</td>
 <option value="desc" {if $defaultOrderDir eq 'desc'}selected="selected"{/if}/>{tr}descending{/tr}</option>
 </select>
 </td></tr>
+
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Tracker items allow ratings?{/tr}</td><td>
+<input type="checkbox" name="useRatings" {if $useRatings eq 'y'}checked="checked"{/if} onclick="toggleSpan('ratingoptions');" />
+<span id="ratingoptions" style="display:{if $useRatings eq 'y'}inline{else}none{/if};">
+{tr}with values{/tr} <input type="text" name="ratingOptions" value="{if $ratingOptions}{$ratingOptions}{else}-2,-1,0,1,2{/if}" />
+{tr}and display rating results in listing?{/tr} <input type="checkbox" name="showRatings" {if $showRatings eq 'y'}checked="checked"{/if} />
+</span>
+</td></tr>
+
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Tracker items allow comments?{/tr}</td><td>
 <input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} onclick="toggleSpan('commentsoptions');" />
 <span id="commentsoptions" style="display:{if $useComments eq 'y'}inline{else}none{/if};">
 {tr}and display comments in listing?{/tr} <input type="checkbox" name="showComments" {if $showComments eq 'y'}checked="checked"{/if} />
 </span>
 </td></tr>
+
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Tracker items allow attachments?{/tr}</td><td>
 <input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} onclick="toggleSpan('attachmentsoptions');toggleBlock('attachmentsconf');" />
 <span id="attachmentsoptions" style="display:{if $useAttachments eq 'y'}inline{else}none{/if};">
@@ -208,6 +218,8 @@ showComments = {$showComments}
 useAttachments = {$useAttachments}
 showAttachments = {$showAttachments}
 attachmentsconf = {$ui.filename|default:0},{$ui.created|default:0},{$ui.downloads|default:0},{$ui.comment|default:0},{$ui.filesize|default:0},{$ui.version|default:0},{$ui.filetype|default:0},{$ui.longdesc|default:0} 
+useRatings = {$useRatings}
+ratingOptions = {$ratingOptions}
 categories = {$catsdump}
 {/if}
 </textarea><br />

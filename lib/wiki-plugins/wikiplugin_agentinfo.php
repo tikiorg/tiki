@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_agentinfo.php,v 1.3 2004-08-12 22:31:46 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_agentinfo.php,v 1.4 2005-01-22 22:55:56 mose Exp $
 
 // Wiki plugin to display a browser client information
 // damian aka damosoft May 2004
@@ -11,7 +11,7 @@ function wikiplugin_agentinfo_help() {
 
 function wikiplugin_agentinfo($data, $params) {
 	
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	$asetup = '';
 

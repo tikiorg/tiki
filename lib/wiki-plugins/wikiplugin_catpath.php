@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.5 2004-06-23 22:34:27 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.6 2005-01-22 22:55:56 mose Exp $
  *
  * TikiWiki CATPATH plugin.
  * 
@@ -32,7 +32,7 @@ function wikiplugin_catpath($data, $params) {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	// default divider is '>'
 	if (!(isset($divider))) {

@@ -24,7 +24,7 @@ class Messu extends TikiLib {
 	}
 
 	function post_message($user, $from, $to, $cc, $subject, $body, $priority) {
-		global $smarty, $userlib, $sender_email, $language;
+		global $smarty, $userlib, $sender_email, $language,$tikilib;
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');
@@ -41,7 +41,7 @@ class Messu extends TikiLib {
 
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = httpPrefix(). $foo["path"];
+		$machine = $tikilib->httpPrefix(). $foo["path"];
 
 		if ($this->get_user_preference($user, 'minPrio', 6) <= $priority) {
 			if (!isset($_SERVER["SERVER_NAME"])) {

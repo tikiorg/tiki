@@ -319,7 +319,7 @@
     <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Dump{/tr}:</td><td><input type="checkbox" name="feature_dump" {if $feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Export{/tr}:</td><td><input type="checkbox" name="feature_wiki_export" {if $feature_wiki_export eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Rating{/tr}:</td><td><input type="checkbox" name="feature_wiki_rating" {if $feature_wiki_rating eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Rating{/tr}:</td><td><input type="checkbox" name="feature_wiki_ratings" {if $feature_wiki_ratings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}History{/tr}:</td><td><input type="checkbox" name="feature_history" {if $feature_history eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}List pages{/tr}:</td><td><input type="checkbox" name="feature_listPages" {if $feature_listPages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Backlinks{/tr}:</td><td><input type="checkbox" name="feature_backlinks" {if $feature_backlinks eq 'y'}checked="checked"{/if}/></td></tr>
@@ -351,9 +351,9 @@
     <option value="0" {if $wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
     <option value="60" {if $wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
     <option value="300" {if $wiki_cache eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
-    <option value="600" {if $wiki_cache eq 600}selected="selected"{/if}>10 {tr}minute{/tr}</option>
+    <option value="600" {if $wiki_cache eq 600}selected="selected"{/if}>10 {tr}minutes{/tr}</option>
     <option value="900" {if $wiki_cache eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
-    <option value="1800" {if $wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minute{/tr}</option>
+    <option value="1800" {if $wiki_cache eq 1800}selected="selected"{/if}>30 {tr}minutes{/tr}</option>
     <option value="3600" {if $wiki_cache eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
     <option value="7200" {if $wiki_cache eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
     </select> 
@@ -391,11 +391,15 @@
     {tr}Wiki History{/tr}
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
-    <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions|escape}" /></td></tr>
+    <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions|escape}" /> (0={tr}unlimited{/tr})</td></tr>
     <tr><td class="form">{tr}Never delete versions younger than days{/tr}: </td><td><input size="5" type="text" name="keep_versions" value="{$keep_versions|escape}" /></td></tr>
     <tr><td class="form">{tr}IP not displayed in history{/tr}:</td><td>
 	<input type="checkbox" name="feature_wiki_history_ip" {if $feature_wiki_history_ip eq 'n'}checked="checked"{/if}/>
     </td></tr>
+    <tr><td class="form">{tr}Diff style{/tr}: </td><td><select name="default_wiki_diff_style">
+       <option value="old" {if $default_wiki_diff_style eq 'old'}selected="selected"{/if}>{tr}Only with last version{/tr}</option>
+       <option value="minsidediff" {if $default_wiki_diff_style ne 'old'}selected="selected"{/if}>{tr}Any 2 versions{/tr}</option>
+    </select></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>

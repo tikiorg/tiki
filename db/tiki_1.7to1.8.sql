@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.107 2004-05-01 01:06:20 damosoft Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.108 2005-01-22 22:54:59 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -896,3 +896,7 @@ ALTER TABLE tiki_mailin_accounts ADD anonymous CHAR(1) NOT NULL DEFAULT 'y';
 # added on 2004-03-26 by baptiste (adding attachments handling to the mail-in feature)
 ALTER TABLE tiki_mailin_accounts ADD attachments CHAR(1) NOT NULL DEFAULT 'n';
 
+# 2004-12-16 sylvieg
+ALTER TABLE tiki_blog_posts drop KEY ft;
+ALTER TABLE tiki_blog_posts ADD FULLTEXT KEY ft(data, title);
+ALTER TABLE tiki_blog_posts MODIFY data_size int(11) unsigned NOT NULL default '0';

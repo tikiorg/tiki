@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.70 2004-09-08 19:52:58 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.71 2005-01-22 22:56:14 mose Exp $
 
 MoreNeat theme
 */
@@ -1909,6 +1909,21 @@ TABLE.admin { width: 100%; }
   margin: 2px;
   vertcal-align: middle;
 }
+/* wiki diff styles */
+
+table.diff {
+border-color: #A9B8C2;
+border-width: 1px 1px 1px 1px;
+border-style: solid;
+font-family: monospace, 'Courier New', courier;
+}
+.diff, .diff td{border: 1px solid #A9B8C2}
+.diff div {border-top: 1px solid #A9B8C2}
+.diffheader{background-color:#a9b8c2; font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffbody{background-color:#F2F4F5}
+.diffchar {color: red;}
 
 /* wiki diff styles */
 
@@ -2012,7 +2027,7 @@ border-top : 1px dashed #999999;
 border-bottom : 1px dashed #999999;
 min-height : 142px;
 }
-.versionav {
+.versionav:after {
 display : inline;
 float : right;
 border-left : 1px dashed #999999;
@@ -2032,7 +2047,7 @@ padding : 0 10px;
 background-color : #cccccc;
 font-weight : bold;
 }
-.versiontitle {
+.versiontitle:after {
 font-weight : bold;
 border-bottom : 1px dashed #999999;
 border-left : 1px dashed #999999;

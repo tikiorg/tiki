@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_rss.php,v 1.9 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_rss.php,v 1.10 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,8 +20,8 @@ if($tiki_p_map_view != 'y') {
 }
 
 $feed = "map";
-$title = tra("Tiki RSS feed for maps");
-$desc = tra("List of maps available.");
+$title = (!empty($title_rss_mapfiles)) ? $title_rss_mapfiles : tra("Tiki RSS feed for maps");
+$desc =  (!empty($desc_rss_mapfiles)) ? $desc_rss_mapfiles : tra("List of maps available.");
 $now = date("U");
 $id = "name";
 $titleId = "name";

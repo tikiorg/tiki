@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.24 2005-01-01 00:16:34 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.25 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,7 +40,7 @@ if (!isset($_REQUEST["page"])) {
 include_once ("tiki-pagesetup.php");
 
 // Now check permissions to access this page
-if ($tiki_p_view != 'y' || $tiki_p_view_wiki_history == 'n') {
+if ($tiki_p_view != 'y' || (isset($tiki_p_view_wiki_history) && $tiki_p_view_wiki_history == 'n')) {
 	$smarty->assign('msg', tra("Permission denied you cannot browse this page history"));
 
 	$smarty->display("error.tpl");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.84 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.85 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,6 +32,9 @@ ini_set('session.use_only_cookies', 1);
 // ini_set('session.save_handler', 'mmcache');
 // ... or if you just cant to store sessions in file
 // ini_set('session.save_handler', 'files');
+
+// Smarty workaround - if this would be 'On' in php.ini Smarty fails to parse tags
+ini_set('magic_quotes_sybase','Off');
 
 // ---------------------------------------------------------------------
 // inclusions of mandatory stuff and setup
@@ -95,14 +98,16 @@ if ( false ) { // if pre-PHP 4.1 compatibility is not required
 }
 
 // mose : simulate strong var type checking for http vars
-$patterns['int']   = "/^[0-9]*$/"; // *Id, offset,
+$patterns['int']   = "/^[0-9]*$/"; // *Id
+$patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
 $patterns['char']  = "/^[-,_a-zA-Z0-9]*$/"; // sort_mode, 
 $patterns['string']  = "/^[^<>\";#]*$/"; // find, and such extended chars
 
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 
-$vartype['offset'] = 'int';
+$vartype['id'] = 'int';
+$vartype['offset'] = 'intSign';
 $vartype['thresold'] = 'int';
 $vartype['sort_mode'] = 'char';
 $vartype['comments_offset'] = 'int';
@@ -127,7 +132,7 @@ function varcheck($array) {
       } else {
         if (is_array($rv)) {
           varcheck($rv);
-        } elseif ((((substr($rq,-2,2) == 'Id' and !$rq == 'reqId') or (isset($vartype["$rq"]) and $vartype["$rq"] == 'int')) and !preg_match($patterns['int'],$rv))
+        } elseif ((((substr($rq,-2,2) == 'Id' and $rq != 'reqId') or (isset($vartype["$rq"]) and $vartype["$rq"] == 'int')) and !preg_match($patterns['int'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'char') and  !preg_match($patterns['char'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'hash') and  !preg_match($patterns['hash'],$rv))
           or ((isset($vartype["$rq"]) and $vartype["$rq"] == 'string') and  !preg_match($patterns['string'],$rv))) {
@@ -539,10 +544,6 @@ if ($tikidomain and is_file("styles/$tikidomain/$style")) {
 	$style = "$tikidomain/$style";
 }
 $smarty->assign('style', $style);
-
-$icon_style = $tikilib->get_preference("icon_style", 'default');
-//$smarty->assign('icon_style', $icon_style); //btodoroff: I see no reason to need this
-$icon_style_base=$icon_style;
 
 $slide_style = $tikilib->get_preference("slide_style", 'slidestyle.css');
 $smarty->assign('slide_style', $slide_style);

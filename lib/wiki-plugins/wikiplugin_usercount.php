@@ -15,7 +15,7 @@ function wikiplugin_usercount($data, $params) {
 
         global $userlib;
 
-        extract ($params);
+        extract ($params,EXTR_SKIP);
 
         $numusers = $userlib->count_users($data);
 

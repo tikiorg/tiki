@@ -27,7 +27,7 @@
                 <a  class="linkmodule" 
                     href="{$slvn_item.list[ix].href|escape}"
                     title="{$slvn_item.list[ix].title|escape}">
-                  {$slvn_item.list[ix].label|escape}
+                  {if $slvn_item.list[ix].label == ''}-{else}{$slvn_item.list[ix].label|escape}{/if}
                 </a>
               </td>
             </tr>

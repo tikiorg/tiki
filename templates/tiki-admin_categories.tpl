@@ -1,15 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.37 2004-10-08 10:00:03 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.38 2005-01-22 22:56:20 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
 
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}CategoryAdmin" target="tikihelp" class="tikihelp" title="{tr}admin categories{/tr}">
+<a href="{$helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}admin categories{/tr}">
 <img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin categories template{/tr}">
+<a href="tiki-edit_templates.php?template=tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin categories tpl{/tr}">
 <img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
 <br />
 

@@ -52,7 +52,9 @@
 <textarea name="data" rows="20" cols="80">{$data|escape}</textarea>
 <div align="center">
 <input type="hidden" name="template" value="{$template|escape}" />
+{if $feature_edit_templates eq 'y'}
 <input type="submit" name="save" value="{tr}save{/tr}" />
+{/if}
 </div>
 </form>
 {/if}

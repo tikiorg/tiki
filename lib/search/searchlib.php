@@ -62,7 +62,7 @@ class SearchLib extends TikiLib {
 
 
         function &find_part($where,$words,$offset, $maxRecords) {
-          $words=preg_split("/[\W]+/",$words,-1,PREG_SPLIT_NO_EMPTY);
+          $words=preg_split("/[\s]+/",$words,-1,PREG_SPLIT_NO_EMPTY);
           if (count($words)>0) {
           switch($where) {
             case "wikis":
@@ -330,7 +330,7 @@ class SearchLib extends TikiLib {
         }
 
 	function &find_exact($where,$words,$offset, $maxRecords) {
-	  $words=preg_split("/[\W]+/",$words,-1,PREG_SPLIT_NO_EMPTY);
+	  $words=preg_split("/[\s]+/",$words,-1,PREG_SPLIT_NO_EMPTY);
 	  if (count($words)>0) {
 	  switch($where) {
 	    case "wikis":

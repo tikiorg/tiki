@@ -1,6 +1,6 @@
 TikiWiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.164 2004-09-08 19:51:49 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.165 2005-01-22 22:54:52 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionally include an identifer
@@ -198,6 +198,34 @@ Version 1.9
 * [MOD] Parse absolute URI correctly in group home page setting
 * [NEW] plugin ATTACH to list attachements on a wiki page
 * [MOD] Avoid sending user back to registration page on first login 
+
+Version 1.8.5 - Polaris -
+<http://tikiwiki.org/ReleaseProcess185>
+* [FIX] Header redirections now die; afterwards to prevent other code being
+        executed. 
+* [FIX] More Path Disclosure fixes 
+* [FIX] Remove the old password from being displayed on the tiki-change_password
+        routine. 
+* [NEW] Tiki security admin, a control panel to check internal tiki security
+        settings and tiki files integrity. 
+* [NEW] Added .htaccess files to most directories to disallow direct access
+* [FIX] Remove file from temp after upload 
+* [FIX] More secure map uploads 
+* [MOD]  Latest ADODB for MySQL 4.1 support 
+* [FIX] Wiki renaming fixes and enhancements
+* [NEW] moves custom permissions and user watches.
+* [FIX] Email notifications and theme control objects. 
+* [FIX] WikiSyntax : Definition list "eats" character 
+* [FIX] version in the diff of a wiki page changed notification to the previous
+        message not the current" 
+* [FIX] forum post notification with the right url 
+* [FIX] monthview on year change 
+* [FIX] fixed content disclosure through user watches. 
+* [FIX] filename check in map editing code. 
+* [FIX] REQUEST variable sanitation now works. 
+* [FIX] fixed the check on filename uploaded on wiki pages
+* [FIX] fixed check of filename for upload_image
+* [FIX] fixed the article submission image id sanity
 
 Version 1.8.4 - Polaris -
 <http://tikiwiki.org/ReleaseProcess184>

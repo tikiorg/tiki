@@ -18,14 +18,13 @@ class ModLib extends TikiLib {
 		$this->db = $db;
 	}
 
-	function replace_user_module($name, $title, $data) {
-
+	function replace_user_module($name, $title, $data, $parse=NULL) {
 		if ((!empty($name)) && (!empty($title)) && (!empty($data))) {
 			$query = "delete from `tiki_user_modules` where `name`=?";
 			$result = $this->query($query,array($name),-1,-1,false);
-			$query = "insert into `tiki_user_modules`(`name`,`title`,`data`) values(?,?,?)";
+			$query = "insert into `tiki_user_modules`(`name`,`title`,`data`, `parse`) values(?,?,?,?)";
 
-			$result = $this->query($query,array($name,$title,$data));
+			$result = $this->query($query,array($name,$title,$data,$parse));
 			return true;
 		}
 	}

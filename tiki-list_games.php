@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.23 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.24 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,7 +104,6 @@ if(isset($_REQUEST["game"])) {
 }
 
 
-
 // 3. Upload games //
 $smarty->assign('uploadform', 'n');
 
@@ -112,7 +111,7 @@ if (isset($_REQUEST["uploadform"]) && $tiki_p_admin_games == 'y') {
     $smarty->assign('uploadform', 'y');
 }
 
-if (isset($_POST["upload"])) {
+if (isset($_POST["upload"]) && $tiki_p_admin_games == 'y') {
     check_ticket('list-games');
     if (isset($_FILES['flashfile']) && is_uploaded_file($_FILES['flashfile']['tmp_name'])
         && isset($_FILES['imagefile']) && is_uploaded_file($_FILES['imagefile']['tmp_name'])) {
@@ -139,7 +138,7 @@ if (isset($_POST["upload"])) {
         }
 
         @$fp = fopen($_FILES['flashfile']['tmp_name'], "rb");
-        $name = $_FILES['flashfile']['name'];
+        $name = basename($_FILES['flashfile']['name']);
         @$fw = fopen("games/flash/$name", "wb");
 
         if ($fp && $fw) {
@@ -155,7 +154,7 @@ if (isset($_POST["upload"])) {
         }
 
         @$fp = fopen($_FILES['imagefile']['tmp_name'], "rb");
-        $name = $_FILES['imagefile']['name'];
+        $name = basename($_FILES['imagefile']['name']);
         @$fw = fopen("games/thumbs/$name", "wb");
 
         if ($fp && $fw) {
@@ -193,7 +192,6 @@ if (isset($_POST["upload"])) {
     }
 
 }
-
 
 
 // 4. Edit them //

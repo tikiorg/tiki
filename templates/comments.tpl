@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.58 2004-10-08 10:00:03 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.59 2005-01-22 22:56:17 mose Exp $ *}
 
 {if $forum_mode eq 'y'}
     <tr><td>
@@ -192,7 +192,7 @@
   {/if}
 
 
-    <form method="post" action="{$comments_father}" id='editpostform'>
+    <form enctype="multipart/form-data" method="post" action="{$comments_father}" id='editpostform'>
     <input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
     <input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
     <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
@@ -273,6 +273,14 @@
 	<input type="hidden" name="cols" value="{$cols}"/>
       </td>
     </tr>
+	{if $forum_mode == "y" and (($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y'))}
+	<tr>
+		<td class="formcolor">{tr}Attach file{/tr}</td>
+		<td class="formcolor">
+			<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />
+		</td>  
+	</tr>
+	{/if}
     </table>
     </form>
   <br />

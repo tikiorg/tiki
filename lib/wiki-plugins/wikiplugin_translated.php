@@ -11,7 +11,7 @@ function wikiplugin_translated_help() {
 }
 
 function wikiplugin_translated($data, $params) {
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 	$img = '';
 
 	$h = opendir("img/flags/");

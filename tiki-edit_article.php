@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.48 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.49 2005-01-22 22:54:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -70,8 +70,8 @@ $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
 
 // If the articleId is passed then get the article data
-// GGG - You have to check for the actual value of the articleId because it 
-//  will be 0 when you select preview while creating a new article. You 
+// GGG - You have to check for the actual value of the articleId because it
+//  will be 0 when you select preview while creating a new article. You
 //  really do not want to do $tikilib->get_article if the articleId is 0
 if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$article_data = $tikilib->get_article($_REQUEST["articleId"]);
@@ -132,6 +132,7 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 }
 
 // Now check permissions to access this page
+// echo $tiki_p_edit_article.$article_data["author"].$article_data["creator_edit"];
 if ($tiki_p_edit_article != 'y' and ($article_data["author"] != $user or $article_data["creator_edit"] != 'y')) {
 	$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
 
@@ -194,6 +195,7 @@ if (isset($_REQUEST["preview"])) {
 	if (!isset($_REQUEST["linkto"])) $_REQUEST['linkto'] = '';
 	if (!isset($_REQUEST["image_caption"])) $_REQUEST['image_caption'] = '';
 	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
+	if (!isset($_REQUEST["type"])) $_REQUEST['type'] = '';
 
   $smarty->assign('topline', $_REQUEST["topline"]);
   $smarty->assign('subtitle', $_REQUEST["subtitle"]);
@@ -352,6 +354,8 @@ if (isset($_REQUEST["save"])) {
 	if (!isset($_REQUEST["linkto"])) $_REQUEST['linkto'] = '';
 	if (!isset($_REQUEST["image_caption"])) $_REQUEST['image_caption'] = '';
 	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
+	if (!isset($_REQUEST["type"])) $_REQUEST['type'] = '';
+
 	if ($feature_multilingual == 'y' && $_REQUEST['lang'] && isset($article_data) && $article_data['lang'] != $_REQUEST["lang"]) {
 		include_once("lib/multilingual/multilinguallib.php");
 		if ($multilinguallib->updatePageLang('article', $article_data['articleId'], $_REQUEST["lang"], true)) {
@@ -365,14 +369,14 @@ if (isset($_REQUEST["save"])) {
 	// If page exists
 	$artid = $artlib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), $_REQUEST["authorName"],
 		$_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user,
-		$articleId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["topline"], $_REQUEST["subtitle"], 
+		$articleId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], $_REQUEST["topline"], $_REQUEST["subtitle"],
 		$_REQUEST["linkto"], $_REQUEST["image_caption"], $_REQUEST["lang"], $_REQUEST["rating"], $isfloat);
 
 	/*
 	$links = $tikilib->get_links($body);
 	$notcachedlinks = $tikilib->get_links_nocache($body);
 	$cachedlinks = array_diff($links, $notcachedlinks);
-	$tikilib->cache_links($cachedlinks); 
+	$tikilib->cache_links($cachedlinks);
 	*/
 	$cat_type = 'article';
 	$cat_objid = $artid;

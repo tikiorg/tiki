@@ -24,16 +24,17 @@ function smarty_modifier_tiki_date_format($string, $format = "%b %e, %Y", $defau
 	$dc =& $tikilib->get_date_converter($user);
 	
 	$disptime = $dc->getDisplayDateFromServerDate($string);
-	if ($tikilib->get_display_offset($user)) {
-		$format = preg_replace("/ ?%Z/","",$format);
-	}
-	else {
-		$format = preg_replace("/%Z/","UTC",$format);
-	}
-	
+
 	global $language;
 	if ($tikilib->get_preference("language", "en") != $language && $tra_format) {
 		$format = $tra_format;
+	}
+	
+	if ($tikilib->get_display_offset($user)) {
+		$format = preg_replace("/[ ]?%Z/","",$format);
+	}
+	else {
+		$format = preg_replace("/%Z/","UTC",$format);
 	}
 	
 	$date = new Date($disptime);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.30 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.31 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,11 +47,6 @@ if($where=='wikis') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
     $smarty->display("error.tpl");
     die;
-  }
-  if($tiki_p_admin_wiki != 'y'  && $tiki_p_view != 'y') {
-    $smarty->assign('msg',tra("Permission denied you cannot view this section"));
-    $smarty->display("error.tpl");
-    die;  
   }
 }
 
@@ -100,11 +95,6 @@ if($where=='files') {
 	  $smarty->display("error.tpl");
 	  die;
 	}
-	if($tiki_p_view_file_gallery != 'y') {
-	  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
-	  $smarty->display("error.tpl");
-	  die;
-	}
 }
 
 if($where=='articles') {
@@ -112,11 +102,6 @@ if($where=='articles') {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 	  $smarty->display("error.tpl");
 	  die;
-	}
-	if($tiki_p_read_article != 'y') {
-	  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
-	  $smarty->display("error.tpl");
-	  die;  
 	}
 }
 
@@ -126,11 +111,6 @@ if (($where=='galleries' || $where=='images')) {
 	  $smarty->display("error.tpl");
 	  die;
 	}
-  if($tiki_p_view_image_gallery != 'y') {
-    $smarty->assign('msg',tra("Permission denied you can not view this section"));
-    $smarty->display("error.tpl");
-    die;  
-  }
 }
 
 if(($where=='blogs' || $where=='posts')) {
@@ -138,11 +118,6 @@ if(($where=='blogs' || $where=='posts')) {
 	  $smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 	  $smarty->display("error.tpl");
 	  die;
-	}
-	if($tiki_p_read_blog != 'y') {
-	  $smarty->assign('msg',tra("Permission denied you can not view this section"));
-	  $smarty->display("error.tpl");
-	  die;  
 	}
 }
 
