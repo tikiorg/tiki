@@ -115,8 +115,7 @@
               <option value="points_desc" {if $blog_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
            </select></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="blogcomprefs"
-              value="{tr}Change preferences{/tr}" /></td>
+          <td colspan="2" class="button"><input type="submit" name="blogcomprefs" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
     </div>
