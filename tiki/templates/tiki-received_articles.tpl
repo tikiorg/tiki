@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.13 2003-09-25 01:05:21 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.14 2003-10-29 05:19:59 dheltzel Exp $ *}
 <a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br/><br/>
 
 {if $feature_help eq 'y'}
@@ -55,11 +55,12 @@
 
 <tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
 <select id='articletype' name='type' onChange='javascript:chgArtType();'>
-<option value='Article' {if $type eq 'Article'}sselected="selected"{/if}>{tr}Article{/tr}</option>
-<option value='Review' {if $type eq 'Review'}selected="selected"{/if}>{tr}Review{/tr}</option>
-<option value='Event' {if $type eq 'Event'}selected="selected"{/if}>{tr}Event{/tr}</option>
+{section name=t loop=$types}
+<option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
+{/section}
 </select>
-</select></td></tr>
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
+</td></tr>
 <tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
 <select name='rating'>
 <option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>

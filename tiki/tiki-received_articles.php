@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.9 2003-10-26 03:31:40 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-received_articles.php,v 1.10 2003-10-29 05:19:59 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -202,6 +202,9 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
+
+$types = $artlib->list_types();
+$smarty->assign_by_ref('types', $types);
 
 // Display the template
 $smarty->assign('mid', 'tiki-received_articles.tpl');

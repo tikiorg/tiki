@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.19 2003-10-19 02:48:28 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.20 2003-10-29 05:19:59 dheltzel Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
 
@@ -30,9 +30,9 @@
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
      <select name="type">
      <option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
-     <option value='Article' {if $find_type eq 'Article'}selected="selected"{/if}>{tr}Article{/tr}</option>
-     <option value='Review' {if $find_type eq 'Review'}selected="selected"{/if}>{tr}Review{/tr}</option>
-     <option value='Event' {if $find_type eq 'Event'}selected="selected"{/if}>{tr}Event{/tr}</option>
+     {section name=t loop=$types}
+     <option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
+     {/section}
      </select>
      <select name="topic">
      <option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
