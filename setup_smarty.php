@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.10 2004-01-06 20:46:54 gravesweeper Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.11 2004-01-07 14:16:17 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ if (isset($_SERVER["REQUEST_URI"])) {
 }
 
 require_once ("db/tiki-db.php");
-require_once(TIKI_LIB_PATH."/tikiticketlib.php");
+require_once("lib/tikiticketlib.php");
 
 error_reporting (E_ALL);
 // Set the separator for PHP generated tags to be &amp; instead of &
@@ -32,7 +32,7 @@ if (get_magic_quotes_gpc()) {
 // let smarty define SMARTY_DIR so it's an absolute path :
 // define('SMARTY_DIR', 'lib/smarty/');
 
-require_once ( TIKI_LIB_PATH.'/smarty/Smarty.class.php');
+require_once ( 'lib/smarty/Smarty.class.php');
 
 class Smarty_TikiWiki extends Smarty {
 	

@@ -1,5 +1,5 @@
 <?php
-	define( 'TIKI_PATH', $_SERVER["DOCUMENT_ROOT"] );
+	define( 'TIKI_PATH', getcwd() );
 	define( 'TIKI_DB_PATH', TIKI_PATH.'/db' );
 	define( 'TIKI_LIB_PATH', TIKI_PATH.'/lib' );
 

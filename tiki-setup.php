@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.187 2004-01-07 02:22:02 gravesweeper Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.188 2004-01-07 14:16:17 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,7 +19,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],"tiki-setup.php")!=FALSE) {
   die("This script cannot be called directly");
 }
 
-include_once($_SERVER['DOCUMENT_ROOT']."/lib/init/setup_inc.php");
+include_once("lib/init/setup_inc.php");
 include_once(TIKI_LIB_PATH."/init/initlib.php");
 
 class TikiSetup extends TikiInit {
@@ -44,7 +44,7 @@ class TikiSetup extends TikiInit {
         	$docroot = dirname($_SERVER['PATH_TRANSLATED']);
         }
         else{
-        	$docroot = $_SERVER['DOCUMENT_ROOT'];
+        	$docroot = getcwd();
         }
 
         if (ini_get('session.save_handler') == 'files') {
