@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.15 2003-11-08 18:19:09 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.16 2003-11-08 18:35:13 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -144,12 +144,12 @@ class TikiIntegrator extends TikiLib
         $repl = str_replace('{path}', $rep["path"], $rule["repl"]);
         $repl = str_replace('{repID}', $rep["repID"], $repl);
         //
+        $d = $data;
         if ($rule["type"] == 'y')
         {
             // regex rule. Do replace 'till we have smth to replace (if 'g' modifier present)...
             $g = !(strpos($rule["rxmod"], 'g') === false);
             $mod = str_replace('g', '', $rule["rxmod"]);
-            $d = $data;
             do
             {
                 $tmp = $d;
