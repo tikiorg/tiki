@@ -27,7 +27,7 @@
 </form>
 <h2>{tr}Add all your site users to this newsletter (broadcast){/tr}</h2>
 <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;add_all=1">{tr}Add users{/tr}</a>
-<h2>Subscriptions</h2>
+<h2>{tr}Subscriptions{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
