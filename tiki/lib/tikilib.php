@@ -4091,28 +4091,14 @@ function replace_hotwords($line, $words) {
 
     // Replace Hotwords
     if ($feature_hotwords == 'y') {
-		foreach ($words as $word => $url) {
-	    	// \b is a word boundary, \s is a space char
-	    	$line = preg_replace("/^$word(\b)/i","<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
-		    $line = preg_replace("/\s$word(\b)/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
-		}
+	foreach ($words as $word => $url) {
+	    // \b is a word boundary, \s is a space char
+	    $line = preg_replace("/^$word(\b)/i","<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
+	    $line = preg_replace("/\s$word(\b)/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
+	}
     }
 
     return $line;
-}
-
-// Make plain URLs in text into clickable hyperlinks
-// Code taken from XOOPS: http://xoops.org/
-function autolinks($text) {
-	global $feature_autolinks;
-	
-	if ($feature_autolinks == 'y') {
-		$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i");
-		$replacements = array("\\1<a class='wiki' href=\"\\2://\\3\" target=\"_blank\">\\2://\\3</a>", "\\1<a class='wiki' href=\"http://www.\\2.\\3\" target=\"_blank\">www.\\2.\\3</a>", "\\1<a class='wiki' href=\"ftp://ftp.\\2.\\3\" target=\"_blank\">ftp.\\2.\\3</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>");
-		return preg_replace($patterns, $replacements, $text);
-	} else {
-		return $text;
-	}
 }
 
 //Updates a dynamic variable found in some object
@@ -4807,9 +4793,6 @@ function parse_data($data) {
 
 	// Replace Hotwords before begin
 	$line = $this->replace_hotwords($line, $words);
-	
-	// Make plain URLs clickable hyperlinks
-	$line = $this->autolinks($line);
 
 	// Replace monospaced text
 	$line = preg_replace("/-\+(.*?)\+-/", "<code>$1</code>", $line);
@@ -5022,14 +5005,17 @@ function parse_data($data) {
 	    $max = $rsss[3][$i];
 
 	    if (empty($max))
-		$max = 99;
+			$max = 99;
 
 	    $rssdata = $rsslib->get_rss_module_content($id);
 	    $items = $rsslib->parse_rss_data($rssdata);
+
 	    $repl = '<ul>';
 
-	    for ($j = 0; $j < count($items) && $j < $max; $j++) {
-		$repl .= '<li><a target="_blank" href="' . $items[$j]["link"] . '" class="wiki">' . $items[$j]["title"] . '</a></li>';
+	    for ($j = 1; $j < count($items) && $j < $max; $j++) {
+				$repl .= '<li><a target="_blank" href="' . $items[$j]["link"] . '" class="wiki">' . $items[$j]["title"] . '</a>';
+	      $repl .= ' ('.$items[$j]["pubdate"].')';
+	      $repl .= '</li>';
 	    }
 
 	    $repl .= '</ul>';
