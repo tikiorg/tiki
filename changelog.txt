@@ -1,5 +1,9 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Alternative syntax for tables, you can sepparate rows using line returns instead
+  of ||. You have to select which syntax to use in the admin screen.
+* [NEW] Admin menu submit buttons now get back to the admin section where the
+  submited information was found.
 * [NEW] User menus, the user can add items to the application menu, an option to
   automatically add top-level bookmarks to the menu is provided.
 * [NEW] Theme control center: if activated you can control the theme
