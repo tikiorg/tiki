@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.19 2004-02-10 01:54:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.20 2004-02-12 18:57:56 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,13 +54,19 @@ $info["newItemStatus"] = 'o';
 $info["modItemStatus"] = 'o';
 $info["writerCanModify"] = '';
 $info["writerGroupCanModify"] = '';
+$info["defaultStatus"] = 'o';
+$info["defaultStatusList"] = array();
 $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
 	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
-} 
+}
+$dstatus = preg_split('//', $info['defaultStatus'], -1, PREG_SPLIT_NO_EMPTY);
+foreach ($dstatus as $ds) {
+	$info["defaultStatusList"][$ds] = true;
+}
 
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
@@ -79,6 +85,8 @@ $smarty->assign('newItemStatus', $info["newItemStatus"]);
 $smarty->assign('modItemStatus', $info["modItemStatus"]);
 $smarty->assign('writerCanModify', $info["writerCanModify"]);
 $smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
+$smarty->assign('defaultStatus', $info["defaultStatus"]);
+$smarty->assign('defaultStatusList', $info["defaultStatusList"]);
 
 $outatt = array();
 $info["orderPopup"] = '';
@@ -166,6 +174,10 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["writerGroupCanModify"] = 'y';
 	}
 
+	if (isset($_REQUEST["defaultStatus"]) && $_REQUEST["defaultStatus"] && is_array($_REQUEST["defaultStatus"])) {
+		$tracker_options["defaultStatus"] = implode('',$_REQUEST["defaultStatus"]);
+	}
+
 	if (isset($_REQUEST['ui']) and is_array($_REQUEST['ui'])) {
 		$showlist = array();
 		$popupinfo = array();
@@ -179,7 +191,7 @@ if (isset($_REQUEST["save"])) {
 		if (count($popupinfo)) {
 			$orderat.= '|'.implode(',',$popupinfo);
 		}
-		$tracker_options[" orderAttachments"] = $orderat;
+		$tracker_options["orderAttachments"] = $orderat;
 	}
 	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
 	$smarty->assign('trackerId', 0);
