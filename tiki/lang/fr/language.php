@@ -403,6 +403,10 @@ $lang=Array(
 // ### end of possibly untranslated words
 // ###
 
+"filename" => "Fichier",
+"filetype" => "Type",
+"filesize" => "Taille",
+"longdesc" => "Description",
 "Wiki page" => "Page Wiki",
 "changed" => "modifié",
 "Re:" => "Re :",
