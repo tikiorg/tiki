@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.10 2004-06-16 01:20:08 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.11 2004-10-28 01:03:55 chealer Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,44 +15,28 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== FALSE) {
   die;
 }
 
-include_once ('lib/categories/categlib.php');
-
 if ($feature_categories == 'y') {
-	$smarty->assign('cat_categorize', 'n');
-
-	if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
-		$smarty->assign('cat_categorize', 'y');
+	include_once ('lib/categories/categlib.php');
+	$categories = $categlib->list_categs();
+	if (isset($_REQUEST["preview"])) {
+		$cats = isset($_REQUEST["cat_categories"]) ? $_REQUEST["cat_categories"] : array();
+	} else {
+		$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 	}
 
-	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
-	$categories = $categlib->list_categs();
-	$num_categories = count($categories);
-
-	for ($i = 0; $i < $num_categories; $i++) {
+	for ($i = 0; $i < count($categories); $i++) {
 		if (in_array($categories[$i]["categId"], $cats)) {
 			$categories[$i]["incat"] = 'y';
 		} else {
 			$categories[$i]["incat"] = 'n';
 		}
-		if (isset($_REQUEST["cat_categories"]) && isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
-			if (in_array($categories[$i]["categId"], $_REQUEST["cat_categories"])) {
-				$categories[$i]["incat"] = 'y';
-			} else {
-				$categories[$i]["incat"] = 'n';
-			}
-		}
 	}
-
-	$smarty->assign('catsdump', implode(',',$cats));
 	$smarty->assign_by_ref('categories', $categories);
-
-	// check if this page is categorized
-	if ($categlib->is_categorized($cat_type, $cat_objid)) {
-		$cat_categorize = 'y';
+	if (isset($_REQUEST["preview"])) {
+		$smarty->assign('cat_categorize', (isset($_REQUEST["cat_categories"]) && isset($_REQUEST["cat_categorize"])) ? 'y' : 'n');
 	} else {
-		$cat_categorize = 'n';
+		$smarty->assign('cat_categorize', count($cats) != 0 ? 'y' : 'n');
 	}
-	$smarty->assign('cat_categorize', $cat_categorize);
 }
 
 ?>
