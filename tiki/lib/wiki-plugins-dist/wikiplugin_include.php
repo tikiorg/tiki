@@ -26,10 +26,12 @@
  *
  * NOTE: The design and implementation of the start/stop feature is experimental
  *	 and needs some feedback (and, no doubt, improvement) from the community. 
+ *       In order to prevent infinite loops, any page can only be included
+ *   directly or indirectly 5 times (set in $max_times).
  *
  * @package TikiWiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 function wikiplugin_include_help() {
@@ -37,32 +39,43 @@ function wikiplugin_include_help() {
 }
 function wikiplugin_include($data, $params) {
 	global $tikilib,$userlib,$user;
+    static $included_pages;
 
-	extract ($params);
-
+	$max_times = 5;
+    extract ($params);
 	if (!isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br/>");
 	}
-	$data = $tikilib->get_page_info($page);
+    if ( isset($included_pages[$page]) ) {
+        if ( $included_pages[$page]>=$max_times ) {
+            return '';
+        }
+        $included_pages[$page]++;
+    } else {
+        $included_pages[$page] = 1;
+        // only evaluate permission the first time round
+        // evaluate if object or system permissions enables user to see the included page
+        $canbeseen="n";
+        if ($userlib->object_has_one_permission($page,'wiki page')) {
+            if ($userlib->object_has_permission($user,$page,'wiki page','tiki_p_view')) {
+                $canbeseen="y";
+            }
+        } else {
+            if ($userlib->user_has_permission($user,'tiki_p_view')) {
+                $canbeseen="y";
+            }
+        }
+        if ($canbeseen=="n") {
+            $included_pages[$page] = $max_times;
+    //		I think is safer to show nothing instead of a message saying that a page can't be accessed
+    //		$text="<b>User $user has no permission to access $page</b><br/>";
+            $text="";
+            return($text);
+        }
+    }
 
-	// evaluate if object or system permissions enables user to see the included page
-	$canbeseen="n";
-	if ($userlib->object_has_one_permission($page,'wiki page')) {
-		if ($userlib->object_has_permission($user,$page,'wiki page','tiki_p_view')) {
-			$canbeseen="y";
-		}
-	} else {
-		if ($userlib->user_has_permission($user,'tiki_p_view')) {
-			$canbeseen="y";
-		}
-	}
+    $data = $tikilib->get_page_info($page);
 
-	if ($canbeseen=="n") {
-//		I think is safer to show nothing instead of a message saying that a page can't be accessed
-//		$text="<b>User $user has no permission to access $page</b><br/>";
-		$text="";
-		return($text);
-	}
 	$text = $data['data'];
 	if (isset($start) || isset($stop)) {
 		$explText = explode("\n", $text);
