@@ -6,25 +6,22 @@ class ShoutboxLib extends TikiLib {
 		if (!$db) {
 			die ("Invalid db object passed to ShoutboxLib constructor");
 		}
-
 		$this->db = $db;
 	}
 
 	function list_shoutbox($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where (message like $findesc)";
+			$mid = " where (`message` like ?)";
+			$bindvars = array('%'.$find.'%');
 		} else {
 			$mid = "";
+			$bindvars = array();
 		}
 
-		$query = "select * from tiki_shoutbox $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_shoutbox $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_shoutbox` $mid order by ".$this-convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_shoutbox` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -34,7 +31,6 @@ class ShoutboxLib extends TikiLib {
 			$res["message"] = htmlspecialchars($res["message"]);
 			$ret[] = $res;
 		}
-
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
@@ -43,23 +39,18 @@ class ShoutboxLib extends TikiLib {
 
 	function replace_shoutbox($msgId, $user, $message) {
 		$hash = md5($message);
-
-		$cant = $this->getOne("select count(*) from tiki_shoutbox where hash = '$hash' and user='$user'");
-
-		if ($cant)
+		$cant = $this->getOne("select count(*) from `tiki_shoutbox` where `hash`=? and `user`=?", array($hash,$user));
+		if ($cant) {
 			return;
-
-		$message = addslashes(strip_tags($message));
-
-		// Check the name
+		}
+		$message = strip_tags($message);
 		$now = date("U");
-
 		if ($msgId) {
-			$query = "update tiki_shoutbox set user='$user', message='$message', hash='$hash' where msgId=$msgId";
+			$query = "update `tiki_shoutbox` set `user`=?, `message`=?, `hash`=? where `msgId`=?";
+			$bindvars = array($user,$message,$hash,(int)$msgId);
 		} else {
-			$query
-				= "replace into tiki_shoutbox(message,user,timestamp,hash)
-                values('$message','$user',$now,'$hash')";
+			$query = "replace into tiki_shoutbox(message,user,timestamp,hash) values('$message','$user',$now,'$hash')";
+			$bindvars = array($message,$user,(int)$now,$hash);
 		}
 
 		$result = $this->query($query);
@@ -67,21 +58,18 @@ class ShoutboxLib extends TikiLib {
 	}
 
 	function remove_shoutbox($msgId) {
-		$query = "delete from tiki_shoutbox where msgId=$msgId";
-
-		$result = $this->query($query);
+		$query = "delete from `tiki_shoutbox` where `msgId`=?";
+		$result = $this->query($query,array((int)$msgId));
 		return true;
 	}
 
 	function get_shoutbox($msgId) {
-		$query = "select * from tiki_shoutbox where msgId=$msgId";
-
-		$result = $this->query($query);
-
-		if (!$result->numRows())
+		$query = "select * from `tiki_shoutbox` where `msgId`=?";
+		$result = $this->query($query,array((int)$msgId));
+		if (!$result->numRows()) {
 			return false;
-
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		}
+		$res = $result->fetchRow();
 		return $res;
 	}
 }
