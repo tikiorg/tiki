@@ -767,6 +767,23 @@ if(isset($_REQUEST["wikisetprefs"])) {
   }
 }
 
+if(isset($_REQUEST["wikisetcopyright"])) {
+  if(isset($_REQUEST["wiki_feature_copyrights"]) && $_REQUEST["wiki_feature_copyrights"]=="on") {
+    $tikilib->set_preference("wiki_feature_copyrights",'y'); 
+    $smarty->assign("wiki_feature_copyrights",'y');
+  } else {
+    $tikilib->set_preference("wiki_feature_copyrights",'n');
+    $smarty->assign("wiki_feature_copyrights",'n');
+  }  
+  if(isset($_REQUEST["wikiLicensePage"])) {
+    $tikilib->set_preference("wikiLicensePage",$_REQUEST["wikiLicensePage"]);
+    $smarty->assign('wikiLicensePage',$_REQUEST["wikiLicensePage"]);	
+  }
+  if(isset($_REQUEST["wikiSubmitNotice"])) {
+    $tikilib->set_preference("wikiSubmitNotice",$_REQUEST["wikiSubmitNotice"]);
+    $smarty->assign('wikiSubmitNotice',$_REQUEST["wikiSubmitNotice"]);	
+  }
+}
 
 if(isset($_REQUEST["pollprefs"])) {
   if(isset($_REQUEST["poll_comments_per_page"])) {

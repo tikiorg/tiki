@@ -79,6 +79,9 @@
 {/if}
 
 <p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
+{if $wiki_feature_copyrights  eq 'y'}
+<p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&copyrightpage={$page}">{tr}{$wikiLicensePage}{/tr}</a>.</p>
+{/if}
 {if $wiki_extras eq 'y'}
 <br/>
 {if $feature_wiki_attachments eq 'y'}
