@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.167 2003-11-21 01:50:04 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.168 2003-11-25 09:18:54 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -450,8 +450,10 @@ $feature_calendar = 'n';
 $feature_editcss = 'n';
 $feature_wiki_monosp = 'y';
 $feature_maps = 'n';
-$feature_modulecontrols = 'y';
+$feature_modulecontrols = 'n';
+$feature_phplayers = 'n';
 $smarty->assign('feature_modulecontrols', $feature_modulecontrols);
+$smarty->assign('feature_phplayers', $feature_phplayers);
 
 $feature_help = 'y';
 $smarty->assign('feature_help', $feature_help);
@@ -1704,7 +1706,7 @@ if ($feature_integrator == 'y')
  * Register the search refresh function
  */
 
-if ($feature_search) {
+if ($feature_search == 'y') {
   include_once("lib/search/refresh.php");
   register_shutdown_function("refresh_search_index");
 }
