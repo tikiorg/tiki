@@ -14,6 +14,7 @@
 'themes','isabelsworld','1.1','The theme of Isabel.','GNU/LGPL'
 'themes','nhs','1.1','A style sheet by sdl of the Tiki Community conforming to the NHS colour schemes','GNU/LGPL'
 'themes','purplemetal','1.1','Theme borrowed to another cms.','GNU/GPL'
+'themes','redgrey','1.0','Theme based on Fedora* sites','Unknown'
 'themes','redmetal','1.1','Theme borrowed to another cms.','GNU/GPL'
 'themes','tarynsworld','1.0','The theme of Taryn', 'GNU/LGPL'
 'themes','underworld','1.0','Underworld dark theme','GNU/LGPL'
