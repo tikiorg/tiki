@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.25 2003-11-11 08:43:03 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.26 2003-11-12 00:44:24 chealer Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 <script type="javascript" src="lib/calendar/dates.js"></script>
@@ -263,13 +263,13 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 
 <tr><td class="formcolor">{tr}Start{/tr}</td><td class="formcolor">
 <input type="text" name="start_freeform" value=""> {tr}or{/tr}
-{html_select_date time=$start prefix="start_" field_order=DMY}
+{html_select_date time=$start prefix="start_" end_year="+4" field_order=DMY}
 {html_select_time minute_interval=10 time=$start prefix="starth_" display_seconds=false use_24_hours=true}
 </td></tr>
 
 <tr><td class="formcolor">{tr}End{/tr}</td><td class="formcolor">
 <input type="text" name="end_freeform" value=""> {tr}or{/tr}
-{html_select_date time=$end prefix="end_" field_order=DMY}
+{html_select_date time=$end prefix="end_" end_year="+4" field_order=DMY}
 {html_select_time minute_interval=10 time=$end prefix="endh_" display_seconds=false use_24_hours=true}
 </td></tr>
 
