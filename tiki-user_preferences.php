@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.34 2003-10-20 13:59:59 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.35 2003-10-30 17:22:06 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 include_once('lib/modules/modlib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
+include_once ('lib/userprefs/userprefslib.php');
 
 // User preferences screen
 if ($feature_userPreferences != 'y') {
@@ -27,6 +28,11 @@ if (!$user) {
 }
 
 $userwatch = $user;
+
+// Custom fields
+$customfields = array();
+$customfields = $userprefslib->get_userprefs('CustomFields');
+$smarty->assign_by_ref('customfields', $customfields);
 
 if (isset($_REQUEST["view_user"])) {
 	if ($_REQUEST["view_user"] <> $user) {
@@ -104,6 +110,13 @@ if (isset($_REQUEST["prefs"])) {
 
 	$email_isPublic = isset($_REQUEST['email_isPublic']) ? $_REQUEST['email_isPublic']: 'n';
 	$tikilib->set_user_preference($userwatch, 'email is public', $email_isPublic);
+
+	// Custom fields
+	foreach ($customfields as $custpref=>$prefvalue ) {
+		//print $customfields[$custpref]['prefName'];
+		//print $_REQUEST[$customfields[$custpref]['prefName']];
+		$tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+	}
 
 	header ("location: tiki-user_preferences.php?view_user=$userwatch");
 	die;
@@ -306,6 +319,12 @@ $smarty->assign('avatar', $avatar);
 
 $user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
 $smarty->assign('user_information', $user_information);
+
+// Custom fields
+foreach ($customfields as $custpref=>$prefvalue ) {
+	$customfields[$custpref]['value'] = $tikilib->get_user_preference($userwatch, $customfields[$custpref]['prefName'], $customfields[$custpref]['value']);
+	$smarty->assign($customfields[$custpref]['prefName'], $customfields[$custpref]['value']);
+}
 
 if ($feature_messages == 'y' && $tiki_p_messages == 'y') {
 	$unread = $tikilib->user_unread_messages($userwatch);

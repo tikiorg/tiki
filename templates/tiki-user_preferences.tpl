@@ -10,11 +10,6 @@
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
 
-
-
-
-
-
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
 <table >
@@ -105,6 +100,13 @@
   </td>
   </tr>
   {/if}
+
+  {* Custom fields *}
+  {section name=ir loop=$customfields}
+    <tr><td class="form">{$customfields[ir].prefName}:</td>
+        <td><input type="text" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" /></td>
+    </tr>
+  {/section}
 
   <tr><td align="center" colspan="2"><input type="submit" name="prefs" value="{tr}set{/tr}" /></td></tr>
   </table>
