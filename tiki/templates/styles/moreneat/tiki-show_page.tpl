@@ -165,12 +165,15 @@
 	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
 {/if}
 
-{if $feature_wiki_comments eq 'y' and $show_page eq 'y'}
-<span class="tabbut">
-{if $comments_cant > 0}
+{if $feature_wiki_comments eq 'y' and $show_page eq 'y'  && ($tiki_p_read_comments eq 'y' || $tiki_p_admin_wiki eq 'y' || $tiki_p_admin eq 'y')}
+{if $comments_cant > 0 || $tiki_p_post_comments eq 'y'}
+	<span class="tabbut">
+	{if $comments_cant > 0}
 	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
-{else}
-	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
+	{else}
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a>
+	{/if}
+	</span>
 {/if}
 {/if}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
