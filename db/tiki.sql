@@ -3796,3 +3796,4 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.map');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols', 'y');

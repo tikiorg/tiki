@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/module-title.tpl,v 1.5 2003-08-14 14:15:13 zaufi Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/module-title.tpl,v 1.6 2003-08-15 00:04:46 zaufi Exp $*}
 {* Title bar for module with controls on it *}
 
 {* Draw module controls for logged user only *}
-{if $user and $user_assigned_modules == 'y' and $no_module_controls ne 'y'}
+{if $user and $user_assigned_modules == 'y' and $no_module_controls ne 'y' and $feature_modulecontrols eq 'y'}
 <table width="100%">
   <tr>
     <td width="11">
