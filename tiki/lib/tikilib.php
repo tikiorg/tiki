@@ -3714,7 +3714,6 @@ class TikiLib {
           $parts = explode( '=>', $decoded_param );
 
 					if (isset($parts[0]) && isset($parts[1])) {
-					$parts = explode('=>', $param);
 						$name = trim($parts[0]);
 
 						$arguments[$name] = trim($parts[1]);
