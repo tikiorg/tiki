@@ -77,7 +77,7 @@ if(isset($_REQUEST["upload"])) {
       $url_info = parse_url($_REQUEST["url"]);
       $pinfo = pathinfo($url_info["path"]);
       $type = "image/".$pinfo["extension"];
-      $name = $pinfo["basename"];
+      $filename = $pinfo["basename"];
       $size = strlen($data);
     } else {
       $error_msg=tra("Cannot get image from URL");
@@ -102,13 +102,13 @@ if(isset($_REQUEST["upload"])) {
        }
       $type = $_FILES['userfile1']['type'];
       $size = $_FILES['userfile1']['size'];
-      $name = $_FILES['userfile1']['name'];
+      $filename = $_FILES['userfile1']['name'];
       
 
 
       // Check for a zip file.....
       // Fixed by Flo
-      if(substr($name,strlen($name)-3)=='zip') {
+      if(substr($filename,strlen($filename)-3)=='zip') {
         if($tiki_p_batch_upload_images == 'y') {
         if($tikilib->process_batch_image_upload($_REQUEST["galleryId"],$_FILES['userfile1']['tmp_name'],$user) == 0) {
           $smarty->assign('msg',tra('Error processing zipped image package'));
@@ -134,6 +134,7 @@ if(isset($_REQUEST["upload"])) {
       $error_msg=tra("cannot process upload");
     }
   }
+
   $up_thumb = 0;
   // If the thumbnail was uploaded
   if(isset($_FILES['userfile2'])&&is_uploaded_file($_FILES['userfile2']['tmp_name'])) {
@@ -145,7 +146,7 @@ if(isset($_REQUEST["upload"])) {
       $thumb_name = $_FILES['userfile2']['name'];
       $up_thumb = 1;
   } 
-  if(empty($_REQUEST["name"])) {
+  if(empty($_REQUEST["name"]) && $_REQUEST["use_filename"] == 'off' ) {
     $error_msg=tra("You have to provide a name to the image");
   }
   if($error_msg) {
@@ -153,6 +154,13 @@ if(isset($_REQUEST["upload"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
+
+  if( $_REQUEST["use_filename"] == 'on' ) {
+    $name=$filename;
+  } else {
+    $name=$_REQUEST["name"];
+  }
+
   if(isset($data)) {
     
     if(!$up_thumb) {
@@ -175,7 +183,7 @@ if(isset($_REQUEST["upload"])) {
         }
         // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
         //$tmpfname = 'temp.jpg';
-        $tmpfname = tempnam ("/tmp", "FOO").'.jpg';     
+        $tmpfname = tempnam ($tmpDir, "FOO").'.jpg';     
         imagejpeg($t,$tmpfname);
         // Now read the information
         $fp = fopen($tmpfname,"rb");
@@ -186,10 +194,10 @@ if(isset($_REQUEST["upload"])) {
         $t_type = $t_pinfo["extension"];
         $t_type='image/'.$t_type;
                 
-        $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $type, $data, $size, $size_x, $size_y, $user,$t_data,$t_type);
+        $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, $size_x, $size_y, $user,$t_data,$t_type);
       } else {
         $tmpfname='';
-        $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $type, $data, $size, 0, 0, $user,'','');
+        $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, 0, 0, $user,'','');
       }
     } else {
       if(function_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
@@ -200,7 +208,8 @@ if(isset($_REQUEST["upload"])) {
         $size_x = 0;
         $size_y = 0;
       }
-      $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $type, $data, $size, $size_x, $size_y, $user,$thumb_data,$thumb_type);
+
+      $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, $size_x, $size_y, $user,$thumb_data,$thumb_type);
     }
     
     if(!$imageId) {

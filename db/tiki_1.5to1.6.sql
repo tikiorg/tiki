@@ -123,6 +123,100 @@ create table tiki_directory_search(
   primary key(term)
 );
 
+### Try to rebuild tiki_images without loss
+
+RENAME TABLE tiki_images TO tiki_images_old;
+
+#DROP TABLE IF EXISTS tiki_images;
+# for now we drop nothing
+
+CREATE TABLE tiki_images (
+  imageId integer(14) not null auto_increment,
+  galleryId integer(14) not null,
+  name varchar(40) not null,
+  description text,
+  created integer(14),
+  user varchar(200),
+  hits integer(14),
+  path varchar(255),
+  primary key(imageId)
+);
+
+DROP TABLE IF EXISTS tiki_images_data;
+CREATE TABLE tiki_images_data (
+  imageId integer(14) not null,
+  xsize integer(8) not null,
+  ysize integer(8) not null,
+  type char(1) not null, 
+  filesize integer(14),
+  filetype varchar(80),
+  filename varchar(80),
+  data longblob,
+  primary key(imageId,xsize,ysize,type)
+);
+
+# insert image information
+insert into tiki_images (imageId,
+		galleryId,name,description,
+		created,
+		user,hits,path)
+	select imageId,
+                galleryId,name,description,
+                created,
+                user,hits,path
+	from tiki_images_old;
+
+# insert original images
+insert into tiki_images_data (imageId,
+		xsize,ysize,type,filesize,
+		filename,filetype,data)
+	select imageId,
+                xsize,ysize,'o',filesize,
+                filename,filetype,data
+	from tiki_images_old;
+
+# insert thumbnails x and y size, filesize are not correct
+# best is, if user recreates the thumbs.
+insert into tiki_images_data (imageId,
+                xsize,ysize,type,filesize,
+                filename,filetype,data)
+        select imageId,
+                xsize,ysize,'t',filesize,
+                filename,t_type,t_data
+        from tiki_images_old;
+
+# Information for the scales
+drop table if exists tiki_galleries_scales;
+create table tiki_galleries_scales (
+	      galleryId int(14) not null,
+              xsize integer not null, 
+	      ysize integer not null, 
+	      primary key (galleryId,xsize,ysize));
+
+# Optimaziation
+create index ti_gId on tiki_images (galleryId);
+create index ti_cr on tiki_images (created);
+create index ti_hi on tiki_images (hits);
+create index ti_us on tiki_images (user);
+create index t_i_d_it on tiki_images_data (imageId,type);
+
+# Optimization of others -- try yourself
+#create index tg_u on tiki_galleries (user);
+#create index ti_p_hi on tiki_pages (hits);
+#create index ti_p_lm on tiki_pages (lastModif);
+#create index up_t on users_permissions(type);
+#create index tc_pi on tiki_comments(parentId);
+#create index tf_n on tiki_forums(name);
+#create index tf_lp on tiki_forums(lastPost);
+#create index tf_h on tiki_forums(hits);
+#create index ts_t on tiki_shoutbox(timestamp);
+#create index ta_pd on tiki_articles(publishDate);
+
+
+
+
+
+
 ### DIRECTORIES END
 
 ### FULLTEXT SEARCH BEGIN
@@ -256,3 +350,42 @@ UPDATE users_permissions set level='basic' where permName='tiki_p_upload_picture
 UPDATE users_permissions set level='editors' where permName='tiki_p_batch_upload_files';
 
 CREATE FULLTEXT INDEX ft ON tiki_directory_sites (name,description);
+
+
+#another Optimaziation - try
+#create index up_l on users_permissions(level);
+
+
+### TABLES FOR LANGUAGES ###
+
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_languages','tiki','Can edit translations and create new languages');
+
+drop table if exists tiki_language;
+create table tiki_language(
+  source tinyblob not null,
+  lang char(2) not null,
+  tran tinyblob,
+  primary key(source(255),lang)
+);
+
+drop table if exists tiki_untranslated;
+create table tiki_untranslated(
+  id integer(14) unique not null auto_increment,
+  source tinyblob not null,
+  lang char(2) not null,
+  key(id),
+  primary key(source(255),lang)
+);
+
+drop table if exists tiki_languages;
+create table tiki_languages(
+  lang char(2) not null,
+  language varchar(255),
+  primary key(lang)
+);
+
+
+insert into tiki_languages values('en','English');
+
+### TABLES FOR LANGUAGES END ###
+

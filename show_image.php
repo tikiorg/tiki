@@ -1,4 +1,7 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.3 2003-01-04 19:34:16 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.4 2003-03-04 22:53:42 redflo Exp $
+
+if (!isset($_REQUEST["nocache"]))
+  session_cache_limiter('private_no_expire');
 
 include_once("tiki-setup_base.php");
 // show_image.php
@@ -12,7 +15,21 @@ if(!isset($_REQUEST["id"])) {
 $gal_use_db=$tikilib->get_preference('gal_use_db','y');
 $gal_use_dir=$tikilib->get_preference('gal_use_dir','');
 
-$data = $tikilib->get_image($_REQUEST["id"]);
+$sxsize=0;
+$sysize=0;
+if(isset($_REQUEST["thumb"])) {
+  $itype='t';
+  }
+elseif (isset($_REQUEST["scaled"])) {
+  $itype='s';
+  if (isset($_REQUEST["xsize"]) && is_numeric($_REQUEST["xsize"])) {$sxsize=$_REQUEST["xsize"];}
+  if (isset($_REQUEST["ysize"]) && is_numeric($_REQUEST["ysize"])) {$sysize=$_REQUEST["ysize"];}
+  }
+else {
+  $itype='o';
+  }
+
+$data = $tikilib->get_image($_REQUEST["id"],$itype,$sxsize,$sysize);
 $galleryId=$data["galleryId"];
 
 $smarty->assign('individual','n');
@@ -39,26 +56,17 @@ if(!isset($tiki_p_view_image_gallery)) {
 }
 
 if(!isset($_REQUEST["thumb"])) {
-  $ter='';
   $tikilib->add_image_hit($_REQUEST["id"]);
-  $type=$data["filetype"];
-  $content = $data["data"];
-} else {
-  $ter='.thumb';
-  if(!empty($data["t_data"])) {
-    $type = $data["t_type"];
-    
-    $content = $data["t_data"];
-  } else {
-    $type=$data["filetype"];
-    $content = $data["data"];
-  }
-}
+} 
+
+$type=$data["filetype"];
+$content = $data["data"];
 header("Content-type: $type");
-if($data["path"]) {
-  readfile($gal_use_dir.$data["path"].$ter);
-} else {
+header("Content-Disposition: inline; filename=".$data["filename"]);
+//if($data["path"]) {
+//  readfile($gal_use_dir.$data["path"].$ter);
+//} else {
   echo "$content";    
-}
-echo $data;
+//}
+// ????? echo $data;
 ?>

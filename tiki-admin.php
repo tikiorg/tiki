@@ -205,10 +205,36 @@ if(isset($_REQUEST["prefs"])) {
   $tikilib->set_preference('feature_server_name',$_REQUEST["feature_server_name"]);
   $smarty->assign('feature_server_name',$_REQUEST["feature_server_name"]);
   
+  if(isset($_REQUEST["tmpDir"])) {
+    $tikilib->set_preference("tmpDir",$_REQUEST["tmpDir"]);
+    $smarty->assign_by_ref('tmpDir',$_REQUEST["tmpDir"]);
+  } else {
+    if (strstr(PHP_OS,'Windows')) $tdir='C:/temp' ; else $tdir='/tmp'; // untested. Dont have windows
+    $tikilib->set_preference("tmpDir",$tdir);
+    $smarty->assign('tmpDir',$tdir);
+  }
+
   if(isset($_REQUEST["language"])) {
     $tikilib->set_preference("language",$_REQUEST["language"]); 
     $smarty->assign_by_ref('site_language',$_REQUEST["language"]);
   }
+
+  if(isset($_REQUEST["lang_use_db"]) && $_REQUEST["lang_use_db"]=="on") {
+    $tikilib->set_preference("lang_use_db",'y');
+    $smarty->assign('lang_use_db','y');
+  } else {
+    $tikilib->set_preference("lang_use_db",'n');
+    $smarty->assign('lang_use_db','n');
+  }
+
+  if(isset($_REQUEST["record_untranslated"]) && $_REQUEST["record_untranslated"]=="on") {
+    $tikilib->set_preference("record_untranslated",'y');
+    $smarty->assign('record_untranslated','y');
+  } else {
+    $tikilib->set_preference("record_untranslated",'n');
+    $smarty->assign('record_untranslated','n');
+  }
+
 
   if(isset($_REQUEST['display_timezone'])) {
     $tikilib->set_preference('display_timezone',$_REQUEST['display_timezone']); 
@@ -1358,6 +1384,8 @@ while($file=readdir($h)) {
 closedir($h);
 $smarty->assign_by_ref('languages',$languages);
 $smarty->assign('site_language',$tikilib->get_preference("language",'en'));
+
+$smarty->assign('lang_use_db',$tikilib->get_preference("lang_use_db",'n'));
 
 $timezone_options = $tikilib->get_timezone_list(false);
 $smarty->assign_by_ref('timezone_options',$timezone_options);

@@ -5,13 +5,19 @@
 
 class UsersLib extends TikiLib {
 #  var $db;  // The PEAR db object used to access the database
-    
+  
+  var $usergroups_cache;
+  var $groupperm_cache;
+
   function UsersLib($db) 
   {
     if(!$db) {
       die("Invalid db object passed to UsersLib constructor");  
     }
     $this->db = $db;  
+    // Initialize caches
+    $this->usergroups_cache=array();
+    $this->groupperm_cache=array(array());
   }
 
   function set_admin_pass($pass) 
@@ -167,7 +173,6 @@ class UsersLib extends TikiLib {
 	    $current = $t;
 	}
 	$query = "update users_users set lastLogin=$current where login='$user'";
-        $query = "update users_users set lastLogin=$current where login='$user'";
         $result = $this->query($query);
         // check
         $query = "update users_users set currentLogin=$t where login='$user'";
@@ -297,6 +302,7 @@ class UsersLib extends TikiLib {
   
   function get_user_groups($user) 
   {
+    if(!isset($this->usergroups_cache[$user])) {
     $userid = $this->get_user_id($user);
     $query = "select groupName from users_usergroups where userId='$userid'";
     $result = $this->query($query);
@@ -308,7 +314,12 @@ class UsersLib extends TikiLib {
     }
     $ret[] = "Anonymous";
     $ret=array_unique($ret);
+    // cache it
+    $this->usergroups_cache[$user]=$ret;
     return $ret;
+    } else {
+      return $this->usergroups_cache[$user];
+    }
   }
 
   function get_user_info($user) 
@@ -471,9 +482,14 @@ class UsersLib extends TikiLib {
   
   function group_has_permission($group,$perm) 
   {
+    if(!isset($perm,$this->groupperm_cache[$group][$perm])) {
     $query = "select groupName,permName from users_grouppermissions where groupName='$group' and permName='$perm'";
     $result = $this->query($query);
-    return $result->numRows();  
+    $this->groupperm_cache[$group][$perm]=$result->numRows();
+    return $result->numRows();
+    } else {
+      return $this->groupperm_cache[$group][$perm];
+    }
   }
   
   function remove_permission_from_group($perm,$group) 

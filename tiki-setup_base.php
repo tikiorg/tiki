@@ -1,5 +1,6 @@
 <?php 
 
+
 require_once("setup.php");
 require_once("lib/tikilib.php");
 $tikilib = new TikiLib($dbTiki);
@@ -26,6 +27,8 @@ if(isset($_SESSION["user"])) {
 
 function tra($content)
 {
+  global $lang_use_db;
+  if ($lang_use_db!='y') {
     global $lang;
     if ($content) {
       if(isset($lang[$content])) {
@@ -34,6 +37,24 @@ function tra($content)
         return $content;        
       }
     }
+  } else {
+    global $tikilib;
+    global $language;
+    $query="select tran from tiki_language where source='".addslashes($content)."' and lang='".$language."'";
+    $result=$tikilib->db->query($query);
+    $res=$result->fetchRow(DB_FETCHMODE_ASSOC);
+    if(DB::isError($result)) return $content;
+    if(!isset($res["tran"])) {
+      global $record_untranslated;
+      if ($record_untranslated==true) {
+	$query="insert into tiki_untranslated (source,lang) values('".addslashes($content)."','".$language."')";
+        //No eror checking here
+        $tikilib->db->query($query);
+	}
+      return $content;
+    }
+    return $res["tran"];
+  }
 }
 
 
@@ -210,9 +231,11 @@ if($feature_userPreferences == 'y') {
 $stlstl=explode('.',$style);
 $style_base = $stlstl[0];
 
+//really needed? (todo: check)
+//if ($lang_use_db!='y') {
 global $lang;
 include_once('lang/'.$language.'/language.php');
-
+//}
 
 
 ?>

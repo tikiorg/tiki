@@ -58,7 +58,7 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
       $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
     }
     // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
-    $tmpfname = tempnam ("/tmp", "FOO").'.jpg';     
+    $tmpfname = tempnam ($tmpDir, "FOO").'.jpg';     
     imagejpeg($t,$tmpfname);
     // Now read the information
     $fp = fopen($tmpfname,"rb");

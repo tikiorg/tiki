@@ -66,7 +66,7 @@ $smarty->assign("imageData",urlencode($info["imageData"]));
 $smarty->assign("imageType",$info["imageType"]);
 $smarty->assign("hasImage",'n');
 if(strlen($info["imageData"])>0) {
-   $tmpfname = tempnam ("/tmp", "TMPIMG").$info["imageName"];     
+   $tmpfname = tempnam ($tmpDir, "TMPIMG").$info["imageName"];     
    $fp = fopen($tmpfname,"w");
    if($fp) {
      fwrite($fp,urldecode($info["imageData"]));

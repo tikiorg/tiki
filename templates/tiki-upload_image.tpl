@@ -3,7 +3,7 @@
 <div align="center">
 <form enctype="multipart/form-data" action="tiki-upload_image.php" method="post">
 <table class="normal">
-<tr><td class="formcolor">{tr}Image Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td></tr>
+<tr><td class="formcolor">{tr}Image Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /> {tr}use filename{/tr}:<input type="checkbox" name="use_filename" /></td></tr>
 <tr><td class="formcolor">{tr}Image Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description"></textarea></tr></td>
 <tr><td class="formcolor">{tr}Gallery{/tr}:</td><td class="formcolor"> 
 <select name="galleryId">

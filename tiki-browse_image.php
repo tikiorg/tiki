@@ -14,7 +14,58 @@ if(!isset($_REQUEST["imageId"])) {
   $smarty->display("styles/$style_base/error.tpl");
   die;
 }
-$info = $tikilib->get_image($_REQUEST["imageId"]);
+
+// get info for scaled images
+$scaleinfo = $tikilib->get_gallery_scale_info($_REQUEST["galleryId"]);
+$sxsize=0;
+$sysize=0;
+if(isset($_REQUEST["xsize"])) $sxsize=$_REQUEST["xsize"];
+if(isset($_REQUEST["ysize"])) $sysize=$_REQUEST["ysize"];
+
+$prevx=0;
+$prevy=0;
+$prevt='o';
+$nextx=0;
+$nexty=0;
+$nextt='o';
+while (list ($key, $val) = each ($scaleinfo)) {
+  if ($val["xsize"] < $sxsize && $val["ysize"] < $sysize ) {
+    $prevx=$val["xsize"];
+    $prevy=$val["ysize"];
+    $prevt='s';
+  }
+  if ($val["xsize"] > $sxsize && $val["ysize"] > $sysize ) {
+    $nextx=$val["xsize"];
+    $nexty=$val["ysize"];
+    $nextt='s';
+  }
+}
+
+
+if(!isset($_REQUEST["scaled"])) 
+{
+  $itype='o';
+  $sxsize=0;
+  $sysize=0;
+} else {
+  $itype='s';
+  $sxsize=$_REQUEST["xsize"];
+  $sysize=$_REQUEST["ysize"];
+}
+
+$smarty->assign_by_ref('itype',$itype);
+$smarty->assign_by_ref('sxsize',$sxsize);
+$smarty->assign_by_ref('sysize',$sysize);
+$smarty->assign_by_ref('nextx',$nextx);
+$smarty->assign_by_ref('nexty',$nexty);
+$smarty->assign_by_ref('nextt',$nextt);
+$smarty->assign_by_ref('prevx',$prevx);
+$smarty->assign_by_ref('prevy',$prevy);
+$smarty->assign_by_ref('prevt',$prevt);
+
+  
+
+$info = $tikilib->get_image_info($_REQUEST["imageId"],$itype,$sxsize,$sysize);
 $gal_info = $tikilib->get_gallery($info["galleryId"]);
 $_REQUEST["galleryId"] = $info["galleryId"];
 
@@ -96,7 +147,7 @@ $smarty->assign('url_show',httpPrefix().$foo2);
 
 
 $tikilib->add_image_hit($_REQUEST["imageId"]);
-$info = $tikilib->get_image($_REQUEST["imageId"]);
+$info = $tikilib->get_image_info($_REQUEST["imageId"]); //todo: already known???
 $gal_info = $tikilib->get_gallery($info["galleryId"]);
 //$smarty->assign_by_ref('theme',$gal_info["theme"]);
 //$smarty->assign('use_theme','y');
