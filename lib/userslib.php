@@ -78,6 +78,17 @@ class UsersLib extends TikiLib {
 		return true;
 	}
 
+	function copy_object_permissions($objectId,$destinationObjectId,$objectType) {
+		$objectId = md5($objectType.$objectId);
+
+		$query = "select permName, groupName from users_objectpermissions where objectId='$objectId' and  objectType='$objectType'";
+    		$result = $this->query($query);
+    		while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      			$this->assign_object_permission($res["groupName"],$destinationObjectId,$objectType,$res["permName"]);
+    		}
+    		return true;
+  	}
+
 	function get_object_permissions($objectId, $objectType) {
 		$objectId = md5($objectType . $objectId);
 
