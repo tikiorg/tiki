@@ -5210,7 +5210,7 @@ function get_locale($user = false) {
 	    'pl' => 'pl_PL', # polish
 	    'po' => 'po',
 	    'ru' => 'ru_RU',
-	    'sp' => 'es_ES',
+	    'es' => 'es_ES',
 	    'sw' => 'sw_SW', # swahili
 	    'tw' => 'tw_TW',
 	    );

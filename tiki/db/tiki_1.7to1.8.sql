@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.61 2003-11-10 04:33:17 zaufi Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.62 2003-11-11 05:54:24 gmuslera Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -575,3 +575,17 @@ CREATE TABLE sessions(
   PRIMARY KEY (SESSKEY),
   KEY (EXPIRY)
 ) TYPE=MyISAM;
+
+
+# 
+# Changing language code from 'sp' to 'es'
+# 
+
+
+UPDATE tiki_calendar_items SET lang = 'es' WHERE lang='sp';
+UPDATE tiki_language SET lang = 'es' WHERE lang='sp';
+UPDATE tiki_languages SET lang = 'es' WHERE lang='sp';
+UPDATE tiki_menu_languages SET language = 'es' WHERE language='sp';
+UPDATE tiki_untranslated SET lang = 'es' WHERE lang='sp';
+UPDATE tiki_preferences SET value = 'es' WHERE value='sp' and name='language';
+UPDATE tiki_user_preferences SET value = 'es' WHERE value='sp' and prefName='language';
