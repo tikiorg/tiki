@@ -8,6 +8,7 @@ body {
   margin: 0;
 	padding: 0;
 }
+/* woh, this css is a mess*/
 ul
 {
 margin-top: 2px;
@@ -22,10 +23,10 @@ a:hover {
   color: #226822;
 	background-color: #f5f5b6;
 	text-decoration: none;
-}	
+}
 /* GENERAL LAYOUT EXPLANATION
  *
- * The tiki application is enclosed as a whole in tiki-main tiki-main contains three divs: tiki-top, 
+ * The tiki application is enclosed as a whole in tiki-main tiki-main contains three divs: tiki-top,
  * tiki-mid and tiki-botthat will be used for the header, application and footer.
  *
  * tiki-mid contains a 3-column table, the columns are called (ids) leftcolumn, centercolumn and rightcolumn
@@ -33,16 +34,16 @@ a:hover {
  *
  */
 
-/********************************************* GENERAL LAYOUT *********************************************************/
+/*********************** GENERAL LAYOUT ************************************/
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {  margin: 0px;  }
 
 /* This is the header */
-#tiki-top { 
+#tiki-top {
 font-family: "Trebuchet MS", Arial, sans-serif;
 font-size: .9em;
-background-color: #C7D0D9; 
+background-color: #C7D0D9;
 height: 41px;
 border-bottom: 1px solid #8CACBB;
 }
@@ -95,7 +96,7 @@ clear: both;
 }
 
 /* And this is the footer */
-#tiki-bot {  
+#tiki-bot {
 padding-top: 10px;  
 padding-bottom: 5px; 
 margin-top: 0px;   
@@ -188,7 +189,7 @@ div#debugconsole {
   padding: 5px;
   border: 6px ridge #996600;
   font-size: 12px;
-} 
+}
 span.on-option { color: #00C000; }
 span.off-option { color: #005000; }
 
@@ -248,7 +249,7 @@ margin: 0;
 
 /* Boxes used for modules (modules are those boxes in the left/right columns) */
 div.box {  
-	overflow: hidden; 
+	overflow: hidden;
 	margin-bottom: 12px;
   border-top: 1px solid #8CACBB;
 	width: 190px;
@@ -972,7 +973,7 @@ table.threads { width: 100%;}
 
 td.viewthreadl { 
 border: 1px solid #8CACBB; 
-border-collapse:collapse; 
+border-collapse:collapse;
 background-color: #EFEFEF; 
 height: 10px; 
 vertical-align: top;
@@ -2099,3 +2100,10 @@ TABLE.admin {
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting {
+font-family : monospace;
+padding : 2ex;
+background-color : #C7D0D9;
+margin : 1ex;
+border : 1px dashed #adacaf; }
