@@ -215,7 +215,7 @@ class UsersLib extends TikiDB {
 		);
     }
 
-    function validate_user($user, $pass, $challenge, $response) {
+    function validate_user(&$user, $pass, $challenge, $response) {
 	global $tikilib, $sender_email;
 
 	// these will help us keep tabs of what is going on
@@ -324,7 +324,7 @@ class UsersLib extends TikiDB {
 
 	// next see if we need to check CAS
 	elseif ($auth_cas) {
-		$result = $this->validate_user_cas();
+		$result = $this->validate_user_cas($user);
 		switch ($result) {
 		case USER_VALID:
 			$userCAS = true;
@@ -350,7 +350,7 @@ class UsersLib extends TikiDB {
 			// see if we can create a new account
 			if ($cas_create_tiki) {
 			    // need to make this better! *********************************************************
-			    $result = $this->add_user($user, $pass, '');
+			    $result = $this->add_user($user, '', '');
 
 			    // if it worked ok, just log in
 			    if ($result == USER_VALID)
@@ -481,7 +481,42 @@ class UsersLib extends TikiDB {
 		return PASSWORD_INCORRECT;
 	}
     }
+    
+	// validate the user through CAS
+	function validate_user_cas(&$user) {
+		global $tikilib;
 
+		// just make sure we're supposed to be here
+		if ($tikilib->get_preference('auth_method', 'tiki') != 'cas')
+		    return false;
+
+		$cas_version = $tikilib->get_preference('cas_version', 'CAS_VERSION_1_0');
+		$cas_hostname = $tikilib->get_preference('cas_hostname');
+		$cas_port = $tikilib->get_preference('cas_port');
+		$cas_path = $tikilib->get_preference('cas_path');
+		
+		// import phpCAS lib
+		include_once('CAS/CAS.php');
+
+		phpCAS::setDebug();
+
+		// initialize phpCAS
+		phpCAS::client($cas_version, "$cas_hostname", (int) $cas_port, "$cas_path");
+
+		// check CAS authentication
+		phpCAS::authenticateIfNeeded();
+
+		// at this step, the user has been authenticated by the CAS server
+		// and the user's login name can be read with phpCAS::getUser().
+		
+		$user = phpCAS::getUser();
+		
+		if (isset($user)) {
+			return USER_VALID;
+		} else {
+			return PASSWORD_INCORRECT;
+		}
+    }
 
     // validate the user in the PEAR::Auth system
     function validate_user_auth($user, $pass) {

@@ -186,8 +186,8 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}CAS server version{/tr}:<td>
 <select name="cas_version">
 <option value="none" {if $cas_version neq "1" && $cas_version neq "2"} selected="selected"{/if}></option>
-<option value="CAS_VERSION_1_0" {if $cas_version eq "CAS_VERSION_1_0"} selected="selected"{/if}>{tr}Version 1.0{/tr}</option>
-<option value="CAS_VERSION_2_0" {if $cas_version eq "CAS_VERSION_2_0"} selected="selected"{/if}>{tr}Version 2.0{/tr}</option>
+<option value="1.0" {if $cas_version eq "1.0"} selected="selected"{/if}>{tr}Version 1.0{/tr}</option>
+<option value="2.0" {if $cas_version eq "2.0"} selected="selected"{/if}>{tr}Version 2.0{/tr}</option>
 </select>
 </td></tr>
 <tr><td class="form">{tr}CAS server hostname{/tr}:</td><td><input type="text" name="cas_hostname" value="{$cas_hostname|escape}" size="50" /></td></tr>

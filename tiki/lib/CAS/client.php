@@ -1077,7 +1077,8 @@ class CASClient
 	 * $this->_callback_url .= $_SERVER['SERVER_NAME'];
 	 */
         if(empty($_SERVER['HTTP_X_FORWARDED_SERVER'])){
-          $this->_callback_url .= $_SERVER['SERVER_NAME'];
+//          $this->_callback_url .= $_SERVER['SERVER_NAME'];
+			$this->_callback_url .= $_SERVER['HTTP_HOST'];
         } else {
           $this->_callback_url .= $_SERVER['HTTP_X_FORWARDED_SERVER'];
         }
@@ -1804,7 +1805,8 @@ class CASClient
 	 * $this->_url .= $_SERVER['SERVER_NAME'];
 	 */
         if(empty($_SERVER['HTTP_X_FORWARDED_SERVER'])){
-          $this->_url .= $_SERVER['SERVER_NAME'];
+//          $this->_url .= $_SERVER['SERVER_NAME'];
+			$this->_url .= $_SERVER['HTTP_HOST'];
         } else {
           $this->_url .= $_SERVER['HTTP_X_FORWARDED_SERVER'];
         }
