@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.15 2003-10-06 17:51:58 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.16 2003-10-26 14:12:10 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -311,7 +311,6 @@ class CategLib extends TikiLib {
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS ////
 	function categorize_page($pageName, $categId) {
 		// Check if we already have this object in the tiki_categorized_objects page
-		$pageName_sl = addslashes($pageName);
 
 		$catObjectId = $this->is_categorized('wiki page', $pageName_sl);
 
@@ -320,8 +319,7 @@ class CategLib extends TikiLib {
 			$info = $this->get_page_info($pageName);
 
 			$href = 'tiki-index.php?page=' . urlencode($pageName);
-			$catObjectId
-				= $this->add_categorized_object('wiki page', $pageName, substr($info["description"], 0, 200), $pageName, $href);
+			$catObjectId = $this->add_categorized_object('wiki page', $pageName, substr($info["description"], 0, 200), $pageName, $href);
 		}
 
 		$this->categorize($catObjectId, $categId);

@@ -258,9 +258,8 @@ class WikiLib extends TikiLib {
 		$this->query($query, array( $cache, $page));
 	}
 
+	// huho why that fuction is empty ??
 	function save_notepad($user, $title, $data) {
-		$data = addslashes($data);
-		$title = addslashes($data);
 	}
 
 	// Methods to cache and handle the cached version of wiki pages
