@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.38 2004-07-13 18:24:24 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.39 2004-07-13 20:37:56 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -168,9 +168,7 @@ if ($tiki_p_post_comments == 'y') {
 
 		$object = explode(':', $comments_objectId );
 		if( $object[0] == 'forum' && 
-			isset( $_REQUEST["comments_grandParentId"] ) &&
-			!empty($_REQUEST["comments_grandParentId"] ) &&
-			$_REQUEST["comments_grandParentId"] != 0)
+			!empty($_REQUEST["comments_grandParentId"] ))
 		{
 		    $parent_id = $_REQUEST["comments_grandParentId"];
 		} else {
@@ -434,6 +432,10 @@ if (isset($_REQUEST["comments_parentId"]) &&
 	 isset($_REQUEST['post_reply']))) {
     $parent_com = $commentslib->get_comment($_REQUEST["comments_parentId"]);
     $smarty->assign_by_ref('parent_com', $parent_com);
+}
+
+if (!empty($_REQUEST['post_reply'])) {
+	$smarty->assign('post_reply', $_REQUEST['post_reply']);
 }
 
 ?>
