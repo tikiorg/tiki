@@ -450,12 +450,12 @@ class DirLib extends TikiLib {
   // Get
   
   // Remove
-  function dir_remove_site($siteId) 
-  {
-    $query = "delete from tiki_directory_sites where siteId=$siteId";
-    $result = $this->query($query);
+  //function dir_remove_site($siteId) 
+  //{
+//    $query = "delete from tiki_directory_sites where siteId=$siteId";
+    //$result = $this->query($query);
     // No need to cascade
-  }
+  //}
   
   // Functions to manage relationship between categories
   function dir_list_related_categories($parent,$offset,$maxRecords,$sort_mode,$find)

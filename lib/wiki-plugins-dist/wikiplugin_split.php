@@ -1,4 +1,13 @@
 <?php
+
+// Splits the page in two colums
+// Usage:
+// {SPLIT()}
+// column1
+// ---
+// column2
+// {SPLIT}
+
 function wikiplugin_split($data,$params) {
   global $tikilib;
   global $replacement;
