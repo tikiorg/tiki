@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.205 2004-06-08 03:11:40 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.206 2004-06-08 05:15:53 lfagundes Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -3943,6 +3943,9 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
 
+# Community permissions
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community');
+
 # --------------------------------------------------------
 
 #
@@ -4362,6 +4365,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_homework','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_detect_language','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_languages','a:0:{}');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_styles','a:0:{}');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_friends','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','login_asc');
 
 # Dynamic variables
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
@@ -4603,3 +4608,25 @@ CREATE TABLE tiki_translated_objects (
   PRIMARY KEY (type, objId),
   KEY ( traId)
 ) TYPE=MyISAM AUTO_INCREMENT=1;
+
+
+#
+# Community tables begin
+#
+
+CREATE TABLE tiki_friends (
+  user char(40) NOT NULL default '',
+  friend char(40) NOT NULL default '',
+  PRIMARY KEY  (user,friend)
+) TYPE=MyISAM;
+
+CREATE TABLE tiki_friendship_requests (
+  userFrom char(40) NOT NULL default '',
+  userTo char(40) NOT NULL default '',
+  tstamp timestamp(14) NOT NULL,
+  PRIMARY KEY  (userFrom,userTo)
+) TYPE=MyISAM;
+
+#
+# Community tables end
+#

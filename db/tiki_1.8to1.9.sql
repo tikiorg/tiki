@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.69 2004-06-07 14:10:46 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.70 2004-06-08 05:15:53 lfagundes Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -547,3 +547,23 @@ CREATE TABLE tiki_translated_objects (
   PRIMARY KEY (type, objId),
   KEY ( traId)
 ) TYPE=MyISAM AUTO_INCREMENT=1;
+
+
+# Added on June 8th 2004 by lfagundes; Friendship Netowrk
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_friends','n');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','login_asc');
+
+CREATE TABLE tiki_friends (
+  user char(40) NOT NULL default '',
+  friend char(40) NOT NULL default '',
+  PRIMARY KEY  (user,friend)
+) TYPE=MyISAM;
+
+CREATE TABLE tiki_friendship_requests (
+  userFrom char(40) NOT NULL default '',
+  userTo char(40) NOT NULL default '',
+  tstamp timestamp(14) NOT NULL,
+  PRIMARY KEY  (userFrom,userTo)
+) TYPE=MyISAM;
+

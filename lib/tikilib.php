@@ -2084,6 +2084,81 @@ function add_pageview() {
 	return $ret;
     }
 
+    // FRIENDS METHODS //
+    function list_user_friends($user, $offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $find = '')
+    {
+	global $userlib;
+
+	$sort_mode = $this->convert_sortmode($sort_mode);
+
+	if($find) {
+	    $findesc = $this->qstr('%'.$find.'%');
+	    $mid=" and (u.login like $findesc or u.realName like $findesc) ";
+	} else {
+	    $mid='';
+	}
+
+	$user = addslashes($user);
+
+	$query = "select u.* from tiki_friends as f, users_users as u where u.login=f.friend and f.user='$user' and f.user <> f.friend $mid order by $sort_mode limit $offset, $maxRecords";
+	$query_cant = "select count(*) from tiki_friends as f, users_users as u where u.login=f.friend and f.user='$user' $mid";
+	$result = $this->query($query);
+	$cant = $this->getOne($query_cant);
+	$ret = Array();
+	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	    $ret[] = $res;
+	}
+	$retval = Array();
+	$retval["data"] = $ret;
+	$retval["cant"] = $cant;
+	return $retval;
+
+    }
+
+    function verify_friendship($user, $friend)
+    {
+	global $userlib;
+
+	if ($user == $friend) {
+	    return 1;
+	}
+
+	$user = addslashes($user);
+	$friend = addslashes($friend);
+
+	$query = "select count(*) from tiki_friends where user='$user' and friend='$friend'";
+	return $this->getOne($query);
+    }
+
+	
+    function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'realName', $find = '')
+    {
+	global $user, $userlib;
+
+	if($find) {
+	    $findesc = $this->qstr('%'.$find.'%');
+	    $mid=" where (login like $findesc or realName like $findesc) ";
+	} else {
+	    $mid='';
+	}
+
+
+	$sort_mode = preg_replace('/_(asc|desc)$/',' $1',$sort_mode);
+
+	$query = "select u.*, f.user is not null as friend from users_users as u left join tiki_friends as f on u.login=f.friend and f.user='".addslashes($user)."' $mid order by $sort_mode limit $offset, $maxRecords";
+	$query_cant = "select count(*) from users_users $mid";
+	$result = $this->query($query);
+	$cant = $this->getOne($query_cant);
+	$ret = Array();
+	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	    $ret[] = $res;
+	}
+	$retval = Array();
+	$retval["data"] = $ret;
+	$retval["cant"] = $cant;
+	return $retval;
+    }
+
     // BLOG METHODS ////
     /*shared*/
     function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {

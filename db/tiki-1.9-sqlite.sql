@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sqlite.sql,v 1.22 2004-06-08 03:11:40 lfagundes Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sqlite.sql,v 1.23 2004-06-08 05:15:52 lfagundes Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -4699,6 +4699,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
 
 
+-- Community permissions
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community');
+
+
 -- --------------------------------------------------------
 
 --
@@ -5487,6 +5491,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_languages','a
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('available_styles','a:0:{}');
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_friends','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('user_list_order','login_asc');
+
 
 -- Dynamic variables
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
@@ -5786,5 +5794,29 @@ CREATE TABLE "tiki_translated_objects" (
   KEY ( traId)
 )  ;
 
+
+
+--
+-- Community tables begin
+--
+
+CREATE TABLE "tiki_friends" (
+  "user" char(40) NOT NULL default '',
+  "friend" char(40) NOT NULL default '',
+  PRIMARY KEY ("user","friend")
+) ;
+
+
+CREATE TABLE "tiki_friendship_requests" (
+  "userFrom" char(40) NOT NULL default '',
+  "userTo" char(40) NOT NULL default '',
+  "tstamp" timestamp(3) NOT NULL,
+  PRIMARY KEY ("userFrom","userTo")
+) ;
+
+
+--
+-- Community tables end
+--
 ;
 
