@@ -23,7 +23,7 @@ class SearchLib extends TikiLib {
 			if ($cant) {
 				$query = "update `tiki_search_stats` set `hits`= `hits` + 1 where `term`=?";
 			} else {
-				$query = "insert into `tiki_search_stats (`term`,`hits`) values (?,1)";
+				$query = "insert into `tiki_search_stats` (`term`,`hits`) values (?,1)";
 			}
 
 			$result = $this->query($query,array($word));
