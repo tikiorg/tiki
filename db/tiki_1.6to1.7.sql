@@ -66,7 +66,8 @@ alter table tiki_forums add ui_email char(1);
 alter table tiki_forums add ui_online char(1);
 alter table tiki_forums add topic_summary char(1);
 
-update tiki_forums set show_description='y';
+###
+
 update tiki_forums set inbound_address='';
 update tiki_forums set outbound_address='';
 update tiki_forums set topic_smileys='n';
