@@ -1,5 +1,5 @@
 <?php 
-# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.17 2003-12-15 00:08:03 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.18 2004-05-02 19:49:24 lfagundes Exp $
 include_once("lib/init/initlib.php");
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
@@ -24,6 +24,7 @@ $map = array (
         
 );
 $s=new xmlrpc_server( $map );
+
 function check_individual($user,$blogid,$permName) {
   global $userlib;
   // If the user is admin he can do everything
