@@ -37,12 +37,13 @@ Register an existing unlisted currency
 <table class="normal">
 <tr class="heading">
 <th colspan="2">&nbsp;</th>
-<th align=left><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=id_{if $smarty.request.sort_mode eq 'id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Id{/tr}</a></th>
-<th align=left><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_name_{if $smarty.request.sort_mode eq 'cc_name_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Name{/tr}</a></th>
-<th align=left><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_description_{if $smarty.request.sort_mode eq 'cc_description_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Description{/tr}</a></th>
-<th align=left><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=owner_id_{if $smarty.request.sort_mode eq 'owner_id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Owner{/tr}</a></th>
-<th align=center><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=requires_approval_{if $smarty.request.sort_mode eq 'requires_approval_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Approval?{/tr}</a></th>
-<th align=center><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=listed_{if $smarty.request.sort_mode eq 'listed_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Listed?{/tr}</a></th>
+<th align="left"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=id_{if $smarty.request.sort_mode eq 'id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Id{/tr}</a></th>
+<th align="left"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_name_{if $smarty.request.sort_mode eq 'cc_name_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Name{/tr}</a></th>
+<th align="left"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_description_{if $smarty.request.sort_mode eq 'cc_description_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Description{/tr}</a></th>
+<th align="left"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=owner_id_{if $smarty.request.sort_mode eq 'owner_id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Owner{/tr}</a></th>
+<th align="center"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=requires_approval_{if $smarty.request.sort_mode eq 'requires_approval_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Approval?{/tr}</a></th>
+<th align="center"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=listed_{if $smarty.request.sort_mode eq 'listed_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Listed?{/tr}</a></th>
+<th align="right"><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=population_{if $smarty.request.sort_mode eq 'population_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Population{/tr}</a></th>
 </tr>
 
 {cycle values="odd,even" print=false}
@@ -69,6 +70,7 @@ Register an existing unlisted currency
 <td>{$it.owner_id|userlink}</td>
 <td align=center>{$it.requires_approval}</td>
 <td align=center>{$it.listed}</td>
+<td align=center>{$it.population}</td>
 </tr>
 {foreachelse}
 <td colspan="7">No entry</td>

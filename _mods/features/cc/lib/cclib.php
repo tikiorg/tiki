@@ -105,31 +105,36 @@ class CcLib extends UsersLib {
 	}
 
 	function get_currencies($all=false,$offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false) {
-		$query = 'select * from `cc_cc`';
+		$query = 'select cc.*,count(*) as population from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
 		$query_cant = 'select count(*) from `cc_cc`';
 		$bindvars = $mid = array();
 		if ($find) {
-			$mid[] = "`cc_name`=?";
+			$mid[] = "cc.`cc_name`=?";
 			$bindvars[] = '%'. $find .'%';
 		}
 		if ($owner) {
-			$mid[] = "`owner_id`=?";
+			$mid[] = "cc.`owner_id`=?";
 			$bindvars[] = $owner;
 		}
 		if (!$all) {
-			$mid[] = "`listed`=?";
+			$mid[] = "cc.`listed`=?";
 			$bindvars[] = 'y';
 		}
-		$order = " order by ".$this->convert_sortmode($sort_mode);
-		if (count($mid)) {
-			$mid = " where ". implode(' and ',$mid);
+		$midc = $mid;
+		$bindvarsc = $bindvars;
+		$midc[] = "ccl.`approved`=?";
+		$bindvarsc[] = 'y';
+		$order = " group by cc_id order by ".$this->convert_sortmode($sort_mode);
+		if (count($midc)) {
+			$midc = " where ". implode(' and ',$midc);
 		} else {
-			$mid = '';
+			$midc = '';
 		}
-		$result = $this->query($query.$mid.$order,$bindvars,$max,$offset);	
+		$result = $this->query($query.$midc.$order,$bindvarsc,$max,$offset);	
 		$cant = $this->getOne($query_cant.$mid,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
+			// $res['population'] = $this->getOne("select count(*) from `cc_ledger` where `cc_id`=? and `approved`=?",array($res['id'],'y'));
 			$ret["{$res['id']}"] = $res;
 		}
 		$retval = array();
