@@ -1,3 +1,4 @@
+/* 11 February 2004 -- 508 Theme specially designed to be the first WAI-508 Compliant theme for Tikiwiki -- Designed & built by beerlounge.de & musus */ 
 
 body {
 	background-color: #FFFFFF;
@@ -87,7 +88,7 @@ span.off-option {
 }
 
 /* Modules (modules are those boxes in the left/right columns) */
-div.box {
+.box {
 	margin-left: 4px;
 	margin-right: 4px;
 	margin-top: 4px;
@@ -100,7 +101,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-.module-title {
+.box-title {
 	background-color: #222222;
 	border-bottom: 1px solid #000000;
 	color: #F4F800;
@@ -113,8 +114,8 @@ div.box {
 	width: 170px;
 }
 
-/* And this is the data */
-.module-content {
+/* data */
+.box-data {
 	color: #FFFFFF;
 	margin-left: 5px;
 	margin-right: 5px;
@@ -123,7 +124,7 @@ div.box {
 	width: 163px;
 }
 
-.module-title table {
+.box-title table {
 	width: 100%;
 	border: 0px 0px 0px 0px;
 	padding: 0px 0px 0px 0px;
@@ -131,7 +132,7 @@ div.box {
 }
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */
-TD.module {
+td.module {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	color: #FFFFFF;
@@ -141,7 +142,7 @@ TD.module {
 	margin: 0px 0px 0px 0px;
 }
 
-/* style for rss lists in modules or in wiki */
+/* rss lists in modules or in wiki */
 .rsslist {
 	background-color: #FFFFFF;
 	margin: 0px;
@@ -176,7 +177,7 @@ TD.module {
 }
 
 /* Now the boxes for the rest of Tiki (non-modules */
-div.cbox {
+.cbox {
 	margin-top: 4px;
 	margin-bottom: 0px;
 	border: 1px solid #FFDD11;
@@ -186,7 +187,7 @@ div.cbox {
 }
 
 /* Boxes are divided in title and content, this is the title */
-.tiki-title {
+.cbox-title {
 	background-color: #000000;
 	color: #FFFFFF;
 	border-bottom: 1px solid #FFDD11;
@@ -200,7 +201,7 @@ div.cbox {
 }
 
 /* the data */
-.tiki-content {
+.cbox-data {
 	background-color: #FFFFFF;
 	margin-left: 5px;
 	margin-right: 5px;
@@ -213,15 +214,15 @@ div.cbox {
 
 /* When there's a link in a tiki-title */
 a.flip, 
-a.tiki-title {
+a.cboxt-title {
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	color: #FFFFFF;
 	text-decoration: none;
 }
 
-.flip:hover a, 
-.tiki-title:hover a {
+a.flip:hover, 
+a.cboxt-title:hover {
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	color: #4E4E4E;
@@ -295,7 +296,7 @@ form {
 	background-color: transparent;
 }
 
-/* General form elements */
+/* form elements */
 file, textarea, select {
 	color: #000000;
 	font: normal 10px Verdana, Arial, Helvetica, sans-serif;
@@ -308,8 +309,6 @@ input {
 }
 
 /* General tables */
-
-
 /* Cells where nothing is specified */
 td {
 	color: #000000;
@@ -318,7 +317,7 @@ td {
 	vertical-align: top;
 }
 
-/* Cells in forms without background color (inside a div for example) */
+/* Cells in forms without background color */
 .form {
 	color: #000000;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -327,7 +326,13 @@ td {
 	text-align: left;
 }
 /* Cells in forms using a background color */
-.imageinfo, .formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
+.imageinfo, 
+.formcolor, 
+.galform, 
+.editblogform, 
+.editfgalform, 
+.comform, 
+.forumform {
 	color: #000000;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background-color: #FFFFFF;
@@ -337,7 +342,7 @@ td {
 	border: 0.5px solid #000000;
 }
 
-/* The table */
+/* tables */
 table.imageinfo, 
 table.listgallery, 
 table.creategalform, 
@@ -411,8 +416,15 @@ th.viewthread {
 	vertical-align: middle;
 }
 
-/* Links to view an object from a table listing objects can be generalized to this link */
-a.tablename, a.galname, a.imagename, a.jukeboxname, a.blogname, a.fgalname, a.artname, a.forumname {
+/* Links to view an object from a table listing objects */
+a.tablename, 
+a.galname, 
+a.imagename, 
+a.jukeboxname, 
+a.blogname, 
+a.fgalname, 
+a.artname, 
+a.forumname {
 	font-weight: bold;
 	font-size: 11px;
 	color: #000000;
@@ -474,7 +486,7 @@ a.forumnameread:hover {
 }
 
 /* When a find button is provided for a listing the table form is displayed in a table with the following style */
-.findtable {
+table.findtable {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	margin-bottom: 20px;
@@ -524,7 +536,7 @@ a.forumnameread:hover {
 }
 
 /* Titles */
-/* When the page title is a link this is the style */
+/* when the page title is a link */
 .imagetitle, .gallerytitle, .pagetitle, .forumspagetitle {
 	font-weight: bold;
 	font-size: 26px;
@@ -563,8 +575,16 @@ H3 {
 	color: #064973;
 }
 
-/* Links where no special link style apply (usually with the general application background) */
-.link, .gallink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink, .admlink, .forumbutlink {
+/* Links */
+.link, 
+.gallink, 
+.bloglink, 
+.fgallink, 
+.trailer, 
+.opencomlink, 
+.commentslink, 
+.admlink, 
+.forumbutlink {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	color: #222222;
@@ -572,7 +592,15 @@ H3 {
 	text-decoration: none;
 }
 
-.link:hover, .gallink:hover, .bloglink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover, .commentslink:hover, .admlink:hover, .forumbutlink:hover {
+.link:hover, 
+.gallink:hover, 
+.bloglink:hover, 
+.fgallink:hover, 
+.trailer:hover, 
+.opencomlink:hover, 
+.commentslink:hover, 
+.admlink:hover, 
+.forumbutlink:hover {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	background-color: #222222;
@@ -598,14 +626,26 @@ div.searchdate {
 }
 
 /* prev & next buttons in pagination */
-.prevnext, .galprevnext, .blogprevnext, .fgalprevnext, .artprevnext, .forumprevnext, .jukeboxprevnext {
+.prevnext, 
+.galprevnext, 
+.blogprevnext, 
+.fgalprevnext, 
+.artprevnext, 
+.forumprevnext, 
+.jukeboxprevnext {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 9px;
 	color: #000000;
 	text-decoration: none;
 }
 
-.prevnext:hover, .galprevnext:hover, .blogprevnext:hover, .fgalprevnext:hover, .artprevnext:hover, .jukeboxprevnext:hover, .forumprevnext:hover {
+.prevnext:hover, 
+.galprevnext:hover, 
+.blogprevnext:hover, 
+.fgalprevnext:hover, 
+.artprevnext:hover, 
+.jukeboxprevnext:hover, 
+.forumprevnext:hover {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 9px;
 	color: #4E4E4E;
@@ -617,7 +657,7 @@ div.searchdate {
 	color: #D40000;
 }
 
-/*********************************************** THE WIKI ***********************************************************/
+/*** THE WIKI ***/
 div.titlebar {
 	background-color: #044873;
 	color: #FFFFFF;
@@ -630,12 +670,12 @@ div.titlebar {
 	text-indent: 3pt;
 }
 
-/* The bar where the actions for a page are displayed */
-DIV#page-bar {
+/* bar where the actions for a page are displayed */
+div#page-bar {
 	margin-left: 5px;
 }
 
-/* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
+/* Wiki action buttons (edit, print, remove, etc) */
 .button2 {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
@@ -743,7 +783,7 @@ p.editdate {
 	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-/* The edit-help used to display the wiki syntax when editing a page */
+/* edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp {
 	background-color: #FFFFFF;
 	border: 1px solid #000000;
@@ -751,12 +791,11 @@ div.wiki-edithelp {
 	padding: 6pt;
 }
 
-/******************************************************* IMAGE GALLERIES **********************************************/
+/*** IMAGE GALLERIES ***/
 /* Container for the whole gallery */
-div.browsegallery {
-}
+div.browsegallery { }
 
-/* You can set a different background color for odd and even rows in the thumbnails table */
+/* background color for odd and even rows in the thumbnails table */
 /* Thumbnails in odd rows */
 .oddthumb {
 	background-color: #FFFFFF;
@@ -766,8 +805,6 @@ div.browsegallery {
 	background-color: #F5F5F5;
 }
 
-/* Gallery Title */
-/*div.gallerytitle {font-weight: bold; font-size: 26px; font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif; color: black;}*/
 div.adminoptions {
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -794,13 +831,12 @@ img.athumb {
 	border: 1px solid #C7C7C7;
 }
 
-/* No records found text (displayed in the table when no records */
-p.norecords {
+/* No records found text (displayed in the table when no records) */
+.norecords {
 	font-weight: bold;
 }
 
 /* Browsing an image */
-
 div.showimage {
 	text-align: center;
 	margin-top: 15px;
@@ -827,9 +863,8 @@ div.linksinfo {
 	margin-bottom: 10px;
 }
 
-/******************************************************* WEBLOGS **********************************************************/
-
-/* The header of a weblog post */
+/*** WEBLOGS ***/
+/* header of a weblog post */
 div.posthead {
 	background-color: #045D95;
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -844,7 +879,7 @@ div.posthead {
 	margin-bottom: 0px;
 }
 
-/* The font used in the heading of the weblog */
+/* font used in the heading of the weblog */
 span.posthead {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -868,7 +903,7 @@ span.posthead {
 	text-decoration: underline;
 }
 
-/* The post body */
+/* post body */
 div.postbody {
 	overflow: hidden;
 	background-color: #FFFFFF;
@@ -882,7 +917,7 @@ div.postbody {
 	margin-bottom: 10px;
 }
 
-/* The weblog title */
+/* weblog title */
 div.blogtitle {
 	background-color: #044873;
 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
@@ -896,7 +931,7 @@ div.blogtitle {
 	border-bottom: 0px;
 }
 
-/* The weblog information */
+/* weblog information */
 div.bloginfo {
 	background-color: #FFFFFF;
 	border: 1px solid #000000;
@@ -938,9 +973,8 @@ div.blogtools {
 	clear: both;
 }
 
-/****************************************************** CMS ***************************************************************/
-
-/* The article title bar */
+/*** CMS ***/
+/* article title bar */
 div.articletitle {
 	background-color: #044873;
 	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -955,7 +989,7 @@ div.articletitle {
 	margin-top: 5px;
 }
 
-/* The article heading */
+/* article heading */
 div.articleheading {
 	background-color: #FFFFFF;
 	border: 1px solid #000000;
@@ -987,7 +1021,7 @@ div.articleheadingtext {
 	display: inline;
 }
 
-/* The body */
+/* body */
 div.articlebody {
 	background-color: #FFFFFF;
 	border: 1px solid #000000;
@@ -1001,28 +1035,27 @@ div.articlebody {
 	clear: both;
 }
 
-/* The article title */
+/* article title */
 span.titlea {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 }
 
-/* The author, date and number of reads */
+/* author, date and number of reads */
 span.titleb {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 }
 
-/* The trailer */
+/* the trailer */
 span.trailer {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	font-weight: bold;
 }
 
-/******************************************************* CALENDAR **********************************************************/
-
+/*** CALENDAR ***/
 /* LINKS TO DAYS IN THE CALENDAR */
 .day {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -1090,9 +1123,8 @@ span.trailer {
 	font-weight: bold;
 }
 
-/*************************************************** COMMENTS **************************************************************/
-
-/* The whole comment area when it is visible and when it is not */
+/*** COMMENTS ***/
+/* comment area when it is visible and when it is not */
 #comzone {
 	display: none;
 	margin-left: 1px;
@@ -1190,7 +1222,7 @@ div.commenttext {
 	text-decoration: underline;
 }
 
-/************************************************************ CHAT *********************************************************/
+/*** CHAT ***/
 table.chatroom {
 	border-color: #403429;
 	border-style: solid;
@@ -1244,7 +1276,7 @@ span.chuser {
 	font-weight: bold;
 }
 
-/********************************************************** POLLS ********************************************************/
+/*** POLLS ***/
 div.pollresults {
 	border: 1px solid #000000;
 	margin-top: 5px;
@@ -1260,7 +1292,6 @@ td.pollr {
 }
 
 /*** FORUMS ***/
-
 /* Title for the forums page */
 table.threads {
 	width: 97%;
@@ -1458,14 +1489,16 @@ table.catobjects {
 	border-collapse: collapse;
 }
 
-td.categobjectsnameeven, td.categobjectsnameodd {
+td.categobjectsnameeven, 
+td.categobjectsnameodd {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	border: 1px solid #000000;
 	background-color: #C7C7C7;
 }
 
-td.categobjectsdataeven, td.categobjectsdataodd {
+td.categobjectsdataeven, 
+td.categobjectsdataodd {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	border: 1px solid #000000;
@@ -1487,7 +1520,7 @@ td.categobjectsdataeven, td.categobjectsdataodd {
 }
 
 /*** FAQS ***/
-/* The list of questions */
+/* list of questions */
 div.faqlistquestions {
 	background-color: #FFFFFF;
 	color: #000000;
@@ -1867,7 +1900,8 @@ a.caltabon:hover {
 	background-color: transparent;
 }
 
-div#tabcal, div#tabnav {
+div#tabcal, 
+div#tabnav {
 	margin-top: 10px;
 	margin-left: 30px;
 }
@@ -1878,7 +1912,8 @@ div#tab {
 	margin-bottom: 1px;
 }
 
-div.tabcal, div.tabnav {
+div.tabcal, 
+div.tabnav {
 	padding: 10px;
 	background-color: #FFFFFF;
 	border: 1px solid #666666;
@@ -2233,16 +2268,20 @@ div.tabrow {
 	width: auto;
 	padding: 1px; 
 }
+
 .opaque .box-title, .box-data {
 	width: auto;
 }
+
 .calcontent {
 	min-height: 60px;
 }
+
 .viewmodeon {
 	padding-left: 0px;
 	padding-right: 0px;
 }
+
 .viewmodeoff {
 	padding-left: 0px;
 	padding-right: 0px;
@@ -2262,10 +2301,7 @@ a.viewmodeoff img {
 	width: 100%;
 }
 
-/*
- * help zone
- */
-
+/* help zone */
 div#edithelpzone {
 	display: none;
 }
@@ -2285,10 +2321,8 @@ div#attzoneopen {
 	color: #000000;
 }
 
-/*
- * Caption in tables.
- * Currently in Attachments and comments only.
- */
+/* Caption in tables
+ * Currently in Attachments and comments only */
 caption {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -2330,55 +2364,57 @@ a.tikihelp:hover {
 }
 
 .catblock {
- border: 1px solid #aaaaaa;
+	border: 1px solid #aaaaaa;
 }
 
 .catlists {
- border-top: 1px solid #FFFFFF;
- padding: 1px 6px 1px 6px;
- background-color: none;
- color: #666666;
+	border-top: 1px solid #FFFFFF;
+	padding: 1px 6px 1px 6px;
+	background-color: none;
+	color: #666666;
 }
 
 .catlists:last-child {
- border-bottom: 1px solid #FFFFFF;
+	border-bottom: 1px solid #FFFFFF;
 }
 
 .catlists:hover {
- background-color: #dedede;
+	background-color: #dedede;
 }
 
 .cattitle {
- color: #000000;
- font-weight: bold;
+	color: #000000;
+	font-weight: bold;
 }
 
 .catlists a.link {
- color: #666666;
- padding: 0px 4px 0px 4px;
- border: 1px solid #aaaaaa;
- -moz-border-radius: 6px;
+	color: #666666;
+	padding: 0px 4px 0px 4px;
+	border: 1px solid #aaaaaa;
+	-moz-border-radius: 6px;
 }
 
 .catlists a.link:hover {
- color: #000000;
+	color: #000000;
 }
 
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
- display: none;
+	display: none;
 }
 
 /* JsCalendar wrapper */
 #datrigger {
- border: 2px outset #666666;
- padding: 1px 3px 1px 5px;
- margin: 2px;
- cursor: pointer;
- font-weight: bold;
+	border: 2px outset #666666;
+	padding: 1px 3px 1px 5px;
+	margin: 2px;
+	cursor: pointer;
+	font-weight: bold;
 }
 
-TABLE.admin { width: 100%; }
+TABLE.admin { 
+	width: 100%;
+}
 
 table.commentinfo { 
 	width: 100%; 
@@ -2386,91 +2422,89 @@ table.commentinfo {
 }
 
 div#loadstats {
- background-color: #222222;
- font-size: 80%;
- color: #FFFFFF;
- padding: 5px;
+	background-color: #222222;
+	font-size: 80%;
+	color: #FFFFFF;
+	padding: 5px;
 }
 
 /* phplayers style */
 .box-data table {
- width: 100%;
+	width: 100%;
 }
 
 .mdkverbar {
- margin: 0px;
+	margin: 0px;
 }
 
 .mdksubmenu {
- z-index: 999;
- position: absolute;
- left: 0;
- top: 0;
- background-color: #FFFFFF;
- visibility: hidden;
+	z-index: 999;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background-color: #FFFFFF;
+	visibility: hidden;
 }
 
 .mdksubmenu table {
- width: auto;
+	width: auto;
 }
 
 .mdksubframe {
- z-index: 1000;
- position: relative;
- display: block;
- border: 1px solid #000000;
+	z-index: 1000;
+	position: relative;
+	display: block;
+	border: 1px solid #000000;
 }
 
 .mdkitem {
- border-top: 1px solid #dedede;
- position: relative;
- text-align: left;
- white-space: nowrap;
+	border-top: 1px solid #dedede;
+	position: relative;
+	text-align: left;
+	white-space: nowrap;
 }
 
 .mdkitem a {
- padding: 2px 5px 2px 5px;
- position: relative;
- display: block;
+	padding: 2px 5px 2px 5px;
+	position: relative;
+	display: block;
 }
 
-.mdkitem a:visited {
-}
+.mdkitem a:visited { }
 
 .mdkitem a:hover {
- padding: 2px 5px 1px 5px;
+	padding: 2px 5px 1px 5px;
 }
 
 .mdkitem a:active {
- color: #993300;
+	color: #993300;
 }
 
 .mdkitem .mdkfwdarr {
- position: absolute;
- top: 5px;
- right: 12px;
+	position: absolute;
+	top: 5px;
+	right: 12px;
 }
 
-.toc {
-}
+.toc { }
 
 .toc li {
- margin-top: 3px;
+	margin-top: 3px;
 }
 
 .tocnav {
- background-color: #ededed;
- margin-bottom: 16px;
+	background-color: #ededed;
+	margin-bottom: 16px;
 }
 
 .tocnav table {
- width: 100%;
- background-color: #FFFFFF;
+	width: 100%;
+	background-color: #FFFFFF;
 }
 
 .tocnav a {
- font-size: 90%;
- color: #424242;
+	font-size: 90%;
+	color: #424242;
 }
 
 /* jscalendar */
@@ -2545,4 +2579,4 @@ a.removeTab{
 /* ASSORTED */
 #clear {
 	clear:both;
-	}
+}
