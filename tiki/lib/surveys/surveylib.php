@@ -71,9 +71,9 @@ class SurveyLib extends TikiLib {
 	}
 
 	function replace_survey_question($questionId, $question, $type, $surveyId, $position, $options) {
-		$question = addslashes($question);
+		//$question = addslashes($question);
 
-		$options = addslashes($options);
+		//$options = addslashes($options);
 
 		if ($questionId) {
 			$query = "update `tiki_survey_questions` set `type`=?, `position`=?, `question`=?, `options`=? where `questionId`=? and `surveyId`=?";
