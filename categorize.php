@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.11 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.12 2004-04-16 08:42:36 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,6 +20,10 @@ if ($feature_categories == 'y') {
 
 	if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
 		$smarty->assign('cat_categorize', 'y');
+	}
+	if (isset($_REQUEST['import']) and isset($_REQUEST['categories'])) {
+		$_REQUEST["cat_categories"] = split(',',$_REQUEST['categories']);
+		$_REQUEST["cat_categorize"] = 'on';
 	}
 
 	if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {

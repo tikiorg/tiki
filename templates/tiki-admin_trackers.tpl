@@ -210,6 +210,7 @@ showComments = {$showComments}
 useAttachments = {$useAttachments}
 showAttachments = {$showAttachments}
 attachmentsconf = {$ui.filename|default:0},{$ui.created|default:0},{$ui.downloads|default:0},{$ui.comment|default:0},{$ui.filesize|default:0},{$ui.version|default:0},{$ui.filetype|default:0},{$ui.longdesc|default:0} 
+categories = {$catsdump}
 {/if}
 </textarea><br />
 <input type="submit" name="save" value="{tr}Import{/tr}" />
