@@ -30,7 +30,7 @@ if (isset($_REQUEST['mapfile']))
 }
 
 //checking the mapfile
-if (preg_match("/(\/\.)/", $map_path.$mapfile))
+if (!is_file($map_path.$mapfile) || preg_match("/(\/\.)/", $map_path.$mapfile))
 {
   $smarty->assign('msg',tra("invalid mapfile name"));
   $smarty->display("error.tpl");
