@@ -1,9 +1,10 @@
 <a class="pagetitle" href="tiki-user_assigned_modules.php">{tr}User assigned modules{/tr}</a><br/><br/>
 [<a href="tiki-user_preferences.php" class="link">{tr}User Preferences{/tr}</a>
 {if $feature_user_bookmarks eq 'y'}|<a href="tiki-user_bookmarks.php" class="link">{tr}User Bookmarks{/tr}</a>{/if}
+|<a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a>
 {if $user_assigned_modules eq 'y'}|<a href="tiki-user_assigned_modules.php" class="link">{tr}Configure modules{/tr}</a>{/if}]<br/><br/>
 <a class="link" href="tiki-user_assigned_modules.php?recreate=1">{tr}Restore defaults{/tr}</a><br/><br/>
-<h2>User assigned modules</h2>
+<h2>{tr}User assigned modules{/tr}</h2>
 <table class="normal">
 <tr>
   <td class="heading">{tr}name{/tr}</td>
@@ -27,14 +28,14 @@
   <td class="even">{$modules[ix].position}</td>
   <td class="even">
   {if $modules[ix].name ne 'application_menu' and $modules[ix].name ne 'login_box'}
-  <a class="link" href="tiki-user_assigned_modules.php?unassign={$modules[ix].name}">unassign</a>
+  <a class="link" href="tiki-user_assigned_modules.php?unassign={$modules[ix].name}">{tr}unassign{/tr}</a>
   {/if}
-  <a class="link" href="tiki-user_assigned_modules.php?up={$modules[ix].name}">up</a>
-  <a class="link" href="tiki-user_assigned_modules.php?down={$modules[ix].name}">down</a>
+  <a class="link" href="tiki-user_assigned_modules.php?up={$modules[ix].name}">{tr}up{/tr}</a>
+  <a class="link" href="tiki-user_assigned_modules.php?down={$modules[ix].name}">{tr}down{/tr}</a>
   {if $modules[ix].position eq 'l'}
-  <a class="link" href="tiki-user_assigned_modules.php?right={$modules[ix].name}">move</a>
+  <a class="link" href="tiki-user_assigned_modules.php?right={$modules[ix].name}">{tr}move{/tr}</a>
   {else}
-  <a class="link" href="tiki-user_assigned_modules.php?left={$modules[ix].name}">move</a>
+  <a class="link" href="tiki-user_assigned_modules.php?left={$modules[ix].name}">{tr}move{/tr}</a>
   {/if}
   </td>
 </tr>
@@ -58,8 +59,8 @@
 <td class="formcolor">{tr}Column{/tr}:</td>
 <td class="formcolor">
 <select name="position">
-<option value="l">left</option>
-<option value="r">right</option>
+<option value="l">{tr}left{/tr}</option>
+<option value="r">{tr}right{/tr}</option>
 </select>
 </td>
 </tr>

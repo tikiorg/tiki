@@ -21,7 +21,7 @@
 </div>
 <div class="cbox-data">
 <div class="simplebox">
-<b>Pages</b>: 
+<b>{tr}Pages{/tr}</b>: 
 {section name=ix loop=$printpages}
 {$printpages[ix]}&nbsp;
 {/section}

@@ -5,7 +5,8 @@
 {if $user_assigned_modules eq 'y'}|<a href="tiki-user_assigned_modules.php" class="link">{tr}Configure modules{/tr}</a>{/if}]<br/><br/>
 <table width="100%">
 <tr>
-  <td valign="top" width="50%">
+  <!--The line below was <td valign="top" width="50%"> for no real reason-->
+  <td valign="top">
   <div class="cbox">
   <div class="cbox-title">{tr}User Information{/tr}</div>
   <div class="cbox-data">
@@ -73,7 +74,8 @@
   </div>
   </div>
   </td>
-  <td valign="top" width="50%">
+  <!--The line below was <td valign="top" width="50%"> for no real reason-->
+  <td valign="top">
   <!--
   <div class="cbox">
   <div class="cbox-title">{tr}Configure this page{/tr}</div>
@@ -116,7 +118,7 @@
   </div>
 <br/>
   <div class="cbox">
-  <div class="cbox-title">User Galleries</div>
+  <div class="cbox-title">{tr}User Galleries{/tr}</div>
   <div class="cbox-data">
   <table width="100%">
   {section name=ix loop=$user_galleries}
@@ -131,7 +133,7 @@
   </div>
 <br/>
   <div class="cbox">
-  <div class="cbox-title">Assigned items</div>
+  <div class="cbox-title">{tr}Assigned items{/tr}</div>
   <div class="cbox-data">
   <table width="100%">
   {section name=ix loop=$user_items}
