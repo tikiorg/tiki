@@ -2855,7 +2855,7 @@ Set optional paramater -+ln+- to 1 if you need line numbering feature." => "Toon
 "to be used as argument" => "moet als argument gebruikt worden",
 "Missing db param" => "Ontbrekende db param",
 "There is an error in the plugin data" => "Er is een fout in de plugin data",
-"Change your email" => "Change your email",
-"Edit this assigned module:" => "Edit this assigned module:",
+"Change your email" => "Wijzig je email",
+"Edit this assigned module:" => "Wijzig deze toegewezen module:",
 "##end###" => "###end###");
 ?>
