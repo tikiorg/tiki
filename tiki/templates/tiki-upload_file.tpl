@@ -44,7 +44,7 @@
 	{/if}
 	
 	{if count($uploads) > 0}
-		<h3>{tr}The following file was succesfully uploaded{/tr}:</h3><br/>
+		<h3>{tr}The following file was successfully uploaded{/tr}:</h3><br/>
 		{section name=ix loop=$uploads}
 			<div align="center">
 				{$uploads[ix].name} ({$uploads[ix].size|kbsize})<br/>

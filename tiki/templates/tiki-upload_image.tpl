@@ -30,8 +30,8 @@
 	{if $show eq 'y'}
 	<br/>
 	<hr>
-	<h2>{tr}Upload succesful!{/tr}</h2>
-	<h3>{tr}The following image was succesfully uploaded{/tr}:</h3>
+	<h2>{tr}Upload successful!{/tr}</h2>
+	<h3>{tr}The following image was successfully uploaded{/tr}:</h3>
 	<div align="center">
 	<img src="{$url_show}?id={$imageId}" /><br/>
 	<b>{tr}Thumbnail{/tr}:</b><br/>
