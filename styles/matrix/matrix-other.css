@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.css,v 1.8 2003-08-09 22:24:59 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.css,v 1.9 2003-10-14 22:49:11 zaufi Exp $
  *
  * Define styles for:
  *  Messages, RSS, Shoutbox
@@ -131,4 +131,8 @@ div.shoutboxmodmsg.linkmodule:visited {
 	color: #001000;
 	cursor: help;
 	text-decoration: none;
+}
+/* TikiIntegrator: By default copy rules dialog not shown */
+div#rules-copy-panel {
+    display: none;
 }

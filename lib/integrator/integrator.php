@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.3 2003-10-14 15:57:31 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.4 2003-10-14 22:49:11 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -17,16 +17,17 @@ class TikiIntegrator extends TikiLib
     /// Repository management
     //\{
     /// List all
-    function list_repositories()
+    function list_repositories($visible_only)
     {
-        $query = "select * from tiki_integrator_repositories order by 'name'";
+        $cond = ($visible_only == true) ? "where visibility='y'" : '';
+        $query = "select * from tiki_integrator_repositories ".$cond." order by 'name'";
         $result = $this->query($query);
         $ret = Array();
         while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) $ret[] = $res;
         return $ret;
     }
     /// Add/Update
-    function add_replace_repository($repID, $name, $path, $start, $css, $descr)
+    function add_replace_repository($repID, $name, $path, $start, $css, $vis, $descr)
     {
         $name  = addslashes($name);
         $path  = addslashes($path);
@@ -34,12 +35,13 @@ class TikiIntegrator extends TikiLib
         $css   = addslashes($css);
         $descr = addslashes($descr);
         if (strlen($repID) == 0 || $repID == 0)
-            $query = "insert into tiki_integrator_repositories(name,path,start_page,css_file,description)
-                      values('$name','$path','$start','$css','$descr')";
+            $query = "insert into tiki_integrator_repositories(name,path,start_page,css_file,visibility,description)
+                      values('$name','$path','$start','$css','$vis','$descr')";
         else
             $query = "update tiki_integrator_repositories 
                       set name='$name',path='$path',start_page='$start',
-                      css_file='$css',description='$descr' where repID='$repID'";
+                      css_file='$css',visibility='$vis',description='$descr'
+                      where repID='$repID'";
         $result = $this->query($query);
     }
     /// Get one entry by ID

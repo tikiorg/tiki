@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.2 2003-10-14 15:58:09 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.3 2003-10-14 22:49:10 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -131,7 +131,7 @@ $smarty->assign_by_ref('rules', $rules);
 $smarty->assign('repID', $repID);
 
 // Fill list of possible source repositories
-$allreps = $integrator->list_repositories();
+$allreps = $integrator->list_repositories(false);
 $reps = array();
 foreach($allreps as $rep) $reps[$rep["repID"]] = $rep["name"];
 $smarty->assign_by_ref('reps', $reps);

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-other.css,v 1.6 2003-10-06 22:48:29 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-other.css,v 1.7 2003-10-14 22:49:11 zaufi Exp $
  *
  * Define styles for:
  *  Messages, RSS, Shoutbox, Categories
@@ -119,4 +119,8 @@ div.imgaldescr {
 	background-color: InfoBackground;
 	border: 3px ridge WindowFrame;
 	padding: 5px;
+}
+/* TikiIntegrator: By default copy rules dialog not shown */
+div#rules-copy-panel {
+    display: none;
 }
