@@ -184,6 +184,14 @@ if($feature_theme_control == 'y') {
 	include('tiki-tc.php');
 }
 
+if($user 
+	&& $tiki_p_notepad == 'y' 
+	&& $feature_notepad == 'y' 
+	&& isset($_REQUEST['savenotepad'])) {
+  $post_info = $bloglib->get_post($_REQUEST['savenotepad']);	
+  $tikilib->replace_note($user,0,$post_info['title']?$post_info['title']:date("d/m/Y [h:i]",$post_info['created']),$post_info['data']);
+}
+
 
 // Display the template
 $smarty->assign('mid','tiki-view_blog.tpl');

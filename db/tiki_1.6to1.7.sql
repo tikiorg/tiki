@@ -1,3 +1,69 @@
+### New feature: charts ###
+drop table if exists tiki_charts;
+create table tiki_charts(
+  chartId integer(14) not null auto_increment,
+  title varchar(250),
+  description text,
+  singleItemVotes char(1),
+  singleChartVotes char(1),
+  suggestions char(1),
+  autoValidate char(1),
+  topN integer(6),
+  maxVoteValue integer(4),
+  frequency integer(14),
+  showAverage char(1),
+  isActive char(1),
+  showVotes char(1),
+  useCookies char(1),
+  lastChart integer(14),
+  voteAgainAfter integer(14),
+  created integer(14),
+  primary key(chartId)
+);
+
+drop table if exists tiki_chart_items;
+create table tiki_chart_items(
+  itemId integer(14) not null auto_increment,
+  title varchar(250),
+  description text,
+  chartId integer(14) not null,
+  created integer(14),
+  votes integer(14),
+  points integer(14),
+  average decimal(4,2),
+  primary key(itemId)
+);
+
+drop table if exists tiki_charts_rankings;
+create table tiki_charts_rankings(
+  chartId integer(14) not null,
+  itemId integer(14) not null,
+  position integer(14) not null,
+  lastPosition integer(14) not null,
+  period integer(14) not null,
+  primary key(chartId,itemId,period)
+);
+
+drop table if exists tiki_charts_chart_votes;
+create table tiki_charts_chart_votes(
+  user varchar(200) not null,
+  chartId integer(14) not null,
+  timestamp integer(14),
+  primary key(user,chartId)
+);
+
+drop table if exists tiki_charts_item_votes;
+create table tiki_charts_item_votes(
+  user varchar(200) not null,
+  itemId integer(14) not null,
+  timestamp integer(14),
+  chartId integer(14),
+  primary key(user,ItemId)  
+);
+
+### End of charts feature ###
+
+
 ### Modifications for blog improvements
 drop table if exists tiki_blog_posts_images;
 create table tiki_blog_posts_images(

@@ -38,12 +38,6 @@ if(!isset($_REQUEST['blogId'])&&!isset($_REQUEST['postId'])) {
   }
 }
 
-// Check if we are receiving a trackback ping
-
-// (a) Receive a trackback ping
-// Check for url
-// and title, excerpt,blog_name
-// add them to trackbacks_from
 
 
 
@@ -153,6 +147,14 @@ if($feature_theme_control == 'y') {
 	$cat_objid = $_REQUEST['blogId'];
 	include('tiki-tc.php');
 }
+
+if($user 
+	&& $tiki_p_notepad == 'y' 
+	&& $feature_notepad == 'y' 
+	&& isset($_REQUEST['savenotepad'])) {
+  $tikilib->replace_note($user,0,$post_info['title']?$post_info['title']:date("d/m/Y [h:i]",$post_info['created']),$post_info['data']);
+}
+
 
 // Display the template
 $smarty->assign('mid','tiki-view_blog_post.tpl');

@@ -331,8 +331,10 @@ $smarty->assign('feature_directory',$feature_directory);
 $feature_usermenu = 'n';
 $smarty->assign('feature_usermenu',$feature_usermenu);
 
+/*
 $feature_wiki_notepad = 'n';
 $smarty->assign('feature_wiki_notepad',$feature_wiki_notepad);
+*/
 
 $feature_minical = 'n';
 $smarty->assign('feature_minical',$feature_minical);
@@ -345,6 +347,8 @@ $feature_theme_control = 'n';
 $smarty->assign('feature_theme_control',$feature_theme_control);
 $feature_workflow = 'n';
 $smarty->assign('feature_workflow',$feature_workflow);
+$feature_charts = 'n';
+$smarty->assign('feature_charts',$feature_charts);
 $feature_phpopentracker = 'n';
 $smarty->assign('feature_phpopentracker',$feature_phpopentracker);
 

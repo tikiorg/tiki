@@ -891,7 +891,7 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_wiki_footnotes",'n');
     $smarty->assign("feature_wiki_footnotes",'n');
   }
-  
+/*  
   if(isset($_REQUEST["feature_wiki_notepad"]) && $_REQUEST["feature_wiki_notepad"]=="on") {
     $tikilib->set_preference("feature_wiki_notepad",'y'); 
     $smarty->assign("feature_wiki_notepad",'y');
@@ -899,7 +899,7 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_wiki_notepad",'n');
     $smarty->assign("feature_wiki_notepad",'n');
   }
-
+*/
   if(isset($_REQUEST["feature_wiki_usrlock"]) && $_REQUEST["feature_wiki_usrlock"]=="on") {
     $tikilib->set_preference("feature_wiki_usrlock",'y'); 
     $smarty->assign("feature_wiki_usrlock",'y');
@@ -1356,6 +1356,15 @@ if(isset($_REQUEST["features"])) {
     $tikilib->set_preference("feature_workflow",'n');
     $smarty->assign("feature_workflow",'n');
   }
+
+  if(isset($_REQUEST["feature_charts"]) && $_REQUEST["feature_charts"]=="on") {
+    $tikilib->set_preference("feature_charts",'y'); 
+    $smarty->assign("feature_charts",'y');
+  } else {
+    $tikilib->set_preference("feature_charts",'n');
+    $smarty->assign("feature_charts",'n');
+  }
+
 
   if(isset($_REQUEST["feature_phpopentracker"]) && $_REQUEST["feature_phpopentracker"]=="on") {
     $tikilib->set_preference("feature_phpopentracker",'y'); 

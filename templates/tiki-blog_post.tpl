@@ -1,5 +1,5 @@
 {popup_init src="lib/overlib.js"}
-<a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}">{tr}Edit Post{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a><br/><br/>
 {if $wysiwyg eq 'n'}
 		[<a class="link" href="{sameurl wysiwyg='y'}">{tr}Use wysiwyg editor{/tr}</a>]
 {else}
@@ -19,6 +19,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php">
 <input type="hidden" name="wysiwyg" value="{$wysiwyg}" />
 <input type="hidden" name="postId" value="{$postId}" />
+<input type="hidden" name="blogId" value="{$blogId}" />
 <table class="editblogform">
 <tr><td class="editblogform">{tr}Blog{/tr}</td><td class="editblogform">
 <select name="blogId">

@@ -41,7 +41,23 @@ if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'
 }
 
 
-
+if(isset($_REQUEST["merge"])) {
+  $merge = ''; $first=true;
+  foreach(array_keys($_REQUEST["note"]) as $note) {      	
+    $data_c = $notepadlib->get_note($user,$note);
+    $data = $data_c['data'];
+    if($first) {
+    	$first=false;
+    	$merge.="---------".tra('merged note:').$data_c['name']."----"."\n";
+    	$merge.=$data;
+    } else {
+     	$merge.="\n---------".tra('merged note:').$data_c['name']."----"."\n";
+     	$merge.=$data;
+    }
+  }
+  // Now create the merged note
+  $tikilib->replace_note($user,0,$_REQUEST['merge_name'],$merge);
+}
 
 if(isset($_REQUEST["delete"])) {
   foreach(array_keys($_REQUEST["note"]) as $note) {      	

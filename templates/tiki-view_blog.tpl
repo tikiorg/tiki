@@ -1,7 +1,24 @@
 {if strlen($heading) > 0}
 {eval var=$heading}
 {else}
-<br/>
+<div class="blogtitle">Blog: {$title}</div>
+<div class="bloginfo">
+{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br/>
+{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br/><br/>
+({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
+{if $tiki_p_blog_post eq "y"}
+{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
+[<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}">{tr}Post{/tr}</a>]
+{/if}
+{if $rss_blog eq "y"}
+[<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}">RSS</a>]
+{/if}
+{/if}
+{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}
+[<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit{/tr}</a>]
+{/if}
+</div>
+<div class="blogdesc">{tr}Description:{/tr}{$description}</div>
 {/if}
 {if $use_find eq 'y'}
 <div class="blogtools">
@@ -35,6 +52,9 @@
 {if ($ownsblog eq 'y') or ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}"><img border='0' src='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 <a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}"><img src='img/icons/trash.gif' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' /></a>
+{/if}
+{if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+<a title="{tr}Save to notepad{/tr}" href="{sameurl savenotepad=$listpages[ix].postId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 {/if}
 </td></tr></table>
 </div>
