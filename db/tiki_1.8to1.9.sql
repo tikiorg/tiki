@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.38 2004-04-10 18:36:27 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.39 2004-04-11 16:58:14 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -278,3 +278,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_sheet_history', 'Can view sheet history', 'admin', 'sheet');
 
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sheet','n');
+
+# added on 2004-04-11 by mose at dgd request
+ALTER TABLE `tiki_tracker_fields` CHANGE `name` `name` VARCHAR( 255 ) DEFAULT NULL ;

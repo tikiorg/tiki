@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.179 2004-04-10 18:36:27 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.180 2004-04-11 16:58:13 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2998,7 +2998,7 @@ DROP TABLE IF EXISTS tiki_tracker_fields;
 CREATE TABLE tiki_tracker_fields (
   fieldId int(12) NOT NULL auto_increment,
   trackerId int(12) NOT NULL default '0',
-  name varchar(80) default NULL,
+  name varchar(255) default NULL,
   options text,
   position int(4) default NULL,
   type char(1) default NULL,
