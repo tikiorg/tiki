@@ -30,7 +30,9 @@
 <td title="{$thelist[i].age|duration} ago">{$thelist[i].last_tr_date|date_format:"%d/%m"}</td>
 <td>{$thelist[i].acct_id|userlink}</td>
 {if !$ccid}
-<td><a href="cc.php?page=currencies&amp;cc_id={$thelist[i].cc_id|escape:'url'}&amp;view=1">{$thelist[i].cc_id}</a></td>
+<td><a href="cc.php?page=currencies&amp;cc_id={$thelist[i].cc_id|escape:'url'}&amp;view=1">
+<img src="img/cc/currency.png" width="9" height="10" border="0" alt="{tr}Examine{/tr}" />
+<b>{$thelist[i].cc_id}</b></a></td>
 {/if}
 <td align=right>{$thelist[i].balance}</td>
 <td align=right>{$thelist[i].tr_total}</td>

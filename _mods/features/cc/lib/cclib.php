@@ -114,7 +114,8 @@ class CcLib extends UsersLib {
 		$bindvars = $mid = array();
 		if ($reg) {
 			$query = "select *,count(*) as population from `cc_ledger` as ccl left join `cc_cc` as cc on ccl.`cc_id`=cc.`id` left join `cc_ledger` as cclc on cc.`id`=cclc.`cc_id` ";
-			$query.= " where ccl.`acct_id`=? group by cclc.`cc_id` order by ".$this->convert_sortmode($sort_mode);
+			$query.= " where ccl.`acct_id`=? group by cclc.`cc_id` order by ";
+			$query.= $this->convert_sortmode($sort_mode);
 			$query_cant = "select count(*) from `cc_ledger` as ccl  where ccl.`acct_id`=?";
 			$bindvars[] = $reg;
 			$result = $this->query($query.$order,$bindvars,$max,$offset);	
@@ -138,7 +139,8 @@ class CcLib extends UsersLib {
 				$mid[] = "ccl.`approved`=?";
 				$bindvars[] = 'y';
 			}
-			$order = " group by cc_id order by ".$this->convert_sortmode($sort_mode);
+			$order = " group by cc_id order by ";
+			$order.= $this->convert_sortmode($sort_mode);
 			if (count($mid)) {
 				$mid = " where ". implode(' and ',$mid);
 			} else {
@@ -149,7 +151,6 @@ class CcLib extends UsersLib {
 		}
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			// $res['population'] = $this->getOne("select count(*) from `cc_ledger` where `cc_id`=? and `approved`=?",array($res['id'],'y'));
 			$ret["{$res['id']}"] = $res;
 		}
 		$retval = array();
