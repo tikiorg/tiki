@@ -192,6 +192,9 @@
   <a class='separator' href="tiki-directory_browse.php">{tr}Directory{/tr}</a>
   </div>
   <div id='dirmenu' style="{$mnu_dirmenu}">
+  {if $tiki_p_submit_link eq 'y'}
+  &nbsp;<a href="tiki-directory_add_site.php" class="linkmenu">{tr}Submit a new link{/tr}</a><br/>
+  {/if}
   {if $tiki_p_view_directory eq 'y'}
   &nbsp;<a href="tiki-directory_browse.php" class="linkmenu">{tr}Browse Directory{/tr}</a><br/>
   {/if}
