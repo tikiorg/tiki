@@ -56,8 +56,8 @@ public class Node extends Vertex {
 		x = length();
 		z = length();
 		setBounds();
-		
-		System.out.println("Creating " + name);
+
+		//System.out.println("Creating " + name);
 		nodesFromName.put(name, this);
 
 	}
@@ -269,74 +269,60 @@ public class Node extends Vertex {
 	}
 
 	public void paint(Graphics g) {
-		if (visible()) {
-			Graphics2D graphic = (Graphics2D) g;
 
-			double zc = Z - ZC;
-			double scale;
-			if (Math.abs(zc) > 1)
-				scale = Math.abs(FOV * 1 / zc);
-			else
-				scale = 1;
-			scale *= 2;
+		Graphics2D graphic = (Graphics2D) g;
 
-			if (scale > 1)
-				scale = 1;
-			if (scale < 0.1)
-				scale = 0.1;
+		double zc = Z - ZC;
+		double scale;
+		if (Math.abs(zc) > 1)
+			scale = Math.abs(FOV * 1 / zc);
+		else
+			scale = 1;
+		scale *= 2;
 
-			g.setColor(Config.graphstringcolor);
-			Set linkSet = links.keySet();
+		if (scale > 1)
+			scale = 1;
+		if (scale < 0.1)
+			scale = 0.1;
 
-			for (Iterator it = linkSet.iterator(); it.hasNext();) {
-				Node neighbour = fromString((String) it.next());
-				if (neighbour != null && neighbour.visible()) {
-					g.drawLine(u, v, neighbour.u, neighbour.v);
-				}
+		g.setColor(Config.graphstringcolor);
+		Set linkSet = links.keySet();
+
+		for (Iterator it = linkSet.iterator(); it.hasNext();) {
+			Node neighbour = fromString((String) it.next());
+			if (neighbour != null) {
+				g.drawLine(u, v, neighbour.u, neighbour.v);
 			}
-
-			AffineTransform at = graphic.getTransform();
-
-			AlphaComposite al2 = (AlphaComposite) graphic.getComposite();
-
-			AlphaComposite al =
-				AlphaComposite.getInstance(
-					AlphaComposite.SRC_OVER,
-					(float) (scale));
-
-			graphic.setComposite(al);
-
-			Color cl = graphic.getColor();
-
-			Stroke s = graphic.getStroke();
-
-			at.setToScale(scale, scale);
-
-			graphic.setColor(Config.linkballcolor);
-			graphic.setComposite(al);
-			graphic.fillOval(U, V, relativeBallSize, relativeBallSize);
-			AffineTransform at2 = new AffineTransform();
-			at2.setToScale(scale, scale);
-			FontRenderContext frc = new FontRenderContext(at2, true, true);			
-			
-			TextLayout l =
-				new TextLayout(
-					(new AttributedString(name))
-						.getIterator(),
-					frc);
-			l.draw(graphic, U, V);
-			graphic.setComposite(al2);
 		}
-	}
 
-	/**
-	 * @return
-	 */
-	public boolean visible() {
-		return true
-			|| isCentered
-			|| (distanceFromCenter >= 0
-				&& distanceFromCenter <= Config.navigationDepth);
+		AffineTransform at = graphic.getTransform();
+
+		AlphaComposite al2 = (AlphaComposite) graphic.getComposite();
+
+		AlphaComposite al =
+			AlphaComposite.getInstance(
+				AlphaComposite.SRC_OVER,
+				(float) (scale));
+
+		graphic.setComposite(al);
+
+		Color cl = graphic.getColor();
+
+		Stroke s = graphic.getStroke();
+
+		at.setToScale(scale, scale);
+
+		graphic.setColor(Config.linkballcolor);
+		graphic.setComposite(al);
+		graphic.fillOval(U, V, relativeBallSize, relativeBallSize);
+		AffineTransform at2 = new AffineTransform();
+		at2.setToScale(scale, scale);
+		FontRenderContext frc = new FontRenderContext(at2, true, true);
+
+		TextLayout l =
+			new TextLayout((new AttributedString(name)).getIterator(), frc);
+		l.draw(graphic, U, V);
+		graphic.setComposite(al2);
 	}
 
 	public void remove() {

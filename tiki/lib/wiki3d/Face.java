@@ -1,58 +1,46 @@
 package wiki3d;
 import java.awt.*;
 public class Face {
-	ObjectVertex v1;
+	Vertex v1;
 	Color c1 = Config.colorface1;
 	Color c2 = Config.colorface2;
-	ObjectVertex v2;
-	ObjectVertex v3;
-	ObjectVertex v4;
-	public Face(int i) {
-		v1 = new ObjectVertex(-i, 0, i);
-		v2 = new ObjectVertex(i, 0, i);
-		v3 = new ObjectVertex(i, 0, -i);
-		v4 = new ObjectVertex(-i, 0, -i);
-
-	}
-
-	public void setOrigin(int x, int y, int z) {
-		v1.setOrigin(x, y, z);
-		v2.setOrigin(x, y, z);
-		v3.setOrigin(x, y, z);
-		v4.setOrigin(x, y, z);
+	Vertex v2;
+	Vertex v3;
+	Vertex v4;
+	public Face() {
+		int i = Config.facesize;
+		v1 = new Vertex(-i, 0, i);
+		v2 = new Vertex(i, 0, i);
+		v3 = new Vertex(i, 0, -i);
+		v4 = new Vertex(-i, 0, -i);
 
 	}
 
 	public void transform(Matrix3D amat) {
-		ObjectVertex.mat.unit();
-		ObjectVertex.mat.mult(amat);
-		ObjectVertex.mat.translate(
-			ObjectVertex.origin.x,
-			ObjectVertex.origin.y,
-			ObjectVertex.origin.z);
+		Vertex.mat.unit();
+		Vertex.mat.mult(amat);
+		Vertex.mat.translate(
+			Vertex.origin.x,
+			Vertex.origin.y,
+			Vertex.origin.z);
+		
 		v1.transform();
 		v1.proj();
-		//v2.mat.unit();
-		//v2.mat.mult(amat);
-		//v2.mat.translate(v2.origin.x,v2.origin.y,v2.origin.z);
+
 		v2.transform();
 		v2.proj();
-		//v3.mat.unit();
-		//v3.mat.mult(amat);
-		//v3.mat.translate(v3.origin.x,v3.origin.y,v3.origin.z);
+
 		v3.transform();
 		v3.proj();
-		//v4.mat.unit();
-		//v4.mat.mult(amat);
-		//v4.mat.translate(v4.origin.x,v4.origin.y,v4.origin.z);
+
 		v4.transform();
 		v4.proj();
 	}
 	public void paint(Graphics g) {
-		int a1 = v1.X - ObjectVertex.origin.x;
-		int b1 = v1.Y - ObjectVertex.origin.y;
-		int a2 = v2.X - ObjectVertex.origin.x;
-		int b2 = v2.Y - ObjectVertex.origin.y;
+		int a1 = v1.X - Vertex.origin.x;
+		int b1 = v1.Y - Vertex.origin.y;
+		int a2 = v2.X - Vertex.origin.x;
+		int b2 = v2.Y - Vertex.origin.y;
 		int z = a1 * b2 - a2 * b1;
 
 		Polygon p = new Polygon();
@@ -65,9 +53,6 @@ public class Face {
 		else
 			g.setColor(c2);
 		g.fillPolygon(p);
-
-	}
-	public void translate(int x, int y, int z) {
 
 	}
 

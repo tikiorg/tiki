@@ -4,7 +4,13 @@ import java.awt.*;
 
 public class Graph extends Vector {
 	Node focus;
+	public Matrix3D transformationMatrix, rotationMatrix;
+	public Face face;
+	
 	public Graph() {
+		transformationMatrix = new Matrix3D();
+		rotationMatrix = new Matrix3D();
+		face = new Face();
 	}
 
 	//checks whether any of the vertex in the collection contains the
@@ -15,7 +21,7 @@ public class Graph extends Vector {
 
 		while (i < size()) {
 			if (((Node) elementAt(i)).contains(x, y)) {
-				focus = ((Node) elementAt(i));				
+				focus = ((Node) elementAt(i));
 				return true;
 			}
 			i++;
@@ -40,10 +46,8 @@ public class Graph extends Vector {
 		// of the vertex in the collection.
 		while (e.hasMoreElements()) {
 			Node node = (Node) e.nextElement();
-			if (node.visible()) {
-				ps[i] = new Pos(node.Z, i);
-				i++;				
-			}
+			ps[i] = new Pos(node.Z, i);
+			i++;
 
 		}
 		count = i;
@@ -66,26 +70,23 @@ public class Graph extends Vector {
 
 		}
 
-		//
-
 		for (i = 0; i < count; i++) {
 			try {
 				((Node) elementAt(ps[i].pos)).paint(g);
 			} catch (Exception ex) {
 			}
 		}
-		//System.out.println("\n "+z[0]+ " "+ z[1]+" "+z[2]);
 
 	}
 
-	public void transform(Matrix3D amat) {
+	public void transform() {
 		//transforming each of the vertex in coll.
 		//first prepare the transformation matrix which is common and then
 		// operate
 		//on each points.
 
 		Node.mat.unit();
-		Node.mat.mult(amat);
+		Node.mat.mult(rotationMatrix);
 		Node.mat.translate(Node.origin.x, Node.origin.y, Node.origin.z);
 
 		Enumeration e = elements();
@@ -96,19 +97,47 @@ public class Graph extends Vector {
 			cc.proj();
 
 		}
+		
+		face.transform(rotationMatrix);
 
 	}
 
 	public void removeNode(Node node) {
 		for (int i = 0; i < size(); i++) {
 			if (this.elementAt(i) == node) {
-				this.remove(i);				
+				this.remove(i);
 			}
 		}
 		if (focus == node) {
 			focus = null;
 		}
 		node.remove();
+	}
+
+	public void rotate(double xtheta, double ytheta) {
+		if (xtheta > Config.thetamax)
+			xtheta = Config.thetamax;
+		else if (xtheta < -Config.thetamax)
+			xtheta = -Config.thetamax;
+		else if (xtheta > 0 && xtheta < Config.thetamin)
+			xtheta = Config.thetamin;
+		else if (xtheta < 0 && xtheta > -Config.thetamin)
+			xtheta = -Config.thetamin;
+
+		if (ytheta > Config.thetamax)
+			ytheta = Config.thetamax;
+		else if (ytheta < -Config.thetamax)
+			ytheta = -Config.thetamax;
+		else if (ytheta > 0 && ytheta < Config.thetamin)
+			ytheta = Config.thetamin;
+		else if (ytheta < 0 && ytheta > Config.thetamin)
+			ytheta = -Config.thetamin;
+
+		transformationMatrix.unit();
+		transformationMatrix.xrot(-xtheta);
+		transformationMatrix.yrot(-ytheta);
+
+		rotationMatrix.mult(transformationMatrix);
 	}
 
 }

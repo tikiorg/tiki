@@ -11,14 +11,9 @@ static Color graphcolor=new Color(255,255,0);
 static Color graphstringcolor =new Color(10,10,10);
 
 static Color linkballcolor=new Color(255,0,0);//The link node color
-static Color actionbannercolor=new Color(0,100,100);//Background of the action text
-static Color actiontextcolor=new Color(255,255,255);//color of action label
-static int actionbannerwidth=50;//width of the action label
 static int  ballsize=30; //size of the nodes
 static int randomlength=500;//random number to calculate length of the nodes 
 static int  lengthmedian=250; //this is substracted from above to give symmetry
-static int zshift=0;//the child nodes are not in the same zplane as parent the displacement is given by this no.
-
 static int originx=200;//origin of the graph
 static int originy=200;//
 static int originz=0;//
@@ -43,17 +38,13 @@ static int ymin=-800;
 static int zmin=-1000;
 static float thetamax=20.0f;
 static float thetamin=1.0f;
-static float scalex = -3f;
+static float scalex = 3f;
 static float scaley = 3f;
-static int xstep=1;//elasticity of the nodes
-static int ystep=1;//also determines the precision upto which the point retraces
-static int zstep=1;
 
-static int balanceSpeedFactor=1;
 
 static int nodeDistance = 200;
 public static int minimumBallSize = 2;
-public static float maxSpeed = 30;
+public static float maxSpeed = 50;
 public static int navigationDepth = 1;
 
 
