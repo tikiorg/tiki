@@ -1,8 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment_edit_preview.tpl,v 1.3 2004-02-06 20:37:01 ggeller Exp $ *}
-{* tiki-hw_teacher_assignment_edit_preview.tpl *}
-{* Adapted from tiki-preview_article.tpl *}
-{* January 16, 2004 *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment_edit_preview.tpl,v 1.4 2004-02-22 17:07:28 ggeller Exp $ *}
 {* George G. Geller *}
+
+<!-- tiki-hw_teacher_assignment_edit_preview.tpl start -->
 
 <h2>{tr}Preview{/tr}: {$page}</h2>
 <div class="article">
@@ -61,3 +60,5 @@ GGG *}
 {$parsed_body}
 </div>
 </div>
+
+<!-- tiki-hw_teacher_assignment_edit_preview.tpl end -->
