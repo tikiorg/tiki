@@ -71,13 +71,15 @@
         </td>
       </tr><tr><td colspan=2><hr></td></tr><tr>
         <td class="form">{tr}Language{/tr}:</td>
-        <td><select name="language">
-            {section name=ix loop=$languages}
-              <option value="{$languages[ix]|escape}"
-                {if $language eq $languages[ix]}selected="selected"{/if}>
-                {$languages[ix]}</option>
-            {/section}
-            </select>
+        <td>
+        <select name="language">
+        {section name=ix loop=$languages}
+        <option value="{$languages[ix].value|escape}"
+          {if $language eq $languages[ix].value}selected="selected"{/if}>
+          {$languages[ix].name}
+        </option>
+        {/section}
+        </select>
         </td>
       </tr><tr>
         <td class="form">{tr}Use database for translation{/tr}:</td>

@@ -312,7 +312,10 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 <tr><td class="formcolor">{tr}Language{/tr}</td><td class="formcolor">
 <select name="lang">
 {section name=ix loop=$languages}
-<option value="{$languages[ix]|escape}" {if $lang eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
+<option value="{$languages[ix].value|escape}"
+  {if $lang eq $languages[ix].value}selected="selected"{/if}>
+  {$languages[ix].name}
+</option>
 {/section}
 </select>
 {if $lang}<span class="mini">( {$lang} )</span>{/if}
