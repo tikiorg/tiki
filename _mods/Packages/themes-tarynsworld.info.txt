@@ -1,0 +1,27 @@
+contributor:
+$Author: damosoft $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-10-25 13:33:45 $
+
+files: 
+styles/tarynsworld.css styles/tarynsworld.css
+styles/tarynsworld/001.gif styles/tarynsworld/001.gif
+
+author:
+damosoft
+
+licence:
+GNU/LGPL
+
+url:
+http://taryn.parkersworld.org
+
+Description: 
+This is the theme in action of TarynsWorld
+
+Changelog:
+1 initial package
