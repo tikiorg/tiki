@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.11 2003-08-16 00:13:41 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.12 2003-10-27 14:18:26 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.11 2003-08-16 00:13:41 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.12 2003-10-27 14:18:26 mose Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -88,11 +88,12 @@ if (!isset($_REQUEST["thumb"])) {
 
 $type = $imagegallib->filetype;
 header ("Content-type: $type");
+header ("Content-length: ".$imagegallib->filesize);
 header ("Content-Disposition: inline; filename=" . $imagegallib->filename);
 //if($data["path"]) {
 //  readfile($gal_use_dir.$data["path"].$ter);
 //} else {
-echo "$imagegallib->image";
+echo $imagegallib->image;
 //}
 // ????? echo $data;
 
