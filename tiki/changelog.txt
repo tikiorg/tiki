@@ -7,6 +7,7 @@ Version 1.5 -TBA-
 * [NEW] Tiki can now be run on any Web server port.
 * [NEW] HTTPS protocol is now supported. Tiki can now run over HTTPS connections.
 * [NEW] BiDi support. Added support for BiDi languages. 
+  Added BiDi.css file to control BiDi directionality and layout.
 * [NEW] Added ~ns~ ~/ns~ syntax to the Wiki to make page sections unparsed. Can be used to put HTML code or
   anything that you want as-is without wiki syntax being parsed.
 * [NEW] Fulltext searching added (optional). By enabling this feature, results will be sorted by the relevance of the
