@@ -18,7 +18,7 @@ static int  lengthmedian=250; //this is substracted from above to give symmetry
 static int originx=200;//origin of the graph
 static int originy=200;//
 static int originz=0;//
-static int faceoriginx=400,faceoriginy=400,camposz=500;//origin of navigator and z position of the viewer .
+static int faceoriginx=400,faceoriginy=400,faceoriginz=700;//origin of navigator and z position of the viewer .
 static int facesize=30;//size of the navigator
 
 static int fieldOfView=200;//field of view
@@ -26,6 +26,7 @@ static int faceadjust=50;//to adjust the position of the navigator box
 static int controlwidth=100;//width of the navigator box
 static int windowwidth=600;//
 static int gearing=1;//ratio movement of the navigator to the graph to slow down with increase
+static int textsize = 40;
 static int windowheight=500;
 static int viewheight=500;//heght of view port including navigator
 static int viewwidth=500;//width of view port
@@ -44,10 +45,11 @@ static float scaley = 3f;
 
 
 static int nodeDistance = 200;
-public static int minimumBallSize = 2;
+public static int minimumBallSize = 1;
 public static float maxSpeed = 50;
 public static int navigationDepth = 2;
 public static int throwDragTime = 500;
+public static Color ballBorderColor = new Color(0,0,0);
 
 
 
