@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_users.php,v 1.6 2003-10-17 12:03:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-chat_users.php,v 1.7 2003-11-26 22:40:44 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-chat_users.php,v 1.6 2003-10-17 12:03:18 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-chat_users.php,v 1.7 2003-11-26 22:40:44 dheltzel Exp $
 require_once ("tiki-setup.php");
 
 include_once ('lib/chat/chatlib.php');
@@ -46,7 +46,7 @@ include_once ('lib/chat/chatlib.php');
 
 						</tr>
 
-			<?
+			<?php
 
 						}
 			}
