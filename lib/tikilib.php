@@ -5264,6 +5264,32 @@ class TikiLib extends TikiDB {
 							return $back;
 						    }
 
+    function httpScheme() {
+	return 'http' . ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '');
+    }
+
+    function httpPrefix() {
+	/*
+	   if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
+	   $rv = 'https://' . $_SERVER['HTTP_HOST'];
+
+	   if ($_SERVER['SERVER_PORT'] != 443)
+	   $rv .= ':' . $_SERVER['SERVER_PORT'];
+	   } else {
+	   $rv = 'http://' . $_SERVER['HTTP_HOST'];
+
+	   if ($_SERVER['SERVER_PORT'] != 80)
+	   $rv .= ':' . $_SERVER['SERVER_PORT'];
+	   }
+
+	   return $rv;
+	 */
+	/* Warning by zaufi: as far as I saw in my apache 1.3.27
+	 * there is no need to add port if it is non default --
+	 * $_SERVER['HTTP_HOST'] already contain it ...
+	 */
+	return 'http'.((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
+    }
     } 
 
     // end of class ------------------------------------------------------
@@ -5333,32 +5359,6 @@ class TikiLib extends TikiDB {
 	return $_SESSION['havegd2'];
     }
 
-    function httpScheme() {
-	return 'http' . ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '');
-    }
-
-    function httpPrefix() {
-	/*
-	   if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
-	   $rv = 'https://' . $_SERVER['HTTP_HOST'];
-
-	   if ($_SERVER['SERVER_PORT'] != 443)
-	   $rv .= ':' . $_SERVER['SERVER_PORT'];
-	   } else {
-	   $rv = 'http://' . $_SERVER['HTTP_HOST'];
-
-	   if ($_SERVER['SERVER_PORT'] != 80)
-	   $rv .= ':' . $_SERVER['SERVER_PORT'];
-	   }
-
-	   return $rv;
-	 */
-	/* Warning by zaufi: as far as I saw in my apache 1.3.27
-	 * there is no need to add port if it is non default --
-	 * $_SERVER['HTTP_HOST'] already contain it ...
-	 */
-	return 'http'.((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
-    }
 
     function detect_browser_language() {
 
