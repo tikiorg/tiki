@@ -6,6 +6,11 @@ folder of your TikiWiki installation.
 
 Then in wiki syntax type {EBAY(search=>keywords to find)/}
 
+Current Issues:
+* Currently only works with ebay.co.uk
+  (sorry if your not in the uk :p)
+
+
 Enjoy
 
 Damian Parker
