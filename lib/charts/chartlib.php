@@ -65,6 +65,7 @@ class ChartLib extends TikiLib {
       } else {
       	$res['voted']='n';
       }
+      $res['perm'] = $this->getOne("select count(*) from tiki_charts_rankings where itemId=".$res['itemId']);
       $ret[]=$res;
     }
     return $ret;
@@ -128,6 +129,30 @@ class ChartLib extends TikiLib {
     $query = "select * from tiki_chart_items where itemId='$itemId'";
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $period = $this->get_last_period($res['chartId']);
+    if($period) {
+	    // Permanency
+	    $res['perm']=$this->getOne("select count(*) from tiki_charts_rankings where itemId=$itemId");
+	    // Current position
+		$res['position']= $this->getOne("select position from tiki_charts_rankings where itemId=$itemId and period=$period");   
+	    // Last position
+	    $res['lastPosition']= $this->getOne("select lastPosition from tiki_charts_rankings where itemId=$itemId and period=$period");   
+	    // Best position
+	    $res['best']= $this->getOne("select min(position) from tiki_charts_rankings where itemId=$itemId");   
+	    if($res['lastPosition'] != 0) {
+      		$res['dif']=$res['position']-$res['position'];
+      		if($res['dif']==0) $res['dif']='-';
+      	} else {
+      		$res['dif']='new';
+      	}	    
+	    // Dif
+	} else {
+		$res['perm']=0;
+		$res['position']=0;
+		$res['lastPosition']=0;
+		$res['best']=0;
+		$res['dif']=0;
+	}
     return $res;	
   }
 
@@ -269,6 +294,10 @@ class ChartLib extends TikiLib {
     $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res['items'] = $this->getOne('select count(*) from tiki_chart_items where chartId='.$res['chartId']);
+      $query2="select distinct(period) from tiki_charts_rankings where chartId=".$res['chartId'];
+      $result2=$this->query($query2);
+      $res['periods']=$result2->numRows();
       $ret[] = $res;
     }
     $retval = Array();

@@ -125,6 +125,9 @@
 <tr>
 <td width="7%" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'title_desc'}{sameurl sort_mode="title_asc"}{else}{sameurl sort_mode="title_desc"}{/if}">{tr}Title{/tr}</a></td>
+<td width="7%" style="text-align:right;" class="heading" >{tr}Items{/tr}</td>
+<td width="7%" style="text-align:right;" class="heading" >{tr}Ranks{/tr}</td>
+<td width="5%" class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
@@ -134,9 +137,17 @@
 	</td>
 	<td class="{cycle advance=false}">
 		<a class="link" href="{sameurl chartId=$items[ix].chartId}">{$items[ix].title}</a>
-		[<a class="link" href="tiki-admin_chart_items.php?chartId={$items[ix].chartId}">{tr}items{/tr}</a>]
-		[<a class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}">{tr}view{/tr}</a>]
 	</td>
+	<td style="text-align:right;" class="{cycle advance=false}">
+		<a class="link" href="tiki-admin_chart_items.php?chartId={$items[ix].chartId}">{$items[ix].items}</a>
+	</td>
+	<td style="text-align:right;" class="{cycle advance=false}">
+		{$items[ix].periods}
+	</td>
+	<td style="text-align:right;" class="{cycle}">
+		<a class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="img/icons/ico_table" border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
+	</td>
+
 </tr>
 {sectionelse}
 <tr>
