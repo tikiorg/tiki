@@ -30,7 +30,7 @@
 {if $user}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('mymenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('mymenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('mymenu');">[-]</a>{/if} 
   <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki (click!){/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('mymenu');">[+]</a>{/if} 
@@ -79,7 +79,7 @@
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('wfmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('wfmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('wfmenu');">[-]</a>{/if} 
   <a href="tiki-g-user_processes.php" class="separator">{tr}Workflow{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('wfmenu');">[+]</a>{/if}
@@ -99,7 +99,7 @@
 {if $feature_wiki eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('wikimenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('wikimenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('wikimenu');">[-]</a>{/if}
   <a class='separator' href='tiki-index.php'>{tr}Wiki{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('wikimenu');">[+]</a>{/if}
@@ -141,7 +141,7 @@
 {if $feature_galleries eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('galmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('galmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('galmenu');">[-]</a>{/if} 
   <a class='separator' href="tiki-galleries.php">{tr}Image Gals{/tr}</a> 
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('galmenu');">[+]</a>{/if}
@@ -165,7 +165,7 @@
 {if $feature_articles eq 'y' or $feature_submissions eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('cmsmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('cmsmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('cmsmenu');">[-]</a>{/if}
   <a class='separator' href='tiki-view_articles.php'>{tr}Articles{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('cmsmenu');">[+]</a>{/if}
@@ -204,7 +204,7 @@
 {if $feature_blogs eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('blogmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('blogmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('blogmenu');">[-]</a>{/if}
   <a class='separator' href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('blogmenu');">[+]</a>{/if}
@@ -231,7 +231,7 @@
 {if $feature_forums eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('formenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('formenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('formenu');">[-]</a>{/if} 
   <a class='separator' href="tiki-forums.php">{tr}Forums{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('formenu');">[+]</a>{/if}
@@ -252,7 +252,7 @@
 {if $feature_directory eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('dirmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('dirmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('dirmenu');">[-]</a>{/if} 
   <a class='separator' href="tiki-directory_browse.php">{tr}Directory{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('dirmenu');">[+]</a>{/if}
@@ -270,7 +270,7 @@
 {if $feature_file_galleries eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('filegalmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('filegalmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('filegalmenu');">[-]</a>{/if} 
   <a class='separator' href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('filegalmenu');">[+]</a>{/if}
@@ -291,7 +291,7 @@
 {if $feature_faqs eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('faqsmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('faqsmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('faqsmenu');">[-]</a>{/if} 
   <a href="tiki-list_faqs.php" class="separator">{tr}FAQs{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('faqsmenu');">[+]</a>{/if}
@@ -309,7 +309,7 @@
 {if $feature_quizzes eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('quizmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('quizmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('quizmenu');">[-]</a>{/if} 
   <a href="tiki-list_quizzes.php" class="separator">{tr}Quizzes{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('quizmenu');">[+]</a>{/if}
@@ -328,7 +328,7 @@
 {if $feature_trackers eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('trkmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('trkmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('trkmenu');">[-]</a>{/if} 
   <a href="tiki-list_trackers.php" class="separator">{tr}Trackers{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('trkmenu');">[+]</a>{/if}
@@ -344,7 +344,7 @@
 {if $feature_surveys eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('srvmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('srvmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('srvmenu');">[-]</a>{/if} 
   <a href="tiki-list_surveys.php" class="separator">{tr}Surveys{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('srvmenu');">[+]</a>{/if}
@@ -363,7 +363,7 @@
 {if $feature_newsletters eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('nlmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('nlmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('nlmenu');">[-]</a>{/if} 
   <a href="tiki-newsletters.php" class="separator">{tr}Newsletters{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('nlmenu');">[+]</a>{/if}
@@ -380,7 +380,7 @@
 {if $feature_eph eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('ephmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('ephmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('ephmenu');">[-]</a>{/if} 
   <a href="tiki-eph.php" class="separator">{tr}Ephemerides{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('ephmenu');">[+]</a>{/if}
@@ -396,7 +396,7 @@
 {if $feature_charts eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('chartmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('chartmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('chartmenu');">[-]</a>{/if} 
   <a href="tiki-charts.php" class="separator">{tr}Charts{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('chartmenu');">[+]</a>{/if}
@@ -428,7 +428,7 @@
  
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('admmnu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('admmnu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('admmnu');">[-]</a>{/if}
   {if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if}
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('admmnu');">[+]</a>{/if}
@@ -507,7 +507,7 @@
 {if $feature_usermenu eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class='separator' href="javascript:toggle('usrmenu');"><img src="img/icons/folderin.gif" border="0">&nbsp;</a>
+  <a class='separator' href="javascript:toggle('usrmenu');"><img src="img/icons/fo.gif" border="0">&nbsp;</a>
   {else}<a class='separator' href="javascript:toggle('usrmenu');">[-]</a>{/if} 
   <a href="tiki-usermenu.php" class="separator">{tr}User Menu{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('usrmenu');">[+]</a>{/if}

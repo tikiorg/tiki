@@ -577,7 +577,6 @@ $smarty->assign('trl','');
 
 $smarty->assign('userbreadCrumb',$userbreadCrumb);
 $smarty->assign('feature_polls',$feature_polls);
-$smarty->assign('feature_menusfolderstyle',$feature_menusfolderstyle);
 $smarty->assign('feature_quizzes',$feature_quizzes);
 $smarty->assign('feature_chat',$feature_chat);
 $smarty->assign('rss_articles',$rss_articles);
@@ -646,6 +645,7 @@ $smarty->assign('feature_blog_rankings',$feature_blog_rankings);
 $smarty->assign('feature_gal_rankings',$feature_gal_rankings);
 $smarty->assign('feature_wiki_rankings',$feature_wiki_rankings);
 $smarty->assign('feature_wiki_undo',$feature_wiki_undo);
+$smarty->assign('feature_menusfolderstyle',$feature_menusfolderstyle);
 
 $smarty->assign('feature_wiki_templates',$feature_wiki_templates);
 $smarty->assign('feature_cms_templates',$feature_cms_templates);

@@ -2259,5 +2259,6 @@ in Admin-Allgemein abgestellt haben.
 "Custom message to the user" => "Spezielle Nachricht f&uuml;r den Benutzer",
 "Rules" => "Regeln",
 "User/IP" => "Benutzername/IP",
+"Display menus as folders" => "Men&uuml;s als Ordner darstellen",
 "##end###" => "###end###");
 ?>
