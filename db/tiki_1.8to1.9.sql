@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.33 2004-03-10 13:49:13 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.34 2004-03-24 13:46:45 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -248,4 +248,6 @@ ALTER TABLE `users_groups` ADD `usersFieldId` INT( 11 ), ADD `groupFieldId` INT(
 ALTER TABLE `tiki_tracker_fields` ADD `isMandatory` varchar ( 1 ) DEFAULT 'n' NOT NULL ;
 UPDATE `tiki_tracker_fields` set `isMandatory`='y' where `isMandatory`='';
 
+# added on 2004-03-24 by mose for fixing an error in perm label
+UPDATE `users_permissions` set `permDesc`='Can view trackers closed items' where `permName`='tiki_p_view_trackers_closed';
 
