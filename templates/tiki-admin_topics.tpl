@@ -1,16 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.17 2003-12-10 23:08:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.18 2004-02-05 20:00:09 damosoft Exp $ *}
 
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 <!-- the help link info -->
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Topics{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
 
 <!-- link to tpl -->
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_topics.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin topics tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_topics.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin topics template{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
 <!-- beginning of next bit -->
 <br /><br />

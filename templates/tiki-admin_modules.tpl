@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.25 2004-01-30 08:49:21 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.26 2004-02-05 20:00:08 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 <!-- the help link info -->
@@ -10,8 +10,8 @@
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin modules tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin modules template{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
 <!-- begin -->
 

@@ -3,13 +3,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Polls" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin polls{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin polls tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin polls template{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
 <!-- begin -->
 
@@ -69,7 +69,7 @@
 <td class="odd">{$channels[user].publishDate|tiki_short_datetime}</td>
 <td class="odd">{$channels[user].options}</td>
 <td class="odd">
-   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}delete{/tr}</a>
    <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pollId={$channels[user].pollId}">{tr}edit{/tr}</a>
    <a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">{tr}options{/tr}</a>
 </td>
@@ -83,7 +83,7 @@
 <td class="even">{$channels[user].publishDate|tiki_short_datetime}</td>
 <td class="even">{$channels[user].options}</td>
 <td class="even">
-   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}">{tr}delete{/tr}</a>
    <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pollId={$channels[user].pollId}">{tr}edit{/tr}</a>
    <a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}">{tr}options{/tr}</a>
 </td>
