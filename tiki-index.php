@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.95 2004-05-28 13:12:44 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.96 2004-06-04 11:51:37 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,7 +24,9 @@ if(!isset($_SESSION["thedate"])) {
 } else {
     $thedate = $_SESSION["thedate"];
 }
-
+if (isset($_REQUEST["page_id"])) {
+	$_REQUEST["page"] = $tikilib->get_page_name_from_id($_REQUEST["page_id"]);
+}
 if (!isset($_REQUEST["page"])) {
     $_REQUEST["page"] = $wikiHomePage;
     if(!$tikilib->page_exists($wikiHomePage)) {
