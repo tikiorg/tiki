@@ -26,16 +26,16 @@ function _translate_lang($key) {
    else {
     global $tikilib;
     $content = $key[2];
-    $query="select tran from tiki_language where source='".addslashes($content)."' and lang='".$language."'";
-    $result=$tikilib->db->query($query);
+    $query="select `tran` from `tiki_language` where `source`=? and `lang`=?";
+    $result=$tikilib->query($query,array($content,$language));
+    if(!$result) { return $content; }
     $res=$result->fetchRow();
-    if(!$res) { return $content; }
     if(!isset($res["tran"])) {
       global $record_untranslated;
       if ($record_untranslated=='y') {
-        $query="insert into tiki_untranslated (source,lang) values('".addslashes($content)."','".$language."')";
+        $query="insert into `tiki_untranslated` (`source`,`lang`) values(?,?)";
         //No eror checking here
-        $tikilib->db->query($query);
+        $tikilib->query($query,array($content,$language),-1,-1,false);
       }
       return $key[1].$content."{/tr}";
     }
