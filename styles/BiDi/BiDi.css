@@ -3,15 +3,18 @@
 /* GENERAL LAYOUT EXPLANATION
  *
  * BiDi layout modifications relay on the fact that the Tiki application is 
- * enclosed as a whole in tiki-main. Thus is mirrors the entire output by
- * setting the directionality property of this DIV element. Other modifications
- * include overriding all left text-alignments and turning them into right
- * text-alignments.
+ * enclosed as a whole in tiki-main or tiki-clean. Thus it mirrors the entire
+ * output by setting the directionality property of this DIV element.
+ * Other modifications include overriding all left text-alignments and
+ * turning them into right text-alignments.
  *
  */
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main { direction: rtl ! important }
+
+/* This div encloses the "clean" Tiki screens */
+DIV#tiki-clean { direction: rtl ! important }
 
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */
