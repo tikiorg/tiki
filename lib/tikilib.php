@@ -896,8 +896,8 @@ class TikiLib extends TikiDB {
 	    $query = "delete from `tiki_users_score` where `user`=? and `event_id`=?";
 	    $this->query($query, array($user, $event_id));
 
-	    $query = "insert into `tiki_users_score` (`user`, `event_id`, `score`, `expire`) values (?, ?, ?, ?)"; 
-	    $this->query($query, array($user, $event_id, $score, time() + ($expire*60)));
+	    $query = "insert into `tiki_users_score` (`user`, `event_id`, `expire`) values (?, ?, ?)"; 
+	    $this->query($query, array($user, $event_id, time() + ($expire*60)));
 	}
 
 	$query = "update `users_users` set `score` = `score` + ? where `login`=?";
