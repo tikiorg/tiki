@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.14 2003-11-10 14:50:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.15 2003-11-12 00:32:25 zaufi Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit Repository:{/tr} {$name}</h2>
@@ -51,6 +51,9 @@
         </a>
       {/if}
     </td>
+  </tr><tr>
+    <td class="formcolor"><span title="{tr}Seconds count 'till cached page will be expired{/tr}">{tr}Cache expiraion{/tr}</td>
+    <td class="formcolor"><input type="text" maxlength="14" size="14" name="expiration" value="{$expiration|escape}" title="{tr}Seconds count 'till cached page will be expired{/tr}" /></td>
   </tr><tr>
     <td class="formcolor"><span title="{tr}Human readable text description of repository{/tr}">{tr}Description{/tr}</td>
     <td class="formcolor"><textarea name="description" rows="4" title="{tr}Human readable text description of repository{/tr}">{$description|escape}</textarea></td>

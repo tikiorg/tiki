@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.17 2003-11-11 21:53:09 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.18 2003-11-12 00:32:25 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -8,12 +8,14 @@
 
 require_once('tiki-setup.php');
 require_once('lib/integrator/integrator.php');
-if ($feature_integrator != 'y') {
+
+// If Integrator is ON, check permissions...
+if ($feature_integrator != 'y')
+{
 	$smarty->assign('msg', tra("This feature is disabled").": feature_integrator");
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
 }
-// Check permissions
 if (($tiki_p_admin_integrator != 'y') && ($tiki_p_admin != 'y'))
 {
     $smarty->assign('msg', tra("You dont have permission to use this feature"));

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.12 2003-11-10 05:00:42 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.13 2003-11-12 00:32:25 zaufi Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -60,7 +60,7 @@
 <table class="normal">
   <tr>
     <td class="formcolor"><span title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}">{tr}Rule order{/tr}</span></td>
-    <td class="formcolor"><input type="text" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}" />
+    <td class="formcolor"><input type="text" maxlength="2" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}" />
     </td>
   </tr><tr>
     <td class="formcolor"><span title="{tr}Text to search for{/tr}">{tr}Search{/tr}</span></td>
@@ -81,7 +81,7 @@
   </tr><tr>
     <td class="formcolor">{tr}<span title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}">Regex modifiers{/tr}</span></td>
     <td class="formcolor">
-      <input type="text" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}" />
+      <input type="text" maxlength="20" size="20" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}" />
     </td>
   </tr><tr>
     <td class="formcolor"><span title="{tr}Human readable text description of rule{/tr}">{tr}Description{/tr}</td>
