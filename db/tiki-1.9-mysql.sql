@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.16 2004-03-24 13:46:45 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.17 2004-04-03 08:00:06 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -270,7 +270,10 @@ CREATE TABLE tiki_actionlog (
 DROP TABLE IF EXISTS tiki_articles;
 CREATE TABLE tiki_articles (
   articleId int(8) NOT NULL auto_increment,
+  topline varchar(255) default NULL,
   title varchar(80) default NULL,
+  subtitle varchar(255) default NULL,
+  linkto varchar(255) default NULL,
   state char(1) default 's',
   authorName varchar(60) default NULL,
   topicId int(14) default NULL,
@@ -278,6 +281,7 @@ CREATE TABLE tiki_articles (
   size int(12) default NULL,
   useImage char(1) default NULL,
   image_name varchar(80) default NULL,
+  image_caption text default NULL,
   image_type varchar(80) default NULL,
   image_size int(14) default NULL,
   image_x int(4) default NULL,
@@ -1848,6 +1852,7 @@ CREATE TABLE tiki_mailin_accounts (
   useAuth char(1) default NULL,
   smtpPort int(4) default NULL,
   anonymous char(1) NOT NULL default 'y',
+  attachments char(1) NOT NULL default 'n',
   PRIMARY KEY  (accountId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -2773,13 +2778,17 @@ CREATE TABLE tiki_structures (
 DROP TABLE IF EXISTS tiki_submissions;
 CREATE TABLE tiki_submissions (
   subId int(8) NOT NULL auto_increment,
+  topline varchar(255) default NULL,
   title varchar(80) default NULL,
+  subtitle varchar(255) default NULL,
+  linkto varchar(255) default NULL,
   authorName varchar(60) default NULL,
   topicId int(14) default NULL,
   topicName varchar(40) default NULL,
   size int(12) default NULL,
   useImage char(1) default NULL,
   image_name varchar(80) default NULL,
+  image_caption text default NULL,
   image_type varchar(80) default NULL,
   image_size int(14) default NULL,
   image_x int(4) default NULL,
@@ -4011,6 +4020,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_warn_on_edit','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_webmail','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_allowhtml','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_attachments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_description','n');

@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.13 2004-03-24 13:46:45 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.14 2004-04-03 08:00:08 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -356,7 +356,10 @@ go
 
 CREATE TABLE "tiki_articles" (
 articleId numeric(8 ,0) identity,
+  "topline" varchar(255) default NULL NULL,
   "title" varchar(80) default NULL NULL,
+  "subtitle" varchar(255) default NULL NULL,
+  "linkto" varchar(255) default NULL NULL,
   "state" char(1) default 's',
   "authorName" varchar(60) default NULL NULL,
   "topicId" numeric(14,0) default NULL NULL,
@@ -364,6 +367,7 @@ articleId numeric(8 ,0) identity,
   "size" numeric(12,0) default NULL NULL,
   "useImage" char(1) default NULL NULL,
   "image_name" varchar(80) default NULL NULL,
+  "image_caption" text default NULL NULL,
   "image_type" varchar(80) default NULL NULL,
   "image_size" numeric(14,0) default NULL NULL,
   "image_x" numeric(4,0) default NULL NULL,
@@ -2492,6 +2496,7 @@ accountId numeric(12 ,0) identity,
   "useAuth" char(1) default NULL NULL,
   "smtpPort" numeric(4,0) default NULL NULL,
   "anonymous" char(1) default 'y' NOT NULL,
+  "attachments" char(1) default 'n' NOT NULL,
   PRIMARY KEY ("accountId")
 )   
 go
@@ -4155,13 +4160,17 @@ go
 
 CREATE TABLE "tiki_submissions" (
 subId numeric(8 ,0) identity,
+  "topline" varchar(255) default NULL NULL,
   "title" varchar(80) default NULL NULL,
+  "subtitle" varchar(255) default NULL NULL,
+  "linkto" varchar(255) default NULL NULL,
   "authorName" varchar(60) default NULL NULL,
   "topicId" numeric(14,0) default NULL NULL,
   "topicName" varchar(40) default NULL NULL,
   "size" numeric(12,0) default NULL NULL,
   "useImage" char(1) default NULL NULL,
   "image_name" varchar(80) default NULL NULL,
+  "image_caption" text default NULL NULL,
   "image_type" varchar(80) default NULL NULL,
   "image_size" numeric(14,0) default NULL NULL,
   "image_x" numeric(4,0) default NULL NULL,
@@ -6660,6 +6669,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml','n')
 go
 
 

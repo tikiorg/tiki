@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.34 2004-03-24 13:46:45 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.35 2004-04-03 08:00:09 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -250,4 +250,14 @@ UPDATE `tiki_tracker_fields` set `isMandatory`='y' where `isMandatory`='';
 
 # added on 2004-03-24 by mose for fixing an error in perm label
 UPDATE `users_permissions` set `permDesc`='Can view trackers closed items' where `permName`='tiki_p_view_trackers_closed';
+
+# added on 2004-04-02 by mose : more fields for articles and submissions
+ALTER TABLE `tiki_articles` ADD `topline` VARCHAR( 255 ) AFTER `articleId` ;
+ALTER TABLE `tiki_articles` ADD `subtitle` VARCHAR( 255 ) AFTER `title` ;
+ALTER TABLE `tiki_articles` ADD `linkto` VARCHAR( 255 ) AFTER `subtitle` ;
+ALTER TABLE `tiki_articles` ADD `image_caption` TEXT AFTER `image_name` ;
+ALTER TABLE `tiki_submissions` ADD `topline` VARCHAR( 255 ) AFTER `subId` ;
+ALTER TABLE `tiki_submissions` ADD `subtitle` VARCHAR( 255 ) AFTER `title` ;
+ALTER TABLE `tiki_submissions` ADD `linkto` VARCHAR( 255 ) AFTER `subtitle` ;
+ALTER TABLE `tiki_submissions` ADD `image_caption` TEXT AFTER `image_name` ;
 
