@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.72 2004-02-26 06:30:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.73 2004-03-03 07:31:04 florianlink Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,17 +15,17 @@ include_once ('lib/notifications/notificationlib.php');
 
 
 if ($feature_wiki != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
+  $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
-	$smarty->display("error.tpl");
-	die;
+  $smarty->display("error.tpl");
+  die;
 }
 
 if ($tiki_p_view != 'y') {
-	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
+  $smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
-	$smarty->display("error.tpl");
-	die;
+  $smarty->display("error.tpl");
+  die;
 }
 
 // Get the page from the request var or default it to HomePage
@@ -34,120 +34,120 @@ if(!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
   $smarty->display("error.tpl");
   die;
 } else {
-	$page = $_REQUEST["page"];
+  $page = $_REQUEST["page"];
 
-	$smarty->assign_by_ref('page', $_REQUEST["page"]);
+  $smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 if (isset($_REQUEST["page_ref_id"])) {
-	$page_ref_id = $_REQUEST["page_ref_id"];
+  $page_ref_id = $_REQUEST["page_ref_id"];
 } else {
-	$page_ref_id = '';
+  $page_ref_id = '';
 }
 $smarty->assign('page_ref_id',$page_ref_id);
 
 function compare_import_versions($a1, $a2) {
-	return $a1["version"] - $a2["version"];
+  return $a1["version"] - $a2["version"];
 }
 
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-	check_ticket('edit-page');
-	require ("lib/webmail/mimeDecode.php");
+  check_ticket('edit-page');
+  require ("lib/webmail/mimeDecode.php");
 
-	$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-	$data = '';
+  $fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+  $data = '';
 
-	while (!feof($fp)) {
-		$data .= fread($fp, 8192 * 16);
-	}
+  while (!feof($fp)) {
+    $data .= fread($fp, 8192 * 16);
+  }
 
-	fclose ($fp);
-	$name = $_FILES['userfile1']['name'];
-	$params = array(
-		'input' => $data,
-		'crlf' => "\r\n",
-		'include_bodies' => TRUE,
-		'decode_headers' => TRUE,
-		'decode_bodies' => TRUE
-	);
+  fclose ($fp);
+  $name = $_FILES['userfile1']['name'];
+  $params = array(
+    'input' => $data,
+    'crlf' => "\r\n",
+    'include_bodies' => TRUE,
+    'decode_headers' => TRUE,
+    'decode_bodies' => TRUE
+  );
 
-	$output = Mail_mimeDecode::decode($params);
-	unset ($parts);
-	parse_output($output, $parts, 0);
-	$last_part = '';
-	$last_part_ver = 0;
-	usort($parts, 'compare_import_versions');
+  $output = Mail_mimeDecode::decode($params);
+  unset ($parts);
+  parse_output($output, $parts, 0);
+  $last_part = '';
+  $last_part_ver = 0;
+  usort($parts, 'compare_import_versions');
 
-	foreach ($parts as $part) {
-		if ($part["version"] > $last_part_ver) {
-			$last_part_ver = $part["version"];
+  foreach ($parts as $part) {
+    if ($part["version"] > $last_part_ver) {
+      $last_part_ver = $part["version"];
 
-			$last_part = $part["body"];
-		}
+      $last_part = $part["body"];
+    }
 
-		if (isset($part["pagename"])) {
-			$pagename = urldecode($part["pagename"]);
+    if (isset($part["pagename"])) {
+      $pagename = urldecode($part["pagename"]);
 
-			$version = urldecode($part["version"]);
-			$author = urldecode($part["author"]);
-			$lastmodified = $part["lastmodified"];
+      $version = urldecode($part["version"]);
+      $author = urldecode($part["author"]);
+      $lastmodified = $part["lastmodified"];
 
-			if (isset($part["description"])) {
-				$description = $part["description"];
-			} else {
-				$description = '';
-			}
+      if (isset($part["description"])) {
+        $description = $part["description"];
+      } else {
+        $description = '';
+      }
 
-			$authorid = urldecode($part["author_id"]);
+      $authorid = urldecode($part["author_id"]);
 
-			if (isset($part["hits"]))
-				$hits = urldecode($part["hits"]);
-			else
-				$hits = 0;
+      if (isset($part["hits"]))
+        $hits = urldecode($part["hits"]);
+      else
+        $hits = 0;
 
-			$ex = substr($part["body"], 0, 25);
-			//print(strlen($part["body"]));
-			$msg = '';
+      $ex = substr($part["body"], 0, 25);
+      //print(strlen($part["body"]));
+      $msg = '';
 
-			if (isset($_REQUEST["save"])) {
-				if ($tikilib->page_exists($pagename)) {
-					$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description);
-				} else {
-					$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author,
-						$authorid, $description);
-				}
-			} else {
-				$_REQUEST["edit"] = $last_part;
-			}
-		}
-	}
+      if (isset($_REQUEST["save"])) {
+        if ($tikilib->page_exists($pagename)) {
+          $tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description);
+        } else {
+          $tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author,
+            $authorid, $description);
+        }
+      } else {
+        $_REQUEST["edit"] = $last_part;
+      }
+    }
+  }
 
-	if (isset($_REQUEST["save"])) {
-		unset ($_REQUEST["save"]);
-		if ($page_ref_id) {
-			header ("location: tiki-index.php?page_ref_id=$page_ref_id");
-		} else {
-			header ("location: tiki-index.php?page=$page");
-		}
-		die;
-	}
+  if (isset($_REQUEST["save"])) {
+    unset ($_REQUEST["save"]);
+    if ($page_ref_id) {
+      header ("location: tiki-index.php?page_ref_id=$page_ref_id");
+    } else {
+      header ("location: tiki-index.php?page=$page");
+    }
+    die;
+  }
 }
 
 // Upload pictures here
 if (($feature_wiki_pictures_new == 'y') && (isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) {
-	if (isset($_FILES['picfile1']) && is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
-		$picname = $_FILES['picfile1']['name'];
+  if (isset($_FILES['picfile1']) && is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
+    $picname = $_FILES['picfile1']['name'];
 
-		move_uploaded_file($_FILES['picfile1']['tmp_name'], "img/wiki_up/$tikidomain" . $picname);
-		//is done in js... $_REQUEST["edit"] = $_REQUEST["edit"] . "{img src=\"img/wiki_up/$tikidomain$picname\"}";
-	}
-} else 
+    move_uploaded_file($_FILES['picfile1']['tmp_name'], "img/wiki_up/$tikidomain" . $picname);
+    //is done in js... $_REQUEST["edit"] = $_REQUEST["edit"] . "{img src=\"img/wiki_up/$tikidomain$picname\"}";
+  }
+} else
 if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) {
-	if (isset($_FILES['picfile1']) && is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
-		$picname = $_FILES['picfile1']['name'];
+  if (isset($_FILES['picfile1']) && is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
+    $picname = $_FILES['picfile1']['name'];
 
-		move_uploaded_file($_FILES['picfile1']['tmp_name'], "img/wiki_up/$tikidomain" . $picname);
-		$_REQUEST["edit"] = $_REQUEST["edit"] . "{picture file=img/wiki_up/$tikidomain$picname}";
-	}
+    move_uploaded_file($_FILES['picfile1']['tmp_name'], "img/wiki_up/$tikidomain" . $picname);
+    $_REQUEST["edit"] = $_REQUEST["edit"] . "{picture file=img/wiki_up/$tikidomain$picname}";
+  }
 }
 /**
  * \brief Parsed HTML tree walker (used by HTML sucker)
@@ -326,25 +326,25 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
 }
 //
 if(strcasecmp(substr($page,0,8),"UserPage")==0) {
-	$name = substr($page,8);
-	if(strcasecmp($user,$name)!=0) {
-		if($tiki_p_admin != 'y') {
- 			$smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
- 			$smarty->display("error.tpl");
- 			die;
- 		}
- 	}
+  $name = substr($page,8);
+  if(strcasecmp($user,$name)!=0) {
+    if($tiki_p_admin != 'y') {
+      $smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
+      $smarty->display("error.tpl");
+      die;
+    }
+  }
 }
 
 if ($_REQUEST["page"] == 'SandBox' && $feature_sandbox != 'y') {
-	$smarty->assign('msg', tra("The SandBox is disabled"));
+  $smarty->assign('msg', tra("The SandBox is disabled"));
 
-	$smarty->display("error.tpl");
-	die;
+  $smarty->display("error.tpl");
+  die;
 }
 
 if (!isset($_REQUEST["comment"])) {
-	$_REQUEST["comment"] = '';
+  $_REQUEST["comment"] = '';
 }
 
 /*
@@ -358,12 +358,12 @@ include_once ("tiki-pagesetup.php");
 
 // Now check permissions to access this page
 if ($page != 'SandBox') {
-	if ($tiki_p_edit != 'y') {
-		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+  if ($tiki_p_edit != 'y') {
+    $smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 
-		$smarty->display("error.tpl");
-		die;
-	}
+    $smarty->display("error.tpl");
+    die;
+  }
 }
 
 // Get page data
@@ -374,39 +374,39 @@ if(isset($info['wiki_cache'])) {
 }
 
 if ($info["flag"] == 'L') {
-	$smarty->assign('msg', tra("Cannot edit page because it is locked"));
+  $smarty->assign('msg', tra("Cannot edit page because it is locked"));
 
-	$smarty->display("error.tpl");
-	die;
+  $smarty->display("error.tpl");
+  die;
 }
 
 if ($page != 'SandBox') {
-	// Permissions
-	// if this page has at least one permission then we apply individual group/page permissions
-	// if not then generic permissions apply
-	if ($tiki_p_admin != 'y') {
-		if ($userlib->object_has_one_permission($page, 'wiki page')) {
-			if (!$userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_edit')) {
-				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+  // Permissions
+  // if this page has at least one permission then we apply individual group/page permissions
+  // if not then generic permissions apply
+  if ($tiki_p_admin != 'y') {
+    if ($userlib->object_has_one_permission($page, 'wiki page')) {
+      if (!$userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_edit')) {
+        $smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 
-				$smarty->display("error.tpl");
-				die;
-			}
-		} else {
-			if ($tiki_p_edit != 'y') {
-				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+        $smarty->display("error.tpl");
+        die;
+      }
+    } else {
+      if ($tiki_p_edit != 'y') {
+        $smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 
-				$smarty->display("error.tpl");
-				die;
-			}
-		}
-	}
+        $smarty->display("error.tpl");
+        die;
+      }
+    }
+  }
 }
 
 if ($tiki_p_admin != 'y') {
-	if ($tiki_p_use_HTML != 'y') {
-		$_REQUEST["allowhtml"] = 'off';
-	}
+  if ($tiki_p_use_HTML != 'y') {
+    $_REQUEST["allowhtml"] = 'off';
+  }
 }
 
 //$smarty->assign('allowhtml','y');
@@ -427,85 +427,85 @@ $smarty->assign('footnote', '');
 $smarty->assign('has_footnote', 'n');
 
 if ($feature_wiki_footnotes == 'y') {
-	if ($user) {
-		$x = $wikilib->get_footnote($user, $page);
+  if ($user) {
+    $x = $wikilib->get_footnote($user, $page);
 
-		$footnote = $wikilib->get_footnote($user, $page);
-		$smarty->assign('footnote', $footnote);
+    $footnote = $wikilib->get_footnote($user, $page);
+    $smarty->assign('footnote', $footnote);
 
-		if ($footnote)
-			$smarty->assign('has_footnote', 'y');
+    if ($footnote)
+      $smarty->assign('has_footnote', 'y');
 
-		$smarty->assign('parsed_footnote', $tikilib->parse_data($footnote));
+    $smarty->assign('parsed_footnote', $tikilib->parse_data($footnote));
 
-		if (isset($_REQUEST['footnote'])) {
-			check_ticket('edit-page');
-			$smarty->assign('parsed_footnote', $tikilib->parse_data($_REQUEST['footnote']));
+    if (isset($_REQUEST['footnote'])) {
+      check_ticket('edit-page');
+      $smarty->assign('parsed_footnote', $tikilib->parse_data($_REQUEST['footnote']));
 
-			$smarty->assign('footnote', $_REQUEST['footnote']);
-			$smarty->assign('has_footnote', 'y');
+      $smarty->assign('footnote', $_REQUEST['footnote']);
+      $smarty->assign('has_footnote', 'y');
 
-			if (empty($_REQUEST['footnote'])) {
-				$wikilib->remove_footnote($user, $page);
-			} else {
-				$wikilib->replace_footnote($user, $page, $_REQUEST['footnote']);
-			}
-		}
-	}
+      if (empty($_REQUEST['footnote'])) {
+        $wikilib->remove_footnote($user, $page);
+      } else {
+        $wikilib->replace_footnote($user, $page, $_REQUEST['footnote']);
+      }
+    }
+  }
 }
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
-	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
+  $template_data = $tikilib->get_template($_REQUEST["templateId"]);
 
-	$_REQUEST["edit"] = $template_data["content"];
-	$_REQUEST["preview"] = 1;
+  $_REQUEST["edit"] = $template_data["content"];
+  $_REQUEST["preview"] = 1;
 }
 
 if(isset($_REQUEST["edit"])) {
-  
+
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
-    $edit_data = $_REQUEST["edit"];  
+    $edit_data = $_REQUEST["edit"];
   } else {
-	$edit_data = htmlspecialchars($_REQUEST["edit"]);
+  $edit_data = htmlspecialchars($_REQUEST["edit"]);
   }
-  
-  
+
+
 } else {
-	if (isset($info["data"])) {
-		$edit_data = $info["data"];
-	} else {
-		$edit_data = '';
-	}
+  if (isset($info["data"])) {
+    $edit_data = $info["data"];
+  } else {
+    $edit_data = '';
+  }
 }
 
 if (isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y') {
-	if (isset($_REQUEST['copyrightTitle'])) {
-		$smarty->assign('copyrightTitle', $_REQUEST["copyrightTitle"]);
-	}
+  if (isset($_REQUEST['copyrightTitle'])) {
+    $smarty->assign('copyrightTitle', $_REQUEST["copyrightTitle"]);
+  }
 
-	if (isset($_REQUEST['copyrightYear'])) {
-		$smarty->assign('copyrightYear', $_REQUEST["copyrightYear"]);
-	}
+  if (isset($_REQUEST['copyrightYear'])) {
+    $smarty->assign('copyrightYear', $_REQUEST["copyrightYear"]);
+  }
 
-	if (isset($_REQUEST['copyrightAuthors'])) {
-		$smarty->assign('copyrightAuthors', $_REQUEST["copyrightAuthors"]);
-	}
+  if (isset($_REQUEST['copyrightAuthors'])) {
+    $smarty->assign('copyrightAuthors', $_REQUEST["copyrightAuthors"]);
+  }
 }
 
 $smarty->assign('commentdata', '');
 
 if (isset($_REQUEST["comment"])) {
-	$smarty->assign_by_ref('commentdata', $_REQUEST["comment"]);
+  $smarty->assign_by_ref('commentdata', $_REQUEST["comment"]);
 }
 
 if (isset($info["description"])) {
-	$smarty->assign('description', $info["description"]);
+  $smarty->assign('description', $info["description"]);
 
-	$description = $info["description"];
+  $description = $info["description"];
 } else {
-	$smarty->assign('description', '');
+  $smarty->assign('description', '');
 
-	$description = '';
+  $description = '';
 }
 
 if(isset($_REQUEST["description"])) {
@@ -515,22 +515,25 @@ if(isset($_REQUEST["description"])) {
 if(isset($_REQUEST["allowhtml"]) and $_REQUEST["allowhtml"] == "on") {
     $smarty->assign('allowhtml','y');
 } else {
-	$smarty->assign('allowhtml','n');
+  $smarty->assign('allowhtml','n');
 }
 
 $smarty->assign_by_ref('pagedata',htmldecode($edit_data));
-$parsed = $tikilib->parse_data($edit_data);
+
+// apply the optional post edit filters before preview
+$parsed = $tikilib->apply_postedit_handlers($edit_data);
+$parsed = $tikilib->parse_data($parsed);
 
 /* SPELLCHECKING INITIAL ATTEMPT */
 //This nice function does all the job!
 if ($wiki_spellcheck == 'y') {
-	if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
-		$parsed = $tikilib->spellcheckreplace($edit_data, $parsed, $language, 'editwiki');
+  if (isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on') {
+    $parsed = $tikilib->spellcheckreplace($edit_data, $parsed, $language, 'editwiki');
 
-		$smarty->assign('spellcheck', 'y');
-	} else {
-		$smarty->assign('spellcheck', 'n');
-	}
+    $smarty->assign('spellcheck', 'y');
+  } else {
+    $smarty->assign('spellcheck', 'n');
+  }
 }
 
 $smarty->assign_by_ref('parsed', $parsed);
@@ -538,7 +541,7 @@ $smarty->assign_by_ref('parsed', $parsed);
 $smarty->assign('preview',0);
 // If we are in preview mode then preview it!
 if(isset($_REQUEST["preview"])) {
-  $smarty->assign('preview',1); 
+  $smarty->assign('preview',1);
 }
 
 function htmldecode($string) {
@@ -547,15 +550,15 @@ function htmldecode($string) {
    return $string;
 }
 
-function parse_output(&$obj, &$parts,$i) {  
-  if(!empty($obj->parts)) {    
-    for($i=0; $i<count($obj->parts); $i++)      
-      parse_output($obj->parts[$i], $parts,$i);  
-  }else{    
-    $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;    
-    switch($ctype) {    
+function parse_output(&$obj, &$parts,$i) {
+  if(!empty($obj->parts)) {
+    for($i=0; $i<count($obj->parts); $i++)
+      parse_output($obj->parts[$i], $parts,$i);
+  }else{
+    $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;
+    switch($ctype) {
       case 'application/x-tikiwiki':
-         $aux["body"] = $obj->body;  
+         $aux["body"] = $obj->body;
          $ccc=$obj->headers["content-type"];
          $items = split(';',$ccc);
          foreach($items as $item) {
@@ -564,20 +567,20 @@ function parse_output(&$obj, &$parts,$i) {
              $aux[trim($portions[0])]=trim($portions[1]);
            }
          }
-         
-         
+
+
          $parts[]=$aux;
-         
-    }  
+
+    }
   }
 }
 
 // Pro
 // Check if the page has changed
 if (isset($_REQUEST["save"])) {
-	check_ticket('edit-page');
+  check_ticket('edit-page');
   // Check if all Request values are delivered, and if not, set them
-  // to avoid error messages. This can happen if some features are 
+  // to avoid error messages. This can happen if some features are
   // disabled
   if(!isset($_REQUEST["description"])) $_REQUEST["description"]='';
   if(!isset($_REQUEST["comment"])) $_REQUEST["comment"]='';
@@ -600,10 +603,10 @@ if (isset($_REQUEST["save"])) {
     $page = $_REQUEST["page"];
 
     if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
-      $edit = $_REQUEST["edit"];  
+      $edit = $_REQUEST["edit"];
     } else {
 //      $edit = strip_tags($_REQUEST["edit"]);
-	  $edit = htmlspecialchars($_REQUEST['edit']);
+    $edit = htmlspecialchars($_REQUEST['edit']);
     }
 
     // add permisions here otherwise return error!
@@ -624,20 +627,23 @@ if (isset($_REQUEST["save"])) {
 
     // Parse $edit and eliminate image references to external URIs (make them internal)
     $edit = $imagegallib->capture_images($edit);
-  
+
+    // apply the optional page edit filters before data storage
+    $edit = $tikilib->apply_postedit_handlers($edit);
+
     // If page exists
     if(!$tikilib->page_exists($_REQUEST["page"])) {
       // Extract links and update the page
 
-	  $links = $tikilib->get_links($_REQUEST["edit"]);
-	  /*
-	  $notcachedlinks = $tikilib->get_links_nocache($_REQUEST["edit"]);
-	  $cachedlinks = array_diff($links, $notcachedlinks);
-	  $tikilib->cache_links($cachedlinks); 
-	  */
+    $links = $tikilib->get_links($_REQUEST["edit"]);
+    /*
+    $notcachedlinks = $tikilib->get_links_nocache($_REQUEST["edit"]);
+    $cachedlinks = array_diff($links, $notcachedlinks);
+    $tikilib->cache_links($cachedlinks);
+    */
       $t = date("U");
-      $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);  
-      if ($wiki_watch_author == 'y') 
+      $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);
+      if ($wiki_watch_author == 'y')
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],tra('Wiki page'),$page,"tiki-index.php?page=$page");
 
     } else {
@@ -654,25 +660,25 @@ if (isset($_REQUEST["save"])) {
     }
 
     $page = urlencode($page);
-		if ($page_ref_id) {
-    	header("location: tiki-index.php?page_ref_id=$page_ref_id");
-		} else {
-    	header("location: tiki-index.php?page=$page");
-		}
+    if ($page_ref_id) {
+      header("location: tiki-index.php?page_ref_id=$page_ref_id");
+    } else {
+      header("location: tiki-index.php?page=$page");
+    }
     die;
   } else {
     $page = urlencode($page);
-		if ($page_ref_id) {
-    	header("location: tiki-index.php?page_ref_id=$page_ref_id");
-		} else {
-    	header("location: tiki-index.php?page=$page");
-		}
+    if ($page_ref_id) {
+      header("location: tiki-index.php?page_ref_id=$page_ref_id");
+    } else {
+      header("location: tiki-index.php?page=$page");
+    }
     die;
   }
 }
 
 if ($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {
-	$templates = $tikilib->list_templates('wiki', 0, -1, 'name_asc', '');
+  $templates = $tikilib->list_templates('wiki', 0, -1, 'name_asc', '');
 }
 
 $smarty->assign_by_ref('templates', $templates["data"]);
@@ -682,7 +688,7 @@ $cat_objid = $_REQUEST["page"];
 include_once ("categorize_list.php");
 
 if ($feature_theme_control == 'y') {
-	include ('tiki-tc.php');
+  include ('tiki-tc.php');
 }
 
 $section = 'wiki';
@@ -696,18 +702,18 @@ $plugins = array();
 
 // Request help string from each plugin module
 foreach ($plugin_files as $pfile) {
-	$pinfo["file"] = $pfile;
+  $pinfo["file"] = $pfile;
 
-	$pinfo["help"] = $wikilib->get_plugin_description($pfile);
-	$pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
-	$plugins[] = $pinfo;
+  $pinfo["help"] = $wikilib->get_plugin_description($pfile);
+  $pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
+  $plugins[] = $pinfo;
 }
 
 $smarty->assign_by_ref('plugins', $plugins);
 
 if ($structlib->page_is_in_structure($_REQUEST["page"])) {
-	$structs = $structlib->get_page_structures($_REQUEST["page"]);
-	$smarty->assign('showstructs', $structs);
+  $structs = $structlib->get_page_structures($_REQUEST["page"]);
+  $smarty->assign('showstructs', $structs);
 }
 
 // Flag for 'page bar' that currently 'Edit' mode active
@@ -717,9 +723,9 @@ $smarty->assign('edit_page', 'y');
 
 // Set variables so the preview page will keep the newly inputted category information
 if (isset($_REQUEST['cat_categorize'])) {
-	if ($_REQUEST['cat_categorize'] == 'on') {
-		$smarty->assign('categ_checked', 'y');
-	}
+  if ($_REQUEST['cat_categorize'] == 'on') {
+    $smarty->assign('categ_checked', 'y');
+  }
 }
 include_once("textareasize.php");
 
