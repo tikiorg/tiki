@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.69 2004-05-28 10:27:47 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.70 2004-05-28 13:12:44 chris_holman Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -45,16 +45,16 @@
 	{if $user and $feature_user_watches eq 'y'}
 	  {if $user_watching_page eq 'n'}
           <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
-	  {else}
+          {else}
 	    <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
-	  {/if}
-	{/if}
-    </td>
+          {/if}
+        {/if}
+        </td>
 	{if $feature_backlinks eq 'y' and $backlinks}
       <td style="text-align:right;">
       <form action="tiki-index.php" method="post">
 	  <select name="page" onchange="page.form.submit()">
-	    <option value="{$page}">{tr}backlinks{/tr}...</option>
+	    <option>{tr}backlinks{/tr}...</option>
 		{section name=back loop=$backlinks}
 		  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 		{/section}
@@ -67,7 +67,11 @@
           <a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img border="0" src="img/icons/ico_wiki3d.gif" alt='{tr}3d browser{/tr}' /></a>
         {/if}
 
-	{if count($showstructs) > 1}
+        {* If not displaying structure but page is member of 
+	** one or more structures display a list of structures 
+	** the page is a member of. 
+	*}
+	{if !$page_ref_id and count($showstructs) ne 0}
   	  <td style="text-align:right;">
       <form action="tiki-index.php" method="post">
 	  <select name="page_ref_id" onchange="page_ref_id.form.submit()">
