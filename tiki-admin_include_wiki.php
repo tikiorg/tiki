@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.25 2004-06-10 20:48:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.26 2004-06-15 18:15:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -563,6 +563,13 @@ if (isset($_REQUEST["wikifeatures"])) {
 	} else {
 		$tikilib->set_preference("feature_wiki_open_as_structure", 'n');
 		$smarty->assign("feature_wiki_open_as_structure", 'n');
+	}
+	if (isset($_REQUEST["feature_wiki_ext_icon"]) && $_REQUEST["feature_wiki_ext_icon"] == "on") {
+		$tikilib->set_preference("feature_wiki_ext_icon", 'y');
+		$smarty->assign("feature_wiki_ext_icon", 'y');
+	} else {
+		$tikilib->set_preference("feature_wiki_ext_icon", 'n');
+		$smarty->assign("feature_wiki_ext_icon", 'n');
 	}
 
 }
