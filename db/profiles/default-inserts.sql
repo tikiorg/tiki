@@ -174,7 +174,6 @@ INSERT INTO tiki_preferences VALUES ('feature_wiki_notepad','n');
 INSERT INTO tiki_preferences VALUES ('feature_wiki_pdf','n');
 INSERT INTO tiki_preferences VALUES ('feature_wiki_pictures','n');
 INSERT INTO tiki_preferences VALUES ('feature_wiki_rankings','y');
-INSERT INTO tiki_preferences VALUES ('feature_wiki_showstructs','n');
 INSERT INTO tiki_preferences VALUES ('feature_wiki_tables','old');
 INSERT INTO tiki_preferences VALUES ('feature_wiki_templates','n');
 INSERT INTO tiki_preferences VALUES ('feature_wiki_undo','n');

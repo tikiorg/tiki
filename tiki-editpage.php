@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.61 2003-11-24 05:52:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.62 2003-11-26 11:13:11 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -673,7 +673,7 @@ foreach ($plugin_files as $pfile) {
 
 $smarty->assign_by_ref('plugins', $plugins);
 
-if ($feature_wiki_showstructs == 'y' && $structlib->page_is_in_structure($_REQUEST["page"])) {
+if ($structlib->page_is_in_structure($_REQUEST["page"])) {
 	$structs = $structlib->get_page_structures($_REQUEST["page"]);
 	$smarty->assign('showstructs', $structs);
 }

@@ -91,10 +91,7 @@
 </td></tr>
 
 {include file=categorize.tpl}
-
-{if $feature_wiki_showstructs eq 'y' and $showstructs}
 {include file=structures.tpl}
-{/if}
 
 {if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr><td class="formcolor">{tr}Apply template{/tr}:</td><td class="formcolor">
