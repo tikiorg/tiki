@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/tests/core/init.scripts/05-database.php,v 1.1 2003-08-22 19:04:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tests/core/init.scripts/05-database.php,v 1.2 2003-08-24 00:42:17 zaufi Exp $
  *
  * \brief Initialize low level DB support
  */
@@ -18,21 +18,18 @@ if ($api_tiki == 'adodb')
     //include_once('adodb-errorpear.inc.php');
     include_once ('adodb-pear.inc.php');
 
-    if ($db_tiki == 'pgsql') {
+    if ($db_tiki == 'pgsql')
         $db_tiki = 'postgres7';
-    }
 
-    if ($db_tiki == 'sybase') {
+    if ($db_tiki == 'sybase')
         // avoid database change messages
         ini_set('sybct.min_server_severity', '11');
-    }
 
     $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 // ADODB_FETCH_BOTH appears to be buggy for null values
-} else {
+} else
     // Database connection for the tiki system
     include_once ('DB.php');
-}
 
 //doesn't work with adodb. adodb doesn't let you inherit
 /*
@@ -44,7 +41,8 @@ $dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 //$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
 $dbTiki = &ADONewConnection($db_tiki);
 
-if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
+if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki))
+{
     print "
 <html><body>
 <p>Unable to login to the MySQL database '$dbs_tiki' on '$host_tiki' as user '$user_tiki'<br />
@@ -56,8 +54,7 @@ if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
     exit;
 }
 
-if ($db_tiki == 'sybase') {
+if ($db_tiki == 'sybase')
     $dbTiki->Execute("set quoted_identifier on");
-}
 
 ?>

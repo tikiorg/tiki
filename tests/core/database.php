@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/tests/core/database.php,v 1.1 2003-08-22 19:04:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tests/core/database.php,v 1.2 2003-08-24 00:42:17 zaufi Exp $
  *
  * \brief Database Layer
  *
@@ -29,22 +29,18 @@ class TikiCoreDatabase
     function qstr($str)
     {
         if (function_exists('mysql_real_escape_string'))
-            return "'" . mysql_real_escape_string($str). "'";
-        else
-            return "'" . mysql_escape_string($str). "'";
+             return "'" . mysql_real_escape_string($str). "'";
+        else return "'" . mysql_escape_string($str). "'";
     }
     /// Queries the database reporting an error if detected
     function query($query, $values = null, $numrows = -1, $offset = -1, $reporterrors = true)
     {
         $query = $this->convert_query($query);
 
-        if ($numrows == -1 && $offset == -1)
-            $result = $this->db->Execute($query, $values);
-        else
-            $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+        if ($numrows == -1 && $offset == -1) $result = $this->db->Execute($query, $values);
+        else $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
 
-        if (!$result && $reporterrors)
-            $this->sql_error($query, $values, $result);
+        if (!$result && $reporterrors) $this->sql_error($query, $values, $result);
 
         //count the number of queries made
         $this->num_queries++;
@@ -58,13 +54,11 @@ class TikiCoreDatabase
         $query = $this->convert_query($query);
         $result = $this->db->SelectLimit($query, 1, 0, $values);
 
-        if (!$result && $reporterrors)
-            $this->sql_error($query, $values, $result);
+        if (!$result && $reporterrors) $this->sql_error($query, $values, $result);
 
         $res = $result->fetchRow();
 
-        if ($res === false)
-            return (NULL); //simulate pears behaviour
+        if ($res === false) return (NULL); //simulate pears behaviour
 
         list($key, $value) = each($res);
         return $value;
@@ -74,7 +68,7 @@ class TikiCoreDatabase
     function sql_error($query, $values, $result)
     {
         global $ADODB_Database;
-        trigger_error($ADODB_Database . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
+        trigger_error($ADODB_Database." error: ".$this->db->ErrorMsg()." in query:<br/>".$query."<br/>", E_USER_WARNING);
         die;
     }
 
