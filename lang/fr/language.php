@@ -4197,5 +4197,6 @@ $lang=Array(
 "Swedish" => "Suédois",
 "Traditional Chinese" => "Chinois trad.",
 "Chinese" => "Chinois",
+"Use this thread to discuss the %s page." => "Utilisez la page %s pour discuter le fil de discussion",
 "###end###"=>"###end###");
 ?>

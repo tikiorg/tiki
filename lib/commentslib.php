@@ -249,15 +249,6 @@ class Comments extends TikiLib {
 	    if (empty($aux["sender"]["name"]))
 		$aux["sender"]["name"] = $aux["sender"]["email"];
 
-	    // Remove 're:' and [forum]. -rlpowell
-	    $title = trim(
-		    preg_replace( "/[rR][eE]:/", "", 
-			preg_replace( "/\[[-A-Za-z _:]*\]/", "", 
-			    $aux['subject'] 
-			    )
-			)
-		    );
-
 	    $email = $aux["sender"]["email"];
 	    $message = $pop3->GetMessage($i);
 	    $full = $message["full"];
@@ -276,6 +267,16 @@ class Comments extends TikiLib {
 
 	    if (isset($parts["text"][0]))
 		$body = $parts["text"][0];
+
+	    // Remove 're:' and [forum]. -rlpowell
+	    $title = trim(
+		    preg_replace( "/[rR][eE]:/", "", 
+			preg_replace( "/\[[-A-Za-z _:]*\]/", "", 
+			    $output->headers['subject'] 
+			    )
+			)
+		    );
+
 
 	    //Todo: check permissions
 	    $message_id = substr($output->headers["message-id"], 1,
@@ -312,7 +313,7 @@ class Comments extends TikiLib {
 		$parentId = $this->post_new_comment(
 			'forum:' . $forumId, 0,
 			$userName, $title, 
-			"Use this thread to discuss the [tiki-index.php?page=$title|$title] page.",
+			sprintf(tra("Use this thread to discuss the %s page."), "[tiki-index.php?page=$title|$title]"),
 			$temp_msid
 			);
 	    }
