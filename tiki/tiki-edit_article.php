@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.44 2004-06-16 10:54:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.45 2004-07-08 12:50:33 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -392,7 +392,7 @@ $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 
 // get list of valid types
-$types = $artlib->list_types();
+$types = $artlib->list_types_byname();
 $smarty->assign_by_ref('types', $types);
 
 if ($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {

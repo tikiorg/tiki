@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.10 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.11 2004-07-08 12:50:33 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,7 +69,7 @@ if ($tiki_p_admin_shoutbox == 'y') {
 if ($tiki_p_post_shoutbox == 'y') {
 	if (isset($_REQUEST["save"])) {
 		check_ticket('shoutbox');
-		$shoutboxlib->replace_shoutbox($_REQUEST["msgId"], $user, $_REQUEST["message"]);
+		$shoutboxlib->replace_shoutbox($_REQUEST["msgId"], $_REQUEST["user"], $_REQUEST["message"]);
 
 		$smarty->assign("msgId", '0');
 		$smarty->assign('message', '');

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.82 2004-07-01 00:07:03 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.83 2004-07-08 12:50:33 damosoft Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -248,19 +248,6 @@ ALTER TABLE `users_groups` ADD `usersFieldId` INT( 11 ), ADD `groupFieldId` INT(
 ALTER TABLE `tiki_tracker_fields` ADD `isMandatory` varchar ( 1 ) DEFAULT 'n' NOT NULL ;
 UPDATE `tiki_tracker_fields` set `isMandatory`='y' where `isMandatory`='';
 
-# added on 2004-03-09 by mose for keeping track of what happens
-CREATE TABLE tiki_logs (
-  logId int(8) NOT NULL auto_increment,
-  logtype varchar(20) NOT NULL,
-  logmessage text NOT NULL,
-  loguser varchar(200) NOT NULL,
-  logip varchar(200) NOT NULL,
-  logclient text NOT NULL,
-  logtime int(14) NOT NULL,
-  PRIMARY KEY  (logId),
-  KEY logtype (logtype)
-) TYPE=MyISAM;
-
 # added on 2004-03-24 by mose for fixing an error in perm label
 UPDATE `users_permissions` set `permDesc`='Can view trackers closed items' where `permName`='tiki_p_view_trackers_closed';
 
@@ -370,7 +357,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 #revised  2004-5-03 ggeller
 #
 
-rename table hw_actionlog to tiki_hw_actionlog;
 CREATE TABLE tiki_hw_actionlog (
   action varchar(255) NOT NULL default '',
   lastModif int(14) NOT NULL default '0',
@@ -381,7 +367,6 @@ CREATE TABLE tiki_hw_actionlog (
   PRIMARY KEY  (lastModif)
 ) TYPE=MyISAM;
 
-rename table hw_assignments to tiki_hw_assignments;
 CREATE TABLE tiki_hw_assignments (
   assignmentId int(8) NOT NULL auto_increment,
   title varchar(80) default NULL,
@@ -396,7 +381,6 @@ CREATE TABLE tiki_hw_assignments (
   KEY dueDate (dueDate)
 ) TYPE=MyISAM;
 
-rename table hw_grading_queue to tiki_hw_grading_queue;
 CREATE TABLE tiki_hw_grading_queue (
   id int(14) NOT NULL auto_increment,
   status int(4) default NULL,
@@ -410,7 +394,6 @@ CREATE TABLE tiki_hw_grading_queue (
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
-rename table hw_history to tiki_hw_history;
 CREATE TABLE tiki_hw_history (
   id int(14) NOT NULL default '0',
   version int(8) NOT NULL default '0',
@@ -422,7 +405,6 @@ CREATE TABLE tiki_hw_history (
   PRIMARY KEY  (id,version)
 ) TYPE=MyISAM;
 
-rename table hw_pages_history to tiki_hw_pages_history;
 CREATE TABLE tiki_hw_pages_history (
   id int(14) NOT NULL default '0',
   version int(8) NOT NULL default '0',
@@ -434,7 +416,6 @@ CREATE TABLE tiki_hw_pages_history (
   PRIMARY KEY  (id,version)
 ) TYPE=MyISAM;
 
-rename table hw_pages to tiki_hw_pages;
 CREATE TABLE tiki_hw_pages (
   id int(14) NOT NULL auto_increment,
   assignmentId int(14) NOT NULL default '0',
@@ -608,7 +589,7 @@ alter table `tiki_users_score` drop score;
 #UPDATE users_permissions SET level = 'admin' WHERE permName='tiki_p_admin_newsletters';
 #UPDATE users_permissions SET level = 'editors' WHERE permName='tiki_p_send_newsletters';
 
-CREATE TABLE tiki_searchsyllable(
+CREATE TABLE IF NOT EXISTS tiki_searchsyllable(
   syllable varchar(80) NOT NULL default '',
   lastUsed int(11) NOT NULL default '0',
   lastUpdated int(11) NOT NULL default '0',
@@ -616,7 +597,7 @@ CREATE TABLE tiki_searchsyllable(
   KEY lastUsed (lastUsed)
 ) TYPE=MyISAM;
 
-CREATE TABLE tiki_searchwords(
+CREATE TABLE  IF NOT EXISTS tiki_searchwords(
   syllable varchar(80) NOT NULL default '',
   searchword varchar(80) NOT NULL default '',
   PRIMARY KEY  (syllable,searchword)

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.61 2004-07-01 22:33:42 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.62 2004-07-08 12:50:38 damosoft Exp $
 
 MoreNeat theme
 */
@@ -350,6 +350,7 @@ table.editfgalform, table.listfgal, table.listfiles, table.listarticles,table.fo
 table.viewthread, table.jukeboxlist, table.userlist
 {  padding:0px; margin: 0px; border-collapse: collapse; width: 100%;}
 
+.normal table { width: 100% !important; }
 
 TABLE.normalnoborder {  width: 97%;}
 
@@ -580,7 +581,7 @@ div.wikitext {
 }
 
 /* Links to wiki pages */
-.wiki { color:#436976; text-decoration:underline;}
+.wiki { color:#335966; text-decoration:underline;}
 .wiki:hover {color: #436976;text-decoration:underline;}
 
 /* Links to create new wiki pages that don't exist yet, this modifies the "?"*/
@@ -1952,6 +1953,7 @@ background-color: #ccffcc;
 .codelisting
 { font-family : monospace;
 padding : 2ex;
+padding-top : 2.5ex;
 background-color : #edeeef;
 margin : 1ex;
 border : 1px dashed #adacaf; }
@@ -1976,4 +1978,13 @@ border-width: 0px 1px 1px 1px;
 border-style: solid;
 color: black;
 background-color: #edeeef;
+}
+.codecaption {
+font-size : smaller;
+padding : .5ex 2ex;
+background-color : #ffffff;
+position : relative;
+bottom : -2ex;
+display : inline;
+border : 1px dashed #adacaf; 
 }

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/classicblue/modules/mod-login_box.tpl,v 1.2 2004-07-01 00:07:09 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/classicblue/modules/mod-login_box.tpl,v 1.3 2004-07-08 12:50:40 damosoft Exp $ *}
 
-{tikimodule title="{tr}ColoradoWEB Menu{/tr}" name="login_box"}
+{tikimodule title="{tr}Login{/tr}" name="login_box"}
 
     {if $user}
       {tr}logged as{/tr}: {$user}<br />

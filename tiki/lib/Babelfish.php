@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.8 2004-03-29 21:26:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.9 2004-07-08 12:50:35 damosoft Exp $
 
 // Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -59,6 +59,9 @@ class Babelfish {
 		\static
 	*/
 	function url($lang_from, $lang_to) {
+ 	        $lang_from = substr($lang_from,0,2);
+		$lang_to = substr($lang_to,0,2);
+
 		static $url_map = array(
 			'en'	=> 'english',
 			'fr'	=> 'french',
@@ -95,6 +98,8 @@ class Babelfish {
 		\static
 	*/
 	function links($lang_from = 'en') {
+ 	        $lang_from = substr($lang_from,0,2);
+
 		static $fishes = array(
 			'en' => array(	# English
 				'de' => '&Uuml;bersetzen&nbsp;Sie&nbsp;diese&nbsp;Seite&nbsp;ins&nbsp;Deutsche',
@@ -157,6 +162,8 @@ class Babelfish {
 		\static
 	*/
 	function logo($lang = 'en') {
+ 	        $lang = substr($lang,0,2);
+
 		static $s = "<script language=\"JavaScript1.2\" src=\"http://www.altavista.com/r?%str\"></script>";
 
 		$lang = strtolower($lang);

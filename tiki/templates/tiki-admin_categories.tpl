@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.34 2004-06-23 22:34:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.35 2004-07-08 12:50:39 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -11,6 +11,10 @@
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin categories template{/tr}">
 <img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
+<br />
+
+<a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="browse the category system">{tr}browse category{/tr}</a>
+
 
 <br />
 <br />
@@ -24,39 +28,19 @@
 {/section}
 </div>
 <div>
-{assign var=categ value=''}
-{assign var=parent value=''}
-{assign var=space value=1}
-{assign var=step value='-'}
 {section name=dx loop=$catree}
-{if $catree[dx].parentId eq $categ}
-{assign var=space value=$space+1}
-{assign var=step value='o'}
-{elseif $catree[dx].parentId ne $parent}
-{assign var=space value=$space-1}
-{assign var=step value='c'}
-{else}
-{assign var=step value='-'}
+{assign var=after value=$smarty.section.dx.index_next}
+{assign var=before value=$smarty.section.dx.index_prev}
+{if $smarty.section.dx.index > 0 and $catree[dx].deep > $catree[$before].deep}
+<div id="id{$catree[$before].categId}" style="display:none;">
 {/if}
-{if $step eq 'c'}
-</div>
-{/if}
-{if $step eq 'o'}
-<a href="javascript:toggle('id{$catree[dx].parentId}');" class="linkmenu">&gt;&gt;&gt;</a>
-</div>
-<div id="id{$catree[dx].parentId}" style="display:none;">
-{else}
-</div>
-{/if}
-<div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}" style="padding-left:{$space*30+20}px;">
+<div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}" style="padding-left:{$catree[dx].deep*30+20}px;">
 <!-- {$catree[dx].parentId} :: {$catree[dx].categId} :: -->
 {if $catree[dx].children > 0}<i class="mini">{$catree[dx].children} {tr}Child categories{/tr}</i>{/if}
 {if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
-{assign var=categ value=$catree[dx].categId}
-{assign var=parent value=$catree[dx].parentId}
-<a title="{tr}delete{/tr}" class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;removeCat={$categ}" title="{tr}delete{/tr}"><img  
-style="margin-right:{$space*10+10}px;" border="0" src="img/icons2/delete.gif" align="right" height="12" width="12" hspace="5" vspace="1"/></a>
-<a title="{tr}edit{/tr}" class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;categId={$categ}" title="{tr}edit{/tr}"><img  
+<a title="{tr}delete{/tr}" class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}delete{/tr}"><img  
+style="margin-right:{$catree[dx].deep*10+10}px;" border="0" src="img/icons2/delete.gif" align="right" height="12" width="12" hspace="5" vspace="1"/></a>
+<a title="{tr}edit{/tr}" class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}edit{/tr}"><img  
 border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"/></a>
 {if $catree[dx].has_perm eq 'y'}
 <a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key_active.gif" /></a>
@@ -64,6 +48,14 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
 <a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key.gif" /></a>
 {/if}
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
+{if $catree[dx].deep < $catree[$after].deep}
+<a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a></div>
+{elseif $catree[dx].deep eq $catree[$after].deep}
+</div>
+{else}
+</div>
+{repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
+{/if}
 {/section}
 </div>
 </div>

@@ -459,7 +459,6 @@ class WikiLib extends TikiLib {
     // Removes last version of the page (from pages) if theres some
     // version in the tiki_history then the last version becomes the actual version
     function remove_last_version($page, $comment = '') {
-	global $histlib;
 
 	$this->invalidate_cache($page);
 	$query = "select * from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode("lastModif_desc");
@@ -468,6 +467,11 @@ class WikiLib extends TikiLib {
 	if ($result->numRows()) {
 	    // We have a version
 	    $res = $result->fetchRow();
+
+		global $histlib;
+		if (!is_object($histlib)) {
+			include_once('lib/wiki/histlib.php');
+		}
 
 	    $histlib->use_version($res["pageName"], $res["version"]);
 	    $histlib->remove_version($res["pageName"], $res["version"]);

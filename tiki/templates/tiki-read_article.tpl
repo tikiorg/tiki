@@ -58,9 +58,9 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 </div>
 <div class="articletrailer">
 <table class="wikitopline"><tr>
-{if $show_size eq 'y'}
-<td>({$size} bytes)</td>
-{/if}
+<td>{if $show_size eq 'y'}
+({$size} bytes)
+{/if}</td>
 {if $feature_multilingual eq 'y' and $show_lang eq 'y' and $lang}{include file="translated-lang.tpl" td='y'}{/if}
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}

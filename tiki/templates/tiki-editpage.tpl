@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.54 2004-07-01 00:07:07 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.55 2004-07-08 12:50:39 damosoft Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -33,7 +33,13 @@
 <input type="hidden" name="add_child" value="true" />
 {/if}
 <table class="normal">
+<tr><td class="formcolor">{tr}Quicklinks{/tr}:</td><td class="formcolor">
+{include file=tiki-edit_help_tool.tpl}
+</td></tr>
+
+{if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}
+{/if}
 {include file=structures.tpl}
 
 {if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}

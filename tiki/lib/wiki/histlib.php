@@ -192,6 +192,7 @@ class HistLib extends TikiLib {
 	}
 }
 
+global $dbTiki;
 $histlib = new HistLib($dbTiki);
 
 ?>

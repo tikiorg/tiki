@@ -1,4 +1,6 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer.php,v 1.5 2004-07-08 12:50:37 damosoft Exp $
+
 /**
  * A class to render Diffs in different formats.
  *

@@ -1,4 +1,5 @@
 {popup_init src="lib/overlib.js"}
+{include file="tiki-articles-js.tpl"}
 {if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
@@ -27,12 +28,12 @@
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
 <div class="simplebox">{tr}<b>*</b>=optional, <b>Topline</b>=small line above Title, <b>Subtitle</b>=small line below Title, <b>Source</b>=URL to article source{/tr}</div><br />
 <table class="normal">
-<tr class="formcolor"><td>{tr}Topline{/tr} *</td><td><input type="text" name="topline" value="{$topline|escape}" size="60" /></td></tr>
+<tr class="formcolor" id='show_topline' {if $types.$type.show_topline eq 'y'}style="display:;"{else}style="display:none;"{/if}><td>{tr}Topline{/tr} *</td><td><input type="text" name="topline" value="{$topline|escape}" size="60" /></td></tr>
 <tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" maxlength="80" size="80" /></td></tr>
-<tr class="formcolor"><td>{tr}Subtitle{/tr} *</td><td><input type="text" name="subtitle" value="{$subtitle|escape}" size="60" /></td></tr>
-<tr class="formcolor"><td>{tr}Source{/tr} ({tr}URL{/tr}) *</td><td><input type="text" name="linkto" value="{$linkto|escape}" size="60" /></td></tr>
+<tr class="formcolor" id='show_subtitle' {if $types.$type.show_subtitle eq 'y'}style="display:;"{else}style="display:none;"{/if}><td>{tr}Subtitle{/tr} *</td><td><input type="text" name="subtitle" value="{$subtitle|escape}" size="60" /></td></tr>
+<tr class="formcolor" id='show_linkto' {if $types.$type.show_linkto eq 'y'}style="display:;"{else}style="display:none;"{/if}><td>{tr}Source{/tr} ({tr}URL{/tr}) *</td><td><input type="text" name="linkto" value="{$linkto|escape}" size="60" /></td></tr>
 {if $feature_multilingual eq 'y'}
-<tr class="formcolor"><td>{tr}Language{/tr}</td><td><select name="lang">
+<tr class="formcolor" id='show_lang' {if $types.$type.show_lang eq 'y'}style="display:;"{else}style="display:none;"{/if}><td>{tr}Language{/tr}</td><td><select name="lang">
 <option value="">{tr}All{/tr}</option>
 {section name=ix loop=$languages}
 <option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
@@ -40,7 +41,7 @@
 </select>
 </td></tr>
 {/if}
-<tr class="formcolor"><td>{tr}Author Name{/tr}</td><td><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
+<tr class="formcolor" id='show_author' {if $types.$type.show_author eq 'y'}style="display:;"{else}style="display:none;"{/if}><td>{tr}Author Name{/tr}</td><td><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Topic{/tr}</td><td>
 <select name="topicId">
 {section name=t loop=$topics}
@@ -52,13 +53,13 @@
 </td></tr>
 <tr class="formcolor"><td>{tr}Type{/tr}</td><td>
 <select id='articletype' name='type' onchange='javascript:chgArtType();'>
-{section name=t loop=$types}
-<option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{tr}{$types[t].type}{/tr}</option>
-{/section}
+{foreach from=$types key=typei item=prop}
+<option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei}{/tr}</option>
+{/foreach}
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
 </td></tr>
-<tr id='isreview' {if $type ne 'Review'}style="display:none;"{else}style="display:block;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
+<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
 <select name='rating'>
 <option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
 <option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
@@ -82,7 +83,7 @@
 <option value="0.5" {if $rating eq "0.5"}selected="selected"{/if}>0.5</option>
 </select>
 </td></tr>
-<tr class="formcolor"><td>{tr}Own Image{/tr} *</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<tr id='show_image_1' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own Image{/tr} *</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
 {if $hasImage eq 'y'}
   <tr class="formcolor"><td>{tr}Own Image{/tr}</td><td>{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
@@ -92,15 +93,15 @@
     </td></tr>
   {/if}
 {/if}
-<tr class="formcolor"><td>{tr}Use own image{/tr} *</td><td>
+<tr id='show_image_2' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Use own image{/tr} *</td><td>
 <input type="checkbox" name="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
 </td></tr>
-<tr class="formcolor"><td>{tr}Float text around image{/tr} *</td><td>
+<tr id='show_image_3' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Float text around image{/tr} *</td><td>
 <input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}/>
 </td></tr>
-<tr class="formcolor"><td>{tr}Own image size x{/tr} *</td><td><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Own image size y{/tr} *</td><td><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Image caption{/tr} *</td><td><input type="text" name="image_caption" value="{$image_caption|escape}" size="60" /></td></tr>
+<tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own image size x{/tr} *</td><td><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
+<tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own image size y{/tr} *</td><td><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
+<tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Image caption{/tr} *</td><td><input type="text" name="image_caption" value="{$image_caption|escape}" size="60" /></td></tr>
 
 {if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr class="formcolor"><td>{tr}Apply template{/tr} *</td><td>
@@ -116,7 +117,7 @@
 {include file=categorize.tpl}
 
 <tr class="formcolor"><td>{tr}Heading{/tr}</td><td><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
-<tr class="formcolor"><td>{tr}Body{/tr}
+<tr  id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Body{/tr}
 <br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
 <br />{include file=tiki-edit_help_tool.tpl area_name='body'}
 </td><td>
@@ -128,12 +129,12 @@
 {if $cms_spellcheck eq 'y'}
 <tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
-<tr class="formcolor"><td>{tr}Publish Date{/tr}</td><td>
+<tr id='show_pre_publ' {if $types.$type.show_pre_publ eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Publish Date{/tr}</td><td>
 {html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td></tr>
-<tr class="formcolor"><td>{tr}Expiration Date{/tr}</td><td>
+<tr id='show_post_expire' {if $types.$type.show_post_expire eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Expiration Date{/tr}</td><td>
 {html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
