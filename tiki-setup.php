@@ -270,6 +270,7 @@ $feature_edit_templates = 'n';
 $feature_dynamic_content = 'n';
 $feature_chat = 'n';
 $feature_polls = 'n';
+$feature_menusfolderstyle = 'n';
 
 $wiki_creator_admin = 'n';
 $smarty->assign('wiki_creator_admin',$wiki_creator_admin);
@@ -574,6 +575,7 @@ $smarty->assign('trl','');
 
 $smarty->assign('userbreadCrumb',$userbreadCrumb);
 $smarty->assign('feature_polls',$feature_polls);
+$smarty->assign('feature_menusfolderstyle',$feature_menusfolderstyle);
 $smarty->assign('feature_quizzes',$feature_quizzes);
 $smarty->assign('feature_chat',$feature_chat);
 $smarty->assign('rss_articles',$rss_articles);
