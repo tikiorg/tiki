@@ -31,7 +31,7 @@ function wikiplugin_tracker($data, $params) {
 			return "<div>Done!</div><pre>".print_r($ins_fields)."</pre>";
 		}
 		$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
-		$optionnal = array();
+		$optional = array();
 		if (isset($fields)) {
 			$outf = array();
 			$fl = split(":",$fields);
