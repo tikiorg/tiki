@@ -1,10 +1,14 @@
 <h1><a href="cc.php?page=currencies{if $userid}&amp;user={$userid}{/if}" class="pagetitle">List of currencies</a></h1>
-<span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
+<br />
+<span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span>
 
 <span class="button2"><a href="cc.php?page=currencies" class="linkbut">All Currencies</a></span>
 {if $tiki_p_cc_use eq 'y'}
-<span class="button2"><a href="cc.php?page=currencies&amp;my" class="linkbut">Owned Currencies</a></span>
 <span class="button2"><a href="cc.php?page=currencies&amp;reg" class="linkbut">Registered Currencies</a></span>
+{/if}
+<br /><br />
+{if $tiki_p_cc_use eq 'y'}
+<span class="button2"><a href="cc.php?page=currencies&amp;my" class="linkbut">Owned Currencies</a></span>
 {/if}
 {if $tiki_p_cc_create eq 'y' or $tiki_p_cc_admin eq 'y'}
 <span class="button2"><a href="cc.php?page=currencies&amp;new" class="linkbut">Create new currency</a></span>
@@ -33,12 +37,12 @@ Register an existing unlisted currency
 <table class="normal">
 <tr class="heading">
 <th colspan="2">&nbsp;</th>
-<th><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=id_{if $sort_mode eq 'id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Id{/tr}</a></th>
-<th><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_name_{if $sort_mode eq 'cc_name_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Name{/tr}</a></th>
-<th><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_description_{if $sort_mode eq 'cc_description_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Description{/tr}</a></th>
-<th><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=owner_id_{if $sort_mode eq 'owner_id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Owner{/tr}</a></th>
-<th><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=requires_approval_{if $sort_mode eq 'requires_approval_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Approval?{/tr}</a></th>
-<th><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=listed_{if $sort_mode eq 'listed_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Listed?{/tr}</a></th>
+<th align=left><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=id_{if $sort_mode eq 'id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Id{/tr}</a></th>
+<th align=left><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_name_{if $sort_mode eq 'cc_name_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Name{/tr}</a></th>
+<th align=left><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=cc_description_{if $sort_mode eq 'cc_description_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Description{/tr}</a></th>
+<th align=left><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=owner_id_{if $sort_mode eq 'owner_id_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Owner{/tr}</a></th>
+<th align=center><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=requires_approval_{if $sort_mode eq 'requires_approval_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Approval?{/tr}</a></th>
+<th align=center><a class="tableheading" href="cc.php?page=currencies&amp;sort_mode=listed_{if $sort_mode eq 'listed_desc'}asc{else}desc{/if}{if $userid}&amp;user={$userid}{/if}">{tr}Listed?{/tr}</a></th>
 </tr>
 
 {cycle values="odd,even" print=false}
@@ -63,8 +67,8 @@ Register an existing unlisted currency
 <td>{$it.cc_name}</td>
 <td>{$it.cc_description}</td>
 <td>{$it.owner_id|userlink}</td>
-<td>{$it.requires_approval}</td>
-<td>{$it.listed}</td>
+<td align=center>{$it.requires_approval}</td>
+<td align=center>{$it.listed}</td>
 </tr>
 {foreachelse}
 <td colspan="7">No entry</td>

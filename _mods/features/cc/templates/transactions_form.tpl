@@ -10,7 +10,20 @@
 <table class="formcolor">
 
 <tr class="formrow">
-<td>{tr}Amount{/tr}</td>
+<td>Description</td>
+{if $tiki_p_cc_admin eq 'y'}
+<td>From account</td>	
+{/if}
+<td>To account</td>	
+<td>Amount</td>
+</tr>
+
+<tr class="formrow">
+<td><input type='text' name='tr_item' size="24" value="{$smarty.request.tr_item}" />
+{if $tiki_p_cc_admin eq 'y'}
+<td><input type='text' name='from_id' size="24" value="{$smarty.request.from_id}" /></td>
+{/if}
+<td><input type='text' name='to_id' size="24" value="{$smarty.request.to_id}" /></td>
 <td>
 <input type='text' name='tr_amount' size="8" value="{$smarty.request.tr_amount}" />
 {if $currency}
@@ -24,24 +37,12 @@
 </select>
 {/if}
 </td>
+
+
 </tr>
+
 <tr class="formrow">
-{if $tiki_p_cc_admin eq 'y'}
-<tr class="formrow">
-<td>From account</td>	
-<td><input type='text' name='from_id' size="24" value="{$smarty.request.from_id|default:$user}" /></td>
-</tr>
-{/if}
-<tr class="formrow">
-<td>To account</td>	
-<td><input type='text' name='to_id' size="24" value="{$smarty.request.to_id}" /></td>
-</tr>
-<tr class="formrow">
-<td>Description</td>
-<td><input type='text' name='tr_item' size="24" value="{$smarty.request.tr_item}" />
-</tr>
-<tr class="formrow">
-<td></td><td><input type='submit' value='record' /></td>
+<td><input type='submit' value='record' /></td>
 </tr>
 
 </table>

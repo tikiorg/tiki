@@ -9,8 +9,7 @@
 <li>Currency Name: a more freeform label to describe a currency, sometimes used in reports.</li>
 <li>Description: a brief introduction about that - purpose, unit, limitations, values ....</li>
 <li>Requires approval: do people need your agreement to register to use this currency?</li>
-<li>Listed Publicly: set currency as visible or hidden in the public currency list.  Hiding gives no guarantee the id will not become known, but it helps preserve private groups from casual
-access.</li>
+<li>Listed Publicly: set currency as visible or hidden in the public currency list.  Hiding gives no guarantee the id will not become known, but it helps preserve private groups from casual access.</li>
 <li>Register Owner: auto-register (or not) the currency owner.</li>
 <li>Owner: the registry administrator can create a cc and specify an account holder as currency owner.</li>
 </ul>
@@ -19,11 +18,15 @@ access.</li>
 
 <p>This is the most common operation in the system, the feeding of the ledger. Parameters are :</p>
 <ul>
-<li>Currency: specify the cc you want to use for the transaction.</li>
+<li>Any useful text. </li>
 <li>Account id to recceive transfer. </li> 
 <li>Amount to transfer. </li>
-<li>Any useful text. </li>
+<li>Currency: specify the cc you want to use for the transaction.</li>
 <li>Click to submit. </li>
+<br>
+<li>Balances and records are updated. </li>
+<li>Confirmation will display, or any reasons for failure. </li>
+
 </ul>
 <br>
 <p>Balances and records are updated. Confirmation will display, or any reasons for failure. </p>
