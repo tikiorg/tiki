@@ -163,7 +163,6 @@ if (isset($_REQUEST["action"]) )
     twp_dispatch_actions($_REQUEST['action']);
     
     $smarty->assign('uses_tabs', 'y');
-    $smarty->assign('mid', 'error.tpl'); //'tiki-packager_admin_wizard.tpl
 } else {
     twp_displayPackageList();
 
