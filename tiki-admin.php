@@ -567,6 +567,60 @@ if(isset($_REQUEST["homeforumprefs"])&&isset($_REQUEST["homeForum"])) {
   $smarty->assign('home_forum',$_REQUEST["homeForum"]);
 }  
 
+if(isset($_REQUEST['imagegallistprefs'])) {
+  if(isset($_REQUEST["gal_list_name"]) && $_REQUEST["gal_list_name"]=="on") {
+    $tikilib->set_preference("gal_list_name",'y'); 
+    $smarty->assign("gal_list_name",'y');
+  } else {
+    $tikilib->set_preference("gal_list_name",'n');
+    $smarty->assign("gal_list_name",'n');
+  }  
+  if(isset($_REQUEST["gal_list_description"]) && $_REQUEST["gal_list_description"]=="on") {
+    $tikilib->set_preference("gal_list_description",'y'); 
+    $smarty->assign("gal_list_description",'y');
+  } else {
+    $tikilib->set_preference("gal_list_description",'n');
+    $smarty->assign("gal_list_description",'n');
+  }  
+  if(isset($_REQUEST["gal_list_created"]) && $_REQUEST["gal_list_created"]=="on") {
+    $tikilib->set_preference("gal_list_created",'y'); 
+    $smarty->assign("gal_list_created",'y');
+  } else {
+    $tikilib->set_preference("gal_list_created",'n');
+    $smarty->assign("gal_list_created",'n');
+  }  
+  if(isset($_REQUEST["gal_list_lastmodif"]) && $_REQUEST["gal_list_lastmodif"]=="on") {
+    $tikilib->set_preference("gal_list_lastmodif",'y'); 
+    $smarty->assign("gal_list_lastmodif",'y');
+  } else {
+    $tikilib->set_preference("gal_list_lastmodif",'n');
+    $smarty->assign("gal_list_lastmodif",'n');
+  }  
+  if(isset($_REQUEST["gal_list_user"]) && $_REQUEST["gal_list_user"]=="on") {
+    $tikilib->set_preference("gal_list_user",'y'); 
+    $smarty->assign("gal_list_user",'y');
+  } else {
+    $tikilib->set_preference("gal_list_user",'n');
+    $smarty->assign("gal_list_user",'n');
+  }  
+  if(isset($_REQUEST["gal_list_imgs"]) && $_REQUEST["gal_list_imgs"]=="on") {
+    $tikilib->set_preference("gal_list_imgs",'y'); 
+    $smarty->assign("gal_list_imgs",'y');
+  } else {
+    $tikilib->set_preference("gal_list_imgs",'n');
+    $smarty->assign("gal_list_imgs",'n');
+  }  
+  if(isset($_REQUEST["gal_list_visits"]) && $_REQUEST["gal_list_visits"]=="on") {
+    $tikilib->set_preference("gal_list_visits",'y'); 
+    $smarty->assign("gal_list_visits",'y');
+  } else {
+    $tikilib->set_preference("gal_list_visits",'n');
+    $smarty->assign("gal_list_visits",'n');
+  }  
+
+}
+
+
 if(isset($_REQUEST["forumlistprefs"])) {
   if(isset($_REQUEST["forum_list_topics"]) && $_REQUEST["forum_list_topics"]=="on") {
     $tikilib->set_preference("forum_list_topics",'y'); 

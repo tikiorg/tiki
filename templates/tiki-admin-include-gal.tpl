@@ -56,6 +56,43 @@
 <a class="link" href="tiki-admin.php#gal?rmvorphimg=1">{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</a>
 </div>
 
+	<div class="simplebox">
+	{tr}Gallery listing configuration{/tr}
+	<form method="post" action="tiki-admin.php#gal">
+	<table>
+	<tr>
+		<td class="form">{tr}Name{/tr}</td>
+		<td class="form"><input type="checkbox" name="gal_list_name" {if $gal_list_name eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Description{/tr}</td>
+		<td class="form"><input type="checkbox" name="gal_list_description" {if $gal_list_description eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Created{/tr}</td>
+		<td class="form"><input type="checkbox" name="gal_list_created" {if $gal_list_created eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Last modified{/tr}</td>
+		<td class="form"><input type="checkbox" name="gal_list_lastmodif" {if $gal_list_lastmodif eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}User{/tr}</td>
+		<td class="form"><input type="checkbox" name="gal_list_user" {if $gal_list_user eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Images{/tr}</td>
+		<td class="form"><input type="checkbox" name="gal_list_imgs" {if $gal_list_imgs eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Visits{/tr}</td>
+		<td class="form"><input type="checkbox" name="gal_list_visits" {if $gal_list_visits eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr><td align="center" colspan="2"><input type="submit" name="imagegallistprefs" value="{tr}Set prefs{/tr}" /></td></tr>
+	</table>	
+	</form>	
+	</div>
+
     <div class="simplebox">
     {tr}Image galleries comments settings{/tr}
     <form method="post" action="tiki-admin.php#gal">

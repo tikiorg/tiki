@@ -177,15 +177,18 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 	      	  $smarty->assign('was_queued','n');
 	          if($_REQUEST["comments_threadId"]==0) {
 	            $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"], $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"]);
-	            
+	            if($forum_info["outbound_address"]) {
+				  @mail($forum_info["outbound_address"], '['.$forum_info['name'].']'.'re:'.$thread_info['title'],$_REQUEST["comments_title"]."\n".$_REQUEST["comments_data"]); 	          	
+ 	            }
 	            if($feature_user_watches == 'y') {
-				    $nots = $commentslib->get_event_watches('forum_post_thread',$_REQUEST['forumId']);
+				    $nots = $commentslib->get_event_watches('forum_post_thread',$_REQUEST['comments_parentId']);
 					foreach($nots as $not) {
 				  	  $smarty->assign('mail_forum',$forum_info["name"]);
 		              $smarty->assign('mail_title',$_REQUEST["comments_title"]);
 		              $smarty->assign('mail_date',date("u"));
 		              $smarty->assign('mail_message',$_REQUEST["comments_data"]);
 		              $smarty->assign('mail_author',$user);
+		              $smarty->assign('mail_topic',tra('topic:').$thread_info['title']);
 		              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
 		              @mail($not['email'], tra('Tiki email notification'),$mail_data);
 		            }
@@ -358,22 +361,21 @@ if($user
   $tikilib->replace_note($user,0,$info['title'],$info['data']);
 }
 
-/*
-review watches here
+
 if($feature_user_watches == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {
 	  if($_REQUEST['watch_action']=='add') {
-	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],tra('forum topic'),$forum_info['name'].':'.$thread_info['title'],"tiki-view_forum_thread.php?forumId=".$_REQUEST['forumId']."&comments_parentId=".$_REQUEST['comments_parentId'];);
+	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],tra('forum topic'),$forum_info['name'].':'.$thread_info['title'],"tiki-view_forum_thread.php?forumId=".$_REQUEST['forumId']."&comments_parentId=".$_REQUEST['comments_parentId']);
 	  } else {
 	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
 	  }
 	}
 	$smarty->assign('user_watching_topic','n');
-	if($user && $watch = $tikilib->get_user_event_watches($user,'forum_post_thread',$_REQUEST['forumId'])) {
+	if($user && $watch = $tikilib->get_user_event_watches($user,'forum_post_thread',$_REQUEST['comments_parentId'])) {
 		$smarty->assign('user_watching_topic','y');
 	}
 }
-*/
+
 
 
 if($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {

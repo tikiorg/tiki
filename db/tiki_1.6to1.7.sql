@@ -136,8 +136,8 @@ update  tiki_comments set summary='';
 alter table tiki_comments add smiley varchar(80);
 update tiki_comments set smiley='';
 
-alter table tiki_forums add outbound_address char(1);
-alter table tiki_forums add inbound_address char(1);
+alter table tiki_forums add outbound_address varchar(250);
+alter table tiki_forums add inbound_address varchar(250);
 alter table tiki_forums add topic_smileys char(1);
 alter table tiki_forums add ui_avatar char(1);
 alter table tiki_forums add ui_flag char(1);
