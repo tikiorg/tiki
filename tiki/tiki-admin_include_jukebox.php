@@ -89,6 +89,16 @@ if (isset($_REQUEST['jukeboxalbumlistconf'])) {
 
 		$smarty->assign("jukebox_album_list_created", 'n');
 	}
+
+	if (isset($_REQUEST["jukebox_album_list_genre"]) && $_REQUEST["jukebox_album_list_genre"] == "on") {
+		$tikilib->set_preference("jukebox_album_list_genre", 'y');
+
+		$smarty->assign("jukebox_album_list_genre", 'y');
+	} else {
+		$tikilib->set_preference("jukebox_album_list_genre", 'n');
+
+		$smarty->assign("jukebox_album_list_genre", 'n');
+	}
 }
 
 ask_ticket('admin-inc-jukebox');
