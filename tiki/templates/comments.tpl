@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.28 2003-11-21 11:51:09 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.29 2003-11-21 11:54:19 sylvieg Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -266,7 +266,7 @@
     {if $feature_smileys eq 'y'}
     <tr>
       <td class="formcolor">{tr}Smileys{/tr}</td>
-      <td class="formcolor">{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl"}</td>
+      <td class="formcolor">{include file="tiki-smileys.tpl" area_name="editpost"}</td>
     </tr>
     {/if}
     <tr>
