@@ -138,9 +138,9 @@
 <tr><td class="form">{tr}Use direct pagination links{/tr}:</td><td><input type="checkbox" name="direct_pagination" {if $direct_pagination eq 'y'}checked="checked"{/if}/></td></tr>
 <!--<tr><td class="form">{tr}Wiki_Tiki_Title{/tr}: </td><td><input type="text" size="5" name="title" value="{$title}" /></td></tr>-->
 <tr><td class="form">{tr}Theme{/tr}:</td><td>
-        <select name="style">
+        <select name="style_site">
         {section name=ix loop=$styles}
-        <option value="{$styles[ix]}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
+        <option value="{$styles[ix]}" {if $style_site eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
         {/section}
         </select></td></tr>
 <tr><td class="form">{tr}Slideshows theme{/tr}:</td><td>

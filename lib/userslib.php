@@ -139,11 +139,9 @@ class UsersLib {
     $user=addslashes($user);
     $hash=md5($pass);
     // If the user is loggin in the the lastLogin should be the last currentLogin?
-    // 
-    
     
     if($feature_challenge=='n' || empty($response)) {
-      $query = "select login from users_users where login='$user' and hash='$hash'"; 
+      $query = "select login from users_users where binary login = '$user' and hash='$hash'"; 
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query,$result);
       if($result->numRows()) {
@@ -169,7 +167,7 @@ class UsersLib {
     } else {
       // Use challenge-reponse method
       // Compare pass against md5(user,challenge,hash)
-      $hash = $this->db->getOne("select hash from users_users where login='$user'");
+      $hash = $this->db->getOne("select hash from users_users where binary login='$user'");
       
       if(!isset($_SESSION["challenge"])) return false;
       //print("pass: $pass user: $user hash: $hash <br/>");

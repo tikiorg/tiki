@@ -146,6 +146,8 @@ class QuizLib extends TikiLib {
   function register_quiz_stats($quizId,$user,$timeTaken,$points,$maxPoints,$resultId)
   {
     $now = date("U");
+    // Fix a bug if no result is indicated.
+    if(!$resultId) $resultId=0;
     $query = "insert into tiki_user_quizzes(user,quizId,timestamp,timeTaken,points,maxPoints,resultId)
     values('$user',$quizId,$now,$timeTaken,$points,$maxPoints,$resultId)";
     $result = $this->query($query);

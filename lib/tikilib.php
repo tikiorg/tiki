@@ -7641,7 +7641,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         $items = $this->parse_rss_data($rssdata);
         $repl='';
         for($j=0;$j<count($items) && $j<$max;$j++) {
-         $repl.='<li><a target="_blank" href="'.$items[$j]["link"].'" class="rsslink">'.$items[$j]["title"].'</a></li>';
+         $repl.='<li><a target="_blank" href="'.$items[$j]["link"].'" class="wiki">'.$items[$j]["title"].'</a></li>';
         }
         $repl='<ul>'.$repl.'</ul>';
         $data = str_replace($rsss[0][$i],$repl,$data);
