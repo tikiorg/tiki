@@ -30,7 +30,7 @@ function wikiplugin_jabber($data,$params) {
   if(!isset($defaultColor)) {
     $defaultColor = '255,255,255';
   }
-  $userpwd = $tikilib->get_user_password($user);
+  $userpwd = $userlib->get_user_password($user);
 
   $result='<APPLET ARCHIVE="lib/jabber/JabberApplet.jar" CODE="org/jabber/applet/JabberApplet.class" HEIGHT='.$height.' WIDTH='.$width.' VIEWASTEXT>';
   $result.='<param name="xmlhostname" value="'.$xmlhostname.'">';
