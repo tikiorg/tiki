@@ -7683,11 +7683,18 @@ function parse_data($data)
     
     for($i=0;$i<count($plugins[0]);$i++) {
       $plugin_start = $plugins[0][$i];
+      $plugin_start_base = '{'.$plugins[1][$i].'(';
       $plugin_end = '{'.$plugins[1][$i].'}';
       // Find first occurrence of start tag
+      // Build start tag using 
+
+
       $pos = strpos($data,$plugin_start);
       // And now find the LAST occurrence of the end tag
-      $pos_end = strpos($data,$plugin_end);
+      $pos_end = strpos($data,$plugin_end,$pos);
+      
+      
+      
       if($pos_end>$pos) {
         $plugin_data_len=$pos_end-$pos-strlen($plugins[0][$i]);
         $plugin_data = substr($data,$pos+strlen($plugin_start),$plugin_data_len);
