@@ -66,6 +66,92 @@ class FileGalLib extends TikiLib {
 		return $fileId;
 	}
 
+    function add_file_gallery_hit($id) {
+	global $count_admin_pvs, $user;
+	if ($count_admin_pvs == 'y' || $user != 'admin') {
+	    $query = "update `tiki_file_galleries` set `hits`=`hits`+1 where `galleryId`=?";
+	    $result = $this->query($query,array((int) $id));
+	}
+	return true;
+    }
+
+    function get_file_gallery($id) {
+	$query = "select * from `tiki_file_galleries` where `galleryId`=?";
+	$result = $this->query($query,array((int) $id));
+	$res = $result->fetchRow();
+	return $res;
+    }
+
+    function list_visible_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
+	// If $user is admin then get ALL galleries, if not only user galleries are shown
+
+	$old_sort_mode = '';
+	$bindvars = array('y');
+	$whuser = "";
+
+	if (in_array($sort_mode, array( 'files_desc', 'files_asc'))) {
+	    $old_offset = $offset;
+	    $old_maxRecords = $maxRecords;
+	    $old_sort_mode = $sort_mode;
+	    $sort_mode = 'user_desc';
+	    $offset = 0;
+	    $maxRecords = -1;
+	}
+
+	// If the user is not admin then select `it` 's own galleries or public galleries
+	if ($user != 'admin') {
+	    $whuser.= " and (`user`=? or `public`=?)";
+	    $bindvars[] = $user;
+	    $bindvars[] = "y";
+	}
+
+	if ($find) {
+	    $findesc = '%' . $find . '%';
+	    $whuser .= " and (`name` like ? or `description` like ?)";
+	    $bindvars[] = $findesc;
+	    $bindvars[] = $findesc;
+	}
+
+	$query = "select * from `tiki_file_galleries` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_file_galleries` where `visible`=? $whuser";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
+	$ret = array();
+
+	while ($res = $result->fetchRow()) {
+	    $aux = array();
+
+	    $aux["name"] = $res["name"];
+	    $gid = $res["galleryId"];
+	    $aux["id"] = $gid;
+	    $aux["visible"] = $res["visible"];
+	    $aux["galleryId"] = $res["galleryId"];
+	    $aux["description"] = $res["description"];
+	    $aux["created"] = $res["created"];
+	    $aux["lastModif"] = $res["lastModif"];
+	    $aux["user"] = $res["user"];
+	    $aux["hits"] = $res["hits"];
+	    $aux["public"] = $res["public"];
+	    $aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`=?",array((int)$gid));
+	    $ret[] = $aux;
+	}
+	if ($old_sort_mode == 'files_asc') {
+	    usort($ret, 'compare_files');
+	}
+	if ($old_sort_mode == 'files_desc') {
+	    usort($ret, 'r_compare_files');
+	}
+
+	if (in_array($old_sort_mode, array( 'files_desc', 'files_asc'))) {
+	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
+	}
+
+	$retval = array();
+	$retval["data"] = $ret;
+	$retval["cant"] = $cant;
+	return $retval;
+    }
+
 	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
 		global $tiki_p_admin_file_galleries;
 

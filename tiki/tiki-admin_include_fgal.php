@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.8 2004-03-29 21:26:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_fgal.php,v 1.9 2004-07-15 22:09:07 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -144,7 +144,11 @@ if (isset($_REQUEST["filegalcomprefs"])) {
 	}
 }
 
-$file_galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
+global $filegallib;
+if (!is_object($filegallib)) {
+	include_once ('lib/filegals/filegallib.php');
+}
+$file_galleries = $filegallib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
 
 $smarty->assign("fgal_match_regex", $tikilib->get_preference("fgal_match_regex", ''));

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.20 2004-06-23 22:33:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.21 2004-07-15 22:09:07 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,7 +40,7 @@ if (!isset($_REQUEST["galleryId"])) {
 }
 
 if ($_REQUEST["galleryId"] != 0) {
-	$gal_info = $tikilib->get_file_gallery($_REQUEST["galleryId"]);
+	$gal_info = $filegallib->get_file_gallery($_REQUEST["galleryId"]);
 } else {
 	$gal_info["galleryId"] = 0;
 
@@ -134,7 +134,7 @@ $smarty->assign_by_ref('owner', $gal_info["user"]);
 $smarty->assign_by_ref('public', $gal_info["public"]);
 $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 
-$tikilib->add_file_gallery_hit($_REQUEST["galleryId"]);
+$filegallib->add_file_gallery_hit($_REQUEST["galleryId"]);
 
 if (isset($_REQUEST["remove"])) {
 	// To remove an image the user must be the owner or admin
