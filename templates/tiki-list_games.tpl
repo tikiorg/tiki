@@ -40,12 +40,12 @@
 <table class="normal">
   <tr><td class="formcolor">{tr}Flash binary (.sqf or .dcr){/tr}:</td>
       <td class="formcolor">
-        <input name="userfile1" type="file" />
+        <input name="flashfile" type="file" />
       </td>
   </tr>
   <tr><td class="formcolor">{tr}Thumbnail (if the game is foo.swf the thumbnail must be named foo.swf.gif or foo.swf.png or foo.swf.jpg){/tr}:</td>
       <td class="formcolor">
-        <input name="userfile2" type="file" />
+        <input name="imagefile" type="file" />
       </td>
   </tr>
   <tr><td class="formcolor">{tr}Description{/tr}:</td>
@@ -64,8 +64,10 @@
 <form action="tiki-list_games.php" method="post">
 <input type="hidden" name="editable" value="{$editable|escape}" />
 <table class="normal">
-  <tr><td class="formcolor">{tr}description{/tr}</td>
-      <td class="formcolor"><textarea name="description" rows="4" cols="40">{$data|escape}</textarea></td>
+  <tr><td class="formcolor" style="text-align:center; vertical-align:bottom">
+        <a href="tiki-list_games.php?edit={$games[$editable].game}"><img border='0' src="games/thumbs/{$games[$editable].game}" alt=''/></td>
+      <td class="formcolor">{tr}Description{/tr}<br />
+      <textarea name="description" rows="4" cols="40">{$data|escape}</textarea></td>
   </tr>
   <tr><td class="formcolor">&nbsp;</td>
       <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
