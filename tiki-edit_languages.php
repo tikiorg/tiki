@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.9 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.10 2003-11-25 23:05:49 marcius Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -126,7 +126,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 					//if ($result->numRows()== 0 ) 
 					if (!isset($result)) {
 						$query = "insert into `tiki_language` values(?,?,?)";
-						$result = $tikilib->query($query, array($_REQUEST["edit_edt_source_$i"],$edit_language,$_REQUEST["edit_edt_tran_$i"]);
+						$result = $tikilib->query($query,array($_REQUEST["edit_edt_source_$i"],$edit_language,$_REQUEST["edit_edt_tran_$i"]));
 					}
 				}
 			} elseif (isset($_REQUEST["del_tran_$i"])) {
@@ -190,7 +190,7 @@ if ($whataction == "edit_rec_sw" || $whataction == "edit_tran_sw") {
 	if (!isset($tr_recnum)) $tr_recnum = 0;
 
 	$aquery = sprintf(" order by source limit %d,%d", $tr_recnum, $maxRecords);
-	$sort_mode = "source_asc"
+	$sort_mode = "source_asc";
 
 	if ($whataction == "edit_tran_sw") {
 		$query = "select `source`, `tran` from `tiki_language` where `lang`=? $squeryedit order by ".$this->convert_sortmode($sort_mode);
