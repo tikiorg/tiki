@@ -22,9 +22,10 @@ class ArtLib extends TikiLib {
   
   function add_article_hit($articleId)
   {
-    $query = "update tiki_articles set reads=reads+1 where articleId=$articleId";
-    $result = $this->query($query);
-
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_articles set reads=reads+1 where articleId=$articleId";
+      $result = $this->query($query);
+    }
     return true;
   }
   

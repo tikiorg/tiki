@@ -605,8 +605,10 @@ class TikiLib {
   // File attachments functions for the wiki ////
   /*shared*/ function add_wiki_attachment_hit($id)
   {
-    $query = "update tiki_wiki_attachments set downloads=downloads+1 where attId=$id";
-    $result = $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_wiki_attachments set downloads=downloads+1 where attId=$id";
+      $result = $this->query($query);
+    }
     return true;
   }
   
@@ -1279,15 +1281,19 @@ class TikiLib {
 
   /*shared*/ function add_file_hit($id)
   {
-    $query = "update tiki_files set downloads=downloads+1 where fileId=$id";
-    $result = $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_files set downloads=downloads+1 where fileId=$id";
+      $result = $this->query($query);
+    }
     return true;
   }
 
   /*shared*/function add_file_gallery_hit($id)
   {
-    $query = "update tiki_file_galleries set hits=hits+1 where galleryId=$id";
-    $result = $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_file_galleries set hits=hits+1 where galleryId=$id";
+      $result = $this->query($query);
+    }
     return true;
   }
 
@@ -2565,9 +2571,11 @@ class TikiLib {
   }
 
   function add_hit($pageName) {
-    $pageName = addslashes($pageName);
-    $query = "update tiki_pages set hits=hits+1 where pageName = '$pageName'";
-    $result = $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $pageName = addslashes($pageName);
+      $query = "update tiki_pages set hits=hits+1 where pageName = '$pageName'";
+      $result = $this->query($query);
+    }
     return true;
   }
   

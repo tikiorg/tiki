@@ -33,8 +33,10 @@ class FlinksLib extends TikiLib {
   
   function add_featured_link_hit($url)
   {
-    $query = "update tiki_featured_links set hits = hits + 1 where url = '$url'";
-    $result = $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_featured_links set hits = hits + 1 where url = '$url'";
+      $result = $this->query($query);
+    }
   }
   
   function get_featured_link($url)

@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.6 2003-04-07 00:13:59 redflo Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.7 2003-05-16 22:09:06 ohertel Exp $
 
 if (!isset($_REQUEST["nocache"]))
   session_cache_limiter('private_no_expire');
@@ -56,10 +56,11 @@ if(!isset($tiki_p_view_image_gallery)) {
   die;
 }
 
-if(!isset($_REQUEST["thumb"])) {
-  $imagegallib->add_image_hit($_REQUEST["id"]);
-} 
-
+if($count_admin_pvs == 'y' || $user!='admin') {
+  if(!isset($_REQUEST["thumb"])) {
+    $imagegallib->add_image_hit($_REQUEST["id"]);
+  } 
+}
 $type=$imagegallib->filetype;
 header("Content-type: $type");
 header("Content-Disposition: inline; filename=".$imagegallib->filename);

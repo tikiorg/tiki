@@ -12,8 +12,10 @@ class ChartLib extends TikiLib {
   
   function add_chart_hit($chartId)
   {
-    $query = "update tiki_charts set hits=hits+1 where chartId=$chartId";
-    $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_charts set hits=hits+1 where chartId=$chartId";
+      $this->query($query);
+    }
   }
   
   function clear_chart_votes($chartId)

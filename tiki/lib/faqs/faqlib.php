@@ -102,8 +102,10 @@ class FaqLib extends TikiLib {
   
   function add_faq_hit($faqId)
   {
-    $query = "update tiki_faqs set hits=hits+1 where faqId=$faqId";
-    $result = $this->query($query);
+    if($count_admin_pvs == 'y' || $user!='admin') {
+      $query = "update tiki_faqs set hits=hits+1 where faqId=$faqId";
+      $result = $this->query($query);
+    }
   }
 
   function replace_faq_question($faqId,$questionId, $question, $answer)
