@@ -13,7 +13,7 @@
   {assign var=opensec value='y'}
   <div {if $menu_info.type eq 'd'}style="display:none;"{/if} id='userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}'>
 {else}
-  <div class="button">&nbsp;<a href="{$channels[ix].url}" class="linkmenu">{tr}{$channels[ix].name}{/tr}</a></div>
+  <div>&nbsp;<a href="{$channels[ix].url}" class="linkmenu">{tr}{$channels[ix].name}{/tr}</a></div>
 {/if}
 {/section}
 {if $opensec eq 'y'}</div>{/if}
@@ -22,7 +22,7 @@
 {if $channels[ix].type eq 's'}
   <div class="separator"><a class='separator' href="{$channels[ix].url}">{tr}{$channels[ix].name}{/tr}</a></div>
 {else}
-  <div class="button">&nbsp;<a href="{$channels[ix].url}" class="linkmenu">{tr}{$channels[ix].name}{/tr}</a></div>
+  <div>&nbsp;<a href="{$channels[ix].url}" class="linkmenu">{tr}{$channels[ix].name}{/tr}</a></div>
 {/if}
 {/section}
 {/if}
