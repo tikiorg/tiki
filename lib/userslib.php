@@ -291,6 +291,9 @@ class UsersLib extends TikiLib {
 					// just say no!
 					return false;
 			}
+				// if the user was logged into Auth and found in Tiki (no password in Tiki user table necessary)
+				elseif ($userAuth && $userTikiPresent)
+				return true;
 		}
 
 		// we will never get here
