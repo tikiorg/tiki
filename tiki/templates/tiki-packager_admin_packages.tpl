@@ -25,7 +25,7 @@
 <h3>{tr}List of packages{/tr}</h3>
 <hr />
 
-<form method="post" action="tiki-packager.php">
+<form method="POST" action="tiki-packager.php">
 <table class="findtable"><tr>
 <td><label for="groups_find">{tr}Find{/tr}</label></td>
 <td><input type="text" name="find" id="groups_find" value="{$find|escape}" /></td>
@@ -86,7 +86,7 @@ title={tr}"Click here to delete this manifest"{/tr}><img border="0" alt="{tr}Rem
 <tbody>
 </table>
 <br />
-<input type="submit" name="action" value="{tr}Remove selected packages{/tr}" onclick="confirmTheLink(this, '{tr}Are you sure you want to delete these manifests?{/tr}');"/>
+<input type="submit" name="action" value="{tr}Remove selected packages{/tr}" onclick="return confirmTheLink(this, '{tr}Are you sure you want to delete these manifests?{/tr}');"/>
 </form>
 <br />
 <div class="mini" align="center">
