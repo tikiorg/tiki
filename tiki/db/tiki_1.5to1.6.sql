@@ -1,5 +1,13 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+drop table if exists tiki_newsreader_marks;
+create table tiki_newsreader_marks (
+  user varchar(200) not null,
+  serverId integer(12) not null,
+  groupName varchar(255) not null,
+  timestamp integer(14) not null
+);
+
 drop table if exists tiki_newsreader_servers;
 create table tiki_newsreader_servers(
   user varchar(200) not null,

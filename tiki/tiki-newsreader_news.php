@@ -44,7 +44,7 @@ if(!$info) {
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
-print_r($info);
+
 
 //Now calculate all the offsets using maxRecords and offset
 //then load headers for messages between the first and last message to be displayed
@@ -83,7 +83,6 @@ for($i=$info['last']-$offset;$count<$maxRecords&&$i>=$info['first'];$i--) {
   
 }
 $smarty->assign('articles',$articles);
-print_r(array_keys($articles[0]));
 
 if($feature_messages=='y' && $tiki_p_messages=='y') {
   $unread = $tikilib->user_unread_messages($user);

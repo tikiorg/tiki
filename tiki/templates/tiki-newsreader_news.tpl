@@ -1,20 +1,21 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-newsreader_news.php?server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}">{tr}Newss from{/tr}:{$group}</a><br/><br/>
+<a class="pagetitle" href="tiki-newsreader_news.php?serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}">{tr}Newss from{/tr}:{$group}</a><br/><br/>
 {include file=tiki-mytiki_bar.tpl}
 <br/><br/>
 [<a class="link" href="tiki-newsreader_servers.php">{tr}Back to servers{/tr}</a>
-| <a class="link" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Back to groups{/tr}</a>]
+{if $serverId}| <a class="link" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Back to groups{/tr}</a>{/if}]
 <br/><br/>
 <table class="normal">
 {cycle values="odd,even" print=false}
 <tr>
+<td class="heading">{tr}From{/tr}</td>
 <td class="heading">{tr}Subject{/tr}</td>
 <td class="heading">{tr}Date{/tr}</td>
 </tr>
 {section loop=$articles name=ix}
 <tr>
-
-<td class="{cycle advance=false}"><a class="link" href="tiki-newsreader_read.php?server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}&amp;offset={$offset}&amp;id={$articles[ix].loopid}">{$articles[ix].Subject}</a></td>
+<td class="{cycle advance=false}">{$articles[ix].From}</td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-newsreader_read.php?server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}&amp;offset={$offset}&amp;id={$articles[ix].loopid}&amp;serverId={$serverId}">{$articles[ix].Subject}</a></td>
 <td class="{cycle}">{$articles[ix].Date|tiki_short_datetime}</td>
 </tr>
 {/section}
