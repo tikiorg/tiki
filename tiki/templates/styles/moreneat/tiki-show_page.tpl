@@ -55,7 +55,8 @@
 {if !$lock}
 	{if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
 		{if $beingEdited eq 'y'}
-			<span class="tabbut"><a title="{$semUser}" style="background: #FFAAAA;" href="tiki-editpage.php?page={$page|escape:"url"}" class="tablink">{tr}edit{/tr}</a></span>
+			{popup_init src="lib/overlib.js"}
+			<span class="tabbut"><a style="background: #FFAAAA;" href="tiki-editpage.php?page={$page|escape:"url"}" class="tablink" {popup text="$semUser" width="-1"}>{tr}edit{/tr}</a></span>
 		{else}
 			<span class="tabbut"><a href="tiki-editpage.php?page={$page|escape:"url"}" class="tablink">{tr}edit{/tr}</a></span>
 		{/if}
