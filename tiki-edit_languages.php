@@ -47,7 +47,7 @@ if(isset($_REQUEST["createlang"])) {
 
 //Editing things
 
-// Get availible languages from DB
+// Get available languages from DB
 
 $query="select lang from tiki_languages";
 $result=$tikilib->query($query);
