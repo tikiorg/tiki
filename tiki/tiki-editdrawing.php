@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.3 2003-01-04 19:34:16 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.4 2003-04-24 20:45:44 lrargerich Exp $
 
 include_once("tiki-setup_base.php");
 
@@ -14,6 +14,14 @@ if(isset($_REQUEST["close"])) {
 $name=$_REQUEST["drawing"];
 $path=$_REQUEST["path"];
 ?>
+<applet archive="lib/jgraphpad/jgraphpad.jar"
+code="com.jgraph.JGraphpad.class" width=100% height=40>
+	<param name="drawpath" value="<?php echo $path?>/img/wiki/<?php echo $name?>.draw">
+	<param name="gifpath"  value="<?php echo $path?>/img/wiki/<?php echo $name?>.gif">
+	<param name="savepath" value="<?php echo $path?>/jhot.php">
+	<param name="viewpath" value="tiki-editdrawing.php?close=1">
+</applet>	
+<!--
 <applet code="CH.ifa.draw.twiki.TWikiDraw.class" archive="lib/jHotDraw/twikidraw.jar" width=100% height=40>
 	<param name="drawpath" value="<?php echo $path?>/img/wiki/<?php echo $name?>.draw">
 	<param name="gifpath"  value="<?php echo $path?>/img/wiki/<?php echo $name?>.gif">
@@ -22,3 +30,4 @@ $path=$_REQUEST["path"];
 	<param name="viewpath" value="tiki-editdrawing.php?close=1">
 	<param name="helppath" value=".">
 </applet>
+-->
