@@ -14,6 +14,8 @@ class TikiLib {
   var $buffer;
   var $flag;
   var $parser;
+  var $pre_handlers=Array();
+  var $pos_handlers=Array();
 
   // Constructor receiving a PEAR::Db database object.
   function TikiLib($db)
@@ -3413,8 +3415,24 @@ class TikiLib {
     $data=str_replace("tiki-index","tiki-index_raw",$data);
     return $data;
   }
-
-function parse_data($data)
+  
+  function add_pre_handler($name)
+  {
+    if(!in_array($name,$this->pre_handlers)) {
+      $this->pre_handlers[]=$name;
+    }
+  }
+  
+  function add_pos_handler($name)
+  {
+    if(!in_array($name,$this->pos_handlers)) {
+      $this->pos_handlers[]=$name;
+    }
+  }
+  
+  
+  //PARSEDATA
+  function parse_data($data)
   {
     global $page_regex;
     global $slidemode;
@@ -3431,6 +3449,11 @@ function parse_data($data)
     global $page; 
     global $dbTiki;
     global $structlib;
+
+	// Process pre_handlers here
+	foreach($this->pre_handlers as $handler) {
+	  $data = $handler($data);
+	}
 
     if($feature_hotwords_nw == 'y') {
       $hotw_nw = "target='_blank'";
@@ -4017,6 +4040,11 @@ function parse_data($data)
     foreach($preparsed as $pp) {
       $data = str_replace($pp["key"],"<pre>".$pp["data"]."</pre>",$data);
     }
+
+	// Process pos_handlers here
+	foreach($this->pos_handlers as $handler) {
+	  $data = $handler($data);
+	}
 
     return $data;
   }
