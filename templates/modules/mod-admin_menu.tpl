@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.19 2003-10-28 00:27:25 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.20 2003-11-19 05:22:15 mose Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -39,6 +39,7 @@
       &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br />
       &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br />
       &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br />
+			&nbsp;<a href="tiki-quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
     {/if}
     {if $tiki_p_admin_chat eq 'y'}
       &nbsp;<a href="tiki-admin_chat.php" class="linkmenu">{tr}Chat{/tr}</a><br />
