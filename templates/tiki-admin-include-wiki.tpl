@@ -216,6 +216,34 @@
     </form>
     </div>
 
+    <div class="simplebox">
+    {tr}Wiki 3D browser configuration{/tr}
+    <form action="tiki-admin.php?page=wiki" method="post">
+    <table class="admin">
+      <tr>
+        <td class="form">{tr}Enable wiki 3D browser{/tr}:</td>
+        <td><input type="checkbox" name="wiki_feature_3d" {if $wiki_feature_3d eq 'y'}checked="checked"{/if}/></td>
+      </tr>
+      <tr>
+        <td class="form">{tr}Browser width{/tr}: </td>
+	<td><input type="text" name="wiki_3d_width" value="{$wiki_3d_width|escape}" /></td>
+      </tr>
+      <tr>
+        <td class="form">{tr}Browser height{/tr}: </td>
+	<td><input type="text" name="wiki_3d_height" value="{$wiki_3d_height|escape}" /></td>
+      </tr>
+      <tr>
+        <td class="form">{tr}Navigation depth{/tr}: </td>
+	<td><input type="text" name="wiki_3d_navigation_depth" value="{$wiki_3d_navigation_depth|escape}" /></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="button"><input type="submit" name="wikiset3d" value="{tr}Change preferences{/tr}" /></td>
+      </tr>    
+    </table>
+    </form>
+
+    </div>
+
     </td>
     
     <td  valign="top">

@@ -154,6 +154,34 @@ class WikiLib extends TikiLib {
 	return $aux;
     }
 
+    // Returns all pages that links from here or to here, without distinction
+    // This is used by wiki3d, to make the graph
+    function wiki_get_neighbours($page) {
+
+	   $neighbours = array();
+	   $already = array();
+
+           $query = "select `toPage` from `tiki_links` where `fromPage`=?";
+	   $result = $this->query($query,array($page));
+	   while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	       $neighbour = $row['toPage'];
+	       $neighbours[] = $neighbour;
+	       $already[$neighbour] = 1;
+	   }
+
+           $query = "select `fromPage` from `tiki_links` where `toPage`=?";
+	   $result = $this->query($query,array($page));
+	   while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	       $neighbour = $row['fromPage'];
+	       if (!isset($already[$neighbour])) {
+		   $neighbours[] = $neighbour;
+	       }
+	   }
+
+	   return $neighbours;
+
+    }
+
 
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong

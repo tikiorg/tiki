@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.21 2004-04-08 22:55:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.22 2004-05-02 19:49:24 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -584,6 +584,32 @@ if (isset($_REQUEST["wikisetcopyright"])) {
 		$tikilib->set_preference("wikiSubmitNotice", $_REQUEST["wikiSubmitNotice"]);
 
 		$smarty->assign('wikiSubmitNotice', $_REQUEST["wikiSubmitNotice"]);
+	}
+}
+
+if (isset($_REQUEST["wikiset3d"])) {
+        check_ticket('admin-inc-wiki');
+	if (isset($_REQUEST["wiki_feature_3d"]) && $_REQUEST["wiki_feature_3d"] == "on") {
+	    $tikilib->set_preference("wiki_feature_3d", 'y');
+	    $smarty->assign("wiki_feature_3d", 'y');
+	} else {
+	    $tikilib->set_preference("wiki_feature_3d", 'n');
+	    $smarty->assign("wiki_feature_3d", 'n');
+	}
+
+	if (isset($_REQUEST["wiki_3d_width"])) {
+		$tikilib->set_preference("wiki_3d_width", $_REQUEST["wiki_3d_width"]);
+		$smarty->assign('wiki_3d_width', $_REQUEST["wiki_3d_width"]);
+	}
+
+	if (isset($_REQUEST["wiki_3d_height"])) {
+		$tikilib->set_preference("wiki_3d_height", $_REQUEST["wiki_3d_height"]);
+		$smarty->assign('wiki_3d_height', $_REQUEST["wiki_3d_height"]);
+	}
+
+	if (isset($_REQUEST["wiki_3d_navigation_depth"])) {
+		$tikilib->set_preference("wiki_3d_navigation_depth", $_REQUEST["wiki_3d_navigation_depth"]);
+		$smarty->assign('wiki_3d_navigation_depth', $_REQUEST["wiki_3d_navigation_depth"]);
 	}
 }
 
