@@ -1479,7 +1479,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "strict" => "limité",
 "Pictures" => "Photos",
 "Use page description" => "Use page description",
-"Maximum size for each attachment" => "Taille maximum des ficheirs joints",
+"Maximum size for each attachment" => "Taille maximum des fichiers joints",
 "page" => "page",
 "page|desc" => "page|desc",
 "some text" => "some text",
@@ -2083,7 +2083,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "create new empty structure" => "create new empty structure",
 "Create structure from tree" => "Create structure from tree",
 "Use  single spaces to indent structure levels" => "Utiliser un seul espace pour une mise en retrait",//perhaps not used
-"tree" => "tree",
+"tree" => "arbre",
 "Just Tiki" => "Juste Tiki",
 "Tiki and PEAR::Auth" => "Tiki et PEAR::Auth",
 "Show description" => "Afficher la description",
@@ -2195,7 +2195,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "export pages" => "exporter les pages",
 "dump tree" => "dump tree",//??
 "stat" => "stat",
-"Batch upload (CSV file)" => "Téléchargement en différé (fichier CSV)",
+"Batch upload (CSV file)" => "Télécharger en différé (fichier CSV)",
 "Batch Upload Results" => "Résultats du téléchargement en différé",
 "Workflow" => "Workflow",
 "ExtWikis" => "ExtWikis",
