@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.136 2003-08-22 02:43:44 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.137 2003-08-22 05:05:53 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1610,5 +1610,7 @@ if ($feature_obzip == 'y') {
  */
 include_once ('lib/debug/debugger.php');
 //print("tiki-setup: after include debugger.php:".$tiki_timer->elapsed()."<br />");
+
+$smarty->assign_by_ref('num_queries',$tikilib->num_queries);
 
 ?>
