@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.23 2004-03-05 01:31:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.24 2004-03-10 13:49:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,6 +65,7 @@ if ($_REQUEST["fieldId"]) {
 	$info["isTblVisible"] = 'n';
 	$info["isPublic"] = 'n';
 	$info["isHidden"] = 'n';
+	$info["isMandatory"] = 'n';
 }
 
 $smarty->assign('name', $info["name"]);
@@ -76,6 +77,7 @@ $smarty->assign('isSearchable', $info["isSearchable"]);
 $smarty->assign('isTblVisible', $info["isTblVisible"]);
 $smarty->assign('isPublic', $info["isPublic"]);
 $smarty->assign('isHidden', $info["isHidden"]);
+$smarty->assign('isMandatory', $info["isMandatory"]);
 
 
 if (isset($_REQUEST["remove"])) {
@@ -115,10 +117,16 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$isHidden = 'n';
 	}
+	
+	if (isset($_REQUEST["isMandatory"]) && $_REQUEST["isMandatory"] == 'on') {
+		$isMandatory = 'y';
+	} else {
+		$isMandatory = 'n';
+	}
 
 	//$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
 	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,
-		$isTblVisible, $isPublic, $isHidden, $_REQUEST["position"], $_REQUEST["options"]);
+		$isTblVisible, $isPublic, $isHidden, $isMandatory, $_REQUEST["position"], $_REQUEST["options"]);
 	$smarty->assign('fieldId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('type', '');
@@ -128,6 +136,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('isTblVisible', $isTblVisible);
 	$smarty->assign('isPublic', $isPublic);
 	$smarty->assign('isHidden', $isHidden);
+	$smarty->assign('isMandatory', $isMandatory);
 	$smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
 }
 
@@ -160,23 +169,12 @@ foreach ($channels['data'] as $c) {
 	}
 }
 $smarty->assign('plug', implode(':',$plug));
-	
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$urlquery['find'] = $find;
+$urlquery['sort_mode'] = $sort_mode;
+$smarty->assign_by_ref('urlquery', $urlquery);
+$cant = $channels["cant"];
+include "tiki-pagination.php";
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('admin-tracker-fields');
