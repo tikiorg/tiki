@@ -5423,7 +5423,7 @@ function list_languages($path = false) {
     $h = opendir($path);
 
     while ($file = readdir($h)) {
-  if ($file != '.' && $file != '..' && is_dir("$path/$file") && strlen($file) == 2) {
+  if ($file != '.' && $file != '..' && $file != 'CVS' && is_dir("$path/$file") ) {
       $languages[] = $file;
   }
     }
