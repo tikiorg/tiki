@@ -52,10 +52,10 @@ $smarty->assign('assign_rows',10);
 $smarty->assign('assign_params','');
 
 if(isset($_REQUEST["clear_cache"])) {
-  $h = opendir("modules/cache");
+  $h = opendir("modules/cache/$tikidomain");
   while (($file = readdir($h)) !== false) {
       if(substr($file,0,3)=='mod') {
-        $file="modules/cache/".$file;
+        $file="modules/cache/$tikidomain/".$file;
         unlink($file);
       }
     }  
@@ -84,7 +84,11 @@ if(isset($_REQUEST["edit_assign"])) {
   $smarty->assign_by_ref('assign_cache',$info["cache_time"]);
   $smarty->assign_by_ref('assign_rows',$info["rows"]);
   $smarty->assign_by_ref('assign_params',$info["params"]);
-  $cosa="".$info["ord"];
+  if (isset($info["ord"]) {
+		$cosa="".$info["ord"];
+	} else {
+		 $cosa="";
+	}
   $smarty->assign_by_ref('assign_order',$cosa);
 }
 
