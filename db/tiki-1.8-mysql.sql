@@ -2955,14 +2955,16 @@ CREATE TABLE tiki_tracker_fields (
 DROP TABLE IF EXISTS tiki_tracker_item_attachments;
 CREATE TABLE tiki_tracker_item_attachments (
   attId int(12) NOT NULL auto_increment,
-  itemId varchar(40) NOT NULL default '',
+  itemId int(12) NOT NULL default 0,
   filename varchar(80) default NULL,
   filetype varchar(80) default NULL,
   filesize int(14) default NULL,
   user varchar(200) default NULL,
   data longblob,
+	longdesc blob,
   path varchar(255) default NULL,
   downloads int(10) default NULL,
+	version varchar(40) default NULL,
   created int(14) default NULL,
   comment varchar(250) default NULL,
   PRIMARY KEY  (attId)
@@ -3043,6 +3045,7 @@ CREATE TABLE tiki_trackers (
   showComments char(1) default NULL,
   useAttachments char(1) default NULL,
   showAttachments char(1) default NULL,
+	orderAttachments varchar(255) NOT NULL default 'name,created,filesize,downloads,desc',
   items int(10) default NULL,
   PRIMARY KEY  (trackerId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;

@@ -28,6 +28,7 @@
 <option value="u" {if $type eq 'u'}selected="selected"{/if}>{tr}user selector{/tr}</option>
 <option value="g" {if $type eq 'g'}selected="selected"{/if}>{tr}group selector{/tr}</option>
 <option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}date and time{/tr}</option>
+<option value="j" {if $type eq 'j'}selected="selected"{/if}>{tr}jscalendar{/tr}</option>
 <option value="i" {if $type eq 'i'}selected="selected"{/if}>{tr}image{/tr}</option>
 </select>
 <span  id='trkfldoptions' {if $type eq 'd' or $type eq 'i'}style="display:inline;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" /></span>

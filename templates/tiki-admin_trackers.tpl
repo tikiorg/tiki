@@ -35,6 +35,26 @@
 {tr}and display comments in listing?{/tr} <input type="checkbox" name="showComments" {if $showComments eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Tracker items allow attachments?{/tr}</td><td class="formcolor"><input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} />
 {tr}and display attachments in listing?{/tr} <input type="checkbox" name="showAttachments" {if $showAttachments eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Attachement display options{/tr}<br />{tr}(Use numbers to order items, 0 will not be displayed,<br /> and negative values will be displayed in a popup){/tr}</td><td class="formcolor">
+<table width="100%"><tr>
+<td class="formcolor">{tr}name{/tr}</td>
+<td class="formcolor">{tr}date{/tr}</td>
+<td class="formcolor">{tr}dls{/tr}</td>
+<td class="formcolor">{tr}desc{/tr}</td>
+<td class="formcolor">{tr}size{/tr}</td>
+<td class="formcolor">{tr}version{/tr}</td>
+<td class="formcolor">{tr}type{/tr}</td>
+<td class="formcolor">{tr}long desc{/tr}</td></tr>
+<tr>
+<td class="formcolor"><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
+<td class="formcolor"><input type="text" size="2" name="ui[date]" value="{$ui.created}" /></td>
+<td class="formcolor"><input type="text" size="2" name="ui[downloads]" value="{$ui.downloads}" /></td>
+<td class="formcolor"><input type="text" size="2" name="ui[comment]" value="{$ui.comment}" /></td>
+<td class="formcolor"><input type="text" size="2" name="ui[filesize]" value="{$ui.filesize}" /></td>
+<td class="formcolor"><input type="text" size="2" name="ui[version]" value="{$ui.version}" /></td>
+<td class="formcolor"><input type="text" size="2" name="ui[filetype]" value="{$ui.filetype}" /></td>
+<td class="formcolor"><input type="text" size="2" name="ui[longdesc]" value="{$ui.longdesc}" /></td>
+</tr></table>
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

@@ -111,7 +111,7 @@ class TrackerLib extends TikiLib {
 			$bindvars=array((int) $itemId);
 		}
 
-		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`downloads`,`created`,`comment` from `tiki_tracker_item_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select `user`,`attId`,`itemId`,`filename`,`filesize`,`filetype`,`downloads`,`created`,`comment`,`longdesc`,`version` from `tiki_tracker_item_attachments` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_tracker_item_attachments` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -127,12 +127,12 @@ class TrackerLib extends TikiLib {
 		return $retval;
 	}
 
-	function item_attach_file($itemId, $name, $type, $size, $data, $comment, $user, $fhash) {
+	function item_attach_file($itemId, $name, $type, $size, $data, $comment, $user, $fhash, $version, $longdesc) {
 		$comment = strip_tags($comment);
 		$now = date("U");
-		$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,`comment`,`path`)
-    values(?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array((int) $itemId,$name,$size,$type,$data,(int) $now,0,$user,$comment,$fhash));
+		$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,`comment`,`path`,`version`,`longdesc`)
+    values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array((int) $itemId,$name,$size,$type,$data,(int) $now,0,$user,$comment,$fhash,$version,$longdesc));
 	}
 
 	function get_item_attachment($attId) {
@@ -453,15 +453,15 @@ class TrackerLib extends TikiLib {
 	}
 
 				// Inserts or updates a tracker  
-	function replace_tracker($trackerId, $name, $description, $showCreated, $showLastModif, $useComments, $useAttachments, $showStatus, $showComments, $showAttachments) {
+	function replace_tracker($trackerId, $name, $description, $showCreated, $showLastModif, $useComments, $useAttachments, $showStatus, $showComments, $showAttachments, $orderattachments) {
 
 		if ($trackerId) {
 			$query = "update `tiki_trackers` set `name`=?,`description`=?, `useAttachments`=?,`showAttachments`=?,
-				`useComments`=?, `showComments`=?,`showCreated`=?,`showLastModif`=?,`showStatus`=? 
+				`useComments`=?, `showComments`=?,`showCreated`=?,`showLastModif`=?,`showStatus`=?, `orderAttachments`=? 
 				where `trackerId`=?";
 
 			$bindvars=array($name,$description,$useAttachments,$showAttachments,$useComments,$showComments,$showCreated,
-				$showLastModif,$showStatus,(int) $trackerId);
+				$showLastModif,$showStatus,$orderattachments,(int) $trackerId);
 
 			$result = $this->query($query,$bindvars);
 		} else {
@@ -469,10 +469,10 @@ class TrackerLib extends TikiLib {
 			
 			$this->getOne("delete from `tiki_trackers` where `name`=?",array($name),false);
 			$query = "insert into `tiki_trackers`(`name`,`description`,`created`,`lastModif`,
-				`items`,`showCreated`,`showLastModif`,`useComments`,`showComments``useAttachments`,`showAttachments``showStatus`)
-                		values(?,?,?,?,?,?,?,?,?,?,?,?)";
+				`items`,`showCreated`,`showLastModif`,`useComments`,`showComments``useAttachments`,`showAttachments`,`showStatus`,`orderAttachments`)
+                		values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,(int) $now,(int) $now,0,$showCreated,$showLastModif,
-				$useComments,$showComments,$useAttachments,$showAttachments,$showStatus);
+				$useComments,$showComments,$useAttachments,$showAttachments,$showStatus,$orderattachments);
 			$result = $this->query($query,$bindvars);
 			$trackerId = $this->getOne("select max(`trackerId`) from `tiki_trackers` where `name`=? and `created`=?",array($name,(int) $now));
 		}
@@ -563,7 +563,29 @@ class TrackerLib extends TikiLib {
 		$res = $result->fetchRow();
 		return $res;
 	}
-/* End of tiki tracker construction functions */
+
+/*
+** function only used for the popup for more infos on attachements
+*  returns an array with field=>value
+*/
+	function get_moreinfo($attId) {
+		$query = "select `orderAttachments`, t.`trackerId` from tiki_trackers t ";
+		$query.= " left join `tiki_tracker_items` i on t.`trackerId`=i.`trackerId` ";
+		$query.= " left join `tiki_tracker_item_attachments` a on i.`itemId`=a.`itemId` ";
+		$query.= " where a.`attId`=?";
+		$resu = $this->query($query,((int)$attId));
+		if (strstr($resu['orderatt'],'|')) {
+			$fields = split(',',substr($resu['orderat'],strpos($resu['orderatt'],'|')));
+			$query = "select `".implode("`,`",$fields)."` from `tiki_tracker_item_attachments` where `attId`=?";
+			$result = $this->query($query,array((int)$attId));
+			$res = $result->fetchRow();
+			$res["trackerId"] = $resu['trackerId'];
+			return $res;
+		} else {
+			return array(tra("Sorry") => tra("No extra information for that attached file."));
+		}
+	}
+
 }
 
 $trklib = new TrackerLib($dbTiki);
