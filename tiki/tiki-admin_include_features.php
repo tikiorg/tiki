@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.5 2003-08-14 01:33:34 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.6 2003-08-15 00:04:46 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -72,8 +72,9 @@ $features_toggles = array(
 	"feature_xmlrpc",
 	"layout_section",
 	"user_assigned_modules",
-	'feature_babelfish',
-	'feature_babelfish_logo',
+	"feature_babelfish",
+	"feature_babelfish_logo",
+  "feature_modulecontrols"
 );
 
 // Process Features form(s)
