@@ -826,7 +826,7 @@ class UsersLib extends TikiLib {
     }
 
     function get_permission_levels() {
-	$query = "select distinct(level) from `users_permissions`";
+	$query = "select distinct(`level`) from `users_permissions`";
 
 	$result = $this->query($query);
 	$ret = array();
@@ -924,7 +924,7 @@ class UsersLib extends TikiLib {
 
     function assign_permission_to_group($perm, $group) {
 	$query = "delete from `users_grouppermissions` where `groupName` = ?
-		and permName = ?";
+		and `permName` = ?";
 	$result = $this->query($query, array($group, $perm));
 	$query = "insert into `users_grouppermissions`(`groupName`, `permName`)
 		values(?, ?)";
