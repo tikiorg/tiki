@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.13 2003-08-12 13:24:56 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.14 2003-08-14 03:09:03 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.13 2003-08-12 13:24:56 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.14 2003-08-14 03:09:03 teedog Exp $
 session_start();
 
 // Define and load Smarty components
@@ -320,7 +320,6 @@ include_once ('DB.php');
 
 if (!file_exists('db/local.php')) {
 	$dbcon = false;
-
 	$smarty->assign('dbcon', 'n');
 } else {
 	// include the file to get the variables
@@ -335,14 +334,19 @@ if (!file_exists('db/local.php')) {
 		$smarty->assign('dbcon', 'n');
 	} else {
 		$dbcon = true;
-
-		$smarty->assign('dbcon', 'y');
+		if (!isset($_REQUEST['reset'])) {
+			$smarty->assign('dbcon', 'y');
+			$smarty->assign('resetdb', 'n');
+		} else {
+			$smarty->assign('dbcon', 'y');
+			$smarty->assign('resetdb', 'y');
+		}
 	}
 }
 
 // We won't update database info unless we can't connect to the
 // database.
-if (!$dbcon && isset($_REQUEST['dbinfo'])) {
+if ((!$dbcon or $_REQUEST['resetdb']=='y') && isset($_REQUEST['dbinfo'])) {
 	$filetowrite = '<' . '?' . 'php' . "\n";
 
 	$filetowrite .= '$db_tiki="' . $dbtodsn[$_REQUEST['db']] . '";' . "\n";
@@ -358,7 +362,7 @@ if (!$dbcon && isset($_REQUEST['dbinfo'])) {
 		$filetowrite .= '$host_tiki="unix(' . $_REQUEST['socket'] . ')";' . "\n";
 
 		break;
-        case "hostname":
+    case "hostname":
 	default:
                 $filetowrite .= '$host_tiki="' . $_REQUEST['host'] . '";' . "\n";
 

@@ -18,7 +18,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
   temp<br/><br/>
   <a href="tiki-install.php" class="link">try again!</a>
 *}
-	{if $dbcon eq 'n'}
+	{if $dbcon eq 'n' or $resetdb eq 'y'}
 	  <b>Tiki cannot find a database connection</b><br/>
 	  Please enter your database connection info<br/><br/>
 	  <form action="tiki-install.php" method="post">
@@ -87,7 +87,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  	</tr>
 	  	<tr>
 	  		<td class="formcolor">&nbsp;</td>
-	  		<td class="formcolor"><input type="submit" name="dbinfo" /></td>
+	  		<td class="formcolor"><input type="hidden" name="resetdb" value="{$resetdb}">
+	  		<input type="submit" name="dbinfo" /></td>
 	  	</tr>
 	  	
 	  </table>
@@ -115,7 +116,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		    </td></tr>
 		    </table>
 		    </form><br/>
-			<a href="tiki-index.php" class="link">Do nothing and enter Tiki!</a>		    
+			<a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
+			<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
 		  {else}
 			{* we are not logged then no admin account found and user not logged*}
 			<b>This site has an admin account configured</b><br/>
@@ -161,7 +163,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
     		recommend you to remove the script and then proceed into Tiki. If
     		you decide to remove the script it will be renamed to tiki-install.done<br/><br/>
     		<a href="tiki-install.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br/>
-    		<a href="tiki-index.php" class="link">Click here to proceed into tiki without removing the script</a>
+    		<a href="tiki-index.php" class="link">Click here to proceed into tiki without removing the script</a><br />
+    		<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
     	{/if}
 	{/if}
 
