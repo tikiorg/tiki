@@ -44,9 +44,9 @@
 	  {/if}
           <br/>
           <small class="caption">{$images[idx].name}
-          {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
             <br>
             [
+          {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 	    {if $nextx!=0}
             <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}" title="{tr}original size{/tr}">o</a>|
 	    {/if}
@@ -59,8 +59,9 @@
             <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}" title="{tr}delete{/tr}">x</a>
             |
             <a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$images[idx].imageId}" title="{tr}edit{/tr}">edit</a>
+            | 
           {/if}
-          | <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}&amp;popup=1" target="_blank">popup</a>
+          <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}&amp;popup=1" target="_blank">popup</a>
             ]
           <br/>
          ({$images[idx].xsize}x{$images[idx].ysize})[{$images[idx].hits} {tr}hits{/tr}]</small>
