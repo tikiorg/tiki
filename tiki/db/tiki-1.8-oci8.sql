@@ -929,7 +929,6 @@ CREATE TABLE "tiki_charts" (
   "lastChart" number(14) default NULL,
   "voteAgainAfter" number(14) default NULL,
   "created" number(14) default NULL,
-  "hist" number(12) default NULL,
   PRIMARY KEY ("chartId")
 )   ;
 
@@ -2521,7 +2520,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Rankings','tiki-cms_rankings.php',365,'feature_articles,feature_cms_ranking','tiki_p_read_article','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Submit article','tiki-edit_submissions.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Submit article','tiki-edit_submission.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','');
@@ -2834,6 +2833,12 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','External wikis','tiki-admin_external_wikis.php',1225,'','tiki_p_admin','');
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MantisBT','tiki-mantis-bugs.php',190,'feature_mantis','tiki_p_view_mantis','');
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin MantisBT','tiki-mantis-admin.php',192,'feature_mantis','tiki_p_admin_mantis','');
 
 
 -- --------------------------------------------------------
@@ -3991,6 +3996,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "trackerId" number(12) default '0' NOT NULL,
   "name" varchar(80) default NULL,
   "options" clob,
+  "position" number(4) default NULL,
   "type" char(1) default NULL,
   "isMain" char(1) default NULL,
   "isTblVisible" char(1) default NULL,
@@ -4016,14 +4022,16 @@ CREATE SEQUENCE "tiki_tracker_item_attachments_sequ" INCREMENT BY 1 START WITH 1
 
 CREATE TABLE "tiki_tracker_item_attachments" (
   "attId" number(12) NOT NULL,
-  "itemId" varchar(40) default '' NOT NULL,
+  "itemId" number(12) default 0 NOT NULL,
   "filename" varchar(80) default NULL,
   "filetype" varchar(80) default NULL,
   "filesize" number(14) default NULL,
   "user" varchar(200) default NULL,
   "data" blob,
+  "longdesc" blob,
   "path" varchar(255) default NULL,
   "downloads" number(10) default NULL,
+  "version" varchar(40) default NULL,
   "created" number(14) default NULL,
   "comment" varchar(250) default NULL,
   PRIMARY KEY ("attId")
@@ -4127,7 +4135,10 @@ CREATE TABLE "tiki_trackers" (
   "showStatus" char(1) default NULL,
   "showLastModif" char(1) default NULL,
   "useComments" char(1) default NULL,
+  "showComments" char(1) default NULL,
   "useAttachments" char(1) default NULL,
+  "showAttachments" char(1) default NULL,
+  "orderAttachments" varchar(255) default 'filename,created,filesize,downloads,desc' NOT NULL,
   "items" number(10) default NULL,
   PRIMARY KEY ("trackerId")
 )   ;
@@ -5201,6 +5212,12 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can browse categories', 'registered', 'tiki');
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_mantis', 'Can admin Mantis configuration', 'admin', 'mantis');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_mantis', 'Can view Mantis bugs', 'registered', 'mantis');
+
+
 -- --------------------------------------------------------
 --
 -- Table structure for table `users_usergroups`
@@ -5273,9 +5290,9 @@ INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin'
 UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin";
 
 
-INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator'); 
+INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator');
 
-
+ 
 -- --------------------------------------------------------
 -- Inserts of all default values for preferences
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('allowRegister','n');
@@ -5441,6 +5458,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('contact_user','admin');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('count_admin_pvs','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_map','pacific.map');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('directory_columns','3');
@@ -5635,6 +5655,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_image_galleries
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_integrator','n');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_jscalendar','n');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_lastChanges','y');
 
 
@@ -5650,6 +5673,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_listPages','y')
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_live_support','n');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_mantis','n');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_menusfolderstyle','n');
 
 
@@ -5657,6 +5683,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_messages','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_minical','n');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols', 'n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_newsletters','n');
@@ -5681,6 +5710,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_comments',
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_polls','n');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_phplayers','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_quizzes','n');
@@ -5759,9 +5791,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_warn_on_edit','
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n');
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_showstructs','n');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n');
@@ -5969,6 +5998,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('long_date_format','%A %
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('long_time_format','%H:%M:%S %Z');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('map_path','/var/www/html/map/');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('maxArticles','10');
@@ -6274,19 +6306,13 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('wikiSubmitNotice','');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_top_bar','n');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_uses_slides','n');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_db','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_dir','');
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('map_path','/var/www/html/map/');
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_map','pacific.map');
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols', 'y');
 
 
 -- Dynamic variables

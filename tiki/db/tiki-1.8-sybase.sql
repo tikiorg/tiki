@@ -1043,7 +1043,6 @@ chartId numeric(14 ,0) identity,
   "lastChart" numeric(14,0) default NULL NULL,
   "voteAgainAfter" numeric(14,0) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
-  "hist" numeric(12,0) default NULL NULL,
   PRIMARY KEY ("chartId")
 )   
 go
@@ -2953,7 +2952,7 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Submit article','tiki-edit_submissions.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Submit article','tiki-edit_submission.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','')
 go
 
 
@@ -3488,6 +3487,18 @@ go
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','External wikis','tiki-admin_external_wikis.php',1225,'','tiki_p_admin','')
 go
+
+
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MantisBT','tiki-mantis-bugs.php',190,'feature_mantis','tiki_p_view_mantis','')
+go
+
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin MantisBT','tiki-mantis-admin.php',192,'feature_mantis','tiki_p_admin_mantis','')
+go
+
 
 
 
@@ -4781,6 +4792,7 @@ fieldId numeric(12 ,0) identity,
   "trackerId" numeric(12,0) default '0' NOT NULL,
   "name" varchar(80) default NULL NULL,
   "options" text default '',
+  "position" numeric(4,0) default NULL NULL,
   "type" char(1) default NULL NULL,
   "isMain" char(1) default NULL NULL,
   "isTblVisible" char(1) default NULL NULL,
@@ -4806,14 +4818,16 @@ go
 
 CREATE TABLE "tiki_tracker_item_attachments" (
 attId numeric(12 ,0) identity,
-  "itemId" varchar(40) default '' NOT NULL,
+  "itemId" numeric(12,0) default 0 NOT NULL,
   "filename" varchar(80) default NULL NULL,
   "filetype" varchar(80) default NULL NULL,
   "filesize" numeric(14,0) default NULL NULL,
   "user" varchar(200) default NULL NULL,
   "data" image default '',
+  "longdesc" image default '',
   "path" varchar(255) default NULL NULL,
   "downloads" numeric(10,0) default NULL NULL,
+  "version" varchar(40) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   "comment" varchar(250) default NULL NULL,
   PRIMARY KEY ("attId")
@@ -4923,7 +4937,10 @@ trackerId numeric(12 ,0) identity,
   "showStatus" char(1) default NULL NULL,
   "showLastModif" char(1) default NULL NULL,
   "useComments" char(1) default NULL NULL,
+  "showComments" char(1) default NULL NULL,
   "useAttachments" char(1) default NULL NULL,
+  "showAttachments" char(1) default NULL NULL,
+  "orderAttachments" varchar(255) default 'filename,created,filesize,downloads,desc' NOT NULL,
   "items" numeric(10,0) default NULL NULL,
   PRIMARY KEY ("trackerId")
 )   
@@ -6391,6 +6408,16 @@ go
 
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_mantis', 'Can admin Mantis configuration', 'admin', 'mantis')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_mantis', 'Can view Mantis bugs', 'registered', 'mantis')
+go
+
+
+
 -- --------------------------------------------------------
 
 --
@@ -6481,6 +6508,7 @@ INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin',
 go
 
 
+ 
 -- --------------------------------------------------------
 
 -- Inserts of all default values for preferences
@@ -6755,6 +6783,11 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('count_admin_pvs','y')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_map','pacific.map')
 go
 
 
@@ -7079,6 +7112,11 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_jscalendar','n')
+go
+
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_lastChanges','y')
 go
 
@@ -7104,6 +7142,11 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_mantis','n')
+go
+
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_menusfolderstyle','n')
 go
 
@@ -7115,6 +7158,11 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_minical','n')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols', 'n')
 go
 
 
@@ -7155,6 +7203,11 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_polls','n')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_phplayers','n')
 go
 
 
@@ -7285,11 +7338,6 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n')
-go
-
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_showstructs','n')
 go
 
 
@@ -7635,6 +7683,11 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('long_time_format','%H:%M:%S %Z')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('map_path','/var/www/html/map/')
 go
 
 
@@ -8144,27 +8197,17 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('wiki_uses_slides','n')
+go
+
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_db','y')
 go
 
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_dir','')
-go
-
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('map_path','/var/www/html/map/')
-go
-
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_map','pacific.map')
-go
-
-
-
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols', 'y')
 go
 
 
