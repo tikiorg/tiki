@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.203 2004-06-07 01:16:44 marclaporte Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.204 2004-06-07 14:10:46 sylvieg Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4592,3 +4592,13 @@ CREATE TABLE tiki_hw_pages (
 #
 # Homework tables end
 #
+
+#translated objects table
+CREATE TABLE tiki_translated_objects (
+  traId int(14) NOT NULL auto_increment,
+  type varchar(50) NOT NULL,
+  objId varchar(255) NOT NULL,
+  lang varchar(16) default NULL,
+  PRIMARY KEY (type, objId),
+  KEY ( traId)
+) TYPE=MyISAM AUTO_INCREMENT=1;
