@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.32 2003-12-15 00:08:04 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.33 2003-12-17 13:20:03 mose Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -27,14 +27,22 @@ function chgTrkFld() {
 		document.getElementById('trkfldoptions').style.display = "inline";
 		document.getElementById('trkflddropdown').style.display = "inline";
 		document.getElementById('trkfldimage').style.display = "none";
+		document.getElementById('trkfldaction').style.display = "none";
+	} else if (document.getElementById('trkfldtype').value == 'x' ) {
+		document.getElementById('trkfldoptions').style.display = "inline";
+		document.getElementById('trkflddropdown').style.display = "none";
+		document.getElementById('trkfldimage').style.display = "none";
+		document.getElementById('trkfldaction').style.display = "inline";
 	} else if (document.getElementById('trkfldtype').value == 'i' ) {
 		document.getElementById('trkfldoptions').style.display = "inline";
 		document.getElementById('trkflddropdown').style.display = "none";
 		document.getElementById('trkfldimage').style.display = "inline";
+		document.getElementById('trkfldaction').style.display = "none";
 	} else {
 		document.getElementById('trkfldoptions').style.display = "none";
 		document.getElementById('trkflddropdown').style.display = "none";
 		document.getElementById('trkfldimage').style.display = "none";
+		document.getElementById('trkfldaction').style.display = "none";
 	}
 }
 
