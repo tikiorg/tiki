@@ -1,6 +1,7 @@
 <?php
 include_once('tiki-setup.php');
 include_once('lib/minical/minicallib.php');
+if(!$minical_reminders) die;
 //$refresh=$_REQUEST['refresh']*1000;
 $refresh=1000*60*1;
 /*
