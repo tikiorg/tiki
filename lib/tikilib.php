@@ -7520,9 +7520,20 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $hotw_nw = '';
     }
 
-    //Extract noparse sections before anything
+    //Extract preparse sections before anything
+    $preparsed=Array();
+    preg_match_all("/\~pp\~((.|\n)*?)\~\/pp\~/",$data,$preparse);
+    foreach(array_unique($preparse[1]) as $pp) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$pp;
+      $preparsed[]=$aux;
+      $data=str_replace("~pp~$pp~/pp~",$key,$data);
+    }
+
+    //Extract noparse sections almost before anything
     $noparsed=Array();
-    preg_match_all("/\~np\~([^\~]*)\~\/np\~/",$data,$noparse);
+    preg_match_all("/\~np\~((.|\n)*?)\~\/np\~/",$data,$noparse);
     foreach(array_unique($noparse[1]) as $np) {
       $key=md5($this->genPass());
       $aux["key"]=$key;
@@ -7767,7 +7778,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
     $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/","$1"."$2"."$3",$data);
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
-    preg_match_all("/\(\(($page_regex)\|([^\)]+)\)\)/",$data,$pages);
+    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages);
     for($i=0;$i<count($pages[1]);$i++) {
       if($desc = $this->page_exists_desc($pages[1][$i])) {
         $repl = "<a title='$desc' href='tiki-index.php?page=".$pages[1][$i]."' class='wiki'>".$pages[5][$i]."</a>";
@@ -7775,8 +7786,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         $repl = $pages[5][$i]."<a href='tiki-editpage.php?page=".$pages[1][$i]."' class='wiki'>?</a>";
       } 
 
-      $pattern = "/\(\(".$pages[0][$i]."\)\)/";
+      $pattern = "/".$pages[0][$i]."/";
       $pattern=str_replace('|','\|',$pattern);
+      $pattern=str_replace('(','\(',$pattern);
+      $pattern=str_replace(')','\)',$pattern);
       $data = preg_replace($pattern,"$repl",$data);
     }
 
@@ -8007,6 +8020,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $data = str_replace($np["key"],$np["data"],$data);
     }
 
+    foreach($preparsed as $pp) {
+      $data = str_replace($pp["key"],"<pre>".$pp["data"]."</pre>",$data);
+    }
+
     return $data;  
   }   
 
@@ -8035,7 +8052,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     global $page_regex;
     preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
     preg_match_all("/\(\(($page_regex)\)\)/",$data,$pages2);
-    preg_match_all("/\(\(($page_regex)\|([^\)]+)\)\)/",$data,$pages3);
+    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages3);
     $pages = array_unique(array_merge($pages[2],$pages2[1],$pages3[1]));
     return $pages;
   }
