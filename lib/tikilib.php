@@ -3326,6 +3326,7 @@ function parse_htmlchar(&$data) {
     $data = preg_replace("/~rsq~/i", "&rsquo;", $data);
     $data = preg_replace("/~c~/i", "&copy;", $data);
     $data = preg_replace("/~--~/", "&mdash;", $data);
+    $data = preg_replace("/ -- /", " &mdash; ", $data);
     $data = preg_replace("/~lt~/i", "&lt;", $data);
     $data = preg_replace("/~gt~/i", "&gt;", $data);
 
