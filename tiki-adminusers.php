@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.22 2004-02-03 06:13:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.23 2004-02-08 11:40:19 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$tikifeedback = array();
 require_once ('tiki-setup.php');
 
 if ($user != 'admin') {
@@ -82,7 +83,6 @@ function batchImportUsers() {
 	@$smarty->assign('discardlist', $discarded);
 }
 
-
 // Process the form to add a user here
 if (isset($_REQUEST["newuser"])) {
 	check_ticket('admin-users');
@@ -92,21 +92,21 @@ if (isset($_REQUEST["newuser"])) {
 	} else {
 		// Check if the user already exists
 		if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
-			$smarty->assign('msg', tra("The passwords dont match"));
-			$smarty->display("error.tpl");
-			die;
+			$tikifeedback[] = array('num'=>1,'mes'=>tra("The passwords don't match"));
 		} else {
 			if ($userlib->user_exists($_REQUEST["name"])) {
-				$smarty->assign('msg', tra("User already exists"));
-				$smarty->display("error.tpl");
-				die;
+				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("User %s already exists"),$_REQUEST["name"]));
 			} else {
-				$userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"]);
+				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"])) {
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("login"),$_REQUEST["name"]));
+					setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
+				} else {
+					$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to create new %s with %s %s."),tra("user"),tra("login"),$_REQUEST["name"]));
+				}
 			}
 		}
 	}
 }
-
 
 if (isset($_REQUEST["action"])) {
 	check_ticket('admin-users');
@@ -208,13 +208,27 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 					die; 	
 				}
 			}
-			$userlib->change_user_password($_POST['name'],$_POST["pass"]);
+			if ($userlib->change_user_password($_POST['name'],$_POST["pass"])) {
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
+			} else {
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modification failed."),tra("password")));
+			}
 		}
 		if ($userinfo['email'] != $_POST['email']) {
-			$userlib->change_user_email($_POST['name'],$_POST['email'],'');
+			if ($userlib->change_user_email($_POST['name'],$_POST['email'],'')) {
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("email"),$userinfo['email'],$_POST["email"]));
+				$userinfo['email'] = $_POST['email'];
+			} else {
+				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to change %s from %s to %s"),tra("email"),$userinfo['email'],$_POST["email"]));
+			}
 		}
 		if ($chlogin) {
-			$userlib->change_login($userinfo['login'],$_POST['name']);
+			if ($userlib->change_login($userinfo['login'],$_POST['name'])) {
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("login"),$userinfo['email'],$_POST["email"]));
+				$userinfo['login'] = $_POST['name'];
+			} else {
+				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to change %s from %s to %s"),tra("login"),$userinfo['email'],$_POST["email"]));
+			}
 		}
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 	}
@@ -283,10 +297,12 @@ if (isset($_REQUEST['add'])) {
 }
 
 $smarty->assign('userinfo', $userinfo);
-$smarty->assign('userid', $_REQUEST["user"]);
+$smarty->assign('userId', $_REQUEST["user"]);
 $smarty->assign('username', $username);
 $smarty->assign('usermail', $usermail);
 $smarty->assign('usersTrackerId', $usersTrackerId);
+
+$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 ask_ticket('admin-users');
 

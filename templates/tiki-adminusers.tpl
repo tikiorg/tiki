@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.43 2004-02-05 20:00:10 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.44 2004-02-08 11:40:20 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -13,9 +13,14 @@
 
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
-{if $userinfo}
+{if $userinfo.userId}
 <span class="button2"><a href="tiki-adminusers.php?add=1" class="linkbut">{tr}Add a new user{/tr}</a></span>
 {/if}
+
+{if $tikifeedback}
+<br />{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
+{/if}
+
 <br /><br /><br />
 
 {cycle name=tabs values="1,2,3,4" print=false advance=false}
@@ -23,7 +28,7 @@
 {* ---------------------- tabs -------------------- *}
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Users{/tr}</span>
-{if $userinfo}
+{if $userinfo.userId}
 <span id="tab{cycle name=tabs}" class="tab">{tr}Edit user{/tr} <i>{$userinfo.login}</i></span>
 {if $fields}
 <span id="tab{cycle name=tabs}" class="tab">{tr}More info{/tr}</span>
@@ -125,7 +130,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 
 {* ---------------------- tab with form -------------------- *}
 <div id="content{cycle name=content}" class="content">
-{if $userinfo.login}
+{if $userinfo.userId}
 <h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
 {else}
 <h2>{tr}Add a new user{/tr}</h2>
@@ -139,14 +144,16 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <tr class="formcolor"><td>{tr}Created{/tr}:</td><td>{$userinfo.created|tiki_long_datetime}</td></tr>
 <tr class="formcolor"><td>{tr}Registration{/tr}:</td><td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td></tr>
 <tr class="formcolor"><td>{tr}Last login{/tr}:</td><td>{if $userinfo.lastLogin}{$userinfo.lastLogin|tiki_long_datetime}{/if}</td></tr>
-{if $userinfo}
+{if $userinfo.userId}
 <tr class="formcolor"><td>&nbsp;</td><td>
 <input type="hidden" name="user" value="{$userinfo.userId|escape}">
-<input type="submit" name="edituser" value="{tr}Save{/tr}" />
+<input type="hidden" name="edituser" value="1" />
+<input type="submit" name="submit" value="{tr}Save{/tr}" />
 {else}
 <tr class="formcolor"><td>{tr}Batch upload (CSV file){/tr}:</td><td><input type="file" name="csvlist"/><br />{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked="checked" /></td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td>
-<input type="submit" name="newuser" value="{tr}Add{/tr}" />
+<input type="hidden" name="newuser" value="1" />
+<input type="submit" name="submit" value="{tr}Add{/tr}" />
 {/if}
 </td></tr>
 </table>
