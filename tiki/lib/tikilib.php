@@ -2472,7 +2472,7 @@ function replace_article($title, $authorName, $topicId, $useImage, $imgname, $im
 	// Insert the article
 	$query = "insert into `tiki_articles` (title, authorName, topicId, useImage, image_name, image_size, image_type, image_data, ";
 	$query.= " publishDate, expireDate, created, heading, body, hash, author, reads, votes, points, size, topicName, image_x, image_y, type, rating, isfloat) ";
-	$query.= " values( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	$query.= " values( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	$result = $this->query($query, array(
 		    $title, $authorName, (int) $topicId, $useImage, $imgname, (int) $imgsize, $imgtype, $imgdata, (int) $publishDate, (int) $expireDate, (int) $now, $heading,
