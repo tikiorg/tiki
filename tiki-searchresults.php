@@ -24,7 +24,7 @@ $find_where='find_'.$where;
 $smarty->assign('where',$where);
 $smarty->assign('where2',tra($where));
 
-if($where=='pages' and $feature_wiki != 'y') {
+if($where=='wikis' and $feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
   die;

@@ -60,7 +60,7 @@ if(isset($_REQUEST["tasks_useDates"])) {
 } else {
   $tasks_useDates = $tikilib->get_user_preference($user,'tasks_useDates');
 }
-$tasks_maxRecords = $tikilib->get_user_preference($user,'tasks_maxRecords');
+$tasks_maxRecords = $tikilib->get_user_preference($user,'tasks_maxRecords', $maxRecords);
 $maxRecords = $tasks_maxRecords;
 $smarty->assign('tasks_useDates',$tasks_useDates);
 $smarty->assign('tasks_maxRecords',$tasks_maxRecords);
