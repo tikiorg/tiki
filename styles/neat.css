@@ -558,6 +558,17 @@ TD.heading, td.jukeboxlistheading, td.gallistheading, td.listgalheading, td.blog
 	padding-right:   5px;
 }
 
+th, th.jukeboxlistheading, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
+	th.forumheading, th.viewthread {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   black;
+	font-size:   10px;
+	background-color:   #DEE7EC;
+	border:   1px solid #8CACBB;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
 TD.button {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	color:   black;

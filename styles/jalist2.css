@@ -376,6 +376,17 @@ TD.heading, td.gallistheading, td.listgalheading, td.jukeboxlistheading, td.blog
 	padding-right:   5px;
 }
 
+th, th.gallistheading, th.listgalheading, th.jukeboxlistheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
+	th.forumheading, th.thead {
+	background-image:    url(jalist/fcap.png);
+	font-family:   Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	color:   white;
+	font-size:   11px;
+	background-color:   #6884ad;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
 TD.button {
 	background-image:    url(jalist/fcap.png);
 	font-family:   Tahoma, Verdana, Arial, Helvetica, sans-serif;

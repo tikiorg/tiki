@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.1 2004-01-26 06:19:11 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.2 2004-02-01 21:42:24 musus Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -347,6 +347,16 @@ TABLE.normalnoborder {
 /* Table headings */
 TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, 
 td.listfilesheading, td.listartheading, td.forumheading, td.thead {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  color: black; font-size: 10px;
+  background-color: #f0ead8; 
+  border: 1px solid #676767;
+  padding-left: 2px;
+  padding-right: 5px;
+}
+
+th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, 
+th.listfilesheading, th.listartheading, th.forumheading, th.thead {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   color: black; font-size: 10px;
   background-color: #f0ead8; 

@@ -461,6 +461,16 @@ td.listfilesheading, td.listartheading, td.forumheading, td.viewthread
   padding-right: 5px;
 }
 
+th, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.jukeboxlistheading,
+th.listfilesheading, th.listartheading, th.forumheading, th.viewthread
+{
+  color: black; 
+  background-color: #DEE7EC; 
+  border: 1px solid #8CACBB;
+  padding-left: 2px;
+  padding-right: 5px;
+}
+
 TD.button
 {
   color: black;
