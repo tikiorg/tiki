@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.13 2004-06-01 03:41:45 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.14 2004-06-04 04:06:57 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -270,7 +270,6 @@ ask_ticket('edit-quiz-question');
 // Display the template
 $smarty->assign('mid', 'tiki-quiz_edit.tpl');
 
-// $smarty->display("tiki.tpl");
-$smarty->display("ggg-tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>
