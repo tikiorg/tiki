@@ -1,36 +1,4 @@
 <?php // -*- coding:utf-8 -*-
-// parameters:
-// lang=xx  : only tranlates language 'xx',
-//            if not given all languages are translated
-// comments : generate all comments (equal to close&module)
-// close    : look for similar strings that are allready translated and
-//            generate a commet if a 'match' is made
-// module   : generate comments that describes in which .php and/or .tpl
-//            module(s) a certain string was found (useful for checking
-//            translations in context)
-// patch    : looks for the file 'language.patch' in the same directory
-//            as the corresponding language.php and overrides any strings
-//            in language.php - good if a user does not agree with
-//            some translations or if only changes are sent to the maintaner
-// spelling : generates a file 'spellcheck_me.txt' that contains the
-//            words used in the translation.It is then easy to check this
-//            file for spelling errors (corrections must be done in
- //            'language.php, however)
-// Examples:
-// http://www.neonchart.com/get_strings.php?lang=sv
-// Will translate langauage 'sv' and (almost) avoiding comment generation
-
-// http://www.neonchart.com/get_strings.php?lang=sv&comments
-// Will translate langauage 'sv' and generate all possible comments.
-// This is the most usefull mode when working on a translation.
-
-// http://www.neonchart.com/get_strings.php?lang=sv&nohelp&nosections
-// These options will only provide the minimal amout of comments.
-// Usefull mode when preparing a translation for distribution.
-
-// http://www.neonchart.com/get_strings.php?nohelp&nosections
-// Prepare all languages for release 
-
 $lang=Array(
 "Your message has been queued for approval, the message will be posted after\r\na moderator approves it." => "Ihre Nachricht w&uuml;rde in die Warteschlange f&uuml;r Best&auml;stigungen eingereiht. Sie wird angezeigt, sobald sie ein Moderator freigegeben hat.", 
 "Click" => "Klick",
