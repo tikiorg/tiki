@@ -15,7 +15,7 @@
 </table>
 
 <h3>{tr}Ephemerides{/tr}</h3>
-{if $tiki_p_admin eq 'y'}
+{if $tiki_p_eph_admin eq 'y'}
 <a class="linkbut" href="tiki-eph_admin.php">{tr}Admin{/tr}</a>
 {/if}
 <table class="normal">
