@@ -121,7 +121,7 @@ class QuizLib extends TikiLib {
     $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["avgavg"]=$res["points"]/$res["maxPoints"]*100;
+      $res["avgavg"]= ($res["maxPoints"] !=0) ? $res["points"]/$res["maxPoints"]*100 : 0.0;
       $hasDet = $this->getOne("select count(*) from tiki_user_answers where userResultId=".$res["userResultId"]);
       if($hasDet) {
         $res["hasDetails"]='y';
