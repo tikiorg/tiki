@@ -499,7 +499,7 @@ TD {
 Cells in forms without background color 
 (inside a div for example) 
 */
-TD.form {
+.form {
 	font-size:    11px;
 	vertical-align:   top;
 	text-align:   left;
@@ -508,7 +508,7 @@ TD.form {
 /* 
 Cells in forms using a background color 
 */
-TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+.formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
 	background:    #d1d2a9;
 	font-size:   11px;
 	vertical-align:   top;
@@ -804,7 +804,7 @@ prev & next buttons in pagination
 /* 
 Warning background/color 
 */
-span.warn {
+.attention {
 	color: red;
 }
 
