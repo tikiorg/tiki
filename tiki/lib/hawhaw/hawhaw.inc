@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 25. May 2003
+// Last modified: 24. June 2003
 // Tested with PHP 3.0.7, 3.0.13, 4.0.0 and 4.1.1
 //
 // This library is free software; you can redistribute it and/or modify it under the
@@ -21,9 +21,12 @@
 //
 // For further information about this library and its license terms please visit:
 // http://www.hawhaw.de/
+//
+// changes against V5.0:
+// - bugfix: HAW_linkset: dtmf attribute in VoiceXML option tag 1-9 only
 
 // miscellaneous constants
-define("HAW_VERSION", "HAWHAW V5.0");
+define("HAW_VERSION", "HAWHAW V5.1b");
 define("HAW_COPYRIGHT", "(C) Norbert Huffschmid");
 
 // constants for markup languages
@@ -5180,7 +5183,7 @@ class HAW_linkset
 
         while (list($key, $val) = each($this->element))
         {
-          if ($val->get_accesskey() <= 9)
+          if (($val->get_accesskey() >= 1) && ($val->get_accesskey() <= 9))
             $dtmf = sprintf(" dtmf=\"%d\"", $val->get_accesskey());
           else
             $dtmf = "";
