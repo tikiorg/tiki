@@ -43,7 +43,7 @@ class MenuLib extends TikiLib {
 
 	function replace_menu($menuId, $name, $description, $type) {
 		// Check the name
-		if (isset($menuId)) {
+		if (isset($menuId) and $menuId > 0) {
 			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=? where `menuId`=?";
 			$bindvars=array($name,$description,$type,(int)$menuId);
 		} else {
