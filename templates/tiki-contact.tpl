@@ -28,6 +28,6 @@
 </table>
 </form>
 {/if}
-<h2>Contact us by email</h2>                              
+<h2>{tr}Contact us by email{/tr}</h2>                              
 {mailto address="$email" encode="javascript" text="click here to send us an email" extra='class="link"'}
                                
