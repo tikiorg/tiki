@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.10 2003-08-11 22:16:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.11 2003-09-24 03:13:14 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,8 +90,20 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 
+if (isset($_REQUEST["type"])) {
+	$type = $_REQUEST["type"];
+} else {
+	$type = '';
+}
+
+if (isset($_REQUEST["topicId"])) {
+	$topicId = $_REQUEST["topicId"];
+} else {
+	$topicId = '';
+}
+
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles(0, $maxArticles, $sort_mode, $find, $pdate, $user);
+$listpages = $tikilib->list_articles(0, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topicId);
 
 for ($i = 0; $i < count($listpages["data"]); $i++) {
 	$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
