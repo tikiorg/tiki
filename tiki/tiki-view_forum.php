@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.36 2003-10-09 01:07:45 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.37 2003-10-09 18:18:41 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -293,56 +293,6 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 		    $smarty->assign('was_queued', 'n');
 
 		    if ($_REQUEST["comments_threadId"] == 0) {
-			if ($forum_info["outbound_address"]) {
-			    $cdata_data = $_REQUEST["comments_data"];
-
-			    if (isset($_REQUEST["comments_topicssummary"]) &&
-				    $_REQUEST["comments_topicssummary"] )
-			    {
-				$cadata_data = $_REQUEST["comments_topicssummary"] . $cdata_data;
-			    }
-
-			    if ($forum_info["outbound_address"]) {
-				@mail(
-					$forum_info["outbound_address"],
-					$_REQUEST["comments_title"],
-					$_REQUEST["comments_title"] . "\n" . $_REQUEST["comments_data"],
-					"From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n"
-				     );
-			    }
-			}
-
-			if ($forum_info["useMail"] == 'y') {
-			    $smarty->assign('mail_forum', $forum_info["name"]);
-
-			    $smarty->assign('mail_title', $_REQUEST["comments_title"]);
-			    $smarty->assign('mail_date', date("u"));
-			    $smarty->assign('mail_message', $_REQUEST["comments_data"]);
-			    $smarty->assign('mail_author', $user);
-			    $smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
-			    $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-			    @mail($forum_info["mail"], tra('Tiki email notification'), $mail_data,
-				    "From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
-			}
-
-			// Check if the user is monitoring this post
-			if ($feature_user_watches == 'y') {
-			    $nots = $commentslib->get_event_watches('forum_post_topic', $_REQUEST['forumId']);
-
-			    foreach ($nots as $not) {
-				$smarty->assign('mail_forum', $forum_info["name"]);
-
-				$smarty->assign('mail_title', $_REQUEST["comments_title"]);
-				$smarty->assign('mail_date', date("u"));
-				$smarty->assign('mail_message', $_REQUEST["comments_data"]);
-				$smarty->assign('mail_author', $user);
-				$smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
-				$mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-				@mail($not['email'], tra('Tiki email notification'), $mail_data,
-					"From: ". $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
-			    }
-			}
-
 			if (!isset($_REQUEST['comment_topicsummary']))
 			    $_REQUEST['comment_topicsummary'] = '';
 
@@ -362,8 +312,13 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				    $_REQUEST['comment_topicsmiley']
 				    );
 
+			// Check if the thread was successfully
+			// created.
 			if ( ! $threadId )
 			{
+			    // The thread *WAS* *NOT* successfully
+			    // created.
+
 			    // Call post_new_comment again, but this
 			    // time ask it to return the threadId if the
 			    // same comment already exists. -rlpowell
@@ -390,7 +345,64 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				header('location: ' . $url);
 				exit;
 			    }
+			} else {
+			    // The thread *WAS* successfully
+			    // created.
+
+			    // Deal with mail notifications.
+
+			    if ($forum_info["outbound_address"]) {
+				$cdata_data = $_REQUEST["comments_data"];
+
+				if (isset($_REQUEST["comments_topicssummary"]) &&
+					$_REQUEST["comments_topicssummary"] )
+				{
+				    $cadata_data = $_REQUEST["comments_topicssummary"] . $cdata_data;
+				}
+
+				if ($forum_info["outbound_address"]) {
+				    @mail(
+					    $forum_info["outbound_address"],
+					    $_REQUEST["comments_title"],
+					    $_REQUEST["comments_title"] . "\n" . $_REQUEST["comments_data"],
+					    "From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n"
+					 );
+				}
+			    }
+
+			    if ($forum_info["useMail"] == 'y') {
+				$smarty->assign('mail_forum', $forum_info["name"]);
+
+				$smarty->assign('mail_title', $_REQUEST["comments_title"]);
+				$smarty->assign('mail_date', date("u"));
+				$smarty->assign('mail_message', $_REQUEST["comments_data"]);
+				$smarty->assign('mail_author', $user);
+				$smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
+				$mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
+				@mail($forum_info["mail"], tra('Tiki email notification'), $mail_data,
+					"From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
+			    }
+
+			    // Check if the user is monitoring this post
+			    if ($feature_user_watches == 'y') {
+				$nots = $commentslib->get_event_watches('forum_post_topic', $_REQUEST['forumId']);
+
+				foreach ($nots as $not) {
+				    $smarty->assign('mail_forum', $forum_info["name"]);
+
+				    $smarty->assign('mail_title', $_REQUEST["comments_title"]);
+				    $smarty->assign('mail_date', date("u"));
+				    $smarty->assign('mail_message', $_REQUEST["comments_data"]);
+				    $smarty->assign('mail_author', $user);
+				    $smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
+				    $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
+				    @mail($not['email'], tra('Tiki email notification'), $mail_data,
+					    "From: ". $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
+				}
+			    }
+
 			}
+
 
 			// PROCESS ATTACHMENT HERE        
 			if ($threadId && ($forum_info['att'] == 'att_all') || ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y') || ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y')) {
