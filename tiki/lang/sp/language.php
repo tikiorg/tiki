@@ -2046,6 +2046,7 @@ from Admin->General
 "User tasks" => "User tasks",
 "You have" => "You have",
 "new message" => "new message",
+"new messages" => "new messages",
 "Last Sites" => "Last Sites",
 "Top Sites" => "Top Sites",
 "Directory Stats" => "Directory Stats",
