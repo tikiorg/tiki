@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.42 2004-07-15 21:50:54 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.43 2004-07-17 12:49:28 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -227,7 +227,7 @@ if (isset($_REQUEST['add'])) {
 	$cookietab = "2";
 }
 
-if ($_REQUEST['group']) {
+if ($_REQUEST['group'] and isset($_REQUEST['show'])) {
 	$memberslist = $userlib->get_group_users($_REQUEST['group']);
 } else {
 	$memberslist = '';

@@ -178,7 +178,7 @@ class StructLib extends TikiLib {
 		// if were not trying to add a duplicate structure head 
 		if ($created or isset($parent_id)) {
             //Get the page Id
-		    $query = "select `page_id` from `tiki_pages` where `pageName`=?";
+		    $query = "select `page_id` from `tiki_pages` where ".$this->convert_binary()." `pageName`=?";
 			$page_id = $this->getOne($query,array($name));
 
 			if (isset($after_ref_id)) {
@@ -683,7 +683,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find) {
 	// Now loop the pages
 	foreach($pages as $page)
 	{
-		$query = "select * from `tiki_pages` where `pageName`=?";
+		$query = "select * from `tiki_pages` where ".$this->convert_binary()." `pageName`=?";
   		$result = $this->query($query,array($page));
 		$res = $result->fetchRow();
   		$docs[] = $res["pageName"]; 

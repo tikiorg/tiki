@@ -104,17 +104,26 @@ restore_error_handler();
 $smarty->assign("page",$map->name." Map");
  
 $layerbol=FALSE;
-if (isset($_REQUEST['size']))
-{
-  $size=$_REQUEST['size'];
-  $layerbol=TRUE;
-} else
-{
-  $size=400;
+
+if (isset($_REQUEST['Redraw'])) {
+	$_REQUEST['size'] = 2;
+	$_REQUEST['x'] = floor($map->width / 2);
+	$_REQUEST['y'] = floor($map->height / 2);
 }
-$map->Set("width",$size);
-$map->Set("height",$size);
-$map->scalebar->Set("width",$size);
+
+if (isset($_REQUEST['size']) and $_REQUEST['size'] < 5) {
+  $xsize=floor($_REQUEST['size']*($map->width / 2));
+  $ysize=floor($_REQUEST['size']*($map->height / 2));
+  $layerbol=TRUE;
+	$size = $_REQUEST['size'];
+} else {
+	$xsize = $map->width;
+	$ysize = $map->height;
+	$size = 2;
+}
+$map->Set("width",$xsize);
+$map->Set("height",$ysize);
+$map->scalebar->Set("width",$xsize);
 
 if (isset($_REQUEST['minx']) && isset($_REQUEST['miny'])
      && isset($_REQUEST['maxx']) && isset($_REQUEST['maxy']))
@@ -285,8 +294,8 @@ $smarty->assign('maxx',$maxx);
 $smarty->assign('maxy',$maxy);
 
 $smarty->assign('size',$size);
-$smarty->assign('possiblesizes',array(200,400,600));
-$smarty->assign('displaysizes',array('200x200','400x400','600x600'));
+$smarty->assign('possiblesizes',array(1,2,3,4));
+$smarty->assign('displaysizes',array(tra('half'),tra('normal'),tra('bigger'),tra('double')));
 
 $smarty->assign_by_ref('layer_label',$layer_label);
 $smarty->assign_by_ref('my_layers_label_checked',$my_layers_label_checked);

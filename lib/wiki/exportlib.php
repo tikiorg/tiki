@@ -60,7 +60,7 @@ class ExportLib extends TikiLib {
 	// Returns all the versions for this page
 	// without the data itself
 	function get_page_history($page) {
-		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode("version_desc");
+		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where ".$this->convert_binary()." `pageName`=? order by ".$this->convert_sortmode("version_desc");
 		$result = $this->query($query,array($page));
 		$ret = array();
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.53 2004-06-23 22:34:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.54 2004-07-17 12:49:34 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -26,9 +26,7 @@
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}List{/tr}</a></span>
 {if $groupname}
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Edit group{/tr} <i>{$groupname}</i></a></span>
-{if $memberslist}
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Members{/tr}</a></span>
-{/if}
 {else}
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Add a new group{/tr}</a></span>
 {/if}
@@ -208,16 +206,21 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 </div>
 
 {* ----------------------- tab with memberlist --------------------------------------- *}
-{if $groupname and $memberslist}
+{if $groupname}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h3>{tr}Members List{/tr}: {$groupname}</h3>
 <table class="normal"><tr>
+{if $memberslist}
 {cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 {section name=ix loop=$memberslist}
-<td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}" class="link">{$memberslist[ix]}</a></td>{cycle name=table}
+<td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}" class="link">mod</a> {$memberslist[ix]|userlink}</td>{cycle name=table}
 {/section}
 </tr></table>
 <div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname}</div>
 </div>
+{else}
+<td class="formcolor auto"><a href="tiki-admingroups.php?group={$groupname}&show=1">List all members</a></td>
+</tr></table>
+</div>
 {/if}
-
+{/if}

@@ -163,7 +163,7 @@ class TikiLib extends TikiDB {
 
 	$hash = md5(uniqid('.'));
 	$email = $userlib->get_user_email($user);
-	$query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
+	$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
 	$this->query($query,array($user,$event,$object));
 	$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`) ";
 	$query.= "values(?,?,?,?,?,?,?,?)";
@@ -179,7 +179,7 @@ class TikiLib extends TikiDB {
 
     /*shared*/
     function remove_user_watch($user, $event, $object) {
-	$query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
+	$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
 	$this->query($query,array($user,$event,$object));
     }
 
@@ -192,7 +192,7 @@ class TikiLib extends TikiDB {
 	    $bindvars[]=$event;
 	}
 
-	$query = "select * from `tiki_user_watches` where `user`=? $mid";
+	$query = "select * from `tiki_user_watches` where ".$this->convert_binary()." `user`=? $mid";
 	$result = $this->query($query,$bindvars);
 	$ret = array();
 
@@ -1000,7 +1000,7 @@ class TikiLib extends TikiDB {
 
 	    $pages[$page] = $val;
 	    // Fixed query.  -rlpowell
-	    $query = "update `tiki_pages` set `pageRank`=? where `pageName`= ?";
+	    $query = "update `tiki_pages` set `pageRank`=? where ".$this->convert_binary()." `pageName`= ?";
 	    $result = $this->query($query, array((int)$val, $page) );
 	}
 
@@ -1008,7 +1008,7 @@ class TikiLib extends TikiDB {
 	    foreach ($pages as $pagename => $rank) {
 		// Get all the pages linking to this one
 		// Fixed query.  -rlpowell
-		$query = "select `fromPage`  from `tiki_links` where `toPage` = ?";
+		$query = "select `fromPage`  from `tiki_links` where ".$this->convert_binary()." `toPage` = ?";
 		$result = $this->query($query, array( $pagename ) );
 		$sum = 0;
 
@@ -1017,7 +1017,7 @@ class TikiLib extends TikiDB {
 
 		    if (isset($pages[$linking])) {
 			// Fixed query.  -rlpowell
-			$q2 = "select count(*) from `tiki_links` where `fromPage`= ?";
+			$q2 = "select count(*) from `tiki_links` where ".$this->convert_binary()." `fromPage`= ?";
 			$cant = $this->getOne($q2, array($linking) );
 			if ($cant == 0) $cant = 1;
 			$sum += $pages[$linking] / $cant;
@@ -1027,7 +1027,7 @@ class TikiLib extends TikiDB {
 		$val = (1 - 0.85) + 0.85 * $sum;
 		$pages[$pagename] = $val;
 		// Fixed query.  -rlpowell
-		$query = "update `tiki_pages` set `pageRank`=? where `pageName`=?";
+		$query = "update `tiki_pages` set `pageRank`=? where ".$this->convert_binary()." `pageName`=?";
 		$result = $this->query($query, array((int)$val, $pagename) );
 
 		// Update
@@ -2240,13 +2240,13 @@ class TikiLib extends TikiDB {
 	function vote_page($page, $points) {
 	    $query = "update `pages`
 		set `points`=`points`+$points, `votes`=`votes`+1
-		where `pageName`=?";
+		where ".$this->convert_binary()." `pageName`=?";
 	    $result = $this->query($query, array( $page ));
 	}
 
 	function get_votes($page) {
 	    $query = "select `points` ,`votes`
-		from `pages` where `pageName`=?";
+		from `pages` where ".$this->convert_binary()." `pageName`=?";
 	    $result = $this->query($query, array( $page ));
 	    $res = $result->fetchRow();
 	    return $res;
@@ -2669,7 +2669,7 @@ class TikiLib extends TikiDB {
 	// This implements all the functions needed to use Tiki
 	/*shared*/
 	function page_exists($pageName, $casesensitive=false) {
-	    $query = "select `pageName` from `tiki_pages` where `pageName` = ?";
+	    $query = "select `pageName` from `tiki_pages` where ".$this->convert_binary()." `pageName` = ?";
 	    $result = $this->query($query, array($pageName));
 
 	    // if casesensitive, check the name of the returned page:
@@ -2683,7 +2683,7 @@ class TikiLib extends TikiDB {
 
 	function page_exists_desc($pageName) {
 	    $query = "select `description`  from `tiki_pages`
-		where `pageName` = ?";
+		where ".$this->convert_binary()." `pageName` = ?";
 	    $result = $this->query($query, array( $pageName ));
 
 	    if (!$result->numRows())
@@ -2699,7 +2699,7 @@ class TikiLib extends TikiDB {
 
 	function page_exists_modtime($pageName) {
 	    $query = "select `lastModif`  from `tiki_pages`
-		where `pageName` = ?";
+		where ".$this->convert_binary()." `pageName` = ?";
 	    $result = $this->query($query, array( $pageName ));
 
 	    if (!$result->numRows())
@@ -2714,7 +2714,7 @@ class TikiLib extends TikiDB {
 	}
 
 	function add_hit($pageName) {
-	    $query = "update `tiki_pages` set `hits`=`hits`+1 where `pageName` = ?";
+	    $query = "update `tiki_pages` set `hits`=`hits`+1 where ".$this->convert_binary()." `pageName` = ?";
 	    $result = $this->query($query, array($pageName));
 	    return true;
 	}
@@ -2825,7 +2825,7 @@ class TikiLib extends TikiDB {
 	}
 
 	function get_page_info($pageName) {
-	    $query = "select * from `tiki_pages` where `pageName`=?";
+	    $query = "select * from `tiki_pages` where ".$this->convert_binary()." `pageName`=?";
 
 	    $result = $this->query($query, array($pageName));
 
@@ -2852,7 +2852,7 @@ class TikiLib extends TikiDB {
 	}
 
 	function get_page_id_from_name($page) {
-	    $query = "select `page_id` from `tiki_pages` where `pageName`=?";
+	    $query = "select `page_id` from `tiki_pages` where ".$this->convert_binary()." `pageName`=?";
 	    return $this->getOne($query, array($page));
 	}
 
@@ -4356,7 +4356,7 @@ class TikiLib extends TikiDB {
 	}
 
 	function invalidate_cache($page) {
-	    $query = "update `tiki_pages` set `cache_timestamp`=? where `pageName`=?";
+	    $query = "update `tiki_pages` set `cache_timestamp`=? where ".$this->convert_binary()." `pageName`=?";
 	    $this->query($query, array(0,$page) );
 	}
 
@@ -4435,11 +4435,11 @@ class TikiLib extends TikiDB {
 
 	}
 
-	    if ($lang) {// not sure it is necessary
-		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where `pageName`=?";
+	if ($lang) {// not sure it is necessary
+		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where ".$this->convert_binary()." `pageName`=?";
 		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$lang,$pageName));
-	    } else {
-		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? where `pageName`=?";
+	} else {
+		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? where ".$this->convert_binary()." `pageName`=?";
 		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$pageName));
 	    }
 	    // Parse edit_data updating the list of links from this page
@@ -4502,12 +4502,12 @@ class TikiLib extends TikiDB {
 	    // Get this page information
 	    $info = $this->get_page_info($pageName);
 
-	    if ($version >= $info["version"]) {
-		if ($lang) { // not sure it is necessary
-		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where `pageName`=?";
+	if ($version >= $info["version"]) {
+	    if ($lang) { // not sure it is necessary
+		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where ".$this->convert_binary()." `pageName`=?";
 		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $lang, $pageName));
-		} else {
-		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=? where `pageName`=?";
+	    } else {
+		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=? where ".$this->convert_binary()." `pageName`=?";
 		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $pageName));
 		}
 		// Parse edit_data updating the list of links from this page

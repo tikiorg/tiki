@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.25 2004-06-16 19:40:52 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.26 2004-07-17 12:49:28 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,10 +26,11 @@ if ($tiki_p_use_webmail != 'y') {
 }
 
 require_once ("lib/webmail/pop3.php");
-require_once ("lib/webmail/mimeDecode.php");
+//require_once ("lib/webmail/mimeDecode.php");
+require_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/webmail/htmlMimeMail.php");
-
+/*
 function parse_output(&$obj, &$parts, $i) {
 	if (!empty($obj->parts)) {
 		$temp_max = count($obj->parts);
@@ -89,6 +90,7 @@ function parse_output(&$obj, &$parts, $i) {
 		}
 	}
 }
+*/
 function decode_subject_utf8($string){
 	if (ereg('=\?.*\?.*\?=', $string) === false)
 		return $string;
@@ -174,21 +176,13 @@ if ($_REQUEST["section"] == 'read') {
 	$header = $message["header"];
 	$full = $message["full"];
 	$pop3->Close();
-	$params = array(
-		'input' => $full,
-		'crlf' => "\r\n",
-		'include_bodies' => TRUE,
-		'decode_headers' => TRUE,
-		'decode_bodies' => TRUE
-	);
 
-	$output = Mail_mimeDecode::decode($params);
-	parse_output($output, $parts, 0);
+	$output = mime::decode($full);
 
-	if (isset($parts["html"])) {
-		$bodies = $parts["html"];
+	if (isset($output["html"])) {
+		$bodies = $output["html"];
 	} else {
-		$bodies = $parts["text"];
+		$bodies = $output["text"];
 	}
 
 	$temp_max = count($bodies);
@@ -197,8 +191,8 @@ if ($_REQUEST["section"] == 'read') {
 			$bodies[$i], "<a><b><i><table><tr><td><th><ul><li><img><hr><ol><br /><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select>");
 	}
 
-	if (isset($parts["attachments"])) {
-		$attachs = $parts["attachments"];
+	if (isset($output["attachments"])) {
+		$attachs = $output["attachments"];
 	} else {
 		$attachs = array();
 	}

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.83 2004-07-08 12:50:33 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.84 2004-07-17 12:49:28 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -606,4 +606,20 @@ CREATE TABLE  IF NOT EXISTS tiki_searchwords(
 # added 29 06 04 06:24:56 by mose for more optoins in wiki
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage_prefix','UserPage');
+
+#added 7/12/04 sylvie
+UPDATE `tiki_menu_options` set `name`='Upload file' where `name`='Upload  File' and menuId='42';UPDATE `tiki_menu_options` set `name`='MyTiki' where `name`='MonTiki (clic!)' and menuId='42';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','MyTiki home','tiki-my_tiki.php.php',51,'','','Registered');
+UPDATE `tiki_menu_options` set `name`='Admin' where `name`='Admin (click!)' and menuId='42';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','System Admin','tiki-admin_system.php',1230,'','tiki_p_admin','');
+UPDATE `tiki_menu_options` set `name`='Shoutbox Words' where `position`='1191' and menuId='42';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Score','tiki-admin_score.php',1235,'','tiki_p_admin','');
+UPDATE `tiki_menu_options` set `name`='Tracks' where `position`='625' and menuId='42' and name='View Tracks';
+UPDATE `tiki_menu_options` set `name`='Jukebox Admin' where `position`='635' and menuId='42' and name='Admin';
+UPDATE `tiki_menu_options` set `name`='Genres Admin', `url`='tiki-jukebox_genres.php', `perm`='tiki_p_jukebox_genres' where `url`='tiki-jukebox_upload.php' and menuId='42';
+UPDATE `tiki_menu_options` set `name`='User list' where `url`='tiki-list_users.php' and menuId='42;UPDATE `tiki_menu_options` set `section`='feature_articles,feature_cms_rankings'  where `section`='feature_articles,feature_cms_ranking' and menuId='42';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','','');
+
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('contact_anon','n');
 

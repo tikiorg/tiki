@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.118 2004-07-14 20:27:36 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.119 2004-07-17 12:49:28 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -94,7 +94,29 @@ if(isset($page_ref_id)) {
 $smarty->assign_by_ref('page',$page);
 $smarty->assign('page_ref_id', $page_ref_id);
 
-require_once('tiki-pagesetup.php');
+// Get page data, if available
+$info = $tikilib->get_page_info($page);
+
+// If the page doesn't exist then display an error
+if(empty($info)) {
+    $smarty->assign('msg',tra("Sorry, \"$page\" has not been created."));
+    $smarty->display("error.tpl");
+    die;
+}
+
+// Update the pagename with the canonical name
+$page = $info['pageName'];
+
+$creator = $wikilib->get_creator($page);
+$smarty->assign('creator',$creator);
+
+// Let creator set permissions
+if($wiki_creator_admin == 'y') {
+    if ($creator && $user && ($creator==$user)) {
+	$tiki_p_admin_wiki = 'y';
+	$smarty->assign( 'tiki_p_admin_wiki', 'y' );
+    }
+}
 
 $objId = urldecode($page);
 if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
@@ -124,42 +146,7 @@ if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 	$is_categorized = FALSE;
 }
 
-$creator = $wikilib->get_creator($page);
-$smarty->assign('creator',$creator);
-
-// Let creator set permissions
-if($wiki_creator_admin == 'y') {
-    if ($creator && $user && ($creator==$user)) {
-	$tiki_p_admin_wiki = 'y';
-	$smarty->assign( 'tiki_p_admin_wiki', 'y' );
-    }
-}
-
-if(isset($_REQUEST["copyrightpage"])) {
-    $smarty->assign_by_ref('copyrightpage',$_REQUEST["copyrightpage"]); 
-}
-
-// Get the backlinks for the page "page"
-$backlinks = $wikilib->get_backlinks($page);
-$smarty->assign_by_ref('backlinks', $backlinks);
-
-// Get page data, if available
-$info = $tikilib->get_page_info($page);
-
-// If the page doesn't exist then display an error
-if(empty($info)) {
-    $smarty->assign('msg',tra("Sorry, \"$page\" has not been created."));
-    $smarty->display("error.tpl");
-    die;
-} else {
-    // Update the pagename with the canonical name.  This makes it
-    // possible to link to a page using any case, but the page is still
-    // displayed with the original capitalization.  So if there's a page
-    // called 'About Me', then one can conveniently make a link to it in
-    // the text as '... learn more ((about me)).'.  When the link is
-    // followed, then it still says 'About Me' in the title.
-    $page = $info['pageName'];
-}
+require_once('tiki-pagesetup.php');
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
@@ -179,6 +166,14 @@ if ($feature_multilingual == 'y' && $info['lang'] && $info['lang'] != "NULL") { 
 	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
 	$smarty->assign('trads', $trads);
 }
+
+if(isset($_REQUEST["copyrightpage"])) {
+  $smarty->assign_by_ref('copyrightpage',$_REQUEST["copyrightpage"]); 
+}
+
+// Get the backlinks for the page "page"
+$backlinks = $wikilib->get_backlinks($page);
+$smarty->assign_by_ref('backlinks', $backlinks);
 
 // BreadCrumbNavigation here
 // Get the number of pages from the default or userPreferences

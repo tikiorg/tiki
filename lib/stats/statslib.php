@@ -44,7 +44,7 @@ class StatsLib extends TikiLib {
 		}
 		$bindvars = array();
 		if ($find) {
-			$mid = " where `pageName` like ? ";
+			$mid = " where ".$this->convert_binary()." `pageName` like ? ";
 			$bindvars[] = "%$find%";
 		} else {
 			$mid = "";
@@ -64,7 +64,7 @@ class StatsLib extends TikiLib {
 			$pageName = $res["pageName"];
 			$queryc = "select count(*) from `tiki_links` where `toPage`=?";
 			$cant = $this->getOne($queryc,array($pageName));
-			$queryc = "select count(*) from `tiki_structures` ts, `tiki_pages` tp where ts.`page_id`=tp.`page_id` and tp.`pageName`=?";
+			$queryc = "select count(*) from `tiki_structures` ts, `tiki_pages` tp where ts.`page_id`=tp.`page_id` and ".$this->convert_binary()." tp.`pageName`=?";
 			$cant += $this->getOne($queryc,array($pageName));
 
 			if ($cant == 0) {
@@ -81,7 +81,7 @@ class StatsLib extends TikiLib {
 				$aux["comment"] = $res["comment"];
 				$aux["version"] = $res["version"];
 				$aux["flag"] = $res["flag"] == 'L' ? 'locked' : 'unlocked';
-				$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page_as));
+				$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where ".$this->convert_binary()." `pageName`=?",array($page_as));
 				$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page_as));
 				$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page_as));
 				$ret[] = $aux;

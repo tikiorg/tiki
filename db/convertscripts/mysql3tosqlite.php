@@ -65,19 +65,19 @@ function parse($stmt)
   // blobs
   $stmt=preg_replace("/longblob|tinyblob|blob/","bytea",$stmt);
   // quote column names
-  $stmt=preg_replace("/  ([a-zA-Z0-9_]+)/","  \"$1\"",$stmt);
+  $stmt=preg_replace("/\n[ \t]+([a-zA-Z0-9_]+)/","\n  \"$1\"",$stmt);
   // quote and record table names
   $stmt=preg_replace("/(DROP TABLE |CREATE TABLE )([a-zA-Z0-9_]+)( \()*/e","record_tablename('$1','$2','$3')",$stmt);
   // unquote the PRIMARY and other Keys
-  $stmt=preg_replace("/  \"(PRIMARY|KEY|FULLTEXT|UNIQUE)\"/","  $1",$stmt);
+  $stmt=preg_replace("/\n[ \t]+\"(PRIMARY|KEY|FULLTEXT|UNIQUE)\"/","\n  $1",$stmt);
   // convert enums
-  $stmt=preg_replace("/  (\"[a-zA-Z0-9_]+\") enum\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
+  $stmt=preg_replace("/\n[ \t]+(\"[a-zA-Z0-9_]+\") enum\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
   // quote column names in primary keys
-  $stmt=preg_replace("/  (PRIMARY KEY)  \((.+)\),*/e","quote_prim_cols('$1','$2')",$stmt);
+  $stmt=preg_replace("/\n[ \t]+(PRIMARY KEY)  \((.+)\),*/e","quote_prim_cols('$1','$2')",$stmt);
   // create indexes from KEY ...
-  $stmt=preg_replace("/  KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$1','$2')",$stmt);
-  $stmt=preg_replace("/  FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$1','$2')",$stmt);
-  $stmt=preg_replace("/  (UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$2','$3','$1')",$stmt);
+  $stmt=preg_replace("/\n[ \t]+KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$1','$2')",$stmt);
+  $stmt=preg_replace("/\n[ \t]+FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$1','$2')",$stmt);
+  $stmt=preg_replace("/\n[ \t]+(UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$2','$3','$1')",$stmt);
   // handle inserts
   $stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES (.*)/e","do_inserts('$1','$2','$3')",$stmt);
   $stmt=preg_replace("/INSERT IGNORE INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES (.*)/e","do_inserts('$1','$2','$3')",$stmt);
@@ -146,11 +146,11 @@ function quotemd5($a)
 
 function quote_prim_cols($key,$content)
 {
-  $ret="  $key (";
+  $ret="\n  $key (";
   $cols=split(",",$content);
   foreach ($cols as $vals) {
     $vals=preg_replace("/\(.*\)/","",$vals);
-    $ret.="\"$vals\"";
+    $ret.="\"".trim($vals)."\"";
   }
   $ret=preg_replace("/\"\"/","\",\"",$ret);
   $ret.=")";
@@ -163,7 +163,7 @@ function convert_enums($colname,$content)
  $isnum=true;
  $length=0;
  $colname=stripslashes($colname);
- $ret="  $colname ";
+ $ret="\n  $colname ";
  foreach ($enumvals as $vals) {
    if (!is_int($vals)) $isnum=false;
    if (strlen($vals)>$length) $length=strlen($vals);

@@ -25,10 +25,13 @@ class mime {
 
 		$headparsed = preg_replace("/".$crlf."(\t| )/",' ',$header);
 		$heads = explode($crlf, trim($headparsed));
+		if (substr($heads[0],0,5) == "From ") {
+			$heads[0] = str_replace("From ","x-From: ",$heads[0]);
+		}
 		foreach ($heads as $line) {
 			$hdr_name = trim(substr($line, 0, strpos($line, ':')));
 			$hdr_value = trim(substr($line, strpos($line, ':')+1));
-			if ($hdr_value[0] == ' ') $hdr_value = substr($hdr_value, 1);
+			if (substr($hdr_value,0,1) == ' ') $hdr_value = substr($hdr_value, 1);
 			$hdr_value = preg_replace('/(=\?[^?]+\?(Q|B)\?[^?]*\?=)( |' . "\t|" . $crlf . ')+=\?/', '\1=?', $hdr_value);
 			while (preg_match('/(=\?([^?]+)\?(Q|B)\?([^?]*)\?=)/', $input, $matches)) {
 				list(,$encoded,$charset,$enconding,$text) = $matches;
@@ -60,13 +63,13 @@ class mime {
 			} else {
 				$back['header'][$lname]  = $hdr_value;
 			}
-			$headers["$hdr_name"] = $hdr_value;
+			$headers["$lname"] = $hdr_value;
 		}
 
 		while (list($key, $value) = each($headers)) {
-			$headers[$key]['name'] = strtolower($headers[$key]['name']);
 		
-			$input = $headers[$key]['value'];
+			$input = $headers[$key];
+			$it = array();
 			if (($pos = strpos($input, ';')) !== false) {
 				$it['value'] = trim(substr($input, 0, $pos));
 				$input = trim(substr($input, $pos + 1));
@@ -80,8 +83,8 @@ class mime {
 				$it['value'] = trim($input);
 			}
 
-			switch ($headers[$key]['name']) {
-
+			switch ($key) {
+			
 			case 'content-type':
 				$content_type = $it;
 				$back['type'] = $content_type['value'];
@@ -109,11 +112,23 @@ class mime {
 		}
 
 		if (isset($content_type)) {
+			$type = 'text';
 			switch (strtolower($content_type['value'])) {
-			case 'text/plain':
 			case 'text/html':
+				$type = 'html';
+			case 'text/plain':
+				if (!empty($content_disposition) && $content_disposition['value'] == 'attachment') {
+					$back['attachments'][] = $back['d_parameters'];
+				}
 				$encoding = isset($content_transfer_encoding) ? $content_transfer_encoding['value'] : '7bit';
 				$back['body'] = mime::decodeBody($body, $encoding);
+				if ($back['ctype_parameters'] and strtolower($back['ctype_parameters']['charset']) == "iso-8859-1") { 
+					$back[$type][] = utf8_encode($back['body']);
+				} elseif ($back['ctype_parameters'] and strtolower($back['ctype_parameters']['charset']) != "utf-8" and function_exists('mb_convert_encoding')) {
+					$back[$type][] = mb_convert_encoding($back['body'],"utf-8", $back['ctype_parameters']['charset']);
+				} else {
+					$back[$type][] = $back['body'];
+				}
 				break;
 
 			case 'multipart/signed':

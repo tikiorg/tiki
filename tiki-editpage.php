@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.92 2004-07-05 22:12:55 telenieko Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.93 2004-07-17 12:49:28 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -88,20 +88,13 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 
   fclose ($fp);
   $name = $_FILES['userfile1']['name'];
-  $params = array(
-    'input' => $data,
-    'crlf' => "\r\n",
-    'include_bodies' => TRUE,
-    'decode_headers' => TRUE,
-    'decode_bodies' => TRUE
-  );
 
-  $output = Mail_mimeDecode::decode($params);
+  $output = mime::decode($data);
   unset ($parts);
-  parse_output($output, $parts, 0);
+
   $last_part = '';
   $last_part_ver = 0;
-  usort($parts, 'compare_import_versions');
+  usort($output['parts'], 'compare_import_versions');
 
   foreach ($parts as $part) {
     if ($part["version"] > $last_part_ver) {
@@ -609,6 +602,7 @@ function htmldecode($string) {
    return $string;
 }
 
+/*
 function parse_output(&$obj, &$parts,$i) {
   if(!empty($obj->parts)) {
     for($i=0; $i<count($obj->parts); $i++)
@@ -633,7 +627,7 @@ function parse_output(&$obj, &$parts,$i) {
     }
   }
 }
-
+*/
 // Pro
 // Check if the page has changed
 if (isset($_REQUEST["save"])) {

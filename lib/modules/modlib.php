@@ -111,7 +111,7 @@ class ModLib extends TikiLib {
 		$h = opendir("templates/modules");
 
 		while (($file = readdir($h)) !== false) {
-			if (substr($file, 0, 4) == 'mod-') {
+			if (substr($file, 0, 4) == 'mod-' && preg_match ("/\.tpl$/", $file)) {
 				if (!strstr($file, "nocache")) {
 					$name = substr($file, 4, strlen($file) - 8);
 
