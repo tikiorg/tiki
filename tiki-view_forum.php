@@ -241,7 +241,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
  	            if($_REQUEST["comments_topicssummary"]) {
  	            	$cadata_data = $_REQUEST["comments_topicssummary"].$cdata_data;
  	            }
-				@mail($forum_info["outbound_address"], '['.$forum_info['name'].']'.$_REQUEST["comments_title"],$cdata_data); 	          	
+				@mail($forum_info["outbound_address"], '['.$forum_info['name'].']'.$_REQUEST["comments_title"],$cdata_data, "From: $sender_email"); 	
  	          }
 	          if($forum_info["useMail"]=='y') {
 	              $smarty->assign('mail_forum',$forum_info["name"]);
@@ -251,7 +251,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 	              $smarty->assign('mail_author',$user);
 	              $smarty->assign('mail_topic',tra(' new topic:').$_REQUEST["comments_title"]);
 	              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-	              @mail($forum_info["mail"], tra('Tiki email notification'),$mail_data);
+	              @mail($forum_info["mail"], tra('Tiki email notification'),$mail_data, "From: $sender_email");
 	          }
 	          // Check if the user is monitoring this post
 			  if($feature_user_watches == 'y') {
@@ -264,7 +264,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 	              $smarty->assign('mail_author',$user);
 	              $smarty->assign('mail_topic',tra(' new topic:').$_REQUEST["comments_title"]);
 	              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-	              @mail($not['email'], tra('Tiki email notification'),$mail_data);
+	              @mail($not['email'], tra('Tiki email notification'),$mail_data, "From: $sender_email");
 	            }
 			  }
 			  if(!isset($_REQUEST['comment_topicsummary'])) $_REQUEST['comment_topicsummary']='';          

@@ -25,7 +25,7 @@ if (isset( $_REQUEST["remind"] )) {
     $mail_data = $smarty->fetch( 'mail/password_reminder.tpl' );
     $tmp = tra( "Your Tiki account information for" );
     $tmp .= " ".$_SERVER["SERVER_NAME"];
-    @mail( $email, $tmp, $mail_data );
+    @mail( $email, $tmp, $mail_data, "From: $sender_email" );
     // Just show "success" message and no form
     $smarty->assign( 'showmsg', 'y' );
     $smarty->assign( 'showfrm', 'n' );

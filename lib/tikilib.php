@@ -3575,6 +3575,7 @@ class TikiLib {
     global $dbTiki;
     global $notificationlib;
     global $feature_user_watches;
+    global $sender_email;
     include_once('lib/notifications/notificationlib.php');
     $this->invalidate_cache($pageName);
     // Collect pages before modifying edit_data (see update of links below)
@@ -3625,7 +3626,7 @@ class TikiLib {
         $smarty->assign('mail_machine',$machine);
         $smarty->assign('mail_pagedata',$edit_data);
         $mail_data = $smarty->fetch('mail/wiki_change_notification.tpl');
-        @mail($email, tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);
+        @mail($email, tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data, "From: $sender_email");
       }
       if($feature_user_watches == 'y') {
         $nots = $this->get_event_watches('wiki_page_changed',$pageName);
@@ -3647,7 +3648,7 @@ class TikiLib {
 	        $smarty->assign('mail_machine_raw',httpPrefix().implode('/',$parts));
 	        $smarty->assign('mail_pagedata',$edit_data);
 	        $mail_data = $smarty->fetch('mail/user_watch_wiki_page_changed.tpl');
-	        @mail($not['email'], tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);          
+	        @mail($not['email'], tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data, "From: $sender_email");          
         }
       }
     }  

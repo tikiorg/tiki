@@ -140,7 +140,7 @@ class UsersLib extends TikiLib {
 
   function validate_user($user,$pass,$challenge,$response)
   {
-    global $tikilib;
+    global $tikilib, $sender_email;
 
     // these will help us keep tabs of what is going on
     $userTiki = false;
@@ -168,7 +168,7 @@ class UsersLib extends TikiLib {
     }
 
     if($this->debug != false)
-      mail($this->debug, "tiki result", $result);
+      mail($this->debug, "tiki result", $result,"From: $sender_email");
     // if we aren't using LDAP this will be quick
     if(!$auth_pear ||
        ($auth_pear && $user == "admin" && $skip_admin) )
@@ -191,7 +191,7 @@ class UsersLib extends TikiLib {
       // check the user account
       $result = $this->validate_user_auth($user, $pass);
       if($this->debug != false)
-        mail($this->debug,"result", $result);
+        mail($this->debug,"result", $result,"From: $sender_email");
       switch($result)
       {
         case USER_VALID:
@@ -208,21 +208,21 @@ class UsersLib extends TikiLib {
             ."userTiki: $userTiki\n"
             ."UserTikiPresent: $userTikiPresent\n";
       if($this->debug != false)
-        mail($this->debug, "status", $msg);
+        mail($this->debug, "status", $msg,"From: $sender_email");
 
       // start off easy
       // if the user verified in Tiki and Auth, log in
       if($userAuth && $userTiki)
       {
         if($this->debug != false)
-          mail($this->debug, "exit 1", "");
+          mail($this->debug, "exit 1", "","From: $sender_email");
         return $this->update_lastlogin($user);
       }
       // if the user wasn't found in either system, just fail
       elseif(!$userTikiPresent && $userAuthPresent)
       {
         if($this->debug != false)
-          mail($this->debug, "exit 2", "");
+          mail($this->debug, "exit 2", "","From: $sender_email");
         return false;
       }
       // if the user was logged into Tiki but not found in Auth
@@ -234,7 +234,7 @@ class UsersLib extends TikiLib {
           // need to make this better! *********************************************************
           $result = $this->create_user_auth($user, $pass);
           if($this->debug != false)
-            mail($this->debug, "exit 3", $result);
+            mail($this->debug, "exit 3", $result,"From: $sender_email");
           // if it worked ok, just log in
           if($result == USER_VALID)
             // before we log in, update the login counter
@@ -259,7 +259,7 @@ class UsersLib extends TikiLib {
       elseif($userAuth && !$userTikiPresent)
       {
         if($this->debug != false)
-          mail($this->debug, "ok", "4");
+          mail($this->debug, "ok", "4","From: $sender_email");
         // see if we can create a new account
         if($create_tiki)
         {
@@ -285,12 +285,12 @@ class UsersLib extends TikiLib {
           return false;
       }
       elseif($this->debug != false)
-        mail($this->debug, "ok", "5");
+        mail($this->debug, "ok", "5","From: $sender_email");
     }
 
     // we will never get here
     if($this->debug != false)
-      mail($this->debug, "ok", "6");
+      mail($this->debug, "ok", "6","From: $sender_email");
     return false;
   }
 
@@ -338,7 +338,7 @@ class UsersLib extends TikiLib {
       $msg = "Status: ".$status."\n";
       foreach($options as $key=>$val)
         $msg .= "$key = $val\n";
-      mail($this->debug, "testing auth", $msg);
+      mail($this->debug, "testing auth", $msg,"From: $sender_email");
     }
 
     return $status;
@@ -432,7 +432,7 @@ class UsersLib extends TikiLib {
   // create a new user in the Auth directory
   function create_user_auth($user, $pass)
   {
-    global $tikilib;
+    global $tikilib, $sender_email;
     $options = array();
     $options["host"]       =  $tikilib->get_preference("auth_ldap_host", "localhost");
     $options["port"]       =  $tikilib->get_preference("auth_ldap_port", "389");
@@ -471,7 +471,7 @@ class UsersLib extends TikiLib {
       foreach($options as $key=>$val)
         $msg .= "$key = $val\n";
       if($this->debug != false)
-        mail($this->debug, "create_user_auth", $msg);
+        mail($this->debug, "create_user_auth", $msg,"From: $sender_email");
     }
 
     return $status;

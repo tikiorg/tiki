@@ -107,7 +107,7 @@ if(isset($_REQUEST["register"])) {
       $smarty->assign('mail_date',date("U"));
       $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
       $mail_data = $smarty->fetch('mail/new_user_notification.tpl');
-      mail($email, tra('New user registration'),$mail_data);
+      mail($email, tra('New user registration'),$mail_data,"From: $sender_email");
     }
     // Send the mail
     $smarty->assign('msg',tra('You will receive an email with information to login for the first time into this site'));
@@ -116,7 +116,7 @@ if(isset($_REQUEST["register"])) {
     $smarty->assign('mail_user',$_REQUEST["name"]);
     $smarty->assign('mail_apass',$apass);
     $mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
-    mail($_REQUEST["email"], tra('Your Tiki information registration'),$mail_data);
+    mail($_REQUEST["email"], tra('Your Tiki information registration'),$mail_data,"From: $sender_email");
     
     $smarty->assign('showmsg','y');
   } else {

@@ -20,7 +20,7 @@ class Messu extends Tikilib {
   
   function post_message($user,$from,$to,$cc,$subject,$body,$priority)
   {
-    global $smarty,$userlib;
+    global $smarty,$userlib,$sender_email;
     
     $from = addslashes($from);
     $to = addslashes($to);
@@ -54,7 +54,7 @@ class Messu extends Tikilib {
       $mail_data = $smarty->fetch('mail/messu_message_notification.tpl');
       $email = $userlib->get_user_email($user);
       if($email) {
-        @mail($email, 'New message arrived from '.$_SERVER["SERVER_NAME"], $mail_data);
+        @mail($email, 'New message arrived from '.$_SERVER["SERVER_NAME"], $mail_data, "From: $sender_email");
       }
     }
     

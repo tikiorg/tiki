@@ -68,6 +68,7 @@ class NlLib extends TikiLib {
  {
     global $smarty;
     global $user;
+    global $sender_email;
     $email=addslashes($email);
     // Generate a code and store it and send an email  with the
     // URL to confirm the subscription put valid as 'n'
@@ -88,7 +89,7 @@ class NlLib extends TikiLib {
     $smarty->assign('url_subscribe',$url_subscribe);
     $smarty->assign('server_name',$_SERVER["SERVER_NAME"]);
     $mail_data=$smarty->fetch('mail/confirm_newsletter_subscription.tpl');
-    @mail($email, tra('Newsletter subscription information at ').$_SERVER["SERVER_NAME"],$mail_data, "Content-type: text/plain;charset=utf-8\r\n");
+    @mail($email, tra('Newsletter subscription information at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
     $this->update_users($nlId);    
   }
   
@@ -96,6 +97,7 @@ class NlLib extends TikiLib {
   {
     global $smarty;
     global $user;
+    global $sender_email;
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $url_subscribe = httpPrefix().$foo["path"];       	 
     $query = "select * from tiki_newsletter_subscriptions where code='$code'";
@@ -112,7 +114,7 @@ class NlLib extends TikiLib {
     $smarty->assign('code',$res["code"]);
     $smarty->assign('url_subscribe',$url_subscribe);
     $mail_data=$smarty->fetch('mail/newsletter_welcome.tpl');
-    @mail($res["email"], tra('Welcome to ').$info["name"].tra(' at ').$_SERVER["SERVER_NAME"],$mail_data, "Content-type: text/plain;charset=utf-8\r\n");
+    @mail($res["email"], tra('Welcome to ').$info["name"].tra(' at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
     return $this->get_newsletter($res["nlId"]);
   }
   
@@ -120,6 +122,7 @@ class NlLib extends TikiLib {
   {
     global $smarty;
     global $user;
+    global $sender_email;
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $url_subscribe = httpPrefix().$foo["path"];
     $query = "select * from tiki_newsletter_subscriptions where code='$code'";
@@ -136,7 +139,7 @@ class NlLib extends TikiLib {
     $smarty->assign('mail_user',$user);
     $smarty->assign('url_subscribe',$url_subscribe);
     $mail_data=$smarty->fetch('mail/newsletter_byebye.tpl');
-    @mail($res["email"], tra('Bye bye from ').$info["name"].tra(' at ').$_SERVER["SERVER_NAME"],$mail_data, "Content-type: text/plain;charset=utf-8\r\n");
+    @mail($res["email"], tra('Bye bye from ').$info["name"].tra(' at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
     $this->update_users($res["nlId"]);    
     return $this->get_newsletter($res["nlId"]);
   }

@@ -293,6 +293,7 @@ class BlogLib extends TikiLib {
     // update tiki_blogs and call activity functions
 	global $smarty;
 	global $feature_user_watches;
+	global $sender_email;
     $tracks=addslashes(serialize(explode(',',$trackbacks)));
     $title=addslashes($title);
     $data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
@@ -328,7 +329,7 @@ class BlogLib extends TikiLib {
 	        if(count($parts)>1) unset($parts[count($parts)-1]);
 	        $smarty->assign('mail_machine_raw',httpPrefix().implode('/',$parts));
 	        $mail_data = $smarty->fetch('mail/user_watch_blog_post.tpl');
-	        @mail($not['email'], tra('Blog post').' '.$title, $mail_data);          
+	        @mail($not['email'], tra('Blog post').' '.$title, $mail_data, "From: $sender_email");          
         }
 	}    
 

@@ -234,6 +234,10 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference('contact_user',$_REQUEST['contact_user']);
     $smarty->assign('contact_user',$_REQUEST['contact_user']);
   }
+   if(isset($_REQUEST['sender_email'])) {
+    $tikilib->set_preference('sender_email',$_REQUEST['sender_email']);
+    $smarty->assign('sender_email',$_REQUEST['sender_email']);
+  }
   
   
   if(isset($_REQUEST["tikiIndex"])) {
