@@ -3,9 +3,8 @@
 <form method="post" action="tiki-edit_css.php">
 {tr}Style Sheet{/tr} : 
 {if $action eq "edit"}
-<b>{$editstyle}</b>
-<input type="hidden" name="editstyle" value="{$editstyle|escape}" />
-<input type="submit" name="save" value="{tr}save a custom copy{/tr}" /> 
+<input type="text" name="editstyle" value="{$editstyle}" />
+<input type="submit" name="save" value="{tr}Save{/tr}" /> 
 <a href="tiki-edit_css.php?editstyle={$editstyle}" class="link">{tr}Cancel{/tr}</a>
 <div style="padding:4px;border-bottom:1px solid #c3b3a3;">
 <textarea name="data" rows="42" cols="80" wrap="virtual" style="padding:7px;padding-right:0;">{$data|escape}</textarea>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.23 2004-04-16 15:33:32 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.24 2004-04-26 17:55:12 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,10 +33,14 @@ class Smarty_TikiWiki extends Smarty {
 	}
 
 	function _smarty_include($params) {
-		global $style, $style_base;
+		global $style, $style_base, $tikidomain;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/styles/$style_base/".$params['smarty_include_tpl_file'])) {
+			if ($tikidomain and file_exists("templates/$tikidomain/$style_base/".$params['smarty_include_tpl_file'])) {
+				$params['smarty_include_tpl_file'] = "$tikidomain/$style_base/".$params['smarty_include_tpl_file'];
+			} elseif ($tikidomain and file_exists("templates/$tikidomain/".$params['smarty_include_tpl_file'])) {
+				$params['smarty_include_tpl_file'] = "$tikidomain/".$params['smarty_include_tpl_file'];
+			} elseif (file_exists("templates/styles/$style_base/".$params['smarty_include_tpl_file'])) {
 				$params['smarty_include_tpl_file'] = "styles/$style_base/".$params['smarty_include_tpl_file'];
 			}
 		}
@@ -44,10 +48,14 @@ class Smarty_TikiWiki extends Smarty {
 	}
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
-		global $language, $style, $style_base;
+		global $language, $style, $style_base, $tikidomain;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
+			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
+			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
+			} elseif (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
@@ -79,10 +87,14 @@ class Smarty_TikiWiki extends Smarty {
 		return ereg_replace("^[ \t]*", "", $res);
 	}
 	function is_cached($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null) {
-		global $language, $style, $style_base;
+		global $language, $style, $style_base, $tikidomain;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
+			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
+			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
+			} elseif (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
@@ -94,7 +106,11 @@ class Smarty_TikiWiki extends Smarty {
 		global $language, $style, $style_base;
 
 		if (isset($style) && isset($style_base) && isset($_smarty_tpl_file)) {
-			if (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
+			if ($tikidomain and file_exists("templates/$tikidomain/styles/$style_base/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$tikidomain/styles/$style_base/$_smarty_tpl_file";
+			} elseif ($tikidomain and file_exists("templates/$tikidomain/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$tikidomain/$_smarty_tpl_file";
+			} elseif (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
