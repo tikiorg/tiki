@@ -125,6 +125,13 @@ $smarty->assign_by_ref('sort_mode',$sort_mode);
 // If offset is set use it if not then use offset =0
 // use the maxRecords php variable to set the limit
 // if sortMode is not set then use lastModif_desc
+if(!isset($_REQUEST["numrows"])) {
+	$numrows = $maxRecords;
+} else {
+	$numrows = $_REQUEST["numrows"];
+}
+$smarty->assign_by_ref('numrows',$numrows);
+
 if(!isset($_REQUEST["offset"])) {
   $offset = 0;
 } else {
@@ -139,18 +146,18 @@ if(isset($_REQUEST["find"])) {
 }
 $smarty->assign('find',$find);
 
-$users = $userlib->get_users($offset,$maxRecords,$sort_mode,$find);
-$cant_pages = ceil($users["cant"] / $maxRecords);
+$users = $userlib->get_users($offset,$numrows,$sort_mode,$find);
+$cant_pages = ceil($users["cant"] / $numrows);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
-$smarty->assign('actual_page',1+($offset/$maxRecords));
-if($users["cant"] > ($offset+$maxRecords)) {
-  $smarty->assign('next_offset',$offset + $maxRecords);
+$smarty->assign('actual_page',1+($offset/$numrows));
+if($users["cant"] > ($offset+$numrows)) {
+  $smarty->assign('next_offset',$offset + $numrows);
 } else {
   $smarty->assign('next_offset',-1); 
 }
 // If offset is > 0 then prev_offset
 if($offset>0) {
-  $smarty->assign('prev_offset',$offset - $maxRecords);  
+  $smarty->assign('prev_offset',$offset - $numrows);  
 } else {
   $smarty->assign('prev_offset',-1); 
 }
