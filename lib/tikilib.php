@@ -426,12 +426,9 @@ function replace_note($user, $noteId, $name, $data) {
 	$this->query($query,array($name,$data,(int)$size,(int)$now,$user,(int)$noteId));
 	return $noteId;
     } else {
-	$query = "insert into `tiki_user_notes`(`user`,`noteId`,`name`,`data`,`created`,`lastModif`,`size`)
-	    values(?,?,?,?,?,?,?)";
-
+	$query = "insert into `tiki_user_notes`(`user`,`noteId`,`name`,`data`,`created`,`lastModif`,`size`) values(?,?,?,?,?,?,?)";
 	$this->query($query,array($user,(int)$noteId,$name,$data,(int)$now,(int)$now,(int)$size));
-	$noteId = $this->getOne(
-		"select max(`noteId`) from `tiki_user_notes` where `user`=? and `name`=? and `created`=?",array($user,$name,(int)$now));
+	$noteId = $this->getOne( "select max(`noteId`) from `tiki_user_notes` where `user`=? and `name`=? and `created`=?",array($user,$name,(int)$now));
 	return $noteId;
     }
 }
@@ -454,13 +451,11 @@ function add_user_watch($user, $event, $object, $type, $title, $url) {
 /*shared*/
 function remove_user_watch_by_hash($hash) {
     $query = "delete from `tiki_user_watches` where `hash`=?";
-
     $this->query($query,array($hash));
 }
 
 /*shared*/
 function remove_user_watch($user, $event, $object) {
-
     $query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
     $this->query($query,array($user,$event,$object));
 }
@@ -481,35 +476,27 @@ function get_user_watches($user, $event = '') {
     while ($res = $result->fetchRow()) {
 	$ret[] = $res;
     }
-
     return $ret;
 }
 
 /*shared*/
 function get_watches_events() {
-    $query = "select distinct `event` from `tiki_user_watches`";
-
-    $result = $this->query($query,array());
-    $ret = array();
-
-    while ($res = $result->fetchRow()) {
-	$ret[] = $res['event'];
-    }
-
-    return $ret;
+	$query = "select distinct `event` from `tiki_user_watches`";
+	$result = $this->query($query,array());
+	$ret = array();
+	while ($res = $result->fetchRow()) {
+		$ret[] = $res['event'];
+	}
+	return $ret;
 }
 
 /*shared*/
 function get_user_event_watches($user, $event, $object) {
-    $query = "select * from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
-
-    $result = $this->query($query,array($user,$event,$object));
-
-    if (!$result->numRows())
-	return false;
-
-    $res = $result->fetchRow();
-    return $res;
+	$query = "select * from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
+	$result = $this->query($query,array($user,$event,$object));
+	if (!$result->numRows()) return false;
+	$res = $result->fetchRow();
+	return $res;
 }
 
 /*shared*/
@@ -531,26 +518,17 @@ function get_event_watches($event, $object) {
 
 /*shared*/
 function replace_task($user, $taskId, $title, $description, $date, $status, $priority, $completed, $percentage) {
-    if ($taskId) {
-	$query = "update `tiki_user_tasks` set
-	    `title` = ?,
-	`description` = ?,
-	`date` = ?,
-	`status` = ?,
-	`priority` = ?,
-	`percentage` = ?,
-	`completed` = ?
-	    where `user`=? and `taskId`=?";
-
-	$this->query($query,array($title,$description,$date,$status,$priority,$percentage,$completed,$user,$taskId));
-	return $taskId;
-    } else {
-	$query = "insert into `tiki_user_tasks`(`user`,`taskId`,`title`,`description`,`date`,`status`,`priority`,`completed`,`percentage`)
-	    values(?,?,?,?,?,?,?,?,?)";
+	if ($taskId) {
+		$query = "update `tiki_user_tasks` set `title` = ?, `description` = ?, `date` = ?, `status` = ?, `priority` = ?, ";
+		$query.= "`percentage` = ?, `completed` = ?  where `user`=? and `taskId`=?";
+		$this->query($query,array($title,$description,$date,$status,$priority,$percentage,$completed,$user,$taskId));
+		return $taskId;
+	} else {
+		$query = "insert into `tiki_user_tasks`(`user`,`taskId`,`title`,`description`,`date`,`status`,`priority`,`completed`,`percentage`) ";
+	  $query.= " values(?,?,?,?,?,?,?,?,?)";
 
 	$this->query($query,array($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage));
-	$taskId = $this->getOne(
-		"select  max(`taskId`) from `tiki_user_tasks` where `user`=? and `title`=? and `date`=?",array($user,$title,$date));
+	$taskId = $this->getOne( "select  max(`taskId`) from `tiki_user_tasks` where `user`=? and `title`=? and `date`=?",array($user,$title,$date));
 	return $taskId;
     }
 }
@@ -558,16 +536,14 @@ function replace_task($user, $taskId, $title, $description, $date, $status, $pri
 /*shared*/
 function complete_task($user, $taskId) {
     $now = date("U");
-
     $query = "update `tiki_user_tasks` set `completed`=?, `status`='c', `percentage`=100 where `user`=? and `taskId`=?";
-    $this->query($query,array($now,$user,$taskId));
+    $this->query($query,array((int)$now,$user,(int)$taskId));
 }
 
 /*shared*/
 function remove_task($user, $taskId) {
     $query = "delete from `tiki_user_tasks` where `user`=? and `taskId`=?";
-
-    $this->query($query,array($user,$taskId));
+    $this->query($query,array($user,(int)$taskId));
 }
 
 /*shared*/
@@ -613,7 +589,6 @@ function list_tasks($user, $offset, $maxRecords, $sort_mode, $find, $use_date, $
 /*shared*/
 function dir_stats() {
     $aux = array();
-
     $aux["valid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('y'));
     $aux["invalid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('n'));
     $aux["categs"] = $this->db->getOne("select count(*) from `tiki_directory_categories`",array());
@@ -652,12 +627,8 @@ function dir_list_all_valid_sites2($offset, $maxRecords, $sort_mode, $find) {
 /*shared*/
 function get_directory($categId) {
     $query = "select * from `tiki_directory_categories` where `categId`=?";
-
     $result = $this->query($query,array($categId));
-
-    if (!$result->numRows())
-	return false;
-
+    if (!$result->numRows()) return false;
     $res = $result->fetchRow();
     return $res;
 }
@@ -665,23 +636,18 @@ function get_directory($categId) {
 /*shared*/
 function user_unread_messages($user) {
     $cant = $this->getOne("select count(*) from `messu_messages` where `user`=? and `isRead`=?",array($user,'n'));
-
     return $cant;
 }
 
 /*shared*/
 function get_online_users() {
     $query = "select `user` ,`timestamp` from `tiki_sessions` where `user`<>?";
-
     $result = $this->query($query,array(''));
     $ret = array();
-
     while ($res = $result->fetchRow()) {
 	$res['user_information'] = $this->get_user_preference($res['user'], 'user_information', 'public');
-
 	$ret[] = $res;
     }
-
     return $ret;
 }
 
@@ -689,7 +655,8 @@ function get_online_users() {
 function get_user_items($user) {
     $items = array();
 
-    $query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and `value`=?";
+    $query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif";
+		$query = " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and `value`=?";
     $result = $this->query($query,array('u','o',$user));
     $ret = array();
 
@@ -698,10 +665,10 @@ function get_user_items($user) {
 
 	$trackerId = $res["trackerId"];
 	// Now get the isMain field for this tracker
-	$fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',$trackerId));
+	$fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',(int)$trackerId));
 	// Now get the field value
-	$value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array($fieldId,$itemId));
-	$tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array($trackerId));
+	$value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array((int)$fieldId,(int)$itemId));
+	$tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array((int)$trackerId));
 	$aux["trackerId"] = $trackerId;
 	$aux["itemId"] = $itemId;
 	$aux["value"] = $value;
@@ -709,7 +676,6 @@ function get_user_items($user) {
 
 	if (!in_array($itemId, $items)) {
 	    $ret[] = $aux;
-
 	    $items[] = $itemId;
 	}
     }
@@ -717,8 +683,8 @@ function get_user_items($user) {
     $groups = $this->get_user_groups($user);
 
     foreach ($groups as $group) {
-	$query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and value=?";
-
+	$query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif ";
+	$query.= " where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and value=?";
 	$result = $this->query($query,array('g','o',$group));
 
 	while ($res = $result->fetchRow()) {
@@ -726,10 +692,10 @@ function get_user_items($user) {
 
 	    $trackerId = $res["trackerId"];
 	    // Now get the isMain field for this tracker
-	    $fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',$trackerId));
+	    $fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',(int)$trackerId));
 	    // Now get the field value
-	    $value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array($fieldId,$itemId));
-	    $tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array($trackerId));
+	    $value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array((int)$fieldId,(int)$itemId));
+	    $tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array((int)$trackerId));
 	    $aux["trackerId"] = $trackerId;
 	    $aux["itemId"] = $itemId;
 	    $aux["value"] = $value;
@@ -737,7 +703,6 @@ function get_user_items($user) {
 
 	    if (!in_array($itemId, $items)) {
 		$ret[] = $aux;
-
 		$items[] = $itemId;
 	    }
 	}
@@ -752,13 +717,13 @@ function get_actual_content($contentId) {
 
     $now = date("U");
     $query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
-    $res = $this->getOne($query,array($contentId,$now));
+    $res = $this->getOne($query,array((int)$contentId,$now));
 
     if (!$res)
 	return '';
 
     $query = "select `data`  from `tiki_programmed_content` where `contentId`=? and `publishDate`=?";
-    $data = $this->getOne($query,array($contentId,$res));
+    $data = $this->getOne($query,array((int)$contentId,$res));
     return $data;
 }
 
@@ -784,17 +749,17 @@ function compute_quiz_stats() {
     while ($res = $result->fetchRow()) {
 	$quizId = $res["quizId"];
 
-	$quizName = $this->getOne("select `name`  from `tiki_quizzes` where `quizId`=?",array($quizId));
-	$timesTaken = $this->getOne("select count(*) from `tiki_user_quizzes` where `quizId`=?",array($quizId));
-	$avgpoints = $this->getOne("select avg(`points`) from `tiki_user_quizzes` where `quizId`=?",array($quizId));
-	$maxPoints = $this->getOne("select max(`maxPoints`) from `tiki_user_quizzes` where `quizId`=?",array($quizId));
+	$quizName = $this->getOne("select `name`  from `tiki_quizzes` where `quizId`=?",array((int)$quizId));
+	$timesTaken = $this->getOne("select count(*) from `tiki_user_quizzes` where `quizId`=?",array((int)$quizId));
+	$avgpoints = $this->getOne("select avg(`points`) from `tiki_user_quizzes` where `quizId`=?",array((int)$quizId));
+	$maxPoints = $this->getOne("select max(`maxPoints`) from `tiki_user_quizzes` where `quizId`=?",array((int)$quizId));
 	$avgavg = ($maxPoints != 0) ? $avgpoints / $maxPoints * 100 : 0.0;
-	$avgtime = $this->getOne("select avg(`timeTaken`) from `tiki_user_quizzes` where `quizId`=?",array($quizId));
+	$avgtime = $this->getOne("select avg(`timeTaken`) from `tiki_user_quizzes` where `quizId`=?",array((int)$quizId));
 	$querydel = "delete from `tiki_quiz_stats_sum` where `quizId`=?";
-	$resultdel = $this->query($querydel,array($quizId),-1,-1,false);
+	$resultdel = $this->query($querydel,array((int)$quizId),-1,-1,false);
 	$query2 = "insert into `tiki_quiz_stats_sum`(`quizId`,`quizName`,`timesTaken`,`avgpoints`,`avgtime`,`avgavg`)
 	    values(?,?,?,?,?,?)";
-	$result2 = $this->query($query2,array($quizId,$quizName,$timesTaken,$avgpoints,$avgtime,$avgavg));
+	$result2 = $this->query($query2,array((int)$quizId,$quizName,(int)$timesTaken,(float)$avgpoints,$avgtime,$avgavg));
     }
 }
 
@@ -894,9 +859,9 @@ function list_surveys($offset, $maxRecords, $sort_mode, $find) {
 
 /*shared*/
 function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '') {
-    $filters = array();
+	$filters = array();
 
-    if ($fields) {
+	if ($fields) {
 	for ($i = 0; $i < count($fields["data"]); $i++) {
 	    $fieldId = $fields["data"][$i]["fieldId"];
 
@@ -908,16 +873,17 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
 	}
     }
 
-    $sort_mode = str_replace("_", " ", $sort_mode);
-    $mid = " where `trackerId`=$trackerId ";
+    $mid = " where `trackerId`=? ";
+		$bindvars = array((int)$trackerId);
 
     if ($status) {
-	$mid .= " and `status`='$status' ";
+			$mid .= " and `status`=? ";
+			$bindvars[] = $status;
     }
 
-    $query = "select * from `tiki_tracker_items` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from `tiki_tracker_items` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_tracker_items` $mid";
-    $result = $this->query($query);
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant);
     $ret = array();
 
@@ -925,8 +891,9 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
 	$fields = array();
 
 	$itid = $res["itemId"];
-	$query2 = "select `ttif` .fieldId,name,value,type,isTblVisible,isMain from `tiki_tracker_item_fields` ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=" . $res["itemId"] . " order by fieldId asc";
-	$result2 = $this->query($query2);
+	$query2 = "select ttif.`fieldId`,`name`,`value`,`type`,`isTblVisible`,`isMain` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf ";
+	$query2.= " where ttif.`fieldId`=ttf.`fieldId` and `itemId`=? order by ".$this->convert_sortmode("fieldId_asc");
+	$result2 = $this->query($query2,array((int) $res["itemId"]);
 	$pass = true;
 
 	while ($res2 = $result2->fetchRow()) {
@@ -949,7 +916,7 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
 	}
 
 	$res["field_values"] = $fields;
-	$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=$itid");
+	$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int)$itid));
 
 	if ($pass)
 	    $ret[] = $res;
@@ -963,6 +930,7 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
 }
 
 /*shared*/
+// \todo remove all hardcoded html in get_user_avatar()
     function get_user_avatar($user, $float = "") {
 	if (empty($user))
 	    return '';
@@ -971,8 +939,8 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
 	    return '';
 	}
 
-	$type = $this->getOne("select `avatarType`  from `users_users` where `login`='$user'");
-	$libname = $this->getOne("select `avatarLibName`  from `users_users` where `login`='$user'");
+	$type = $this->getOne("select `avatarType`  from `users_users` where `login`=?",array($user));
+	$libname = $this->getOne("select `avatarLibName`  from `users_users` where `login`=?",array($user));
 	$ret = '';
 	$style = '';
 
@@ -985,17 +953,14 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
 	switch ($type) {
 	    case 'n':
 		$ret = '';
-
 		break;
 
 	    case 'l':
 		$ret = "<img border='0' width='45' height='45' src='" . $libname . "' " . $style . " alt=\"$user\"/>";
-
 		break;
 
 	    case 'u':
 		$ret = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$user' " . $style . " alt=\"$user\"/>";
-
 		break;
 	}
 
@@ -1004,9 +969,8 @@ function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $field
 
 /*shared*/
 function get_forum_sections() {
-    $query = "select distinct `section` from `tiki_forums` where `section`<>''";
-
-    $result = $this->query($query);
+    $query = "select distinct `section` from `tiki_forums` where `section`<>?";
+    $result = $this->query($query,array(''));
     $ret = array();
 
     while ($res = $result->fetchRow()) {
@@ -1028,22 +992,17 @@ function register_referer($referer) {
 	$query = "insert into `tiki_referer_stats`(`last`,`referer`,`hits`) values(?,?,1)";
     }
 
-    $result = $this->query($query,array($now,$referer));
+    $result = $this->query($query,array((int)$now,$referer));
 }
 
 // File attachments functions for the wiki ////
 /*shared*/
 function add_wiki_attachment_hit($id) {
-    global $count_admin_pvs;
-
-    global $user;
-
+    global $count_admin_pvs, $user;
     if ($count_admin_pvs == 'y' || $user != 'admin') {
-	$query = "update `tiki_wiki_attachments` set `downloads`=downloads+1 where `attId`=$id";
-
-	$result = $this->query($query);
+	$query = "update `tiki_wiki_attachments` set `downloads`=`downloads`+1 where `attId`=?";
+	$result = $this->query($query,array((int)$id));
     }
-
     return true;
 }
 
