@@ -898,15 +898,15 @@ class TikiLib {
 		$referer = addslashes($referer);
 
 		$now = date("U");
-		$cant = $this->getOne("select count(*) from `tiki_referer_stats` where `referer`='$referer'");
+		$cant = $this->getOne("select count(*) from `tiki_referer_stats` where `referer`=?",array($referer));
 
 		if ($cant) {
-			$query = "update `tiki_referer_stats` set `hits`=`hits`+1,last=$now where `referer`='$referer'";
+			$query = "update `tiki_referer_stats` set `hits`=`hits`+1,`last`=? where `referer`=?";
 		} else {
-			$query = "insert into tiki_referer_stats(referer,hits,last) values('$referer',1,$now)";
+			$query = "insert into `tiki_referer_stats`(`last`,`referer`,`hits`) values(?,?,1)";
 		}
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($now,$referer));
 	}
 
 	// File attachments functions for the wiki ////
@@ -2435,7 +2435,7 @@ class TikiLib {
 			$result = $this->query($query);
 		} else {
 			// Insert the article
-			$query = "insert into tiki_articles(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y,type,rating,isfloat)
+			$query = "insert into `tiki_articles`(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y,type,rating,isfloat)
                          values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating,'$isfloat')";
 
 			$result = $this->query($query);
@@ -2761,7 +2761,7 @@ class TikiLib {
 		$data = $this->httprequest($url);
 		$data = addslashes($data);
 		$refresh = date("U");
-		$query = "insert into tiki_link_cache(url,data,refresh) values('$url','$data',$refresh)";
+		$query = "insert into `tiki_link_cache`(url,data,refresh) values('$url','$data',$refresh)";
 		$result = $this->query($query);
 		return true;
 	}
@@ -2780,7 +2780,7 @@ class TikiLib {
 		$result = $this->query($query);
 		$action = "Removed";
 		$t = date("U");
-		$query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','$comment')";
+		$query = "insert into `tiki_actionlog`(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','$comment')";
 		$result = $this->query($query);
 		$this->remove_object('wiki page', $page);
 		$this->remove_from_structure($page);
@@ -2795,11 +2795,11 @@ class TikiLib {
 		$query = "select `page` from `tiki_structures` where `parent`='$page_sl'";
 		$result = $this->query($query);
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$this->remove_from_structure($res["page"]);
 		}
 
-		$query = "delete from tiki_structures where `page`='$page_sl'";
+		$query = "delete from `tiki_structures` where `page`='$page_sl'";
 		$result = $this->query($query);
 		return true;
 	}
@@ -2832,11 +2832,11 @@ class TikiLib {
 		if (user_exists($user))
 			return false;
 
-		$query = "insert into users_users(login,password,email) values('$user','$pass','$email')";
+		$query = "insert into `users_users`(login,password,email) values('$user','$pass','$email')";
 		$result = $this->query($query);
 		$action = "user $user added";
 		$t = date("U");
-		$query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','')";
+		$query = "insert into `tiki_actionlog`(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','')";
 		$result = $this->query($query);
 		return true;
 	}
@@ -3276,10 +3276,10 @@ class TikiLib {
 			$preferences[$name] = $value;
 		}
 
-		$name = addslashes($name);
-		$value = addslashes($value);
-		$query = "replace into tiki_preferences(name,value) values('$name','$value')";
-		$result = $this->query($query);
+		$query = "delete from `tiki_preferences` where `name`=?";
+		$result = $this->query($query,array($name),-1,-1,false);
+		$query = "insert into `tiki_preferences`(`name`,`value`) values(?,?)";
+		$result = $this->query($query,array($name,$value));
 		return true;
 	}
 
@@ -4689,7 +4689,7 @@ foreach(array_unique($pages[1]) as $page_parse) {
 		$version += 1;
 
 		if (!$minor) {
-			$query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data, description)
+			$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data, description)
               values('$pageName_sl',$version,$lastModif,'$user','$ip','$comment','$data','$description')";
 
 			if ($pageName != 'SandBox') {
@@ -4761,7 +4761,7 @@ foreach(array_unique($pages[1]) as $page_parse) {
 		if ($pageName != 'SandBox' && !$minor) {
 			$action = "Updated";
 
-			$query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$pageName_sl',$t,'$edit_user','$edit_ip','$edit_comment')";
+			$query = "insert into `tiki_actionlog`(action,pageName,lastModif,user,ip,comment) values('$action','$pageName_sl',$t,'$edit_user','$edit_ip','$edit_comment')";
 			$result = $this->query($query);
 			$maxversions = $this->get_preference("maxVersions", 0);
 
@@ -4806,7 +4806,7 @@ foreach(array_unique($pages[1]) as $page_parse) {
 		$t = date("U");
 		$query = "delete from `tiki_history` where `pageName`='$pageName' and `version`=$version";
 		$result = $this->query($query);
-		$query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data,description)
+		$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description)
               values('$pageName',$version,$lastModif,'$edit_user','$edit_ip','$edit_comment','$edit_data','$description')";
 		$result = $this->query($query);
 

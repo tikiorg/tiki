@@ -13,37 +13,42 @@ class ThemeControlLib extends TikiLib {
 	function tc_assign_category($categId, $theme) {
 		$this->tc_remove_cat($categId);
 
-		$query = "replace into tiki_theme_control_categs(categId,theme) values($categId,'$theme')";
-		$this->query($query);
+		$query = "delete from `tiki_theme_control_categs` where `categId`=?";
+		$this->query($query,array($categId),-1,-1,false);
+		$query = "insert into `tiki_theme_control_categs`(`categId`,`theme`) values(?,?)";
+		$this->query($query,array($categId,$theme));
 	}
 
 	function tc_assign_section($section, $theme) {
 		$this->tc_remove_section($section);
 
-		$query = "replace into tiki_theme_control_sections(section,theme) values('$section','$theme')";
-		$this->query($query);
+		$query = "delete from `tiki_theme_control_sections` where `section`=?";
+		$this->query($query,array($section),-1,-1,false);
+		$query = "insert into `tiki_theme_control_sections`(`section`,`theme`) values(?,?)";
+		$this->query($query,array($section,$theme));
 	}
 
 	function tc_assign_object($objId, $theme, $type, $name) {
-		$name = addslashes($name);
 
 		$objId = md5($type . $objId);
 		$this->tc_remove_object($objId);
-		$query = "replace into tiki_theme_control_objects(objId,theme,type,name) values('$objId','$theme','$type','$name')";
-		$this->query($query);
+		$query = "delete from `tiki_theme_control_objects` where `objId`=?";
+		$this->query($query,array($objId),-1,-1,false);
+		$query = "insert into `tiki_theme_control_objects`(`objId`,`theme`,`type`,`name`) values(?,?,?,?)";
+		$this->query($query,array($objId,$theme,$type,$name));
 	}
 
 	function tc_get_theme_by_categ($categId) {
-		if ($this->getOne("select count(*) from tiki_theme_control_categs where categId=$categId")) {
-			return $this->getOne("select theme from tiki_theme_control_categs where categId=$categId");
+		if ($this->getOne("select count(*) from `tiki_theme_control_categs` where `categId`=?",array($categId))) {
+			return $this->getOne("select `theme` from `tiki_theme_control_categs` where `categId`=?",array($categId));
 		} else {
 			return '';
 		}
 	}
 
 	function tc_get_theme_by_section($section) {
-		if ($this->getOne("select count(*) from tiki_theme_control_sections where section='$section'")) {
-			return $this->getOne("select theme from tiki_theme_control_sections where section='$section'");
+		if ($this->getOne("select count(*) from `tiki_theme_control_sections` where `section`=?",array($section))) {
+			return $this->getOne("select `theme` from `tiki_theme_control_sections` where `section`=?",array($section));
 		} else {
 			return '';
 		}
@@ -52,8 +57,8 @@ class ThemeControlLib extends TikiLib {
 	function tc_get_theme_by_object($type, $objId) {
 		$objId = md5($type . $objId);
 
-		if ($this->getOne("select count(*) from tiki_theme_control_objects where type='$type' and objId='$objId'")) {
-			return $this->getOne("select theme from tiki_theme_control_objects where type='$type' and objId='$objId'");
+		if ($this->getOne("select count(*) from `tiki_theme_control_objects` where `type`=? and `objId`=?",array($type,$objId))) {
+			return $this->getOne("select `theme` from `tiki_theme_control_objects` where `type`=? and `objId`=?",array($type,$objId));
 		} else {
 			return '';
 		}
@@ -72,13 +77,13 @@ class ThemeControlLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select tc.categId,tc.name,theme from tiki_theme_control_categs ttt,tiki_categories tc where ttt.categId=tc.categId $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_theme_control_categs ttt,tiki_categories tc where ttt.categId=tc.categId $mid";
+		$query = "select tc.categId,tc.name,theme from `tiki_theme_control_categs` ttt,tiki_categories tc where ttt.categId=tc.categId $mid order by $sort_mode limit $offset,$maxRecords";
+		$query_cant = "select count(*) from `tiki_theme_control_categs` ttt,tiki_categories tc where ttt.categId=tc.categId $mid";
 		$result = $this->query($query);
 		$cant = $this->getOne($query_cant);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -101,13 +106,13 @@ class ThemeControlLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from tiki_theme_control_sections $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_theme_control_sections $mid";
+		$query = "select * from `tiki_theme_control_sections` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query_cant = "select count(*) from `tiki_theme_control_sections` $mid";
 		$result = $this->query($query);
 		$cant = $this->getOne($query_cant);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -130,13 +135,13 @@ class ThemeControlLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from tiki_theme_control_objects where type='$type' $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_theme_control_objects where type='$type' $mid";
+		$query = "select * from `tiki_theme_control_objects` where `type`='$type' $mid order by $sort_mode limit $offset,$maxRecords";
+		$query_cant = "select count(*) from `tiki_theme_control_objects` where `type`='$type' $mid";
 		$result = $this->query($query);
 		$cant = $this->getOne($query_cant);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -147,19 +152,19 @@ class ThemeControlLib extends TikiLib {
 	}
 
 	function tc_remove_cat($cat) {
-		$query = "delete from tiki_theme_control_categs where categId=$cat";
+		$query = "delete from `tiki_theme_control_categs` where `categId`=$cat";
 
 		$this->query($query);
 	}
 
 	function tc_remove_section($section) {
-		$query = "delete from tiki_theme_control_sections where section='$section'";
+		$query = "delete from `tiki_theme_control_sections` where `section`='$section'";
 
 		$this->query($query);
 	}
 
 	function tc_remove_object($objId) {
-		$query = "delete from tiki_theme_control_objects where objId='$objId'";
+		$query = "delete from `tiki_theme_control_objects` where `objId`='$objId'";
 
 		$this->query($query);
 	}

@@ -475,24 +475,29 @@ class Comments extends TikiLib {
 		} else {
 			$now = date("U");
 
-			$query = "insert into `tiki_forums`(name, description, created, lastPost, threads,
-                comments, controlFlood,floodInterval, moderator, hits, mail, useMail, usePruneUnreplied,
-                pruneUnrepliedAge, usePruneOld,pruneMaxAge, topicsPerPage, topicOrdering, threadOrdering,section,
-                topics_list_reads,topics_list_replies,topics_list_pts,topics_list_lastpost,topics_list_author,vote_threads,show_description,
-                inbound_pop_server,inbound_pop_port,inbound_pop_user,inbound_pop_password,outbound_address,
-                topic_smileys,topic_summary,
-                ui_avatar,ui_flag,ui_posts,ui_level,ui_email,ui_online,approval_type,moderator_group,forum_password,forum_use_password,att,att_store,att_store_dir,att_max_size) 
-                values ('$name','$description',$now,$now,0,
-                        0,'$controlFlood',$floodInterval,'$moderator',0,'$mail','$useMail','$usePruneUnreplied',
-                        $pruneUnrepliedAge,  '$usePruneOld',
+			$query = "insert into `tiki_forums`(`name`, `description`, `created`, `lastPost`, `threads`,
+                `comments`, `controlFlood`,`floodInterval`, `moderator`, `hits`, `mail`, `useMail`, `usePruneUnreplied`,
+                `pruneUnrepliedAge`, `usePruneOld`,`pruneMaxAge`, `topicsPerPage`, `topicOrdering`, `threadOrdering`,`section`,
+                `topics_list_reads`,`topics_list_replies`,`topics_list_pts`,`topics_list_lastpost`,`topics_list_author`,`vote_threads`,`show_description`,
+                `inbound_pop_server`,`inbound_pop_port`,`inbound_pop_user`,`inbound_pop_password`,`outbound_address`,
+                `topic_smileys`,`topic_summary`,
+                `ui_avatar`,`ui_flag`,`ui_posts`,`ui_level`,`ui_email`,`ui_online`,`approval_type`,`moderator_group`,`forum_password`,`forum_use_password`,`att`,`att_store`,`att_store_dir`,`att_max_size`) 
+                values (?,?,?,?,?,?,?,?,?,?,
+			?,?,?,?,?,?,?,?,?,?,
+			?,?,?,?,?,?,?,?,?,?,
+			?,?,?,?,?,?,?,?,?,?,
+			?,?,?,?,?,?,?,?)";
+			$bindvars=array($name,$description,$now,$now,0,
+                        0,$controlFlood,$floodInterval,$moderator,0,$mail,$useMail,$usePruneUnreplied,
+                        $pruneUnrepliedAge,  $usePruneOld,
                         $pruneMaxAge, $topicsPerPage,
-                        '$topicOrdering','$threadOrdering','$section',
-                        '$topics_list_reads','$topics_list_replies','$topics_list_pts','$topics_list_lastpost','$topics_list_author','$vote_threads','$show_description',
-                        '$inbound_pop_server',$inbound_pop_port,'$inbound_pop_user','$inbound_pop_password','$outbound_address',
-                        '$topic_smileys','$topic_summary',
-                        '$ui_avatar','$ui_flag','$ui_posts','$ui_level','$ui_email','$ui_online','$approval_type','$moderator_group','$forum_password','$forum_use_password','$att','$att_store','$att_store_dir',$att_max_size) ";
-			$result = $this->query($query);
-			$forumId = $this->getOne("select max(forumId) from `tiki_forums` where `name`='$name' and created=$now");
+                        $topicOrdering,$threadOrdering,$section,
+                        $topics_list_reads,$topics_list_replies,$topics_list_pts,$topics_list_lastpost,$topics_list_author,$vote_threads,$show_description,
+                        $inbound_pop_server,$inbound_pop_port,$inbound_pop_user,$inbound_pop_password,$outbound_address,
+                        $topic_smileys,$topic_summary,
+                        $ui_avatar,$ui_flag,$ui_posts,$ui_level,$ui_email,$ui_online,$approval_type,$moderator_group,$forum_password,$forum_use_password,$att,$att_store,$att_store_dir,$att_max_size);
+			$result = $this->query($query,$bindvars);
+			$forumId = $this->getOne("select max(`forumId`) from `tiki_forums` where `name`=? and `created`=?",array($name,$now));
 		}
 
 		return $forumId;
@@ -551,7 +556,7 @@ class Comments extends TikiLib {
 
 			// Now select users
 			$objectId = md5('forum' . $res["forumId"]);
-			$query = "select distinct `username` from `tiki_comments` where `object`=?";
+			$query = "select distinct `userName` from `tiki_comments` where `object`=?";
 			$result2 = $this->query($query,array($objectId));
 			$res["users"] = $result2->numRows();
 
@@ -562,7 +567,7 @@ class Comments extends TikiLib {
 			}
 
 
-			$query2 = "select * from tiki_comments,tiki_forums where `object`=md5(concat('forum',forumId)) and commentDate=" . $res["lastPost"];
+			$query2 = "select * from `tiki_comments`,`tiki_forums` where `object`=md5(concat('forum',`forumId`)) and `commentDate`=" . $res["lastPost"];
 			$result2 = $this->query($query2);
 			$res2 = $result2->fetchRow();
 			$res["lastPostData"] = $res2;

@@ -17,23 +17,23 @@ class LsAdminlib extends Tikilib {
 	}
 
 	function remove_operator($user) {
-		$query = "delete from tiki_live_support_operators where user='$user'";
+		$query = "delete from `tiki_live_support_operators` where `user`='$user'";
 
 		$this->query($query);
 	}
 
 	function is_operator($user) {
-		return $this->getOne("select count(*) from tiki_live_support_operators where user='$user'");
+		return $this->getOne("select count(*) from `tiki_live_support_operators` where `user`='$user'");
 	}
 
 	function get_operators($status) {
-		$query = "select * from tiki_live_support_operators where status='$status'";
+		$query = "select * from `tiki_live_support_operators` where `status`='$status'";
 
 		$result = $this->query($query);
 		$ret = array();
 		$now = date("U");
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$res['elapsed'] = $now - $res['status_since'];
 
 			$ret[] = $res;
@@ -68,13 +68,13 @@ class LsAdminlib extends Tikilib {
 			}
 		}
 
-		$query = "select * from tiki_live_support_messages $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_live_support_messages $mid";
+		$query = "select * from `tiki_live_support_messages` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query_cant = "select count(*) from `tiki_live_support_messages` $mid";
 		$result = $this->query($query);
 		$cant = $this->getOne($query_cant);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -90,7 +90,7 @@ class LsAdminlib extends Tikilib {
 		$result = $this->query($query);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -119,14 +119,14 @@ class LsAdminlib extends Tikilib {
 			}
 		}
 
-		$query = "select * from tiki_live_support_requests $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_live_support_requests $mid";
+		$query = "select * from `tiki_live_support_requests` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query_cant = "select count(*) from `tiki_live_support_requests` $mid";
 		$result = $this->query($query);
 		$cant = $this->getOne($query_cant);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$res['msgs'] = $this->getOne("select count(*) from tiki_live_support_events where reqId='" . $res['reqId'] . "'");
+		while ($res = $result->fetchRow()) {
+			$res['msgs'] = $this->getOne("select count(*) from `tiki_live_support_events` where `reqId`='" . $res['reqId'] . "'");
 
 			$ret[] = $res;
 		}
@@ -143,7 +143,7 @@ class LsAdminlib extends Tikilib {
 		$result = $this->query($query);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res['tiki_user'];
 		}
 
@@ -156,7 +156,7 @@ class LsAdminlib extends Tikilib {
 		$result = $this->query($query);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res['operator'];
 		}
 
@@ -164,12 +164,12 @@ class LsAdminlib extends Tikilib {
 	}
 
 	function get_events($reqId) {
-		$query = "select tlr.operator_id,tlr.user_id,tle.data,tle.timestamp,tlr.user,tlr.operator,tlr.tiki_user,tle.senderId from tiki_live_support_events tle, tiki_live_support_requests tlr where tle.reqId=tlr.reqId and (senderId=user_id or senderId=operator_id) and tlr.reqId='$reqId'";
+		$query = "select tlr.operator_id,tlr.user_id,tle.data,tle.timestamp,tlr.user,tlr.operator,tlr.tiki_user,tle.senderId from `tiki_live_support_events` tle, tiki_live_support_requests tlr where tle.reqId=tlr.reqId and (senderId=user_id or senderId=operator_id) and tlr.reqId='$reqId'";
 
 		$result = $this->query($query);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
