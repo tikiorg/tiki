@@ -57,6 +57,20 @@ class UserModulesLib extends TikiLib {
 
     return $ret;
   }
+
+  function get_user_assigned_modules_pos($user,$pos)
+  {
+
+    $query = "select * from tiki_user_assigned_modules where user='$user' and position='$pos' order by ord asc";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+
+    return $ret;
+  }
+
   
   function get_assigned_modules_user($user,$position)
   {

@@ -55,23 +55,23 @@ class POP3{
         }
 	
         function POP3Command($command, &$result) {
-                if ($this->DEBUG) echo "<b>Sending Command: </b>".$command."<br>";flush();
+                if ($this->DEBUG) {echo "<b>Sending Command: </b>".$command."<br>";flush();}
                 @fputs($this->connection, "$command\r\n");
                 $result = @fgets($this->connection, 100);
 
                 if (eregi("^(\+OK)", $result)) :
-                        if ($this->DEBUG) echo "<b>Result OK: </b><br>";flush();
+                        if ($this->DEBUG) {echo "<b>Result OK: </b><br>";flush();}
                         return true;
                 else :
                         $this->AddError($result);
                 endif;
         }
          function OpenConnection() {
-                 if ($this->DEBUG) echo "<b>Openning Connection to: </b>".$this->hostname."<br>";flush();
+                 if ($this->DEBUG) {echo "<b>Openning Connection to: </b>".$this->hostname."<br>";flush();}
                  if($this->hostname=="")
                            $this->AddError("You must specified a valid hostname");
                    $this->connection = fsockopen($this->hostname,$this->port, $errno, $errstr);
-                if ($this->DEBUG) echo "<b>Connection opened </b><br>";flush();
+                if ($this->DEBUG) {echo "<b>Connection opened </b><br>";flush();}
                    if (!($this->connection)) :
                            if ($errno == 0)
                                     $this->AddError("Invalid Mail Server Name or Server Connection Error");

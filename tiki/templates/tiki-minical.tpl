@@ -45,9 +45,9 @@
 {cycle values="odd,even" print=false}
 
 {if $view eq 'daily'}
-<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|date_format:"%d"}&amp;mon={$yesterday|date_format:"%m"}&amp;year={$yesterday|date_format:"%Y"}">&lt;</a>
+<b><a class="link" href="tiki-minical.php?view={$view}&amp;day={$yesterday|date_format:"%d"}&amp;mon={$yesterday|date_format:"%m"}&amp;year={$yesterday|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
 {$pdate|tiki_long_date} 
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|date_format:"%d"}&amp;mon={$tomorrow|date_format:"%m"}&amp;year={$tomorrow|date_format:"%Y"}">&gt;</a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$tomorrow|date_format:"%d"}&amp;mon={$tomorrow|date_format:"%m"}&amp;year={$tomorrow|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
 </b>
 <table clas="normal" width="97%" >
 {section name=ix loop=$slots}
@@ -82,9 +82,9 @@
 {/if}
 
 {if $view eq 'weekly'}
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&year={$prev_week_start|date_format:"%Y"}">&lt;</a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&year={$prev_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
 <b>{$week_start|date_format:"%b"} {$week_start|date_format:"%d"}-{$week_end|date_format:"%b"} {$week_end|date_format:"%d"}</b>
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&year={$next_week_start|date_format:"%Y"}">&gt;</a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&year={$next_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
 <table class="normal" width="97%" >
 {section name=ix loop=$slots}
 <tr>
@@ -137,22 +137,22 @@
 <input type="hidden" name="view" value="{$view}" />
 <table class="normal">
 <tr>
-<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td width="2%" class="heading"><input type="submit" name="delete" value="x " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}title{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'start_desc'}start{else}start_desc{/if}">{tr}start{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'duration_desc'}duration_asc{else}duration_desc{/if}">{tr}duration{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicId_desc'}topicId_asc{else}topicId_desc{/if}">{tr}topic{/tr}</a></td>
+<td style="text-align:center;" class="heading" ><a class="tableheading" href="tiki-minical.php?view={$view}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicId_desc'}topicId_asc{else}topicId_desc{/if}">{tr}topic{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle advance=false}">
+<td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="event[{$channels[user].eventId}]" />
 </td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-minical.php?view={$view}&amp;eventId={$channels[user].eventId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}#add">{$channels[user].title}</a></td>
 <td class="{cycle advance=false}">{$channels[user].start|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{math equation="x / 3600" x=$channels[user].duration format="%d"} {tr}h{/tr} {math equation="(x % 3600) / 60" x=$channels[user].duration} {tr}mins{/tr}</td>
-<td class="{cycle advance=false}">
+<td style="text-align:center;" class="{cycle advance=false}">
     	{if $channels[user].topicId}
 			{if $channels[user].topic.isIcon eq 'y'}
 			<img title="{$channels[user].topic.name}" src="{$channels[user].topic.path}" alt="{tr}topic image{/tr}" />

@@ -10,6 +10,20 @@ if($feature_wiki != 'y') {
 
 
 include_once("tiki-pagesetup.php");
+
+include_once('lib/wiki/wikilib.php');
+$creator = $wikilib->get_creator($page);
+$smarty->assign('creator',$creator);
+
+// Let creator set permissions
+if($wiki_creator_admin == 'y') {
+	if ($creator && $user && ($creator==$user)) {
+	   $tiki_p_admin_wiki = 'y';
+	   $smarty->assign( 'tiki_p_admin_wiki', 'y' );
+	}
+}
+
+
 // Now check permissions to access this page
 
   if($tiki_p_admin_wiki != 'y') {

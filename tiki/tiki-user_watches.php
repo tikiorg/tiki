@@ -35,6 +35,7 @@ if(!isset($_REQUEST['event'])) $_REQUEST['event']='';
 $watches = $tikilib->get_user_watches($user,$_REQUEST['event']);
 $smarty->assign('watches',$watches);
 
+include_once('tiki-mytiki_shared.php');
 
 $smarty->assign('mid','tiki-user_watches.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

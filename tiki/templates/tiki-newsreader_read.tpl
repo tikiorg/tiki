@@ -8,15 +8,23 @@
 <br/><br/>
 <table class="normal">
 <tr><td class="formcolor" colspan="2">
-[<a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$first}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}">{tr}First{/tr}</a>
-| <a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$last}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}">{tr}Last{/tr}</a>]
-[{if $prev_article > 0}<a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$prev_article}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}">{tr}Prev{/tr}</a>{/if}
-{if $next_article > 0}| <a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$next_article}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}">{tr}Next{/tr}</a>{/if}]
+<table width="100%"><tr><td>
+<a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$first}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First{/tr}' title='{tr}First{/tr}' /></a>
+{if $prev_article > 0}<a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$prev_article}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Prev{/tr}' title='{tr}Prev{/tr}' /></a>{/if}
+{if $prev_article > 0 and $next_article > 0}&nbsp;-&nbsp;{/if}
+{if $next_article > 0}<a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$next_article}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next{/tr}' title={tr}Next{/tr}' /> </a>{/if}
+<a class="link" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$last}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}"><img src='img/icons2/nav_last.gif' border='0' alt='{tr}Last{/tr}' title='{tr}Last{/tr}' /></a>
+</td>
+<td style="text-align:right;">
+	{if $user and $feature_notepad eq 'y'}
+	<a title="{tr}Save to notepad{/tr}" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$id}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+	{/if}
+</td></tr></table>
 </td></tr>
 <tr><td class="formcolor">{tr}Newsgroup{/tr}:</td><td class="formcolor">{$headers.Newsgroups}</td></tr>
 <tr><td class="formcolor">{tr}From{/tr}:</td><td class="formcolor">{$headers.From}</td></tr>
 <tr><td class="formcolor">{tr}Date{/tr}:</td><td class="formcolor">{$headers.Date|tiki_short_datetime}</td></tr>
 <tr><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor">{$headers.Subject}</td></tr>
-<tr><td colspan="2">{$body}</td></tr>
+<tr><td colspan="2" style="background-color:white;">{$body}</td></tr>
 </table>
 <br/><br/><br/>

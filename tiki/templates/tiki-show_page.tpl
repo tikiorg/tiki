@@ -59,7 +59,7 @@
 </div>
 {/if}
 
-<p class="editdate">{tr}Last modification date{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
+<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
 {if $wiki_extras eq 'y'}
 <br/>
 {if $feature_wiki_attachments eq 'y'}

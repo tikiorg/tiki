@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.4 2003-03-30 20:50:39 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.5 2003-05-22 20:24:13 lrargerich Exp $
 
 $check = isset($page);
 
@@ -9,6 +9,7 @@ $ppps = Array(
 'tiki_p_remove',
 'tiki_p_rename',
 'tiki_p_lock',
+'tiki_p_admin_wiki',
 'tiki_p_view_attachments'
 );
 

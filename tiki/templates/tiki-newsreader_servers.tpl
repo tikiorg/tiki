@@ -15,13 +15,18 @@
 </table>
 <table class="normal">
 <tr>
-<td class="heading" width="80%"><a class="tableheading" href="tiki-newsreader_servers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'server_desc'}server_asc{else}server_desc{/if}">{tr}server{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-newsreader_servers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'server_desc'}server_asc{else}server_desc{/if}">{tr}server{/tr}</a></td>
+<td width="8%" class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle}"><a class="link" href="tiki-newsreader_groups.php?serverId={$channels[user].serverId}">{$channels[user].server}</a>
- [<a class="link" href="tiki-newsreader_servers.php?serverId={$channels[user].serverId}">{tr}edit{/tr}</a>|<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}">{tr}del{/tr}</a>]
+<td class="{cycle advance=false}">
+	<a class="link" href="tiki-newsreader_groups.php?serverId={$channels[user].serverId}">{$channels[user].server}</a>
+</td>
+<td class="{cycle}">
+	<a class="link" href="tiki-newsreader_servers.php?serverId={$channels[user].serverId}"><img src='img/icons/edit.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
+	<a class="link" href="tiki-newsreader_servers.php?remove={$channels[user].serverId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}del{/tr}' title='{tr}delete{/tr}' /></a>
 </td>
 </tr>
 {/section}

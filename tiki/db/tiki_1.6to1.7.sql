@@ -1,3 +1,4 @@
+
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forums_report','forums','Can report msgs to moderator','registered');
 ### forum posts can be reported to moderator ###
 drop table if exists tiki_forums_reported;
@@ -445,6 +446,7 @@ alter table tiki_blog_posts add title varchar(80);
 
 
 alter table tiki_pages add creator varchar(200);
+update tiki_pages set creator=user;
 
 #### Workflow tables and permissions
 ## Workflow Roles, each role must be asociated with a process

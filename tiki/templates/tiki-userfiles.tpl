@@ -32,20 +32,20 @@
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 <table class="normal">
 <tr>
-<td class="heading">&nbsp;</td>
+<td style="text-align:center;" class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}size{/tr}</a></td>
+<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-userfiles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}size{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle advance=false}">
+<td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="userfile[{$channels[user].fileId}]" />
 </td>
 <td class="{cycle advance=false}">{$channels[user].filename|iconify}<a class="link" href="tiki-download_userfile.php?fileId={$channels[user].fileId}">{$channels[user].filename}</a></td>
 <td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
-<td class="{cycle}">{$channels[user].filesize}</td>
+<td style="text-align:right;" class="{cycle}">{$channels[user].filesize|kbsize}</td>
 </tr>
 {/section}
 </table>
@@ -80,7 +80,17 @@
 </tr>
 -->
 <tr>
-  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
+  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor">
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile2" type="file"><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile3" type="file"><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile4" type="file"><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile5" type="file"><br />
+  <input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" />
+  </td>
+</tr>
+<tr>
+
 </tr>
 </table>
 </form>

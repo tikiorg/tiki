@@ -1,5 +1,10 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Wiki: Optionally admin can choose if the user who creates a page has
+  admin privileges over that page (remove, assign perms, etc)
+* [NEW] Wiki: The listpages feature can be configured choosing what columns will
+  be displayed in the listing.
+* [NEW] MyTiki page reformatted to a tabbed interface.
 * [FIX] Lethal bug in tikilib that caused cache engine to infinitely recurse has been
   resolved.
 * [NEW] Forums: Posts can be reported to moderator.
@@ -16,7 +21,6 @@ Version 1.7 -Eta Carinae-
   friendly version of the Wiki.
 * [NEW] Forum attachments added, you can setup which forums admit attachments and who
   can attach files to forum posts. 
->>>>>>> 1.82
 * [NEW] Added forum discussion button to wiki page view: allows users to go straight to
   forum for page discussion.
 * [NEW] Drawings history added. From the admin drawings panel you can view the history,
