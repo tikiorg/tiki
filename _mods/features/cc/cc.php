@@ -117,7 +117,7 @@ if ($user) {
 		}
 		$currencies = $cclib->get_currencies(0,1000,'cc_name_asc','',$user);
 		$smarty->assign('currencies',$currencies['data']);
-		$mid = "cc/transactions.tpl";
+		$mid = "cc/transactions_form.tpl";
 	}
 }
 
