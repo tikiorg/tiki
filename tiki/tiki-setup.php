@@ -239,6 +239,8 @@ $feature_messages = 'n';
 $smarty->assign('feature_messages',$feature_messages);
 $feature_tasks = 'n';
 $smarty->assign('feature_tasks',$feature_tasks);
+$feature_wiki_footnotes = 'n';
+$smarty->assign('feature_wiki_footnotes',$feature_wiki_footnotes);
 
 $system_os = $tikilib->get_preference('system_os','unknown');
 $smarty->assign('system_os',$system_os);

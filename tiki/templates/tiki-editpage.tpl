@@ -67,6 +67,13 @@
 <tr><td class="formcolor">{tr}Edit{/tr}:</td><td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="22" cols="80" wrap="virtual">{$pagedata}</textarea>
 </td>
+
+{if $feature_wiki_footnotes eq 'y'}
+{if $user}
+<tr><td class="formcolor">{tr}Footnotes{/tr}:</td><td class="formcolor"><textarea name="footnote" rows="8" cols="80">{$footnote}</textarea></td>
+{/if}
+{/if}
+
 {if $page ne 'SandBox'}
 <tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" name="comment" value="{$commentdata}" /></td>
 {/if}

@@ -752,6 +752,14 @@ if(isset($_REQUEST["wikifeatures"])) {
     $smarty->assign("feature_wiki_rankings",'n');
   }
   
+  if(isset($_REQUEST["feature_wiki_footnotes"]) && $_REQUEST["feature_wiki_footnotes"]=="on") {
+    $tikilib->set_preference("feature_wiki_footnotes",'y'); 
+    $smarty->assign("feature_wiki_footnotes",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_footnotes",'n');
+    $smarty->assign("feature_wiki_footnotes",'n');
+  }
+  
   if(isset($_REQUEST["feature_wiki_undo"]) && $_REQUEST["feature_wiki_undo"]=="on") {
     $tikilib->set_preference("feature_wiki_undo",'y'); 
     $smarty->assign("feature_wiki_undo",'y');

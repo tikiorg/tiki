@@ -1,5 +1,9 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Wiki page footnotes, wiki pages can have footnotes, footnotes are kept at user
+  level (each user only sees his footnotes for each page). This allow users to keep his
+  private comments and notes for Wiki pages. 
+* [NEW] Plugins added to normal distribution: code, split, avatar, center
 * [NEW] Plugins can be nested
 * [NEW] Plugins are re-entrant, a plugin can generate another plugin code. 
 * [NEW] Wiki structures can be used to generate slide shows

@@ -61,6 +61,76 @@ class TikiLib {
     die;
   }
   
+  function complete_task($user,$taskId)
+  {
+    $now = date("U");
+    $query = "update tiki_user_tasks set completed=$now, status='c', percentage=100 where user='$user' and taskId=$taskId";
+    $this->query($query);
+  }
+  
+  function remove_task($user,$taskId)
+  {
+    $query = "delete from tiki_user_tasks where user='$user' and taskId=$taskId";
+    $this->query($query);  	
+  }
+
+  function list_tasks($user,$offset,$maxRecords,$sort_mode,$find,$use_date,$pdate)
+  {
+    $now = date("U");
+    if($use_date=='y') {
+     $prio = " and date<=$pdate ";
+    } else {
+     $prio = '';
+    }
+    
+    $sort_mode = str_replace("_desc"," desc",$sort_mode);
+    $sort_mode = str_replace("_asc"," asc",$sort_mode);
+    if($find) {
+      $mid=" and (title like '%".$find."%' or description like '%".$find."%')".$prio;  
+    } else {
+      $mid="".$prio; 
+    }
+    $query = "select * from tiki_user_tasks where user='$user' $mid order by $sort_mode,taskId desc limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_user_tasks where user='$user' $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+
+  // Functions for wiki page footnotes
+  function get_footnote($user,$page)
+  {
+    $page = addslashes($page);
+    $count = $this->getOne("select count(*) from tiki_page_footnotes where user='$user' and pageName='$page'");
+    if(!$count) {
+      return '';
+    } else {
+      return $this->getOne("select data from tiki_page_footnotes where user='$user' and pageName='$page'");
+    }
+  }
+  
+  function replace_footnote($user,$page,$data)
+  {
+    $page=addslashes($page);
+    $data=addslashes($data);
+    $query = "replace into tiki_page_footnotes(user,pageName,data) values('$user','$page','$data')";
+    $this->query($query);
+  }
+
+  function remove_footnote($user,$page)
+  {
+    $page=addslashes($page);
+    $query = "delete from tiki_page_footnotes where user='$user' and pageName='$page'";
+    $this->query($query);
+  }  
+  
   function dir_stats()
   {
     $aux=Array();

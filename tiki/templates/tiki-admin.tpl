@@ -480,6 +480,7 @@
     <option value="7200" {if $wiki_cache eq 7200}selected="selected"{/if}>2 hours</option>
     </select> 
     </td></tr>
+    <tr><td class="form">{tr}Footnotes{/tr}:</td><td><input type="checkbox" name="feature_wiki_footnotes" {if $feature_wiki_footnotes eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
     </form>

@@ -196,6 +196,28 @@ if(!$user && $anonCanEdit<>'y') {
 
 $smarty->assign_by_ref('data',$info);
 
+$smarty->assign('footnote','');
+$smarty->assign('has_footnote','n');
+if($feature_wiki_footnotes == 'y') {
+ if($user) {
+    $x = $tikilib->get_footnote($user,$page);
+    $footnote=$tikilib->get_footnote($user,$page);
+    $smarty->assign('footnote',$footnote);
+    if($footnote) $smarty->assign('has_footnote','y');
+    $smarty->assign('parsed_footnote',$tikilib->parse_data($footnote));
+
+ if(isset($_REQUEST['footnote'])) {
+
+      if(empty($_REQUEST['footnote'])) {
+        $tikilib->remove_footnote($user,$page);
+      } else {
+        $tikilib->replace_footnote($user,$page,$_REQUEST['footnote']);
+      }
+    }
+  }
+}
+
+
 if(isset($_REQUEST["templateId"])&&$_REQUEST["templateId"]>0) {
   $template_data = $tikilib->get_template($_REQUEST["templateId"]);
   $_REQUEST["edit"]=$template_data["content"];
@@ -323,6 +345,7 @@ if(isset($_REQUEST["save"])) {
   header("location: tiki-index.php?page=$page");
   die;
 }
+
 
 if($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {
   $templates = $tikilib->list_templates('wiki',0,-1,'name_asc','');

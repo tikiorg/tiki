@@ -2,6 +2,12 @@
 [<a href="tiki-user_preferences.php" class="link">{tr}User Preferences{/tr}</a>
 {if $feature_user_bookmarks eq 'y'}|<a href="tiki-user_bookmarks.php" class="link">{tr}User Bookmarks{/tr}</a>{/if}
 |<a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a>
+{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+|<a href="messu-mailbox.php" class="link">{tr}Messages{/tr} ({$unread})</a>
+{/if}
+{if $feature_tasks eq 'y'}
+|<a href="tiki-user_tasks.php" class="link">{tr}Tasks{/tr}</a>
+{/if}
 {if $user_assigned_modules eq 'y'}|<a href="tiki-user_assigned_modules.php" class="link">{tr}Configure modules{/tr}</a>{/if}]<br/><br/>
 <table width="100%">
 <tr>
