@@ -17,7 +17,8 @@
 {if $preview eq 'y'}
 <br />
 <div class="wikitext">{$info.subject}</div>
-<div class="wikitext">{$parsed}</div>
+<div class="wikitext">{$info.data}</div>
+{if $txt}<div class="wikitext">{$txt}</div>{/if}
 {/if}
 <h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 <form action="tiki-send_newsletters.php" method="post" id='editpageform'>
@@ -40,7 +41,11 @@
 </select>
 </td></tr>
 {/if}
-<tr><td class="formcolor">{tr}Data{/tr}:</td><td class="formcolor"><textarea name="data" rows="25" cols="60">{$info.data|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Data{/tr}:<br/><br/>{include file="textareasize.tpl" area_name='editnl' formId='editpageform'}</td>
+<td class="formcolor"><textarea id='editnl' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
+<input type="hidden" name="rows" value="{$rows}"/>
+<input type="hidden" name="cols" value="{$cols}"/>
+</td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
 </table>
