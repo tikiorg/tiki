@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.21 2004-01-28 12:17:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.22 2004-02-03 06:13:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -172,14 +172,54 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-list($username,$usermail,$usersTrackerId) = array('','','');
+list($username,$usermail,$usersTrackerId,$chlogin) = array('','','',false);
 if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 	if (ereg("^[a-zA-Z]",$_REQUEST["user"])) {
 		$_REQUEST["user"] = $userlib->get_user_id($_REQUEST["user"]);
 	}
-	$re = $userlib->get_usertracker($_REQUEST["user"]);
-	
+	$userinfo = $userlib->get_userid_info($_REQUEST["user"]);
+	if (isset($_POST["edituser"]) and isset($_POST['name']) and isset($_POST['email'])) {
+		//var_dump($_POST);die;
+		if ($_POST['name']) {
+			if ($userinfo['login'] != $_POST['name']) {
+				if ($userlib->user_exists($_POST['name'])) {
+					$smarty->assign('msg', tra("User already exists"));
+			  	$smarty->display("error.tpl");
+					die;
+				}
+				$chlogin = true;
+			}
+		}
+		if (isset($_POST['pass']) &&  $_POST["pass"]) {
+			if ($_POST["pass"] != $_POST["pass2"]) {
+				$smarty->assign('msg', tra("The passwords dont match"));
+				$smarty->display("error.tpl");
+				die;
+			} 
+			if (strlen($_POST["pass"])<$min_pass_length) {
+				$smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
+				$smarty->display("error.tpl");
+				die; 	
+			} 
+			if ($pass_chr_num == 'y') {
+				if (!preg_match_all("/[0-9]+/",$_POST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_POST["pass1"],$foo)) {
+					$smarty->assign('msg',tra("Password must contain both letters and numbers"));
+					$smarty->display("error.tpl");
+					die; 	
+				}
+			}
+			$userlib->change_user_password($_POST['name'],$_POST["pass"]);
+		}
+		if ($userinfo['email'] != $_POST['email']) {
+			$userlib->change_user_email($_POST['name'],$_POST['email'],'');
+		}
+		if ($chlogin) {
+			$userlib->change_login($userinfo['login'],$_POST['name']);
+		}
+		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
+	}
 	if ($userTracker == 'y') {
+		$re = $userlib->get_usertracker($_REQUEST["user"]);
 		if ($re['usersTrackerId']) {
 			include_once('lib/trackers/trackerlib.php');
 			$usersTrackerId = $re["usersTrackerId"];
@@ -191,32 +231,36 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			$smarty->assign('useritemId', $useritemId);
 			for ($i = 0; $i < count($fields["data"]); $i++) {
 				if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin) {
-				$name = $fields["data"][$i]["fieldId"];
-				if ($fields["data"][$i]["type"] == 'c') {
-					if (!isset($info["$name"])) $info["$name"] = 'n';
-				} else {
-					if (!isset($info["$name"])) $info["$name"] = '';
-				}
-				if ($fields["data"][$i]["type"] == 'e') {
-					include_once('lib/categories/categlib.php');
-					$k = $fields["data"][$i]["options"];
-					$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
-					if (!isset($cat)) {
-						$cat = $categlib->get_object_categories("tracker ".$usertrackerId,$useritemId);
+					$name = $fields["data"][$i]["fieldId"];
+					if ($fields["data"][$i]["type"] == 'c') {
+						if (!isset($info["$name"])) { 
+							$info["$name"] = 'n';
+						}
+					} else {
+						if (!isset($info["$name"])) {
+							$info["$name"] = '';
+						}
 					}
-					foreach ($cat as $c) {
-						$ins_fields["data"][$i]["value"]["$c"] = 'y';
+					if ($fields["data"][$i]["type"] == 'e') {
+						include_once('lib/categories/categlib.php');
+						$k = $fields["data"][$i]["options"];
+						$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+						if (!isset($cat)) {
+							$cat = $categlib->get_object_categories("tracker ".$usertrackerId,$useritemId);
+						}
+						foreach ($cat as $c) {
+							$ins_fields["data"][$i]["value"]["$c"] = 'y';
+						}
+					} elseif  ($fields["data"][$i]["type"] == 'r') {
+						$fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info["$name"]);
+						$fields["data"][$i]["value"] = $info["$name"];
+						$fields["data"][$i]["type"] = 't';
+					} elseif ($fields["data"][$i]["type"] == 'a') {
+						$fields["data"][$i]["value"] = $info["$name"];
+						$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+					} else {
+						$fields["data"][$i]["value"] = $info["$name"];
 					}
-				} elseif  ($fields["data"][$i]["type"] == 'r') {
-					$fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info["$name"]);
-					$fields["data"][$i]["value"] = $info["$name"];
-					$fields["data"][$i]["type"] = 't';
-				} elseif ($fields["data"][$i]["type"] == 'a') {
-					$fields["data"][$i]["value"] = $info["$name"];
-					$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
-				} else {
-					$fields["data"][$i]["value"] = $info["$name"];
-				}
 				} else {
 					unset($fields["data"][$i]);
 				}
@@ -224,10 +268,13 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			$smarty->assign('fields', $fields["data"]);
 		}
 	}
-	if (!isset($_REQUEST["action"])) {
-		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
-	}
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
 } else {
+	$userinfo['login'] = '';
+	$userinfo['email'] = '';
+	$userinfo['created'] = date('U');
+	$userinfo['registrationDate'] = '';
+	$userinfo['lastLogin'] = '';
 	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");	
 	$_REQUEST["user"] = 0;
 }
@@ -235,8 +282,8 @@ if (isset($_REQUEST['add'])) {
 	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
 }
 
-
-$smarty->assign('user', $_REQUEST["user"]);
+$smarty->assign('userinfo', $userinfo);
+$smarty->assign('userid', $_REQUEST["user"]);
 $smarty->assign('username', $username);
 $smarty->assign('usermail', $usermail);
 $smarty->assign('usersTrackerId', $usersTrackerId);

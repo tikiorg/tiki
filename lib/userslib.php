@@ -36,7 +36,7 @@ class UsersLib extends TikiLib {
 
 	$query = "select `email` from `users_users` where `login` = ?";
 	$email = $this->getOne($query, array('admin'));
-	$hash = md5("admin" . $pass . $email);
+	$hash = md5("admin" . $pass);
 
 	if ($feature_clear_passwords == 'n')
 	    $pass = '';
@@ -402,17 +402,19 @@ class UsersLib extends TikiLib {
 
 	$res = $result->fetchRow();
 	$hash=md5($user.$pass.trim($res['email']));
-	$hash2 = md5($pass);
+	$hash2 = md5($user.$pass);
+	$hash3 = md5($pass);
 
 	// next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
 	if ($feature_challenge == 'n' || empty($response)) {
 	    $query
-		= "select `login` from `users_users` where " . $this->convert_binary(). " `login` = ? and (`hash`=? or `hash`=?)";
+		= "select `login` from `users_users` where " . $this->convert_binary(). " `login` = ? and (`hash`=? or `hash`=? or `hash`=?)";
 
 	    $result = $this->query($query, array(
 			$user,
 			$hash,
-			$hash2
+			$hash2,
+			$hash3
 			));
 
 	    if ($result->numRows()) {
@@ -1090,10 +1092,11 @@ function get_included_groups($group) {
     function confirm_user($user) {
 	global $feature_clear_passwords;
 
-	$query = "select `provpass`, `login`, `email` from `users_users` where `login`=?";
+	$query = "select `provpass`, `login` from `users_users` where `login`=?";
 	$result = $this->query($query, array($user));
 	$res = $result->fetchRow();
-	$hash = md5($res["login"] . $res["provpass"] . $res["email"]);
+	// $hash = md5($res["login"] . $res["provpass"] . $res["email"]);
+	$hash = md5($res["login"] . $res["provpass"]);
 	$provpass = $res["provpass"];
 
 	if ($feature_clear_passwords == 'n') {
@@ -1115,7 +1118,8 @@ function get_included_groups($group) {
 
 	global $feature_clear_passwords;
 	// Generate a unique hash; this is also done below in set_user_fields()
-	$hash = md5($user . $pass . $email);
+	//$hash = md5($user . $pass . $email);
+	$hash = md5($user . $pass);
 
 	if ($feature_clear_passwords == 'n')
 	    $pass = '';
@@ -1162,8 +1166,9 @@ function get_included_groups($group) {
 		    $user
 		    ));
 
-	$hash = md5($user . $pass . $email);
-	$query = "update `users_users` set `hash`=? where " . $this->convert_binary(). " `login`=?";
+	// that block stays here for a time (compatibility)
+	$hash = md5($user . $pass);
+	$query = "update `users_users` set `hash`=?  where " . $this->convert_binary(). " `login`=?";
 	$result = $this->query($query, array(
 		    $hash,
 		    $user
@@ -1213,14 +1218,13 @@ function get_included_groups($group) {
 
     function renew_user_password($user) {
 	$pass = $this->genPass();
-	$query = "select `email` from `users_users` where `login` = ?";
-	$email = $this->getOne($query, array($user));
-	$hash = md5($user . $pass . $email);
+	//$hash = md5($user . $pass . $email);
+	$hash = md5($user . $pass);
 	// Note that tiki-generated passwords are due inmediatley
 	$now = date("U");
 	$query = "update `users_users` set `password` = ?, `hash` = ?,
 		`pass_due` = ? where ".$this->convert_binary()." `login` = ?";
-	$result = $this->query($query, array($pass, $hash, $now, $user));
+	$result = $this->query($query, array($pass, $hash, (int)$now, $user));
 	return $pass;
     }
 
@@ -1231,7 +1235,8 @@ function get_included_groups($group) {
 	$query = "select `email` from `users_users` where `login` = ?";
 	$email = $this->getOne($query, array($user));
 	$email=trim($email);
-	$hash = md5($user . $pass . $email);
+	//$hash = md5($user . $pass . $email);
+	$hash = md5($user . $pass);
 	$now = date("U");
 	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
 
@@ -1313,7 +1318,8 @@ function get_included_groups($group) {
 	    }
 
 	    // I don't think there are currently cases where login and email are undefined
-	    $hash = md5($u['login'] . $u['password'] . $u['email']);
+	    //$hash = md5($u['login'] . $u['password'] . $u['email']);
+	    $hash = md5($u['login'] . $u['password']);
 	    $q[] = "`hash` = ?";
 	    $bindvars[] = $hash;
 	}
