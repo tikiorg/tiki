@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.200 2004-06-03 18:57:08 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.201 2004-06-05 15:17:21 ggeller Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2549,7 +2549,7 @@ CREATE TABLE tiki_quizzes (
 	sForum varchar(80) default NULL,
 	sPrologue text,
 	sData text,
-	sEpilogue text
+	sEpilogue text,
   PRIMARY KEY  (quizId, nVersion)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
