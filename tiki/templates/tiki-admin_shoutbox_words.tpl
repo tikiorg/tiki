@@ -13,7 +13,7 @@
 
 <!-- begin -->
 
-<h2>{tr}Add Bad Word{/tr}</h2>
+<h2>{tr}Add Banned Word{/tr}</h2>
 
 <form method="post" action="tiki-admin_shoutbox_words.php">
 <table class="normal">
