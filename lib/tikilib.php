@@ -2735,7 +2735,6 @@ class TikiLib {
       }
     }
 
-
     //unset($smc);
     if($feature_wiki_tables != 'new') {
 	    // New syntax for tables

@@ -476,6 +476,9 @@ $smarty->assign('feature_eph',$feature_eph);
 $feature_live_support = 'n';
 $smarty->assign('feature_live_support',$feature_live_support);
 
+$webserverauth = 'n';
+$smarty->assign('webserverauth',$webserverauth);
+
 $feature_banning = 'n';
 $smarty->assign('feature_banning',$feature_banning);
 

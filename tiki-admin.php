@@ -396,6 +396,15 @@ if(isset($_REQUEST["loginprefs"])) {
     $smarty->assign('allowRegister','n');
   }
 
+  if(isset($_REQUEST["webserverauth"]) && $_REQUEST["webserverauth"]=="on") {
+    $tikilib->set_preference("webserverauth",'y'); 
+    $smarty->assign('webserverauth','y');
+  } else {
+    $tikilib->set_preference("webserverauth",'n');
+    $smarty->assign('webserverauth','n');
+  }
+
+
   if(isset($_REQUEST["useRegisterPasscode"]) && $_REQUEST["useRegisterPasscode"]=="on") {
     $tikilib->set_preference("useRegisterPasscode",'y'); 
     $smarty->assign('useRegisterPasscode','y');

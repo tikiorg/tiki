@@ -3,6 +3,7 @@ function smarty_function_content($params, &$smarty)
 {
     global $tikilib;
     global $dbTiki;
+    global $dcslib;
     include_once('lib/dcs/dcslib.php');
     extract($params);
     // Param = zone
@@ -14,7 +15,5 @@ function smarty_function_content($params, &$smarty)
     $data = $dcslib->get_actual_content($id);
     print($data);
 }
-
-/* vim: set expandtab: */
 
 ?>

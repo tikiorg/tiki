@@ -12,16 +12,6 @@ if($feature_wiki != 'y') {
 include_once("tiki-pagesetup.php");
 
 include_once('lib/wiki/wikilib.php');
-$creator = $wikilib->get_creator($page);
-$smarty->assign('creator',$creator);
-
-// Let creator set permissions
-if($wiki_creator_admin == 'y') {
-	if ($creator && $user && ($creator==$user)) {
-	   $tiki_p_admin_wiki = 'y';
-	   $smarty->assign( 'tiki_p_admin_wiki', 'y' );
-	}
-}
 
 
 // Now check permissions to access this page
@@ -43,6 +33,18 @@ if(!isset($_REQUEST["page"])) {
   $page = $_REQUEST["page"];
   $smarty->assign_by_ref('page',$_REQUEST["page"]); 
 }
+
+$creator = $wikilib->get_creator($page);
+$smarty->assign('creator',$creator);
+
+// Let creator set permissions
+if($wiki_creator_admin == 'y') {
+	if ($creator && $user && ($creator==$user)) {
+	   $tiki_p_admin_wiki = 'y';
+	   $smarty->assign( 'tiki_p_admin_wiki', 'y' );
+	}
+}
+
 
 if(isset($_REQUEST["addemail"])) {
   $notificationlib->add_mail_event('wiki_page_changes','wikipage'.$_REQUEST["page"],$_REQUEST["email"]);

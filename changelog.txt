@@ -1,5 +1,7 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Authentication: Tiki can use the WebServer authentication if admin wants, the
+  user is automatically logged to Tiki once the WebServer authentication is used.
 * [NEW] Mechanism to prevent script/robotic user registration is supported, Tiki generates
   a graphical number that the user must enter in the registration form to be registered.
   This feature is optional and can be enabled/disabled from the admin->login menu.
