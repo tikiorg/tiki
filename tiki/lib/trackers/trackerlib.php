@@ -456,9 +456,14 @@ class TrackerLib extends TikiLib {
 
 		for ($i = 0; $i < count($ins_fields["data"]); $i++) {
 			if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'e') {
+				
 			} elseif (isset($ins_fields["data"][$i]["fieldId"])) {
 				$fieldId = $ins_fields["data"][$i]["fieldId"];
-				$value = $ins_fields["data"][$i]["value"];
+				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'f') {
+					$value = date('r',$ins_fields["data"][$i]["value"]);
+				} else {
+					$value = $ins_fields["data"][$i]["value"];
+				}
 				if (isset($ins_fields["data"][$i]["name"])) {
 					$name = $ins_fields["data"][$i]["name"];
 				} else {
