@@ -1,7 +1,12 @@
 <?php
+if (isset($_GET['version'])) {
+	$version = $_GET['version'];
+} else {
+	$version = 'last';
+}
 
 // read file
-$file="../tiki-1.8-mysql.sql";
+$file="../tiki.sql";
 @$fp = fopen($file,"r");
 if(!$fp) echo "Error opening $file";
 $data = '';
@@ -20,7 +25,7 @@ $statements=split(";",$data);
 
 echo "<table>\n";
 // step though statements
-$fp=fopen($file."_to_sqlite.sql","w");
+$fp=fopen($version.".to_sqlite.sql","w");
 foreach ($statements as $statement)
 {
   echo "<tr><td><pre>\n";
