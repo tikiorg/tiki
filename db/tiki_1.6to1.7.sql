@@ -1,3 +1,18 @@
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forums_report','forums','Can report msgs to moderator','registered');
+### forum posts can be reported to moderator ###
+drop table if exists tiki_forums_reported;
+create table tiki_forums_reported(
+  threadId integer(12) not null,
+  forumId integer(12) not null,
+  parentId integer(12) not null,
+  user varchar(200),
+  timestamp integer(14),
+  reason varchar(250),
+  primary key(threadId)
+);
+### 
+
+
 ### file galleries configuration ###
 alter table tiki_files add reference_url varchar(250);
 alter table tiki_files add is_reference char(1);

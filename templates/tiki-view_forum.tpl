@@ -233,6 +233,9 @@ a moderator approves it.{/tr}</small>
 	<input type="image" name="splitsel" src="img/icons/topic_split.gif" border='0' alt='{tr}merge{/tr}' title='{tr}merge selected topics{/tr}' />
 	</td>
 	<td style="text-align:right;" class="forumodd" colspan="2">
+	{if $reported > 0}
+	<small><a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported messages:{/tr}{$reported}</a></small><br/>
+	{/if}
 	<small><a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued messages:{/tr}{$queued}</a></small>
 	</td>
 </tr>

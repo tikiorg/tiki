@@ -124,6 +124,13 @@ if($tiki_p_admin_forum == 'y') {
 	}
 }
 
+if($tiki_p_forums_report == 'y') {
+	if(isset($_REQUEST['report'])) {
+		$commentslib->report_post($_REQUEST['forumId'],$_REQUEST['comments_parentId'],$_REQUEST['report'],$user,'');
+	}
+}
+
+
 
 
 $smarty->assign_by_ref('forum_info',$forum_info);
@@ -574,6 +581,7 @@ if($user && $feature_messages=='y' && $tiki_p_messages=='y') {
 
 if($tiki_p_admin_forum == 'y') {
 	$smarty->assign('queued',$commentslib->get_num_queued($comments_objectId));
+	$smarty->assign('reported',$commentslib->get_num_reported($_REQUEST['forumId']));
 }
 
 // Display the template

@@ -1,5 +1,6 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Forums: Posts can be reported to moderator.
 * [NEW] File galleries: Up to 6 files can be uploaded at once. 
 * [NEW] Forums control to view posts from the last X hours/days only.
 * [NEW] File galleries dupes are now prevented.
