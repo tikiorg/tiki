@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2004-08-28 11:57:36 $
-# $Author: redflo $
+# $Date: 2004-09-02 19:26:40 $
+# $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -1879,6 +1879,7 @@ CREATE TABLE tiki_mailin_accounts (
   attachments char(1) NOT NULL default 'n',
   article_topicId int(4) default NULL,
   article_type varchar(50) default NULL,
+  discard_after varchar(255) default NULL,
   PRIMARY KEY  (accountId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

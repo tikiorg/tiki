@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.13 2004-06-17 20:35:52 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.14 2004-09-02 19:26:39 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,7 @@ if (isset($_REQUEST["new_acc"])) {
 	check_ticket('admin-mailin');
 	$mailinlib->replace_mailin_account($_REQUEST["accountId"], $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"],
 		$_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["type"],
-		$_REQUEST["active"], $_REQUEST["anonymous"], $_REQUEST["attachments"], $_REQUEST["article_topicId"], $_REQUEST["article_type"]);
+		$_REQUEST["active"], $_REQUEST["anonymous"], $_REQUEST["attachments"], $_REQUEST["article_topicId"], $_REQUEST["article_type"], $_REQUEST["discard_after"]);
 //	$_REQUEST["accountId"] = 0;
 	$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Mail-in account %s saved"),$_REQUEST["account"]));
 } else {
@@ -70,6 +70,7 @@ if ($_REQUEST["accountId"]) {
 	$info["attachments"] = 'n';
 	$info["article_topicId"] = '';
 	$info["article_type"] = '';
+	$info["discard_after"] = '';
 }
 
 $smarty->assign('info', $info);

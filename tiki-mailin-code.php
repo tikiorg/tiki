@@ -133,6 +133,9 @@ foreach ($accs['data'] as $acc) {
   
         if (isset($output['text'][0])) {
           $msgbody = $output["text"][0];
+          if (isset($acc['discard_after'])) {
+             $msgbody = preg_replace("/".$acc['discard_after'].".*$/s", "", $msgbody);
+          }
         }
         
         $heading = $msgbody;
@@ -220,6 +223,9 @@ foreach ($accs['data'] as $acc) {
 					$body = '';
 				}
   
+        if (isset($acc['discard_after']) && !empty($body)) {
+           $body = preg_replace("/".$acc['discard_after'].".*$/s", "", $body);
+        }
         if (!empty($body)) {
           if (!$tikilib->page_exists($page)) {
             $content .= "Page: $page has been created<br />";
@@ -244,8 +250,12 @@ foreach ($accs['data'] as $acc) {
         $output = mime::decode($full);
         //mailin_parse_output($output, $parts, 0);
   
-        if (isset($output["text"][0]))
+        if (isset($output["text"][0])) {
           $body = $output["text"][0];
+          if (isset($acc['discard_after'])) {
+              $body = preg_replace("/".$acc['discard_after'].".*$/s", "", $body);
+          }
+        }
   
         if (isset($body)) {
           if (!$tikilib->page_exists($page)) {
