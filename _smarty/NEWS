@@ -1,3 +1,40 @@
+Version 2.6.3 (June 16, 2004)
+-----------------------------
+
+  - added escapement of '</' to '<\/' in escape:javascript
+    modifier (c960657, Monte)
+  - added obfuscation of protocol-string in {mailto} when using hex-
+    encoding (bharat, messju)
+  - enhanced auto-generated filenames for templates_c and cache (messju)
+  - add 'nonstd' to escape modifier for escaping non-std chars,
+    such as ms doc quote (Monte)
+  - adjusted textformat to not output wrap chars after last para
+    (Monte)
+  - use tempnam() instead of unqid() to create better temporary files in
+    smarty_core_write_file() (xces, messju)
+  - add 'mail' to escape modifier for safe display of e-mail
+    addresses (Monte)
+  - add cycle function attribute "reset" to english docs (Monte)
+  - enhanced support of numeric constants as variable-expressions (messju)
+  - add case decentity to smarty_modifier_escape() (Konstantin A. Pelepelin,
+    messju)
+  - make smarty_core_write_compiled_include() php5-aware (messju)
+  - removed unused functionality to load a subset of lines from a file (messju)
+  - fix is_secure() should only check if a file is_readable, not if
+    the directory where it is in is readable (sagi, messju)
+  - fix problem displaying debug console when $default_resource_type
+    is not "file:" (c960657, Monte)
+  - fix permission handling with security and config_load (messju)
+  - removed '.' from the list of default template locations in
+    _parse_resource_name() (messju)
+  - fix avoid warning with template_exists() on an absolute paths (messju)
+  - fix parameters passed to resource's secure()-function (messju)
+  - fix handling of integer values like width and delay im
+    smarty_function_popup() (messju)
+
+Version 2.6.2 (Feb 17, 2004)
+----------------------------
+
   - fix allow empty years, months and days in html_select_date's
     time-attribute (messju)
   - fix YES and NO should not be booleanized inside triple-quotes in a
