@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.10 2004-03-12 21:07:59 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.11 2004-03-19 18:09:59 ggeller Exp $
 
 /*
     The idea here is that all access to the hw tables goes through this
@@ -16,7 +16,7 @@ class HomeworkLib extends TikiLib {
 	// The homeworklib and hw_ functions always assume that admin has
 	//   the permissions of teacher, teacher has the pemissions of 
 	//   grader, and grader has the permissions of student
-	//	global $ggg_tracer;
+	//	TODO: maybe tiki_p_admin needs to have all the permissions, too?
 	global $tiki_p_hw_admin;
 	global $tiki_p_hw_teacher;
 	global $tiki_p_hw_grader;
@@ -33,6 +33,36 @@ class HomeworkLib extends TikiLib {
 	else if (isset($tiki_p_hw_grader) && $tiki_p_hw_grader == 'y'){
 	  $tiki_p_hw_student = 'y';
 	}
+  }
+
+  // Called by:
+  //   tiki-hw_student_assignments.php
+  //   tiki-hw_teacher_assignments.php
+  // Data:
+  //   hw_assignments table - read only
+  // Arguments:
+  //   offset     - read only - starting point in the vector
+  //   maxRecords - read only - maximum number of records to return
+  // Returns:
+  //   Array with count of results and a data vector, sorted by the due date
+  // TODO: Test with a lot of rows in the table and different values of offset and maxRecords
+  function hw_assignments_list($offset = 0, $maxRecords = -1) {
+    $bindvars=array();
+	//    $query = 'select `hw_assignments`.* from `hw_assignments` ORDER BY `dueDate`';
+	$query = 'select `hw_assignments`.* from `hw_assignments` WHERE deleted = 0 ORDER BY `dueDate`';
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $ret = array();
+    
+    $cant = 0;
+    while ($res = $result->fetchRow()) {
+      $ret[] = $res;
+      $cant++;
+    }
+    
+    $retval = array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
   }
 
   // Called by: tiki-hw_teacher_assignment_edit.php
@@ -87,112 +117,114 @@ class HomeworkLib extends TikiLib {
   // Returns $lastchanges (wo) Nested array with the data of interest
   // TODO: Pass back due date.
   function hw_pages_list($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc') {
-	global $user;
+    global $user;
     if ($sort_mode == 'size_desc') {
-	  $sort_mode = 'page_size_desc';
+      $sort_mode = 'page_size_desc';
     }
-	
+    
     if ($sort_mode == 'size_asc') {
-	  $sort_mode = 'page_size_asc';
+      $sort_mode = 'page_size_asc';
     }
-	
+    
     $old_sort_mode = '';
-	
+    
     if (in_array($sort_mode, array(
-								   'versions_desc',
-								   'versions_asc',
-								   'links_asc',
-								   'links_desc',
-								   'backlinks_asc',
-								   'backlinks_desc'
-								   ))) {
-	  $old_offset = $offset;
-	  
-	  $old_maxRecords = $maxRecords;
-	  $old_sort_mode = $sort_mode;
-	  $sort_mode = 'user_desc';
-	  $offset = 0;
-	  $maxRecords = -1;
+				   'versions_desc',
+				   'versions_asc',
+				   'links_asc',
+				   'links_desc',
+				   'backlinks_asc',
+				   'backlinks_desc'
+				   ))) {
+      $old_offset = $offset;
+      
+      $old_maxRecords = $maxRecords;
+      $old_sort_mode = $sort_mode;
+      $sort_mode = 'user_desc';
+      $offset = 0;
+      $maxRecords = -1;
     }
-	
-	$mid = " where `id` like ? ";
-	$bindvars = array('%%');
-	
-	$bindvars = array();
-
-	global $tiki_p_hw_grader;
-	if ($tiki_p_hw_grader == 'y'){
-	  $query = 'select * from hw_pages';
-	}
-	else {
-	  $query = 'select * from hw_pages where `studentName` = ';
-	  $query .= "\"$user\"";
-	}
-
+    
+    $mid = " where `id` like ? ";
+    $bindvars = array('%%');
+    
+    $bindvars = array();
+  
+    global $tiki_p_hw_grader;
+    if ($tiki_p_hw_grader == 'y'){
+      $query = 'select * from hw_pages';
+    }
+    else {
+      $query = 'select * from hw_pages where `studentName` = ';
+      $query .= "\"$user\"";
+    }
+    
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
-
-	$query_cant = 'select count(*) from hw_pages where `studentName` = "Bobby"';
+    
+    global $user;
+    $query_cant = 'select count(*) from hw_pages where `studentName` = '."\"$user\"";
+    
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = array();
-	
-	$cant = 0;
+    
+    $cant = 0;
     while ($res = $result->fetchRow()) {
-	  $cant++;
-	  $aux = array();
-	  $aux["id"] = $res["id"];
-	  $assignment_data = array();
-	  if (!$this->hw_assignment_fetch(&$assignment_data, $res["assignmentId"])){
-		// this happens it the assignmentId is not valid.
-		// i.e. the hw_pages table has a row with an invalid assignmentId
-		continue;
-	  }
-	  $aux["title"] = $assignment_data["title"];
-	  $aux["dueDate"] = $assignment_data["dueDate"];
-	  $aux["lastModif"] = $res["lastModif"];
-	  $aux["user"] = $res["user"];
-	  $aux["ip"] = $res["ip"];
-	  $aux["len"] = $res["page_size"];
-	  $aux["comment"] = $res["comment"];
-	  $aux["student"] = $res["studentName"];
-	  $ret[] = $aux;
+      $cant++;
+      $aux = array();
+      $aux["id"] = $res["id"];
+      $assignment_data = array();
+      if (!$this->hw_assignment_fetch(&$assignment_data, $res["assignmentId"])){
+	// this happens it the assignmentId is not valid.
+	// i.e. the hw_pages table has a row with an invalid assignmentId
+	continue;
+      }
+      $aux["title"] = $assignment_data["title"];
+      $aux["dueDate"] = $assignment_data["dueDate"];
+      $aux["lastModif"] = $res["lastModif"];
+      $aux["user"] = $res["user"];
+      $aux["ip"] = $res["ip"];
+      $aux["len"] = $res["page_size"];
+      $aux["comment"] = $res["comment"];
+      $aux["student"] = $res["studentName"];
+      $ret[] = $aux;
     }
-	
+    
     // If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
     if ($old_sort_mode == 'versions_asc') {
-	  usort($ret, 'compare_versions');
+      usort($ret, 'compare_versions');
     }
-	
+    
     if ($old_sort_mode == 'versions_desc') {
-	  usort($ret, 'r_compare_versions');
+      usort($ret, 'r_compare_versions');
     }
-	
+    
     if ($old_sort_mode == 'links_desc') {
-	  usort($ret, 'compare_links');
+      usort($ret, 'compare_links');
     }
-	
+    
     if ($old_sort_mode == 'links_asc') {
-	  usort($ret, 'r_compare_links');
+      usort($ret, 'r_compare_links');
     }
-	
+    
     if ($old_sort_mode == 'backlinks_desc') {
-	  usort($ret, 'compare_backlinks');
+      usort($ret, 'compare_backlinks');
     }
-	
+    
     if ($old_sort_mode == 'backlinks_asc') {
-	  usort($ret, 'r_compare_backlinks');
+      usort($ret, 'r_compare_backlinks');
     }
-	
+    
     if (in_array($old_sort_mode, array(
-									   'versions_desc',
-									   'versions_asc',
-									   'links_asc',
-									   'links_desc',
-									   'backlinks_asc',
-									   'backlinks_desc'
-									   ))) {
-	  $ret = array_slice($ret, $old_offset, $old_maxRecords);
+				       'versions_desc',
+				       'versions_asc',
+				       'links_asc',
+				       'links_desc',
+				       'backlinks_asc',
+				       'backlinks_desc'
+				       ))) {
+      $ret = array_slice($ret, $old_offset, $old_maxRecords);
     }
-	
+    
     $retval = array();
     $retval["data"] = $ret;
     $retval["cant"] = $cant;
@@ -393,9 +425,10 @@ class HomeworkLib extends TikiLib {
   // Called by: tiki-hw_rollback.php
   //            tiki-hw_teacher_assignment_edit.php
   //            tiki-hw_teacher_assignment.php
+  //            tiki-hw_grading_queue.php
   // Fetch data for an assignment.
   // $data - wo - row from hw_assignments table
-  // $id   - wo - index to hw_assignments table
+  // $id   - read only - index to hw_assignments table
   // db hw_assignments table
   // Return true if successful, otherwise false
   function hw_assignment_fetch(&$data, $id) {
@@ -597,33 +630,35 @@ class HomeworkLib extends TikiLib {
   // $unlock (ro) - ulnlock page?
   //
   function hw_page_update($pageId, $data, $comment, $unlock = true) {
-		//    global $ggg_tracer;
-		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.": in hw_page_update.");
-		//    $ggg_tracer->outln("Have to update the version number!");
-		//    $ggg_tracer->outln("Have to update the time stamp!");
-
-	$oldInfo = array();
-	$status = $this->hw_page_fetch_by_id(&$oldInfo, $pageId, false);
-	if ($status != 'HW_OK'){
-	  $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.", ".tra("Error: Call to hw_page_fetch_by_id failed!"));
-	  $smarty->display("error.tpl");
-	  die;  
-	}
-
-   	$query = "insert into `hw_history`(`id`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`) values(?,?,?,?,?,?,?)";
-	$result = $this->query($query,array($oldInfo["id"], (int)$oldInfo["version"], (int)$oldInfo["lastModif"], $oldInfo["user"], $oldInfo["ip"], $oldInfo["comment"], $oldInfo["data"]));
-
-	$version = (int)$oldInfo["version"] + 1;
-	$lastModif = date("U");
-	$ip = $_SERVER["REMOTE_ADDR"];
-
-
-	$query = "update `hw_pages` set `version` = ?, `lastModif` = ?, `ip` = ? , `data` = ?, `comment` = ?  where `id`=?";
-	$this->query($query,array($version,$lastModif,$ip,$data,$comment,$pageId));
-	if ($unlock)
-	  $this->hw_page_unlock($pageId);
+    //    global $ggg_tracer;
+    //    $ggg_tracer->outln(__FILE__." line: ".__LINE__.": in hw_page_update.");
+    //    $ggg_tracer->outln("Have to update the version number!");
+    //    $ggg_tracer->outln("Have to update the time stamp!");
+    
+    $oldInfo = array();
+    $status = $this->hw_page_fetch_by_id(&$oldInfo, $pageId, false);
+    if ($status != 'HW_OK'){
+      $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.", ".tra("Error: Call to hw_page_fetch_by_id failed!"));
+      $smarty->display("error.tpl");
+      die;  
+    }
+    
+    $query = "insert into `hw_history`(`id`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`) values(?,?,?,?,?,?,?)";
+    $result = $this->query($query,array($oldInfo["id"], (int)$oldInfo["version"], (int)$oldInfo["lastModif"], $oldInfo["user"], $oldInfo["ip"], $oldInfo["comment"], $oldInfo["data"]));
+    
+    $version = (int)$oldInfo["version"] + 1;
+    $lastModif = date("U");
+    $ip = $_SERVER["REMOTE_ADDR"];
+    
+    global $user;
+    $query = "update `hw_pages` set `version` = ?, `lastModif` = ?, `ip` = ? , `data` = ?, `comment` = ?,
+                   `user` = ?";
+    $query .= " where `id`=?";
+    $this->query($query,array($version,$lastModif,$ip,$data,$comment,$user,$pageId));
+    if ($unlock)
+      $this->hw_page_unlock($pageId);
   }
-
+  
   // Create a homework page
   //  
 
@@ -706,34 +741,45 @@ class HomeworkLib extends TikiLib {
 	return true;
   }
 
+  // Stub for now
+  // Called by tiki-hw_rollback.php
+  function hw_page_use_version($page, $version, $comment = ''){
+    global $user;
+		//    global $ggg_tracer;
+		//    $ggg_tracer->outln(__FILE__." line: ".__LINE__.': In hw_page_use_version!');
+	$query = "select * from `hw_history` where `id`=? and `version`=?";
+	$result = $this->query($query,array($page,$version));
+	if (!$result->numRows())
+		return false;
+	$res = $result->fetchRow();
+	$query = "update `hw_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=? where `id`=?";
+	$result = $this->query($query,array($res["data"],$res["lastModif"],$res["user"],$res["comment"],$res["ip"],$page));
+	$action = "Changed actual version to $version";
+	$t = date("U");
+	$query = "insert into `hw_actionlog`(`action`,`pageId`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+	$result = $this->query($query,array($action,$page,$t,$user,$_SERVER["REMOTE_ADDR"],$comment));
+	return true;
+  }
+
+  // Fetch a list of all the pages for $assignmentId
   // Called by:
-  //   tiki-hw_student_assignments.php
-  //   tiki-hw_teacher_assignments.php
+  //   tiki-hw_grading_queue.php
   // Data:
-  //   hw_assignments table - read only
-  // Arguments:
-  //   offset     - read only - starting point in the vector
-  //   maxRecords - read only - maximum number of records to return
-  // Returns:
-  //   Array with count of results and a data vector, sorted by the due date
-  // TODO: Test with a lot of rows in the table and different values of offset and maxRecords
-  function hw_assignments_list($offset = 0, $maxRecords = -1) {
-    $bindvars=array();
-	//    $query = 'select `hw_assignments`.* from `hw_assignments` ORDER BY `dueDate`';
-	$query = 'select `hw_assignments`.* from `hw_assignments` WHERE deleted = 0 ORDER BY `dueDate`';
-    $result = $this->query($query,$bindvars,$maxRecords,$offset);
-    $ret = array();
-    
-    $cant = 0;
+  //   Returns true for success false for failure
+  //   $listPages - write only
+  //   $assignmentId - index into hw_assignments and a columnt in hw_pages
+  function hw_pages_list_for_assignment(&$listPages, $assignmentId) {
+    $bResult = false;
+	$sQuery = "select * from hw_pages where `assignmentId` = $assignmentId";
+
+    $result = $this->query($sQuery);
+	if ($result->numRows() == 0)
+	  return false;
     while ($res = $result->fetchRow()) {
-      $ret[] = $res;
-      $cant++;
-    }
-    
-    $retval = array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
+	  $listPages[] = $res;
+	}
+	usort($listPages,'compare_lastModif');
+	return $listPages;
   }
   
   function assignment_store($id,$dueDate,$data,$user,$ip,$description){
@@ -1105,7 +1151,36 @@ function get_assignment($articleId) {
    return true;
  }
 
+ // Return the number of pages waiting to be graded
+ // Called by: tiki-hw_teacher_assignments.php
+ // $assignmentId - index into hw_assignments table
+ // returns the number of assignments waiting to be graded.
+ //   The definition of "waiting to be graded." is the due date has passed
+ //     and the last editor was the student.
+ function hw_assignment_iGradingQue($assignmentId){
+   $data = array();
+   $query = 'select dueDate from hw_assignments where `assignmentId` = '.$assignmentId;
+   $result = $this->query($query);
+   while ($res = $result->fetchRow()) {
+	 $dueDate = $res["dueDate"];
+   }
+   $theDate = date("U");
+
+   if ($theDate < $dueDate){
+	 return 0;
+   }
+
+   // assignment dueDate has passed.
+   $query_cant = 'select count(*) from hw_pages where `studentName` = `user`
+                    and `assignmentId` = '.$assignmentId;
+   $cant = $this->getOne($query_cant);
+   return $cant;
+ }
+
 } //end of class HomeworkLib
 
+function compare_lastModif($ar1, $ar2) {
+    return $ar1["lastChanged"] - $ar2["lastChanged"];
+}
 
 ?>

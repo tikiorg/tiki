@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_editpage.php,v 1.4 2004-03-12 20:58:25 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_editpage.php,v 1.5 2004-03-19 18:09:59 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -63,9 +63,8 @@ if (!$tiki_p_hw_grader && $usr != $studentName /* && !homeworklib->hw_peer_revie
 $assignmentId = $page_data['assignmentId'];
 $smarty->assign('assignmentId',$assignmentId);
 
-// $assignment_data = $homeworklib->get_assignment($assignmentId);
 if (!$homeworklib->hw_assignment_fetch(&$assignment_data, $assignmentId)){
-  $smarty->assign('msg', tra("Assignment not found"));
+  $smarty->assign('msg', tra("Error: Assignment not found."));
   $smarty->display("error.tpl");
   die;
 }
@@ -85,11 +84,15 @@ if (($tiki_p_hw_grader == 'n') && (date("U") > $assignment_data['dueDate']) ) {
 // Admin, teachers and graders can edit anyone's page after the due date, no
 //   one's before the due date. (unlock this page and exit)
 // $ggg_tracer->outln(__FILE__." line ".__LINE__.' $tiki_p_hw_grader = '.$tiki_p_hw_grader);
-if (($tiki_p_hw_grader == 'y') && (date("U") < $assignment_data['expireDate'])) {
+if (($tiki_p_hw_grader == 'y') && (date("U") < $assignment_data['dueDate'])) {
   $homeworklib->hw_page_unlock($pageId);
   $smarty->assign('msg', tra("Permission denied: The teacher must wait until the due date to edit students' work."));
   $smarty->display("error.tpl");
   die;
+}
+
+if ($tiki_p_hw_grader == 'y' /* TODO: Or peer review */){
+  $smarty->assign('grader',true);
 }
 
 $smarty->assign('homeworkTitle', $assignment_data["title"]);
@@ -112,8 +115,10 @@ if (isset($_REQUEST["save"])) {
     $comment = $_REQUEST["comment"];
     $homeworklib->hw_page_update($pageId, $edit, $comment);
   }
-  header("location: tiki-hw_page.php?assignmentId=".$page_data['assignmentId']);
-  die;
+  if ($tiki_p_hw_grader == 'y')
+    header("location: tiki-hw_grading_queue.php?assignmentId=".$page_data['assignmentId']);
+  else
+    header("location: tiki-hw_page.php?assignmentId=".$page_data['assignmentId']);
 }
 
 // We are creating a new version; it needs a new comment.

@@ -1,7 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment.tpl,v 1.1 2004-03-01 02:15:37 ggeller Exp $ *}
-{* George G. Geller *}
-{* February 29, 2004 *}
-{* Adapted from tiki-read_article.php *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment.tpl,v 1.2 2004-03-19 18:09:59 ggeller Exp $ *}
+{* Copyright 2004 George G. Geller *}
 
 <!-- templates/tiki-hw_teacher_assignment.tpl start -->
 
@@ -25,12 +23,15 @@
 <div class="articletrailer">
   <table class="wikitopline">
     <tr>
+      <td><a href="tiki-hw_teacher_assignments.php" class="trailer">{tr}Assignments List{/tr}</a></td>
       <td>
-        <a href="tiki-hw_teacher_assignments.php" class="trailer">{tr}Assignments List{/tr}</a>
-      </td>
-      <td>
-        {* <a href="tiki-hw_page.php?assignmentId={$assignmentId}" class="trailer">{tr}My Work{/tr}</a> *}
-	Grading Queue (empty) {* GGG FIXME need link to papers to be graded *}
+      {if $nGradingQueue eq 0}
+        <td style="text-align:left;"><a class="trailer" href="tiki-hw_grading_queue.php?assignmentId={$assignmentId}">{tr}Grading Queue {/tr}({tr}empty{/tr})</a></td>
+      {elseif $nGradingQueue eq 1}
+        <td style="text-align:left;"><a class="trailer" href="tiki-hw_grading_queue.php?assignmentId={$assignmentId}">{tr}Grading Queue {/tr}(1 {tr}paper{/tr})</a></td>
+      {else}
+        <td style="text-align:left;"><a class="trailer" href="tiki-hw_grading_queue.php?assignmentId={$assignmentId}">{tr}Grading Queue {/tr}({$nGradingQueue} {tr}papers{/tr})</a></td>
+      {/if}
       </td>
       <td style="text-align:right;">
         {* TODO IN VERSION2
