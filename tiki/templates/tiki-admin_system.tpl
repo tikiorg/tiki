@@ -21,3 +21,15 @@
 <td class="form">({$modules.cant} {tr}files{/tr} / {$modules.total|kbsize})</td>
 </tr>
 </table>
+
+<table class="normal">
+<tr><td colspan="3" class="heading">{tr}Templates compiler{/tr}</td></tr>
+{foreach key=key item=item from=$templates}
+<tr class="formcolor">
+<td class="form"><b>{$key}</b></td>
+<td class="form"><a href="tiki-admin_system.php?compiletemplates={$key}" class="link">{tr}Compile{/tr}</a></td>
+<td class="form">({$item.cant} {tr}files{/tr} / {$item.total|kbsize})</td>
+</tr>
+{/foreach}
+</table>
+
