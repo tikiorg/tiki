@@ -132,3 +132,24 @@
 </div> 
 {* END OF PAGINATION *}
 
+{* SHOW GRAPH IF AVAILABLE... *}
+{if $graph neq ''}
+  <h3>{tr}Process Graph for{/tr} {$procname}</h3>
+  <table class="normal">
+    <tr>
+      <td class="formcolor">
+        <center>
+          {if $map neq ''}
+            <img src="{$graph}" alt="{$procname}" border="0" usemap="#procmap" />
+            <map name="procmap">
+              {$map}
+            </map>
+          {else}
+            <img src="{$graph}" alt="{$procname}" border="0" />
+          {/if}
+        </center>
+      </td>
+    </tr>
+  </table>
+{/if}
+{* END OF SHOW GRAPH *}

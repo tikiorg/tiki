@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_activities.php,v 1.6 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_activities.php,v 1.7 2004-01-22 01:52:55 halon Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,6 +86,49 @@ $smarty->assign_by_ref('items', $items["data"]);
 
 $processes = $GUI->gui_list_user_processes($user, 0, -1, 'procname_asc', '', '');
 $smarty->assign_by_ref('all_procs', $processes['data']);
+
+if (count($processes['data']) == 1 && empty($_REQUEST['filter_process'])) {
+    $_REQUEST['filter_process'] = $processes['data'][0]['pId'];
+}
+
+if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process']) {
+    $actid2item = array();
+    foreach (array_keys($items["data"]) as $index) {
+        $actid2item[$items["data"][$index]['activityId']] = $index;
+    }
+    foreach ($processes['data'] as $info) {
+        if ($info['pId'] == $_REQUEST['filter_process'] && !empty($info['normalized_name'])) {
+            $graph = "lib/Galaxia/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
+            $mapfile = "lib/Galaxia/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
+            if (file_exists($graph) && file_exists($mapfile)) {
+                $maplines = file($mapfile);
+                $map = '';
+                foreach ($maplines as $mapline) {
+                    if (!preg_match('/activityId=(\d+)/',$mapline,$matches)) continue;
+                    $actid = $matches[1];
+                    if (!isset($actid2item[$actid])) continue;
+                    $index = $actid2item[$actid];
+                    $item = $items['data'][$index];
+                    if ($item['instances'] > 0) {
+                        $url = "tiki-g-user_instances.php?filter_process=".$info['pId'];
+                        $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;filter_activity', $mapline);
+                        $map .= $mapline;
+                    } elseif ($item['isInteractive'] == 'y' && ($item['type'] == 'start' || $item['type'] == 'standalone')) {
+                        $url = "tiki-g-run_activity.php?";
+                        $mapline = preg_replace('/href=".*?activityId/', 'href="' . $url . '&amp;activityId', $mapline);
+                        $map .= $mapline;
+                    }
+                }
+                $smarty->assign('graph', $graph);
+                $smarty->assign('map', $map);
+                $smarty->assign('procname', $info['procname']);
+            } else {
+                $smarty->assign('graph', '');
+            }
+            break;
+        }
+    }
+}
 
 $section = 'workflow';
 include_once ('tiki-section_options.php');
