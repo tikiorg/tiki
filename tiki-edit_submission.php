@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.20 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.21 2003-09-25 15:45:31 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,7 +43,8 @@ $smarty->assign('allowhtml', 'y');
 $publishDate = date('U');
 $dc = &$tikilib->get_date_converter($user);
 $smarty->assign('title', '');
-$smarty->assign('authorName', '');
+$authorName = $tikilib->get_user_preference($user,'realName',$user);
+$smarty->assign('authorName', $authorName);
 $smarty->assign('topicId', '');
 $smarty->assign('useImage', 'n');
 $smarty->assign('isfloat', 'n');
