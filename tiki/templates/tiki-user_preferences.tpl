@@ -166,8 +166,14 @@
     <option value='public' {if $user_information eq 'public'}selected="selected"{/if}>{tr}public{/tr}</option>
   </select>
   </td></tr>
-  {if $feature_wiki eq 'y'}
-  <tr><td class="form">{tr}Use double-click to edit pages{/tr}:</td>
+  {if $feature_wiki eq 'y' and $feature_wiki_dblclickedit neq 'disabled'}
+  <tr><td class="form">
+  {if $feature_wiki_dblclickedit eq 'wikitext_only'}
+	  {tr}Double-click on wiki text to edit page{/tr}:
+  {else}
+	  {tr}Double-click to edit pages{/tr}:
+  {/if}
+  </td>
   <td class="form">
   <input type="checkbox" name="user_dbl" {if $user_dbl eq 'y'}checked="checked"{/if} />
   </td>

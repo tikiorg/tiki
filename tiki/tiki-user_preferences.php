@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.54 2004-06-18 22:17:21 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.55 2004-07-01 19:11:19 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -394,6 +394,8 @@ if ($display_timezone != "UTC")
 
 $smarty->assign_by_ref('display_timezone', $display_timezone);
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
+global $feature_wiki_dblclickedit;
+$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
 
 ask_ticket('user-prefs');
 
