@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.12 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.13 2003-08-15 21:53:38 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -87,7 +87,7 @@ if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 	$heading .= '[<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit{/tr}</a>]' . "\n";
 	$heading .= '{/if}' . "\n";
 	$heading .= '</div>' . "\n";
-	$heading .= '<div class="blogdesc">{tr}Description:{/tr}{$description}</div>';
+	$heading .= '<div class="blogdesc">{tr}Description:{/tr} {$description}</div>';
 }
 
 $smarty->assign_by_ref('heading', $heading);
