@@ -1001,3 +1001,32 @@ div.dirfooter {
   margin-top: 10px;
   border: 1px solid black;
 }
+
+/*************************************************** MESSAGES ***************************************************/
+/* Links for priority colors */
+td.prio1 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px; background-color: #E6E6FF;}
+td.prio2 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px;background-color: #D5D5FF;}
+td.prio3 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px;background-color: #C6C6FF;}
+td.prio4 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px;background-color: #A8A8FF;}
+td.prio5 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px; background-color: #7373FF;}
+
+/* Div containing links to flag/unflag messages when reading a message */
+div.messureadflag {
+  background-color: #CCCCCC;
+  padding-left: 5px;
+}
+
+/* Header when reading a message */
+div.messureadhead {
+  background-color: #DEDEDE;
+  margin-top: 2px;
+}
+
+/* Message body when reading */
+div.messureadbody {
+ margin-top: 5px;
+}
+
+/* Links to read emails (the subject in the mailbox listing) */
+.readlink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : black; text-decoration: underline;}
+.readlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #636363; text-decoration: underline;}

@@ -14,6 +14,9 @@
 {if $feature_userPreferences eq 'y' and $user}
   &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}user preferences{/tr}</a><br/>
 {/if}
+{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+  &nbsp;<a href="messu-mailbox.php" class="linkmenu">{tr}messages{/tr}</a><br/>
+{/if}
 {/if}
 
 {if $feature_stats eq 'y' and $tiki_p_view_stats eq 'y'}
@@ -267,6 +270,7 @@
  $tiki_p_edit_templates eq 'y' or
  $tiki_p_admin_dynamic eq 'y' or
  $tiki_p_admin_dynamic eq 'y' or
+ $tiki_p_admin_mailin eq 'y' or
  $tiki_p_edit_content_templates eq 'y' or
  $tiki_p_edit_html_pages eq 'y' or
  $tiki_p_view_referer_stats eq 'y' or
@@ -311,6 +315,9 @@
     {/if}
     {if $tiki_p_edit_cookies eq 'y'}
       &nbsp;<a href="tiki-admin_cookies.php" class="linkmenu">{tr}Cookies{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_admin_mailin eq 'y'}
+      &nbsp;<a href="tiki-admin_mailin.php" class="linkmenu">{tr}Mail-in{/tr}</a><br/>
     {/if}
     {if $tiki_p_edit_content_templates eq 'y'}
       &nbsp;<a href="tiki-admin_content_templates.php" class="linkmenu">{tr}Content templates{/tr}</a><br/>

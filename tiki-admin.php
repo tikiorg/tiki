@@ -1024,6 +1024,14 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_directory",'n');
   }
   
+  if(isset($_REQUEST["feature_messages"]) && $_REQUEST["feature_messages"]=="on") {
+    $tikilib->set_preference("feature_messages",'y'); 
+    $smarty->assign("feature_messages",'y');
+  } else {
+    $tikilib->set_preference("feature_messages",'n');
+    $smarty->assign("feature_messages",'n');
+  }
+  
   if(isset($_REQUEST["feature_webmail"]) && $_REQUEST["feature_webmail"]=="on") {
     $tikilib->set_preference("feature_webmail",'y'); 
     $smarty->assign("feature_webmail",'y');

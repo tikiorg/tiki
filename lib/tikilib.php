@@ -33,6 +33,19 @@ class TikiLib {
     die;
   }
 
+  // Get online users
+  function get_online_users()
+  {
+    $query = "select user from tiki_sessions where user<>''";
+    $result = $this->db->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res['user_information'] = $this->get_user_preference($res['user'],'user_information','public');
+      $ret[] = $res;
+    }
+    return $ret;
+  }
+
   // Validate emails...
   function SnowCheckMail($Email,$Debug=false)
   {
@@ -5370,9 +5383,10 @@ class TikiLib {
 
   function update_session($sessionId)
   {
+    global $user;
     $now = date("U");
     $oldy = $now-(5*60);
-    $query = "replace into tiki_sessions(sessionId,timestamp) values('$sessionId',$now)";
+    $query = "replace into tiki_sessions(sessionId,timestamp,user) values('$sessionId',$now,'$user')";
     $result = $this->query($query);
     $query = "delete from tiki_sessions where timestamp<$oldy";
     $result = $this->query($query);
@@ -6095,6 +6109,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // tags table
   function restore_tag($tagname)
   {
+    $query = "update tiki_pages set cache_timestamp=0";
+    $this->query($query);
     $query = "select * from tiki_tags where tagName='$tagname'";
     $result=$this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -6554,6 +6570,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // Removes all the versions of a page and the page itself
   function remove_all_versions($page,$comment='')
   {
+    $this->invalidate_cache($page);
     $query = "delete from tiki_pages where pageName = '$page'";
     $result = $this->query($query);
     $query = "delete from tiki_history where pageName = '$page'";
@@ -6570,6 +6587,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 
   function use_version($page,$version,$comment='')
   {
+    $this->invalidate_cache($page);
     $query = "select * from tiki_history where pageName='$page' and version='$version'";
     $result=$this->query($query);
     if(!$result->numRows()) return false;
@@ -6597,6 +6615,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   // version in the tiki_history then the last version becomes the actual version
   function remove_last_version($page,$comment='')
   {
+    $this->invalidate_cache($page);
     $query = "select * from tiki_history where pageName='$page' order by lastModif desc";
     $result = $this->query($query);
     if($result->numRows()) {
@@ -7300,7 +7319,6 @@ function parse_data($data)
 
     // Now search for plugins
     preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
-    //print_r($plugins);
     for($i=0;$i<count($plugins[0]);$i++) {
       $plugin_start = $plugins[0][$i];
       $plugin_end = '{'.$plugins[1][$i].'}';
@@ -8364,9 +8382,15 @@ function parse_data($data)
     $result = $this->query($query);
   }
 
+  function invalidate_cache($page) {
+    $query = "update tiki_pages set cache_timestamp=0 where pageName='$page'";
+    $this->query($query);
+  }
+
   function update_page($pageName,$edit_data,$edit_comment, $edit_user, $edit_ip,$description='')
   {
     global $smarty;
+    $this->invalidate_cache($pageName);
     // Collect pages before modifying edit_data (see update of links below)
     $pages = $this->get_pages($edit_data);
     $edit_data = addslashes($edit_data);
