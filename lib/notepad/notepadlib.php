@@ -42,7 +42,7 @@ class NotepadLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_user_notes` where `user`='$user' $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_user_notes` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_user_notes` where `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
