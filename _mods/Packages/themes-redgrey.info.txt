@@ -1,0 +1,33 @@
+contributor:
+$Author: damosoft $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-10-28 18:55:33 $
+
+files: 
+themes/redgrey/styles/redgrey.css styles/redgrey.css
+themes/redgrey/styles/redgrey/tikibutton2.png styles/redgrey/tikibutton2.png
+themes/redgrey/templates/error.tpl templates/styles/redgrey/error.tpl
+themes/redgrey/templates/tiki-bot_bar.tpl templates/styles/redgrey/tiki-bot_bar.tpl
+themes/redgrey/templates/tiki-show_page.tpl templates/styles/redgrey/tiki-show_page.tpl
+themes/redgrey/templates/tiki-top_bar.tpl templates/styles/redgrey/tiki-top_bar.tpl
+themes/redgrey/templates/tiki.tpl templates/styles/redgrey/tiki.tpl
+
+author:
+damosoft
+
+licence:
+Unknown!
+
+Description: 
+A rip of the Fedora* themes
+
+configuration:
+color,color,red
+type of design,type,plain
+
+Changelog:
+1 initial package
