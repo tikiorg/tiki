@@ -12,6 +12,16 @@ body {
 	margin-bottom:   0px;
 	margin-right:   0px;
 }
+a {
+	color:    #2270e5;
+	text-decoration:   none;
+}
+
+a:hover {
+	color: #f7a046;
+	text-decoration: underline;
+}
+
 
 /* GENERAL LAYOUT EXPLANATION
  *
@@ -2541,7 +2551,8 @@ div#loadstats {
 }
 
 .mdkitem a:hover  {
-  padding: 2px 5px 1px 5px;
+  padding: 2px 5px 2px 5px;
+	text-decoration: none;
 }
 
 .mdkitem a:active {
@@ -2583,7 +2594,7 @@ div.tabs {
   cursor: default !important;
   font-weight: 700 !important;
   z-index: 100;
-  }
+}
 
 .content {
   position: relative;
