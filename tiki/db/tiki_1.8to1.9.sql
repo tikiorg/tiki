@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.59 2004-05-05 02:36:32 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.60 2004-05-17 08:50:20 chealer Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -485,3 +485,6 @@ ALTER TABLE `tiki_quizzes` ADD `expireDate` int(14) ;
 
 # Added 1 May 2004 by Robin Lee Powell; anonymous poll votes allowed or not.
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_anonymous','n');
+
+# Added 2004 on 2004-05-17 by chealer : 876510 fix
+UPDATE `tiki_preferences` set `name`='image_galleries_comments_default_order' where `name`='image_galleries_comments_default_orderin';

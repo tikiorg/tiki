@@ -5,7 +5,7 @@
 <form action="tiki-admin.php?page=gal" method="post">
 <table class="admin">
 <tr class="form"><td><label>{tr}Home Gallery (main gallery){/tr}</label></td><td>
-<select name="homeGallery">
+<select name="home_gallery">
 {section name=ix loop=$galleries}
 <option value="{$galleries[ix].galleryId|escape}" {if $galleries[ix].galleryId eq $home_gallery}selected="selected"{/if}>{$galleries[ix].name|truncate:20:"...":true}</option>
 {/section}
@@ -78,10 +78,10 @@
     <tr class="form"><td><label>{tr}Default number of comments per page{/tr}: </label></td><td><input size="5" type="text" name="image_galleries_comments_per_page" value="{$image_galleries_comments_per_page|escape}" /></td></tr>
     <tr class="form"><td><label>{tr}Comments default ordering{/tr}</label>
     </td><td>
-    <select name="image_galleries_comments_default_ordering">
-    <option value="commentDate_desc" {if $image_galleries_comments_default_ordering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
-		<option value="commentDate_asc" {if $image_galleries_comments_default_ordering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
-    <option value="points_desc" {if $image_galleries_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
+    <select name="image_galleries_comments_default_order">
+    <option value="commentDate_desc" {if $image_galleries_comments_default_order eq 'commentDate_desc'}selected="selected"{/if}>{tr}Newest first{/tr}</option>
+		<option value="commentDate_asc" {if $image_galleries_comments_default_order eq 'commentDate_asc'}selected="selected"{/if}>{tr}Oldest first{/tr}</option>
+    <option value="points_desc" {if $image_galleries_comments_default_order eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
     </select>
     </td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="imagegalcomprefs" value="{tr}Change preferences{/tr}" /></td></tr>
