@@ -47,6 +47,12 @@ class SearchLib extends TikiLib {
 	    case "articles":
 	      return $this->find_exact_articles($words,$offset, $maxRecords);
 	      break;
+	    case "blogs":
+	      return $this->find_exact_blogs($words,$offset, $maxRecords);
+	      break;
+	    case "posts":
+	      return $this->find_exact_blog_posts($words,$offset, $maxRecords);
+	      break;
 	    default:
 	      return $this->find_exact_all($words,$offset, $maxRecords);
 	      break;
@@ -58,15 +64,90 @@ class SearchLib extends TikiLib {
 	  $wikiresults=$this->find_exact_wiki($words,$offset, $maxRecords);
 	  $artresults=$this->find_exact_articles($words,$offset, $maxRecords);
 	  $fcommresults=$this->find_exact_forumcomments($words,$offset, $maxRecords);
+	  $blogresults=$this->find_exact_blogs($words,$offset, $maxRecords);
+	  $blogpostsresults=$this->find_exact_blog_posts($words,$offset, $maxRecords);
+
 
 	  //merge the results
 	  $res=array();
 	  $res["data"]=array_merge($wikiresults["data"],$artresults["data"],
-	  		$fcommresults["data"]);
+	  		$fcommresults["data"],$blogresults["data"],
+			$blogpostsresults["data"]);
 	  $res["cant"]=$wikiresults["cant"]+$artresults["cant"]+
-	  		$fcommresults["cant"];
+	  		$fcommresults["cant"]+$blogresults["cant"]+
+			$blogpostsresults["cant"];
 	  return ($res);
 	}
+
+	function &find_exact_blogs($words,$offset, $maxRecords) {
+          global $feature_blogs;
+          if ($feature_blogs == 'y') {
+            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+                b.`description`,b.`hits`,b.`lastModif`,b.`title` from
+                `tiki_searchindex` s, `tiki_blogs` b where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='blog' and
+                s.`page`=b.`blogId`";
+            $result=$this->query($query,$words,$maxRecords,$offset);
+            $querycant="select count(*) from `tiki_searchindex` s, `tiki_blogs` b where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='blog' and
+                s.`page`=b.`blogId`";
+            $cant=$this->getOne($querycant,$words);
+            $ret=array();
+            while ($res = $result->fetchRow()) {
+              $href = "tiki-view_blog.php?blogId=".urlencode($res["page"]);
+              $ret[] = array(
+                'pageName' => $res["title"],
+                'location' => $res["location"],
+                'data' => substr($res["description"],0,250),
+                'hits' => $res["hits"],
+                'lastModif' => $res["lastModif"],
+                'href' => $href,
+                'relevance' => $res["hits"]
+              );
+            }
+            return array('data' => $ret,'cant' => $cant);
+          } else {
+            return array('data' => array(),'cant' => 0);
+          }
+        }
+
+
+        function &find_exact_blog_posts($words,$offset, $maxRecords) {
+          global $feature_blogs;
+          if ($feature_blogs == 'y') {
+            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+                bp.`data`,b.`hits`,b.`title` as `btitle`,bp.`created`,b.`title`,b.`blogId` from
+                `tiki_searchindex` s, `tiki_blogs` b ,`tiki_blog_posts` bp where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='blog_post' and
+                s.`page`=bp.`postId` and
+		bp.`blogId`=b.`blogId`";
+            $result=$this->query($query,$words,$maxRecords,$offset);
+            $querycant="select count(*) from `tiki_searchindex` s, `tiki_blog_posts` bp where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='blog_post' and
+                s.`page`=bp.`postId`";
+            $cant=$this->getOne($querycant,$words);
+            $ret=array();
+            while ($res = $result->fetchRow()) {
+              $href = "tiki-view_blog_post.php?blogId=".urlencode($res["blogId"])."&amp;postId=".urlencode($res["page"]);
+              $ret[] = array(
+                'pageName' => $res["btitle"]."::".$res["title"],
+                'location' => tra("Blog post"),
+                'data' => substr($res["data"],0,250),
+                'hits' => $res["hits"],
+                'lastModif' => $res["created"],
+                'href' => $href,
+                'relevance' => $res["hits"]
+              );
+            }
+            return array('data' => $ret,'cant' => $cant);
+          } else {
+            return array('data' => array(),'cant' => 0);
+          }
+        }
 
 	function &find_exact_articles($words,$offset, $maxRecords) {
 	  global $feature_articles;

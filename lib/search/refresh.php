@@ -20,6 +20,9 @@ function refresh_search_index() {
     if ($feature_trackers == 'y') $locs[]="random_refresh_index_trackers";
     global $feature_articles;
     if ($feature_articles == 'y') $locs[]="random_refresh_index_articles";
+    global $feature_blogs;
+    if ($feature_blogs== 'y') $locs[]="random_refresh_index_blogs";
+    if ($feature_blogs== 'y') $locs[]="random_refresh_index_blog_posts";
     // comments can be everywhere?
     $locs[]="random_refresh_index_comments";
     // some refreshes to enhance the refreshing stats
@@ -45,6 +48,33 @@ function random_refresh_index_comments() {
     insert_index($words,$res["objectType"].'comment',$res["threadId"]);
   }
 }
+
+function random_refresh_index_blogs() {
+  global $tikilib;
+  // get random blog 
+  $cant=$tikilib->getOne("select count(*) from `tiki_blogs`",array());
+  if($cant>0) {
+    $query="select * from `tiki_blogs`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["title"]." ".$res["user"]." ".$res["description"]);
+    insert_index($words,'blog',$res["blogId"]);
+  }
+}
+
+function random_refresh_index_blog_posts() {
+  global $tikilib;
+  // get random blog 
+  $cant=$tikilib->getOne("select count(*) from `tiki_blog_posts`",array());
+  if($cant>0) {
+    $query="select * from `tiki_blog_posts`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["title"]." ".$res["user"]." ".$res["data"]);
+    insert_index($words,'blog_post',$res["postId"]);
+  }
+}
+
 
 function random_refresh_index_articles() {
   global $tikilib;
