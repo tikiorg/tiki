@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.30 2004-05-26 20:52:37 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.31 2004-05-28 14:05:15 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -518,9 +518,24 @@ class QuizLib extends TikiLib {
 		return true;
 	}
 
-// 	function quiz_fetch($_REQUEST["quizId"]);
+	function quiz_fetch($id){
+		if ($id == 0){
+			$quiz = new Quiz;
+		}
+		else {
+			echo __FILE__." line: ".__LINE__." : Need to fetch a quiz from the database"."<br />";
+		}
+		return $quiz;
+	}
 
-
+	// $quiz is a quiz object
+	function quiz_store($quiz){
+		echo __FILE__." line: ".__LINE__.": in quizlib->quiz_store<br />";
+		foreach($quiz as $key => $val){
+			echo $key." = ".$val."<br />";
+		}
+		die;
+	}
 // Function for Quizzes end ////
 }
 
@@ -729,6 +744,7 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion {
 
 class Quiz {
 	var $id;
+  var $deleted;
 	var $author;            // id of the author (index into the users_users table)
 	var $version;
 	var $timestamp;
@@ -760,6 +776,7 @@ class Quiz {
 		global $user;
 		global $userlib;
 		$this->id = 0;
+		$this->deleted = 0;
 		$this->author = $userlib->get_user_id($user);
 		$this->authorLogin = $user;
 		$this->version = 1;
@@ -775,7 +792,7 @@ class Quiz {
 		$this->limitDisplay = "y";
 		$this->questionsPerPage = 1;
 		$this->timeLimited = "n";
-		$this->timeLimit = "0";
+		$this->timeLimit = "1";
 		$this->multiSession = "n";
 		$this->canRepeat = "y";
 		$this->repetitions = 'unlimited';
@@ -794,6 +811,7 @@ class Quiz {
 		global $userlib;
 		$lines = array();
 		$lines[] = "id = ".$this->id."<br />";
+		$lines[] = "deleted = ".$this->deleted."<br />";
 		$authorInfo = $userlib->get_userid_info($this->author);
 		$lines[] = "author id = ".$this->author."; author login = ".$authorInfo["login"]."<br />";
 		$lines[] = "version = ".$this->version."<br />";
@@ -824,11 +842,19 @@ class Quiz {
 		return $lines;
   }
 
-  function getQuestion(){
-    return $this->question;
+	// Use any data in the array to replace the instance data.
+  function data_load($data){
+		// echo __FILE__." line:".__LINE__."<br />";
+		foreach($this as $key => $val){
+			if (isset($data[$key]) && ($data[$key] != $val)){
+				// echo "old: ".$key." = ".$val;
+				$this->$key = $data[$key];
+				// echo ", new: ".$this->$key."<br />";
+			}
+		}
   }
 
-  function to_text(){
+  function compare($quiz){
     // Export the question to an array of text lines.
   }
 

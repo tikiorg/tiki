@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.12 2004-05-26 20:52:37 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.13 2004-05-28 14:04:18 ggeller Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -102,14 +102,14 @@
   						<td class="formcolor"><input type="checkbox" name=quiz.limitDisplay id="quiz-display-limit" {if $quiz->limitDisplay eq 'y'}checked="checked"{/if} /><label for="quiz-display-limit">{tr}Limit questions displayed per page to {/tr}</label><select name=quiz.questionsPerPage id="quiz-perpage">{html_options values=$tpl.qpp selected=$quiz->questionsPerPage output=$tpl.qpp}</select>{tr}&nbsp question(s).{/tr}</td>
 						</tr>
 						<tr>
-  						<td class="formcolor"><input type="checkbox" name=quiz.timeLimited id="timelimit" {if $quiz->timeLimited eq 'y'}checked="checked"{/if} /><label for="timelimit">{tr}Impose a time limit of {/tr}</label><select name=quiz.timeLimit id="quiz-maxtime">{html_options values=$mins selected=$quiz->timeLimit output=$mins}</select> {tr}minutes{/tr}</td>
+  						<td class="formcolor"><input type="checkbox" name=quiz.timeLimited id="timelimit" {if $quiz->timeLimited eq 'y'}checked="checked"{/if} /><label for="timelimit">{tr}Impose a time limit of {/tr}</label><select name=quiz.timeLimit id="quiz-maxtime">{html_options values=$tpl.mins selected=$quiz->timeLimit output=$tpl.mins}</select> {tr}minutes{/tr}</td>
 						</tr>
 						<tr>
 							<td class="formcolor"><input type="checkbox" name=quiz.multiSession id="quiz-multi-session" {if $quiz->multiSession eq 'y'}checked="checked"{/if} /><label for="quiz-multi-session">{tr}Allow students to store partial results and return to quiz.{/tr}</td>
 						</tr>
 						<tr>
 							<td class="formcolor"><input type="checkbox" name=quiz.canRepeat id="repeat" {if $quiz->canRepeat eq 'y'}checked="checked"{/if} /><label for="repeat">{tr}Allow students to retake this quiz {/tr}</label>
-							<select name=quiz.repetitions id="quiz-repeat">{html_options values=$repetitions selected=$quiz->repetitions output=$repetitions}</select> {tr}times{/tr}</td>
+							<select name=quiz.repetitions id="quiz-repeat">{html_options values=$tpl.repetitions selected=$quiz->repetitions output=$tpl.repetitions}</select> {tr}times{/tr}</td>
 						</tr>
 					</table>
 			  </div>
