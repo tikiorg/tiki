@@ -39,7 +39,7 @@
     <input type="hidden" name="priority" value="{$priority|escape}" />
     <input type="hidden" name="flagval" value="{$flagval|escape}" />
     <input type="hidden" name="to" value="{$msg.user_from|escape}" />
-    <input type="hidden" name="subject" value="Re:{$msg.subject}" />
+    <input type="hidden" name="subject" value="{tr}Re:{/tr}{$msg.subject}" />
     <input type="hidden" name="body" value="{$msg.body|quoted|escape}" />
     <input type="submit" name="reply" value="{tr}reply{/tr}" />
     </form>
