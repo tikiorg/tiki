@@ -120,10 +120,12 @@
 	<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="tablink">{tr}undo{/tr}</a></span>
 {/if}
 
+{if $wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
 	<span class="tabbut"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
 {elseif $structure eq 'y'}
-	<span class="tabbut"><a href="tiki-slideshow2.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
+	<span class="tabbut"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="tablink">{tr}slides{/tr}</a></span>
+{/if}
 {/if}
 
 {if $tiki_p_admin_wiki eq 'y'}
