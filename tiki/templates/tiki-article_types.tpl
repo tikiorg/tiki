@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.2 2003-10-28 16:49:11 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.3 2003-10-28 21:45:06 dheltzel Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -30,7 +30,7 @@
 <td class="heading">{tr}Show publish date{/tr}</td>
 <td class="heading">{tr}Show expire date{/tr}</td>
 <td class="heading">{tr}Show reads{/tr}</td>
-<td class="heading" width=10%>{tr}Action{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$types}
@@ -57,7 +57,7 @@
 
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
  <table class="normal">
-<tr><td class="formcolor" width=20%>{tr}Type Name{/tr}</td><td class="formcolor"><input type="text" name="type" /></td></tr>
+<tr><td class="formcolor">{tr}Type Name{/tr}</td><td class="formcolor"><input type="text" name="type" /></td></tr>
 <tr><td class="formcolor">{tr}Use Ratings{/tr}</td><td class="formcolor"><input type="checkbox" name="use_ratings" {if $use_ratings eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show before publish date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_pre_publ" {if $show_pre_publ eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show after expire date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_post_expire" {if $show_post_expire eq 'y'}checked="checked"{/if} /></td></tr>
