@@ -587,7 +587,9 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 	// Return an array of users indicating name, email, last changed pages, versions, lastLogin 
 	if ($find) {
 	    $mid = " where `login` like ?";
+			$mmid = $mid;
 	    $bindvars = array('%'.$find.'%');
+			$mbindvars = $bindvars;
 	}
 
 	if ($initial) {
