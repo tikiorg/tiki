@@ -12,8 +12,15 @@
  *
  * Of course, this requires latex installed or at least the commands that are called
  * by tex2png
+ * On RedHat 8, these commands are provided by the tetex-dvips, tetex-fonts, tetex-latex
+ *   and tetex rpms.
  * Not sure how multiplataform it is, the script i call in the end seem to be bash, maybe
  * an alternative .bat should be done
+ *
+ * Installation instructions:
+ *   move this file to lib/wiki-plugins
+ *   move tex2png to lib
+ *
  */
 
 function wikiplugin_formula_help() {
