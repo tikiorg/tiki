@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.15 2003-11-09 13:30:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.16 2003-11-15 12:12:32 sylvieg Exp $ *}
 <a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a><br /><br />
 
 {if $feature_help eq 'y'}
@@ -14,9 +14,9 @@
 <br /><br />
 
 {if $galleryId ne ''}
-	<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="link">
+	<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">
 {else}
-	<a href="tiki-galleries.php" class="link">
+	<a href="tiki-galleries.php" class="linkbut">
 {/if}
 {tr}Browse gallery{/tr}</a><br /><br />
 {if count($galleries) > 0}

@@ -16,10 +16,8 @@
 {/if}
 
 <br /><br />
-[
-<a class="link" href="tiki-list_articles.php">{tr}list articles{/tr}</a> |
-<a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
-]
+<a class="linkbut" href="tiki-list_articles.php">{tr}list articles{/tr}</a>
+<a class="linkbut" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
 <br /><br />
 <form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='editpageform'>
 <input type="hidden" name="articleId" value="{$articleId|escape}" />

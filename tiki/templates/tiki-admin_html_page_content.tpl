@@ -5,9 +5,9 @@
 
 <br/>
 <h2>{tr}Page{/tr}: {$pageName}</h2><br/><br/>
-[<a class="link" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
-|<a class="link" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit this page{/tr}</a>]
-|<a class="link" href="tiki-page.php?pageName={$pageName|escape:"url"}">{tr}View page{/tr}</a>]<br/><br/>
+<a class="linkbut" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
+<a class="linkbut" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit this page{/tr}</a>]
+<a class="linkbut" href="tiki-page.php?pageName={$pageName|escape:"url"}">{tr}View page{/tr}</a><br/><br/>
 
 {if $zone}
 <h2>{tr}Edit zone{/tr}</h2>

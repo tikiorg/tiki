@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.22 2003-11-14 16:57:34 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.23 2003-11-15 12:12:32 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
@@ -12,12 +12,10 @@
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
 <br /><br />
-[
 {if $tiki_p_edit_article eq 'y'}
-  <a class="link" href="tiki-edit_article.php">{tr}edit new article{/tr}</a> |
+  <a class="linkbut" href="tiki-edit_article.php">{tr}edit new article{/tr}</a>
 {/if}
-<a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
-]
+<a class="linkbut" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
 
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=cms"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>

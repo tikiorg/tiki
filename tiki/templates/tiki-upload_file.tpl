@@ -1,6 +1,6 @@
 <a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload File{/tr}</a><br /><br />
 {if count($galleries) > 0}
-	<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="link">{tr}Browse gallery{/tr}</a><br /><br />
+	<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse gallery{/tr}</a><br /><br />
 	<div align="center">
 	<form enctype="multipart/form-data" action="tiki-upload_file.php" method="post">
 	<table class="normal">

@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-quiz_stats.php">{tr}Stats for quizzes{/tr}</a><br/><br/>
-[<a class="link" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
-|<a class="link" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
-|<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br/><br/>
+<a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
+<a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
+<a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br/><br/>
 <h2>{tr}Quizzes{/tr}</h2>
 <div  align="center">
 <table class="findtable">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.22 2003-11-14 17:25:50 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.23 2003-11-15 12:12:32 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -24,7 +24,7 @@
 <h3>{tr}Create a file gallery{/tr}</h3>
 {else}
 <h3>{tr}Edit this file gallery:{/tr} {$name}</h3>
-[&nbsp;<a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>&nbsp;]
+<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>
 {/if}
 {if $individual eq 'y'}
 <a class="fgallink" href="tiki-objectpermissions.php?objectName=file%20gallery%20{$name}&amp;objectType=file%20gallery&amp;permType=file%20galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
@@ -97,7 +97,7 @@
 
 <h2>{tr}Available File Galleries{/tr}</h2>
 {if $tiki_p_create_file_galleries eq 'y'}
-[&nbsp;<a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>&nbsp;]<br/><br/>
+<a class="linkbut" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br/><br/>
 {/if}
 <div align="center">
 <table class="findtable">

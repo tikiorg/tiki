@@ -1,17 +1,17 @@
 {popup_init src="lib/overlib.js"}
 <a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a><br /><br />
 {if $wysiwyg eq 'n'}
-		[<a class="link" href="tiki-blog_post.php?wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a>]
+		<a class="linkbut" href="tiki-blog_post.php?wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a>
 {else}
-		[<a class="link" href="tiki-blog_post.php?wysiwyg=n">{tr}Use normal editor{/tr}</a>]
+		<a class="linkbut" href="tiki-blog_post.php?wysiwyg=n">{tr}Use normal editor{/tr}</a>
 {/if}
 {if $preview eq 'y'}
 	{include file=tiki-preview_post.tpl}
 {/if}
-[{if $blogId > 0 }
-<a class="bloglink" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>|
+{if $blogId > 0 }
+<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>
 {/if}
-<a class="bloglink" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>]
+<a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
 <br /><br />
 <div class="wikitext"><small>{tr}Note: if you want to use images please save the post first and you
 will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor

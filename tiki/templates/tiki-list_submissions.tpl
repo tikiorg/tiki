@@ -1,5 +1,5 @@
 <a class="pagetitle" href="tiki-list_submissions.php">{tr}Submissions{/tr}</a><br/><br/>
-[<a class="link" href="tiki-edit_submission.php">{tr}edit new submission{/tr}</a>]
+<a class="linkbut" href="tiki-edit_submission.php">{tr}edit new submission{/tr}</a>
 <br/><br/>
 <div align="center">
 <table class="findtable">
