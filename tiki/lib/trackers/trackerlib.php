@@ -4,10 +4,7 @@ class TrackerLib extends TikiLib {
     
   function TrackerLib($db) 
   {
-    if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
-    }
-    $this->db = $db;  
+    parent::TikiLib($db);
   }
   
   /* Tiki tracker construction options */
@@ -34,16 +31,14 @@ class TrackerLib extends TikiLib {
     }
     $query = "select * from tiki_tracker_items $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_tracker_items $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $fields=Array();
       $itid=$res["itemId"];
       $query2="select ttif.fieldId,name,value,type,isTblVisible,isMain from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=".$res["itemId"]." order by fieldId asc";
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $result2 = $this->query($query2);
       $pass=true;
       while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
         // Check if the field is visible!
@@ -60,7 +55,7 @@ class TrackerLib extends TikiLib {
         $fields[]=$res2;
       }
       $res["field_values"]=$fields;
-      $res["comments"]=$this->db->getOne("select count(*) from tiki_tracker_item_comments where itemId=$itid");
+      $res["comments"]=$this->getOne("select count(*) from tiki_tracker_item_comments where itemId=$itid");
       if($pass) $ret[] = $res;
     }
     //$ret=$this->sort_items_by_condition($ret,$sort_mode);
@@ -74,14 +69,13 @@ class TrackerLib extends TikiLib {
   function add_item_attachment_hit($id) 
   {
     $query = "update tiki_tracker_item_attachments set downloads=downloads+1 where attId=$id";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return true;                        
   }
   
   function get_item_attachment_owner($attId)
   {
-    return $this->db->getOne("select user from tiki_tracker_item_attachments where attId=$attId");
+    return $this->getOne("select user from tiki_tracker_item_attachments where attId=$attId");
   }
   
   function list_item_attachments($itemId,$offset,$maxRecords,$sort_mode,$find)
@@ -94,9 +88,8 @@ class TrackerLib extends TikiLib {
     }
     $query = "select user,attId,itemId,filename,filesize,filetype,downloads,created,comment from tiki_tracker_item_attachments $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_tracker_item_attachments $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;
@@ -115,16 +108,14 @@ class TrackerLib extends TikiLib {
     $now = date("U");
     $query = "insert into tiki_tracker_item_attachments(itemId,filename,filesize,filetype,data,created,downloads,user,comment,path)
     values($itemId,'$name',$size,'$type','$data',$now,0,'$user','$comment','$fhash')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
   }
   
   function get_item_attachment($attId)
   {
     $query = "select * from tiki_tracker_item_attachments where attId=$attId";
-    $result = $this->db->query($query);
+    $result = $this->query($query);
     if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
@@ -132,13 +123,12 @@ class TrackerLib extends TikiLib {
   function remove_item_attachment($attId)
   {
     global $t_use_dir;
-    $path = $this->db->getOne("select path from tiki_tracker_item_attachments where attId=$attId");
+    $path = $this->getOne("select path from tiki_tracker_item_attachments where attId=$attId");
     if($path) {
       @unlink($t_use_dir.$path);
     }
     $query = "delete from tiki_tracker_item_attachments where attId='$attId'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
   }
   
   
@@ -149,17 +139,15 @@ class TrackerLib extends TikiLib {
     $data=addslashes(strip_tags($data,"<a>"));
     if($commentId) {
       $query = "update tiki_tracker_item_comments set title='$title', data='$data', user='$user' where commentId=$commentId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);  
+      $result = $this->query($query);
     } else {
       $now = date("U");
       $query = "insert into tiki_tracker_item_comments(itemId,title,data,user,posted) values ($itemId,'$title','$data','$user',$now)";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $commentId=$this->db->getOne("select max(commentId) from tiki_tracker_item_comments where posted=$now and title='$title' and itemId=$itemId");
+      $result = $this->query($query);
+      $commentId=$this->getOne("select max(commentId) from tiki_tracker_item_comments where posted=$now and title='$title' and itemId=$itemId");
     }
-    $trackerId=$this->db->getOne("select trackerId from tiki_tracker_items where itemId=$itemId");
-    $trackerName=$this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
+    $trackerId=$this->getOne("select trackerId from tiki_tracker_items where itemId=$itemId");
+    $trackerName=$this->getOne("select name from tiki_trackers where trackerId=$trackerId");
     $emails = $this->get_mail_events('tracker_modified',$trackerId);
     $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
     $emails=array_merge($emails,$emails2);
@@ -177,8 +165,7 @@ class TrackerLib extends TikiLib {
   function remove_item_comment($commentId)
   {
     $query = "delete from tiki_tracker_item_comments where commentId=$commentId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
   }
   
   function list_item_comments($itemId,$offset,$maxRecords,$sort_mode,$find)
@@ -191,9 +178,8 @@ class TrackerLib extends TikiLib {
     }
     $query = "select * from tiki_tracker_item_comments where itemId=$itemId $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_tracker_item_comments where itemId=$itemId $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $res["parsed"]=nl2br($res["data"]);
@@ -209,9 +195,8 @@ class TrackerLib extends TikiLib {
   function get_item_comment($commentId)
   {
     $query = "select * from tiki_tracker_item_comments where commentId=$commentId";
-    $result = $this->db->query($query);
+    $result = $this->query($query);
     if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
@@ -233,16 +218,14 @@ class TrackerLib extends TikiLib {
     $mid='';
     $query = "select * from tiki_tracker_items $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_tracker_items $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $fields=Array();
       $itid=$res["itemId"];
       $query2="select ttif.fieldId,value,isTblVisible,isMain from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=".$res["itemId"]." order by fieldId asc";
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $result2 = $this->query($query2);
       $pass=true;
       while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
         // Check if the field is visible!
@@ -257,7 +240,7 @@ class TrackerLib extends TikiLib {
         $fields[]=$res2;
       }
       $res["field_values"]=$fields;
-      $res["comments"]=$this->db->getOne("select count(*) from tiki_tracker_item_comments where itemId=$itid");
+      $res["comments"]=$this->getOne("select count(*) from tiki_tracker_item_comments where itemId=$itid");
       if($pass) $ret[] = $res;
     }
     //$ret=$this->sort_items_by_condition($ret,$sort_mode);
@@ -270,13 +253,11 @@ class TrackerLib extends TikiLib {
   function get_tracker_item($itemId)
   {
     $query = "select * from tiki_tracker_items where itemId=$itemId";
-    $result = $this->db->query($query);
+    $result = $this->query($query);
     if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $query = "select * from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=$itemId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $fields=Array();
     while($res2 = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $name=$res2["name"];
@@ -292,19 +273,14 @@ class TrackerLib extends TikiLib {
     global $smarty;
     $now = date("U");
     $query="update tiki_trackers set lastModif=$now where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
+    $result = $this->query($query);
     if($itemId) {
       $query="update tiki_tracker_items set status='$status',lastModif=$now where itemId=$itemId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
+      $result = $this->query($query);
     } else {
       $query="replace into tiki_tracker_items(trackerId,created,lastModif,status) values($trackerId,$now,$now,'$status')";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $new_itemId=$this->db->getOne("select max(itemId) from tiki_tracker_items where created=$now and trackerId=$trackerId");
+      $result = $this->query($query);
+      $new_itemId=$this->getOne("select max(itemId) from tiki_tracker_items where created=$now and trackerId=$trackerId");
     }
     $the_data = '';
     for($i=0;$i<count($ins_fields["data"]);$i++) {
@@ -315,17 +291,15 @@ class TrackerLib extends TikiLib {
       $the_data.="$name = $value\n";
       if($itemId) {
         $query = "update tiki_tracker_item_fields set value='$value' where itemId=$itemId and fieldId=$fieldId";
-        $result = $this->db->query($query);
-        if(DB::isError($result)) $this->sql_error($query, $result);
+        $result = $this->query($query);
       } else {
         // We add an item
         
         $query = "replace into tiki_tracker_item_fields(itemId,fieldId,value) values($new_itemId,$fieldId,'$value')";
-        $result = $this->db->query($query);
-        if(DB::isError($result)) $this->sql_error($query, $result);
+        $result = $this->query($query);
       }
     }
-    $trackerName=$this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
+    $trackerName=$this->getOne("select name from tiki_trackers where trackerId=$trackerId");
     $emails = $this->get_mail_events('tracker_modified',$trackerId);
     $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
     $emails=array_merge($emails,$emails2);
@@ -337,10 +311,9 @@ class TrackerLib extends TikiLib {
       $mail_data=$smarty->fetch('mail/tracker_changed_notification.tpl');
       @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data);
     }
-    $cant_items = $this->db->getOne("select count(*) from tiki_tracker_items where trackerId=$trackerId");
+    $cant_items = $this->getOne("select count(*) from tiki_tracker_items where trackerId=$trackerId");
     $query = "update tiki_trackers set items=$cant_items where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     if(!$itemId) $itemId=$new_itemId;
     return $itemId;
   }
@@ -348,23 +321,17 @@ class TrackerLib extends TikiLib {
   function remove_tracker_item($itemId)
   {
     $now = date("U");
-    $trackerId=$this->db->getOne("select trackerId from tiki_tracker_items where itemId=$itemId");
+    $trackerId=$this->getOne("select trackerId from tiki_tracker_items where itemId=$itemId");
     $query="update tiki_trackers set lastModif=$now where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $query="update tiki_trackers set items=items-1 where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $query="delete from tiki_tracker_item_fields where itemId=$itemId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $query ="delete from tiki_tracker_items where itemId=$itemId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $query ="delete from tiki_tracker_item_comments where itemId=$itemId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    
+    $result = $this->query($query);
   }
   
   
@@ -379,9 +346,8 @@ class TrackerLib extends TikiLib {
     }
     $query = "select * from tiki_trackers $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_trackers $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Tracker fields are automatically counted when adding/removing fields to trackers
@@ -404,9 +370,8 @@ class TrackerLib extends TikiLib {
     }
     $query = "select * from tiki_tracker_fields $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_tracker_fields $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $res["options_array"]=split(',',$res["options"]);
@@ -426,15 +391,13 @@ class TrackerLib extends TikiLib {
         
     if($trackerId) {
       $query = "update tiki_trackers set name='$name',description='$description', useAttachments='$useAttachments',useComments='$useComments', showCreated='$showCreated',showLastModif='$showLastModif',showStatus='$showStatus' where trackerId=$trackerId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
+      $result = $this->query($query);
     } else {
       $now = date("U");
       $query = "replace into tiki_trackers(name,description,created,lastModif,items,showCreated,showLastModif,useComments,useAttachments,showStatus)
                 values('$name','$description',$now,$now,0,'$showCreated','$showLastModif','$useComments','$useAttachments','$showStatus')";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $trackerId=$this->db->getOne("select max(trackerId) from tiki_trackers where name='$name' and created=$now");
+      $result = $this->query($query);
+      $trackerId=$this->getOne("select max(trackerId) from tiki_trackers where name='$name' and created=$now");
     }
     
     return $trackerId;
@@ -450,14 +413,12 @@ class TrackerLib extends TikiLib {
     
     if($fieldId) {
       $query = "update tiki_tracker_fields set name='$name',type='$type',isMain='$isMain',isTblVisible='$isTblVisible',options='$options' where fieldId=$fieldId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
+      $result = $this->query($query);
     } else {
       $query = "replace into tiki_tracker_fields(trackerId,name,type,isMain,isTblVisible,options)
                 values($trackerId,'$name','$type','$isMain','$isTblVisible','$options')";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
-      $fieldId=$this->db->getOne("select max(fieldId) from tiki_tracker_fields where trackerId=$trackerId and name='$name'");
+      $result = $this->query($query);
+      $fieldId=$this->getOne("select max(fieldId) from tiki_tracker_fields where trackerId=$trackerId and name='$name'");
     }
     return $fieldId;
   }
@@ -467,27 +428,21 @@ class TrackerLib extends TikiLib {
   {
     // Remove the tracker
     $query = "delete from tiki_trackers where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     // Remove the fields
     $query = "delete from tiki_tracker_fields where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     // Remove the items (Remove fields for each item for this tracker)
     $query = "select itemId from tiki_tracker_items where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $query2="delete from tiki_tracker_item_fields where itemId=".$res["itemId"];
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $result2 = $this->query($query2);
       $query2="delete from tiki_tracker_item_comments where itemId=".$res["itemId"];
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $result2 = $this->query($query2);
     }
     $query = "delete from tiki_tracker_items where trackerId=$trackerId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $this->remove_object('tracker',$trackerId);
     return true;
   }
@@ -495,20 +450,17 @@ class TrackerLib extends TikiLib {
   function remove_tracker_field($fieldId) 
   {
     $query = "delete from tiki_tracker_fields where fieldId=$fieldId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $query = "delete from tiki_tracker_item_fields where fieldId=$fieldId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     return true;
   }
   
   function get_tracker($trackerId)
   {
     $query = "select * from tiki_trackers where trackerId=$trackerId";
-    $result = $this->db->query($query);
+    $result = $this->query($query);
     if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
@@ -516,16 +468,12 @@ class TrackerLib extends TikiLib {
   function get_tracker_field($fieldId)
   {
     $query = "select * from tiki_tracker_fields where fieldId=$fieldId";
-    $result = $this->db->query($query);
+    $result = $this->query($query);
     if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
   /* End of tiki tracker construction functions */   
-   
-  
-  
 }
 
 $trklib= new TrackerLib($dbTiki);

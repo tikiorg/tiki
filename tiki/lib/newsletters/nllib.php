@@ -4,10 +4,7 @@ class NlLib extends TikiLib {
   
   function NlLib($db) 
   {
-    if(!$db) {
-      die("Invalid db object passed to UsersLib constructor");  
-    }
-    $this->db = $db;  
+    parent::TikiLib($db); 
   }
    
   function replace_newsletter($nlId,$name,$description,$allowAnySub,$frequency)
@@ -22,17 +19,15 @@ class NlLib extends TikiLib {
       allowAnySub = '$allowAnySub',
       frequency = $frequency
       where nlId = $nlId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
+      $result = $this->query($query);
     } else {
       // insert a new quiz
       $now = date("U");
       $query = "insert into tiki_newsletters(name,description,allowAnySub,frequency,lastSent,editions,users,created)
       values('$name','$description','$allowAnySub',$frequency,$now,0,0,$now)";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
+      $result = $this->query($query);
       $queryid = "select max(nlId) from tiki_newsletters where created=$now";
-      $nlId = $this->db->getOne($queryid);  
+      $nlId = $this->getOne($queryid);  
     }
     return $nlId;
   }
@@ -45,15 +40,13 @@ class NlLib extends TikiLib {
     $now = date("U");
     $query = "insert into tiki_sent_newsletters(nlId,subject,data,sent,users)
     values($nlId,'$subject','$data',$now,$users)";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
   }
   
   function get_subscribers($nlId) 
   {
     $query = "select email from tiki_newsletter_subscriptions where valid='y' and nlId=$nlId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[]=$res["email"];
@@ -63,11 +56,10 @@ class NlLib extends TikiLib {
 
   function remove_newsletter_subscription($nlId,$email)
   {
-    $valid = $this->db->getOne("select valid from tiki_newsletter_subscriptions where nlId=$nlId and email='$email'");	
+    $valid = $this->getOne("select valid from tiki_newsletter_subscriptions where nlId=$nlId and email='$email'");	
     
     $query = "delete from tiki_newsletter_subscriptions where nlId=$nlId and email='$email'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);	
+    $result = $this->query($query);
     $this->update_users($nlId);    
   }
 
@@ -84,8 +76,7 @@ class NlLib extends TikiLib {
     $now = date("U");
     $query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed)
     values($nlId,'$email','$code','n',$now)";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $info = $this->get_newsletter($nlId);
     $smarty->assign('info',$info);
     // Now send an email to the address with the confirmation instructions
@@ -106,15 +97,13 @@ class NlLib extends TikiLib {
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $url_subscribe = httpPrefix().$foo["path"];       	 
     $query = "select * from tiki_newsletter_subscriptions where code='$code'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $info = $this->get_newsletter($res["nlId"]);
     $smarty->assign('info',$info);
     $query = "update tiki_newsletter_subscriptions set valid='y' where code='$code'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     // Now send a welcome email
     $smarty->assign('mail_date',date("U"));
     $smarty->assign('mail_user',$user);
@@ -132,16 +121,14 @@ class NlLib extends TikiLib {
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $url_subscribe = httpPrefix().$foo["path"];
     $query = "select * from tiki_newsletter_subscriptions where code='$code'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $info = $this->get_newsletter($res["nlId"]);
     $smarty->assign('info',$info);
     $smarty->assign('code',$res["code"]);
     $query = "delete from tiki_newsletter_subscriptions where code='$code'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     // Now send a bye bye email
     $smarty->assign('mail_date',date("U"));
     $smarty->assign('mail_user',$user);
@@ -155,8 +142,7 @@ class NlLib extends TikiLib {
   function add_all_users($nlId)
   {
     $query = "select email from users_users";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $email = $res["email"];
       if(!empty($email)) {
@@ -168,9 +154,8 @@ class NlLib extends TikiLib {
   function get_newsletter($nlId) 
   {
     $query = "select * from tiki_newsletters where nlId=$nlId";
-    $result = $this->db->query($query);
+    $result = $this->query($query);
     if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
@@ -178,19 +163,17 @@ class NlLib extends TikiLib {
   function get_edition($editionId) 
   {
     $query = "select * from tiki_sent_newsletters where editionId=$editionId";
-    $result = $this->db->query($query);
+    $result = $this->query($query);
     if(!$result->numRows()) return false;
-    if(DB::isError($result)) $this->sql_error($query, $result);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
 
   function update_users($nlId) 
   {
-    $users = $this->db->getOne("select count(*) from tiki_newsletter_subscriptions where nlId=$nlId");
+    $users = $this->getOne("select count(*) from tiki_newsletter_subscriptions where nlId=$nlId");
     $query = "update tiki_newsletters set users=$users where nlId=$nlId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
   }  
    
   function list_newsletters($offset,$maxRecords,$sort_mode,$find)
@@ -203,12 +186,11 @@ class NlLib extends TikiLib {
     }
     $query = "select * from tiki_newsletters $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_newsletters $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["confirmed"]=$this->db->getOne("select count(*) from tiki_newsletter_subscriptions where valid='y' and nlId=".$res["nlId"]);
+      $res["confirmed"]=$this->getOne("select count(*) from tiki_newsletter_subscriptions where valid='y' and nlId=".$res["nlId"]);
       $ret[] = $res;
     }
     $retval = Array();
@@ -227,9 +209,8 @@ class NlLib extends TikiLib {
     }
     $query = "select tsn.editionId,tn.nlId,subject,data,tsn.users,sent,name from tiki_newsletters tn, tiki_sent_newsletters tsn where tn.nlId=tsn.nlId $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_newsletters tn, tiki_sent_newsletters tsn where tn.nlId=tsn.nlId $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;
@@ -250,9 +231,8 @@ class NlLib extends TikiLib {
     }
     $query = "select * from tiki_newsletter_subscriptions $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_newsletter_subscriptions $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;
@@ -268,7 +248,7 @@ class NlLib extends TikiLib {
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $foo=str_replace('send_newsletters','newsletters',$foo);
     $url_subscribe = httpPrefix().$foo["path"];
-    $code = $this->db->getOne("select code from tiki_newsletter_subscriptions where nlId=$nlId and email='$email'");
+    $code = $this->getOne("select code from tiki_newsletter_subscriptions where nlId=$nlId and email='$email'");
     $url_unsub = $url_subscribe.'?unsubscribe='.$code;
     $msg = '<br/><br/>'.tra('You can unsubscribe from this newsletter following this link').": <a href='$url_unsub'>$url_unsub</a>";
     return $msg;
@@ -277,11 +257,9 @@ class NlLib extends TikiLib {
   function remove_newsletter($nlId)
   {
     $query = "delete from tiki_newsletters where nlId=$nlId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $query = "delete from tiki_newsletter_subscriptions where nlId=$nlId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $this->remove_object('newsletter',$nlId);
     return true;    
   }
@@ -289,13 +267,10 @@ class NlLib extends TikiLib {
   function remove_edition($editionId)
   {
     $query = "delete from tiki_sent_newsletters where editionId=$editionId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
   }
   
   // Now functions to add/remove/replace/list email addresses from the list of subscriptors
-  
-  
 }
 
 $nllib= new NlLib($dbTiki);
