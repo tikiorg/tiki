@@ -27,6 +27,9 @@
     <option value="blogs">{tr}Blogs{/tr}</option>
     <option value="posts">{tr}Blog Posts{/tr}</option>
     {/if}
+    {if $feature_faqs eq 'y'}
+    <option value="faqs">{tr}FAQs{/tr}</option>
+    {/if}
     </select>
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/> 
     </form>

@@ -45,13 +45,46 @@ if(isset($_REQUEST["bookmark_mark"])) {
       }
     }
     // Check if we are bookmarking an article
+    if(strstr($_SERVER["REQUEST_URI"],'tiki-read_article')) {
+      $info = $tikilib->get_article($setup_query_data["articleId"]);
+      $_REQUEST["bookmark_urlname"] = $info["title"];
+    }
+    
     // Check if we are bookmarking an image gallery
+    if(strstr($_SERVER["REQUEST_URI"],'tiki-browse_gallery') || strstr($_SERVER["REQUEST_URI"],'tiki-list_gallery')) {
+      $info = $tikilib->get_gallery($setup_query_data["galleryId"]);
+      $_REQUEST["bookmark_urlname"] = $info["name"];
+    }
+    
     // Check if we are bookmarking a file gallery
+    if(strstr($_SERVER["REQUEST_URI"],'tiki-list_file_gallery')) {
+      $info = $tikilib->get_file_gallery($setup_query_data["galleryId"]);
+      $_REQUEST["bookmark_urlname"] = $info["name"];
+    }
+    
+    // Check if we are bookmarking an image
+    if(strstr($_SERVER["REQUEST_URI"],'tiki-browse_image')) {
+      $info = $tikilib->get_image($setup_query_data["imageId"]);
+      $_REQUEST["bookmark_urlname"] = $info["name"];
+    }
+    
     // Check if we are bookmarking a forum
-    // Check if we are bookmarking a forum topic
+    if(strstr($_SERVER["REQUEST_URI"],'tiki-view_forum')) {
+      $info = $tikilib->get_forum($setup_query_data["forumId"]);
+      $_REQUEST["bookmark_urlname"] = $info["name"];
+    }
+    
     // Check if we are bookmarking a faq
-    // Check if we are bookmarking a poll-results page
+    if(strstr($_SERVER["REQUEST_URI"],'tiki-view_faq')) {
+      $info = $tikilib->get_faq($setup_query_data["faqId"]);
+      $_REQUEST["bookmark_urlname"] = $info["title"];
+    }
+    
     // Check if we are bookmarking a weblog
+    if(strstr($_SERVER["REQUEST_URI"],'tiki-view_blog')) {
+      $info = $tikilib->get_blog($setup_query_data["blogId"]);
+      $_REQUEST["bookmark_urlname"] = $info["title"];
+    }
     
   }
   if(!empty($_REQUEST["bookmark_urlname"])) {
