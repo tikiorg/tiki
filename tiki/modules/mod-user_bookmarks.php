@@ -31,7 +31,7 @@ if(isset($_REQUEST["bookmark_removeurl"])) {
 }
 
 if(isset($_REQUEST["bookmark_create_folder"])) {
-  $tikilib->add_folder($_SESSION["bookmarks_parent"],$bookmark_urlname,$user);
+  $tikilib->add_folder($_SESSION["bookmarks_parent"],$_REQUEST['bookmark_urlname'],$user);
 }
 
 if(isset($_REQUEST["bookmark_mark"])) {

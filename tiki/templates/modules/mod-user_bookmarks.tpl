@@ -22,9 +22,9 @@
 </table>
 <br/>
 <form action="{$ownurl}" method="post">
-<input type="text" size="8" name="bookmark_urlname" />
 <input type="submit" name="bookmark_mark" value="{tr}mark{/tr}" />
-<input type="submit" name="bookmark_create_folder" value="{tr}new{/tr}" />
+<input type="text" size="8" name="bookmark_urlname" />
+<input type="submit" name="bookmark_create_folder" value="{tr}n{/tr}" />
 </form>
 </div>
 </div>

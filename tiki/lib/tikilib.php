@@ -1,5 +1,4 @@
 <?php
-
 include_once('lib/diff.php');
 require_once('lib/Date.php');
 
