@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.16 2004-06-11 02:55:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.17 2004-06-16 19:23:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -141,7 +141,8 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $nllib->list_newsletters($offset, $maxRecords, $sort_mode, $find);
 
-for ($i = 0; $i < count($channels["data"]); $i++) {
+$temp_max = count($channels["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($channels["data"][$i]["nlId"], 'newsletters')) {
 		$channels["data"][$i]["individual"] = 'y';
 

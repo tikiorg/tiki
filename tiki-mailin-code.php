@@ -22,7 +22,8 @@ include_once ("lib/webmail/htmlMimeMail.php");
 
 function parse_output(&$obj, &$parts, $i) {
   if (!empty($obj->parts)) {
-    for ($i = 0; $i < count($obj->parts); $i++)
+  	$temp_max = count($obj->parts);
+    for ($i = 0; $i < $temp_max; $i++)
       parse_output($obj->parts[$i], $parts, $i);
   } else {
     $ctype = $obj->ctype_primary . '/' . $obj->ctype_secondary;

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.38 2004-05-06 00:55:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.39 2004-06-16 19:23:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,7 +49,8 @@ if ($user_assigned_modules == 'y' && $tiki_p_configure_modules == 'y' && $user &
 foreach ( array('left_modules', 'right_modules') as $these_modules_name ) {
 // note indent missing to preserve CVS history
 $these_modules =& $$these_modules_name;
-for ($i = 0; $i < count($these_modules); $i++) {
+$temp_max = count($these_modules);
+for ($i = 0; $i < $temp_max; $i++) {
 	$r = &$these_modules[$i];
 	$pass = 'y';
 	if ($modallgroups != 'y') {
