@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.18 2003-10-19 14:00:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.19 2003-11-17 02:47:43 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.18 2003-10-19 14:00:15 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.19 2003-11-17 02:47:43 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -115,8 +115,9 @@ if ($isvalid) {
 		if ($rememberme != 'disabled') {
 			if (isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
 				$hash = $userlib->get_user_hash($_REQUEST['user']);
-
-				setcookie($user_cookie_site, $hash, time() + $remembertime);
+				$cookie_path = $tikilib->get_preference('cookie_path', '/');
+				$cookie_domain = $tikilib->get_preference('cookie_domain', $tikilib->get_preference('http_domain', $_SERVER['SERVER_NAME']));
+				setcookie($user_cookie_site, $hash, time() + $remembertime, $cookie_path, $cookie_domain);
 			}
 		}
 	}
