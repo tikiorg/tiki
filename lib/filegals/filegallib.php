@@ -24,8 +24,13 @@ class FileGalLib extends TikiLib {
   
   function insert_file($galleryId,$name,$description,$filename,  $data, $size,$type ,$user,$path)
   {
+		global $fgal_use_db, $fgal_use_dir;
     $name = addslashes(strip_tags($name));
-    $checksum=md5($data);
+		if ($fgal_use_db == 'n') {
+			$checksum=md5(implode('',file($fgal_use_dir.$path)));
+		} else {
+    	$checksum=md5($data);
+		}
     $path = addslashes($path);
     $description = addslashes(strip_tags($description));
     $data = addslashes($data);
@@ -259,3 +264,4 @@ class FileGalLib extends TikiLib {
 $filegallib= new FileGalLib($dbTiki);
 
 ?>
+
