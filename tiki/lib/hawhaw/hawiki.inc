@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 23. June 2003
+// Last modified: 27. June 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -443,7 +443,7 @@ class HAWIKI_wiki
 
   function HAWIKI_wiki($input, $wiki_base)
   {
-    $this->wiki_string = $input;
+    $this->wiki_string = utf8_decode($input);
     $this->wiki_base = $wiki_base;
     $this->smiley_dir = "";       // has to be set later by function call
     $this->link_jingle = "";      // dito
@@ -608,11 +608,8 @@ class HAWIKI_wiki
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
             printf("<b>Paragraph:</b> %s<br>\n", $po["text"]);
 
-          $rule = new HAW_rule();
-          $this->deck->add_rule($rule);
           $paragraph = new HAW_text($po["text"], HAW_TEXTFORMAT_BIG);
           $this->deck->add_text($paragraph);
-          $this->deck->add_rule($rule);
 
           break;
         }
