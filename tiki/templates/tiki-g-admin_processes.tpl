@@ -29,7 +29,7 @@
 
 
 
-<br/><br/>
+<br /><br />
 {include file=tiki-g-monitor_bar.tpl}
 <h3>{tr}Add or edit a process{/tr} <a class="link" href="tiki-g-admin_processes.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;pid=0">{tr}new{/tr}</a>
 </h3>
@@ -38,9 +38,9 @@
 {/if}
 {if $pid > 0 and count($errors)}
 <div class="wikitext">
-{tr}This process is invalid{/tr}:<br/>
+{tr}This process is invalid{/tr}:<br />
 {section name=ix loop=$errors}
-<small>{$errors[ix]}</small><br/>
+<small>{$errors[ix]}</small><br />
 {/section}
 </div>
 {/if}
@@ -146,12 +146,12 @@
 	</td>
 
 	<td class="{cycle}">
-	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newminor={$items[ix].pId}">{tr}new minor{/tr}</a><br/>
-	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newmajor={$items[ix].pId}">{tr}new major{/tr}</a><br/>
-	  <a class="link" href="tiki-g-admin_activities.php?pid={$items[ix].pId}">{tr}activities{/tr}</a><br/>
-	  <a class="link" href="tiki-g-admin_shared_source.php?pid={$items[ix].pId}">{tr}code{/tr}</a><br/>
-	  <a class="link" href="tiki-g-save_process.php?pid={$items[ix].pId}">{tr}save{/tr}</a><br/>
-	  <a class="link" href="tiki-g-admin_roles.php?pid={$items[ix].pId}">{tr}roles{/tr}</a><br/>
+	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newminor={$items[ix].pId}">{tr}new minor{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;newmajor={$items[ix].pId}">{tr}new major{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_activities.php?pid={$items[ix].pId}">{tr}activities{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_shared_source.php?pid={$items[ix].pId}">{tr}code{/tr}</a><br />
+	  <a class="link" href="tiki-g-save_process.php?pid={$items[ix].pId}">{tr}save{/tr}</a><br />
+	  <a class="link" href="tiki-g-admin_roles.php?pid={$items[ix].pId}">{tr}roles{/tr}</a><br />
 	</td>
 </tr>
 {sectionelse}
@@ -174,7 +174,7 @@
 &nbsp;[<a class="prevnext" href="{sameurl offset=$next_offset}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="{sameurl offset=$selector_offset}">

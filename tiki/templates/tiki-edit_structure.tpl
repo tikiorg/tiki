@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-edit_structure.php?page_ref_id={$page_ref_id}">
   {tr}Modify Structure{/tr}: {$structure_name}
-</a><br/><br/>
+</a><br /><br />
 
 <form action="tiki-edit_structure.php" method="post">
 <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
@@ -69,7 +69,7 @@
 </table>
 </form>
 
-<br/>
+<br />
 <h2>{tr}Structure Layout{/tr}</h2>
 
 {section name=ix loop=$subtree}
@@ -97,7 +97,7 @@
 {/section}
 
 {if $remove eq 'y'}
-<br/>
+<br />
 {tr}You will remove{/tr} '{$removePageName}' {tr}and its subpages from the structure, now you have two options:{/tr}
 <ul>
 <li><a class="link" href="tiki-edit_structure.php?page_ref_id={$removepage}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>

@@ -14,11 +14,11 @@
 <!-- beginning of next bit -->
 
 
-<br/><br/>
+<br /><br />
 <a class="linkbut" href="tiki-edit_blog.php">{tr}edit blog{/tr}</a>
 <a class="linkbut" href="tiki-blog_post.php">{tr}post{/tr}</a>
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
-<br/><br/>
+<br /><br />
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -70,7 +70,7 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-list_posts.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -80,7 +80,7 @@
 &nbsp;[<a class="prevnext" href="tiki-list_posts.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-list_posts.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

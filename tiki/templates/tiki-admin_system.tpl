@@ -6,7 +6,7 @@
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_system.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system admin tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 </h1>
-<br/><br/>
+<br /><br />
 
 <table class="normal">
 <tr><td colspan="3" class="heading">{tr}Exterminator{/tr}</td></tr>

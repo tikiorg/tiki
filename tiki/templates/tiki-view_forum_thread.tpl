@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.46 2004-01-15 09:56:29 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.47 2004-01-30 08:49:22 damosoft Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
-<br/><br/>
+<br /><br />
 {if $unread > 0}
-	<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br/><br/></a>
+	<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br /><br /></a>
 {/if}
 
 {if $was_queued eq 'y'}
@@ -18,7 +18,7 @@ a moderator approves it.{/tr}</small>
 [{if $prev_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
 {if $next_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_next_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$next_topic}" class="link">{tr}next topic{/tr}</a>{/if}] 
  </div>
-<br/><br/>
+<br /><br />
 {if $openpost eq 'y'}
 {assign var="postclass" value="forumpostopen"}
 {else}
@@ -30,17 +30,17 @@ a moderator approves it.{/tr}</small>
   <td class="odd" >
   <div align="center">
   {if $forum_info.ui_avatar eq 'y'}
-  {$thread_info.userName|avatarize}<br/>
+  {$thread_info.userName|avatarize}<br />
   {/if}
   {$thread_info.userName|userlink}
   {if $forum_info.ui_flag eq 'y'}
-  <br/>{$thread_info.userName|countryflag}
+  <br />{$thread_info.userName|countryflag}
   {/if}
   {if $thread_info.userName and $forum_info.ui_posts eq 'y'}
-  <br/><small>posts:{$thread_info.user_posts}</small>
+  <br /><small>posts:{$thread_info.user_posts}</small>
   {/if}
   {if $thread_info.userName and $forum_info.ui_level eq 'y'}
-  <br/><img src="img/icons/{$thread_info.user_level}stars.gif" alt='{$thread_info.user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
+  <br /><img src="img/icons/{$thread_info.user_level}stars.gif" alt='{$thread_info.user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
   {/if}
   </div>
   </td>
@@ -80,9 +80,9 @@ a moderator approves it.{/tr}</small>
   	</td>
   </tr>
   </table>
-  <br/><br/>
+  <br /><br />
   {$thread_info.parsed}
-  <br/>
+  <br />
   {if count($thread_info.attachments) > 0}
 	{section name=ix loop=$thread_info.attachments}
 		<a class="link" href="tiki-download_forum_attachment.php?attId={$thread_info.attachments[ix].attId}">
@@ -91,7 +91,7 @@ a moderator approves it.{/tr}</small>
 		{if $tiki_p_admin_forum eq 'y'}
 			<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$thread_info.attachments[ix].attId}">[{tr}del{/tr}]</a>					
 		{/if}
-		<br/>
+		<br />
 	{/section}
   {/if}
   </td>
@@ -138,14 +138,14 @@ a moderator approves it.{/tr}</small>
   </td>
 </tr>
 </table>
-<br/>
+<br />
 {if $tiki_p_admin_form eq 'y' or $thread_info.type ne 'l'}
 {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_post eq 'y'}
 
 <input type="button" name="comments_postComment" value="{tr}new reply{/tr}" onclick="show('{$postclass}');"/>
  
  {if $comment_preview eq 'y'}
-  <br/><br/>
+  <br /><br />
   <b>{tr}Preview{/tr}</b>
   <div class="commentscomment">
   <div class="commentheader">
@@ -153,7 +153,7 @@ a moderator approves it.{/tr}</small>
   <tr>
   <td>
   <div class="commentheader">
-  <span class="commentstitle">{$comments_preview_title}</span><br/>
+  <span class="commentstitle">{$comments_preview_title}</span><br />
   {tr}by{/tr} {$user}
   </div>
   </td>
@@ -166,13 +166,13 @@ a moderator approves it.{/tr}</small>
   </div>
   <div class="commenttext">
   {$comments_preview_data}
-  <br/>
+  <br />
   </div>
   </div>
   {/if}
  
 <div id='{$postclass}' class="threadpost">
-  <br/>
+  <br />
   {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$smarty.request.comments_parentId}&amp;forumId={$forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
@@ -216,7 +216,7 @@ a moderator approves it.{/tr}</small>
      </tr>
     {/if}
     <tr>
-      <td class="formcolor">{tr}Comment{/tr}<br/><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
+      <td class="formcolor">{tr}Comment{/tr}<br /><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
       <td class="formcolor"><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
@@ -240,17 +240,17 @@ a moderator approves it.{/tr}</small>
     </table>
     </form>
     
-   <br/>    
-  <div class="commentsedithelp"><b>{tr}Posting comments{/tr}:</b><br/><br/>
-  {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br/>
+   <br />    
+  <div class="commentsedithelp"><b>{tr}Posting comments{/tr}:</b><br /><br />
+  {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br />
   {tr}HTML tags are not allowed inside comments{/tr}
   </div>
-  <br/>
+  <br />
     
 </div>
 
 
-<br/><br/>
+<br /><br />
 {/if}
 {/if}
 
@@ -362,17 +362,17 @@ a moderator approves it.{/tr}</small>
   <td  class="{cycle advance=false}" >
   <div align="center">
   {if $forum_info.ui_avatar eq 'y'}
-  {$comments_coms[ix].userName|avatarize}<br/>
+  {$comments_coms[ix].userName|avatarize}<br />
   {/if}
-  <br/>{$comments_coms[ix].userName|userlink}
+  <br />{$comments_coms[ix].userName|userlink}
   {if $forum_info.ui_flag eq 'y'}
-  <br/>{$comments_coms[ix].userName|countryflag}
+  <br />{$comments_coms[ix].userName|countryflag}
   {/if}
   {if $comments_coms[ix].userName and $forum_info.ui_posts eq 'y'}
-  <br/><small>posts:{$comments_coms[ix].user_posts}</small>
+  <br /><small>posts:{$comments_coms[ix].user_posts}</small>
   {/if}
   {if $comments_coms[ix].userName and $forum_info.ui_level eq 'y'}
-  <br/><img src="img/icons/{$comments_coms[ix].user_level}stars.gif" alt='{$comments_coms[ix].user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
+  <br /><img src="img/icons/{$comments_coms[ix].user_level}stars.gif" alt='{$comments_coms[ix].user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
   {/if}
 
   </div>
@@ -414,9 +414,9 @@ a moderator approves it.{/tr}</small>
 	</td>
   </tr>
   </table>
-  <br/><br/>
+  <br /><br />
   {$comments_coms[ix].parsed}
-  <br/>
+  <br />
   {if count($comments_coms[ix].attachments) > 0}
 	{section name=iz loop=$comments_coms[ix].attachments}
 		<a class="link" href="tiki-download_forum_attachment.php?attId={$comments_coms[ix].attachments[iz].attId}">
@@ -425,7 +425,7 @@ a moderator approves it.{/tr}</small>
 		{if $tiki_p_admin_forum eq 'y'}
 			<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comments_coms[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
 		{/if}
-		<br/>
+		<br />
 	{/section}
   {/if}
 
@@ -484,7 +484,7 @@ a moderator approves it.{/tr}</small>
 {/if}
 </form>
 
-<br/>
+<br />
   <div align="center">
   <div class="mini">
   {if $comments_prev_offset >= 0}
@@ -495,7 +495,7 @@ a moderator approves it.{/tr}</small>
   &nbsp;[<a class="prevnext" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}next{/tr}</a>]
   {/if}
   {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$comments_cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$comments_maxComments}
 <a class="prevnext" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">
@@ -504,7 +504,7 @@ a moderator approves it.{/tr}</small>
 {/if}
   </div>
 {/if}
-  <br/>
+  <br />
   </div>
 <small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>
 

@@ -1,12 +1,12 @@
 <div style="margin-left:180px;margin-right:180px;">
 <h1>Tiki installer v{$tiki_version} <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt='help' /></a></h1>
-<a href="tiki-install.php?restart=1" class="link">reload</a><br/><br/>
+<a href="tiki-install.php?restart=1" class="link">reload</a><br /><br />
 
 	{if $dbcon eq 'n' or $resetdb eq 'y'}
 	{* we do not have a valid db connection or db reset is requested *}
-	  <b>Tiki cannot find a database connection</b><br/>
-	  Please enter your database connection info<br/><br/>
+	  <b>Tiki cannot find a database connection</b><br />
+	  Please enter your database connection info<br /><br />
 	  <form action="tiki-install.php" method="post">
 	  <table class="normal">
 	  	<tr>
@@ -108,18 +108,18 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 				<p>
 			</td></tr>
 		</table>
-		</form><br/>
+		</form><br />
 	    {else}
-    		You do not have any packages installed.<br/>
+    		You do not have any packages installed.<br />
     		Please visit <a href="http://sourceforge.net/projects/tikiwiki">
 		http://sourceforge.net/projects/tikiwiki</a> for a list of packages available
-    		for download.<br/><br/>
+    		for download.<br /><br />
 	    {/if}
 	  {elseif $dbdone eq 'n'}
 		  {if $logged eq 'y'}
 		    {* we are logged if no admin account is found or if he user logged in*}
-		    <b>Welcome to the installation script!</b><br/>
-		    You can now create a new database or update your current database<br/><br/>
+		    <b>Welcome to the installation script!</b><br />
+		    You can now create a new database or update your current database<br /><br />
 		    <form method="post" action="tiki-install.php">
 		    <table>
 		    <tr><td>
@@ -148,11 +148,11 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 			<input type="submit" name="update" value="update" />
 		    </td></tr>
 		    </table>
-		    </form><br/>
+		    </form><br />
 		  {else}
 			{* we are not logged then no admin account found and user not logged*}
-			<b>This site has an admin account configured</b><br/>
-		    Please enter your admin password to continue<br/><br/>
+			<b>This site has an admin account configured</b><br />
+		    Please enter your admin password to continue<br /><br />
 
 		     <form name="loginbox" action="tiki-install.php" method="post"> 
 		          <table>
@@ -165,30 +165,30 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		      </form>
 		  {/if}
     	  {else}
-    		<b>Print operations executed successfully</b><br/>
+    		<b>Print operations executed successfully</b><br />
     		<textarea rows="15" cols="80">
     		{section loop=$succcommands name=ix}
     		{$succcommands[ix]}
     		{/section}
-    		</textarea><br/><br/>
-    		<b>Print operations failed</b><br/>
+    		</textarea><br /><br />
+    		<b>Print operations failed</b><br />
     		<textarea rows="15" cols="80">
     		{section loop=$failedcommands name=ix}
     		{$failedcommands[ix]}
     		{/section}
-    		</textarea><br/><br/>
+    		</textarea><br /><br />
     		Your database has been configured and Tiki is ready to run, if
     		this is your first install your admin password is 'admin'. You can
     		now log in into Tiki as 'admin' - 'admin' and start configuring
-    		the application.<br/>
+    		the application.<br />
     		Note: This install script may be potentially harmful so we strongly
     		recommend you to remove the script and then proceed into Tiki. If
-    		you decide to remove the script it will be renamed to tiki-install.done<br/><br/>
+    		you decide to remove the script it will be renamed to tiki-install.done<br /><br />
     	  {/if}
 	{/if}
     	{if $dbcon eq 'y'}
 	  {if $dbdone eq 'y'} 
-	    <a href="tiki-install.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br/>
+	    <a href="tiki-install.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br />
     	    <a href="tiki-index.php" class="link">Click here to proceed into tiki without removing the script</a><br />
 	  {else}
 	    <a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />

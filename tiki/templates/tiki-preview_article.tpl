@@ -1,7 +1,7 @@
 <h2>{tr}Preview{/tr}: {$page}</h2>
 <div class="article">
 <div class="articletitle">
-<span class="titlea">{$title}</span><br/>
+<span class="titlea">{$title}</span><br />
 <span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span>
 </div>
 

@@ -14,7 +14,7 @@
 
 <!-- beginning of next bit -->
 
-<br/><br/>
+<br /><br />
 {if $msg}
 <div class="cbox">
 <div class="cbox-title">
@@ -25,7 +25,7 @@
 </div>
 </div>
 {/if}
-<br/>
+<br />
 <div class="cbox">
 <div class="cbox-title">
 {tr}Send objects to this site{/tr}
@@ -44,7 +44,7 @@
 </form>
 </div>
 </div>
-<br/>
+<br />
 
 <div class="cbox">
 <div class="cbox-title">
@@ -54,11 +54,11 @@
 <form action="tiki-send_objects.php" method="post">
 <input type="hidden" name="sendarticles" value="{$form_sendarticles|escape}" />
 <input type="hidden" name="sendpages" value="{$form_sendpages|escape}" />
-{tr}filter{/tr}:<input type="text" name="find" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br/>
+{tr}filter{/tr}:<input type="text" name="find" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br />
 </form>
 </div>
 </div>
-<br/>
+<br />
 
 {if $tiki_p_send_pages eq 'y'}
 <div class="cbox">
@@ -92,7 +92,7 @@
 </div>
 {/if}
 
-<br/>
+<br />
 
 {if $tiki_p_send_articles eq 'y'}
 <div class="cbox">

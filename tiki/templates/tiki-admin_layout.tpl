@@ -1,4 +1,4 @@
-<a href="tiki-admin_layout.php" class="pagetitle">{tr}Admin layout{/tr}</a><br/><br/>
+<a href="tiki-admin_layout.php" class="pagetitle">{tr}Admin layout{/tr}</a><br /><br />
 
 {section name=ix loop=$sections}
 <a name="{$sections[ix].name|escape}"></a>
@@ -25,5 +25,5 @@
     </div>
 </div>
 </div>
-<br/>    
+<br />    
 {/section}

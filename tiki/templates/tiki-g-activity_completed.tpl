@@ -2,7 +2,7 @@
 {*Smarty template*}
 <h1>{tr}Activity completed{/tr}</h1>
 {include file=tiki-g-user_bar.tpl}
-<br/><br/>
+<br /><br />
 <table class="normal">
 <tr>
 	<td class="odd">{tr}Process{/tr}

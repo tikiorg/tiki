@@ -1,13 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.50 2003-12-21 17:47:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.51 2004-01-30 08:49:22 damosoft Exp $ *}
 
-<a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br/><br/>
+<a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br /><br />
 {if $forum_info.show_description eq 'y'}
 {$forum_info.description}
-<br/><br/>
+<br /><br />
 {/if}
 
 <a class="link" href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
-<br/><br/>
+<br /><br />
 {if $openpost eq 'y'}
 {assign var="postclass" value="forumpostopen"}
 {else}
@@ -44,7 +44,7 @@
 </table>
 
 {if $unread > 0}
-	<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br/></a>
+	<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br /></a>
 {/if}
 
 {if $was_queued eq 'y'}
@@ -57,7 +57,7 @@ a moderator approves it.{/tr}</small>
 
 {if $tiki_p_forum_post_topic eq 'y'}
   {if $comment_preview eq 'y'}
-  <br/><br/>
+  <br /><br />
   <b>{tr}Preview{/tr}</b>
   <div class="commentscomment">
   <div class="commentheader">
@@ -65,7 +65,7 @@ a moderator approves it.{/tr}</small>
   <tr>
   <td>
   <div class="commentheader">
-  <span class="commentstitle">{$comments_preview_title}</span><br/>
+  <span class="commentstitle">{$comments_preview_title}</span><br />
   {tr}by{/tr} {$user}
   </div>
   </td>
@@ -78,20 +78,20 @@ a moderator approves it.{/tr}</small>
   </div>
   <div class="commenttext">
   {$comments_preview_data}
-  <br/>
+  <br />
   </div>
   </div>
   {/if}
 
   {if $warning eq 'y'}
-  <br/><br/>
-  <div class="commentsedithelp"><br/><b>{tr}You have to enter a title and text{/tr}!</b><br/><br/>
+  <br /><br />
+  <div class="commentsedithelp"><br /><b>{tr}You have to enter a title and text{/tr}!</b><br /><br />
   </div>
-  <br/>
+  <br />
   {/if}
 
 <div id='{$postclass}'>
-  <br/>
+  <br />
   {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
@@ -164,7 +164,7 @@ a moderator approves it.{/tr}</small>
      </tr>
     {/if}
     <tr>
-      <td class="formcolor">{tr}Comment{/tr}<br/><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
+      <td class="formcolor">{tr}Comment{/tr}<br /><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
       <td class="formcolor"><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea><input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/></td>
     </tr>
@@ -186,7 +186,7 @@ a moderator approves it.{/tr}</small>
     </tr>
     </table>
     </form>
-<br/>    
+<br />    
   <table class="normal" id="commentshelp">
   <tr><td class="even">
   <b>{tr}Posting comments{/tr}:</b>
@@ -200,7 +200,7 @@ a moderator approves it.{/tr}</small>
    
 </div>
 
-<br/>
+<br />
 {/if}
 
 
@@ -225,7 +225,7 @@ a moderator approves it.{/tr}</small>
 	</td>
 	<td style="text-align:right;" class="odd" colspan="10">
 	{if $reported > 0}
-	<small><a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported messages:{/tr}{$reported}</a></small><br/>
+	<small><a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported messages:{/tr}{$reported}</a></small><br />
 	{/if}
 	<small><a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued messages:{/tr}{$queued}</a></small>
 	</td>
@@ -328,7 +328,7 @@ a moderator approves it.{/tr}</small>
   <table width=100%"><tr><td>
   <a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if}  href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$comments_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
   {if $forum_info.topic_summary eq 'y'}
-  <br/><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     
+  <br /><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     
   {/if}
   </td>
   
@@ -365,7 +365,7 @@ a moderator approves it.{/tr}</small>
   {if $forum_info.topics_list_lastpost eq 'y'}
   	  <td class="{cycle advance=false}">{$comments_coms[ix].lastPost|tiki_short_datetime}<!--date_format:"%b %d [%H:%M]"-->
 	  {if $comments_coms[ix].replies}
-	  <br/>
+	  <br />
 	  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     
 	  {/if}
 	  </td>
@@ -391,7 +391,7 @@ a moderator approves it.{/tr}</small>
   &nbsp;[<a class="forumprevnext" href="tiki-view_forum.php?forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}next{/tr}</a>]
   {/if}
   {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$comments_cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$comments_maxComments}
 <a class="prevnext" href="tiki-view_forum.php?forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">
@@ -399,7 +399,7 @@ a moderator approves it.{/tr}</small>
 {/section}
 {/if}
   </div>
-  <br/>
+  <br />
   </div>
 
 {if $forum_info.forum_last_n > 0}
@@ -422,7 +422,7 @@ a moderator approves it.{/tr}</small>
 	 	{/section}
 	</tr>
 	</table>
-	<br/>
+	<br />
 {/if}
 
 <table >  

@@ -13,7 +13,7 @@
 </select>
 <input type="submit" name="selrank" value="{tr}view{/tr}" />
 </form>
-<br/><br/>
+<br /><br />
 {section name=ix loop=$rankings}
 <div class="cbox">
 <div class="cbox-title">
@@ -27,5 +27,5 @@
 </table>
 </div>
 </div>
-<br/>
+<br />
 {/section}

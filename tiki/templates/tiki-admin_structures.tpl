@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.22 2004-01-26 23:11:32 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.23 2004-01-30 08:49:21 damosoft Exp $ *}
 
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
 <!-- the help link info -->
@@ -65,8 +65,8 @@
   </div>
 
 {if $askremove eq 'y'}
-<br/>
-<a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a><br/>
+<br />
+<a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a><br />
 <a class="link" href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
 {/if}
 
@@ -81,7 +81,7 @@
    <td class="formcolor"><input type="text" name="alias" /></td>
 </tr>    
 <tr>
-   <td class="formcolor">{tr}tree{/tr}:<br/>(optional)</td>
+   <td class="formcolor">{tr}tree{/tr}:<br />(optional)</td>
    <td colspan=3 class="formcolor"><textarea rows="5" cols="60" name="tree"></textarea></td>
 </tr>    
 <tr>

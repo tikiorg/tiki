@@ -23,7 +23,7 @@
 
 
 
-<br/><br/>
+<br /><br />
 
 <h3>{tr}List of instances{/tr} ({$cant})</h3>
 
@@ -159,7 +159,7 @@
 &nbsp;[<a class="prevnext" href="tiki-g-monitor_instances.php?where={$where}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-g-monitor_instances.php?where={$where}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

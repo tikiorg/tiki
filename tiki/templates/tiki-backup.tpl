@@ -19,7 +19,7 @@
 
 
 
-<br/><br/>
+<br /><br />
 <h2>{tr}List of available backups{/tr}</h2>
 
 <table class="normal">
@@ -42,28 +42,28 @@
 </tr>
 {/section}
 </table>
-<br/>
+<br />
 {if $restore eq 'y'}
 <div class="simplebox">
 <strong>{tr}Restoring a backup{/tr}</strong>
-<br/>
+<br />
 <strong>{tr}Warning!{/tr}: </strong>
 <i>{tr}Restoring a backup destoys all the data in your Tiki database. All your tables will be replaced with the information in the backup.{/tr}</i>
-<br/><br/>
+<br /><br />
 <a href="tiki-backup.php?rrestore={$restorefile}" class="link">{tr}Click here to confirm restoring{/tr}</a>
 </div>
-<br/>
+<br />
 {/if}
 <div class="simplebox">
-<strong>{tr}Create new backup{/tr}</strong><br/>
+<strong>{tr}Create new backup{/tr}</strong><br />
 <i>{tr}Creating backups may take a long time. If the process is not completed you will see a blank screen. If so you need to increment the maximum script execution time from your php.ini file{/tr}</i>
-<br/><br/>
+<br /><br />
 <a href="tiki-backup.php?generate=1" class="linkbut">{tr}Create new backup{/tr}</a>
 <b>Warning : Backups are known not to work since some time now. Don't rely on them. Chealer9 20031117</b>
 </div>
-<br/>
+<br />
 <div class="simplebox">
-<strong>{tr}Upload a backup{/tr}</strong><br/>
+<strong>{tr}Upload a backup{/tr}</strong><br />
 <form enctype="multipart/form-data" action="tiki-backup.php" method="post">
 <table class="normalnoborder">
 <tr><td class="form">{tr}Upload backup{/tr}:</td><td class="form">

@@ -149,7 +149,7 @@ GGG *}
 </td>
 </tr>
 
-<tr><td class="formcolor">{tr}Details test test test{/tr}<br/><br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
+<tr><td class="formcolor">{tr}Details test test test{/tr}<br /><br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
 <br /><br />{tr}Quicklinks{/tr}
 {include file=tiki-edit_help_tool.tpl}
 </td><td class="formcolor">
