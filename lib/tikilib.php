@@ -4256,7 +4256,7 @@ function parse_data($data) {
 
 	//print("todo el tag es: ".$page_parse."<br/>");
 	//print_r($imgdata);
-	$repl = "<div class=\"innerimg\"><img alt='" . tra('Image') . "' src='".$imgdata["src"]."' border='0' ";
+	$repl = "<img alt='" . tra('Image') . "' src='".$imgdata["src"]."' border='0' ";
 
 	if ($imgdata["width"])
 	    $repl .= " width='" . $imgdata["width"] . "'";
@@ -4275,7 +4275,7 @@ function parse_data($data) {
 	}
 
 	if ($imgdata["align"]) {
-	    $repl = "<div align='" . $imgdata["align"] . "'>" . $repl . "</div>";
+	    $repl = "<div align='" . $imgdata["align"] . "'>" . $repl;
 	}
 
 	$data = str_replace($page_parse, $repl, $data);
