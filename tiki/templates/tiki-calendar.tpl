@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.33 2003-12-05 19:42:06 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.34 2003-12-05 19:49:33 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-calendar.php?view={$view}">{tr}Calendar{/tr}</a>
@@ -298,7 +298,7 @@ align       : "bR"
 window.location = 'tiki-calendar.php?todate='+document.getElementById('todate').value+'{if $calendarId}&calendarId={$calendarId}&editmode=add{/if}';
 {literal} } {/literal}
 {literal}Calendar.setup( { {/literal}
-date        : "{$focusdate|tiki_long_date}",      // initial date
+date        : "{$focusdate|date_format:"%B %e, %Y %H:%M"}",      // initial date
 inputField  : "todate",      // ID of the input field
 ifFormat    : "%s",    // the date format
 displayArea : "datrigger",       // ID of the span where the date is to be shown
