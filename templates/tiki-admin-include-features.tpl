@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.37 2004-02-09 18:20:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.38 2004-02-20 22:43:16 sylvieg Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -463,7 +463,7 @@
 			{tr}Jukebox{/tr}
 			{if $feature_help eq 'y'}</a>{/if}
 			:</td>
-	<td<input type="checkbox" name="feature_jukebox" {if $feature_jukebox eq 'y'}checked="checked"{/if} /></td>
+	<td><input type="checkbox" name="feature_jukebox" {if $feature_jukebox eq 'y'}checked="checked"{/if} /></td>
 
       </tr>
 
