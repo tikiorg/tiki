@@ -118,6 +118,21 @@
             align="center">{tr}General Settings{/tr}</td>
       </tr><tr>
         <td class="form" width="43%">
+          {tr}Disallow access to the site (except for those with permission){/tr}:</td>
+        <td width="57%"><input type="checkbox" name="site_closed"
+              {if $site_closed eq 'y'}checked="checked"{/if}/>
+        </td>
+      </tr><tr>
+      	<td class="form">
+      		{tr}Message to display when site is closed{/tr}:</td>
+        <td><input type="text" name="site_closed_msg"
+             value="{$site_closed_msg}" size="60"/></td>
+      </tr>
+      </table>
+      <table width="99%"><tr>
+        <td colspan=5><hr></td></tr>
+        <tr>
+        <td class="form" width="43%">
           {tr}Open external links in new window{/tr}:</td>
         <td width="5%"><input type="checkbox" name="popupLinks"
               {if $popupLinks eq 'y'}checked="checked"{/if}/>
@@ -165,25 +180,25 @@
         <td class="form" width="43%">
           {tr}Server name (for absolute URIs){/tr}:</td>
         <td width="57%"><input type="text" name="feature_server_name"
-                               value="{$feature_server_name|escape}" /></td>
+                               value="{$feature_server_name|escape}" size="40" /></td>
       </tr><tr>
         <td class="form">{tr}Browser title{/tr}:</td>
-        <td><input type="text" name="siteTitle" value="{$siteTitle|escape}" /></td>
+        <td><input type="text" name="siteTitle" value="{$siteTitle|escape}" size="40" /></td>
       </tr><tr>
 <!--
         <td class="form">{tr}Wiki_Tiki_Title{/tr}: </td>
-        <td><input type="text" size="5" name="title" value="{$title|escape}" /></td>
+        <td><input type="text" size="5" name="title" value="{$title|escape}" size="40" /></td>
       </tr><tr>
 -->
         <td class="form">{tr}Temporary directory{/tr}:</td>
-        <td><input type="text" name="tmpDir" value="{$tmpDir|escape}" /></td>
+        <td><input type="text" name="tmpDir" value="{$tmpDir|escape}" size="40" /></td>
       </tr><tr>
         <td class="form">{tr}Sender Email{/tr}:</td>
-        <td><input type="text" name="sender_email" value="{$sender_email|escape}" /></td>
+        <td><input type="text" name="sender_email" value="{$sender_email|escape}" size="40" /></td>
       </tr><tr>
         <td class="form">{tr}Contact user{/tr}:</td>
         <td>{if $feature_contact eq 'y'}
-              <input type="text" name="contact_user" value="{$contact_user|escape}" />
+              <input type="text" name="contact_user" value="{$contact_user|escape}" size="40" />
             {else}
               {tr}contact feature disabled{/tr}
             {/if}
@@ -203,7 +218,7 @@
         </td>
       </tr><tr>
         <td class="form">{tr}Proxy Host{/tr}:</td>
-        <td><input type="text" name="proxy_host" value="{$proxy_host|escape}" /></td>
+        <td><input type="text" name="proxy_host" value="{$proxy_host|escape}" size="40" /></td>
       </tr><tr>
         <td class="form">{tr}Proxy port{/tr}:</td>
         <td><input size=5 type="text" name="proxy_port" value="{$proxy_port|escape}" /></td>

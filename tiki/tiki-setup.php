@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.126 2003-08-14 01:33:34 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.127 2003-08-14 04:40:56 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -295,6 +295,16 @@ $tiki_timer = new timer();
 $tiki_timer->start();
 
 include_once ("tiki-setup_base.php");
+
+//check to see if admin has closed the site
+$site_closed = $tikilib->get_preference('site_closed','n');
+$site_closed_msg = $tikilib->get_preference('site_closed_msg','This site is closed for maintainance.');
+if ($site_closed == 'y' and $tiki_p_access_closed_site != 'y'
+	 and !isset($_REQUEST['display_closed_site_msg']) and !isset($bypass_siteclose_check)) {
+	$url = 'tiki-error.php?error=' . urlencode(tra("$site_closed_msg")) . '&display_closed_site_msg=yes';
+	header('location: ' . $url);
+	exit;
+}
 
 //print("profile: include tiki-setup_base:".$tiki_timer->elapsed()."<br/>");
 
