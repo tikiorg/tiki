@@ -121,7 +121,7 @@
   <form method="post" action="tiki-admin.php#general">
     <table>
     <tr><td class="form">{tr}Change admin password{/tr}:</td><td><input type="password" name="adminpass" /></td></tr>
-    <tr><td class="form">{tr}Again{/tr}:</td><td><input type="password" name="again" /></td></tr>
+    <tr><td class="form">{tr}Repeat password{/tr}:</td><td><input type="password" name="again" /></td></tr>
     <tr><td>&nbsp;</td><td><input type="submit" name="newadminpass" value="{tr}change{/tr}" /></td></tr>
     </table>
   </form>
