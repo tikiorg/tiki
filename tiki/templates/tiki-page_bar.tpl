@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.24 2003-10-12 05:00:32 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.25 2003-11-18 23:59:25 chris_holman Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -53,7 +53,7 @@
 {if $show_slideshow eq 'y'}
 <td><div class="button2"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="linkbut">{tr}slides{/tr}</a></div></td>
 {elseif $structure eq 'y'}
-<td><div class="button2"><a href="tiki-slideshow2.php?page={$page|escape:"url"}" class="linkbut">{tr}slides{/tr}</a></div></td>
+<td><div class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="linkbut">{tr}slides{/tr}</a></div></td>
 {/if}
 <td><div class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}export{/tr}</a></div></td>
 {if $feature_wiki_discuss eq 'y'}

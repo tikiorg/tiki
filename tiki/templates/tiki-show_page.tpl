@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.50 2003-11-11 10:01:32 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.51 2003-11-18 23:59:25 chris_holman Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -71,12 +71,12 @@
 <div class="tocnav">
 <table>
 <tr><td>
-    {if $struct_prev_next and $struct_prev_next.prev_page_ref_id}
-		<a href="tiki-index.php?page_ref_id={$struct_prev_next.prev_page_ref_id}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' 
-   			{if $struct_prev_next.prev_page_alias}
-   				title='{$struct_prev_next.prev_page_alias}'
+    {if $prev_info and $prev_info.page_ref_id}
+		<a href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' 
+   			{if $prev_info.page_alias}
+   				title='{$prev_info.page_alias}'
    			{else}
-   				title='{$struct_prev_next.prev_pageName}'
+   				title='{$prev_info.pageName}'
    			{/if}/></a>{else}<img src='img/icons2/nix.gif' border='0'/>{/if}
 	{if $parent_info}
    	<a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src='img/icons2/nav_home.gif' border='0' alt='{tr}Parent page{/tr}' 
@@ -85,20 +85,20 @@
         {else}
    	      title='{$parent_info.pageName}'
         {/if}/></a>{else}<img src='img/icons2/nix.gif' border='0'/>{/if}
-   	{if $struct_prev_next and $struct_prev_next.next_page_ref_id}
-      <a href="tiki-index.php?page_ref_id={$struct_prev_next.next_page_ref_id}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' 
-		  {if $struct_prev_next.next_page_alias}
-			  title='{$struct_prev_next.next_page_alias}'
+   	{if $next_info and $next_info.page_ref_id}
+      <a href="tiki-index.php?page_ref_id={$next_info.page_ref_id}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' 
+		  {if $next_info.page_alias}
+			  title='{$next_info.page_alias}'
 		  {else}
-			  title='{$struct_prev_next.next_pageName}'
+			  title='{$next_info.pageName}'
 		  {/if}/></a>{else}<img src='img/icons2/nix.gif' border='0'/>
 	{/if}
-	{if $structure_info}
-   	<a href="tiki-index.php?page_ref_id={$structure_info.page_ref_id}"><img src='img/icons2/home.gif' border='0' alt='TOC' 
-		  {if $structure_info.page_alias}
-			  title='{$structure_info.page_alias}'
+	{if $home_info}
+   	<a href="tiki-index.php?page_ref_id={$home_info.page_ref_id}"><img src='img/icons2/home.gif' border='0' alt='TOC' 
+		  {if $home_info.page_alias}
+			  title='{$home_info.page_alias}'
 		  {else}
-			  title='{$structure_info.pageName}'
+			  title='{$home_info.pageName}'
 		  {/if}/></a>{/if}
   </td>
   <td>

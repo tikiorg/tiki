@@ -48,14 +48,13 @@ if(isset($page_ref_id)) {
  	$smarty->assign('structure','y');
  	$page_info = $structlib->s_get_page_info($page_ref_id);
  	$smarty->assign('page_info', $page_info);
-  $structure_info = $structlib->s_get_structure_info($page_ref_id);
- 	$smarty->assign('structure_info', $structure_info);
-  $parent_info = $structlib->s_get_parent_info($page_ref_id);
- 	$smarty->assign('parent_info', $parent_info);
- 	$prev_next_pages = $structlib->get_prev_next_pages($page_ref_id);
- 	$smarty->assign('struct_prev_next', $prev_next_pages);
-  $page = $page_info["pageName"];
-  $structure_path = $structlib->get_structure_path($page_ref_id);
+ 	$navigation_info = $structlib->get_navigation_info($page_ref_id);
+ 	$smarty->assign('next_info', $navigation_info["next"]);
+ 	$smarty->assign('prev_info', $navigation_info["prev"]);
+ 	$smarty->assign('parent_info', $navigation_info["parent"]);
+ 	$smarty->assign('home_info', $navigation_info["home"]);
+    $page = $page_info["pageName"];
+    $structure_path = $structlib->get_structure_path($page_ref_id);
  	$smarty->assign('structure_path', $structure_path);
 }
 $smarty->assign_by_ref('page',$page);
