@@ -1,5 +1,8 @@
 <?php
 
+function wikiplugin_split_help() {
+	return tra("Split a page into columns").": ~np~{SPLIT()}".tra("column")."---".tra("column")."{SPLIT}~/np~";
+}
 function wikiplugin_split($data, $params) {
 	global $tikilib;
 
