@@ -53,6 +53,8 @@
   {/sortlinks}
   </select>
   </td></tr>
+  <tr><td class="form">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
+  <tr><td class="form">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lon" value="{$lon|escape}" /></td></tr> 
   {if $change_theme eq 'y'}
   <tr><td class="form">{tr}Theme{/tr}:</td><td class="form"><select name="mystyle">
     {section name=ix loop=$styles}

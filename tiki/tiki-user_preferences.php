@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.49 2004-05-30 04:38:14 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.50 2004-06-09 04:03:09 franck Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,6 +97,16 @@ if (isset($_REQUEST["prefs"])) {
 		$tikilib->set_user_preference($userwatch, 'display_timezone', $_REQUEST['display_timezone']);
 
 		$smarty->assign_by_ref('display_timezone', $_REQUEST['display_timezone']);
+	}
+
+	if (isset($_REQUEST["lat"])) {
+		$smarty->assign('lat', floatval($_REQUEST["lat"]));
+		$tikilib->set_user_preference($userwatch, 'lat', floatval($_REQUEST["lat"]));
+	}
+
+	if (isset($_REQUEST["lon"])) {
+		$smarty->assign('lon', floatval($_REQUEST["lon"]));
+		$tikilib->set_user_preference($userwatch, 'lon', floatval($_REQUEST["lon"]));
 	}
 
 	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
@@ -312,6 +322,10 @@ $smarty->assign_by_ref('style', $style);
 $realName = $tikilib->get_user_preference($userwatch, 'realName', '');
 $country = $tikilib->get_user_preference($userwatch, 'country', 'Other');
 $smarty->assign('country', $country);
+$lat = $tikilib->get_user_preference($userwatch, 'lat', '');
+$smarty->assign('lat', $lat);
+$lon = $tikilib->get_user_preference($userwatch, 'lon', '');
+$smarty->assign('lon', $lon);
 $anonpref = $tikilib->get_preference('userbreadCrumb', 4);
 $userbreadCrumb = $tikilib->get_user_preference($userwatch, 'userbreadCrumb', $anonpref);
 $smarty->assign_by_ref('realName', $realName);
