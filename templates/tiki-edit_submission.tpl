@@ -2,31 +2,17 @@
 {if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
-<a class="pagetitle" href="tiki-edit_submission.php">{tr}Edit{/tr}: {$title}</a>
-<!-- the help link info --->
-  
-      {if $feature_help eq 'y'}
+<a class="pagetitle" href="tiki-edit_submission.php">{tr}Edit{/tr}: {$title}</a><br /><br />
+
+{if $feature_view_tpl eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Submissions{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
 
-<!-- link to tpl -->
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-edit_submission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit submissions tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
-
-<!--- beginning of next bit --->
-
-
-
-
-
-
-
-
-
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
 
 <br /><br />
 [<a class="link" href="tiki-list_submissions.php">{tr}list submissions{/tr}</a>]
@@ -83,12 +69,12 @@
 <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
 {if $hasImage eq 'y'}
-<tr><td class="formcolor">Own Image: </td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
-{if $tempimg ne 'n'}
-<tr><td class="formcolor">Own Image:</td><td class="formcolor">
-<img alt="theimage" border="0" src="{$tempimg}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
-</td></tr>
-{/if}
+  <tr><td class="formcolor">Own Image: </td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
+  {if $tempimg ne 'n'}
+    <tr><td class="formcolor">Own Image:</td><td class="formcolor">
+    <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
+    </td></tr>
+  {/if}
 {/if}
 <tr><td class="formcolor">{tr}Use own image{/tr}</td><td class="formcolor">
 <input type="checkbox" name="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>

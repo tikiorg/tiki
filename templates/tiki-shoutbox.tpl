@@ -1,23 +1,18 @@
-<a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
-<!-- the help link info --->
-  
-      {if $feature_help eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-shoutbox.tpl,v 1.8 2003-08-15 21:46:15 mose Exp $ *}
+<a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a><br/>
+
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Tiki Shoutbox{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
 
-<!-- link to tpl -->
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-shoutbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Tiki Shoutbox tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
 
-<!-- begin -->
+<br /><br />
 
-
-
-<br/>
 {if $tiki_p_post_shoutbox eq 'y'}
 <h2>{tr}Post or edit a message{/tr}</h2>
 <form action="tiki-shoutbox.php" method="post">
@@ -48,8 +43,11 @@
 <div class="shoutboxmsg">
 <b>{$channels[user].user}</b> {tr}at{/tr}: {$channels[user].timestamp|tiki_long_time}
 {if $tiki_p_admin_shoutbox eq 'y'}
-[<a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].msgId}" class="link">x</a>
-|<a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;msgId={$channels[user].msgId}" class="link">edit</a>]
+  [
+  <a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].msgId}" class="link">x</a>
+  |
+  <a href="tiki-shoutbox.php?find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;msgId={$channels[user].msgId}" class="link">edit</a>
+  ]
 {/if}
 <br/>
 {$channels[user].message}

@@ -1,26 +1,18 @@
-<a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.12 2003-08-15 21:51:08 mose Exp $ *}
+<a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a><br /><br />
 
-<!-- the help link info --->
-  
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ImageGallery" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Image Gallery{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
 
-<!-- link to tpl -->
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-upload_image.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Image Gallery tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
-
-<!--- beginning of next bit --->
-
-
-
-
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
 
 <br /><br />
+
 {if $galleryId ne ''}
 	<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="link">
 {else}
@@ -60,9 +52,10 @@
 	<h2>{tr}Upload successful!{/tr}</h2>
 	<h3>{tr}The following image was successfully uploaded{/tr}:</h3>
 	<div align="center">
-	<img src="{$url_show}?id={$imageId}" /><br />
+	<img src="{$url_show}?id={$imageId}" alt='{tr}Image ID{/tr}'/><br />
 	<b>{tr}Thumbnail{/tr}:</b><br />
-	<img src="{$url_show}?id={$imageId}&thumb=1" /><br /><br />
+	<img src="{$url_show}?id={$imageId}&thumb=1"
+		alt='{tr}Image ID thumb{/tr}'/><br /><br />
 	<div class="wikitext">
 	{tr}You can view this image in your browser using{/tr}: <a class="link" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br /><br />
 	{tr}You can include the image in an HTML/Tiki page using{/tr}:  <textarea rows="2" cols="60">&lt;img src="{$url_show}?id={$imageId}" /&gt;</textarea>

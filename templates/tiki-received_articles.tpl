@@ -1,45 +1,30 @@
-<a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.10 2003-08-15 21:43:33 mose Exp $ *}
+<a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br/><br/>
 
-<!-- the help link info --->
-  
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Article" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Received Articles{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
 
-<!-- link to tpl -->
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-received_articles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}received articles tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
 
-<!--- beginning of next bit --->
-
-
-
-
-
-
-
-
-
-
-
-<br/><br/>
+<br /><br />
 {if $preview eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
 <div class="articletitle">
 <span class="titlea">{$title}</span><br/>
-<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} (0 {tr}reads{/tr})</span>
+<span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} (0 {tr}reads{/tr})</span>
 </div>
 <div class="articleheading">
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr><td width="25%" valign="top">
 {if $useImage eq 'y'}
-<img alt="theimage" border="0" src="received_article_image.php?id={$receivedArticleId}" />
+  <img alt="{tr}Article image{/tr}" border="0" src="received_article_image.php?id={$receivedArticleId}" />
 {else}
-<img alt="theimage" border="0" src="topic_image.php?id={$topic}" />
+  <img alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topic}" />
 {/if}
 </td><td width="75%" valign="top">
 <span class="articleheading">{$parsed_heading}</span>
