@@ -8,6 +8,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // tiki-setup has already set the $language variable
 //Create a list of languages
 $languages = array();
-$languages = $tikilib->list_languages();
+$languages = $tikilib->list_languages(false, 'y');
 $smarty->assign_by_ref('languages', $languages);
 ?>
