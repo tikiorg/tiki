@@ -1005,7 +1005,7 @@ class ImageGalsLib extends TikiLib {
 		return $res;
 	}
 
-	// Add an option to stablish Image size (x,y)
+	// Add an option to establish Image size (x,y)
 	function get_image($id, $itype = 'o', $xsize = 0, $ysize = 0) {
 		global $gal_use_db;
 
@@ -1060,7 +1060,12 @@ class ImageGalsLib extends TikiLib {
 
 
 		$result = $this->query($query,$bindvars,1);
-		$res = $result->fetchRow();
+		
+		if ($result===false || $result===null) {
+			die;
+		}
+		
+		$res = $result->fetchRow();		
 
 		$this->imageId = $res["imageId"];
 		$this->galleryId = $res["galleryId"];
@@ -1122,6 +1127,21 @@ class ImageGalsLib extends TikiLib {
 
 		return $res;
 	}
+
+
+   function get_imageid_byname($name) {
+	
+		$bindvars=array($name);
+
+		$query = "select `imageId` from `tiki_images` 
+						where `name` like ?";
+
+		$result = $this->query($query,$bindvars,1);
+		$res = $result->fetchRow(); 
+		
+		return($res["imageId"]);
+			  
+   }
 
 	function get_image_thumb($id) {
 		return $this->get_image($id, 't');
