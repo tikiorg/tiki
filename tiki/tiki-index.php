@@ -339,22 +339,13 @@ $smarty->assign('wiki_extras','y');
 $smarty->assign('structure','n');   
 if($structlib->page_is_in_structure($page)) {   
 	$smarty->assign('structure','y');
-	$prev=$structlib->get_prev_page($page);
-	$next=$structlib->get_next_page($page);
-	$parent=$structlib->get_parent_page($page);
-	$struct=$structlib->get_structure($page);
-	$alias=$structlib->get_page_alias($page);
-	$struct_alias=$structlib->get_page_alias($struct);
-	$prev_alias=$structlib->get_page_alias($prev);
-	$next_alias=$structlib->get_page_alias($next);
-	$smarty->assign('struct_next',$next);
-	$smarty->assign('struct_prev',$prev);
-	$smarty->assign('struct_parent',$parent);
-	$smarty->assign('struct_struct',$struct);
-	$smarty->assign('struct_alias',$alias);
-	$smarty->assign('struct_struct_alias',$struct_alias);
-	$smarty->assign('struct_prev_alias',$prev_alias);
-	$smarty->assign('struct_next_alias',$next_alias);
+	if (isset($_REQUEST["structID"]))	{
+		$prev_next_pages = $structlib->get_prev_next_pages($page, $_REQUEST["structID"]);
+	}
+	else {
+		$prev_next_pages = $structlib->get_prev_next_pages($page);
+	}
+	$smarty->assign('struct_prev_next', $prev_next_pages);
 }
 
 if($feature_theme_control == 'y') {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.33 2003-10-28 22:25:48 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.34 2003-11-04 10:02:57 caustin_ats Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -29,6 +29,10 @@
 </td></tr>
 
 {include file=categorize.tpl}
+
+{if $feature_wiki_showstructs eq 'y' and $showstructs}
+{include file=structures.tpl}
+{/if}
 
 {if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr><td class="formcolor">{tr}Apply template{/tr}:</td><td class="formcolor">

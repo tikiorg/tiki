@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.54 2003-10-28 22:25:49 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.55 2003-11-04 10:03:03 caustin_ats Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -673,8 +673,10 @@ foreach ($plugin_files as $pfile) {
 
 $smarty->assign_by_ref('plugins', $plugins);
 
-$pageAlias = $structlib->get_page_alias($_REQUEST["page"]);
-$smarty->assign('pageAlias', $pageAlias);
+if ($feature_wiki_showstructs == 'y' && $structlib->page_is_in_structure($_REQUEST["page"])) {
+	$structs = $structlib->get_showstructs($_REQUEST["page"]);
+	$smarty->assign('showstructs', $structs);
+}
 
 // Flag for 'page bar' that currently 'Edit' mode active
 // so no need to show comments & attachments, but need

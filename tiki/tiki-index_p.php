@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.8 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.9 2003-11-04 10:03:03 caustin_ats Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -230,13 +230,13 @@ $smarty->assign('structure', 'n');
 
 if ($structlib->page_is_in_structure($page)) {
 	$smarty->assign('structure', 'y');
-
-	$prev = $structlib->get_prev_page($page);
-	$next = $structlib->get_next_page($page);
-	$struct = $structlib->get_structure($page);
-	$smarty->assign('struct_next', $next);
-	$smarty->assign('struct_prev', $prev);
-	$smarty->assign('struct_struct', $struct);
+	if (isset($_REQUEST["structID"]))	{
+		$prev_next_pages = $structlib->get_prev_next_pages($page, $_REQUEST["structID"]);
+	}
+	else {
+		$prev_next_pages = $structlib->get_prev_next_pages($page);
+	} 	
+	$smarty->assign('struct_prev_next', $prev_next_pages);
 }
 
 if ($feature_theme_control == 'y') {

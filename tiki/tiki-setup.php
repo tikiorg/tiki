@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.153 2003-10-25 00:46:16 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.154 2003-11-04 10:03:01 caustin_ats Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -549,6 +549,9 @@ $feature_wiki_footnotes = 'n';
 $smarty->assign('feature_wiki_footnotes', $feature_wiki_footnotes);
 $feature_wiki_monosp = 'y';
 $smarty->assign('feature_wiki_monosp', $feature_wiki_monosp);
+
+$feature_wiki_showstructs = 'n';
+$smarty->assign('feature_wiki_showstructs', $feature_wiki_monosp);
 
 $system_os = $tikilib->get_preference('system_os', TikiSetup::os());
 $smarty->assign('system_os', $system_os);
