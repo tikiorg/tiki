@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.48 2004-04-03 09:36:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.49 2004-04-27 18:06:59 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -40,6 +40,19 @@
 </select>
 </td></tr>
 {/if}
+
+{if $feature_multilingual eq 'y'}
+<tr class="formcolor"><td>{tr}Language{/tr}:</td><td>
+<select name="lang">
+<option value="">{tr}Unknown{/tr}</option>
+{section name=ix loop=$languages}
+<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+{/section}
+</select>
+</td></tr>
+{*<tr class="formcolor"><td>{tr}Is a translation of this page:{/tr}</td><td><input size="80" type="text" name="translation" value="{$translation|escape}" /></td></tr>*}
+{/if}
+
 {if $feature_smileys eq 'y'}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
 {include file="tiki-smileys.tpl" area_name='editwiki'}

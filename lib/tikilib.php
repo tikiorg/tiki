@@ -3509,7 +3509,7 @@ function add_hit($pageName) {
     return true;
 }
 
-function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '') {
+function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '', $lang=null) {
     global $smarty;
     global $dbTiki;
     global $sender_email;
@@ -3531,8 +3531,8 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
     if ($this->page_exists($name))
   return false;
 
-    $query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`) ";
-    $query.= " values(?,?,?,?,?,?,?,?,?,?,?)";
+    $query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`lang`) ";
+    $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?)";
     $result = $this->query($query, array(
     $name,
     (int)$hits,
@@ -3544,7 +3544,8 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
     $ip,
     $description,
     $user,
-    (int)strlen($data)
+    (int)strlen($data),
+    $lang
     ));
 
     $this->clear_links($name);
@@ -5014,7 +5015,7 @@ function invalidate_cache($page) {
     $this->query($query, array(0,$page) );
 }
 
-function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false) {
+function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang=null) {
     global $smarty;
 
     global $dbTiki;
@@ -5075,8 +5076,9 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
 
 
 
-    $query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? where `pageName`=?";
-    $result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$pageName));
+    $query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where `pageName`=?";
+    $result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$lang,$pageName));
+echo "EEEEE".$lang;
     // Parse edit_data updating the list of links from this page
     $this->clear_links($pageName);
 
@@ -5114,7 +5116,7 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
     }
 }
 
-function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '') {
+function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang=null) {
     global $smarty;
 
     if ($pageName == 'SandBox')
@@ -5138,8 +5140,8 @@ function update_page_version($pageName, $version, $edit_data, $edit_comment, $ed
     $info = $this->get_page_info($pageName);
 
     if ($version >= $info["version"]) {
-  $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?  where `pageName`=?";
-  $result = $this->query($query, array( $edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $pageName ) );
+  $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where `pageName`=?";
+  $result = $this->query($query, array( $edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $lang, $pageName ) );
   // Parse edit_data updating the list of links from this page
   $this->clear_links($pageName);
 
