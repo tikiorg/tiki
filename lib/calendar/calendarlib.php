@@ -114,7 +114,8 @@ class CalendarLib extends TikiLib {
 		$bindvars[] = (int)$tstart;
 
 		$query = "select i.`calitemId` as calitemId, i.`name` as name, i.`description` as description, i.`start` as start, i.`end` as end, ";
-		$query .= "i.`url` as url, i.`status` as status, i.`priority`  as priority, c.`name` as calname, i.`calendarId` as calendarId ";
+		$query .= "i.`url` as url, i.`status` as status, i.`priority`  as priority, c.`name` as calname, i.`calendarId` as calendarId, ";
+		$query .= "i.`locationID` as locationID, i.`categoryID` as categoryID ";
 		$query .= "from `tiki_calendar_items` as i left join `tiki_calendars` as c on i.`calendarId`=c.`calendarId` where ($cond) ";
 		$result = $this->query($query,$bindvars);
 		$ret = array();
@@ -134,6 +135,8 @@ class CalendarLib extends TikiLib {
 					$head = " ... " . tra("continued"). " ... ";
 				}
 
+				$resitem=$this->get_item($res["calitemId"]);
+				
 				$ret["$i"][] = array(
 					"result" => $res,
 					"calitemId" => $res["calitemId"],
@@ -142,6 +145,8 @@ class CalendarLib extends TikiLib {
 					"type" => $res["status"],
 					"web" => $res["url"],
 					"prio" => $res["priority"],
+					"location" => $resitem["locationName"],
+					"category" => $resitem["categoryName"],
 					"url" => "tiki-calendar.php?todate=$i&amp;editmode=1&amp;calitemId=" . $res["calitemId"],
 					"name" => $res["name"],
 					"extra" => "<div align='right'>... " . tra("click to edit"),
