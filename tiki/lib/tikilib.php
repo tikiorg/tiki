@@ -3569,7 +3569,7 @@ function parse_first(&$data, &$preparsed, &$noparsed) {
 		// the following str_replace line is to decode the &gt; char when html is turned off
 		// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
 		$decoded_param = str_replace('&gt;', '>', $param);
-		$parts = explode( '=>', $decoded_param );
+		$parts = split( '=>?', $decoded_param );
 
 		if (isset($parts[0]) && isset($parts[1])) {
 		    $name = trim($parts[0]);
