@@ -999,7 +999,6 @@ class TikiLib extends TikiDB {
 	    $val = 1 / count($ret);
 
 	    $pages[$page] = $val;
-	    // Fixed query.  -rlpowell
 	    $query = "update `tiki_pages` set `pageRank`=? where ".$this->convert_binary()." `pageName`= ?";
 	    $result = $this->query($query, array((int)$val, $page) );
 	}
@@ -1007,7 +1006,6 @@ class TikiLib extends TikiDB {
 	for ($i = 0; $i < $loops; $i++) {
 	    foreach ($pages as $pagename => $rank) {
 		// Get all the pages linking to this one
-		// Fixed query.  -rlpowell
 		$query = "select `fromPage`  from `tiki_links` where ".$this->convert_binary()." `toPage` = ?";
 		$result = $this->query($query, array( $pagename ) );
 		$sum = 0;
@@ -1016,7 +1014,6 @@ class TikiLib extends TikiDB {
 		    $linking = $res["fromPage"];
 
 		    if (isset($pages[$linking])) {
-			// Fixed query.  -rlpowell
 			$q2 = "select count(*) from `tiki_links` where ".$this->convert_binary()." `fromPage`= ?";
 			$cant = $this->getOne($q2, array($linking) );
 			if ($cant == 0) $cant = 1;
@@ -1026,7 +1023,6 @@ class TikiLib extends TikiDB {
 
 		$val = (1 - 0.85) + 0.85 * $sum;
 		$pages[$pagename] = $val;
-		// Fixed query.  -rlpowell
 		$query = "update `tiki_pages` set `pageRank`=? where ".$this->convert_binary()." `pageName`=?";
 		$result = $this->query($query, array((int)$val, $pagename) );
 
@@ -1972,7 +1968,6 @@ class TikiLib extends TikiDB {
 
 	/*shared*/
 	function get_topic_image($topicId) {
-	    // Fixed query. -rlpowell
 	    $query = "select `image_name` ,`image_size`,`image_type`, `image_data` from `tiki_topics` where `topicId`=?";
 	    $result = $this->query($query, array((int) $topicId));
 	    $res = $result->fetchRow();
@@ -2720,12 +2715,8 @@ class TikiLib extends TikiDB {
 	}
 
 	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '', $lang='') {
-	    global $smarty;
-	    global $dbTiki;
-	    global $sender_email;
-	    include_once ("lib/commentslib.php");
-
-	    $commentslib = new Comments($dbTiki);
+	    if ($this->page_exists($name))
+		return false;
 
 	    // Collect pages before modifying data
 	    $pages = $this->get_pages($data);
@@ -2741,9 +2732,6 @@ class TikiLib extends TikiDB {
 	    if (!isset($_SERVER["SERVER_NAME"])) {
 		$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 	    }
-
-	    if ($this->page_exists($name))
-		return false;
 
 	    if ($lang) {	// not sure it is necessary
 		$query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`lang`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -2777,14 +2765,6 @@ class TikiLib extends TikiDB {
 
 		//  Deal with mail notifications.
 		include_once('lib/notifications/notificationemaillib.php');
-		//This is put away: sender_email must be enough!
-		//  if( $this->get_preference('wiki_forum') ) {
-		//      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
-		//    if ($forums)
-		//      $fromEmail = $forums["data"][0]["outbound_from"];
-		//    else
-		//      $fromEmail = $sender_email;
-		//  }
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = httpPrefix(). dirname( $foo["path"] );
 		sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine);
@@ -4360,18 +4340,7 @@ class TikiLib extends TikiDB {
 	    $this->query($query, array(0,$page) );
 	}
 
-	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='') {
-	    global $smarty;
-
-	    global $dbTiki;
-	    global $feature_user_watches;
-	    global $wiki_watch_author;
-	    global $wiki_watch_comments;
-	    global $sender_email;
-	    include_once ("lib/commentslib.php");
-
-	    $commentslib = new Comments($dbTiki);
-
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $minor = false, $lang='') {
 	    $this->invalidate_cache($pageName);
 	    // Collect pages before modifying edit_data (see update of links below)
 	    $pages = $this->get_pages($edit_data);
@@ -4380,143 +4349,82 @@ class TikiLib extends TikiDB {
 		return false;
 
 	    $t = date("U");
-	    // Get this page information
-	    $info = $this->get_page_info($pageName);
-	    // Store the old version of this page in the history table
-	// Use largest version +1 in history table rather than tiki_page because versions used to be bugged
-	include_once ("lib/wiki/histlib.php");
-	//    $old_version = $info["version"];
-	$old_version = $histlib->get_page_latest_version($pageName) + 1;
-	    $lastModif = $info["lastModif"];
-	    $user = $info["user"];
-	    $ip = $info["ip"];
-	    $comment = $info["comment"];
-	    $data = $info["data"];
+	    
+	    // Use largest version +1 in history table rather than tiki_page because versions used to be bugged
+	    //    $old_version = $info["version"];
+	    include_once ("lib/wiki/histlib.php");
+	    $old_version = $histlib->get_page_latest_version($pageName);
+	   
+	    if (!$minor && $pageName != 'SandBox') {
+		// Archive current version
+		$info = $this->get_page_info($pageName);
+		$lastModif = $info["lastModif"];
+		$user = $info["user"];
+		$ip = $info["ip"];
+		$comment = $info["comment"];
+		$data = $info["data"];
+		$description = $info["description"];
+		$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
+		values(?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+	    }
 	    // WARNING: POTENTIAL BUG
 	    // The line below is not consistent with the rest of Tiki
 	    // (I commented it out so it can be further examined by CVS change control)
 	    //$pageName=addslashes($pageName);
 	    // But this should work (comment added by redflo):
-	$version = $old_version + 1;
+	    $version = $old_version + 1;
 
-	    if (!$minor) {
-		if ($pageName != 'SandBox') {
-		    $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
-			values(?,?,?,?,?,?,?,?)";
-# echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-		$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
-		/* the following doesn't work because tiki dies if the above query fails
-		if (!$result) {
-			$query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";
-			$result = $this->query($query2,array($pageName,(int) $version));
-			$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
-		}
-		*/
-	    }
-
-	    //  Deal with mail notifications.
-	    include_once('lib/notifications/notificationemaillib.php');
-	    //This is put away: sender_email must be enough!
-	    //  if( $this->get_preference('wiki_forum') ) {
-	    //      $forums = $commentslib->list_forums( 0, 1, 'name_asc', $this->get_preference('wiki_forum') );
-	    //    if ($forums)
-	    //      $fromEmail = $forums["data"][0]["outbound_from"];
-	    //    else
-	    //      $fromEmail = $sender_email;
-	    //  }
-	    $foo = parse_url($_SERVER["REQUEST_URI"]);
-	    $machine = httpPrefix(). dirname( $foo["path"] );
-	    sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
-
-		global $feature_score;
-	        if ($feature_score == 'y') {
-        	    $this->score_event($user, 'wiki_edit');
-	        }
-
-	}
-
-	if ($lang) {// not sure it is necessary
-		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? where ".$this->convert_binary()." `pageName`=?";
-		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$lang,$pageName));
-	} else {
-		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? where ".$this->convert_binary()." `pageName`=?";
-		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($data),$pageName));
+	    if ($lang) {// not sure it is necessary
+		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? 
+		where ".$this->convert_binary()." `pageName`=?";
+		$result = $this->query($query,array($edit_description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($edit_data),$lang,$pageName));
+	    } else {
+		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? 
+		where ".$this->convert_binary()." `pageName`=?";
+		$result = $this->query($query,array($edit_description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($edit_data),$pageName));
 	    }
 	    // Parse edit_data updating the list of links from this page
 	    $this->clear_links($pageName);
-
 	    // Pages collected above
 	    foreach ($pages as $page) {
 		$this->replace_link($pageName, $page);
 	    }
+	    
+	    if (!$minor) {
+		if ($pageName != 'SandBox') {
+			// Update the log
+			$action = "Updated"; //get_strings tra("Updated")
 
-	    // Update the log
-	    if ($pageName != 'SandBox' && !$minor) {
-		$action = "Updated"; //get_strings tra("Updated")
+			$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+			$result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));
 
-		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
-		$result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));
-		$maxversions = $this->get_preference("maxVersions", 0);
-
-		if ($maxversions) {
-		    // Select only versions older than keep_versions days
-		    $keep = $this->get_preference('keep_versions', 0);
-
-		    $now = date("U");
-		    $oktodel = $now - ($keep * 24 * 3600);
-		    $query = "select `pageName` ,`version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` desc";
-		    $result = $this->query($query,array($pageName,$oktodel),-1,$maxversions);
-		    $toelim = $result->numRows();
-
-		    while ($res = $result->fetchRow()) {
-			$page = $res["pageName"];
-
-			$version = $res["version"];
-			$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
-			$this->query($query,array($pageName,$version));
-		    }
+			$maxversions = $this->get_preference("maxVersions", 0);
+			if ($maxversions) {
+				// Delete outdated versions from history
+				$keep = $this->get_preference('keep_versions', 0);
+				$oktodel = $t - ($keep * 24 * 3600);
+				$query = "select `version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` desc";
+				$result = $this->query($query,array($pageName,$oktodel),-1,$maxversions);
+				$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
+				while ($res = $result->fetchRow()) {
+					$this->query($query,array($pageName,$res["version"]));
+				}
+			}
 		}
-	    }
-	}
-
-	function update_page_version($pageName, $version, $edit_data, $edit_comment, $edit_user, $edit_ip, $lastModif, $description = '', $lang='') {
-	    global $smarty;
-
-	    if ($pageName == 'SandBox')
-		return;
-
-	    // Collect pages before modifying edit_data
-	    $pages = $this->get_pages($edit_data);
-
-	    if (!$this->page_exists($pageName))
-		return false;
-
-	    $t = date("U");
-	    $query = "delete from `tiki_history` where `pageName`=? and `version`=?";
-	    $result = $this->query($query, array( $pageName,(int) $version) );
-	    $query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data,description) values(?,?,?, ?,?,?, ?,?)";
-	    $result = $this->query($query, array($pageName,(int)$version,(int)$lastModif, $edit_user,$edit_ip,$edit_comment, $edit_data,$description)
-		    );
-
-	    //print("version: $version<br />");
-	    // Get this page information
-	    $info = $this->get_page_info($pageName);
-
-	if ($version >= $info["version"]) {
-	    if ($lang) { // not sure it is necessary
-		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=?,`lang`=?  where ".$this->convert_binary()." `pageName`=?";
-		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $lang, $pageName));
-	    } else {
-		    $query = "update `tiki_pages` set `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `description`=?,`page_size`=? where ".$this->convert_binary()." `pageName`=?";
-		    $result = $this->query($query, array($edit_data, $edit_comment, (int) $t, (int) $version, $edit_user, $edit_ip, $description, (int) strlen($data), $pageName));
+		global $feature_user_watches;
+		if ($feature_user_watches == 'y') {
+			//  Deal with mail notifications.
+			include_once('lib/notifications/notificationemaillib.php');
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$machine = httpPrefix(). dirname( $foo["path"] );
+			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
 		}
-		// Parse edit_data updating the list of links from this page
-		$this->clear_links($pageName);
 
-		// Pages are collected at the top of the function before adding slashes
-		foreach ($pages as $page) {
-		    $this->replace_link($pageName, $page);
-		}
+		global $feature_score;
+		if ($feature_score == 'y') {
+			$this->score_event($user, 'wiki_edit');
+	        }
 	    }
 	}
 
