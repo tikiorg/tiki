@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.229 2004-05-31 22:55:58 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.230 2004-06-03 15:45:44 sylvieg Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -492,6 +492,8 @@ $wiki_cache = 0;
 $smarty->assign('wiki_cache', $wiki_cache);
 $feature_file_galleries = 'n';
 $feature_file_galleries_rankings = 'n';
+if (isset($_SESSION["language"]))
+	$saveLanguage = $_SESSION["language"]; // if register_globals is on variable and _SESSION are the same
 $language = 'en';
 $lang_use_db = 'n';
 
@@ -1291,8 +1293,8 @@ if ($feature_userPreferences == 'y') {
     }
     $smarty->assign('language', $language);
 }
-if ((!isset($user) || $user == "")  && isset($_SESSION['language']) ) { // users not logged that change the preference
-	$language = $_SESSION['language'];
+if (!(isset($user) && $user)  && isset($saveLanguage) ) { // users not logged that change the preference
+	$language = $saveLanguage;
 	$smarty->assign('language', $language);
 }
 
