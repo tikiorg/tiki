@@ -1,5 +1,12 @@
 <?php
 
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.28 2004-05-21 20:43:15 ggeller Exp $
+
+// Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
+//                          George G. Geller et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -511,6 +518,9 @@ class QuizLib extends TikiLib {
 		return true;
 	}
 
+// 	function quiz_fetch($_REQUEST["quizId"]);
+
+
 // Function for Quizzes end ////
 }
 
@@ -773,6 +783,7 @@ class Quiz {
 		$this->forumName = "";
 		$this->data = "";
 	}
+
   function show_html(){
     // dump as html text
 		$lines = array();
@@ -804,15 +815,19 @@ class Quiz {
 		$lines[] = "data = ".$this->data."<br />";
 		return $lines;
   }
+
   function getQuestion(){
     return $this->question;
   }
+
   function to_text(){
     // Export the question to an array of text lines.
   }
+
   function getAnswerCount(){
     // How many possible answers (i.e. choices in a multiple-choice)
   }
+
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.8 2004-05-20 12:29:34 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.9 2004-05-21 20:43:14 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -8,15 +8,6 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 /*
-
-  Must check for any students having accessed the quiz before
-	allowing changes.
-  
-  Status
-	N students have taken this quiz.
-	M quizzes have been machine graded
-	J quizzes have been graded by peer review
-	K quizzes have been graded by graders and teachers
 
 	(The expire date must be rigid.  That is, papers will not be accepted after the expire
 		date, even if the quiz was started before the expire date.  Otherwise, in cases where
@@ -42,7 +33,7 @@ if ($feature_quizzes != 'y') {
 	die;
 }
 
-// quizId of 0 is used as a default; There should not be a row in the db with an id of zero.
+// quizId of 0 is used as a place holder; There should NOT be a row in the db with an id of zero.
 if(!isset($_REQUEST["quizId"])){
 	$_REQUEST["quizId"] = 0;
 }
@@ -71,7 +62,7 @@ if ($userlib->object_has_one_permission($_REQUEST["quizId"], 'quiz')) {
 }
 
 if ($tiki_p_admin_quizzes != 'y') {
-	$smarty->assign('msg', tra("You don't have permission to use this feature"));
+	$smarty->assign('msg', tra("You don't have permission to edit quizzes."));
 
 	$smarty->display("error.tpl");
 	die;
@@ -85,11 +76,11 @@ $dc = &$tikilib->get_date_converter($user);
 
 if (isset($_REQUEST["preview"]) || isset($_REQUEST["xmlview"])|| isset($_REQUEST["textview"])) {
 	echo "line: ".__LINE__."<br>";
-	echo "Sorry, this is only a prototype at present.<br>";
+	echo "Sorry, preview, xmlview and textview are not supported in this version.<br>";
 
-	foreach ($_REQUEST as $key => $request){
-		echo $key." = ".$request."<br>";
-	}
+// 	foreach ($_REQUEST as $key => $request){
+// 		echo $key." = ".$request."<br>";
+// 	}
 	die;
 }
 
@@ -101,17 +92,7 @@ function	fetchYNOption(&$quiz, $_REQUEST, $option){
 	}
 }
 
-
-// When the quiz id is not indicated, create a new quiz
-if ($_REQUEST["quizId"] == 0) {
-	$quizNew = new Quiz;
-	echo "line ".__LINE__."<br>";
-	$lines = $quizNew->show_html();
-	foreach ($lines as $line){
-		echo $line;
-	}
-	die;
-} else if (isset($_REQUEST["save"])) {
+if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz-question');
 
 	$cat_href = "tiki-quiz.php?quizId=" . $cat_objid;
@@ -185,6 +166,7 @@ if ($_REQUEST["quizId"] == 0) {
 	$quiz['forumName'] = $_REQUEST['forumName'];
 	echo '$quiz["forumName"] = '.$quiz["forumName"]."<br>";
 
+
 	die;
 
 	// Have to parse the data and bail out if there is an error.
@@ -192,17 +174,27 @@ if ($_REQUEST["quizId"] == 0) {
 	// Store the new or revised information
 	// If everything works, preview the quiz.
 	// 
+} else if ($_REQUEST["quizId"] == 0) { // When the quiz id is not indicated, create a new quiz
+	$quizNew = new Quiz;
+	/*
+	echo "line ".__LINE__."<br>";
+	$lines = $quizNew->show_html();
+	foreach ($lines as $line){
+		echo $line;
+	}
 	die;
+	*/
+} else {
+	$quiz = $quizlib->get_quiz($_REQUEST["quizId"]);
+	echo "line ".__LINE__."<br>";
+	foreach ($quiz as $key => $val){
+		echo $key." = ".$val."<br>";
+	}
+	echo "publishDate = ".date("r",$quiz['publishDate'])."<br>";
+	echo "expireDate = ".date("r",$quiz['expireDate'])."<br>";
+	die;
+	$quizOld = $quizlib->quiz_fetch($_REQUEST["quizId"]);
 }
-
-// $quizOld = $quizlib->fetch_quiz($_REQUEST["quizId"]);
-$quiz = $quizlib->get_quiz($_REQUEST["quizId"]);
-echo "line ".__LINE__."<br>";
-foreach ($quiz as $key => $val){
-	echo $key." = ".$val."<br>";
-}
-echo date("r",$quiz['publishDate'])."<br>";
-die;
 
 $smarty->assign('quiz', $quiz);
 
