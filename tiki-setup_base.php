@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.54 2004-03-18 21:22:36 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.55 2004-03-25 21:02:45 chealer Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -191,22 +191,13 @@ if(!$cachelib->isCached("allperms")) {
 }
 $allperms = $allperms["data"];
 
-
+//Initializes permissions
 foreach ($allperms as $vperm) {
-    $perm = $vperm["permName"];
+	$perm = $vperm["permName"];
+	$$perm = 'n';
 
-    if ($user != 'admin' && (!$user || !$userlib->user_has_permission($user, 'tiki_p_admin'))) {
-        $$perm = 'n';
-
-        $smarty->assign("$perm", 'n');
-    } else {
-        $$perm = 'y';
-
-        $smarty->assign("$perm", 'y');
-    }
+	$smarty->assign("$perm", 'n');
 }
-
-unset($allperms);
 
 // Permissions
 // Get group permissions here
@@ -370,6 +361,18 @@ if ($tiki_p_admin_cms == 'y') {
         $$perm = 'y';
     }
 }
+
+//Gives admins all permissions
+if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_admin'))) {
+	foreach ($allperms as $vperm) {
+		$perm = $vperm["permName"];
+		$$perm = 'y';
+
+		$smarty->assign("$perm", 'y');
+	}
+}
+
+unset($allperms);
 
 $tikiIndex = $tikilib->get_preference("tikiIndex", 'tiki-index.php');
 
