@@ -49,9 +49,13 @@
 <td class="listfilesfilename{cycle advance=false}">
 {if $tiki_p_download_files eq 'y'}
 {$images[changes].filename|iconify}
-<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}">
 {/if}
+<a class="fgalname" href="tiki-download_file.php?fileId={$images[changes].fileId}">
+{if ($images[changes].name != "") }
+{$images[changes].name}
+{else}
 {$images[changes].filename}
+{/if}
 {if $tiki_p_download_files eq 'y'}
 </a>
 {/if}

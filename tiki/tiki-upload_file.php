@@ -147,9 +147,12 @@ if(isset($_REQUEST["upload"])) {
        $error_msg=tra("cannot process upload");
     }
   /*}*/
+  /* Commented by LeChucDaPirate on May 2, 2003
+     This field is not required anymore 
   if(empty($_REQUEST["name"])) {
     $error_msg=tra("You have to provide a name to the file");
   }
+  */
   if($error_msg) {
     $smarty->assign('msg',$error_msg);
     $smarty->display("styles/$style_base/error.tpl");
