@@ -201,6 +201,18 @@
   </div>
 {/if}
 
+{if $feature_trackers eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:hide('trkmenu');">[-]</a> 
+  <a href="tiki-list_trackers.php" class="separator">{tr}Trackers{/tr}</a>
+  <a class='separator' href="javascript:show('trkmenu');">[+]</a></div>
+  <div id='trkmenu'>
+  &nbsp;<a href="tiki-list_trackers.php" class="linkmenu">{tr}List Trackers{/tr}</a><br/>
+  {if $tiki_p_admin_trackers eq 'y'}
+  &nbsp;<a href="tiki-admin_trackers.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  {/if}
+  </div>
+{/if}
+
 
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or

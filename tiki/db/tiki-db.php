@@ -3,8 +3,8 @@
 require_once('DB.php');
 $host_tiki   = 'localhost';
 $user_tiki   = 'root';
-$pass_tiki   = '';
-$dbs_tiki    = 'tiki14b1';
+$pass_tiki   = 'seldon';
+$dbs_tiki    = 'tiki';
 
 /*
 CVS Developers: Do not change any of the above.

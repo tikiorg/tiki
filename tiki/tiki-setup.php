@@ -200,6 +200,23 @@ $w_use_dir = '';
 $feature_wiki_attachments = 'n';
 $feature_page_title = 'y';
 
+$t_use_db = 'y';
+$t_use_dir = '';
+$smarty->assign('t_use_db',$t_use_db);
+$smarty->assign('t_use_dir',$t_use_dir);
+$feature_trackers = 'n';
+$smarty->assign('feature_trackers',$feature_trackers);
+
+$feature_clear_passwords = 'y';
+$smarty->assign('feature_clear_passwords','n');
+$feature_challenge = 'n';
+$smarty->assign('feature_challenge','n');
+$min_pass_length=1;
+$smarty->assign('min_pass_length',$min_pass_length);
+$pass_chr_num='n';
+$smarty->assign('pass_chr_num',$pass_chr_num);
+$pass_due=999;
+$smarty->assign('pass_due',$pass_due);
 
 $smarty->assign('feature_page_title',$feature_page_title);
 $smarty->assign('w_use_db',$w_use_db);
@@ -398,7 +415,7 @@ $smarty->assign('allowRegister',$allowRegister);
 $smarty->assign('cachepages',$cachepages);
 $smarty->assign('cacheimages',$cacheimages);
 
-
+$smarty->assign('wiki_extras','n');
 
 $prefs = $tikilib->get_all_preferences();
 if(!file_exists('templates_c/preferences.php')) {
@@ -440,17 +457,6 @@ if($feature_userPreferences == 'y') {
 
 global $lang;
 include_once('lang/'.$language.'/language.php');
-function tra($content)
-{
-    global $lang;
-    if ($content) {
-      if(isset($lang[$content])) {
-        return $lang[$content];  
-      } else {
-        return $content;        
-      }
-    }
-}
 
 
 
@@ -461,6 +467,18 @@ $smarty->assign('user',$user);
 $smarty->assign('lock',false);
 $smarty->assign('title',$title);
 $smarty->assign('maxRecords',$maxRecords);
+
+// If we are processing a login then do not generate the challenge
+// if we are in any other case then yes.
+if(!strstr($_SERVER["REQUEST_URI"],'tiki-login')) {
+  if($feature_challenge == 'y') {
+    $chall=$userlib->generate_challenge();
+    $_SESSION["challenge"]=$chall;
+    $smarty->assign('challenge',$chall);
+  }  
+}
+
+
 include_once("tiki-modules.php");
 $smarty->assign('beingEdited','n');
 
@@ -559,6 +577,8 @@ if(isset($GLOBALS["HTTP_REFERER"])) {
   }
 }
 }
+
+
 
 
 // Stats

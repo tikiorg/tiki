@@ -7,7 +7,31 @@
       {tr}logged as{/tr}: {$smarty.session.user}<br/>
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a>
     {else}
-     <form action="tiki-login.php" method="post"> 
+     <form name="loginbox" action="tiki-login.php" method="post" {if $feature_challenge eq 'y'}onSubmit="doChallengeResponse()"{/if}> 
+     {if $feature_challenge eq 'y'}
+     <script language="javascript" src="lib/md5.js"></script>   
+     {literal}
+     <script language="javascript">
+     <!--
+     function doChallengeResponse() {
+       str = document.loginbox.user.value + 
+       MD5(document.loginbox.pass.value) +
+       document.loginbox.challenge.value;
+       document.loginbox.pass.value = MD5(str);
+       /*
+       document.login.password.value = "";
+       document.logintrue.username.value = document.login.username.value;
+       document.logintrue.response.value = MD5(str);
+       document.logintrue.submit();
+       */
+       document.loginbox.submit();
+       return false;
+     }
+     // -->
+    </script>
+    {/literal}
+     <input type="hidden" name="challenge" value="{$challenge}" />
+     {/if}
       <table border="0">
       <tr>
         <td>

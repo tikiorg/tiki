@@ -41,6 +41,22 @@ if(isset($_REQUEST["register"])) {
     die; 	
   }
   
+  //Validate password here
+  if(strlen($_REQUEST["pass"])<$min_pass_length) {
+    $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
+    $smarty->display('error.tpl');
+    die; 	
+  }
+  
+  // Check this code
+  if($pass_chr_num == 'y') {
+    if(!preg_match_all("[0-9]+",$_REQUEST["pass"],$foo) || !preg_match_all("[A-Za-z]+",$_REQUEST["pass"],$foo)) {
+      $smarty->assign('msg',tra("Password must contain both letters and numbers"));
+      $smarty->display('error.tpl');
+      die; 	
+    }
+  }
+  
   if(!preg_match_all("/[A-Z0-9a-z_-]+/",$_REQUEST["name"],$matches)) {
     $smarty->assign('msg',tra("Invalid username"));
     $smarty->display('error.tpl');

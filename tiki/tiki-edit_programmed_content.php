@@ -2,7 +2,6 @@
 // Initialization
 require_once('tiki-setup.php');
 
-
 if($feature_dynamic_content != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
@@ -19,6 +18,9 @@ if(!isset($_REQUEST["contentId"])) {
   $smarty->display('error.tpl');
   die;  
 }
+
+
+
 $smarty->assign('contentId',$_REQUEST["contentId"]);
 $smarty->assign('pId',0);
 $info = $tikilib->get_content($_REQUEST["contentId"]);
@@ -90,7 +92,9 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
+
 $listpages = $tikilib->list_programmed_content($_REQUEST["contentId"],$offset,$maxRecords,$sort_mode,$find);
+
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

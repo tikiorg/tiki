@@ -123,15 +123,42 @@ if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' &&
 }
 }
 
+//Now process the pages
+preg_match_all("/-=([^=]+)=-/",$info["data"],$reqs);
 $slides = split("-=[^=]+=-",$info["data"]);
-if(count($slides)>1) {
- $smarty->assign('show_slideshow','y');
+
+if(!isset($_REQUEST["slide"])) {
+  $_REQUEST["slide"]=0;
+}
+$smarty->assign('prev_slide',$_REQUEST["slide"]-1);
+$smarty->assign('next_slide',$_REQUEST["slide"]+1);
+
+$slide_title = $reqs[1][$_REQUEST["slide"]];
+$slide_data = $tikilib->parse_data($slides[$_REQUEST["slide"]+1]);
+
+if(isset($reqs[1][$_REQUEST["slide"]-1])) {
+  $slide_prev_title = $reqs[1][$_REQUEST["slide"]-1];
 } else {
- $smarty->assign('show_slideshow','n');
+  $slide_prev_title = '';
 }
 
-$pdata = $tikilib->parse_data($info["data"]);
-$smarty->assign_by_ref('parsed',$pdata);
+if(isset($reqs[1][$_REQUEST["slide"]+1])) {
+  $slide_next_title = $reqs[1][$_REQUEST["slide"]+1];
+} else {
+  $slide_next_title = '';
+}
+$smarty->assign('slide_prev_title',$slide_prev_title);
+$smarty->assign('slide_next_title',$slide_next_title);
+
+$smarty->assign('slide_title',$slide_title);
+$smarty->assign('slide_data',$slide_data);
+
+$total_slides = count($slides)-1;
+$current_slide = $_REQUEST["slide"]+1;
+$smarty->assign('total_slides',$total_slides);
+$smarty->assign('current_slide',$current_slide);
+
+
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif',$info["lastModif"]);
 if(empty($info["user"])) {
@@ -139,72 +166,12 @@ if(empty($info["user"])) {
 }
 $smarty->assign_by_ref('lastUser',$info["user"]);
 
-/*
-// force enable wiki comments (for development)
-$feature_wiki_comments = 'y';
-$smarty->assign('feature_wiki_comments','y');
-*/
-
-// Comments engine!
-if($feature_wiki_comments == 'y') {
-  $comments_per_page = $wiki_comments_per_page;
-  $comments_default_ordering = $wiki_comments_default_ordering;
-  $comments_vars=Array('page');
-  $comments_prefix_var='wiki page';
-  $comments_object_var='page';
-  include_once("comments.php");
-}
 
 $section='wiki';
 include_once('tiki-section_options.php');
 
 
 
-if($feature_wiki_attachments == 'y') {
-  if(isset($_REQUEST["removeattach"])) {
-    $owner = $tikilib->get_attachment_owner($_REQUEST["removeattach"]);
-    if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
-      $tikilib->remove_wiki_attachment($_REQUEST["removeattach"]);
-    }
-  }
-  if(isset($_REQUEST["attach"]) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
-    // Process an attachment here
-    if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-      $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
-      $data = '';
-      $fhash='';
-      if($w_use_db == 'n') {
-        $fhash = md5($name = $_FILES['userfile1']['name']);    
-        $fw = fopen($w_use_dir.$fhash,"w");
-        if(!$fw) {
-          $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
-          $smarty->display('error.tpl');
-          die;  
-        }
-      }
-      while(!feof($fp)) {
-        if($w_use_db == 'y') {
-          $data .= fread($fp,8192*16);
-        } else {
-          $data = fread($fp,8192*16);
-          fwrite($fw,$data);
-        }
-      }
-      fclose($fp);
-      if($w_use_db == 'n') {
-        fclose($fw);
-        $data='';
-      }
-      $size = $_FILES['userfile1']['size'];
-      $name = $_FILES['userfile1']['name'];
-      $type = $_FILES['userfile1']['type'];
-      $tikilib->wiki_attach_file($page,$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
-    }
-  }
-
-  $atts = $tikilib->list_wiki_attachments($page,0,-1,'created_desc','');
-  $smarty->assign('atts',$atts["data"]);
-}
 
 $smarty->assign('wiki_extras','y');
 
@@ -212,6 +179,6 @@ $smarty->assign('wiki_extras','y');
 $smarty->assign('dblclickedit','y');
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
-$smarty->display('tiki.tpl');
+$smarty->display('tiki-slideshow.tpl');
 
 ?>

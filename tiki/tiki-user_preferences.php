@@ -102,6 +102,9 @@ $smarty->assign_by_ref('user_pages',$user_pages);
 $smarty->assign_by_ref('user_blogs',$user_blogs);
 $smarty->assign_by_ref('user_galleries',$user_galleries);
 
+$user_items = $tikilib->get_user_items($userwatch);
+$smarty->assign_by_ref('user_items',$user_items);
+
 // Get user blogs
 
 
