@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.11 2004-04-28 23:42:31 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.12 2004-04-30 13:28:47 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,8 +12,6 @@ require_once('tiki-setup.php');
 include_once('lib/quizzes/quizlib.php');
 
 include_once('lib/homework/homeworklib.php');
-
-require_once('doc/devtools/ggg-trace.php');
 
 if ($feature_quizzes != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
@@ -113,21 +111,17 @@ if (isset($_REQUEST["import"])) {
 	for ($i = 0; $i < count($input_array); $i++)
 		$input_array[$i] = trim($input_array[$i]);
 
+	if ($input_array[count($input_array)] != "")
+		array_push($input_array,"");
+
 	$questions = TextToQuestions($input_array);
 
-	// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $_REQUEST["questionId"] = '.$_REQUEST["questionId"]);
-	// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $_REQUEST["quizId"] = '.$_REQUEST["quizId"]);
 	foreach ($questions as $question){
 		$question_text = $question->getQuestion();
-		// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $question_text = ');
-		// $ggg_tracer->outvar($question_text);
 		$id = $quizlib->replace_quiz_question(0, $question_text, 'o', $_REQUEST["quizId"], 0);
 		for ($i = 0; $i < $question->getChoiceCount(); $i++){
 			$a = $question->GetChoice($i);
-			// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $a = ');
-			// $ggg_tracer->outln("  ".$a);
 			$b = $question->GetCorrect($i);
-			// $ggg_tracer->outln(__FILE__." line ".__LINE__.': $p = '.$b);
 			$quizlib->replace_question_option(0, $a, $b, $id);
 		}
 	}
