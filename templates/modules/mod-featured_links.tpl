@@ -17,7 +17,7 @@
      {else}
       <tr>
        <td class="module">
-        <a class="linkmodule" {if $featuredLinks[ix].type eq 'n'}target='_blank'{/if} href="{$featuredLinks[ix].url|escape:"url"}">
+        <a class="linkmodule" {if $featuredLinks[ix].type eq 'n'}target='_blank'{/if} href="{$featuredLinks[ix].url}">
          {$featuredLinks[ix].title}
         </a>
        </td>
