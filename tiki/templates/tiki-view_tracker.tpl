@@ -37,7 +37,6 @@
 <table class="normal"><tr>
 {if $show_filters eq 'y'}
 <td class="formcolor" style="width:100%;"><input type="text" name="filtervalue" value="{$filtervalue}" /></td>
-<td><input type="submit" name="filter" value="{tr}filter{/tr}" /></td>
 <td>
 <select name="filterfield">
 {section name=ix loop=$fields}
@@ -58,6 +57,7 @@
 </select>
 </td>
 {/if}
+<td><input type="submit" name="filter" value="{tr}filter{/tr}" /></td>
 </tr></table>
 </form>
 {/if}
