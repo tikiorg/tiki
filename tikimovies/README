@@ -1,0 +1,9 @@
+Flash movies repository How To
+------------------------------
+$Header: /cvsroot/tikiwiki/tiki/tikimovies/README,v 1.1 2003-10-12 22:50:17 mose Exp $
+
+Add a swf movie in tikimovies/ directory, name it like you want it to be displayed on the select menu, eg. My_movie.swf
+Copy sample.xml tp My_movie.xml (the same name as the swf name) and edit that file, at least change the MovieURL to tikimovies/My_movie.swf
+Point your browser to /tiki-listmovies.php, it read the dir so you don't need any more declaration.
+
+mose@feu.org
