@@ -909,8 +909,14 @@ class ImageGalsLib extends TikiLib {
                         $bindvars=array($galleryId);
                 }
 
-                $query = "select * from `tiki_galleries` 
-                 where `parentgallery`=? $mid
+                $query = "select g.`galleryId`,g.`name`,g.`description`,
+	       		g.`created`,g.`lastModif`,g.`visible`,g.`theme`,g.`user`,
+       			g.`hits`,g.`maxRows`,g.`rowImages`,g.`thumbSizeX`,
+	 		g.`thumbSizeY`,g.`public`,g.`sortorder`,g.`sortdirection`,
+			g.`galleryimage`,g.`parentgallery`,count(i.`imageId`) numimages
+			from `tiki_galleries` g, `tiki_images` i
+			where i.`galleryId`=g.`galleryId` and
+                 	`parentgallery`=? $mid group by g.`galleryId`
                 order by ".$this->convert_sortmode($sort_mode);
                 $result = $this->query($query,$bindvars,$maxRecords,$offset);
                 $ret = array();
