@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.28 2003-08-21 23:11:48 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.29 2003-08-22 00:44:36 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -339,10 +339,10 @@ if ($feature_userPreferences == 'y') {
     $smarty->assign('style', $style);
     $smarty->assign('language', $language);
 }
-*/
 
 $stlstl = explode('.', $style);
 $style_base = $stlstl[0];
+*/
 
 // Fix IIS servers not setting what they should set (ay ay IIS, ay ay)
 if (!isset($_SERVER['QUERY_STRING']))
