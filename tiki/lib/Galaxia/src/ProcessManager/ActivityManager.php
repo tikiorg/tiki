@@ -589,6 +589,8 @@ class ActivityManager extends BaseManager {
   {
     $query = "update galaxia_activities set isInteractive='$value' where pId=$pId and activityId=$actid";
     $this->query($query);
+    // If template does not exist then create template
+    $this->compile_activity($pId,$actid);
   }
 
   /*!
@@ -651,6 +653,16 @@ class ActivityManager extends BaseManager {
 	fwrite($fw,$data);
 
 	//Copy the templates
+	
+	if($act_info['isInteractive']=='y' && !file_exists($template_file)) {
+	  $fw = fopen($template_file,'w');
+	  fwrite($fw,'{*Smarty template*}');
+	  fclose($fw);
+	}
+    if($act_info['isInteractive']!='y' && file_exists($template_file)) {
+      @unlink($template_file);
+	  @unlink("templates/".$proc_info['normalized_name']."/$actname.tpl");      
+	}
 	@copy($template_file,"templates/".$proc_info['normalized_name']."/$actname.tpl");
     
   }

@@ -1,5 +1,4 @@
 <?php
-
 //!! ProcessManager
 //! A class to maniplate processes.
 /*!
@@ -245,7 +244,7 @@ class ProcessManager extends BaseManager {
   		'isActive' => $data['isActive'],
   		'isValid' => $data['isValid']
   	);
-  	$pid = $this->replace_process(0,$vars);
+  	$pid = $this->replace_process(0,$vars,false);
 	//Put the shared code 
 	$proc_info = $this->get_process($pid);
 	$procname = $proc_info['normalized_name'];
@@ -264,6 +263,8 @@ class ProcessManager extends BaseManager {
   		'isAutoRouted' => $activity['isAutoRouted']
    	  );	  
    	  $actname=$am->_normalize_name($activity['name']);
+      
+      $actid = $am->replace_activity($pid,0,$vars);
       $fp = fopen("lib/Galaxia/processes/$procname/code/activities/$actname".'.php',"w");
       fwrite($fp,$activity['code']);
       fclose($fp);
@@ -272,21 +273,25 @@ class ProcessManager extends BaseManager {
       	fwrite($fp,$activity['template']);
       	fclose($fp);
       }
-      $actid = $am->replace_activity($pid,0,$vars);
       $actids[$activity['name']] = $am->_get_activity_id_by_name($pid,$activity['name']);
 	  $actname = $am->_normalize_name($activity['name']);
 	  $now = date("U");
+
   	  foreach($activity['roles'] as $role) {
+
 	    $vars = Array(
   		'name' => $role,
   		'description' => $role,
   		'lastModif' => $now,
-   	  	);	  
-  	  	if(!$rm->role_name_exists($role['name'])) {
+   	  	);
+  	  	if(!$rm->role_name_exists($pid,$role)) {
    	  	  $rid=$rm->replace_role($pid,0,$vars);
+   	  	} else {
+   	  	  $rid = $rm->get_role_id($pid,$role);
    	  	}
-   	  	$am->add_activity_role($actid,$rid);
-		
+   	  	if($actid && $rid) {
+   	  	  $am->add_activity_role($actid,$rid);
+   	  	}
   	  }
   	}
   	foreach($data['transitions'] as $tran) {
@@ -294,7 +299,7 @@ class ProcessManager extends BaseManager {
   	}
   	unset($am);
   	unset($rm);
-  	$msg = sprintf(tra('Process %s %s imported'),$vars['name'],$vars['version']);
+  	$msg = sprintf(tra('Process %s %s imported'),$proc_info['name'],$proc_info['version']);
   	$this->notify_all(2,$msg);
   }
   
@@ -448,7 +453,7 @@ class ProcessManager extends BaseManager {
 	array containing the fields to update or to insert as needed.
 	$pId is the processId
   */
-  function replace_process($pId, $vars)
+  function replace_process($pId, $vars, $create = true)
   {
     $TABLE_NAME = 'galaxia_processes';
     $now = date("U");
@@ -503,24 +508,27 @@ class ProcessManager extends BaseManager {
       $this->query($query);
       $pId = $this->getOne("select max(pId) from $TABLE_NAME where lastModif=$now"); 
       // Now automatically add a start and end activity 
-      $aM= new ActivityManager($this->db);
-      $vars1 = Array(
-      	'name' => 'start',
-      	'description' => 'default start activity',
-      	'type' => 'start',
-      	'isInteractive' => 'y',
-      	'isAutoRouted' => 'y'
-      );
-      $vars2 = Array(
-      	'name' => 'end',
-      	'description' => 'default end activity',
-      	'type' => 'end',
-      	'isInteractive' => 'n',
-      	'isAutoRouted' => 'y'
-      );
-
-      $aM->replace_activity($pId,0,$vars1);
-      $aM->replace_activity($pId,0,$vars2);
+      // unless importing ($create = false)
+      if($create) {
+	      $aM= new ActivityManager($this->db);
+	      $vars1 = Array(
+	      	'name' => 'start',
+	      	'description' => 'default start activity',
+	      	'type' => 'start',
+	      	'isInteractive' => 'y',
+	      	'isAutoRouted' => 'y'
+	      );
+	      $vars2 = Array(
+	      	'name' => 'end',
+	      	'description' => 'default end activity',
+	      	'type' => 'end',
+	      	'isInteractive' => 'n',
+	      	'isAutoRouted' => 'y'
+	      );
+	
+	      $aM->replace_activity($pId,0,$vars1);
+	      $aM->replace_activity($pId,0,$vars2);
+      }
 	  $msg = sprintf(tra('Process %s has been created'),$vars['name']);     
 	  $this->notify_all(4,$msg);
     }
@@ -592,7 +600,8 @@ class ProcessManager extends BaseManager {
    */
    function _remove_directory($dir,$rec=false)
    {
-
+     // Prevent a disaster
+	 if(trim($dir) == '/'|| trim($dir)=='.' || trim($dir)=='templates' || trim($dir)=='templates/') return false;
      $h = opendir($dir);
      while(($file = readdir($h)) !== false) {
        if(is_file($dir.'/'.$file)) {

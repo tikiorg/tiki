@@ -159,7 +159,7 @@ class BaseActivity extends Base {
   /*! Returns if the activity is interactive */
   function isInteractive()
   {
-    return $this->isInteractive;
+    return $this->isInteractive == 'y';
   }
   
   /*! Sets if the activity is auto-routed */
@@ -171,7 +171,7 @@ class BaseActivity extends Base {
   /*! Gets if the activity is auto routed */
   function isAutoRouted()
   {
-    return $this->isAutoRouted;
+    return $this->isAutoRouted == 'y';
   }
 
   /*! Sets the processId for this activity */

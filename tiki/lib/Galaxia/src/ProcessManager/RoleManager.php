@@ -28,6 +28,12 @@ class RoleManager extends BaseManager {
     $this->db = $db;  
   }
   
+  function get_role_id($pid,$name)
+  {
+    $name = addslashes($name);
+    return ($this->getOne("select roleId from galaxia_roles where name='$name' and pId=$pid"));
+  }
+  
   /*!
     Gets a role fields are returned as an asociative array
   */
@@ -42,10 +48,10 @@ class RoleManager extends BaseManager {
   /*!
     Indicates if a role exists
   */
-  function role_name_exists($name)
+  function role_name_exists($pid,$name)
   {
   	$name = addslashes($name);
-    return ($this->getOne("select count(*) from galaxia_roles where name='$name'"));
+    return ($this->getOne("select count(*) from galaxia_roles where pId=$pid and name='$name'"));
   }
   
   /*!

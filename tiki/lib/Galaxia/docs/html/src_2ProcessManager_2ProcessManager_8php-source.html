@@ -28,7 +28,7 @@
 00035   {
 00036         $query = <span class="stringliteral">"update galaxia_processes set isActive='y' where pId=$pId"</span>;
 00037     $this-&gt;query($query);  
-00038     $msg = sprintf(tra('Process %d has been activated'),$pId);
+00038     $msg = sprintf(tra('<a class="code" href="classProcess.html">Process</a> %d has been activated'),$pId);
 00039     $this-&gt;<a class="code" href="classObservable.html#b0">notify_all</a>(3,$msg);
 00040   }
 00041   
@@ -36,7 +36,7 @@
 00046   {
 00047     $query = <span class="stringliteral">"update galaxia_processes set isActive='n' where pId=$pId"</span>;
 00048     $this-&gt;query($query);  
-00049     $msg = sprintf(tra('Process %d has been deactivated'),$pId);
+00049     $msg = sprintf(tra('<a class="code" href="classProcess.html">Process</a> %d has been deactivated'),$pId);
 00050     $this-&gt;<a class="code" href="classObservable.html#b0">notify_all</a>(3,$msg);
 00051   }
 00052   
@@ -272,7 +272,7 @@
 00294         }
 00295         unset($am);
 00296         unset($rm);
-00297         $msg = sprintf(tra('Process %s %s imported'),$vars['name'],$vars['version']);
+00297         $msg = sprintf(tra('<a class="code" href="classProcess.html">Process</a> %s %s imported'),$vars['name'],$vars['version']);
 00298         $this-&gt;<a class="code" href="classObservable.html#b0">notify_all</a>(2,$msg);
 00299   }
 00300   
@@ -391,7 +391,7 @@
 00437         <span class="comment">// And finally remove the proc</span>
 00438     $query = <span class="stringliteral">"delete from galaxia_processes where pId=$pId"</span>;
 00439     $this-&gt;query($query);
-00440     $msg = sprintf(tra('Process %s removed'),$name);
+00440     $msg = sprintf(tra('<a class="code" href="classProcess.html">Process</a> %s removed'),$name);
 00441         $this-&gt;<a class="code" href="classObservable.html#b0">notify_all</a>(5,$msg);
 00442     
 00443     <span class="keywordflow">return</span> <span class="keyword">true</span>;
@@ -426,7 +426,7 @@
 00477       $oldname = $old_proc['normalized_name'];
 00478       $newname = $vars['normalized_name'];
 00479       rename(<span class="stringliteral">"lib/Galaxia/processes/$oldname"</span>,<span class="stringliteral">"lib/Galaxia/processes/$newname"</span>);
-00480       $msg = sprintf(tra('Process %s has been updated'),$vars['name']);     
+00480       $msg = sprintf(tra('<a class="code" href="classProcess.html">Process</a> %s has been updated'),$vars['name']);     
 00481       $this-&gt;<a class="code" href="classObservable.html#b0">notify_all</a>(3,$msg);
 00482     } <span class="keywordflow">else</span> {
 00483       unset($vars['pId']);
@@ -470,7 +470,7 @@
 00521 
 00522       $aM-&gt;replace_activity($pId,0,$vars1);
 00523       $aM-&gt;replace_activity($pId,0,$vars2);
-00524           $msg = sprintf(tra('Process %s has been created'),$vars['name']);     
+00524           $msg = sprintf(tra('<a class="code" href="classProcess.html">Process</a> %s has been created'),$vars['name']);     
 00525           $this-&gt;<a class="code" href="classObservable.html#b0">notify_all</a>(4,$msg);
 00526     }
 00527     <span class="comment">// Get the id</span>
@@ -591,7 +591,7 @@
 00662 
 00663 
 00664 ?&gt;
-</pre></div><hr><address style="align: right;"><small>Generated on Mon Apr 21 11:15:31 2003 for Galaxia by
+</pre></div><hr><address style="align: right;"><small>Generated on Fri Apr 25 16:07:09 2003 for Galaxia by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.3-rc3 </small></address>

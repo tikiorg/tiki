@@ -11,10 +11,12 @@ if($feature_workflow != 'y') {
   die;  
 }
 
+if(!isset($_REQUEST['auto'])) {
 if($tiki_p_use_workflow != 'y') {
   $smarty->assign('msg',tra("Permission denied"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
+}
 }
 
 
@@ -89,16 +91,14 @@ $__comments = $instance->get_instance_comments();
 
 // This goes to the end part of all activities
 // If this activity is interactive then we have to display the template
-if($__activity_completed ) {
-
+if(!isset($_REQUEST['auto']) && $__activity_completed && $activity->isInteractive()) {
 	$smarty->assign('procname',$process->getName());
 	$smarty->assign('procversion',$process->getVersion());
 	$smarty->assign('actname',$activity->getName());
 	$smarty->assign('mid','tiki-g-activity_completed.tpl');
 	$smarty->display("styles/$style_base/tiki.tpl");
-	
 } else {
-	if($activity->isInteractive) {
+	if(!isset($_REQUEST['auto']) && $activity->isInteractive()) {
 		$section='workflow';
 		include_once('tiki-section_options.php');
 	 	$template = $activity->getNormalizedName().'.tpl';
@@ -106,5 +106,4 @@ if($__activity_completed ) {
 		$smarty->display("styles/$style_base/tiki.tpl");
 	}
 }
-
 ?>
