@@ -3,9 +3,18 @@
   // This lib uses pear so the constructor requieres
   // a pear DB object
 
+// some definitions for helping with authentication
+define("USER_VALID",          2);
+define("SERVER_ERROR",       -1);
+define("PASSWORD_INCORRECT", -3);
+define("USER_NOT_FOUND",     -5);
+define("ACCOUNT_DISABLED",   -6);
+
 class UsersLib extends TikiLib {
  # var $db;  // The PEAR db object used to access the database
-  
+
+  // change this to an email address to receive debug emails from the LDAP code
+  var $debug = false;
   var $usergroups_cache;
   var $groupperm_cache;
 
@@ -125,63 +134,318 @@ class UsersLib extends TikiLib {
   {
     return $this->db->getOne("select count(*) from users_users where binary login = '$user' and hash='$hash'");
   }
-  
+
   function validate_user($user,$pass,$challenge,$response)
   {
+    global $tikilib;
+
+    // these will help us keep tabs of what is going on
+    $userTiki = false;
+    $userTikiPresent = false;
+    $userAuth = false;
+    $userAuthPresent = false;
+
+    // see if we are to use PEAR::Auth
+    $auth_pear   = ($tikilib->get_preference("auth_method",           "tiki") == "auth");
+    $create_tiki = ($tikilib->get_preference("auth_create_user_tiki", "n")    == "y");
+    $create_auth = ($tikilib->get_preference("auth_create_user_auth", "n")    == "y");
+    $skip_admin  = ($tikilib->get_preference("auth_skip_admin",       "n")    == "y");
+
+    // first attempt a login via the standard Tiki system
+    $result = $this->validate_user_tiki($user, $pass, $challenge, $response);
+    switch($result)
+    {
+      case USER_VALID:
+        $userTiki        = true;
+        $userTikiPresent = true;
+        break;
+      case PASSWORD_INCORRECT:
+        $userTikiPresent = true;
+        break;
+    }
+
+    if($this->debug != false)
+      mail($this->debug, "tiki result", $result);
+    // if we aren't using LDAP this will be quick
+    if(!$auth_pear ||
+       ($auth_pear && $user == "admin" && $skip_admin) )
+    {
+      // if the user verified ok, log them in
+      if($userTiki)
+        return $this->update_lastlogin($user);
+      // if the user password was incorrect but the account was there, give an error
+      elseif($userTikiPresent)
+        return false;
+      // if the user was not found, give an error
+      // this could be for future uses
+      else
+        return false;
+    }
+
+    // next see if we need to check LDAP
+    else
+    {
+      // check the user account
+      $result = $this->validate_user_auth($user, $pass);
+      if($this->debug != false)
+        mail($this->debug,"result", $result);
+      switch($result)
+      {
+        case USER_VALID:
+          $userAuth        = true;
+          $userAuthPresent = true;
+          break;
+        case PASSWORD_INCORRECT:
+          $userAuthPresent = true;
+          break;
+      }
+
+      $msg = "userAuth: $userAuth\n"
+            ."userAuthPresent: $userAuthPresent\n"
+            ."userTiki: $userTiki\n"
+            ."UserTikiPresent: $userTikiPresent\n";
+      if($this->debug != false)
+        mail($this->debug, "status", $msg);
+
+      // start off easy
+      // if the user verified in Tiki and Auth, log in
+      if($userAuth && $userTiki)
+      {
+        if($this->debug != false)
+          mail($this->debug, "exit 1", "");
+        return $this->update_lastlogin($user);
+      }
+      // if the user wasn't found in either system, just fail
+      elseif(!$userTikiPresent && $userAuthPresent)
+      {
+        if($this->debug != false)
+          mail($this->debug, "exit 2", "");
+        return false;
+      }
+      // if the user was logged into Tiki but not found in Auth
+      elseif($userTiki && !$userAuthPresent)
+      {
+        // see if we can create a new account
+        if($create_auth)
+        {
+          // need to make this better! *********************************************************
+          $result = $this->create_user_auth($user, $pass);
+          if($this->debug != false)
+            mail($this->debug, "exit 3", $result);
+          // if it worked ok, just log in
+          if($result == USER_VALID)
+            // before we log in, update the login counter
+            return $this->update_lastlogin($user);
+          // if the server didn't work, do something!
+          elseif($result == SERVER_ERROR)
+          {
+            // check the notification status for this type of error
+            return false;
+          }
+          // otherwise don't log in.
+          else
+            return false;
+        }
+        // otherwise
+        else
+          // just say no!
+          return false;
+      }
+
+      // if the user was logged into Auth but not found in Tiki
+      elseif($userAuth && !$userTikiPresent)
+      {
+        if($this->debug != false)
+          mail($this->debug, "ok", "4");
+        // see if we can create a new account
+        if($create_tiki)
+        {
+          // need to make this better! *********************************************************
+          $result = $this->create_user_tiki($user, $pass);
+          // if it worked ok, just log in
+          if($result == USER_VALID)
+            // before we log in, update the login counter
+            return $this->update_lastlogin($user);
+          // if the server didn't work, do something!
+          elseif($result == SERVER_ERROR)
+          {
+            // check the notification status for this type of error
+            return false;
+          }
+          // otherwise don't log in.
+          else
+            return false;
+        }
+        // otherwise
+        else
+          // just say no!
+          return false;
+      }
+      elseif($this->debug != false)
+        mail($this->debug, "ok", "5");
+    }
+
+    // we will never get here
+    if($this->debug != false)
+      mail($this->debug, "ok", "6");
+    return false;
+  }
+
+  // validate the user in the PEAR::Auth system
+  function validate_user_auth($user,$pass)
+  {
+    global $tikilib;
+    include_once("Auth/Auth.php");
+
+    // just make sure we're supposed to be here
+    if($tikilib->get_preference("auth_method", "tiki") != "auth")
+      return false;
+
+    // get all of the LDAP options from the database
+    $options["host"]       =  $tikilib->get_preference("auth_ldap_host", "localhost");
+    $options["port"]       =  $tikilib->get_preference("auth_ldap_port", "389");
+    $options["scope"]      =  $tikilib->get_preference("auth_ldap_scope", "sub");
+    $options["basedn"]     =  $tikilib->get_preference("auth_ldap_basedn", "");
+    $options["userdn"]     =  $tikilib->get_preference("auth_ldap_userdn", "");
+    $options["userattr"]   =  $tikilib->get_preference("auth_ldap_userattr", "uid");
+    $options["useroc"]     =  $tikilib->get_preference("auth_ldap_useroc", "posixAccount");
+    $options["groupdn"]    =  $tikilib->get_preference("auth_ldap_groupdn", "");
+    $options["groupattr"]  =  $tikilib->get_preference("auth_ldap_groupattr", "cn");
+    $options["groupoc"]    =  $tikilib->get_preference("auth_ldap_groupoc", "grouOfUniqueNames");
+    $options["memberattr"] =  $tikilib->get_preference("auth_ldap_memberattr", "uniqueMember");
+    $options["memberisdn"] = ($tikilib->get_preference("auth_ldap_memberisdn", "y") == "y");
+
+    // set the Auth options
+    $a = new Auth( "LDAP", $options, "", false, $user, $pass );
+    // turn off the error message
+    $a->setShowLogin( false );
+    $a->start();
+    $status = "";
+
+    // check if the login correct
+    if ($a->getAuth())
+      $status = USER_VALID;
+
+    // otherwise use the error status given back
+    else
+      $status = $a->getStatus();
+
+    if($this->debug != false)
+    {
+      $msg = "Status: ".$status."\n";
+      foreach($options as $key=>$val)
+        $msg .= "$key = $val\n";
+      mail($this->debug, "testing auth", $msg);
+    }
+
+    return $status;
+  }
+
+  // validate the user in the Tiki database
+  function validate_user_tiki($user,$pass,$challenge,$response)
+  {
+    // If the user is loggin in the the lastLogin should be the last currentLogin?
+
     global $feature_challenge;
     $user=addslashes($user);
     $hash=md5($pass);
-    // If the user is loggin in the the lastLogin should be the last currentLogin?
-    
+
+    // first verify that the user exists
+    $query = "select login from users_users where binary login = '$user' and hash='$hash'";
+    $result = $this->query($query);
+    if(!$result->numRows())
+        return USER_NOT_FOUND;
+
+    // next verify the password
     if($feature_challenge=='n' || empty($response)) {
-      $query = "select login from users_users where binary login = '$user' and hash='$hash'"; 
+      $query = "select login from users_users where binary login = '$user' and hash='$hash'";
       $result = $this->query($query);
       if($result->numRows()) {
-        $t = date("U");
-        // Check
-        $current = $this->getOne("select currentLogin from users_users where login='$user'");
-        if (is_null($current)) {
-	    // First time
-	    $current = $t;
-	}
-	$query = "update users_users set lastLogin=$current where login='$user'";
-        $result = $this->query($query);
-        // check
-        
-        $query = "update users_users set currentLogin=$t where login='$user'";
-        $result = $this->query($query);
-        return true; 
+        return USER_VALID;
       }
     } else {
       // Use challenge-reponse method
       // Compare pass against md5(user,challenge,hash)
       $hash = $this->getOne("select hash from users_users where binary login='$user'");
-      
+
       if(!isset($_SESSION["challenge"])) return false;
       //print("pass: $pass user: $user hash: $hash <br/>");
       //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br/>");
       //print("response : $response<br/>");
       if($response == md5($user.$hash.$_SESSION["challenge"])) {
-        $t = date("U");
-        // Check
-        $current = $this->getOne("select currentLogin from users_users where login='$user'");
-        if (is_null($current)) {
-	    // First time
-	    $current = $t;
-	}
-	$query = "update users_users set lastLogin=$current where login='$user'";
-        $result = $this->query($query);
-        // check
-        $query = "update users_users set currentLogin=$t where login='$user'";
-        $result = $this->query($query);
-        return true;
-      } else {
-        return false;      
+        return USER_VALID;
       }
     }
-    return false;
+
+    return PASSWORD_INCORRECT;
   }
-  
+
+  // update the lastlogin status on this user
+  function update_lastlogin($user)
+  {
+    $t = date("U");
+    // Check
+    $current = $this->getOne("select currentLogin from users_users where login='$user'");
+    if (is_null($current)) {
+      // First time
+      $current = $t;
+    }
+    $query = "update users_users set lastLogin=$current where login='$user'";
+    $result = $this->query($query);
+    // check
+    $query = "update users_users set currentLogin=$t where login='$user'";
+    $result = $this->query($query);
+    return true;
+  }
+
+  // create a new user in the Auth directory
+  function create_user_auth($user, $pass)
+  {
+    global $tikilib;
+    $options = array();
+    $options["host"]       =  $tikilib->get_preference("auth_ldap_host", "localhost");
+    $options["port"]       =  $tikilib->get_preference("auth_ldap_port", "389");
+    $options["scope"]      =  $tikilib->get_preference("auth_ldap_scope", "sub");
+    $options["basedn"]     =  $tikilib->get_preference("auth_ldap_basedn", "");
+    $options["userdn"]     =  $tikilib->get_preference("auth_ldap_userdn", "");
+    $options["userattr"]   =  $tikilib->get_preference("auth_ldap_userattr", "uid");
+    $options["useroc"]     =  $tikilib->get_preference("auth_ldap_useroc", "posixAccount");
+    $options["groupdn"]    =  $tikilib->get_preference("auth_ldap_groupdn", "");
+    $options["groupattr"]  =  $tikilib->get_preference("auth_ldap_groupattr", "cn");
+    $options["groupoc"]    =  $tikilib->get_preference("auth_ldap_groupoc", "groupOfUniqueNames");
+    $options["memberattr"] =  $tikilib->get_preference("auth_ldap_memberattr", "uniqueMember");
+    $options["memberisdn"] = ($tikilib->get_preference("auth_ldap_memberisdn", "y") == "y");
+    $options["adminuser"]  =  $tikilib->get_preference("auth_ldap_adminuser", "");
+    $options["adminpass"]  =  $tikilib->get_preference("auth_ldap_adminpass", "");
+
+    // set additional attributes here
+    $userattr = array();
+    $userattr["email"] = $this->getOne("select `email` from `users_users` where `login`='$user'");
+
+    // set the Auth options
+    $a = new Auth( "LDAP", $options );
+    
+    // check if the login correct
+    if( $a->addUser($user, $pass, $userattr) === true )
+      $status = USER_VALID;
+
+    // otherwise use the error status given back
+    else
+      $status = $a->getStatus();
+
+    // if we're in debug mode, send an email
+    if($this->debug)
+    {
+      $msg = "Status: ".$status."\n";
+      foreach($options as $key=>$val)
+        $msg .= "$key = $val\n";
+      if($this->debug != false)
+        mail($this->debug, "create_user_auth", $msg);
+    }
+
+    return $status;
+  }
+
   function get_users($offset = 0,$maxRecords = -1,$sort_mode = 'login_desc', $find='')
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
