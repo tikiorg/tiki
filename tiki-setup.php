@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.154 2003-11-04 10:03:01 caustin_ats Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.155 2003-11-06 15:59:42 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1679,6 +1679,15 @@ if ((strpos($_SERVER['REQUEST_URI'], 'tiki-integrator.php') != 0) && isset($_REQ
 {
     $integrator_css_file = $integrator->get_rep_css($integrator->get_repository($_REQUEST['repID']));
     $smarty->assign('integrator_css_file', $integrator_css_file);
+}
+
+/*
+ * Register the search refresh function
+ */
+
+if ($feature_search) {
+  include_once("lib/search/refresh.php");
+  register_shutdown_function("refresh_search_index");
 }
 
 ?>
