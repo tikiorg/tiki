@@ -9,6 +9,7 @@ if(($tiki_p_admin_drawings != 'y') && ($tiki_p_edit_drawings != 'y')) {
 if(isset($_REQUEST["close"])) {
   print("<script>window.opener.location.reload();</script>");
   print("<script>window.close();</script>");
+  die;
 }
 ?>
 <?
