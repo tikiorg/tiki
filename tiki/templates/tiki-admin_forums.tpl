@@ -156,8 +156,12 @@
 	<td class="formcolor"><input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if} /></td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Forward messages to this forum to this email{/tr}</td>
-	<td class="formcolor"><input type="text" name="outbound_address" value="{$outbound_address|escape}" /></td>
+	<td class="formcolor">{tr}Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address{/tr}</td>
+	<td class="formcolor"><input type="text" name="outbound_address" size=30 value="{$outbound_address|escape}" /></td>
+</tr>
+<tr>
+	<td class="formcolor">{tr}Originating e-mail address for mails from this forum{/tr}</td>
+	<td class="formcolor"><input type="text" name="outbound_from" size=30 value="{$outbound_from|escape}" /></td>
 </tr>
 <tr>
 	<td class="formcolor">{tr}Add messages from this email to the forum{/tr}</td>
