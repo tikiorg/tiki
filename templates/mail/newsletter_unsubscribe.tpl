@@ -1,0 +1,1 @@
+{tr}You can unsubscribe from this newsletter following this link{/tr}

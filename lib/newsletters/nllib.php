@@ -1,6 +1,5 @@
 <?php
-include_once ('lib/webmail/htmlMimeMail.php');
-include_once('lib/webmail/encodestring.php');
+include_once ('lib/webmail/tikimaillib.php');
 class NlLib extends TikiLib {
 	function NlLib($db) {
 		parent::TikiLib($db);
@@ -69,12 +68,9 @@ class NlLib extends TikiLib {
 			$smarty->assign('url_subscribe', $url_subscribe);
 			$smarty->assign('server_name', $_SERVER["SERVER_NAME"]);
 			$mail_data = $smarty->fetch('mail/confirm_newsletter_subscription.tpl');
-			$mail = new htmlMimeMail();
-			$mail->setFrom($sender_email);
-			$mail->setSubject(encodeString(tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"], $charset));
-			$mail->setHeadCharset($charset);
-			$mail->setText(encodeString($mail_data, $charset));
-			$mail->setTextCharset($charset);
+			$mail = new TikiMail($user);
+			$mail->setSubject(tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"]);
+			$mail->setText($mail_data);
 			if (!$mail->send(array($email)))
 				return false;
 		} else {
@@ -110,16 +106,12 @@ class NlLib extends TikiLib {
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('code', $res["code"]);
 		$smarty->assign('url_subscribe', $url_subscribe);
-		$mail = new htmlMimeMail();
+		$mail = new TikiMail($user);
 		$lg = !$user? "": $this->get_user_preference($user, "language", $language);
-		$charset = !$user ? "utf-8": $this->get_user_preference($user, "mailCharset", "utf-8");
-		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome_subject.tpl'); echo 
-		$mail->setSubject(encodeString(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]), $charset));
+		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome_subject.tpl');
+		$mail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_welcome.tpl');
-		$mail->setFrom($sender_email);
-		$mail->setHeadCharset($charset);
-		$mail->setText(encodeString($mail_data, $charset));
-		$mail->setTextCharset($charset);
+		$mail->setText($mail_data);
 		if (!$mail->send(array($res["email"])))
 				return false;
 		return $this->get_newsletter($res["nlId"]);
@@ -149,15 +141,11 @@ class NlLib extends TikiLib {
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('url_subscribe', $url_subscribe);
 		$lg = !$user? "": $this->get_user_preference($user, "language", $language);
-		$charset = !$user ? "utf-8": $this->get_user_preference($user, "mailCharset", "utf-8");
-		$mail = new htmlMimeMail();
+		$mail = new TikiMail();
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye_subject.tpl');
-		$mail->setSubject(encodeString(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]), $charset));
+		$mail->setSubject(sprintf($mail_data, $info["name"], $_SERVER["SERVER_NAME"]));
 		$mail_data = $smarty->fetchLang($lg, 'mail/newsletter_byebye.tpl');
-		$mail->setFrom($sender_email);
-		$mail->setHeadCharset($charset);
-		$mail->setText(encodeString($mail_data, $charset));
-		$mail->setTextCharset($charset);
+		$mail->setText($mail_data);
 		$mail->send(array($res["email"]));
 
 		$this->update_users($res["nlId"]);
@@ -298,14 +286,16 @@ class NlLib extends TikiLib {
 		return $retval;
 	}
 
-	function get_unsub_msg($nlId, $email) {
+	function get_unsub_msg($nlId, $email, $lang) {
+		global $smarty;
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 
 		$foo = str_replace('send_newsletters', 'newsletters', $foo);
 		$url_subscribe = httpPrefix(). $foo["path"];
 		$code = $this->getOne("select `code` from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=?",array((int)$nlId,$email));
 		$url_unsub = $url_subscribe . '?unsubscribe=' . $code;
-		$msg = '<br/><br/>' . tra( 'You can unsubscribe from this newsletter following this link'). ": <a href='$url_unsub'>$url_unsub</a>";
+		$msg = $smarty->fetchLang($lang, 'mail/newsletter_unsubscribe.tpl');
+		$msg = '<br/><br/>' . $msg . ": <a href='$url_unsub'>$url_unsub</a>";
 		return $msg;
 	}
 

@@ -34,7 +34,7 @@
   </select>
   </td></tr>
   </td></tr>
-  <tr><td class="form">{tr}Does you mail reader need a special charset{/tr}</td>
+  <tr><td class="form">{tr}Does your mail reader need a special charset{/tr}</td>
   <td class="form">
   <select name="mailCharset">
    {section name=ix loop=$mailCharsets}
