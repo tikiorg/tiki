@@ -101,7 +101,7 @@
 {if $ins_fields[ix].linkId}
 <a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value|default:"&nbsp;"}</a>
 {else}
-{$ins_fields[ix].value|escape|default:"&nbsp;"}
+{$ins_fields[ix].value|default:"&nbsp;"}
 {/if}
 {/if}
 {if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
@@ -231,6 +231,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}delete{/tr}"  hspace="2" vspace=
 {/section}
 
 <table class="normal">
+<tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}save{/tr}" />
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
 <td>
@@ -242,7 +243,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </select>
 </td></tr>
 {/if}
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
+
 {section name=ix loop=$ins_fields}
 {if $ins_fields[ix].isPublic eq 'y' or $tiki_p_admin_trackers eq 'y'}
 {if $ins_fields[ix].type ne 'x'}
@@ -375,7 +376,7 @@ align       : "bR"
 
 {/if}
 {/section}
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" />
+<tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}save{/tr}" />
 </td></tr>
 </table>
 </form>
