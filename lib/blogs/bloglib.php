@@ -329,7 +329,7 @@ class BlogLib extends TikiLib {
 	        if(count($parts)>1) unset($parts[count($parts)-1]);
 	        $smarty->assign('mail_machine_raw',httpPrefix().implode('/',$parts));
 	        $mail_data = $smarty->fetch('mail/user_watch_blog_post.tpl');
-	        @mail($not['email'], tra('Blog post').' '.$title, $mail_data, "From: $sender_email");          
+	        @mail($not['email'], tra('Blog post').' '.$title, $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");          
         }
 	}    
 
