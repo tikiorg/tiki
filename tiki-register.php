@@ -4,6 +4,7 @@ require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
 include_once('lib/registration/registrationlib.php');
 include_once('lib/notifications/notificationlib.php');
+include_once('lib/webmail/tikimaillib.php');
 
 // Permission: needs p_register
 if($allowRegister != 'y') {
