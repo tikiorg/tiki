@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.29 2004-06-13 22:03:14 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.30 2004-06-16 20:23:04 teedog Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -78,7 +78,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
     <div class="cbox">
       <div class="cbox-title">
       {if $categId > 0}
-      {tr}Edit this category:{/tr} {$name} [<a href="tiki-admin_categories.php?parentId={$parentId}#editcreate" class="cboxtlink">{tr}create new{/tr}</a>]
+      {tr}Edit this category:{/tr} <b>{$name}</b> [<a href="tiki-admin_categories.php?parentId={$parentId}#editcreate" class="cboxtlink">{tr}create new{/tr}</a>]
       {else}
       {tr}Add new category{/tr}
       {/if}
