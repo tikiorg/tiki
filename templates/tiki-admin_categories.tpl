@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.15 2004-01-01 03:19:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.16 2004-01-01 03:27:10 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -79,8 +79,8 @@
         <tr><td class="form">{tr}Parent{/tr}:</td><td class="form">
 				<select name="parentId">
 				<option value="0">{tr}top{/tr}</option>
-				{section name=ix loop=$categories}
-				<option value="{$categories[ix].categId|escape}" {if $categories[ix].categId eq $parentId}selected="selected"{/if}>{$categories[ix].name}</option>
+				{section name=ix loop=$catree}
+				<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $parentId}selected="selected"{/if}>{$catree[ix].categpath}</option>
 				{/section}
 				</select>
 				</td></tr>

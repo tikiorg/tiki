@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.19 2004-01-01 03:19:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.20 2004-01-01 03:27:09 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.19 2004-01-01 03:19:07 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.20 2004-01-01 03:27:09 mose Exp $
 //
 
 // Initialization
@@ -260,10 +260,10 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
-
+/*
 $categories = $categlib->get_all_categories();
 $smarty->assign_by_ref('categories', $categories);
-
+*/
 $galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
