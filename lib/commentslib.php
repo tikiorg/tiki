@@ -1491,7 +1491,7 @@ class Comments extends TikiLib {
 
 		$query_cant = "select count(*) from `tiki_comments` as tc1 $mid and tc1.`in_reply_to` = ? $time_cond";
 	} else {
-	    $query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
+	    $query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
 	    $query = "select threadId from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
 	}
 
