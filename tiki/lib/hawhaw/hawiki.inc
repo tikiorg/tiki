@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 17. October 2003
+// Last modified: 18. October 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -594,6 +594,9 @@ class HAWIKI_page
       // jingle has been set by hawiki user
       $this->deck->set_voice_jingle($this->link_jingle);
     }
+
+    // smooth voice sections
+    $this->deck->smooth_voice();
 
     // output appropriate markup language
     $this->deck->create_page();

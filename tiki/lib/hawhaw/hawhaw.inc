@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 13. October 2003
+// Last modified: 19. October 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -23,6 +23,7 @@
 //
 // changes against V5.2:
 // - enhanced browser detection: OpenVXI voice browser
+// - new method in HAW_deck: smooth_voice()
 
 // miscellaneous constants
 define("HAW_VERSION", "HAWHAW V5.3b");
@@ -242,7 +243,7 @@ function HAW_voice_eventhandler($handler, $audio_array, $deck)
       else
         $count = "";
 
-      printf("<catch%s event=\"%s\">", $count, $handler); 
+      printf("<catch%s event=\"%s\">", $count, $handler);
 
       HAW_voice_audio(HAW_specchar($val["text"], $deck), $val["src"], 0);
 
@@ -1386,7 +1387,7 @@ class HAW_deck
     semantic error and terminate voice output. Please refer to the
     <a href="http://www.w3.org/TR/voicexml20/#dml6.3" target="_blank">
     W3C VoiceXML Recommendation (chapter 6.3)</a>
-    for detailled info about valid name/value combinations. 
+    for detailled info about valid name/value combinations.
     @param name Name of property (e.g. "bargein", "timeout", etc.)
     @param value Value of property (e.g. "false", "10s", etc.)
   */
@@ -1396,6 +1397,58 @@ class HAW_deck
     $arr["value"] = $value;
 
     $this->voice_property[] = $arr;
+  }
+
+
+  /**
+    Smooth contiguous text sections. <br>
+    Note: This function affects VoiceXML output only.<br>
+    Voice decks often are assembled by some HAW_text objects. Each HAW_text
+    object creates a VoiceXML &lt;block&gt; element. On some voice browsers this
+    results in an interruptive speech synthesis. This function coalesces directly
+    neighbored HAW_text objects to one single HAW_text object and thus results in
+    a smoothed voice perception.
+  */
+  function smooth_voice()
+  {
+    if ($this->ml == HAW_VXML)
+    {
+      // this function make sense for VoiceXML output only
+
+      $i = 0;
+
+      while (isset($this->element[$i]))
+      {
+        $current_element = $this->element[$i];
+
+        if (isset($this->element[$i+1]))
+        {
+          $next_element = $this->element[$i+1];
+
+          if (($current_element->get_elementtype() == HAW_PLAINTEXT) &&
+              ($current_element->get_br() == 0) &&
+              ($next_element->get_elementtype() == HAW_PLAINTEXT) &&
+              ($next_element->get_br() == 0) &&
+              ($current_element->get_attrib() == $next_element->get_attrib()))
+          {
+            // create single HAW_text object containing both text sections
+            $merged_text = new HAW_text($current_element->get_text() . " " . $next_element->get_text(),
+                                        $current_element->get_attrib());
+
+            // adopt line breaks from next element
+            $merged_text->set_br($next_element->get_br());
+
+            // replace old two objects with new object
+            array_splice($this->element, $i, 2, array($merged_text));
+            $this->number_of_elements--;
+
+            $i--; // continue with merged element
+          }
+        }
+
+        $i++;
+      }
+    }
   }
 
 
@@ -2339,7 +2392,7 @@ class HAW_form
   
         HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                         $this->voice_audio_src, HAW_VOICE_PAUSE);
-      
+
         echo "</block>\n";
       }
     }
@@ -2457,6 +2510,21 @@ class HAW_text
 
     $this->voice_text = $text;
     $this->voice_audio_src = $audio_src;
+  }
+
+  function get_text()
+  {
+    return $this->text;
+  }
+
+  function get_br()
+  {
+    return $this->br;
+  }
+
+  function get_attrib()
+  {
+    return $this->attrib;
   }
 
   function get_elementtype()
