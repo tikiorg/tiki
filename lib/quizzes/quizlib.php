@@ -566,7 +566,7 @@ function TextToQuestions($text){
 	for ($i = 0; $i < count($text); $i++){
 		$text[$i] = trim($text[$i]);
 		if (!ctype_print($text[$i])){
-			quizlib_error_exit("lib/quizzes/quizlib.php line ".__LINE__.": Your text has invalid character(s) near line $i.");
+			quizlib_error_exit("lib/quizzes/quizlib.php line ".__LINE__.": Your text has invalid character(s) near line $i where it says:\n  $text[$i]");
 		}
 	}
 
