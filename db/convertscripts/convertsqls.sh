@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.5 2004-06-19 08:00:32 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/convertscripts/convertsqls.sh,v 1.6 2004-07-15 19:29:08 teedog Exp $
 
 
 if [ -z $1 ]; then
@@ -9,7 +9,7 @@ if [ -z $1 ]; then
 fi
 
 TIKISERVER=$1
-VERSION="1.9"
+VERSION="1.10"
 
 wget -O pgsql72..sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3topgsql72.php?version=$VERSION" 
 wget -O sybase.sql.tmp "http://$TIKISERVER/db/convertscripts/mysql3tosybase.php?version=$VERSION" 
