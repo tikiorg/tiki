@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.18 2003-10-11 09:43:52 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.19 2003-10-11 11:45:18 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,9 +68,9 @@ if ($rss_version == 2) {
 	print '<channel rdf:about="'.htmlspecialchars($url).'">'."\n";
 }
 
-print "<title>".rawurlencode($title)."</title>\n";
+print "<title>".htmlspecialchars($title)."</title>\n";
 print "<link>".htmlspecialchars($home)."</link>\n";
-print "<description>".rawurlencode($desc)."</description>\n";
+print "<description>".htmlspecialchars($desc)."</description>\n";
 
 if ($rss_version == 2) {
 	print "<language>en-us</language>\n";
@@ -80,7 +80,7 @@ print "\n";
 
 if ($rss_version == 2) {
 	print '<image>'."\n";
-	print "<title>".rawurlencode($title)."</title>\n";
+	print "<title>".htmlspecialchars($title)."</title>\n";
 	print "<link>".htmlspecialchars($home)."</link>\n";
 	print "<url>".htmlspecialchars($url)."</url>\n";
 	print "</image>\n\n";
@@ -106,21 +106,21 @@ foreach ($changes["data"] as $chg) {
 	} else {
 		print ('<item rdf:about="'.htmlspecialchars($read.$chg["pageName"]).'">'."\n");
 	}
-	print ('  <title>'.rawurlencode($chg["pageName"].' '.$chg["action"]).'</title>'."\n");
+	print ('  <title>'.htmlspecialchars($chg["pageName"].' '.$chg["action"]).'</title>'."\n");
 	print ('  <link>'.htmlspecialchars($read.$chg["pageName"]).'</link>'."\n");
 	if (!empty($chg["comment"])) {
-		$comment = "(".rawurlencode($chg["comment"]).")";
+		$comment = "(".htmlspecialchars($chg["comment"]).")";
 	} else {
 		$comment = '';
 	}
   $date = $tikilib -> date_format($tikilib -> get_short_datetime_format(), $chg["lastModif"]);
 	if ($rss_version == 2) {
-		print ('<description>'.rawurlencode($chg["action"]." ".$chg["pageName"].$comment).'</description>'."\n");
-		// print("<author>".rawurlencode($chg["user"])."</author>\n"); // TODO: email address of author
+		print ('<description>'.htmlspecialchars($chg["action"]." ".$chg["pageName"].$comment).'</description>'."\n");
+		// print("<author>".htmlspecialchars($chg["user"])."</author>\n"); // TODO: email address of author
 		print ('<guid isPermaLink="true">'.htmlspecialchars($read.$chg["pageName"]).'</guid>'."\n");
-		print ("<pubDate>".rawurlencode($date)."</pubDate>\n");
+		print ("<pubDate>".htmlspecialchars($date)."</pubDate>\n");
 	} else {
-		print ('  <description>'.rawurlencode("[$date] :".$chg["action"]." ".$chg["pageName"].$comment).'</description>'."\n");
+		print ('  <description>'.htmlspecialchars("[$date] :".$chg["action"]." ".$chg["pageName"].$comment).'</description>'."\n");
 	}
 	print ('</item>'."\n\n");
 }

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.13 2003-10-11 09:43:11 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-file_galleries_rss.php,v 1.14 2003-10-11 11:50:21 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -71,7 +71,7 @@ if ($rss_version == 2) {
 
 print "<title>".htmlspecialchars($title)."</title>\n";
 print "<link>".htmlspecialchars($home)."</link>\n";
-print "<description>".rawurlencode($desc)."</description>\n";
+print "<description>".htmlspecialchars($desc)."</description>\n";
 
 if ($rss_version == 2) {
 	print "<language>en-us</language>\n";
@@ -81,7 +81,7 @@ print "\n";
 
 if ($rss_version == 2) {
 	print '<image>'."\n";
-	print "<title>".rawurlencode($title)."</title>\n";
+	print "<title>".htmlspecialchars($title)."</title>\n";
 	print "<link>".htmlspecialchars($home)."</link>\n";
 	print "<url>".htmlspecialchars($url)."</url>\n";
 	print "</image>\n\n";
@@ -107,17 +107,17 @@ foreach ($changes["data"] as $chg) {
 	} else {
 		print ('<item rdf:about="'.htmlspecialchars($read."?fileId=".$chg["fileId"]).'">'."\n");
 	}
-	print ('  <title>'.rawurlencode($chg["filename"].': '.$tikilib -> date_format($tikilib -> get_short_datetime_format(), $chg["created"])).'</title>'."\n");
+	print ('  <title>'.htmlspecialchars($chg["filename"].': '.$tikilib -> date_format($tikilib -> get_short_datetime_format(), $chg["created"])).'</title>'."\n");
 	print ('  <link>'.htmlspecialchars($read."?fileId=".$chg["fileId"]).'</link>'."\n");
 
   $date = $tikilib -> date_format($tikilib -> get_short_datetime_format(), $chg["created"]);
 	if ($rss_version == 2) {
-		print ('<description>'.rawurlencode($chg["description"]).'</description>'."\n");
-		// print("<author>".rawurlencode($chg["user"])."</author>\n"); // TODO: email address of author
+		print ('<description>'.htmlspecialchars($chg["description"]).'</description>'."\n");
+		// print("<author>".htmlspecialchars($chg["user"])."</author>\n"); // TODO: email address of author
 		print ('<guid isPermaLink="true">'.htmlspecialchars($read."?fileId=".$chg["fileId"]).'</guid>'."\n");
-		print ("<pubDate>".rawurlencode($date)."</pubDate>\n");
+		print ("<pubDate>".htmlspecialchars($date)."</pubDate>\n");
 	} else {
-		print ('  <description>'.rawurlencode($chg["description"]).'</description>'."\n");
+		print ('  <description>'.htmlspecialchars($chg["description"]).'</description>'."\n");
 	}
 	print ('</item>'."\n\n");
 }
