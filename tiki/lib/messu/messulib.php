@@ -40,8 +40,12 @@ class Messu extends Tikilib {
     $this->query($query);
     
     // Now check if the user should be notified by email
+    $foo = parse_url($_SERVER["REQUEST_URI"]);
+    $machine =httpPrefix().$foo["path"];
+
     if($this->get_user_preference($user,'minPrio',6)<=$priority) {
       $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+      $smarty->assign('mail_machine',$machine);
       $smarty->assign('mail_date',date("U"));
       $smarty->assign('mail_user',stripslashes($user));
       $smarty->assign('mail_from',stripslashes($from));
