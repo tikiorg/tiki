@@ -21,3 +21,4 @@
 'services','mailman','1.6','Plugin to enable integrated mailman multi-list panel, using iframe','GNU/LGPL'
 'wikiplugins','ebay','1.1','Currently only works with ebay.co.uk','GNU/LGPL'
 'wikiplugins','scroll','1.1','no description','GNU/LGPL'
+'features','tiki-sheet','1.0','Tiki JavaScript Spreadsheet feature','GNU/LGPL'
