@@ -26,7 +26,20 @@
 </table>
 </form>
 <h2>{tr}Add all your site users to this newsletter (broadcast){/tr}</h2>
-<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;add_all=1">{tr}Add users{/tr}</a>
+<form action="tiki-admin_newsletter_subscriptions.php" method="post">
+<a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;add_all=1">{tr}Add all users{/tr}</a><br />
+<input type="hidden" name="nlId" value="{$nlId|escape}" />
+<input type="hidden" name="add_group" value="1" />
+<select name="group">
+{section name=x loop=$groups}
+<option value="{$groups[x]|escape}">{$groups[x]}</option>
+{/section}
+</select>
+<input type="submit" name="acton" value="{tr}Subscribe group{/tr}" /><br />
+<i>{tr}Group subscription also subscribes included groups{/tr}</i>
+
+</form>
+
 <h2>{tr}Subscriptions{/tr}</h2>
 <div  align="center">
 <table class="findtable">

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.7 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletter_subscriptions.php,v 1.8 2004-02-17 10:03:38 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,6 +85,10 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('admin-nl-subsriptions');
 	$sid = $nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["email"]);
 }
+if (isset($_REQUEST["add_group"]) and isset($_REQUEST['group'])) {
+	check_ticket('admin-nl-subsriptions');
+	$nllib->add_all_group_emails($_REQUEST["nlId"], $_REQUEST['group']);
+}
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'subscribed_desc';
@@ -141,6 +145,10 @@ for ($i = 0; $i < 90; $i++) {
 }
 
 $smarty->assign('freqs', $freqs);
+
+$groups = $userlib->list_all_groups();
+$smarty->assign('groups', $groups);
+
 
 /*
 $cat_type='newsletter';
