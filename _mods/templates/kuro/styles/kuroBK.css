@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.2 2005-02-10 10:08:00 michael_davey Exp $
+$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.3 2005-02-14 12:06:48 michael_davey Exp $
 
 Heavy theme for tiki
 
@@ -794,6 +794,21 @@ input[type=submit] { color : #000000; background: #E4E7EA;
 input[type=submit]:hover { color: #000000; 
   background: #E4E7EA;
   background-image: url(mods/tab-active);
+}
+input[type=image].wikiaction {
+  vertical-align: middle;
+  border: none;
+  padding-bottom: 1px;
+  padding-right: 1px;
+  color : transparent;
+  background: transparent;
+}
+input[type=image].wikiaction:hover {
+  padding: 0px;
+  padding-top: 1px;
+  padding-left: 1px;
+  color: transparent;
+  background: transparent;
 }
 select {color : #000000; 
   background: #E4E7EA; 

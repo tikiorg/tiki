@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/templates/kuro/templates/styles/kuroBK/tiki-site_header.tpl,v 1.2 2005-02-12 22:57:15 michael_davey Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/templates/kuro/templates/styles/kuroBK/tiki-site_header.tpl,v 1.3 2005-02-14 12:06:49 michael_davey Exp $ *}
 {* Template for TikiWiki site identity header *}
 {if $feature_sitemycode eq 'y' && ($sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$sitemycode}{* here can be custom site admin code *}{/if}
 
@@ -9,6 +9,7 @@
     searchNoResults="false"
     searchStyle="menu"
     searchOrientation="horiz"
+    wikiActionIcon="styles/kuroBK/but_go"
 }
 </div>     
 {* search the site *}
