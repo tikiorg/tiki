@@ -1,6 +1,19 @@
 <a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
+
+<!-- help links -->
+{if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=UserWatches" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}User Preferences{/tr}">
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
+<!--  link to tpl -->
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-user_watches.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}UserPreferences tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
+<!--  tiki toolbar -->
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
+<!--  begin watches -->
 <h3>{tr}Watches{/tr}</h3>
 
 
