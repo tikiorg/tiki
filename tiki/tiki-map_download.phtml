@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.9 2005-03-12 16:49:00 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.10 2005-04-02 17:43:38 michael_davey Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -89,17 +89,34 @@ $tempfile="TM".date("YmdHis");
 $files = array();
 $h = opendir($file_path);
 
+//first check if there is not a file with NDL extension
+// to stop download
+$nodownload=FALSE;
 while (($file = readdir($h)) !== false) {
 $extension = array_pop(explode('.', basename($file)));
   if (substr(basename($file), 0,"-" . (strlen($extension) + 1))==$file_name)
   {
-    $files[] = $file;
-    copy($file_path."/".$file,"files/".$tempfile.".".$extension);
-    $dfiles[]=$tempfile.".".$extension;
+  	if ($extension=="NDL") {
+  	  $nodownload=TRUE;
+  	}
   }
-}	
+}
 closedir ($h);
+$smarty->assign('nodownload', $nodownload);
 
+if (!$nodownload) {
+	$h = opendir($file_path);
+	while (($file = readdir($h)) !== false) {
+	$extension = array_pop(explode('.', basename($file)));
+	  if (substr(basename($file), 0,"-" . (strlen($extension) + 1))==$file_name)
+	  {
+	    $files[] = $file;
+	    copy($file_path."/".$file,"files/".$tempfile.".".$extension);
+	    $dfiles[]=$tempfile.".".$extension;
+	  }
+	}	
+	closedir ($h);
+}
 
 //clean the files directory from old files
 $h = opendir("files");
@@ -120,6 +137,7 @@ $userid = $userlib->get_user_id($user);
 //$query = "insert into tiki_download (object,userid,type,date,IP) values ('$file_name',$userid,'maps',".date("U").",'".$_SERVER["REMOTE_ADDR"]."')";
 //$result = $userlib->query($query);
 
+$smarty->assign('nodownload', $nodownload);
 $smarty->assign_by_ref('files',$files);
 $smarty->assign_by_ref('dfiles',$dfiles);
 
