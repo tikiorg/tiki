@@ -18,7 +18,7 @@ if(isset($_REQUEST["channelId"]) && isset($_REQUEST["nickname"])) {
       preg_match("/:([^:]+):(.*)/",$data,$reqs);
       $tikilib->send_private_message($_REQUEST["nickname"],$reqs[1],$reqs[2]);  
     } else {
-      if($channelId) {
+      if($_REQUEST["channelId"]) {
         $tikilib->send_message($_REQUEST["nickname"],$_REQUEST["channelId"],$data);  
       } 
     }
