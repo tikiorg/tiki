@@ -90,7 +90,7 @@ function since_last_visit_new($user) {
           break;
         case "wiki page":
           $ret["items"]["comments"]["list"][$count]["href"]
-            = "tiki-index.php?page=" . $res["object"];
+            = "tiki-index.php?page=" . urlencode($res["object"]);
           break;
       }
       $ret["items"]["comments"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["commentDate"]) ." ". tra("by") ." ". $res["userName"];
@@ -110,7 +110,7 @@ function since_last_visit_new($user) {
     $count = 0;
     while ($res = $result->fetchRow())
     {
-        $ret["items"]["pages"]["list"][$count]["href"]  = "tiki-index.php?page=" . $res["pageName"];
+        $ret["items"]["pages"]["list"][$count]["href"]  = "tiki-index.php?page=" . urlencode($res["pageName"]);
         $ret["items"]["pages"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["lastModif"]) ." ". tra("by") ." ". $res["user"];
         $ret["items"]["pages"]["list"][$count]["label"] = $res["pageName"]; 
         $count++;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.17 2004-09-08 19:51:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.18 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,6 +78,7 @@ if (isset($_REQUEST["preview"])) {
 	//TODO: the sent text version is not pretty: the text must be a textarea
 	if (isset($_REQUEST["data"])) {
 		$info["data"] = $_REQUEST["data"];
+		$info["dataparsed"] = $tikilib->parse_data($_REQUEST["data"]);
 	} else {
 		$info["data"] = '';
 	}
@@ -99,6 +100,7 @@ if (isset($_REQUEST["save"])) {
 	$subscribers = $nllib->get_subscribers($_REQUEST["nlId"]);
 	$smarty->assign('nlId', $_REQUEST["nlId"]);
 	$smarty->assign('data', $_REQUEST["data"]);
+	$smarty->assign('dataparsed', $tikilib->parse_data($_REQUEST["data"]));
 	$smarty->assign('subject', $_REQUEST["subject"]);
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
@@ -112,7 +114,8 @@ if (isset($_REQUEST["send"])) {
 	$subscribers = $nllib->get_subscribers($_REQUEST["nlId"]);
 
 	$mail = new TikiMail();
-	$txt = strip_tags($_REQUEST["data"]); //TODO: be able to have a different text
+	$txt = preg_replace(array("/\s+/","/&nbsp;/"),array(" "," "),strip_tags($tikilib->parse_data($_REQUEST["data"]))); 
+	$html = $tikilib->parse_data($_REQUEST["data"]); 
 	$sent = 0;
 	$unsubmsg = '';
 
@@ -123,7 +126,7 @@ if (isset($_REQUEST["send"])) {
 		$languageEmail = !$userEmail? $language: $tikilib->get_user_preference($userEmail, "language", $language);
 		if ($nl_info["unsubMsg"] == 'y')
 			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail);
-		$mail->setHtml($_REQUEST["data"] . $unsubmsg, $txt.$unsubmsg);
+		$mail->setHtml($html.$unsubmsg, $txt. strip_tags($unsubmsg));
 		$mail->buildMessage();
 		if ($mail->send(array($email)))
 			$sent++;

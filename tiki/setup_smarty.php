@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.28 2004-08-26 19:23:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.29 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,6 +76,7 @@ class Smarty_TikiWiki extends Smarty {
 
 		$_smarty_cache_id = $lg . $_smarty_cache_id;
 		$_smarty_compile_id = $lg . $_smarty_compile_id;
+		$this->_compile_id = $lg . $_smarty_compile_id; // not pretty but I don't know how to change id for get_compile_path
 		$isCompiled = $this->_is_compiled($_smarty_tpl_file, $this->_get_compile_path($_smarty_tpl_file));
 		if (!$isCompiled) {
 			$lgSave = $language;
@@ -90,6 +91,7 @@ class Smarty_TikiWiki extends Smarty {
 			$language = $lgSave;
 			include ("lang/$language/language.php");
 		}
+
 		return ereg_replace("^[ \t]*", "", $res);
 	}
 	function is_cached($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null) {

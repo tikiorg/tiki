@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.33 2004-08-27 15:40:52 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.34 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -224,6 +224,19 @@ if (isset($_REQUEST["upload"])) {
 	} else {
 		$name = $_REQUEST["name"];
 	}
+	
+	$lat=NULL;
+	$lon=NULL;
+	if ($feature_maps == 'y') {
+		if (isset($_REQUEST["lat"])) {
+			$lat = (float) $_REQUEST["lat"];
+			$smarty->assign('lat', $lat);
+		}
+		if (isset($_REQUEST["lon"])) {
+			$lon = (float) $_REQUEST["lon"];
+			$smarty->assign('lon', $lon);
+		}
+	}
 
 	if (isset($data)) {
 		if (!$up_thumb) {
@@ -267,7 +280,7 @@ if (isset($_REQUEST["upload"])) {
 
 				$imageId
 					= $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data,
-					$size, $size_x, $size_y, $user, $t_data, $t_type);
+					$size, $size_x, $size_y, $user, $t_data, $t_type, $lat, $lon);
 				} else { // Not in Image format
 				   $smarty->assign('msg',tra('The uploaded file ist not recognized as a image'));
 				   $smarty->display('error.tpl');
@@ -278,7 +291,7 @@ if (isset($_REQUEST["upload"])) {
 
 				$imageId
 					= $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data,
-					$size, 0, 0, $user, '', '');
+					$size, 0, 0, $user, '', '',$lat, $lon);
 			}
 		} else {
 			if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
@@ -299,7 +312,7 @@ if (isset($_REQUEST["upload"])) {
 			}
 
 			$imageId = $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data,
-				$size, $size_x, $size_y, $user, $thumb_data, $thumb_type);
+				$size, $size_x, $size_y, $user, $thumb_data, $thumb_type, $lat, $lon);
 		}
 
 		if (!$imageId) {

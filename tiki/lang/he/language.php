@@ -1761,7 +1761,7 @@ $lang = Array(
 // TODO "{$channels[ix].name}" => "@{$channels[ix].name}@",
 
 "Invalid old password" => "סיסמה ישנה לא תקינה.",
-"The passwords didn't match" => "הסיסאות החדשות אינן תואמות.",
+"The passwords did not match" => "הסיסאות החדשות אינן תואמות.",
 "You dont have permission to view other users data" => "אין הרשאה לצפות בנתוני משתמשים אחרים",
 "Password should be at least" => "הסיסמה צריכה להיות באורך של לפחות",
 "Password must contain both letters and numbers" => "הסיסמה צריכה להכיל גם תווים וגם ספרות",

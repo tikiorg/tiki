@@ -1,5 +1,5 @@
 <div style="margin-left:180px;margin-right:180px;">
-<h1>Tiki installer v{$tiki_version} (CVS) <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
+<h1>Tiki installer v{$tiki_version} pre-RC4 (CVS) <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 
 {if $tikifeedback}

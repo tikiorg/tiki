@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.23 2004-09-08 19:53:06 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.24 2004-09-19 19:37:13 mose Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
@@ -85,6 +85,9 @@
 		   </select>
 		   <input type="submit" name="Go" value="Go" />		       
 		&nbsp;{/if}
+		<input type="image" name="maponly" value="yes" src="img/icn/png.gif" border="0" 
+			alt="{tr}View the Map Only{/tr}" 
+		  	title="{tr}View the Map Only{/tr}" />
 		 {if $tiki_p_map_edit eq 'y'}
      			&nbsp; 
      			<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">

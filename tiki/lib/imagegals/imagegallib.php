@@ -734,16 +734,16 @@ class ImageGalsLib extends TikiLib {
 		}
 	}
 
-	function edit_image($id, $name, $description) {
+	function edit_image($id, $name, $description,$lat=NULL,$lon=NULL) {
 		$name = strip_tags($name);
 
 		$description = strip_tags($description);
-		$query = "update `tiki_images` set `name`=?, description=? where `imageId` = ?";
-		$result = $this->query($query,array($name,$description,(int)$id));
+		$query = "update `tiki_images` set `name`=?, description=?, lat=?, lon=? where `imageId` = ?";
+		$result = $this->query($query,array($name,$description,$lat,$lon,(int)$id));
 		return true;
 	}
 
-	function insert_image($galleryId, $name, $description, $filename, $filetype, &$data, $size, $xsize, $ysize, $user, $t_data, $t_type) {
+	function insert_image($galleryId, $name, $description, $filename, $filetype, &$data, $size, $xsize, $ysize, $user, $t_data, $t_type ,$lat=NULL, $lon=NULL) {
 		global $gal_use_db;
 
 		global $gal_use_dir;
@@ -783,9 +783,9 @@ class ImageGalsLib extends TikiLib {
 			$path = $fhash;
 		}
 
-		$query = "insert into `tiki_images`(`galleryId`,`name`,`description`,`user`,`created`,`hits`,`path`)
-                          values(?,?,?,?,?,?,?)";
-		$result = $this->query($query,array((int)$galleryId,$name,$description,$user,(int)$now,0,$path));
+		$query = "insert into `tiki_images`(`galleryId`,`name`,`description`,`user`,`created`,`hits`,`path`,`lat`,`lon`)
+                          values(?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array((int)$galleryId,$name,$description,$user,(int)$now,0,$path,$lat,$lon));
 		$query = "select max(`imageId`) from `tiki_images` where `created`=?";
 		$imageId = $this->getOne($query,array((int)$now));
 		// insert data
@@ -1382,7 +1382,7 @@ class ImageGalsLib extends TikiLib {
 
 		$query = "select i.`imageId`, i.`galleryId`, i.`name`,
                      i.`description`, i.`created`, i.`user`,
-                     i.`hits`, i.`path`,
+                     i.`hits`, i.`path`, i.`lat`, i.`lon`,
                      d.`xsize`,d.`ysize`,d.`type`,d.`filesize`,
                      d.`filetype`,d.`filename`,d.`xsize` * d.`ysize` as `xysize`
                  from `tiki_images` i, `tiki_images_data` d where
@@ -1435,7 +1435,7 @@ class ImageGalsLib extends TikiLib {
 
 		$query = "select i.`imageId`, i.`galleryId`, i.`name`,
                      i.`description`, i.`created`, i.`user`,
-                     i.`hits`, i.`path`,
+                     i.`hits`, i.`path`,i.`lat`, i.`lon`,
                      d.`xsize`,d.`ysize`,d.`type`,d.`filesize`,
                      d.`filetype`,d.`filename`,d.`data`,
 		     d.`xsize` * d.`ysize` as `xysize`
@@ -1457,6 +1457,8 @@ class ImageGalsLib extends TikiLib {
 		$this->galleryId = $res["galleryId"];
 		$this->name = $res["name"];
 		$this->description = $res["description"];
+		$this->lat = $res["lat"];
+		$this->lon = $res["lon"];
 		$this->created = $res["created"];
 		$this->user = $res["user"];
 		$this->hits = $res["hits"];
@@ -1533,7 +1535,7 @@ class ImageGalsLib extends TikiLib {
 		return $this->get_image($id, 't');
 	}
 
-	function replace_gallery($galleryId, $name, $description, $theme, $user, $maxRows, $rowImages, $thumbSizeX, $thumbSizeY, $public, $visible = 'y', $sortorder='created', $sortdirection='desc', $galleryimage='first',$parentgallery=-1,$showname='y',$showimageid='n',$showdescription='n',$showcreated='n',$showuser='n',$showhits='y',$showxysize='y',$showfilesize='n',$showfilename='n',$defaultscale='o') {
+	function replace_gallery($galleryId, $name, $description, $theme, $user, $maxRows, $rowImages, $thumbSizeX, $thumbSizeY, $public, $visible = 'y', $sortorder='created', $sortdirection='desc', $galleryimage='first',$parentgallery=-1,$showname='y',$showimageid='n',$showdescription='n',$showcreated='n',$showuser='n',$showhits='y',$showxysize='y',$showfilesize='n',$showfilename='n',$defaultscale='o',$geographic	= 'n') {
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
 		// create the gallary if the name is unused.
 		$name = strip_tags($name);
@@ -1544,7 +1546,7 @@ class ImageGalsLib extends TikiLib {
 		if ($galleryId > 0) {
 			//$res = $result->fetchRow();
 			//if( ($user == 'admin') || ($res["user"]==$user) ) {
-			$query = "update `tiki_galleries` set `name`=?,`visible`=?, `maxRows`=? , `rowImages`=?, 
+			$query = "update `tiki_galleries` set `name`=?,`visible`=?, `geographic`=?,`maxRows`=? , `rowImages`=?, 
                 `thumbSizeX`=?, `thumbSizeY`=?, `description`=?, `theme`=?,
                 `lastModif`=?, `public`=?, `sortorder`=?, `sortdirection`=?, `galleryimage`=?,
 		`parentgallery`=?,`showname`=?,`showimageid`=?,`showdescription`=?,
@@ -1552,12 +1554,11 @@ class ImageGalsLib extends TikiLib {
 		`showfilename`=?,`defaultscale`=?
 	       	where `galleryId`=?";
 
-			$result = $this->query($query,array($name,$visible,(int)$maxRows,(int)$rowImages,(int)$thumbSizeX,(int)$thumbSizeY,$description,$theme,(int)$now,$public,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,(int)$galleryId));
+			$result = $this->query($query,array($name,$visible,$geographic,(int)$maxRows,(int)$rowImages,(int)$thumbSizeX,(int)$thumbSizeY,$description,$theme,(int)$now,$public,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,(int)$galleryId));
 		} else {
 			// Create a new record
-			$query = "insert into `tiki_galleries`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`galleryimage`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcreated`,`showuser`,`showhits`,`showxysize`,`showfilesize`,`showfilename`,`defaultscale`)
-                                    values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			$bindvars=array($name,$description,$theme,(int) $now,$user,(int) $now,(int) $maxRows,(int) $rowImages,(int) $thumbSizeX,(int) $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale);
+			$query = "insert into `tiki_galleries`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`galleryimage`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcreated`,`showuser`,`showhits`,`showxysize`,`showfilesize`,`showfilename`,`defaultscale`,`geographic`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars=array($name,$description,$theme,(int) $now,$user,(int) $now,(int) $maxRows,(int) $rowImages,(int) $thumbSizeX,(int) $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,$geographic);
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries` where `name`=? and `created`=?",array($name,(int) $now));
 

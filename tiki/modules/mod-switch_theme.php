@@ -7,7 +7,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-
 if(isset($_COOKIE['tiki-theme']) && !($feature_userPreferences == 'y' && $user && $change_theme == 'y')){
 	$style = $_COOKIE['tiki-theme'];
 }
@@ -15,6 +14,6 @@ if(isset($_COOKIE['tiki-theme']) && !($feature_userPreferences == 'y' && $user &
 $smarty->assign('styleslist',$tikilib->list_styles());
 
 if(isset($style)){
-	$smarty->assign('style', $style);
+	$smarty->assign('styleName', ereg_replace($tikidomain."/", "", $style));
 }
 ?>

@@ -46,6 +46,9 @@ $lang=Array(
 "color for links (called edges here)\n" => "colour for links (called edges here)\n",
 "Colored text" => "Coloured text",
 "Will display using the indicated HTML color" => "Will display using the indicated HTML colour",
+"Display Tiki objects that have not been categorized" => "Display Tiki objects that have not been categorised",
+"categorize this object" => "categorise this object",
+"Categorize" => "Categorise",
 // ### end of untranslated words
 // ###
 

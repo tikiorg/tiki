@@ -18,13 +18,13 @@
 
 <table class="normal">
   <tr>
-    <td class="heading" width="25%">
-      <a class="linkbut" href="tiki-admin_mailin.php#add">{tr}Add new Mail-in account{/tr}</a>
+    <td class="heading">
+      {tr}Action{/tr}
     </td>
-    <td class="heading" width="50%">
+    <td class="heading">
       {tr}Account{/tr}
     </td>
-    <td class="heading" width="25%">{tr}type{/tr}</td>
+    <td class="heading">{tr}type{/tr}</td>
   </tr>
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}
@@ -34,7 +34,7 @@
          <a href="tiki-admin_mailin.php?remove={$accounts[ix].accountId}" ><img border='0' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='img/icons2/delete.gif' /></a>
       </td>
       <td class="{cycle advance=false}">{$accounts[ix].account}</td>
-      <td class="{cycle}">{$accounts[ix].type}</td>
+      <td class="{cycle}">{tr}{$accounts[ix].type}{/tr}</td>
     </tr>
   {/section}
 </table>

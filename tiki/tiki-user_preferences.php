@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.61 2004-09-08 19:51:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.62 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -162,7 +162,7 @@ if (isset($_REQUEST['chgadmin'])) {
             require_once ('lib/userslib/userslib_admin.php');
 
 	    if (!$userslibadmin->validate_user($userwatch, $pass, '', '')) {
-		$smarty->assign('msg', tra("Invalid password.  You current password is required to change administrative info"));
+		$smarty->assign('msg', tra("Invalid password.  Your current password is required to change administrative information"));
 		
 		$smarty->display("error.tpl");
 		die;
@@ -178,7 +178,7 @@ if (isset($_REQUEST['chgadmin'])) {
 	if (!empty($_REQUEST["pass1"])) {
 
 	    if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
-		$smarty->assign('msg', tra("The passwords didn't match"));
+		$smarty->assign('msg', tra("The passwords did not match"));
 		
 		$smarty->display("error.tpl");
 		die;

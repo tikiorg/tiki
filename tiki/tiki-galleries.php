@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.33 2004-09-08 19:51:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.34 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -92,6 +92,7 @@ $smarty->assign('thumbSizeY', 80);
 $smarty->assign('public', 'n');
 $smarty->assign('edited', 'n');
 $smarty->assign('visible', 'y');
+$smarty->assign('geographic', 'n');
 $smarty->assign('edit_mode', 'n');
 $options_sortorder=array(tra('id') => 'imageId',
 		tra('Name') => 'name', 
@@ -165,7 +166,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('showfilesize',$info['showfilesize']);
 		$smarty->assign('showfilename',$info['showfilename']);
 		$smarty->assign('defaultscale',$info['defaultscale']);
-
+		$smarty->assign_by_ref('geographic', $info["geographic"]);
 		$smarty->assign_by_ref('scaleinfo', $scaleinfo);
 	}
 }
@@ -229,6 +230,15 @@ if (isset($_REQUEST["edit"])) {
 	}
 
 	$smarty->assign_by_ref('visible', $visible);
+	
+		if (isset($_REQUEST["geographic"]) && $_REQUEST["geographic"] == "on") {
+		$smarty->assign('geographic', 'y');
+		$geographic = 'y';
+	} else {
+		$geographic = 'n';
+	}
+
+	$smarty->assign_by_ref('geographic', $geographic);
 
 	if (isset($_REQUEST["public"]) && $_REQUEST["public"] == "on") {
 		$smarty->assign('public', 'y');
@@ -243,7 +253,7 @@ if (isset($_REQUEST["edit"])) {
 		'', $user, $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
 		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage'],$_REQUEST['parentgallery'],
 		$_REQUEST['showname'],$_REQUEST['showimageid'],$_REQUEST['showdescription'],$_REQUEST['showcreated'],
-		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale']);
+		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale'],$geogrpahic);
 
 	#add scales
 	if (isset($_REQUEST["scaleSize"]) && is_numeric($_REQUEST["scaleSize"])) {

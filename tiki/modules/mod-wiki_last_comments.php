@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-wiki_last_comments.php,v 1.5 2004-08-26 19:24:11 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-wiki_last_comments.php,v 1.6 2004-09-19 19:37:09 mose Exp $
 // \brief Show last comments on wiki pages
 //
 
@@ -32,6 +32,7 @@ function wiki_last_comments($limit)
 $comments = wiki_last_comments($module_rows);
 $smarty->assign('comments', $comments);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
+$smarty->assign('module_rows', $module_rows);
 $smarty->assign('moretooltips', isset($module_params["moretooltips"]) ? $module_params["moretooltips"] : 'n');
 
 ?>

@@ -131,12 +131,12 @@
 {if $cms_spellcheck eq 'y'}
 <tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
-<tr id='show_pre_publ' {if $types.$type.show_pre_publ eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Publish Date{/tr}</td><td>
+<tr id='show_pubdate' {if $types.$type.show_pubdate eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Publish Date{/tr}</td><td>
 {html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td></tr>
-<tr id='show_post_expire' {if $types.$type.show_post_expire eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Expiration Date{/tr}</td><td>
+<tr id='show_expdate' {if $types.$type.show_expdate eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Expiration Date{/tr}</td><td>
 {html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>

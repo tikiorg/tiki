@@ -804,7 +804,7 @@ $lang=Array(
 
 "Saturday" => "Subota",
 "at" => "na",
-"The passwords didn't match" => "Lozinke se ne poklapaju",
+"The passwords did not match" => "Lozinke se ne poklapaju",
 "You can not use the same password again" => "Nemožete dva puta da koristite istu lozinku",
 "Invalid old password" => "Neispravna stara lozinka",
 "Password must contain both letters and numbers" => "Lozinka mora da sadrži slova i brojeve",

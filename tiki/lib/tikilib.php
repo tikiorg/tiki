@@ -993,7 +993,7 @@ class TikiLib extends TikiDB {
     // generate a random string (for unsubscription code etc.)
     function genRandomString($base="") {
 	if ($base == "") $base = $this->genPass();
-	$base .= date("U");
+	$base .= microtime();
 	return md5($base);
     }
 
@@ -2785,6 +2785,10 @@ class TikiLib extends TikiDB {
 	}
 
 	function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system', $ip = '0.0.0.0', $description = '', $lang='') {
+	global $smarty;
+	global $dbTiki;
+	global $sender_email;
+	include_once ("lib/commentslib.php");
 	    if ($this->page_exists($name))
 		return false;
 
@@ -3958,12 +3962,13 @@ class TikiLib extends TikiDB {
 		$imgdata["align"] = '';
 		$imgdata["desc"] = '';
 		$imgdata["imalign"] = '';
+	  $imgdata["alt"] = '';
 		$imgdata = $this->split_assoc_array( $parts, $imgdata);
 
 		if ($tikidomain) {
 		    $imgdata["src"] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata["src"]);
 		}
-		$repl = '<img alt="' . tra('Image') . '" src="'.$imgdata["src"].'" border="0" ';
+	  $repl = '<img alt="' . $imgdata["alt"] . '" src="'.$imgdata["src"].'" border="0" ';
 
 		if ($imgdata["width"])
 		    $repl .= ' width="' . $imgdata["width"] . '"';
@@ -4623,6 +4628,14 @@ class TikiLib extends TikiDB {
 	}
 
 	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $minor = false, $lang='') {
+	global $dbTiki;
+	global $feature_user_watches;
+	global $wiki_watch_author;
+	global $wiki_watch_comments;
+	global $sender_email;
+	global $histlib;
+	include_once ("lib/commentslib.php");
+
 	    $this->invalidate_cache($pageName);
 	    // Collect pages before modifying edit_data (see update of links below)
 	    $pages = $this->get_pages($edit_data);
@@ -4631,15 +4644,17 @@ class TikiLib extends TikiDB {
 		return false;
 
 	    $t = date("U");
+		$info = $this->get_page_info($pageName);
 	    
 	    // Use largest version +1 in history table rather than tiki_page because versions used to be bugged
 	    //    $old_version = $info["version"];
-	    include_once ("lib/wiki/histlib.php");
+			if (!is_object($histlib)) {
+	    	include_once ("lib/wiki/histlib.php");
+			}
 	    $old_version = $histlib->get_page_latest_version($pageName, &$old_data);
 	   
 	    if (!$minor && $pageName != 'SandBox') {
 		// Archive current version
-		$info = $this->get_page_info($pageName);
 		$lastModif = $info["lastModif"];
 		$user = $info["user"];
 		$ip = $info["ip"];

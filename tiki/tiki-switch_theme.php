@@ -15,7 +15,7 @@ if (isset($_GET['theme'])){
 	if($feature_userPreferences == 'y' && $user && $change_theme == 'y') {  
 		$tikilib->set_user_preference($user,'theme',$new_theme);
 	} else {
-		setcookie('tiki-theme', $new_theme, time()+3600*24*30*12, '', $_SERVER['SERVER_NAME']);
+		$a = setcookie('tiki-theme', $new_theme, time()+3600*24*30*12);
 	}
 }
 

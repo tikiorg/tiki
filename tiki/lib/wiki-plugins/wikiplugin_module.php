@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.22 2004-08-26 19:24:10 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.23 2004-09-19 19:37:09 mose Exp $
 Displays a module inlined in page
 
 Parameters
@@ -45,7 +45,7 @@ function wikiplugin_module($data, $params) {
 	}
 
 	if (!isset($np)) {
-		$np = '0';
+		$np = '1';
 	}
 
 	if (!isset($module) or !$module) {

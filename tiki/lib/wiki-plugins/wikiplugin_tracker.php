@@ -9,7 +9,7 @@ function wikiplugin_tracker_help() {
 	return $help;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $userlib, $dbTiki, $notificationlib, $user, $group;
+	global $tikilib, $trklib, $userlib, $dbTiki, $notificationlib, $user, $group;
 	//var_dump($_REQUEST);
 	extract ($params);
 	if (!isset($showtitle)) {

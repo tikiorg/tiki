@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-usage_chart.php,v 1.5 2004-09-08 19:51:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-usage_chart.php,v 1.6 2004-09-19 19:36:25 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,7 +25,7 @@ $graph = new graph(400,300);
 $graph->parameter['path_to_fonts'] = 'lib/graph2/';
 $graph->parameter['title'] = tra('Usage');
 $graph->parameter['x_label'] = tra('Feature');
-$graph->parameter['y_label_left'] = tra('Klicks');
+$graph->parameter['y_label_left'] = tra('Clicks');
 
 $data = $tikilib->get_usage_chart_data();
 $graph->x_data=$data['xdata'];

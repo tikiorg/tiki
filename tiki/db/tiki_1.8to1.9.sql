@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.89 2004-09-08 19:51:53 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.90 2004-09-19 19:36:26 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -653,5 +653,22 @@ CREATE TABLE tiki_structure_versions (
 ALTER TABLE `tiki_structures` ADD `structure_id` int(14) NOT NULL AFTER `page_ref_id`;
 ALTER TABLE `tiki_structures` ADD `page_version` int(8) default NULL AFTER `page_id`;
 
-# added on 2004-09-07 by chealer for baptiste (modification of 1.7 to 1.8 upgrade script made after 1.8.1 release, for older installs) : adding attachments handling to the mail-in feature
-ALTER TABLE tiki_mailin_accounts ADD attachments CHAR(1) NOT NULL DEFAULT 'n';
+# added on 2004-09-08 by chealer for installs originally made between 1.8.0 and 1.8.2 : provides tiki_download table
+CREATE TABLE `tiki_download` (
+  `id` int(11) NOT NULL auto_increment,
+  `object` varchar(255) NOT NULL default '',
+  `userId` int(8) NOT NULL default '0',
+  `type` varchar(20) NOT NULL default '',
+  `date` int(14) NOT NULL default '0',
+  `IP` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  KEY `object` (`object`,`userId`,`type`),
+  KEY `userId` (`userId`),
+  KEY `type` (`type`),
+  KEY `date` (`date`)
+) TYPE=MyISAM AUTO_INCREMENT=32;
+
+# added on 2004-09-18 by franck for adding geographic capability to image galleries
+ALTER TABLE `tiki_galleries` ADD `geographic` char(1) default NULL AFTER `visible`;
+ALTER TABLE `tiki_images` ADD `lat` float default NULL AFTER `description`;
+ALTER TABLE `tiki_images` ADD `lon` float default NULL AFTER `description`;

@@ -1600,7 +1600,7 @@ $lang=Array(
 "The following image was succesfully uploaded" => "Slijedeća slika je uspješno poslana na poslužitelj",//perhaps not used
 "The following site was added and validation by admin may be needed before appearing on the lists" => "Slijedeći site je dodan i provjera od strane administratora je potrebna pre nego što će se pojaviti na listi",
 "The page cannot be found" => "Stranica nije pronađena",
-"The passwords didn't match" => "Šifre se ne podudaraju",
+"The passwords did not match" => "Šifre se ne podudaraju",
 "The passwords dont match" => "Šifre nisu iste",
 "The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appeareance of the page, no versions are stored for this page." => "Igraonica je stranica na kojoj možete vježbate vještinu izrade stranica, koristite pregled da bi vidjeli krajnji izgled stranice, ništa neće biti pohranjeno.",
 "The SandBox is a page where you can practice your editing skills, use the preview feature
