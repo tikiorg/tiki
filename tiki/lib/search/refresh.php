@@ -5,12 +5,13 @@ function refresh_search_index() {
   session_write_close();
 
   // check if we have to run. Run every n-th click:
-  $n=5; //todo: make it configurable
-  srand (microtime());
+  $n=100; //todo: make it configurable
+  list($usec, $sec) = explode(" ",microtime());
+  srand (ceil($sec+100*$usec));
   if(rand(1,$n)==1) {
     // get a random location
     $locs=array("wiki","forum","trackers","oldest"); // to be continued
-    $location=$locs[rand(0,count($locs))];
+    $location=$locs[rand(0,count($locs)-1)];
     // random refresh
     switch ($location) {
       case "wiki":
@@ -109,7 +110,7 @@ function insert_index(&$words,$location,$page) {
       $query="insert into `tiki_searchindex`
     		(`location`,`page`,`searchword`,`count`,`last_update`)
 		values(?,?,?,?,?)";
-      $tikilib->query($query,array($location,$page,$key,(int) $value,$now));
+      $tikilib->query($query,array($location,$page,$key,(int) $value,$now),-1,-1,false);
     }
   }
 
