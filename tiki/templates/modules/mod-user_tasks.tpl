@@ -1,7 +1,7 @@
 {if $feature_tasks eq 'y' and $user}
 <div class="box">
 <div class="box-title">
-{tr}<a class="linkmodule" href="tiki-user_tasks.php">User tasks</a>{/tr}
+<a class="linkmodule" href="tiki-user_tasks.php">{tr}User tasks{/tr}</a>
 </div>
 <div class="box-data">
 <form action="{$ownurl}" method="post">
