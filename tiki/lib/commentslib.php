@@ -1138,16 +1138,16 @@ class Comments extends TikiLib {
 	$old_sort_mode = '';
 
 	if (in_array($sort_mode, array(
-			'replies desc',
-			'replies asc',
-			'lastPost desc',
-			'lastPost asc'
+			'replies_desc',
+			'replies_asc',
+			'lastPost_desc',
+			'lastPost_asc'
 			))) {
 	    $old_offset = $offset;
 
 	    $old_maxRecords = $maxRecords;
 	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'title desc';
+	    $sort_mode = 'title_desc';
 	    $offset = 0;
 	    $maxRecords = -1;
 	}
