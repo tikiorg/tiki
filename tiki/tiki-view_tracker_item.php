@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.26 2004-01-20 10:21:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.27 2004-01-21 03:51:57 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -136,6 +136,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 }
 
 if ($_REQUEST["itemId"]) {
+	include_once('lib/categories/categlib.php');
 	$cat = $categlib->get_object_categories("tracker ".$_REQUEST["trackerId"],$_REQUEST["itemId"]);
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	for ($i = 0; $i < count($fields["data"]); $i++) {
