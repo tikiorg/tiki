@@ -18,7 +18,7 @@
 <tr><td class="formcolor">{tr}Registration code{/tr}:</td>
 <td class="formcolor"><input  type="text" maxlength="5" size="5" name="regcode" /></td></tr>
 {/if}
-<tr><td class="formcolor">{tr}Password{/tr}:</td><td class="formcolor"><input id='pass1' type="password" name="pass1" /></td></tr>
+<tr><td class="formcolor">{tr}Password{/tr}:</td><td class="formcolor"><input id='pass1' type="password" name="pass" /></td></tr>
 <tr><td class="formcolor">{tr}Repeat password{/tr}:</td><td class="formcolor"><input id='pass2' type="password" name="pass2" /></td></tr>
 <tr><td class="formcolor">{tr}Email{/tr}:</td><td class="formcolor"><input type="text" name="email" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="register" value="{tr}register{/tr}" /></td></tr>
@@ -26,7 +26,7 @@
 </form>
 <br/>
 <table class="normal">
-<tr><td class="formcolor"><a class="link" href="javascript:genPass('genepass','pass1','pass2');">{tr}Generate a password{/tr}</a></td>
+<tr><td class="formcolor"><a class="link" href="javascript:genPass('genepass','pass','pass2');">{tr}Generate a password{/tr}</a></td>
 <td class="formcolor"><input id='genepass' type="text" /></td></tr>
 </table>
 {/if}
