@@ -13,7 +13,7 @@ if($feature_file_galleries != 'y') {
 
 // Now check permissions to access this page
 if($tiki_p_upload_files != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cannot upload images"));
+  $smarty->assign('msg',tra("Permission denied you cannot upload files"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
@@ -48,11 +48,11 @@ if(isset($_REQUEST["upload"])) {
     	}
   	}
   	if($tiki_p_admin_file_galleries == 'y') {
-    	$tiki_p_upload_filesimages = 'y';
+    	$tiki_p_upload_files = 'y';
   	}
 
   	if($tiki_p_upload_files != 'y') {
-  		$smarty->assign('msg',tra("Permission denied you cannot upload images"));
+  		$smarty->assign('msg',tra("Permission denied you cannot upload files"));
   		$smarty->display("styles/$style_base/error.tpl");
   		die;  
   	}
@@ -89,7 +89,7 @@ if(isset($_REQUEST["upload"])) {
 	        		$filegallib->process_batch_file_upload($_REQUEST["galleryId"],$_FILES["userfile$i"]['tmp_name'],$user,$_REQUEST["description"]);
 	        		header("location: tiki-list_file_gallery.php?galleryId=".$_REQUEST["galleryId"]);
 	        	} else {
-	           		$smarty->assign('msg',tra('No permission to upload zipped image packages'));
+	           		$smarty->assign('msg',tra('No permission to upload zipped file packages'));
 	           		$smarty->display("styles/$style_base/error.tpl");
 	           		die;  	
 	        	}
@@ -137,6 +137,7 @@ if(isset($_REQUEST["upload"])) {
 		  	if(isset($data)) {
 		     	$fileId = $filegallib->insert_file($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user,$fhash);
 		      	if(!$fileId) {
+						$errors[] = sprintf("%s<br>%s<br>%s<br>%s<br>%s<br>%s<br>%s<br>%s<br>%s<br>",$_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user,$fhash);
 			     	$errors[] = tra('Upload was not successful (maybe a duplicate file)'.': '.$name);
 		      	} 
 		      	if(count($errors)==0) {
