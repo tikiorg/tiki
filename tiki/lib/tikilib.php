@@ -3746,9 +3746,6 @@ class TikiLib {
 		$noparsed = array();
 		$this->parse_first($data, $preparsed, $noparsed);
 
-		// Replace special characters
-		$this->parse_htmlchar($data);
-
 		// Extract [link] sections (to be re-inserted later)
 		$noparsedlinks = array();
 		preg_match_all("/\[([^\]]*)\]/", $data, $noparseurl);
@@ -3761,6 +3758,10 @@ class TikiLib {
 			$noparsedlinks[] = $aux;
 			$data = str_replace("$np", $key, $data);
 		}
+
+		// Replace special characters
+		//done after url catching because otherwise urls of dyn. sites will be modified
+		$this->parse_htmlchar($data);
 
 		// Now replace a TOC
 		preg_match_all("/\{toc\}/i", $data, $tocs);
@@ -4215,7 +4216,8 @@ class TikiLib {
 			}
 
 			if ($this->is_cached($link) && $cachepages == 'y') {
-				$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=$link\">(cache)</a>";
+				//use of urlencode for using cached versions of dynamic sites
+				$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
 
 				//$link2 = str_replace("/","\/",$link);
 				//$link2 = str_replace("?","\?",$link2);
