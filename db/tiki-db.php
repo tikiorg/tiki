@@ -43,4 +43,9 @@ $user_tiki   = NULL;
 $pass_tiki   = NULL;
 $dbs_tiki    = NULL;
 
+unset($host_tiki);
+unset($user_tiki);
+unset($pass_tiki);
+unset($dbs_tiki);
+
 ?>

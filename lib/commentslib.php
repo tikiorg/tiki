@@ -1,10 +1,10 @@
 <?php
 
-// A library to handle comments on objetcs (notes, articles, etc)
+// A library to handle comments on object (notes, articles, etc)
 // This is just a test
 
-class Comments {
-  var $db;  // The PEAR db object used to access the database
+class Comments extends TikiLib {
+#  var $db;  // The PEAR db object used to access the database
     
   function Comments($db) 
   {
@@ -14,17 +14,7 @@ class Comments {
     $this->db = $db;  
   }
   
-  function sql_error($query, $result) 
-  {
-    trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
-    die;
-  }
-
-
   /* Functions for the forums */
-  
-
-  
      
   function replace_forum($forumId, $name, $description, $controlFlood,$floodInterval, 
                          $moderator, $mail, $useMail,
@@ -54,8 +44,7 @@ class Comments {
                 threadOrdering = '$threadOrdering',
                 pruneMaxAge = $pruneMaxAge
                 where forumId = $forumId";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);   
+      $result = $this->query($query);
     } else{
       $now = date("U");
       $query = "insert into tiki_forums(name, description, created, lastPost, threads,
@@ -66,9 +55,8 @@ class Comments {
                         $pruneUnrepliedAge,  '$usePruneOld',
                         $pruneMaxAge, $topicsPerPage,
                         '$topicOrdering','$threadOrdering','$section') ";
-     $result = $this->db->query($query);
-     if(DB::isError($result)) $this->sql_error($query, $result);   
-     $forumId=$this->db->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
+     $result = $this->query($query);
+     $forumId=$this->getOne("select max(forumId) from tiki_forums where name='$name' and created=$now"); 
     }	
     return $forumId;
   }           
@@ -76,8 +64,7 @@ class Comments {
   function get_forum($forumId) 
   {
     $query = "select * from tiki_forums where forumId='$forumId'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
@@ -85,13 +72,11 @@ class Comments {
   function remove_forum($forumId) 
   {
     $query = "delete from tiki_forums where forumId=$forumId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);	
+    $result = $this->query($query);
     // Now remove all the messages for the forum
     $objectId = md5('forum'.$forumId);	
     $query = "delete from tiki_comments where object='$objectId'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);	
+    $result = $this->query($query);
     return true;
   }              
 
@@ -105,9 +90,8 @@ class Comments {
     }
     $query = "select * from tiki_forums $mid order by section asc,$sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_forums $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $now = date("U");
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -121,7 +105,7 @@ class Comments {
       // Now select users
       $objectId=md5('forum'.$res["forumId"]);
       $query = "select distinct(username) from tiki_comments where object='$objectId'";
-      $result2 = $this->db->query($query);
+      $result2 = $this->query($query);
       $res["users"] = $result2->numRows();
       if($forum_age) {
         $res["users_per_day"] = $res["users"]/$forum_age;
@@ -130,8 +114,7 @@ class Comments {
       }
       
       $query2= "select * from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and commentDate=".$res["lastPost"];
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $result2 = $this->query($query2);
       $res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC);
       $res["lastPostData"]=$res2;
       $ret[] = $res;
@@ -152,9 +135,8 @@ class Comments {
     }
     $query = "select * from tiki_forums $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_forums";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $now = date("U");
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -168,7 +150,7 @@ class Comments {
       // Now select users
       $objectId=md5('forum'.$res["forumId"]);
       $query = "select distinct(username) from tiki_comments where object='$objectId'";
-      $result2 = $this->db->query($query);
+      $result2 = $this->query($query);
       $res["users"] = $result2->numRows();
       if($forum_age) {
         $res["users_per_day"] = $res["users"]/$forum_age;
@@ -177,8 +159,7 @@ class Comments {
       }
       
       $query2= "select * from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and commentDate=".$res["lastPost"];
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $result2 = $this->query($query2);
       $res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC);
       $res["lastPostData"]=$res2;
       $ret[] = $res;
@@ -197,7 +178,7 @@ class Comments {
     if($user) {
       $objectId = md5('forum'.$forumId);
       $query = "select max(commentDate) from tiki_comments where object='$objectId' and userName='$user'";
-      $maxDate = $this->db->getOne($query);
+      $maxDate = $this->getOne($query);
       if(!$maxDate) {
         return true;
       }
@@ -230,13 +211,11 @@ class Comments {
     } else {
       $query = "update tiki_forums set comments=comments+1 where forumId=$forumId";		
     }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
   
-    $lastPost = $this->db->getOne("select max(commentDate) from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and forumId=$forumId");
+    $lastPost = $this->getOne("select max(commentDate) from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and forumId=$forumId");
     $query="update tiki_forums set lastPost=$lastPost where forumId=$forumId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     
     $this->forum_prune($forumId);
     return true;
@@ -252,8 +231,7 @@ class Comments {
   function forum_add_hit($forumId)
   {
     $query = "update tiki_forums set hits=hits+1 where forumId=$forumId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);	
+    $result = $this->query($query);
     $this->forum_prune($forumId);
     return true;
   }
@@ -261,8 +239,7 @@ class Comments {
   function comment_add_hit($threadId)
   {
     $query = "update tiki_comments set hits=hits+1 where threadId=$threadId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);	
+    $result = $this->query($query);
     //$this->forum_prune($forumId);
     return true;
   }
@@ -278,22 +255,19 @@ class Comments {
       $now = date("U");
       $oldage = $now - $age;
       $query = "select threadId from tiki_comments where parentId=0  and commentDate<$oldage";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
+      $result = $this->query($query);
       while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
         // Check if this old top level thread has replies
         $id = $res["threadId"];
         $query2 = "select count(*) from tiki_comments where parentId=$id";
-        $cant = $this->db->getOne($query2);
+        $cant = $this->getOne($query2);
         if($cant == 0) {
           // Remove this old thread without replies
           $query3 = "delete from tiki_comments where threadId = $id";
-          $result3 = $this->db->query($query3);
-          if(DB::isError($result3)) $this->sql_error($query3, $result3);	
+          $result3 = $this->query($query3);
           // This is just to be sure
           $query3 = "delete from tiki_comments where parentId = $id";
-          $result3 = $this->db->query($query3);
-          if(DB::isError($result3)) $this->sql_error($query3, $result3);	
+          $result3 = $this->query($query3);
         }	
       }
     }
@@ -302,18 +276,16 @@ class Comments {
       $maxAge = $forum["pruneMaxAge"];
       $old = date("U") - $maxAge;
       $query = "delete from tiki_comments where object='$objectId' and commentDate<$old";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
+      $result = $this->query($query);
     }
     
     // Recalculate comments and threads
     $query = "select count(*) from tiki_comments where object='$objectId'";
-    $comments = $this->db->getOne($query);
+    $comments = $this->getOne($query);
     $query = "select count(*) from tiki_comments where object='$objectId' and parentId=0";
-    $threads = $this->db->getOne($query);
+    $threads = $this->getOne($query);
     $query = "update tiki_forums set comments=$comments, threads=$threads where forumId=$forumId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     return true;
   }
   
@@ -325,8 +297,7 @@ class Comments {
   function get_comment($id) 
   {
     $query = "select * from tiki_comments where threadId='$id'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $res["parsed"] = $this->parse_comment_data($res["data"]);
     return $res;
@@ -334,7 +305,7 @@ class Comments {
     
   function get_comment_father($id) {
     $query = "select parentId from tiki_comments where threadId=$id";
-    $ret = $this->db->getOne($query);
+    $ret = $this->getOne($query);
     return $ret;
   }
   
@@ -342,7 +313,7 @@ class Comments {
   {
     $hash = md5($objectId);   
     $query = "select count(*) from tiki_comments where object='$hash'";
-    $cant = $this->db->getOne($query);
+    $cant = $this->getOne($query);
     return $cant;
   }
   
@@ -350,10 +321,9 @@ class Comments {
     
   function get_comment_replies($id,$sort_mode,$offset,$max,$threshold=0) {
     $query = "select threadId,title,userName,points,commentDate,parentId from tiki_comments where average>=$threshold and parentId=$id order by $sort_mode,commentDate desc limit $offset,$max";
-    $result = $this->db->query($query);
+    $result = $this->query($query);
     $retval=Array();
     $retval["numReplies"]=$result->numRows();
-    if(DB::isError($result)) $this->sql_error($query, $result);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[]=$res;
@@ -373,10 +343,10 @@ class Comments {
   
   function pick_cookie()
   {
-    $cant = $this->db->getOne("select count(*) from tiki_cookies");
+    $cant = $this->getOne("select count(*) from tiki_cookies");
     if(!$cant) return '';
     $bid = rand(0,$cant-1);
-    $cookie = $this->db->getOne("select cookie from tiki_cookies limit $bid,1");
+    $cookie = $this->getOne("select cookie from tiki_cookies limit $bid,1");
     $cookie = str_replace("\n","",$cookie);
     return 'Cookie: '.$cookie.'';    
   }
@@ -425,7 +395,7 @@ class Comments {
     }
     
     $query = "select count(*) from tiki_comments where object='$hash' and average<$threshold";
-    $below = $this->db->getOne($query);
+    $below = $this->getOne($query);
     if($find) {
       $mid=" where type='s' and average>=$threshold and object='$hash' and parentId=$parentId and (title like '%".$find."%' or data like '%".$find."%') ";  
     } else {
@@ -434,15 +404,14 @@ class Comments {
     $query = "select * from tiki_comments $mid order by $sort_mode limit $offset,$maxRecords";
     //print("$query<br/>");
     $query_cant = "select count(*) from tiki_comments $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret1 = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Get the last reply
       $tid = $res["threadId"];
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
-      $res["lastPost"]=$this->db->getOne($query);
+      $res["lastPost"]=$this->getOne($query);
       if(!$res["lastPost"]) $res["lastPost"]=$res["commentDate"];
       // Get the grandfather
       if($res["parentId"]>0) {
@@ -474,19 +443,17 @@ class Comments {
     $query = "select * from tiki_comments $mid order by $sort_mode limit $offset,$maxRecords";
     //print("$query<br/>");
     $query_cant = "select count(*) from tiki_comments $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant += $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant += $this->getOne($query_cant);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Get the last reply
       $tid = $res["threadId"];
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
-      $res["lastPost"]=$this->db->getOne($query);
+      $res["lastPost"]=$this->getOne($query);
       if(!$res["lastPost"]) $res["lastPost"]=$res["commentDate"];
       
       $query2 = "select * from tiki_comments where parentId='$tid' and commentDate=".$res["lastPost"];
-      $result2 = $this->db->query($query2);
-      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $result2 = $this->query($query2);
       $res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC);
       $res["lastPostData"]=$res2;
       
@@ -544,8 +511,7 @@ class Comments {
      $title = addslashes(strip_tags($title));
      $data = addslashes($data);
      $query="update tiki_comments set title='$title', data='$data', type='$type' where threadId=$threadId";
-     $result = $this->db->query($query);
-     if(DB::isError($result)) $this->sql_error($query, $result);
+     $result = $this->query($query);
   }
 
   function post_new_comment($objectId,$parentId,$userName, $title, $data,$type='n')
@@ -561,29 +527,22 @@ class Comments {
     }
     $hash=md5($title.$data);
     $query = "select threadId from tiki_comments where hash='$hash'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     if(!$result->numRows()) {
       $now = date("U");
       $object = md5($objectId);
       $query = "insert into tiki_comments(object,commentDate,userName,title,data,votes,points,hash,parentId,average,hits,type)
                           values('$object',$now,'$userName','$title','$data',0,0,'$hash',$parentId,0,0,'$type')";
       
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
+      $result = $this->query($query);
     }
     return true;                      
   }
   
   function remove_comment($threadId) 
   {
-    $query = "delete from tiki_comments where threadId='$threadId'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    // Cascade deleting to child posts....
-    $query = "delete from tiki_comments where parentId='$threadId'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $query = "delete from tiki_comments where threadId='$threadId' or parentId='$threadId'";
+    $result = $this->query($query);
     return true;
   }
   
@@ -592,8 +551,7 @@ class Comments {
   
     // Select user points for the user who is voting (it may be anonymous!)
     $query = "select points,voted from tiki_userpoints where user='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     if($result->numRows()) {
       $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
       $user_points = $res["points"];
@@ -615,7 +573,7 @@ class Comments {
     
     // Get the user that posted the comment being voted
     $query = "select userName from tiki_comments where threadId=$threadId";
-    $comment_user = $this->db->getOne($query);
+    $comment_user = $this->getOne($query);
         
     if($comment_user && ($comment_user==$user)) {
       // The user is voting a comment posted by himself then bail out
@@ -626,22 +584,18 @@ class Comments {
     if($comment_user) {
       // Update the user points adding this new vote
       $query = "select user from tiki_userpoints where user='$comment_user'";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query, $result);
+      $result = $this->query($query);
       if($result->numRows()) {
         $query = "update tiki_userpoints set points = points + $vote, voted=voted+1 where user='$user'";
       } else {
         $query = "insert into tiki_userpoints(user,points,voted) values('$comment_user',$vote,1)";
       }
     }
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $query = "update tiki_comments set points = points + $vote_weight, votes = votes+1 where threadId=$threadId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $query = "update tiki_comments set average = points/votes where threadId=$threadId";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     return true;
   }
   

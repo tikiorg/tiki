@@ -1,9 +1,10 @@
 <?php
  
 class StructLib extends TikiLib {
-    
-  function TrackerLib($db) 
+
+  function StructLib($db) 
   {
+  	# this is probably uneeded now
     if(!$db) {
       die("Invalid db object passed to UsersLib constructor");  
     }
@@ -14,14 +15,12 @@ class StructLib extends TikiLib {
   {
     // Now recursively remove
     $query = "select page from tiki_structures where parent='$page'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $this->s_remove_page($res["page"],$delete);	
     }
     $query = "delete from tiki_structures where page='$page'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     if($delete) {
       $this->remove_all_versions($page);	
     }
@@ -38,7 +37,7 @@ class StructLib extends TikiLib {
       $this->create_page($name, 0, '', $now, 'created from stucture', 'system', '0.0.0.0','');
     }    
     if($after) {
-      $max = $this->db->getOne("select pos from tiki_structures where page='$after'");	
+      $max = $this->getOne("select pos from tiki_structures where page='$after'");	
     } else {
       $max =0;	
     }
@@ -46,19 +45,15 @@ class StructLib extends TikiLib {
      //If max is 5 then we are inserting after position 5 so we'll insert 5 and move all
      // the others
      $query = "update tiki_structures set pos=pos+1 where pos>$max and parent='$parent'";
-     $result = $this->db->query($query);
-     if(DB::isError($result)) $this->sql_error($query, $result);	
+     $result = $this->query($query);
     }
-    $cant = $this->db->getOne("select count(*) from tiki_structures where page='$name'");
+    $cant = $this->getOne("select count(*) from tiki_structures where page='$name'");
     if($cant) return false;
     $max++;
     $query = "insert into tiki_structures(parent,page,pos) values('$parent','$name',$max)";
     
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     // If the page doesn't exist then create the page!
-    
-    
   }
  
   function get_subtree($structure,$page,&$html,$level='')
@@ -68,8 +63,7 @@ class StructLib extends TikiLib {
     //$level++;
     $sublevel=0;
     $query = "select page from tiki_structures where parent='$page' order by pos asc";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     $subs=Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
     	if($first) {
@@ -99,7 +93,7 @@ class StructLib extends TikiLib {
   
   function get_structure($page)
   {
-    $parent = $this->db->getOne("select parent from tiki_structures where page='$page'");
+    $parent = $this->getOne("select parent from tiki_structures where page='$page'");
     if(!$parent) return $page;
     return $this->get_structure($parent);
   }
@@ -111,8 +105,7 @@ class StructLib extends TikiLib {
     //$level++;
     $sublevel=0;
     $query = "select page from tiki_structures where parent='$page' order by pos asc";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     $subs=Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
     	if($first) {
@@ -139,7 +132,7 @@ class StructLib extends TikiLib {
   
   function page_is_in_structure($page)
   {
-    $cant = $this->db->getOne("select count(*) from tiki_structures where page='$page'");
+    $cant = $this->getOne("select count(*) from tiki_structures where page='$page'");
     return $cant;
   }
   
@@ -148,8 +141,7 @@ class StructLib extends TikiLib {
     // If we have children then get the first children
     if($deep) {
     $query = "select page from tiki_structures where parent='$page' order by pos asc";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     if($result->numRows()) {
       $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
       return $res["page"];
@@ -157,12 +149,11 @@ class StructLib extends TikiLib {
     }
     
     // Try to get the next page with the same parent as this
-    $parent = $this->db->getOne("select parent from tiki_structures where page='$page'");
-    $pos = $this->db->getOne("select pos from tiki_structures where page='$page'");
+    $parent = $this->getOne("select parent from tiki_structures where page='$page'");
+    $pos = $this->getOne("select pos from tiki_structures where page='$page'");
     if(!$parent) return '';
     $query = "select page from tiki_structures where parent='$parent' and pos>$pos order by pos asc";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     if($result->numRows()) {
       $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
       return $res["page"];
@@ -175,12 +166,11 @@ class StructLib extends TikiLib {
   function get_prev_page($page)
   {
     // Try to get the next page with the same parent as this
-    $parent = $this->db->getOne("select parent from tiki_structures where page='$page'");
-    $pos = $this->db->getOne("select pos from tiki_structures where page='$page'");
+    $parent = $this->getOne("select parent from tiki_structures where page='$page'");
+    $pos = $this->getOne("select pos from tiki_structures where page='$page'");
     if(!$parent) return '';
     $query = "select page from tiki_structures where parent='$parent' and pos<$pos order by pos desc";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     if($result->numRows()) {
       $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
       return $res["page"];
@@ -194,8 +184,7 @@ class StructLib extends TikiLib {
   {
     $ret = Array();
     $query = "select page from tiki_structures where parent='$page' order by pos desc";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[]=$res["page"];
     }	
@@ -205,8 +194,7 @@ class StructLib extends TikiLib {
   function get_max_children($page)
   {
     $query = "select page from tiki_structures where parent='$page'";	
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     if(!$result->numRows()) {
 	return '';
     }
@@ -220,8 +208,7 @@ class StructLib extends TikiLib {
     $ret = Array($page);
     //print("page: $page<br/>");
     $query = "select page from tiki_structures where parent='$page'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result); 	
+    $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[]=$res["page"];
       $ret2 = $this->get_structure_pages($res["page"]);
@@ -243,9 +230,8 @@ class StructLib extends TikiLib {
     }
     $query = "select * from tiki_structures $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_structures $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;

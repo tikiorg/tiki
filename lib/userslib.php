@@ -3,8 +3,8 @@
   // This lib uses pear so the constructor requieres
   // a pear DB object
 
-class UsersLib {
-  var $db;  // The PEAR db object used to access the database
+class UsersLib extends TikiLib {
+#  var $db;  // The PEAR db object used to access the database
     
   function UsersLib($db) 
   {
@@ -13,12 +13,6 @@ class UsersLib {
     }
     $this->db = $db;  
   }
-  
-  function sql_error($query, $result) 
-  {
-    trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
-    die;
-  }
 
   function set_admin_pass($pass) 
   {
@@ -26,8 +20,7 @@ class UsersLib {
     $hash = md5($pass);
     if($feature_clear_passwords == 'n') $pass='';
     $query = "update users_users set password='$pass',hash='$hash' where login='admin'"; 
-    $result=$this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result=$this->query($query);
     return true;
   }
 
@@ -37,8 +30,7 @@ class UsersLib {
     $objectId = md5($objectType.$objectId);
     
     $query = "replace into users_objectpermissions(groupName,objectId,objectType,permName) values('$groupName','$objectId','$objectType','$permName')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return true;
   }
   
@@ -48,8 +40,7 @@ class UsersLib {
     $objectId = md5($objectType.$objectId);
     foreach($groups as $groupName) {
       $query = "select permName from users_objectpermissions where groupName='$groupName' and objectId='$objectId' and objectType='$objectType' and permName = '$permName'";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query,$result);
+      $result = $this->query($query);
       if($result->numRows()) return true;
     }
     return false;
@@ -59,8 +50,7 @@ class UsersLib {
   {
     $objectId = md5($objectType.$objectId);
     $query = "delete from users_objectpermissions where groupName='$groupName' and objectId='$objectId' and objectType='$objectType' and permName='$permName'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return true;
   }
   
@@ -68,8 +58,7 @@ class UsersLib {
   {
     $objectId = md5($objectType.$objectId);
     $query = "select groupName,permName from users_objectpermissions where objectId='$objectId' and objectType='$objectType'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;
@@ -83,23 +72,20 @@ class UsersLib {
     $objectId = md5($objectType.$objectId);
     
     $query = "select objectId,objectType from users_objectpermissions where objectId='$objectId' and objectType='$objectType'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return $result->numRows(); 
   }
   
 
   function user_exists($user) {
     $query = "select login from users_users where login='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return $result->numRows();
   }
   
   function group_exists($group) {
     $query = "select groupName from users_groups where groupName='$group'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return $result->numRows();
   }
   
@@ -108,8 +94,7 @@ class UsersLib {
     $t = date("U");
     // No need to change lastLogin since it is handled at the validateUser method
     //$query = "update users_users set lastLogin=$t where login='$user'";
-    //$result = $this->db->query($query);
-    //if(DB::isError($result)) $this->sql_error($query,$result);
+    //$result = $this->query($query);
   }
   
   function genPass()
@@ -142,32 +127,27 @@ class UsersLib {
     
     if($feature_challenge=='n' || empty($response)) {
       $query = "select login from users_users where binary login = '$user' and hash='$hash'"; 
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query,$result);
+      $result = $this->query($query);
       if($result->numRows()) {
         $t = date("U");
         // Check
-        $current = $this->db->getOne("select currentLogin from users_users where login='$user'");
+        $current = $this->getOne("select currentLogin from users_users where login='$user'");
         if (is_null($current)) {
 	    // First time
 	    $current = $t;
 	}
 	$query = "update users_users set lastLogin=$current where login='$user'";
-        $result = $this->db->query($query);
-        if(DB::isError($result)) $this->sql_error($query,$result);
+        $result = $this->query($query);
         // check
         
         $query = "update users_users set currentLogin=$t where login='$user'";
-        $result = $this->db->query($query);
-        if(DB::isError($result)) $this->sql_error($query,$result);
-        
-        
+        $result = $this->query($query);
         return true; 
       }
     } else {
       // Use challenge-reponse method
       // Compare pass against md5(user,challenge,hash)
-      $hash = $this->db->getOne("select hash from users_users where binary login='$user'");
+      $hash = $this->getOne("select hash from users_users where binary login='$user'");
       
       if(!isset($_SESSION["challenge"])) return false;
       //print("pass: $pass user: $user hash: $hash <br/>");
@@ -176,19 +156,17 @@ class UsersLib {
       if($response == md5($user.$hash.$_SESSION["challenge"])) {
         $t = date("U");
         // Check
-        $current = $this->db->getOne("select currentLogin from users_users where login='$user'");
+        $current = $this->getOne("select currentLogin from users_users where login='$user'");
         if (is_null($current)) {
 	    // First time
 	    $current = $t;
 	}
 	$query = "update users_users set lastLogin=$current where login='$user'";
         $query = "update users_users set lastLogin=$current where login='$user'";
-        $result = $this->db->query($query);
-        if(DB::isError($result)) $this->sql_error($query,$result);
+        $result = $this->query($query);
         // check
         $query = "update users_users set currentLogin=$t where login='$user'";
-        $result = $this->db->query($query);
-        if(DB::isError($result)) $this->sql_error($query,$result);
+        $result = $this->query($query);
         return true;
       } else {
         return false;      
@@ -209,9 +187,8 @@ class UsersLib {
     $query = "select * from users_users $mid order by $sort_mode limit $offset,$maxRecords";
     
     $query_cant = "select count(*) from users_users";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $aux = Array();
@@ -233,15 +210,13 @@ class UsersLib {
   function group_inclusion($group,$include)
   {
     $query = "replace into tiki_group_inclusion(groupName,includeGroup) values('$group','$include')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
   }
   
   function get_included_groups($group)
   {
     $query = "select includeGroup from tiki_group_inclusion where groupName='$group'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
     $ret=Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[]=$res["includeGroup"];
@@ -255,8 +230,7 @@ class UsersLib {
   {
     $userid = $this->get_user_id($user);
     $query = "delete from users_usergroups where userId=$userid and groupName='$group'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    $result = $this->query($query);
   }
 
   function get_groups($offset = 0,$maxRecords = -1,$sort_mode = 'groupName_desc', $find='')
@@ -270,9 +244,8 @@ class UsersLib {
     }
     $query = "select groupName, groupDesc from users_groups $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from users_groups";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $aux = Array();
@@ -292,21 +265,18 @@ class UsersLib {
 
   function get_user_id($user)
   {
-    $id = $this->db->getOne("select userId from users_users where login='$user'");
-    if(DB::isError($id)) return false;
+    $id = $this->getOne("select userId from users_users where login='$user'");
     return $id;  
   }
   
   function remove_user($user)
   {
-    $userId = $this->db->getOne("select userId from users_users where login = '$user'");
+    $userId = $this->getOne("select userId from users_users where login = '$user'");
        
     $query = "delete from users_users where login = '$user'";
-    $result =  $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result =  $this->query($query);
     $query = "delete from users_usergroups where userId=$userId";
-    $result =  $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result =  $this->query($query);
     
     return true;
   }
@@ -314,11 +284,9 @@ class UsersLib {
   function remove_group($group)
   {
     $query = "delete from users_groups where groupName = '$group'";
-    $result =  $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result =  $this->query($query);
     $query = "delete from tiki_group_inclusion where groupName = '$group'";
-    $result =  $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result =  $this->query($query);
     return true;
   }
   
@@ -326,8 +294,7 @@ class UsersLib {
   {
     $userid = $this->get_user_id($user);
     $query = "select groupName from users_usergroups where userId='$userid'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res["groupName"];  
@@ -342,8 +309,7 @@ class UsersLib {
   function get_user_info($user) 
   {
     $query = "select * from users_users where login='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $aux = Array();
     foreach ($res as $key => $val) {
@@ -357,8 +323,7 @@ class UsersLib {
   function get_userid_info($user) 
   {
     $query = "select * from users_users where userId='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $aux = Array();
     foreach ($res as $key => $val) {
@@ -387,9 +352,8 @@ class UsersLib {
     
     $query = "select permName,type, permDesc from users_permissions $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from users_permissions $mid";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
-    $cant = $this->db->getOne($query_cant);
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $aux = Array();
@@ -414,8 +378,7 @@ class UsersLib {
   function get_group_permissions($group)
   {
     $query = "select permName from users_grouppermissions where groupName='$group'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res["permName"];  
@@ -426,8 +389,7 @@ class UsersLib {
   function assign_permission_to_group($perm,$group) 
   {
     $query = "replace into users_grouppermissions(groupName,permName) values('$group','$perm')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return true;  
   }
   
@@ -461,24 +423,21 @@ class UsersLib {
   function group_has_permission($group,$perm) 
   {
     $query = "select groupName,permName from users_grouppermissions where groupName='$group' and permName='$perm'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return $result->numRows();  
   }
   
   function remove_permission_from_group($perm,$group) 
   {
     $query = "delete from users_grouppermissions where permName='$perm' and groupName= '$group'";
-    $result =  $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result =  $this->query($query);
     return true;
   }
   
   function get_group_info($group) 
   {
     $query = "select * from users_groups where groupName='$group'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $perms = $this->get_group_permissions($group);
     $res["perms"] = $perms;
@@ -489,8 +448,7 @@ class UsersLib {
   {
     $userid = $this->get_user_id($user);
     $query = "replace into users_usergroups(userId,groupName) values($userid,'$group')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return true;  
   }
   
@@ -498,14 +456,13 @@ class UsersLib {
   {
     global $feature_clear_passwords;
     
-    $provpass = $this->db->getOne("select provpass from users_users where login='$user'");
+    $provpass = $this->getOne("select provpass from users_users where login='$user'");
     $hash=md5($provpass);
     if($feature_clear_passwords == 'n') {
       $provpass='';
     }
     $query = "update users_users set password='$provpass',hash='$hash' where login='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
   }
   
   function add_user($user,$pass,$email,$provpass='')
@@ -518,8 +475,7 @@ class UsersLib {
     $now=date("U");
     $new_pass_due=$now+(60*60*24*$pass_due);
     $query = "insert into users_users(login,password,email,provpass,registrationDate,hash,pass_due,created) values('$user','$pass','$email','$provpass',$now,'$hash',$new_pass_due,$now)";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     $this->assign_user_to_group($user,'Registered');
     return true;
   }
@@ -527,20 +483,19 @@ class UsersLib {
   function change_user_email($user,$email)
   {
     $query = "update users_users set email='$email' where login='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
   }
   
   function get_user_password($user) 
   {
     $query = "select password from users_users where login='$user'";
-    $pass = $this->db->getOne($query);
+    $pass = $this->getOne($query);
     return $pass;
   }
   
   function is_due($user)
   {
-    $due = $this->db->getOne("select pass_due from users_users where login='$user'");
+    $due = $this->getOne("select pass_due from users_users where login='$user'");
     if($due<=date("U")) return true;
     return false;
   }
@@ -552,8 +507,7 @@ class UsersLib {
     // Note that tiki-generated passwords are due inmediatley
     $now=date("U");
     $query = "update users_users set password='$pass', hash='$hash',pass_due=$now where login='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return $pass;
   }
   
@@ -568,16 +522,14 @@ class UsersLib {
       $pass='';
     }
     $query = "update users_users set hash='$hash',password='$pass',pass_due=$new_pass_due where login='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
   }
   
   function add_group($group,$desc)
   {
     if($this->group_exists($group)) return false;  
     $query = "insert into users_groups(groupName, groupDesc) values('$group','$desc')";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    $result = $this->query($query);
     return true;
   }
 }  
