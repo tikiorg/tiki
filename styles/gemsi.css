@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.6 2004-01-04 08:26:31 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.7 2004-01-04 21:06:34 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -20,18 +20,19 @@ sable sombre : #ddd7c6;
 */
 
 body {
+	font-family: Helvetica, Arial, sans-serif;
 	background-color: white;
 	margin: 0px;
 }
 TD {
 	vertical-align: top;
-	text-align: left;
 }
 FORM {
 	margin: 0px;
 	padding: 0px;
 }
 input, textarea, select {
+	background-color: #ededed;
 	color: black;
 	border: 1px solid #1c60a8;
 }
@@ -39,6 +40,7 @@ input {
 	text-indent: 2px;
 }
 input[type=submit] {
+	background-color: #dedede;
 }
 input[type=submit]:hover {
 	background-color: #aaaaaa;
@@ -219,7 +221,7 @@ div.separator, div.separatorline {
 }
 .linkmenu, .rsslink {
 	color: #1c60a8;
-	margin-left: 15px;
+	margin-left: 2px;
 }
 .linkmenu:active, 
 .rsslink:active {
