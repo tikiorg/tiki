@@ -1441,14 +1441,14 @@ class Comments extends TikiLib {
 	if (!$userName) {
 	    $userName = tra('Anonymous');
 	} else {
-	    $now = date("U");
+	    $now = (int) date("U");
 
 	    if ($this->db->getOne("select count(*) from 
 			`tiki_user_postings` where `user`=?",
 			array( $userName )))
 	    {
 		$query = "update `tiki_user_postings` ".
-		    "set `last`=?, posts = posts + 1 where `user`=?";
+		    "set `last`=?, `posts` = `posts` + 1 where `user`=?";
 
 		$this->query($query, array( $now, $userName ) );
 	    } else {
@@ -1460,20 +1460,20 @@ class Comments extends TikiLib {
 		    $posts = 1;
 
 		$query = "insert into 
-		    `tiki_user_postings`(user,first,last,posts) 
+		    `tiki_user_postings`(`user`,`first`,`last`,`posts`) 
 		    values( ?, ?, ?, ? )";
 		$this->query($query,  array($userName, $now, $now, $posts) );
 	    }
 
 	    // Calculate max
-	    $max = $this->getOne("select max(posts) from tiki_user_postings");
-	    $min = $this->getOne("select min(posts) from tiki_user_postings");
+	    $max = $this->getOne("select max(`posts`) from `tiki_user_postings`",array());
+	    $min = $this->getOne("select min(`posts`) from `tiki_user_postings`",array());
 
 	    if ($min == 0)
 		$min = 1;
 
-	    $ids = $this->getOne("select count(*) from tiki_user_postings");
-	    $tot = $this->getOne("select sum(posts) from tiki_user_postings");
+	    $ids = $this->getOne("select count(*) from `tiki_user_postings`",array());
+	    $tot = $this->getOne("select sum(`posts`) from `tiki_user_postings`",array());
 	    $average = $tot / $ids;
 	    $range1 = ($min + $average) / 2;
 	    $range2 = ($max + $average) / 2;
@@ -1606,22 +1606,22 @@ class Comments extends TikiLib {
 
 	    if ($result->numRows()) {
 		$query = "update `tiki_userpoints`
-		    set `points` = points + ?, voted=voted+1
+		    set `points` = `points` + ?, `voted`=`voted`+1
 		    where `user`=?";
 		$result = $this->query($query, array( $vote, $user ) );
 	    } else {
 		$query = "insert into
-		    `tiki_userpoints`(user,points,voted)
+		    `tiki_userpoints`(`user`,`points`,`voted`)
 		    values( ?, ?, 1 )";
 		$result = $this->query($query, array( $comment_user, $vote ) );
 	    }
 	}
 
 	$query = "update `tiki_comments`
-	    set `points` = points + ?, votes = votes+1
+	    set `points` = `points` + ?, `votes` = `votes`+1
 	    where `threadId`=?";
 	$result = $this->query($query, array( $vote_weight, $threadId ) );
-	$query = "update `tiki_comments` set `average` = points/votes
+	$query = "update `tiki_comments` set `average` = `points`/`votes`
 	    where `threadId`=?";
 	$result = $this->query($query, array( $threadId ) );
 	return true;
