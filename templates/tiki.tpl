@@ -1,4 +1,4 @@
-{* Index we display a wiki page here *}
+{* Index  we display a wiki page here *}
 {include file="header.tpl"}
 <div id="tiki-main">
   <div id="tiki-top">
