@@ -2,14 +2,14 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2004-03-27 21:24:48 $
-* CVS Revision...: $Revision: 1.10 $
+* Last Modified..: $Date: 2004-03-29 21:26:41 $
+* CVS Revision...: $Revision: 1.11 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -884,7 +884,7 @@ class htmlMimeMail {
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.10 $
+* @version $Revision: 1.11 $
 * @package Mail
 */
 class Mail_mimePart {
@@ -1174,7 +1174,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.10 $
+* @version $Revision: 1.11 $
 * @package Mail
 */
 class Mail_RFC822 {

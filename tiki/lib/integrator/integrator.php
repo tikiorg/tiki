@@ -1,14 +1,14 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.25 2004-03-27 21:24:32 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.26 2004-03-29 21:26:35 mose Exp $
  * 
  * \brief Tiki integrator support class
  *
  */
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+if (basename($_SERVER["SCRIPT_NAME"]) == basename(__FILE__)) {
+  header("location: index.php");
 }
 
 include_once ('lib/tikilib.php');

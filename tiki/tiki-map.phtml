@@ -23,6 +23,12 @@ $smarty->assign('tiki_p_map_edit',$tiki_p_map_edit);
 
 if (isset($_REQUEST['mapfile']))
 {
+  // Validate to prevent displaying any file
+  if (strstr($_REQUEST["mapfile"], '..')) {
+    $smarty->assign('msg', tra("You dont have permission to do that"));
+    $smarty->display('error.tpl');
+    die;
+  }
   $mapfile = $_REQUEST['mapfile'];
 } else
 {

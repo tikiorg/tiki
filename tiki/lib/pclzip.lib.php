@@ -2,7 +2,7 @@
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
 // --------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 //   The use of this software is at the risk of the user.
 //
 // --------------------------------------------------------------------------------
-// $Id: pclzip.lib.php,v 1.7 2004-03-27 21:24:03 mose Exp $
+// $Id: pclzip.lib.php,v 1.8 2004-03-29 21:26:29 mose Exp $
 // --------------------------------------------------------------------------------
 
   // ----- Constants

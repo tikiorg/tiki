@@ -13,12 +13,12 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.5 2004-03-27 21:24:30 mose Exp $
+// $Id: GraphViz.php,v 1.6 2004-03-29 21:26:34 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  die("This script cannot be called directly");
+  header("location: index.php");
 }
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.10 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.11 2004-03-29 21:26:28 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if(@$feature_maps != 'y') {
+if(!isset($feature_maps) or $feature_maps != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
   $smarty->display("error.tpl");
   die;
@@ -34,6 +34,17 @@ if (isset($_REQUEST["mapfile"])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+}
+if (!isset($map_path) or !$map_path) {
+	$smarty->assign('msg', tra("Maps feature is not correctly setup : Maps path is missing."));
+	$smarty->display('error.tpl');
+	die;
+}
+
+if (!is_dir($map_path)) {
+	$smarty->assign('msg', tra("Please create a directory named $map_path to hold your map files."));
+	$smarty->display('error.tpl');
+	die;							
 }
 
 $smarty->assign('tiki_p_map_create', $tiki_p_map_create);
