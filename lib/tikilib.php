@@ -33,7 +33,7 @@ class TikiLib {
   // to record the query stats, create a table:
   // create table tiki_querystats(qcount number,qtext varchar(255),qtime float);
   // to show queries to tune use queries like this one:
-  // select qcount*qtime , qtext from tiki_querystats order by 1 ;
+  // select `qcount` *qtime , qtext from `tiki_querystats` order by 1 ;
   /*
   function query($query,$reporterrors=true) {
     //for performance stats
@@ -47,7 +47,7 @@ class TikiLib {
     $querystat="insert into tiki_querystats values(1,'".addslashes($query)."',$qdiff)";
     $qresult=$this->db->query($querystat);
     if(DB::isError($qresult)) {
-      $querystat="update tiki_querystats set qcount=qcount+1, qtime=qtime+$qdiff where qtext='".addslashes($query)."'";
+      $querystat="update `tiki_querystats` set `qcount`=qcount+1, qtime=qtime+$qdiff where `qtext`='".addslashes($query)."'";
       $qresult=$this->db->query($querystat);
     }
     return $result;
@@ -65,7 +65,7 @@ class TikiLib {
     $querystat="insert into tiki_querystats values(1,'".addslashes($query)."',$qdiff)";
     $qresult=$this->db->query($querystat);
     if(DB::isError($qresult)) {
-      $querystat="update tiki_querystats set qcount=qcount+1, qtime=qtime+$qdiff where qtext='".addslashes($query)."'";
+      $querystat="update `tiki_querystats` set `qcount`=qcount+1, qtime=qtime+$qdiff where `qtext`='".addslashes($query)."'";
       $qresult=$this->db->query($querystat);
     }
     return $result;
@@ -83,25 +83,114 @@ class TikiLib {
   }
 
   // Queries the database reporting an error if detected
-  function query($query,$reporterrors=true) {
-    $result = $this->db->query($query);
-    if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
+  // 
+  function query($query,$values=null,$numrows=-1,$offset=-1,$reporterrors=true) {
+    $query=$this->convert_query($query);
+    //echo "query: $query <br/>";
+    //echo "<pre>";
+    //print_r($values);
+    //echo "\n";
+    if($numrows==-1 && $offset==-1) 
+      $result = $this->db->Execute($query,$values);
+    else 
+      $result = $this->db->SelectLimit($query,$numrows,$offset,$values);
+    //print_r($result);
+    //echo "\n</pre>\n";
+    if(!$result && $reporterrors) $this->sql_error($query,$values,$result);
     return $result;
   }
 
   // Gets one column for the database.
-  function getOne($query,$reporterrors=true) {
-    $result = $this->db->getOne($query);
-    if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
-    return $result;
+  function getOne($query,$values=null,$reporterrors=true) {
+    $query=$this->convert_query($query);
+    //echo "<pre>";
+    //echo "query: $query \n";
+    //print_r($values);
+    //echo "\n";
+    $result = $this->db->SelectLimit($query,1,0,$values);
+    //echo "\n</pre>\n";
+    if(!$result && $reporterrors) $this->sql_error($query,$values,$result);
+    $res=$result->fetchRow();
+    if ($res===false) return(NULL);  //simulate pears behaviour
+    return $res[0];
   }
   
   // Reports SQL error from PEAR::db object.
-  function sql_error($query, $result)
+  function sql_error($query,$values, $result)
   {
-    trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
+    global $ADODB_Database;
+    trigger_error($ADODB_Database." error:  ".$this->db->ErrorMsg()." in query:<br/>".$query."<br/>",E_USER_WARNING);
+    // only for debugging.
+    //print_r($values);
+    //echo "<br/>";
     die;
   }
+
+  // functions to support DB abstraction
+  
+  function convert_query($query)
+  {
+    global $ADODB_Database;
+    switch($ADODB_Database)
+    {
+      case "oci8":
+        $query=preg_replace("/`/","\"",$query);
+        // convert bind variables - adodb does not do that 
+        $qe=explode("?",$query);
+        $query='';
+        for ($i=0 ; $i<sizeof($qe)-1; $i++) {
+            $query.=$qe[$i].":".$i;
+          }
+        $query.=$qe[$i];
+        break;
+      case "postgres7":
+      case "sybase":
+        $query=preg_replace("/`/","\"",$query);
+	break;
+     }
+    return($query);
+  }
+
+  function convert_sortmode($sort_mode)
+  {
+    global $ADODB_Database;
+    switch($ADODB_Database)
+    {
+      case "pgsql72":
+      case "postgres7":
+      case "oci8":
+      case "sybase":
+        // Postgres needs " " around column names
+        //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
+        $sort_mode = str_replace("_","\" ",$sort_mode);
+        $sort_mode = "\"".$sort_mode;
+        break;
+      case "mysql3":
+      case "mysql":
+        $sort_mode = str_replace("_","` ",$sort_mode);
+        $sort_mode = "`".$sort_mode;
+        break;
+    }
+    return $sort_mode;
+  }
+
+  function convert_binary()
+  {
+    global $ADODB_Database;
+    switch($ADODB_Database)
+    {
+      case "pgsql72":
+      case "oci8":
+      case "postgres7":
+        return;
+        break;
+      case "mysql3":
+      case "mysql":
+        return "binary";
+        break;
+    }
+  }
+
 
   /*shared*/ function httprequest($url,$reqmethod=HTTP_REQUEST_METHOD_GET)
   {
@@ -128,7 +217,7 @@ class TikiLib {
 
   /*shared*/ function get_dsn_by_name($name) 
   {
-    return $this->getOne("select dsn from tiki_dsn where name='$name'");
+    return $this->getOne("select `dsn`  from `tiki_dsn` where `name`='$name'");
   }
   
   
@@ -138,9 +227,9 @@ class TikiLib {
   	if($user == 'admin' ) return false;
   	$ips = explode('.',$_SERVER["REMOTE_ADDR"]);
   	$now = date("U");
-  	$query = "select tb.message,tb.user,tb.ip1,tb.ip2,tb.ip3,tb.ip4,tb.mode from tiki_banning tb, tiki_banning_sections tbs where tbs.banId=tb.banId and tbs.section='$section' and ( (tb.use_dates = 'n') or (tb.date_from <= $now and tb.date_to >= $now))";
+  	$query = "select `tb` .message,tb.user,tb.ip1,tb.ip2,tb.ip3,tb.ip4,tb.mode from `tiki_banning` tb, tiki_banning_sections tbs where tbs.banId=tb.banId and tbs.section='$section' and ( (tb.use_dates = 'n') or (tb.date_from <= $now and tb.date_to >= $now))";
     $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
     	if(!$res['message']) {
     		$res['message']=tra('You are banned from').':'.$section;
     	}
@@ -183,14 +272,14 @@ class TikiLib {
       data = '$data',
       size = $size,
       lastModif = $now
-      where user='$user' and noteId=$noteId";	
+      where `user`='$user' and noteId=$noteId";	
       $this->query($query);
       return $noteId;
     } else {
       $query = "insert into tiki_user_notes(user,noteId,name,data,created,lastModif,size)
       values('$user',$noteId,'$name','$data',$now,$now,$size)";
       $this->query($query);
-      $noteId = $this->getOne("select max(noteId) from tiki_user_notes where user='$user' and name='$name' and created=$now");
+      $noteId = $this->getOne("select `max` (noteId) from `tiki_user_notes` where `user`='$user' and name='$name' and created=$now");
       return $noteId;
     }
   }
@@ -209,7 +298,7 @@ class TikiLib {
   }
   
   /*shared*/ function remove_user_watch_by_hash($hash) {
-  	$query = "delete from tiki_user_watches where hash='$hash'";
+  	$query = "delete from `tiki_user_watches` where `hash`='$hash'";
   	$this->query($query);
   }
 
@@ -217,7 +306,7 @@ class TikiLib {
   /*shared*/ function remove_user_watch($user,$event,$object)
   {
   	$object=addslashes($object);
-  	$query = "delete from tiki_user_watches where user='$user' and event='$event' and object='$object'";
+  	$query = "delete from `tiki_user_watches` where `user`='$user' and event='$event' and object='$object'";
   	$this->query($query);
   }
   
@@ -227,10 +316,10 @@ class TikiLib {
     if($event) {
       $mid = " and event='$event' ";
     }
-    $query = "select * from tiki_user_watches where user='$user' $mid";
+    $query = "select * from `tiki_user_watches` where `user`='$user' $mid";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
 	return $ret;    
@@ -238,10 +327,10 @@ class TikiLib {
   
   /*shared*/ function get_watches_events()
   {
-    $query = "select distinct(event) from tiki_user_watches";
+    $query = "select `distinct` (event) from tiki_user_watches";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res['event'];
     }
 	return $ret;    
@@ -250,10 +339,10 @@ class TikiLib {
   /*shared*/ function get_user_event_watches($user,$event,$object)
   {
    
-    $query = "select * from tiki_user_watches where user='$user' and event='$event' and object='$object'";
+    $query = "select * from `tiki_user_watches` where `user`='$user' and event='$event' and object='$object'";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
 	return $res;    
   }
 
@@ -261,10 +350,10 @@ class TikiLib {
   {
 	   
     $ret = Array();
-    $query = "select * from tiki_user_watches where event='$event' and object='$object'";
+    $query = "select * from `tiki_user_watches` where `event`='$event' and object='$object'";
     $result = $this->query($query);
     if(!$result->numRows()) return $ret;
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
 	return $ret;    
@@ -284,14 +373,14 @@ class TikiLib {
       priority = $priority,
       percentage = $percentage,
       completed = $completed
-      where user='$user' and taskId=$taskId";	
+      where `user`='$user' and taskId=$taskId";	
       $this->query($query);
       return $taskId;
     } else {
       $query = "insert into tiki_user_tasks(user,taskId,title,description,date,status,priority,completed,percentage)
       values('$user',$taskId,'$title','$description',$date,'$status',$priority,$completed,$percentage)";	
       $this->query($query);
-      $taskId = $this->getOne("select max(taskId) from tiki_user_tasks where user='$user' and title='$title' and date=$date");
+      $taskId = $this->getOne("select `max` (taskId) from `tiki_user_tasks` where `user`='$user' and title='$title' and date=$date");
       return $taskId;
     }
   }
@@ -299,13 +388,13 @@ class TikiLib {
   /*shared*/ function complete_task($user,$taskId)
   {
     $now = date("U");
-    $query = "update tiki_user_tasks set completed=$now, status='c', percentage=100 where user='$user' and taskId=$taskId";
+    $query = "update `tiki_user_tasks` set `completed`=$now, status='c', percentage=100 where `user`='$user' and taskId=$taskId";
     $this->query($query);
   }
   
   /*shared*/ function remove_task($user,$taskId)
   {
-    $query = "delete from tiki_user_tasks where user='$user' and taskId=$taskId";
+    $query = "delete from `tiki_user_tasks` where `user`='$user' and taskId=$taskId";
     $this->query($query);  	
   }
 
@@ -326,12 +415,12 @@ class TikiLib {
     } else {
       $mid="".$prio; 
     }
-    $query = "select * from tiki_user_tasks where user='$user' $mid order by $sort_mode,taskId desc limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_user_tasks where user='$user' $mid";
+    $query = "select * from `tiki_user_tasks` where `user`='$user' $mid order by $sort_mode,taskId desc limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_user_tasks` where `user`='$user' $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -343,11 +432,11 @@ class TikiLib {
   /*shared*/ function dir_stats()
   {
     $aux=Array();
-    $aux["valid"] = $this->db->getOne("select count(*) from tiki_directory_sites where isValid='y'");
-    $aux["invalid"] = $this->db->getOne("select count(*) from tiki_directory_sites where isValid='n'");
+    $aux["valid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`='y'");
+    $aux["invalid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`='n'");
     $aux["categs"] = $this->db->getOne("select count(*) from tiki_directory_categories");
-    $aux["searches"] = $this->db->getOne("select sum(hits) from tiki_directory_search");
-    $aux["visits"] = $this->db->getOne("select sum(hits) from tiki_directory_sites");
+    $aux["searches"] = $this->db->getOne("select `sum` (hits) from tiki_directory_search");
+    $aux["visits"] = $this->db->getOne("select `sum` (hits) from tiki_directory_sites");
     return $aux;
   }
   
@@ -355,18 +444,17 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $findesc = $this->qstr('%'.$find.'%');
-      $mid=" where isValid='y' and (name like $findesc or description like $findesc)";  
+      $mid=" where `isValid`='y' and (name like '%".$find."%' or description like '%".$find."%')";  
     } else {
-      $mid=" where isValid='y' "; 
+      $mid=" where `isValid`='y' "; 
     }
     
-    $query = "select * from tiki_directory_sites $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_directory_sites $mid";
+    $query = "select * from `tiki_directory_sites` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_directory_sites` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -387,16 +475,16 @@ class TikiLib {
   
   /*shared*/ function user_unread_messages($user)
   {
-    $cant = $this->getOne("select count(*) from messu_messages where user='$user' and isRead='n'");
+    $cant = $this->getOne("select count(*) from `messu_messages` where `user`='$user' and isRead='n'");
     return $cant;
   }
 
   /*shared*/ function get_online_users()
   {
-    $query = "select user,timestamp from tiki_sessions where user<>''";
+    $query = "select `user` ,timestamp from `tiki_sessions` where `user`<>''";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $res['user_information'] = $this->get_user_preference($res['user'],'user_information','public');
       $ret[] = $res;
     }
@@ -407,17 +495,17 @@ class TikiLib {
   /*shared*/ function get_user_items($user)
   {
     $items = Array();
-    $query = "select ttf.trackerId, tti.itemId from tiki_tracker_fields ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='u' and tti.status='o' and value='$user'";
+    $query = "select `ttf` .trackerId, tti.itemId from `tiki_tracker_fields` ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='u' and tti.status='o' and value='$user'";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $itemId=$res["itemId"];
       $trackerId=$res["trackerId"];
       // Now get the isMain field for this tracker
-      $fieldId=$this->getOne("select fieldId from tiki_tracker_fields ttf where isMain='y' and trackerId=$trackerId");
+      $fieldId=$this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`='y' and trackerId=$trackerId");
       // Now get the field value
-      $value = $this->getOne("select value from tiki_tracker_item_fields where fieldId=$fieldId and itemId=$itemId");
-      $tracker = $this->getOne("select name from tiki_trackers where trackerId=$trackerId");
+      $value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=$fieldId and itemId=$itemId");
+      $tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=$trackerId");
       $aux["trackerId"]=$trackerId;
       $aux["itemId"]=$itemId;
       $aux["value"]=$value;
@@ -430,16 +518,16 @@ class TikiLib {
 
     $groups = $this->get_user_groups($user);
     foreach($groups as $group) {
-      $query = "select ttf.trackerId, tti.itemId from tiki_tracker_fields ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='g' and tti.status='o' and value='$group'";
+      $query = "select `ttf` .trackerId, tti.itemId from `tiki_tracker_fields` ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='g' and tti.status='o' and value='$group'";
       $result = $this->query($query);
-      while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      while($res = $result->fetchRow()) {
         $itemId=$res["itemId"];
         $trackerId=$res["trackerId"];
         // Now get the isMain field for this tracker
-        $fieldId=$this->getOne("select fieldId from tiki_tracker_fields ttf where isMain='y' and trackerId=$trackerId");
+        $fieldId=$this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`='y' and trackerId=$trackerId");
         // Now get the field value
-        $value = $this->getOne("select value from tiki_tracker_item_fields where fieldId=$fieldId and itemId=$itemId");
-        $tracker = $this->getOne("select name from tiki_trackers where trackerId=$trackerId");
+        $value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=$fieldId and itemId=$itemId");
+        $tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=$trackerId");
         $aux["trackerId"]=$trackerId;
         $aux["itemId"]=$itemId;
         $aux["value"]=$value;
@@ -459,10 +547,10 @@ class TikiLib {
   {
     $data ='';
     $now = date("U");
-    $query = "select max(publishDate) from tiki_programmed_content where contentId=$contentId and publishDate<=$now";
+    $query = "select `max` (publishDate) from `tiki_programmed_content` where `contentId`=$contentId and publishDate<=$now";
     $res = $this->getOne($query);
     if(!$res) return '';
-    $query = "select data from tiki_programmed_content where contentId=$contentId and publishDate=$res";
+    $query = "select `data`  from `tiki_programmed_content` where `contentId`=$contentId and publishDate=$res";
     $data = $this->getOne($query);
     return $data;
   }
@@ -470,25 +558,25 @@ class TikiLib {
 
   /*shared*/ function get_quiz($quizId) 
   {
-    $query = "select * from tiki_quizzes where quizId=$quizId";
+    $query = "select * from `tiki_quizzes` where `quizId`=$quizId";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
   /*shared*/ function compute_quiz_stats()
   {
-    $query = "select quizId from tiki_user_quizzes";
+    $query = "select `quizId`  from tiki_user_quizzes";
     $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $quizId = $res["quizId"];
-      $quizName = $this->getOne("select name from tiki_quizzes where quizId=$quizId");
-      $timesTaken = $this->getOne("select count(*) from tiki_user_quizzes where quizId=$quizId");
-      $avgpoints = $this->getOne("select avg(points) from tiki_user_quizzes where quizId=$quizId");
-      $maxPoints = $this->getOne("select max(maxPoints) from tiki_user_quizzes where quizId=$quizId");
+      $quizName = $this->getOne("select `name`  from `tiki_quizzes` where `quizId`=$quizId");
+      $timesTaken = $this->getOne("select count(*) from `tiki_user_quizzes` where `quizId`=$quizId");
+      $avgpoints = $this->getOne("select avg(points) from `tiki_user_quizzes` where `quizId`=$quizId");
+      $maxPoints = $this->getOne("select max (maxPoints) from `tiki_user_quizzes` where `quizId`=$quizId");
       $avgavg = ($maxPoints!=0) ? $avgpoints/$maxPoints*100 : 0.0;
-      $avgtime = $this->getOne("select avg(timeTaken) from tiki_user_quizzes where quizId=$quizId");
+      $avgtime = $this->getOne("select avg(timeTaken) from `tiki_user_quizzes` where `quizId`=$quizId");
       $query2 = "replace into tiki_quiz_stats_sum(quizId,quizName,timesTaken,avgpoints,avgtime,avgavg)
       values($quizId,'$quizName',$timesTaken,$avgpoints,$avgtime,$avgavg)";
       $result2 = $this->query($query2);
@@ -504,14 +592,14 @@ class TikiLib {
     } else {
       $mid=" ";
     }
-    $query = "select * from tiki_quizzes $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_quizzes $mid";
+    $query = "select * from `tiki_quizzes` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_quizzes` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["questions"]=$this->getOne("select count(*) from tiki_quiz_questions where quizId=".$res["quizId"]);
-      $res["results"]=$this->getOne("select count(*) from tiki_quiz_results where quizId=".$res["quizId"]);
+    while($res = $result->fetchRow()) {
+      $res["questions"]=$this->getOne("select count(*) from `tiki_quiz_questions` where `quizId`=".$res["quizId"]);
+      $res["results"]=$this->getOne("select count(*) from `tiki_quiz_results` where `quizId`=".$res["quizId"]);
       $ret[] = $res;
     }
     $retval = Array();
@@ -530,12 +618,12 @@ class TikiLib {
     } else {
       $mid="  ";
     }
-    $query = "select * from tiki_quiz_stats_sum $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_quiz_stats_sum $mid";
+    $query = "select * from `tiki_quiz_stats_sum` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_quiz_stats_sum` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -553,13 +641,13 @@ class TikiLib {
     } else {
       $mid=" ";
     }
-    $query = "select * from tiki_surveys $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_surveys $mid";
+    $query = "select * from `tiki_surveys` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_surveys` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["questions"]=$this->getOne("select count(*) from tiki_survey_questions where surveyId=".$res["surveyId"]);
+    while($res = $result->fetchRow()) {
+      $res["questions"]=$this->getOne("select count(*) from `tiki_survey_questions` where `surveyId`=".$res["surveyId"]);
       $ret[] = $res;
     }
     $retval = Array();
@@ -583,22 +671,22 @@ class TikiLib {
     }
 
     $sort_mode = str_replace("_"," ",$sort_mode);
-    $mid=" where trackerId=$trackerId ";
+    $mid=" where `trackerId`=$trackerId ";
     if($status) {
       $mid.=" and status='$status' ";
     }
-    $query = "select * from tiki_tracker_items $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_tracker_items $mid";
+    $query = "select * from `tiki_tracker_items` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_tracker_items` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $fields=Array();
       $itid=$res["itemId"];
-      $query2="select ttif.fieldId,name,value,type,isTblVisible,isMain from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=".$res["itemId"]." order by fieldId asc";
+      $query2="select `ttif` .fieldId,name,value,type,isTblVisible,isMain from `tiki_tracker_item_fields` ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=".$res["itemId"]." order by fieldId asc";
       $result2 = $this->query($query2);
       $pass=true;
-      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
+      while($res2 = $result2->fetchRow()) {
         // Check if the field is visible!
         $fieldId=$res2["fieldId"];
         if(count($filters)>0) {
@@ -613,7 +701,7 @@ class TikiLib {
         $fields[]=$res2;
       }
       $res["field_values"]=$fields;
-      $res["comments"]=$this->getOne("select count(*) from tiki_tracker_item_comments where itemId=$itid");
+      $res["comments"]=$this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=$itid");
       if($pass) $ret[] = $res;
     }
     //$ret=$this->sort_items_by_condition($ret,$sort_mode);
@@ -629,8 +717,8 @@ class TikiLib {
     if(!$this->user_exists($user)) {
       return '';
     }
-    $type = $this->getOne("select avatarType from users_users where login='$user'");
-    $libname = $this->getOne("select avatarLibName from users_users where login='$user'");
+    $type = $this->getOne("select `avatarType`  from `users_users` where `login`='$user'");
+    $libname = $this->getOne("select `avatarLibName`  from `users_users` where `login`='$user'");
     $ret='';
     $style='';
     if (strcasecmp($float,"left")==0) {
@@ -654,10 +742,10 @@ class TikiLib {
 
   /*shared*/ function get_forum_sections()
   {
-    $query = "select distinct section from tiki_forums where section<>''";
+    $query = "select `distinct`  section from `tiki_forums` where `section`<>''";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[]=$res["section"];
     }
     return $ret;
@@ -668,9 +756,9 @@ class TikiLib {
   {
      $referer = addslashes($referer);
      $now=date("U");
-     $cant = $this->getOne("select count(*) from tiki_referer_stats where referer='$referer'");
+     $cant = $this->getOne("select count(*) from `tiki_referer_stats` where `referer`='$referer'");
      if($cant) {
-       $query = "update tiki_referer_stats set hits=hits+1,last=$now where referer='$referer'";
+       $query = "update `tiki_referer_stats` set `hits`=`hits`+1,last=$now where `referer`='$referer'";
      } else {
        $query = "insert into tiki_referer_stats(referer,hits,last) values('$referer',1,$now)";
      }
@@ -683,7 +771,7 @@ class TikiLib {
 	global $count_admin_pvs;
 	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
-      $query = "update tiki_wiki_attachments set downloads=downloads+1 where attId=$id";
+      $query = "update `tiki_wiki_attachments` set `downloads`=downloads+1 where `attId`=$id";
       $result = $this->query($query);
     }
     return true;
@@ -691,30 +779,30 @@ class TikiLib {
   
   /*shared*/ function get_wiki_attachment($attId)
   {
-    $query = "select * from tiki_wiki_attachments where attId=$attId";
+    $query = "select * from `tiki_wiki_attachments` where `attId`=$attId";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
   /*shared*/ function get_random_image($galleryId = -1)
   {
     $whgal = "";
-    if (((int)$galleryId) != -1) { $whgal = " where galleryId = " . $galleryId; }
+    if (((int)$galleryId) != -1) { $whgal = " where `galleryId` = " . $galleryId; }
     $query = "select count(*) from tiki_images" . $whgal;
     $cant = $this->getOne($query);
     $ret = Array();
     if ($cant) {
       $pick = rand(0,$cant-1);
       
-      $query = "select imageId,galleryId,name from tiki_images" . $whgal . " limit $pick,1";
+      $query = "select `imageId` ,galleryId,name from tiki_images" . $whgal . " limit $pick,1";
       $result=$this->query($query);
-      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+      $res = $result->fetchRow();
       $ret["galleryId"] = $res["galleryId"];
       $ret["imageId"] = $res["imageId"];
       $ret["name"] = $res["name"];
-      $query = "select name from tiki_galleries where galleryId = " . $res["galleryId"];
+      $query = "select `name`  from `tiki_galleries` where `galleryId` = " . $res["galleryId"];
       $ret["gallery"] = $this->getOne($query);
     } else {
       $ret["galleryId"] = 0;
@@ -726,9 +814,9 @@ class TikiLib {
 
   /*shared*/   function get_gallery($id)
   {
-    $query = "select * from tiki_galleries where galleryId='$id'";
+    $query = "select * from `tiki_galleries` where `galleryId`='$id'";
     $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
@@ -736,15 +824,15 @@ class TikiLib {
   /*shared*/ function get_news_from_last_visit($user)
   {
     if(!$user) return false;
-    $last = $this->getOne("select lastLogin from users_users where login='$user'");
+    $last = $this->getOne("select `lastLogin`  from `users_users` where `login`='$user'");
     $ret = Array();
 		if (!$last) $last = time();
     $ret["lastVisit"] = $last;
-    $ret["images"] = $this->getOne("select count(*) from tiki_images where created>$last");
-    $ret["pages"] = $this->getOne("select count(*) from tiki_pages where lastModif>$last");
-    $ret["files"]  = $this->getOne("select count(*) from tiki_files where created>$last");
-    $ret["comments"]  = $this->getOne("select count(*) from tiki_comments where commentDate>$last");
-    $ret["users"]  = $this->getOne("select count(*) from users_users where registrationDate>$last");
+    $ret["images"] = $this->getOne("select count(*) from `tiki_images` where `created`>$last");
+    $ret["pages"] = $this->getOne("select count(*) from `tiki_pages` where `lastModif`>$last");
+    $ret["files"]  = $this->getOne("select count(*) from `tiki_files` where `created`>$last");
+    $ret["comments"]  = $this->getOne("select count(*) from `tiki_comments` where `commentDate`>$last");
+    $ret["users"]  = $this->getOne("select count(*) from `users_users` where `registrationDate`>$last");
     return $ret;
   }
   
@@ -758,16 +846,16 @@ class TikiLib {
     } else {
       $mid="";
     }
-    $query = "select name,created,tcts.templateId from tiki_content_templates tct, tiki_content_templates_sections tcts where tcts.templateId=tct.templateId and section='$section' $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_content_templates tct, tiki_content_templates_sections tcts where tcts.templateId=tct.templateId and section='$section' $mid";
+    $query = "select `name` ,created,tcts.templateId from `tiki_content_templates` tct, tiki_content_templates_sections tcts where tcts.templateId=tct.templateId and section='$section' $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_content_templates` tct, tiki_content_templates_sections tcts where tcts.templateId=tct.templateId and section='$section' $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query2= "select section from tiki_content_templates_sections where templateId=".$res["templateId"];
+    while($res = $result->fetchRow()) {
+      $query2= "select `section`  from `tiki_content_templates_sections` where `templateId`=".$res["templateId"];
       $result2 = $this->query($query2);
       $sections = Array();
-      while($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
+      while($res2 = $result2->fetchRow()) {
         $sections[] = $res2["section"];
       }
       $res["sections"]=$sections;
@@ -781,10 +869,10 @@ class TikiLib {
 
   /*shared*/ function get_template($templateId)
   {
-    $query = "select * from tiki_content_templates where templateId=$templateId";
+    $query = "select * from `tiki_content_templates` where `templateId`=$templateId";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
   // templates ////
@@ -798,12 +886,12 @@ class TikiLib {
     } else {
       $mid="";
     }
-    $query = "select * from tiki_games $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_games $mid";
+    $query = "select * from `tiki_games` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_games` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $parts=explode('.',$res["gameName"]);
       $res["thumbName"]=$parts[0];
       $ret[] = $res;
@@ -819,7 +907,7 @@ class TikiLib {
     $cant = $this->getOne("select count(*) from tiki_cookies");
     if(!$cant) return '';
     $bid = rand(0,$cant-1);
-    $cookie = $this->getOne("select cookie from tiki_cookies limit $bid,1");
+    $cookie = $this->getOne("select `cookie`  from `tiki_cookies` limit $bid,1");
     $cookie = str_replace("\n","",$cookie);
     return '<i>"'.$cookie.'"</i>';
   }
@@ -828,9 +916,9 @@ class TikiLib {
   /*shared*/ function add_pageview()
   {
     $dayzero = mktime(0,0,0,date("m"),date("d"),date("Y"));
-    $cant = $this->getOne("select count(*) from tiki_pageviews where day=$dayzero");
+    $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=$dayzero");
     if($cant) {
-      $query = "update tiki_pageviews set pageviews=pageviews+1 where day=$dayzero";
+      $query = "update `tiki_pageviews` set `pageviews`=pageviews+1 where `day`=$dayzero";
     } else {
       $query = "replace into tiki_pageviews(day,pageviews) values($dayzero,1)";
     }
@@ -843,12 +931,12 @@ class TikiLib {
     $now = mktime(0,0,0,date("m"),date("d"),date("Y"));
     $dfrom =0;
     if($days!=0) $dfrom = $now-($days*24*60*60);
-    $query = "select day,pageviews from tiki_pageviews where day<=$now and day>=$dfrom";
+    $query = "select `day` ,pageviews from `tiki_pageviews` where `day`<=$now and day>=$dfrom";
     $result = $this->query($query);
     $ret = Array();
     $n=ceil($result->numRows()/10);
     $i=0;
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       if($i%$n==0) {
         $data=Array(date("j M",$res["day"]),$res["pageviews"]);
       } else {
@@ -865,15 +953,15 @@ class TikiLib {
   {
     $this->compute_quiz_stats();
     $data=Array();
-    $data[]=Array("wiki",$this->getOne("select sum(hits) from tiki_pages"));
-    $data[]=Array("img-g",$this->getOne("select sum(hits) from tiki_galleries"));
-    $data[]=Array("file-g",$this->getOne("select sum(hits) from tiki_file_galleries"));
-    $data[]=Array("faqs",$this->getOne("select sum(hits) from tiki_faqs"));
-    $data[]=Array("quizzes",$this->getOne("select sum(timesTaken) from tiki_quiz_stats_sum"));
-    $data[]=Array("arts",$this->getOne("select sum(reads) from tiki_articles"));
-    $data[]=Array("blogs",$this->getOne("select sum(hits) from tiki_blogs"));
-    $data[]=Array("forums",$this->getOne("select sum(hits) from tiki_forums"));
-    $data[]=Array("games",$this->getOne("select sum(hits) from tiki_games"));
+    $data[]=Array("wiki",$this->getOne("select `sum` (hits) from tiki_pages"));
+    $data[]=Array("img-g",$this->getOne("select `sum` (hits) from tiki_galleries"));
+    $data[]=Array("file-g",$this->getOne("select `sum` (hits) from tiki_file_galleries"));
+    $data[]=Array("faqs",$this->getOne("select `sum` (hits) from tiki_faqs"));
+    $data[]=Array("quizzes",$this->getOne("select `sum` (timesTaken) from tiki_quiz_stats_sum"));
+    $data[]=Array("arts",$this->getOne("select `sum` (reads) from tiki_articles"));
+    $data[]=Array("blogs",$this->getOne("select `sum` (hits) from tiki_blogs"));
+    $data[]=Array("forums",$this->getOne("select `sum` (hits) from tiki_forums"));
+    $data[]=Array("games",$this->getOne("select `sum` (hits) from tiki_games"));
    return $data;
   }
 
@@ -881,18 +969,17 @@ class TikiLib {
   // User assigned modules ////
   /*shared*/ function get_user_id($user)
   {
-    $id = $this->db->getOne("select userId from users_users where login='$user'");
-    if(DB::isError($id)) return false;
+    $id = $this->db->getOne("select `userId` from `users_users` where `login`=?",array($user));
     return $id;
   }
 
   /*shared*/ function get_user_groups($user)
   {
     $userid = $this->get_user_id($user);
-    $query = "select groupName from users_usergroups where userId='$userid'";
+    $query = "select `groupName`  from `users_usergroups` where `userId`='$userid'";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res["groupName"];
     }
     $ret[] = "Anonymous";
@@ -909,13 +996,13 @@ class TikiLib {
     } else {
       $mid="";
     }
-    $query = "select * from tiki_faqs $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_faqs $mid";
+    $query = "select * from `tiki_faqs` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_faqs` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["suggested"]=$this->getOne("select count(*) from tiki_suggested_faq_questions where faqId=".$res["faqId"]);
+    while($res = $result->fetchRow()) {
+      $res["suggested"]=$this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=".$res["faqId"]);
       $ret[] = $res;
     }
     $retval = Array();
@@ -926,10 +1013,10 @@ class TikiLib {
   
   /*shared */ function get_faq($faqId)
   {
-    $query = "select * from tiki_faqs where faqId=$faqId";
+    $query = "select * from `tiki_faqs` where `faqId`=$faqId";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
   // End Faqs ////
@@ -958,10 +1045,10 @@ class TikiLib {
   // column to tiki_pages
   function pageRank($loops=16)
   {
-    $query = "select pageName from tiki_pages";
+    $query = "select `pageName`  from tiki_pages";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[]=$res["pageName"];
     }
     // Now calculate the loop
@@ -969,20 +1056,20 @@ class TikiLib {
     foreach ($ret as $page) {
       $val = 1/count($ret);
       $pages[$page] = $val;
-      $query = "update tiki_pages set pageRank=$val where pageName='".addslashes($page)."'";
+      $query = "update `tiki_pages` set `pageRank`=$val where `pageName`='".addslashes($page)."'";
       $result = $this->query($query);
     }
     for($i=0;$i<$loops;$i++) {
       foreach($pages as $pagename => $rank) {
         // Get all the pages linking to this one
-        $query = "select fromPage from tiki_links where toPage = '".addslashes($pagename)."'";
+        $query = "select `fromPage`  from `tiki_links` where `toPage` = '".addslashes($pagename)."'";
         $result = $this->query($query);
 
         $sum = 0;
-        while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+        while($res = $result->fetchRow()) {
           $linking = $res["fromPage"];
 					if (isset($pages[$linking])) {
-						$q2 = "select count(*) from tiki_links where fromPage='".addslashes($linking)."'";
+						$q2 = "select count(*) from `tiki_links` where `fromPage`='".addslashes($linking)."'";
 						$cant = $this->getOne($q2);
 						if($cant==0) $cant=1;
 							$sum += $pages[$linking] / $cant;
@@ -990,7 +1077,7 @@ class TikiLib {
 					}
 				 $val = (1-0.85)+0.85 * $sum;
          $pages[$pagename] = $val;
-         $query = "update tiki_pages set pageRank=$val where pageName='".addslashes($pagename)."'";
+         $query = "update `tiki_pages` set `pageRank`=$val where `pageName`='".addslashes($pagename)."'";
          $result = $this->query($query);
 
         // Update
@@ -1085,9 +1172,9 @@ class TikiLib {
 
   /*shared*/ function get_forum($forumId)
   {
-    $query = "select * from tiki_forums where forumId='$forumId'";
+    $query = "select * from `tiki_forums` where `forumId`='$forumId'";
     $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
@@ -1100,13 +1187,13 @@ class TikiLib {
     } else {
       $mid="";
     }
-    $query = "select * from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from tiki_comments,tiki_forums where `object`=md5(concat('forum',forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_comments,tiki_forums where `object`=md5(concat('forum',forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $now = date("U");
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -1124,13 +1211,13 @@ class TikiLib {
     } else {
       $mid="";
     }
-    $query = "select * from tiki_comments,tiki_forums where object=md5(concat('forum',$forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_comments,tiki_forums where object=md5(concat('forum',$forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from tiki_comments,tiki_forums where `object`=md5(concat('forum',$forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_comments,tiki_forums where `object`=md5(concat('forum',$forumId)) and parentId=0 $mid order by $sort_mode limit $offset,$maxRecords";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $now = date("U");
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -1148,13 +1235,13 @@ class TikiLib {
     } else {
       $mid="";
     }
-    $query = "select * from tiki_forums $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_forums $mid";
+    $query = "select * from `tiki_forums` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_forums` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $now = date("U");
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $forum_age = ceil(($now - $res["created"])/(24*3600));
       $res["age"] = $forum_age;
       if($forum_age) {
@@ -1162,9 +1249,9 @@ class TikiLib {
       } else {
         $res["posts_per_day"] =0;
       }
-      // Now select users
+      // Now select `users` 
       $objectId=md5('forum'.$res["forumId"]);
-      $query = "select distinct(username) from tiki_comments where object='$objectId'";
+      $query = "select `distinct` (username) from `tiki_comments` where `object`='$objectId'";
       $result2 = $this->query($query);
       $res["users"] = $result2->numRows();
       if($forum_age) {
@@ -1185,10 +1272,10 @@ class TikiLib {
     $this->uncategorize_object($type,$id);
     // Now remove comments
     $object = md5($type.$id);
-    $query = "delete from tiki_comments where object='$object'";
+    $query = "delete from `tiki_comments` where `object`='$object'";
     $result = $this->query($query);
     // Remove individual permissions for this object if they exist
-    $query = "delete from users_objectpermissions where objectId='$object' and objectType='$type'";
+    $query = "delete from `users_objectpermissions` where `objectId`='$object' and objectType='$type'";
     $result = $this->query($query);
     return true;
    }
@@ -1196,12 +1283,12 @@ class TikiLib {
   /*shared*/ function uncategorize_object($type,$id)
   {
     $id=addslashes($id);
-    $query = "select catObjectId from tiki_categorized_objects where type='$type' and objId='$id'";
+    $query = "select `catObjectId`  from `tiki_categorized_objects` where `type`='$type' and objId='$id'";
     $catObjectId = $this->getOne($query);
     if($catObjectId) {
-      $query = "delete from tiki_category_objects where catObjectId=$catObjectId";
+      $query = "delete from `tiki_category_objects` where `catObjectId`=$catObjectId";
       $result = $this->query($query);
-      $query = "delete from tiki_categorized_objects where catObjectId=$catObjectId";
+      $query = "delete from `tiki_categorized_objects` where `catObjectId`=$catObjectId";
       $result = $this->query($query);
     }
   }
@@ -1337,12 +1424,12 @@ class TikiLib {
     } else {
       $mid="";
     }
-    $query = "select * from tiki_received_pages $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_received_pages $mid";
+    $query = "select * from `tiki_received_pages` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_received_pages` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       if($this->page_exists($res["pageName"])) {
         $res["exists"]='y';
       } else {
@@ -1360,19 +1447,19 @@ class TikiLib {
   // Functions for polls ////
   /*shared*/ function get_poll($pollId)
   {
-    $query = "select * from tiki_polls where pollId=$pollId";
+    $query = "select * from `tiki_polls` where `pollId`=$pollId";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
   //This should be moved to a poll module (currently in tiki-setup.php
   /*shared*/ function poll_vote($pollId,$optionId)
   {
-    $query = "update tiki_poll_options set votes=votes+1 where optionId=$optionId";
+    $query = "update `tiki_poll_options` set `votes`=votes+1 where `optionId`=$optionId";
     $result = $this->query($query);
-    $query = "update tiki_polls set votes=votes+1 where pollId=$pollId";
+    $query = "update `tiki_polls` set `votes`=votes+1 where `pollId`=$pollId";
     $result = $this->query($query);
   }
 
@@ -1382,10 +1469,10 @@ class TikiLib {
   // Functions for the menubuilder and polls////
   /*Shared*/ function get_menu($menuId)
   {
-    $query = "select * from tiki_menus where menuId=$menuId";
+    $query = "select * from `tiki_menus` where `menuId`=$menuId";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
@@ -1393,17 +1480,16 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where menuId=$menuId and (name like $findesc or url like $findesc)";
+      $mid=" where `menuId`=$menuId and (name like '%".$find."%' or url like '%".$find."%')";
     } else {
-      $mid=" where menuId=$menuId ";
+      $mid=" where `menuId`=$menuId ";
     }
-    $query = "select * from tiki_menu_options $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_menu_options $mid";
+    $query = "select * from `tiki_menu_options` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_menu_options` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -1427,7 +1513,7 @@ class TikiLib {
         $ret = false;
       }
     } else {
-      $query = "select user from tiki_user_votings where user='$user' and id='$id'";
+      $query = "select `user`  from `tiki_user_votings` where `user`='$user' and id='$id'";
       $result = $this->query($query);
       if($result->numRows()) {
         $ret = true;
@@ -1461,12 +1547,12 @@ class TikiLib {
     } else {
       $mid="";
     }
-    $query = "select fileId,name,description,created,filename,filesize,user,downloads from tiki_files $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_files $mid";
+    $query = "select `fileId` ,name,description,created,filename,filesize,user,downloads from `tiki_files` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_files` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -1477,9 +1563,9 @@ class TikiLib {
 
   /*shared*/ function get_file($id)
   {
-    $query = "select path,galleryId,filename,filetype,data from tiki_files where fileId='$id'";
+    $query = "select `path` ,galleryId,filename,filetype,data from `tiki_files` where `fileId`='$id'";
     $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
@@ -1487,17 +1573,16 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where galleryId=$galleryId and (name like $findesc or description like $findesc)";
+      $mid=" where `galleryId`=$galleryId and (name like '%".$find."%' or description like '%".$find."%')";
     } else {
-      $mid="where galleryId=$galleryId";
+      $mid="where `galleryId`=$galleryId";
     }
-    $query = "select fileId,name,description,created,filename,filesize,user,downloads from tiki_files $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_files $mid";
+    $query = "select `fileId` ,name,description,created,filename,filesize,user,downloads from `tiki_files` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_files` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -1511,7 +1596,7 @@ class TikiLib {
 	global $count_admin_pvs;
 	global $user;
     if($count_admin_pvs == 'y' || $user!='admin') {
-      $query = "update tiki_files set downloads=downloads+1 where fileId=$id";
+      $query = "update `tiki_files` set `downloads`=downloads+1 where `fileId`=$id";
       $result = $this->query($query);
     }
     return true;
@@ -1523,7 +1608,7 @@ class TikiLib {
   	global $user;
   	
     if($count_admin_pvs == 'y' || $user!='admin') {
-      $query = "update tiki_file_galleries set hits=hits+1 where galleryId=$id";
+      $query = "update `tiki_file_galleries` set `hits`=hits+1 where `galleryId`=$id";
       $result = $this->query($query);
     }
     return true;
@@ -1533,9 +1618,9 @@ class TikiLib {
 
   /*shared*/ function get_file_gallery($id)
   {
-    $query = "select * from tiki_file_galleries where galleryId='$id'";
+    $query = "select * from `tiki_file_galleries` where `galleryId`='$id'";
     $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
@@ -1555,7 +1640,7 @@ class TikiLib {
       $maxRecords = -1;
     }
 
-    // If the user is not admin then select it's own galleries or public galleries
+    // If the user is not admin then select `it` 's own galleries or public galleries
     if($user != 'admin') {
       $whuser = " and (user='$user' or public='y')";
     } else {
@@ -1571,14 +1656,14 @@ class TikiLib {
       }
     }
 
-    $query = "select * from tiki_file_galleries where visible='y' $whuser order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_file_galleries where visible='y' $whuser";
+    $query = "select * from `tiki_file_galleries` where `visible`='y' $whuser order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_file_galleries` where `visible`='y' $whuser";
     $result = $this->query($query);
     $result_cant = $this->query($query_cant);
     $res2 = $result_cant->fetchRow();
     $cant = $res2[0];
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $aux = Array();
       $aux["name"] = $res["name"];
       $gid = $res["galleryId"];
@@ -1591,7 +1676,7 @@ class TikiLib {
       $aux["user"] = $res["user"];
       $aux["hits"] = $res["hits"];
       $aux["public"] = $res["public"];
-      $aux["files"] = $this->getOne("select count(*) from tiki_files where galleryId='$gid'");
+      $aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`='$gid'");
       $ret[] = $aux;
     }
     if($old_sort_mode == 'files asc') {
@@ -1619,8 +1704,7 @@ class TikiLib {
   // Semaphore functions ////
   function get_semaphore_user($semName)
   {
-  	$semNameEsc = $this->qstr($semName);
-    return $this->getOne("select user from tiki_semaphores where semName=$semNameEsc");
+    return $this->getOne("select `user`  from `tiki_semaphores` where `semName`='$semName'");
   }
   
   function semaphore_is_set($semName,$limit)
@@ -1628,10 +1712,9 @@ class TikiLib {
 
     $now=date("U");
     $lim=$now-$limit;
-    $semNameEsc = $this->qstr($semName);
-    $query = "delete from tiki_semaphores where semName=$semNameEsc and timestamp<$lim";
+    $query = "delete from `tiki_semaphores` where `semName`='$semName' and timestamp<$lim";
     $result = $this->query($query);
-    $query = "select semName from tiki_semaphores where semName=$semNameEsc";
+    $query = "select `semName`  from `tiki_semaphores` where `semName`='$semName'";
     $result = $this->query($query);
     return $result->numRows();
    }
@@ -1643,9 +1726,8 @@ class TikiLib {
       $user = 'anonymous';
     }
     $now=date("U");
-//    $cant=$this->getOne("select count(*) from tiki_semaphores where semName='$semName'");
-	$semNameEsc = $this->qstr($semName);
-    $query = "delete from tiki_semaphores where semName=$semNameEsc";
+//    $cant=$this->getOne("select count(*) from `tiki_semaphores` where `semName`='$semName'");
+    $query = "delete from `tiki_semaphores` where `semName`='$semName'";
     $this->query($query);
     $query = "replace into tiki_semaphores(semName,timestamp,user) values($semNameEsc,$now,'$user')";
     $result = $this->query($query);
@@ -1654,18 +1736,17 @@ class TikiLib {
 
   function semaphore_unset($semName,$lock)
   {
-  	$semNameEsc = $this->qstr($semName);
-    $query = "delete from tiki_semaphores where semName=$semNameEsc and timestamp=$lock";
+    $query = "delete from `tiki_semaphores` where `semName`='$semName' and timestamp=$lock";
     $result = $this->query($query);
   }
   
   // Hot words methods ////
   /*shared*/ function get_hotwords()
   {
-    $query = "select * from tiki_hotwords";
-    $result = $this->query($query);
+    $query = "select * from `tiki_hotwords`";
+    $result = $this->query($query,false);
     $ret= Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[$res["word"]]=$res["url"];
     }
     return $ret;
@@ -1681,12 +1762,12 @@ class TikiLib {
     } else {
       $mid='';
     }
-    $query = "select * from tiki_blogs $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_blogs $mid";
+    $query = "select * from `tiki_blogs` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_blogs` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -1697,11 +1778,11 @@ class TikiLib {
   
   /*shared*/ function get_blog($blogId)
   {
-    $query = "select * from tiki_blogs where blogId=$blogId";
+    $query = "select * from `tiki_blogs` where `blogId`=$blogId";
     $result = $this->query($query);
 
     if($result->numRows()) {
-      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+      $res = $result->fetchRow();
     } else {
       return false;
     }
@@ -1710,13 +1791,13 @@ class TikiLib {
   
   /*shared*/function list_user_blogs($user,$include_public=false)
   {
-    $query = "select * from tiki_blogs where user='$user'";
+    $query = "select * from `tiki_blogs` where `user`='$user'";
     if($include_public) {
       $query.=" or public='y'";
     }
     $result = $this->query($query);
     $ret=Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[]=$res;
     }
     return $ret;
@@ -1731,16 +1812,16 @@ class TikiLib {
     } else {
       $mid='';
     }
-    $query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_blog_posts $mid";
+    $query = "select * from `tiki_blog_posts` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_blog_posts` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $blogId=$res["blogId"];
-      $query = "select title from tiki_blogs where blogId=$blogId";
+      $query = "select `title`  from `tiki_blogs` where `blogId`=$blogId";
       $hash=md5('postId'.$res["postId"]);
-      $cant_com = $this->getOne("select count(*) from tiki_comments where object='$hash'");
+      $cant_com = $this->getOne("select count(*) from `tiki_comments` where `object`='$hash'");
       $res["comments"]=$cant_com;
       $res["blogTitle"]=$this->getOne($query);
       $res["size"]=strlen($res["data"]);
@@ -1768,29 +1849,29 @@ class TikiLib {
       if($mid) {
         $mid.=" and  publishDate<=$date ";
       } else {
-        $mid=" where publishDate<=$date ";
+        $mid=" where `publishDate`<=$date ";
       }
     }
     if($type) {
       if($mid) {
         $mid.=" and type='$type'";
       } else {
-        $mid=" where type='$type'";
+        $mid=" where `type`='$type'";
       }
     }
     if($topicId) {
       if($mid) {
         $mid.=" and topicId=$topicId";
       } else {
-        $mid=" where topicId=$topicId";
+        $mid=" where `topicId`=$topicId";
       }
     }
-    $query = "select * from tiki_articles $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_articles $mid";
+    $query = "select * from `tiki_articles` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_articles` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $res["entrating"]=floor($res["rating"]);
       $add=1;
       if($userlib->object_has_one_permission($res["topicId"],'topic')) {
@@ -1831,15 +1912,15 @@ class TikiLib {
       if($mid) {
         $mid.=" and  publishDate<=$date ";
       } else {
-        $mid=" where publishDate<=$date ";
+        $mid=" where `publishDate`<=$date ";
       }
     }
-    $query = "select * from tiki_submissions $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_submissions $mid";
+    $query = "select * from `tiki_submissions` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_submissions` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $res["entrating"]=floor($res["rating"]);
       if(empty($res["body"])) {
         $res["isEmpty"] = 'y';
@@ -1861,11 +1942,11 @@ class TikiLib {
 
   function get_article($articleId)
   {
-    $query = "select * from tiki_articles where articleId=$articleId";
+    $query = "select * from `tiki_articles` where `articleId`=$articleId";
     $result = $this->query($query);
 
     if($result->numRows()) {
-      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+      $res = $result->fetchRow();
       $res["entrating"]=floor($res["rating"]);
     } else {
       return false;
@@ -1875,11 +1956,11 @@ class TikiLib {
 
   function get_submission($subId)
   {
-    $query = "select * from tiki_submissions where subId=$subId";
+    $query = "select * from `tiki_submissions` where `subId`=$subId";
     $result = $this->query($query);
 
     if($result->numRows()) {
-      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+      $res = $result->fetchRow();
       $res["entrating"]=floor($res["rating"]);
     } else {
       return false;
@@ -1897,7 +1978,7 @@ class TikiLib {
     $body = addslashes($body);
     $hash = md5($title.$heading.$body);
     $now = date("U");
-    $query = "select name from tiki_topics where topicId = $topicId";
+    $query = "select `name`  from `tiki_topics` where `topicId` = $topicId";
     $topicName = $this->getOne($query);
     $topicName = addslashes($topicName);
     $size = strlen($body);
@@ -1924,7 +2005,7 @@ class TikiLib {
                 author = '$user',
                 type = '$type',
                 rating = $rating
-                where articleId = $articleId";
+                where `articleId` = $articleId";
       $result = $this->query($query);
 
     } else {
@@ -1933,7 +2014,7 @@ class TikiLib {
                          values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating,'$isfloat')";
       $result = $this->query($query);
 
-      $query2 = "select max(articleId) from tiki_articles where created = $now and title='$title' and hash='$hash'";
+      $query2 = "select `max` (articleId) from `tiki_articles` where `created` = $now and title='$title' and hash='$hash'";
       $articleId=$this->getOne($query2);
     }
     return $articleId;
@@ -1941,19 +2022,19 @@ class TikiLib {
 
   /*shared*/ function get_topic_image($topicId)
   {
-    $query = "select image_name,image_size,image_type,image_data from tiki_topics where topicId=$topicId";
+    $query = "select `image_name` ,image_size,image_type,image_data from `tiki_topics` where `topicId`=$topicId";
     $result = $this->query($query);
 
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
   /*shared*/ function get_featured_links($max=10)
   {
-    $query = "select * from tiki_featured_links where position>0 order by position asc limit 0,$max";
+    $query = "select * from `tiki_featured_links` where `position`>0 order by position asc limit 0,$max";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     return $ret;
@@ -1962,12 +2043,14 @@ class TikiLib {
   function update_session($sessionId)
   {
     global $user;
+    if($user===false) $user='';
     $now = date("U");
     $oldy = $now-(5*60);
-    $query = "replace into tiki_sessions(sessionId,timestamp,user) values('$sessionId',$now,'$user')";
-    $result = $this->query($query);
-    $query = "delete from tiki_sessions where timestamp<$oldy";
-    $result = $this->query($query);
+    $this->query('delete from `tiki_sessions` where `sessionId`=?',array($sessionId),-1,-1,false);
+    $query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`) values(?,?,?)";
+    $result = $this->query($query,array($sessionId,(int) $now,$user));
+    $query = "delete from `tiki_sessions` where `timestamp`<?";
+    $result = $this->query($query,array($oldy));
     return true;
   }
 
@@ -1980,11 +2063,11 @@ class TikiLib {
 
   /*shared*/ function get_assigned_modules($position)
   {
-    $query = "select params,name,title,position,ord,cache_time,rows,groups from tiki_modules where position='$position' order by ord asc";
-    $result = $this->query($query);
+    $query = "select `params`,`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups` from `tiki_modules` where `position`= ? order by `ord` asc";
+    $result = $this->query($query,array($position));
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      if($res["groups"]) {
+    while($res = $result->fetchRow()) {
+      if($res["groups"] && strlen($res["groups"])>1) {
         $grps = unserialize($res["groups"]);
         $res["module_groups"]='';
         foreach($grps as $grp) {
@@ -2001,7 +2084,7 @@ class TikiLib {
   /*shared*/ function is_user_module($name)
   {
     $name=addslashes($name);
-    $query = "select name from tiki_user_modules where name='$name'";
+    $query = "select `name`  from `tiki_user_modules` where `name`='$name'";
     $result = $this->query($query);
     return $result->numRows();
   }
@@ -2011,9 +2094,9 @@ class TikiLib {
   /*shared*/ function get_user_module($name)
   {
     $name=addslashes($name);
-    $query = "select * from tiki_user_modules where name='$name'";
+    $query = "select * from `tiki_user_modules` where `name`='$name'";
     $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
@@ -2079,7 +2162,7 @@ class TikiLib {
   function is_cached($url)
   {
     $url=addslashes($url);
-    $query = "select cacheId from tiki_link_cache where url='$url'";
+    $query = "select `cacheId`  from `tiki_link_cache` where `url`='$url'";
     $result = $this->query($query);
     $cant = $result->numRows();
     return $cant;
@@ -2094,12 +2177,12 @@ class TikiLib {
     } else {
       $mid="";
     }
-    $query = "select cacheId,url,refresh from tiki_link_cache $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_link_cache $mid";
+    $query = "select `cacheId` ,url,refresh from `tiki_link_cache` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_link_cache` $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[] = $res;
     }
     $retval = Array();
@@ -2111,35 +2194,35 @@ class TikiLib {
 
   function refresh_cache($cacheId)
   {
-    $query = "select url from tiki_link_cache where cacheId=$cacheId";
+    $query = "select `url`  from `tiki_link_cache` where `cacheId`=$cacheId";
     $url = $this->getOne($query);
     $data = $this->httprequest($url);
     $data = addslashes($data);
     $refresh = date("U");
-    $query = "update tiki_link_cache set data='$data', refresh=$refresh where cacheId=$cacheId";
+    $query = "update `tiki_link_cache` set `data`='$data', refresh=$refresh where `cacheId`=$cacheId";
     $result = $this->query($query);
     return true;
   }
 
   function remove_cache($cacheId)
   {
-    $query = "delete from tiki_link_cache where cacheId=$cacheId";
+    $query = "delete from `tiki_link_cache` where `cacheId`=$cacheId";
     $result = $this->query($query);
     return true;
   }
 
   function get_cache($cacheId)
   {
-    $query = "select * from tiki_link_cache where cacheId=$cacheId";
+    $query = "select * from `tiki_link_cache` where `cacheId`=$cacheId";
     $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
   function get_cache_id($url)
   {
     if(!$this->is_cached($url)) return false;
-    $query = "select cacheId from tiki_link_cache where url='$url'";
+    $query = "select `cacheId`  from `tiki_link_cache` where `url`='$url'";
     $id = $this->getOne($query);
     return $id;
   }
@@ -2148,16 +2231,16 @@ class TikiLib {
   function vote_page($page, $points)
   {
     $page = addslashes($page);
-    $query = "update pages set points=points+$points, votes=votes+1 where pageName='$page'";
+    $query = "update `pages` set `points`=points+$points, votes=votes+1 where `pageName`='$page'";
     $result = $this->query($query);
   }
 
   function get_votes($page)
   { 
     $page = addslashes($page);
-    $query = "select points,votes from pages where pageName='$page'";
+    $query = "select `points` ,votes from `pages` where `pageName`='$page'";
     $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
 
@@ -2166,10 +2249,10 @@ class TikiLib {
   // it returns pageName and hits for each page
   function get_top_pages($limit)
   {
-    $query = "select pageName, hits from tiki_pages order by hits desc limit 0,$limit";
+    $query = "select `pageName` , hits from `tiki_pages` order by hits desc limit 0,$limit";
     $result=$this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $aux["pageName"] = $res["pageName"];
       $aux["hits"] = $res["hits"];
       $ret[] = $aux;
@@ -2184,7 +2267,7 @@ class TikiLib {
     $cant = $this->getOne($query);
     // Adjust the limit if there are not enough pages
     if($cant<$n) $n=$cant;
-    // Now that we know the number of pages to pick select n random positions from 0 to cant
+    // Now that we know the number of pages to pick select `n`  random positions from `0` to cant
     $positions = Array();
     for ($i=0;$i<$n;$i++)
     {
@@ -2195,7 +2278,7 @@ class TikiLib {
     $ret = Array();
     for ($i=0; $i<count($positions);$i++) {
       $index = $positions[$i];
-      $query = "select pageName from tiki_pages limit $index,1";
+      $query = "select `pageName`  from `tiki_pages` limit $index,1";
       $name = $this->getOne($query);
       $ret[]=$name;
     }
@@ -2225,11 +2308,11 @@ class TikiLib {
   {
     $page = addslashes($page);
     $this->invalidate_cache($page);
-    $query = "delete from tiki_pages where pageName = '$page'";
+    $query = "delete from `tiki_pages` where `pageName` = '$page'";
     $result = $this->query($query);
-    $query = "delete from tiki_history where pageName = '$page'";
+    $query = "delete from `tiki_history` where `pageName` = '$page'";
     $result = $this->query($query);
-    $query = "delete from tiki_links where fromPage = '$page'";
+    $query = "delete from `tiki_links` where `fromPage` = '$page'";
     $result = $this->query($query);
     $action="Removed";
     $t = date("U");
@@ -2257,15 +2340,15 @@ class TikiLib {
 
   function remove_user($user)
   {
-    $query = "delete from users_users where login = '$user'";
+    $query = "delete from `users_users` where `login` = '$user'";
     $result =  $this->query($query);
     return true;
   }
 
   function user_exists($user)
   {
-    $query = "select login from users_users where login='$user'";
-    $result = $this->query($query);
+    $query = "select `login` from `users_users` where `login`=?";
+    $result = $this->query($query,array($user));
     if($result->numRows()) return true;
     return false;
   }
@@ -2289,31 +2372,31 @@ class TikiLib {
 
   function get_user_password($user)
   {
-    return $this->getOne("select password from users_users where binary login='$user'");
+    return $this->getOne("select `password`  from `users_users` where ".$this->convert_binary()." `login`='$user'");
   }
 
   function get_user_email($user)
   {
-    return $this->getOne("select email from users_users where binary login='$user'");
+    return $this->getOne("select `email` from `users_users` where ".$this->convert_binary()." `login`=?",array($user));
   }
 
   function get_user_info($user)
   {
-    $query = "select login, email, lastLogin from tiki_users where user='$user'";
+    $query = "select `login` , email, lastLogin from `tiki_users` where `user`='$user'";
     $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     $aux = Array();
     $aux["user"] = $res["user"];
     $user = $aux["user"];
     $aux["email"] = $res["email"];
     $aux["lastLogin"] = $res["lastLogin"];
     // Obtain lastChanged
-    $query2 = "select count(*) from tiki_pages where user='$user'";
+    $query2 = "select count(*) from `tiki_pages` where `user`='$user'";
     $result2 = $this->query($query2);
     $res2 = $result2->fetchRow();
     $aux["versions"] = $res2[0];
     // Obtain versions
-    $query3 = "select count(*) from tiki_history where user='$user'";
+    $query3 = "select count(*) from `tiki_history` where `user`='$user'";
     $result3 = $this->query($query3);
     $res3 = $result3->fetchRow();
     $aux["lastChanged"] = $res3[0];
@@ -2336,17 +2419,17 @@ class TikiLib {
       $maxRecords = -1;
     }
 
-    // If the user is not admin then select it's own galleries or public galleries
+    // If the user is not admin then select `it` 's own galleries or public galleries
      if (($tiki_p_admin_galleries == 'y') or ($user == 'admin')) {
        $whuser = "";
     } else {
-      $whuser = "where user='$user' or public='y'";
+      $whuser = "where `user`='$user' or public='y'";
      }
 
     if($find) {
     	$findesc = $this->qstr('%'.$find.'%');
       if(empty($whuser)) {
-        $whuser = "where name like $findesc or description like $findesc";
+        $whuser = "where `name` like '%".$find."%' or description like '%".$find.".%'";
       } else {
         $whuser .= " and name like $findesc or description like $findesc";
       }
@@ -2354,14 +2437,14 @@ class TikiLib {
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    $query = "select * from tiki_galleries $whuser order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_galleries $whuser";
+    $query = "select * from `tiki_galleries` $whuser order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_galleries` $whuser";
     $result = $this->query($query);
     $result_cant = $this->query($query_cant);
     $res2 = $result_cant->fetchRow();
     $cant = $res2[0];
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $aux = Array();
       $aux["name"] = $res["name"];
       $gid = $res["galleryId"];
@@ -2375,7 +2458,7 @@ class TikiLib {
       $aux["hits"] = $res["hits"];
       $aux["public"] = $res["public"];
       $aux["theme"] = $res["theme"];
-      $aux["images"] = $this->getOne("select count(*) from tiki_images where galleryId='$gid'");
+      $aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`='$gid'");
       $ret[] = $aux;
     }
     if($old_sort_mode == 'images asc') {
@@ -2408,7 +2491,7 @@ class TikiLib {
       $maxRecords = -1;
     }
 
-    // If the user is not admin then select it's own galleries or public galleries
+    // If the user is not admin then select `it` 's own galleries or public galleries
     if($user != 'admin') {
       $whuser = " and (user='$user' or public='y') ";
     } else {
@@ -2426,14 +2509,14 @@ class TikiLib {
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    $query = "select * from tiki_galleries where visible='y' $whuser order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_galleries where visible='y' $whuser";
+    $query = "select * from `tiki_galleries` where `visible`='y' $whuser order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_galleries` where `visible`='y' $whuser";
     $result = $this->query($query);
     $result_cant = $this->query($query_cant);
     $res2 = $result_cant->fetchRow();
     $cant = $res2[0];
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $aux = Array();
       $aux["name"] = $res["name"];
       $gid = $res["galleryId"];
@@ -2447,7 +2530,7 @@ class TikiLib {
       $aux["hits"] = $res["hits"];
       $aux["public"] = $res["public"];
       $aux["theme"] = $res["theme"];
-      $aux["images"] = $this->getOne("select count(*) from tiki_images where galleryId='$gid'");
+      $aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`='$gid'");
       $ret[] = $aux;
     }
     if($old_sort_mode == 'images asc') {
@@ -2486,8 +2569,7 @@ class TikiLib {
     }
 
     if($find) {
-    	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where pageName like $findesc ";
+      $mid=" where `pageName` like '%".$find."%' ";
     } else {
       $mid="";
     }
@@ -2495,14 +2577,14 @@ class TikiLib {
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    $query = "select creator,pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from tiki_pages $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_pages $mid";
+    $query = "select `creator` ,pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from `tiki_pages` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from `tiki_pages` $mid";
     $result = $this->query($query);
     $result_cant = $this->query($query_cant);
     $res2 = $result_cant->fetchRow();
     $cant = $res2[0];
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $aux = Array();
       $aux["pageName"] = $res["pageName"];
       $page = $aux["pageName"];
@@ -2516,9 +2598,9 @@ class TikiLib {
       $aux["creator"] = $res["creator"];
       $aux["version"] = $res["version"];
       $aux["flag"] = $res["flag"] == 'L' ? tra('locked') : tra('unlocked');
-      $aux["versions"] = $this->getOne("select count(*) from tiki_history where pageName='$page_as'");
-      $aux["links"] = $this->getOne("select count(*) from tiki_links where fromPage='$page_as'");
-      $aux["backlinks"] = $this->getOne("select count(*) from tiki_links where toPage='$page_as'");
+      $aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`='$page_as'");
+      $aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`='$page_as'");
+      $aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`='$page_as'");
       $ret[] = $aux;
     }
     // If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
@@ -2562,20 +2644,20 @@ class TikiLib {
       $maxRecords = -1;
     }
     // Return an array of users indicating name, email, last changed pages, versions, lastLogin
-    $query = "select user, email, lastLogin from tiki_users order by $sort_mode limit $offset,$maxRecords";
+    $query = "select `user` , email, lastLogin from `tiki_users` order by $sort_mode limit $offset,$maxRecords";
     $cant = $this->getOne("select count(*) from tiki_users");
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $aux = Array();
       $aux["user"] = $res["user"];
       $user = $aux["user"];
       $aux["email"] = $res["email"];
       $aux["lastLogin"] = $res["lastLogin"];
       // Obtain lastChanged
-      $aux["versions"] = $this->getOne("select count(*) from tiki_pages where user='$user'");
+      $aux["versions"] = $this->getOne("select count(*) from `tiki_pages` where `user`='$user'");
       // Obtain versions
-      $aux["lastChanged"] = $this->getOne("select count(*) from tiki_history where user='$user'");
+      $aux["lastChanged"] = $this->getOne("select count(*) from `tiki_history` where `user`='$user'");
       $ret[] = $aux;
     }
     if($old_sort_mode == 'changed asc') {
@@ -2601,10 +2683,10 @@ class TikiLib {
 
   function get_all_preferences()
   {
-    $query = "select name,value from tiki_preferences";
+    $query = "select `name` ,value from tiki_preferences";
     $result = $this->query($query);
     $ret=Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while($res = $result->fetchRow()) {
       $ret[$res["name"]] = $res["value"];
     }
     return $ret;
@@ -2615,10 +2697,10 @@ class TikiLib {
     static $preferences;
 
     if (!isset($preferences[$name])) {
-      $query = "select value from tiki_preferences where name='$name'";
-      $result = $this->query($query);
+      $query = "select `value` from `tiki_preferences` where `name`=?";
+      $result = $this->query($query,array($name));
       if($result->numRows()) {
-        $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+        $res = $result->fetchRow();
         $preferences[$name] = $res["value"];
       } else {
         $preferences[$name] = $default;
@@ -2649,10 +2731,10 @@ class TikiLib {
   {
     global $user_preferences;
     if (!isset($user_preferences[$user][$name])) {
-      $query = "select value from tiki_user_preferences where prefName='$name' and user='$user'";
-      $result = $this->query($query);
+      $query = "select `value` from `tiki_user_preferences` where `prefName`=? and `user`=?";
+      $result = $this->query($query,array($name,$user));
       if($result->numRows()) {
-        $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+        $res = $result->fetchRow();
         $user_preferences[$user][$name] = $res["value"];
       } else {
         $user_preferences[$user][$name] = $default;
@@ -2674,11 +2756,11 @@ class TikiLib {
 
   function validate_user($user,$pass)
   {
-    $query = "select user from tiki_users where user='$user' and password='$pass'";
+    $query = "select `user`  from `tiki_users` where `user`='$user' and password='$pass'";
     $result = $this->query($query);
     if($result->numRows()) {
       $t = date("U");
-      $query = "update tiki_users set lastLogin='$t' where user='$user'";
+      $query = "update `tiki_users` set `lastLogin`='$t' where `user`='$user'";
       $result = $this->query($query);
       return true;
     }
@@ -2689,18 +2771,18 @@ class TikiLib {
   /*shared*/ function page_exists($pageName)
   {
     $pageName = addslashes($pageName);
-    $query = "select pageName from tiki_pages where pageName = '$pageName'";
-    $result = $this->query($query);
+    $query = "select `pageName` from `tiki_pages` where `pageName` = ?";
+    $result = $this->query($query,array($pageName));
     return $result->numRows();
   }
 
   function page_exists_desc($pageName)
   {
     $pageName = addslashes($pageName);
-    $query = "select description from tiki_pages where pageName = '$pageName'";
+    $query = "select `description`  from `tiki_pages` where `pageName` = '$pageName'";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     if(!$res["description"]) $res["description"]=tra('no description');
     return $res["description"];
   }
@@ -2708,10 +2790,10 @@ class TikiLib {
   function page_exists_modtime($pageName)
   {
     $pageName = addslashes($pageName);
-    $query = "select lastModif from tiki_pages where pageName = '$pageName'";
+    $query = "select `lastModif`  from `tiki_pages` where `pageName` = '$pageName'";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     if(!$res["lastModif"]) $res["lastModif"]=0;
     return $res["lastModif"];
   }
@@ -2719,8 +2801,8 @@ class TikiLib {
 
   function add_hit($pageName) {
     $pageName = addslashes($pageName);
-    $query = "update tiki_pages set hits=hits+1 where pageName = '$pageName'";
-    $result = $this->query($query);
+    $query = "update `tiki_pages` set `hits`=`hits`+1 where `pageName` = ?";
+    $result = $this->query($query,array($pageName));
     return true;
   }
   
@@ -2735,8 +2817,8 @@ class TikiLib {
     $data = addslashes($data);
     $comment = addslashes($comment);
     if($this->page_exists($name)) return false;
-    $query = "insert into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,description,creator) values('$name',$hits,'$data',$lastModif,'$comment',1,'$user','$ip','$description','$user')";
-    $result = $this->query($query);
+    $query = "insert into `tiki_pages`(`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`) values(?,?,?,?,?,?,?,?,?,?)";
+    $result = $this->query($query,array($name,(int) $hits,$data,(int) $lastModif,$comment,1,$user,$ip,$description,$user));
     $this->clear_links($name);
     // Pages are collected before adding slashes
     foreach($pages as $a_page) {
@@ -2745,18 +2827,18 @@ class TikiLib {
     // Update the log
     if($name != 'SandBox') {
       $action = "Created";
-      $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$name',$lastModif,'$user','$ip','$comment')";
-      $result = $this->query($query);
+      $query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+      $result = $this->query($query,array($action,$name,(int) $lastModif,$user,$ip,$comment));
     }
     return true;
   }
 
   function get_user_pages($user,$max)
   {
-    $query = "select pageName from tiki_pages where user='$user' limit 0,$max";
+    $query = "select `pageName`  from `tiki_pages` where `user`='$user' limit 0,$max";
     $result = $this->query($query);
     $ret=Array();
-    while( $res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while( $res = $result->fetchRow()) {
       $ret[]=$res;
     }
     return $ret;
@@ -2764,10 +2846,10 @@ class TikiLib {
 
   function get_user_galleries($user,$max)
   {
-    $query = "select name,galleryId from tiki_galleries where user='$user' limit 0,$max";
+    $query = "select `name` ,galleryId from `tiki_galleries` where `user`='$user' limit 0,$max";
     $result = $this->query($query);
     $ret=Array();
-    while( $res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    while( $res = $result->fetchRow()) {
       $ret[]=$res;
     }
     return $ret;
@@ -2775,11 +2857,10 @@ class TikiLib {
 
   function get_page_info($pageName)
   {
-    $pageNameEsc = $this->qstr($pageName);
-    $query = "select * from tiki_pages where pageName=$pageNameEsc";
-    $result = $this->query($query);
+    $query = "select * from `tiki_pages` where `pageName`=?";
+    $result = $this->query($query,array($pageName));
     if(!$result->numRows()) return false;
-    $ret = $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $ret = $res = $result->fetchRow();
     $ret["pageName"] = $pageName;
     return $ret;
   }
@@ -3286,8 +3367,8 @@ class TikiLib {
         if(count($wexs)==2) {
           $wkname = $wexs[0];       
 
-          if($this->db->getOne("select count(*) from tiki_extwiki where name='$wkname'")==1) {
-	    $wkurl = $this->db->getOne("select extwiki from tiki_extwiki where name='$wkname'");
+          if($this->db->getOne("select count(*) from `tiki_extwiki` where `name`='$wkname'")==1) {
+	    $wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`='$wkname'");
 	    $wkurl = '<a href="'.str_replace('$page',urlencode($wexs[1]),$wkurl).'" class="wiki">'.$wexs[1].'</a>';
 	    $data = preg_replace($pattern,"$wkurl",$data);
 	    $repl2=false;
@@ -3326,8 +3407,8 @@ class TikiLib {
         $wexs = explode(':',$page_parse);
         if(count($wexs)==2) {
           $wkname = $wexs[0];        
-          if($this->db->getOne("select count(*) from tiki_extwiki where name='$wkname'")==1) {
-			$wkurl = $this->db->getOne("select extwiki from tiki_extwiki where name='$wkname'");
+          if($this->db->getOne("select count(*) from `tiki_extwiki` where `name`='$wkname'")==1) {
+			$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`='$wkname'");
 			$wkurl = '<a href="'.str_replace('$page',urlencode($wexs[1]),$wkurl).'" class="wiki">'.$wexs[1].'</a>';
 			$data = preg_replace("/\(\($page_parse\)\)/","$wkurl",$data);
 			$repl2=false;
@@ -3785,8 +3866,8 @@ class TikiLib {
 
   function clear_links($page) {
     $page = addslashes($page);
-    $query = "delete from tiki_links where fromPage='$page'";
-    $result = $this->query($query);
+    $query = "delete from `tiki_links` where `fromPage`=?";
+    $result = $this->query($query,array($page));
   }
 
   function replace_link($pageFrom, $pageTo) {
@@ -3798,7 +3879,7 @@ class TikiLib {
 
   function invalidate_cache($page) {
     $page = addslashes($page);
-    $query = "update tiki_pages set cache_timestamp=0 where pageName='$page'";
+    $query = "update `tiki_pages` set `cache_timestamp`=0 where `pageName`='$page'";
     $this->query($query);
   }
 
@@ -3885,7 +3966,7 @@ class TikiLib {
         }
       }
     }  
-    $query = "update tiki_pages set description='$description', data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where pageName='$pageName_sl'";
+    $query = "update `tiki_pages` set `description`='$description', data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip' where `pageName`='$pageName_sl'";
     $result = $this->query($query);
     // Parse edit_data updating the list of links from this page
     $this->clear_links($pageName);
@@ -3904,13 +3985,13 @@ class TikiLib {
         $keep = $this->get_preference('keep_versions',0);
         $now = date("U");
         $oktodel = $now - ($keep * 24 * 3600);
-        $query = "select pageName,version from tiki_history where pageName='$pageName_sl' and lastModif<=$oktodel order by lastModif desc limit $maxversions,-1";
+        $query = "select `pageName` ,version from `tiki_history` where `pageName`='$pageName_sl' and lastModif<=$oktodel order by lastModif desc limit $maxversions,-1";
         $result = $this->query($query);
         $toelim = $result->numRows();
-        while($res= $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+        while($res= $result->fetchRow()) {
           $page = $res["pageName"];
           $version = $res["version"];
-          $query = "delete from tiki_history where pageName='$pageName_sl' and version='$version'";
+          $query = "delete from `tiki_history` where `pageName`='$pageName_sl' and version='$version'";
           $this->query($query);
         }
       }
@@ -3929,7 +4010,7 @@ class TikiLib {
     $edit_comment = addslashes($edit_comment);
     if(!$this->page_exists($pageName)) return false;
     $t = date("U");
-    $query = "delete from tiki_history where pageName='$pageName' and version=$version";
+    $query = "delete from `tiki_history` where `pageName`='$pageName' and version=$version";
     $result = $this->query($query);
     $query = "insert into tiki_history(pageName, version, lastModif, user, ip, comment, data,description)
               values('$pageName',$version,$lastModif,'$edit_user','$edit_ip','$edit_comment','$edit_data','$description')";
@@ -3939,7 +4020,7 @@ class TikiLib {
     // Get this page information
     $info = $this->get_page_info($pageName);
     if($version>=$info["version"]) {
-      $query = "update tiki_pages set data='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip', description='$description' where pageName='$pageName'";
+      $query = "update `tiki_pages` set `data`='$edit_data', comment='$edit_comment', lastModif=$t, version=$version, user='$edit_user', ip='$edit_ip', description='$description' where `pageName`='$pageName'";
       $result = $this->query($query);
       // Parse edit_data updating the list of links from this page
       $this->clear_links($pageName);
