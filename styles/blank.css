@@ -1,0 +1,16 @@
+/* 
+$Header: /cvsroot/tikiwiki/tiki/styles/blank.css,v 1.1 2003-12-29 08:05:58 mose Exp $
+Blank : special style intended to be neutral and overridden by another local css
+*/
+
+body {
+	background-color: white;
+	margin: 0px;
+}
+TD {
+	vertical-align: top;
+}
+FORM {
+	margin: 0px;
+	padding: 0px;
+}
