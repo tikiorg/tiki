@@ -3,6 +3,9 @@
 {if $ccid}in <b><a href="cc.php?page=currencies&amp;cc_id={$ccid|escape:'url'}&amp;view=1">{$ccid}</a></b>{/if}
 </h1>
 <span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span>
+{if $ccid}
+<span class="button2"><a href="cc.php?page=transactions&amp;cc_id={$ccid|escape:'url'}&amp;new=1" class="linkbut">{tr}New Transaction with{/tr} {$ccid}</a></span>
+{/if}
 <br />
 
 <br /><br />

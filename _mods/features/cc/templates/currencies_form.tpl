@@ -11,6 +11,9 @@
 <FORM action="cc.php?page={$page}" method='post'>
 <span class="button2"><a href="cc.php?page=currencies" class="linkbut">{tr}List Currencies{/tr}</a></span>
 <span class="button2"><a href="cc.php?page=currencies&amp;my=1" class="linkbut">{tr}My Currencies{/tr}</a></span>
+{if $info.id}
+<span class="button2"><a href="cc.php?page=currencies&amp;cc_id={$info.id}&amp;view=1" class="linkbut">{tr}Examine{/tr} {$info.id}</a></span>
+{/if}
 <br /><br />
 
 {if $msg}<div class="simplebox">{$msg}</div>{/if}

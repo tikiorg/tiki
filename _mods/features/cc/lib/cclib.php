@@ -34,9 +34,9 @@ class CcLib extends UsersLib {
 		fclose($fp);
 	}
 
-	function user_infos($user) {
+	function user_infos($user,$app=false) {
 		$info = $this->get_user_info($user);
-		$info['registered_cc'] = $this->get_registered_cc($user);
+		$info['registered_cc'] = $this->get_registered_cc($user,$app);
 		return $info;
 	}
 
@@ -110,34 +110,43 @@ class CcLib extends UsersLib {
 		return $retval;
 	}
 
-	function get_currencies($all=false,$offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false,$app=false) {
-		$query = 'select cc.*,count(*) as population from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
-		$query_cant = 'select count(*) from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
+	function get_currencies($all=false,$offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false,$app=false,$reg=false) {
 		$bindvars = $mid = array();
-		if ($find) {
-			$mid[] = "cc.`cc_name`=?";
-			$bindvars[] = '%'. $find .'%';
-		}
-		if ($owner) {
-			$mid[] = "cc.`owner_id`=?";
-			$bindvars[] = $owner;
-		}
-		if (!$all) {
-			$mid[] = "cc.`listed`=?";
-			$bindvars[] = 'y';
-		}
-		if ($app) {
-			$mid[] = "ccl.`approved`=?";
-			$bindvars[] = 'y';
-		}
-		$order = " group by cc_id order by ".$this->convert_sortmode($sort_mode);
-		if (count($mid)) {
-			$mid = " where ". implode(' and ',$mid);
+		if ($reg) {
+			$query = "select *,count(*) as population from `cc_ledger` as ccl left join `cc_cc` as cc on ccl.`cc_id`=cc.`id` left join `cc_ledger` as cclc on cc.`id`=cclc.`cc_id` ";
+			$query.= " where ccl.`acct_id`=? group by cclc.`cc_id` order by ".$this->convert_sortmode($sort_mode);
+			$query_cant = "select count(*) from `cc_ledger` as ccl  where ccl.`acct_id`=?";
+			$bindvars[] = $reg;
+			$result = $this->query($query.$order,$bindvars,$max,$offset);	
+			$cant = $this->getOne($query_cant,$bindvars);
 		} else {
-			$mid = '';
+			$query = 'select cc.*,count(*) as population from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
+			$query_cant = 'select count(*) from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
+			if ($find) {
+				$mid[] = "cc.`cc_name`=?";
+				$bindvars[] = '%'. $find .'%';
+			}
+			if ($owner) {
+				$mid[] = "cc.`owner_id`=?";
+				$bindvars[] = $owner;
+			}
+			if (!$all) {
+				$mid[] = "cc.`listed`=?";
+				$bindvars[] = 'y';
+			}
+			if ($app) {
+				$mid[] = "ccl.`approved`=?";
+				$bindvars[] = 'y';
+			}
+			$order = " group by cc_id order by ".$this->convert_sortmode($sort_mode);
+			if (count($mid)) {
+				$mid = " where ". implode(' and ',$mid);
+			} else {
+				$mid = '';
+			}
+			$result = $this->query($query.$mid.$order,$bindvars,$max,$offset);	
+			$cant = $this->getOne($query_cant.$mid,$bindvars);
 		}
-		$result = $this->query($query.$mid.$order,$bindvars,$max,$offset);	
-		$cant = $this->getOne($query_cant.$mid,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			// $res['population'] = $this->getOne("select count(*) from `cc_ledger` where `cc_id`=? and `approved`=?",array($res['id'],'y'));
@@ -194,9 +203,14 @@ class CcLib extends UsersLib {
 		return $this->getOne("select `requires_approval` from `cc_cc` where `id`=?",array($cc));
 	}
 
-	function get_registered_cc($user,$app='y') {
-		$query = "select * from `cc_ledger` left join `cc_cc` on `cc_ledger`.cc_id=`cc_cc`.id where `acct_id`=? and `approved`=?";
-		$result = $this->query($query,array($user,$app));
+	function get_registered_cc($user,$app=false) {
+		$query = "select * from `cc_ledger` left join `cc_cc` on `cc_ledger`.cc_id=`cc_cc`.id where `acct_id`=?";
+		$bindvars = array($user);
+		if ($app) {
+			$bindvars[] = $app;
+			$query.= " and `approved`=?";
+		}
+		$result = $this->query($query,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret["{$res['cc_id']}"] = $res;

@@ -2,11 +2,10 @@
 <br />
 <span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span>
 
-<span class="button2"><a href="cc.php?page=currencies" class="linkbut">All Currencies</a></span>
+<span class="button2"><a href="cc.php?page=currencies&amp;all=1" class="linkbut">All Currencies</a></span>
 {if $tiki_p_cc_use eq 'y'}
 <span class="button2"><a href="cc.php?page=currencies&amp;reg=1" class="linkbut">Registered Currencies</a></span>
 {/if}
-<br /><br />
 {if $tiki_p_cc_use eq 'y'}
 <span class="button2"><a href="cc.php?page=currencies&amp;my=1" class="linkbut">Owned Currencies</a></span>
 {/if}
@@ -56,6 +55,8 @@ Register an existing unlisted currency
 </td>
 {elseif $ccuser.registered_cc.$ccid.approved eq 'c'}
 <td><a href="cc.php?page=currencies&amp;register={$it.id}">{tr}Reregister{/tr}</a></td>
+{elseif $ccuser.registered_cc.$ccid.approved eq 'n'}
+<td>{tr}Pending Registration{/tr}</td>
 {else}
 <td><a href="cc.php?page=currencies&amp;register={$it.id}">{tr}Register{/tr}</a></td>
 {/if}

@@ -1,4 +1,4 @@
-<h1><a href="cc.php?page=my_tr&amp;new=1" class="pagetitle">Record a transaction {if $currency} in cc {$currency}{/if}</a>
+<h1><a href="cc.php?page=my_tr&amp;new=1" class="pagetitle">Record a transaction{if $currency} in currency {$currency}{/if}</a>
 </h1>
 
 <span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
@@ -16,18 +16,22 @@
 {/if}
 <td>to account</td>	
 <td align=right>amount</td>
+{if !$currency}
 <td>cc</td>
+{/if}
 </tr>
 
 <tr class="formrow">
 <td><input type='text' name='tr_item' size="24" value="{$smarty.request.tr_item}" /> </td>
 {if $tiki_p_cc_admin eq 'y'}
-<td><input type='text' name='from_id' size="24" value="{$smarty.request.from_id}" /></td>
+<td><input type='text' name='from_id' size="24" value="{$smarty.request.from_id|default:$user}" /></td>
+{else}
+<td>{$user}</td>
 {/if}
 <td><input type='text' name='to_id' size="24" value="{$smarty.request.to_id}" /></td>
 <td><input type='text' name='tr_amount' size="8" value="{$smarty.request.tr_amount}" /></td>
 {if $currency}
-<td><input type="text" name="cc_id" value="{$currency}" /></td>
+<input type="hidden" name="cc_id" value="{$currency}" />
 {else}
 <td><select name="cc_id" style="font-style:italic;">
 <option value="">select cc</option>
@@ -56,3 +60,4 @@
 
 </table>
 </form>
+

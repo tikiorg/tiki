@@ -6,16 +6,18 @@ if (!isset($_REQUEST['page'])) { $_REQUEST['page'] = ''; }
 $page = $_REQUEST['page'];
 
 if (isset($_REQUEST['all'])) { 
-	$_SESSION['viewallcc'] = 'y'; 
-} elseif (isset($_REQUEST['my']) or isset($_REQUEST['reg'])) { 
-	$_SESSION['viewallcc'] = 'n'; 
+	$_SESSION['viewrange'] = 'all'; 
+} elseif (isset($_REQUEST['my'])) {
+	$_SESSION['viewrange'] = 'my'; 
+} elseif (isset($_REQUEST['reg'])) { 
+	$_SESSION['viewrange'] = 'reg'; 
 }
 
 $mid = "cc/index.tpl";
 $view = '';
 
 if ($user) {
-	
+
 	$ccuser = $cclib->user_infos($user);
 	$smarty->assign_by_ref("ccuser", $ccuser);
 
@@ -26,7 +28,7 @@ if ($user) {
 			$_REQUEST["sort_mode"] = $sort_mode;
 		} else {
 			$sort_mode = $_REQUEST["sort_mode"];
-		}		
+		}
 		if ($page == 'ledgers' and $tiki_p_cc_admin == 'y') {
 			if (isset($_REQUEST['cc_id'])) {
 				$thelist = $cclib->get_ledgers(0,-1,$sort_mode,false,$_REQUEST['cc_id']);
@@ -105,20 +107,27 @@ if ($user) {
 		if (isset($_REQUEST['new'])) {
 			if (isset($_REQUEST['currency'])) {
 				$currency = $_REQUEST['currency'];
+				if (!$cclib->is_currency($currency)) {
+					$smarty->assign('msg',tra("Sorry, the currency $currency is not available."));
+					$currency = false;
+				} elseif (!$cclib->is_registered($user,$currency,'y')) {
+					$smarty->assign('msg',tra("Sorry, you are not registered into currency $currency."));
+					$currency = false;
+				}
 			} else {
 				$currency = false;
 			}
-			$currencies = $cclib->get_registered_cc($user);
+			$currencies = $cclib->get_registered_cc($user,'y');
 			$smarty->assign('currencies',$currencies);
 			$smarty->assign('currency',$currency);
 			$view = 'new';
 			$mid = 'cc/transactions_form.tpl';
-		} elseif (isset($_SESSION['viewallcc']) and $_SESSION['viewallcc'] == 'y' and $tiki_p_cc_admin == 'y') {
-			$thelist = $cclib->get_transactions(0,-1,$sort_mode,'','');
+		} elseif (isset($_SESSION['viewrange']) and $_SESSION['viewrange'] == 'all' and $tiki_p_cc_admin == 'y') {
+			$thelist = $cclib->get_transactions(0,-1,$sort_mode);
 			$smarty->assign('thelist',$thelist['data']);
 			$mid = "cc/transactions.tpl";
 		} else {
-			$thelist = $cclib->get_transactions(0,-1,'tr_date_desc','',$user);
+			$thelist = $cclib->get_transactions(0,-1,$sort_mode,'',$user);
 			$smarty->assign('thelist',$thelist['data']);
 			$mid = "cc/transactions.tpl";
 		}
@@ -168,7 +177,7 @@ if ($user) {
 							$smarty->assign('msg',"Currency ". $_REQUEST['cc_id'] ." created.");
 							$ccuser = $cclib->user_infos($user);
 						}
-						$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,'',$owner);
+						$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,'',$owner,'y');
 						$smarty->assign('thelist', $thelist['data']);
 						$mid = "cc/currencies.tpl";
 						$view = 'my';
@@ -183,8 +192,9 @@ if ($user) {
 			}
 		} elseif (isset($_REQUEST['new']) and ($tiki_p_cc_create == 'y' or $tiki_p_cc_admin == 'y')) {
 			$mid = "cc/currencies_form.tpl";
-		} elseif (isset($_REQUEST['reg'])) {
-			$smarty->assign('thelist',$ccuser['registered_cc']);
+		} elseif (isset($_REQUEST['reg']) or $_SESSION['viewrange'] == 'reg') {
+			$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,false,false,false,$user);
+			$smarty->assign('thelist',$thelist['data']);
 			$mid = "cc/currencies.tpl";
 			$view = 'reg';
 		} else {
@@ -199,14 +209,14 @@ if ($user) {
 					$ccuser = $cclib->user_infos($user);
 				}
 			}
-			if (isset($_REQUEST['my'])) { 
+			if (isset($_REQUEST['my']) or $_SESSION['viewrange'] == 'my') { 
 				$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,'',$user);
 				$view = 'my';
 			} else {
-				if ($tiki_p_cc_admin == 'y') {
-					$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,'','');
+				if ($tiki_p_cc_admin == 'y' and $_SESSION['viewrange'] == 'all') {
+					$thelist = $cclib->get_currencies(true,0,-1,$sort_mode);
 				} else {
-					$thelist = $cclib->get_currencies(false,0,-1,$sort_mode,'','');
+					$thelist = $cclib->get_currencies(false,0,-1,$sort_mode);
 				}
 				$view = '';
 			}
