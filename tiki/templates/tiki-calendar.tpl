@@ -38,14 +38,6 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 ><input type="checkbox" name="calIds[]" value="{$k}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if}
 onclick="this.checked=!this.checked;"/>
 {$infocals.$k.name} (id #{$k})
-<!--
-<div class="simplebox">
-tiki_p_view_calendar : {$tiki_p_view_calendar.$loopcal}<br/>
-tiki_p_admin_calendar : {$tiki_p_admin_calendar.$loopcal}<br/>
-tiki_p_change_events : {$tiki_p_change_events.$loopcal}<br/>
-tiki_p_add_events : {$tiki_p_add_events.$loopcal}<br/>
-</div>
--->
 </div>
 {/foreach}
 </td>
@@ -134,7 +126,9 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 <a href="tiki-calendar.php?todate={$cell[w][d].day}" class="linkmenu" style="color:#666666;font-size:7px;">{$cell[w][d].day|date_format:"%d/%m"}</a>
 </span>
 <span style="float:right;margin-right:3px;">
+{if count($listcals) > 0}
 <a href="tiki-calendar.php?todate={$cell[w][d].day}&editmode=add" class="linkmenu" style="color:#666666;font-size:7px;">{tr}+{/tr}</a>
+{/if}
 </span>
 .<br/>
 </div>
