@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.23 2004-01-28 03:37:40 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.24 2004-01-28 04:55:44 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,7 +63,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"])) {
 	check_ticket('admin-groups');
 	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
-	if (isset($_REQUEST["include_groups"])) {
+	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {
 		foreach ($_REQUEST["include_groups"] as $include) {
 			if ($_REQUEST["name"] != $include) {
 				$userlib->group_inclusion($_REQUEST["name"], $include);
@@ -95,7 +95,7 @@ if (!isset($_REQUEST["numrows"])) {
 $smarty->assign_by_ref('numrows', $numrows);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'groupName_desc';
+	$sort_mode = 'groupName_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -167,8 +167,9 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 					}
 				}
 			}
-			//	 var_dump($ins_fields['data']);
 			$smarty->assign_by_ref('fields', $fields["data"]);
+			$groupitemId = $info["itemId"];
+			$smarty->assign('groupitemId', $groupitemId);
 		}
 	}
 
@@ -183,9 +184,7 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 			$inc["$rr"] = "y";
 		}
 	}
-	if (!isset($_REQUEST["action"])) {
-		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
-	}
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
 } else {
 	$allgroups = $userlib->list_all_groups();
 	foreach ($allgroups as $rr) {

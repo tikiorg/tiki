@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.30 2004-01-27 18:36:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.31 2004-01-28 04:55:44 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,9 +93,14 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 	}
 
+	if  ($fields["data"][$i]["type"] == 'r') {
+		$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($ins_fields["data"][$i]["options_array"][0],$ins_fields["data"][$i]["options_array"][1],$ins_fields["data"][$i]["value"]);
+		$ins_fields["data"][$i]["type"] = 't';
+	}
+
 	if ($fields["data"][$i]["type"] == 'e') {
 		include_once('lib/categories/categlib.php');
-		$k = $ins_fields["data"][$i]["options"];
+		$k = $fields["data"][$i]["options"];
 		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
 	}
 
