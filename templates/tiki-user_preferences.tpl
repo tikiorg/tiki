@@ -92,7 +92,7 @@
   <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
   {/if}
 	{if $userTracker eq 'y'}
-  <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td>
+  <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td class="form">
 	{if $useritemId}
 	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}">{tr}Edit informations{/tr}</a>
 	{else}
@@ -137,7 +137,7 @@
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
   <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
-  <tr><td class="form">{tr}Password{/tr}:</td><td><input type="password" name="pass" /></td></tr>
+  <tr><td class="form">{tr}Password{/tr}:</td class="form"><td><input type="password" name="pass" /></td></tr>
   <tr><td colspan="2" class="button"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
   </table>
   </form>
@@ -149,10 +149,10 @@
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
   {if $tiki_p_admin ne 'y' or $userwatch eq $user}
-   <tr><td>{tr}Old password{/tr}:</td><td><input type="password" name="old" /></td></tr>
+   <tr><td class="form">{tr}Old password{/tr}:</td><td class="form"><input type="password" name="old" /></td></tr>
   {/if}
-  <tr><td>{tr}New password{/tr}:</td><td><input type="password" name="pass1" /></td></tr>
-  <tr><td>{tr}Again please{/tr}:</td><td><input type="password" name="pass2" /></td></tr>
+  <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
+  <tr><td class="form">{tr}Again please{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
   <tr><td colspan="2" class="button"><input type="submit" name="chgpswd" value="{tr}change password{/tr}"></td></tr>
   </table>
   </form>
