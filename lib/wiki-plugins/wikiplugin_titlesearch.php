@@ -1,112 +1,107 @@
 <?php
-    /** 
+    /**
+    * Include the library {@link PluginsLib}
+    */
+    require_once "lib/wiki/pluginslib.php";
+    /**
     * Title Search Plugin
     * Search the titles of all pages in this wiki
+    * Params
+    * <ul>
+    * <li> search: required
+    * <li> info (allows multiple columns, joined by '|') : hits,lastModif,user,ip,len,comment, 
+    * creator, version, flag, versions,links,backlinks
+    * <li> exclude (allows multiple pagenames) : HomePage|RecentChanges
+    * <li> noheader         : by default, false
+    * </ul>    
+    * @package TikiWiki
+    * @subpackage TikiPlugins
+    * @author Claudio Bustos
+    * @version 1.0
     */
-    function wikiplugin_titlesearch_help() {
-        return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits+user,exclude=>HomePage+SandBox,noheader=>0,)}{TITLESEARCH}~/np~";
-    }
-    /**
-    * Search the titles of all pages in this wiki
-    * @param string not used
-    * @param array       // info (allows multiple columns, joined by '+') |
-    *                       info=hits,lastModif,user,ip,len,comment, creator, version,
-    *                       flag, versions,links,backlinks
-    *                    // exclude (allows multiple pagenames)|exclude=HomePage+RecentChanges
-    *                    // noheader = by default, false
-    *                    // search = required
-    * @return string
-    */
-
-    function wikiplugin_titlesearch($data, $params) {
-        global $wikilib;
-        $aInfoPresetNames = array(
-        "hits" => "Hits", "lastModif" => "Last mod", "user" => "Last author", "len" => "Size", "comment" => "Com", "creator" => "Creator", "version" => "Last ver", "flag" => "Status", "versions" => "Vers", "links" => "Links", "backlinks" => "Backlinks");
-        $aInfoPreset = array_keys($aInfoPresetNames);
-        extract ($params);
-        /////////////////////////////////
-        // Default values
-        /////////////////////////////////
-        //
-        if (!isset($search)) {
-            return ("You have to define a search");
+    class WikiPluginTitleSearch extends PluginsLib {
+        var $expanded_params = array("exclude", "info");
+        function getDescription() {
+            return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
         }
-        $noheader = isset($noheader)?(bool)$noheader : 0; // Include a header, with the search and number of pages
-        $exclude = isset($exclude)?explode("+", $exclude) : array(); // List of pages to exclude, separated by '+'
-        //
-        /////////////////////////////////
-        // Create a valid list for $info
-        /////////////////////////////////
-        //
-        if (isset($info)) {
-            $info = explode("+", $info);
-            $info_temp = array();
-            foreach($info as $sInfo) {
-                if (in_array(trim($sInfo), $aInfoPreset)) {
-                    $info_temp[] = trim($sInfo);
-                }
-                $info = $info_temp?$info_temp:
-                false;
+        function getDefaultArguments() {
+            return array('exclude' => array(),
+                'noheader' => 0,
+                'info' => false,
+                'search' => false);
+        }
+        function getName() {
+            return tra("TitleSearch");
+        }
+        function getVersion() {
+            return preg_replace("/[Revision: $]/", '',
+                "\$Revision: 1.12 $");
+        }
+        function run ($data, $params) {
+            global $wikilib;
+            $aInfoPreset = array_keys($this->aInfoPresetNames);
+            $params = $this->getParams($params, true);
+            extract ($params);
+            if (!$search) {
+                return ("You have to define a search");
             }
-        } else {
-            $info = false;
-        }
-        //
-        /////////////////////////////////
-        // Process pages
-        /////////////////////////////////
-        //
-        $sOutput = "";
-        $aInfo = $wikilib->list_pages(0, -1, 'pageName_desc', $search);
-        foreach($aInfo["data"] as $idPage=>$aPage) {
-            if(in_array($aPage["pageName"],$exclude)) {
-                unset($aInfo["data"][$idPage]);
-                $aInfo["cant"]--;
-            }
-        }
-        //
-        /////////////////////////////////
-        // Start of Output
-        /////////////////////////////////
-        //
-        if (!$noheader) {
-            // Create header
-            $count = $aInfo["cant"];
-            if (!$count) {
-                $sOutput .= tra("No pages found for title search")." '__".$search."__'";
-            } elseif ($count == 1) {
-                $sOutput .= tra("One page found for title search")." '__".$search."__'";
-            } else {
-                $sOutput = "$count".tra(" pages found for title search")." '__".$search."__'";
-            }
-            $sOutput .= "\n";
-        }
-        if ($info) {
-            // Header for info
-            $sOutput .= "<table class='normal'><tr><td class='heading'>".tra("Page")."</td>";
-            foreach($info as $iInfo => $sHeader) {
-                $sOutput .= "<td class='heading'>".tra($sHeader)."</td>";
-            }
-            $sOutput .= "</tr>";
-        }
-        foreach($aInfo["data"] as $aPage) {
-            // Loop of Backlinks
-            if (!$info) {
-                $sOutput .= "*((".$aPage["pageName"]."))\n";
-            } else {
-                $sOutput .= "<tr><td>((".$aPage["pageName"]."))</td>";
-                foreach($info as $sInfo) {
-                    if (isset($aPage[trim($sInfo)])) {
-                        $sOutput .= "<td>".$aPage[trim($sInfo)]."</td>";
-                    }
-                }
-            }
-        }
-        if ($info) {
+            //
+            /////////////////////////////////
+            // Create a valid list for $info
+            /////////////////////////////////
+            //
             if ($info) {
-                $sOutput .= "</table>";
+                $info_temp = array();
+                foreach($info as $sInfo) {
+                    if (in_array(trim($sInfo), $aInfoPreset)) {
+                        $info_temp[] = trim($sInfo);
+                    }
+                    $info = $info_temp?$info_temp:
+                    false;
+                }
+            } else {
+                $info = false;
             }
+            //
+            /////////////////////////////////
+            // Process pages
+            /////////////////////////////////
+            //
+            $sOutput = "";
+            $aPages = $wikilib->list_pages(0, -1, 'pageName_desc', $search);
+            foreach($aPages["data"] as $idPage => $aPage) {
+                if (in_array($aPage["pageName"], $exclude)) {
+                    unset($aPages["data"][$idPage]);
+                    $aPages["cant"]--;
+                }
+            }
+            //
+            /////////////////////////////////
+            // Start of Output
+            /////////////////////////////////
+            //
+            if (!$noheader) {
+                // Create header
+                $count = $aPages["cant"];
+                if (!$count) {
+                    $sOutput  .= tra("No pages found for title search")." '__".$search."__'";
+                } elseif ($count == 1) {
+                    $sOutput  .= tra("One page found for title search")." '__".$search."__'";
+                } else {
+                    $sOutput = "$count".tra(" pages found for title search")." '__".$search."__'";
+                }
+                $sOutput  .= "\n";
+            }
+            $sOutput.=PluginsLibUtil::createTablePages($aPages["data"],$info);
+            return $sOutput;
         }
-        return $sOutput;
+    }
+    function wikiplugin_titlesearch($data, $params) {
+        $plugin = new WikiPluginTitleSearch();
+        return $plugin->run($data, $params);
+    }
+    function wikiplugin_titlesearch_help() {
+        $plugin = new WikiPluginTitleSearch();
+        return $plugin->getDescription();
     }
 ?>
