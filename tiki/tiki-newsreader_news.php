@@ -85,6 +85,10 @@ for($i=$info['last']-$offset;$count<$maxRecords&&$i>=$info['first'];$i--) {
 $smarty->assign('articles',$articles);
 print_r(array_keys($articles[0]));
 
+if($feature_messages=='y' && $tiki_p_messages=='y') {
+  $unread = $tikilib->user_unread_messages($user);
+  $smarty->assign('unread',$unread);
+}
 
 $smarty->assign('mid','tiki-newsreader_news.tpl');
 $smarty->display('tiki.tpl');

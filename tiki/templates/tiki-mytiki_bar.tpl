@@ -15,6 +15,12 @@
 {if $user_assigned_modules eq 'y'}
 <td><div class="button2"><a class="linkbut" href="tiki-user_assigned_modules.php">{tr}Modules{/tr}</div></td>
 {/if}
+{if $feature_newsreader eq 'y'}
+<td><div class="button2"><a class="linkbut" href="tiki-newsreader_servers.php">{tr}Newsreader{/tr}</div></td>
+{/if}
+{if $feature_webmail eq 'y'}
+<td><div class="button2"><a class="linkbut" href="tiki-webmail.php">{tr}Webmail{/tr}</div></td>
+{/if}
 </tr></table>
 </div>
 
