@@ -1,7 +1,6 @@
 <table width="100%">
 <tr><td width="50%">
 	<div id="power" style="text-align: left">
-<a href="https://sourceforge.net/projects/tikiwiki" title="TikiWiki"><img alt="{tr}Powered by{/tr} TikiWiki" style="border: 0;" src="img/tiki/tikibutton2.png" /></a>
 	</div></td><td width="50%">
 	<div id="rss" style="text-align: right">
 		{if $rss_wiki eq 'y'}
