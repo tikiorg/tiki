@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/comments.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/comments.tpl,v 1.2 2004-01-07 19:51:18 musus Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -15,26 +15,26 @@
   {* if a reply to it is being composed * }
   {* The $parent_com is only set in this case *}
   {if $parent_com}
-  <table class="normal">
-  <tr>
-  	<td class="odd">
+  <table>
+  <tr class="odd">
+  	<td>
   		<a name="threadId{$parent_com.threadId}"></a>
-  		<table >
+  		<table>
   			<tr>
-			  	<td>
-			    	<span class="commentstitle">{$parent_com.title}</span><br />
+				<td>
+			    	<div class="commentstitle">{$parent_com.title}</div><br />
 			  		{tr}by{/tr} {$parent_com.userName} {tr}on{/tr} {$parent_com.commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$parent_com.average|string_format:"%.2f"}]
 			  	</td>
 			 </tr>
 		</table>
 	</td>
   </tr>
-  <tr>
-  	<td class="even">
+  <tr class="even">
+  	<td>
   		{$parent_com.parsed}
   		<br /><br />
   		{if $parent_com.parentId > 0}
-  			[<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$parent_com.grandFather}">{tr}parent{/tr}</a>]
+  			[<a class="comments" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$parent_com.grandFather}">{tr}parent{/tr}</a>]
   		{/if}
   	</td>
   </tr>

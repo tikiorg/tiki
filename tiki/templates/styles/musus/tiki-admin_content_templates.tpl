@@ -26,30 +26,29 @@
 {/if}
 <form action="tiki-admin_content_templates.php" method="post">
 <input type="hidden" name="templateId" value="{$templateId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="name" value="{$info.name|escape}" /></td></tr>
+<table>
+<tr class="cell"><td>{tr}name{/tr}:</td><td><input type="text" maxlength="255" size="40" name="name" value="{$info.name|escape}" /></td></tr>
 {if $feature_cms_templates eq 'y'}
-<tr><td class="formcolor">{tr}use in cms{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="cell"><td>{tr}use in articles{/tr}:</td><td><input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
 {if $feature_wiki_templates eq 'y'}
-<tr><td class="formcolor">{tr}use in wiki{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="cell"><td>{tr}use in wiki{/tr}:</td><td><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
 {if $feature_newsletters eq 'y'}
-<tr><td class="formcolor">{tr}use in newsletters{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="cell"><td>{tr}use in newsletters{/tr}:</td><td><input type="checkbox" name="section_newsletters" {if $info.section_newsletters eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-<tr><td class="formcolor">{tr}use in HTML pages{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}template{/tr}:</td><td class="formcolor"><textarea name="content" rows="25" cols="60">{$info.content|escape}</textarea></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr class="cell"><td>{tr}use in HTML pages{/tr}:</td><td><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="cell"><td>{tr}template{/tr}:</td><td><textarea name="content" rows="25" cols="60">{$info.content|escape}</textarea></td></tr>
+<tr class="cell"><td>&nbsp;</td><td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
+<tr class="cell"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 
-
 <h2>{tr}Templates{/tr}</h2>
-<div  align="center">
+<div align="center">
 <table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
+<tr><td>{tr}Find{/tr}</td>
+   <td>
    <form method="get" action="tiki-admin_content_templates.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -58,7 +57,7 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}last modif{/tr}</a></td>
@@ -67,39 +66,39 @@
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
-<tr>
-<td class="odd">{$channels[user].name}</td>
-<td class="odd">{$channels[user].created|tiki_short_datetime}</td>
-<td class="odd">
+<tr class="odd">
+<td>{$channels[user].name}</td>
+<td>{$channels[user].created|tiki_short_datetime}</td>
+<td>
 [{section name=ix loop=$channels[user].sections}
-&nbsp;&nbsp;({$channels[user].sections[ix]} <a class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
+&nbsp;&nbsp;({$channels[user].sections[ix]} <a  href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
 title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
 {/section}]
 </td>
-<td class="odd">
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
+<td>
+   &nbsp;&nbsp;<a  href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
 title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+   <a  href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
-<tr>
-<td class="even">{$channels[user].name}</td>
-<td class="even">{$channels[user].created|tiki_short_datetime}</td>
-<td class="even">
+<tr class="even">
+<td>{$channels[user].name}</td>
+<td>{$channels[user].created|tiki_short_datetime}</td>
+<td>
 [{section name=ix loop=$channels[user].sections}
-({$channels[user].sections[ix]} &nbsp;&nbsp;<a class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
+({$channels[user].sections[ix]} &nbsp;&nbsp;<a  href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
 title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
 {/section}]
 </td>
-<td class="even">
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
+<td>
+   &nbsp;&nbsp;<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this template?{/tr}')" 
 title="{tr}Click here to delete this template{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+   <a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}
