@@ -1098,3 +1098,386 @@ div.messureadbody {
 /* Links to read emails (the subject in the mailbox listing) */
 .readlink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : black; text-decoration: underline;}
 .readlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #636363; text-decoration: underline;}
+
+
+/* calendar styles */
+.Cal0, 
+.Cal1, 
+.Cal2
+{
+border-top:1px dashed #cccccc;
+color: #425262;
+font-size:10px;
+padding-right:0px;
+}
+.Cal0:before
+{
+content: "? ";
+}
+
+.Cal1:before
+{
+content: "+ ";
+background-color: #FFCC77;
+}
+
+.Cal2:before
+{
+content: "X ";
+background-color: #eeeeaa;
+}
+
+
+
+.Calwiki
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+margin-top: 0;
+}
+
+.Calwiki a
+{
+color: #443F39;
+}
+
+.Calwiki:before
+{
+content: "w";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calblog
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calblog a
+{
+color: #443039;
+}
+
+.Calblog:before
+{
+content: "b";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calgal
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calgal a
+{
+color: #303F49;
+}
+
+.Calgal:before
+{
+content: "i";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calart
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calart a
+{
+color: #304F30;
+}
+
+.Calart:before
+{
+content: "a";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calforum
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calforum a
+{
+color: #304F30;
+}
+
+.Calforum:before
+{
+content: "o";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Caldir
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Caldir a
+{
+color: #304F30;
+}
+
+.Caldir:before
+{
+content: "d";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calfgal
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calfgal a
+{
+color: #304F30;
+}
+
+.Calfgal:before
+{
+content: "f";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calfaq
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calfaq a
+{
+color: #304F30;
+}
+
+.Calfaq:before
+{
+content: "q";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calquiz
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calquiz a
+{
+color: #304F30;
+}
+
+.Calquiz:before
+{
+content: "z";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Caltrack
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Caltrack a
+{
+color: #304F30;
+}
+
+.Caltrack:before
+{
+content: "t";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calsurv
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calsurv a
+{
+color: #304F30;
+}
+
+.Calsurv:before
+{
+content: "s";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calnl
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calnl a
+{
+color: #304F30;
+}
+
+.Calnl:before
+{
+content: "n";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Caleph
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Caleph a
+{
+color: #304F30;
+}
+
+.Caleph:before
+{
+content: "e";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.Calchart
+{
+border-top:1px dashed #cccccc;
+font-size:10px;
+padding-left:3px;
+padding-right:3px;
+}
+
+.Calchart a
+{
+color: #304F30;
+}
+
+.Calchart:before
+{
+content: "c";
+font-family: monospace;
+background-color: #ffffff;
+}
+
+.viewmodeon
+{background-color: #6A5A49;
+color: #ffffff;
+text-decoration: none;
+padding-left: 10px;
+padding-right: 10px;
+}
+
+.viewmodeoff
+{
+background-color: #FFFFFF;
+color: #000000;
+text-decoration: none;
+padding-left: 10px;
+padding-right: 10px;
+}
+
+.viewmodeoff:hover
+{
+background-color: #FFFF00;
+color: #000000;
+}
+.calweb
+{
+font-weight: bold;
+font-size: 10px;
+text-decoration: none;
+padding-left: 3px;
+padding-right: 3px;
+color: #336699;
+}
+.calweb:hover
+{
+color: #996633;
+}
+.calprio1
+{
+background-color: #DAE0E0;
+}
+.calprio2
+{
+background-color: #DADCDC;
+}
+.calprio3
+{
+background-color: #DAD0D0;
+}
+.calprio4
+{
+background-color: #DACACA;
+}
+.calprio5
+{
+background-color: #DAC0D0;
+}
+.calprio6
+{
+background-color: #DABABA;
+}
+.calprio7
+{
+background-color: #DAB0B0;
+}
+.calprio8
+{
+background-color: #DAAAAA;
+}
+.calprio9
+{
+background-color: #DA9A9A;
+}
