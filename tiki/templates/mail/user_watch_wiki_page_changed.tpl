@@ -5,7 +5,7 @@
 
 {tr}Diff:{/tr} {$mail_machine_raw}/tiki-pagehistory.php?page={$mail_page}&diff2={$mail_last_version}
 
-{tr}If you don't want to receive this notifications follow this link:{/tr}
+{tr}If you don't want to receive these notifications follow this link:{/tr}
 {$mail_machine_raw}/tiki-user_watches.php?hash={$mail_hash}
 
 {tr}The new page content is:{/tr}
