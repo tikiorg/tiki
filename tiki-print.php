@@ -61,6 +61,13 @@ if($count_admin_pvs == 'y' || $user!='admin') {
 
 // Get page data
 $info = $tikilib->get_page_info($page);
+if($wiki_feature_copyrights == 'y' && isset($wikiLicensePage)) {
+  // insert license if wiki copyrights enabled
+  $license_info = $tikilib->get_page_info($wikiLicensePage);
+  $tikilib->add_hit($wikiLicensePage);
+  $info["data"] = $info["data"]."\n<HR>\n".$license_info["data"];
+  $_REQUEST['copyrightpage'] = $page;
+}
 
 // Verify lock status
 if($info["flag"] == 'L') {
