@@ -1,24 +1,39 @@
 <?php
 
-$user = @posix_getpwuid(@posix_getuid());
-$wwwuser = $user ? $user['name'] : false;
-unset($user);
-if (!$wwwuser) {
-	$wwwuser = 'nobody (or the user account the web server is running under)';
-}
-$docroot = $_SERVER['DOCUMENT_ROOT'];
+function system_check() {
+	if (!function_exists('posix_getuid'))
+		return true;
 
-$errors = '';
+	$user = @posix_getpwuid(@posix_getuid());
+	$group = @posix_getpwuid(@posix_getgid());
+	$wwwuser = $user ? $user['name'] : false;
+	$wwwgroup = $group ? $group['name'] : false;
 
-if (!is_writeable('templates_c')) {
-	$errors .= "$docroot/templates_c is not writeable by $wwwuser.\n";
-}
-if (!is_writeable('modules/cache')) {
-	$errors .= "$docroot/modules/cache is not writeable by $wwwuser.\n";
-}
+	if (!$wwwuser) {
+		$wwwuser = 'nobody (or the user account the web server is running under)';
+	}
+	if (!$wwwgroup) {
+		$wwwgroup = 'nobody (or the group account the web server is running under)';
+	}
+	$docroot = $_SERVER['DOCUMENT_ROOT'];
 
-if ($errors) {
-	print <<<qq
+	$errors = '';
+
+	if (!is_dir('templates_c')) {
+		$errors .= "The directory '$docroot/templates_c' does not exist.\n";
+	} else 
+	if (!is_writeable('templates_c')) {
+		$errors .= "The directory '$docroot/templates_c' is not writeable by $wwwuser.\n";
+	}
+	if (!is_dir('modules/cache')) {
+		$errors .= "The directory '$docroot/modules/cache' does not exist.\n";
+	} else 
+	if (!is_writeable('modules/cache')) {
+		$errors .= "The directory '$docroot/modules/cache' is not writeable by $wwwuser.\n";
+	}
+
+	if ($errors) {
+		print "
 <pre>
 Your tiki is not properly set up:
 
@@ -32,16 +47,16 @@ and type the following commands:
 
 or
 
-\$ su -c './setup.sh mylogin $wwwuser'
+\$ su -c './setup.sh mylogin $wwwgroup'
 
 Once you have executed these commands, this message will disappear!
 
-qq;
-exit;
+";
+		exit;
+	}
 }
-unset($docroot);
-unset($errors);
-unset($wwwuser);
+
+system_check();
 
 class timer
         {
