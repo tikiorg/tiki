@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.12 2003-11-14 23:34:23 ohertel Exp $
+$Id: trollparty.css,v 1.13 2003-12-04 19:12:57 mose Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -2328,7 +2328,7 @@ background-color: #222222;
 }
 .calfocus
 {
-font-size:7px;
+font-size:r97px;
 background-color: transparent;
 }
 .calfocus a
@@ -2338,7 +2338,7 @@ color: #000000;
 }
 .calfocuson
 {
-font-size:7px;
+font-size:r97px;
 background-color: #f1f1c9;
 }
 .calfocuson a
@@ -2615,22 +2615,6 @@ color: #304F30;
 content: "c";
 font-family: monospace;
 }
-
-.viewmodeon
-{
-color: #ffffff;
-text-decoration: underline;
-padding-left: 10px;
-padding-right: 10px;
-}
-
-.viewmodeoff
-{
-text-decoration: none;
-padding-left: 10px;
-padding-right: 10px;
-}
-
 .calweb
 {
 font-weight: bold;
@@ -2700,7 +2684,60 @@ border-left: 1px solid #b1b299;
 border-top: 1px solid #f1f1c9;
 border-right: 1px solid #f1f1c9;
 }
+div.tabrow {
+	margin-left: 29px;
+	border: 1px solid #787878;
+	border-bottom: 0;
+	font-size: 11px;
+}
+td.middle {
+	vertical-align: middle; 
+}
+.daterow {
+	margin-left: 10px;
+}
+.mininotes {
+	font-size: 80%;
+	color:#666666;
+}
+.opaque
+{
+	background-color: #ffffff;
+	width: auto;
+	border: 1px solid #666666;
+	padding: 1px; 
+}
+.opaque .box-title,
+.opaque, .box-data 
+{
+	width: auto;
+}
+.calcontent {
+	min-height: 60px;
+}
+.viewmodeon {
+	padding-left:   0px;
+	padding-right:   0px;
+}
+.viewmodeoff {
+	padding-left:   0px;
+	padding-right:   0px;
+}
+a.viewmodeon img {
+	margin: 0;
+padding: 0;
+}
+a.viewmodeoff img {
+	margin: 0;
+padding: 0;
+}
+#caltable {
+	width: 100%;
+}
 
+/*
+ * help zone
+ */
 div#edithelpzone { display: none;  }
 div#attzone      { display: none; margin-top: 10px; }
 div#attzoneopen      { display: block; margin-top: 10px; }

@@ -13,11 +13,11 @@ light grey : #cccccc;
 
 
 images :
-url(styles/akwa/aqua-tab.png)
-url(styles/akwa/aqua-tab-active.png)
-url(styles/akwa/aqua-header.png)
-url(styles/akwa/dark.png)
-url(styles/akwa/aqua-menubar.png)
+url(akwa/aqua-tab.png)
+url(akwa/aqua-tab-active.png)
+url(akwa/aqua-header.png)
+url(akwa/dark.png)
+url(akwa/aqua-menubar.png)
 */
 
 
@@ -62,7 +62,7 @@ width: 100%;
 height: 16px; 
 padding-left: 10px; 
 padding-right: 10px; 
-background-image: url(styles/akwa/aqua-header.png); 
+background-image: url(akwa/aqua-header.png); 
 white-space: nowrap;
 border-bottom: 1px solid #999999;
 color: #424242;
@@ -75,7 +75,7 @@ DIV#tiki-mid { z-index: 1; height: auto;  margin-bottom: 40px; }
 
 /* And this is the footer */
 DIV#tiki-bot { 
-background-image: url(styles/akwa/aqua-header.png); 
+background-image: url(akwa/aqua-header.png); 
 z-index: 10; 
 background-color: #eeeeee; 
 position: fixed; 
@@ -131,7 +131,7 @@ div.box {
 div.box-title {
 	font-family: Arial, Helvetica, sans-serif;  
 	font-size: 10px;
-	background-image: url(styles/akwa/aqua-tab.png);
+	background-image: url(akwa/aqua-tab.png);
 	border: 1px solid #999999;
 	padding: 2px 10px 0px 10px;
 	color: #425262;
@@ -149,7 +149,7 @@ div.box-data {
   overflow: hidden;
   color: black;
   background-color: #FFFFFF;
-  background-image: url(styles/akwa/aqua-header.png);
+  background-image: url(akwa/aqua-header.png);
   padding: 5px;  
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  
 	border: 1px solid #999999;
@@ -174,7 +174,7 @@ div.cbox {
 
 /* Boxes are divided in title and data, this is the title */
 div.cbox-title {
-	background-image: url(styles/akwa/aqua-tab.png);
+	background-image: url(akwa/aqua-tab.png);
   border: 1px solid #999999;  
   border-bottom: 0;
 	font-size: 13px;  
@@ -193,7 +193,7 @@ div.cbox-title {
 /* And this is the data */
 div.cbox-data {
   overflow: hidden;
-	background-image: url(styles/akwa/aqua-header.png);
+	background-image: url(akwa/aqua-header.png);
 	border: 1px solid #999999;
 	border-top: 1px solid #cccccc;
   background-color: white;
@@ -210,7 +210,7 @@ div.cbox-data {
 /* Menus */
 /* Separators are used to separate menu areas in the application menu and user created menus*/
 div.separator {
-	background-image: url(styles/akwa/dark.png);
+	background-image: url(akwa/dark.png);
   color: #003163; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;
   margin-left: 2px;  margin-right: 2px;  margin-top: 6px;  margin-bottom: 2px;
   width: 90%;
@@ -259,8 +259,8 @@ padding: 0px;
 /* General form elements */
 input,textarea, select {color : #000000; font: normal 10px Verdana, Arial, Helvetica, sans-serif; border: 1px solid #999999; }
 input { text-indent : 2px; }
-input[type=submit] { font-weight: bold; color: #224466; background-image: url(styles/akwa/aqua-tab.png); -moz-border-radius: 3px;}
-input[type=submit]:hover { color: #000000; background-image: url(styles/akwa/aqua-tab-active.png);}
+input[type=submit] { font-weight: bold; color: #224466; background-image: url(akwa/aqua-tab.png); -moz-border-radius: 3px;}
+input[type=submit]:hover { color: #000000; background-image: url(akwa/aqua-tab-active.png);}
 
 /* General tables */
 /* These styles apply to tables used to display common listings such as the wiki page listing, last changes,
@@ -279,7 +279,7 @@ TABLE.normalnoborder {  width: 100%; border-spacing: 0; border-collapse: separat
 TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, 
 td.listfilesheading, td.listartheading, td.forumheading, td.thead
 {
-	background-image: url(styles/akwa/aqua-menubar.png);
+	background-image: url(akwa/aqua-menubar.png);
 	border-bottom: 1px solid #999999;
   font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px; 
@@ -289,7 +289,7 @@ td.listfilesheading, td.listartheading, td.forumheading, td.thead
 
 TD.button
 {
-  background-image: url(styles/akwa/aqua-menubar.png);
+  background-image: url(akwa/aqua-menubar.png);
   border-bottom: 1px solid #999999;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px; 
@@ -394,7 +394,7 @@ a.pagetitle, a.forumspagetitle { text-decoration: none;}
 H1 { 
 font-weight: bold; 
 font-size: 18px; 
-background-image: url(styles/akwa/aqua-menubar.png);
+background-image: url(akwa/aqua-menubar.png);
 color : black;
 margin-top: 5px;
 margin-bottom: 0px;
@@ -447,7 +447,7 @@ div.titlebar {
   border: 1px solid #aeaeae;
   border-bottom: 1px solid #424242;
   border-left: 1px solid #424242;
-	background-image: url(styles/akwa/aqua-tab.png);
+	background-image: url(akwa/aqua-tab.png);
   padding: 1px; 
   margin-top: 10px;
   margin-bottom: 3px;
@@ -462,7 +462,7 @@ DIV#page-bar {	backgroud-color: white; margin-left: 5px;}
 /* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
 div.button2 {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background-image: url(styles/akwa/aqua-tab.png);
+	background-image: url(akwa/aqua-tab.png);
   font-size: 10px;
   color : Black;
   font-weight : bold;
@@ -596,7 +596,7 @@ margin-bottom: 10px;
 
 /* The header of a weblog post */
 div.posthead {
-	background-image: url(styles/akwa/aqua-header.png);
+	background-image: url(akwa/aqua-header.png);
 	-moz-border-radius: 0px 42px 0px 00px;
 	border: 1px solid #999999;
 	border-bottom: 0;
@@ -632,7 +632,7 @@ div.postbody {
 
 /* The weblog title */
 div.blogtitle {
-	background-image: url(styles/akwa/aqua-menubar.png);
+	background-image: url(akwa/aqua-menubar.png);
   font-weight : bold;
 	color: #424242;
   font-size: 18px;
@@ -647,7 +647,7 @@ div.blogtitle {
 /* The weblog information */
 div.bloginfo {
   background-color: white;
-	background-image: url(styles/akwa/aqua-header.png);
+	background-image: url(akwa/aqua-header.png);
 	border-left: 1px solid #999999;
 	border-right: 1px solid #999999;
   padding: 5px;
@@ -668,7 +668,7 @@ div.blogdesc {
 /* Links to post/edit/rss feed for the webelog are contained inside this div */
 div.blogtools {
   background-color: white;
-	background-image: url(styles/akwa/aqua-menubar.png);
+	background-image: url(akwa/aqua-menubar.png);
   border: 1px solid #999999;
 	border-top: 1px solid #dedede;
   font-size: 10px;
@@ -693,7 +693,7 @@ div.fgaldesc {
 div.articletitle {
   font-size: 11px; 
   background-color: white; 
-	background-image: url(styles/akwa/aqua-header.png);
+	background-image: url(akwa/aqua-header.png);
   border: 1px solid #999999;
   border-bottom: 0px;
   padding: 5px;
@@ -714,7 +714,7 @@ div.articleheading {
 
 div.articletrailer {
   background-color: white;
-	background-image: url(styles/akwa/aqua-menubar.png);
+	background-image: url(akwa/aqua-menubar.png);
   border: 1px solid #999999;
   margin-bottom: 20px;
   font-size: 11px;
@@ -883,7 +883,7 @@ td.forumtoolbar {  color: black;  font-size: 11px;  font-weight : bold; text-dec
 
 table.tcategpath { 
 background-color: #FFFFFF;
-background-image: url(styles/akwa/aqua-menubar.png);
+background-image: url(akwa/aqua-menubar.png);
 margin-bottom: 40px; 
 border: 1px solid #999999; 
 width: 100%;
@@ -1233,12 +1233,35 @@ background-color: #ffffff;
 font-size: 9px;
 margin-bottom: 7px;
 }
+div.tabrow {
+margin-left: 29px;
+background-color: #ffffff;
+border: 1px solid #787878;
+border-top: 0;
+font-size: 11px;
+}
+td.middle {
+	vertical-align: middle; 
+}
+.daterow {
+	margin-left: 10px;
+}
+.mininotes {
+	font-size: 80%;
+	color:#666666;
+}
 
 /* style of the popup background in case of transparent styles */
-#opaque
+.opaque
 {
 background-color: #ffffff;
 }
+.opaque .box-title,
+.opaque, .box-data 
+{
+width: auto;
+}
+
 .calfocus
 {
 font-size:7px;
@@ -1258,7 +1281,11 @@ background-color: #f3e498;
 text-decoration: none;
 }
 
-
+.calcontent {
+min-height: 60px;
+border-spacing: 0;
+border: 1px solid #676767;
+}
 
 
 .Calwiki
@@ -1543,20 +1570,15 @@ background-color: #ffffff;
 }
 
 .viewmodeon
-{background-color: #6A5A49;
-color: #ffffff;
-text-decoration: none;
-padding-left: 10px;
-padding-right: 10px;
+{
+padding-left: 0px;
+padding-right: 0px;
 }
 
 .viewmodeoff
 {
-background-color: #FFFFFF;
-color: #000000;
-text-decoration: none;
-padding-left: 10px;
-padding-right: 10px;
+padding-left: 0px;
+padding-right: 0px;
 }
 
 .viewmodeoff:hover
@@ -1564,6 +1586,15 @@ padding-right: 10px;
 background-color: #FFFF00;
 color: #000000;
 }
+a.viewmodeon img {
+	margin: 0;
+padding: 0;
+}
+a.viewmodeoff img {
+	margin: 0;
+padding: 0;
+}
+
 .calweb
 {
 font-weight: bold;
@@ -1618,6 +1649,17 @@ div#edithelpzone { display: none;  }
 div#attzone      { display: none; margin-top: 10px; }
 div#attzoneopen      { display: block; margin-top: 10px; }
 .highlight { background-color: #ddeeff;  }
+/*
+ * Caption in tables.
+ * Currently in Attachments and comments only.
+ */
+caption
+{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight : bold;
+  text-align: right;
+}
 
 /* trees */
 div.tree

@@ -272,6 +272,10 @@ FORM {  margin : 0px 0px 0px 0px;  padding-bottom : 0px;  padding-left : 0px;  p
 /* General form elements */
 input,textarea, select {color : #000000; font: normal 10px Verdana, Arial, Helvetica, sans-serif; }
 input { text-indent : 2px; }
+input[type=submit]:hover {
+  background-color: #aaaaaa;
+  cursor: pointer;
+}
 
 /* General tables */
 /* These styles apply to tables used to display common listings such as the wiki page listing, last changes,
@@ -1216,7 +1220,7 @@ width: auto;
 }
 .calfocus
 {
-font-size: 8px;
+font-size: 9px;
 background-color: #e4e1d9;
 }
 .calfocus a
@@ -1226,7 +1230,7 @@ color: #000000;
 }
 .calfocuson
 {
-font-size: 8px;
+font-size: 9px;
 background-color: #f3e498;
 }
 .calfocuson a
