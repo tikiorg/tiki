@@ -36,5 +36,6 @@
 {include file="babelfish.tpl"}
 
 <div id="loadstats" style="text-align: center">
-{tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} | {tr}Memory usage{/tr}: {memusage} | {$num_queries} {tr}database queries used{/tr} | GZIP {$gzip} | {tr}Server load{/tr}: {$server_load}
+{tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} | {tr}Memory usage{/tr}: {memusage} | {$num_queries} {tr}database queries used{/tr} | GZIP {$gzip} | {tr}Server load{/tr}: {$server_load}<br/>
+This style works best in Mozilla based browsers - <a href="http://www.mozilla.org/" class="linkmenu">mozilla.org</a>
 </div>
