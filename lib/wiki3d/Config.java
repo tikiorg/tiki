@@ -9,7 +9,7 @@ static Color colorface1=new Color(255,0,0);//color of the navigator
 static Color colorface2=new Color(0,255,255);//-do- reverse side
 static Color graphcolor=new Color(255,255,0);
 static Color graphstringcolor =new Color(10,10,10);
-static Color stringcolorend=new Color(0,0,255);//The string joining the graph and the nodes are gradient from this color to the color of the ball below;
+
 static Color linkballcolor=new Color(255,0,0);//The link node color
 static Color actionbannercolor=new Color(0,100,100);//Background of the action text
 static Color actiontextcolor=new Color(255,255,255);//color of action label
