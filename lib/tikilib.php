@@ -76,7 +76,7 @@ class TikiLib {
   {
     return $this->getOne("select dsn from tiki_dsn where name='$name'");
   }
-
+  
 
   /*shared*/ function replace_note($user,$noteId,$name,$data)
   {
@@ -3806,19 +3806,20 @@ class TikiLib {
     }
     $pars=join('/',$pars);
     if(preg_match_all("/\{draw +name=([A-Za-z_\-0-9]+) *\}/",$data,$draws)) {
+      //$this->invalidate_cache($page);
       for($i=0;$i<count($draws[0]);$i++) {
         $id = $draws[1][$i];
         $repl='';
         $name=$id.'.gif';
         if(file_exists("img/wiki/$name")) {
           if($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-            $repl="<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
+            $repl="<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=$page&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
           } else {
             $repl="<img border='0' src='img/wiki/$name' alt='a drawing' />";
           }
         } else {
           if($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-            $repl="<a class='wiki' href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
+            $repl="<a class='wiki' href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=$page&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
           } else {
             $repl=tra('drawing not found');
           }
