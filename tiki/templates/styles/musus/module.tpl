@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/module.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/module.tpl,v 1.2 2004-01-07 23:17:14 musus Exp $ *}
 {* Module layout with controls *}
 
-<div class="box"><div class="box-title">
+<div class="module"><div class="module-title">
 {* Draw module controls for logged user only *}
 {if $user and $user_assigned_modules == 'y' and $no_module_controls ne 'y' and $feature_modulecontrols eq 'y'}
 <table>
@@ -27,6 +27,6 @@ title="{tr}Click here to unassign this module{/tr}"><img border="0" alt="{tr}Rem
   {$module_title}
 {/if}
 
-</div><div class="box-data">
+</div><div class="module-content">
     {$module_content}
 </div></div>
