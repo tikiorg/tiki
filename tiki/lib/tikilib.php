@@ -4743,7 +4743,7 @@ function parse_data($data) {
 		$max = 99;
 
 	    $rssdata = $rsslib->get_rss_module_content($id);
-	    $items = $rsslib->parse_rss_data($rssdata);
+	    $items = $rsslib->parse_rss_data($rssdata, $id);
 
 	    $repl = '<ul>';
 
