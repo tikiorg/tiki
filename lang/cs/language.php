@@ -1976,7 +1976,6 @@ $lang=Array(
 "Unflagg" => "Unflagg",
 "Unflagged" => "Unflagged",
 "United_Arab_Emirates" => "Spojené Arabské Emiráty",
-"United_Kingdom" => "Anglie",
 "United_States" => "Spojené státy Americké",
 "Unix" => "Unix",
 "Unknown group" => "Neznámá skupina",
