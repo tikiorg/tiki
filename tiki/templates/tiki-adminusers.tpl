@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.58 2004-06-27 03:05:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.59 2004-07-16 18:30:28 teedog Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -18,7 +18,7 @@
 {/if}
 
 {if $tikifeedback}
-<br />{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
+<br /><div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
 {/if}
 
 <br /><br />
@@ -67,9 +67,11 @@ class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
+<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
 <table class="normal">
 <tr>
 <td class="heading auto">&nbsp;</td>
+<td class="heading">&nbsp;</td>
 <td class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
@@ -81,9 +83,10 @@ class="prevnext">{tr}All{/tr}</a>
 {cycle print=false values="even,odd"}
 {section name=user loop=$users}
 <tr class="{cycle}">
-<td class="thin"><a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Configure/Options{/tr}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a></td>
+<td class="thin"><input type="checkbox" name="checked[]" value="{$users[user].user}" {if $users[user].checked eq 'y'}checked="checked" {/if}/></td>
+<td class="thin"><a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Change user preferences{/tr}: {$users[user].user}"><img border="0" alt="{tr}Change user preferences{/tr}: {$users[user].user}" src="img/icons/config.gif" /></a></td>
 <td class="thin"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}"  
-title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a></td>
+title="{tr}edit account settings{/tr}: {$users[user].user}"><img border="0" alt="{tr}edit account settings{/tr}: {$users[user].user}" src="img/icons/edit.gif" /></a></td>
 <td><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}">{$users[user].user}</a></td>
 <td>{$users[user].email}</td>
 <td>{if $users[user].currentLogin eq ''}{tr}Never{/tr}{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
@@ -100,7 +103,39 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </td>
 </tr>
 {/section}
+  <script language='Javascript' type='text/javascript'>
+  <!--
+  // check / uncheck all.
+  // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
+  // for now those people just have to check every single box
+  document.write("<tr><td><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
+  document.write("<td colspan=\"18\"><label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
+  //-->                     
+  </script>
 </table>
+  <p align="left"> {*on the left to have it close to the checkboxes*}
+  {if $group_management_mode neq 'y'}
+  {tr}Perform action with checked:{/tr}
+  <select name="submit_mult">
+    <option value="" selected>-</option>
+    <option value="remove_users" >{tr}remove{/tr}</option>
+    <option value="assign_groups" >{tr}manage group assignments{/tr}</option>
+  </select>
+  <input type="submit" value="{tr}ok{/tr}" />
+  {else}
+  <select name="group_management">
+  	<option value="add">{tr}Assign selected to{/tr}</option>
+  	<option value="remove">{tr}Remove selected from{/tr}</option>
+  </select>
+  {tr}the following groups:{/tr}
+  {section name=ix loop=$groups}
+  	<br /><input type="checkbox" name="checked_groups[]" value="{$groups[ix].groupName}" /> {$groups[ix].groupName}
+  {/section}
+  <br /><input type="submit" value="{tr}ok{/tr}" />
+  {/if}
+  </p>
+</form>
+
 {if $cant_pages > 1}
 <br />
 <div class="mini">
