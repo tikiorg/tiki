@@ -1128,7 +1128,8 @@ go
 
 CREATE TABLE "tiki_comments" (
 threadId numeric(14 ,0) identity,
-  "object" varchar(32) default '' NOT NULL,
+  "object" varchar(255) default '' NOT NULL,
+  "objectType" varchar(32) default '' NOT NULL,
   "parentId" numeric(14,0) default NULL NULL,
   "userName" varchar(200) default NULL NULL,
   "commentDate" numeric(14,0) default NULL NULL,
@@ -1143,6 +1144,8 @@ threadId numeric(14 ,0) identity,
   "user_ip" varchar(15) default NULL NULL,
   "summary" varchar(240) default NULL NULL,
   "smiley" varchar(80) default NULL NULL,
+  "message_id" varchar(250) default NULL NULL,
+  "in_reply_to" varchar(250) default NULL NULL,
   PRIMARY KEY ("threadId")
 
 
@@ -1788,6 +1791,7 @@ forumId numeric(8 ,0) identity,
   "moderator_group" varchar(200) default NULL NULL,
   "approval_type" varchar(20) default NULL NULL,
   "outbound_address" varchar(250) default NULL NULL,
+  "outbound_from" varchar(250) default NULL NULL,
   "inbound_pop_server" varchar(250) default NULL NULL,
   "inbound_pop_port" numeric(4,0) default NULL NULL,
   "inbound_pop_user" varchar(200) default NULL NULL,
@@ -1806,6 +1810,7 @@ forumId numeric(8 ,0) identity,
   "topics_list_lastpost" char(1) default NULL NULL,
   "topics_list_author" char(1) default NULL NULL,
   "vote_threads" char(1) default NULL NULL,
+  "forum_last_n" numeric(2,0) default 0,
   PRIMARY KEY ("forumId")
 )   
 go
@@ -2128,7 +2133,6 @@ imageId numeric(14 ,0) identity,
 
 
 
-
 )   
 go
 
@@ -2142,8 +2146,6 @@ go
 CREATE  INDEX "tiki_images_ti_gId" ON "tiki_images"("galleryId")
 go
 CREATE  INDEX "tiki_images_ti_cr" ON "tiki_images"("created")
-go
-CREATE  INDEX "tiki_images_ti_hi" ON "tiki_images"("hits")
 go
 CREATE  INDEX "tiki_images_ti_us" ON "tiki_images"("user")
 go
@@ -2777,7 +2779,10 @@ nlId numeric(12 ,0) identity,
   "lastSent" numeric(14,0) default NULL NULL,
   "editions" numeric(10,0) default NULL NULL,
   "users" numeric(10,0) default NULL NULL,
+  "allowUserSub" char(1) default 'y',
   "allowAnySub" char(1) default NULL NULL,
+  "unsubMsg" char(1) default 'y',
+  "validateAddr" char(1) default 'y',
   "frequency" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("nlId")
 )   
@@ -2891,6 +2896,7 @@ CREATE TABLE "tiki_pages" (
   "points" numeric(8,0) default NULL NULL,
   "votes" numeric(8,0) default NULL NULL,
   "cache" text default '',
+  "wiki_cache" numeric(10,0) default 0,
   "cache_timestamp" numeric(14,0) default NULL NULL,
   "pageRank" decimal(4,3) default NULL NULL,
   "creator" varchar(200) default NULL NULL,
@@ -2898,13 +2904,10 @@ CREATE TABLE "tiki_pages" (
 
 
 
-
 ) 
 go
 
 
-CREATE  INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName")
-go
 CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data")
 go
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank")
@@ -4638,6 +4641,7 @@ go
 CREATE TABLE "users_groups" (
   "groupName" varchar(30) default '' NOT NULL,
   "groupDesc" varchar(255) default NULL NULL,
+  "groupHome" varchar(255) default '',
   PRIMARY KEY ("groupName")
 ) 
 go
@@ -5401,6 +5405,32 @@ go
 
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editor', 'maps')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_create', 'Can create new mapfile', 'admin', 'maps')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_delete', 'Can delete mapfiles', 'admin', 'maps')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_map_view', 'Can view mapfiles', 'basic', 'maps')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_access_closed_site', 'Can access site when closed', 'admin', 'tiki')
+go
+
+
+
+
 -- --------------------------------------------------------
 
 --
@@ -5456,6 +5486,7 @@ userId numeric(8 ,0) identity,
   "password" varchar(30) default '' NOT NULL,
   "provpass" varchar(30) default NULL NULL,
   "realname" varchar(80) default NULL NULL,
+  "default_group" varchar(255) default '',
   "homePage" varchar(200) default NULL NULL,
   "lastLogin" numeric(14,0) default NULL NULL,
   "currentLogin" numeric(14,0) default NULL NULL,
@@ -5798,6 +5829,16 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_articles','n')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_babelfish','n')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_babelfish_logo','n')
 go
 
 
@@ -6881,6 +6922,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateUsers','n')
 go
 
 
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('eponymousGroups','n')
 go
 
@@ -7052,6 +7094,33 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('w_use_dir','')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('map_path','/var/www/html/map/')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('default_map','pacific.map')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols', 'y')
+go
+
+
+
+
+-- Dynamic variables
+CREATE  "TABLE" tiki_dynamic_variables( name varchar( 40  ) not null,  "DATA" text default '',  PRIMARY  KEY ( name )  )
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki')
 go
 
 
