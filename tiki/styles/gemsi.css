@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.18 2004-01-21 07:30:38 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.19 2004-01-24 23:10:27 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -38,6 +38,9 @@ input, textarea, select {
 }
 input {
 	text-indent: 2px;
+}
+input[type=image] {
+	border: 0;
 }
 input[type=submit] {
 	background-color: #dedede;
@@ -183,7 +186,6 @@ TD.module {
 	color: black;
 }
 div.cbox { 
-  background-color: white; 
   padding: 10px; 
 }
 div.cbox-title {
@@ -367,11 +369,19 @@ background-color: #eee7d6;
 tr.odd:hover {
 background-color: #FFF7E6;
 }
+tr.odd:hover a {
+background-color: #FFFFFF;
+color: #1c60a8;
+}
 tr.even {
 background-color: #ddd7c6;
 }
 tr.even:hover {
 background-color: #FFF7E6;
+}
+tr.even:hover a {
+background-color: #FFFFFF;
+color: #1c60a8;
 }
 
 TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd, td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,

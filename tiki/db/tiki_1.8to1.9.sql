@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.15 2004-01-22 07:55:52 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.16 2004-01-24 23:10:57 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -128,4 +128,7 @@ CREATE TABLE tiki_tracker_options (
   value text default NULL,
   PRIMARY KEY (trackerId,name(30))
 ) TYPE=MyISAM ;
+
+# added on 2004-01-23 by mose, adding a field param
+ALTER TABLE tiki_tracker_fields ADD isPublic varchar ( 1 ) default NULL;
 

@@ -68,8 +68,8 @@ class="link" href="tiki-objectpermissions.php?objectName=Tracker%20{$channels[us
 src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /></a>{if $channels[user].individual eq 'y'}){/if}</td>
 <td>{$channels[user].description}</td>
 <td><a class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='img/icons/ico_table.gif' alt='{tr}fields{/tr}' title='{tr}fields{/tr}' border='0' /></a></td>
-<td>{$channels[user].created|tiki_short_datetime}</td>
-<td>{$channels[user].lastModif|tiki_short_datetime}</td>
+<td>{$channels[user].created|tiki_short_date}</td>
+<td>{$channels[user].lastModif|tiki_short_date}</td>
 <td style="text-align:right;" >{$channels[user].items}</td>
 <td  ><a class="link" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].trackerId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a></td>
 </tr>
@@ -104,32 +104,30 @@ src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /
 <form action="tiki-admin_trackers.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal">
-<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td><td></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td><td colspan="2"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+{assign var=cols value="2"}
 {include file=categorize.tpl}
-<tr class="formcolor"><td>{tr}Show status when listing tracker items?{/tr}</td><td>
-<input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} onclick="toggleSpan('statusoptions');" />
-<span id="statusoptions" style="display:{if $showStatus eq 'y'}inline{else}none{/if};">
-{tr}Show status to tracker admin only (regular users only see open items){/tr} 
-<input type="checkbox" name="showStatusAdminOnly" {if $showStatusAdminOnly eq 'y'}checked="checked"{/if} />
-</span>
-</td></tr>
-<tr class="formcolor"><td>{tr}Show creation date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
-<tr class="formcolor"><td>{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
-<tr class="formcolor"><td>{tr}Tracker items allow comments?{/tr}</td><td>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Show status (if disabled only tracker admin can see it){/tr}</td><td>
+<input type="checkbox" name="showStatusAdminOnly" {if $showStatusAdminOnly eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Show status when listing tracker items?{/tr}</td><td>
+<input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Show creation date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Tracker items allow comments?{/tr}</td><td>
 <input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} onclick="toggleSpan('commentsoptions');" />
 <span id="commentsoptions" style="display:{if $useComments eq 'y'}inline{else}none{/if};">
 {tr}and display comments in listing?{/tr} <input type="checkbox" name="showComments" {if $showComments eq 'y'}checked="checked"{/if} />
 </span>
 </td></tr>
-<tr class="formcolor"><td>{tr}Tracker items allow attachments?{/tr}</td><td>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Tracker items allow attachments?{/tr}</td><td>
 <input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} onclick="toggleSpan('attachmentsoptions');toggleBlock('attachmentsconf');" />
 <span id="attachmentsoptions" style="display:{if $useAttachments eq 'y'}inline{else}none{/if};">
 {tr}and display attachments in listing?{/tr} <input type="checkbox" name="showAttachments" {if $showAttachments eq 'y'}checked="checked"{/if} />
 </span>
 </td></tr>
-<tr class="formcolor"><td colspan="2">
-<div id="attachmentsconf" style="display:{if $useAttachments eq 'y'}bloc{else}none{/if};">
+<tr class="formcolor"><td class="auto" colspan="3">
+<div id="attachmentsconf" style="display:{if $useAttachments eq 'y'}block{else}none{/if};">
 {tr}Attachement display options (Use numbers to order items, 0 will not be displayed, and negative values will be displayed in a popup){/tr}<br />
 <table width="100%"><tr>
 <td>{tr}name{/tr}</td>
@@ -152,7 +150,7 @@ src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /
 </tr></table>
 </div>
 </td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 </div>

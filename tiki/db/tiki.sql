@@ -2956,6 +2956,7 @@ CREATE TABLE tiki_tracker_fields (
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,
   isSearchable char(1) default NULL,
+  isPublic char(1) default NULL,
   PRIMARY KEY  (fieldId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

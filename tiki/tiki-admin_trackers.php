@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.12 2004-01-22 07:55:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.13 2004-01-24 23:10:55 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,6 +51,7 @@ $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
 } 
 
 $smarty->assign('name', $info["name"]);
@@ -137,8 +138,9 @@ if (isset($_REQUEST["save"])) {
 		}
 		$tracker_options[" orderAttachments"] = $orderat;
 	}
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
 
-	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $showCreated, $showLastModif, $tracker_options);
+	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
 	$smarty->assign('trackerId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.25 2004-01-22 07:55:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.26 2004-01-24 23:10:56 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,12 +65,13 @@ $ins_fields = $fields;
 for ($i = 0; $i < count($fields["data"]); $i++) {
 	$fid = $fields["data"][$i]["fieldId"];
 	$ins_id = 'ins_' . $fid;
-	$fields["data"][$i]["id"] = $ins_id;
+	$filter_id = 'filter_' . $fid;
+	$fields["data"][$i]["id"] = $filter_id;
 	$ins_fields["data"][$i]["id"] = $ins_id;
 
 	if ($fields["data"][$i]["type"] != 'c' && $fields["data"][$i]["type"] != 'f') {
-		if (isset($_REQUEST["$fid"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$fid"];
+		if (isset($_REQUEST["$filter_id"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
@@ -123,12 +124,11 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
 	}
 	if ($fields["data"][$i]["type"] == 'c') {
-		if (isset($_REQUEST["$fid"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$fid"];
+		if (isset($_REQUEST["$filter_id"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
-
 		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
 			$ins_fields["data"][$i]["value"] = 'y';
 		} else {
@@ -170,39 +170,20 @@ if ($user) {
 	}
 }
 
-if (!isset($_REQUEST["save"])) {
-	if ($_REQUEST["itemId"]) {
-		$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
-		for ($i = 0; $i < count($fields["data"]); $i++) {
-			$fid = $fields["data"][$i]["fieldId"];
-			$ins_id = 'ins_' . $fid;
-			$ins_fields["data"][$i]["id"] = $ins_id;
-			$ins_fields["data"][$i]["value"] = $info["$fid"];
-		}
-	}
-}
-
-if ($tiki_p_create_tracker_items == 'y') {
-	if (isset($_REQUEST["save"])) {
+if (isset($_REQUEST["save"])) {
+	if ($tiki_p_create_tracker_items == 'y') {
 		check_ticket('view-trackers');
 		// Save here the values for this item
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields);
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
-		for ($i = 0; $i < count($fields["data"]); $i++) {
-			$fid = $fields["data"][$i]["fieldId"];
-			$ins_id = 'ins_' . $fid;
-			$ins_fields["data"][$i]["id"] = $ins_id;
-			$ins_fields["data"][$i]["value"] = '';
-		}
 		$smarty->assign('itemId', '');
 	}
 }
 
 $smarty->assign_by_ref('fields', $fields["data"]);
-$smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'lastModif_desc';
+	$sort_mode = '';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }

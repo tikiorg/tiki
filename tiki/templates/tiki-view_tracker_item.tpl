@@ -35,12 +35,14 @@
 <h3>{tr}View item{/tr}</h3>
 <table class="normal">
 {section name=ix loop=$ins_fields}
+
 {if $ins_fields[ix].type eq 'h'}
 </table>
 <h3>{$ins_fields[ix].name}</h3>
 <table class="normal">
+
 {elseif $ins_fields[ix].type ne 'x'}
-{if $ins_fields[ix].type eq 'c' and $fields[ix].options eq '1'}
+{if $ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' and $fields[ix].options_array[0] eq '1'}
 <tr class="formcolor"><td>{$ins_fields[ix].name}</td><td>
 {elseif $stick eq 'y'}
 <td>{$ins_fields[ix].name}</td><td>
@@ -50,8 +52,10 @@
 {/if}
 {if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
 {$ins_fields[ix].value|date_format:$daformat}</td></tr>
+
 {elseif $ins_fields[ix].type eq 'a'}
-{$ins_fields[ix].pvalue}</td></tr>
+{$ins_fields[ix].pvalue}
+
 {elseif $ins_fields[ix].type eq 'e'}
 {assign var=fca value=$ins_fields[ix].options}
 <table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
@@ -59,18 +63,20 @@
 <td width="50%" nowrap="nowrap"><tt>{if $ins_fields[ix].value.$ku eq 'y'}X&nbsp;{else}&nbsp;&nbsp;{/if}</tt>{$iu.name}</td>{cycle name=$fca}
 {/foreach}
 </table></td></tr>
+
 {elseif $ins_fields[ix].type eq 'c'}
 {$ins_fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
-{if $fields[ix].options eq '1' and $stick ne 'y'}
+{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
 {else}
 </td></tr>
 {assign var=stick value="n"}
 {/if}
+
 {else}
 {$ins_fields[ix].value}
-{if $fields[ix].options eq '1' and $stick ne 'y'}
+{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
 {else}
@@ -207,7 +213,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}erase{/tr}"  hspace="2" vspace="
 <h3>{$ins_fields[ix].name}</h3>
 <table class="normal">
 {else}
-{if $ins_fields[ix].type eq 'c' and $ins_fields[ix].options eq '1'}
+{if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1'}
 <tr class="formcolor"><td>{$ins_fields[ix].name}</td><td>
 {elseif $stick eq 'y'}
 <td>{$ins_fields[ix].name}</td><td>
@@ -275,7 +281,8 @@ align       : "bR"
 {literal} } );{/literal}
 </script>
 {/if}
-{if $ins_fields[ix].type eq 'c' and $fields[ix].options eq '1' and $stick ne 'y'}
+{if (($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1')
+ and $stick ne 'y'}
 </td>{assign var=stick value="y"}
 {else}
 </td></tr>{assign var=stick value="n"}
