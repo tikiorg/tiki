@@ -18,14 +18,15 @@ class Comments extends TikiLib {
     function report_post($forumId, $parentId, $threadId, $user, $reason = '') {
 
 	$now = date("U");
-	$bindvars=array($forumId,$parentId,$threadId,$user,$reason,$now);
-	$query = "delete from `tiki_forums_reported` where `forumId`=? and 
-	    `parentId`=? and `threadId`=? and `user`=? 
-	    and `reason`=? and `timestamp`=?";
+
+	$query = "delete from `tiki_forums_reported` where `forumId`=?";
+	$bindvars=array($forumId);
 	$this->query($query,$bindvars,-1,-1,false);
+
 	$query = "insert into `tiki_forums_reported`(`forumId`,
 	`parentId`, `threadId`, `user`, `reason`, `timestamp`)
 	    values(?,?,?,?,?,?)";
+	$bindvars=array($forumId,$parentId,$threadId,$user,$reason,$now);
 	$this->query($query,$bindvars);
     }
 
@@ -83,13 +84,14 @@ class Comments extends TikiLib {
 	    return false;
 
 	$now = date("U");
-	$bindvars=array($user,(int) $threadId,(int) $forumId);
 
-	$query = "delete from `tiki_forum_reads` where `user`=? and `threadId`=? and `forumId`=?";
+	$query = "delete from `tiki_forum_reads` where `user`=? and `threadId`=?";
+	$bindvars=array($user,(int) $threadId);
 	$this->query($query,$bindvars,-1,-1,false);
-	$bindvars [] = $now;
+
 	$query = "insert into `tiki_forum_reads`(`user`,`threadId`,`forumId`,`timestamp`)
 	    values(?,?,?,?)";
+	$bindvars=array($user,(int) $threadId,(int) $forumId,$now);
 	$this->query($query,$bindvars);
     }
 
@@ -437,6 +439,7 @@ class Comments extends TikiLib {
 		);
 	$this->remove_queued($qId);
 
+/* This all looks redundant to me -dheltzel
 	if ($threadId) {
 	    $query = "update `tiki_forum_attachments` set `threadId`=$threadId where `qId`=$qId";
 
@@ -444,6 +447,7 @@ class Comments extends TikiLib {
 	    $query = "delete from `tiki_forum_attachments` where `qId`=$qId";
 	    $this->query($query);
 	}
+*/
     }
 
     function get_forum_topics($forumId) {

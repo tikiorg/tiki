@@ -134,8 +134,8 @@ class BanLib extends TikiLib {
 			$banId = $this->getOne("select max(`banId`) from `tiki_banning` where `created`=?",array($now));
 		}
 
-		$query = "delete from `tiki_banning_sections` where `banId`=?";
-		$this->query($query,array($banId));
+		$query = "delete from `tiki_banning_sections` where `banId`=? and `section`=?";
+		$this->query($query,array($banId,$section));
 
 		foreach ($sections as $section) {
 			$query = "insert into `tiki_banning_sections`(`banId`,`section`) values(?,?)";
