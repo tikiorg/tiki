@@ -613,8 +613,8 @@ class UsersLibAdmin extends UsersLib {
 		require_once('xml/xmlparserlib.php');
 		
 		global $auth_ext_xml_url;
-		if ($tikilib->get_preference('auth_method', 'tiki') == 'cas' && $tikilib->get_preference('auth_ext_xml_', 'tiki') == 'cas') {
-			include_once('CAS/CAS.php');
+		if ($this->get_preference('auth_method', 'tiki') == 'cas' && $this->get_preference('auth_ext_xml_enabled', 'n') == 'y') {
+			include_once('phpcas/CAS.php');
 			$service = $auth_ext_xml_url;
 			phpCAS::serviceWeb($service,$err_code,$xmloutput);
 		} else {
@@ -626,7 +626,7 @@ class UsersLibAdmin extends UsersLib {
 			fclose($handle);
 		}
 		
-		$parser = new XMLParser('$xmloutput', 'raw', 1);
+		$parser = new XMLParser($xmloutput, 'raw', 1);
 		$tree = $parser->getTree();
 
 		global $auth_ext_xml_group_management, $auth_ext_xml_login_isvalid, $auth_ext_xml_group_management_checked;

@@ -15,7 +15,7 @@
 //  require_once('XMLParser.php');
 //
 //... string buffer ...
-//  $data = '<?xml version="1.0" encoding="ISO-8859-1" ?>
+//  $data = '
 //<country name="usa">
 //    <city name="mountain view">baz
 //        <user>Jack</user>
@@ -47,6 +47,11 @@
 //  print_r($tree);
 //  echo '</PRE>';
 //
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+}
 
 class XMLParser {
 	var $data;		// Input XML data buffer
