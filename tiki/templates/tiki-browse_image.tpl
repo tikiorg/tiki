@@ -1,5 +1,11 @@
 <div  class="browseimage">
 
+{if ($popup != "") }
+  <script language=javascript>
+	window.resizeTo({$winx},{$winy});
+  </script>
+{/if}
+
 {if ($popup == "")  }
   <div class="imagetitle">
     {tr}Browsing Image{/tr}: {$name}
@@ -13,12 +19,13 @@
 {/if}  
 
 {if ($popup != "") }
-  <div align="center" >
+  <div valign=middle height={$winy} align="center" >
     [{if $previmg}
     <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink"> {tr}prev image{/tr}</a>{/if}{if $previmg and $nextimg} | {/if}
     {if $nextimg}
     <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink">{tr}next image{/tr}</a>{/if}]
   </div>
+  <br>
 {/if}   
 
   <div class="showimage" {if ($popup) }height=400{/if}>
@@ -43,7 +50,7 @@
     <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink"> {tr}prev image{/tr}</a>{/if}{if $previmg and $nextimg} | {/if}
     {if $nextimg}
     <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}{if $itype=='s'}&amp;scaled&amp;xsize={$sxsize}&amp;ysize={$sysize}{/if}&amp;popup={$popup}" class="gallink">{tr}next image{/tr}</a>{/if}]
-   [<a {jspopup href="tiki-browse_image.php?offset=$offset&amp;sort_mode=$sort_mode&amp;desp=$nextdesp&amp;galleryId=$galleryId&amp;imageId=$imageId&amp;popup=1"} class="gallink">{tr}Popup window{/tr}</a>]
+   [<a {jspopup height="$winy" width="$winx" href="tiki-browse_image.php?offset=$offset&amp;sort_mode=$sort_mode&amp;desp=$nextdesp&amp;galleryId=$galleryId&amp;imageId=$imageId&amp;popup=1"} class="gallink">{tr}Popup window{/tr}</a>]
 	{/if}
   </div>
 
