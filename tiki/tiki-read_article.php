@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.29 2004-06-07 16:43:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.30 2004-06-07 17:08:26 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -170,7 +170,7 @@ if ($is_categorized) {
   if (isset($feature_categoryobjects) and $feature_categories == 'y') {
     if ($feature_categoryobjects == 'y') {
       $catids = $categlib->get_object_categories('article', $objId);
-      $display_catobjects = $tikilib->get_categoryobjects($catids);
+      $display_catobjects = $categlib->get_categoryobjects($catids);
       $smarty->assign('display_catobjects',$display_catobjects);
     }
   } 

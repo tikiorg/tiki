@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.34 2004-06-07 16:44:38 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.35 2004-06-07 17:07:43 teedog Exp $
  *
  * \brief Categiries support class
  *
@@ -634,27 +634,121 @@ class CategLib extends TikiDB {
 		global $smarty;
 		global $tikilib;
 		global $feature_categories;
-		global $categlib;
+	//	global $categlib;
 
-		if (!is_object($categlib)) {
-		    require_once ("lib/categories/categlib.php");
-		}
+	//	if (!is_object($categlib)) {
+	//	    require_once ("lib/categories/categlib.php");
+	//	}
 
 		$catpath = '';
 		foreach ($cats as $categId) {
 		    $catpath .= '<span class="categpath">';
 		    $path = '';
-		    $info = $categlib->get_category($categId);
+		    $info = $this->get_category($categId);
 		    $path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>';
 
 		    while ($info["parentId"] != 0) {
-				$info = $categlib->get_category($info["parentId"]);
+				$info = $this->get_category($info["parentId"]);
 				$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a> > ' . $path;
 		    }
 		    $catpath .= $path . '</span><br />';
 		}
 		return $catpath;
     }
+    
+    //Moved from tikilib.php
+    function get_categoryobjects($catids) {
+		global $dbTiki;
+
+		global $smarty;
+		global $tikilib;
+		global $feature_categories;
+	//	global $categlib;
+
+	//	if (!is_object($categlib)) {
+	//	    require_once ("lib/categories/categlib.php");
+	//	}
+
+		// TODO: move this array to a lib
+		// array for converting long type names to translatable headers (same strings as in application menu)
+		$typetitles = array(
+			"article" => "Articles",
+			"blog" => "Blogs",
+			"directory" => "Directories",
+			"faq" => "FAQs",
+			"file gallery" => "File Galleries",
+			"forum" => "Forums",
+			"image gallery" => "Image Galleries",
+			"newsletter" => "Newsletters",
+			"poll" => "Polls",
+			"quiz" => "Quizzes",
+			"survey" => "Surveys",
+			"tracker" => "Trackers",
+			"wiki page" => "Wiki"
+		);
+
+		// string given back to caller
+		$out = "";
+
+		// array with items to be displayed
+		$listcat = array();
+		// title of categories
+		$title = '';
+		$find = "";
+		$offset = 0;
+		$maxRecords = 500;
+		$count = 0;
+		$sort = 'name_asc';
+
+		foreach ($catids as $id) {
+		    // get data of category
+		    $cat = $this->get_category($id);
+
+		    // store name of category
+		    // \todo remove hardcoded html
+		    if ($count != 0) {
+				$title .= "| <a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
+		    } else {
+				$title .= "<a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
+	    	}
+
+			// keep track of how many categories there are for split mode off
+			$count++;
+			$subcategs = array();
+			$subcategs = $this->get_category_descendants($id);
+
+			// array with objects in category
+			$objectcat = array();
+			$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, $find);
+
+			foreach ($objectcat["data"] as $obj) {
+				$type = $obj["type"];
+				if (!($tikilib->in_multi_array($obj['name'], $listcat))) {
+					if (isset($typetitles["$type"])) {
+						$listcat["{$typetitles["$type"]}"][] = $obj;
+					} elseif (isset($type)) {
+						$listcat["$type"][] = $obj;
+					}
+				}
+			}
+
+			// split mode: appending onto $out each time
+			$smarty->assign("title", $title);
+			$smarty->assign("listcat", $listcat);
+			$out .= $smarty->fetch("tiki-simple_plugin.tpl");
+			// reset array for next loop
+			$listcat = array();
+			// reset title
+			$title = '';
+			$count = 0;
+		}
+
+		// non-split mode
+		//  $smarty -> assign("title", $title);
+		//  $smarty -> assign("listcat", $listcat);
+		//  $out = $smarty -> fetch("tiki-simple_plugin.tpl");
+		return $out;
+	}
 
 }
 
