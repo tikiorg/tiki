@@ -56,12 +56,31 @@ class ShoutboxLib extends TikiLib {
 	}
 
 	function replace_shoutbox($msgId, $user, $message) {
-		$hash = md5($message);
-		$cant = $this->getOne("select count(*) from `tiki_shoutbox` where `hash`=? and `user`=?", array($hash,$user));
-		if ($cant) {
-			return;
-		}
 		$message = strip_tags($message);
+
+		// Check Message for containing bad/banned words
+		$words = $this->get_bad_words();
+		$badmsg = false;
+		foreach ($words["data"] as $word) {
+			if (preg_match("/".$word["word"]."/i", $message)) {
+				$badmsg = true;
+			}
+		}
+	
+		//Die if badmsg with suitable error screen
+	
+		if ($badmsg) {
+			return;
+		} else {
+
+		// Back on track for normal shoutbox posting
+
+                $hash = md5($message);  // this checks for the same message already existing
+                $cant = $this->getOne("select count(*) from `tiki_shoutbox` where `hash`=? and `user`=?", array($hash,$user));
+                if ($cant) {
+                        return;
+                }
+
 		$now = date("U");
 		if ($msgId) {
 			$query = "update `tiki_shoutbox` set `user`=?, `message`=?, `hash`=? where `msgId`=?";
@@ -75,6 +94,7 @@ class ShoutboxLib extends TikiLib {
 		}
 
 		$result = $this->query($query,$bindvars);
+		} // Close my if $badmsg
 		return true;
 	}
 
