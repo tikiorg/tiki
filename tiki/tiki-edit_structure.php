@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.12 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.13 2003-11-18 09:42:48 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,8 +57,8 @@ if (isset($_REQUEST["create"])) {
 	} 
 	elseif(!empty($_REQUEST['name2'])) {
 		foreach ($_REQUEST['name2'] as $name) {
-			$structlib->s_create_page($_REQUEST["page_ref_id"], $after, $name, '');
-      $after = $_REQUEST["page_ref_id"];
+			$new_page_ref_id = $structlib->s_create_page($_REQUEST["page_ref_id"], $after, $name, '');
+      $after = $new_page_ref_id;
 		}
 	}
 }
@@ -83,9 +83,6 @@ if (isset($_REQUEST["sremove"])) {
 $page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 $smarty->assign('pageName', $page_info["pageName"]);
 $smarty->assign('pageAlias', $page_info["page_alias"]);
-
-//$pageAlias = $structlib->get_page_alias($_REQUEST["page_ref_id"]);
-//$smarty->assign('pageAlias', $pageAlias);
 
 $subpages = $structlib->get_pages($_REQUEST["page_ref_id"]);
 $max = $structlib->get_max_children($_REQUEST["structure_id"], $_REQUEST["page_ref_id"]);
