@@ -265,7 +265,7 @@ class TrackerLib extends TikiLib {
 	function get_all_items($trackerId,$fieldId,$status='o') {
 		global $cachelib;
 		$sort_mode = "value_asc";
-		$cache = md5('trackerfield'.$fieldId);
+		$cache = md5('trackerfield'.$fieldId.$tiki_p_admin);
 		if (!$cachelib->isCached($cache)) {
 			//$query = "select distinct ttif.`itemid`, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
 			//$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and tti.`status`=? order by ".$this->convert_sortmode($sort_mode);
@@ -459,8 +459,13 @@ class TrackerLib extends TikiLib {
 				$the_data .= "  $name = $value\n";
 
 				if ($itemId) {
-					$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
-					$this->query($query,array($value,(int) $itemId,(int) $fieldId));
+					if ($this->getOne('select count(*) from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?',array((int) $itemId,(int) $fieldId)) > 0) {
+						$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
+						$this->query($query,array($value,(int) $itemId,(int) $fieldId));
+					} else {
+						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
+						$this->query($query,array((int) $itemId,(int) $fieldId,$value));
+					}
 				} else {
 					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 					$this->query($query,array((int) $new_itemId,(int) $fieldId,$value));
