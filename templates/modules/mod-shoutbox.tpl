@@ -4,14 +4,14 @@
 {tr}ShoutBox{/tr}
 </div>
 <div class="box-data">
+{if $tiki_p_post_shoutbox eq 'y'}
 <form action="{$shout_ownurl}" method="post">
 <div align="center">
-{if $tiki_p_post_shoutbox eq 'y'}
 <textarea rows="3" class="tshoutbox" cols="27" name="shout_msg" maxlength="250"></textarea>
 <br/>
 <input type="submit" name="shout_send" value="{tr}send{/tr}" /></div><br/>
-{/if}
 </form>
+{/if}
 {section loop=$shout_msgs name=ix}
 <div class="shoutboxmodmsg">
 <b>{$shout_msgs[ix].user}</b> at {$shout_msgs[ix].timestamp|tiki_long_time}

@@ -68,7 +68,7 @@ if(isset($_REQUEST["chgpswd"])) {
     die;
   }
   
-  if(!$userlib->validate_user($_REQUEST["user"],$_REQUEST["pass"],'','')) {
+  if(!$userlib->validate_user($userwatch,$_REQUEST["pass1"],'','')) {
     $smarty->assign('msg',tra("Invalid old password"));
     $smarty->display("styles/$style_base/error.tpl");
     die;
@@ -145,7 +145,7 @@ $smarty->assign_by_ref('userbreadCrumb',$userbreadCrumb);
 $homePage = $tikilib->get_user_preference($userwatch,'homePage','');
 $smarty->assign_by_ref('homePage',$homePage);
 
-$avatar = $tikilib->get_user_avatar($user);
+$avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar',$avatar);
 
 $timezone_options = $tikilib->get_timezone_list(true);
