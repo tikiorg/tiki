@@ -47,9 +47,9 @@
 <td class="odd">{$words[user].word}</td>
 <td class="odd">{$words[user].url}</td>
 <td class="odd">
-<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
+&nbsp;&nbsp;<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this hotword?{/tr}')" 
-title="Click here to delete this hotword"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>
+title="Click here to delete this hotword"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {else}
@@ -57,9 +57,9 @@ title="Click here to delete this hotword"><img border="0" alt="{tr}Remove{/tr}" 
 <td class="even">{$words[user].word}</td>
 <td class="even">{$words[user].url}</td>
 <td class="even">
-<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
+&nbsp;&nbsp;<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this hotword?{/tr}')" 
-title="Click here to delete this hotword"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>
+title="Click here to delete this hotword"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.6 2003-11-23 22:30:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.7 2004-01-01 15:12:20 mose Exp $ *}
 
 {if $feature_search eq 'y'}
 {tikimodule title="{tr}Search{/tr}" name="search_new"}
@@ -31,6 +31,9 @@
     {/if}
     {if $feature_faqs eq 'y'}
     <option value="faqs">{tr}FAQs{/tr}</option>
+    {/if}
+    {if $feature_trackers eq 'y'}
+    <option value="trackers">{tr}Tracker{/tr}</option>
     {/if}
     </select>
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/> 

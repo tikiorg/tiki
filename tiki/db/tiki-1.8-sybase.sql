@@ -6514,7 +6514,7 @@ INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin',
 go
 
 
- 
+
 -- --------------------------------------------------------
 
 -- Inserts of all default values for preferences

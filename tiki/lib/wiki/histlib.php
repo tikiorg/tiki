@@ -156,11 +156,13 @@ class HistLib extends TikiLib {
 
 		$query = "select ta.`action`, ta.`lastModif`, ta.`user`,
 		ta.`ip`, ta.`pageName`,ta.`comment`, `version` from
-		`tiki_actionlog` ta, `tiki_history` th " .
+		`tiki_actionlog` ta left join `tiki_history` th on
+		th.`pageName`=ta.`pageName` and th.`lastModif`=ta.`lastModif` " .
 		$where . " order by
 		".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_actionlog`
-		ta, `tiki_history` th " . $where;
+		ta left join `tiki_history` th on 
+		th.`pageName`=ta.`pageName` and th.`lastModif`=ta.`lastModif` " . $where;
 		$result = $this->query($query,$bindvars,$limit,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();

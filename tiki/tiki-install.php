@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.43 2003-12-30 13:24:04 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.44 2004-01-01 15:12:17 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.43 2003-12-30 13:24:04 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.44 2004-01-01 15:12:17 mose Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -41,10 +41,10 @@ function process_sql_file($file,$db_tiki) {
 	    $statements=split("(\r|\n)go(\r|\n)",$command);
 	    break;
 	  case "oci8":
-	    $statements=preg_split("#;|(\n/\n)#",$command);
+	    $statements=preg_split("#(;\n)|(\n/\n)#",$command);
 	    break;
 	  default:
-	    $statements=split(";",$command);
+	    $statements=preg_split("#(;\n)#",$command);
 	    break;
 	}
 	$prestmt="";
@@ -568,7 +568,7 @@ if ($db_tiki == "mysql") {
 	$h = opendir('db/profiles/');
 
 	while ($file = readdir($h)) {
-		if (strstr($file, '.prf')) {
+		if (substr($file,-4,4) == '.prf') {
 			// Assign the filename of the profile to the name field
 			$prof1 = array("name" => $file);
 			// Open the profile and pull out the description from the first line
