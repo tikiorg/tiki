@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.6 2003-10-06 22:48:29 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.7 2003-11-15 06:42:15 zaufi Exp $
  *
  */
 
@@ -17,9 +17,9 @@
  * General HTML redefinitions
  */
 body {
-	color: WindowText;
-	background: Background;
-	margin: 0px;
+    color: WindowText;
+    background: Background;
+    margin: 0px;
 }
 
 hr {
@@ -31,44 +31,44 @@ hr {
 
 /* Headers */
 h1 {
-	text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 h2, h3, h4 {
-	font-variant: small-caps;
+    font-variant: small-caps;
 }
 
 h5, h6 {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 /* Description on wiki pages */
 small {
-	font-size: small;
+    font-size: small;
 }
 
 /* Prevent forms from generating unwanted padding or margins */
 form {
-	margin: 0px;
-	padding: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 /* Code fragments */
 pre {
-	font-size: 12px;
-	white-space: pre;
+    font-size: 12px;
+    white-space: pre;
 }
 code {
-	font-size: 14px;
+    font-size: 14px;
 }
 
 /* No borders for images */
 img {
-	border: none;
+    border: none;
 }
 /* Expand all text editors to max size */
 textarea {
-	width: 99%;
+    width: 99%;
 }
 
 /* Make definition lists looks better */

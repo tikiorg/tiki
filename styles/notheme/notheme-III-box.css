@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-III-box.css,v 1.6 2003-11-14 23:34:24 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-III-box.css,v 1.7 2003-11-15 06:42:15 zaufi Exp $
  *
  */
 
@@ -10,10 +10,6 @@ div.box-title {
     margin-bottom: 0px;
     padding-top: 0px;
     padding-bottom: 0px;
-}
-
-div.box-title table {
-    width: 100%;
 }
 
 /* By default data block in module collapsed */

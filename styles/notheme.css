@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.7 2003-10-13 13:38:56 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.8 2003-11-15 06:44:23 zaufi Exp $
  *
  * My second theme :)
  * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
@@ -10,6 +10,7 @@
 @import "notheme/notheme-tc.css";
 @import "notheme/notheme-box.css";
 @import "notheme/notheme-wiki.css";
+@import "notheme/notheme-comments.css";
 @import "notheme/notheme-table.css";
 @import "notheme/notheme-categories.css";
 @import "notheme/notheme-other.css";
