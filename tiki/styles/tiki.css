@@ -444,10 +444,14 @@ TABLE.normalnoborder { }
 TD {vertical-align: top;}
 
 /* Cells in forms without background color (inside a div for example) */
-.form 
-{ }
+.form td { }
 /* Cells in forms using a background color */
-.formcolor, .galform , .editblogform, .editfgalform, .comform, .forumform
+.formcolor td, 
+.galform td, 
+.editblogform td, 
+.editfgalform td, 
+.comform td, 
+.forumform td
 { border: 1px solid #8CACBB;   background: #DEE7EC; }
 
 /* Table headings */
@@ -501,7 +505,7 @@ a.forumnameread:hover
 
 /* When a find button is provided for a listing the table form is displayed in a table with the following style */
 table.findtable { margin-bottom: 1px; padding-bottom: 10px;}
-td.findtable { }
+.findtable td { }
 
 /* Odd rows in several listings */
 tr.odd {

@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.6 2004-02-16 21:58:02 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.7 2004-02-25 00:25:02 musus Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -305,12 +305,13 @@ FORM {  margin : 0px 0px 0px 0px;  padding-bottom : 0px;  padding-left : 0px;  p
 /* Cells where nothing is specified */
 
 /* Cells in forms without background color (inside a div for example) */
-.form { 
+.form td { 
 	color: Black;  
 	font-size: 10px; 
 	vertical-align: top;
 	text-align: left;
 }
+
 TD.formbor { 
 	border: 1px solid #676767; 
 	color: Black; 
@@ -319,7 +320,12 @@ TD.formbor {
 	text-align: left;
 }
 /* Cells in forms using a background color */
-.formcolor, .galform , .editblogform, .editfgalform, .comform, .forumform { 
+.formcolor td, 
+.galform td, 
+.editblogform td, 
+.editfgalform td, 
+.comform td, 
+.forumform td { 
 	border: 1px solid #676767; 
 	color: black;   
 	background-color: #f0ead8; 
@@ -327,6 +333,47 @@ TD.formbor {
 	vertical-align: top;
 	text-align: left;
 }
+
+tr.formcolor { 
+	background-color: #FFF7E6;
+}
+
+tr.formcolor:hover { 
+	background-color: #eee7d6;
+}
+
+tr.formcolor:hover input[type=file],
+tr.formcolor:hover input[type=password],
+tr.formcolor:hover input[type=text],
+tr.formcolor:hover textarea { 
+	background-color: #FFF7E6;
+}
+
+tr.formcolor td {
+	border-top: 1px solid #ddd7c6;
+	padding: 3px 20px 3px 3px;
+}
+
+tr.formcolor table td {
+	font-size: 90%;
+	color: #424242;
+	border-top: 0;
+	padding: 1px 20px 1px 3px;
+}
+
+.normal tr.formcolor:first-child td {
+	border-top: 0;
+}
+
+tr.formcolor td:first-child, .formlabel {
+	font-size: 90%;
+	color: #424242;
+	padding-top: 6px;
+}
+
+/* When a find button is provided for a listing the table form is displayed in a table with the following style */
+table.findtable { width: 100%; margin-bottom: 1px; padding-bottom: 10px;}
+.findtable td {   font-size: 11px;}
 
 /* The table */
 table.listgallery, table.creategalform,TABLE.normal,table.gallerylisting, table.bloglist, table.editblogform,
@@ -337,7 +384,6 @@ table.viewthread {
 	border-collapse: collapse; 
 	width: 100%;
 }
-
 
 TABLE.normalnoborder {  
 	width: 100%;
@@ -395,48 +441,6 @@ a.forumnameread:hover
 .llistfileslink:hover, .llistart:hover,.lforumheading:hover
 {    color: black;   font-size: 10px; text-decoration: none;}
 
-/* When a find button is provided for a listing the table form is displayed in a table with the following style */
-table.findtable { width: 100%; margin-bottom: 1px; padding-bottom: 10px;}
-td.findtable {   font-size: 11px;}
-TD.form {
-	color: black;
-	text-align: left;
-}
-TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
-	background-color: #FFF7E6;
-	color: black;
-	text-align: left;
-}
-tr.formcolor { 
-	background-color: #FFF7E6;
-}
-tr.formcolor:hover { 
-	background-color: #eee7d6;
-}
-tr.formcolor:hover input[type=file],
-tr.formcolor:hover input[type=password],
-tr.formcolor:hover input[type=text],
-tr.formcolor:hover textarea { 
-	background-color: #FFF7E6;
-}
-tr.formcolor td {
-	border-top: 1px solid #ddd7c6;
-	padding: 3px 20px 3px 3px;
-}
-tr.formcolor table td {
-	font-size: 90%;
-	color: #424242;
-	border-top: 0;
-	padding: 1px 20px 1px 3px;
-}
-.normal tr.formcolor:first-child td {
-	border-top: 0;
-}
-tr.formcolor td:first-child, .formlabel {
-	font-size: 90%;
-	color: #424242;
-	padding-top: 6px;
-}
 .right {
 	text-align: right;
 	margin-right: 3px;

@@ -320,21 +320,22 @@ td {
 }
 
 /* Cells in forms without background color (inside a div for example) */
-.form {
+.form td {
 	color: #FFFFFF;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	vertical-align: middle;
 	text-align: left;
 }
+
 /* Cells in forms using a background color */
-.imageinfo, 
-.formcolor, 
-.galform, 
-.editblogform, 
-.editfgalform, 
-.comform, 
-.forumform {
+.imageinfo td, 
+.formcolor td, 
+.galform td, 
+.editblogform td, 
+.editfgalform td, 
+.comform td, 
+.forumform td {
 	color: #000000;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background-color: #FFFFFF;
@@ -493,6 +494,10 @@ table.findtable {
 	font-size: 11px;
 	margin-bottom: 20px;
 	background-color: #000000;
+}
+
+.findtable td {
+	color: #FFFFFF;
 }
 
 /* odd rows in data tables */
