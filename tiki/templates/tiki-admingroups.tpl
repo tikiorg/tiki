@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.30 2004-01-16 03:30:03 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.31 2004-01-21 07:07:23 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -31,6 +31,7 @@
 
 {cycle name=content values="1,2,3,4" print=false advance=false}
 
+{* ----------------------- tab with list --------------------------------------- *}
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}List of existing groups{/tr}</h3>
 
@@ -112,6 +113,7 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 </div>
 </div>
 
+{* ----------------------- tab with form --------------------------------------- *}
 <div id="content{cycle name=content}" class="content">
 {if $groupname eq ''}
 <h3>{tr}Add New Group{/tr}</h3>
@@ -169,6 +171,7 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 
 </div>
 
+{* ----------------------- tab with more --------------------------------------- *}
 {if $ins_fields}
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}Additionnal information{/tr}</h3>
@@ -196,10 +199,17 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 </div>
 {/if}
 
+{* ----------------------- tab with memberlist --------------------------------------- *}
 {if $memberslist}
 <div id="content{cycle name=content}" class="content">
-<h3>{tr}Members List{/tr}</h3>
-
+<h3>{tr}Members List{/tr}: {$groupname}</h3>
+<table class="normal"><tr>
+{cycle name=table values=',,,,</tr><tr>' print=false advance=false}
+{section name=ix loop=$memberslist}
+<td class="formcolor auto"><a href="tiki-adminusers.php?user={$memberslist[ix]|escape:"url"}" class="link">{$memberslist[ix]}</a></td>{cycle name=table}
+{/section}
+</tr></table>
+<div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname}</div>
 </div>
 {/if}
 

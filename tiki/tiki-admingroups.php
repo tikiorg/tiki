@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.19 2004-01-18 04:55:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.20 2004-01-21 07:07:22 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -173,14 +173,13 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 			$smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
 		}
 	}
+	
 	$groupperms = $re["perms"];
 	$rs = $userlib->get_included_groups($_REQUEST["group"]);
 
 	foreach ($users["data"] as $r) {
 		$rr = $r["groupName"];
-
 		$inc["$rr"] = "n";
-
 		if (in_array($rr, $rs)) {
 			$inc["$rr"] = "y";
 		}
@@ -192,6 +191,13 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 	$_REQUEST["group"] = 0;
 }
+
+if ($_REQUEST['group']) {
+	$memberslist = $userlib->get_group_users($_REQUEST['group']);
+} else {
+	$memberslist = '';
+}
+$smarty->assign('memberslist',$memberslist);
 
 $smarty->assign('inc', $inc);
 $smarty->assign('group', $_REQUEST["group"]);
