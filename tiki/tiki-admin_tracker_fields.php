@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.7 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.8 2003-11-11 22:22:57 gillesm Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,7 +24,7 @@ if ($tiki_p_admin_trackers != 'y') {
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
-}
+}	
 
 if (!isset($_REQUEST["trackerId"])) {
 	$smarty->assign('msg', tra("No tracker indicated"));
@@ -64,6 +64,7 @@ $smarty->assign('type', $info["type"]);
 $smarty->assign('options', $info["options"]);
 $smarty->assign('isMain', $info["isMain"]);
 $smarty->assign('isTblVisible', $info["isTblVisible"]);
+
 
 if (isset($_REQUEST["remove"])) {
 	$trklib->remove_tracker_field($_REQUEST["remove"]);
