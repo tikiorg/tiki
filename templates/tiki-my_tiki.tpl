@@ -1,4 +1,18 @@
-<a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
+
+
+{if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=MyTikiDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}MyTikiDoc{/tr}">
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+{/if}
+
+{if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-my_tiki.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}my tiki tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+{/if}
+
+
+
 {include file=tiki-mytiki_bar.tpl}
 <br/><br/>
 
