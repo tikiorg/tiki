@@ -1275,6 +1275,15 @@ if(isset($_REQUEST["features"])) {
     $tikilib->set_preference("feature_theme_control",'n');
     $smarty->assign("feature_theme_control",'n');
   }
+  
+  if(isset($_REQUEST["feature_workflow"]) && $_REQUEST["feature_workflow"]=="on") {
+    $tikilib->set_preference("feature_workflow",'y'); 
+    $smarty->assign("feature_workflow",'y');
+  } else {
+    $tikilib->set_preference("feature_workflow",'n');
+    $smarty->assign("feature_workflow",'n');
+  }
+
 
   
   if(isset($_REQUEST["feature_eph"]) && $_REQUEST["feature_eph"]=="on") {

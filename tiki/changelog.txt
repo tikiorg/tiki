@@ -1,5 +1,8 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Workflow engine added. Create processes, monitor processes and
+  execute processes. Processes are mapped to PHP scripts. Please read
+  the workflow documentation for a detailed overview of the Workflow engine.
 * [NEW] The special Smarty plugin {helplink page="PageName"} can be used to create
   a link that will display a wiki page as a help popup. This allows your site to
   create an online help system based on Wiki pages. 

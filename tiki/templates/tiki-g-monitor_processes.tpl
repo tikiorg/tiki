@@ -1,0 +1,153 @@
+{popup_init src="lib/overlib.js"}
+{*Smarty template*}
+<a class="pagetitle" href="tiki-g-monitor_processes.php">{tr}Monitor processes{/tr}</a>
+<br/><br/>
+{include file=tiki-g-monitor_bar.tpl}
+<h3>{tr}List of processes{/tr} ({$cant})</h3>
+
+{* FILTERING FORM *}
+<form action="tiki-g-monitor_processes.php" method="post">
+<input type="hidden" name="offset" value="{$offset}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<table>
+<tr>
+<td>
+	<small>{tr}find{/tr}</small>
+</td>
+<td >
+	<small>{tr}proc{/tr}</small>
+</td>
+<td >
+	<small>{tr}active{/tr}</small>
+</td>
+<td >
+	<small>{tr}valid{/tr}</small>
+</td>
+<td >
+	&nbsp;
+</td>	
+</tr>
+
+<tr>
+<td >
+	<input size="8" type="text" name="find" value="{$find}" />
+</td>
+<td >
+	<select name="filter_process">
+	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
+	{section loop=$all_procs name=ix}
+	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId}">{$all_procs[ix].name}</option>
+	{/section}
+	</select>
+</td>
+<td >
+	<select name="filter_active">
+	<option {if '' eq $smarty.request.filter_active}selected="selected"{/if} value="">{tr}All{/tr}</option>
+	<option value="y" {if 'y' eq $smarty.request.filter_active}selected="selected"{/if}>{tr}Active{/tr}</option>
+	<option value="n" {if 'n' eq $smarty.request.filter_active}selected="selected"{/if}>{tr}Inactive{/tr}</option>
+	</select>
+</td>
+<td >
+	<select name="filter_valid">
+	<option {if '' eq $smarty.request.filter_valid}selected="selected"{/if} value="">{tr}All{/tr}</option>
+	<option {if 'y' eq $smarty.request.filter_valid}selected="selected"{/if} value="y">{tr}Valid{/tr}</option>
+	<option {if 'n' eq $smarty.request.filter_valid}selected="selected"{/if} value="n">{tr}Invalid{/tr}</option>
+	</select>
+</td>
+<td >	
+	<input type="submit" name="filter" value="{tr}filter{/tr}" />
+</td>
+</tr>
+</table>	
+</form>
+{*END OF FILTERING FORM *}
+
+{*LISTING*}
+<form action="tiki-g-monitor_processes.php" method="post">
+<input type="hidden" name="offset" value="{$offset}" />
+<input type="hidden" name="find" value="{$find}" />
+<input type="hidden" name="where" value="{$where}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<table class="normal">
+<tr>
+<td width="55%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></td>
+<td width="5%" class="heading" >{tr}Activs{/tr}</td>
+<td width="5%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isActive_desc'}{sameurl sort_mode='isActive_asc'}{else}{sameurl sort_mode='isActive_desc'}{/if}">{tr}act{/tr}</a></td>
+<td width="5%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isValid_desc'}{sameurl sort_mode='isValid_asc'}{else}{sameurl sort_mode='isValid_desc'}{/if}">{tr}val{/tr}</a></td>
+<td width="15%" class="heading" >{tr}Instances{/tr}<br/>
+</td>
+</tr>
+{cycle values="odd,even" print=false}
+{section name=ix loop=$items}
+<tr>
+	<td class="{cycle advance=false}">
+	  <a class="link" href="tiki-g-admin_processes.php?pid={$items[ix].pId}">{$items[ix].name} {$items[ix].version}</a>
+	</td>
+	<td class="{cycle advance=false}" style="text-align:right;">
+		<a href="tiki-g-monitor_activities.php?filter_process={$items[ix].pId}" class="link">{$items[ix].activities}</a>
+	</td>
+
+
+	  
+
+	<td class="{cycle advance=false}" style="text-align:center;">
+	  {if $items[ix].isActive eq 'y'}
+	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}active{/tr}) ' title='{tr}active process{/tr}' />
+	  {else}
+	  &nbsp;
+	  {/if}
+	</td>
+	<td class="{cycle advance=false}" style="text-align:center;">
+	  {if $items[ix].isValid eq 'n'}
+	  <img src='lib/Galaxia/img/icons/red_dot.gif' alt=' ({tr}invalid{/tr}) ' title='{tr}invalid process{/tr}' />
+	  {else}
+	  <img src='lib/Galaxia/img/icons/green_dot.gif' alt=' ({tr}valid{/tr}) ' title='{tr}valid process{/tr}' />
+	  {/if}
+
+	</td>
+	
+	<td class="{cycle}" style="text-align:right;">
+		<table width="100%">
+		<tr>
+		 <td text-align:right;"><a style="color:green;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=active">{$items[ix].active_instances}</a></td>
+		 <td text-align:right;"><a style="color:black;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=completed">{$items[ix].completed_instances}</a></td>
+		 <td text-align:right;"><a style="color:grey;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=aborted">{$items[ix].aborted_instances}</a></td>
+		 <td text-align:right;"><a style="color:red;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=exception">{$items[ix].exception_instances}</a></td>
+		</tr>
+		</table>
+	</td>
+</tr>
+{sectionelse}
+<tr>
+	<td class="{cycle advance=false}" colspan="6">
+	{tr}No processes defined yet{/tr}
+	</td>
+</tr>	
+{/section}
+</table>
+</form>
+{* END OF LISTING *}
+
+{* PAGINATION *}
+<div class="mini">
+<div align="center">
+{if $prev_offset >= 0}
+[<a class="prevnext" href="tiki-g-monitor_processes.php?where={$where}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+{/if}
+{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+{if $next_offset >= 0}
+&nbsp;[<a class="prevnext" href="tiki-g-monitor_processes.php?where={$where}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+{/if}
+{if $direct_pagination eq 'y'}
+<br/>
+{section loop=$cant_pages name=foo}
+{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+<a class="prevnext" href="tiki-g-monitor_processes.php?where={$where}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+{$smarty.section.foo.index_next}</a>&nbsp;
+{/section}
+{/if}
+</div>
+</div> 
+{* END OF PAGINATION *}
+
+{include file=tiki-g-monitor_stats.tpl}

@@ -1,0 +1,376 @@
+\section{Activity\-Manager Class Reference}
+\label{classActivityManager}\index{ActivityManager@{ActivityManager}}
+Inheritance diagram for Activity\-Manager:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=65pt]{classActivityManager__inherit__graph}
+\end{center}
+\end{figure}
+Collaboration diagram for Activity\-Manager:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=65pt]{classActivityManager__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf Activity\-Manager} (\$db)
+\item 
+\index{get_error@{get\_\-error}!ActivityManager@{ActivityManager}}\index{ActivityManager@{ActivityManager}!get_error@{get\_\-error}}
+{\bf get\_\-error} ()\label{classActivityManager_a1}
+
+\item 
+{\bf add\_\-activity\_\-role} (\$activity\-Id,\$role\-Id)
+\item 
+{\bf get\_\-activity\_\-roles} (\$activity\-Id)
+\item 
+{\bf remove\_\-activity\_\-role} (\$activity\-Id,\$role\-Id)
+\item 
+{\bf add\_\-transition} (\$p\-Id,\$act\-From\-Id,\$act\-To\-Id)
+\item 
+{\bf remove\_\-transition} (\$act\-From\-Id,\$act\-To\-Id)
+\item 
+{\bf get\_\-process\_\-transitions} (\$p\-Id,\$actid=0)
+\item 
+{\bf get\_\-process\_\-activities} (\$p\-Id)
+\item 
+{\bf build\_\-process\_\-graph} (\$p\-Id)
+\item 
+{\bf validate\_\-process\_\-activities} (\$p\-Id)
+\item 
+{\bf activity\_\-name\_\-exists} (\$p\-Id,\$name)
+\item 
+{\bf get\_\-activity} (\$p\-Id,\$activity\-Id)
+\item 
+{\bf list\_\-activities} (\$p\-Id,\$offset,\$max\-Records,\$sort\_\-mode,\$find,\$where='')
+\item 
+{\bf remove\_\-activity} (\$p\-Id,\$activity\-Id)
+\item 
+{\bf replace\_\-activity} (\$p\-Id,\$activity\-Id,\$vars)
+\item 
+{\bf Activity\-Manager} (\$db)
+\item 
+\index{get_error@{get\_\-error}!ActivityManager@{ActivityManager}}\index{ActivityManager@{ActivityManager}!get_error@{get\_\-error}}
+{\bf get\_\-error} ()\label{classActivityManager_a17}
+
+\item 
+{\bf add\_\-activity\_\-role} (\$activity\-Id,\$role\-Id)
+\item 
+{\bf get\_\-activity\_\-roles} (\$activity\-Id)
+\item 
+{\bf remove\_\-activity\_\-role} (\$activity\-Id,\$role\-Id)
+\item 
+{\bf transition\_\-exists} (\$pid,\$act\-From\-Id,\$act\-To\-Id)
+\item 
+{\bf add\_\-transition} (\$p\-Id,\$act\-From\-Id,\$act\-To\-Id)
+\item 
+{\bf remove\_\-transition} (\$act\-From\-Id,\$act\-To\-Id)
+\item 
+{\bf remove\_\-activity\_\-transitions} (\$p\-Id,\$aid)
+\item 
+{\bf get\_\-process\_\-transitions} (\$p\-Id,\$actid=0)
+\item 
+{\bf activity\_\-is\_\-auto\_\-routed} (\$actid)
+\item 
+{\bf get\_\-process\_\-activities} (\$p\-Id)
+\item 
+{\bf build\_\-process\_\-graph} (\$p\-Id)
+\item 
+{\bf validate\_\-process\_\-activities} (\$p\-Id)
+\item 
+{\bf activity\_\-name\_\-exists} (\$p\-Id,\$name)
+\item 
+{\bf get\_\-activity} (\$p\-Id,\$activity\-Id)
+\item 
+{\bf list\_\-activities} (\$p\-Id,\$offset,\$max\-Records,\$sort\_\-mode,\$find,\$where='')
+\item 
+{\bf remove\_\-activity} (\$p\-Id,\$activity\-Id)
+\item 
+{\bf replace\_\-activity} (\$p\-Id,\$activity\-Id,\$vars)
+\end{CompactItemize}
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+\index{error@{error}!ActivityManager@{ActivityManager}}\index{ActivityManager@{ActivityManager}!error@{error}}
+{\bf error} = ''\label{classActivityManager_m0}
+
+\item 
+\index{activityId@{activityId}!ActivityManager@{ActivityManager}}\index{ActivityManager@{ActivityManager}!activityId@{activityId}}
+return {\bf activity\-Id}\label{classActivityManager_m1}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+This class is used to add,remove,modify and list activities used in the Workflow engine. Activities are managed in a per-process level, each activity belongs to some process. 
+
+
+
+Definition at line 17 of file Process\-Manager/Activity\-Manager.php.
+
+\subsection{Constructor \& Destructor Documentation}
+\index{ActivityManager@{Activity\-Manager}!ActivityManager@{ActivityManager}}
+\index{ActivityManager@{ActivityManager}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::Activity\-Manager (\$ {\em db})}\label{classActivityManager_a0}
+
+
+Constructor takes a PEAR::Db object to be used to manipulate activities in the database. 
+
+Definition at line 24 of file Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!ActivityManager@{ActivityManager}}
+\index{ActivityManager@{ActivityManager}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::Activity\-Manager (\$ {\em db})}\label{classActivityManager_a16}
+
+
+Constructor takes a PEAR::Db object to be used to manipulate activities in the database. 
+
+Definition at line 24 of file src/Process\-Manager/Activity\-Manager.php.
+
+\subsection{Member Function Documentation}
+\index{ActivityManager@{Activity\-Manager}!activity_is_auto_routed@{activity\_\-is\_\-auto\_\-routed}}
+\index{activity_is_auto_routed@{activity\_\-is\_\-auto\_\-routed}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::activity\_\-is\_\-auto\_\-routed (\$ {\em actid})}\label{classActivityManager_a26}
+
+
+Indicates if an activity is auto\-Routed 
+
+Definition at line 153 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!activity_name_exists@{activity\_\-name\_\-exists}}
+\index{activity_name_exists@{activity\_\-name\_\-exists}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::activity\_\-name\_\-exists (\$ {\em p\-Id}, \$ {\em name})}\label{classActivityManager_a30}
+
+
+Indicates if an activity with the same name exists 
+
+Definition at line 343 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!activity_name_exists@{activity\_\-name\_\-exists}}
+\index{activity_name_exists@{activity\_\-name\_\-exists}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::activity\_\-name\_\-exists (\$ {\em p\-Id}, \$ {\em name})}\label{classActivityManager_a11}
+
+
+Indicates if an activity with the same name exists 
+
+Definition at line 259 of file Process\-Manager/Activity\-Manager.php.
+
+Referenced by replace\_\-activity().\index{ActivityManager@{Activity\-Manager}!add_activity_role@{add\_\-activity\_\-role}}
+\index{add_activity_role@{add\_\-activity\_\-role}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::add\_\-activity\_\-role (\$ {\em activity\-Id}, \$ {\em role\-Id})}\label{classActivityManager_a18}
+
+
+Asociates an activity with a role 
+
+Definition at line 40 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!add_activity_role@{add\_\-activity\_\-role}}
+\index{add_activity_role@{add\_\-activity\_\-role}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::add\_\-activity\_\-role (\$ {\em activity\-Id}, \$ {\em role\-Id})}\label{classActivityManager_a2}
+
+
+Asociates an activity with a role 
+
+Definition at line 40 of file Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!add_transition@{add\_\-transition}}
+\index{add_transition@{add\_\-transition}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::add\_\-transition (\$ {\em p\-Id}, \$ {\em act\-From\-Id}, \$ {\em act\-To\-Id})}\label{classActivityManager_a22}
+
+
+Adds a transition 
+
+Definition at line 81 of file src/Process\-Manager/Activity\-Manager.php.
+
+References get\_\-activity().\index{ActivityManager@{Activity\-Manager}!add_transition@{add\_\-transition}}
+\index{add_transition@{add\_\-transition}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::add\_\-transition (\$ {\em p\-Id}, \$ {\em act\-From\-Id}, \$ {\em act\-To\-Id})}\label{classActivityManager_a5}
+
+
+Adds a transition 
+
+Definition at line 73 of file Process\-Manager/Activity\-Manager.php.
+
+References get\_\-activity().\index{ActivityManager@{Activity\-Manager}!build_process_graph@{build\_\-process\_\-graph}}
+\index{build_process_graph@{build\_\-process\_\-graph}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::build\_\-process\_\-graph (\$ {\em p\-Id})}\label{classActivityManager_a28}
+
+
+Builds the graph 
+
+Definition at line 177 of file src/Process\-Manager/Activity\-Manager.php.
+
+References get\_\-process\_\-activities(), and get\_\-process\_\-transitions().\index{ActivityManager@{Activity\-Manager}!build_process_graph@{build\_\-process\_\-graph}}
+\index{build_process_graph@{build\_\-process\_\-graph}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::build\_\-process\_\-graph (\$ {\em p\-Id})}\label{classActivityManager_a9}
+
+
+Builds the graph 
+
+Definition at line 141 of file Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!get_activity@{get\_\-activity}}
+\index{get_activity@{get\_\-activity}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::get\_\-activity (\$ {\em p\-Id}, \$ {\em activity\-Id})}\label{classActivityManager_a31}
+
+
+Gets a activity fields are returned as an asociative array 
+
+Definition at line 353 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!get_activity@{get\_\-activity}}
+\index{get_activity@{get\_\-activity}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::get\_\-activity (\$ {\em p\-Id}, \$ {\em activity\-Id})}\label{classActivityManager_a12}
+
+
+Gets a activity fields are returned as an asociative array 
+
+Definition at line 269 of file Process\-Manager/Activity\-Manager.php.
+
+Referenced by add\_\-transition().\index{ActivityManager@{Activity\-Manager}!get_activity_roles@{get\_\-activity\_\-roles}}
+\index{get_activity_roles@{get\_\-activity\_\-roles}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::get\_\-activity\_\-roles (\$ {\em activity\-Id})}\label{classActivityManager_a19}
+
+
+Gets the roles asociated to an activity 
+
+Definition at line 50 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!get_activity_roles@{get\_\-activity\_\-roles}}
+\index{get_activity_roles@{get\_\-activity\_\-roles}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::get\_\-activity\_\-roles (\$ {\em activity\-Id})}\label{classActivityManager_a3}
+
+
+Gets the roles asociated to an activity 
+
+Definition at line 50 of file Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!get_process_activities@{get\_\-process\_\-activities}}
+\index{get_process_activities@{get\_\-process\_\-activities}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::get\_\-process\_\-activities (\$ {\em p\-Id})}\label{classActivityManager_a27}
+
+
+Returns all the activities for a process as an array 
+
+Definition at line 162 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!get_process_activities@{get\_\-process\_\-activities}}
+\index{get_process_activities@{get\_\-process\_\-activities}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::get\_\-process\_\-activities (\$ {\em p\-Id})}\label{classActivityManager_a8}
+
+
+Returns all the activities for a process as an array 
+
+Definition at line 126 of file Process\-Manager/Activity\-Manager.php.
+
+Referenced by build\_\-process\_\-graph().\index{ActivityManager@{Activity\-Manager}!get_process_transitions@{get\_\-process\_\-transitions}}
+\index{get_process_transitions@{get\_\-process\_\-transitions}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::get\_\-process\_\-transitions (\$ {\em p\-Id}, \$ {\em actid} = 0)}\label{classActivityManager_a25}
+
+
+Returns all the transitions for a process 
+
+Definition at line 135 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!get_process_transitions@{get\_\-process\_\-transitions}}
+\index{get_process_transitions@{get\_\-process\_\-transitions}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::get\_\-process\_\-transitions (\$ {\em p\-Id}, \$ {\em actid} = 0)}\label{classActivityManager_a7}
+
+
+Returns all the transitions for a process 
+
+Definition at line 107 of file Process\-Manager/Activity\-Manager.php.
+
+Referenced by build\_\-process\_\-graph().\index{ActivityManager@{Activity\-Manager}!list_activities@{list\_\-activities}}
+\index{list_activities@{list\_\-activities}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::list\_\-activities (\$ {\em p\-Id}, \$ {\em offset}, \$ {\em max\-Records}, \$ {\em sort\_\-mode}, \$ {\em find}, \$ {\em where} = '')}\label{classActivityManager_a32}
+
+
+Lists activities at a per-process level 
+
+Definition at line 364 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!list_activities@{list\_\-activities}}
+\index{list_activities@{list\_\-activities}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::list\_\-activities (\$ {\em p\-Id}, \$ {\em offset}, \$ {\em max\-Records}, \$ {\em sort\_\-mode}, \$ {\em find}, \$ {\em where} = '')}\label{classActivityManager_a13}
+
+
+Lists activities at a per-process level 
+
+Definition at line 280 of file Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!remove_activity@{remove\_\-activity}}
+\index{remove_activity@{remove\_\-activity}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::remove\_\-activity (\$ {\em p\-Id}, \$ {\em activity\-Id})}\label{classActivityManager_a33}
+
+
+Removes a activity. 
+
+Definition at line 395 of file src/Process\-Manager/Activity\-Manager.php.
+
+References remove\_\-transition().\index{ActivityManager@{Activity\-Manager}!remove_activity@{remove\_\-activity}}
+\index{remove_activity@{remove\_\-activity}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::remove\_\-activity (\$ {\em p\-Id}, \$ {\em activity\-Id})}\label{classActivityManager_a14}
+
+
+Removes a activity. 
+
+Definition at line 311 of file Process\-Manager/Activity\-Manager.php.
+
+References remove\_\-transition().\index{ActivityManager@{Activity\-Manager}!remove_activity_role@{remove\_\-activity\_\-role}}
+\index{remove_activity_role@{remove\_\-activity\_\-role}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::remove\_\-activity\_\-role (\$ {\em activity\-Id}, \$ {\em role\-Id})}\label{classActivityManager_a20}
+
+
+Removes a role from an activity 
+
+Definition at line 64 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!remove_activity_role@{remove\_\-activity\_\-role}}
+\index{remove_activity_role@{remove\_\-activity\_\-role}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::remove\_\-activity\_\-role (\$ {\em activity\-Id}, \$ {\em role\-Id})}\label{classActivityManager_a4}
+
+
+Removes a role from an activity 
+
+Definition at line 64 of file Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!remove_activity_transitions@{remove\_\-activity\_\-transitions}}
+\index{remove_activity_transitions@{remove\_\-activity\_\-transitions}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::remove\_\-activity\_\-transitions (\$ {\em p\-Id}, \$ {\em aid})}\label{classActivityManager_a24}
+
+
+Removes all the activity transitions 
+
+Definition at line 125 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!remove_transition@{remove\_\-transition}}
+\index{remove_transition@{remove\_\-transition}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::remove\_\-transition (\$ {\em act\-From\-Id}, \$ {\em act\-To\-Id})}\label{classActivityManager_a23}
+
+
+Removes a transition 
+
+Definition at line 115 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!remove_transition@{remove\_\-transition}}
+\index{remove_transition@{remove\_\-transition}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::remove\_\-transition (\$ {\em act\-From\-Id}, \$ {\em act\-To\-Id})}\label{classActivityManager_a6}
+
+
+Removes a transition 
+
+Definition at line 96 of file Process\-Manager/Activity\-Manager.php.
+
+Referenced by remove\_\-activity().\index{ActivityManager@{Activity\-Manager}!replace_activity@{replace\_\-activity}}
+\index{replace_activity@{replace\_\-activity}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::replace\_\-activity (\$ {\em p\-Id}, \$ {\em activity\-Id}, \$ {\em vars})}\label{classActivityManager_a34}
+
+
+Updates or inserts a new activity in the database, \$vars is an asociative array containing the fields to update or to insert as needed. \$p\-Id is the process\-Id \$activity\-Id is the activity\-Id 
+
+Definition at line 423 of file src/Process\-Manager/Activity\-Manager.php.
+
+References activity\_\-name\_\-exists().\index{ActivityManager@{Activity\-Manager}!replace_activity@{replace\_\-activity}}
+\index{replace_activity@{replace\_\-activity}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::replace\_\-activity (\$ {\em p\-Id}, \$ {\em activity\-Id}, \$ {\em vars})}\label{classActivityManager_a15}
+
+
+Updates or inserts a new activity in the database, \$vars is an asociative array containing the fields to update or to insert as needed. \$p\-Id is the process\-Id \$activity\-Id is the activity\-Id 
+
+Definition at line 339 of file Process\-Manager/Activity\-Manager.php.
+
+References activity\_\-name\_\-exists().\index{ActivityManager@{Activity\-Manager}!transition_exists@{transition\_\-exists}}
+\index{transition_exists@{transition\_\-exists}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::transition\_\-exists (\$ {\em pid}, \$ {\em act\-From\-Id}, \$ {\em act\-To\-Id})}\label{classActivityManager_a21}
+
+
+Checks if a transition exists 
+
+Definition at line 73 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!validate_process_activities@{validate\_\-process\_\-activities}}
+\index{validate_process_activities@{validate\_\-process\_\-activities}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::validate\_\-process\_\-activities (\$ {\em p\-Id})}\label{classActivityManager_a29}
+
+
+Validates if a process can be activated checking the process activities and transitions the rules are: 0) No circular activities 1) Must have only one a start and end activity 2) End must be reachable from start 3) Interactive activities must have a role assigned 4) Roles should be mapped 5) Standalone activities cannot have transitions 
+
+Definition at line 239 of file src/Process\-Manager/Activity\-Manager.php.\index{ActivityManager@{Activity\-Manager}!validate_process_activities@{validate\_\-process\_\-activities}}
+\index{validate_process_activities@{validate\_\-process\_\-activities}!ActivityManager@{Activity\-Manager}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Activity\-Manager::validate\_\-process\_\-activities (\$ {\em p\-Id})}\label{classActivityManager_a10}
+
+
+Validates if a process can be activated checking the process activities and transitions the rules are: 0) No circular activities 1) Must have only one a start and end activity 2) End must be reachable from start 3) Interactive activities must have a role assigned 
+
+Definition at line 173 of file Process\-Manager/Activity\-Manager.php.
+
+The documentation for this class was generated from the following files:\begin{CompactItemize}
+\item 
+Process\-Manager/Activity\-Manager.php\item 
+src/Process\-Manager/Activity\-Manager.php\end{CompactItemize}
