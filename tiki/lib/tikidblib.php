@@ -1,15 +1,20 @@
 <?php
+//
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.2 2003-11-16 19:34:28 zaufi Exp $
+//
+
 
 class TikiDB {
 // Database access functions
 
 var $db; // The ADODB db object used to access the database
+var $num_queries;
 
-function TikiDB ($db) {
-  if (!$db) {
-    die ("Invalid db object passed to TikiLib constructor");
-  }
+function TikiDB($db)
+{
+  if (!$db) die("Invalid db object passed to TikiLib constructor");
   $this->db = $db;
+  $this->num_queries = 0;
 }
 
 // Use ADOdb->qstr() for 1.8
@@ -42,7 +47,7 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
 
     //count the number of queries made
     $this->num_queries++;
-
+    $this->debugger_log($query, $values);
     return $result;
 }
 
@@ -75,7 +80,7 @@ function query($query, $values = null, $numrows = -1,
 
     //count the number of queries made
     $this->num_queries++;
-
+    $this->debugger_log($query, $values);
     return $result;
 }
 
@@ -102,6 +107,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
     //count the number of queries made
     $this->num_queries++;
+    $this->debugger_log($query, $values);
 
     if ($res === false)
         return (NULL); //simulate pears behaviour
@@ -248,7 +254,26 @@ function sql_cast($var,$type) {
     }
 
 }
-
+function debugger_log($query, $values)
+{
+    // Will spam only if debug parameter present in URL
+    // \todo DON'T FORGET TO REMOVE THIS BEFORE 1.8 RELEASE
+    if (!isset($_REQUEST["debug"])) return;
+    // spam to debugger log
+    include_once ('lib/debug/debugger.php');
+    global $debugger;
+    if (is_array($values) && strpos($query, '?'))
+        foreach ($values as $v)
+        {
+            $q = strpos($query, '?');
+            if ($q)
+            {
+                $tmp = substr($query, 0, $q)."'".$v."'".substr($query, $q + 1);
+                $query = $tmp;
+            }
+        }
+    $debugger->msg($this->num_queries.': '.$query);
+}
 }
 
 
