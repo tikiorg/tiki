@@ -1422,3 +1422,12 @@ background-color: #DAAAAA;
 {
 background-color: #DA9A9A;
 }
+
+/* To set initial state for 'wiki quick help' panel
+ * just set display to 'none' (hidden) or 'block' (show)
+ * /
+div#edithelpzone { display: none;  }
+/* To set initial state for 'attachments' table
+ * just set display to 'none' (hidden) or 'block' (show)
+ * /
+div#attzone      { display: none; margin-top: 10px; }
