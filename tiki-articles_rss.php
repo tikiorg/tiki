@@ -13,7 +13,7 @@ $img = 'http://'.$_SERVER["SERVER_NAME"].$foo2;
 $read = 'http://'.$_SERVER["SERVER_NAME"].$foo3;
 //$title = $tikilib->get_preference("title","Tiki RSS feedpepe");
 $now = date("U");
-$changes = $tikilib->list_articles(0,$max_rss_articles,'publishDate_desc', '', $now);
+$changes = $tikilib->list_articles(0,$max_rss_articles,'publishDate_desc', '', $now,$user);
 //print_r($changes);die;
 print('<');
 print('?xml version="1.0" ?');
