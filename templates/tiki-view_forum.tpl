@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.55 2004-02-22 23:55:51 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.56 2004-02-27 09:52:25 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br /><br />
 {if $forum_info.show_description eq 'y'}
@@ -150,6 +150,7 @@ a moderator approves it.{/tr}</small>
     		<input type="text" size="60" name="comment_topicsummary" value="{$comment_topicsummary|escape}" maxlength="240" />
     	</td>
     </tr>
+    {/if}
     {if $feature_smileys eq 'y'}
      <tr class="formcolor">
 	<td>{tr}Smileys{/tr}</td>
