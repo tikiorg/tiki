@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.12 2003-11-12 00:32:25 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.13 2003-11-12 01:00:56 zaufi Exp $
  *
  * Admin interface for repositories management
  *
@@ -34,6 +34,8 @@ $description = isset($_REQUEST["description"]) ? $_REQUEST["description"] : '';
 $vis         = isset($_REQUEST["vis"])         ? ($_REQUEST["vis"]       == 'on' ? 'y' : 'n')  : 'n';
 $cacheable   = isset($_REQUEST["cacheable"])   ? ($_REQUEST["cacheable"] == 'on' ? 'y' : 'n')  : 'n';
 
+// Create instance of integrator
+$integrator = new TikiIntegrator($dbTiki);
 
 // Check if 'submit' pressed ...
 if (isset($_REQUEST["save"]))

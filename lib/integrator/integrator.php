@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.19 2003-11-10 04:33:18 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.20 2003-11-12 01:00:57 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -26,7 +26,7 @@ class TikiIntegrator
         return $ret;
     }
     /// Add/Update
-    function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cacheable, $descr)
+    function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cacheable, $exp, $descr)
     {
         global $tikilib;
         $name  = addslashes($name);
@@ -35,13 +35,14 @@ class TikiIntegrator
         $css   = addslashes($css);
         $descr = addslashes($descr);
         if (strlen($repID) == 0 || $repID == 0)
-            $query = "insert into tiki_integrator_reps(name,path,start_page,css_file,visibility,cacheable,description)
-                      values('$name','$path','$start','$css','$vis','$cacheable','$descr')";
+            $query = "insert into tiki_integrator_reps(name,path,start_page,css_file,
+                      visibility,cacheable,expiration,description)
+                      values('$name','$path','$start','$css','$vis','$cacheable','$exp','$descr')";
         else
             $query = "update tiki_integrator_reps 
                       set name='$name',path='$path',start_page='$start',
                       css_file='$css',visibility='$vis',cacheable='$cacheable',
-                      description='$descr' where repID='$repID'";
+                      expiration='$exp',description='$descr' where repID='$repID'";
         $result = $tikilib->query($query);
         // Invalidate cached repository if needed
         if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID))
@@ -208,13 +209,14 @@ class TikiIntegrator
         return $p.'/'.((strlen($file) > 0) ? $file : $rep["start_page"]);
     }
     /// Return CSS file for given repository
-    function get_rep_css($rep)
+    function get_rep_css($repID)
     {
         global $style;
         global $style_base;
 
         // Return if no CSS file defined for repository
-        if (strlen($rep["css_file"]) == 0) return '';
+        $rep = $this->get_repository($repID);
+        if (!isset($rep["css_file"]) || strlen($rep["css_file"]) == 0) return '';
         
         $tiki_root = $_SERVER['DOCUMENT_ROOT'].dirname($_SERVER['SCRIPT_NAME']);
         // Fill array of dirs to scan (local filesystem, and web based)
@@ -289,13 +291,27 @@ class TikiIntegrator
     function get_file($repID, $file, $use_cache = 'y', $url = '')
     {
         global $tikilib;
+//        global $debugger;
         $data = '';
         // Try to get data from cache
+        $cacheId = 0;
         if ($use_cache == 'y' && $url != '' && $tikilib->is_cached($url))
-            $data = $tikilib->get_cache($tikilib->get_cache_id($url));
+            $data = $tikilib->get_cache($cacheId = $tikilib->get_cache_id($url));
 
+        $rep = $this->get_repository($repID);
+
+//        $debugger->msg("exp: ".$rep["expiration"]);
         // If smth found in cache return it... else try to get it by usual way.
-        if ($data != '' && isset($data["data"]) && ($data["data"] != '')) return $data["data"];
+        // \todo Smbd can explain why to use date('U') instead of time()???
+        if ($data != '' && isset($data["data"]) && ($data["data"] != '')
+         && ($rep["expiration"] > 0 ? (time() - $data["refresh"]) < $rep["expiration"] : true))
+            return $data["data"];
+//        {
+//            $debugger->msg("Get page ".$url." from cache");
+//            $debugger->msg("Age of page (sec.): ".(time() - $data["refresh"]));
+//            return $data["data"];
+//        }
+//        else $debugger->msg("No cached page for ".$url);
 
         // Get file content to string
         $data = @file_get_contents($file);
@@ -305,7 +321,8 @@ class TikiIntegrator
         {
             // Now we need to hack this file by applying all configured rules...
             $data = $this->apply_all_rules($repID, $data);
-            // Add result to cache
+            // Add result to cache (remove prev if needed)
+            if ($cacheId != 0) $tikilib->remove_cache($cacheId);
             $tikilib->cache_url($url, $data);
         }
         return $data;
@@ -329,7 +346,5 @@ class TikiIntegrator
         $result = $tikilib->query($query);
     }
 }
-
-$integrator = new TikiIntegrator($dbTiki);
 
 ?>

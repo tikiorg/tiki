@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.13 2003-11-12 00:32:25 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.14 2003-11-12 01:00:57 zaufi Exp $
  *
  * Integrated files viewer (wrapper)
  *
@@ -31,6 +31,8 @@ if (!isset($_REQUEST["repID"]) && ($repID <= 0))
     $smarty->display("styles/$style_base/error.tpl");
     die;
 }
+// Create instance of integrator
+$integrator = new TikiIntegrator($dbTiki);
 // Get repository configuration data
 $rep = $integrator->get_repository($repID);
 
