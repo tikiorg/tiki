@@ -589,7 +589,7 @@ div.posthead {
   text-align: center;
   padding-left: 0px;  padding-right: 0px;
   margin-bottom: 0px;
-  width: 100%;
+  width: 98%;
 }
 
 /* The font used in the heading of the weblog */
@@ -607,7 +607,8 @@ div.postbody {
   background: #EFEFEF;
   border: 1px solid black;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: #00639c;
-  width: 100%;
+  padding-left: 5px;padding-top: 5px; padding-bottom: 5px; 
+  width: 98%;
   margin-bottom: 10px;
 }
 
@@ -617,6 +618,7 @@ div.blogtitle {
   color: #FFA34F; font-size: 11px; font-weight : bold;
   background-color: #006699; height: 25px;
   background-image: url(subsilver/cellpic3.gif);
+  width: 98%;
   padding-left: 2px;
   padding-right: 5px;
   margin-top: 10px;
@@ -635,7 +637,7 @@ div.bloginfo {
   margin-bottom: 10px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  width: 100%;
+  width: 98%;
   clear: both;
 }
 
@@ -650,7 +652,7 @@ div.blogdesc {
   margin-bottom: 10px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  width: 100%;
+  width: 98%;
   clear: both;
 }
 
@@ -665,7 +667,7 @@ div.blogtools {
   margin-bottom: 10px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  width: 100%;
+  width: 98%;
   clear: both;
 }
 
@@ -789,7 +791,7 @@ div.articletitle {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   margin-top: 5px;
-  width: 100%;
+  width: 97%;
   clear: both;
 }
 
@@ -804,7 +806,7 @@ div.articleheading {
   border-bottom: 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  width: 100%;
+  width: 97%;
   clear: both;
 }
 
@@ -820,7 +822,7 @@ div.articletrailer {
   margin-bottom: 20px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  width: 100%;
+  width: 97%;
   clear: both;
 }
 
@@ -839,7 +841,7 @@ div.articlebody {
   margin: 10px 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
-  width: 100%;
+  width: 97%;
   clear: both;
 }
 
@@ -1070,11 +1072,11 @@ td.forumheading {
 .lforumheading:hover {  font-family: Verdana, Arial, Helvetica, sans-serif;  color: #FF860D;   font-size: 11px; font-weight : bold;  text-decoration: none;}
 
 /* Even rows in forums table */
-td.forumstableeven { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 30px;}
+td.forumstableeven { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 30px; text-align: left;}
 td.forumstableinfoeven { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #DEE7E7; text-align: right; height: 30px;}
 
 /* Odd rows in forums table */
-td.forumstableodd { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; height: 30px; background-color: #EFEFEF;}
+td.forumstableodd { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; height: 30px; background-color: #EFEFEF; text-align: left;}
 td.forumstableinfoodd { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #DEE7E7; height: 30px; text-align: right;}
 
 /* The forum name is a link to the forum topics */
