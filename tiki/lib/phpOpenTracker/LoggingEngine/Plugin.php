@@ -14,14 +14,14 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: Plugin.php,v 1.1 2003-04-25 18:44:00 lrargerich Exp $
+// $Id: Plugin.php,v 1.2 2003-05-12 16:35:12 lechuckdapirate Exp $
 //
 
 /**
 * Base Class for phpOpenTracker LoggingEngine plugins
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_LoggingEngine_Plugin {

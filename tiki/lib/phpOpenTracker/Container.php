@@ -14,7 +14,7 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: Container.php,v 1.1 2003-04-25 18:43:52 lrargerich Exp $
+// $Id: Container.php,v 1.2 2003-05-12 16:35:07 lechuckdapirate Exp $
 //
 
 require_once POT_INCLUDE_PATH . 'Parser.php';
@@ -23,7 +23,7 @@ require_once POT_INCLUDE_PATH . 'Parser.php';
 * phpOpenTracker Session Container
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_Container {

@@ -14,7 +14,7 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: Parser.php,v 1.1 2003-04-25 18:43:52 lrargerich Exp $
+// $Id: Parser.php,v 1.2 2003-05-12 16:35:12 lechuckdapirate Exp $
 //
 
 /**
@@ -26,7 +26,7 @@
 * project.
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_Parser {

@@ -14,14 +14,14 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: DB.php,v 1.1 2003-04-25 18:43:52 lrargerich Exp $
+// $Id: DB.php,v 1.2 2003-05-12 16:35:07 lechuckdapirate Exp $
 //
 
 /**
 * Base Class for phpOpenTracker Database Handlers.
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_DB {

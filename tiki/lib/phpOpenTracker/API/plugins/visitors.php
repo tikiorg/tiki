@@ -15,7 +15,7 @@
 // |         Oliver Lehmann <oliver@phpOpenTracker.de>                   |
 // +---------------------------------------------------------------------+
 //
-// $Id: visitors.php,v 1.1 2003-04-25 18:43:58 lrargerich Exp $
+// $Id: visitors.php,v 1.2 2003-05-12 16:35:01 lechuckdapirate Exp $
 //
 
 require_once POT_INCLUDE_PATH . 'API/Plugin.php';
@@ -24,7 +24,7 @@ require_once POT_INCLUDE_PATH . 'API/Plugin.php';
 * phpOpenTracker API - Visitors
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_API_visitors extends phpOpenTracker_API_Plugin {

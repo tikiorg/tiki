@@ -14,7 +14,7 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: visitors_online.php,v 1.1 2003-04-25 18:43:59 lrargerich Exp $
+// $Id: visitors_online.php,v 1.2 2003-05-12 16:35:07 lechuckdapirate Exp $
 //
 
 require_once POT_INCLUDE_PATH . 'API/Plugin.php';
@@ -23,7 +23,7 @@ require_once POT_INCLUDE_PATH . 'API/Plugin.php';
 * phpOpenTracker API - Visitors Online
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_API_visitors_online extends phpOpenTracker_API_Plugin {

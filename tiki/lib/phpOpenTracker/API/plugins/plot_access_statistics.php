@@ -14,7 +14,7 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: plot_access_statistics.php,v 1.1 2003-04-25 18:43:55 lrargerich Exp $
+// $Id: plot_access_statistics.php,v 1.2 2003-05-12 16:34:55 lechuckdapirate Exp $
 //
 
 require_once POT_INCLUDE_PATH . 'API/Plugin.php';
@@ -23,7 +23,7 @@ require_once POT_INCLUDE_PATH . 'API/Plugin.php';
 * phpOpenTracker API - Plot Access Statistics
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_API_plot_access_statistics extends phpOpenTracker_API_Plugin {

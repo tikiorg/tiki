@@ -14,14 +14,14 @@
 // | Author: Sebastian Bergmann <sebastian@phpOpenTracker.de>            |
 // +---------------------------------------------------------------------+
 //
-// $Id: Clickpath.php,v 1.1 2003-04-25 18:43:53 lrargerich Exp $
+// $Id: Clickpath.php,v 1.2 2003-05-12 16:34:49 lechuckdapirate Exp $
 //
 
 /**
 * Clickpath
 *
 * @author   Sebastian Bergmann <sebastian@phpOpenTracker.de>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @since    phpOpenTracker 1.0.0
 */
 class phpOpenTracker_Clickpath {
@@ -75,7 +75,6 @@ class phpOpenTracker_Clickpath {
     $this->count         = $count;
     $this->length        = sizeof($documents);
     $this->statistics    = $statistics;
-    print("hey");
   }
 
   /**
