@@ -230,19 +230,19 @@ $lang=Array(
 // "New item \$itemId in tracker \$trackerName" => "New item \$itemId in tracker \$trackerName", // ## MODULES ./lib/trackers/trackerlib.php
 // "Checkbox options: put 1 if you need that next field is on the same row" => "Checkbox options: put 1 if you need that next field is on the same row", // ## MODULES ./lib/trackers/trackerlib.php
 // "Dropdown options : list of items separated with commas" => "Dropdown options : list of items separated with commas", // ## MODULES ./lib/trackers/trackerlib.php
-// "jscalendar" => "jscalendar", // ## CLOSE: Calendar=>Kalender // ## MODULES ./lib/trackers/trackerlib.php
+ "jscalendar" => "jscalendar", // ## CLOSE: Calendar=>Kalender // ## MODULES ./lib/trackers/trackerlib.php
 // "Image options : xSize,ySize indicated in pixels" => "Image options : xSize,ySize indicated in pixels", // ## MODULES ./lib/trackers/trackerlib.php
 // "Action options : Label,post,tiki-index.php,page:fieldname,highlight=test" => "Action options : Label,post,tiki-index.php,page:fieldname,highlight=test", // ## MODULES ./lib/trackers/trackerlib.php
-// "header" => "header", // ## CLOSE: sender=>afzender // ## MODULES ./lib/trackers/trackerlib.php
+ "header" => "hoofding", // ## CLOSE: sender=>afzender // ## MODULES ./lib/trackers/trackerlib.php
 // "Category options : parentId" => "Category options : parentId", // ## MODULES ./lib/trackers/trackerlib.php
 // "tracker item" => "tracker item", // ## CLOSE: Tracker Items=>Trackeritems // ## MODULES ./lib/trackers/trackerlib.php
 // "Tracker options : trackerId,fieldname" => "Tracker options : trackerId,fieldname", // ## MODULES ./lib/trackers/trackerlib.php
 // "No extra information for that attached file. " => "No extra information for that attached file. ", // ## MODULES ./lib/trackers/trackerlib.php
 // "child categories" => "child categories", // ## CLOSE: Child categories=>Ondergeschikte categorie&euml;n // ## MODULES ./lib/tree/categ_admin_tree.php
 // "objects in category" => "objects in category", // ## CLOSE: Objects in category=>Objecten in categorie // ## MODULES ./lib/tree/categ_admin_tree.php
-// "(AT)" => "(AT)", // ## MODULES ./lib/userprefs/scrambleEmail.php
-// "(DOT)" => "(DOT)", // ## MODULES ./lib/userprefs/scrambleEmail.php
-// "failed" => "failed", // ## CLOSE: files=>bestanden // ## MODULES ./lib/wiki/pluginslib.php
+ "(AT)" => "(AT)", // ## MODULES ./lib/userprefs/scrambleEmail.php
+ "(DOT)" => "(PUNT)", // ## MODULES ./lib/userprefs/scrambleEmail.php
+ "failed" => "faalde", // ## CLOSE: files=>bestanden // ## MODULES ./lib/wiki/pluginslib.php
 // "Include an article" => "Include an article", // ## MODULES ./lib/wiki-plugins/wikiplugin_article.php
 // "Insert articles into a wikipage" => "Insert articles into a wikipage", // ## MODULES ./lib/wiki-plugins/wikiplugin_articles.php
 // "no attachment on this page." => "no attachment on this page.", // ## MODULES ./lib/wiki-plugins/wikiplugin_attach.php
@@ -271,10 +271,10 @@ $lang=Array(
 // "Sorts the plugin content in the wiki page" => "Sorts the plugin content in the wiki page", // ## CLOSE: Centers the plugin content in the wiki page=>Centreer de plugin inhoud in de wiki pagina // ## MODULES ./lib/wiki-plugins/wikiplugin_sort.php
 // "one data per line" => "one data per line", // ## MODULES ./lib/wiki-plugins/wikiplugin_sort.php
 // "Split a page into rows and columns" => "Split a page into rows and columns", // ## MODULES ./lib/wiki-plugins/wikiplugin_split.php
-// "row1col1" => "row1col1", // ## MODULES ./lib/wiki-plugins/wikiplugin_split.php
-// "row1col2" => "row1col2", // ## MODULES ./lib/wiki-plugins/wikiplugin_split.php
-// "row2col1" => "row2col1", // ## MODULES ./lib/wiki-plugins/wikiplugin_split.php
-// "row2col2" => "row2col2", // ## MODULES ./lib/wiki-plugins/wikiplugin_split.php
+ "row1col1" => "row1col1", // ## MODULES ./lib/wiki-plugins/wikiplugin_split.php
+ "row1col2" => "row1col2", // ## MODULES ./lib/wiki-plugins/wikiplugin_split.php
+ "row2col1" => "row2col1", // ## MODULES ./lib/wiki-plugins/wikiplugin_split.php
+ "row2col2" => "row2col2", // ## MODULES ./lib/wiki-plugins/wikiplugin_split.php
 // "Run a sql query" => "Run a sql query", // ## MODULES ./lib/wiki-plugins/wikiplugin_sql.php
 // "sql query" => "sql query", // ## MODULES ./lib/wiki-plugins/wikiplugin_sql.php
 // "Search the titles of all pages in this wiki" => "Search the titles of all pages in this wiki", // ## MODULES ./lib/wiki-plugins/wikiplugin_titlesearch.php
@@ -3826,14 +3826,14 @@ $lang=Array(
 //"No image indicated" => "Geen afbeelding opgegeven", // ./tiki-browse_image.php
 //"Permission denied you cannot move images from this gallery" => "Geen toestemming om afbeeldingen uit deze galerij te verplaatsen", // ./tiki-browse_image.php
 //"Permission denied you cannot view the calendar" => "Toegang tot de kalender geweigerd", // ./tiki-calendar.php
-//"event without name" => "gebeurtenis zonder naam", // ./tiki-calendar.php
-//"Sunday" => "zondag", // ./tiki-calendar.php
-//"Monday" => "maandag", // ./tiki-calendar.php
-//"Tuesday" => "dinsdag", // ./tiki-calendar.php
-//"Wednesday" => "woensdag", // ./tiki-calendar.php
-//"Thursday" => "donderdag", // ./tiki-calendar.php
-//"Friday" => "vrijdag", // ./tiki-calendar.php
-//"Saturday" => "zatedag", // ./tiki-calendar.php
+"event without name" => "gebeurtenis zonder naam", // ./tiki-calendar.php
+"Sunday" => "zondag", // ./tiki-calendar.php
+"Monday" => "maandag", // ./tiki-calendar.php
+"Tuesday" => "dinsdag", // ./tiki-calendar.php
+"Wednesday" => "woensdag", // ./tiki-calendar.php
+"Thursday" => "donderdag", // ./tiki-calendar.php
+"Friday" => "vrijdag", // ./tiki-calendar.php
+"Saturday" => "zatedag", // ./tiki-calendar.php
 //"The passwords didn't match" => "De paswoorden komen niet overeen", // ./tiki-change_password.php, ./tiki-user_preferences.php
 //"You can not use the same password again" => "U kan hetzelfde paswoord niet opnieuw gebruiken", // ./tiki-change_password.php
 //"Invalid old password" => "Ongeldig oud paswoord", // ./tiki-change_password.php, ./tiki-user_preferences.php
