@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.193 2004-01-21 23:57:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.194 2004-01-22 00:26:10 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -587,7 +587,7 @@ $smarty->assign('t_use_db', $t_use_db);
 $smarty->assign('t_use_dir', $t_use_dir);
 $groupTracker = 'n';
 $smarty->assign('groupTracker', $groupTracker);
-$feature_trackers = 'n';
+$userTracker = 'n';
 $smarty->assign('userTracker', $userTracker);
 $feature_trackers = 'n';
 $smarty->assign('feature_trackers', $feature_trackers);
