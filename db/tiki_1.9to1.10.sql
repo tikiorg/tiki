@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.12 2004-07-23 16:20:40 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.13 2004-07-27 21:09:29 teedog Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -18,6 +18,7 @@
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_pageid','n');
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_wiki_history', 'Can view wiki page history', 'registered', 'wiki');
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_author', 'Can view wiki page authors', 'basic', 'wiki');
+INSERT IGNORE INTO users_grouppermissions (groupName, permName) VALUES ('Anonymous', 'tiki_p_wiki_view_author');
 
 #
 # Tables of the Opinion-Network
