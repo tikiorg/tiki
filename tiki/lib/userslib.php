@@ -139,7 +139,7 @@ class UsersLib extends TikiLib {
 		    $objectType
 		    ));
 
-	return $result();
+	return $result;
     }
 
     function user_exists($user) {
