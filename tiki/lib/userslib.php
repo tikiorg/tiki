@@ -703,7 +703,7 @@ class UsersLib extends TikiLib {
 	$query = "delete from `users_groups` where `groupName` = ?";
 	$result = $this->query($query, array($group));
 	$query = "delete from `tiki_group_inclusion` where `groupName` = ? or
-		includeGroup = ?";
+		`includeGroup` = ?";
 	$result = $this->query($query, array($group, $group));
 	$query = "delete from `users_grouppermissions` where `groupName` = ?";
 	$result = $this->query($query, array($group));
@@ -1009,7 +1009,7 @@ class UsersLib extends TikiLib {
     $cachelib->invalidate("allperms");
 
 	$query = "delete from `users_grouppermissions` where `permName` = ?
-		and groupName = ?";
+		and `groupName` = ?";
 	$result = $this->query($query, array($perm, $group));
 	return true;
     }
