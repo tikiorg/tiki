@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.10 2003-08-18 08:42:22 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.11 2003-10-17 15:26:14 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,8 +101,8 @@ $display_timezone = $tikilib->get_user_preference($userwatch, 'display_timezone'
 $smarty->assign_by_ref('display_timezone', $display_timezone);
 
 $userinfo = $userlib->get_user_info($userwatch);
-
-if ($tikilib->get_user_preference($userwatch, 'email is public') == 'y') {
+$email_isPublic = $tikilib->get_user_preference($userwatch,'email is public');
+if ($email_isPublic == 'y') {
 	switch ($tikilib->get_user_preference($userwatch, 'scrambling method', 'unicode')) {
 	case 'strtr':
 		$trans = array(
@@ -112,7 +112,6 @@ if ($tikilib->get_user_preference($userwatch, 'email is public') == 'y') {
 
 		$userinfo['email'] = strtr($userinfo['email'], $trans);
 		break;
-
 	default:
 		$encoded = '';
 
@@ -125,6 +124,7 @@ if ($tikilib->get_user_preference($userwatch, 'email is public') == 'y') {
 }
 
 $smarty->assign_by_ref('userinfo', $userinfo);
+$smarty->assign_by_ref('email_isPublic',$email_isPublic);
 
 $smarty->display("styles/$style_base/tiki.tpl");
 
