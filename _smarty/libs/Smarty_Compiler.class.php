@@ -34,12 +34,12 @@
  * @link http://smarty.php.net/
  * @author Monte Ohrt <monte@ispi.net>
  * @author Andrei Zmievski <andrei@php.net>
- * @version 2.6.0-RC1-cvs
+ * @version 2.6.0-RC1
  * @copyright 2001-2003 ispi of Lincoln, Inc.
  * @package Smarty
  */
 
-/* $Id: Smarty_Compiler.class.php,v 1.1.1.1 2003-08-20 23:39:48 rossta Exp $ */
+/* $Id: Smarty_Compiler.class.php,v 1.1.1.2 2003-09-03 17:06:06 mose Exp $ */
 
 /**
  * Template compiling class

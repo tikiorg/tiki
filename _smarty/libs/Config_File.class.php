@@ -24,14 +24,14 @@
  * http://smarty.php.net/
  *
  * @link http://smarty.php.net/
- * @version 2.6.0-RC1-cvs
+ * @version 2.6.0-RC1
  * @copyright Copyright: 2001-2003 ispi of Lincoln, Inc.
  * @author Andrei Zmievski <andrei@php.net>
  * @access public
  * @package Smarty
  */
 
-/* $Id: Config_File.class.php,v 1.1.1.1 2003-08-20 23:39:46 rossta Exp $ */
+/* $Id: Config_File.class.php,v 1.1.1.2 2003-09-03 17:06:08 mose Exp $ */
 /**
  * Config file reading class
  * @package Smarty
