@@ -1,6 +1,10 @@
 {* $Hader: $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a><br /><br />
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=wiki"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<br /><br />
+{/if}
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>
    <td class="findtitle">
@@ -187,8 +191,4 @@
 {/if}
 </div>
 </div>
-{if $tiki_p_admin eq 'y'}
-<br /><br />
-<a href="tiki-admin.php?page=wiki"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-{/if}
 

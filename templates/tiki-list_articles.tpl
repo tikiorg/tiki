@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.21 2003-11-11 18:47:17 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.22 2003-11-14 16:57:34 sylvieg Exp $ *}
 
-<a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}List Articles{/tr}">
@@ -11,7 +11,6 @@
 <a href="tiki-edit_templates.php?template=templates/tiki-list_articles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list articles tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
-
 <br /><br />
 [
 {if $tiki_p_edit_article eq 'y'}
@@ -19,6 +18,11 @@
 {/if}
 <a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
 ]
+
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=cms"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+{/if}
+
 <br/><br/>
 <div align="center">
 <table class="findtable">
@@ -155,7 +159,3 @@
 {/if}
 </div>
 </div>
-{if $tiki_p_admin eq 'y'}
-<br/><br/>
-<a href="tiki-admin.php?page=cms"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-{/if}
