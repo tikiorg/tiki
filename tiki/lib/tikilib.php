@@ -4110,6 +4110,7 @@ function parse_data($data) {
 	$imgdata["link"] = '';
 	$imgdata["align"] = '';
 	$imgdata["desc"] = '';
+	$imgdata["imalign"] = '';
 
 	foreach ($parts as $part) {
 	    $part = str_replace('}', '', $part);
@@ -4134,6 +4135,10 @@ function parse_data($data) {
 
 	if ($imgdata["height"])
 	    $repl .= ' height="' . $imgdata["height"] . '"';
+
+        if ($imgdata["imalign"]) {
+            $repl .= ' align="' . $imgdata["imalign"] . '"';
+        }
 
 	$repl .= ' />';
 
