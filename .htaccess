@@ -1,0 +1,4 @@
+# Tell Apache to append a charset="utf-8" to the Content-Type header
+# if the header doesn't already specify a character set.  This will
+# help to persuade browsers to decode the pages as UTF-8.
+AddDefaultCharset utf-8
