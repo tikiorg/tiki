@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-old_articles.tpl,v 1.5 2003-09-25 01:05:23 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-old_articles.tpl,v 1.6 2003-11-20 23:49:04 mose Exp $ *}
 
 {if $feature_articles eq 'y'}
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Old articles{/tr}" module_name="old_articles"}
+{include file="module-title.tpl" module_title="{tr}Old articles{/tr}" module_name="old_articles"}
 </div>
 <div class="box-data">
 <table  border="0" cellpadding="0" cellspacing="0">

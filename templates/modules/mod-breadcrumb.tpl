@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-breadcrumb.tpl,v 1.5 2003-10-22 18:38:20 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-breadcrumb.tpl,v 1.6 2003-11-20 23:49:04 mose Exp $ *}
 
 {if $feature_featuredLinks eq 'y'}
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Recently visited pages{/tr}" module_name="breadcrumb"}
+{include file="module-title.tpl" module_title="{tr}Recently visited pages{/tr}" module_name="breadcrumb"}
 </div>
 <div class="box-data">
 <table  border="0" cellpadding="0" cellspacing="0">

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.3 2003-11-18 01:16:30 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.4 2003-11-20 23:49:04 mose Exp $ *}
 
 {if $feature_search eq 'y'}
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Search{/tr}" module_name="search_new"}
+{include file="module-title.tpl" module_title="{tr}Search{/tr}" module_name="search_new"}
 </div>
 <div class="box-data">
     <form class="forms" method="get" action="tiki-searchindex.php">

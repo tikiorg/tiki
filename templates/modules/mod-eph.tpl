@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-eph.tpl,v 1.3 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-eph.tpl,v 1.4 2003-11-20 23:49:04 mose Exp $ *}
 
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="<a class=\"cboxtlink\" href=\"tiki-eph.php\">{tr}Ephemerides{/tr}</a>" module_name="eph"}
+{include file="module-title.tpl" module_title="<a class=\"cboxtlink\" href=\"tiki-eph.php\">{tr}Ephemerides{/tr}</a>" module_name="eph"}
 </div>
 <div class="box-data">
 {if $modephdata}

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-messages_unread_messages.tpl,v 1.8 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-messages_unread_messages.tpl,v 1.9 2003-11-20 23:49:04 mose Exp $ *}
 
 {if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Messages{/tr}" module_name="messages_unread_messages"}
+{include file="module-title.tpl" module_title="{tr}Messages{/tr}" module_name="messages_unread_messages"}
 </div>
 <div class="box-data">
 {if $modUnread > 0}

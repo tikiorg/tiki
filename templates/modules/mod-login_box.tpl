@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.22 2003-11-07 23:32:33 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.23 2003-11-20 23:49:04 mose Exp $ *}
 
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Login{/tr}" module_name="login_box"}
+{include file="module-title.tpl" module_title="{tr}Login{/tr}" module_name="login_box"}
 </div>
 <div class="box-data">
     {if $user}
