@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.1 2003-11-23 03:22:35 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.2 2003-12-07 15:06:59 mose Exp $ *}
 {* Module layout with controls *}
 
-<div class="box" id="{$module_name|escape}"><div class="box-title">
+<div class="box"><div class="box-title">
 {* Draw module controls for logged user only *}
 {if $user and $user_assigned_modules == 'y' and $no_module_controls ne 'y' and $feature_modulecontrols eq 'y'}
 <table>
