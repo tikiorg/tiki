@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.9 2003-08-07 19:42:24 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.10 2003-10-24 15:39:25 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,6 +19,9 @@ if ($user != 'admin') {
 	}
 }
 
+$ag_home = '';
+if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
+
 // Process the form to add a group
 if (isset($_REQUEST["newgroup"])) {
 	// Check if the user already exists
@@ -28,7 +31,7 @@ if (isset($_REQUEST["newgroup"])) {
 		$smarty->display("styles/$style_base/error.tpl");
 		die;
 	} else {
-		$userlib->add_group(addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]),$_REQUEST["home"]);
+		$userlib->add_group(addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]),$ag_home);
 		if (isset($_REQUEST["include_groups"])) {
 			foreach ($_REQUEST["include_groups"] as $include) {
 				if ($_REQUEST["name"] != $include) {
@@ -43,7 +46,7 @@ if (isset($_REQUEST["newgroup"])) {
 
 // modification
 if (isset($_REQUEST["save"])and isset($_REQUEST["olgroup"])) {
-	$userlib->change_group(addslashes($_REQUEST["olgroup"]),addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]),$_REQUEST["home"]);
+	$userlib->change_group(addslashes($_REQUEST["olgroup"]),addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]),$ag_home);
 
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
 
