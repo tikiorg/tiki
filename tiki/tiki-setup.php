@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.250 2004-07-02 22:07:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.251 2004-07-12 22:00:36 teedog Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -465,7 +465,6 @@ $smarty->assign('feature_wiki_pageid',$feature_wiki_pageid);
 
 //default wiki double-click edit setting
 $feature_wiki_dblclickedit = 'whole_page';
-$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
 
 //default wiki page version diff style
 $feature_wiki_diff_style = 'unified';
