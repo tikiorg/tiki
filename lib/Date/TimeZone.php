@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZone.php,v 1.1 2003-01-03 06:22:15 rossta Exp $
+// $Id: TimeZone.php,v 1.2 2003-01-13 15:04:02 lrargerich Exp $
 //
 // Date_TimeZone Class
 //
@@ -250,12 +250,12 @@ class Date_TimeZone
     function inDaylightTime($date)
     {
         $env_tz = "";
-        if(getenv("TZ")) {
-            $env_tz = getenv("TZ");
+        if(getenv("PHP_TZ")) { //mn
+            $env_tz = getenv("PHP_TZ"); //mn
         }
-        putenv("TZ=".$this->id);
+        putenv("PHP_TZ=".$this->id); //mn
         $ltime = localtime($date->getTime(), true);
-        putenv("TZ=".$env_tz);
+        putenv("PHP_TZ=".$env_tz); //mn
         return $ltime['tm_isdst'];
     }
 
