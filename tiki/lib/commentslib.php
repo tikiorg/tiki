@@ -1466,36 +1466,33 @@ class Comments extends TikiLib {
 	if ($find) {
 	    $findesc = '%' . $find . '%';
 
-	    $mid = " where `objectType` = ? and `object`=? and
-		`parentId`=? and `average`>=? and (`title`
-			like ? or `data` like ?) ";
+	    $mid = " where tc1.`objectType` = ? and tc1.`object`=? and
+		tc1.`parentId`=? and tc1.`average`>=? and (tc1.`title`
+			like ? or tc1.`data` like ?) ";
 	    $bind_mid=array($object[0],  $object[1],  (int) $parentId,
 		    (int) $threshold, $findesc, $findesc);
 	} else {
-	    $mid = " where `objectType` = ? and `object`=? and `parentId`=? and `average`>=? ";
+	    $mid = " where tc1.`objectType` = ? and tc1.`object`=? and tc1.`parentId`=? and tc1.`average`>=? ";
 	    $bind_mid=array($object[0], $object[1], (int) $parentId, (int) $threshold);
 	}
 
 	if( $object[0] == "forum" && $style != 'commentStyle_plain' )
 	{
-	    $temp_query = "CREATE TEMPORARY TABLE temp_tk select distinct `message_id` from `tiki_comments`";
-	    $result = $this->query($temp_query);
-
 	    $query = "select `message_id` from `tiki_comments` where `threadId` = ?";
 	    $parent_message_id = $this->getOne($query, array( $parentId ) );
 
-	    $query = "select `tiki_comments`.threadId from `tiki_comments` 
-		left outer join `temp_tk` on `in_reply_to` = temp_tk.`message_id`
+	    $query = "select `tc1`.threadId from `tiki_comments` as tc1
+		left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
 		$mid 
-		and (`in_reply_to` = ?
-		or (`in_reply_to` = \"\" or `in_reply_to` is null or temp_tk.message_id is null))
-		$time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
+		and (tc1.`in_reply_to` = ?
+		or (tc1.`in_reply_to` = \"\" or tc1.`in_reply_to` is null or tc1.message_id is null))
+		$time_cond order by tc1.".$this->convert_sortmode($sort_mode).",tc1.`threadId`";
 		$bind_mid = array_merge($bind_mid, array($parent_message_id));
 
-		$query_cant = "select count(*) from `tiki_comments` $mid and `in_reply_to` = ? $time_cond";
+		$query_cant = "select count(*) from `tiki_comments` as tc1 $mid and tc1.`in_reply_to` = ? $time_cond";
 	} else {
 	    $query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
-	    $query = "select threadId from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
+	    $query = "select threadId from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
 	}
 
 	$result = $this->query($query,array_merge($bind_mid,$bind_time));
