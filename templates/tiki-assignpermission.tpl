@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.45 2004-02-09 18:20:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.46 2004-02-24 21:52:00 wolff_borg Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
@@ -108,7 +108,6 @@
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=dsn">{tr}DSN{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=directory">{tr}Directory{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=workflow">{tr}Workflow{/tr}</a>|
-   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=mantis">{tr}Mantis{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=charts">{tr}Charts{/tr}</a>|  
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=extwiki">{tr}ExtWikis{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=support">{tr}Live support{/tr}</a>|

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.15 2004-01-18 02:01:48 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.16 2004-02-24 21:51:44 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -45,7 +45,6 @@ $features_toggles = array(
 	"feature_jukebox",
 	"feature_left_column",
 	"feature_live_support",
-	"feature_mantis",
 	"feature_maps",
 	"feature_messages",
 	"feature_minical",

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.198 2004-02-20 19:10:20 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.199 2004-02-24 21:51:44 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -655,9 +655,6 @@ $sender_email = $tikilib->get_preference('sender_email', $default_sender_email);
 $smarty->assign('sender_email', $sender_email);
 $email_encoding = $tikilib->get_preference('email_encoding', 'utf-8');
 $smarty->assign('email_encoding', $email_encoding);
-
-$feature_mantis = 'n';
-$smarty->assign('feature_mantis', $feature_mantis);
 
 $webmail_view_html = 'y';
 $smarty->assign('webmail_view_html', $webmail_view_html);
@@ -1458,14 +1455,6 @@ if(isset($_COOKIE["layermenu"])) {
   if($_COOKIE["layermenu"]=='o') {
       $smarty->assign('mnu_layermenu','display:block;');
   }
-}
-
-$smarty->assign('mnu_mantis', 'display:none;');
-
-if (isset($_COOKIE["mantismenu"])) {
-    if ($_COOKIE["mantismenu"] == 'o') {
-        $smarty->assign('mnu_mantis', 'display:block;');
-    }
 }
 
 if ($user && $feature_usermenu == 'y') {
