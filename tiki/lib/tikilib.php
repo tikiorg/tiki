@@ -4048,7 +4048,7 @@ class TikiLib {
     static $long_date_format = false;
 
     if (!$long_date_format)
-      $long_date_format = $this->get_preference('long_date_format', '%A %d ' . tra('of') . ' %B, %Y');
+      $long_date_format = $this->get_preference('long_date_format', '%A %d of %B, %Y');
     return $long_date_format;
   }
 
@@ -4056,7 +4056,7 @@ class TikiLib {
     static $short_date_format = false;
 
     if (!$short_date_format)
-      $short_date_format = $this->get_preference('short_date_format', '%a %d ' . tra('of') . ' %b, %Y');
+      $short_date_format = $this->get_preference('short_date_format', '%a %d of %b, %Y');
     return $short_date_format;
   }
 
