@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.68 2004-04-08 22:55:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.69 2004-04-09 03:00:02 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,8 +42,7 @@ require_once("lib/logs/logslib.php");
 $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
-=======
->>>>>>> 1.44.2.14
+
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
 
