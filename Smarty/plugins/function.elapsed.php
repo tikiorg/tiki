@@ -3,7 +3,7 @@ function smarty_function_elapsed($params, &$smarty)
 {
     global $tiki_timer;
     
-    $ela = $tiki_timer->elapsed();
+    $ela = number_format($tiki_timer->elapsed(),2);
     print($ela);
 }
 

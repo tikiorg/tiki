@@ -153,7 +153,7 @@ if(!$blog_data) {
 if($feature_blogposts_comments == 'y') {
   $comments_per_page = $blog_comments_per_page;
   $comments_default_ordering = $blog_comments_default_ordering;
-  $comments_vars=Array('postId','offset','find','sort_mode');
+  $comments_vars=Array('postId','offset','find','sort_mode','blogId');
   $comments_prefix_var='post';
   $comments_object_var='postId';
   include_once("comments.php");

@@ -1,0 +1,5 @@
+<?php
+/* you need to get an id from amazon to run this,
+   and rename this file to config.php */
+$amazon_id = 'XXXXXXXXXXXXXXX';
+?>
