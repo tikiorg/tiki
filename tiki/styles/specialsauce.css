@@ -683,7 +683,7 @@ div#page-bar {
 }
 
 /* wiki tabs (edit, print, remove, etc) */
-.button2 {
+.button2, .button3 {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: #000000;
@@ -710,7 +710,9 @@ div#page-bar {
 	padding-bottom: 1px;
 	margin: 0.0ex 0px;
 }
-	
+.button3 { -moz-border-radius : 5px 5px 0 0;  }
+.button3 .linkbut { -moz-border-radius : 5px 5px 0 0; padding-bottom : 2px; border-bottom : 0; }
+
 /* links in buttons */
 .linkbut {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -2525,67 +2527,6 @@ div#loadstats {
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
 	display: none;
-}
-
-/* tabs */
-div.tabs {
-	font-size: 11px;
-	white-space: nowrap;
-	cursor: default !important;
-	font-weight: 700 !important;
-	z-index: 100;
-}
-
-.content {
-	position: relative;
-	border: 1px solid #666;
-	width: 600px;
-	padding: 10px;
-	margin-bottom: 25px;
-	z-index: 80;
-	background-color: #F3F6F9;
-	-moz-border-radius: 0px 4px 4px 4px;
-}
-	
-.tab {
-	border: 1px solid #347;
-	padding: 2px 5px 1px 5px;
-	background-color: #BCD;
-	color: #303036;
-	z-index: 100;
-	border-bottom-width: 0px;
-	-moz-border-radius: 4px 4px 0px 0px;
-}
-
-.tabHover {
-	background-color: #46596F;
-	color: #FFF;
-	z-index: 90;
-	border-bottom-width: 0px;
-	cursor: pointer;
-}
-
-.tabActive { 
-	padding: 3px 5px 2px 5px;
-	color: #060610;
-	background-color: #F3F6F9;
-	z-index: 100;
-}
-
-div.tabsClone .tab {
-	border-top-width: 0px !important;
-	border-bottom-width: 1px !important;
-}
-
-div.tabsClone .tabActive{
-	border-top-width: 0px !important;
-	border-bottom-width: 1px !important;
-	top: -2px;
-}
-
-a.removeTab {
-	font-size: smaller;
-	text-decoration: none;
 }
 
 /* ASSORTED */

@@ -16,21 +16,23 @@
 <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
 {/if}
 </div>
-<br /><br />
+<br />
 
+{if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3" print=false advance=false}
 <div class="tabs">
-<span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Trackers{/tr}</span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Trackers{/tr}</a></span>
 {if $trackerId}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Edit tracker{/tr} {$name} (#{$trackerId})</span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Edit tracker{/tr} {$name} (#{$trackerId})</a></span>
 {else}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Create trackers{/tr}</span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Create trackers{/tr}</a></span>
 {/if}
 </div>
+{/if}
 
-{cycle name=content values="1,2,3,4,5" print=false advance=false}
+{cycle name=content values="1,2,3,4,5" print=false advance=false assign=focustab}
 {* --- tab with list --- *}
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content}" class="wikitext" {if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>
 
 <div  align="center">
@@ -80,7 +82,7 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{if $channel
 </div>
 
 {* --- tab with form --- *}
-<div id="content{cycle name=content}" class="content">
+<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h2>{tr}Create/edit trackers{/tr}</h2>
 {if $individual eq 'y'}
 <div class="simplebox">

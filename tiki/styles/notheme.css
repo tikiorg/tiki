@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.10 2004-02-16 20:01:40 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.11 2004-04-09 03:55:07 mose Exp $
  *
  * My second theme :)
  * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
@@ -19,62 +19,6 @@
 @import "notheme/notheme-calendar.css";
 @import "notheme/notheme-article.css";
 @import "notheme/notheme-faq.css";
-/* for tabs */
-div.tabs {
-	font-size: 11px;
-	white-space: nowrap;
-	cursor: default !important;
-	font-weight: 700 !important;
-	z-index: 100;
-	}
-
-.content {
-	position: relative;
-	border: 2px outset WindowFrame;
-	min-width: 400px;
-	padding: 10px;
-	margin-bottom: 25px;
-	z-index: 80;
-	}
-	
-.tab {
-	border: 2px outset WindowFrame;
-	padding: 2px 5px 1px 5px;
-	color: WindowText;
-	z-index: 100;
-	border-bottom-width: 0;
-	-moz-border-radius: 4px 4px 0px 0px;
-	}
-
-.tabHover {
-	color: HighlightText;
-	background-color: Highlight;
-	z-index: 90;
-	border-bottom-width: 0;
-	cursor: pointer;
-	}
-
-.tabActive { 
-	padding: 3px 5px 2px 5px;
-	color: HighlightText;
-	background-color: Highlight;
-	z-index: 100;
-	}
-      
-div.tabsClone .tab, div.tabsClone .tabActive {
-	border-top-width: 0 !important;
-	border-bottom-width: 1px !important;
-	}
-
-div.tabsClone .tabActive{
-	top: -2px;
-	}
-
-a.removeTab{
-	font-size: smaller;
-	text-decoration: none;
-	}
-
 
 /* ASSORTED  */
 
