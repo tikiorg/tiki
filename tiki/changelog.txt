@@ -1,5 +1,11 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Weblogs:Trackback pings implemented, you can send a ping from any weblog
+  post to any URI accepting trackback pings. Tiki will also accept trackback pings
+  the tiki-view_blog_post.php script implements the discovery mechanism, then Tiki
+  can display a list of trackback pings to your blog posts from other sites. 
+  Compatible with geeklog, movabletype and other wonderful weblogging packages
+  that are-now-eclipsed-by-the-amazing-tiki-machine!
 * [NEW] Weblogs: interface added to add images to a weblog post, this works
   with the traditional editor or the brand-new WYSIWYG editor.
 * [NEW] Customizable heading (all the html before posts) for weblogs.

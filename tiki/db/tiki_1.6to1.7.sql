@@ -12,6 +12,10 @@ create table tiki_blog_posts_images(
 
 alter table tiki_blogs add heading text;
 alter table tiki_blogs add use_find char(1);
+alter table tiki_blog_posts add trackbacks_to text;
+update tiki_blog_posts set trackbacks_to='';
+alter table tiki_blog_posts add trackbacks_from text;
+update tiki_blog_posts set trackbacks_from='';
 alter table tiki_blogs add use_title char(1);
 alter table tiki_blogs add add_date char(1);
 alter table tiki_blogs add add_poster char(1);

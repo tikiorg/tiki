@@ -3,6 +3,50 @@
 require_once('tiki-setup.php');
 include_once('lib/blogs/bloglib.php');
 
+if(!isset($_REQUEST['blogId'])&&!isset($_REQUEST['postId'])) {
+  $parts = parse_url($_SERVER['REQUEST_URI']);
+  $paths = explode('/',$parts['path']);
+  $blogId = $paths[count($paths)-2];
+  $postId = $paths[count($paths)-1];
+  // So this is to process a trackback ping
+  
+  if(isset($_REQUEST['__mode'])) {
+    // Build RSS listing trackback_from
+    $pings = $bloglist->get_trackbacks_from($postId);
+  }
+  
+  if(isset($_REQUEST['url'])) {
+    // Add a trackback ping to the list of trackback_from
+    $title = isset($_REQUEST['title'])?$_REQUEST['title']:'';
+    $excerpt = isset($_REQUEST['excerpt'])?$_REQUEST['excerpt']:'';
+    $blog_name = isset($_REQUEST['blog_name'])?$_REQUEST['blog_name']:'';
+    if($bloglib->add_trackback_from($postId,$_REQUEST['url'],$title,$excerpt,$blog_name))
+    {
+	    print('<?xml version="1.0" encoding="iso-8859-1"?>');
+	    print('<response>');
+	    print('<error>0</error>');
+	    print('</response>');
+
+    } else {
+        print('<?xml version="1.0" encoding="iso-8859-1"?>');
+	    print('<response>');
+	    print('<error>1</error>');
+	    print('<message>Error trying to add ping for post</message>');
+	    print('</response>');
+    }
+    die;
+  }
+}
+
+// Check if we are receiving a trackback ping
+
+// (a) Receive a trackback ping
+// Check for url
+// and title, excerpt,blog_name
+// add them to trackbacks_from
+
+
+
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
@@ -14,6 +58,13 @@ if(!isset($_REQUEST["postId"])) {
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
+
+//Build absolute URI for this
+$parts = parse_url($_SERVER['REQUEST_URI']);
+$uri = httpPrefix().$parts['path'].'?blogId='.$_REQUEST['blogId'].'&postId='.$_REQUEST['postId'];
+$uri2 = httpPrefix().$parts['path'].'/'.$_REQUEST['blogId'].'/'.$_REQUEST['postId'];
+$smarty->assign('uri',$uri);
+$smarty->assign('uri2',$uri2);
 
 $postId=$_REQUEST["postId"];
 $post_info = $bloglib->get_post($_REQUEST["postId"]);
