@@ -18,7 +18,9 @@ function wikiplugin_sheet_help() {
 	return tra("TikiSheet").":<br />~np~{SHEET(id=>)}".tra("Sheet Heading")."{SHEET}~/np~";
 }
 function wikiplugin_sheet($data, $params) {
+	global $dbTiki, $tikilib;
 	extract ($params);
+	$tikilib = &new TikiLib( $dbTiki );
 
 	if (!isset($id)) {
 		return ("<b>missing face parameter for plugin</b><br/>");
