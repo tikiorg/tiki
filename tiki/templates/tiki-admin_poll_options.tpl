@@ -48,7 +48,7 @@
 <td class="odd">{$channels[user].title}</td>
 <td class="odd">{$channels[user].votes}</td>
 <td class="odd">
-   <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}delete{/tr}</a>
    <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}edit{/tr}</a>
    
 </td>
@@ -58,7 +58,7 @@
 <td class="even">{$channels[user].title}</td>
 <td class="even">{$channels[user].votes}</td>
 <td class="even">
-   <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}">{tr}delete{/tr}</a>
    <a class="link" href="tiki-admin_poll_options.php?pollId={$pollId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}">{tr}edit{/tr}</a>
 </td>
 </tr>

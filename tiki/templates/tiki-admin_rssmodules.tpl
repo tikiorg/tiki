@@ -3,14 +3,14 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=RSSModules" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin RSS modules{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_rssmodules.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin RSSmodules tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_rssmodules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin RSSmodules template{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
 <!-- begin -->
@@ -97,7 +97,7 @@
 <td class="odd">{$channels[user].showTitle}</td>
 <td class="odd">{$channels[user].showPubDate}</td>
 <td class="odd">
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}">{tr}delete{/tr}</a>
    <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rssId={$channels[user].rssId}">{tr}edit{/tr}</a>
    <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].rssId}">{tr}view{/tr}</a>
 </td>
@@ -113,7 +113,7 @@
 <td class="even">{$channels[user].showTitle}</td>
 <td class="even">{$channels[user].showPubDate}</td>
 <td class="even">
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}">{tr}delete{/tr}</a>
    <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rssId={$channels[user].rssId}">{tr}edit{/tr}</a>
    <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].rssId}">{tr}view{/tr}</a>
 </td>
