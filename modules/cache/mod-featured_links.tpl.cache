@@ -1,8 +1,0 @@
-<div class="box">
-<div class="box-title">
-Featured links</div>
-<div class="box-data">
-<div class="button">1)<a class="linkbut" href="tiki-featured_link.php?url=http://www.google.com">Google</a></div>
-<div class="button">2)<a class="linkbut" href="tiki-featured_link.php?url=http://www.ole.com.ar">Ole</a></div>
-</div>
-</div>

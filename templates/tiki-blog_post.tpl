@@ -18,23 +18,6 @@
 </select>
 </td></tr>
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform">
-[ <a class="link" href="javascript:setSomeElement('blogedit','__text here__');">b</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','||r1c1|r1c2||r2c1|r2c2||');">tbl</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','[http://|desc]');">a</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','!text');">h1</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','!!text');">h2</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','!!!text');">h3</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','-=text=-');">title</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','^text^');">box</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','{literal}{{/literal}rss id= }');">rss</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','{literal}{{/literal}content id= }');">dcs</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','---');">line</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','::some::');">center</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','{literal}{{/literal}cookie}');">cookie</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','{literal}{{/literal}img src=?nocache=1 width= height= align= desc= link= }');">img nc</a> |
-<a class="link" href="javascript:setSomeElement('blogedit','{literal}{{/literal}img src= width= height= align= desc= link= }');">img</a> ]
-</td></tr>
-<tr><td class="editblogform">&nbsp;</td><td class="editblogform">
    
      <table>
      <tr>
@@ -66,7 +49,10 @@
 
 
 </td></tr>
-
+<tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+{assign var=area_name value="blogedit"}
+{include file=tiki-edit_help_tool.tpl}
+</td>
 <tr><td class="editblogform">{tr}Data{/tr}</td><td class="editblogform"><textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="80" wrap="virtual">{$data}</textarea></td></tr>
 </td></tr>
 {if $blog_spellcheck eq 'y'}

@@ -69,6 +69,10 @@
 <tr><td class="formcolor">{tr}Own image size x{/tr}</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x}" /></td></tr>
 <tr><td class="formcolor">{tr}Own image size y{/tr}</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y}" /></td></tr>
 <tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" id='subheading' name="heading" rows="5" cols="80" wrap="virtual">{$heading}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+{assign var=area_name value="subbody"}
+{include file=tiki-edit_help_tool.tpl}
+</td>
 <tr><td class="formcolor">{tr}Body{/tr}</td><td class="formcolor"><textarea class="wikiedit" id='subbody' name="body" rows="25" cols="80" wrap="virtual">{$body}</textarea></td></tr>
 {if $cms_spellcheck eq 'y'}
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>

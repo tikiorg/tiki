@@ -1,3 +1,10 @@
+<!--
+{popup_init src="lib/overlib.js"}
+<a href="tiki-special_chars.html" {popup sticky="true" trigger="onClick" caption="Special characters help" 
+   text="kj"}>foo
+</a><br/>
+-->
+
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}
@@ -11,21 +18,8 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
 <form  method="post" action="tiki-editpage.php">
 <table class="normal">
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
-[ <a class="link" href="javascript:setSomeElement('editwiki','__text here__');">b</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','||r1c1|r1c2||r2c1|r2c2||');">tbl</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','[http://|desc]');">a</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','!text');">h1</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','!!text');">h2</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','!!!text');">h3</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','-=text=-');">title</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','^text^');">box</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','{literal}{{/literal}rss id= }');">rss</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','{literal}{{/literal}content id= }');">dcs</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','---');">line</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','::some::');">center</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','{literal}{{/literal}cookie}');">cookie</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','{literal}{{/literal}img src=?nocache=1 width= height= align= desc= link= }');">img nc</a> |
-<a class="link" href="javascript:setSomeElement('editwiki','{literal}{{/literal}img src= width= height= align= desc= link= }');">img</a> ]
+{assign var=area_name value="editwiki"}
+{include file=tiki-edit_help_tool.tpl}
 </td>
 <tr><td class="formcolor">{tr}Smileys{/tr}</td><td class="formcolor">
 <table>

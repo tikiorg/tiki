@@ -416,6 +416,15 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_wiki_rankings",'n');
     $smarty->assign("feature_wiki_rankings",'n');
   }
+  
+  if(isset($_REQUEST["feature_wiki_undo"]) && $_REQUEST["feature_wiki_undo"]=="on") {
+    $tikilib->set_preference("feature_wiki_undo",'y'); 
+    $smarty->assign("feature_wiki_undo",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_undo",'n');
+    $smarty->assign("feature_wiki_undo",'n');
+  }
+
 
   if(isset($_REQUEST["feature_wiki_multiprint"]) && $_REQUEST["feature_wiki_multiprint"]=="on") {
     $tikilib->set_preference("feature_wiki_multiprint",'y'); 

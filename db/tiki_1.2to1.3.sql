@@ -1,6 +1,6 @@
 ### CHANGES FOR VERSION 1.3###
 
-DROP TABLE IF EXISTS tiki_private_meesages;
+DROP TABLE IF EXISTS tiki_private_messages;
 CREATE TABLE tiki_private_messages(
   messageId int(8) NOT NULL auto_increment,
   toNickname varchar(200) NOT NULL,
