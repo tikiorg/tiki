@@ -263,7 +263,11 @@ $stlstl=explode('.',$style);
 $style_base = $stlstl[0];
 
 
-
+// Fix IIS servers not setting what they should set (ay ay IIS, ay ay)
+if(!isset($_SERVER['QUERY_STRING'])) $_SERVER['QUERY_STRING']='';
+if(!isset($_SERVER['REQUEST_URI'])||empty($_SERVER['REQUEST_URI'])) {
+  $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '/' . $_SERVER['QUERY_STRING'];
+}
 
 
 //really needed? (todo: check)

@@ -197,7 +197,7 @@ class FileGalLib extends TikiLib {
       $fhash='';
       if($fgal_use_db == 'n') {
         $fhash = md5($name = $file);
-        @$fw = fopen($fgal_use_dir.$fhash,"w");
+        @$fw = fopen($fgal_use_dir.$fhash,"wb");
         if(!$fw) {
           $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
           $smarty->display("styles/$style_base/error.tpl");

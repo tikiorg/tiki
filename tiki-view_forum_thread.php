@@ -205,7 +205,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 					   		} elseif(substr($forum_info['att_store_dir'],strlen($forum_info['att_store_dir'])-1,1) != '/') {
 					   			$forum_info['att_store_dir'].='/';	
 					   		}
-					   		@$fw = fopen($forum_info['att_store_dir'].$fhash,"w");
+					   		@$fw = fopen($forum_info['att_store_dir'].$fhash,"wb");
 					   		if(!$fw) {
 					     		$smarty->assign('msg',tra('Cannot write to this file:').$fhash);
 					     		$smarty->display("styles/$style_base/error.tpl");
@@ -261,7 +261,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 					   		} elseif(substr($forum_info['att_store_dir'],strlen($forum_info['att_store_dir'])-1,1) != '/') {
 					   			$forum_info['att_store_dir'].='/';	
 					   		}
-					   		@$fw = fopen($forum_info['att_store_dir'].$fhash,"w");
+					   		@$fw = fopen($forum_info['att_store_dir'].$fhash,"wb");
 					   		if(!$fw) {
 					     		$smarty->assign('msg',tra('Cannot write to this file:').$fhash);
 					     		$smarty->display("styles/$style_base/error.tpl");
@@ -349,7 +349,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 						   		} elseif(substr($forum_info['att_store_dir'],strlen($forum_info['att_store_dir'])-1,1) != '/') {
 						   			$forum_info['att_store_dir'].='/';	
 						   		}
-						   		@$fw = fopen($forum_info['att_store_dir'].$fhash,"w");
+						   		@$fw = fopen($forum_info['att_store_dir'].$fhash,"wb");
 						   		if(!$fw) {
 						     		$smarty->assign('msg',tra('Cannot write to this file:').$fhash);
 						     		$smarty->display("styles/$style_base/error.tpl");

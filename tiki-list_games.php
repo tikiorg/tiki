@@ -92,7 +92,7 @@ if(isset($_REQUEST["edit"]) && $tiki_p_admin_games=='y') {
 
 if(isset($_REQUEST["save"]) && $tiki_p_admin_games=='y') {
   $file = $_REQUEST["editable"];
-  @$fp = fopen("games/thumbs/$file".'.txt',"w");
+  @$fp = fopen("games/thumbs/$file".'.txt',"wb");
   if($fp) {
     fwrite($fp,$_REQUEST["description"]);
     fclose($fp);

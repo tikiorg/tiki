@@ -103,7 +103,7 @@ if(isset($_REQUEST["upload"])) {
 	       	if($fgal_use_db == 'n') {
 	         	$fhash = md5($name = $_FILES["userfile$i"]['name']);    
 	         	$fhash = md5(uniqid($fhash));
-	         	@$fw = fopen($fgal_use_dir.$fhash,"w");
+	         	@$fw = fopen($fgal_use_dir.$fhash,"wb");
 	         	if(!$fw) {
 	           		$errors[] = tra('Cannot write to this file:').$fhash;
 	            }

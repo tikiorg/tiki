@@ -62,7 +62,7 @@ if(isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"]>0) {
   $smarty->assign("hasImage",'n');
   if(strlen($info["imageData"])>0) {
      $tmpfname = tempnam ($tmpDir, "TMPIMG").$info["imageName"];     
-     $fp = fopen($tmpfname,"w");
+     $fp = fopen($tmpfname,"wb");
      if($fp) {
        fwrite($fp,urldecode($info["imageData"]));
        fclose($fp);

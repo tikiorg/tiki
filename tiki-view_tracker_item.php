@@ -253,7 +253,7 @@ if($tracker_info["useAttachments"] == 'y') {
       $fhash='';
       if($t_use_db == 'n') {
         $fhash = md5($name = $_FILES['userfile1']['name']);    
-        $fw = fopen($t_use_dir.$fhash,"w");
+        $fw = fopen($t_use_dir.$fhash,"wb");
         if(!$fw) {
           $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
           $smarty->display("styles/$style_base/error.tpl");
