@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.35 2004-01-29 16:52:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.36 2004-01-29 16:58:07 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,7 +78,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	$filter_id = 'filter_' . $fid;
 	$fields["data"][$i]["filter_id"] = $filter_id;
 
-	if ($tracker_info['defaultOrderKey'] == $fields["data"][$i]['name']) {
+	if (isset($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $fields["data"][$i]['name']) {
 		$orderkey = true;
 	}
 	if ($fields["data"][$i]["type"] == 'f') {
