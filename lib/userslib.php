@@ -850,7 +850,7 @@ function get_included_groups($group) {
 	}
 
     function remove_group($group) {
-	global $acachelib;
+	global $cachelib;
 	$query = "delete from `users_groups` where `groupName` = ?";
 	$result = $this->query($query, array($group));
 	$query = "delete from `tiki_group_inclusion` where `groupName` = ? or `includeGroup` = ?";
