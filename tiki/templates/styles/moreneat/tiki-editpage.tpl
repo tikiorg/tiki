@@ -1,3 +1,4 @@
+<!-- templates/styles/moreneat/tiki-editpage.tpl start  -->
 {popup_init src="lib/overlib.js"}
 
 <!--Check to see if there is an editing conflict-->
@@ -213,7 +214,10 @@
 {if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr><td class="formcolor">{tr}Upload picture{/tr}</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-<input name="picfile1" type="file">
+<input type="hidden" name="hasAlreadyInserted" value="" />
+<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
+<input name="picfile1" type="file" onchange="javascript:insertImg('editwiki','picfile1','hasAlreadyInserted')"/>
+{* <input name="picfile1" type="file"> *}
 </td></tr>
 {/if}
 {if $feature_wiki_icache eq 'y'}
@@ -262,3 +266,4 @@
 <br />
 <!--<a href="javascript:replaceSome('editwiki','foo','bar');">foo2bar</a>-->
 {include file=tiki-edit_help.tpl}
+<!-- templates/styles/moreneat/tiki-editpage.tpl end -->
