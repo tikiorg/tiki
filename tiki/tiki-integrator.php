@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.4 2003-10-19 15:09:06 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.5 2003-10-19 16:41:05 zaufi Exp $
  *
  * Integrated files viewer (wrapper)
  *
@@ -30,7 +30,9 @@ $rep = $integrator->get_repository($repID);
 
 // Check if given file present at configured location
 $file = $integrator->get_rep_file($rep, isset($_REQUEST["file"]) ? $_REQUEST["file"] : '');
-if (!file_exists($file))
+if ((substr($file, 0, 7) != 'http://') 
+ && (substr($file, 0, 8) != 'https://')
+ && !file_exists($file))
 {
     if ($tiki_p_admin == 'y')
       $smarty->assign('msg',tra("File not found ").$file);

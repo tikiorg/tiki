@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.8 2003-10-19 15:09:06 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.9 2003-10-19 16:41:05 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -93,7 +93,9 @@ if (isset($_REQUEST["preview"]))
         $rep = $integrator->get_repository($repID);
         // Check if file given and present at configured location
         $f = $integrator->get_rep_file($rep, $file);
-        if (!file_exists($f))
+        if ((substr($rep["path"], 0, 7) != 'http://')
+         && (substr($rep["path"], 0, 8) != 'https://')
+         && !file_exists($f))
         {
             $smarty->assign('msg', tra("File not found ").$f);
             $smarty->display("styles/$style_base/error.tpl");

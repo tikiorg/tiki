@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.10 2003-10-19 15:09:07 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.11 2003-10-19 16:41:06 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -143,7 +143,13 @@ class TikiIntegrator extends TikiLib
     {
         // Is repository path absolute? (start from www root ('/'))
         $p = '';
-        if (substr($rep["path"], 0, 1) == '/')
+        if ((substr($rep["path"], 0, 7) == 'http://') 
+         || (substr($rep["path"], 0, 8) == 'https://'))
+        {
+            // It is remote repository -- just copy configured path
+            $p = $rep["path"];
+        }
+        elseif (substr($rep["path"], 0, 1) == '/')
             // Absolute path: prepend web server root
             $p = $_SERVER['DOCUMENT_ROOT'].$rep["path"];
         else
