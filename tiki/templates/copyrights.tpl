@@ -1,4 +1,4 @@
-<h2>{tr}Copyrights{/tr}: <a href="tiki-index.php?page={$page}">{$page}</a></h2>
+<h2>{tr}Copyrights{/tr}: <a href="tiki-index.php?page={$page|escape:"url"}">{$page}</a></h2>
 
 <table border="0" width="100%">
 {section name=i loop=$copyrights}
@@ -13,9 +13,9 @@
     </table>
   </td><td class="formcolor" align="right">
     <input type="submit" name="editcopyright" value="{tr}edit{/tr}"/><br />
-    <a href="copyrights.php?page={$page}&action=delete&copyrightId={$copyrights[i].copyrightId}">x</a>
-    <a href="copyrights.php?page={$page}&action=up&copyrightId={$copyrights[i].copyrightId}">up</a>
-    <a href="copyrights.php?page={$page}&action=down&copyrightId={$copyrights[i].copyrightId}">down</a>
+    <a href="copyrights.php?page={$page|escape:"url"}&action=delete&copyrightId={$copyrights[i].copyrightId}">x</a>
+    <a href="copyrights.php?page={$page|escape:"url"}&action=up&copyrightId={$copyrights[i].copyrightId}">up</a>
+    <a href="copyrights.php?page={$page|escape:"url"}&action=down&copyrightId={$copyrights[i].copyrightId}">down</a>
     </form>
   </td></tr>
 {/section}
