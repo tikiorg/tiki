@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.8 2003-10-13 13:38:57 zaufi Exp $
+$Id: trollparty.css,v 1.9 2003-10-21 22:54:14 zaufi Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -2750,3 +2750,8 @@ cursor: help;
 text-decoration: inherit;
 }
 
+
+/* TikiIntegrator: By default copy rules dialog not shown */
+div#rules-copy-panel {
+    display: none;
+}

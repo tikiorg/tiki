@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.5 2003-10-16 20:33:36 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.6 2003-10-21 22:54:14 zaufi Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -167,4 +167,8 @@ form {
 /* hide comments and the form */
 #comzone {
  display: none;
+}
+/* TikiIntegrator: By default copy rules dialog not shown */
+div#rules-copy-panel {
+    display: none;
 }

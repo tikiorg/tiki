@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.20 2003-10-13 13:38:56 zaufi Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.21 2003-10-21 22:54:13 zaufi Exp $
 2003 - created and maintained by mose@feu.org
 */
 
@@ -2616,4 +2616,9 @@ a.tikihelp:hover {
 div.catlists {
 	margin-top: 15px;
 	border: 1px solid #424242;
+}
+
+/* TikiIntegrator: By default copy rules dialog not shown */
+div#rules-copy-panel {
+    display: none;
 }

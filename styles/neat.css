@@ -2439,3 +2439,8 @@ a.tikihelp:hover {
 	cursor:   help;
 	text-decoration:   inherit;
 }
+
+/* TikiIntegrator: By default copy rules dialog not shown */
+div#rules-copy-panel {
+    display: none;
+}
