@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.31 2004-06-21 00:43:38 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.32 2004-06-21 01:02:09 teedog Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -97,7 +97,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
 				</td></tr>
         <tr><td class="form">{tr}Name{/tr}:</td><td class="form"><input type="text" name="name" value="{$name|escape}" /></td></tr>
         <tr><td class="form">{tr}Description{/tr}:</td><td class="form"><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td></tr>
-        {if $categId <= 0}<tr><td class="form">{tr}Assign permissions automatically{/tr}:</td><td class="form"><input type="checkbox" name="assign_perms" checked="{$assign_perms}" /></td></tr>{/if}
+        {if $categId <= 0}<tr><td class="form"><label for="assign_perms" title="{tr}Perms inherited from closest parent if possible or from global perms{/tr}">{tr}Assign permissions automatically{/tr}:</label></td><td class="form"><input type="checkbox" name="assign_perms" id="assign_perms" checked="{$assign_perms}" /></td></tr>{/if}
         <tr><td class="form" align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
       </table>
       </form>
