@@ -5,6 +5,7 @@ function smarty_function_banner($params, &$smarty)
     global $tikilib;
     global $dbTiki;
     include_once('lib/banners/bannerlib.php');
+    global $bannerlib;
     extract($params);
     // Param = zone
 
