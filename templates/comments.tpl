@@ -151,7 +151,7 @@
     <td class="form">{tr}Threshold{/tr}
         <select name="comments_threshold">
         <option value="0" {if $comments_threshold eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
-        <option value="0.01" {if $comments_threshold eq 0.01}selected="selected"{/if}>0</option>
+        <option value="0.01" {if $comments_threshold eq '0.01'}selected="selected"{/if}>0</option>
         <option value="1" {if $comments_threshold eq 1}selected="selected"{/if}>1</option>
         <option value="2" {if $comments_threshold eq 2}selected="selected"{/if}>2</option>
         <option value="3" {if $comments_threshold eq 3}selected="selected"{/if}>3</option>

@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.10 2003-02-18 17:01:54 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.11 2003-02-21 22:32:37 lrargerich Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -9,6 +9,7 @@ if (!isset($_REQUEST["login"])) {
   die;  
 }
 */
+
 
 if($tiki_p_admin == 'y') {
  if(isset($_REQUEST["su"])) {
@@ -90,6 +91,15 @@ if ($https_mode) {
 		}
 	}
 }
+
+// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
+if($rememberme != 'disabled') {
+if(isset($_REQUEST['rme'])&&$_REQUEST['rme']=='on') {
+  $hash = $userlib->get_user_hash($_REQUEST['user']);
+  setcookie('tiki-user',$hash,$remembertime);
+}
+}
+
 
 header('location: ' . $url);
 exit;

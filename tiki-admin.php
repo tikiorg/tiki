@@ -428,6 +428,10 @@ if(isset($_REQUEST["loginprefs"])) {
   $v = isset($_REQUEST['https_prefix']) ? $_REQUEST['https_prefix'] : '/';
   $tikilib->set_preference('https_prefix', $v); 
   $smarty->assign('https_prefix', $v);
+  $tikilib->set_preference('rememberme',$_REQUEST['rememberme']);
+  $tikilib->set_preference('remembertime',$_REQUEST['remembertime']);
+  $smarty->assign('rememberme',$_REQUEST['rememberme']);
+  $smarty->assign('remembertime',$_REQUEST['remembertime']);
 }
 
 if(isset($_REQUEST["cmsprefs"])) {
@@ -1360,6 +1364,11 @@ $smarty->assign_by_ref('short_date_format',$short_date_format);
 $smarty->assign_by_ref('long_date_format',$long_date_format);
 $smarty->assign_by_ref('short_time_format',$short_time_format);
 $smarty->assign_by_ref('long_time_format',$long_time_format);
+
+
+
+$smarty->assign('rememberme',$tikilib->get_preference('rememberme','disabled'));
+$smarty->assign('remembertime',$tikilib->get_preference('remembertime',7200));
 
 
 include_once("lib/commentslib.php");

@@ -1,4 +1,4 @@
-{if $user}
+{if $user and $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 <div class="box">
 <div class="box-title">
 {tr}Messages{/tr}

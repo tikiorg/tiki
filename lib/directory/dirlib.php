@@ -46,18 +46,10 @@ class DirLib extends TikiLib {
     return $path;
   }
   
+    
   // Stats functions
   // get stats (valid sites, invalid sites, categories, searches)
-  function dir_stats()
-  {
-    $aux=Array();
-    $aux["valid"] = $this->db->getOne("select count(*) from tiki_directory_sites where isValid='y'");
-    $aux["invalid"] = $this->db->getOne("select count(*) from tiki_directory_sites where isValid='n'");
-    $aux["categs"] = $this->db->getOne("select count(*) from tiki_directory_categories");
-    $aux["searches"] = $this->db->getOne("select sum(hits) from tiki_directory_search");
-    $aux["visits"] = $this->db->getOne("select sum(hits) from tiki_directory_sites");
-    return $aux;
-  }
+  
 
   // Functions to manage categories
   
@@ -523,13 +515,15 @@ class DirLib extends TikiLib {
     for($i=0;$i<count($words);$i++) {
       $words[$i]=trim($words[$i]);
       $word = $words[$i];
-      // Check if the term is in the stats then add it or increment it
-      if($this->db->getOne("select count(*) from tiki_directory_search where term='$word'")) {
-        $query = "update tiki_directory_search set hits=hits+1 where term='$word'";
-        $this->query($query);
-      } else {
-        $query = "insert into tiki_directory_search(term,hits) values('$word',1)";
-        $this->query($query);
+      if(!empty($word)) {
+        // Check if the term is in the stats then add it or increment it
+        if($this->db->getOne("select count(*) from tiki_directory_search where term='$word'")) {
+          $query = "update tiki_directory_search set hits=hits+1 where term='$word'";
+          $this->query($query);
+        } else {
+          $query = "insert into tiki_directory_search(term,hits) values('$word',1)";
+          $this->query($query);
+        }
       }
       // Now build the query
       $words[$i] = " ((name like '%$word%') or (description like '%$word%') or (url like '%$word%') or (cache like '%$word%')) ";
