@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.12 2004-04-30 13:28:47 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.13 2004-04-30 18:25:00 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,8 +10,6 @@
 require_once('tiki-setup.php');
 
 include_once('lib/quizzes/quizlib.php');
-
-include_once('lib/homework/homeworklib.php');
 
 if ($feature_quizzes != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
@@ -104,17 +102,8 @@ if (isset($_REQUEST["save"])) {
 
 if (isset($_REQUEST["import"])) {
 	check_ticket('edit-quiz-question');
-	$input = $_REQUEST["input_data"];
 
-	$input_array = preg_split("/\r\n/", $input);
-
-	for ($i = 0; $i < count($input_array); $i++)
-		$input_array[$i] = trim($input_array[$i]);
-
-	if ($input_array[count($input_array)] != "")
-		array_push($input_array,"");
-
-	$questions = TextToQuestions($input_array);
+	$questions = TextToQuestions($_REQUEST["input_data"]);
 
 	foreach ($questions as $question){
 		$question_text = $question->getQuestion();

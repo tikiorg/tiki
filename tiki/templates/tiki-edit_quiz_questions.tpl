@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.11 2004-04-28 23:42:32 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.12 2004-04-30 18:25:00 ggeller Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -50,7 +50,7 @@
 </form>
 
 <h2>{tr}Import questions from text{/tr}</h2>
-<form enctype="multipart/form-data" method="post" action="tiki-edit_quiz_questions.php">
+<form enctype="multipart/form-data" method="post" action="tiki-edit_quiz_questions.php?quizId={$quiz_info.quizId}">
   <input type="hidden" name="quizId" value="{$quizId|escape}" />
   <table class="normal">
     <tr>
