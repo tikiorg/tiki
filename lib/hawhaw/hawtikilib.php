@@ -30,7 +30,7 @@ function HAWTIKI_index($info)
   // determine title and url switch for navigation links
   if ($_REQUEST['frame'] == 'no')
   {
-    $framearg = '&amp;frame=no';
+    $framearg = '&frame=no';
     $title = '';
   }
   else
@@ -41,11 +41,11 @@ function HAWTIKI_index($info)
 
   // determine url switch for jingle playing at links
   if ($_REQUEST['jingle'] == 'no')
-    $jinglearg = '&amp;jingle=no';
+    $jinglearg = '&jingle=no';
   else
     $jinglearg = '';
 
-  $wikiPage = new HAWIKI_page($info['data'],"tiki-index.php?mode=mobile$framearg$jinglearg&amp;page=", $title);
+  $wikiPage = new HAWIKI_page($info['data'],"tiki-index.php?mode=mobile$framearg$jinglearg&page=", $title);
 
   if ($_REQUEST['frame'] != 'no')
   {
@@ -75,9 +75,9 @@ function HAWTIKI_view_blog_post($post_info)
                          hawtra("posted on"), HAWTIKI_date($post_info['created']),
                          hawtra("by"), $post_info['user']);
 
-  $blogPost = new HAWIKI_page($page_prefix . $post_info["data"],"tiki-index.php?mode=mobile&amp;page=", $post_info["title"]);
+  $blogPost = new HAWIKI_page($page_prefix . $post_info["data"],"tiki-index.php?mode=mobile&page=", $post_info["title"]);
 
-  $blogPost->set_navlink(tra("Return to blog"), "tiki-view_blog.php?mode=mobile&amp;blogId=" . $post_info["blogId"], HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+  $blogPost->set_navlink(tra("Return to blog"), "tiki-view_blog.php?mode=mobile&blogId=" . $post_info["blogId"], HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
   $blogPost->set_smiley_dir("img/smiles");
   $blogPost->set_link_jingle("lib/hawhaw/link.wav");
   $blogPost->set_hawimconv("lib/hawhaw/hawimconv.php");
@@ -102,7 +102,7 @@ function HAWTIKI_list_blogs($listpages, $tiki_p_read_blog)
     // check for tiki_p_read_blog here
     if($blog['individual'] == 'n' && $tiki_p_read_blog == 'y' ||
     $blog['individual_tiki_p_read_blog'] == 'y') {
-      $link = new HAW_link(HAWIKI_specchar($blog['title']),"tiki-view_blog.php?mode=mobile&amp;blogId=".$blog['blogId']);
+      $link = new HAW_link(HAWIKI_specchar($blog['title']),"tiki-view_blog.php?mode=mobile&blogId=".$blog['blogId']);
       $linkset->add_link($link);
     }
   }
@@ -140,7 +140,7 @@ function HAWTIKI_view_blog($listpages, $blog_data)
     else
       $label = HAWTIKI_date($blog['created']);
 
-    $link = new HAW_link(HAWIKI_specchar($label),"tiki-view_blog_post.php?mode=mobile&amp;blogId=" . $_REQUEST['blogId'] . "&amp;postId=" . $blog['postId']);
+    $link = new HAW_link(HAWIKI_specchar($label),"tiki-view_blog_post.php?mode=mobile&blogId=" . $_REQUEST['blogId'] . "&postId=" . $blog['postId']);
     $linkset->add_link($link);
   }
 
@@ -160,7 +160,7 @@ function HAWTIKI_view_blog($listpages, $blog_data)
     if ($offset < 0)
       $offset = 0;
 
-    $link = new HAW_link(hawtra("prev"),"tiki-view_blog.php?mode=mobile&amp;blogId=" . $_REQUEST['blogId'] . "&amp;offset=" . $offset);
+    $link = new HAW_link(hawtra("prev"),"tiki-view_blog.php?mode=mobile&blogId=" . $_REQUEST['blogId'] . "&offset=" . $offset);
     $blogList->add_link($link);
   }
 
@@ -174,7 +174,7 @@ function HAWTIKI_view_blog($listpages, $blog_data)
     // next posts are available
 
     $offset += $blog_data['maxPosts'];
-    $link = new HAW_link(hawtra("next"),"tiki-view_blog.php?mode=mobile&amp;blogId=" . $_REQUEST['blogId'] . "&amp;offset=" . $offset);
+    $link = new HAW_link(hawtra("next"),"tiki-view_blog.php?mode=mobile&blogId=" . $_REQUEST['blogId'] . "&offset=" . $offset);
     $blogList->add_link($link);
   }
 
@@ -209,7 +209,7 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
 
     // without read permission no reading is allowed
     if($tiki_p_read_article == 'y') {
-      $readlink = new HAW_link(hawtra("Read"),"tiki-read_article.php?mode=mobile&amp;articleId=".$article['articleId']);
+      $readlink = new HAW_link(hawtra("Read"),"tiki-read_article.php?mode=mobile&articleId=".$article['articleId']);
       $articleList->add_link($readlink);
     }
 
@@ -220,7 +220,7 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
   {
     // previous articles are available
     $prev_offset = $offset - $maxRecords;
-    $prev = new HAW_link(hawtra("prev"),"tiki-list_articles.php?mode=mobile&amp;offset=" . $prev_offset);
+    $prev = new HAW_link(hawtra("prev"),"tiki-list_articles.php?mode=mobile&offset=" . $prev_offset);
     $articleList->add_link($prev);
   }
 
@@ -228,7 +228,7 @@ function HAWTIKI_list_articles($listpages, $tiki_p_read_article, $offset, $maxRe
   {
     // next articles are available
     $next_offset = $offset + $maxRecords;
-    $next = new HAW_link(hawtra("next"),"tiki-list_articles.php?mode=mobile&amp;offset=" . $next_offset);
+    $next = new HAW_link(hawtra("next"),"tiki-list_articles.php?mode=mobile&offset=" . $next_offset);
     $articleList->add_link($next);
   }
 
@@ -250,7 +250,7 @@ function HAWTIKI_read_article($article_data, $pages)
   $heading = sprintf("\n%s\n---\n", $article_data['heading']);
 
   $article = new HAWIKI_page($prefix . $heading . $article_data["body"],
-                             "tiki-index.php?mode=mobile&amp;page=", $article_data["title"]);
+                             "tiki-index.php?mode=mobile&page=", $article_data["title"]);
 
   $article->set_navlink(tra("List articles"), "tiki-list_articles.php?mode=mobile", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
 
@@ -261,13 +261,13 @@ function HAWTIKI_read_article($article_data, $pages)
 
   if ($page > 1)
   {
-    $link = sprintf("tiki-read_article.php?mode=mobile&amp;articleId=%s&amp;page=%d", $_REQUEST['articleId'], $page-1);
+    $link = sprintf("tiki-read_article.php?mode=mobile&articleId=%s&page=%d", $_REQUEST['articleId'], $page-1);
     $article->set_navlink(tra("previous page"), $link, HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
   }
 
   if ($page < $pages)
   {
-    $link = sprintf("tiki-read_article.php?mode=mobile&amp;articleId=%s&amp;page=%d", $_REQUEST['articleId'], $page+1);
+    $link = sprintf("tiki-read_article.php?mode=mobile&articleId=%s&page=%d", $_REQUEST['articleId'], $page+1);
     $article->set_navlink(tra("next page"), $link, HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
   }
 
