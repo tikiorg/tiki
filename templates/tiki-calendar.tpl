@@ -1,4 +1,4 @@
-
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.33 2003-12-05 19:42:06 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-calendar.php?view={$view}">{tr}Calendar{/tr}</a>
@@ -10,26 +10,33 @@
 {* ----------------------------------- *}
 
 <div id="tab" style="display:{if $smarty.cookies.tab eq 'c' or $show_navtab}none{else}block{/if};">
-<a href="javascript:show('tabcal',1);hide('tabnav',1);hide('tab',1);" class="caltab">{tr}Calendars Panel{/tr}</a>
+<div>
+<a href="javascript:show('tabcal',1);{if $modifiable}hide('tabnav',1);{/if}hide('tab',1);" class="caltab">{tr}Calendars Panel{/tr}</a>
+{if $modifiable}
 <a href="javascript:hide('tabcal',1);show('tabnav',1);hide('tab',1);" class="caltab">{tr}Events Panel{/tr}</a>
-</div>
+{/if}
+</div></div>
 
 {* ----------------------------------- *}
 
 <div id="tabcal" style="display:{if $smarty.cookies.tabcal eq 'o' and !$show_navtab}block{else}none{/if};">
 <div>
-<a href="javascript:show('tabcal',1);hide('tabnav',1);hide('tab',1);" class="caltabon">{tr}Calendars Panel{/tr}</a>
+<a href="javascript:show('tabcal',1);{if $modifiable}hide('tabnav',1);{/if}hide('tab',1);" class="caltabon">{tr}Calendars Panel{/tr}</a>
+{if $modifiable}
 <a href="javascript:hide('tabcal',1);show('tabnav',1);hide('tab',1);" class="caltab">{tr}Events Panel{/tr}</a>
-<a href="javascript:hide('tabcal',1);hide('tabnav',1);show('tab',1);" class="caltab">{tr}Hide{/tr}</a>
+{/if}
+<a href="javascript:hide('tabcal',1);{if $modifiable}hide('tabnav',1);{/if}show('tab',1);" class="caltab">{tr}Hide{/tr}</a>
 </div>
 
-<form class="box" method="get" action="tiki-calendar.php" name="f">
 <div class="tabcal">
+<form class="box" method="get" action="tiki-calendar.php" name="f">
 <table border="0" >
 <tr>
 <td>
 <input type="submit" name="refresh" value="{tr}Refresh{/tr}"/><br />
 </td>
+
+{if $modifiable}
 <td>
 <div class="caltitle">{tr}Group Calendars{/tr}</div>
 <div class="caltoggle"
@@ -46,6 +53,8 @@ onclick="this.checked=!this.checked;"/>
 </div>
 {/foreach}
 </td>
+{/if}
+
 <td>
 <div class="caltitle">{tr}Tools Calendars{/tr}</div>
 <div class="caltoggle"
@@ -63,11 +72,12 @@ onmouseover="this.style.textDecoration='underline';"
 {/foreach}
 </td>
 </tr></table>
-</div></div>
 </form>
+</div></div>
 
 {* ----------------------------------- *}
 
+{if $modifiable}
 <div id="tabnav" style="display:{if $smarty.cookies.tabnav eq 'o' or $show_navtab}block{else}none{/if};">
 <div>
 <a href="javascript:show('tabcal',1);hide('tabnav',1);hide('tab',1);" class="caltab">{tr}Calendars Panel{/tr}</a>
@@ -76,35 +86,25 @@ onmouseover="this.style.textDecoration='underline';"
 </div>
 
 <div class="tabnav">
-{* ······························· *}{if $calitemId > 0 or $calendarId > 0}
+{* ······························· *}{if ($calitemId > 0 and $tiki_p_change_events eq 'y') or ($calendarId > 0 and $tiki_p_add_events eq 'y')}
 
 {* ················ *}{if $calitemId}
-<div class="pagetitle">{tr}Edit Calendar Item{/tr} : </span>{$name|default:"new event"} {if $calitemId}(id #{$calitemId}){/if}</div>
+<div class="pagetitle">{tr}Edit Calendar Item{/tr}</div>
+<div><b>{$calname}</b> : {$name|default:"new event"} (id #{$calitemId})</div>
 <div class="mininotes">{tr}Created{/tr}: {$created|tiki_long_date} {$created|tiki_long_time} </div>
 <div class="mininotes">{tr}Modified{/tr}: {$lastModif|tiki_long_date} {$lastModif|tiki_long_time} </div>
 <div class="mininotes">{tr}by{/tr}: {$lastUser} </div>
+{* ················ *}{else}
+<div class="pagetitle">{tr}New Calendar Item{/tr}</div>
+<div><b>{$calname}</b> </div>
 {* ················ *}{/if}
 
-<div>
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
 <input type="hidden" name="editmode" value="1">
-{if $tiki_p_change_events}
-<input type="hidden" name="calitemId" value="{$calitemId|escape}">
+{if $tiki_p_change_events and $calitemId}
+<input type="hidden" name="calitemId" value="{$calitemId}">
 {/if}
 <table class="normal" style="width:100%;">
-<tr><td class="formcolor">{tr}Calendar{/tr}</td><td class="formcolor">
-<select name="calendarId">
-{foreach item=lc from=$listcals}
-<option value="{$lc|escape}" {if $calendarId eq $lc}selected="selected"{/if} onchange="document.forms[f].submit();">{$infocals.$lc.name}</option>
-{/foreach}
-</select>
-<input type="submit" name="refr" value="{tr}refresh{/tr}" />
-{if $calendarId}
-<span class="mini">( {$calname} )</span>
-{/if}
-<br />
-{tr}If you change the calendar selection, please refresh to get the appropriated list in Category, Location and people (if applicable to the calendar you choose).{/tr}<br />
-</td></tr>
 
 {if $customcategories eq 'y'}
 <tr><td class="form">{tr}Category{/tr}</td><td class="form">
@@ -154,15 +154,49 @@ onmouseover="this.style.textDecoration='underline';"
 {/if}
 
 <tr><td class="formcolor">{tr}Start{/tr}</td><td class="formcolor">
+{if $feature_jscalendar}
+<input type="hidden" name="start_date_input" value="{$start}" id="start_date_input" />
+<span id="start_date_display" class="daterow">{$start|date_format:$daformat}</span>
+<script type="text/javascript">
+{literal}Calendar.setup( { {/literal}
+date        : "{$starti|date_format:"%B %e, %Y %H:%M"}",      // initial date
+inputField  : "start_date_input",      // ID of the input field
+ifFormat    : "%s",    // the date format
+displayArea : "start_date_display",       // ID of the span where the date is to be shown
+daFormat    : "{$daformat}",  // format of the displayed date
+showsTime   : true,
+singleClick : true,
+align       : "bR"
+{literal} } );{/literal}
+</script>
+{else}
 <input type="text" name="start_freeform" value=""> {tr}or{/tr}
 {html_select_date time=$start prefix="start_" end_year="+4" field_order=DMY}
 {html_select_time minute_interval=10 time=$start prefix="starth_" display_seconds=false use_24_hours=true}
+{/if}
 </td></tr>
 
 <tr><td class="formcolor">{tr}End{/tr}</td><td class="formcolor">
+{if $feature_jscalendar}
+<input type="hidden" name="end_date_input" value="{$end}" id="end_date_input" />
+<span id="end_date_display" class="daterow">{$end|date_format:$daformat}</span>
+<script type="text/javascript">
+{literal}Calendar.setup( { {/literal}
+date        : "{$end|date_format:"%B %e, %Y %H:%M"}",      // initial date
+inputField  : "end_date_input",      // ID of the input field
+ifFormat    : "%s",    // the date format
+displayArea : "end_date_display",       // ID of the span where the date is to be shown
+daFormat    : "{$daformat}",  // format of the displayed date
+showsTime   : true,
+singleClick : true,
+align       : "bR"
+{literal} } );{/literal}
+</script>
+{else}
 <input type="text" name="end_freeform" value=""> {tr}or{/tr}
 {html_select_date time=$end prefix="end_" end_year="+4" field_order=DMY}
 {html_select_time minute_interval=10 time=$end prefix="endh_" display_seconds=false use_24_hours=true}
+{/if}
 </td></tr>
 
 <tr><td class="formcolor">{tr}Name{/tr}</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" />
@@ -218,56 +252,59 @@ onmouseover="this.style.textDecoration='underline';"
 {/if}
 
 <tr><td class="formcolor"></td><td class="formcolor">
+<span class="button2" style="float:right;"><a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1" class="linkbut" />{tr}delete{/tr}</a></span>
+<input type="submit" name="save" value="{tr}save{/tr}" />
 {if $calitemId and $tiki_p_change_events}
 <input type="submit" name="copy" value="{tr}duplicate{/tr}" />
 {/if}
-<input type="submit" name="save" value="{tr}save{/tr}" />
-<a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1" class="link" style="margin-left:42px;"/>{tr}delete{/tr}</a>
+{tr}to{/tr}
+<select name="calendarId">
+{foreach item=lc from=$listcals}
+<option value="{$lc|escape}" {if $calendarId eq $lc}selected="selected"{/if} onchange="document.forms[f].submit();">{$infocals.$lc.name}</option>
+{/foreach}
+</select>
+
 </td></tr>
 </table>
 </form>
 </div>
+</div>
 {* ······························· *}{else}
 <h2>{tr}Add Calendar Item{/tr}</h2>
 
-{* ················ *}{if count($listcals) gt 0}
-{tr}Choose a calendar where to put events{/tr} : 
 <ul>
-{foreach item=k from=$listcals}
-<li><a href="tiki-calendar.php?todate={$focusdate}&amp;calendarId={$k}&amp;editmode=add" class="link">{$infocals.$k.name}</a></li>
+{foreach name=licals item=k from=$modifiable}
+{if $infocals.$k.tiki_p_add_events eq 'y'}
+<li>{tr}in{/tr} <a href="tiki-calendar.php?todate={$focusdate}&amp;calendarId={$k}&amp;editmode=add" class="link">{$infocals.$k.name}</a></li>
+{/if}
 {/foreach}
 </ul>
-{* ················ *}{else}
-<h1>{tr}You should first ask that a calendar is created, so you can create events attached to it.{/tr}</h1>
-{* ················ *}{/if}
+</div>
+</div>
 
 {* ······························· *}{/if}
-</div>
-</div>
-
-{* ----------------------------------- *}
+{/if}
 
 <div class="tabrow">
 <table cellpadding="0" cellspacing="0" border="0">
 <tr><td class="middle" nowrap="nowrap">
 {if $feature_jscalendar eq 'y'}
-<form action="tiki-calendar.php" method="get" class="daterow" name="f">
-<img src="img/icons/calendar.gif" width="16" height="16" vspace="2" hspace="2" align="top"
-/><input type="hidden" id="todate" name="todate" value="{$focusdate}" /><span style="font-weight:bold;cursor:pointer;" title="{tr}Date Selector{/tr}" id="datrigger">{$focusdate|tiki_short_date}</span>
-<input type="submit" name="action" value="{tr}Go{/tr}" class="linkbut" />
+<form action="tiki-calendar.php" method="get" name="f">
+<input type="hidden" id="todate" name="todate" value="{$focusdate}" /><span title="{tr}Date Selector{/tr}" id="datrigger" class="daterow" >{$focusdate|tiki_long_date}</span>
+<span class="date">&lt;- {tr}click to navigate{/tr}</span>
 </form>
 <script type="text/javascript">
-{literal}function gotocal(calendar)  { {/literal}
-window.location = 'tiki-calendar.php?todate='+document.getElementById('todate').value;
+{literal}function gotocal()  { {/literal}
+window.location = 'tiki-calendar.php?todate='+document.getElementById('todate').value+'{if $calendarId}&calendarId={$calendarId}&editmode=add{/if}';
 {literal} } {/literal}
 {literal}Calendar.setup( { {/literal}
-date        : "{$focusdate|date_format}",      // initial date
+date        : "{$focusdate|tiki_long_date}",      // initial date
 inputField  : "todate",      // ID of the input field
 ifFormat    : "%s",    // the date format
 displayArea : "datrigger",       // ID of the span where the date is to be shown
-daFormat    : "{$daformat}",  // format of the displayed date
+daFormat    : "{$daformat2}",  // format of the displayed date
 singleClick : true,
-onClose     : gotocal
+onUpdate     : gotocal
 {literal} } );{/literal}
 </script>
 {else}
@@ -275,7 +312,7 @@ onClose     : gotocal
 <a href="tiki-calendar.php?todate={$monthbefore}" class="link" title="{$monthbefore|tiki_long_date}">{tr}-1m{/tr}</a>
 <a href="tiki-calendar.php?todate={$weekbefore}" class="link" title="{$weekbefore|tiki_long_date}">{tr}-7d{/tr}</a>
 <a href="tiki-calendar.php?todate={$daybefore}" class="link" title="{$daybefore|tiki_long_date}">{tr}-1d{/tr}</a> 
-<b>{$focusdate|tiki_short_date}</b>
+<b>{$focusdate|tiki_long_date}</b>
 <a href="tiki-calendar.php?todate={$dayafter}" class="link" title="{$dayafter|tiki_long_date}">{tr}+1d{/tr}</a>
 <a href="tiki-calendar.php?todate={$weekafter}" class="link" title="{$weekafter|tiki_long_date}">{tr}+7d{/tr}</a>
 <a href="tiki-calendar.php?todate={$monthafter}" class="link" title="{$monthafter|tiki_long_date}">{tr}+1m{/tr}</a>
@@ -283,7 +320,7 @@ onClose     : gotocal
 {/if}
 </td>
 <td align="center" width="100%" class="middle">
-<div><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_long_date}"><b>{tr}today{/tr}:</b> {$now|tiki_long_date}</a></div>
+<div><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_short_date}"><b>{tr}today{/tr}:</b> {$now|tiki_short_date}</a></div>
 </td>
 <td align="right" class="middle" nowrap="nowrap" width="90">
 <a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" align="top" /></a><a 
