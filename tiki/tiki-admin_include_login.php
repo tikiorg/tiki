@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.21 2004-07-29 17:37:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.22 2004-08-04 22:42:11 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -431,6 +431,83 @@ if (isset($_REQUEST['auth_cas'])) {
 
 		$smarty->assign('cas_path', $_REQUEST['cas_path']);
 	}
+}
+
+if (isset($_REQUEST['auth_ext_xml'])) {
+	
+    check_ticket('admin-inc-login');
+    if (isset($_REQUEST['auth_ext_xml_enabled']) && $_REQUEST['auth_ext_xml_enabled'] ==  'on') {
+        $tikilib->set_preference('auth_ext_xml_enabled', 'y');
+        $smarty->assign('auth_ext_xml_enabled', 'y');
+    } else {
+        $tikilib->set_preference('feature_auth_ext_xml', 'n');
+        $smarty->assign('feature_auth_ext_xml', 'n');
+    }
+    if (isset($_REQUEST['auth_ext_xml_create_user_tiki']) && $_REQUEST['auth_ext_xml_create_user_tiki'] ==  'on') {
+        $tikilib->set_preference('auth_ext_xml_create_user_tiki', 'y');
+        $smarty->assign('auth_ext_xml_create_user_tiki', 'y');
+    } else {
+        $tikilib->set_preference('auth_ext_xml_create_user_tiki', 'n');
+        $smarty->assign('auth_ext_xml_create_user_tiki', 'n');
+    }
+    if (isset($_REQUEST['auth_ext_xml_delete_user_tiki']) && $_REQUEST['auth_ext_xml_delete_user_tiki'] ==  'on') {
+        $tikilib->set_preference('auth_ext_xml_delete_user_tiki', 'y');
+        $smarty->assign('auth_ext_xml_delete_user_tiki', 'y');
+    } else {
+        $tikilib->set_preference('auth_ext_xml_delete_user_tiki', 'n');
+        $smarty->assign('auth_ext_xml_delete_user_tiki', 'n');
+    }
+    if (isset($_REQUEST['auth_ext_xml_manage_admin']) && $_REQUEST['auth_ext_xml_manage_admin'] ==  'on') {
+        $tikilib->set_preference('auth_ext_xml_manage_admin', 'y');
+        $smarty->assign('auth_ext_xml_manage_admin', 'y');
+    } else {
+        $tikilib->set_preference('auth_ext_xml_manage_admin', 'n');
+        $smarty->assign('auth_ext_xml_manage_admin', 'n');
+    }
+    if (isset($_REQUEST['auth_ext_xml_skip_admin']) && $_REQUEST['auth_ext_xml_skip_admin'] == 'on') {
+        $tikilib->set_preference('auth_ext_xml_skip_admin', 'y');
+        $smarty->assign('auth_ext_xml_skip_admin', 'y');
+    } else {
+        $tikilib->set_preference('auth_ext_xml_skip_admin', 'n');
+        $smarty->assign('auth_ext_xml_skip_admin', 'n');
+    }
+	if (isset($_REQUEST['auth_ext_xml_url'])) {
+		$tikilib->set_preference('auth_ext_xml_url', $_REQUEST['auth_ext_xml_url']);
+		$smarty->assign('auth_ext_xml_url', $_REQUEST['auth_ext_xml_url']);
+	}
+	if (isset($_REQUEST['auth_ext_xml_login_element'])) {
+		$tikilib->set_preference('auth_ext_xml_login_element', $_REQUEST['auth_ext_xml_login_element']);
+		$smarty->assign('auth_ext_xml_login_element', $_REQUEST['auth_ext_xml_login_element']);
+	}
+	if (isset($_REQUEST['auth_ext_xml_login_element_value'])) {
+		$tikilib->set_preference('auth_ext_xml_login_element_value', $_REQUEST['auth_ext_xml_login_element_value']);
+		$smarty->assign('auth_ext_xml_login_element_value', $_REQUEST['auth_ext_xml_login_element_value']);
+	}
+	if (isset($_REQUEST['auth_ext_xml_login_attribute'])) {
+		$tikilib->set_preference('auth_ext_xml_login_attribute', $_REQUEST['auth_ext_xml_login_attribute']);
+		$smarty->assign('auth_ext_xml_login_attribute', $_REQUEST['auth_ext_xml_login_attribute']);
+	}
+	if (isset($_REQUEST['auth_ext_xml_login_attribute_value'])) {
+		$tikilib->set_preference('auth_ext_xml_login_attribute_value', $_REQUEST['auth_ext_xml_login_attribute_value']);
+		$smarty->assign('auth_ext_xml_login_attribute_value', $_REQUEST['auth_ext_xml_login_attribute_value']);
+	}
+	if (isset($_REQUEST['auth_ext_xml_admin_element'])) {
+		$tikilib->set_preference('auth_ext_xml_admin_element', $_REQUEST['auth_ext_xml_admin_element']);
+		$smarty->assign('auth_ext_xml_admin_element', $_REQUEST['auth_ext_xml_admin_element']);
+	}
+	if (isset($_REQUEST['auth_ext_xml_admin_element_value'])) {
+		$tikilib->set_preference('auth_ext_xml_admin_element_value', $_REQUEST['auth_ext_xml_admin_element_value']);
+		$smarty->assign('auth_ext_xml_admin_element_value', $_REQUEST['auth_ext_xml_admin_element_value']);
+	}
+	if (isset($_REQUEST['auth_ext_xml_admin_attribute'])) {
+		$tikilib->set_preference('auth_ext_xml_admin_attribute', $_REQUEST['auth_ext_xml_admin_attribute']);
+		$smarty->assign('auth_ext_xml_admin_attribute', $_REQUEST['auth_ext_xml_admin_attribute']);
+	}
+	if (isset($_REQUEST['auth_ext_xml_admin_attribute_value'])) {
+		$tikilib->set_preference('auth_ext_xml_admin_attribute_value', $_REQUEST['auth_ext_xml_admin_attribute_value']);
+		$smarty->assign('auth_ext_xml_admin_attribute_value', $_REQUEST['auth_ext_xml_admin_attribute_value']);
+	}
+	
 }
 
 // Get list of available languages

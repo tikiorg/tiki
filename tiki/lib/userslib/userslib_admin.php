@@ -602,7 +602,38 @@ class UsersLibAdmin extends UsersLib {
         return PASSWORD_INCORRECT;
     }
 
+	
+	function validate_user_external_xml($user) {
+		require_once('lib/xml/xmlparserlib.php');
+		$parser = new XMLParser('$xmloutput', 'url', 1);
+		$tree = $parser->getTree();
 
+		global $auth_ext_xml_login_isvalid, $auth_ext_xml_login_isadmin;
+		$auth_ext_xml_login_isvalid = false;
+		$auth_ext_xml_login_isadmin = false;
+		
+		function walk($value, $key, $data = null) {
+			global $auth_ext_xml_login_isvalid;
+			if (!$auth_ext_xml_login_isvalid && is_array($value)) {
+				global $auth_ext_xml_login_element, $auth_ext_xml_login_element_value, $auth_ext_xml_login_attribute, $auth_ext_xml_login_attribute_value;
+				global $auth_ext_xml_admin_element, $auth_ext_xml_admin_element_value, $auth_ext_xml_admin_attribute, $auth_ext_xml_admin_attribute_value;
+				if (array_key_exists($auth_ext_xml_login_element, $value)) {
+					foreach ($value[$auth_ext_xml_login_element] as $node) {
+						if (empty($auth_ext_xml_login_attribute_value) ||
+							(isset($node['ATTRIBUTES'][$auth_ext_xml_login_attribute]) && $node['ATTRIBUTES'][$auth_ext_xml_login_attribute] == $auth_ext_xml_login_attribute_value)) {
+							if (empty($auth_ext_xml_login_element_value) || (isset($node['VALUE']) && $node['VALUE'] == $auth_ext_xml_login_element_value)) {
+								$auth_ext_xml_login_isvalid = true;
+								break 1;
+							}
+						}
+					}
+				}
+			}
+		}
+		array_walk_recursive($tree, "walk");
+		
+		return $auth_ext_xml_login_isvalid;
+	}
 
 
     // update the lastlogin status on this user
@@ -690,6 +721,19 @@ class UsersLibAdmin extends UsersLib {
 
 } // End Class declaration
 
+if (!function_exists('array_walk_recursive')) {
+	function array_walk_recursive(&$array, $function, $data=NULL) {
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$function($value, $key, $data);
+				array_walk_recursive($value, $function, $data);
+			} else {
+				$function($value, $key, $data);
+			}
+		$array[$key] = $value;
+		}
+	}
+}
 
 // create a global instance.
 global $userslibadmin;
