@@ -1,14 +1,23 @@
 TikiWiki mods Collection
 -------------------------
 
-That package is bundled separately because it contains various 
-licences. Each mod has his own, refer to them specifically before 
+These packages are bundled separately because they may contain various 
+licences. Each mod may have its own, refer to them specifically before 
 using them.
 
+Please create a subfolder underneath the correct section for your mod.
+Remember to include a README in there with suitable contact details and 
+what license the mod is under.
+
+If no license is showing, we shall asume its the same as TikiWiki. LGPL.
 
 INDEX
 ------
 
-* nothing there yet
-
-
+/themes/ - User contributed themes, please see the README there for details.
+/javascript/
+/avatars/
+/patches/
+/smilies/
+/templates/
+/wiki-plugins/
