@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.14 2004-01-04 09:12:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.15 2004-01-04 19:31:02 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,11 +148,6 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('admin-tracker-fields');
-
-$orders = array(); 
-for ($i=1;$i<50;$i++) { $orders[] = $i; }
-$smarty->assign('orders', $orders);
-
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_tracker_fields.tpl');

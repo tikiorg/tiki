@@ -39,14 +39,8 @@
 <tr><td class="formcolor">{tr}Is column visible when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column links to edit/view item?{/tr}</td><td class="formcolor"><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column is searchable?{/tr}</td><td class="formcolor"><input type="checkbox" name="isSearchable" {if $isSearchable eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor">
-<select name="position">
-{section name=ix loop=$orders}
-<option value="{$orders[ix]|escape}" {if $position eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
-{/section}
-</select>
-</td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor"><input type="text" size="5" name="position" value="{$position}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Tracker fields{/tr}</h2>
