@@ -593,6 +593,24 @@ td.findtable {
 /* 
 Odd rows in several listings 
 */
+tr.odd {
+	font-size:    12px;
+	background-color:   #d9d9b0;
+	vertical-align:   top;
+	text-align:   left;
+}
+tr.odd:hover {
+background-color: #FFF7E6;
+}
+tr.even {
+	font-size:    12px;
+	background-color:   #d1d2a9;
+	vertical-align:   top;
+	text-align:   left;
+}
+tr.even:hover {
+background-color: #FFF7E6;
+}
 TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
 	td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
 	td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,

@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.31 2004-01-04 06:22:08 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.32 2004-01-05 08:11:40 mose Exp $
 
 MoreNeat theme
 */
@@ -395,6 +395,18 @@ table.findtable { width: 97%; margin-bottom: 1px; padding-bottom: 10px;}
 td.findtable {   font-size: 11px;}
 
 /* Odd rows in several listings */
+tr.odd {
+border: 1px solid #8CACBB;  border-collapse: collapse;  font-size: 10px; color : black; background-color: #F7F9FA; vertical-align: top; text-align: left;
+}
+tr.odd:hover {
+background-color: #FFF7E6;
+}
+tr.even {
+border: 1px solid #8CACBB; font-size: 10px; background-color: transparent; color : black; vertical-align: top; text-align: left;
+}
+tr.even:hover {
+background-color: #FFF7E6;
+}
 TD.odd,td.gallistnameodd,td.gallistdescriptionodd,td.gallistcreatedodd,td.gallistlastModifodd, td.gallistuserodd,
 td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
 td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,

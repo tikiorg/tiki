@@ -448,6 +448,35 @@ td.findtable {
 }
 
 /* Odd rows in several listings */
+tr.odd {
+	margin:    0px 0px 0px 0px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   Black;
+	background-color:   #C7C7C7;
+	vertical-align:   top;
+	text-align:   left;
+	padding-left:   2px;
+	border:   0.5px solid black;
+}
+tr.odd:hover {
+background-color: #FFF7E6;
+}
+tr.even {
+	border-color:    black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	background-color:   white;
+	border:   0.5px solid black;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+	padding-left:   2px;
+	margin:   0px 0px 0px 0px;
+}
+tr.even:hover {
+background-color: #FFF7E6;
+}
 TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
 	td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
 	td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,

@@ -569,6 +569,29 @@ td.findtable {
 }
 
 /* Tables odd rows */
+tr.odd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+tr.odd:hover {
+background-color: #FFF7E6;
+}
+tr.even {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+tr.even:hover {
+background-color: #FFF7E6;
+}
+
 TD.odd {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
