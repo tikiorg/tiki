@@ -38,8 +38,6 @@
 		{/if}
 	</div>
 
-</div>
-
 {include file="babelfish.tpl"}
 
 <div id="loadstats" style="text-align: center">
