@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.44 2003-10-23 04:07:25 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.45 2003-10-24 14:14:39 ohertel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -476,3 +476,5 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 ALTER TABLE tiki_received_articles ADD COLUMN expireDate int(14) default NULL AFTER `publishDate`;
 ALTER TABLE tiki_submissions ADD COLUMN expireDate int(14) default NULL AFTER `publishDate`;
+
+ALTER TABLE `tiki_modules` CHANGE `title` `title` VARCHAR( 255 ) DEFAULT NULL;
