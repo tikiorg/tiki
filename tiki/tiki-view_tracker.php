@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.59 2004-03-08 13:37:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.60 2004-03-16 02:13:07 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,7 +49,7 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 
 if (isset($_REQUEST['vals']) and is_array($_REQUEST['vals'])) {
 	$defaultvalues = $_REQUEST['vals'];
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1,80)),"tab2");
+	setcookie("activeTabs".urlencode(substr(urldecode($_SERVER["REQUEST_URI"]),1)),"tab2");
 } else {
 	$defaultvalues = array();
 }
@@ -166,6 +166,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		$listfields[$fid]['options'] = $fields["data"][$i]["options"];
 		$listfields[$fid]['isMain'] = $fields["data"][$i]["isMain"];
 		$listfields[$fid]['isTblVisible'] = $fields["data"][$i]["isTblVisible"];
+		$listfields[$fid]['isHidden'] = $fields["data"][$i]["isHidden"];
 		$listfields[$fid]['isSearchable'] = $fields["data"][$i]["isSearchable"];
 	}
 	
@@ -251,7 +252,12 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		if ($fields["data"][$i]["type"] == 'a' and $fields["data"][$i]["options_array"][0])	{
 			$textarea_options = true;
 		} elseif ($fields["data"][$i]["type"] == 'r')	{
-			$fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1]);
+			if ($tiki_p_admin_tracker_items == 'y') {
+				$stt = 'poc';
+			} else {
+				$stt = 'o';
+			}
+			$fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$stt);
 		} elseif ($fields["data"][$i]["type"] == 'i')	{
 			if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
 				if (!empty($gal_match_regex)) {
@@ -328,7 +334,7 @@ if (isset($_REQUEST["save"])) {
 			$_REQUEST["status"] = '';
 		}
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status']);
-		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1,80)),"tab1");
+		setcookie("activeTabs".urlencode(substr(urldecode($_SERVER["REQUEST_URI"]),1)),"tab1");
 		$smarty->assign('itemId', '');
 		
 		if (count($ins_categs)) {
