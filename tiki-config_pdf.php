@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.6 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.7 2003-12-05 11:53:20 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,10 +68,11 @@ if (!isset($_REQUEST["autobreak"])) {
 if (!isset($_REQUEST["convertpages"])) {
 	$convertpages = array();
 
-	if (isset($_REQUEST["page"]) && $tikilib->page_exists($_REQUEST["page"])) {
-		$struct = $structlib->get_structure_pages_ordered($_REQUEST["page"]);
-		$convertpages = $struct;
-//		$convertpages[] = $_REQUEST["page"];
+	if (isset($_REQUEST["page_ref_id"]) ) {
+		$struct = $structlib->s_get_structure_pages($_REQUEST["page_ref_id"]);
+    foreach($struct as $struct_page) {
+      $convertpages[] = $struct_page["pageName"];
+    }
 	}
 } else {
 	$convertpages = unserialize(urldecode($_REQUEST['convertpages']));
