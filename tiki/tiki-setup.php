@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.181 2003-12-24 09:18:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.182 2003-12-27 16:28:11 vulgrin Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,8 +40,14 @@ class TikiSetup extends TikiInit {
         $checked = true;
 
         $errors = '';
-
-        $docroot = dirname($_SERVER['SCRIPT_FILENAME']);
+        
+        if (strpos($_SERVER["SERVER_SOFTWARE"],"IIS")==TRUE){
+        	$docroot = dirname($_SERVER['PATH_TRANSLATED']);
+        }
+        else{
+        	$docroot = dirname($_SERVER['SCRIPT_FILENAME']);
+        }
+        
 
         if (ini_get('session.save_handler') == 'files') {
             $save_path = ini_get('session.save_path');
