@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.1 2003-10-13 17:17:49 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.2 2003-10-14 15:58:09 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -11,6 +11,7 @@ require_once('lib/integrator/integrator.php');
 // Setup local variables from request or set default values
 $repID       = isset($_REQUEST["repID"])       ? $_REQUEST["repID"]       :  0;
 $ruleID      = isset($_REQUEST["ruleID"])      ? $_REQUEST["ruleID"]      :  0;
+$srcrep      = isset($_REQUEST["srcrep"])      ? $_REQUEST["srcrep"]      :  0;
 $srch        = isset($_REQUEST["srch"])        ? $_REQUEST["srch"]        : '';
 $repl        = isset($_REQUEST["repl"])        ? $_REQUEST["repl"]        : '';
 $description = isset($_REQUEST["description"]) ? $_REQUEST["description"] : '';
@@ -27,6 +28,9 @@ if (!isset($_REQUEST["repID"]) || $repID <= 0)
     $smarty->display("styles/$style_base/error.tpl");
     die;
 }
+// Check if copy button pressed
+if (isset($_REQUEST["copy"]) && ($srcrep > 0))
+    $integrator->copy_rules($srcrep, $repID);
 
 // Check if 'save' button pressed ...
 if (isset($_REQUEST["save"]))
@@ -42,7 +46,7 @@ if (isset($_REQUEST["save"]))
     }
 }
 // Check if 'preview' button pressed ...
-if (isset($_REQUEST["preview"]) && ($html == 'y' || $code == 'y'))
+if (isset($_REQUEST["preview"]))
 {
     // Prepeare rule data
     $rule = array();
@@ -115,14 +119,22 @@ if (isset($_REQUEST["action"]))
 // Get repository name
 $r = $integrator->get_repository($repID);
 $smarty->assign('name', $r["name"]);
+
+// Reassign checkboxes
 $smarty->assign('file', $file);
 $smarty->assign('code', $code);
 $smarty->assign('html', $html);
 
-// Fill list of repositories
+// Fill list of rules
 $rules = $integrator->list_rules($repID);
 $smarty->assign_by_ref('rules', $rules);
 $smarty->assign('repID', $repID);
+
+// Fill list of possible source repositories
+$allreps = $integrator->list_repositories();
+$reps = array();
+foreach($allreps as $rep) $reps[$rep["repID"]] = $rep["name"];
+$smarty->assign_by_ref('reps', $reps);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_integrator_rules.tpl');
