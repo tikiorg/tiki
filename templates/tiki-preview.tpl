@@ -1,5 +1,5 @@
 <h2>{tr}Preview{/tr}: {$page}</h2>
-{if $feature_wiki_description}
+{if $feature_wiki_description eq 'y'}
 <small>{$description}</small>
 {/if}
 <div  class="wikitext">{$parsed}</div>

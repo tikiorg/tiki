@@ -15,7 +15,7 @@
 <table width="100%">
 <tr>
 <td>
-{if $feature_wiki_description}
+{if $feature_wiki_description eq 'y'}
 <small>{$description}</small>
 {/if}
 {if $cached_page eq 'y'}
