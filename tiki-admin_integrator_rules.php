@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.4 2003-10-15 16:04:45 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.5 2003-10-17 16:10:16 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -31,6 +31,7 @@ $type        = isset($_REQUEST["type"])        ? ($_REQUEST["type"]      == 'on'
 $casesense   = isset($_REQUEST["casesense"])   ? ($_REQUEST["casesense"] == 'on' ? 'y' : 'n')  : 'n';
 $code        = isset($_REQUEST["code"])        ? ($_REQUEST["code"]      == 'on' ? 'y' : 'n')  : 'n';
 $html        = isset($_REQUEST["html"])        ? ($_REQUEST["html"]      == 'on' ? 'y' : 'n')  : 'n';
+$all         = isset($_REQUEST["all"])         ? ($_REQUEST["all"]       == 'on' ? 'y' : 'n')  : 'n';
 
 if (!isset($_REQUEST["repID"]) || $repID <= 0)
 {
@@ -93,6 +94,15 @@ if (isset($_REQUEST["preview"]))
         }
         // Get file content to string
         $data = file_get_contents($f);
+        // Should we apply all configured rules or only current one?
+        if ($all == 'y')
+        {
+            $rules = $integrator->list_rules($repID);
+            if (is_array($rules))
+                foreach ($rules as $r)
+                    if ($r["ruleID"] !== $ruleID)
+                        $data = $integrator->apply_rule($rep, $r, $data);
+        }
         // Apply rule
         $data = $integrator->apply_rule($rep, $rule, $data);
         $smarty->assign_by_ref('preview_data', $data);
@@ -134,6 +144,7 @@ $smarty->assign('name', $r["name"]);
 $smarty->assign('file', $file);
 $smarty->assign('code', $code);
 $smarty->assign('html', $html);
+$smarty->assign('all',  $all);
 
 // Fill list of rules
 $rules = $integrator->list_rules($repID);
