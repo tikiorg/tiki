@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.16 2003-08-15 21:10:40 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.17 2003-09-23 09:59:55 fukuchi Exp $ *}
 
 <a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a><br /><br />
 [{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner)}
@@ -106,7 +106,7 @@
 {if $gal_info.show_dl eq 'y'}
 	<td style="text-align:right;" width="5%" class="heading"><a class="tableheading" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}Dls{/tr}</a></td>
 {/if}
-<td width="8%" class="heading">Actions</td>
+<td width="8%" class="heading">{tr}Actions{/tr}</td>
 </tr>
 
 
