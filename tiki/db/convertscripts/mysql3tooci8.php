@@ -50,7 +50,7 @@ function parse($stmt)
   //oracle cannot DROP TABLE IF EXISTS
   $stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);
   //auto_increment things
-  $stmt=preg_replace("/  ([a-zA-Z0-9_]+).+int\(([^\)]+)\) NOT NULL auto_increment/e","create_trigger('$1','$2')",$stmt);
+  $stmt=preg_replace("/  ([a-zA-Z0-9_]+).+int\(([^\)]+)\) (unsigned )*NOT NULL auto_increment/e","create_trigger('$1','$2')",$stmt);
   // integer types
   $stmt=preg_replace("/tinyint\(([0-9]+)\)/","number($1)",$stmt);
   $stmt=preg_replace("/int\(([0-9]+)\) unsigned/","number($1)",$stmt);

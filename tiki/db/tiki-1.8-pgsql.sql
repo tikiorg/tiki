@@ -548,7 +548,7 @@ CREATE TABLE "tiki_blog_posts" (
 CREATE  INDEX "tiki_blog_posts_data" ON "tiki_blog_posts"("data");
 CREATE  INDEX "tiki_blog_posts_blogId" ON "tiki_blog_posts"("blogId");
 CREATE  INDEX "tiki_blog_posts_created" ON "tiki_blog_posts"("created");
-CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data" "title");
+CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title");
 
 -- --------------------------------------------------------
 
@@ -1279,7 +1279,7 @@ CREATE TABLE "tiki_dsn" (
 -- --------------------------------------------------------
 
 
-DROP TABLE "if" exists tiki_dynamic_variables;
+DROP TABLE "tiki_dynamic_variables";
 
 
 CREATE TABLE "tiki_dynamic_variables" (
@@ -2783,7 +2783,7 @@ CREATE TABLE "tiki_menus" (
 
 
 -- --------------------------------------------------------
-INSERT INTO tiki_menus(menuId,name,description,type) VALUES('42','Application menu','Main extensive navigation menu','d');
+INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Application menu','Main extensive navigation menu','d');
 
 
 -- --------------------------------------------------------
@@ -3030,7 +3030,7 @@ CREATE TABLE "tiki_pages" (
 
 CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data");
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank");
-CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName" "description" "data");
+CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","description","data");
 CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
 
 -- --------------------------------------------------------
@@ -5059,10 +5059,10 @@ CREATE TABLE "users_usergroups" (
 
 
 -- --------------------------------------------------------
-INSERT INTO users_groups(groupName,groupDesc) VALUES('Anonymous','Public users not logged');
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Anonymous','Public users not logged');
 
 
-INSERT INTO users_groups(groupName,groupDesc) VALUES('Registered','Users logged into the system');
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users logged into the system');
 
 
 -- --------------------------------------------------------
@@ -5109,7 +5109,7 @@ CREATE TABLE "users_users" (
 INSERT INTO "users_users" ("email","login","password","realname","hash") VALUES ('','admin','admin','System Administrator','f6fdffe48c908deb0f4c3bd36c032e72');
 
 
-UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin;
+UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin";
 
 
 -- --------------------------------------------------------
@@ -6177,7 +6177,7 @@ CREATE TABLE "tiki_integrator_rules" (
   "rxmod" varchar(20) NOT NULL default '',
   "enabled" char(1) NOT NULL default 'n',
   "description" text NOT NULL,
-  PRIMARY KEY (ruleID),
+  PRIMARY KEY ("ruleID")
 
 ) ;
 
@@ -6214,7 +6214,7 @@ DROP TABLE "tiki_quicktags";
 
 
 CREATE TABLE "tiki_quicktags" (
-  "tagId" smallint NOT NULL auto_increment,
+  "tagId" serial,
   "taglabel" varchar(255) default NULL,
   "taginsert" varchar(255) default NULL,
   "tagicon" varchar(255) default NULL,

@@ -450,7 +450,7 @@ CREATE TABLE tiki_blog_posts (
   KEY data (data(255)),
   KEY blogId (blogId),
   KEY created (created),
-  FULLTEXT KEY ft (data, title)
+  FULLTEXT KEY ft (data,title)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -1051,7 +1051,7 @@ CREATE TABLE tiki_dsn (
 # --------------------------------------------------------
 
 
-DROP TABLE if exists tiki_dynamic_variables;
+DROP TABLE IF EXISTS tiki_dynamic_variables;
 CREATE TABLE tiki_dynamic_variables (
   name varchar(40) NOT NULL,
   DATA text,
@@ -2053,7 +2053,7 @@ CREATE TABLE tiki_menus (
   PRIMARY KEY  (menuId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
-INSERT INTO tiki_menus(menuId,name,description,type) VALUES('42','Application menu','Main extensive navigation menu','d');
+INSERT INTO tiki_menus (menuId,name,description,type) VALUES ('42','Application menu','Main extensive navigation menu','d');
 # --------------------------------------------------------
 
 #
@@ -2255,7 +2255,7 @@ CREATE TABLE tiki_pages (
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
   KEY pageRank (pageRank),
-  FULLTEXT KEY ft (pageName, description, data)
+  FULLTEXT KEY ft (pageName,description,data)
 ) TYPE=MyISAM AUTO_INCREMENT=1;
 # --------------------------------------------------------
 
@@ -3707,8 +3707,8 @@ CREATE TABLE users_usergroups (
   PRIMARY KEY  (userId,groupName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
-INSERT INTO users_groups(groupName,groupDesc) VALUES('Anonymous','Public users not logged');
-INSERT INTO users_groups(groupName,groupDesc) VALUES('Registered','Users logged into the system');
+INSERT INTO users_groups (groupName,groupDesc) VALUES ('Anonymous','Public users not logged');
+INSERT INTO users_groups (groupName,groupDesc) VALUES ('Registered','Users logged into the system');
 # --------------------------------------------------------
 
 #
@@ -4129,7 +4129,7 @@ CREATE TABLE tiki_integrator_rules (
   rxmod varchar(20) NOT NULL default '',
   enabled char(1) NOT NULL default 'n',
   description text NOT NULL,
-  PRIMARY KEY (ruleID),
+  PRIMARY KEY  (ruleID),
   KEY repID (repID)
 ) TYPE=MyISAM;
 

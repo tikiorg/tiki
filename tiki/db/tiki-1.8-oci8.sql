@@ -570,7 +570,7 @@ END;
 CREATE  INDEX "tiki_blog_posts_data" ON "tiki_blog_posts"("data");
 CREATE  INDEX "tiki_blog_posts_blogId" ON "tiki_blog_posts"("blogId");
 CREATE  INDEX "tiki_blog_posts_created" ON "tiki_blog_posts"("created");
-CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data" "title");
+CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title");
 
 -- --------------------------------------------------------
 --
@@ -1353,7 +1353,7 @@ END;
 /
 
 -- --------------------------------------------------------
-DROP TABLE "if" exists tiki_dynamic_variables;
+DROP TABLE "tiki_dynamic_variables";
 
 
 CREATE TABLE "tiki_dynamic_variables" (
@@ -2861,7 +2861,7 @@ END;
 /
 
 -- --------------------------------------------------------
-INSERT INTO tiki_menus(menuId,name,description,type) VALUES('42','Application menu','Main extensive navigation menu','d');
+INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Application menu','Main extensive navigation menu','d');
 
 
 -- --------------------------------------------------------
@@ -3116,7 +3116,7 @@ END;
 /
 CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data");
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank");
-CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName" "description" "data");
+CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","description","data");
 CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
 
 -- --------------------------------------------------------
@@ -5218,10 +5218,10 @@ CREATE TABLE "users_usergroups" (
 
 
 -- --------------------------------------------------------
-INSERT INTO users_groups(groupName,groupDesc) VALUES('Anonymous','Public users not logged');
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Anonymous','Public users not logged');
 
 
-INSERT INTO users_groups(groupName,groupDesc) VALUES('Registered','Users logged into the system');
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users logged into the system');
 
 
 -- --------------------------------------------------------
@@ -6342,7 +6342,7 @@ CREATE TABLE "tiki_integrator_rules" (
   "rxmod" varchar(20) default '' NOT NULL,
   "enabled" char(1) default 'n' NOT NULL,
   "description" clob NOT NULL,
-  PRIMARY KEY (ruleID),
+  PRIMARY KEY ("ruleID")
 ) ;
 
 CREATE TRIGGER "tiki_integrator_rules_trig" BEFORE INSERT ON "tiki_integrator_rules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
@@ -6378,15 +6378,21 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 -- 
 DROP TABLE "tiki_quicktags";
 
+CREATE SEQUENCE "tiki_quicktags_sequ" INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE "tiki_quicktags" (
-  "tagId" number(4) NOT NULL auto_increment,
+  "tagId" number(4) NOT NULL,
   "taglabel" varchar(255) default NULL,
   "taginsert" varchar(255) default NULL,
   "tagicon" varchar(255) default NULL,
   PRIMARY KEY ("tagId")
 )   ;
 
+CREATE TRIGGER "tiki_quicktags_trig" BEFORE INSERT ON "tiki_quicktags" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_quicktags_sequ".nextval into :NEW."tagId" FROM DUAL;
+END;
+/
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon") VALUES ('bold','__text__','images/ed_format_bold.gif');
 
