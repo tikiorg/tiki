@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.9 2003-10-19 13:20:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.10 2003-10-19 15:09:07 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -141,7 +141,18 @@ class TikiIntegrator extends TikiLib
     /// Build full path to file inside given repository
     function get_rep_file($rep, $file = '')
     {
-        return $_SERVER['DOCUMENT_ROOT'].'/'.$rep["path"].'/'.((strlen($file) > 0) ? $file : $rep["start_page"]);
+        // Is repository path absolute? (start from www root ('/'))
+        $p = '';
+        if (substr($rep["path"], 0, 1) == '/')
+            // Absolute path: prepend web server root
+            $p = $_SERVER['DOCUMENT_ROOT'].$rep["path"];
+        else
+            // Relative Tiki base path: get tiki root and append repository path
+            // note: little hack here -- assume that __this__ file placed exactly
+            //       at 2nd dir level in Tiki base dir.
+            $p = dirname(dirname(dirname(__FILE__))).'/'.$rep["path"];
+
+        return $p.'/'.((strlen($file) > 0) ? $file : $rep["start_page"]);
     }
     /// Return CSS file for given repository
     function get_rep_css($rep)

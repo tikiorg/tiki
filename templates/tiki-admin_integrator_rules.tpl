@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.8 2003-10-19 13:20:19 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.9 2003-10-19 15:09:07 zaufi Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -53,8 +53,8 @@
 
 <table class="normal">
   <tr>
-    <td class="formcolor"><span title="{tr}According this order rules will be applied (0 = auto){/tr}">{tr}Rule order{/tr}</span></td>
-    <td class="formcolor"><input type="text" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied (0 = auto){/tr}" />&nbsp;
+    <td class="formcolor"><span title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}">{tr}Rule order{/tr}</span></td>
+    <td class="formcolor"><input type="text" size="2" name="ord" value="{$ord|escape}" title="{tr}According this order rules will be applied ('0' or empty = auto){/tr}" />
     </td>
   </tr><tr>
     <td class="formcolor"><span title="{tr}Text to search for{/tr}">{tr}Search{/tr}</span></td>
@@ -65,22 +65,21 @@
   </tr><tr>
     <td class="formcolor"><span title="{tr}Is this regular expression or simpel search/replacer{/tr}">{tr}Regex{/tr}</span></td>
     <td class="formcolor">
-      <input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simpel search/replacer{/tr}" /> &nbsp;&nbsp;
+      <input type="checkbox" name="type" {if $type eq 'y'}checked="checked"{/if} title="{tr}Is this regular expression or simpel search/replacer{/tr}" />
     </td>
   </tr><tr>
     <td class="formcolor"><span title="{tr}Is case sensitive (for simple replacer){/tr}">{tr}Case sensitive{/tr}</td>
     <td class="formcolor">
-      <input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}" /> &nbsp;&nbsp;
+      <input type="checkbox" name="casesense" {if $casesense eq 'y'}checked="checked"{/if} title="{tr}Is case sensitive (for simple replacer){/tr}" />
     </td>
   </tr><tr>
     <td class="formcolor">{tr}<span title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}">Regex modifiers{/tr}</span></td>
     <td class="formcolor">
-      <input type="text" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}" /> &nbsp;&nbsp;
-      {tr}Aux modifiers for preg_replace{/tr}
+      <input type="text" name="rxmod" value="{$rxmod|escape}" title="{tr}subset of chars: imsxeADSXUu, which is regex modifiers{/tr}" />
     </td>
   </tr><tr>
-    <td class="formcolor"><span title="{tr}Human readable text descriptions of rule{/tr}">{tr}Description{/tr}</td>
-    <td class="formcolor"><textarea name="description" rows="4" title="{tr}Human readable text descriptions of rule{/tr}">{$description|escape}</textarea></td>
+    <td class="formcolor"><span title="{tr}Human readable text description of rule{/tr}">{tr}Description{/tr}</td>
+    <td class="formcolor"><textarea name="description" rows="4" title="{tr}Human readable text description of rule{/tr}">{$description|escape}</textarea></td>
   </tr><tr>
     <td class="formcolor">&nbsp;</td>
     <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
@@ -98,7 +97,7 @@
   </tr><tr>
     <td class="formcolor"><span title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}">{tr}File{/tr}</td>
     <td class="formcolor">
-      <input type="text" name="file" value="{$file|escape}" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}" /> &nbsp;&nbsp;
+      <input type="text" name="file" value="{$file|escape}" title="{tr}Test file from repository to generate preview for (empty = configured start page){/tr}" />
     </td>
   </tr><tr>
     <td class="formcolor">&nbsp;</td>

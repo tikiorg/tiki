@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.7 2003-10-19 13:20:18 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.8 2003-10-19 15:09:06 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -12,11 +12,10 @@ require_once('lib/integrator/integrator.php');
 // Check permissions
 if ($tiki_p_admin != 'y')
 {
-    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->assign('msg', tra("You dont have permission to use this feature"));
     $smarty->display("styles/$style_base/error.tpl");
     die;
 }
-
 
 // Setup local variables from request or set default values
 $repID       = (isset ($_REQUEST["repID"])
@@ -27,20 +26,20 @@ $ord         = (isset ($_REQUEST["ord"])
              && strlen($_REQUEST["ord"])    > 0) ? $_REQUEST["ord"]         :  0;
 $srcrep      = (isset ($_REQUEST["srcrep"])
              && strlen($_REQUEST["srcrep"]) > 0) ? $_REQUEST["srcrep"]      :  0;
-$srch        = isset($_REQUEST["srch"])          ? $_REQUEST["srch"]        : '';
-$repl        = isset($_REQUEST["repl"])          ? $_REQUEST["repl"]        : '';
-$description = isset($_REQUEST["description"])   ? $_REQUEST["description"] : '';
-$rxmod       = isset($_REQUEST["rxmod"])         ? $_REQUEST["rxmod"]       : '';
-$file        = isset($_REQUEST["file"])          ? $_REQUEST["file"]        : '';
-$type        = isset($_REQUEST["type"])          ? ($_REQUEST["type"]      == 'on' ? 'y' : 'n')  : 'n';
-$casesense   = isset($_REQUEST["casesense"])     ? ($_REQUEST["casesense"] == 'on' ? 'y' : 'n')  : 'n';
-$code        = isset($_REQUEST["code"])          ? ($_REQUEST["code"]      == 'on' ? 'y' : 'n')  : 'n';
-$html        = isset($_REQUEST["html"])          ? ($_REQUEST["html"]      == 'on' ? 'y' : 'n')  : 'n';
-$all         = isset($_REQUEST["all"])           ? ($_REQUEST["all"]       == 'on' ? 'y' : 'n')  : 'n';
+$srch        =  isset ($_REQUEST["srch"])        ? $_REQUEST["srch"]        : '';
+$repl        =  isset ($_REQUEST["repl"])        ? $_REQUEST["repl"]        : '';
+$description =  isset ($_REQUEST["description"]) ? $_REQUEST["description"] : '';
+$rxmod       =  isset ($_REQUEST["rxmod"])       ? $_REQUEST["rxmod"]       : '';
+$file        =  isset ($_REQUEST["file"])        ? $_REQUEST["file"]        : '';
+$type        =  isset ($_REQUEST["type"])        ? ($_REQUEST["type"]      == 'on' ? 'y' : 'n')  : 'n';
+$casesense   =  isset ($_REQUEST["casesense"])   ? ($_REQUEST["casesense"] == 'on' ? 'y' : 'n')  : 'n';
+$code        =  isset ($_REQUEST["code"])        ? ($_REQUEST["code"]      == 'on' ? 'y' : 'n')  : 'n';
+$html        =  isset ($_REQUEST["html"])        ? ($_REQUEST["html"]      == 'on' ? 'y' : 'n')  : 'n';
+$all         =  isset ($_REQUEST["all"])         ? ($_REQUEST["all"]       == 'on' ? 'y' : 'n')  : 'n';
 
 if (!isset($_REQUEST["repID"]) || $repID <= 0)
 {
-    $smarty->assign('msg',tra("No repository"));
+    $smarty->assign('msg', tra("No repository"));
     $smarty->display("styles/$style_base/error.tpl");
     die;
 }
@@ -57,7 +56,7 @@ if (isset($_REQUEST["save"]))
                                       $type, $casesense, $rxmod, $description);
     else
     {
-        $smarty->assign('msg',tra("Search is mandatory field"));
+        $smarty->assign('msg', tra("Search is mandatory field"));
         $smarty->display("styles/$style_base/error.tpl");
         die;
     }
@@ -67,24 +66,24 @@ if (isset($_REQUEST["preview"]))
 {
     // Prepeare rule data
     $rule = array();
-    $rule["repID"] = $repID;
-    $rule["ruleID"] = $ruleID;
-    $rule["ord"] = $ord;
-    $rule["srch"] = $srch;
-    $rule["repl"] = $repl;
-    $rule["type"] = $type;
-    $rule["casesense"] = $casesense;
-    $rule["rxmod"] = $rxmod;
+    $rule["repID"]       = $repID;
+    $rule["ruleID"]      = $ruleID;
+    $rule["ord"]         = $ord;
+    $rule["srch"]        = $srch;
+    $rule["repl"]        = $repl;
+    $rule["type"]        = $type;
+    $rule["casesense"]   = $casesense;
+    $rule["rxmod"]       = $rxmod;
     $rule["description"] = $description;
 
     // Reassign values in form
-    $smarty->assign('ruleID', $rule["ruleID"]);
-    $smarty->assign('ord', $rule["ord"]);
-    $smarty->assign('srch', $rule["srch"]);
-    $smarty->assign('repl', $rule["repl"]);
-    $smarty->assign('type', $rule["type"]);
-    $smarty->assign('casesense', $rule["casesense"]);
-    $smarty->assign('rxmod', $rule["rxmod"]);
+    $smarty->assign('ruleID',      $rule["ruleID"]);
+    $smarty->assign('ord',         $rule["ord"]);
+    $smarty->assign('srch',        $rule["srch"]);
+    $smarty->assign('repl',        $rule["repl"]);
+    $smarty->assign('type',        $rule["type"]);
+    $smarty->assign('casesense',   $rule["casesense"]);
+    $smarty->assign('rxmod',       $rule["rxmod"]);
     $smarty->assign('description', $rule["description"]);
 
     // Have smth to show?
@@ -96,7 +95,7 @@ if (isset($_REQUEST["preview"]))
         $f = $integrator->get_rep_file($rep, $file);
         if (!file_exists($f))
         {
-            $smarty->assign('msg',tra("File not found"));
+            $smarty->assign('msg', tra("File not found ").$f);
             $smarty->display("styles/$style_base/error.tpl");
             die;
         }
@@ -126,13 +125,13 @@ if (isset($_REQUEST["action"]))
         if ($ruleID != 0)
         {
             $rule = $integrator->get_rule($ruleID);
-            $smarty->assign('ruleID', $rule["ruleID"]);
-            $smarty->assign('ord', $rule["ord"]);
-            $smarty->assign('srch', $rule["srch"]);
-            $smarty->assign('repl', $rule["repl"]);
-            $smarty->assign('type', $rule["type"]);
-            $smarty->assign('casesense', $rule["casesense"]);
-            $smarty->assign('rxmod', $rule["rxmod"]);
+            $smarty->assign('ruleID',      $rule["ruleID"]);
+            $smarty->assign('ord',         $rule["ord"]);
+            $smarty->assign('srch',        $rule["srch"]);
+            $smarty->assign('repl',        $rule["repl"]);
+            $smarty->assign('type',        $rule["type"]);
+            $smarty->assign('casesense',   $rule["casesense"]);
+            $smarty->assign('rxmod',       $rule["rxmod"]);
             $smarty->assign('description', $rule["description"]);
         }
         break;
