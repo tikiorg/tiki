@@ -38,8 +38,10 @@ class TagLineLib extends TikiLib {
 			$query = "update `tiki_cookies` set `cookie`=? where `cookieId`=?";
 			$bindvars = array($cookie,(int)$cookieId);
 		} else {
-			$query = "replace into `tiki_cookies`(`cookie`) values(?)";
 			$bindvars = array($cookie);
+			$query = "delete from `tiki_cookies` where `cookie`=?";
+			$result = $this->query($query,$bindvars);
+			$query = "insert into `tiki_cookies`(`cookie`) values(?)";
 		}
 		$result = $this->query($query,$bindvars);
 		return true;

@@ -41,7 +41,9 @@ class HotwordsLib extends TikiLib {
 		$word = addslashes($word);
 
 		$url = addslashes($url);
-		$query = "replace into `tiki_hotwords`(`word`,`url`) values(?,?)";
+		$query = "delete from `tiki_hotwords` where `word`=?";
+		$result = $this->query($query,array($word));
+		$query = "insert into `tiki_hotwords`(`word`,`url`) values(?,?)";
 		$result = $this->query($query,array($word,$url));
 		return true;
 	}
