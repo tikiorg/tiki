@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.28 2004-07-15 21:28:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.29 2004-08-22 01:37:25 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,6 +93,25 @@ $smarty->assign('public', 'n');
 $smarty->assign('edited', 'n');
 $smarty->assign('visible', 'y');
 $smarty->assign('edit_mode', 'n');
+$options_sortorder=array(tra('id') => 'imageId',
+		tra('Name') => 'name', 
+		tra('Creation Date') => 'created',
+		tra('Owner') => 'user',
+		tra('Hits') => 'hits',
+		tra('Size') => 'filesize',
+		tra('Individual Order') => 'individual');
+$smarty->assign_by_ref('options_sortorder',$options_sortorder);
+$smarty->assign('sortorder','imageId');
+$smarty->assign('sortorder','created');
+$smarty->assign('sortdirection','desc');
+$options_galleryimage=array(tra('first uploaded image') => 'firstu',
+			    tra('last uploaded image') => 'lastu',
+			    tra('first image') => 'first',
+			    tra('last image') => 'last',
+			    tra('random image') => 'random',
+			    tra('individual image') => 'individual');
+$smarty->assign_by_ref('options_galleryimage',$options_galleryimage);
+$smarty->assign('galleryimage','first');
 
 // If we are editing an existing gallery prepare smarty variables
 if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
@@ -116,6 +135,9 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign_by_ref('thumbSizeY', $info["thumbSizeY"]);
 		$smarty->assign_by_ref('public', $info["public"]);
 		$smarty->assign_by_ref('visible', $info["visible"]);
+		$smarty->assign('sortorder',$info['sortorder']);
+		$smarty->assign('sortdirection',$info['sortdirection']);
+		$smarty->assign('galleryimage',$info['galleryimage']);
 		$smarty->assign_by_ref('scaleinfo', $scaleinfo);
 	}
 }
@@ -156,6 +178,10 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign_by_ref('rowImages', $_REQUEST["rowImages"]);
 	$smarty->assign_by_ref('thumbSizeX', $_REQUEST["thumbSizeX"]);
 	$smarty->assign_by_ref('thumbSizeY', $_REQUEST["thumbSizeY"]);
+        $smarty->assign('sortorder',$_REQUEST['sortorder']);
+	$smarty->assign('sortdirection',$_REQUEST['sortdirection']);
+	$smarty->assign('galleryimage',$_REQUEST['galleryimage']);
+
 
 	if (isset($_REQUEST["visible"]) && $_REQUEST["visible"] == "on") {
 		$smarty->assign('visible', 'y');
@@ -177,7 +203,7 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign_by_ref('public', $public);
 	$gid = $imagegallib->replace_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"],
 		'', $user, $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
-		$visible);
+		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage']);
 
 	#add scales
 	if (isset($_REQUEST["scaleSizeX"])

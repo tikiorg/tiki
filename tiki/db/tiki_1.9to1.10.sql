@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.15 2004-07-28 20:16:40 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.16 2004-08-22 01:37:26 redflo Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -66,3 +66,13 @@ PRIMARY KEY ( id )
 #
 # Opinion-Network tables END
 #
+
+#
+# Imagegals enhancements
+#
+
+ALTER TABLE tiki_galleries ADD COLUMN (
+	sortorder VARCHAR(20) NOT NULL DEFAULT 'created',
+	sortdirection VARCHAR(4) NOT NULL DEFAULT 'desc',
+	galleryimage VARCHAR(20) NOT NULL DEFAULT 'first'
+);

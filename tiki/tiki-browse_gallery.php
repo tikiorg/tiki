@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.23 2004-06-23 22:33:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.24 2004-08-22 01:37:25 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -241,7 +241,8 @@ if ($imagegallib->canrotate) {
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'created_asc';
+	// default sortorder from gallery settings
+	$sort_mode = $info['sortorder'].'_'.$info['sortdirection'];
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }

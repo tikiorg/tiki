@@ -44,6 +44,20 @@
 <tr><td class="formcolor">{tr}Images per row{/tr}:</td><td class="formcolor"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Thumbnails size X{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Thumbnails size Y{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>      
+<tr><td class="formcolor">{tr}Default sort order{/tr}:</td><td class="formcolor"><select name="sortorder">
+{foreach from=$options_sortorder key=key item=item}
+<option value="{$item}" {if $sortorder == $item} selected="selected"{/if}>{$key}</option>
+{/foreach}
+</select>
+<input type="radio" name="sortdirection" value="desc" {if $sortdirection == 'desc'}checked="checked"{/if} />{tr}descending{/tr}
+<input type="radio" name="sortdirection" value="asc" {if $sortdirection == 'asc'}checked="checked"{/if} />{tr}ascending{/tr}
+</td></tr>
+<tr><td class="formcolor">{tr}Gallery Image{/tr}:</td><td class="formcolor"><select name="galleryimage">
+{foreach from=$options_galleryimage key=key item=item}
+<option value="{$item}" {if $galleryimage == $item} selected="selected"{/if}>{$key}</option>
+{/foreach}
+</select>
+</td></tr>
 <tr><td class="formcolor">{tr}Available scales{/tr}:</td><td class="formcolor">
 {section  name=scales loop=$scaleinfo}
 {tr}Remove{/tr}:<input type="checkbox" name="{$scaleinfo[scales].xsize|escape}x{$scaleinfo[scales].ysize}" />
