@@ -18,10 +18,10 @@ $processManager = new ProcessManager($dbTiki);
 ///
 $instanceManager = new InstanceManager($dbTiki);
 
-$logger = new Logger('lib/Galaxia/log/pm.log');
-$processManager->attach_all($logger);
-$activityManager->attach_all($logger);
-$roleManager->attach_all($logger);
+//$logger = new Logger('lib/Galaxia/log/pm.log');
+//$processManager->attach_all($logger);
+//$activityManager->attach_all($logger);
+//$roleManager->attach_all($logger);
 
 $smarty->assign('is_active_help',tra('indicates if the process is active. Invalid processes cant be active'));
 ?>

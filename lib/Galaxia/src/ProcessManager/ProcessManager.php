@@ -1,20 +1,12 @@
 <?php
 
 //!! ProcessManager
-//! A class to maniplate processes and activities.
+//! A class to maniplate processes.
 /*!
   This class is used to add,remove,modify and list
   processes.
 */
 
-// The following constants define loggeable events
-define('PROCESS_ACTIVATED',1);
-define('PROCESS_DEACTIVATED',2);
-define('PROCESS_CHANGED',3);
-define('PROCESS_CREATED',4);
-define('PROCESS_REMOVED',5);
-define('PROCESS_IMPORTED',6);
-define('PROCESS_EXPORTED',7);
 
 
 class ProcessManager extends BaseManager {
@@ -44,7 +36,7 @@ class ProcessManager extends BaseManager {
   	$query = "update galaxia_processes set isActive='y' where pId=$pId";
     $this->query($query);  
     $msg = sprintf(tra('Process %d has been activated'),$pId);
-    $this->notify_all(PROCESS_ACTIVATED,$msg);
+    $this->notify_all(3,$msg);
   }
   
   /*!
@@ -55,7 +47,7 @@ class ProcessManager extends BaseManager {
     $query = "update galaxia_processes set isActive='n' where pId=$pId";
     $this->query($query);  
     $msg = sprintf(tra('Process %d has been deactivated'),$pId);
-    $this->notify_all(PROCESS_DEACTIVATED,$msg);
+    $this->notify_all(3,$msg);
   }
   
   /*!
@@ -140,7 +132,8 @@ class ProcessManager extends BaseManager {
   }
   
   /*!
-   Creates  a process from its XML representation
+   Creates  a process PHP data structure from its XML 
+   representation
   */
   function unserialize_process($xml) 
   {
@@ -299,12 +292,10 @@ class ProcessManager extends BaseManager {
   	foreach($data['transitions'] as $tran) {
   		$am->add_transition($pid,$actids[$tran['from']],$actids[$tran['to']]);  
   	}
-  	
-
-
-  	
   	unset($am);
   	unset($rm);
+  	$msg = sprintf(tra('Process %s %s imported'),$vars['name'],$vars['version']);
+  	$this->notify_all(2,$msg);
   }
   
   
@@ -446,7 +437,8 @@ class ProcessManager extends BaseManager {
 	// And finally remove the proc
     $query = "delete from galaxia_processes where pId=$pId";
     $this->query($query);
-
+    $msg = sprintf(tra('Process %s removed'),$name);
+	$this->notify_all(5,$msg);
     
     return true;
   }
@@ -485,6 +477,8 @@ class ProcessManager extends BaseManager {
       $oldname = $old_proc['normalized_name'];
       $newname = $vars['normalized_name'];
       rename("lib/Galaxia/processes/$oldname","lib/Galaxia/processes/$newname");
+      $msg = sprintf(tra('Process %s has been updated'),$vars['name']);     
+      $this->notify_all(3,$msg);
     } else {
       unset($vars['pId']);
       // insert mode
@@ -528,7 +522,7 @@ class ProcessManager extends BaseManager {
       $aM->replace_activity($pId,0,$vars1);
       $aM->replace_activity($pId,0,$vars2);
 	  $msg = sprintf(tra('Process %s has been created'),$vars['name']);     
-	  $this->notify_all(PROCESS_CREATED,$msg);
+	  $this->notify_all(4,$msg);
     }
     // Get the id
     return $pId;
@@ -631,7 +625,7 @@ class ProcessManager extends BaseManager {
      closedir($h);   
    }
 
-   //\todo code handler   
+
    function _start_element_handler($parser,$element,$attribs)
    {
      
@@ -646,7 +640,7 @@ class ProcessManager extends BaseManager {
      $this->current=$i;
    }
 
-   //\todo code handler      
+
    function _end_element_handler($parser,$element)
    {
 	//when a tag ends put text
@@ -655,7 +649,7 @@ class ProcessManager extends BaseManager {
 	$this->current=$this->tree[$this->current]['parent'];
    }
 
-   //\todo code handler   
+
    function _data_handler($parser,$data)
    {
 	$this->buffer.=$data;

@@ -1,5 +1,4 @@
 <?php
-
 //!! ActivityManager
 //! A class to maniplate process activities and transitions
 /*!
@@ -9,10 +8,6 @@
   activity belongs to some process.
 */
 
-/*\todo
-  Add a method to check activity an activity name exists in a process (to be used
-  to prevent duplicate names)
-*/
 
 class ActivityManager extends BaseManager {
   var $error='';
