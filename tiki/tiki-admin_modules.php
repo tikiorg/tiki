@@ -6,6 +6,19 @@ include_once('lib/polls/polllib.php');
 include_once('lib/banners/bannerlib.php');
 include_once('lib/dcs/dcslib.php');
 
+if(!isset($dcslib)) {
+	$dcslib= new DCSLib($dbTiki);
+}
+
+if(!isset($bannerlib)) {
+  $bannerlib = new BannerLib($dbTiki);
+}
+
+
+if(!isset($rsslib)) {
+  $rsslib = new RssLib($dbTiki);
+}
+
 if(!isset($polllib)) {
   $polllib = new PollLib($dbTiki);
 }

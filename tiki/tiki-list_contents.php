@@ -3,6 +3,11 @@
 require_once('tiki-setup.php');
 include_once('lib/dcs/dcslib.php');
 
+if(!isset($dcslib)) {
+	$dcslib= new DCSLib($dbTiki);
+}
+
+
 if($feature_dynamic_content != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
