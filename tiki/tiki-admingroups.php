@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.41 2004-07-11 15:52:58 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.42 2004-07-15 21:50:54 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,10 @@
 // Initialization
 require_once ('tiki-setup.php');
 require_once ('lib/userslib/userslib_admin.php');
+global $trklib;
+if (!is_object($trklib)) {
+	require_once('lib/trackers/trackerlib.php');
+}
 
 // PERMISSIONS: NEEDS p_admin
 if ($user != 'admin') {
@@ -23,7 +27,7 @@ $cookietab = "1";
 list($trackers,$ag_utracker,$ag_ufield,$ag_gtracker,$ag_gfield) = array(array(),0,0,0,0);
 
 if (isset($groupTracker) and $groupTracker == 'y') {
-	$trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
+	$trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["groupstracker"]) and isset($trackers[$_REQUEST["groupstracker"]])) {
 		$ag_gtracker = $_REQUEST["groupstracker"];
@@ -34,7 +38,7 @@ if (isset($groupTracker) and $groupTracker == 'y') {
 }
 
 if (isset($userTracker) and $userTracker == 'y') {
-	if (!isset($trackerlist)) $trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
+	if (!isset($trackerlist)) $trackerlist = $trklib->list_trackers(0, -1, 'name_asc', '');
 	$trackers = $trackerlist['list'];
 	if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
 		$ag_utracker = $_REQUEST["userstracker"];

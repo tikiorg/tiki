@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.35 2004-06-16 01:36:54 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.36 2004-07-15 21:50:54 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -241,7 +241,11 @@ $info["defaultStatusList"] = array();
 $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 
 if ($_REQUEST["trackerId"]) {
-	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
+	global $trklib;
+	if (!is_object($trklib)) {
+		require_once('lib/trackers/trackerlib.php');
+	}
+	$info = array_merge($info,$trklib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
 	$cookietab = '2';
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');

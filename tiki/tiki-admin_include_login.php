@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.19 2004-06-09 17:13:08 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.20 2004-07-15 21:50:54 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -442,7 +442,11 @@ $smarty->assign("available_styles", unserialize($tikilib->get_preference("availa
 $smarty->assign("userTracker", $tikilib->get_preference("userTracker", "n"));
 $smarty->assign("groupTracker", $tikilib->get_preference("groupTracker", "n"));
 
-$listTrackers = $tikilib->list_trackers(0,-1,"name_desc","");
+global $trklib;
+if (!is_object($trklib)) {
+	require_once('lib/trackers/trackerlib.php');
+}
+$listTrackers = $trklib->list_trackers(0,-1,"name_desc","");
 $smarty->assign("listTrackers",$listTrackers['list']);
 
 $smarty->assign("change_theme", $tikilib->get_preference("change_theme", "n"));

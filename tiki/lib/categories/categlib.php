@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.52 2004-07-15 21:28:59 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.53 2004-07-15 21:50:55 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -436,8 +436,12 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('tracker', $trackerId);
 
 		if (!$catObjectId) {
+			global $trklib;
+			if (!is_object($trklib)) {
+				require_once('lib/trackers/trackerlib.php');
+			}
 			// The page is not cateorized
-			$info = $this->get_tracker($trackerId);
+			$info = $trklib->get_tracker($trackerId);
 
 			$href = 'tiki-view_tracker.php?trackerId=' . $trackerId;
 			$catObjectId = $this->add_categorized_object('tracker', $trackerId, substr($info["description"], 0, 200),$info["name"] , $href);
