@@ -72,7 +72,7 @@
     <tr><td style="font-weight:bold;">{tr}To{/tr}:</td><td>{$msg.user_to}</td></tr>
     <tr><td style="font-weight:bold;">{tr}Cc{/tr}:</td><td>{$msg.user_cc}</td></tr>
     <tr><td style="font-weight:bold;">{tr}Subject{/tr}:</td><td>{$msg.subject}</td></tr>
-    <tr><td style="font-weight:bold;">{tr}Date{/tr}:<td>{$msg.date|date_format:"%a %b %Y [%H:%I]"}</td></tr>
+    <tr><td style="font-weight:bold;">{tr}Date{/tr}:<td>{$msg.date|tiki_short_datetime}</td></tr><!--date_format:"%a %b %Y [%H:%I]"-->
   </table>
   </div>
   <div class="messureadbody">
