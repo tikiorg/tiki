@@ -388,7 +388,7 @@ function check_rules($user, $section) {
     $ips = explode('.', $_SERVER["REMOTE_ADDR"]);
     $now = date("U");
     $query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= ? and tb.`date_to` >= ?))";
-    $result = $this->query($query,array($section,'n',$now,$now));
+    $result = $this->query($query,array($section,'n',(int)$now,(int)$now));
 
     while ($res = $result->fetchRow()) {
 	if (!$res['message']) {
@@ -422,22 +422,16 @@ function replace_note($user, $noteId, $name, $data) {
     $size = strlen($data);
 
     if ($noteId) {
-	$query = "update `tiki_user_notes` set
-	    `name` = ?,
-	`data` = ?,
-	`size` = ?,
-	`lastModif` = ?
-	    where `user`=? and `noteId`=?";
-
-	$this->query($query,array($name,$data,$size,$now,$user,$noteId));
+	$query = "update `tiki_user_notes` set `name` = ?, `data` = ?, `size` = ?, `lastModif` = ?  where `user`=? and `noteId`=?";
+	$this->query($query,array($name,$data,(int)$size,(int)$now,$user,(int)$noteId));
 	return $noteId;
     } else {
 	$query = "insert into `tiki_user_notes`(`user`,`noteId`,`name`,`data`,`created`,`lastModif`,`size`)
 	    values(?,?,?,?,?,?,?)";
 
-	$this->query($query,array($user,$noteId,$name,$data,$now,$now,$size));
+	$this->query($query,array($user,(int)$noteId,$name,$data,(int)$now,(int)$now,(int)$size));
 	$noteId = $this->getOne(
-		"select max(`noteId`) from `tiki_user_notes` where `user`=? and `name`=? and `created`=?",array($user,$name,$now));
+		"select max(`noteId`) from `tiki_user_notes` where `user`=? and `name`=? and `created`=?",array($user,$name,(int)$now));
 	return $noteId;
     }
 }
@@ -448,14 +442,11 @@ function add_user_watch($user, $event, $object, $type, $title, $url) {
 
     $hash = md5(uniqid('.'));
     $email = $userlib->get_user_email($user);
-    $query = "delete from `tiki_user_watches`
-	where `user`=? and `event`=? and `object`=? and
-	`email`=? and `hash`=? and `type`=? and `title`=? and
-	`url`=?";
+    $query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=? and ";
+		$query.= "`email`=? and `hash`=? and `type`=? and `title`=? and `url`=?";
     $this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url),-1,-1,false);
-    $query = "insert into
-	`tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`)
-	values(?,?,?,?,?,?,?,?)";
+    $query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`) ";
+		$query.= "values(?,?,?,?,?,?,?,?)";
     $this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url));
     return true;
 }
