@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.28 2004-04-03 09:36:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.29 2004-06-09 19:59:19 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.28 2004-04-03 09:36:49 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.29 2004-06-09 19:59:19 teedog Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -146,6 +146,8 @@ if ($isvalid) {
 		}
 	}
 } else {
+	unset($user);
+	unset($isvalid);
 	$url = 'tiki-error.php?error=' . urlencode(tra('Invalid username or password'));
 }
 
