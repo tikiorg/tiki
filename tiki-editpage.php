@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.103 2004-10-08 09:59:44 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.104 2004-12-11 21:37:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -169,8 +169,9 @@ if ($tikidomain) { $wiki_up.= "/$tikidomain"; }
 if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki_p_upload_picture == 'y')) {
   if (isset($_FILES['picfile1']) && is_uploaded_file($_FILES['picfile1']['tmp_name'])) {
     $picname = $_FILES['picfile1']['name'];
-
-    move_uploaded_file($_FILES['picfile1']['tmp_name'], "$wiki_up/$picname");
+		if (preg_match('/\.(gif|png|jpe?g)$/i',$picname)) {
+    	move_uploaded_file($_FILES['picfile1']['tmp_name'], "$wiki_up/$picname");
+		}
   }
 }
 
