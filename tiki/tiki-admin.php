@@ -189,12 +189,13 @@ if(isset($_REQUEST["prefs"])) {
     $smarty->assign('contact_user',$_REQUEST['contact_user']);
   }
   
+  
   if(isset($_REQUEST["tikiIndex"])) {
     $tikilib->set_preference("tikiIndex",$_REQUEST["tikiIndex"]); 
     $smarty->assign_by_ref('tikiIndex',$_REQUEST["tikiIndex"]);
   }
   
-  if(isset($_REQUEST["system_os")) {
+  if(isset($_REQUEST["system_os"])) {
     $tikilib->set_preference('system_os',$_REQUEST['system_os']);
     $smarty->assign('system_os',$_REQUEST['system_os']);
   }

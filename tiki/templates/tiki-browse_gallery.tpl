@@ -1,34 +1,35 @@
-<div class="browsegallery">
-  <div  class="gallerytitle">
-    {tr}Browsing Gallery{/tr}: {$name}
-  </div>
-  <div class="adminoptions">[
-  {if $system eq 'n'}
-  {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-      <a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> |
-      <a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> 
-  {/if}
-  {if $tiki_p_upload_images eq 'y'}
-    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'} |
-        <a href="tiki-upload_image.php?galleryId={$galleryId}" class="gallink">{tr}upload image{/tr}</a>
-    {/if}
-  {/if}
-  {/if}
-  | <a href="tiki-list_gallery.php?galleryId={$galleryId}" class="gallink">{tr}list gallery{/tr}</a> {if $rss_image_gallery eq 'y'}| <a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="gallink">RSS</a>{/if}  
-  ]</div>
+<a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
+{tr}Browsing Gallery{/tr}: {$name}
+</a>
+<br/><br/>
 
-  <div class="galdesc">
-    {$description}
-  </div>
+[{if $system eq 'n'}
+	{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+    	<a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> |
+      	<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> 
+  	{/if}
+  	{if $tiki_p_upload_images eq 'y'}
+    	{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'} |
+        	<a href="tiki-upload_image.php?galleryId={$galleryId}" class="gallink">{tr}upload image{/tr}</a>
+    	{/if}
+  	{/if}
+{/if}
+  | <a href="tiki-list_gallery.php?galleryId={$galleryId}" class="gallink">{tr}list gallery{/tr}</a> {if $rss_image_gallery eq 'y'}| <a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="gallink">RSS</a>{/if}]  
 
-  <div class="sortoptions">
-    <span class="sorttitle">{tr}Sort Images by{/tr}</span>
+{if strlen($description) > 0}
+	<br/><br/>
+	{$description}
+{/if}
+<br/>
+
+<div class="sortoptions">
+	<span class="sorttitle">{tr}Sort Images by{/tr}</span>
     [<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
     |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a></span>
     |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></span>
     |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></span>
     |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span>]
-  </div>
+</div>
 
   <div class="thumbnails">
     <table width="100%" cellpadding="0" cellspacing="0">
@@ -44,25 +45,18 @@
 	  {/if}
           <br/>
           <small class="caption">{$images[idx].name}
-            <br>
-            [
+          <br />
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-	    {if $nextx!=0}
-            <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}" title="{tr}original size{/tr}">o</a>|
-	    {/if}
-            {if $imagerotate}
-            <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$images[idx].imageId}" title="{tr}rotate right{/tr}">r</a>
-            |
-            <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateleft={$images[idx].imageId}" title="{tr}rotate left{/tr}">l</a>
-            |
-            {/if}
-            <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}" title="{tr}delete{/tr}">x</a>
-            |
-            <a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$images[idx].imageId}" title="{tr}edit{/tr}">{tr}edit{/tr}</a>
-            | 
+	    		{if $nextx!=0}
+            		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}" title="{tr}original size{/tr}"><img src='img/icons2/nav_dot.gif' border='0' alt='{tr}original size{/tr}' title='{tr}original size{/tr}' /></a>
+	    		{/if}
+            	{if $imagerotate}
+            		<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$images[idx].imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' border='0' alt='{tr}rotate' title='{tr}rotate{/tr}' /></a>
+            	{/if}
+            	<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}" title="{tr}delete{/tr}"><img src='img/icons2/admin_delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+            	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$images[idx].imageId}" title="{tr}edit{/tr}"><img src='img/icons2/admin_move.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
           {/if}
-          <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$smarty.section.idx.index}&amp;offset={$offset}&amp;imageId={$images[idx].imageId}&amp;popup=1" target="_blank">{tr}popup{/tr}</a>
-            ]
+          <a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;desp=$smarty.section.idx.index&amp;offset=$offset&amp;imageId=$images[idx].imageId&amp;popup=1"} class="gallink"><img src='img/icons2/admin_unhide.gif' border='0' alt='{tr}popup{/tr}' title='{tr}popup{/tr}' /></a>
           <br/>
          ({$images[idx].xsize}x{$images[idx].ysize})[{$images[idx].hits} {tr}hits{/tr}]</small>
          </td>
@@ -78,7 +72,8 @@
     </table>
   </div>
 
-  <div class="mini">
+<div align="center">
+<div class="mini">
       {if $prev_offset >= 0}
         [<a  class="galprevnext" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;&nbsp;
       {/if}
