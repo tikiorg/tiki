@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.19 2004-09-14 07:25:28 chealer Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.20 2004-09-16 07:48:18 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock and $print_page ne 'y'}
@@ -241,14 +241,18 @@
 {/if}
 
 {if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
-<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
+<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
 {else}
-<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}</p>
+<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
 {/if}
+{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+</p>
 
 {if $wiki_extras eq 'y'}
 <br />
+{if $feature_wiki_attachments eq 'y'}
 {include file=attachments.tpl}
+{/if}
 
 {if $feature_wiki_comments eq 'y'}
 {include file=comments.tpl}

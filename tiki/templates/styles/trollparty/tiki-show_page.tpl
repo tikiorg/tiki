@@ -126,10 +126,11 @@
 {/if}
 {if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
 <p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: <b>{$lastModif|tiki_long_date}</b> {$lastModif|tiki_long_time} {tr}by{/tr} {$lastUser|userlink}
-</p>
 {else}
-<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}</p>
+<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
 {/if}
+{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+</p>
 
 {if $wiki_feature_copyrights  eq 'y'}
 {if $wikiLicensePage == $page}
@@ -148,12 +149,14 @@
 <div class="catblock">{$display_catobjects}</div>
 {/if}
 
-{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y'}
+{if $wiki_extras eq 'y'}
+<br />
+{if $feature_wiki_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
 
 {if $feature_wiki_comments}
 {include file=comments.tpl}
 {/if}
-
+{/if}
 

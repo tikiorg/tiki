@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tikigod/tiki-show_page.tpl,v 1.1 2004-07-23 19:06:22 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tikigod/tiki-show_page.tpl,v 1.2 2004-09-16 07:48:21 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -165,8 +165,12 @@
 <p class="editdate">
   {tr}Created by{/tr}: {$creator|userlink}
   {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
-</p>
+{else}
+<p class="editdate">
+  {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} 
 {/if}
+{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+</p>
 
 {if $wiki_feature_copyrights  eq 'y' and $wikiLicensePage}
   {if $wikiLicensePage == $page}

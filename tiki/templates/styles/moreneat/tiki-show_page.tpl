@@ -293,15 +293,19 @@
 {else}
 <p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
 {/if}
-{if $feature_wiki_page_footer}<br />{$wiki_page_footer_content}{/if}
+{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
 </p>
 {if $wiki_extras eq 'y'}
 <br />
+
+{if $feature_wiki_attachments eq 'y'}
 {include file=attachments.tpl}
+{/if}
 
 {if $feature_wiki_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
+
 {/if}
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
 <div class="catblock">{$display_catobjects}</div>
