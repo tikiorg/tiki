@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.8 2003-05-19 16:26:33 ohertel Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.9 2003-05-24 21:53:08 redflo Exp $
 
 if (!isset($_REQUEST["nocache"]))
   session_cache_limiter('private_no_expire');
@@ -31,6 +31,11 @@ else {
   }
 
 $imagegallib->get_image($_REQUEST["id"],$itype,$sxsize,$sysize);
+if (!isset($imagegallib->image)) {
+  // cannot scale image. Get original
+  $imagegallib->get_image($_REQUEST["id"],'o');
+}
+
 $galleryId=$imagegallib->galleryId;
 
 $smarty->assign('individual','n');
