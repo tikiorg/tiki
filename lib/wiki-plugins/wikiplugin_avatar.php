@@ -7,7 +7,7 @@
 // If no avatar nothing is displayed
 
 function wikiplugin_avatar_help() {
-  return "Displays the user Avatar";
+  return tra("Displays the user Avatar");
 }
 
 function wikiplugin_avatar($data,$params) {

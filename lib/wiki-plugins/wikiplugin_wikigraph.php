@@ -6,7 +6,7 @@ include_once('lib/wiki/wikilib.php');
 include_once("lib/graphviz/GraphViz.php");
 
 function wikiplugin_wikigraph_help() {
-  return "Renders a graph";
+  return tra("Renders a graph");
 }
   
 function wikiplugin_wikigraph($data,$params) {

@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;page={$page|escape:"url"}">
   {tr}Structure{/tr}: {$structure}
 </a><br/><br/>
-<a class="link" href="tiki-admin_structures.php">Admin structures</a><br/><br/>
+<a class="link" href="tiki-admin_structures.php">{tr}Admin structures{/tr}</a><br/><br/>
 <form action="tiki-edit_structure.php" method="post">
 <input type="hidden" name="page" value="{$page}" />
 <input type="hidden" name="structure" value="{$structure}" />

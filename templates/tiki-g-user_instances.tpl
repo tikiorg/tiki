@@ -47,7 +47,7 @@
 	<select name="filter_status">
 	<option {if '' eq $smarty.request.filter_status}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$statuses name=ix}
-	<option {if $statuses[ix] eq $smarty.request.filter_status}selected="selected"{/if} value="{$statuses[ix]}">{$statuses[ix]}</option>
+	<option {if $statuses[ix] eq $smarty.request.filter_status}selected="selected"{/if} value="{$statuses[ix]}">{tr}{$statuses[ix]}{/tr}</option>
 	{/section}
 	</select>
 </td>
