@@ -1,3 +1,356 @@
+2003-02-04  Monte Ohrt  <monte@ispi.net>
+
+    * RELEASE_NOTES:
+      reformat text
+
+2003-02-03  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS:
+      update news file
+
+2003-02-03  Greg Beaver  <greg@chiaraquartet.net>
+
+    * ChangeLog
+      Smarty.class.php:
+      begin fixing phpdoc comments in Smarty.class.php
+
+    * ChangeLog
+      Config_File.class.php:
+      fixed phpdoc comments
+
+2003-02-03  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      allow $foo->bar[$x].foo syntax
+
+    * Smarty_Compiler.class.php
+      index.php
+      configs/test.conf
+      templates/index.tpl:
+      fix accidental commit
+
+    * index.php
+      configs/test.conf
+      templates/index.tpl:
+      allow $foo->bar[$j].blah type of syntax
+
+2003-02-02  Greg Beaver  <cellog@php.net>
+
+    * Smarty.class.php
+      begin fixing of phpdoc comments
+
+    * Config_File.class.php
+      fix phpdoc comments, add phpDocumentor docblock templates
+
+2003-02-02  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php
+      docs/html.dsl
+      docs/php.dsl:
+      fix version number
+
+    * (Smarty_2_4_0)
+      Config_File.class.php
+      NEWS
+      README
+      RELEASE_NOTES
+      Smarty.class.php
+      Smarty_Compiler.class.php
+      docs/appendixes.sgml
+      docs/designers.sgml
+      docs/programmers.sgml:
+      update Smarty version numbers
+
+2003-01-30  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      Smarty_Compiler.class.php
+      TODO:
+      fix order of php tag comparisons
+
+    * NEWS
+      Smarty_Compiler.class.php:
+      fix known php tag handling problems
+
+2003-01-29  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php
+      Smarty_Compiler.class.php:
+      change comments to phpdoc style
+
+2003-01-28  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php
+      docs/programmers.sgml:
+      make separate var for compiler file
+
+    * plugins/function.fetch.php:
+      fix error call
+
+2003-01-25  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php
+      Smarty_Compiler.class.php:
+      add support for restriction to registered methods
+
+    * plugins/outputfilter.trimwhitespace.php:
+      update with textarea support
+
+2003-01-24  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      fix compiling problem with {foreach} tags
+
+    * Smarty.class.php
+      Smarty_Compiler.class.php:
+      put objects in own array, add object param format support, change
+      object syntax from foo.bar to foo->bar
+
+2003-01-23  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      Smarty.class.php
+      Smarty_Compiler.class.php:
+      add support for object registration
+
+2003-01-22  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php:
+      add file & line number of calling error to error message
+
+2003-01-21  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      put php style object syntax back in
+
+2003-01-20  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php:
+      move security settings to fetch function for template_dir
+
+    * NEWS
+      Smarty.class.php:
+      fix debug template and security, add template_dir to secure_dir at runtime
+
+2003-01-17  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      Smarty.class.php
+      Smarty_Compiler.class.php:
+      added new object support without new template syntax
+
+2003-01-15  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      Smarty.class.php
+      Smarty_Compiler.class.php:
+      fix if statement syntax for negative integers, fix issue with directories
+      named '0'
+
+2003-01-08  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php
+      plugins/function.counter.php
+      plugins/function.cycle.php
+      plugins/function.debug.php
+      plugins/function.eval.php
+      plugins/function.fetch.php
+      plugins/function.html_options.php
+      plugins/function.html_select_date.php
+      plugins/function.html_select_time.php
+      plugins/function.mailto.php
+      plugins/function.math.php
+      plugins/function.popup.php
+      plugins/function.popup_init.php:
+      update plugins to return values instead of echo, fix config file cache
+      to include global config variables in cache file
+
+    * Smarty_Compiler.class.php:
+      fix bug with >= tests in if statements, comment out full object support
+
+2003-01-06  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      docs/html.dsl
+      plugins/modifier.escape.php:
+      add javascript escape parameter to escape modifier
+
+2003-01-02  Monte Ohrt  <monte@ispi.net>
+
+    * templates/header.tpl:
+      move the title into head where it should be
+
+2002-12-24  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      added correct line numbers to smarty syntax error messages
+
+    * docs/programmers.sgml:
+      update append documentation, make more clear on its function
+
+    * Smarty_Compiler.class.php:
+      fix modifier matching regexp
+
+2002-12-23  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      support nested function calls in IF statements
+
+2002-12-20  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      few more fixes, spaces around function parameters
+
+    * Smarty_Compiler.class.php:
+      fix misc syntax issues with {if} tags
+
+2002-12-20  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      fix misc syntax issues with {if} tags
+
+2002-12-19  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      commit updates, passes all smoke tests
+
+    * NEWS:
+      update NEWS file
+
+    * Smarty_Compiler.class.php:
+      fixed literal string not in quotes as parameters
+
+    * NEWS
+      Smarty_Compiler.class.php:
+      fix misc syntax issues, add ability to pass modifiers to functions
+
+2002-12-18  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS:
+      update NEWS
+
+    * NEWS
+      Smarty.class.php
+      Smarty_Compiler.class.php:
+      update compiler code, clean up regex, add new syntax features
+
+2002-12-16  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS:
+      update NEWS file
+
+    * Smarty_Compiler.class.php:
+      commit updates for objects
+
+2002-12-14  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php
+      Smarty_Compiler.class.php:
+      fix bug with compiling config files with caching on
+
+2002-12-13  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      fix problem with matching single quoted strings
+
+    * Smarty_Compiler.class.php:
+      update embedded variable logic, get rid of ."" at end of output
+
+    * NEWS
+      docs/designers.sgml
+      plugins/function.html_select_date.php:
+      add day_value_format to html_select_date
+
+2002-12-12  Monte Ohrt  <monte@ispi.net>
+
+    * plugins/modifier.debug_print_var.php:
+      fix bug, double escaped values in display
+
+    * Smarty.class.php:
+      move debug test back into fetch()
+
+    * NEWS
+      Smarty.class.php
+      Smarty_Compiler.class.php
+      plugins/outputfilter.trimwhitespace.php:
+      assigned vars are no longer in global name space, few debug cleanups
+
+2002-12-11  Monte Ohrt  <monte@ispi.net>
+
+    * plugins/function.popup.php:
+      fix error in newline code
+
+    * plugins/function.popup.php:
+      fix popup to allow newlines in text data
+
+2002-12-10  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php:
+      fix plugin error logic
+
+    * docs/designers.sgml
+      docs/programmers.sgml:
+      edit examples, make more verbose
+
+    * NEWS
+      plugins/function.html_options.php:
+      escape html entities in the option values and output
+
+    * NEWS
+      plugins/function.html_options.php:
+      fixed bug with label of html_options
+
+2002-12-09  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty.class.php:
+      add support for var_export()
+
+    * Config_File.class.php
+      Smarty.class.php:
+      clean up code, respect force_compile and compile_check flags
+
+    * NEWS
+      Smarty.class.php
+      Smarty_Compiler.class.php
+      docs/designers.sgml
+      plugins/function.mailto.php:
+      add caching feature to config loading, document update, add mailto plugin
+
+2002-12-08  Monte Ohrt  <monte@ispi.net>
+
+    * plugins/function.fetch.php:
+      fix query part of URL
+
+2002-12-05  Monte Ohrt  <monte@ispi.net>
+
+    * docs/designers.sgml:
+      fix typos
+
+2002-11-22  Monte Ohrt  <monte@ispi.net>
+
+    * Smarty_Compiler.class.php:
+      patch for warning message
+
+2002-11-21  Monte Ohrt  <monte@ispi.net>
+
+    * RELEASE_NOTES
+      Smarty.class.php:
+      get rid of testing for a set value with assign function, just set to
+      whatever is passed into the template
+
+    * docs/programmers.sgml:
+      fix typo
+
+2002-11-19  Monte Ohrt  <monte@ispi.net>
+
+    * Config_File.class.php
+      NEWS
+      README
+      RELEASE_NOTES
+      Smarty.class.php
+      Smarty_Compiler.class.php:
+      commit changes, ready for 2.3.1 release
+
 2002-11-01  Monte Ohrt  <monte@ispi.net>
 
     * plugins/function.html_options.php:

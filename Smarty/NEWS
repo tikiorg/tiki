@@ -1,5 +1,63 @@
-Version 2.3.1
--------------
+Version 2.4.2 (Feb 11, 2003)
+----------------------------
+    - support embedded variables in objects (Monte)
+    - fix bug with objects with no properties (M Mohr, Monte)
+    - support full dollar var syntax in quoted text (Monte)
+    - fixed bug in $smarty.const.FOO introduced in 2.4.1 (M
+      Mohr, Monte)
+
+Version 2.4.1 (Feb 6, 2003)
+---------------------------
+
+    - ignore case in IF statements (Rainer Collet, Monte)
+    - treat undefined constants as null (Ferdinand Beyer, Monte)
+    - fix problem with inserts and nested fetches
+      (Rainer Collet, Monte)
+    - added support for passing params to include_php
+      (Tim Riley, Monte)
+    - added support for math operators in if statements (Monte)
+    - added support for $foo->bar[$x].blah syntax (Monte)
+
+Version 2.4.0 (Feb 2, 2003)
+---------------------------
+
+    - fix known problems with php tag handling in templates
+      (recursion, echoing <?xml tags) (Monte)
+    - add support for object registration (Monte)
+    - add debug template to secure_dir, add template_dir
+      to secure_dir by default (Ferdinand Beyer, Monte)
+    - added support for assigned object access (Monte)
+    - fixed bug with directories named '0' (Frank Bauer, Monte)
+    - add javascript parameter to escape modifier (Monte)
+    - added calling function line numbers to syntax error
+      messages in compiler (Monte)
+    - added support for modifiers to function calls (Monte)
+    - support return value for custom functions
+      instead of echoing (but echo still works) (Monte)
+    - added direct access to constants
+      via $smarty.const.FOO (Monte)
+    - added support for passing modifiers
+      to static values (Monte)
+    - fix up regex code in compiler, more accurate and
+      maintainable (Monte)
+    - added day_value_format to html_select_date (Marcus
+      Bointon, Monte)
+    - assigned variables are no longer in global
+      namespace, saving extract() calls and speeding
+      up fetch() and display() linearly with no. of
+      assigned variables (Monte)
+    - added trimwhitespace output filter to dist. (Monte)
+    - fix popup function to allow newlines in text (Monte)
+    - escape html entities in html_options (Monte)
+    - fixed bug with label for html_options (Monte)
+    - added config_load API function (Monte)
+    - added caching to config file loading (Monte)
+    - added "extra" parameter to mailto function (Monte,
+      Massimiliano Perantoni)
+    - added mailto plugin to dist.  (Monte)
+
+Version 2.3.1 (Nov 19, 2002)
+----------------------------
 
     - added optgroup support to html_options (Monte, Robert
       Amos)
@@ -13,8 +71,8 @@ Version 2.3.1
       Hagerty)
     - added textformat block function (Monte)
 
-Version 2.3.0
--------------
+Version 2.3.0 (Aug 7, 2002)
+---------------------------
 
     - added assign_by_ref() and append_by_ref() functions
       (Bob Silva, Monte)
@@ -38,8 +96,8 @@ Version 2.3.0
     - fix bug with debug_tpl file path with Windows (.SMK., Monte)
     - fix append() function with string/array problem (Monte)
 
-Version 2.2.0
--------------
+Version 2.2.0 (July 11, 2002)
+-----------------------------
 
     - make debug.tpl work with any delimiter (Monte)
     - change logic in assign() and append() to test var names
