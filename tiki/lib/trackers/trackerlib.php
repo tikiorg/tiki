@@ -595,8 +595,8 @@ class TrackerLib extends TikiLib {
 
 	function field_types() {
 		$type['c'] = array('label'=>tra('checkbox'),      'opt'=>true,  'help'=>tra('Checkbox options: put 1 if you need that next field is on the same row.'));
-		$type['n'] = array('label'=>tra('numeric field'), 'opt'=>true,  'help'=>tra('Numeric options: 1,size,prepend,append with size in chars, prepend will be display before the field append wil be display just after, and optionaly 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
-		$type['t'] = array('label'=>tra('text field'),    'opt'=>true,  'help'=>tra('Text options: 1,size,prepend,append with size in chars, prepend will be display before the field append wil be display just after, and optionaly 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
+		$type['n'] = array('label'=>tra('numeric field'), 'opt'=>true,  'help'=>tra('Numeric options: 1,size,prepend,append with size in chars, prepend will be display before the field append wil be display just after, and initial 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
+		$type['t'] = array('label'=>tra('text field'),    'opt'=>true,  'help'=>tra('Text options: 1,size,prepend,append with size in chars, prepend will be display before the field append wil be display just after, and initial 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
 		$type['a'] = array('label'=>tra('textarea'),      'opt'=>true,  'help'=>tra('Textarea options: options,width,height with option is 1 or 0, rest is size indicated in chars and lines.'));
 		$type['d'] = array('label'=>tra('drop down'),     'opt'=>true,  'help'=>tra('Dropdown options: list of items separated with commas.') );
 		$type['u'] = array('label'=>tra('user selector'), 'opt'=>true,  'help'=>tra('User Selector: use options for automatic field feeding : you can use 1 for author login or 2 for modificator login.'));
@@ -607,8 +607,8 @@ class TrackerLib extends TikiLib {
 		$type['x'] = array('label'=>tra('action'),        'opt'=>true, 'help'=>tra('Action options: Label,post,tiki-index.php,page:fieldname,highlight=test') );
 		$type['h'] = array('label'=>tra('header'),        'opt'=>false);
 		$type['e'] = array('label'=>tra('category'),      'opt'=>true, 'help'=>tra('Category options: parentId') );
-		$type['r'] = array('label'=>tra('tracker item'),  'opt'=>true, 'help'=>tra('Tracker Item options: trackerId,fieldId links to item from trackerId which fieldId matches the content of that field.') );
-		$type['l'] = array('label'=>tra('tracker links'), 'opt'=>true, 'help'=>tra('Tracker Links options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere.') );
+		$type['r'] = array('label'=>tra('item link'),     'opt'=>true, 'help'=>tra('Item Link options: trackerId,fieldId links to item from trackerId which fieldId matches the content of that field.') );
+		$type['l'] = array('label'=>tra('items list'),    'opt'=>true, 'help'=>tra('Items list options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere.') );
 		return $type;
 	}
 	
