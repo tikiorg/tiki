@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.63 2004-04-03 09:36:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.64 2004-04-03 22:12:12 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -224,7 +224,7 @@ varcheck($_COOKIE);
  * @param $content - English string
  * @param $lg - language - if not specify = global current language
  */
-function tra($content) {
+function tra($content, $lg='') {
     global $lang_use_db;
     global $language;
 
