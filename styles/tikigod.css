@@ -1076,19 +1076,20 @@ div.linksinfo {
 
 /* The header of a weblog post */
 div.posthead {
-	background-color:    #5B6C71;
+	background-color:    #CCCCCC;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   13px;
-	color:   white;
+	color:   black;
 	font-weight:   bold;
 	overflow:   hidden;
 	border:   1px solid black;
 	border-bottom:   0px;
+	-moz-border-radius: 0.6em 0.6em 0 0;
 	text-align:   center;
 	padding-left:   0px;
 	padding-right:   0px;
 	margin-bottom:   0px;
-	width:   98%;
+	width:   100%;
 }
 
 /* The font used in the heading of the weblog */
@@ -1127,10 +1128,11 @@ div.postbody {
 	overflow:    hidden;
 	background:   white;
 	border:   1px solid black;
+	border-top: 0px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
-	width:   98%;
+	width:   100%;
 	padding-left:   5px;
 	padding-top:   5px;
 	padding-bottom:   5px;
@@ -1144,13 +1146,12 @@ div.blogtitle {
 	font-size:   11px;
 	font-weight:   bold;
 	font-size:   18px;
-	background-color:   #5B6C71;
+	background-color:   #666666;
 	padding-left:   2px;
 	padding-right:   5px;
 	margin-top:   10px;
 	border:   1px solid black;
 	border-bottom:   0px;
-	width:   97%;
 }
 
 /* The weblog information */
@@ -1164,7 +1165,6 @@ div.bloginfo {
 	margin-bottom:   10px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	width:   98%;
 	clear:   both;
 }
 
@@ -1179,7 +1179,6 @@ div.blogdesc {
 	margin-bottom:   10px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	width:   98%;
 	clear:   both;
 }
 
@@ -1194,8 +1193,11 @@ div.blogtools {
 	margin-bottom:   10px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
-	width:   98%;
 	clear:   both;
+}
+
+.posthead TABLE {
+	width: 100%;
 }
 
 /**************************************************** FILE GALLERIES ****************************************************/
