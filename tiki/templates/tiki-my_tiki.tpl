@@ -1,9 +1,36 @@
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a><br/><br/>
 {include file=tiki-mytiki_bar.tpl}
 <br/><br/>
+
+
+
+<div class="tabs">
+	{if $mytiki_pages eq 'y'}
+		<span id="tab1" class="tab tabActive">My Pages</span>
+	{/if}
+	{if $mytiki_gals eq 'y'}
+		<span id="tab2" class="tab">My galleries</span>
+	{/if}
+	{if $mytiki_items eq 'y'}
+		<span id="tab3" class="tab">My items</span>
+	{/if}
+	{if $mytiki_msgs eq 'y'}
+		<span id="tab4" class="tab">My messages</span>
+	{/if}
+	{if $mytiki_tasks eq 'y'}
+		<span id="tab5" class="tab">My tasks</span>
+	{/if}
+	{if $mytiki_blogs eq 'y'}
+		<span id="tab6" class="tab">My blogs</span>
+	{/if}
+</div>
+
 {if $mytiki_pages eq 'y'}
+<div id="content1" class="content">
   <div class="cbox">
-  <div class="cbox-title">{tr}User Pages{/tr}</div>
+  <div class="cbox-title">
+  	{tr}User Pages{/tr}
+  </div>
   <div class="cbox-data">
   <table width="100%">
   {section name=ix loop=$user_pages}
@@ -16,24 +43,11 @@
   </table>
   </div>
   </div>
-<br/>  
+</div>
 {/if}
-{if $mytiki_blogs eq 'y'}
-  <div class="cbox">
-  <div class="cbox-title">{tr}User Blogs{/tr}</div>
-  <table width="100%">
-  {section name=ix loop=$user_blogs}
-  <tr><td>
-  <a class="link" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
-  </td><td align="right">
-  (<a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">{tr}edit{/tr}</a>)
-  </td></tr>
-  {/section}
-  </table>
-  </div>
-<br/>
-{/if}
+
 {if $mytiki_gals eq 'y'}
+<div id="content2" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}User Galleries{/tr}</div>
   <div class="cbox-data">
@@ -48,9 +62,11 @@
   </table>
   </div>
   </div>
-<br/>
+</div>
 {/if}
+
 {if $mytiki_items eq 'y'}
+<div id="content3" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}Assigned items{/tr}</div>
   <div class="cbox-data">
@@ -66,9 +82,11 @@
   </table>
   </div>
   </div>
-<br/>
+</div>
 {/if}
+
 {if $mytiki_msgs eq 'y'}
+<div id="content4" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}Unread Messages{/tr}</div>
   <table width="100%">
@@ -79,9 +97,11 @@
   {/section}
   </table>
   </div>
-<br/>
+</div>
 {/if}
+
 {if $mytiki_tasks eq 'y'}
+<div id="content5" class="content">
   <div class="cbox">
   <div class="cbox-title">{tr}Tasks{/tr}</div>
   <table width="100%">
@@ -92,4 +112,25 @@
   {/section}
   </table>
   </div>
+</div>
 {/if}
+
+
+
+{if $mytiki_blogs eq 'y'}
+<div id="content6" class="content">
+  <div class="cbox">
+  <div class="cbox-title">{tr}User Blogs{/tr}</div>
+  <table width="100%">
+  {section name=ix loop=$user_blogs}
+  <tr><td>
+  <a class="link" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
+  </td><td align="right">
+  (<a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">{tr}edit{/tr}</a>)
+  </td></tr>
+  {/section}
+  </table>
+  </div>
+</div>
+{/if}
+

@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki project team
-// Last modified: 16. May 2003
+// Last modified: 20. May 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -33,8 +33,6 @@
 // horizontal rules ----
 // images
 // smileys
-//
-// Remarks: Nested formats are currently NOT supported 
 
 
 // ---------------------  begin of config part  ---------------------
@@ -73,6 +71,7 @@ define("HAWIKI_TOKEN_LINK",       14);
 define("HAWIKI_TOKEN_TABLE",      15);
 define("HAWIKI_TOKEN_IMAGE",      16);
 define("HAWIKI_TOKEN_SMILEY",     17);
+define("HAWIKI_TOKEN_DUMMY",      18);
 
 // internal trace facilities for debugging
 define("HAWIKI_DEBUG_NONE",   0);
@@ -106,7 +105,7 @@ class HAWIKI_wiki
   var $yytext;        // parser output
   var $firstColumn;   // flag to determine parser position
   var $debugflags;    // flags for dumping debug info
-
+  var $textformat;    // text format: bold, italic etc.
 
   function HAWIKI_wiki($input, $wiki_base)
   {
@@ -116,6 +115,7 @@ class HAWIKI_wiki
     $this->navlink = array();
     $this->firstColumn = true;
     $this->debugflags = HAWIKI_DEBUG_NONE;
+    $this->textformat = HAW_TEXTFORMAT_NORMAL;
 
     // check input string for presence resp. maximum length
     if ((strlen($input) == 0) || (strlen($input) > HAWIKI_MAXINPUTCHARS))
@@ -135,6 +135,17 @@ class HAWIKI_wiki
   {
     // convert wiki text into HAWHAW object structure and create appropriate markup
 
+    // remove remote debugging in stable versions !!!
+    global $HTTP_GET_VARS;
+    $url_debugflags = $HTTP_GET_VARS["hawikidebugremote"];
+    if ($url_debugflags && ($this->debugflags == HAWIKI_DEBUG_NONE))
+      $this->debugflags = $url_debugflags;
+
+
+
+    if ($this->debugflags & HAWIKI_DEBUG_PARSER)
+      printf("<b>Input:</b><br><pre>%s</pre><br>\n", $this->wiki_string);
+
     $link_counter = 0;
     foreach ($this->navlink as $value)
     {
@@ -150,9 +161,9 @@ class HAWIKI_wiki
 
     if ($link_counter > 0)
     {
-      // create empty line between link(s) and wiki content
-      $emptyline = new HAW_text("");
-      $this->deck->add_text($emptyline);
+      // create horizontal rule between link(s) and wiki content
+      $rule = new HAW_rule();
+      $this->deck->add_rule($rule);
     }
 
     $input = $this->wiki_string;
@@ -163,6 +174,16 @@ class HAWIKI_wiki
 
       switch ($token)
       {
+        case HAWIKI_TOKEN_DUMMY:
+        {
+          if ($this->debugflags & HAWIKI_DEBUG_PARSER)
+            printf("<b>Dummy token</b><br>\n");
+
+          // unsupported syntax element ==> do nothing
+
+          break;
+        }
+
         case HAWIKI_TOKEN_NEWLINE:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
@@ -172,6 +193,9 @@ class HAWIKI_wiki
           $text->set_br($this->yytext); // set number of line breaks
           $this->deck->add_text($text);
           $this->firstColumn = true;    // now we're again in column 0
+
+          // reset text formatting
+          $this->textformat = HAW_TEXTFORMAT_NORMAL;
 
           break;
         }
@@ -184,7 +208,7 @@ class HAWIKI_wiki
           if (strlen($this->yytext) == 0)
             die("length of text is 0"); // for test only
 
-          $text = new HAW_text($this->yytext);
+          $text = new HAW_text($this->yytext, $this->textformat);
           $text->set_br(0);
           $this->deck->add_text($text);
 
@@ -194,11 +218,9 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_BOLD:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Bold:</b> %s<br>\n", $this->yytext);
+            printf("<b>Toggle bold</b><br>\n");
 
-          $boldtext = new HAW_text($this->yytext, HAW_TEXTFORMAT_BOLD);
-          $boldtext->set_br(0);
-          $this->deck->add_text($boldtext);
+          $this->textformat ^= HAW_TEXTFORMAT_BOLD;
 
           break;
         }
@@ -206,11 +228,9 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_ITALIC:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Italic:</b> %s<br>\n", $this->yytext);
+            printf("<b>Toggle italic</b><br>\n");
 
-          $italictext = new HAW_text($this->yytext, HAW_TEXTFORMAT_ITALIC);
-          $italictext->set_br(0);
-          $this->deck->add_text($italictext);
+          $this->textformat ^= HAW_TEXTFORMAT_ITALIC;
 
           break;
         }
@@ -218,12 +238,10 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_COLORED:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Colored:</b> %s<br>\n", $this->yytext);
+            printf("<b>Colored: %s</b><br>\n", $this->yytext);
 
-          // selective coloring is not supported by HAWHAW -> draw bold
-          $coloredtext = new HAW_text($this->yytext, HAW_TEXTFORMAT_BOLD);
-          $coloredtext->set_br(0);
-          $this->deck->add_text($coloredtext);
+          // color is not supported by HAWHAW -> display as bold
+          $this->textformat ^= HAW_TEXTFORMAT_BOLD;
 
           break;
         }
@@ -231,12 +249,10 @@ class HAWIKI_wiki
         case HAWIKI_TOKEN_MONOSPACED:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Monospaced:</b> %s<br>\n", $this->yytext);
+            printf("<b>Monospaced</b><br>\n");
 
           // monospace is not supported by HAWHAW -> draw small instead
-          $smalltext = new HAW_text($this->yytext, HAW_TEXTFORMAT_SMALL);
-          $smalltext->set_br(0);
-          $this->deck->add_text($smalltext);
+          $this->textformat |= HAW_TEXTFORMAT_SMALL;
 
           break;
         }
@@ -319,7 +335,15 @@ class HAWIKI_wiki
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
             printf("<b>WikiName:</b> %s<br>\n", $this->yytext);
 
-          $link = new HAW_link($this->yytext, $this->wiki_base . $this->yytext);
+          $link_arr = explode("|", $this->yytext);
+
+          if ($link_arr[1])
+            // display alternative link text instead of URL
+            $link = new HAW_link($link_arr[1], $this->wiki_base . $link_arr[0]);
+          else
+            // display URL
+            $link = new HAW_link($link_arr[0], $this->wiki_base . $link_arr[0]);
+
           $link->set_br(0);
           $this->deck->add_link($link);
 
@@ -435,7 +459,12 @@ class HAWIKI_wiki
     if (strlen($input) > 0)
     {
       // parsing aborted due to syntax error
-      HAWIKI_error(HAWIKI_ERROR_INVWIKISYNTAX); // script end
+      // ==> terminate output with error message
+
+      $newline = new HAW_text("");
+      $this->deck->add_text($newline);
+      $error_text = new HAW_text(HAWIKI_ERROR . " " . HAWIKI_ERROR_INVWIKISYNTAX);
+      $this->deck->add_text($error_text);
     }
 
     $link_counter = 0;
@@ -447,9 +476,9 @@ class HAWIKI_wiki
       {
         if ($link_counter == 0)
         {
-          // create empty line between wiki content and 1st link
-          $emptyline = new HAW_text("");
-          $this->deck->add_text($emptyline);
+          // create horozontal rule between wiki content and 1st link
+          $rule = new HAW_rule();
+          $this->deck->add_rule($rule);
         }
 
         $link = new HAW_link($value["label"], $value["url"]);
@@ -509,19 +538,17 @@ class HAWIKI_wiki
       return(HAWIKI_TOKEN_NEWLINE);
     }
 
-    if (preg_match("/^__(.*?)__/", $input, $matches))
+    if (preg_match("/^__/", $input))
     {
       // format bold
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 4);
+      $input = substr($input, 2);
       return(HAWIKI_TOKEN_BOLD);
     }
 
-    if (preg_match("/^''(.*?)''/", $input, $matches))
+    if (preg_match("/^''/", $input))
     {
       // format italic
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 4);
+      $input = substr($input, 2);
       return(HAWIKI_TOKEN_ITALIC);
     }
 
@@ -565,27 +592,33 @@ class HAWIKI_wiki
       return(HAWIKI_TOKEN_HEADING1);
     }
 
-    if ($this->firstColumn && preg_match("/^ (.*)/", $input, $matches))
+    if ($this->firstColumn && preg_match("/^ /", $input))
     {
       // monospaced
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 1);
+      $input = substr($input, 1);
       return(HAWIKI_TOKEN_MONOSPACED);
     }
 
-    if (preg_match("/^::(.*?)::/", $input, $matches))
+    if (preg_match("/^::/", $input))
     {
-      // centered text is not supported ==> handle as plain text
-      $this->yytext = $matches[1];
-      $input = substr($input, strlen($this->yytext) + 4);
-      return(HAWIKI_TOKEN_TEXT);
+      // centered text (not supported)
+      $input = substr($input, 2);
+      return(HAWIKI_TOKEN_DUMMY);
     }
 
-    if (preg_match("/^~~#(\w*):(.*?)~~/", $input, $matches))
+    if (preg_match("/^~~#(\w*?):/", $input, $matches))
     {
-      // colored text (not supported - displayed as bold)
-      $this->yytext = $matches[2];
-      $input = substr($input, strlen($this->yytext) + strlen($matches[1]) + 6);
+      // colored text start (not supported - displayed as bold)
+      $this->yytext = $matches[1];
+      $input = substr($input, strlen($matches[1]) + 4);
+      return(HAWIKI_TOKEN_COLORED);
+    }
+
+    if (preg_match("/^~~/", $input))
+    {
+      // colored text end (not supported - displayed as bold)
+      $this->yytext = "";
+      $input = substr($input, 2);
       return(HAWIKI_TOKEN_COLORED);
     }
 
@@ -604,7 +637,7 @@ class HAWIKI_wiki
       return(HAWIKI_TOKEN_RULE);
     }
 
-    if (preg_match("/^([A-Z][a-z]+[A-Z][a-z]+\w*)/", $input, $matches))
+    if (preg_match("/^([A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*)/", $input, $matches))
     {
       // WikiName
       $this->yytext = $matches[1];
@@ -653,13 +686,17 @@ class HAWIKI_wiki
     }
 
     // plain text - search next syntax element resp. eof
-    if (preg_match("/^(.*?)(__|''|-=|\^|::|~~|\)\)|\(\(|\[|\|\||\{img |\(:|[A-Z][a-z]+[A-Z][a-z]+\w*|[\r\n]|$)/",
+    if (preg_match("/^(.*?)(__|''|-=|\^|::|~~|\)\)|\(\(|\[|\|\||\{img |\(:|[A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*|[\r\n]|$)/",
         $input, $matches))
     {
       // plain text
       $this->yytext = $matches[1];
       $input = substr($input, strlen($this->yytext));
-      return(HAWIKI_TOKEN_TEXT);
+
+      if (strlen($this->yytext) > 0)
+        return(HAWIKI_TOKEN_TEXT);
+      else
+        return(HAWIKI_TOKEN_EOF); // can happen in case of syntax errors
     }
 
     return(HAWIKI_TOKEN_EOF);

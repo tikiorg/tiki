@@ -1140,7 +1140,7 @@ if($feature_phpopentracker == 'y') {
 }
 */
 
-
+$smarty->assign('uses_tabs','n');
 
 $user_preferences=Array();
 
