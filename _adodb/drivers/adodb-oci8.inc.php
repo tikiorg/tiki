@@ -1,7 +1,7 @@
 <?php
 /*
 
-  version V3.70 29 July 2003 (c) 2000-2003 John Lim. All rights reserved.
+  version V3.72 9 Aug 2003 (c) 2000-2003 John Lim. All rights reserved.
 
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
@@ -70,7 +70,6 @@ class ADODB_oci8 extends ADOConnection {
     
 	function ADODB_oci8() 
 	{
-	
 		$this->_hasOCIFetchStatement = ADODB_PHPVER >= 0x4200;
 	}
 	
@@ -147,6 +146,9 @@ NATSOFT.DOMAIN =
 */
 	function _connect($argHostname, $argUsername, $argPassword, $argDatabasename,$mode=0)
 	{
+        $this->_errorMsg = false;
+		$this->_errorCode = false;
+		
 		if($argHostname) { // added by Jorma Tuomainen <jorma.tuomainen@ppoy.fi>
 			if (empty($argDatabasename)) $argDatabasename = $argHostname;
 			else {
@@ -273,29 +275,35 @@ NATSOFT.DOMAIN =
 		return false;
 	}
 
-	/* there seems to be a bug in the oracle extension -- always returns ORA-00000 - no error */
 	function ErrorMsg() 
 	{
-		$arr = @OCIerror($this->_stmt);
+		if ($this->_errorMsg !== false) return $this->_errorMsg;
 		
-		if ($arr === false) {
+		if (is_resource($this->_stmt)) $arr = @OCIerror($this->_stmt);
+		if (empty($arr)) {
 			$arr = @OCIerror($this->_connectionID);
 			if ($arr === false) $arr = @OCIError();
 			if ($arr === false) return '';
 		}
-		   $this->_errorMsg = $arr['message'];
-		   return $this->_errorMsg;
+		$this->_errorMsg = $arr['message'];
+		$this->_errorCode = $arr['code'];
+		return $this->_errorMsg;
 	}
 
 	function ErrorNo() 
 	{
-		if (is_resource($this->_stmt))
-			$arr = @ocierror($this->_stmt);
-		else {
-			$arr = @ocierror($this->_connectionID);
-			if ($arr === false) $arr = @ocierror();
+		if ($this->_errorCode !== false) return $this->_errorCode;
+		
+		if (is_resource($this->_stmt)) $arr = @OCIError($this->_stmt);
+		if (empty($arr)) {
+			$arr = @OCIError($this->_connectionID);
+			if ($arr == false) $arr = @OCIError();
 			if ($arr == false) return '';
 		}
+		
+		$this->_errorMsg = $arr['message'];
+		$this->_errorCode = $arr['code'];
+		
 		return $arr['code'];
 	}
 	
@@ -691,6 +699,7 @@ NATSOFT.DOMAIN =
 	*/ 
 	function _query($sql,$inputarr)
 	{
+		
 		if (is_array($sql)) { // is prepared sql
 			$stmt = $sql[1];
 			
@@ -712,8 +721,8 @@ NATSOFT.DOMAIN =
 				}
 			}
 		} else
-			$stmt=@OCIParse($this->_connectionID,$sql);
-		
+			$stmt=OCIParse($this->_connectionID,$sql);
+	
 		$this->_stmt = $stmt;
 		if (!$stmt) return false;
 	
@@ -738,8 +747,10 @@ NATSOFT.DOMAIN =
 			}
 		}
 		
+        $this->_errorMsg = false;
+		$this->_errorCode = false;
 		if (OCIExecute($stmt,$this->_commit)) {
-        
+			
             switch (@OCIStatementType($stmt)) {
                 case "SELECT" :
 					return $stmt;
@@ -787,12 +798,15 @@ NATSOFT.DOMAIN =
 		$table = strtoupper($table);
 		if ($owner) {
 			$owner_clause = "AND ((a.OWNER = b.OWNER) AND (a.OWNER = UPPER('$owner')))";
-		} else $owner_clause = '';
-		
+			$ptab = 'ALL_';
+		} else {
+			$owner_clause = '';
+			$ptab = 'USER_';
+		}
 		$sql = "
 SELECT /*+ RULE */ distinct b.column_name
-   FROM ALL_CONSTRAINTS a
-	  , ALL_CONS_COLUMNS b
+   FROM {$ptab}CONSTRAINTS a
+	  , {$ptab}CONS_COLUMNS b
   WHERE ( UPPER(b.table_name) = ('$table'))
 	AND (UPPER(a.table_name) = ('$table') and a.constraint_type = 'P')
 	$owner_clause
@@ -875,7 +889,6 @@ SELECT /*+ RULE */ distinct b.column_name
 	{	
 	$nofixquotes=false;
 	
-	
 		if ($this->noNullStrings && strlen($s)==0)$s = ' ';
 		if (!$magic_quotes) {	
 			if ($this->replaceQuote[0] == '\\'){
@@ -922,6 +935,7 @@ class ADORecordset_oci8 extends ADORecordSet {
 		case ADODB_FETCH_DEFAULT:
 		case ADODB_FETCH_BOTH:$this->fetchMode = OCI_NUM+OCI_ASSOC+OCI_RETURN_NULLS+OCI_RETURN_LOBS; break;
 		}
+
 		$this->_queryID = $queryID;
 	}
 

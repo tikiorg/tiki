@@ -226,7 +226,7 @@ First implementation.
 /*
 	Version Number
 */
-define('ADODB_DATE_VERSION',0.09);
+define('ADODB_DATE_VERSION',0.10);
 
 /*
 	We check for Windows as only +ve ints are accepted as dates on Windows.
@@ -579,7 +579,7 @@ function _adodb_getdate($origd=false,$fast=false,$is_gmt=false)
 				$d -= $_day_power * 366;
 			} else
 				$d -= $_day_power * 365;
-			if ($d <= 0) {
+			if ($d < 0) {
 				$year = $a;
 				break;
 			}

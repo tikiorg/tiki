@@ -15,7 +15,7 @@
 /**
 	\mainpage 	
 	
-	 @version V3.70 29 July 2003 (c) 2000-2003 John Lim (jlim\@natsoft.com.my). All rights reserved.
+	 @version V3.72 9 Aug 2003 (c) 2000-2003 John Lim (jlim\@natsoft.com.my). All rights reserved.
 
 	Released under both BSD license and Lesser GPL library license. 
  	Whenever there is any discrepancy between the two licenses, 
@@ -150,7 +150,7 @@
 		/**
 		 * ADODB version as a string.
 		 */
-		$ADODB_vers = 'V3.70 29 July 2003 (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved. Released BSD & LGPL.';
+		$ADODB_vers = 'V3.72 9 Aug 2003 (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved. Released BSD & LGPL.';
 	
 		/**
 		 * Determines whether recordset->RecordCount() is used. 
@@ -272,9 +272,9 @@
 	var $_oldRaiseFn =  false;
 	var $_transOK = null;
 	var $_connectionID	= false;	/// The returned link identifier whenever a successful database connection is made.	
-	var $_errorMsg = '';		/// A variable which was used to keep the returned last error message.  The value will
+	var $_errorMsg = false;		/// A variable which was used to keep the returned last error message.  The value will
 								/// then returned by the errorMsg() function	
-						
+	var $_errorCode = false;	/// Last error code, not guaranteed to be used - only by oci8					
 	var $_queryID = false;		/// This variable keeps the last created result link identifier
 	
 	var $_isPersistentConnection = false;	/// A boolean variable to state whether its a persistent connection or normal connection.	*/
@@ -762,14 +762,14 @@
 			// non-debug version of query
 			
 			$this->_queryID =@$this->_query($sql,$inputarr,$arg3);
-			
 		}
 		// error handling if query fails
 		if ($this->_queryID === false) {
 			$fn = $this->raiseErrorFn;
 			if ($fn) {
 				$fn($this->databaseType,'EXECUTE',$this->ErrorNo(),$this->ErrorMsg(),$sql,$inputarr,$this);
-			}
+			} else
+				if ($this->debug && $this->debug !== 1) adodb_backtrace(true,4);
 			return false;
 		} else if ($this->_queryID === true) {
 		// return simplified empty recordset for inserts/updates/deletes with lower overhead
@@ -1382,7 +1382,7 @@
 	global $ADODB_CACHE_DIR;
 	
 		if (strlen($ADODB_CACHE_DIR) > 1 && !$sql) {
-			if (strpos(strncmp(PHP_OS,'WIN',3) === 0) !== false) {
+			if (strncmp(PHP_OS,'WIN',3) === 0) {
 				$cmd = 'del /s '.str_replace('/','\\',$ADODB_CACHE_DIR).'\adodb_*.cache';
 			} else {
 				$cmd = 'rm -rf '.$ADODB_CACHE_DIR.'/??/adodb_*.cache'; 
@@ -1489,6 +1489,9 @@
 			} else
 				@unlink($md5file);
 		} else {
+			$this->_errorMsg = '';
+			$this->_errorCode = 0;
+			
 			if ($this->fnCacheExecute) {
 				$fn = $this->fnCacheExecute;
 				$fn($this, $secs2cache, $sql, $inputarr);
@@ -3227,7 +3230,8 @@
 	 */
 	function &NewADOConnection($db='')
 	{
-		return ADONewConnection($db);
+		$tmp =& ADONewConnection($db);
+		return $tmp;
 	}
 	
 	/**
@@ -3367,7 +3371,7 @@
 	}
 
 	
-	function adodb_backtrace($print=true)
+	function adodb_backtrace($print=true,$levels=9999)
 	{
 		$s = '';
 		if (PHPVERSION() >= 4.3) {
@@ -3380,6 +3384,9 @@
 			$tabs = sizeof($traceArr)-1;
 			
 			foreach ($traceArr as $arr) {
+				$levels -= 1;
+				if ($levels < 0) break;
+				
 				$args = array();
 				for ($i=0; $i < $tabs; $i++) $s .= ' &nbsp; ';
 				$tabs -= 1;
