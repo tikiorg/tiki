@@ -1,3 +1,9 @@
+/*
+ * Use default looking for doxygened docs 'till
+ * theme authors redefine needed styles...
+ */
+@import "doxygen.css";
+
 body {
 	background-color:    black;
 	background-image:   url(boreal/bg.jpg);

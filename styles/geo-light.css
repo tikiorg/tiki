@@ -2,6 +2,11 @@
 style made by mose@localis.org
 for use of localis.org, and packaged in tikiwiki asis
 */
+/*
+ * Use default looking for doxygened docs 'till
+ * theme authors redefine needed styles...
+ */
+@import "doxygen.css";
 
 /*
 very light: #f1f1c9;
