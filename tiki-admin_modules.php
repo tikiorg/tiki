@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.30 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.31 2004-03-31 09:53:40 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -108,6 +108,7 @@ if (isset($_REQUEST["unassign"])) {
 	$_REQUEST["unassign"] = urldecode($_REQUEST["unassign"]);
 
 	$modlib->unassign_module($_REQUEST["unassign"]);
+	$logslib->add_log('adminmodules','unassigned module '.$_REQUEST["unassign"]);
 }
 
 if (isset($_REQUEST["modup"])) {
@@ -133,6 +134,7 @@ if (isset($_REQUEST["um_update"])) {
 	$smarty->assign_by_ref('um_title', $_REQUEST["um_title"]);
 	$smarty->assign_by_ref('um_data', $_REQUEST["um_data"]);
 	$modlib->replace_user_module($_REQUEST["um_name"], $_REQUEST["um_title"], $_REQUEST["um_data"]);
+	$logslib->add_log('adminmodules','changed user module '.$_REQUEST["um_name"]);
 }
 
 if (!isset($_REQUEST["groups"])) {
@@ -212,6 +214,7 @@ if (isset($_REQUEST["assign"])) {
 	$modlib->assign_module($_REQUEST["assign_name"],
 		'', $_REQUEST["assign_position"], $_REQUEST["assign_order"], $_REQUEST["assign_cache"], $_REQUEST["assign_rows"],
 		serialize($module_groups), $_REQUEST["assign_params"], $_REQUEST["assign_type"]);
+	$logslib->add_log('adminmodules','assigned module '.$_REQUEST["assign_name"]);
 	header ("location: tiki-admin_modules.php");
 }
 
@@ -220,6 +223,7 @@ if (isset($_REQUEST["um_remove"])) {
 	$_REQUEST["um_remove"] = urldecode($_REQUEST["um_remove"]);
 
 	$modlib->remove_user_module($_REQUEST["um_remove"]);
+	$logslib->add_log('adminmodules','removed user module '.$_REQUEST["um_remove"]);
 }
 
 if (isset($_REQUEST["um_edit"])) {
