@@ -213,7 +213,7 @@ function LayersMenuCommon() {
 	$this->libjsdir = "./libjs/";
 	$this->imgdir = "./images/";
 	$this->imgwww = "images/";
-	$this->tpldir = "./templates/";
+	$this->tpldir = "lib/phplayers/templates/";
 	$this->menuStructure = "";
 	$this->separator = "|";
 
