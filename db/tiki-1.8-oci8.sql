@@ -2802,6 +2802,7 @@ CREATE TABLE "tiki_pages" (
   "cache_timestamp" number(14) default NULL,
   "pageRank" decimal(4,3) default NULL,
   "creator" varchar(200) default NULL,
+	page_size number(10) unsigned default 0
   PRIMARY KEY ("pageName")
 
 
@@ -3256,6 +3257,8 @@ CREATE TABLE "tiki_rss_modules" (
   "url" varchar(255) default '' NOT NULL,
   "refresh" number(8) default NULL,
   "lastUpdated" number(14) default NULL,
+  "showTitle" char(1) default 'n',
+  "showPubDate" char(1) default 'n',
   "content" blob,
   PRIMARY KEY ("rssId")
 )   ;
@@ -3265,6 +3268,28 @@ BEGIN
 SELECT "tiki_rss_modules_sequ".nextval into :NEW."rssId" FROM DUAL;
 END;
 /
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tiki_rss_feeds`
+--
+-- Creation: Oct 14, 2003 at 20:34 PM
+-- Last update: Oct 14, 2003 at 20:34 PM
+--
+
+DROP TABLE "tiki_rss_feeds";
+
+
+CREATE TABLE "tiki_rss_feeds" (
+  "name" varchar(30) default '' NOT NULL,
+  "rssVer" char(1) default '1' NOT NULL,
+  "refresh" number(8) default NULL,
+  "lastUpdated" number(14) default NULL,
+  "cache" blob,
+  PRIMARY KEY ("name"," rssVer")
+) ;
+
 
 -- --------------------------------------------------------
 
@@ -3396,7 +3421,7 @@ DROP TABLE "tiki_structures";
 
 CREATE TABLE "tiki_structures" (
   "page" varchar(240) default '' NOT NULL,
-  "page_alias" varchar(240) default '' NOT NULL ,
+  "page_alias" varchar(240) default '' NOT NULL,
   "parent" varchar(240) default '' NOT NULL,
   "pos" number(4) default NULL,
   PRIMARY KEY ("page","parent")
@@ -3930,11 +3955,6 @@ CREATE TABLE "tiki_user_assigned_modules" (
   "position" char(1) default NULL,
   "ord" number(4) default NULL,
   "type" char(1) default NULL,
-  "title" varchar(40) default NULL,
-  "cache_time" number(14) default NULL,
-  "rows" number(4) default NULL,
-  "groups" clob,
-  "params" varchar(250) default NULL,
   "user" varchar(200) default '' NOT NULL,
   PRIMARY KEY ("name","user")
 ) ;
@@ -5054,7 +5074,7 @@ END;
 
 -- --------------------------------------------------------
 ------ Administrator account
-INSERT INTO users_users(email,login,password,realname,hash) VALUES('','admin','admin','System Administrator',md5('adminadmin'));
+INSERT INTO "users_users" ("email","login","password","realname","hash") VALUES ('','admin','admin','System Administrator','f6fdffe48c908deb0f4c3bd36c032e72');
 
 
 UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin;
@@ -5094,6 +5114,27 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_title','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_topic','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_author','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_date','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_img','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_reads','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_size','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_title','y');
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_view_topic','y');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('auth_create_user_auth','n');

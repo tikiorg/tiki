@@ -2023,6 +2023,7 @@ CREATE TABLE tiki_pages (
   cache_timestamp int(14) default NULL,
   pageRank decimal(4,3) default NULL,
   creator varchar(200) default NULL,
+	page_size int(10) unsigned default 0
   PRIMARY KEY  (pageName),
   KEY data (data(255)),
   KEY pageRank (pageRank),
@@ -2345,9 +2346,29 @@ CREATE TABLE tiki_rss_modules (
   url varchar(255) NOT NULL default '',
   refresh int(8) default NULL,
   lastUpdated int(14) default NULL,
+  showTitle char(1) default 'n',
+  showPubDate char(1) default 'n',
   content longblob,
   PRIMARY KEY  (rssId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+#
+# Table structure for table `tiki_rss_feeds`
+#
+# Creation: Oct 14, 2003 at 20:34 PM
+# Last update: Oct 14, 2003 at 20:34 PM
+#
+
+DROP TABLE IF EXISTS tiki_rss_feeds;
+CREATE TABLE tiki_rss_feeds (
+  name varchar(30) NOT NULL default '',
+  rssVer char(1) NOT NULL default '1',
+  refresh int(8) default NULL,
+  lastUpdated int(14) default NULL,
+  cache longblob,
+  PRIMARY KEY  (name, rssVer)
+) TYPE=MyISAM;
 # --------------------------------------------------------
 
 #
@@ -2828,11 +2849,6 @@ CREATE TABLE tiki_user_assigned_modules (
   position char(1) default NULL,
   ord int(4) default NULL,
   type char(1) default NULL,
-  title varchar(40) default NULL,
-  cache_time int(14) default NULL,
-  rows int(4) default NULL,
-  groups text,
-  params varchar(250) default NULL,
   user varchar(200) NOT NULL default '',
   PRIMARY KEY  (name,user)
 ) TYPE=MyISAM;
@@ -3500,6 +3516,13 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_reads','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_size','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_title','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_list_topic','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_view_author','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_view_date','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_view_img','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_view_reads','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_view_size','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_view_title','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('art_view_topic','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_create_user_auth','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_create_user_tiki','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('auth_ldap_adminpass','');
