@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.23 2004-01-08 18:40:18 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.24 2004-01-23 13:50:46 ggeller Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
@@ -101,10 +101,14 @@
   </div>
 {/if}
 
-{if $feature_homework eq 'y'}
+{if $feature_homework eq 'y' and $tiki_p_hw_student eq 'y'}
   <div class="separator">
     <a class='separator' href="javascript:toggle('homeworkmenu');">::</a>
-    <a class='separator' href='tiki-index.php'>{tr}Homework{/tr}</a>
+    {if $tiki_p_hw_teacher eq 'y'}
+      <a class='separator' href='tiki-hw_teacher_assignments.php'>{tr}Homework{/tr}</a>
+    {elseif $tiki_p_hw_student eq 'y'}
+      <a class='separator' href='tiki-hw_student_assignments.php'>{tr}Homework{/tr}</a>
+    {/if}
   </div>
   {if $tiki_p_hw_teacher eq 'y'}
     <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
