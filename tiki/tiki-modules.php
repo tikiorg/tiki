@@ -159,11 +159,11 @@ for($i=0;$i<count($right_modules);$i++) {
 //
 // ATTENTION: Quick hack: remove modules not assigned to Anonymous group
 //            if unregistered user here... (I'll send details to list soon)
-if ($user)
-{
+//if ($user)
+//{
   $smarty->assign_by_ref('right_modules',$right_modules);
   $smarty->assign_by_ref('left_modules',$left_modules);
-}
+/*}
 else
 {
   $rm = array();
@@ -178,5 +178,5 @@ else
 
   $smarty->assign_by_ref('right_modules',$rm);
   $smarty->assign_by_ref('left_modules',$lm);
-}
+}*/
 ?>
