@@ -9,5 +9,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 //Create a list of languages
 $languages = array();
 $languages = $tikilib->list_languages();
+$smarty->assign('module_name', "switch_lang");
 $smarty->assign_by_ref('languages', $languages);
 ?>
