@@ -1,7 +1,7 @@
 {if $preview eq 'y'}
 {include file=tiki-preview_post.tpl}
 {/if}
-<h1><a class="wiki" href="tiki-blog_post.php">{tr}Edit Post{/tr}</a></h1>
+<h1><a class="pagetitle" href="tiki-blog_post.php">{tr}Edit Post{/tr}</a></h1>
 {if $blogId > 0 }
 <a class="link" href="tiki-view_blog.php?blogId=$blogId">view blog</a>
 {/if}

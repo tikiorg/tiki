@@ -1,4 +1,5 @@
-{if $feature_galleries eq 'y'}
+{if $user}
+{if $feature_blogs eq 'y'}
 <div class="box">
 <div class="box-title">
 {tr}My blogs{/tr}
@@ -9,4 +10,5 @@
 {/section}
 </div>
 </div>
+{/if}
 {/if}

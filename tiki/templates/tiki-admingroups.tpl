@@ -25,10 +25,10 @@
 <td class="odd">{$users[user].groupDesc}</td>
 <td class="odd">
 {section name=grs loop=$users[user].perms}
-{$users[user].perms[grs]}(<a class="link" href="tiki-admingroups.php?permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)&nbsp;
+{$users[user].perms[grs]}(<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)&nbsp;
 {/section}
 </td>                                 
-<td class="odd"><a class="link" href="tiki-admingroups.php?action=delete&amp;group={$users[user].groupName}">{tr}delete{/tr}</a>
+<td class="odd"><a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName}">{tr}delete{/tr}</a>
                                    <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}">assign_perms</a></td>
 </tr>
 {else}
@@ -37,11 +37,11 @@
 <td class="even">{$users[user].groupDesc}</td>
 <td class="even">
 {section name=grs loop=$users[user].perms}
-{$users[user].perms[grs]}(<a class="link" href="tiki-admingroups.php?permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)&nbsp;
+{$users[user].perms[grs]}(<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)&nbsp;
 {/section}
 </td>                                 
 
-<td class="even"><a class="link" href="tiki-admingroups.php?action=delete&amp;group={$users[user].groupName}">{tr}delete{/tr}</a>
+<td class="even"><a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName}">{tr}delete{/tr}</a>
                  <a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}">assign_perms</a></td>
 
 </tr>
@@ -50,11 +50,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="link" href="tiki-admingroups.php?&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admingroups.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="link" href="tiki-admingroups.php?&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-admingroups.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 

@@ -1,15 +1,15 @@
 {php}
 include("lib/class_calendar.php");
-if(!isset($_SESSION["thedate"])) {
+//if(!isset($_SESSION["thedate"])) {
   $day = date("d");
   $mon = date("m");
   $year = date("Y");
-}
-if(isset($_SESSION["thedate"])) {
-  $day=date("d",$_SESSION["thedate"]);
-  $mon=date("m",$_SESSION["thedate"]);
-  $year=date("Y",$_SESSION["thedate"]);
-}
+//}
+//if(isset($_SESSION["thedate"])) {
+//  $day=date("d",$_SESSION["thedate"]);
+//  $mon=date("m",$_SESSION["thedate"]);
+//  $year=date("Y",$_SESSION["thedate"]);
+//}
 if(isset($_REQUEST["day"])) {
  $day = $_REQUEST["day"];
 }

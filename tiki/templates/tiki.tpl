@@ -18,7 +18,7 @@
       {/if}
       </div>
       </td>
-      <td id="rightcolumn"><div id="right">
+      <td id="rightcolumn">
       {section name=homeix loop=$right_modules}
       {$right_modules[homeix].data}
       {/section}

@@ -1,4 +1,10 @@
 <?
+require_once('tiki-setup.php');
+
+if($tiki_p_admin != 'y') {
+  die("You need to be admin to run this script");
+}
+
 // Cambiar lo que busca segun sea .php o .tpl
 
 $languages = Array('en','sp');

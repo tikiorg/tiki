@@ -55,8 +55,8 @@ if(isset($GLOBALS["PHPSESSID"])) {
 
 
 
-$home_blog = 1;
-$home_gallery = 1;
+$home_blog = 0;
+$home_gallery = 0;
 $feature_xmlrpc = 'n';
 $feature_blog_rankings = 'y';
 $feature_cms_rankings = 'y';
@@ -137,11 +137,13 @@ $smarty->assign('allowRegister',$allowRegister);
 $smarty->assign('cachepages',$cachepages);
 $smarty->assign('cacheimages',$cacheimages);
 
+
 $prefs = $tikilib->get_all_preferences();
 foreach($prefs as $name => $val) {
   $$name = $val;
   $smarty->assign("$name",$val);
 }
+
 
 global $lang;
 include_once('lang/'.$language.'/language.php');

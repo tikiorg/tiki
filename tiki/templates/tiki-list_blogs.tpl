@@ -1,4 +1,4 @@
-<h1><a class="wiki" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a></h1>
+<h2><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a></h2>
 {if $tiki_p_create_blogs eq 'y'}
 <a class="link" href="tiki-edit_blog.php">edit blog</a>
 {/if}
@@ -50,7 +50,7 @@
 <a class="link" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">{tr}Edit{/tr}</a>
 {/if}
 {if ($listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
-<a class="link" href="tiki-list_blogs.php?remove={$listpages[changes].blogId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}">{tr}Remove{/tr}</a>
 {/if}
 <a class="link" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}">{tr}Read{/tr}</a>
 </td>
@@ -74,7 +74,7 @@
 <a class="link" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">{tr}Edit{/tr}</a>
 {/if}
 {if $listpages[changes].user eq $user or $tiki_p_blog_admin eq 'y'}
-<a class="link" href="tiki-list_blogs.php?remove={$listpages[changes].blogId}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}">{tr}Remove{/tr}</a>
 {/if}
 <a class="link" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}">{tr}Read{/tr}</a>
 </td>
@@ -88,11 +88,11 @@
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a href="tiki-list_blogs.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-list_blogs.php?offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a href="tiki-list_blogs.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-list_blogs.php?offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

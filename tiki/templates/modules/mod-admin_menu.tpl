@@ -24,6 +24,12 @@
   <div class="separator">Blogs</div>
   <div class="button">&nbsp;<a href="tiki-list_blogs.php" class="linkbut">{tr}Blogs{/tr}</a></div>
   <div class="button">&nbsp;<a href="tiki-list_posts.php" class="linkbut">{tr}Posts{/tr}</a></div>
+  <div class="separator">Banners</div>
+  <div class="button">&nbsp;<a href="tiki-list_banners.php" class="linkbut">{tr}Banners{/tr}</a></div>
+  <div class="separator">Templates</div>
+  <div class="button">&nbsp;<a href="tiki-edit_templates.php" class="linkbut">{tr}Edit templates{/tr}</a></div>
+  <div class="separator">Dynamic content system</div>
+  <div class="button">&nbsp;<a href="tiki-list_contents.php" class="linkbut">{tr}Admin content{/tr}</a></div>
 </div>
 </div>
 {/if}

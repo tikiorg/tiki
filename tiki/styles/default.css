@@ -475,9 +475,11 @@ div.titlebar {
 /* Wiki Links used also as the class for links to itself in pages */
 a.wiki { text-decoration: none; }
 .wiki, .named-wiki  { font-weight: bold; color:#1d42be; } /*blue*/
-/* This is obscene in NS4
-b .wiki, STRONG .wiki { font-size: larger; }
-*/
+
+/* Links for page titles */
+a.pagetitle { text-decoration: none; }
+.pagetitle { font-weight: bold; color:#1d42be; } /*blue*/
+
 
 /* Wiki Links used also as the class for links to itself in pages */
 a.page { text-decoration: none; }
@@ -610,6 +612,26 @@ font-size: 12px;
  color : Black;
  background-color : #CCCCCC;
 }
+
+/* prev & next buttons in pagination */
+.prevnext {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12px;
+ color : Black;
+
+}
+.prevnext:active {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12px;
+ color : Black;
+}
+.prevnext:hover {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12px;
+ color : Black;
+ background-color : #CCCCCC;
+}
+
 
 
 /* Prevent forms from generating unwanted padding or margins */

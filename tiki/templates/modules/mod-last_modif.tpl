@@ -1,4 +1,4 @@
-{if $feature_wiki}
+{if $feature_wiki eq 'y'}
 <div class="box">
 <div class="box-title">
 {tr}Last changes{/tr}

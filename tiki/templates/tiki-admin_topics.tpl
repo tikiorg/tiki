@@ -1,4 +1,4 @@
-<h1><a  class="wiki" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a></h1>
+<h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a></h1>
 
 <h3>Create a new topic</h3>
 <form enctype="multipart/form-data" action="tiki-admin_topics.php" method="post">
