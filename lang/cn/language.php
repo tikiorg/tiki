@@ -2162,5 +2162,7 @@ from Admin->General
 "Most active blogs" => "最活跃的日志",
 "Wiki top file galleries" => "热门文件库",
 "Wiki last files" => "最新上传文件",
+"You will receive an email with your password soon" => "You will receive an email with your password soon",
+"Thank you for you registration. You may log in now." => "Thank you for you registration. You may log in now.",
 "##end###" => "###end###");
 ?>

@@ -121,8 +121,8 @@ if(isset($_REQUEST["register"])) {
     $smarty->assign('showmsg','y');
   } else {
     $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
-    header("location: index.php");
-    die;
+    $smarty->assign('msg',tra("Thank you for you registration. You may log in now."));
+    $smarty->assign('showmsg','y');
   }
 
 }

@@ -2123,5 +2123,7 @@ from Admin->General
 "1 day" => "1 day",
 "1 week" => "1 week",
 "1 month" => "1 month",
+"You will receive an email with your password soon" => "You will receive an email with your password soon",
+"Thank you for you registration. You may log in now." => "Thank you for you registration. You may log in now.",
 "##end###" => "###end###");
 ?>

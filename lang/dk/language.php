@@ -2037,5 +2037,7 @@ under Admin->Generelt
 "picture not found" => "picture not found",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=)" => "URL (brug \$page som erstattes af sidens navn i URL'en, f.eks.: http://www.eksempel.dk/tiki-index.php?page=\$page)",
 "Menu options" => "Menu options",
+"You will receive an email with your password soon" => "You will receive an email with your password soon",
+"Thank you for you registration. You may log in now." => "Thank you for you registration. You may log in now.",
 "##end###" => "###end###");
 ?>
