@@ -108,21 +108,51 @@ class FileGalLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$aux = array();
 
-			$aux["name"] = $res["name"];
-			$gid = $res["galleryId"];
-			$aux["id"] = $gid;
-			$aux["visible"] = $res["visible"];
-			$aux["galleryId"] = $res["galleryId"];
-			$aux["description"] = $res["description"];
-			$aux["created"] = $res["created"];
-			$aux["lastModif"] = $res["lastModif"];
-			$aux["user"] = $res["user"];
-			$aux["hits"] = $res["hits"];
-			$aux["public"] = $res["public"];
-			$aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`=?",array($gid));
-			$ret[] = $aux;
+		    $add = TRUE;
+		    global $feature_categories;
+		    global $userlib;
+		    global $user;
+		    global $tiki_p_admin;
+
+		    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['galleryId'], 'file gallery')) {
+		    // gallery permissions override category permissions
+				if (!$userlib->object_has_permission($user, $res['galleryId'], 'file gallery', 'tiki_p_view_file_gallery')) {
+				    $add = FALSE;
+				}
+		    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		    	// no forum permissions so now we check category permissions
+		    	global $categlib;
+		    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+		    	$perms_array = $categlib->get_object_categories_perms($user, 'file gallery', $res['galleryId']);
+		    	if ($perms_array) {
+			    	foreach ($perms_array as $perm => $value) {
+			    		$$perm = $value;
+			    	}
+		    	}
+
+		    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		    		$add = FALSE;
+		    	}
+		    }
+
+			if ($add) {
+				$aux = array();
+
+				$aux["name"] = $res["name"];
+				$gid = $res["galleryId"];
+				$aux["id"] = $gid;
+				$aux["visible"] = $res["visible"];
+				$aux["galleryId"] = $res["galleryId"];
+				$aux["description"] = $res["description"];
+				$aux["created"] = $res["created"];
+				$aux["lastModif"] = $res["lastModif"];
+				$aux["user"] = $res["user"];
+				$aux["hits"] = $res["hits"];
+				$aux["public"] = $res["public"];
+				$aux["files"] = $this->getOne("select count(*) from `tiki_files` where `galleryId`=?",array($gid));
+				$ret[] = $aux;
+			}
 		}
 
 		if ($old_sort_mode == 'files_asc') {
