@@ -38,12 +38,12 @@
 <h2>{tr}Language{/tr}</h2>
 <table>
 <tr>
-	<td><select name="lang" size="1">
-	{if !$lang || $lang == "NULL"}
+	<td><select name="langpage" size="1">
+	{if !$langpage || $langpage == "NULL"}
 	<option value="">{tr}Unknown{/tr}</option>
 	{/if}
 	{section name=ix loop=$languages}
-	<option value="{$languages[ix].value|escape}"{if $lang eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
+	<option value="{$languages[ix].value|escape}"{if $langpage eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
 	{/section}</select>
 	</td>
 	{if count(trads)}
