@@ -30,7 +30,9 @@ class ActivityManager extends BaseManager {
    Asociates an activity with a role
   */
   function add_activity_role($activityId, $roleId) {
-    $query = "replace into `".GALAXIA_TABLE_PREFIX."activity_roles`(`activityId`,`roleId`) values(?,?)";
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."activity_roles` where `activityId`=? and `roleId`=?";
+    $this->query($query,array($activityId, $roleId));
+    $query = "insert into `".GALAXIA_TABLE_PREFIX."activity_roles`(`activityId`,`roleId`) values(?,?)";
     $this->query($query,array($activityId, $roleId));
   }
   
@@ -92,9 +94,11 @@ class ActivityManager extends BaseManager {
     if($a1['type'] == 'end') return false;
      
     
-    $query = "replace into ".GALAXIA_TABLE_PREFIX."transitions(pId,actFromId,actToId)
-              values($pId,$actFromId,$actToId)";
-    $this->query($query);
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."transitions where `actFromId`=? and `actToId`=?";
+    $this->query($query,array($actFromId, $actToId));
+    $query = "insert into `".GALAXIA_TABLE_PREFIX."transitions`(`pId`,`actFromId`,`actToId`) values(?,?,?)";
+    $this->query($query,array($pId, $actFromId, $actToId));
+
     return true;
   }
   

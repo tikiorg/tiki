@@ -39,8 +39,8 @@ class RoleManager extends BaseManager {
   */
   function get_role($pId, $roleId)
   {
-  	$query = "select * from ".GALAXIA_TABLE_PREFIX."roles where pId=$pId and roleId=$roleId";
-	$result = $this->query($query);
+  	$query = "select * from `".GALAXIA_TABLE_PREFIX."roles` where `pId`=? and `roleId`=?";
+	$result = $this->query($query,array($pId, $roleId));
 	$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 	return $res;
   }
@@ -59,8 +59,10 @@ class RoleManager extends BaseManager {
   */
   function map_user_to_role($pId,$user,$roleId)
   {
-    $query = "replace into ".GALAXIA_TABLE_PREFIX."user_roles(pId,user,roleId) values($pId,'$user',$roleId)";
-    $this->query($query);
+	$query = "delete from `".GALAXIA_TABLE_PREFIX."user_roles` where `roleId`=? and `user`=?";
+	$this->query($query,array($roleId, $user));
+	$query = "insert into `".GALAXIA_TABLE_PREFIX."user_roles`(`pId`, `user`, `roleId`) values(?,?,?)";
+	$this->query($query,array($pId,$user,$roleId));
   }
   
   /*!
@@ -68,8 +70,8 @@ class RoleManager extends BaseManager {
   */
   function remove_mapping($user,$roleId)
   { 
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."user_roles where user='$user' and roleId=$roleId";
-    $this->query($query);
+	$query = "delete from `".GALAXIA_TABLE_PREFIX."user_roles` where `user`=? and `roleId`=?";
+	$this->query($query,array($user, $roleId));
   }
   
   /*!
@@ -79,14 +81,16 @@ class RoleManager extends BaseManager {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
 	$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where gr.roleId=gur.roleId and gur.pId=$pId and ((name like $findesc) or (user like $findesc) or (description like $findesc))";
+    	$query = "select `name`,`gr`.`roleId`,`user` from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? and ((`name` like ?) or (`user` like ?) or (`description` like ?)) order by ? limit ?,?";
+	$result = $this->query($query,array($pId, $findesc, $findesc, $findesc, $sort_mode, $offset, $maxRecords));
+    	$query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? and ((`name` like ?) or (`user` like ?) or (`description` like ?)) order by ? limit ?,?";
+	$cant = $this->getOne($query_cant,array($pId, $findesc, $findesc, $findesc, $sort_mode, $offset, $maxRecords));
     } else {
-      $mid=" where gr.roleId=gur.roleId and gur.pId=$pId ";
+    	$query = "select `name`,`gr`.`roleId`,`user` from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? order by ? limit ?,?";
+	$result = $this->query($query,array($pId, $sort_mode, $offset, $maxRecords));
+    	$query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."roles` gr, `".GALAXIA_TABLE_PREFIX."user_roles` gur where `gr`.`roleId`=`gur`.`roleId` and `gur`.`pId`=? order by ? limit ?,?";
+	$cant = $this->getOne($query_cant,array($pId, $sort_mode, $offset, $maxRecords));
     }
-    $query = "select name,gr.roleId,user from ".GALAXIA_TABLE_PREFIX."roles gr, ".GALAXIA_TABLE_PREFIX."user_roles gur $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."roles gr, ".GALAXIA_TABLE_PREFIX."user_roles gur $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;
@@ -133,12 +137,12 @@ class RoleManager extends BaseManager {
   */
   function remove_role($pId, $roleId)
   {
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."roles where pId=$pId and roleId=$roleId";
-    $this->query($query);
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."activity_roles where roleId=$roleId";
-    $this->query($query);
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."user_roles where roleId=$roleId";
-    $this->query($query);
+	$query = "delete from `".GALAXIA_TABLE_PREFIX."roles` where `pId`=? and `roleId`=?";
+	$this->query($query,array($pId, $roleId));
+	$query = "delete from `".GALAXIA_TABLE_PREFIX."activity_roles` where `roleId`=?";
+	$this->query($query,array($roleId));
+	$query = "delete from `".GALAXIA_TABLE_PREFIX."user_roles` where `roleId`=?";
+	$this->query($query,array($roleId));
   }
   
   /*!
