@@ -319,7 +319,7 @@ CREATE TABLE tiki_article_types (
   show_reads varchar(1) default 'y',
   show_size varchar(1) default 'y',
   creator_edit varchar(1) default NULL,
-  comment_rating varchar(1) default NULL,
+  comment_can_rate_article char(1) default NULL,
   PRIMARY KEY  (type)
 ) TYPE=MyISAM ;
 
@@ -857,6 +857,7 @@ CREATE TABLE tiki_comments (
   smiley varchar(80) default NULL,
   message_id varchar(250) default NULL,
   in_reply_to varchar(250) default NULL,
+  comment_rating tinyint(2) default NULL,  
   PRIMARY KEY  (threadId),
   KEY title (title),
   KEY data (data(255)),
@@ -3371,7 +3372,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_read_comments', 'Can read comments', 'basic', 'comments');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_remove_comments', 'Can delete comments', 'editors', 'comments');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_comments', 'Can vote comments', 'registered', 'comments');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin', 'Administrator, can manage users groups and permissions and all the weblog features', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin', 'Administrator, can manage users groups and permissions, Hotwords and all the weblog features', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit', 'Can edit pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view', 'Can view page/pages', 'basic', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_remove', 'Can remove', 'editors', 'wiki');
@@ -3689,6 +3690,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_hotwords_nw','n
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_hotwords','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_html_pages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_image_galleries_comments','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_integrator','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_lastChanges','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_left_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_likePages','y');
@@ -3848,8 +3850,10 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_galleries','y
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_gallery','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_wiki','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('sender_email','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('email_encoding','utf-8');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_date_format','%a %d of %b, %Y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_time_format','%H:%M %Z');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('shoutbox_autolink','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('siteTitle','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('slide_style','slidestyle.css');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('style','moreneat.css');
@@ -3921,6 +3925,7 @@ CREATE TABLE tiki_integrator_reps (
   css_file varchar(255) NOT NULL default '',
   visibility char(1) NOT NULL default 'y',
   cacheable char(1) NOT NULL default 'y',
+  expiration int(11) NOT NULL default '0',
   description text NOT NULL,
   PRIMARY KEY  (repID)
 ) TYPE=MyISAM;
@@ -3928,7 +3933,7 @@ CREATE TABLE tiki_integrator_reps (
 #
 # Dumping data for table 'tiki_integrator_reps'
 #
-INSERT INTO tiki_integrator_reps VALUES (1,'Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
+INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','0','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
 
 #
 # Table structure for table 'tiki_integrator_rules'
@@ -3952,13 +3957,45 @@ CREATE TABLE tiki_integrator_rules (
 #
 # Dumping data for table 'tiki_integrator_rules'
 #
-INSERT INTO tiki_integrator_rules VALUES (1,1,1,'.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <BODY> tags');
-INSERT INTO tiki_integrator_rules VALUES (2,1,2,'img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix images path');
-INSERT INTO tiki_integrator_rules VALUES (3,1,3,'href=(\"|\')(?!(#|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Relace internal links to integrator. Dont touch an external links.');
+INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <BODY> tags');
+INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix images path');
+INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Relace internal links to integrator. Dont touch an external links.');
 
 #
 # Integrator permissions
 #
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
+
+#
+# Table structures for table 'tiki_quicktags'
+# 
+DROP TABLE IF EXISTS tiki_quicktags;
+CREATE TABLE `tiki_quicktags` (
+  `tagId` int(4) unsigned NOT NULL auto_increment,
+  `taglabel` varchar(255) default NULL,
+  `taginsert` varchar(255) default NULL,
+  `tagicon` varchar(255) default NULL,
+  PRIMARY KEY  (`tagId`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('bold','__text__','images/ed_format_bold.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('italic','\'\'text\'\'','images/ed_format_italic.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('underline','===text===','images/ed_format_underline.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','images/insert_table.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('external link','[http://example.com|text]','images/ed_link.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('wiki link','((text))','images/ed_copy.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('heading1','!text','images/ed_custom.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('title bar','-=text=-','images/fullscreen_maximize.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('box','^text^','images/ed_about.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('rss feed','{rss id= }','images/ico_link.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic content','{content id= }','images/book.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('tagline','{cookie}','images/footprint.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('hr','---','images/ed_hr.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('center text','::text::','images/ed_align_center.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('colored text','~~#FF0000:text~~','images/fontfamily.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic variable','%text%','images/book.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif');
+
 
