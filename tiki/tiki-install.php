@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.41 2003-12-28 03:45:30 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.42 2003-12-28 06:52:04 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.41 2003-12-28 03:45:30 wolff_borg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.42 2003-12-28 06:52:04 wolff_borg Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -99,9 +99,10 @@ function create_dirs(){
 		'var/log',
 		'var/log/irc',
 		'templates',
-		'styles',
-		'lib/Galaxia',
-		'lib/Galaxia/processes');
+		'styles');
+
+  if (file_exists('lib/Galaxia'))
+    array_push($dirs, 'lib/Galaxia/processes');
 
 	$ret = "";
   foreach ($dirs as $dir) {
