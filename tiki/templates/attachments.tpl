@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.14 2004-02-04 15:56:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.15 2004-02-05 08:36:48 mose Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -33,7 +33,7 @@
 {cycle values="odd,even" print=false advance=false}
 {section name=ix loop=$atts}
 <tr class="{cycle}">
-<td><span class="mini">{$smarty.section.ix.index}</span></td>
+<td><span class="mini">{$smarty.section.ix.index_next}</span></td>
 <td>
  {$atts[ix].filename|iconify}
  <a title="{tr}Click here to download this file{/tr}" class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
