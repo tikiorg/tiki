@@ -20,7 +20,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.5 $
+    * @version $Revision: 1.6 $
     */
     class WikiPluginBackLinks extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -39,7 +39,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.5 $");
+                "\$Revision: 1.6 $");
         }
         function run ($data, $params) {
             global $wikilib;
@@ -62,8 +62,8 @@
             }
             $sOutput = "";
             // Verify if the page exists
-            if (!PluginsLibUtil::isPage($page)) {
-                return $this->error("The page <b>$page</b> doesn't exists");
+            if (!$wikilib->page_exists($page)) {
+                return $this->error(tra("Page cannot be found")." : <b>$page</b>");
             }
             //
             /////////////////////////////////
