@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.26 2004-08-23 22:18:23 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.27 2004-08-24 13:21:27 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,11 +120,30 @@ if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
 	$gal_info["name"] = 'System';
 	$gal_info["public"] = 'y';
 	$gal_info["description"] = 'System Gallery';
+	$gal_info['showname'] ='y';
+	$gal_info['showimageid'] ='n';
+	$gal_info['showdescription'] ='n';
+	$gal_info['showcreated'] ='n';
+	$gal_info['showuser'] ='n';
+	$gal_info['showhits'] ='y';
+	$gal_info['showxysize'] ='y';
+	$gal_info['showfilesize'] ='n';
+	$gal_info['showfilename'] ='n';
+
 }
 
 $smarty->assign_by_ref('owner', $gal_info["user"]);
 $smarty->assign_by_ref('public', $gal_info["public"]);
 $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
+$smarty->assign_by_ref('showname', $gal_info['showname']);
+$smarty->assign_by_ref('showimageid', $gal_info['showimageid']);
+$smarty->assign_by_ref('showdescription', $gal_info['showdescription']);
+$smarty->assign_by_ref('showcreated', $gal_info['showcreated']);
+$smarty->assign_by_ref('showuser', $gal_info['showuser']);
+$smarty->assign_by_ref('showhits', $gal_info['showhits']);
+$smarty->assign_by_ref('showxysize', $gal_info['showxysize']);
+$smarty->assign_by_ref('showfilesize', $gal_info['showfilesize']);
+$smarty->assign_by_ref('showfilename', $gal_info['showfilename']);
 
 $imagegallib->add_gallery_hit($_REQUEST["galleryId"]);
 
@@ -244,8 +263,12 @@ if ($imagegallib->canrotate) {
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	// default sortorder from gallery settings
-	$sort_mode = $info['sortorder'].'_'.$info['sortdirection'];
+	if(isset($info['sortorder'])) {
+		// default sortorder from gallery settings
+		$sort_mode = $info['sortorder'].'_'.$info['sortdirection'];
+	} else {
+		$sort_mode = 'created_desc';
+	}
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }

@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2004-08-22 22:49:31 $
+# $Date: 2004-08-24 13:21:28 $
 # $Author: redflo $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1428,6 +1428,15 @@ CREATE TABLE tiki_galleries (
   sortdirection varchar(4) NOT NULL default 'desc',
   galleryimage varchar(20) NOT NULL default 'first',
   parentgallery int(14) NOT NULL default -1,
+  showname char(1) NOT NULL default 'y',
+  showimageid char(1) NOT NULL default 'n',
+  showdescription char(1) NOT NULL default 'n',
+  showcreated char(1) NOT NULL default 'n',
+  showuser char(1) NOT NULL default 'n',
+  showhits char(1) NOT NULL default 'y',
+  showxysize char(1) NOT NULL default 'y',
+  showfilesize char(1) NOT NULL default 'n',
+  showfilename char(1) NOT NULL default 'n',
   PRIMARY KEY  (galleryId),
   KEY name (name),
   KEY description (description(255)),

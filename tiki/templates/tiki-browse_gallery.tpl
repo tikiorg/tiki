@@ -44,10 +44,16 @@
           &nbsp;&nbsp;<br />
           <a href="tiki-browse_gallery.php?galleryId={$item.galleryId}"><img alt="subgallery {$item.name}" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
 	  <br />
-	  <small class="caption">{tr}Subgallery{/tr}: {$item.name}
-	  <br />
-	  ({$item.numimages} Images) [{$item.hits}
-                                {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]</small>
+	  <small class="caption">
+		{tr}Subgallery{/tr}: 
+			{if $showname=='y' || $showfilename=='y'}{$item.name}<br />{/if}
+			{if $showimageid=='y'}{tr}ID{/tr}: {$item.galleryId}<br />{/if}
+			{if $showdescription=='y'}{$item.description}<br />{/if}
+			{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
+			{if $showuser=='y'}{tr}User{/tr}: {$item.user}<br />{/if}
+			{if $showxysize=='y' || $showfilesize=='y'}({$item.numimages} Images){/if}
+			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]<br />{/if}
+                        </small>
 	  </td>
         {/foreach}
         {foreach from=$images key=key item=item}
@@ -60,7 +66,16 @@
           <a href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;desp={$key}&amp;offset={$offset}&amp;imageId={$item.imageId}&amp;scaled&amp;xsize={$nextx}&amp;ysize={$nexty}"><img alt="thumbnail" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
 	  {/if}
           <br />
-          <small class="caption">{$item.name}
+          <small class="caption">
+		{if $showname=='y'}{$item.name}<br />{/if}
+		{if $showfilename=='y'}{tr}Filename{/tr}: {$item.filename}<br />{/if}
+		{if $showimageid=='y'}{tr}ID{/tr}: {$item.imageId}<br />{/if}
+		{if $showdescription=='y'}{$item.description}<br />{/if}
+		{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
+		{if $showuser=='y'}{tr}User{/tr}: {$item.user}<br />{/if}
+		{if $showxysize=='y'}({$item.xsize}x{$item.ysize}){/if}
+		{if $showfilesize=='y'}({$item.filesize} Bytes){/if}
+		{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]{/if}
           <br />
           {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 	    		{if $nextx!=0}
@@ -76,8 +91,7 @@
                                         {assign var=THEimageId value=$item.imageId}
           <a {jspopup href="tiki-browse_image.php?galleryId=$galleryId&amp;sort_mode=$sort_mode&amp;desp=$desp&amp;offset=$offset&amp;imageId=$THEimageId&amp;popup=1"} class="gallink"><img src='img/icons2/admin_unhide.gif' border='0' alt='{tr}popup{/tr}' title='{tr}popup{/tr}' /></a>
           <br />
-         ({$item.xsize}x{$item.ysize})[{$item.hits}
-				 {if $item.hits == 1}{tr}hit{/tr}{else}{tr}hits{/tr}{/if}]</small>
+	</small>
          </td>
          {if ($key + $num_subgals) % $rowImages eq $rowImages2}
            </tr><tr>
