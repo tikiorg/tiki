@@ -351,7 +351,7 @@ class UsersLib extends TikiLib {
     $hash=md5($pass);
 
     // first verify that the user exists
-    $query = "select login from users_users where binary login = '$user' and hash='$hash'";
+    $query = "select login from users_users where binary login = '$user'";
     $result = $this->query($query);
     if(!$result->numRows())
         return USER_NOT_FOUND;
