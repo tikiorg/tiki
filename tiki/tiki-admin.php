@@ -13,6 +13,92 @@ if($tiki_p_admin != 'y') {
     die;
 }
 
+function simple_set_toggle( $feature ) 
+{
+  global $_REQUEST, $tikilib, $smarty;
+
+  if (isset($_REQUEST[$feature]) && $_REQUEST[$feature]=="on") {
+    $tikilib->set_preference( $feature, 'y' ); 
+    $smarty->assign( $feature, 'y' );
+  } else {
+    $tikilib->set_preference( $feature, 'n' ); 
+    $smarty->assign( $feature, 'n' );
+  }
+}
+  
+// Process Features form(s)
+if (isset($_REQUEST["features"])) {
+  simple_set_toggle( "feature_wiki" );
+  simple_set_toggle( "feature_chat" );
+  simple_set_toggle( "feature_polls" );
+  simple_set_toggle( "feature_custom_home" );
+  simple_set_toggle( "feature_forums" );
+  simple_set_toggle( "feature_file_galleries" );
+  simple_set_toggle( "feature_banners" );
+  simple_set_toggle( "feature_xmlrpc" );
+  simple_set_toggle( "feature_trackers" );
+  simple_set_toggle( "feature_directory" );
+  simple_set_toggle( "feature_newsreader" );
+  simple_set_toggle( "feature_notepad" );
+  simple_set_toggle( "feature_userfiles" );
+  simple_set_toggle( "feature_usermenu" );
+  simple_set_toggle( "feature_minical" );
+  simple_set_toggle( "feature_theme_control" );
+  simple_set_toggle( "feature_workflow" );
+  simple_set_toggle( "feature_user_watches" );
+  simple_set_toggle( "feature_charts");
+  simple_set_toggle( "feature_phpopentracker" );
+  simple_set_toggle( "feature_eph" );
+  simple_set_toggle( "feature_live_support" );
+  simple_set_toggle( "feature_banning" );
+  simple_set_toggle( "feature_contact" );
+  simple_set_toggle( "feature_messages" );
+  simple_set_toggle( "feature_tasks" );
+  simple_set_toggle( "feature_webmail" );
+  simple_set_toggle( "feature_surveys" );
+  simple_set_toggle( "feature_newsletters" );
+  simple_set_toggle( "feature_drawings" );
+  simple_set_toggle( "feature_html_pages" );
+  simple_set_toggle( "feature_search_stats" );
+  simple_set_toggle( "feature_referer_stats" );
+  simple_set_toggle( "feature_categories" );
+  simple_set_toggle( "feature_faqs" );
+  simple_set_toggle( "feature_shoutbox" );
+  simple_set_toggle( "feature_quizzes" );
+  simple_set_toggle( "feature_smileys" );
+  simple_set_toggle( "feature_stats" );
+  simple_set_toggle( "feature_games" );
+  simple_set_toggle( "user_assigned_modules" );
+  simple_set_toggle( "feature_user_bookmarks" );
+  simple_set_toggle( "feature_comm" );
+  simple_set_toggle( "feature_search" );
+  simple_set_toggle( "feature_search_fulltext" );
+  simple_set_toggle( "feature_edit_templates" );
+  simple_set_toggle( "feature_dynamic_content" );
+  simple_set_toggle( "feature_articles" );
+  simple_set_toggle( "feature_submissions" );
+  simple_set_toggle( "feature_blogs" );
+  simple_set_toggle( "feature_hotwords" );
+  simple_set_toggle( "feature_hotwords_nw" );
+  simple_set_toggle( "feature_userPreferences" );
+  simple_set_toggle( "feature_featuredLinks" );
+  simple_set_toggle( "feature_galleries" );
+  simple_set_toggle( "feature_calendar" );
+  simple_set_toggle( "feature_editcss" );
+}
+
+else if (isset($_REQUEST["layout"])) {
+  simple_set_toggle( "feature_left_column" );
+  simple_set_toggle( "feature_right_column" );
+  simple_set_toggle( "feature_top_bar" );
+  simple_set_toggle( "feature_bot_bar" );
+}
+
+else if (isset($_REQUEST["layout_ss"])) {
+  simple_set_toggle( "layout_section" );
+}
+
+
 if(isset($_REQUEST["rmvorphimg"])) {
   $adminlib->remove_orphan_images();
 }
@@ -20,16 +106,6 @@ if(isset($_REQUEST["rmvunusedpic"])) {
   $adminlib->remove_unused_pictures();	
 }
 
-if(isset($_REQUEST["layout_ss"])) {
- if(isset($_REQUEST["layout_section"]) && $_REQUEST["layout_section"]=="on") {
-    $tikilib->set_preference("layout_section",'y'); 
-    $smarty->assign('layout_section','y');
-  } else {
-    $tikilib->set_preference("layout_section",'n');
-    $smarty->assign('layout_section','n');
-  }
-	
-}
 
 if(isset($_REQUEST["userfilesprefs"])) {
   $tikilib->set_preference("uf_use_db",$_REQUEST["uf_use_db"]);
@@ -40,36 +116,6 @@ if(isset($_REQUEST["userfilesprefs"])) {
   $smarty->assign('userfiles_quota',$_REQUEST['userfiles_quota']);
 }
 
-if(isset($_REQUEST["layout"])) {
- if(isset($_REQUEST["feature_left_column"]) && $_REQUEST["feature_left_column"]=="on") {
-    $tikilib->set_preference("feature_left_column",'y'); 
-    $smarty->assign('feature_left_column','y');
-  } else {
-    $tikilib->set_preference("feature_left_column",'n');
-    $smarty->assign('feature_left_column','n');
-  }
-  if(isset($_REQUEST["feature_right_column"]) && $_REQUEST["feature_right_column"]=="on") {
-    $tikilib->set_preference("feature_right_column",'y'); 
-    $smarty->assign('feature_right_column','y');
-  } else {
-    $tikilib->set_preference("feature_right_column",'n');
-    $smarty->assign('feature_right_column','n');
-  }
-  if(isset($_REQUEST["feature_top_bar"]) && $_REQUEST["feature_top_bar"]=="on") {
-    $tikilib->set_preference("feature_top_bar",'y'); 
-    $smarty->assign('feature_top_bar','y');
-  } else {
-    $tikilib->set_preference("feature_top_bar",'n');
-    $smarty->assign('feature_top_bar','n');
-  }
-  if(isset($_REQUEST["feature_bot_bar"]) && $_REQUEST["feature_bot_bar"]=="on") {
-    $tikilib->set_preference("feature_bot_bar",'y'); 
-    $smarty->assign('feature_bot_bar','y');
-  } else {
-    $tikilib->set_preference("feature_bot_bar",'n');
-    $smarty->assign('feature_bot_bar','n');
-  }
-}
 
 
 if(isset($_REQUEST["maxrss"])) {
@@ -1605,467 +1651,6 @@ if(isset($_REQUEST["filegalset"])) {
 }
 
 
-if(isset($_REQUEST["features"])) {
-  if(isset($_REQUEST["feature_wiki"]) && $_REQUEST["feature_wiki"]=="on") {
-    $tikilib->set_preference("feature_wiki",'y'); 
-    $smarty->assign("feature_wiki",'y');
-  } else {
-    $tikilib->set_preference("feature_wiki",'n');
-    $smarty->assign("feature_wiki",'n');
-  }
-  
-  if(isset($_REQUEST["feature_chat"]) && $_REQUEST["feature_chat"]=="on") {
-    $tikilib->set_preference("feature_chat",'y'); 
-    $smarty->assign("feature_chat",'y');
-  } else {
-    $tikilib->set_preference("feature_chat",'n');
-    $smarty->assign("feature_chat",'n');
-  }
-  
-  if(isset($_REQUEST["feature_polls"]) && $_REQUEST["feature_polls"]=="on") {
-    $tikilib->set_preference("feature_polls",'y'); 
-    $smarty->assign("feature_polls",'y');
-  } else {
-    $tikilib->set_preference("feature_polls",'n');
-    $smarty->assign("feature_polls",'n');
-  }
-  
-  if(isset($_REQUEST["feature_custom_home"]) && $_REQUEST["feature_custom_home"]=="on") {
-    $tikilib->set_preference("feature_custom_home",'y'); 
-    $smarty->assign("feature_custom_home",'y');
-  } else {
-    $tikilib->set_preference("feature_custom_home",'n');
-    $smarty->assign("feature_custom_home",'n');
-  }
-  
-  if(isset($_REQUEST["feature_forums"]) && $_REQUEST["feature_forums"]=="on") {
-    $tikilib->set_preference("feature_forums",'y'); 
-    $smarty->assign("feature_forums",'y');
-  } else {
-    $tikilib->set_preference("feature_forums",'n');
-    $smarty->assign("feature_forums",'n');
-  }
-  
-  if(isset($_REQUEST["feature_file_galleries"]) && $_REQUEST["feature_file_galleries"]=="on") {
-    $tikilib->set_preference("feature_file_galleries",'y'); 
-    $smarty->assign("feature_file_galleries",'y');
-  } else {
-    $tikilib->set_preference("feature_file_galleries",'n');
-    $smarty->assign("feature_file_galleries",'n');
-  }
-  
-  if(isset($_REQUEST["feature_banners"]) && $_REQUEST["feature_banners"]=="on") {
-    $tikilib->set_preference("feature_banners",'y'); 
-    $smarty->assign("feature_banners",'y');
-  } else {
-    $tikilib->set_preference("feature_banners",'n');
-    $smarty->assign("feature_banners",'n');
-  }
-  
-  if(isset($_REQUEST["feature_xmlrpc"]) && $_REQUEST["feature_xmlrpc"]=="on") {
-    $tikilib->set_preference("feature_xmlrpc",'y'); 
-    $smarty->assign("feature_xmlrpc",'y');
-  } else {
-    $tikilib->set_preference("feature_xmlrpc",'n');
-    $smarty->assign("feature_xmlrpc",'n');
-  }
-  
-  if(isset($_REQUEST["feature_trackers"]) && $_REQUEST["feature_trackers"]=="on") {
-    $tikilib->set_preference("feature_trackers",'y'); 
-    $smarty->assign("feature_trackers",'y');
-  } else {
-    $tikilib->set_preference("feature_trackers",'n');
-    $smarty->assign("feature_trackers",'n');
-  }
-  
-  if(isset($_REQUEST["feature_directory"]) && $_REQUEST["feature_directory"]=="on") {
-    $tikilib->set_preference("feature_directory",'y'); 
-    $smarty->assign("feature_directory",'y');
-  } else {
-    $tikilib->set_preference("feature_directory",'n');
-    $smarty->assign("feature_directory",'n');
-  }
-  
-  if(isset($_REQUEST["feature_newsreader"]) && $_REQUEST["feature_newsreader"]=="on") {
-    $tikilib->set_preference("feature_newsreader",'y'); 
-    $smarty->assign("feature_newsreader",'y');
-  } else {
-    $tikilib->set_preference("feature_newsreader",'n');
-    $smarty->assign("feature_newsreader",'n');
-  }
-  
-  if(isset($_REQUEST["feature_notepad"]) && $_REQUEST["feature_notepad"]=="on") {
-    $tikilib->set_preference("feature_notepad",'y'); 
-    $smarty->assign("feature_notepad",'y');
-  } else {
-    $tikilib->set_preference("feature_notepad",'n');
-    $smarty->assign("feature_notepad",'n');
-  }
-
-  if(isset($_REQUEST["feature_userfiles"]) && $_REQUEST["feature_userfiles"]=="on") {
-    $tikilib->set_preference("feature_userfiles",'y'); 
-    $smarty->assign("feature_userfiles",'y');
-  } else {
-    $tikilib->set_preference("feature_userfiles",'n');
-    $smarty->assign("feature_userfiles",'n');
-  }
-
-  if(isset($_REQUEST["feature_usermenu"]) && $_REQUEST["feature_usermenu"]=="on") {
-    $tikilib->set_preference("feature_usermenu",'y'); 
-    $smarty->assign("feature_usermenu",'y');
-  } else {
-    $tikilib->set_preference("feature_usermenu",'n');
-    $smarty->assign("feature_usermenu",'n');
-  }
-  
-  if(isset($_REQUEST["feature_minical"]) && $_REQUEST["feature_minical"]=="on") {
-    $tikilib->set_preference("feature_minical",'y'); 
-    $smarty->assign("feature_minical",'y');
-  } else {
-    $tikilib->set_preference("feature_minical",'n');
-    $smarty->assign("feature_minical",'n');
-  }
-
-
-
-  if(isset($_REQUEST["feature_theme_control"]) && $_REQUEST["feature_theme_control"]=="on") {
-    $tikilib->set_preference("feature_theme_control",'y'); 
-    $smarty->assign("feature_theme_control",'y');
-  } else {
-    $tikilib->set_preference("feature_theme_control",'n');
-    $smarty->assign("feature_theme_control",'n');
-  }
-  
-  if(isset($_REQUEST["feature_workflow"]) && $_REQUEST["feature_workflow"]=="on") {
-    $tikilib->set_preference("feature_workflow",'y'); 
-    $smarty->assign("feature_workflow",'y');
-  } else {
-    $tikilib->set_preference("feature_workflow",'n');
-    $smarty->assign("feature_workflow",'n');
-  }
-
-  if(isset($_REQUEST["feature_user_watches"]) && $_REQUEST["feature_user_watches"]=="on") {
-    $tikilib->set_preference("feature_user_watches",'y'); 
-    $smarty->assign("feature_user_watches",'y');
-  } else {
-    $tikilib->set_preference("feature_user_watches",'n');
-    $smarty->assign("feature_user_watches",'n');
-  }
-
-
-  if(isset($_REQUEST["feature_charts"]) && $_REQUEST["feature_charts"]=="on") {
-    $tikilib->set_preference("feature_charts",'y'); 
-    $smarty->assign("feature_charts",'y');
-  } else {
-    $tikilib->set_preference("feature_charts",'n');
-    $smarty->assign("feature_charts",'n');
-  }
-
-
-  if(isset($_REQUEST["feature_phpopentracker"]) && $_REQUEST["feature_phpopentracker"]=="on") {
-    $tikilib->set_preference("feature_phpopentracker",'y'); 
-    $smarty->assign("feature_phpopentracker",'y');
-  } else {
-    $tikilib->set_preference("feature_phpopentracker",'n');
-    $smarty->assign("feature_phpopentracker",'n');
-  }
-
-  
-  if(isset($_REQUEST["feature_eph"]) && $_REQUEST["feature_eph"]=="on") {
-    $tikilib->set_preference("feature_eph",'y'); 
-    $smarty->assign("feature_eph",'y');
-  } else {
-    $tikilib->set_preference("feature_eph",'n');
-    $smarty->assign("feature_eph",'n');
-  }
-
-  if(isset($_REQUEST["feature_live_support"]) && $_REQUEST["feature_live_support"]=="on") {
-    $tikilib->set_preference("feature_live_support",'y'); 
-    $smarty->assign("feature_live_support",'y');
-  } else {
-    $tikilib->set_preference("feature_live_support",'n');
-    $smarty->assign("feature_live_support",'n');
-  }
-
-  if(isset($_REQUEST["feature_banning"]) && $_REQUEST["feature_banning"]=="on") {
-    $tikilib->set_preference("feature_banning",'y'); 
-    $smarty->assign("feature_banning",'y');
-  } else {
-    $tikilib->set_preference("feature_banning",'n');
-    $smarty->assign("feature_banning",'n');
-  }
-
-  
-  if(isset($_REQUEST["feature_contact"]) && $_REQUEST["feature_contact"]=="on") {
-    $tikilib->set_preference("feature_contact",'y'); 
-    $smarty->assign("feature_contact",'y');
-  } else {
-    $tikilib->set_preference("feature_contact",'n');
-    $smarty->assign("feature_contact",'n');
-  }
-  
-  if(isset($_REQUEST["feature_messages"]) && $_REQUEST["feature_messages"]=="on") {
-    $tikilib->set_preference("feature_messages",'y'); 
-    $smarty->assign("feature_messages",'y');
-  } else {
-    $tikilib->set_preference("feature_messages",'n');
-    $smarty->assign("feature_messages",'n');
-  }
-  
-  if(isset($_REQUEST["feature_tasks"]) && $_REQUEST["feature_tasks"]=="on") {
-    $tikilib->set_preference("feature_tasks",'y'); 
-    $smarty->assign("feature_tasks",'y');
-  } else {
-    $tikilib->set_preference("feature_tasks",'n');
-    $smarty->assign("feature_tasks",'n');
-  }
-  
-  if(isset($_REQUEST["feature_webmail"]) && $_REQUEST["feature_webmail"]=="on") {
-    $tikilib->set_preference("feature_webmail",'y'); 
-    $smarty->assign("feature_webmail",'y');
-  } else {
-    $tikilib->set_preference("feature_webmail",'n');
-    $smarty->assign("feature_webmail",'n');
-  }
-  
-  if(isset($_REQUEST["feature_surveys"]) && $_REQUEST["feature_surveys"]=="on") {
-    $tikilib->set_preference("feature_surveys",'y'); 
-    $smarty->assign("feature_surveys",'y');
-  } else {
-    $tikilib->set_preference("feature_surveys",'n');
-    $smarty->assign("feature_surveys",'n');
-  }
-  
-  if(isset($_REQUEST["feature_newsletters"]) && $_REQUEST["feature_newsletters"]=="on") {
-    $tikilib->set_preference("feature_newsletters",'y'); 
-    $smarty->assign("feature_newsletters",'y');
-  } else {
-    $tikilib->set_preference("feature_newsletters",'n');
-    $smarty->assign("feature_newsletters",'n');
-  }
-  
-  if(isset($_REQUEST["feature_drawings"]) && $_REQUEST["feature_drawings"]=="on") {
-    $tikilib->set_preference("feature_drawings",'y'); 
-    $smarty->assign("feature_drawings",'y');
-  } else {
-    $tikilib->set_preference("feature_drawings",'n');
-    $smarty->assign("feature_drawings",'n');
-  }
-  
-  if(isset($_REQUEST["feature_html_pages"]) && $_REQUEST["feature_html_pages"]=="on") {
-    $tikilib->set_preference("feature_html_pages",'y'); 
-    $smarty->assign("feature_html_pages",'y');
-  } else {
-    $tikilib->set_preference("feature_html_pages",'n');
-    $smarty->assign("feature_html_pages",'n');
-  }
-  
-  if(isset($_REQUEST["feature_search_stats"]) && $_REQUEST["feature_search_stats"]=="on") {
-    $tikilib->set_preference("feature_search_stats",'y'); 
-    $smarty->assign("feature_search_stats",'y');
-  } else {
-    $tikilib->set_preference("feature_search_stats",'n');
-    $smarty->assign("feature_search_stats",'n');
-  }
-  
-  if(isset($_REQUEST["feature_referer_stats"]) && $_REQUEST["feature_referer_stats"]=="on") {
-    $tikilib->set_preference("feature_referer_stats",'y'); 
-    $smarty->assign("feature_referer_stats",'y');
-  } else {
-    $tikilib->set_preference("feature_referer_stats",'n');
-    $smarty->assign("feature_referer_stats",'n');
-  }
-  
-  if(isset($_REQUEST["feature_categories"]) && $_REQUEST["feature_categories"]=="on") {
-    $tikilib->set_preference("feature_categories",'y'); 
-    $smarty->assign("feature_categories",'y');
-  } else {
-    $tikilib->set_preference("feature_categories",'n');
-    $smarty->assign("feature_categories",'n');
-  }
-  
-  if(isset($_REQUEST["feature_faqs"]) && $_REQUEST["feature_faqs"]=="on") {
-    $tikilib->set_preference("feature_faqs",'y'); 
-    $smarty->assign("feature_faqs",'y');
-  } else {
-    $tikilib->set_preference("feature_faqs",'n');
-    $smarty->assign("feature_faqs",'n');
-  }
-  
-  if(isset($_REQUEST["feature_shoutbox"]) && $_REQUEST["feature_shoutbox"]=="on") {
-    $tikilib->set_preference("feature_shoutbox",'y'); 
-    $smarty->assign("feature_shoutbox",'y');
-  } else {
-    $tikilib->set_preference("feature_shoutbox",'n');
-    $smarty->assign("feature_shoutbox",'n');
-  }
-  
-  if(isset($_REQUEST["feature_quizzes"]) && $_REQUEST["feature_quizzes"]=="on") {
-    $tikilib->set_preference("feature_quizzes",'y'); 
-    $smarty->assign("feature_quizzes",'y');
-  } else {
-    $tikilib->set_preference("feature_quizzes",'n');
-    $smarty->assign("feature_quizzes",'n');
-  }
-  
-  if(isset($_REQUEST["feature_smileys"]) && $_REQUEST["feature_smileys"]=="on") {
-    $tikilib->set_preference("feature_smileys",'y'); 
-    $smarty->assign("feature_smileys",'y');
-  } else {
-    $tikilib->set_preference("feature_smileys",'n');
-    $smarty->assign("feature_smileys",'n');
-  }
-  
-  if(isset($_REQUEST["feature_stats"]) && $_REQUEST["feature_stats"]=="on") {
-    $tikilib->set_preference("feature_stats",'y'); 
-    $smarty->assign("feature_stats",'y');
-  } else {
-    $tikilib->set_preference("feature_stats",'n');
-    $smarty->assign("feature_stats",'n');
-  }
-  
-  if(isset($_REQUEST["feature_games"]) && $_REQUEST["feature_games"]=="on") {
-    $tikilib->set_preference("feature_games",'y'); 
-    $smarty->assign("feature_games",'y');
-  } else {
-    $tikilib->set_preference("feature_games",'n');
-    $smarty->assign("feature_games",'n');
-  }
-  
-  if(isset($_REQUEST["user_assigned_modules"]) && $_REQUEST["user_assigned_modules"]=="on") {
-    $tikilib->set_preference("user_assigned_modules",'y'); 
-    $smarty->assign("user_assigned_modules",'y');
-  } else {
-    $tikilib->set_preference("user_assigned_modules",'n');
-    $smarty->assign("user_assigned_modules",'n');
-  }
-  
-  if(isset($_REQUEST["feature_user_bookmarks"]) && $_REQUEST["feature_user_bookmarks"]=="on") {
-    $tikilib->set_preference("feature_user_bookmarks",'y'); 
-    $smarty->assign("feature_user_bookmarks",'y');
-  } else {
-    $tikilib->set_preference("feature_user_bookmarks",'n');
-    $smarty->assign("feature_user_bookmarks",'n');
-  }
-  
-  if(isset($_REQUEST["feature_comm"]) && $_REQUEST["feature_comm"]=="on") {
-    $tikilib->set_preference("feature_comm",'y'); 
-    $smarty->assign("feature_comm",'y');
-  } else {
-    $tikilib->set_preference("feature_comm",'n');
-    $smarty->assign("feature_comm",'n');
-  }
-
-  if(isset($_REQUEST["feature_search"]) && $_REQUEST["feature_search"]=="on") {
-    $tikilib->set_preference("feature_search",'y'); 
-    $smarty->assign("feature_search",'y');
-  } else {
-    $tikilib->set_preference("feature_search",'n');
-    $smarty->assign("feature_search",'n');
-  }
-
-  $b = (isset($_REQUEST["feature_search_fulltext"]) && $_REQUEST["feature_search_fulltext"]=="on") ? 'y' : 'n';
-  $tikilib->set_preference("feature_search_fulltext", $b); 
-  $smarty->assign("feature_search_fulltext", $b);
-
-  if(isset($_REQUEST["feature_edit_templates"]) && $_REQUEST["feature_edit_templates"]=="on") {
-    $tikilib->set_preference("feature_edit_templates",'y'); 
-    $smarty->assign("feature_edit_templates",'y');
-  } else {
-    $tikilib->set_preference("feature_edit_templates",'n');
-    $smarty->assign("feature_edit_templates",'n');
-  }
-
-  if(isset($_REQUEST["feature_dynamic_content"]) && $_REQUEST["feature_dynamic_content"]=="on") {
-    $tikilib->set_preference("feature_dynamic_content",'y'); 
-    $smarty->assign("feature_dynamic_content",'y');
-  } else {
-    $tikilib->set_preference("feature_dynamic_content",'n');
-    $smarty->assign("feature_dynamic_content",'n');
-  }
-
-  if(isset($_REQUEST["feature_articles"]) && $_REQUEST["feature_articles"]=="on") {
-    $tikilib->set_preference("feature_articles",'y'); 
-    $smarty->assign("feature_articles",'y');
-  } else {
-    $tikilib->set_preference("feature_articles",'n');
-    $smarty->assign("feature_articles",'n');
-  }
-  
-  if(isset($_REQUEST["feature_submissions"]) && $_REQUEST["feature_submissions"]=="on") {
-    $tikilib->set_preference("feature_submissions",'y'); 
-    $smarty->assign("feature_submissions",'y');
-  } else {
-    $tikilib->set_preference("feature_submissions",'n');
-    $smarty->assign("feature_submissions",'n');
-  }
-  
-  if(isset($_REQUEST["feature_blogs"]) && $_REQUEST["feature_blogs"]=="on") {
-    $tikilib->set_preference("feature_blogs",'y'); 
-    $smarty->assign("feature_blogs",'y');
-  } else {
-    $tikilib->set_preference("feature_blogs",'n');
-    $smarty->assign("feature_blogs",'n');
-  }
-
-  if(isset($_REQUEST["feature_hotwords"]) && $_REQUEST["feature_hotwords"]=="on") {
-    $tikilib->set_preference("feature_hotwords",'y'); 
-    $smarty->assign("feature_hotwords",'y');
-  } else {
-    $tikilib->set_preference("feature_hotwords",'n');
-    $smarty->assign("feature_hotwords",'n');
-  }
-  
-  if(isset($_REQUEST["feature_hotwords_nw"]) && $_REQUEST["feature_hotwords_nw"]=="on") {
-    $tikilib->set_preference("feature_hotwords_nw",'y'); 
-    $smarty->assign("feature_hotwords_nw",'y');
-  } else {
-    $tikilib->set_preference("feature_hotwords_nw",'n');
-    $smarty->assign("feature_hotwords_nw",'n');
-  }
-  
-  if(isset($_REQUEST["feature_userPreferences"]) && $_REQUEST["feature_userPreferences"]=="on") {
-    $tikilib->set_preference("feature_userPreferences",'y'); 
-    $smarty->assign("feature_userPreferences",'y');
-  } else {
-    $tikilib->set_preference("feature_userPreferences",'n');
-    $smarty->assign("feature_userPreferences",'n');
-  }
-
- if(isset($_REQUEST["feature_featuredLinks"]) && $_REQUEST["feature_featuredLinks"]=="on") {
-    $tikilib->set_preference("feature_featuredLinks",'y'); 
-    $smarty->assign("feature_featuredLinks",'y');
-  } else {
-    $tikilib->set_preference("feature_featuredLinks",'n');
-    $smarty->assign("feature_featuredLinks",'n');
-  }
-
-  if(isset($_REQUEST["feature_galleries"]) && $_REQUEST["feature_galleries"]=="on") {
-    $tikilib->set_preference("feature_galleries",'y'); 
-    $smarty->assign("feature_galleries",'y');
-  } else {
-    $tikilib->set_preference("feature_galleries",'n');
-    $smarty->assign("feature_galleries",'n');
-  }
-
-  if(isset($_REQUEST["feature_calendar"]) && $_REQUEST["feature_calendar"]=="on") {
-    $tikilib->set_preference("feature_calendar",'y'); 
-    $smarty->assign("feature_calendar",'y');
-  } else {
-    $tikilib->set_preference("feature_calendar",'n');
-    $smarty->assign("feature_calendar",'n');
-  }
-
-  if(isset($_REQUEST["feature_editcss"]) && $_REQUEST["feature_editcss"]=="on") {
-    $tikilib->set_preference("feature_editcss",'y'); 
-    $smarty->assign("feature_editcss",'y');
-  } else {
-    $tikilib->set_preference("feature_editcss",'n');
-    $smarty->assign("feature_editcss",'n');
-  }
-
-  
-}
 
 
    
