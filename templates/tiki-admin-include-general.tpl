@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.23 2003-11-18 03:22:00 chealer Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.24 2003-11-18 18:44:07 ohertel Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -313,6 +313,15 @@ get back in if this happens to you. The corresponding SF bug tracker is 835233."
       </table>
       -->
     </form>
+  </div>
+</div>
+<br />
+<div class="cbox">
+  <div class="cbox-title">
+    {tr}Register this site at tikiwiki.org{/tr}
+  </div>
+  <div class="cbox-data">
+  <a class="link" href="tiki-register_site.php">{tr}Click here for more details.{/tr}</a>
   </div>
 </div>
 <br />

@@ -1517,7 +1517,7 @@ table.threads {
 td.viewthreadl {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	background-color: #EFEFEF;
+	background-color: #f2f6e5;
 	height: 30px;
 	width: 30%;
 	vertical-align: top;
@@ -1526,7 +1526,7 @@ td.viewthreadl {
 td.viewthreadr {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	background-color: #EFEFEF;
+	background-color: #f2f6e5;
 	height: 30px;
 	vertical-align: top;
 }
@@ -1536,14 +1536,14 @@ td.threadsevenl {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	width: 30%;
 	font-size: 12px;
-	background-color: #EFEFEF;
+	background-color: #f2f6e5;
 	vertical-align: top;
 }
 
 td.threadsevenr {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	background-color: #EFEFEF;
+	background-color: white;
 	vertical-align: top;
 }
 
@@ -1551,14 +1551,14 @@ td.threadsoddl {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	width: 30%;
 	font-size: 12px;
-	background-color: #DDDDDD;
+	background-color: #f2f6e5;
 	vertical-align: top;
 }
 
 td.threadsoddr {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 13px;
-	background-color: #DDDDDD;
+	background-color: white;
 	vertical-align: top;
 }
 
@@ -1580,7 +1580,7 @@ td.threadseparator {
 }
 
 div.forumtoolbar {
-	background-color: #99AAAE;
+	background-color: #f2f6e5;
 	width: 98%;
 	margin-bottom: 20px;
 	border: 0px;
@@ -1613,7 +1613,7 @@ td.forumtoolbar {
 
 .toolbarlink:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #CCCCCC;
+	color: black;
 	font-size: 11px;
 	font-weight: bold;
 	text-decoration: none;
@@ -2386,3 +2386,4 @@ div#rules-copy-panel {
 /* format tables on admin pages */
 TABLE.admin { width: 100%; }
 
+table.commentinfo { width: 100%; background-color: #f2f6e5; }
