@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.81 2004-05-06 00:55:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.82 2004-05-28 10:27:45 chris_holman Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,12 +38,21 @@ if(!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
 
   $smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
+
+$page_ref_id = '';
 if (isset($_REQUEST["page_ref_id"])) {
   $page_ref_id = $_REQUEST["page_ref_id"];
-} else {
-  $page_ref_id = '';
 }
 $smarty->assign('page_ref_id',$page_ref_id);
+
+//Is new page to be inserted into structure?
+if (isset($_REQUEST["current_page_id"])) {
+  $smarty->assign('current_page_id',$_REQUEST["current_page_id"]);
+  if (isset($_REQUEST["add_child"])) {
+    $smarty->assign('add_child', "true");
+  }
+}
+
 
 function compare_import_versions($a1, $a2) {
   return $a1["version"] - $a2["version"];
@@ -646,16 +655,17 @@ if (isset($_REQUEST["save"])) {
     if(!$tikilib->page_exists($_REQUEST["page"])) {
       // Extract links and update the page
 
-    $links = $tikilib->get_links($_REQUEST["edit"]);
-    /*
-    $notcachedlinks = $tikilib->get_links_nocache($_REQUEST["edit"]);
-    $cachedlinks = array_diff($links, $notcachedlinks);
-    $tikilib->cache_links($cachedlinks);
-    */
+      $links = $tikilib->get_links($_REQUEST["edit"]);
+      /*
+      $notcachedlinks = $tikilib->get_links_nocache($_REQUEST["edit"]);
+      $cachedlinks = array_diff($links, $notcachedlinks);
+      $tikilib->cache_links($cachedlinks);
+      */
       $t = date("U");
       $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, false, $pageLang);
-      if ($wiki_watch_author == 'y') 
+      if ($wiki_watch_author == 'y') {
         $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],tra('Wiki page'),$page,"tiki-index.php?page=$page");
+      }
     } else {
       $links = $tikilib->get_links($edit);
       /*
@@ -668,7 +678,18 @@ if (isset($_REQUEST["save"])) {
       }
       $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang);
     }
-
+    //Page may have been inserted from a structure page view
+  	if (isset($_REQUEST['current_page_id']) ) {
+      $page_info = $structlib->s_get_page_info($_REQUEST['current_page_id']);
+      if (isset($_REQUEST["add_child"]) ) { 
+  	  	$structlib->s_create_page($_REQUEST['current_page_id'], null, $_REQUEST["page"], '');
+      }
+      else {
+	  	  $structlib->s_create_page($page_info["parent_id"], $_REQUEST['current_page_id'], $_REQUEST["page"], '');
+      }
+		  $userlib->copy_object_permissions($page_info["pageName"], $_REQUEST["page"],'wiki page');
+  	} 
+    
     $page = urlencode($page);
     if ($page_ref_id) {
       header("location: tiki-index.php?page_ref_id=$page_ref_id");

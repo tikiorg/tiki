@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.68 2004-05-03 04:21:08 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.69 2004-05-28 10:27:47 chris_holman Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -95,7 +95,8 @@
 {if $structure eq 'y'}
 <div class="tocnav">
 <table>
-<tr><td>
+<tr>
+  <td>
     {if $prev_info and $prev_info.page_ref_id}
 		<a href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' 
    			{if $prev_info.page_alias}
@@ -127,6 +128,23 @@
 		  {/if}/></a>{/if}
   </td>
   <td>
+{if $tiki_p_edit_structures and $tiki_p_edit_structures eq 'y' }
+    <form action="tiki-editpage.php" method="post">
+      <input type="hidden" name="current_page_id" value="{$page_info.page_ref_id}" />
+      <input type="text" name="page" />
+      {* Cannot add peers to head of structure *}
+      {if $page_info and !$parent_info }
+      <input type="hidden" name="add_child" value="checked" /> 
+      {else}
+      <input type="checkbox" name="add_child" /> {tr}Child{/tr}
+      {/if}      
+      <input type="submit" name="insert_into_struct" value="{tr}Add Page{/tr}" />
+    </form>
+{/if}
+  </td>
+</tr>
+<tr>
+  <td colspan=2>
     {section loop=$structure_path name=ix}
       {if $structure_path[ix].parent_id}->{/if}
 	  <a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
