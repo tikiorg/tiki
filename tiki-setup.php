@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.156 2003-11-11 12:02:58 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.157 2003-11-11 14:47:16 luciash Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -380,6 +380,7 @@ $gal_match_regex = '';
 $gal_nmatch_regex = '';
 $fgal_use_dir = '';
 $gal_use_dir = '';
+$feature_integrator = 'n';
 $feature_xmlrpc = 'n';
 $feature_drawings = 'n';
 $layout_section = 'n';
