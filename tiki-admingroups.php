@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.37 2004-03-31 10:00:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.38 2004-04-28 12:46:47 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,18 +208,17 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 			$inc["$rr"] = "y";
 		}
 	}
-
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	setcookie("tab","2");
 } else {
 	$allgroups = $userlib->list_all_groups();
 	foreach ($allgroups as $rr) {
 		$inc["$rr"] = "n";
 	}
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
+	setcookie("tab","1");
 	$_REQUEST["group"] = 0;
 }
 if (isset($_REQUEST['add'])) {
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	setcookie("tab","2");
 }
 
 if ($_REQUEST['group']) {
