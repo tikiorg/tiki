@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.70 2003-11-19 05:08:19 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.71 2003-11-19 05:44:46 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -610,7 +610,7 @@ CREATE TABLE `tiki_quicktags` (
   PRIMARY KEY  (`tagId`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('bold','__test__','images/ed_format_bold.gif');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('bold','__text__','images/ed_format_bold.gif');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('italic','\'\'text\'\'','images/ed_format_italic.gif');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('underline','===text===','images/ed_format_underline.gif');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif');
