@@ -7,9 +7,9 @@
     <form class="forms" method="post" action="tiki-searchresults.php">
     <input id="fuser" name="words" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br/>
     <select name="where">
-    <option value="all">{tr}Entire Site{/tr}</option>
+    <option value="pages">{tr}Entire Site{/tr}</option>
     {if $feature_wiki eq 'y'}
-    <option value="pages">{tr}Wiki Pages{/tr}</option>
+    <option value="wikis">{tr}Wiki Pages{/tr}</option>
     {/if}
     {if $feature_galleries eq 'y'}
     <option value="galleries">{tr}Image Gals{/tr}</option>
