@@ -424,7 +424,6 @@ if($wiki_page_regex == 'strict') {
 }
 
 
-
 $validateUsers = $tikilib->get_preference("validateUsers",'n');
 $forgotPass = $tikilib->get_preference("forgotPass",'n');
 $title = $tikilib->get_preference("title","");
@@ -455,6 +454,85 @@ $_SERVER["SERVER_NAME"] = $feature_server_name;
 
 $feature_bidi='n';
 $smarty->assign('feature_bidi',$feature_bidi);
+
+/* # not implemented
+$http_basic_auth = $tikilib->get_preference('http_basic_auth', '/');
+$smarty->assign('http_basic_auth',$http_basic_auth);
+*/
+
+$https_login = $tikilib->get_preference('https_login', 'n');
+$smarty->assign('https_login',$https_login);
+$https_login_required = $tikilib->get_preference('https_login_required', 'n');
+$smarty->assign('https_login_required',$https_login_required);
+
+$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+if ($https_mode) {
+  $http_port  = 80;
+  $https_port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 443;
+} else {
+  $http_port  = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
+  $https_port = 443;
+}
+
+$http_domain = $tikilib->get_preference('http_domain', '');
+$smarty->assign('http_domain',$http_domain);
+$http_port = $tikilib->get_preference('http_port', $http_port);
+$smarty->assign('http_port',$http_port);
+$http_prefix = $tikilib->get_preference('http_prefix', '/');
+$smarty->assign('http_prefix',$http_prefix);
+
+$https_domain = $tikilib->get_preference('https_domain', '');
+$smarty->assign('https_domain',$https_domain);
+$https_port = $tikilib->get_preference('https_port', $https_port);
+$smarty->assign('https_port',$https_port);
+$https_prefix = $tikilib->get_preference('https_prefix', '/');
+$smarty->assign('https_prefix',$https_prefix);
+
+$login_url = 'tiki-login.php';
+$smarty->assign('login_url', $login_url);
+
+if ($https_login == 'y' || $https_login_required == 'y') {
+	$http_login_url = 'http://' . $http_domain;
+	if ($http_port != 80)
+		$http_login_url .= ':' . $http_port;
+	$http_login_url .= $http_prefix . $tikiIndex;
+	if (SID)
+		$http_login_url .= '?' . SID;
+
+	$https_login_url = 'https://' . $https_domain;
+	if ($https_port != 443)
+		$https_login_url .= ':' . $https_port;
+	$https_login_url .= $https_prefix . $tikiIndex;
+	if (SID)
+		$https_login_url .= '?' . SID;
+
+	$stay_in_ssl_mode = isset($_REQUEST['stay_in_ssl_mode']) ? $_REQUEST['stay_in_ssl_mode'] : '';
+	
+	if ($https_login_required == 'y') {
+		# only show "Stay in SSL checkbox if we're not already in HTTPS mode
+		$show_stay_in_ssl_mode = !$https_mode ? 'y' : 'n';
+		$smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
+		if (!$https_mode) {
+			$https_login_url = 'https://' . $https_domain;
+			if ($https_port != 443)
+				$https_login_url .= ':' . $https_port;
+			$https_login_url .= $https_prefix . $login_url;
+			if (SID)
+				$https_login_url .= '?' . SID;
+			$smarty->assign('login_url', $https_login_url);
+		} else {
+			# We're already in HTTPS mode, so let's stay there
+			$stay_in_ssl_mode = 'on';
+		}
+	} else {
+		$smarty->assign('http_login_url',$http_login_url);
+		$smarty->assign('https_login_url',$https_login_url);
+		# only show "Stay in SSL checkbox if we're not already in HTTPS mode
+		$show_stay_in_ssl_mode = $https_mode ? 'y' : 'n';
+	}
+	$smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
+	$smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
+}
 
 $prefs = $tikilib->get_all_preferences();
 if(!file_exists('templates_c/preferences.php')) {
@@ -702,9 +780,6 @@ if(isset($GLOBALS["HTTP_REFERER"])) {
 }
 }
 
-
-
-
 // Stats
 if($feature_stats == 'y') {
   if($count_admin_pvs == 'y' || $user!='admin') {	
@@ -713,7 +788,6 @@ if($feature_stats == 'y') {
     }
   }
 }
-
 
 if($feature_obzip == 'y') {
   ob_start("ob_gzhandler");

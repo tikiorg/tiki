@@ -391,6 +391,43 @@ if(isset($_REQUEST["loginprefs"])) {
     $smarty->assign('forgotPass','n');
   }
 
+/* # not implemented
+  $b = isset($_REQUEST['http_basic_auth']) && $_REQUEST['http_basic_auth'] == 'on';
+  $tikilib->set_preference('http_basic_auth', $b); 
+  $smarty->assign('http_basic_auth', $b);
+*/
+
+  $b = (isset($_REQUEST['https_login']) && $_REQUEST['https_login'] == 'on') ? 'y' : 'n';
+  $tikilib->set_preference('https_login', $b); 
+  $smarty->assign('https_login', $b);
+
+  $b = (isset($_REQUEST['https_login_required']) && $_REQUEST['https_login_required'] == 'on') ? 'y' : 'n';
+  $tikilib->set_preference('https_login_required', $b); 
+  $smarty->assign('https_login_required', $b);
+
+  $v = isset($_REQUEST['http_domain']) ? $_REQUEST['http_domain'] : '';
+  $tikilib->set_preference('http_domain', $v); 
+  $smarty->assign('http_domain', $v);
+
+  $v = isset($_REQUEST['http_port']) ? $_REQUEST['http_port'] : 80;
+  $tikilib->set_preference('http_port', $v); 
+  $smarty->assign('http_port', $v);
+
+  $v = isset($_REQUEST['http_prefix']) ? $_REQUEST['http_prefix'] : '/';
+  $tikilib->set_preference('http_prefix', $v); 
+  $smarty->assign('http_prefix', $v);
+
+  $v = isset($_REQUEST['https_domain']) ? $_REQUEST['https_domain'] : '';
+  $tikilib->set_preference('https_domain', $v); 
+  $smarty->assign('https_domain', $v);
+
+  $v = isset($_REQUEST['https_port']) ? $_REQUEST['https_port'] : 443;
+  $tikilib->set_preference('https_port', $v); 
+  $smarty->assign('https_port', $v);
+
+  $v = isset($_REQUEST['https_prefix']) ? $_REQUEST['https_prefix'] : '/';
+  $tikilib->set_preference('https_prefix', $v); 
+  $smarty->assign('https_prefix', $v);
 }
 
 if(isset($_REQUEST["cmsprefs"])) {
@@ -1269,8 +1306,8 @@ $smarty->assign_by_ref('display_timezone',$display_timezone);
 $timezone_server = $timezone_options[$server_time->tz->getID()];
 $smarty->assign_by_ref('timezone_server',$timezone_server);
 
-$long_date_format = $tikilib->get_preference('long_date_format', '%A %d of %B, %Y');
-$short_date_format = $tikilib->get_preference('short_date_format', '%a %d of %b, %Y');
+$long_date_format = $tikilib->get_preference('long_date_format', '%A %d ' . tra('of') . ' %B, %Y');
+$short_date_format = $tikilib->get_preference('short_date_format', '%a %d ' . tra('of') . ' %b, %Y');
 $long_time_format = $tikilib->get_preference('long_time_format', '%H:M:%S %Z');
 $short_time_format = $tikilib->get_preference('short_time_format', '%H:%M %Z');
 $smarty->assign_by_ref('short_date_format',$short_date_format);
