@@ -13,7 +13,7 @@ require_once "PEAR.php";
 /**
 * You need DB.php only if you want to use the DB support.
 */
-require_once "DB.php";
+//require_once "DB.php";
 
 /**
 * This is the "common" class of the PHP Layers Menu library.
