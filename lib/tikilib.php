@@ -1569,10 +1569,12 @@ function get_menu($menuId) {
 }
 
 /*shared*/
-function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find) {
+function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $full=false) {
+	global $smarty,$user;
 	$ret = array();
 	$retval = array();
 	$bindvars = array((int)$menuId);
+	$usergroups = $this->get_user_groups($user);
 	if ($find) {
 		$mid = " where `menuId`=? and (`name` like ? or `url` like ?)";
 		$bindvars[] = '%'. $find . '%';
@@ -1585,10 +1587,41 @@ function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find) {
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
 	while ($res = $result->fetchRow()) {
-		$res['menulabel'] = 'userm'.$menuId.preg_replace('/[^a-zA-Z0-9]/','',$res['name']);
-		$ret[] = $res;
+		if (!$full) {
+			$display = true;
+			if (isset($res['section']) and $res['section']) {
+				$sections = split(",",$res['section']);
+				foreach ($sections as $sec) {
+					if (!isset($smarty->_tpl_vars["$sec"]) or $smarty->_tpl_vars["$sec"] != 'y') {
+						$display = false;
+					}
+				}
+			}
+			if (isset($res['perm']) and $res['perm']) {
+				$sections = split(",",$res['perm']);
+				foreach ($sections as $sec) {
+					if (!isset($smarty->_tpl_vars["$sec"]) or $smarty->_tpl_vars["$sec"] != 'y') {
+						$display = false;
+					}
+				}
+			}
+			if (isset($res['groupname']) and $res['groupname']) {
+				$sections = split(",",$res['groupname']);
+				foreach ($sections as $sec) {
+					if ($sec and !in_array($sec,$usergroups)) {
+						$display = false;
+					}
+				}
+			}
+			if ($display) {
+				$pos = $res['position'];
+				$ret["$pos"] = $res;
+			}
+		} else {
+			$ret[] = $res;
+		}
 	}
-	$retval["data"] = $ret;
+	$retval["data"] = array_values($ret);
 	$retval["cant"] = $cant;
 	return $retval;
 }

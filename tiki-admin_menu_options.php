@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.8 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menu_options.php,v 1.9 2003-11-21 06:15:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,12 +44,18 @@ if ($_REQUEST["optionId"]) {
 
 	$info["name"] = '';
 	$info["url"] = '';
+	$info["section"] = '';
+	$info["perm"] = '';
+	$info["groupname"] = '';
 	$info["type"] = 'o';
 	$info["position"] = $maxPos + 1;
 }
 
 $smarty->assign('name', $info["name"]);
 $smarty->assign('url', $info["url"]);
+$smarty->assign('section', $info["section"]);
+$smarty->assign('perm', $info["perm"]);
+$smarty->assign('groupname', $info["groupname"]);
 $smarty->assign('type', $info["type"]);
 $smarty->assign('position', $info["position"]);
 
@@ -62,12 +68,15 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["save"])) {
 	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"],
-		$_REQUEST["type"], $_REQUEST["position"]);
+		$_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"]);
 
 	$smarty->assign('position', $_REQUEST["position"] + 1);
 	$smarty->assign('name', '');
 	$smarty->assign('optionId', 0);
 	$smarty->assign('url', '');
+	$smarty->assign('section', '');
+	$smarty->assign('perm', '');
+	$smarty->assign('groupname', '');
 	$smarty->assign('type', 'o');
 }
 
@@ -94,7 +103,8 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
+$allchannels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
+$channels = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $maxRecords, $sort_mode, $find, true);
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
@@ -113,6 +123,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+$smarty->assign_by_ref('allchannels', $allchannels["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_menu_options.tpl');
