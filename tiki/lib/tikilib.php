@@ -3081,7 +3081,14 @@ class TikiLib {
 
   function set_preference($name, $value)
   {
+    global $preferences;
     @unlink('templates_c/preferences.php');
+    //refresh cache
+    if(isset($preferences[$name])) {
+      unset ($preferences[$name]);
+      $preferences[$name] = $value;
+    }
+
     $name = addslashes($name);
     $value = addslashes($value);
     $query = "replace into tiki_preferences(name,value) values('$name','$value')";
