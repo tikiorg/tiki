@@ -390,7 +390,8 @@ anyword -1  2  3  3  5  3 -1  8 -1
         $t=&$ct[$ct["contentpos"]];
         $tagname=$t["data"]["name"];
         if (isset($this->pg[$tagname]["closeon"])) {
-          if (sizeof($this->pg[$tagname]["closeon"]["in"]) && in_array($this->tagname,$this->pg[$tagname]["closeon"]["in"]) || sizeof($this->pg[$tagname]["closeon"]["notin"]) && !in_array($this->tagname,$this->pg[$tagname]["closeon"]["notin"])) {
+          if (isset($this->pg[$tagname]["closeon"]["in"]) && sizeof($this->pg[$tagname]["closeon"]["in"]) && in_array($this->tagname,$this->pg[$tagname]["closeon"]["in"]) 
+						|| isset($this->pg[$tagname]["closeon"]["notin"]) && sizeof($this->pg[$tagname]["closeon"]["notin"]) && !in_array($this->tagname,$this->pg[$tagname]["closeon"]["notin"])) {
             $actionclose=2;
             break;
           }
