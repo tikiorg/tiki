@@ -500,6 +500,10 @@ $feature_contact = 'n';
 $smarty->assign('feature_contact',$feature_contact);
 $contact_user = $tikilib->get_preference('contact_user','admin');
 $smarty->assign('contact_user',$contact_user);
+$default_sender_email = $tikilib->get_user_email($contact_user);
+$sender_email = $tikilib->get_preference('sender_email',$default_sender_email);
+$smarty->assign('sender_email',$sender_email);
+
 
 $webmail_view_html = 'y';
 $smarty->assign('webmail_view_html',$webmail_view_html);

@@ -32,4 +32,3 @@
 {if strlen($email)>0}
 {mailto address="$email" encode="javascript" text="click here to send us an email" extra='class="link"'}
 {/if}
-                               

@@ -91,6 +91,8 @@
 </td>
 </tr>
 
+<tr><td class="form">{tr}Sender Email{/tr}:</td><td><input type="text" name="sender_email" value="{$sender_email}" /></td></tr>
+
 <tr><td class="form">{tr}Contact user{/tr}:</td><td>{if $feature_contact eq 'y'}<input type="text" name="contact_user" value="{$contact_user}" />{else}{tr}contact feature disabled{/tr}{/if}</td></tr>
 
 <tr><td>&nbsp;</td><td><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>

@@ -113,6 +113,7 @@ class ArtLib extends TikiLib {
   {
     global $smarty;
     global $dbTiki;
+    global $sender_email;
     include_once('lib/notifications/notificationlib.php');
     $title = addslashes($title);
     $heading = addslashes($heading);
@@ -175,7 +176,7 @@ class ArtLib extends TikiLib {
       $smarty->assign('mail_machine',$machine);
       $smarty->assign('mail_subId',$id);
       $mail_data=$smarty->fetch('mail/submission_notification.tpl');
-      @mail($email, tra('New article submitted at ').$_SERVER["SERVER_NAME"],$mail_data);
+      @mail($email, tra('New article submitted at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email");
     }
     return $id;
   }

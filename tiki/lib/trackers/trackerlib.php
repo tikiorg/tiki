@@ -141,6 +141,7 @@ class TrackerLib extends TikiLib {
   {
     global $smarty;
     global $notificationlib;
+    global $sender_email;
     $title=addslashes(strip_tags($title));
     $data=addslashes(strip_tags($data,"<a>"));
     if($commentId) {
@@ -163,7 +164,7 @@ class TrackerLib extends TikiLib {
     $smarty->assign('mail_data',$title."\n\n".$data);
     foreach ($emails as $email) {      
       $mail_data=$smarty->fetch('mail/tracker_changed_notification.tpl');
-      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data);
+      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email");
     }
     return $commentId;
   }
@@ -278,6 +279,7 @@ class TrackerLib extends TikiLib {
     global $user;
     global $smarty;
     global $notificationlib;
+    global $sender_email;
     $now = date("U");
     $query="update tiki_trackers set lastModif=$now where trackerId=$trackerId";
     $result = $this->query($query);
@@ -315,7 +317,7 @@ class TrackerLib extends TikiLib {
     $smarty->assign('mail_data',$the_data);
     foreach ($emails as $email) {      
       $mail_data=$smarty->fetch('mail/tracker_changed_notification.tpl');
-      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data);
+      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email");
     }
     $cant_items = $this->getOne("select count(*) from tiki_tracker_items where trackerId=$trackerId");
     $query = "update tiki_trackers set items=$cant_items where trackerId=$trackerId";
