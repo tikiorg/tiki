@@ -259,6 +259,7 @@ DROP TABLE IF EXISTS tiki_articles;
 CREATE TABLE tiki_articles (
   articleId int(8) NOT NULL auto_increment,
   title varchar(80) default NULL,
+  state char(1) default 's',
   authorName varchar(60) default NULL,
   topicId int(14) default NULL,
   topicName varchar(40) default NULL,
@@ -306,6 +307,7 @@ CREATE TABLE tiki_article_types (
   show_pubdate varchar(1) default 'y',
   show_expdate varchar(1) default NULL,
   show_reads varchar(1) default 'y',
+  show_size varchar(1) default 'y',
   PRIMARY KEY  (type)
 ) TYPE=MyISAM ;
 
