@@ -1,5 +1,6 @@
 {php}
 include_once("lib/class_calendar.php");
+global $dbTiki,$tikilib,$user;
 if(isset($_SESSION["thedate"])) {
   $day=date("d",$_SESSION["thedate"]);
   $mon=date("m",$_SESSION["thedate"]);
