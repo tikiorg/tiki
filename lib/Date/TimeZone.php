@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZone.php,v 1.5 2003-05-26 20:56:44 rossta Exp $
+// $Id: TimeZone.php,v 1.6 2003-07-07 20:44:43 awcolley Exp $
 //
 // Date_TimeZone Class
 //
@@ -1236,6 +1236,11 @@ $GLOBALS['_DATE_TIMEZONE_DATA'] = array(
         'hasdst' => true,
         'dstlongname' => "Eastern Daylight Time",
         'dstshortname' => 'EDT' ),
+    'EDT' => array(                               // Added by AWC
+      'offset' =>  -14400000,                     // Added by AWC
+      'longname' => "Eastern Daylight Time",      // Added by AWC
+      'shortname' => 'EDT',                       // Added by AWC
+      'hasdst' => false ),                        // Added by AWC
     'Etc/GMT+5' => array(
         'offset' => -18000000,
         'longname' => "GMT-05:00",
