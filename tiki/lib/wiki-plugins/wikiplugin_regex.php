@@ -10,7 +10,7 @@
 
 function wikiplugin_regex_help() {
 return tra("Takes regex expressions and parses the content between the REGEX tags and replaces the text.").":
-<br/>~np~{REGEX(regex=>search|replace)}".tra("data")."{REGEX}~/np~ - ''".tra("one data per line")."''";
+<br/>~np~{REGEX(search=>(WikiPageWithRegexCommands)}".tra("data")."{REGEX}~/np~ - ''".tra("one data per line")."''";
 }
 
 function wikiplugin_regex($data, $params) {
