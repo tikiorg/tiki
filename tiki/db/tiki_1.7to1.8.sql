@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.78 2003-11-22 05:54:22 gmuslera Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.79 2003-11-22 06:41:48 gmuslera Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -815,4 +815,4 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 
 # added on 2003-11-21 by gmuslera
 # Updating the tiki-admin_html_pages title from Mail-in to HTML pages
-UPDATE tiki_menu_option SET name = 'HTML pages' WHERE position='1185';
+UPDATE tiki_menu_options SET name = 'HTML pages' WHERE position='1185';
