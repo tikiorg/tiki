@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/lib/irc/irclib.php,v 1.8 2004-08-26 19:23:53 mose Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/lib/irc/irclib.php,v 1.9 2005-01-01 00:17:23 damosoft Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-# Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+# Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 require_once dirname(dirname(__FILE__)). '/pear/IRC.php';

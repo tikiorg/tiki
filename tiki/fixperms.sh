@@ -1,7 +1,7 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.2 2004-10-08 09:59:44 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.3 2005-01-01 00:16:15 damosoft Exp $
 
-# Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+# Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 

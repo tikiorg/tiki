@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.15 2004-08-03 21:00:37 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.16 2005-01-01 00:17:40 damosoft Exp $
 
-// Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 

@@ -1,8 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/sheet/ole/pps/index.php,v 1.1 2004-05-12 13:35:19 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/sheet/ole/pps/index.php,v 1.2 2005-01-01 00:17:39 damosoft Exp $
 
-// Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
