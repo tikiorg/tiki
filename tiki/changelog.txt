@@ -4,6 +4,8 @@ Tikiwiki Changelog
 
 Version 1.8 --
 
+* [FIX] fixed galaxia bugs while porting to adodb queries
+* [NEW] added a module to switch themes 
 * [FIX] moved wiki table parse code behind link parse code
 * [NEW] function targetBlank in tiki-js.lib
 * [MOD] CODE plugin now accepts php syntax highlighting {CODE(colors=>php)}
