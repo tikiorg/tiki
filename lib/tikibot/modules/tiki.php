@@ -44,45 +44,84 @@ class tiki extends Wollabot_Module {
 		$arg = array_shift($params["message_exploded"]);
 		$args = $params["message_exploded"];
 		
-		if (!is_callable('tiki',$method)) {
+		if (!method_exists($this,$method)) {
 			$method = 'tiki_help';
 		}
-		$back = $this->$method();
+		$back = $this->$method($arg,$args);
 		$this->wollabot->print_log("$who asks $command on $target and gets $back");
 		$this->send_privmsg($target, $who.$back);
 	}
 
 
-	function tiki_rpage() {
-		global $tikilib;
-		list($page) = $tikilib->get_random_pages("1");
-		return "Want a page ? Try that one : http://tikiwiki.org/$page !";
+	function tiki_rpage($arg,$args) {
+		if ($arg == 'help') {
+			return "[!T rpage] Returns a random wiki page url.";
+		} else {
+			global $tikilib;
+			list($page) = $tikilib->get_random_pages("1");
+			return "Want a page ? Try that one : http://tikiwiki.org/$page !";
+		}
 	}
 
-	function tiki_who() {
-		global $tikilib;
-		$users = $tikilib->get_online_users();
-		foreach ($users as $u) {
-			$all[] = $u['user'];
-		}
-		$count = count($users);
-		if ($count == 0) {
-			return "There is nobody known right now on tw.o";			 
-		} elseif ($count == 1) {
-			return "There is someone right now on tw.o (".$all[0].")";			 
+	function tiki_who($arg,$args) {
+		if ($arg == 'help') {
+			return "[!T who] Returns who is connected on tikiwiki.org right now.";
 		} else {
-			return "There is ".count($users)." known users right now on tw.o (".implode(', ',$all).")";			 
+			global $tikilib;
+			$users = $tikilib->get_online_users();
+			foreach ($users as $u) {
+				$all[] = $u['user'];
+			}
+			$count = count($users);
+			if ($count == 0) {
+				return "There is nobody known right now on tw.o";			 
+			} elseif ($count == 1) {
+				return "There is someone right now on tw.o (".$all[0].")";			 
+			} else {
+				return "There is ".count($users)." known users right now on tw.o (".implode(', ',$all).")";			 
+			}
 		}
 	}
 	
-	function tiki_stats() {
-		global $statslib;
-		$i = $statslib->site_stats();
-		return "Since ".date("Y-m-d",$i["started"])." (".$i["days"]." days) we got ".$i["pageviews"]." page viewed on tw.o (".round($i["ppd"])." per day).";
+	function tiki_stats($arg,$args) {
+		if ($arg == 'help') {
+			return "[!T stats] Returns statistics of usage of tikiwiki.org.";
+		} else {
+			global $statslib;
+			$i = $statslib->site_stats();
+			return "Since ".date("Y-m-d",$i["started"])." (".$i["days"]." days) we got ".$i["pageviews"]." pages viewed on tw.o (".round($i["ppd"])." per day).";
+		}
 	}
 
-	function tiki_help() {
-		return "help <item> for more info : who stats rpage.";
+	function tiki_art($arg,$args) {
+		if ($arg == 'help') {
+			return "[!T art] Returns the title and url of last published article.";
+		} else {
+			global $tikilib;
+			if (!isset($arg) or $arg < 0 or $arg > 20) { $arg = 0; }
+			$art = $tikilib->list_articles($arg, 1, 'publishDate_desc', '', '', $this->wollabot->configuration['tikibot'], '', '');
+			return "Articles [ $arg ][ ".$art['data'][0]['title']." ]:[ http://tikiwiki.org/art".$art['data'][0]['articleId']." ].";
+		}
+	}
+
+	function tiki_dir($arg,$args) {
+		if ($arg == 'help') {
+			return "[!T dir] Returns the last added directory site";
+		} else {
+			global $tikilib;
+			if (!isset($arg) or $arg < 0 or $arg > 20) { $arg = 0; }
+			$dir = $tikilib->dir_list_all_valid_sites2($arg, 1, 'created_desc', '');
+			return "Directory [ $arg ]:[ ".$dir['data'][0]['name']." ]:[ ".$dir['data'][0]['url']." ].";
+		}
+	}
+	
+	function tiki_help($arg,$args) {
+		$help = "tiki_$arg";
+		if (method_exists($this,$help)) {
+			return $this->$help('help',1);
+		} else {
+			return "[!T help] who stats rpage art dir";
+		}
 	}
 
 }
