@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.13 2004-04-18 20:34:08 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.14 2004-04-27 20:28:03 ggeller Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1190,6 +1190,122 @@ function get_assignment($articleId) {
 
 function compare_lastModif($ar1, $ar2) {
     return $ar1["lastChanged"] - $ar2["lastChanged"];
+}
+
+
+// An abstract class
+class HW_QuizQuestion {
+  function from_text($lines){
+    // Set the question according to an array of text lines.
+  }
+  function to_text(){
+    // Export the question to an array of text lines.
+  }
+}
+
+// A multiple-choice quiz question
+// e.g.
+//   $question = "What is your favorite color?";
+//   $choices = Array(Array('text'=>"Red",  'correct'=>1),
+//                    Array('text'=>"Blue", 'correct'=>1),
+//                    Array('text'=>"Green",'correct'=>1));
+//   Any of the answers are correct in this example.
+class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion {
+  var $question;
+  var $choices  = Array();
+
+  function HW_QuizQuestionMultipleChoice($lines){
+    $this->from_text($lines);
+  }
+
+  // Import from text array
+  // $lines is in array of text items.
+  //   The 0th line is the question.
+  //   The rest of the lines are answers.
+  //   Correct answers start with a "*"
+  function from_text($lines){
+    // echo "Line ".__LINE__." HW_QuizQuestionMC::from_text() \n";
+    $this->question = $lines[0];
+    $this->choices  = Array();
+    $lines = array_slice($lines,1);
+    foreach ($lines as $line){
+      if (preg_match("/^\*\s*(.*)/",$line,$match)) // Ignore spaces after the "*"
+	$a = Array('text'=>$match[1],'correct'=>1);
+      else
+	$a = Array('text'=>$line,'correct'=>0);
+      array_push($this->choices, $a);
+    }
+  }
+
+  function to_text($show_answer = False){
+    // Export the question to an array of text lines.
+    $lines = Array();
+    array_push($lines, $this->question);
+    foreach($this->choices as $choice){
+      if ($show_answer && $choice['correct'])
+	array_push($lines, "*".$choice['text']);
+      else
+	array_push($lines, " ".$choice['text']);
+    }
+    return $lines;
+  }
+
+  function dump(){
+    echo "question = \"".$this->question."\"\n";
+    echo "choices =\n";
+    foreach ($this->choices as $choice){
+      if ($choice['correct'])
+	echo "*";
+      else
+	echo " ";
+      echo $choice['text']."\n";
+    }
+  }
+}
+
+// A Yes-No quiz question
+// e.g.
+//   $question = "Do you wiki?";
+//   $answer   = -1 (unknown), 0 (no), 1 (yes)
+class HW_QuizQuestionYesNo extends HW_QuizQuestion {
+  var $question;
+  var $answer  = -1;
+
+  function HW_QuizQuestionYesNo($lines){
+    $this->from_text($lines);
+  }
+
+  // Import from text array
+  // $lines is in array of text items.
+  //   The 0th line is the question.
+  //   The first line is the answer.
+  function from_text($lines){
+    $this->question = $lines[0];
+    if (preg_match("/^\s*[Yy][Ee][Ss]\s*$/",$lines[1])) // Ignore spaces and case
+      $this->answer = 1;
+    else if (preg_match("/^\s*[Nn][Oo]\s*$/",$lines[1])) // Ignore spaces and case
+      $this->answer = 0;
+    else
+      $this->answer = -1;
+  }
+
+  function to_text($show_answer = False){
+    // Export the question to an array of text lines.
+    $lines = Array();
+    array_push($lines, $this->question);
+    if ($this->answer == 1)
+      array_push($lines, " Yes");
+    else if ($this->answer == 0)
+      array_push($lines, " No");
+    else
+      array_push($lines, " Unknown");
+    return $lines;
+  }
+
+  function dump(){
+    echo "question = \"".$this->question."\"\n";
+    echo "answer = $this->answer\n";
+  }
 }
 
 ?>
