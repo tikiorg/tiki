@@ -78,8 +78,8 @@
 <tr><td class="{cycle}">{$suggested[ix].question}</td></tr>
 {/section}
 </table>
-</div>
 {/if}
+</div>
 {/if}
 {if $feature_faq_comments == 'y'
 && (($tiki_p_read_comments  == 'y'
