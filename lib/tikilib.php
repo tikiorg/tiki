@@ -4039,8 +4039,8 @@ function add_pageview() {
 			// add a space so we can match links starting at the beginning of the first line
 			$text = " " . $text;
 			// match prefix://suffix, www.prefix.suffix/optionalpath, prefix@suffix
-			$patterns = array("#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i", "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i", "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i");
-			$replacements = array("\\1<a class='wiki' href=\"\\2://\\3\">\\2://\\3</a>", "\\1<a class='wiki' href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>");
+			$patterns = array("#([\n ])([a-z0-9]+?)://([^, \n\r]+)#i", "#([\n ])www\.([a-z0-9\-]+)\.([a-z0-9\-.\~]+)((?:/[^, \n\r]*)?)#i", "#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i", "#([\n ])magnet\:\?([^, \n\r]+)#i");
+			$replacements = array("\\1<a class='wiki' href=\"\\2://\\3\">\\2://\\3</a>", "\\1<a class='wiki' href=\"http://www.\\2.\\3\\4\">www.\\2.\\3\\4</a>", "\\1<a class='wiki' href=\"mailto:\\2@\\3\">\\2@\\3</a>", "\\1<a class='wiki' href=\"magnet:?\\2\">magnet:?\\2</a>");
 			$text = preg_replace($patterns, $replacements, $text);
 			// strip the space we added
 			$text = substr($text, 1);
