@@ -1,0 +1,23 @@
+contributor:
+$Author: mose $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-09-29 22:36:45 $
+
+files: 
+themes/veryorange/styles/veryorange.css styles/veryorange.css
+
+author:
+damosoft
+
+licence:
+GNU/LGPL
+
+Description: 
+A style sheet by sdl of the Tiki Community conforming to the NHS colour schemes
+
+Changelog:
+1 initial package
