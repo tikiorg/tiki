@@ -8,7 +8,7 @@
 {if $show_lang and $lang}
 <img src="img/flags/{$lang}.gif" width="18" height="10" border="1" align="right" style="float:right;font-size:10px;" alt="{$lang}"> 
 {/if}
-{$title}</span><br />
+{$arttitle}</span><br />
 {if $show_subtitle eq 'y' and $subtitle}<div class="articlesubtitle">{$subtitle}</div>{/if}
 <span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br />
 </div>
