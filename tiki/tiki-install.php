@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.33 2003-12-04 21:36:05 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.34 2003-12-04 21:43:57 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.33 2003-12-04 21:36:05 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.34 2003-12-04 21:43:57 dheltzel Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -85,54 +85,7 @@ function process_sql_file($file,$db_tiki) {
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
 }
 
-/*
-function deldir($dir){
-   $current_dir = opendir($dir);
-   while($entryname = readdir($current_dir)){
-      if(is_dir("$dir/$entryname") and ($entryname != "." and $entryname!="..")){
-         deldir("${dir}/${entryname}");
-      }elseif($entryname != "." and $entryname!=".."){
-         unlink("${dir}/${entryname}");
-      }
-   }
-   closedir($current_dir);
-   rmdir(${dir});
-}
-
-function clean_cache(){
-   $dir = 'templates_c';
-   $current_dir = opendir($dir);
-   while($entryname = readdir($current_dir)){
-      if(is_dir("$dir/$entryname") and ($entryname != "." and $entryname!="..")){
-         deldir("${dir}/${entryname}");
-      }elseif($entryname != "." and $entryname!=".."){
-         unlink("${dir}/${entryname}");
-      }
-   }
-   closedir($current_dir);
-}
-
-function setup_help(){
-	// show what user/group id the webserver is running as
-	$uid = shell_exec('id -un');
-	$gid = shell_exec('id -gn');
-	print "userid: <b>$uid</b>  groupid: <b>$gid</b><br>If you experience problems with the install, please run the following command as root:<br>";
-	print "<i>./setup.sh $uid $gid 02775</i><br>";
-}
-*/
-
 function create_dirs(){
-/*  old list of dirs
-$dirs = array(
-	'backups',
-	'dump',
-	'img/wiki',
-	'img/wiki_up',
-	'modules/cache',
-	'temp',
-	'templates_c',
-);
-*/
 	$dirs=array(
 		'backups',
 		'db',
@@ -220,6 +173,7 @@ if (isset($_REQUEST['kill'])) {
 	die;
 }
 
+// This is used to install files into the Tiki file structure from a zip file
 if (isset($_REQUEST['install_app'])) {
 	include_once ('lib/pclzip.lib.php');
 	$archive = new PclZip("app_repos/".$_REQUEST['apps']);
@@ -229,21 +183,17 @@ if (isset($_REQUEST['install_app'])) {
 	if ($ziplist) {
 		for ($i = 0; $i < sizeof($ziplist); $i++) {
 			$file = $ziplist["$i"]["filename"];
-			//print "$file";
-			//print "<br>";
 		}
 	}
-/*
-*/
 	if ($archive->extract() == 0) {
 		die("Error : ".$archive->errorInfo(true));
 	}
 	else {
 		print "The application in <b>".$_REQUEST['apps']."</b> was installed successfully";
 	}
-	//die;
 }
 
+// This is used to remove files that were installed into the Tiki file structure by the install_app prcess
 if (isset($_REQUEST['remove_app'])) {
 	include_once ('lib/pclzip.lib.php');
 	$archive = new PclZip("app_repos/".$_REQUEST['apps']);
@@ -258,7 +208,6 @@ if (isset($_REQUEST['remove_app'])) {
 			print "<br>";
 		}
 	}
-	//die;
 }
 
 $smarty = new Smarty_TikiWiki();
