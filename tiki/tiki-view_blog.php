@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.30 2004-01-09 19:47:45 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.31 2004-01-30 22:47:47 swillie Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,6 +90,7 @@ $smarty->assign('heading', $blog_data["heading"]);
 $smarty->assign('use_title', $blog_data["use_title"]);
 $smarty->assign('use_find', $blog_data["use_find"]);
 $smarty->assign('allow_comments', $blog_data["allow_comments"]);
+$smarty->assign('show_avatar',$blog_data["show_avatar"]);
 $smarty->assign('description', $blog_data["description"]);
 $smarty->assign('created', $blog_data["created"]);
 $smarty->assign('lastModif', $blog_data["lastModif"]);

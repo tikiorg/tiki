@@ -43,6 +43,9 @@
 <tr><td class="editblogform"><label for="blogs-comments">{tr}Allow comments{/tr}</label></td><td class="editblogform">
 <input type="checkbox" name="allow_comments" id="blogs-comments" {if $allow_comments eq 'y'}checked='checked'{/if}/>
 </td></tr>
+<tr><td class="editblogform">{tr}Show user avatar{/tr}</td><td class="editblogform">
+<input type="checkbox" name="show_avatar" {if $show_avatar eq 'y'}checked='checked'{/if}/>
+</td></tr>
 
 {if $tiki_p_edit_templates eq 'y'}
 <tr><td class="editblogform"><label for="blogs-heading">{tr}Blog heading{/tr}</label></td><td class="editblogform">

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.20 2004-01-29 11:54:16 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.21 2004-01-30 22:47:46 swillie Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -140,3 +140,6 @@ UPDATE `tiki_tracker_fields` set `isPublic`='y' where `isPublic`='';
 
 # Added on 28 Jan 2004 by rlpowell, to allow for changing your vote in a poll.
 ALTER TABLE `tiki_user_votings` ADD optionId int(10) NOT NULL default '0';
+
+# Added on 29 Jan 2004 by Swillie, to hold choice for displaying user avatar on post heading
+ALTER TABLE 'tiki_blogs' ADD show_avatar char(1) default NULL;

@@ -61,9 +61,17 @@
 <span class="posthead">
 {if $use_title eq 'y'}
 	{$listpages[ix].title}<br />
-	<small> {tr}posted by{/tr} {$listpages[ix].user} on {$listpages[ix].created|tiki_short_datetime}</small>
+	<small> {tr}posted by{/tr} {$listpages[ix].user}  
+	{if $show_avatar eq 'y'}
+       {$listpages[ix].avatar}
+     {/if} 
+	 on {$listpages[ix].created|tiki_short_datetime}</small>
 {else}
-	{$listpages[ix].created|tiki_short_datetime}<small> {tr}posted by{/tr} {$listpages[ix].user}</small>
+	{$listpages[ix].created|tiki_short_datetime}<small> {tr}posted by{/tr} {$listpages[ix].user} 
+	{if $show_avatar eq 'y'}
+        {$listpages[ix].avatar}
+    {/if}
+	</small>
 {/if}
 </span>
 </td><td align="right">
@@ -102,18 +110,18 @@
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>] 
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+ [<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
+{$smarty.section.foo.index_next}</a> 
 {/section}
 {/if}
 </div>
