@@ -312,10 +312,15 @@ input { text-indent : 2px; }
 TD {color: Black; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 12px; vertical-align: top;}
 
 /* Cells in forms without background color (inside a div for example) */
-.form 
+.form td
 { color: Black; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; vertical-align: top; text-align: left;}
 /* Cells in forms using a background color */
-.formcolor, .galform , .editblogform, .editfgalform, .comform, .forumform
+.formcolor td, 
+.galform td, 
+.editblogform td, 
+.editfgalform td, 
+.comform td, 
+.forumform td
 { color: Black; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  background: #DED6C6; font-size: 11px; vertical-align: top; text-align: left;}
 
 /* The table */
@@ -387,7 +392,7 @@ a.forumnameread:hover
 
 /* When a find button is provided for a listing the table form is displayed in a table with the following style */
 table.findtable { width: 97%; margin-bottom: 20px; padding-bottom: 10px;}
-td.findtable { font-family: Verdana, Arial, Helvetica, sans-serif;  font-size: 11px;}
+.findtable td { font-family: Verdana, Arial, Helvetica, sans-serif;  font-size: 11px;}
 
 /* Odd rows in several listings */
 tr.odd {

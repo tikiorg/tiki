@@ -470,7 +470,7 @@ input {
  */
 
 /* Cells in forms without background color (inside a div for example) */
-.form {
+.form td {
 	color: black;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -479,7 +479,12 @@ input {
 }
 
 /* Cells in forms using a background color */
-.formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
+.formcolor td, 
+.galform td, 
+.editblogform td, 
+.editfgalform td, 
+.comform td, 
+.forumform td {
 	background-color: #f2f6e4;
 	color: black;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -597,7 +602,7 @@ table.findtable {
 	padding-bottom: 10px;
 }
 
-td.findtable {
+.findtable td {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 }
