@@ -298,6 +298,20 @@ function convert_query(&$query) {
 
 }
 
+function blob_encode(&$blob) {
+  switch($this->db->blobEncodeType) {
+    case 'I':
+      $blob=$this->db->BlobEncode($blob);
+      break;
+    case 'C':
+      $blob=$this->db->qstr($this->db->BlobEncode($blob));
+      break;
+    case 'false':
+    default:
+  }
+}
+
+
 function convert_sortmode($sort_mode) {
     global $ADODB_Database;
 
@@ -1244,6 +1258,7 @@ function get_user_id($user) {
 function get_user_groups($user) {
     $userid = $this->get_user_id($user);
     $query = "select `groupName`  from `users_usergroups` where `userId`=?";
+    $result=$this->query($query,array((int) $userid));
     $ret = array();
     while ($res = $result->fetchRow()) {
 	$ret[] = $res["groupName"];
