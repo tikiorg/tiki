@@ -20,7 +20,7 @@ $statements=split(";",$data);
 
 echo "<table>\n";
 // step though statements
-$fp=fopen($file."_to_oci8.sql","w");
+$fp=fopen($file."_to_mysql4.sql","w");
 foreach ($statements as $statement)
 {
   echo "<tr><td><pre>\n";
@@ -42,42 +42,14 @@ function parse($stmt)
   $poststmt="\n\n";
   $prestmt="";
 
-  //replace comments
-  $stmt=preg_replace("/#/","--",$stmt);
-  // drop TYPE=MyISAM and AUTO_INCREMENT=1
-  $stmt=preg_replace("/TYPE=MyISAM/","",$stmt);
-  $stmt=preg_replace("/AUTO_INCREMENT=1/","",$stmt);
-  //oracle cannot DROP TABLE IF EXISTS
-  $stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);
-  //auto_increment things
-  $stmt=preg_replace("/  ([a-zA-Z0-9_]+).+int\(([^\)]+)\) NOT NULL auto_increment/e","create_trigger('$1','$2')",$stmt);
-  // integer types
-  $stmt=preg_replace("/int\(([0-9]+)\)/","number($1)",$stmt);
-  // timestamps
-  $stmt=preg_replace("/timestamp\([^\)]+\)/","timestamp(3)",$stmt);
-  // blobs
-  $stmt=preg_replace("/longblob|tinyblob|blob/","blob",$stmt);
-  // text datatypes
-  $stmt=preg_replace("/  (.+) (text)/","  $1 clob",$stmt);
   // quote column names
-  $stmt=preg_replace("/  ([a-zA-Z0-9_]+)/","  \"$1\"",$stmt);
+  $stmt=preg_replace("/  ([a-zA-Z0-9_]+)/","  `$1`",$stmt);
   // quote and record table names
   $stmt=preg_replace("/(DROP TABLE |CREATE TABLE )([a-zA-Z0-9_]+)( \()*/e","record_tablename('$1','$2','$3')",$stmt);
   // unquote the PRIMARY and other Keys
   $stmt=preg_replace("/  \"(PRIMARY|KEY|FULLTEXT|UNIQUE)\"/","  $1",$stmt);
-  // convert enums
-  $stmt=preg_replace("/  (\"[a-zA-Z0-9_]+\") enum\(([^\)]+)\)/e","convert_enums('$1','$2')",$stmt);
-  // Oracle wants to have "default ... NOT NULL" not "NOT NULL default ..."
-  $stmt=preg_replace("/(.+)(NOT NULL) (default.+),/","$1$3 $2,",$stmt);
-  // same with other constraints
-  $stmt=preg_replace("/(.+)(CHECK.+) (default.+),/","$1$3 $2,",$stmt);
-
   // quote column names in primary keys
   $stmt=preg_replace("/  (PRIMARY KEY)  \((.+)\),*/e","quote_prim_cols('$1','$2')",$stmt);
-  // create indexes from KEY ...
-  $stmt=preg_replace("/  KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$1','$2')",$stmt);
-  $stmt=preg_replace("/  FULLTEXT KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$1','$2')",$stmt);
-  $stmt=preg_replace("/  (UNIQUE) KEY ([a-zA-Z0-9_]+) \((.+)\),*/e","create_index('$2','$3','$1')",$stmt);
   // handle inserts
   $stmt=preg_replace("/INSERT INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES (.*)/e","do_inserts('$1','$2','$3')",$stmt);
   $stmt=preg_replace("/INSERT IGNORE INTO ([a-zA-Z0-9_]*).*\(([^\)]+)\) VALUES (.*)/e","do_inserts('$1','$2','$3')",$stmt);
@@ -146,7 +118,7 @@ function do_inserts($tab,$content,$tail)
   $cols=split(",",$content);
   foreach ($cols as $vals) {
     $vals=preg_replace("/ /","",$vals);
-    $ret.="\"$vals\"";
+    $ret.="`$vals`";
   }
   $ret=preg_replace("/\"\"/","\",\"",$ret);
   $ret.=")";
@@ -164,7 +136,7 @@ function quote_prim_cols($key,$content)
   $cols=split(",",$content);
   foreach ($cols as $vals) {
     $vals=preg_replace("/\(.*\)/","",$vals);
-    $ret.="\"$vals\"";
+    $ret.="`$vals`";
   }
   $ret=preg_replace("/\"\"/","\",\"",$ret);
   $ret.=")";
