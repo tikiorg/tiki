@@ -394,10 +394,10 @@ $lang=Array(
 
 "help" => "aide",
 "%A %d of %B, %Y" => "%A %d %B %Y",
-"%A %d of %B, %Y[%H:%M:%S %Z]" => "%A %d %B %Y[%Hh%M]",
+"%A %d of %B, %Y[%H:%M:%S %Z]" => "%A %d %B %Y [%Hh%M]",
 "%H:%M:%S %Z" => "%Hh%M",
 "%a %d of %b, %Y" => "%e/%m/%y",
-"%a %d of %b, %Y[%H:%M %Z]" => "%e/%m/%y[%Hh%M]",
+"%a %d of %b, %Y[%H:%M %Z]" => "%e/%m/%y [%Hh%M]",
 "%H:%M %Z" => "%Hh%M",
 "Missing title or body when trying to post a comment" => "Titre ou contenu manquant pour publier un commentaire",
 "The copyright management feature is not enabled." => "La fonctionnalité copyright n'est pas activée.",
