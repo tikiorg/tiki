@@ -3,16 +3,15 @@
   <div class="cbox-data">
     <div class="simplebox">
       <form action="tiki-admin.php?page=fgal" method="post">
-        <table ><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Home Gallery (main gallery){/tr}</td>
           <td><select name="homeFileGallery">
               {section name=ix loop=$file_galleries}
                 <option value="{$file_galleries[ix].galleryId|escape}" {if $file_galleries[ix].galleryId eq $home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"...":true}</option>
               {/section}
               </select></td>
-        </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="filegalset"
-              value="{tr}Change preferences{/tr}" /></td>
+			<td><input type="submit" name="filegalset"
+              value="{tr}ok{/tr}" /></td>
         </tr></table>
       </form>
     </div>
@@ -20,7 +19,7 @@
     <div class="simplebox">
       {tr}Galleries features{/tr}<br />
       <form action="tiki-admin.php?page=fgal" method="post">
-        <table ><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Rankings{/tr}:</td>
           <td><input type="checkbox" name="feature_file_galleries_rankings" 
               {if $feature_file_galleries_rankings eq 'y'}checked="checked"{/if}/></td>
@@ -36,8 +35,8 @@
           <td class="form">{tr}Use a directory to store files{/tr}:</td>
           <td class="form"><input type="radio" name="fgal_use_db" value="n"
               {if $fgal_use_db eq 'n'}checked="checked"{/if}/>
-              {tr}Directory path{/tr}: <input type="text" name="fgal_use_dir"
-              value="{$fgal_use_dir|escape}" /></td>
+              {tr}Directory path{/tr}:<br><input type="text" name="fgal_use_dir"
+              value="{$fgal_use_dir|escape}" size="50" /></td>
         </tr><tr>
           <td class="form">{tr}Uploaded filenames must match regex{/tr}:</td>
           <td><input type="text" name="fgal_match_regex"
@@ -57,8 +56,8 @@ user from listing the directory contents</li></ul>
 To configure the directory path use UNIX like paths for example files/ or
 c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="filegalfeatures"
-              value="{tr}Set features{/tr}" /></td>
+          <td colspan="2" class="button"><input type="submit" name="filegalfeatures"
+              value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
     </div>
@@ -66,7 +65,7 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
     <div class="simplebox">
       {tr}Gallery listing configuration{/tr}
       <form method="post" action="tiki-admin.php?page=fgal">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Name{/tr}</td>
           <td class="form"><input type="checkbox" name="fgal_list_name"
               {if $fgal_list_name eq 'y'}checked="checked"{/if} /></td>
@@ -95,7 +94,7 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
           <td class="form"><input type="checkbox" name="fgal_list_hits"
               {if $fgal_list_hits eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit"
+          <td colspan="2" class="button"><input type="submit"
               name="filegallistprefs" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -104,7 +103,7 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
     <div class="simplebox">
       {tr}File galleries comments settings{/tr}
       <form method="post" action="tiki-admin.php?page=fgal">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Default number of comments per page{/tr}: </td>
           <td><input size="5" type="text" name="file_galleries_comments_per_page"
                value="{$file_galleries_comments_per_page|escape}" /></td>
@@ -116,7 +115,7 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
               <option value="points_desc" {if $file_galleries_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
               </select></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="filegalcomprefs"
+          <td colspan="2" class="button"><input type="submit" name="filegalcomprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
