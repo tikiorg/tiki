@@ -322,7 +322,8 @@ function convert_sortmode($sort_mode) {
 	    case "sybase":
 	    // Postgres needs " " around column names
 	    //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
-	    $sort_mode = str_replace("_", "\" ", $sort_mode);
+	    $sort_mode = str_replace("_asc", "\" asc", $sort_mode);
+	    $sort_mode = str_replace("_desc", "\" desc", $sort_mode);
         $sort_mode = str_replace(",", "\",\"",$sort_mode);
 
 	$sort_mode = "\"" . $sort_mode;
@@ -331,7 +332,8 @@ function convert_sortmode($sort_mode) {
 	case "mysql3":
 	    case "mysql":
 	default:
-	    $sort_mode = str_replace("_", "` ", $sort_mode);
+	    $sort_mode = str_replace("_asc", "` asc", $sort_mode);
+	    $sort_mode = str_replace("_desc", "` desc", $sort_mode);
         $sort_mode = str_replace(",", "`,`",$sort_mode);
 	    $sort_mode = "`" . $sort_mode;
 	    break;
