@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.27 2004-05-15 23:51:26 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.28 2004-05-25 00:56:12 rlpowell Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,6 +100,11 @@ if (isset($_REQUEST["articleId"])) {
 	if (!isset($_REQUEST['page']))
 		$_REQUEST['page'] = 1;
 
+	// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
+	$preparsed = array();
+	$noparsed = array();
+	$tikilib->parse_pp_np( $article_data["body"], $preparsed, $noparsed );
+
 	$pages = $artlib->get_number_of_pages($article_data["body"]);
 	$article_data["body"] = $artlib->get_page($article_data["body"], $_REQUEST['page']);
 	$smarty->assign('pages', $pages);
@@ -120,12 +125,16 @@ if (isset($_REQUEST["articleId"])) {
 	$smarty->assign('last_page', $pages);
 	$smarty->assign('pagenum', $_REQUEST['page']);
 
+	// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
+	$tikilib->parse_pp_np( $article_data["body"], $preparsed, $noparsed );
+
 	$smarty->assign('body', $article_data["body"]);
 	$smarty->assign('publishDate', $article_data["publishDate"]);
 	$smarty->assign('edit_data', 'y');
 
 	$body = $article_data["body"];
 	$heading = $article_data["heading"];
+
 	$smarty->assign('parsed_body', $tikilib->parse_data($body));
 	$smarty->assign('parsed_heading', $tikilib->parse_data($heading));
 }
