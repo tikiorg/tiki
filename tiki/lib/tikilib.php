@@ -3747,7 +3747,7 @@ function parse_first(&$data, &$preparsed, &$noparsed) {
 
     // Find the plugins
     // note: [1] is plugin name, [2] is plugin arguments
-    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/", $data, $plugins);
+    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
 
     // if true, replace only CODE plugin, if false, replace all other plugins
     $code_first = true;
@@ -3760,10 +3760,20 @@ function parse_first(&$data, &$preparsed, &$noparsed) {
   $plugin_start = $plugins[0][$i];
 
   $plugin = $plugins[1][$i];
-  $plugin_end = '{' . $plugin . '}';
   $plugin_start_base = '{' . $plugins[1][$i] . '(';
   $pos = strpos($data, $plugin_start); // where plugin starts
-  $pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+  // process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
+  if (preg_match("/\/ *\}$/",$plugin_start))
+  {
+   $plugin_end='';
+   $pos_end=$pos+strlen($plugin_start);
+  }
+  else
+  {
+   $plugin_end = '{' . $plugin . '}';
+   $pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+  }
+
 
   if (
     // when in CODE parsing mode, replace only CODE plugins
@@ -3772,7 +3782,6 @@ function parse_first(&$data, &$preparsed, &$noparsed) {
      ((!$code_first) && ($plugin <> 'CODE'))) && ($pos_end > $pos)) {
       // Extract the plugin data
       $plugin_data_len = $pos_end - $pos - strlen($plugins[0][$i]);
-
       $plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
 
       // Construct plugin file pathname
