@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.35 2004-10-25 12:20:29 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.36 2004-10-25 14:45:16 chealer Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.35 2004-10-25 12:20:29 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.36 2004-10-25 14:45:16 chealer Exp $
 //
 
 // Initialization
@@ -246,7 +246,7 @@ function array_csort($marray, $column) {
 	}
 }
 
-$catree = $categlib->list_categs();
+$catree = $categlib->list_categs(true);
 $catree = array_csort($catree,'categpath');
 $smarty->assign('catree', $catree);
 
