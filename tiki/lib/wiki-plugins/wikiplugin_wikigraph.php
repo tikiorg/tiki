@@ -13,22 +13,55 @@ function wikiplugin_wikigraph_help() {
 
 function wikiplugin_wikigraph($data, $params) {
 	global $tikilib;
-
 	global $page;
 	global $wikilib;
+	$add = "";
 	extract ($params);
+  if(!isset($level)) $level = 0;
+	if(!isset($title)) $title = "wikigraph";
+	if(isset($nodesep)) $add.="&amp;nodesep=$nodesep";
+	if(isset($rankdir)) $add.="&amp;rankdir=$rankdir";
+	if(isset($size)) $add.="&amp;size=$size";
+	if(isset($bgcolor)) $add.="&amp;bgcolor=$bgcolor";
+	if(isset($fontsize)) $add.="&amp;fontsize=$fontsize";
+	if(isset($fontname)) $add.="&amp;fontname=$fontname";
+	if(isset($shape)) $add.="&amp;shape=$shape";
+	if(isset($nodestyle)) $add.="&amp;nodestyle=$nodestyle";
+	if(isset($nodecolor)) $add.="&amp;nodecolor=$nodecolor";
+	if(isset($nodefillcolor)) $add.="&amp;nodefillcolor=$nodefillcolor";
+	if(isset($nodewidth)) $add.="&amp;nodewidth=$nodewidth";
+	if(isset($nodeheight)) $add.="&amp;nodeheight=$nodeheight";
+	if(isset($edgecolor)) $add.="&amp;edgecolor=$edgecolor";
+	if(isset($edgestyle)) $add.="&amp;edgestyle=$edgestyle";
+  if(empty($data)) $data=$page;
+  $mapname=md5(uniqid("."));
+  $ret='';
 
-	if (!isset($level))
-		$level = 0;
+$garg = array(
+  'att' => array(
+    'level' => $level,
+    'nodesep' => isset($nodesep) ? $nodesep : ".1",
+    'rankdir' => isset($rankdir) ? $rankdir : "LR",
+    'bgcolor' => isset($bgcolor) ? $bgcolor : "transparent",
+    'size' => isset($size) ? $size : ""
+	),
+	'node' => array(
+    'fontsize' => isset($fontsize) ? $fontsize : "9",
+    'fontname' => isset($fontname) ? $fontname : "Helvetica",
+    'shape' => isset($shape) ? $shape : "box",
+    'style' => isset($nodestyle) ? $nodestyle : "filled",
+    'color' => isset($nodecolor) ? $nodecolor : "#aeaeae",
+    'fillcolor' => isset($nodefillcolor) ? $nodefillcolor : "#FFFFFF",
+    'width' => isset($nodewidth) ? $nodewidth : ".1",
+    'height' => isset($nodeheight) ? $nodeheight : ".1"
+  ),
+  'edge' => array(
+    'color' => isset($edgecolor) ? $edgecolor : "#999999",
+    'style' => isset($edgestyle) ? $edgestyle : "solid"
+));
 
-	if (empty($data))
-		$data = $page;
-
-	$mapname = md5(uniqid("."));
-	$ret = '';
-
-	$ret .= "<div align='center'><img border='0' src='tiki-wiki_graph.php?page=$data&amp;level=$level' alt='graph' usemap='#$mapname' />";
-	$mapdata = $wikilib->get_graph_map($page, $level);
+	$ret .= "<div align='center'><img border='0' src='tiki-wiki_graph.php?page=$data&amp;level=$level$add' alt='graph' usemap='#$mapname' />";
+	$mapdata = $wikilib->get_graph_map($page, $level,$garg);
 	$mapdata = preg_replace("/\n|\r/", '', $mapdata);
 	$ret .= "<map name='$mapname'>$mapdata</map></div>";
 	return $ret;
