@@ -293,6 +293,9 @@ class TikiSheet
 
 				if( empty( $this->cellInfo[$y][$x]['height'] ) )
 					$this->cellInfo[$y][$x]['height'] = 1;
+
+				if( empty( $this->cellInfo[$y][$x]['format'] ) )
+					$this->cellInfo[$y][$x]['format'] = '';
 			}
 
 		return true;
