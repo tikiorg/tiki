@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.5 2003-10-15 16:04:47 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.6 2003-10-17 16:10:17 zaufi Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -75,6 +75,9 @@
     <td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
   </tr><tr>
     <td class="formcolor" colspan="2">{tr}Preview options{/tr}</td>
+  </tr><tr>
+    <td class="formcolor">{tr}Apply all rules{/tr}</td>
+    <td class="formcolor"><input type="checkbox" name="all" {if $all eq 'y'}checked="checked"{/if} /></td>
   </tr><tr>
     <td class="formcolor">{tr}Code preview{/tr}</td>
     <td class="formcolor"><input type="checkbox" name="code" {if $code eq 'y'}checked="checked"{/if} /></td>
