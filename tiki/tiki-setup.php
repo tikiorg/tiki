@@ -98,6 +98,7 @@ $feature_history = 'y';
 $feature_backlinks = 'y';
 $feature_likePages = 'y';
 $feature_search = 'y';
+$feature_search_fulltext = 'y';
 $feature_sandbox = 'y';
 $feature_userPreferences = 'n';
 $feature_userVersions = 'y';
@@ -327,6 +328,7 @@ $smarty->assign('feature_history', $feature_history);
 $smarty->assign('feature_backlinks', $feature_backlinks);
 $smarty->assign('feature_likePages', $feature_likePages);
 $smarty->assign('feature_search', $feature_search);
+$smarty->assign('feature_search_fulltext', $feature_search_fulltext);
 $smarty->assign('feature_sandbox', $feature_sandbox);
 $smarty->assign('feature_userPreferences', $feature_userPreferences);
 $smarty->assign('feature_userVersions', $feature_userVersions);
@@ -544,7 +546,6 @@ if(isset($_REQUEST["pollVote"])) {
 }
 
 $ownurl = httpPrefix().$_SERVER["REQUEST_URI"];
-$server = $_SERVER["SERVER_NAME"];
 $parsed=parse_url($_SERVER["REQUEST_URI"]);
 if(!isset($parsed["query"])) {
   $parsed["query"]='';

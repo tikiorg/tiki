@@ -29,7 +29,6 @@ $v=substr($c->nameOfMonth($mon),0,3);
 $dayofweek=$c->dayOfWeekStr($day,$mon,$year);
 
 
-$server = $_SERVER["SERVER_NAME"];
 $parsed=parse_url($_SERVER["REQUEST_URI"]);
 if(!isset($parsed["query"])) {
   $parsed["query"]='';
@@ -38,7 +37,7 @@ parse_str($parsed["query"],$query);
 unset($query["day"]);
 unset($query["mon"]);
 unset($query["year"]);
-$father='http://'.$server.$parsed["path"];
+$father=httpPrefix().$parsed["path"];
 if(count($query)>0) {
   $first=1;
   foreach($query as $name => $val) {

@@ -35,7 +35,15 @@
 </form>
 <br/><br/>
 {section  name=search loop=$results}
-<a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> ({$results[search].hits})<br/>
+<a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> (Hits: {$results[search].hits})
+{if $feature_search_fulltext eq 'y'}
+&nbsp;(Relevance: {$results[search].relevance})
+{/if}
+{if $results[search].type > ''}
+&nbsp;({$results[search].type})
+{/if}
+
+<br/>
 <div class="searchdesc">{$results[search].data|strip_tags}</div>
 <div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</div><br/>
 {sectionelse}

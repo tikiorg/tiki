@@ -63,7 +63,7 @@ if($userlib->object_has_one_permission($_REQUEST["galleryId"],'image gallery')) 
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo["path"]=str_replace("tiki-galleries","tiki-browse_gallery",$foo["path"]);
-$smarty->assign('url',$_SERVER["SERVER_NAME"].$foo["path"]);
+$smarty->assign('url',httpPrefix().$foo["path"]);
 
 // Init smarty variables to blank values
 //$smarty->assign('theme','');

@@ -41,7 +41,6 @@ if(!isset($_REQUEST['comments_threshold'])) {
 }
 $smarty->assign('comments_threshold',$_REQUEST['comments_threshold']);
 // This sets up comments father as the father
-$comments_server = $_SERVER["SERVER_NAME"];
 $comments_parsed=parse_url($_SERVER["REQUEST_URI"]);
 if(!isset($comments_parsed["query"])) {
   $comments_parsed["query"]='';

@@ -19,7 +19,7 @@ if($tiki_p_upload_files != 'y') {
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-upload_file","tiki-download_file",$foo["path"]);
-$smarty->assign('url_browse',$_SERVER["SERVER_NAME"].$foo1);
+$smarty->assign('url_browse',httpPrefix().$foo1);
 
 
 

@@ -6457,10 +6457,9 @@ class TikiLib {
           }
           // Now change it!
           //print("Changing $url to imageId: $imageId");
-          $foo = parse_url($_SERVER["REQUEST_URI"]);
-          $foo2=str_replace("tiki-editpage","show_image",$foo["path"]);
-          $showurl = $_SERVER["SERVER_NAME"].$foo2;
-          $page_data = str_replace("$url","http://$showurl?id=$imageId",$page_data);
+          $uri = parse_url($_SERVER["REQUEST_URI"]);
+          $path=str_replace("tiki-editpage","show_image",$uri["path"]);
+          $page_data = str_replace($url,httpPrefix().$path.'?id='.$imageId,$page_data);
         } // if strlen
       } // if $fp
       }
@@ -8349,7 +8348,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $ret; 
   }
 
-  function _find($h, $words = '', $offset = 0, $maxRecords = -1) {
+  function _find($h, $words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
     $words = trim($words);
 
     $sql = sprintf('SELECT %s AS name, LEFT(%s, 240) AS data, %s AS hits, %s AS lastModif, %s	AS pageName',
@@ -8360,28 +8359,49 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $sql .= ',' . $id[$i] . ' AS id' . ($i + 1);
     if (count($id) < 2)
       $sql .= ',1 AS id2';
-    
-    $sql2 = ' FROM ' . $h['from'] . ' WHERE 1 ';
-    if ($words) {
+
+    $sql2 = ' FROM ' . $h['from'] . ' WHERE 1';
+
+    $search_fields = array($h['name']);
+   	if ($h['data'] && $h['name'] != $h['data'])
+	    array_push($search_fields, $h['data']);
+
+    $orderby = (isset($h['orderby']) ? $h['orderby'] : $h['hits']);
+
+    if ($fulltext) {
+	   	if (count($h['search']))
+    		if (!preg_match('/\./', $h['search'][0]))
+    			$search_fields = array_merge($search_fields, $h['search']);
+		$qwords = $this->db->quote($words);
+    	$sqlft = 'MATCH(' . join(',', $search_fields) . ') AGAINST (' . $qwords . ')';
+    	$sql2 .= ' AND ' . $sqlft . ' >= 0';
+    	$sql .= ', ' . $sqlft . ' AS relevance';
+	    $orderby = 'relevance desc, ' . $orderby;
+#		if (count($h['search'])) {
+#	    	$sqlft = ' MATCH(' . join(',', $h['search']) . ') AGAINST (' . $qwords . ')';
+#	    	$sql2 .= ' OR ' . $sqlft . ' > 0';
+#	    	$sql .= ', ' . $sqlft . ' AS score2';
+#		}
+	} else if ($words) {
+	  $sql .= ', -1 AS relevance';
       $vwords = split(' ',$words);
-      $search = array_merge($h['search'], array($h['name'], $h['data']));
       foreach ($vwords as $aword) {
         $aword = $this->db->quote('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
         $sql2 .= ' AND (';
-        for ($i = 0; $i < count($search); ++$i) {
+        for ($i = 0; $i < count($search_fields); ++$i) {
           if ($i)
             $sql2 .= ' OR ';
-          $sql2 .= 'UPPER(' . $search[$i] . ') REGEXP ' . $aword;
+          $sql2 .= 'UPPER(' . $search_fields[$i] . ') REGEXP ' . $aword;
         }
         $sql2 .= ')';
       }
     }
+
     $cant = $this->db->GetOne('SELECT COUNT(*)' . $sql2);
     if (!$cant) {
       return array('data' => array(), 'cant' => 0);
     }
-    $sql .= $sql2 . ' ORDER BY ' . (isset($h['orderby']) ? $h['orderby'] : $h['hits']) .
-      ' DESC LIMIT ' . $offset . ',' . $maxRecords;
+    $sql .= $sql2 . ' ORDER BY ' . $orderby . ' DESC LIMIT ' . $offset . ',' . $maxRecords;
     $result = $this->db->query($sql);
     if (DB::isError($result))
       $this->sql_error($sql, $result);
@@ -8395,12 +8415,13 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         'hits'      => $res["hits"],
         'lastModif' => $res["lastModif"],
         'href'      => $href,
+        'relevance' => round($res["relevance"], 3),
       );
     }
     return array('data' => $ret, 'cant' => $cant);
   }
 
-  function find_wikis($words='',$offset=0,$maxRecords=-1) 
+  function find_wikis($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
     static $search_wikis = array(
       'from'      => 'tiki_pages',
@@ -8415,10 +8436,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     );
 
     $this->pageRank();
-    return $this->_find($search_wikis, $words, $offset, $maxRecords);
+    return $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
   }
 
-  function find_galleries($words='',$offset=0,$maxRecords=-1) 
+  function find_galleries($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
     static $search_galleries = array(
       'from'      => 'tiki_galleries',
@@ -8432,10 +8453,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'search'    => array(),
     );
 
-    return $this->_find($search_galleries, $words, $offset, $maxRecords);
+    return $this->_find($search_galleries, $words, $offset, $maxRecords, $fulltext);
   }
   
-  function find_faqs($words='',$offset=0,$maxRecords=-1) 
+  function find_faqs($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
     static $search_faqs = array(
       'from'      => 'tiki_faqs f LEFT JOIN tiki_faq_questions q ON q.faqId = f.faqId',
@@ -8449,10 +8470,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'search'    => array('q.question', 'q.answer'),
     );
 
-    return $this->_find($search_faqs, $words, $offset, $maxRecords);
+    return $this->_find($search_faqs, $words, $offset, $maxRecords, $fulltext);
   }
 
-  function find_images($words='',$offset=0,$maxRecords=-1) 
+  function find_images($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
     static $search_images = array(
       'from'      => 'tiki_images',
@@ -8466,10 +8487,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'search'    => array(),
     );
 
-    return $this->_find($search_images, $words, $offset, $maxRecords);
+    return $this->_find($search_images, $words, $offset, $maxRecords, $fulltext);
   }
 
-  function find_forums($words='',$offset=0,$maxRecords=-1) 
+  function find_forums($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
     static $search_forums = array(
       'from'      => 'tiki_comments c LEFT JOIN tiki_forums f ON md5(concat("forum",f.forumId))=c.object',
@@ -8483,10 +8504,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'search'    => array(),
     );
 
-    return $this->_find($search_forums, $words, $offset, $maxRecords);
+    return $this->_find($search_forums, $words, $offset, $maxRecords, $fulltext);
   }
 
-  function find_files($words='',$offset=0,$maxRecords=-1) 
+  function find_files($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
     static $search_files = array(
       'from'      => 'tiki_files',
@@ -8500,10 +8521,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'search'    => array(),
     );
 
-    return $this->_find($search_files, $words, $offset, $maxRecords);
+    return $this->_find($search_files, $words, $offset, $maxRecords, $fulltext);
   }
 
-  function find_blogs($words='',$offset=0,$maxRecords=-1) 
+  function find_blogs($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
     static $search_blogs = array(
       'from'      => 'tiki_blogs',
@@ -8517,10 +8538,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'search'    => array(),
     );
 
-    return $this->_find($search_blogs, $words, $offset, $maxRecords);
+    return $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext);
   }
 
-  function find_articles($words='',$offset=0,$maxRecords=-1) 
+  function find_articles($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
     static $search_articles = array(
       'from'      => 'tiki_articles',
@@ -8534,10 +8555,10 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'search'    => array('body'),
     );
 
-    return $this->_find($search_articles, $words, $offset, $maxRecords);
+    return $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext);
   }
 
-  function find_posts($words='',$offset=0,$maxRecords=-1) 
+  function find_posts($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
     static $search_posts = array(
       'from'      => 'tiki_blog_posts p LEFT JOIN tiki_blogs b ON b.blogId = p.blogId',
@@ -8552,46 +8573,85 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'search'    => array(),
     );
 
-    return $this->_find($search_posts, $words, $offset, $maxRecords);
+    return $this->_find($search_posts, $words, $offset, $maxRecords, $fulltext);
   }
 
-  function find_pages($words='',$offset=0,$maxRecords=-1) 
+  function find_pages($words='',$offset=0,$maxRecords=-1, $fulltext = false) 
   {
-    $rv = $this->find_wikis($words,     $offset, $maxRecords);
-    $data = $rv['data'];
-    $cant = $rv['cant'];
-    $rv = $this->find_galleries($words, $offset, $maxRecords);
-    foreach($rv['data'] as $a)  # array_merge() didn't work here
+    $data = array();
+    $cant = 0;
+    
+    $rv = $this->find_wikis($words,     $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = 'Wiki';
       array_push($data, $a);
+    }
     $cant += $rv['cant'];
-    $rv = $this->find_faqs($words,      $offset, $maxRecords);
-    foreach($rv['data'] as $a)
+    $rv = $this->find_galleries($words, $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = 'Gallery';
       array_push($data, $a);
+    }
     $cant += $rv['cant'];
-    $rv = $this->find_images($words,    $offset, $maxRecords);
-    foreach($rv['data'] as $a)
+    $rv = $this->find_faqs($words,      $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = 'FAQ';
       array_push($data, $a);
+    }
     $cant += $rv['cant'];
-    $rv = $this->find_forums($words,    $offset, $maxRecords);
-    foreach($rv['data'] as $a)
+    $rv = $this->find_images($words,    $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = 'Image';
       array_push($data, $a);
+    }
     $cant += $rv['cant'];
-    $rv = $this->find_files($words,     $offset, $maxRecords);
-    foreach($rv['data'] as $a)
+    $rv = $this->find_forums($words,    $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = 'Forum';
       array_push($data, $a);
+    }
     $cant += $rv['cant'];
-    $rv = $this->find_blogs($words,     $offset, $maxRecords);
-    foreach($rv['data'] as $a)
+    $rv = $this->find_files($words,     $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = 'File';
       array_push($data, $a);
+    }
     $cant += $rv['cant'];
-    $rv = $this->find_articles($words,  $offset, $maxRecords);
-    foreach($rv['data'] as $a)
+    $rv = $this->find_blogs($words,     $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = 'Blog';
       array_push($data, $a);
+    }
     $cant += $rv['cant'];
-    $rv = $this->find_posts($words,     $offset, $maxRecords);
-    foreach($rv['data'] as $a)
+    $rv = $this->find_articles($words,  $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = 'Article';
       array_push($data, $a);
+    }
     $cant += $rv['cant'];
+    $rv = $this->find_posts($words,     $offset, $maxRecords, $fulltext);
+    foreach($rv['data'] as $a) {
+      $a['type'] = 'Post';
+      array_push($data, $a);
+    }
+    $cant += $rv['cant'];
+
+    if ($fulltext) {
+      function find_pages_cmp ($a, $b) {
+        return ($a['relevance'] > $b['relevance']) ? -1 : (($a['relevance'] < $b['relevance']) ? 1 : 0);
+      }
+    
+      usort ($data, 'find_pages_cmp');
+    } else {
+/*	# this doesn't work, because 'hits' aren't the same across different sections, right?
+      function find_pages_cmp ($a, $b) {
+        return ($a['hits'] > $b['hits']) ? -1 : (($a['hits'] < $b['hits']) ? -1 : 0);
+      }
+    
+      usort ($data, 'find_pages_cmp');
+*/
+    }
+ 
     return array(
       'data' => $data,
       'cant' => $cant,

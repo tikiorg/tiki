@@ -26,6 +26,7 @@
 <table>
 <tr><td class="form">{tr}Wiki{/tr}:</td><td><input type="checkbox" name="feature_wiki" {if $feature_wiki eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Search{/tr}:</td><td><input type="checkbox" name="feature_search" {if $feature_search eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Full Text Search{/tr}:</td><td><input type="checkbox" name="feature_search_fulltext" {if $feature_search_fulltext eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Search stats{/tr}:</td><td><input type="checkbox" name="feature_search_stats" {if $feature_search_stats eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Image Galleries{/tr}:</td><td><input type="checkbox" name="feature_galleries" {if $feature_galleries eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Featured links{/tr}:</td><td><input type="checkbox" name="feature_featuredLinks" {if $feature_featuredLinks eq 'y'}checked="checked"{/if}/></td></tr>

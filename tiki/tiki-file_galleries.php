@@ -52,7 +52,7 @@ $smarty->assign('galleryId',$_REQUEST["galleryId"]);
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo["path"]=str_replace("tiki-file_galleries","tiki-list_file_gallery",$foo["path"]);
-$smarty->assign('url',$_SERVER["SERVER_NAME"].$foo["path"]);
+$smarty->assign('url',httpPrefix().$foo["path"]);
 
 // Init smarty variables to blank values
 //$smarty->assign('theme','');
