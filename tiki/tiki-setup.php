@@ -975,7 +975,7 @@ if ($lang_use_db!='y') {
 
 $smarty->assign('user_dbl',$user_dbl);
 
-$stlstl=explode('.',$style);
+$stlstl=split("-|\.",$style);
 $style_base = $stlstl[0];
 
 
