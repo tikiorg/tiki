@@ -81,22 +81,31 @@
 {if $chart_info.frequency > 0 }
 <small>{tr}Next chart will be generated on{/tr}: {$next_chart|tiki_long_datetime}</small>
 {/if}
+<hr/>
 <h4>{tr}View or vote items not listed in the chart{/tr}</h4>
 <table>
 <tr>
 <td>
 <form method="post">
-{tr}find{/tr}: <input type="text" name="find" value="{$smarty.request.find}" />
+{tr}find{/tr}: <input size="15" type="text" name="find" value="{$smarty.request.find}" />
 <input type="submit" name="findb" value="{tr}find{/tr}" />
 </form>
 </td>
 <td>
-<form method="post" action="tiki-view_chart_item.php">
-<select name="itemId">
+<form id='selit' method="post" action="tiki-view_chart_item.php">
+<select name="itemId" onChange="javascript:document.getElementById('selit').submit();">
 {section name=ix loop=$all_items}
 <option value="{$all_items[ix].itemId}">{$all_items[ix].title}</option>
 {/section}
 </select>
+</form>
+</td>
+</tr>
+<tr>
+<td>
+<form method="post" action="tiki-suggest_chart_item.php">
+<input type="hidden" name="itemId" value="0" />
+<input type="submit" name="suggest" value="{tr}suggest a new item{/tr}" />
 </form>
 </td>
 </tr>
