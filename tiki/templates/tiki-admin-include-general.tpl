@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.33 2004-05-21 09:18:37 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.34 2004-05-30 02:53:03 lfagundes Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -97,6 +97,10 @@
         {/section}
         </select>
         </td>
+      </tr><tr>
+	<td class="form"><label for="general-detect_language">{tr}Detect browser language{/tr}:</label></td>
+        <td><input type="checkbox" name="feature_detect_language" id="general-detect_language"
+              {if $feature_detect_language eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
         <td class="form"><label for="general-db_translation">{tr}Use database for translation{/tr}:</label></td>
         <td><input type="checkbox" name="lang_use_db" id="general-db_translation"

@@ -5824,6 +5824,42 @@ function httpPrefix() {
     return 'http'.((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
 }
 
+function detect_browser_language() {
+
+    // Get supported languages
+    $supported = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE']));
+
+    // Get available languages
+    $available = array();
+    $available_aprox = array();
+
+    $dh = opendir("lang");
+    while ($lang = readdir($dh)) {
+	if (file_exists("lang/$lang/language.php")) {
+	    $available[] = $lang;
+	    $available_aprox[substr($lang, 0, 2)] = $lang;
+	}
+    }
+
+    // Check better language
+    // First try an exact match, then an aproximate
+    $aproximate_lang = '';
+    foreach ($supported as $supported_lang) {
+	$lang = strtolower($supported_lang);
+       	if (in_array($lang, $available)) {
+	    return $lang;
+	} else {
+	    $lang = substr($lang, 0, 2);
+	    if (in_array($lang, array_keys($available_aprox))) {
+		$aproximate_lang = $available_aprox[$lang];
+	    }
+	}
+    }
+
+    return $aproximate_lang;
+}
+		
+		
 if (!function_exists('file_get_contents')) {
     function file_get_contents($f) {
 	ob_start();
