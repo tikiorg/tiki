@@ -2252,7 +2252,7 @@ CREATE TABLE tiki_pages (
   points int(8) default NULL,
   votes int(8) default NULL,
   cache text,
-  wiki_cache int(10) default 0,
+  wiki_cache int(10) default NULL,
   cache_timestamp int(14) default NULL,
   pageRank decimal(4,3) default NULL,
   creator varchar(200) default NULL,
