@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.8 2003-08-14 04:40:56 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.9 2003-08-15 21:15:30 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -124,9 +124,9 @@ while ($file = readdir($h)) {
 		$styles[] = $file;
 	}
 }
-
-closedir ($h);
-$smarty->assign_by_ref("styles", $styles);
+closedir( $h );
+sort($styles);
+$smarty->assign_by_ref( "styles", $styles );
 
 // Get list of available slideshow styles
 $slide_styles = array();
