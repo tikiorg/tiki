@@ -18,25 +18,31 @@ class BannerLib extends TikiLib {
 		// zone
 		// maxImpressions and impressions
 		# TODO localize
-		$dw = strtolower(date("D"));
+		$dw = "`".strtolower(date("D"))."`";
 
 		$hour = date("H"). date("i");
 		$now = date("U");
 		$raw = '';
 		//
 		//
-		$query = "select * from tiki_banners where $dw = 'y' and  hourFrom<=$hour and hourTo>=$hour and
-    ( ((useDates = 'y') and (fromDate<=$now and toDate>=$now)) or (useDates = 'n') ) and
-    impressions<maxImpressions and zone='$zone'";
-		$result = $this->query($query);
-		$rows = $result->numRows();
+		$query = "select count(*) from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
+    		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
+    		`impressions`<`maxImpressions` and `zone`=?";
+    		$bindvars=array('y',$hour,$hour,'y',(int) $now,(int) $now,'n',$zone);
+		$rows=$this->getOne($query,$bindvars);
 
 		if (!$rows)
 			return false;
 
 		$bid = rand(0, $rows - 1);
 		//print("Rows: $rows bid: $bid");
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC, $bid);
+
+		$query = "select * from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
+		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
+		`impressions`<`maxImpressions` and `zone`=?";
+		$result = $this->query($query,$bindvars,1,$bid);
+
+		$res = $result->fetchRow();
 		$id = $res["bannerId"];
 
 		switch ($res["which"]) {
@@ -76,46 +82,48 @@ class BannerLib extends TikiLib {
 		$id = $res["bannerId"];
 
 		if ($id) {
-			$query = "update tiki_banners set impressions = impressions + 1 where bannerId = $id";
+			$query = "update `tiki_banners` set `impressions` = `impressions` + 1 where `bannerId` = ?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($id));
 		}
 
 		return $raw;
 	}
 
 	function add_click($bannerId) {
-		$query = "update tiki_banners set clicks = clicks + 1 where bannerId=$bannerId";
+		$query = "update `tiki_banners` set `clicks` = `clicks` + 1 where `bannerId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($queryi,array($bannerId));
 	}
 
 	function list_banners($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $user) {
 		if ($user == 'admin') {
 			$mid = '';
+			$bindvars=array();
 		} else {
-			$mid = "where client = '$user'";
+			$mid = "where `client` = ?";
+			$bindvars=array($user);
 		}
 
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
+			$bindvars[]=$findesc;
 
 			if ($mid) {
-				$mid .= " and url like $findesc ";
+				$mid .= " and `url` like ? ";
 			} else {
-				$mid .= " where url like $findesc ";
+				$mid .= " where `url` like ? ";
 			}
 		}
 
-		$query = "select * from tiki_banners $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_banners $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_banners` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_banners` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -126,14 +134,14 @@ class BannerLib extends TikiLib {
 	}
 
 	function list_zones() {
-		$query = "select zone from tiki_zones";
+		$query = "select `zone` from `tiki_zones`";
 
-		$query_cant = "select count(*) from tiki_zones";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query_cant = "select count(*) from `tiki_zones`";
+		$result = $this->query($query,array());
+		$cant = $this->getOne($query_cant,array());
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -144,94 +152,94 @@ class BannerLib extends TikiLib {
 	}
 
 	function remove_banner($bannerId) {
-		$query = "delete from tiki_banners where bannerId=$bannerId";
+		$query = "delete from `tiki_banners` where `bannerId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($bannerId));
 	}
 
 	function get_banner($bannerId) {
-		$query = "select * from tiki_banners where bannerId=$bannerId";
+		$query = "select * from `tiki_banners` where `bannerId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($bannerId));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function replace_banner($bannerId, $client, $url, $title = '', $alt = '', $use, $imageData, $imageType, $imageName, $HTMLData,
 		$fixedURLData, $textData, $fromDate, $toDate, $useDates, $mon, $tue, $wed, $thu, $fri, $sat, $sun, $hourFrom, $hourTo,
 		$maxImpressions, $zone) {
-		$url = addslashes($url);
-
-		$title = addslashes($title);
-		$alt = addslashes($alt);
-		$imageData = addslashes(urldecode($imageData));
+		$imageData = urldecode($imageData);
 		//$imageData = '';
-		$imageName = addslashes($imageName);
-		$HTMLData = addslashes($HTMLData);
-		$fixedURLData = addslashes($fixedURLData);
-		$textData = addslashes($textData);
-		$zone = addslashes($zone);
 		$now = date("U");
 
 		if ($bannerId) {
-			$query = "update tiki_banners set
-                client = '$client',
-                url = '$url',
-                title = '$title',
-                alt = '$alt',
-                which = '$use',
-                imageData = '$imageData',
-                imageType = '$imageType',
-                imageName = '$imageName',
-                HTMLData = '$HTMLData',
-                fixedURLData = '$fixedURLData',
-                textData = '$textData',
-                fromDate = $fromDate,
-                toDate = $toDate,
-                useDates = '$useDates',
-                created = $now,
-                zone = '$zone',
-                hourFrom = '$hourFrom',
-                hourTo = '$hourTo',
-                mon = '$mon' ,tue = '$tue', wed = '$wed', thu = '$thu', fri = '$fri', sat = '$sat', sun = '$sun',
-                maxImpressions = $maxImpressions where bannerId=$bannerId";
+			$query = "update `tiki_banners` set
+                `client` = ?,
+                `url` = ?,
+                `title` = ?,
+                `alt` = ?,
+                `which` = ?,
+                `imageData` = ?,
+                `imageType` = ?,
+                `imageName` = ?,
+                `HTMLData` = ?,
+                `fixedURLData` = ?,
+                `textData` = ?,
+                `fromDate` = ?,
+                `toDate` = ?,
+                `useDates` = ?,
+                `created` = ?,
+                `zone` = ?,
+                `hourFrom` = ?,
+                `hourTo` = ?,
+                `mon = ? ,`tue` = ?, `wed` = ?, `thu` = ?, `fri` = ?, `sat` = ?, `sun` = ?,
+                `maxImpressions` = ? where `bannerId`=?";
 
-			$result = $this->query($query);
+                $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$HTMLData,
+                                $fixedURLData, $textData, $fromDate, $toDate, $useDates,$now,$zone,$hourFrom,$hourTo,
+				$mon,$tue,$wed,$thu,$fri,$sat,$sun,$maxImpressions,$bannerId);
+
+			$result = $this->query($query,$bindvars);
 		} else {
-			$query = "insert into tiki_banners(client, url, title, alt, which, imageData, imageType, HTMLData,
-                fixedURLData, textData, fromDate, toDate, useDates, mon, tue, wed, thu, fri, sat, sun,
-                hourFrom, hourTo, maxImpressions,created,zone,imageName,impressions,clicks)
-                values('$client','$url','$title','$alt','$use','$imageData','$imageType','$HTMLData',
-                '$fixedURLData', '$textData', $fromDate, $toDate, '$useDates', '$mon','$tue','$wed','$thu',
-                '$fri','$sat','$sun','$hourFrom','$hourTo',$maxImpressions,$now,'$zone','$imageName',0,0)";
+			$query = "insert into `tiki_banners`(`client`, `url`, `title`, `alt`, `which`, `imageData`, `imageType`, `HTMLData`,
+                `fixedURLData`, `textData`, `fromDate`, `toDate`, `useDates`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun`,
+                `hourFrom`, `hourTo`, `maxImpressions`,`created`,`zone`,`imageName`,`impressions`,`clicks`)
+                values(?,?,?,?,?,?,?,?,
+                ?,?,?,?,?,?,?,?,?,
+                ?,?,?,?,?,?,?,?,?,0,0)";
 
-			$result = $this->query($query);
-			$query = "select max(bannerId) from tiki_banners where created=$now";
-			$bannerId = $this->getOne($query);
+                $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$HTMLData,
+                                $fixedURLData, $textData, $fromDate, $toDate, $useDates, $mon,$tue,$wed,$thu,
+                                $fri,$sat,$sun,$hourFrom,$hourTo,$maxImpressions,$now,$zone,$imageName,0,0);
+
+
+			$result = $this->query($query,$bindvars);
+			$query = "select max(bannerId) from `tiki_banners` where `created`=$now";
+			$bannerId = $this->getOne($query,array($now));
 		}
 
 		return $bannerId;
 	}
 
 	function banner_add_zone($zone) {
-		$zone = addslashes($zone);
-
-		$query = "replace into tiki_zones(zone) values('$zone')";
-		$result = $this->query($query);
+		$query = "delete from `tiki_zones` where `zone`=?";
+		$this->query($query,array($zone),-1,-1,false);
+		$query = "insert into `tiki_zones`(`zone`) values(?)";
+		$result = $this->query($query,array($zone));
 		return true;
 	}
 
 	function banner_get_zones() {
-		$query = "select * from tiki_zones";
+		$query = "select * from `tiki_zones`";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array());
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -239,14 +247,14 @@ class BannerLib extends TikiLib {
 	}
 
 	function banner_remove_zone($zone) {
-		$query = "delete from tiki_zones where zone='$zone'";
+		$query = "delete from `tiki_zones` where `zone`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($zone));
 
 		if (0) {
-			$query = "delete from tiki_banner_zones where zoneName='$zone'";
+			$query = "delete from `tiki_banner_zones` where `zoneName`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($zone));
 		}
 
 		return true;
