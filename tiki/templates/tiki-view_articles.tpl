@@ -54,18 +54,18 @@
 {/section}
 {/if}
 </a>
+{if ($listpages[ix].show_avatar eq 'y')}
+  <td valign="top"><a href="tiki-user_preferences.php?view_user={$listpages[ix].author}">
+  {* <img alt="{$listpages[ix].author}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" /> *}
+  <img alt="{$listpages[ix].author}" border="1" src="user_avatar.php?user=admin" />
+  </a></td>
+{/if}
 {if $listpages[ix].isfloat eq 'n'}
 </td><td  valign="top">
 {/if}
 {/if}
 <span class="articleheading">{$listpages[ix].parsed_heading}</span>
 </td></tr>
-{if ($listpages[ix].show_avatar eq 'y')}
-  <tr><td><a href="tiki-user_preferences.php?view_user={$listpages[ix].author}">
-  {* <img alt="{$listpages[ix].author}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" /> *}
-  <img alt="{$listpages[ix].author}" border="1" src="user_avatar.php?user=admin" />
-  </a></td></tr>
-{/if}
 </table>
 </div>
 <div class="articletrailer">
