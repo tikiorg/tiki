@@ -317,7 +317,7 @@ class Comments extends TikiLib {
 	$hash2 = md5($title . $data);
 
 	if ($qId == 0 && $this->getOne("select count(*) from
-	`tiki_forums_queue` where `title`=?' and `data`=",array($hash2)))
+		    `tiki_forums_queue` where `title`=?' and `data`=",array($hash2)))
 	    return false;
 
 	$now = date("U");
@@ -343,17 +343,17 @@ class Comments extends TikiLib {
 	    return $qId;
 	} else {
 	    $query = "insert into
-	    `tiki_forums_queue`(`object`, `parentId`, `user`,
-	    `title`, `data`, `type`, `topic_smiley`, `summary`,
-	    `timestamp`, `topic_title`, `hash`, `forumId`)
+		`tiki_forums_queue`(`object`, `parentId`, `user`,
+			`title`, `data`, `type`, `topic_smiley`, `summary`,
+			`timestamp`, `topic_title`, `hash`, `forumId`)
 		values(?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	    $this->query($query, array($object, $parentId, $user,
-	    $title, $data, $type, $topic_smiley, $summary, $now,
-	    $topic_title, $hash2, $forumId));
+			$title, $data, $type, $topic_smiley, $summary, $now,
+			$topic_title, $hash2, $forumId));
 	    $qId = $this->getOne("select max(`qId`) from
-	    `tiki_forums_queue` where `hash`=? and
-	    `timestamp`=?",array($hash2,$now));
+		    `tiki_forums_queue` where `hash`=? and
+		    `timestamp`=?",array($hash2,$now));
 	}
 
 	return $qId;
@@ -361,7 +361,7 @@ class Comments extends TikiLib {
 
     function get_num_queued($object) {
 	return $this->getOne("select count(*) from
-	`tiki_forums_queue` where `object`=?",array($object));
+		`tiki_forums_queue` where `object`=?",array($object));
     }
 
     function list_forum_queue($object, $offset, $maxRecords, $sort_mode, $find) {
@@ -680,8 +680,8 @@ class Comments extends TikiLib {
 
 
 	    $query2 = "select * from `tiki_comments`,`tiki_forums`
-	    where `object`=concat('forum',`forumId`) and
-	    `commentDate`=" . $res["lastPost"];
+		where `object`=concat('forum',`forumId`) and
+		`commentDate`=" . $res["lastPost"];
 	    $result2 = $this->query($query2);
 	    $res2 = $result2->fetchRow();
 	    $res["lastPostData"] = $res2;
@@ -736,8 +736,8 @@ class Comments extends TikiLib {
 	    }
 
 	    $query2 = "select * from tiki_comments,tiki_forums where
-	    `object`=concat('forum',forumId) and commentDate="
-	    . $res["lastPost"];
+		`object`=concat('forum',forumId) and commentDate="
+		. $res["lastPost"];
 	    $result2 = $this->query($query2);
 	    $res2 = $result2->fetchRow();
 	    $res["lastPostData"] = $res2;
@@ -815,9 +815,9 @@ class Comments extends TikiLib {
 	$result = $this->query($query);
 
 	$lastPost = $this->getOne("select max(commentDate) from
-	tiki_comments,tiki_forums where
-	`object`=concat('forum',forumId) and
-	forumId=$forumId");
+		tiki_comments,tiki_forums where
+		`object`=concat('forum',forumId) and
+		forumId=$forumId");
 	$query = "update `tiki_forums` set `lastPost`=$lastPost where `forumId`=$forumId";
 	$result = $this->query($query);
 
@@ -1258,8 +1258,8 @@ class Comments extends TikiLib {
 	    $sort_mode = 'average_asc';
 	}
 
-    $time_cond = '';
-    $bind_time = array();
+	$time_cond = '';
+	$bind_time = array();
 
 	$old_sort_mode = '';
 
@@ -1278,14 +1278,14 @@ class Comments extends TikiLib {
 	    $maxRecords = -1;
 	}
 
-    $extra = '';
-    $bind_extra=array();
+	$extra = '';
+	$bind_extra=array();
 
 	$query = "select count(*) from `tiki_comments` where `object`=? $time_cond";
 	$below = $this->getOne($query,array_merge(array($objectId),$bind_time));
 
-    $mid = " where `object`=? ";
-    $bind_mid=array($objectId,);
+	$mid = " where `object`=? ";
+	$bind_mid=array($objectId,);
 
 	$query = "select * from `tiki_comments` $mid $extra $time_cond order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_comments` $mid $extra $time_cond";
@@ -1337,7 +1337,12 @@ class Comments extends TikiLib {
 
 
 	$retval = array();
-	$retval["data"] = $ret;
+	if( isset( $ret ) )
+	{
+	    $retval["data"] = $ret;
+	} else {
+	    $retval["data"] = '';
+	}
 	$retval["below"] = $below;
 	$retval["cant"] = $cant;
 	return $retval;
