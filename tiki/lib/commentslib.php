@@ -2,7 +2,6 @@
 
 // A library to handle comments on object (notes, articles, etc)
 // This is just a test
-
 class Comments extends TikiLib {
 #  var $db;  // The PEAR db object used to access the database
     
