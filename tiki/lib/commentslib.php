@@ -1070,7 +1070,7 @@ class Comments extends TikiLib {
     }
     function get_comment_replies($id, $sort_mode, $offset, $max, $threshold = 0) {
 	$query = "select
-	`threadId`,`title`,`userName`,`points`,`commentDate`,`parentId`
+	`threadId`,`title`,`userName`,`points`,`commentDate`,`parentId`, `data`
 	from `tiki_comments` where `parentId`=? and `average`>=?
 	order by " .
 	$this->convert_sortmode($sort_mode);
@@ -1084,6 +1084,7 @@ class Comments extends TikiLib {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
+	    $res['parsed'] = $this->parse_comment_data($res['data']);
 	    $ret[] = $res;
 	}
 
@@ -1338,7 +1339,6 @@ class Comments extends TikiLib {
 		$rf = &$retval['data'][$i]['replies_flat'];
 		$this->flatten_comment_replies($r, $rf);
 	}
-
 	return $retval;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.28 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.29 2004-04-14 18:19:36 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],"comments.php")!=FALSE) {
 
 
 require_once ('lib/tikilib.php'); # httpScheme()
-require_once ('lib/webmail/tikimaillib.php');
 
 if (!isset($comments_per_page)) {
     $comments_per_page = 10;
@@ -159,6 +158,7 @@ if ($tiki_p_post_comments == 'y') {
 		}
 	    }
 	    if (($feature_user_watches == 'y') && ($wiki_watch_comments == 'y') && (isset($_REQUEST["page"]))) {
+		include_once ('lib/webmail/tikimaillib.php');
 		$nots = $commentslib->get_event_watches('wiki_page_changed', $_REQUEST["page"]);
 		$isBuilt = false;
 		foreach ($nots as $not) {
@@ -302,7 +302,8 @@ if (!isset($_REQUEST["comments_parentId"])) {
 }
 
 $smarty->assign('comments_parentId', $_REQUEST["comments_parentId"]);
-$comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
+//$comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
+$comments_coms = $commentslib->get_comments($comments_objectId, 0,
 	$comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
 	$_REQUEST['comments_threshold']);
 $comments_cant = $commentslib->count_comments($comments_objectId);

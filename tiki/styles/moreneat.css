@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.42 2004-04-09 03:55:07 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.43 2004-04-14 18:19:36 sylvieg Exp $
 
 MoreNeat theme
 */
@@ -807,6 +807,8 @@ span.trailer {  font-size: 10px; }
 /* The comment title */
 span.commentstitle {  font-weight: bold;  font-size: 12px;  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  width: 100%;}
 
+.subcomment { width: 95%; float: right; margin-top: 10px; margin-bottom: 10px;}
+#comzoneopen .linkbut{margin-top: 3px; }
 /************************************************************ CHAT *********************************************************/
 
 table.chatroom { border-color: #5A4A39;  border-style: solid;  border-width: 2px;  width: 97%;}
