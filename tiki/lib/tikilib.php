@@ -1103,9 +1103,14 @@ class TikiLib {
 			return '';
 
 		$bid = rand(0, $cant - 1);
-		$cookie = $this->getOne("select `cookie`  from `tiki_cookies` limit $bid,1");
-		$cookie = str_replace("\n", "", $cookie);
-		return '<i>"' . $cookie . '"</i>';
+		//$cookie = $this->getOne("select `cookie`  from `tiki_cookies` limit $bid,1"); getOne seems not to work with limit
+		$result = $this->query("select `cookie`  from `tiki_cookies` limit $bid,1");
+		if ($res = $result->fetchRow()) {
+			$cookie = str_replace("\n", "", $res['cookie']);
+			return '<i>"' . $cookie . '"</i>';
+		}
+		else
+			return "";
 	}
 
 	// Stats ////
