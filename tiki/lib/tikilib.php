@@ -3627,6 +3627,10 @@ class TikiLib extends TikiDB {
 	    return $result->fetchRow();
     }
 
+    function get_page_name_from_id($page_id) {
+	return $this->getOne("select `pageName`  from `tiki_pages` where `page_id`='$page_id'");
+    }
+
     function how_many_at_start($str, $car) {
 	$cant = 0;
 
