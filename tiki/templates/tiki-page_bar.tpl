@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.34 2004-06-14 20:32:39 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.35 2004-07-20 19:57:43 teedog Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -39,7 +39,7 @@
 <td><div class="button2"><a href="tiki-pagepermissions.php?page={$page|escape:"url"}" class="linkbut">{tr}perms{/tr}</a></div></td>
 {/if}
 
-{if $feature_history eq 'y'}
+{if $feature_history eq 'y' && ($tiki_p_admin_wiki eq 'y' || $tiki_p_view_wiki_history eq 'y')}
 <td><div class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="linkbut">{tr}history{/tr}</a></div></td>
 {/if}
 {/if}

@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2004-07-17 13:31:42 $
-# $Author: mose $
+# $Date: 2004-07-20 19:58:57 $
+# $Author: teedog $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -3932,6 +3932,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_closed', 'Can view trackers closed items', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_pending', 'Can view trackers pending items', 'editors', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_user_results', 'Can view user quiz results', 'editors', 'quizzes');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_wiki_history', 'Can view wiki page history', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_chart', 'Can vote', 'basic', 'charts');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_comments', 'Can vote comments', 'registered', 'comments');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'tiki');
@@ -4670,45 +4671,43 @@ CREATE TABLE tiki_users_score (
 # Community tables end
 #
 
-
-
 #
 # Tables of the Opinion-Network
 #
 
 DROP TABLE IF EXISTS tiki_opnet_question;
 CREATE TABLE tiki_opnet_question (
-	id INT(10) NOT NULL AUTO_INCREMENT,
-	which_formtype INT(10) NOT NULL,
-	question_str VARCHAR(100) NOT NULL,
-	PRIMARY KEY (id) 
+	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+	formtype INT(10) NOT NULL,
+	question VARCHAR( 100 ) NOT NULL ,
+PRIMARY KEY ( id ) 
 );
 
 DROP TABLE IF EXISTS tiki_opnet_formtype;
 CREATE TABLE tiki_opnet_formtype (
-	id INT( 10 ) NOT NULL AUTO_INCREMENT,
-	name VARCHAR(30) NOT NULL,
-	timestamp INT(14) NOT NULL,
-	PRIMARY KEY (id) 
+	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+	name VARCHAR( 30 ) NOT NULL ,
+	timestamp INT( 14 ) NOT NULL,
+PRIMARY KEY ( id ) 
 );
 
 DROP TABLE IF EXISTS tiki_opnet_answer;
 CREATE TABLE tiki_opnet_answer (
-	id INT(10) NOT NULL AUTO_INCREMENT,
-	id_question INT(10) NOT NULL,
-	id_filledform INT(10) NOT NULL,
-	value TEXT NOT NULL,
-	PRIMARY KEY (id) 
+	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+	question_id INT( 10 ) NOT NULL ,
+	filledform_id INT( 10 ) NOT NULL ,
+	value TEXT NOT NULL ,
+PRIMARY KEY ( id ) 
 );
 
 DROP TABLE IF EXISTS tiki_opnet_filledform;
 CREATE TABLE tiki_opnet_filledform (
-	id INT(10) NOT NULL AUTO_INCREMENT,
-	who INT(10) NOT NULL,
-	about_who INT(10) NOT NULL,
-	which_form INT(10) NOT NULL,
-	timestamp INT(14) NOT NULL,
-	PRIMARY KEY (id) 
+	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+	who VARCHAR( 40 ) NOT NULL ,
+	about_who VARCHAR( 40 ) NOT NULL ,
+	formtype INT( 10 ) NOT NULL ,
+	timestamp INT( 14 ) NOT NULL,
+PRIMARY KEY ( id ) 
 );
 
 #

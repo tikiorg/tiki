@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.11 2004-07-01 19:21:19 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.12 2004-07-20 19:57:42 teedog Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
@@ -134,7 +134,7 @@
 {/if}
 
 {if $page ne 'SandBox'}
-	{if $feature_history eq 'y'}
+	{if $feature_history eq 'y' && ($tiki_p_admin_wiki eq 'y' || $tiki_p_view_wiki_history eq 'y')}
 		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
 	{/if}
 {/if}

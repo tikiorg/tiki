@@ -2004,6 +2004,8 @@ END;
 
 ;
 
+;
+
 CREATE SEQUENCE "_sequ" INCREMENT BY 1 START WITH 1;
 ;
 
