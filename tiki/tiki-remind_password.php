@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.18 2004-06-11 19:58:08 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.19 2004-06-16 10:58:43 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,20 +21,29 @@ $smarty->assign('showfrm', 'y');
 
 if (isset($_REQUEST["remind"])) {
 	if ($userlib->user_exists($_REQUEST["username"])) {
+		include_once ('lib/webmail/tikimaillib.php');
+		$email = $userlib->get_user_email($_REQUEST["username"]);
+
+		if(empty($email)) { //only renew if i can mail the pass
+	                $smarty->assign('showmsg', 'e');
+
+       		         $tmp = tra("Unable to send mail. User has not configured email");
+               		 $tmp .= ": " . $_REQUEST["username"];
+               		 $smarty->assign('msg', $tmp);
+		} else {
+
 		if ($feature_clear_passwords == 'y') {
 			$pass = $userlib->get_user_password($_REQUEST["username"]);
 		} else {
 			$pass = $userlib->renew_user_password($_REQUEST["username"]);
 		}
 
-		include_once ('lib/webmail/tikimaillib.php');
-
-		$email = $userlib->get_user_email($_REQUEST["username"]);
 		$languageEmail = $tikilib->get_user_preference($_REQUEST["username"], "language", $language);
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 		$smarty->assign('mail_user', $_REQUEST["username"]);
 		$smarty->assign('mail_same', $feature_clear_passwords);
 		$smarty->assign('mail_pass', $pass);
+		$smarty->assign('mail_ip', $_SERVER['REMOTE_ADDR']);
 		$mail_data = $smarty->fetchLang($languageEmail, 'mail/password_reminder_subject.tpl');
 		$mail = new TikiMail($_REQUEST["username"]);
 		$mail->setSubject(sprintf($mail_data, $_SERVER["SERVER_NAME"]));
@@ -46,14 +55,15 @@ if (isset($_REQUEST["remind"])) {
 		$smarty->assign('showfrm', 'n');
 
 		if ($feature_clear_passwords == 'y') {
-			$tmp = tra("A password reminder email has been sent ");
+			$tmp = tra("A password and your IP address reminder email has been sent ");
 		} else {
-			$tmp = tra("A new password has been sent ");
+			$tmp = tra("A new password and your IP address has been sent ");
 		}
 
 		$tmp .= tra("to the registered email address for");
 		$tmp .= " " . $_REQUEST["username"] . ".";
 		$smarty->assign('msg', $tmp);
+		}
 	} else {
 		// Show error message (and leave form visible so user can fix problem)
 		$smarty->assign('showmsg', 'e');
