@@ -342,16 +342,19 @@ border-top: 0;
 }
 
 /* Cells in forms without background color (inside a div for example) */
-TD.form 
+.form 
 { font-size: 11px; text-align: left;
 
 border-top: 1px dashed #dedede; 
 }
+TD.form { }
+
 /* Cells in forms using a background color */
-TD.formcolor, td.galform , td.editblogform, td.editfgalform, TD.comform,td.forumform
+.formcolor, .galform , .editblogform, .editfgalform, .comform, .forumform
 { background-color: #ffffff; font-size: 11px; text-align: left;
 border-top: 1px dashed #dedede; 
 }
+TD.formcolor, td.galform , td.editblogform, td.editfgalform, TD.comform,td.forumform {}
 
 
 

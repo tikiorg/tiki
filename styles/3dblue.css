@@ -480,15 +480,17 @@ TD {
 }
 
 /* Cells in forms without background color (inside a div for example) */
-TD.form {
+.form {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	vertical-align:   top;
 	text-align:   left;
 }
+TD.form { }
+
 /* Cells in forms using a background color */
-TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
@@ -496,6 +498,7 @@ TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forum
 	text-align:   left;
 	background-color:   #ecf0f6;
 }
+TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform { }
 
 /* The table */
 table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.jukeboxlist, table.bloglist, table.editblogform, table.editfgalform,
