@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.13 2003-08-28 12:31:27 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.14 2003-08-30 12:23:03 redflo Exp $
  *
  * \brief Categiries support class
  *
@@ -514,6 +514,58 @@ class CategLib extends TikiLib {
 
 		return $ret;
 	}
+
+	// get categories related to a link. For Whats relates module.
+	function get_link_categories($link) {
+		$ret=array();
+		$parsed=parse_url($link);
+		$parsed["path"]=end(split("/",$parsed["path"]));
+		if(!isset($parsed["query"])) return($ret);
+		$params=array();
+		$a = explode('&', $parsed["query"]);
+		for ($i=0; $i < count($a);$i++) {
+			$b = split('=', $a[$i]);
+			$params[htmlspecialchars(urldecode($b[0]))]=htmlspecialchars(urldecode($b[1]));
+		}
+		$query="select distinct co.`categId` from `tiki_categorized_objects` cdo, `tiki_category_objects` co  where cdo.`href`=? and cdo.`catObjectId`=co.`catObjectId`";
+		$result=$this->query($query,array($parsed["path"]."?".$parsed["query"]));
+		while ($res = $result->fetchRow()) {
+		  $ret[]=$res["categId"];
+		}
+		return($ret);
+	}
+
+	// input is a array of category id's and return is a array of 
+	// maxRows related links with description
+	function get_related($categories,$maxRows=10) {
+		if(count($categories)==0) return (array());
+		$quarr=implode(",",array_fill(0,count($categories),'?'));
+		$query="select distinct cdo.`type`, cdo.`description`, cdo.`objId`,cdo.`href` from `tiki_categorized_objects` cdo, `tiki_category_objects` co  where co.`categId` in (".$quarr.") and co.`catObjectId`=cdo.`catObjectId`";
+		$result=$this->query($query,$categories);
+		$ret=array();
+		while ($res = $result->fetchRow()) {
+			if (empty($res["description"])) {
+				$ret[$res["href"]]=$res["type"].": ".$res["objId"];
+			} else {
+				$ret[$res["href"]]=$res["type"].": ".$res["description"];
+			}
+		}
+		if (count($ret)>$maxRows) {
+			$ret2=array();
+			$rand_keys = array_rand ($ret,$maxRows);
+			foreach($rand_keys as $value) {
+				$ret2[$value]=$ret[$value];
+			}
+			return($ret2);
+		}
+		return($ret);
+	}
+	
+	// combines the two functions above
+	function get_link_related($link,$maxRows=10) {
+		return ($this->get_related($this->get_link_categories($link),$maxRows));
+	}
+
 }
 
 $categlib = new CategLib($dbTiki);
