@@ -1,7 +1,7 @@
 <?php
   
 /*
-V4.05 13 Dec 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.23 16 June 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -76,7 +76,7 @@ if (!empty($testpgodbc)) {
 }
 
 if (!empty($testibase)) {
-	
+	//$_GET['nolog'] = true;
 	$db = &ADONewConnection('firebird');
 	print "<h1>Connecting $db->databaseType...</h1>";
 	if (@$db->PConnect("localhost:d:\\firebird\\10\\examples\\employee.gdb", "sysdba", "masterkey", ""))
@@ -142,7 +142,7 @@ if (!empty($testmysql)) { // MYSQL
 
 	$db = &ADONewConnection('mysql');
 	print "<h1>Connecting $db->databaseType...</h1>";
-	if ($HTTP_SERVER_VARS['HTTP_HOST'] == 'localhost') $server = 'localhost';
+	if (PHP_VERSION >= 5 || $HTTP_SERVER_VARS['HTTP_HOST'] == 'localhost') $server = 'localhost';
 	else $server = "mangrove";
 	if ($db->PConnect($server, "root", "", "northwind")) {
 		//$db->debug=1;$db->Execute('drop table ADOXYZ');
