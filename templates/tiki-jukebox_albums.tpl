@@ -8,6 +8,9 @@
 {if $tiki_p_jukebox_admin eq 'y'}
 <a class="linkbut" href="tiki-jukebox_admin.php">{tr}admin{/tr}</a>
 {/if}
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=jukebox"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+{/if}
 <br/><br/>
 <div align="center">
 <table class="findtable">
