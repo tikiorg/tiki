@@ -41,7 +41,7 @@
 </tr>    
 <tr>
    <td class="formcolor">&nbsp;</td>
-   <td class="formcolor"><input type="submit" value="{tr}Create new Structure{/tr}" name="create" /></td>
+   <td class="formcolor"><input type="submit" value="{tr}create new structure{/tr}" name="create" /></td>
 	<td colspan=2 class="formcolor"></td>
 </tr>
 </table>
