@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.128 2003-08-14 07:52:50 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.129 2003-08-14 12:52:15 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1188,7 +1188,7 @@ if (0) {
 
 if ($feature_babelfish == 'y') {
 	require_once('lib/Babelfish.php');
-	$smarty->assign('babelfish_links', Babelfish::links($language));
+	$smarty->assign_by_ref('babelfish_links', Babelfish::links($language));
 } else {
 	$smarty->assign('babelfish_links', '');
 }

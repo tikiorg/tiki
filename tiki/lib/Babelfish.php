@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.3 2003-08-14 03:35:28 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.4 2003-08-14 12:51:40 zaufi Exp $
 
 // Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -117,6 +117,9 @@ class Babelfish {
 			'pt' => array(	# Portugese
 				'en' => 'Translate&nbsp;this&nbsp;page&nbsp;into&nbsp;English',
 			),
+			'ru' => array(	# Russian
+				'en' => 'Translate&nbsp;this&nbsp;page&nbsp;into&nbsp;English',
+			),
 		);
 
 		// \todo Use phpsniff or PHP Net::Detect to detect the browser type
@@ -128,16 +131,16 @@ class Babelfish {
 #		}
 
 		# If we have already translated this page (babelfish=en_fr), then don't display the strings again
-		if (!isset($fishes[$lang_from]) || isset($_GET['babelfish'])) {
-			return '';
-		}
+		if (!isset($fishes[$lang_from]) || isset($_GET['babelfish']))
+			return array();
 
 		$a = array();
-		foreach ($fishes[$lang_from] as $lang_to => $msg) {
-			$a[] = sprintf("<span class='link'><a target='%s' href='%s'>%s</a></span>\n", $lang_to, Babelfish::url($lang_from, $lang_to), $msg);
-		}
+		foreach ($fishes[$lang_from] as $lang_to => $msg)
+			$a[] = array('target' => $lang_to,
+                         'href'   => Babelfish::url($lang_from, $lang_to),
+                         'msg'    => $msg);
 
-		return join(" | \n", $a);
+		return $a;
 	}
 
 	/*!
@@ -146,7 +149,7 @@ class Babelfish {
 		\static
 	*/
 	function logo($lang = 'en') {
-		static $s = "\n<br />\n<script language=\"JavaScript1.2\" src=\"http://www.altavista.com/r?%str\"></script>\n";
+		static $s = "<script language=\"JavaScript1.2\" src=\"http://www.altavista.com/r?%str\"></script>";
 		$lang = strtolower($lang);
 		switch ($lang) {
 			case 'en':
