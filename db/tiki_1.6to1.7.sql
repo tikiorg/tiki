@@ -54,7 +54,7 @@ update tiki_user_notes set parse_mode='raw';
 alter table tiki_comments add summary varchar(240);
 update  tiki_comments set summary='';
 alter table tiki_comments add smiley varchar(80);
-update table tiki_comments set smiley='';
+update tiki_comments set smiley='';
 
 alter table tiki_forums add outbound_address char(1);
 alter table tiki_forums add inbound_address char(1);
