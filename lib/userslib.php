@@ -333,7 +333,7 @@ class UsersLib extends TikiLib {
 	    }
 	    // if the user was logged into Auth and found in Tiki (no password in Tiki user table necessary)
 	    elseif ($userAuth && $userTikiPresent)
-		return true;
+		return $this->update_lastlogin($user);
 	}
 
 	// we will never get here
@@ -386,7 +386,6 @@ class UsersLib extends TikiLib {
 
     // validate the user in the Tiki database
     function validate_user_tiki($user, $pass, $challenge, $response) {
-	// If the user is loggin in the the lastLogin should be the last currentLogin?
 	global $feature_challenge;
 
 	// first verify that the user exists

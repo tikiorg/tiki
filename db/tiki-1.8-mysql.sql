@@ -3759,7 +3759,7 @@ CREATE TABLE users_users (
 ### Administrator account
 INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md5('adminadmin'));
 UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin;
-INSERT INTO tiki_user_preferences(user,prefName,value) VALUES ('admin','realName','System Administrator'); 
+INSERT INTO tiki_user_preferences(user,prefName,value) VALUES ('admin','realName','System Administrator');
 # --------------------------------------------------------
 
 # Inserts of all default values for preferences

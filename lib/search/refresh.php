@@ -6,7 +6,7 @@ function refresh_search_index() {
 
   // check if we have to run. Run every n-th click:
   $n=5; //todo: make it configurable
-  $n=1; //debug
+  //$n=1; //debug
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
   if(rand(1,$n)==1) {
@@ -17,7 +17,10 @@ function refresh_search_index() {
     global $feature_forums;
     if ($feature_forums == 'y') $locs[]="random_refresh_index_forum";
     global $feature_trackers;
-    if ($feature_trackers == 'y') $locs[]="random_refresh_index_trackers";
+    if ($feature_trackers == 'y') {
+      $locs[]="random_refresh_index_trackers";
+      $locs[]="random_refresh_index_tracker_items";
+    }
     global $feature_articles;
     if ($feature_articles == 'y') $locs[]="random_refresh_index_articles";
     global $feature_blogs;
@@ -35,6 +38,13 @@ function refresh_search_index() {
       $locs[]="random_refresh_index_dir_cats";
       $locs[]="random_refresh_index_dir_sites";
     }
+    global $feature_galleries;
+    if ($feature_galleries == 'y') {
+      $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"f_gal on\n");fclose($fpd);
+      $locs[]="random_refresh_imggals";
+      $locs[]="random_refresh_img";
+    }
+
 
     // comments can be everywhere?
     $locs[]="random_refresh_index_comments";
@@ -45,6 +55,32 @@ function refresh_search_index() {
     // random refresh
     //echo "$location";
     call_user_func ($location);
+  }
+}
+
+function random_refresh_imggals() {
+  global $feature_galleries;
+  global $tikilib;
+  $cant=$tikilib->getOne("select count(*) from `tiki_galleries`",array());
+  if($cant>0) {
+    $query="select * from `tiki_galleries`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["name"]." ".$res["description"]);
+    insert_index($words,"imggal",$res["galleryId"]);
+  }
+}
+
+function random_refresh_img() {
+  global $feature_galleries;
+  global $tikilib;
+  $cant=$tikilib->getOne("select count(*) from `tiki_images`",array());
+  if($cant>0) {
+    $query="select * from `tiki_images`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["name"]." ".$res["description"]);
+    insert_index($words,"img",$res["imageId"]);
   }
 }
 
@@ -169,7 +205,30 @@ function random_refresh_index_forum() {
 }
 
 function random_refresh_index_trackers() {
+  global $tikilib;
+  $cant=$tikilib->getOne("select count(*) from `tiki_trackers`",array());
+  if($cant>0) {
+    $query="select * from `tiki_trackers`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["name"]." ".$res["description"]);
+    insert_index($words,'tracker',$res["trackerId"]);
+  }
+}
 
+function random_refresh_index_tracker_items() {
+  global $tikilib;
+  $cant=$tikilib->getOne("select count(*) from `tiki_tracker_item_fields` f, `tiki_tracker_fields` tf 
+	where tf.`type` in (?,?) and tf.`fieldId`=f.`fieldId`",array("t","a"));
+  if($cant>0) {
+    $query="select f.`value`, f.`itemId` 
+	from `tiki_tracker_item_fields` f, `tiki_tracker_fields` tf
+	where tf.`type` in (?,?) and tf.`fieldId`=f.`fieldId`";
+    $result=$tikilib->query($query,array("t","a"),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["value"]);
+    insert_index($words,'trackeritem',$res["itemId"]);
+  }
 }
 
 function random_refresh_index_wiki(){

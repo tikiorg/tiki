@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.144 2003-12-28 11:41:32 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.145 2004-01-01 15:12:17 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -22,6 +22,8 @@ Version 1.9
 
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
+* [FIX] fixed a bug where the lastLogin wasn't updated when using
+  Pear::Auth (LDAP) and no passwords are in Tiki DB
 - (rc3) ------------------------------------------------------------
 * [FIX] fixed thumbnail generation in image galleries
 * [FIX] structures moving items now works

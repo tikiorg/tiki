@@ -119,7 +119,7 @@ if ($output == "")
   // LOOP collecting last changes to image galleries
   foreach ($changes["data"] as $chg) {
 
-    $date = htmlspecialchars(gmdate('D, d M Y H:i:s T', date("U")));
+    $date = htmlspecialchars(gmdate('D, d M Y H:i:s T', $chg["$dateId"]));
 	  if ($rss_version < 2) {
 			$date = htmlspecialchars($tikilib->iso_8601($chg["$dateId"]));
 	  }

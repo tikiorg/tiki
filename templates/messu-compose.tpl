@@ -19,7 +19,8 @@
 <form action="messu-compose.php" method="post">
 <table class="normal" >
   <tr>
-    <td class="formcolor"><label for="mess-composeto">{tr}To{/tr}:</label></td><td class="formcolor"><input type="text" name="to" id="mess-composeto" value="{$to|escape}" /> <input type="submit" name="send" value="{tr}send{/tr}" /></td>
+    <td class="formcolor"><label for="mess-composeto">{tr}To{/tr}:</label></td><td class="formcolor"><input type="text" name="to" id="mess-composeto" value="{$to|escape}" />
+		<input type="submit" name="send" value="{tr}send{/tr}" /></td>
   </tr>
   <tr>
     <td class="formcolor"><label for="mess-composecc">{tr}CC{/tr}:</label></td><td class="formcolor"><input type="text" name="cc" id="mess-composecc" value="{$cc|escape}" /></td>

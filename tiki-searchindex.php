@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.4 2003-11-18 01:34:37 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.5 2004-01-01 15:12:17 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -146,12 +146,19 @@ if(($where=='blogs' || $where=='posts')) {
 	}
 }
 
-if (($where == 'blogs' || $where == 'posts') and $feature_blogs != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
-
-	$smarty->display("error.tpl");
-	die;
+if(($where=='trackers')) {
+        if ($feature_trackers != 'y') {
+          $smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
+          $smarty->display("error.tpl");
+          die;
+        }
+        if($tiki_p_view_trackers != 'y') {
+          $smarty->assign('msg',tra("Permission denied you can not view this section"));
+          $smarty->display("error.tpl");
+          die;
+        }
 }
+
 // Already assigned above! $smarty->assign('where',$where);
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;

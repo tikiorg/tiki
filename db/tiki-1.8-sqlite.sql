@@ -5135,7 +5135,7 @@ UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogi
 
 INSERT INTO "tiki_user_preferences" ("user","prefName","value") VALUES ('admin','realName','System Administrator');
 
- 
+
 -- --------------------------------------------------------
 
 -- Inserts of all default values for preferences

@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.29 2003-12-28 11:41:37 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.30 2004-01-01 15:12:20 mose Exp $
 
 MoreNeat theme
 */
@@ -127,7 +127,9 @@ TD#rightcolumn {  padding-left: 0px; vertical-align: top;   width: 180px;}
 TD#centercolumn { padding-right: 10px; vertical-align: top;}
 
 /* And this is what lies inside the centercolumn */
-DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  padding-right: 5px; }
+/*new tiki-center below fixes center column sliding under right column in IE (xen)*/
+/*DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  padding-right: 5px; }*/
+DIV#tiki-center {  margin-left: 1px;  margin-right: 1px;  padding-left: 1px;  padding-right: 1px; }
 
 div#debugconsole {
   position: absolute;
@@ -188,9 +190,17 @@ div.box-data {
 div.separator, div.separatorline {
   background: white;
   color: black;   font-size: 10px;
-	margin-top: 6px;
   padding: 2px;
-  width: 90%;
+	border-top: 1px solid #dedede;
+}
+div.separator:first-child, div.separatorline:first-child {
+	border:0;
+}
+div.separator + div {
+	padding-bottom: 10px;
+}
+div.separator + div .linkmenu:first-child {
+	border-top: 1px solid #dedede;
 }
 .separatorline, .optionline {
   border-top: 1px solid #dedede;
@@ -277,6 +287,7 @@ div.cbox-data {
   background: white;
   padding-left: 5px;  padding-right: 5px;
     font-size: 10px;  color: black;
+	width: 100%;  /*xenfasa added to fix IE formating*/
 }
 
 /* Some boxes are identified by an ID, for example the  boxes in the main application menu, we set display to
@@ -531,6 +542,7 @@ div.wikitext {
   border: 1px solid #99bec6;
   padding-left: 4px; padding-right: 4px; padding-top: 3px;padding-bottom: 1px;
   margin-left: 1px; margin-right: 1px; margin-top: 0px; margin-bottom: 5px;
+  width: 100%; /*xen fixes IE formating.  i.e. Middle column sliding under right*/
   clear: both;
 }
 
@@ -1728,7 +1740,7 @@ TABLE.admin { width: 100%; }
   margin-bottom: 16px;
 }
 .tocnav table {
-  width: 100%;
+/*  width: 100%;*/
   background-color: #ffffff;
 }
 .tocnav a {
