@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.14 2003-12-08 09:07:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.15 2003-12-08 21:34:15 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,7 @@ if ($tiki_p_view_trackers != 'y') {
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
 
-$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_desc', '');
+$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 $ins_fields = $fields;
 
 for ($i = 0; $i < count($fields["data"]); $i++) {
@@ -143,19 +143,15 @@ $smarty->assign('email_mon', '');
 if ($user) {
 	if (isset($_REQUEST["monitor"])) {
 		$user_email = $tikilib->get_user_email($user);
-
 		$emails = $notificationlib->get_mail_events('tracker_modified', $_REQUEST["trackerId"]);
 
 		if (in_array($user_email, $emails)) {
 			$notificationlib->remove_mail_event('tracker_modified', $_REQUEST["trackerId"], $user_email);
-
 			$mail_msg = tra('Your email address has been removed from the list of addresses monitoring this tracker');
 		} else {
 			$notificationlib->add_mail_event('tracker_modified', $_REQUEST["trackerId"], $user_email);
-
 			$mail_msg = tra('Your email address has been added to the list of addresses monitoring this tracker');
 		}
-
 		$smarty->assign('mail_msg', $mail_msg);
 	}
 
