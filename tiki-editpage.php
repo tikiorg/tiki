@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.44 2003-09-24 18:16:26 lrargerich Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.45 2003-09-24 21:22:13 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -172,7 +172,7 @@ if ($page != 'SandBox') {
 
 // Get page data
 $info = $tikilib->get_page_info($page);
-if($info['wiki_cache']!=0) {
+if(isset($info['wiki_cache']) && $info['wiki_cache']!=0) {
   $wiki_cache = $info['wiki_cache'];
   $smarty->assign('wiki_cache',$wiki_cache);
 }
