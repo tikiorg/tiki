@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.13 2004-03-24 13:46:45 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-oci8.sql,v 1.14 2004-04-03 08:00:07 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -319,7 +319,10 @@ DROP TABLE "tiki_articles";
 CREATE SEQUENCE "tiki_articles_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_articles" (
   "articleId" number(8) NOT NULL,
+  "topline" varchar(255) default NULL,
   "title" varchar(80) default NULL,
+  "subtitle" varchar(255) default NULL,
+  "linkto" varchar(255) default NULL,
   "state" char(1) default 's',
   "authorName" varchar(60) default NULL,
   "topicId" number(14) default NULL,
@@ -327,6 +330,7 @@ CREATE TABLE "tiki_articles" (
   "size" number(12) default NULL,
   "useImage" char(1) default NULL,
   "image_name" varchar(80) default NULL,
+  "image_caption" clob default NULL,
   "image_type" varchar(80) default NULL,
   "image_size" number(14) default NULL,
   "image_x" number(4) default NULL,
@@ -2164,6 +2168,7 @@ CREATE TABLE "tiki_mailin_accounts" (
   "useAuth" char(1) default NULL,
   "smtpPort" number(4) default NULL,
   "anonymous" char(1) default 'y' NOT NULL,
+  "attachments" char(1) default 'n' NOT NULL,
   PRIMARY KEY ("accountId")
 )   ;
 
@@ -3391,13 +3396,17 @@ DROP TABLE "tiki_submissions";
 CREATE SEQUENCE "tiki_submissions_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_submissions" (
   "subId" number(8) NOT NULL,
+  "topline" varchar(255) default NULL,
   "title" varchar(80) default NULL,
+  "subtitle" varchar(255) default NULL,
+  "linkto" varchar(255) default NULL,
   "authorName" varchar(60) default NULL,
   "topicId" number(14) default NULL,
   "topicName" varchar(40) default NULL,
   "size" number(12) default NULL,
   "useImage" char(1) default NULL,
   "image_name" varchar(80) default NULL,
+  "image_caption" clob default NULL,
   "image_type" varchar(80) default NULL,
   "image_size" number(14) default NULL,
   "image_x" number(4) default NULL,
@@ -5095,6 +5104,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_view_tpl','y');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_warn_on_edit','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n');
 

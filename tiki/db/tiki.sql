@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.174 2004-03-31 07:38:42 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.175 2004-04-03 08:00:08 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -270,7 +270,10 @@ CREATE TABLE tiki_actionlog (
 DROP TABLE IF EXISTS tiki_articles;
 CREATE TABLE tiki_articles (
   articleId int(8) NOT NULL auto_increment,
+  topline varchar(255) default NULL,
   title varchar(80) default NULL,
+  subtitle varchar(255) default NULL,
+  linkto varchar(255) default NULL,
   state char(1) default 's',
   authorName varchar(60) default NULL,
   topicId int(14) default NULL,
@@ -278,6 +281,7 @@ CREATE TABLE tiki_articles (
   size int(12) default NULL,
   useImage char(1) default NULL,
   image_name varchar(80) default NULL,
+  image_caption text default NULL,
   image_type varchar(80) default NULL,
   image_size int(14) default NULL,
   image_x int(4) default NULL,
@@ -2774,13 +2778,17 @@ CREATE TABLE tiki_structures (
 DROP TABLE IF EXISTS tiki_submissions;
 CREATE TABLE tiki_submissions (
   subId int(8) NOT NULL auto_increment,
+  topline varchar(255) default NULL,
   title varchar(80) default NULL,
+  subtitle varchar(255) default NULL,
+  linkto varchar(255) default NULL,
   authorName varchar(60) default NULL,
   topicId int(14) default NULL,
   topicName varchar(40) default NULL,
   size int(12) default NULL,
   useImage char(1) default NULL,
   image_name varchar(80) default NULL,
+  image_caption text default NULL,
   image_type varchar(80) default NULL,
   image_size int(14) default NULL,
   image_x int(4) default NULL,

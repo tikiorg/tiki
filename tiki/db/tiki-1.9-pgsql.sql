@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.13 2004-03-24 13:46:45 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.14 2004-04-03 08:00:07 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -298,7 +298,10 @@ DROP TABLE "tiki_articles";
 
 CREATE TABLE "tiki_articles" (
   "articleId" serial,
+  "topline" varchar(255) default NULL,
   "title" varchar(80) default NULL,
+  "subtitle" varchar(255) default NULL,
+  "linkto" varchar(255) default NULL,
   "state" char(1) default 's',
   "authorName" varchar(60) default NULL,
   "topicId" bigint default NULL,
@@ -306,6 +309,7 @@ CREATE TABLE "tiki_articles" (
   "size" bigint default NULL,
   "useImage" char(1) default NULL,
   "image_name" varchar(80) default NULL,
+  "image_caption" text default NULL,
   "image_type" varchar(80) default NULL,
   "image_size" bigint default NULL,
   "image_x" smallint default NULL,
@@ -2078,6 +2082,7 @@ CREATE TABLE "tiki_mailin_accounts" (
   "useAuth" char(1) default NULL,
   "smtpPort" smallint default NULL,
   "anonymous" char(1) NOT NULL default 'y',
+  "attachments" char(1) NOT NULL default 'n',
   PRIMARY KEY ("accountId")
 )   ;
 
@@ -3251,13 +3256,17 @@ DROP TABLE "tiki_submissions";
 
 CREATE TABLE "tiki_submissions" (
   "subId" serial,
+  "topline" varchar(255) default NULL,
   "title" varchar(80) default NULL,
+  "subtitle" varchar(255) default NULL,
+  "linkto" varchar(255) default NULL,
   "authorName" varchar(60) default NULL,
   "topicId" bigint default NULL,
   "topicName" varchar(40) default NULL,
   "size" bigint default NULL,
   "useImage" char(1) default NULL,
   "image_name" varchar(80) default NULL,
+  "image_caption" text default NULL,
   "image_type" varchar(80) default NULL,
   "image_size" bigint default NULL,
   "image_x" smallint default NULL,
@@ -4912,6 +4921,8 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_view_tpl','y');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_warn_on_edit','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n');
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_allowhtml','n');
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n');
 
