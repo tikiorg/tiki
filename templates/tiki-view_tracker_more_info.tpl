@@ -2,7 +2,7 @@
 {if $feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
-<div id="tiki-main">
+<div id="tiki-main" class="simplebox">
 <h3>{tr}Details{/tr}</h3>
 <table class="normal">
 {foreach key=l item=v from=$info}
@@ -11,7 +11,7 @@
 {$v}
 </td>
 </tr>
-{/section}
+{/foreach}
 </table>
 <div class="cbox">
 <a href="#" onclick="javascript:window.close();" class="link">{tr}close{/tr}</a>

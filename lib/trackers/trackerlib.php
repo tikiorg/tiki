@@ -572,16 +572,16 @@ class TrackerLib extends TikiLib {
 		$query.= " left join `tiki_tracker_items` i on t.`trackerId`=i.`trackerId` ";
 		$query.= " left join `tiki_tracker_item_attachments` a on i.`itemId`=a.`itemId` ";
 		$query.= " where a.`attId`=? ";
-		$resu = $this->query($query,array((int)$attId));
-		if (strstr('|',$resu['orderAttachments'])) {
-			$fields = split(',',substr($resu['orderAttachments'],strpos($resu['orderAttachments'],'|')));
+		$result = $this->query($query,array((int)$attId));
+		$resu = $result->fetchRow();
+		if (strstr($resu['orderAttachments'],'|')) {
+			$fields = split(',',substr($resu['orderAttachments'],strpos($resu['orderAttachments'],'|')+1));
 			$query = "select `".implode("`,`",$fields)."` from `tiki_tracker_item_attachments` where `attId`=?";
 			$result = $this->query($query,array((int)$attId));
 			$res = $result->fetchRow();
 			$res["trackerId"] = $resu['trackerId'];
-			var_dump($resu);
 		} else {
-			$res = array(tra("message") => tra("No extra information for that attached file."));
+			$res = array(tra("message") => tra("No extra information for that attached file. "));
 			$res['trackerId'] = 0;
 		}
 		return $res;
