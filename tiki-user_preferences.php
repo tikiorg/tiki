@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.32 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.33 2003-10-17 20:56:37 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 include_once('lib/modules/modlib.php');
+include_once ('lib/userprefs/scrambleEmail.php');
 
 // User preferences screen
 if ($feature_userPreferences != 'y') {
@@ -101,7 +102,7 @@ if (isset($_REQUEST["prefs"])) {
 		$smarty->assign('user_dbl', 'n');
 	}
 
-	$email_isPublic = isset($_REQUEST['email_isPublic']) ? 'y' : 'n';
+	$email_isPublic = isset($_REQUEST['email_isPublic']) ? $_REQUEST['email_isPublic']: 'n';
 	$tikilib->set_user_preference($userwatch, 'email is public', $email_isPublic);
 
 	header ("location: tiki-user_preferences.php?view_user=$userwatch");
@@ -296,6 +297,10 @@ $smarty->assign_by_ref('userbreadCrumb', $userbreadCrumb);
 $homePage = $tikilib->get_user_preference($userwatch, 'homePage', '');
 $smarty->assign_by_ref('homePage', $homePage);
 $smarty->assign('email_isPublic', $tikilib->get_user_preference($userwatch, 'email is public', 'n'));
+$scramblingMethods = array("no", "strtr", "unicode", "x");
+$smarty->assign_by_ref('scramblingMethods', $scramblingMethods);
+$scramblingEmails = array(tra("no"), scrambleEmail($userinfo['email'], 'strtr'), scrambleEmail($userinfo['email'], 'unicode'), scrambleEmail($userinfo['email'], 'x'));
+$smarty->assign_by_ref('scramblingEmails', $scramblingEmails);
 $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar', $avatar);
 
