@@ -7,7 +7,7 @@ if(isset($_COOKIE['tiki-theme']) && !($feature_userPreferences == 'y' && $user &
 $styleslist = Array();
 $h = opendir("styles/");
 while ($file = readdir($h)) {
-  if (substr($file,-4,4) == ".css") {
+  if (substr($file,0,1) != '.' and substr($file,-4,4) == ".css" and $file != 'blank.css') {
     $styleslist[] = $file;
   }
 }
