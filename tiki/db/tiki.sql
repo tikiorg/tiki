@@ -444,6 +444,7 @@ CREATE TABLE tiki_blog_posts (
   data_size int(11) unsigned NOT NULL default '0',
   created int(14) default NULL,
   user varchar(200) default NULL,
+  priv varchar(1) default NULL,
   trackbacks_to text,
   trackbacks_from text,
   title varchar(80) default NULL,
