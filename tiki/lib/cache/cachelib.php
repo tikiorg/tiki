@@ -19,7 +19,7 @@ class Cachelib {
 	if (!empty($tikidomain) and substr($tikidomain,-1,1) != '/') {
 		$tikidomain.= '/';
 	}
-	$this->folder = "temp/".$tikidomain."cache";
+	$this->folder = "temp/cache/".$tikidomain;
     if(!is_dir($this->folder)) {
   		mkdir($this->folder);
 			@chmod($this->folder,"0777");
