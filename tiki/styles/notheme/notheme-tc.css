@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-tc.css,v 1.3 2003-08-07 04:34:19 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-tc.css,v 1.4 2003-08-08 04:55:08 zaufi Exp $
  *
  */
 
@@ -9,18 +9,18 @@
 
 /* This div encloses the whole Tiki application */
 div#tiki-main {
-	height:    100%;
-	width:   100%;
-	margin:   0px;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
 }
 
 /* This is the header */
 div#tiki-top {
-	text-align:    right;
-	position:   absolute;
-	right:   200px;
-	margin-top:   0px;
-	padding:   0px;
+	text-align: right;
+	position: absolute;
+	right: 200px;
+	margin-top: 0px;
+	padding: 0px;
 }
 
 /* This is the middle */
@@ -30,14 +30,14 @@ div#tiki-mid {
 
 /* And this is the footer */
 div#tiki-bot {
-	margin-top:    100px;
-	font-size:   small;
+	margin-top: 100px;
+	font-size: small;
 }
 
 div#tiki-bot > table {
-	visibility:    hidden;
-	width:   100%;
-	border:   2px ridge WindowFrame;
+	visibility: hidden;
+	width: 100%;
+	border: 2px ridge WindowFrame;
 }
 
 div#tiki-bot > table td {
@@ -45,27 +45,27 @@ div#tiki-bot > table td {
 }
 
 div#tiki-bot:hover > table {
-	visibility:    visible;
-	width:   100%;
+	visibility: visible;
+	width: 100%;
 }
 
 /* The three columns (now divs) */
 div#leftcolumn {
-	position:    absolute;
-	color:   WindowText;
-	background:   Background;
-	left:   5px;
-	top:   5px;
-	width:   180px;
+	position: absolute;
+	color: WindowText;
+	background: Background;
+	left: 5px;
+	top: 5px;
+	width: 180px;
 }
 
 div#rightcolumn {
-	position:    absolute;
-	color:   WindowText;
-	background:   Background;
-	right:   5px;
-	top:   5px;
-	width:   180px;
+	position: absolute;
+	color: WindowText;
+	background: Background;
+	right: 5px;
+	top: 5px;
+	width: 180px;
 }
 
 /* And this is what lies inside the centercolumn
@@ -75,7 +75,7 @@ div#rightcolumn {
 div#tiki-center {
 	/*  color: WindowText;
 	  background: AppWorkspace;*/
-	padding-left:    2px;
-	padding-right:   2px;
-	width:   auto;
+	padding-left: 2px;
+	padding-right: 2px;
+	width: auto;
 }

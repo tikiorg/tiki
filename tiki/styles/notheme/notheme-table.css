@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-table.css,v 1.3 2003-08-07 04:34:19 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-table.css,v 1.4 2003-08-08 04:55:08 zaufi Exp $
  *
  */
 
@@ -13,8 +13,8 @@
 
 /* The table */
 table.normal {
-	width:    100%;
-	border:   2px ridge WindowFrame;
+	width: 100%;
+	border: 2px ridge WindowFrame;
 }
 
 table.normalnoborder {
@@ -22,8 +22,8 @@ table.normalnoborder {
 }
 /* Do not show border if normaltab inside a simplebox */
 div.simplebox table.normal {
-	width:    100%;
-	border:   none;
+	width: 100%;
+	border: none;
 }
 
 /* Cells where nothing is specified */
@@ -33,42 +33,43 @@ td {
 
 /* Cells in forms without background color (inside a div for example) */
 td.form {
-	color:    WindowText;
-	font-size:   small;
-	vertical-align:   top;
+	color: WindowText;
+	font-size: small;
+	vertical-align: top;
 }
 /* Cells in forms using a background color */
 td.formcolor {
-	color:    WindowText;
-	background-color:   Button;
-	font-size:   small;
-	text-align:   left;
-	vertical-align:   top;
-	border:   1px outset WindowFrame;
+	color: WindowText;
+	background-color: Button;
+	font-size: small;
+	text-align: left;
+	vertical-align: top;
+	border: 1px outset WindowFrame;
 }
 
 /* Table headings */
 td.heading {
-	color:    HighlightText;
-	background-color:   Highlight;
-	font-weight:   bold;
-	border:   1px outset WindowFrame;
-	height:   25px;
-	padding-left:   2px;
-	padding-right:   5px;
-	vertical-align:   middle;
+	color: HighlightText;
+	background-color: Highlight;
+	font-weight: bold;
+	border: 1px outset WindowFrame;
+	height: 25px;
+	padding-left: 2px;
+	padding-right: 5px;
+	vertical-align: middle;
 }
 
 td.button {
-	height:    25px;
-	text-align:   center;
-	vertical-align:   middle;
+	height: 25px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 /* Links in table headings */
-.tableheading, .tableheading:visited, .tableheading:visited:hover, .tableheading:hover {
-	color:    HighlightText;
-	text-decoration:   none;
+.tableheading, .tableheading:visited, .tableheading:visited:hover,
+.tableheading:hover, .tableheading:active {
+	color: HighlightText;
+	text-decoration: none;
 }
 
 /*
@@ -76,8 +77,8 @@ td.button {
  *form is displayed in a table with the following style
  */
 table.findtable {
-	width:    100%;
-	margin-bottom:   20px;
+	width: 100%;
+	margin-bottom: 20px;
 }
 
 td.findtitle {
@@ -85,8 +86,8 @@ td.findtitle {
 
 /* Tables odd rows */
 td.odd {
-	background-color:    Window;
-	border:   1px outset WindowFrame;
+	background-color: Window;
+	border: 1px outset WindowFrame;
 }
 
 td.even {
@@ -101,7 +102,7 @@ td.third {
  * Currently in Attachments and comments only.
  */
 caption {
-	font-weight:    bold;
-	text-align:   right;
-	vertical-align:   middle;
+	font-weight: bold;
+	text-align: right;
+	vertical-align: middle;
 }

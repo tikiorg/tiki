@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.4 2003-08-07 04:34:19 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.5 2003-08-08 04:55:08 zaufi Exp $
  *
  */
 
@@ -10,34 +10,34 @@
 /* Titles */
 /* When the page title is a link this is the style */
 .pagetitle, .pagetitle:visited, .pagetitle:active {
-	color:    WindowText;
-	font-weight:   bold;
-	font-variant:   small-caps;
-	font-size:   40px;
-	text-decoration:   none;
-	text-transform:   none;
+	color: WindowText;
+	font-weight: bold;
+	font-variant: small-caps;
+	font-size: 40px;
+	text-decoration: none;
+	text-transform: none;
 }
 
 /* Text in wiki pages is displayed using the following style */
 div.wikitext {
-	color:    WindowText;
-	background-color:   ThreeDHighlight;
-	border:   3px ridge WindowFrame;
-	padding:   1px;
-	padding-bottom:   10px;
-	margin:   1px;
-	margin-top:   5px;
-	clear:   both;
+	color: WindowText;
+	background-color: ThreeDHighlight;
+	border: 3px ridge WindowFrame;
+	padding: 1px;
+	padding-bottom: 10px;
+	margin: 1px;
+	margin-top: 5px;
+	clear: both;
 }
 /* -= Wiki title bar =- */
 div.titlebar {
-	color:    HighlightText;
-	background-color:   Highlight;
-	font-variant:   small-caps;
-	font-size:   20px;
-	padding-left:   5px;
-	border:   2px ridge WindowFrame;
-	margin-top:   35px;
+	color: HighlightText;
+	background-color: Highlight;
+	font-variant: small-caps;
+	font-size: 20px;
+	padding-left: 5px;
+	border: 2px ridge WindowFrame;
+	margin-top: 35px;
 }
 /* Do not add space before top page -=title=- */
 div.wikitext > div.titlebar:first-child {
@@ -46,64 +46,64 @@ div.wikitext > div.titlebar:first-child {
 
 /* The bar where the actions for a page are displayed */
 div#page-bar {
-	margin-left:    5px;
-	font-size:   small;
+	margin-left: 5px;
+	font-size: small;
 }
 /*
  * Wiki action buttons (the buttons displayed at the end of
  * each page to edit/print/remove/etc a page
  */
 div.button2 {
-	font-family:    serif;
-	font-size:   small;
-	text-align:   center;
-	color:   WindowText;
-	background-color:   ThreeDFace;
+	font-family: serif;
+	font-size: small;
+	text-align: center;
+	color: WindowText;
+	background-color: ThreeDFace;
 	/*
 	  border: 1px outset ThreeDLightShadow;
 	*/
-	border-top:   1px solid ThreeDLightShadow;
-	border-left:   1px solid ThreeDLightShadow;
-	border-bottom:   1px solid ThreeDShadow;
-	border-right:   1px solid ThreeDShadow;
+	border-top: 1px solid ThreeDLightShadow;
+	border-left: 1px solid ThreeDLightShadow;
+	border-bottom: 1px solid ThreeDShadow;
+	border-right: 1px solid ThreeDShadow;
 }
 
 div.button2:hover {
 	/*
 	  border: 1px inset ThreeDLightShadow;
 	*/
-	border-top:    1px solid ThreeDShadow;
-	border-left:   1px solid ThreeDShadow;
-	border-bottom:   1px solid ThreeDLightShadow;
-	border-right:   1px solid ThreeDLightShadow;
+	border-top: 1px solid ThreeDShadow;
+	border-left: 1px solid ThreeDShadow;
+	border-bottom: 1px solid ThreeDLightShadow;
+	border-right: 1px solid ThreeDLightShadow;
 }
 
 /* Links in buttons */
 .linkbut, .linkbut:visited {
-	color:    MenuText;
-	background-color:   Button;
-	text-decoration:   none;
+	color: MenuText;
+	background-color: Button;
+	text-decoration: none;
 }
 
 .linkbut:visited:hover, .linkbut:hover {
-	color:    HighlightText;
-	text-decoration:   none;
+	color: HighlightText;
+	text-decoration: none;
 }
 
 .linkbut:active {
-	color:    MenuText;
-	background-color:   Button;
-	text-decoration:   none;
+	color: MenuText;
+	background-color: Button;
+	text-decoration: none;
 }
 
 .linkbut:first-letter, .linkbut:visited:first-letter {
-	color:    blue;
-	text-decoration:   inherit;
+	color: blue;
+	text-decoration: inherit;
 }
 
 .highlight, .highlight:visited, .highlight:visited:hover, .highlight:hover, .highlight:active {
-	color:    HighlightText;
-	background-color:   Button;
+	color: HighlightText;
+	background-color: Button;
 }
 
 /*
@@ -112,71 +112,71 @@ div.button2:hover {
  * using this style
  */
 .wikicache, .wikicache:visited, .wikicache:visited:hover, .wikicache:hover, .wikicache:active {
-	color:    GrayText;
-	font-size:   small;
-	text-decoration:   none;
+	color: GrayText;
+	font-size: small;
+	text-decoration: none;
 }
 
 /* User table on wiki page */
 table.wikitable {
-	width:    100%;
-	border:   1px solid WindowText;
-	border-spacing:   0;
-	border-collapse:   separate;
+	width: 100%;
+	border: 1px solid WindowText;
+	border-spacing: 0;
+	border-collapse: separate;
 }
 
 td.wikicell {
-	border:    1px solid GrayText;
-	border-spacing:   0;
-	border-collapse:   separate;
+	border: 1px solid GrayText;
+	border-spacing: 0;
+	border-collapse: separate;
 }
 
 /* Date displayed for last modification date of pages */
 p.editdate {
-	font-size:    small;
-	font-family:   serif;
+	font-size: small;
+	font-family: serif;
 }
 
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp {
-	display:    none;
-	color:   InfoText;
-	background-color:   InfoBackground;
-	border:   2px outset WindowFrame;
-	padding:   6px;
-	font-family:   serif;
-	font-size:   small;
-	margin-top:   10px;
+	display: none;
+	color: InfoText;
+	background-color: InfoBackground;
+	border: 2px outset WindowFrame;
+	padding: 6px;
+	font-family: serif;
+	font-size: small;
+	margin-top: 10px;
 }
 
 /* Wiki structures navigation bar */
 div.tocnav {
-	border:    2px ridge WindowFrame;
-	background-color:   InfoBackground;
-	padding-bottom:   5px;
-	padding-top:   5px;
-	margin-bottom:   30px;
+	border: 2px ridge WindowFrame;
+	background-color: InfoBackground;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	margin-bottom: 30px;
 }
 
 .tocnavlink, .tocnavlink:visited, .tocnavlink:hover, .tocnavlink:visited:hover {
-	color:    InfoText;
-	text-decoration:   none;
+	color: InfoText;
+	text-decoration: none;
 }
 
 /* The whole comment/attachment area when it is visible and when it is not */
 #attzone {
-	display:    none;
-	margin-top:   10px;
+	display: none;
+	margin-top: 10px;
 }
 
 #comzone {
-	display:    none;
-	margin-top:   10px;
+	display: none;
+	margin-top: 10px;
 }
 
 #comzoneopen {
-	display:    block;
-	margin-top:   10px;
+	display: block;
+	margin-top: 10px;
 }
 
 div#comzone table.normal td.heading {
@@ -185,9 +185,9 @@ div#comzone table.normal td.heading {
 
 /* The comment title */
 span.commentstitle {
-	font-weight:    bold;
-	font-size:   12px;
-	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
 
 /* Links in comments and in the comment header */
@@ -204,18 +204,18 @@ span.commentstitle {
 }
 
 table#commentshelp {
-	color:    InfoText;
-	background-color:   InfoBackground;
-	font-size:   small;
-	font-family:   serif;
+	color: InfoText;
+	background-color: InfoBackground;
+	font-size: small;
+	font-family: serif;
 }
 
 /* Code listing style */
 div.codelisting {
-	background-color:    InfoBackground;
-	border:   2px ridge WindowFrame;
-	margin:   4px;
-	padding-left:   20px;
+	background-color: InfoBackground;
+	border: 2px ridge WindowFrame;
+	margin: 4px;
+	padding-left: 20px;
 }
 
 /* Input fields in editing form */

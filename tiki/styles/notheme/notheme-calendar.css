@@ -1,0 +1,16 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-calendar.css,v 1.1 2003-08-08 04:55:07 zaufi Exp $
+ *
+ */
+
+div#tab,
+div#tabcal,
+div#tabnav
+{
+  font-size: small;
+}
+
+table#calendar
+{
+  font-size: small;
+}
