@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.29 2003-11-24 06:10:45 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.30 2003-12-01 14:45:46 mose Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -157,12 +157,14 @@ function setUserModuleFromCombo(id) {
 //document.getElementById('usermoduledata').value='das';
 }
 
-function show(foo) {
+function show(foo,f) {
 	document.getElementById(foo).style.display = "block";
+	if (f) { setCookie(foo, "o"); }
 }
 
-function hide(foo) {
+function hide(foo,f) {
 	document.getElementById(foo).style.display = "none";
+	if (f) { setCookie(foo, "c"); }
 }
 
 function flip(foo) {
@@ -184,13 +186,9 @@ function toggle(foo) {
 		setCookie(foo, "o");
 	} else {
 		if (document.getElementById(foo).style.display == "block") {
-			hide(foo);
-
-			setCookie(foo, "c");
+			hide(foo,1);
 		} else {
-			show(foo);
-
-			setCookie(foo, "o");
+			show(foo,1);
 		}
 	}
 }

@@ -1080,7 +1080,7 @@ div.messureadbody {
 
 
 /* calendar styles */
-#calendar
+#caltable
 {
 width:100%;
 }
@@ -1161,7 +1161,7 @@ background-color: transparent;
 div#tab, div#tabcal, div#tabnav
 {
 margin-top: 10px;
-margin-left: 30px;
+margin-left: 29px;
 }
 div#tab
 {
@@ -1172,8 +1172,25 @@ div.tabcal, div.tabnav
 padding: 10px;
 background-color: #ffffff;
 border: 1px solid #666666;
-border-bottom: 1px solid #aeaeae;
+border-bottom: 0;
 font-size: 11px;
+}
+div.tabrow {
+margin-left: 29px;
+background-color: #efefef;
+border: 1px solid #787878;
+border-bottom: 0;
+font-size: 11px;
+}
+td.middle {
+	vertical-align: middle; 
+}
+.daterow {
+	margin-left: 10px;
+}
+.mininotes {
+	font-size: 80%;
+	color:#666666;
 }
 /* checkboxes background is required for rollover display */
 .calcheckbox
@@ -1191,8 +1208,9 @@ background-color: #ffffff;
 }
 .calfocus
 {
-font-size:7px;
+font-size: 8px;
 background-color: transparent;
+height: 32px;
 }
 .calfocus a
 {
@@ -1201,8 +1219,9 @@ color: #000000;
 }
 .calfocuson
 {
-font-size:7px;
+font-size: 8px;
 background-color: #f3e498;
+height: 32px;
 }
 .calfocuson a
 {
@@ -1492,25 +1511,23 @@ font-family: monospace;
 background-color: #ffffff;
 }
 
-.viewmodeon
+a.viewmodeon
 {
-border: 1px solid #8CACBB;
-background-color: #C7D0D9;
-color: #000000;
-font-weight: bold;
-text-decoration: none;
-padding-left: 10px;
-padding-right: 10px;
+margin: 0;
+padding: 0;
 }
-
-.viewmodeoff
+a.viewmodeoff
 {
-border: 1px solid #8CACBB;
-background-color: #FFFFFF;
-color: #000000;
-text-decoration: none;
-padding-left: 10px;
-padding-right: 10px;
+margin: 0;
+padding: 0;
+}
+a.viewmodeon img {
+	margin: 0;
+padding: 0;
+}
+a.viewmodeoff img {
+	margin: 0;
+padding: 0;
 }
 
 .viewmodeoff:hover
