@@ -572,6 +572,9 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 				$width = $sheet->mergeInfo[$y][$x]['width'];
 				$height = $sheet->mergeInfo[$y][$x]['height'];
 
+				$calc = addslashes( $calc );
+				$value = addslashes( $value );
+
 				if( empty( $calc ) )
 					$calc = $value;
 				else
