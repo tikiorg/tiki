@@ -259,16 +259,16 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $ins_fields[ix].type eq 'u'}
 <select name="ins_{$ins_fields[ix].id}">
 <option value="">{tr}None{/tr}</option>
-{section name=ux loop=$users}
-<option value="{$users[ux]|escape}" {if $ins_fields[ix].value eq $users[ux]}selected="selected"{/if}>{$users[ux]}</option>
-{/section}
+{foreach key=id item=one from=$users}
+<option value="{$one|escape}" {if $ins_fields[ix].value eq $one}selected="selected"{/if}>{$one}</option>
+{/foreach}
 </select>
 
 {elseif $ins_fields[ix].type eq 'g'}
 <select name="ins_{$ins_fields[ix].id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
-<option value="{$groups[ux].groupName|escape}" {if $ins_fields[ix].value eq $groups[ux].groupName}selected="selected"{/if}>{$groups[ux].groupName}</option>
+<option value="{$groups[ux]|escape}" {if $ins_fields[ix].value eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
 {/section}
 </select>
 
