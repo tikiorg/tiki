@@ -4549,7 +4549,7 @@ function parse_data($data) {
 
 	    for ($j = 1; $j < count($items) && $j < $max; $j++) {
 		$repl .= '<li class="rssitem"><a target="_blank" href="' . $items[$j]["link"] . '" class="rsslink">' . $items[$j]["title"] . '</a>';
-		if ($items[$j]["pubdate"] <> '') $repl .= ' ('.$items[$j]["pubdate"].')';
+		if ($items[$j]["pubdate"] <> '') { $repl .= ' <span class="rssdate">('.$items[$j]["pubdate"].')</span>'; }
 			$repl .= '</li>';
 			}
 
