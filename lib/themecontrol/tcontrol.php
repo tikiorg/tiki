@@ -65,22 +65,21 @@ class ThemeControlLib extends TikiLib {
 	}
 
 	function tc_list_categories($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
-
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " and (theme like $findesc)";
+			$mid = " and (`theme` like ?)";
+			$bindvars=array($findesc);
 		} else {
 			$mid = "";
+			$bindvars=array();
 		}
 
-		$query = "select tc.categId,tc.name,theme from `tiki_theme_control_categs` ttt,tiki_categories tc where ttt.categId=tc.categId $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from `tiki_theme_control_categs` ttt,tiki_categories tc where ttt.categId=tc.categId $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select tc.`categId`,tc.`name`,`theme` from `tiki_theme_control_categs` ttt,`tiki_categories` tc where ttt.`categId`=tc.`categId` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_theme_control_categs` ttt,`tiki_categories` tc where ttt.`categId`=tc.`categId` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -94,22 +93,21 @@ class ThemeControlLib extends TikiLib {
 	}
 
 	function tc_list_sections($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
-
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (theme like $findesc)";
+			$mid = " where (`theme` like $findesc)";
+			$bindvars=array($findesc);
 		} else {
 			$mid = "";
+			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_theme_control_sections` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select * from `tiki_theme_control_sections` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_theme_control_sections` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -123,22 +121,20 @@ class ThemeControlLib extends TikiLib {
 	}
 
 	function tc_list_objects($type, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
-
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " and (theme like $findesc)";
+			$findesc = '%' . $find . '%';
+			$mid = " where (`theme` like $findesc)";
+			$bindvars=array($type,$findesc);
 		} else {
 			$mid = "";
+			$bindvars=array($type);
 		}
 
-		$query = "select * from `tiki_theme_control_objects` where `type`='$type' $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from `tiki_theme_control_objects` where `type`='$type' $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_theme_control_objects` where `type`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_theme_control_objects` where `type`=? $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -152,21 +148,21 @@ class ThemeControlLib extends TikiLib {
 	}
 
 	function tc_remove_cat($cat) {
-		$query = "delete from `tiki_theme_control_categs` where `categId`=$cat";
+		$query = "delete from `tiki_theme_control_categs` where `categId`=?";
 
-		$this->query($query);
+		$this->query($query,array($cat));
 	}
 
 	function tc_remove_section($section) {
-		$query = "delete from `tiki_theme_control_sections` where `section`='$section'";
+		$query = "delete from `tiki_theme_control_sections` where `section`=?";
 
-		$this->query($query);
+		$this->query($query,array($section));
 	}
 
 	function tc_remove_object($objId) {
-		$query = "delete from `tiki_theme_control_objects` where `objId`='$objId'";
+		$query = "delete from `tiki_theme_control_objects` where `objId`=?";
 
-		$this->query($query);
+		$this->query($query,array($objId));
 	}
 }
 
