@@ -417,10 +417,12 @@ $smarty->assign('wikiHomePage',$wikiHomePage);
 
 $wiki_page_regex = $tikilib->get_preference('wiki_page_regex','strict');
 $smarty->assign('wiki_page_regex',$wiki_page_regex);
+// Please DO NOT modify any of the brackets in the regex(s).
+// It may seem redundent but, really, they are ALL REQUIRED.
 if($wiki_page_regex == 'strict') {
-  $page_regex = '[A-Za-z0-9_][\.: A-Za-z0-9_\-]*[A-Za-z0-9_]';	
+  $page_regex = '([A-Za-z0-9_])([\.: A-Za-z0-9_\-])*([A-Za-z0-9_])';	
 } else {
-  $page_regex = '[A-Za-z0-9_\x80-\xFF][\.: A-Za-z0-9_\-\x80-\xFF]*[A-Za-z0-9_\x80-\xFF]';	
+  $page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';	
 }
 
 
