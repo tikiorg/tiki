@@ -1,5 +1,6 @@
-{tikimodule name="switch_lang2"}
-<div class="box-title">{tr}Language: {/tr}`$language`</div>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_lang2.tpl,v 1.5 2003-11-23 22:57:32 zaufi Exp $ *}
+
+{tikimodule title="{tr}Language{/tr}: `$language`" name="switch_lang2"}
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
 <tr>
 {section name=ix loop=$languages}
