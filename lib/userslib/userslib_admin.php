@@ -136,7 +136,7 @@ class UsersLibAdmin extends UsersLib {
 
 
     function validate_user(&$user, $pass, $challenge, $response) {
-        global $tikilib, $sender_email;
+        global $tikilib, $sender_email, $auth_ext_xml_enabled, $auth_ext_xml_skip_admin;
 
         // these will help us keep tabs of what is going on
         $userTiki = false;
@@ -278,6 +278,13 @@ class UsersLibAdmin extends UsersLib {
             elseif ($userCAS && !$userTikiPresent) {
                         // see if we can create a new account
                         if ($cas_create_tiki) {
+							if ($auth_ext_xml_enabled == 'y' && ($auth_ext_xml_skip_admin != 'y' || $user != 'admin')) {
+								// Verify user with external XML
+								if (!$this->validate_user_external_xml($user)) {
+									return false;
+								}
+							}
+							if (!$this->user_exists($user)) { // user might have been created in validate_user_external_xml() already
                             // need to make this better! *********************************************************
                             $randompass = $this->genPass();
                             // in case CAS auth is turned off accidentally;
@@ -296,15 +303,34 @@ class UsersLibAdmin extends UsersLib {
                             // otherwise don't log in.
                             else
                                         return false;
+							}
                         }
                         // otherwise
-                        else
-                            // just say no!
-                            return false;
+                        else {
+							if ($auth_ext_xml_enabled == 'y' && ($auth_ext_xml_skip_admin != 'y' || $user != 'admin')) {
+								// Verify user with external XML
+								if (!$this->validate_user_external_xml($user)) {
+									return false;
+								} else {
+									return $this->update_lastlogin($user);
+								}
+							} else {
+								return false;
+							}
+                        }
             }
             // if the user was authenticated by CAS and found in Tiki (no password in Tiki user table necessary)
-            elseif ($userCAS && $userTikiPresent)
+            elseif ($userCAS && $userTikiPresent) {
+						if ($auth_ext_xml_enabled == 'y' && ($auth_ext_xml_skip_admin != 'y' || $user != 'admin')) {
+							// Verify user with external XML
+							if (!$this->validate_user_external_xml($user)) {
+								return false;
+							} else {
+								return $this->update_lastlogin($user);
+							}
+						}
                         return $this->update_lastlogin($user);
+            }
         }
 
         // next see if we need to check LDAP
@@ -617,19 +643,28 @@ class UsersLibAdmin extends UsersLib {
 			$service = $auth_ext_xml_url;
 			phpCAS::serviceWeb($service,$err_code,$xmloutput);
 		} else {
-			$handle = fopen($auth_ext_xml_url, "rb");
-			$xmloutput = '';
-			while (!feof($handle)) {
-				$xmloutput .= fread($handle, 8192);
+			if ($handle = fopen($auth_ext_xml_url, "rb")) {
+				$xmloutput = '';
+				while (!feof($handle)) {
+					$xmloutput .= fread($handle, 8192);
+				}
+				fclose($handle);
+			} else {
+				return true; // if getting xml is unsuccessful, return true to let tiki fallback on primary authentication
 			}
-			fclose($handle);
 		}
 		
+		if (empty($xmloutput)) {
+			return true; // if getting xml is blank, return true to let tiki fallback on primary authentication
+		}		
 		global $auth_ext_xml_login_element, $auth_ext_xml_login_element_value, $auth_ext_xml_login_attribute, $auth_ext_xml_login_attribute_value;
 		$auth_ext_xml_login_isvalid = false;
 		require_once("xml_domit/xml_domit_lite_parser.php");
 		$extxml =& new DOMIT_Lite_Document();
-		$success = $extxml->parseXML($xmloutput, false/*use Expat and fallback to built-in SAXY parser*/);
+		$success = $extxml->parseXML($xmloutput, false/*use Expat if possible and fallback on built-in but slower SAXY parser*/);
+		if (!$success) {
+			return true; // if parsing was unsuccessful, return true to let tiki fallback on primary authentication
+		}
 		$myElements =& $extxml->getElementsByPath($auth_ext_xml_login_element);
 		$length = $myElements->getLength();
 		for ($i = 0; $i < $length; $i++) {
@@ -680,6 +715,23 @@ class UsersLibAdmin extends UsersLib {
 					}
 				}
 			}
+		}
+		
+		$user_exists = $this->user_exists($user);
+		
+		if ($auth_ext_xml_login_isvalid && !$user_exists) {
+            $randompass = $this->genPass();
+            // in case CAS auth is turned off accidentally;
+            // we don't want ppl to be able to login as any user with blank passwords
+            $result = $this->add_user($user, $randompass, '');
+
+            // if it worked ok, just log in
+            if ($result == USER_VALID) {
+                // before we log in, update the login counter
+                return $this->update_lastlogin($user);
+            } else {
+            	return false;
+            }
 		}
 		
 		global $auth_ext_xml_delete_user_tiki;
