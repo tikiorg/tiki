@@ -26,3 +26,6 @@
 </tr>
 </table>
 </div> 
+<div align="center">
+<small>{tr}Page generated in{/tr}: {elapsed} {tr}seconds{/tr}</small>
+</div>

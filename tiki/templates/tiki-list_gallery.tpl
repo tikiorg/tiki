@@ -1,12 +1,12 @@
 <h2>{tr}Browsing Gallery{/tr}: {$name}</h2>
   {if $system eq 'n'}
-  {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
-      <a  href="tiki-galleries.php?editgal={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> 
+  {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+      <a  href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> 
       &nbsp;
       <a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> 
   {/if}
-  {if $tiki_p_upload_images}
-    {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner or $public eq 'y'}
+  {if $tiki_p_upload_images eq 'y'}
+    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
         <a href="tiki-upload_image.php?galleryId={$galleryId}" class="gallink">{tr}upload image{/tr}</a><br/><br/>
     {/if}
   {/if}
@@ -39,7 +39,7 @@
 <td class="odd">{$images[changes].filesize}&nbsp;</td>
 <td class="odd">
 <a class="link" href="tiki-browse_image.php?imageId={$images[changes].imageId}">browse</a>
-{if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
+{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 <a class="link" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
 {/if}
 </td>
@@ -52,7 +52,7 @@
 <td class="even">{$images[changes].filesize}&nbsp;</td>
 <td class="even">
 <a class="link" href="tiki-browse_image.php?imageId={$images[changes].imageId}">browse</a>
-{if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
+{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
 <a class="link" href="tiki-list_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$images[changes].imageId}">[x]</a>
 {/if}
 </td>

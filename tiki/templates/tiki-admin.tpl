@@ -18,6 +18,7 @@
 <tr><td class="text">{tr}Banners{/tr}:</td><td><input type="checkbox" name="feature_banners" {if $feature_banners eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="text">{tr}Edit templates{/tr}:</td><td><input type="checkbox" name="feature_edit_templates" {if $feature_edit_templates eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="text">{tr}Dynamic content system{/tr}:</td><td><input type="checkbox" name="feature_dynamic_content" {if $feature_dynamic_content eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="text">{tr}File galleries{/tr}:</td><td><input type="checkbox" name="feature_file_galleries" {if $feature_file_galleries eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="text" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
@@ -126,6 +127,27 @@
     <input type="submit" name="removetag" value="{tr}remove{/tr}"/>          
     </form>
     </div>    
+    
+    
+    <div class="simplebox">
+    {tr}Wiki comments settings{/tr}
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="text">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="wiki_comments_per_page" value="{$wiki_comments_per_page}" /></td></tr>
+    <tr><td class="text">{tr}Comments default ordering{/tr}
+    </td><td>
+    <select name="wiki_comments_default_ordering">
+    <option value="commentDate_desc" {if $wiki_comments_default_ordering eq 'commentDate_dec'}selected="selected"{/if}>{tr}Date{/tr}</option>
+    <option value="points_desc" {if $wiki_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td align="center" colspan="2"><input type="submit" name="wikiprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+    </td>
+    
+    
     <td width="40%" valign="top">
     <div class="simplebox">
     {tr}Wiki Features{/tr}:<br/>
@@ -140,6 +162,8 @@
     <tr><td class="text">{tr}Backlinks{/tr}:</td><td><input type="checkbox" name="feature_backlinks" {if $feature_backlinks eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="text">{tr}Like pages{/tr}:</td><td><input type="checkbox" name="feature_likePages" {if $feature_likePages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="text">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_wiki_rankings" {if $feature_wiki_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="text">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_wiki_comments" {if $feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="text">{tr}Warn on edit{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" class="text" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
     </form>
@@ -177,6 +201,36 @@
 </div>
 <div class="simplebox">
 <a class="link" href="tiki-admin.php?rmvorphimg=1">{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</a>
+</div>
+</div>
+</div>
+
+
+<div class="cbox">
+<div class="cbox-title">File galleries</div>
+<div class="cbox-data">
+<div class="simplebox">
+<form action="tiki-admin.php" method="post">
+<table width="100%">
+<tr><td>{tr}Home Gallery (main gallery){/tr}</td><td>
+<select name="homeFileGallery">
+{section name=ix loop=$file_galleries}
+<option value="{$file_galleries[ix].galleryId}" {if $file_galleries[ix].galleryId eq $home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"(...)":true}</option>
+{/section}
+</select>
+</td></tr>
+<tr><td align="center" class="text" colspan="2"><input type="submit" name="filegalset" value="{tr}Set prefs{/tr}" /></td></tr>    
+</table>
+</form>
+</div>
+<div class="simplebox">
+{tr}Galleries features{/tr}<br/>
+<form action="tiki-admin.php" method="post">
+    <table width="100%">
+    <tr><td class="text">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_rankings" {if $feature_file_galleries_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td align="center" class="text" colspan="2"><input type="submit" name="filegalfeatures" value="{tr}Set features{/tr}" /></td></tr>    
+    </table>
+</form>
 </div>
 </div>
 </div>

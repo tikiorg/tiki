@@ -3,15 +3,15 @@
     {tr}Browsing Gallery{/tr}: {$name}
   </div>
   {if $system eq 'n'}
-  {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
+  {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
     <div class="adminoptions">
-      <a href="tiki-galleries.php?editgal={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> 
+      <a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> 
       &nbsp;&nbsp;
       <a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> 
     </div>
   {/if}
-  {if $tiki_p_upload_images}
-    {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner or $public eq 'y'}
+  {if $tiki_p_upload_images eq 'y'}
+    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
       <div class="uploadimagelink">
         <a href="tiki-upload_image.php?galleryId={$galleryId}" class="gallink">{tr}upload image{/tr}</a><br/><br/>
       </div>
@@ -42,7 +42,7 @@
           <a href="tiki-browse_image.php?imageId={$images[idx].imageId}"><img alt="thumbnail" class="athumb" width="{$thx}" height="{$thy}" src="show_image.php?id={$images[idx].imageId}&amp;thumb=1" /></a>
           <br/>
           <small class="caption">{$images[idx].name}&nbsp;&nbsp;
-          {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
+          {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
             <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$images[idx].imageId}">[x]</a>
           {/if}
           <br/>

@@ -110,6 +110,9 @@ div.boxnm {
    boxes in the main application menu, we set display to
    none to make the menu appear collapsed initially, change
    this to 'block' if you want it to be extended fully */
+#admmnu {
+ display: none;
+}   
 #wikimenu {
  display: none;
 }
@@ -122,6 +125,10 @@ div.boxnm {
 #blogmenu {
  display: none;
 }
+#filegalmenu {
+ display: none;
+}
+
 
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
@@ -220,6 +227,26 @@ font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 .flip:hover {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 13px;
+ color : Black;
+ text-decoration: none;
+}
+
+/* TEXT ADDS */
+.bannertext {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+ color : Black;
+text-decoration: none;
+}
+.bannertext:active {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+ color : Black;
+ text-decoration: none;
+}
+.bannertext:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
  color : Black;
  text-decoration: none;
 }
@@ -454,9 +481,11 @@ div.titlebar {
 /* Wiki Links used also as the class for links to itself in pages */
 a.wiki { text-decoration: none; }
 .wiki, .named-wiki  { font-weight: bold; color:#1d42be; } /*blue*/
-/* This is obscene in NS4
-b .wiki, STRONG .wiki { font-size: larger; }
-*/
+
+/* Titles in pages */
+a.pagetitle { text-decoration: none; }
+.pagetitle { font-weight: bold; color:black; } 
+
 
 /* Date displayed for last modification date of pages */
 p.editdate { font-size: smaller; margin-bottom: -1ex; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
@@ -506,6 +535,7 @@ TD.form {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
   vertical-align: top;
+  text-align: left;
 }
 
 
@@ -581,6 +611,27 @@ font-size: 12px;
  color : Black;
  background-color : #CCCCCC;
 }
+
+/* prev & next buttons in pagination */
+.prevnext {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12px;
+ color : Black;
+
+}
+.prevnext:active {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12px;
+ color : Black;
+}
+.prevnext:hover {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12px;
+ color : Black;
+ background-color : #CCCCCC;
+}
+
+
 
 
 /* Prevent forms from generating unwanted padding or margins */
@@ -1133,6 +1184,115 @@ font-size: 10px;
 color : Black;
 /*text-decoration: none; */
 /*background-color : #CCCCCC;*/
+}
+
+
+/* COMMENTS */
+/* This sets the styles for the comments used in several Tiki sections */
+
+#comzone {
+  display: none;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+#comzoneopen {
+  display: block;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 2px;
+  padding-right: 2px;
+
+}
+
+/* Post comment form */
+div.commentspost {
+ display: inherit;
+ border: 1px solid black;
+ margin-top: 10px;
+ margin-right: 10px;
+ padding-right: 10px;
+ padding-top: 5px;
+ padding-bottom: 5px;
+ margin-bottom: 10px;
+ border: 1px solid black;
+}
+
+/* Help box*/
+div.commentsedithelp {
+  background: white;
+  border: 1px solid black;
+  font-size: smaller;
+}
+
+
+
+/* The toolbar where the ordering number of comments and find box are found */
+div.commentstoolbar {
+  background: #CECECE;
+  color: white;
+  margin-bottom: 20px;
+}
+/* The comment title */
+span.commentstitle {
+  font-weight: bold;
+  font-size: 14px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+/* The comment */
+div.commentscomment {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  margin-bottom: 20px;
+}
+/* The header for a comment */
+div.commentheader {
+  background: #CECECE;
+  font-size: 10px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+
+/* The text */
+div.commenttext {
+  font-size: 12px;
+  margin-left: 5px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+/* Links inside comment text */
+.commentslink {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  color: black;
+}
+.commentslink:active {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  color: black;
+}
+.commentslink:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  color: black;
+}
+/* Links in the comment header (votes, remove) */
+.commentshlink {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: black;
+}
+.commentshlink:active {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: black;
+}
+.commentshlink:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: black;
 }
 
 

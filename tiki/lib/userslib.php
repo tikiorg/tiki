@@ -251,12 +251,19 @@ class UsersLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     // Return an array of users indicating name, email, last changed pages, versions, lastLogin 
+    $mid='';
+    if($type) {
+      $mid = " where type='$type' ";
+    } 
     if($find) {
-      $mid=" where type like '%$type%' and permName like '%".$find."%'";  
-    } else {
-      $mid=" where type like '%$type%'"; 
-    }
-    $query = "select permName, permDesc from users_permissions $mid order by $sort_mode limit $offset,$maxRecords";
+      if($mid) {
+      $mid.=" and permName like '%".$find."%'";  
+      } else {
+      $mid.=" where permName like '%".$find."%'";  
+      }
+    } 
+    
+    $query = "select permName,type, permDesc from users_permissions $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from users_permissions";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
@@ -266,6 +273,7 @@ class UsersLib {
       $aux = Array();
       $aux["permName"] = $res["permName"];
       $aux["permDesc"] = $res["permDesc"];
+      $aux["type"] = $res["type"];
       $ret[] = $aux;
     }
     $retval = Array();
