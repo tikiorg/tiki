@@ -85,7 +85,7 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
   $smarty->assign('edit_mode','y');
   $smarty->assign('edited','y');
   if($_REQUEST["galleryId"]>0) {
-    $info = $tikilib->get_gallery_info($_REQUEST["galleryId"]);
+    $info = $imagegallib->get_gallery_info($_REQUEST["galleryId"]);
     $scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
     //$smarty->assign_by_ref('theme',$info["theme"]);
     $smarty->assign_by_ref('name',$info["name"]);

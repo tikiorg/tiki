@@ -80,6 +80,7 @@ if(isset($_REQUEST["preview"])) {
 }
 
 if(isset($_REQUEST["save"])) {
+  include_once("lib/imagegals/imagegallib.php");
   $smarty->assign('individual','n');
   if($userlib->object_has_one_permission($_REQUEST["blogId"],'blog')) {
     $smarty->assign('individual','y');
@@ -128,7 +129,7 @@ if(isset($_REQUEST["save"])) {
     }
   }
 
-  $_REQUEST["data"] = $tikilib->capture_images($_REQUEST["data"]);
+  $_REQUEST["data"] = $imagegallib->capture_images($_REQUEST["data"]);
   if($_REQUEST["postId"]>0) {
     $bloglib->update_post($_REQUEST["postId"],$_REQUEST["data"],$user);
   } else {

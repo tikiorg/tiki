@@ -208,6 +208,7 @@ if(isset($_REQUEST["preview"])) {
 
 // Pro
 if(isset($_REQUEST["save"])) {
+  include_once("lib/imagegals/imagegallib.php");
   # convert from the displayed 'site' time to 'server' time
   $publishDate = $tikilib->make_server_time($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,
     $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"],
@@ -244,8 +245,8 @@ if(isset($_REQUEST["save"])) {
   }
   
   // Parse $edit and eliminate image references to external URIs (make them internal)
-  $body = $tikilib->capture_images($body);
-  $heading = $tikilib->capture_images($heading);
+  $body = $imagegallib->capture_images($body);
+  $heading = $imagegallib->capture_images($heading);
   // If page exists
   $artid = $tikilib->replace_article(strip_tags($_REQUEST["title"],'<a><pre><p><img><hr><b><i>'),
                             $_REQUEST["authorName"],
