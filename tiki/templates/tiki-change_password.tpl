@@ -3,11 +3,11 @@
 <table class="normal">
 <tr>
   <td class="formcolor">{tr}User{/tr}:</td>
-  <td class="formcolor"><input type="text" name="user" value="{$user}" /></td>
+  <td class="formcolor"><input type="text" name="user" value="{$user|escape}" /></td>
 </tr>  
 <tr>
   <td class="formcolor">{tr}Old password{/tr}:</td>
-  <td class="formcolor"><input type="password" name="oldpass" value="{$oldpass}" /></td>
+  <td class="formcolor"><input type="password" name="oldpass" value="{$oldpass|escape}" /></td>
 </tr>     
 <tr>
   <td class="formcolor">{tr}New password{/tr}:</td>

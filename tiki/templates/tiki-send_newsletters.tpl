@@ -7,9 +7,9 @@
 <div class="wikitext">{$data}</div>
 {tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}
 <form method="post" action="tiki-send_newsletters.php">
-<input type="hidden" name="nlId" value="{$nlId}" />
-<input type="hidden" name="subject" value="{$subject}" />
-<input type="hidden" name="data" value="{$data}" />
+<input type="hidden" name="nlId" value="{$nlId|escape}" />
+<input type="hidden" name="subject" value="{$subject|escape}" />
+<input type="hidden" name="data" value="{$data|escape}" />
 <input type="submit" name="send" value="{tr}send{/tr}" />
 <input type="submit" name="preview" value="{tr}cancel{/tr}" />
 </form>
@@ -22,11 +22,11 @@
 <h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
 <form action="tiki-send_newsletters.php" method="post" id='editpageform'>
 <table class="normal">
-<tr><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" maxlength="250" size="40" name="subject" value="{$info.subject}" /></td></tr>
+<tr><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" maxlength="250" size="40" name="subject" value="{$info.subject|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Newsletter{/tr}:</td><td class="formcolor">
 <select name="nlId">
 {section loop=$newsletters name=ix}
-<option value="{$newsletters[ix].nlId}" {if $newsletters[ix].nlId eq $nlId}selected="selected"{/if}>{$newsletters[ix].name}</option>
+<option value="{$newsletters[ix].nlId|escape}" {if $newsletters[ix].nlId eq $nlId}selected="selected"{/if}>{$newsletters[ix].name}</option>
 {/section}
 </select>
 </td></tr>
@@ -35,12 +35,12 @@
 <select name="templateId" onChange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
-<option value="{$templates[ix].templateId}">{tr}{$templates[ix].name}{/tr}</option>
+<option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
 {/section}
 </select>
 </td></tr>
 {/if}
-<tr><td class="formcolor">{tr}Data{/tr}:</td><td class="formcolor"><textarea name="data" rows="25" cols="60">{$info.data}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Data{/tr}:</td><td class="formcolor"><textarea name="data" rows="25" cols="60">{$info.data|escape}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td></tr>
 </table>
@@ -53,9 +53,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-send_newsletters.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

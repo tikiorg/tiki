@@ -7,8 +7,8 @@
 
 {* FILTERING FORM *}
 <form action="tiki-g-user_activities.php" method="post" id='fform'>
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 <tr>
 <td>
@@ -28,12 +28,12 @@
 	<select onChange='javascript:getElementById("fform").submit();' name="filter_process" onChange='javascript:getElementById("filterf").submit();'>
 	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$all_procs name=ix}
-	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId}">{$all_procs[ix].procname} {$all_procs[ix].version}</option>
+	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId|escape}">{$all_procs[ix].procname} {$all_procs[ix].version}</option>
 	{/section}
 	</select>
 </td>
 <td >
-	<input size="8" type="text" name="find" value="{$find}" />
+	<input size="8" type="text" name="find" value="{$find|escape}" />
 </td>
 <td >	
 	<input type="submit" name="filter" value="{tr}filter{/tr}" />
@@ -45,16 +45,15 @@
 
 {*LISTING*}
 <form action="tiki-g-user_activities.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
 <td width="45%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'procname_desc'}{sameurl sort_mode='procname_asc'}{else}{sameurl sort_mode='procname_desc'}{/if}">{tr}Process{/tr}</a></td>
 <td width="45%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</td>
 <td width="10%" class="heading" >{tr}Instances{/tr}</td>
-</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

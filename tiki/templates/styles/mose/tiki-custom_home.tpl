@@ -303,7 +303,7 @@ outil propose.
 </tr>
 
 <tr><td nowrap style="padding-right:20px;">
-<div class="separator"><a href="tiki-eph.php" class="separator">[-] Calendrier [+]</a></div>
+<div class="separator"><a href="tiki-eph.php" class="separator">[-] {tr}Calendar{/tr} [+]</a></div>
 </td>
 <td>
 <div class=simplebox>

@@ -32,13 +32,13 @@
 {if $receivedArticleId > 0}
 <h2>{tr}Edit received article{/tr}</h2>
 <form action="tiki-received_articles.php" method="post">
-<input type="hidden" name="receivedArticleId" value="{$receivedArticleId}" />
-<input type="hidden" name="created" value="{$created}" />
-<input type="hidden" name="image_name" value="{$image_name}" />
-<input type="hidden" name="image_size" value="{$image_size}" />
+<input type="hidden" name="receivedArticleId" value="{$receivedArticleId|escape}" />
+<input type="hidden" name="created" value="{$created|escape}" />
+<input type="hidden" name="image_name" value="{$image_name|escape}" />
+<input type="hidden" name="image_size" value="{$image_size|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title}" /></td></tr>
-<tr><td class="formcolor">{tr}Author Name{/tr}:</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName}" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Author Name{/tr}:</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 
 <tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
 <select id='articletype' name='type' onChange='javascript:chgArtType();'>
@@ -79,8 +79,8 @@
 <option value="n" {if $useImage eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Image x size{/tr}:</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x}" /></td></tr>
-<tr><td class="formcolor">{tr}Image y size{/tr}:</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y}" /></td></tr>
+<tr><td class="formcolor">{tr}Image x size{/tr}:</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Image y size{/tr}:</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Image name{/tr}:</td><td class="formcolor">{$image_name}</td></tr>
 <tr><td class="formcolor">{tr}Image size{/tr}:</td><td class="formcolor">{$image_size}</td></tr>
 {if $useImage eq 'y'}
@@ -92,13 +92,13 @@
 <tr><td class="formcolor">{tr}Publishing date{/tr}:</td><td class="formcolor">
 {html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
-<tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="heading">{$heading}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="25" cols="40" name="body">{$body}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="heading">{$heading|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Heading{/tr}:</td><td class="formcolor"><textarea rows="25" cols="40" name="body">{$body|escape}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 <tr><td class="formcolor">{tr}Accept Article{/tr}</td><td class="formcolor">
 {tr}Topic{/tr}:<select name="topic">
 {section name=t loop=$topics}
-<option value="{$topics[t].topicId}" {if $topic eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
+<option value="{$topics[t].topicId|escape}" {if $topic eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
 {/section}
 </select><input type="submit" name="accept" value="{tr}accept{/tr}" /></td></tr>
 </table>
@@ -113,7 +113,7 @@
    <form method="get" action="tiki-received_articles.php">
      <input type="text" name="find" />
      <input type="submit" name="search" value="{tr}find{/tr}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

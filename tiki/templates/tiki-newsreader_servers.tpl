@@ -6,9 +6,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-newsreader_servers.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -54,21 +54,20 @@
 
 <h3>{tr}Add or edit a news server{/tr}</h3>
 <form action="tiki-newsreader_servers.php" method="post">
-<input type="hidden" name="serverId" value="{$serverId}" />
+<input type="hidden" name="serverId" value="{$serverId|escape}" />
 <table class="normal">
 <tr>
   <td class="formcolor">{tr}News server{/tr}</td>
-  <td class="formcolor"><input type="text" name="server" value="{$info.server}" />
-  {tr}port{/tr}:<input type="text" size="4" name="port" value="{$info.port}" /></td>
-  </td>
+  <td class="formcolor"><input type="text" name="server" value="{$info.server|escape}" />
+  {tr}port{/tr}:<input type="text" size="4" name="port" value="{$info.port|escape}" /></td>
 </tr>
 <tr>
   <td class="formcolor">{tr}User{/tr}</td>
-  <td class="formcolor"><input type="text" name="username" value="{$info.username}" /></td>
+  <td class="formcolor"><input type="text" name="username" value="{$info.username|escape}" /></td>
 </tr>
 <tr>
   <td class="formcolor">{tr}Password{/tr}</td>
-  <td class="formcolor"><input type="text" name="password" value="{$info.password}" /></td>
+  <td class="formcolor"><input type="text" name="password" value="{$info.password|escape}" /></td>
 </tr>
 <tr>
   <td class="formcolor">&nbsp;</td>

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_perm.php,v 1.1 2003-07-13 00:35:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_perm.php,v 1.2 2003-08-01 10:30:55 redflo Exp $
  *
  * \brief Show current permissions in a convenient way
  *
@@ -10,7 +10,7 @@
 require_once('lib/debug/debugger-ext.php');
 
 /**
- * \brief Debugger command to print smatry vars
+ * \brief Show current permissions in a convenient way
  */
 class DbgPermissions extends DebuggerCommand
 {
@@ -29,12 +29,12 @@ class DbgPermissions extends DebuggerCommand
   {
     return 'perm [partial-name]';
   }
-  /// \b Must have function to show exampla of usage of given command
+  /// \b Must have function to show example of usage of given command
   function example()
   {
     return 'perm'."\n".'perm admin'."\n".'perm .*_comments$';
   }
-  /// Execute command with given set of arguments. Must return string of result.
+  /// Execute command with given set of arguments.
   function execute($params)
   {
     $this->set_result_type(TPL_RESULT);
@@ -45,14 +45,21 @@ class DbgPermissions extends DebuggerCommand
     // Get list of all vars
     global $smarty;
     $tpl_vars = $smarty->get_template_vars();
-    // convert to vector of names, filter permissions only, and sort
+    // Get descriptions for all permissions
+    global $userlib;
+    $pd = $userlib->get_permissions();
+    $descriptions = array();
+    foreach ($pd['data'] as $p) $descriptions[$p['permName']] = $p['permDesc'];
+    // convert to vector of names, filter permissions only
     $perms = array();
     $len = strlen($mask);
     foreach ($tpl_vars as $key => $val)
     {
       if ((!$len || $len && preg_match('/'.$mask.'/', $key))
        && preg_match('/tiki_p_/', $key))
-        $perms[] = array('name' => $key, 'value' => $val);
+        $perms[] = array('name' => $key,
+                         'value' => $val,
+                         'description' => isset($descriptions[$key]) ? $descriptions[$key] : 'No description');
     }
     return $perms;
   }

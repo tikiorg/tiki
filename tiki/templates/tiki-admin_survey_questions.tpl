@@ -6,10 +6,10 @@
 |<a class="link" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a>]<br/><br/>
 <h2>{tr}Create/edit questions for survey{/tr}: <a href="tiki-admin_survey.php?surveyId={$survey_info.surveyId}" class="pagetitle">{$survey_info.name}</a></h2>
 <form action="tiki-admin_survey_questions.php" method="post">
-<input type="hidden" name="surveyId" value="{$surveyId}" />
-<input type="hidden" name="questionId" value="{$questionId}" />
+<input type="hidden" name="surveyId" value="{$surveyId|escape}" />
+<input type="hidden" name="questionId" value="{$questionId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea name="question" rows="5" cols="40">{$info.question}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea name="question" rows="5" cols="40">{$info.question|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Position{/tr}:</td><td class="formcolor"><select name="position">{html_options values=$positions output=$positions selected=$info.position}</select></td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
 <select name="type">
@@ -19,7 +19,7 @@
 <option value='r' {if $info.type eq 'r'}selected=selected{/if}>{tr}Rate (1..5){/tr}</option>
 <option value='s' {if $info.type eq 's'}selected=selected{/if}>{tr}Rate (1..10){/tr}</option>
 </select></td></tr>
-<tr><td class="formcolor">{tr}Options (if apply){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$info.options}" /></td></tr>
+<tr><td class="formcolor">{tr}Options (if apply){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$info.options|escape}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -29,10 +29,10 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_survey_questions.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
-     <input type="hidden" name="surveyId" value="{$surveyId}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
    </form>
    </td>
 </tr>

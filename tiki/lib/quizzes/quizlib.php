@@ -111,6 +111,7 @@ class QuizLib extends TikiLib {
     $this->compute_quiz_stats();
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
+	$findesc = $this->qstr('%'.$find.'%');
       $mid=" where quizId=$quizId";  
     } else {
       $mid="  where quizId=$quizId"; 
@@ -233,7 +234,8 @@ class QuizLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where quizId=$quizId and (question like '%".$find."%'";  
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where quizId=$quizId and (question like $findesc";  
     } else {
       $mid=" where quizId=$quizId "; 
     }
@@ -356,7 +358,8 @@ class QuizLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where quizId=$quizId and (question like '%".$find."%'";  
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where quizId=$quizId and (question like $findesc";  
     } else {
       $mid=" where quizId=$quizId "; 
     }
@@ -380,7 +383,8 @@ class QuizLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where (question like '%".$find."%'";  
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where (question like $findesc";  
     } else {
       $mid=" "; 
     }
@@ -403,7 +407,8 @@ class QuizLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where questionId=$questionId and (option '%".$find."%'";  
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where questionId=$questionId and (option $findesc";  
     } else {
       $mid=" where questionId=$questionId "; 
     }

@@ -2,7 +2,7 @@
 
 class StatsLib extends TikiLib {
 
-  function StatsLib($db) 
+  function StatsLib($db)
   {
     # this is probably uneeded now
     if(!$db) {
@@ -31,7 +31,8 @@ class StatsLib extends TikiLib {
     }
 
     if($find) {
-      $mid=" where pageName like '%".$find."%' ";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where pageName like $findesc ";
     } else {
       $mid="";
     }

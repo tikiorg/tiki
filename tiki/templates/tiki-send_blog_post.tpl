@@ -19,11 +19,11 @@
 {else}
 	<h3>{tr}Send post to this addresses{/tr}</h3>
 	<form method="post" action="tiki-send_blog_post.php">
-	<input type="hidden" name="postId" value="{$postId}" />
+	<input type="hidden" name="postId" value="{$postId|escape}" />
 	<table class="normal">
 	<tr>
 		<td class="formcolor">{tr}List of email addresses separated by commas{/tr}</td>
-		<td class="formcolor"><textarea cols="60" rows="5" name="addresses">{$addresses}</textarea></td>
+		<td class="formcolor"><textarea cols="60" rows="5" name="addresses">{$addresses|escape}</textarea></td>
 	</tr>
 	<tr>
 		<td class="formcolor" colspan="2" style="text-align:center;"><input type="submit" name="send" value="{tr}send{/tr}" /></td>

@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-directory_admin_related.php?parent={$parent}">{tr}Admin related categories{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-directory_admin_related.php?parent={$parent}">{tr}Admin related categories{/tr}</a><br /><br />
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
 {* Navigation bar to admin, admin related, etc *}
@@ -8,7 +8,7 @@
 <form name="path" method="post" action="tiki-directory_admin_related.php">
 <select name="parent" onChange="javascript:path.submit();">
 {section name=ix loop=$all_categs}
-<option value="{$all_categs[ix].categId}" {if $parent eq $all_categs[ix].categId}selected="selected"{/if}>{$all_categs[ix].path}</option>
+<option value="{$all_categs[ix].categId|escape}" {if $parent eq $all_categs[ix].categId}selected="selected"{/if}>{$all_categs[ix].path}</option>
 {/section}
 </select>
 <input type="submit" name="go" value="{tr}go{/tr}" />
@@ -16,14 +16,14 @@
 
 <h2>{tr}Add a related category{/tr}</h2>
 <form action="tiki-directory_admin_related.php" method="post">
-<input type="hidden" name="parent" value="{$parent}" />
+<input type="hidden" name="parent" value="{$parent|escape}" />
 <table class="normal">
   <tr>
     <td class="formcolor">{tr}Category{/tr}:</td>
     <td class="formcolor">
     <select name="categId" />
     {section name=ix loop=$categs}
-      <option value="{$categs[ix].categId}">{$categs[ix].path}</option>
+      <option value="{$categs[ix].categId|escape}">{$categs[ix].path}</option>
     {/section}
     </select>
     </td>
@@ -50,13 +50,13 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <form action="tiki-directory_admin_related.php">
-<input type="hidden" name="parent" value="{$parent}" />
-<input type="hidden" name="oldcategId" value="{$items[user].relatedTo}" />
+<input type="hidden" name="parent" value="{$parent|escape}" />
+<input type="hidden" name="oldcategId" value="{$items[user].relatedTo|escape}" />
 <tr>
 <td class="{cycle advance=false}">
 <select name="categId">
 {section name=ix loop=$categs}
-      <option value="{$categs[ix].categId}" {if $categs[ix].categId eq $items[user].relatedTo}selected="selected"{/if}>{$categs[ix].path}</option>
+      <option value="{$categs[ix].categId|escape}" {if $categs[ix].categId eq $items[user].relatedTo}selected="selected"{/if}>{$categs[ix].path}</option>
 {/section}
 </select>
 </td>
@@ -78,7 +78,7 @@
 &nbsp;[<a class="prevnext" href="tiki-directory_admin_related.php?parent={$parent}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-directory_admin_related.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

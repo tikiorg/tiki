@@ -5,20 +5,20 @@
 <h3>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}new{/tr}</a>
 </h3>
 <form action="tiki-admin_charts.php" method="post">
-<input type="hidden" name="chartId" value="{$info.chartId}" />
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="chartId" value="{$info.chartId|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 	<tr>
 		<td class="formcolor">{tr}Title{/tr}</td>
-		<td class="formcolor"><input type="text" maxlength="250" name="title" value="{$info.title}" /></td>
+		<td class="formcolor"><input type="text" maxlength="250" name="title" value="{$info.title|escape}" /></td>
 	</tr>
 	
 	<tr>
 		<td class="formcolor">{tr}Description{/tr}</td>
-		<td class="formcolor"><textarea rows="4" cols="40" name="description">{$info.description}</textarea></td>
+		<td class="formcolor"><textarea rows="4" cols="40" name="description">{$info.description|escape}</textarea></td>
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Active{/tr}</td>
@@ -118,15 +118,15 @@
 
 <h3>{tr}Charts{/tr}</h3>
 <form action="tiki-admin_charts.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find|escape}" />
 </form>
 <form action="tiki-admin_charts.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
 <td width="7%" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
@@ -151,7 +151,7 @@
 		{$items[ix].periods}
 	</td>
 	<td style="text-align:right;" class="{cycle}">
-		<a class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="img/icons/ico_table" border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
+		<a class="link" href="tiki-view_chart.php?chartId={$items[ix].chartId}"><img src="img/icons/ico_table.gif" border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
 	</td>
 
 </tr>

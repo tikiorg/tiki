@@ -1,11 +1,10 @@
-<a class="pagetitle" href="tiki-edit_css.php">{tr}Edit Style Sheet{/tr}</a><br/><br/>
-<div>
+<a class="pagetitle" href="tiki-edit_css.php">{tr}Edit Style Sheet{/tr}</a><br /><br />
 <div>
 <form method="post" action="tiki-edit_css.php">
 {tr}Style Sheet{/tr} : 
 {if $action eq "edit"}
 <b>{$editstyle}</b>
-<input type="hidden" name="editstyle" value="{$editstyle}" />
+<input type="hidden" name="editstyle" value="{$editstyle|escape}" />
 <input type="submit" name="save" value="{tr}save a custom copy{/tr}" /> 
 <a href="tiki-edit_css.php?editstyle={$editstyle}" class="link">{tr}Cancel{/tr}</a>
 <div style="padding:4px;border-bottom:1px solid #c3b3a3;">
@@ -16,12 +15,12 @@
 <select name="editstyle">
 <option value="" style="background-color:#efdece;color:#766656;border-bottom:1px dashed #787878;">{tr}choose a stylesheet{/tr}</option>
 {section name=t loop=$list}
-<option value="{$list[t]}"{if $list[t] eq $editstyle} selected="selected"{/if}>{$list[t]}</option>
+<option value="{$list[t]|escape}"{if $list[t] eq $editstyle} selected="selected"{/if}>{$list[t]}</option>
 {/section}
 </select>
 <input type="submit" name="try" value="{tr}try{/tr}" />
 <input type="submit" name="display" value="{tr}display{/tr}" />
-<input type="submit" name="edit" value="{tr}edit{/tr}" /><br/>
+<input type="submit" name="edit" value="{tr}edit{/tr}" /><br />
 <div class="">{tr}File with names appended by -{$user} are modifiable, others are only duplicable and be used as model.{/tr}</div>
 </div>
 {section name=l loop=$css}

@@ -14,7 +14,8 @@ class NotificationLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (event like '%".$find."%' or email like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (event like $findesc or email like $findesc)";
     } else {
       $mid=" ";
     }

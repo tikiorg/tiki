@@ -129,7 +129,8 @@ class DrawLib extends TikiLib {
    
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where  (name like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where  (name like $findesc)";
     } else {
       $mid=" ";
     }
@@ -157,7 +158,8 @@ class DrawLib extends TikiLib {
     $name = addslashes($name);
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where name='$name' and (name like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where name='$name' and (name like $findesc)";
     } else {
       $mid=" where name='$name' ";
     }

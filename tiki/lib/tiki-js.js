@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.9 2003-07-05 12:41:41 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.10 2003-08-01 10:30:52 redflo Exp $
 
 function chgArtType() {
   if(document.getElementById('articletype').value=='Article') {
@@ -79,8 +79,12 @@ function flip(foo) {
   if( document.getElementById(foo).style.display == "none") {
     show(foo);
   } else {
-    hide(foo);
-  }
+		if( document.getElementById(foo).style.display == "block") {
+			hide(foo);
+		} else {
+			show(foo);
+		}
+	}
 }
 
 function toggle(foo) {
@@ -88,23 +92,46 @@ function toggle(foo) {
     show(foo);
     setCookie(foo, "o");
   } else {
-    hide(foo);
-    setCookie(foo, "c");
+  	if( document.getElementById(foo).style.display == "block") {
+	    hide(foo);
+	    setCookie(foo, "c");
+	} else {
+	    show(foo);
+	    setCookie(foo, "o");
+	}
   }
 }
 
+function setfoldericonstate(foo) {
+	pic = new Image();
+	if (getCookie(foo) == "o")
+ 	{
+		pic.src = "img/icons/ofo.gif";
+	} else {
+		pic.src = "img/icons/fo.gif";
+	}
+	document.getElementsByName(foo+'icn')[0].src = pic.src;
+}
+
+function setfolderstate(foo) {
+	if (getCookie(foo) == "o")
+ 	{
+		show(foo);
+	} else {
+		hide(foo);
+	}
+	setfoldericonstate(foo);
+}
+
 function icntoggle(foo) {
-  pic = new Image();
   if( document.getElementById(foo).style.display == "none") {
     show(foo);
     setCookie(foo, "o");
-    pic.src = "img/icons/ofo.gif";
   } else {
     hide(foo);
     setCookie(foo, "c");
-    pic.src = "img/icons/fo.gif";
   }
-  document.getElementsByName(foo)[0].src = pic.src;
+  setfoldericonstate(foo);
 }
 
 //
@@ -184,16 +211,33 @@ function fixDate(date) {
 //
 function flipWithSign(foo) {
  if( document.getElementById(foo).style.display == "none") {
-  document.getElementById(foo).style.display="block";
+  show(foo);
   collapseSign("flipper"+foo);
+  setCookie(foo,"o");
  } else {
-  document.getElementById(foo).style.display="none";
+  hide(foo);
   expandSign("flipper"+foo);
+  setCookie(foo,"c");
  }
 }
+
+// set the state of a flipped entry after page reload
+function setFlipWithSign(foo)
+{
+  if (getCookie(foo) == "o") {
+    collapseSign("flipper"+foo);
+    show(foo);
+  }
+  else {
+    expandSign("flipper"+foo);
+    hide(foo);
+  }
+}
+
 function expandSign(foo) {
  document.getElementById(foo).firstChild.nodeValue="[+]";
 }
+
 function collapseSign(foo) {
  document.getElementById(foo).firstChild.nodeValue="[-]";
 } // flipWithSign()
@@ -215,3 +259,27 @@ function switchCheckboxes(the_form,elements_name,switcher_name) {
   } // end if... else
   return true;
 } // switchCheckboxes()
+
+//
+// Set client offset (in minutes) to a cookie to avoid server-side DST issues
+// Added 7/25/03 by Jeremy Jongsma (jjongsma@tickchat.com)
+//
+var expires = new Date();
+var offset = -(expires.getTimezoneOffset() * 60);
+expires.setFullYear(expires.getFullYear()+1);
+setCookie("tz_offset", offset, expires, "/");
+
+
+// function added for use in navigation dropdown
+// example :
+// <select name="anything" onchange="go(this);">
+// <option value="http://tikiwiki.org">tikiwiki.org</option>
+// </select>
+function go(o){
+	if (o.options[o.selectedIndex].value != "") {
+		location = o.options[o.selectedIndex].value;
+		o.options[o.selectedIndex] = 1;
+	}
+	return false;
+}
+				

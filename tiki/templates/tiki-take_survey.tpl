@@ -1,5 +1,5 @@
 <form name="aform" action="tiki-take_survey.php" method="post">
-<input type="hidden" name="surveyId" value="{$surveyId}" />
+<input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <h2>{$survey_info.name}</h2>
 <div class="quizdescription">{$survey_info.description}</div>
 {section name=ix loop=$questions}
@@ -8,7 +8,7 @@
 {if $questions[ix].type eq 'c'}
 <div class="quizoptions">
   {section name=jx loop=$questions[ix].qoptions}
-  <input type="radio" value="{$questions[ix].qoptions[jx].optionId}" name="question_{$questions[ix].questionId}">{$questions[ix].qoptions[jx].qoption}<br/>
+  <input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}">{$questions[ix].qoptions[jx].qoption}<br />
   {/section}
 </div>  
 {/if}
@@ -20,7 +20,7 @@
 {if $questions[ix].type eq 'm'}
 <div class="quizoptions">
   {section name=jx loop=$questions[ix].qoptions}
-  <input type="checkbox" value="{$questions[ix].qoptions[jx].optionId}" name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]">{$questions[ix].qoptions[jx].qoption}<br/>
+  <input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]">{$questions[ix].qoptions[jx].qoption}<br />
   {/section}
 </div>  
 {/if}

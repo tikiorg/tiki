@@ -1,16 +1,16 @@
-<a class="pagetitle" href="tiki-edit_question_options.php?questionId={$questionId}">{tr}Edit question options{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-edit_question_options.php?questionId={$questionId}">{tr}Edit question options{/tr}</a><br /><br />
 [<a class="link" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
 |<a class="link" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
 |<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
 |<a class="link" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
-|<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br/><br/>
+|<a class="link" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>]<br /><br />
 <h2>{tr}Create/edit options for question{/tr}: <a class="pagetitle" href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question}</a></h2>
 <form action="tiki-edit_question_options.php" method="post">
-<input type="hidden" name="optionId" value="{$optionId}" />
-<input type="hidden" name="questionId" value="{$questionId}" />
+<input type="hidden" name="optionId" value="{$optionId|escape}" />
+<input type="hidden" name="questionId" value="{$questionId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Option{/tr}:</td><td class="formcolor"><textarea name="optionText" rows="5" cols="40">{$optionText}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Points{/tr}:</td><td class="formcolor"><input type="text" name="points" value="{$points}" /></td></tr>
+<tr><td class="formcolor">{tr}Option{/tr}:</td><td class="formcolor"><textarea name="optionText" rows="5" cols="40">{$optionText|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Points{/tr}:</td><td class="formcolor"><input type="text" name="points" value="{$points|escape}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -20,10 +20,10 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-edit_question_options.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
-     <input type="hidden" name="questionId" value="{$questionId}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="questionId" value="{$questionId|escape}" />
    </form>
    </td>
 </tr>
@@ -68,7 +68,7 @@
 &nbsp;[<a class="prevnext" href="tiki-edit_question_options.php?questionId={$questionId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-edit_question_options.php?questionId={$questionId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

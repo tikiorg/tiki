@@ -1,11 +1,11 @@
-<a class="pagetitle" href="tiki-contact.php">{tr}Contact us{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-contact.php">{tr}Contact us{/tr}</a><br /><br />
 {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if $message}
 {$message}
 {/if}
 <h2>{tr}Send a message to us{/tr}</h2>
   <form method="post" action="tiki-contact.php">
-  <input type="hidden" name="to" value="{$contact_user}" />
+  <input type="hidden" name="to" value="{$contact_user|escape}" />
   <table class="normalnoborder">
   <tr>
     <td class="form">{tr}Priority{/tr}:</td><td class="form">

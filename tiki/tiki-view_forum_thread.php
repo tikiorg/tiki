@@ -8,15 +8,27 @@ if($feature_forums != 'y') {
   die;  
 }
 
-if(!isset($_REQUEST["forumId"])) {
+if(!isset($_REQUEST['forumId'])) {
   $smarty->assign('msg',tra("No forum indicated"));
   $smarty->display("styles/$style_base/error.tpl");
   die;
 }
-if(!isset($_REQUEST["comments_parentId"])) {
+if(!isset($_REQUEST['comments_parentId'])) {
   $smarty->assign('msg',tra("No thread indicated"));
   $smarty->display("styles/$style_base/error.tpl");
   die;
+}
+if(!isset($_REQUEST['topics_offset'])) {
+	$_REQUEST['topics_offset'] = 1;
+}
+if(!isset($_REQUEST['topics_sort_mode'])) {
+	$_REQUEST['topics_sort_mode'] = 'commentDate_desc';
+}
+if(!isset($_REQUEST['topics_find'])) {
+	$_REQUEST['topics_find'] = '';
+}
+if(!isset($_REQUEST['topics_threshold'])) {
+	$_REQUEST['topics_threshold'] = 0;
 }
 $comments_parentId=$_REQUEST["comments_parentId"];
 

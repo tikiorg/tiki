@@ -1,11 +1,11 @@
 <a class="pagetitle" href="tiki-admin_dsn.php">{tr}Admin dsn{/tr}</a> 
-<br/><br/>
+<br /><br />
 <h2>{tr}Create/edit dsn{/tr}</h2>
 <form action="tiki-admin_dsn.php" method="post">
-<input type="hidden" name="dsnId" value="{$dsnId}" />
+<input type="hidden" name="dsnId" value="{$dsnId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="10" name="name" value="{$info.name}" /></td></tr>
-<tr><td class="formcolor">{tr}dsn{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="dsn" value="{$info.dsn}" /></td></tr>
+<tr><td class="formcolor">{tr}name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="10" name="name" value="{$info.name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}dsn{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="dsn" value="{$info.dsn|escape}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -39,7 +39,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_dsn.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_dsn.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

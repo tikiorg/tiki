@@ -4,7 +4,7 @@
   {if $showmsg eq 'e'}<span class="warn">{/if}
   {$msg}
   {if $showmsg eq 'e'}</span>{/if}
-  <br/><br/>
+  <br /><br />
 {/if}
 
 {if $showfrm eq 'y'}
@@ -20,5 +20,5 @@
   </form>
 {/if}
 
-<br/><br/>
+<br /><br />
 <a href="{$tikiIndex}" class="link">{tr}Return to HomePage{/tr}</a>

@@ -28,11 +28,11 @@
 		<td id="page23"><img src="styles/codex/page_0.gif" width="7" height="1" alt="" border="0" /></td>
 		<td id="page24" width="100%">
 			<div id="tiki-center">
-				<br/>
+				<br />
 				<div class="cbox">
 					<div class="cbox-title">{tr}Error{/tr}</div>
-					<div class="cbox-data">{$msg}<br/><br/>
-					<a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br/><br/>
+					<div class="cbox-data">{$msg}<br /><br />
+					<a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
 					<a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a></div>
 				</div>
 			</div>

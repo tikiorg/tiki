@@ -1,0 +1,63 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-dir.f.css,v 1.2 2003-08-01 10:31:07 redflo Exp $
+ *
+ * Directory styles
+ *
+ */
+
+
+/* Get styles w/o backgrounds */
+@import "matrix-dir.css";
+
+/*
+ * Define backgrounds (the only difference between two themes)
+ */
+
+/* The list of categories */
+div.dircategs 
+{
+}
+
+/* Links to categories */
+.dirlink {}
+.dirlink:hover {}
+
+/* Links to subcategories */
+.dirsublink {}
+.dirsublink:hover {}
+
+
+/* The list of sites in any category */
+div.dirlistsites
+{
+}
+
+/* each site in the list of sites */
+div.dirsite
+{
+}
+
+span.dirsitedesc  {}
+span.dirsitetrail {font-size: 10px;}
+span.dirsitecats  {}
+
+/* Links to sites */
+.dirsitelink {}
+.dirsitelink:hover {}
+
+/* Related categories */
+div.dirrelated
+{
+}
+
+/* Footer with stats for the directory */
+td.dirfooter
+{
+  font-size: 9px;
+}
+
+div.dirfooter
+{
+  background: url(img/ltgreen.png) repeat;
+}
+

@@ -25,7 +25,15 @@ $smarty->assign('pages',$pages);
 
 if(isset($_REQUEST["create"])) {
   if(!isset($_REQUEST["after"])) $_REQUEST["after"]='';	
-  $structlib->s_create_page($_REQUEST["page"],$_REQUEST["after"],$_REQUEST["name"]);	
+  if(!(empty($_REQUEST['name']))) {
+	  $structlib->s_create_page($_REQUEST["page"],$_REQUEST["after"],$_REQUEST["name"]);
+  } else {
+  	$after = $_REQUEST['after'];
+  	foreach ($_REQUEST['name2'] as $name) {
+  		$structlib->s_create_page($_REQUEST["page"],$after,$name);
+  		$after = $name;
+  	}
+  }
 }
 
 $smarty->assign('remove','n');
@@ -47,8 +55,16 @@ $max = $structlib->get_max_children($_REQUEST["page"]);
 $smarty->assign('subpages',$subpages);
 $smarty->assign('max',$max);
 
+if(isset($_REQUEST["find_objects"])) {
+  $find_objects=$_REQUEST["find_objects"];
+} else {
+  $find_objects='';
+}
+$smarty->assign('find_objects',$find_objects);
 
-
+// Get all wiki pages for the dropdown menu
+$listpages = $tikilib->list_pages(0,-1,'pageName_asc',$find_objects);
+$smarty->assign_by_ref('listpages',$listpages["data"]);
 
 $html='';
 $subtree = $structlib->get_subtree($_REQUEST["structure"],$_REQUEST["structure"],$html);

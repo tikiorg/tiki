@@ -41,8 +41,10 @@ if (isset($_REQUEST['assigcat'])) {
 }
 
 if (isset($_REQUEST["delete"])) {
-  foreach(array_keys($_REQUEST["categ"]) as $cat) {      	
-    $tcontrollib->tc_remove_cat($cat);
+  if (isset($_REQUEST["categ"])) {
+    foreach(array_keys($_REQUEST["categ"]) as $cat) {      	
+      $tcontrollib->tc_remove_cat($cat);
+    }
   }
 }
 

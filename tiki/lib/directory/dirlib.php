@@ -79,7 +79,8 @@ class DirLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or description like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -99,11 +100,38 @@ class DirLib extends TikiLib {
     return $retval;
   }
   
+  // List all categories
+  function dir_list_all_categories($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid="where (name like $findesc or description like $findesc)";  
+    } else {
+      $mid=""; 
+    }
+    $query = "select * from tiki_directory_categories $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_directory_categories $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $res["sites"]=$this->db->getOne("select count(*) from tiki_category_sites where categId=".$res["categId"]);
+      //$res["path"]=$this->dir_get_path_text($res["categId"]);
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
   function dir_list_sites($parent,$offset,$maxRecords,$sort_mode,$find,$isValid)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or description like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -129,7 +157,8 @@ class DirLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or description like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -165,7 +194,8 @@ class DirLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (name like '%".$find."%' or description like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or description like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -189,7 +219,8 @@ class DirLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where isValid='y' and (name like '%".$find."%' or description like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where isValid='y' and (name like $findesc or description like $findesc)";  
     } else {
       $mid=" where isValid='y' "; 
     }
@@ -215,7 +246,8 @@ class DirLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (title like '%".$find."%' or data like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (title like $findesc or data like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -243,7 +275,8 @@ class DirLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (title like $findesc or data like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -264,7 +297,8 @@ class DirLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (title like $findesc or data like $findesc)";  
     } else {
       $mid=""; 
     }
@@ -352,7 +386,9 @@ class DirLib extends TikiLib {
       $query = "insert into tiki_directory_categories(parent,hits,name,description,childrenType,viewableChildren,allowSites,showCount,editorGroup,sites)
       values($parent,0,'$name','$description','$childrenType',$viewableChildren,'$allowSites','$showCount','$editorGroup',0)";
       $this->query($query);
+      $categId=$this->getOne("select max(categId) from tiki_directory_categories where name='$name'");
     }
+    return $categId;
   }
     
   // Get

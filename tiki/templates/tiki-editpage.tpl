@@ -1,5 +1,15 @@
 {popup_init src="lib/overlib.js"}
-<!--<a {popup sticky="true" trigger="onClick" caption="Special characters help" text="kj"}>foo</a><br/>-->
+
+<!--Check to see if there is an editing conflict-->
+{if $editpageconflict == 'y'}
+<script language='Javascript' type='text/javascript'>
+<!-- Hide Script
+	alert('{tr}This page is being edited by{/tr} {$semUser}. {tr}Proceed at your own peril{/tr}.')
+//End Hide Script-->
+</script>
+{/if}
+
+<!--<a {popup sticky="true" trigger="onClick" caption="Special characters help" text="kj"}>foo</a><br />-->
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}
@@ -14,7 +24,7 @@
 <tr><td class="formcolor">{tr}Quicklinks{/tr}:</td><td class="formcolor">
 {assign var=area_name value="editwiki"}
 {include file=tiki-edit_help_tool.tpl}
-</td>
+</td></tr>
 
 {include file=categorize.tpl}
 
@@ -23,7 +33,7 @@
 <select name="templateId" onChange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
-<option value="{$templates[ix].templateId}">{tr}{$templates[ix].name}{/tr}</option>
+<option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
 {/section}
 </select>
 </td></tr>
@@ -62,26 +72,26 @@
 {/if}
 <!--<a class="link" href="javascript:setSomeElement('editwiki',"''text here''");">i</a>-->
 {if $feature_wiki_description}
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description}" /></td>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
 <tr><td class="formcolor">{tr}Edit{/tr}:</td><td class="formcolor">
-<textarea id='editwiki' class="wikiedit" name="edit" rows="22" wrap="virtual" cols="80">{$pagedata}</textarea>
+<textarea id='editwiki' class="wikiedit" name="edit" rows="22" wrap="virtual" cols="80">{$pagedata|escape}</textarea>
 </td>
 {if $feature_wiki_footnotes eq 'y'}
 {if $user}
-<tr><td class="formcolor">{tr}Footnotes{/tr}:</td><td class="formcolor"><textarea name="footnote" rows="8" cols="80">{$footnote}</textarea></td>
+<tr><td class="formcolor">{tr}Footnotes{/tr}:</td><td class="formcolor"><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td>
 {/if}
 {/if}
 
 {if $page ne 'SandBox'}
-<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata}" /></td>
+<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td>
 {/if}
 {if $wiki_feature_copyrights  eq 'y'}
 <tr><td class="formcolor">{tr}Copyright{/tr}:</td><td class="formcolor">
 <table border="0">
-<tr><td class="formcolor">Title:</td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrightTitle}" /></td></tr>
-<tr><td class="formcolor">Year:</td><td><input size="4" class="wikitext" type="text" name="copyrightYear" value="{$copyrightYear}" /></td></tr>
-<tr><td class="formcolor">Authors:</td><td><input size="40" class="wikitext" name="copyrightAuthors" type="text" value="{$copyrightAuthors}" /></td></tr>
+<tr><td class="formcolor">{tr}Title:{/tr}</td><td><input size="40" class="wikitext" type="text" name="copyrightTitle" value="{$copyrightTitle|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Year:{/tr}</td><td><input size="4" class="wikitext" type="text" name="copyrightYear" value="{$copyrightYear|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Authors:{/tr}</td><td><input size="40" class="wikitext" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td></tr>
 </table>
 </td>
 {/if}
@@ -105,7 +115,7 @@
 </td></tr>
 {/if}
 
-<input type="hidden" name="page" value="{$page}" />
+<input type="hidden" name="page" value="{$page|escape}" />
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
 
 {if $wiki_feature_copyrights  eq 'y'}
@@ -122,6 +132,6 @@
 </tr>
 </table>
 </form>
-<br/>
+<br />
 <!--<a href="javascript:replaceSome('editwiki','foo','bar');">foo2bar</a>-->
 {include file=tiki-edit_help.tpl}

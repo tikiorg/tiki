@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/tiki-print_multi_pages.tpl,v 1.4 2003-08-01 10:31:17 redflo Exp $ *}
+
 {include file="header.tpl"}
 <div id="tiki-clean">
   <h1>Wiki Pages</h1>

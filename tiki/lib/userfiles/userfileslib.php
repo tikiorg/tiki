@@ -1,7 +1,7 @@
 <?php
 class UserFilesLib extends TikiLib {
 
-  function UserFilesLib($db) 
+  function UserFilesLib($db)
   {
     # this is probably uneeded now
     if(!$db) {
@@ -36,7 +36,8 @@ class UserFilesLib extends TikiLib {
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (filename like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (filename like $findesc)";  
     } else {
       $mid=" "; 
     }

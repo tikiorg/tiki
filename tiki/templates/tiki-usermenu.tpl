@@ -1,18 +1,18 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-usermenu.php">{tr}User Menu{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-usermenu.php">{tr}User Menu{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
-<br/>
+<br />
 {if $feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
 <a title="({tr}May need to refresh twice to see changes{/tr})" class="link" href="tiki-usermenu.php?addbk=1">{tr}Add top level bookmarks to menu{/tr}</a> 
 {/if}
-<br/><br/>
+<br /><br />
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-usermenu.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -20,7 +20,7 @@
 <form action="tiki-usermenu.php" method="post">
 <table class="normal">
 <tr>
-<td width="2%" class="heading"><input type="submit" name="delete" value="x " /></td>
+<td width="2%" class="heading"><input type="submit" name="delete" value="x " title="{tr}delete selected{/tr}" /></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Pos{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></td>
@@ -50,7 +50,7 @@
 &nbsp;[<a class="prevnext" href="tiki-usermenu.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-usermenu.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
@@ -63,15 +63,15 @@
 
 <h3>{tr}Add or edit an item{/tr}</h3>
 <form action="tiki-usermenu.php" method="post">
-<input type="hidden" name="menuId" value="{$menuId}" />
+<input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table class="normal">
   <tr><td class="formcolor">{tr}Name{/tr}</td>
-      <td class="formcolor"><input type="text" name="name" value="{$info.name}" /></td>
+      <td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td>
   </tr>
   <tr><td class="formcolor">{tr}URL{/tr}</td>
-      <td class="formcolor"><input type="text" name="url" value="{$info.url}" /></td>  </tr>
+      <td class="formcolor"><input type="text" name="url" value="{$info.url|escape}" /></td>  </tr>
   <tr><td class="formcolor">{tr}Position{/tr}</td>
-      <td class="formcolor"><input type="text" name="position" value="{$info.position}" /></td>
+      <td class="formcolor"><input type="text" name="position" value="{$info.position|escape}" /></td>
   </tr>
   <tr><td class="formcolor">{tr}Mode{/tr}</td>
       <td class="formcolor">

@@ -1,0 +1,108 @@
+This directory contains source code to Tiki! The wiki with lot of features!
+
+DOCUMENTATION
+-------------------
+* It is highly recommended you refer to the online documentation:
+* http://tikiwiki.org/InstallTikiDoc for a setup guide
+* http://tikiwiki.org/InstallTikiHelp for what to do in case of problems
+* http://tikiwiki.org/InstallTikiTroubleShootingDoc for some troubleshooting ideas and workarounds
+* It might also be helpful to look into the official Manual. Last released documentation, in pdf
+  format (350 pages) (outdated at the time of this writing): http://tikiwiki.org/tiki.pdf
+* Tikiwiki is also a community : irc.freenode.net channel #tikiwiki
+
+ 
+INSTALL TIKI
+-----------------------
+Before you get started it's a good idea to know:
+
+    * your database user name and password
+    * your apache user and group ID 
+
+
+If you're using the rpm that is available you can skip down to browser based install.
+
+These are notes on how to setup and configure Tiki.
+
+Step one:
+- - - - - - 
+Unpack and set the necessary permissions
+unpack to the document root of where you want tiki installed, e.g. /var/www/tiki/ 
+
+bz2 file? Use:
+tar xvjf tikiwikiv.xxx
+
+Step two:
+- - - - - - -
+CHMOD the file setup.sh to 755. "chmod 755 setup.sh"
+
+* Set permissions and virtual host domains with setup.sh:
+  o Determine what user and group your webserver runs as 
+
+The script setup.sh in this directory assigns necessary permissions for the directories that the
+webserver writes files to. It also creates the (initially empty) cache directories.
+
+Usage: ./setup.sh user group rights list of virtual host domains
+
+For example, if apache is running as user $AUSER and group $AGROUP, type:
+You can find your group using the command 'id'.
+
+su -c './setup.sh $AUSER'
+
+Alternatively, you may wish to set both the user and group:
+If not root then
+su -c './setup.sh $USER $AGROUP'
+
+This will allow you to delete certain files/directories without becoming root. Or, if you can't become
+root, but are a member of the group apache runs under (for example: $AGROUP), you can type:
+
+./setup.sh $USER $AGROUP
+
+If root then, and are not a member of the apache group, then type:
+./setup.sh $USER yourgroup 02777
+
+Replace yourgroup with your default group.
+
+NOTE: If you do execute this last command, you will not be able to delete certain files created by
+apache, and will need to ask your system administrator to delete them for you if needed.
+
+To use Tiki's multi-site capability (virtual hosts from a single DocumentRoot) add a list of domains to
+the command to create all the needed directories. For example
+
+If Root then
+root@localhost tiki]# sh ./setup.sh youruser nobody 02775 test1 test2 test3
+
+If not Root then
+./setup.sh $USER $AGROUP 02777 domain1 domain2 domain3
+
+This will get you to the next screen go to step three below.
+
+Step three: browser based setup
+- - - - - - - - - - - - - - - - - - 
+* create a tiki database
+  - often using PhpMyAdmin (cache) and MySQL
+  - or on the command line mysqladmin create dbname
+    the database name is usually called "tiki" 
+* Point your browser to the web address that corresponds to the file tiki-install.php (e.g.
+  http://localhost/tiki/tiki-install.php)
+* Follow the instructions there
+  you'll need the password and user name for your database 
+* For the first time to log into Tiki is 
+
+user: admin
+password: admin
+
+Step four: Custom configuration
+- - - - - - - - - - - - - - - - - - -
+Next you can configure Tiki to your needs:
+
+* Choose which features you want switched on
+  - click on http://localhost/tiki/tiki-admin.php on the left side of your screen 
+* (Optionally) create groups of users that share permissions
+* Assign appropriate permissions 
+
+Good luck! And come on over to 
+  http://tikiwiki.org/tiki-index.php 
+and join the team!
+
+
+

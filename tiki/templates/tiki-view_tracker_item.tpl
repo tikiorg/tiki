@@ -10,10 +10,10 @@
 |<a href="tiki-view_tracker.php?trackerId={$trackerId}" class="link">{tr}View this tracker items{/tr}</a>
 ]<br/><br/>
 <form action="tiki-view_tracker_item.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId}" />
-<input type="hidden" name="itemId" value="{$itemId}" />
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+<input type="hidden" name="itemId" value="{$itemId|escape}" />
 {section name=ix loop=$fields}
-<input type="hidden" name="{$fields[ix].name}" value="{$fields[ix].value}" />
+<input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
 {/section}
 
 {if $tiki_p_modify_tracker_items eq 'y'}
@@ -33,7 +33,7 @@
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$users}
-<option value="{$users[ux].user}" {if $ins_fields[ix].value eq $users[ux].user}selected="selected"{/if}>{$users[ux].user}</option>
+<option value="{$users[ux].user|escape}" {if $ins_fields[ix].value eq $users[ux].user}selected="selected"{/if}>{$users[ux].user}</option>
 {/section}
 </select>
 {/if}
@@ -41,15 +41,15 @@
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
-<option value="{$groups[ux].groupName}" {if $ins_fields[ix].value eq $groups[ux].groupName}selected="selected"{/if}>{$groups[ux].groupName}</option>
+<option value="{$groups[ux].groupName|escape}" {if $ins_fields[ix].value eq $groups[ux].groupName}selected="selected"{/if}>{$groups[ux].groupName}</option>
 {/section}
 </select>
 {/if}
 {if $ins_fields[ix].type eq 't'}
-<input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value}" />
+<input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />
 {/if}
 {if $ins_fields[ix].type eq 'a'}
-<textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value}</textarea>
+<textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
 {/if}
 {if $ins_fields[ix].type eq 'f'}
 {html_select_date prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value end_year="+1"} at {html_select_time prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value display_seconds=false}
@@ -57,7 +57,7 @@
 {if $ins_fields[ix].type eq 'd'}
 <select name="ins_{$ins_fields[ix].name}">
 {section name=jx loop=$ins_fields[ix].options_array}
-<option value="{$ins_fields[ix].options_array[jx]}" {if $ins_fields[ix].value eq $ins_fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
+<option value="{$ins_fields[ix].options_array[jx]|escape}" {if $ins_fields[ix].value eq $ins_fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
 {/section}
 </select>
 {/if}
@@ -88,12 +88,12 @@
 {if $tiki_p_comment_tracker_items eq 'y'}
 <h3>{tr}Add a comment{/tr}</h3>
 <form action="tiki-view_tracker_item.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId}" />
-<input type="hidden" name="itemId" value="{$itemId}" />
-<input type="hidden" name="commentId" value="{$commentId}" />
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+<input type="hidden" name="itemId" value="{$itemId|escape}" />
+<input type="hidden" name="commentId" value="{$commentId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="comment_title" value="{$comment_title}"/></td></tr>
-<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><textarea rows="4" cols="50" name="comment_data">{$comment_data}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="comment_title" value="{$comment_title|escape}"/></td></tr>
+<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><textarea rows="4" cols="50" name="comment_data">{$comment_data|escape}</textarea></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save_comment" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
@@ -113,9 +113,9 @@
 {if $tiki_p_attach_trackers eq 'y'}
 <h3>{tr}Attach a file to this item{/tr}</h3>
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId}" />
-<input type="hidden" name="itemId" value="{$itemId}" />
-<input type="hidden" name="commentId" value="{$commentId}" />
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+<input type="hidden" name="itemId" value="{$itemId|escape}" />
+<input type="hidden" name="commentId" value="{$commentId|escape}" />
 <table class="normal">
 <tr>
  <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input name="userfile1" type="file">

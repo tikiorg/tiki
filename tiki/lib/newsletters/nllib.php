@@ -185,7 +185,8 @@ class NlLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where (name like '%".$find."%' or description like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where (name like $findesc or description like $findesc)";  
     } else {
       $mid=" "; 
     }
@@ -208,7 +209,8 @@ class NlLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" and (subject like '%".$find."%' or data like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" and (subject like $findesc or data like $findesc)";  
     } else {
       $mid=" "; 
     }
@@ -230,7 +232,8 @@ class NlLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where nlId=$nlId and (name like '%".$find."%' or description like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+    $mid=" where nlId=$nlId and (name like $findesc or description like $findesc)";  
     } else {
       $mid=" where nlId=$nlId "; 
     }

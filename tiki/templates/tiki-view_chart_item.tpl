@@ -1,5 +1,5 @@
 <a class="pagetitle" href="tiki-view_chart_item.php?itemId={$smarty.request.itemId}">{tr}Item information{/tr}</a>
-<br/><br/>
+<br /><br />
 {cycle values="odd,even" print=false}
 <table class="normal">
 <tr>
@@ -52,10 +52,10 @@
 	and
 	($chart_info.singleItemVotes eq 'n' or $user_voted_item eq 'n'))}
 <tr>
-	<td width="30%" class="{cycle advance=false}">{tr}Vote tihis item{/tr}</td>
+	<td width="30%" class="{cycle advance=false}">{tr}Vote this item{/tr}</td>
 	<td class="{cycle}">
 		<form method="post">
-		<input type="hidden" name="itemId" value="{$info.itemId}">
+		<input type="hidden" name="itemId" value="{$info.itemId|escape}">
 		{if $chart_info.maxVoteValue eq '5'}
 		<input type="radio" name="points" value="1" />
 		<input type="radio" name="points" value="2" />

@@ -2,6 +2,7 @@
 include_once('lib/diff.php');
 require_once('lib/Date.php');
 include_once('lib/pear/HTTP/Request.php');
+require_once('lib/tikidate.php');
 
 // This class is included by all the Tiki php scripts, so it's important
 // to keep the class as small as possible to improve performance.
@@ -71,6 +72,15 @@ class TikiLib {
   }
 
   */
+  
+  // Use ADOdb->qstr() for 1.8
+  function qstr($str) {
+  	if(function_exists('mysql_real_escape_string')) {
+		return "'".mysql_real_escape_string($str)."'";
+	  } else {
+		return "'".mysql_escape_string($str)."'";
+	  }
+  }
 
   // Queries the database reporting an error if detected
   function query($query,$reporterrors=true) {
@@ -311,7 +321,8 @@ class TikiLib {
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or description like '%".$find."%')".$prio;  
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (title like $findesc or description like $findesc)".$prio;  
     } else {
       $mid="".$prio; 
     }
@@ -344,7 +355,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where isValid='y' and (name like '%".$find."%' or description like '%".$find."%')";  
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" where isValid='y' and (name like $findesc or description like $findesc)";  
     } else {
       $mid=" where isValid='y' "; 
     }
@@ -361,6 +373,15 @@ class TikiLib {
     $retval["data"] = $ret;
     $retval["cant"] = $cant;
     return $retval;
+  }
+  
+  /*shared*/ function get_directory($categId)
+  {
+    $query = "select * from tiki_directory_categories where categId=$categId";
+    $result = $this->query($query);
+    if(!$result->numRows()) return false;
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
   }
   
   
@@ -478,7 +499,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where (name like '%".$find."%' or description like '%".$find."%')";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (name like $findesc or description like $findesc)";
     } else {
       $mid=" ";
     }
@@ -503,7 +525,8 @@ class TikiLib {
     $this->compute_quiz_stats();
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid="  (quizName like '%".$find."%'";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid="  (quizName like $findesc";
     } else {
       $mid="  ";
     }
@@ -525,7 +548,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $mid=" where (name like '%".$find."%' or description like '%".$find."%')";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (name like $findesc or description like $findesc)";
     } else {
       $mid=" ";
     }
@@ -619,10 +643,10 @@ class TikiLib {
         $ret = '';
         break;
       case 'l':
-        $ret = "<img border='0' width='45' height='45' src='".$libname."' ".$style." />";
+        $ret = "<img border='0' width='45' height='45' src='".$libname."' ".$style." alt=\"$user\"/>";
         break;
       case 'u':
-        $ret = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$user' ".$style." />";
+        $ret = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$user' ".$style." alt=\"$user\"/>";
         break;
     }
     return $ret;
@@ -714,6 +738,7 @@ class TikiLib {
     if(!$user) return false;
     $last = $this->getOne("select lastLogin from users_users where login='$user'");
     $ret = Array();
+		if (!$last) $last = time();
     $ret["lastVisit"] = $last;
     $ret["images"] = $this->getOne("select count(*) from tiki_images where created>$last");
     $ret["pages"] = $this->getOne("select count(*) from tiki_pages where lastModif>$last");
@@ -728,7 +753,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (content like '%".$find."%')";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (content like $findesc)";
     } else {
       $mid="";
     }
@@ -767,7 +793,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (gameName like '%".$find."%')";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (gameName like $findesc)";
     } else {
       $mid="";
     }
@@ -877,7 +904,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (title like '%".$find."%' or description like '%".$find."%')";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (title like $findesc or description like $findesc)";
     } else {
       $mid="";
     }
@@ -1010,9 +1038,9 @@ class TikiLib {
             $asugs = array_keys($sugs);
             for($i=0;$i<count($asugs)&&$i<5;$i++) {
               $sug = $asugs[$i];
-              //$repl.="<script>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");</script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br/>";
+              //$repl.="<script language='Javascript' type='text/javascript'>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");</script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br/>";
               $repl.="<a href=\\\"javascript:param=doo_${word}_$i();replaceLimon(param);\\\">$sug</a><br/>";
-              $trl.="<script>function doo_${word}_$i(){ aux = new Array(\"$element\",\"$word\",\"$sug\"); return aux;}</script>";
+              $trl.="<script language='Javascript' type='text/javascript'>function doo_${word}_$i(){ aux = new Array(\"$element\",\"$word\",\"$sug\"); return aux;}</script>";
 
             }
             //$popup_text = " <a title=\"".$sug."\" style=\"text-decoration:none; color:red;\" onClick='"."return overlib(".'"'.$repl.'"'.",STICKY,CAPTION,".'"'."SpellChecker suggestions".'"'.");'>".$word.'</a> ';
@@ -1067,7 +1095,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (title like $findesc or data like $findesc)";
     } else {
       $mid="";
     }
@@ -1090,7 +1119,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or data like '%".$find."%')";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (title like $findesc or data like $findesc)";
     } else {
       $mid="";
     }
@@ -1113,7 +1143,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (name like '%".$find."%' or description like '%".$find."%')";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }
@@ -1175,12 +1206,134 @@ class TikiLib {
     }
   }
 
+  /*shared*/ function get_categorypath($cats)
+  {
+	global $dbTiki;
+	global $smarty;
+	global $tikilib;
+	global $feature_categories;
+	global $categlib;
+	if (!is_object($categlib)) {
+		require_once("lib/categories/categlib.php");
+	}
+
+	$catpath = '';
+
+	foreach($cats as $categId) {
+		$catpath .= '<span class="categpath">';
+		$path = '';
+		$info = $categlib->get_category($categId);
+		$path = '<a class="categpath" href="tiki-browse_categories.php?parentId='.$info["categId"].'">'.$info["name"].'</a>';
+		while($info["parentId"]!=0) {
+	 		$info = $categlib->get_category($info["parentId"]);
+	  		$path = '<a class="categpath" href="tiki-browse_categories.php?parentId='.$info["categId"].'">'.$info["name"].'</a> > '.$path;
+		}
+		$catpath .= $path.'</span><br/>';
+	}
+
+	return $catpath;
+  }
+
+
+  /*shared*/ function in_multi_array($needle, $haystack) {
+	$in_multi_array = false;
+	if (in_array($needle, $haystack))
+	{
+		$in_multi_array = true;
+	} else {
+		while (list($tmpkey,$tmpval) = each ($haystack)) {
+			if (is_array($haystack[$tmpkey])) {
+				if ($this->in_multi_array($needle, $haystack[$tmpkey])) {
+					$in_multi_array = true;
+					break;
+				}
+			}
+		}
+	}
+	return $in_multi_array;
+  }
+
+  /*shared*/ function get_categoryobjects($catids) {
+	global $dbTiki;
+	global $smarty;
+	global $tikilib;
+	global $feature_categories;
+	global $categlib;
+	if (!is_object($categlib)) {
+		require_once ("lib/categories/categlib.php");
+	}
+
+	// TODO: move this array to a lib
+	// array for converting long type names to translatable headers (same strings as in application menu)
+	$typetitles = array("article" => "Articles", "blog" => "Blogs", "directory" => "Directories", "faq" => "FAQs", "file gallery" => "File Galleries", "forum" => "Forums", "image gallery" => "Image Galleries", "newsletter" => "Newsletters", "poll" => "Polls", "quiz" => "Quizzes", "survey" => "Surveys", "tracker" => "Trackers", "wiki page" => "Wiki");
+
+	// string given back to caller
+	$out = "";
+
+	// array with items to be displayed
+	$listcat = array();
+	// title of categories
+	$title = '';
+	$find = "";
+	$offset = 0;
+	$maxRecords = 500;
+	$count = 0;
+	$sort = 'name_asc';
+
+	foreach ($catids as $id) {
+		// get data of category
+		$cat = $categlib -> get_category($id);
+
+		// store name of category
+		if ($count != 0) {
+			$title.= "| <a href='tiki-browse_categories.php?parentId=".$id."'>".$cat['name']."</a> ";
+		} else {
+			$title.= "<a href='tiki-browse_categories.php?parentId=".$id."'>".$cat['name']."</a> ";
+		}
+		// keep track of how many categories there are for split mode off
+		$count ++;
+
+		$subcategs = array();
+		$subcategs = $categlib->get_category_descendants($id);
+
+		// array with objects in category
+		$objectcat = Array();
+
+		$objectcat = $categlib->list_category_objects($id, $offset, $maxRecords, $sort, $find);
+
+		foreach ($objectcat["data"] as $obj) {
+			$type = $obj["type"];
+
+			if (!($this->in_multi_array($obj['name'], $listcat)))  // TODO: check for name+type
+			{
+				$listcat[$typetitles["$type"]][] = $obj;
+			}
+		}
+		// split mode: appending onto $out each time
+		$smarty -> assign("title", $title);
+		$smarty -> assign("listcat", $listcat);
+		$out.= $smarty -> fetch("tiki-simple_plugin.tpl");
+		// reset array for next loop
+		$listcat = array();
+		// reset title
+		$title = '';
+		$count = 0;
+	}
+
+	// non-split mode
+//	$smarty -> assign("title", $title);
+//	$smarty -> assign("listcat", $listcat);
+//	$out = $smarty -> fetch("tiki-simple_plugin.tpl");
+
+	return $out;
+  }
 
   /*shared*/ function list_received_pages($offset,$maxRecords,$sort_mode='pageName_asc',$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (pagename like '%".$find."%' or data like '%".$find."% ')";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (pagename like $findesc or data like $findesc)";
     } else {
       $mid="";
     }
@@ -1240,7 +1393,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where menuId=$menuId and (name like '%".$find."%' or url like '%".$find."%')";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where menuId=$menuId and (name like $findesc or url like $findesc)";
     } else {
       $mid=" where menuId=$menuId ";
     }
@@ -1302,7 +1456,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (name like '%".$find."%' or description like '%".$find."%')";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }
@@ -1332,7 +1487,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where galleryId=$galleryId and (name like '%".$find."%' or description like '%".$find."%')";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where galleryId=$galleryId and (name like $findesc or description like $findesc)";
     } else {
       $mid="where galleryId=$galleryId";
     }
@@ -1407,10 +1563,11 @@ class TikiLib {
     }
 
     if($find) {
+    	$findesc = $this->qstr('%'.$find.'%');
       if(empty($whuser)) {
-        $whuser = " and (name like '%".$find."%' or description like '%".$find.".%')";
+        $whuser = " and (name like $findesc or description like $findesc)";
       } else {
-        $whuser .= " and (name like '%".$find."%' or description like '%".$find.".%')";
+        $whuser .= " and (name like $findesc or description like $findesc)";
       }
     }
 
@@ -1462,7 +1619,8 @@ class TikiLib {
   // Semaphore functions ////
   function get_semaphore_user($semName)
   {
-    return $this->getOne("select user from tiki_semaphores where semName='$semName'");
+  	$semNameEsc = $this->qstr($semName);
+    return $this->getOne("select user from tiki_semaphores where semName=$semNameEsc");
   }
   
   function semaphore_is_set($semName,$limit)
@@ -1470,9 +1628,10 @@ class TikiLib {
 
     $now=date("U");
     $lim=$now-$limit;
-    $query = "delete from tiki_semaphores where semName='$semName' and timestamp<$lim";
+    $semNameEsc = $this->qstr($semName);
+    $query = "delete from tiki_semaphores where semName=$semNameEsc and timestamp<$lim";
     $result = $this->query($query);
-    $query = "select semName from tiki_semaphores where semName='$semName'";
+    $query = "select semName from tiki_semaphores where semName=$semNameEsc";
     $result = $this->query($query);
     return $result->numRows();
    }
@@ -1485,16 +1644,18 @@ class TikiLib {
     }
     $now=date("U");
 //    $cant=$this->getOne("select count(*) from tiki_semaphores where semName='$semName'");
-    $query = "delete from tiki_semaphores where semName='$semName'";
+	$semNameEsc = $this->qstr($semName);
+    $query = "delete from tiki_semaphores where semName=$semNameEsc";
     $this->query($query);
-    $query = "replace into tiki_semaphores(semName,timestamp,user) values('$semName',$now,'$user')";
+    $query = "replace into tiki_semaphores(semName,timestamp,user) values($semNameEsc,$now,'$user')";
     $result = $this->query($query);
     return $now;
   }
 
   function semaphore_unset($semName,$lock)
   {
-    $query = "delete from tiki_semaphores where semName='$semName' and timestamp=$lock";
+  	$semNameEsc = $this->qstr($semName);
+    $query = "delete from tiki_semaphores where semName=$semNameEsc and timestamp=$lock";
     $result = $this->query($query);
   }
   
@@ -1515,7 +1676,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (title like '%".$find."%' or description like '%".$find."%') ";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (title like $findesc or description like $findesc) ";
     } else {
       $mid='';
     }
@@ -1564,7 +1726,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (data like '%".$find."%') ";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (data like $findesc) ";
     } else {
       $mid='';
     }
@@ -1596,7 +1759,8 @@ class TikiLib {
     global $userlib;
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (title like '%".$find."%' or heading like '%".$find."%' or body like '%".$find."%') ";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (title like $findesc or heading like $findesc or body like $findesc) ";
     } else {
       $mid='';
     }
@@ -1658,7 +1822,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (title like '%".$find."%' or heading like '%".$find."%' or body like '%".$find."%') ";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (title like $findesc or heading like $findesc or body like $findesc) ";
     } else {
       $mid='';
     }
@@ -1924,7 +2089,8 @@ class TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (url like '%".$find."%') ";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (url like $findesc) ";
     } else {
       $mid="";
     }
@@ -2070,7 +2236,22 @@ class TikiLib {
     $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
     $result = $this->query($query);
     $this->remove_object('wiki page',$page);
+    $this->remove_from_structure($page);
     return true;
+  }
+  
+  /*shared*/ function remove_from_structure($page)
+  {
+    // Now recursively remove
+    $page_sl=addslashes($page);
+    $query = "select page from tiki_structures where parent='$page_sl'";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $this->remove_from_structure($res["page"]);	
+    }
+    $query = "delete from tiki_structures where page='$page_sl'";
+    $result = $this->query($query);
+    return true;	
   }
   
 
@@ -2163,10 +2344,11 @@ class TikiLib {
      }
 
     if($find) {
+    	$findesc = $this->qstr('%'.$find.'%');
       if(empty($whuser)) {
-        $whuser = "where name like '%".$find."%' or description like '%".$find.".%'";
+        $whuser = "where name like $findesc or description like $findesc";
       } else {
-        $whuser .= " and name like '%".$find."%' or description like '%".$find.".%'";
+        $whuser .= " and name like $findesc or description like $findesc";
       }
     }
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
@@ -2234,10 +2416,11 @@ class TikiLib {
     }
 
     if($find) {
+    	$findesc = $this->qstr('%'.$find.'%');
       if(empty($whuser)) {
-        $whuser = " and (name like '%".$find."%' or description like '%".$find.".%')";
+        $whuser = " and (name like $findesc or description like $findesc)";
       } else {
-        $whuser .= " and (name like '%".$find."%' or description like '%".$find.".%')";
+        $whuser .= " and (name like $findesc or description like $findesc)";
       }
     }
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
@@ -2303,7 +2486,8 @@ class TikiLib {
     }
 
     if($find) {
-      $mid=" where pageName like '%".$find."%' ";
+    	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where pageName like $findesc ";
     } else {
       $mid="";
     }
@@ -2591,8 +2775,8 @@ class TikiLib {
 
   function get_page_info($pageName)
   {
-    $pageName = addslashes($pageName);
-    $query = "select * from tiki_pages where pageName='$pageName'";
+    $pageNameEsc = $this->qstr($pageName);
+    $query = "select * from tiki_pages where pageName=$pageNameEsc";
     $result = $this->query($query);
     if(!$result->numRows()) return false;
     $ret = $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -2636,6 +2820,9 @@ class TikiLib {
   // that textarea won't leave alone.
   function parse_htmlchar(&$data)
   {
+		// cleaning some user input
+		$data = preg_replace( "/&(?!([a-z]{1,7};))/", "&amp;", $data );
+		
     // oft-used characters (case insensitive)
     $data = preg_replace( "/~bs~/i", "&#92;", $data );
     $data = preg_replace( "/~hs~/i", "&nbsp;", $data );
@@ -2732,17 +2919,29 @@ class TikiLib {
     // note: [1] is plugin name, [2] is plugin arguments
     preg_match_all( "/\{([A-Z]+)\(([^\)]*)\)\}/", $data, $plugins );
 
+	// if true, replace only CODE plugin, if false, replace all other plugins
+	$code_first=true;
+	
     // Process plugins in reverse order, so that nested plugins are handled
     // from the inside out.
-    for ($i=count($plugins[0])-1; $i>=0; $i--) {
-
+    $i=count($plugins[0])-1;
+    while ($i>=0) {
       $plugin_start = $plugins[0][$i];
-      $plugin_end = '{'.$plugins[1][$i].'}';
+      $plugin = $plugins[1][$i];
+      $plugin_end = '{'.$plugin.'}';
       $plugin_start_base = '{'.$plugins[1][$i].'(';
       $pos = strpos( $data, $plugin_start );         // where plugin starts
       $pos_end = strpos( $data, $plugin_end, $pos ); // where plugin data ends
-      if ($pos_end > $pos) {
-
+      if (
+      	  // when in CODE parsing mode, replace only CODE plugins 
+	      ( (($code_first) && ($plugin=='CODE'))
+	      ||
+      	  // when NOT in CODE parsing mode, replace all other plugins 
+	      ((!$code_first) && ($plugin<>'CODE')) )
+	      &&
+	      ($pos_end > $pos)
+	      )
+      {
         // Extract the plugin data
         $plugin_data_len = $pos_end - $pos - strlen($plugins[0][$i]);
         $plugin_data = substr( $data, $pos + strlen($plugin_start),
@@ -2778,7 +2977,10 @@ class TikiLib {
                                   $pos_end - $pos + strlen($plugin_end) );
         }
       }
-    }
+      $i--;
+      // if we are in CODE parsing mode and list is done, switch to 'parse other plugins' mode and start all over
+      if (($code_first) && ($i<0)) { $i=count($plugins[0])-1; $code_first=false; }
+    } // while
   }
   // Replace hotwords in given line
   function replace_hotwords($line, $words)
@@ -2819,6 +3021,7 @@ class TikiLib {
     global $structlib;
     global $user;
     global $tikidomain;
+    global $feature_wikiwords;
 
 
     // Process pre_handlers here
@@ -3037,30 +3240,32 @@ class TikiLib {
 
 
     // Replace boxes
-    $data = preg_replace("/\^([^\^]+)\^/","<div class='simplebox' align='center'>$1</div>",$data);
+    $data = preg_replace("/\^([^\^]+)\^/","<div class=\"simplebox\">$1</div>",$data);
     // Replace colors ~~color:text~~
-    $data = preg_replace("/\~\~([^\:]+):([^\~]+)\~\~/","<span style='color:$1;'>$2</span>",$data);
+    $data = preg_replace("/\~\~([^\:]+):([^\~]+)\~\~/","<span style=\"color:$1;\">$2</span>",$data);
     // Underlined text
-    $data = preg_replace("/===([^\=]+)===/","<span style='text-decoration:underline;'>$1</span>",$data);
+    $data = preg_replace("/===([^\=]+)===/","<span style=\"text-decoration:underline;\">$1</span>",$data);
     // Center text
-    $data = preg_replace("/::([^\:]+)::/","<div align='center'>$1</div>",$data);
+    $data = preg_replace("/::([^\:]+)::/","<div align=\"center\">$1</div>",$data);
 
     // Links to internal pages
     // If they are parenthesized then don't treat as links
     // Prevent ))PageName(( from being expanded    \"\'
     //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
-    // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
-    preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
-    foreach(array_unique($pages[2]) as $page_parse) {
-      if($desc = $this->page_exists_desc($page_parse)) {
-        $repl = "<a title='".$desc."' href='tiki-index.php?page=".urlencode($page_parse)."' class='wiki'>$page_parse</a>";
-      } else {
-        $repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
-      }
-      $data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/","$1"."$repl"."$2",$data);
-      //$data = str_replace($page_parse,$repl,$data);
-    }
 
+    if($feature_wikiwords == 'y') {
+	    // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
+	    preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
+	    foreach(array_unique($pages[2]) as $page_parse) {
+	      if($desc = $this->page_exists_desc($page_parse)) {
+	        $repl = '<a title="'.$desc.'" href="tiki-index.php?page='.urlencode($page_parse).'" class="wiki">'.$page_parse.'</a>';
+	      } else {
+	        $repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
+	      }
+	      $data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/","$1"."$repl"."$2",$data);
+	      //$data = str_replace($page_parse,$repl,$data);
+	    }
+    }
 
     $data = preg_replace("/([ \n\t\r\,\;]|^)\)\)([^\(]+)\(\(($|[ \n\t\r\,\;\.])/","$1"."$2"."$3",$data);
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
@@ -3100,7 +3305,7 @@ class TikiLib {
         $text=explode("|",$pages[5][$i]);
 	if($desc = $this->page_exists_desc($pages[1][$i])) {
 	  $uri_ref = "tiki-index.php?page=".urlencode($pages[1][$i]);
-	  $repl = "<a title='$desc' href='$uri_ref' class='wiki'>".(strlen(trim($text[0]))>0?$text[0]:$pages[1][$i])."</a>";
+	  $repl = "<a title=\"$desc\" href='$uri_ref' class='wiki'>".(strlen(trim($text[0]))>0?$text[0]:$pages[1][$i])."</a>";
           // Check is timeout expired?
 	  if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
             // Append small 'new' image. TODO: possible 'updated' image more suitable...
@@ -3131,7 +3336,7 @@ class TikiLib {
       }
       if($repl2) {
 	      if($desc = $this->page_exists_desc($page_parse)) {
-	        $repl = "<a title='$desc' href='tiki-index.php?page=".urlencode($page_parse)."' class='wiki'>$page_parse</a>";
+	        $repl = "<a title=\"$desc\" href='tiki-index.php?page=".urlencode($page_parse)."' class='wiki'>$page_parse</a>";
 	      } else {
 	        $repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
 	      }
@@ -3277,8 +3482,11 @@ class TikiLib {
     // Use tab and newline as tokenizing characters as well  ////
     $lines = explode("\n",$data);
     $data = '';
-    $listbeg=array();
-    $divdepth=array();
+    $listbeg = array();
+    $divdepth = array();
+    $inTable = 0;
+
+    // loop: process all lines
     foreach ($lines as $line) {
 
       // Check for titlebars...
@@ -3330,9 +3538,14 @@ class TikiLib {
 	$data .= $line;
 	continue;
       }
+      // check if we are inside a table, if so, ignore monospaced and do
+      // not insert <br/>
+      $inTable += substr_count($line,"<table");
+      $inTable -= substr_count($line,"</table");
+
       // If the first character is ' ' and we are not in pre then we are in pre
       global $feature_wiki_monosp;
-      if(substr($line,0,1)==' ' && $feature_wiki_monosp=='y') {
+      if(substr($line,0,1)==' ' && $feature_wiki_monosp=='y' && $inTable==0 ) {
         // This is not list item -- must close lists currently opened
 	while(count($listbeg)) $data.=array_shift($listbeg);
         // If the first character is space then
@@ -3459,10 +3672,10 @@ class TikiLib {
                   array_shift($divdepth);
                 }
                 // Leave line unchanged... tiki-index.php will split wiki here
-                $line="\n...page...\n";
+                $line="...page...";
               } else {
                 // Usual paragraph.
-                $line.='<br/>';
+                if ($inTable == 0) { $line.='<br/>'; }
 	      }
 	    }
           }
@@ -3556,10 +3769,17 @@ class TikiLib {
 
   function get_pages($data) {
     global $page_regex;
-    preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
-    preg_match_all("/\(\(($page_regex)\)\)/",$data,$pages2);
-    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages3);
-    $pages = array_unique(array_merge($pages[2],$pages2[1],$pages3[1]));
+    global $feature_wikiwords;
+    if($feature_wikiwords == 'y') {
+	    preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
+	    preg_match_all("/\(\(($page_regex)\)\)/",$data,$pages2);
+	    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages3);
+	    $pages = array_unique(array_merge($pages[2],$pages2[1],$pages3[1]));
+    } else {
+	    preg_match_all("/\(\(($page_regex)\)\)/",$data,$pages);
+	    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages2);
+	    $pages = array_unique(array_merge($pages[1],$pages2[1]));
+    }
     return $pages;
   }
 
@@ -3783,6 +4003,47 @@ class TikiLib {
     return $display_timezone;
   }
 
+  /**
+   * Retrieves the user's preferred offset for displaying dates.
+   *
+   * $user: the logged-in user.
+   * returns: the preferred offset to UTC.
+   */
+  function get_display_offset($_user = false) {
+
+	// Cache preference from DB
+  	$display_tz = "UTC";
+
+	// Default to UTCget_display_offset
+	$display_offset = 0;
+
+	// Load pref from DB is cache is empty
+	if ($_user) $display_tz = $this->get_display_timezone($_user);
+
+	// Recompute offset each request in case DST kicked in
+	if ($display_tz != "UTC" && isset($_COOKIE["tz_offset"]))
+		$display_offset = intval($_COOKIE["tz_offset"]);
+
+	return $display_offset;
+
+  }
+
+  /**
+   * Retrieves a TikiDate object for converting to/from display/UTC timezones
+   *
+   * $user: the logged-in user
+   * returns: reference to a TikiDate instance with the appropriate offsets
+   */
+  function &get_date_converter($_user = false) {
+  	static $date_converter;
+  	if (!$date_converter)
+	{
+		$display_offset = $this->get_display_offset($_user);
+		$date_converter =& new TikiDate($display_offset);
+	}
+	return $date_converter;
+  }
+
   function get_long_date_format() {
     static $long_date_format = false;
 
@@ -3909,9 +4170,14 @@ Debug::d('get_site_date()');
   }
 
   function date_format($format, $timestamp, $user = false) {
-#print "<pre>date_format()</pre>";
-    $date = $this->get_site_date($timestamp, $user);
-    return $date->format($format);
+    //$date = $this->get_site_date($timestamp, $user);
+	// JJ - ignore conversion - we have no idea what TZ they're using
+
+	// strftime doesn't do translations correctly
+    // return strftime($format,$timestamp);
+
+	$date = new Date($timestamp);
+	return $date->format($format);
   }
 
   function get_long_date($timestamp, $user = false) {
@@ -3939,24 +4205,14 @@ Debug::d('get_site_date()');
   }
 
   function get_site_timezone_shortname($user = false) {
-    static $timezone_shortname;
-
-    if (!$timezone_shortname) {
-      $date = $this->get_site_date(date('U'), $user);
-      $timezone_shortname = $date->format('%Z');
-    }
-
-    return $timezone_shortname;
+  	// UTC, or blank for local
+	$dc =& $this->get_date_converter($user);
+	return $dc->getTzName();
   }
 
   function get_server_timezone_shortname($user = false) {
-    static $timezone_shortname;
-
-    if (!$timezone_shortname) {
-      $timezone_shortname = date('%Z');
-    }
-
-    return $timezone_shortname;
+  	// Site time is always UTC, from the user's perspective.
+    return "UTC";
   }
 
   /**
@@ -3964,28 +4220,10 @@ Debug::d('get_site_date()');
     'system' time to return a 'site' time.
   */
   function get_site_time_difference($user = false) {
-    static $difference = false;
-
-    if ($difference === false) {
-      $server_tzid  = $this->get_server_timezone();
-      $site_tzid  = $this->get_display_timezone($user);
-#print "<pre>";
-#printf("server_tzid='%s', site_tzid='%s'", $server_tzid, $site_tzid);
-      $server_tz  =& new Date_TimeZone($server_tzid);
-      $site_tz    =& new Date_TimeZone($site_tzid);
-#printf("server_tz=");
-#print_r($server_tz);
-#printf("site_tz=");
-#print_r($site_tz);
-      $now =& new Date();
-      $server_offset = $server_tz->getOffset($now);
-      $site_offset = $site_tz->getOffset($now);
-#printf("server_offset='%s', site_offset='%s'", $server_offset, $site_offset);
-      $difference = intval(($site_offset - $server_offset) / 1000);
-#printf("difference=%s", $difference);
-    }
-
-    return $difference;
+	$dc =& $this->get_date_converter($user);
+  	$display_offset = $dc->display_offset;
+  	$server_offset = $dc->server_offset;
+	return $display_offset - $server_offset;
   }
 
 

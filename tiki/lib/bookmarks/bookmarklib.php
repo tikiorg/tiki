@@ -1,7 +1,7 @@
 <?php
 class BookmarkLib extends TikiLib {
 
-  function BookmarkLib($db) 
+  function BookmarkLib($db)
   {
     # this is probably uneeded now
     if(!$db) {
@@ -118,7 +118,8 @@ class BookmarkLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and name like '%".$find."%' or url like '%".$find."% '";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and name like $findesc or url like $findesc";
     } else {
       $mid="";
     }

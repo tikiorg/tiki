@@ -1,5 +1,6 @@
 <?php
-include_once("tiki-setup_base.php");
+//include_once("tiki-setup_base.php");
+include_once("tiki-setup.php");
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
 include_once("lib/ziplib.php");
@@ -85,6 +86,7 @@ foreach(array_values($convertpages) as $page) {
 //todo: add linkdestinations for titlebars
 $pdflib->insert_linkdestinations($convertpages);
 // now add data
+$data = utf8_decode($data);
 $pdflib->insert_html($data);
 $pdfdebug=false;
 if($pdfdebug) {

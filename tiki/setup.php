@@ -41,7 +41,7 @@ class Smarty_Sterling extends Smarty {
 			}
     }
 
-    return parent::_smarty_include($_smarty_include_tpl_file, $smarty_include_vars);
+    return parent::_smarty_include($_smarty_include_tpl_file, $_smarty_include_vars);
   }
 
   function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
@@ -62,7 +62,7 @@ class Smarty_Sterling extends Smarty {
   }
   
 }
-
+if(!isset($tikidomain)) $tikidomain = "";
 $smarty = new Smarty_Sterling($tikidomain);
 $smarty->load_filter('pre','tr');
 //$smarty->load_filter('output','trimwhitespace');

@@ -1,17 +1,17 @@
-<a class="pagetitle">{tr}Search results{/tr}</a><br/><br/>
+<a class="pagetitle">{tr}Search results{/tr}</a><br /><br />
 {* The navigation bar *}
 {include file=tiki-directory_bar.tpl}
-<br/><br/>
+<br /><br />
 
 <div align="center">
 <form action="tiki-directory_search.php" method="post">
-<input type="hidden" name="parent" value="{$parent}" />
+<input type="hidden" name="parent" value="{$parent|escape}" />
 {tr}Search{/tr}: 
 <select name="how">
 <option value="or" {if $how eq 'or'}selected="selected"{/if}>{tr}any{/tr}</option>
 <option value="and" {if $how eq 'and'}selected="selected"{/if}>{tr}all{/tr}</option>
 </select>
-<input type="text" name="words" value="{$words}" size="30" />
+<input type="text" name="words" value="{$words|escape}" size="30" />
 <input type="hidden" name="where" value="all" />
 <input type="submit" value="search" />
 </form>
@@ -20,9 +20,9 @@
 
 <div class="dirlistsites">
 <form method="post" action="tiki-directory_search.php">
-<input type="hidden" name="how" value="{$how}" />
-<input type="hidden" name="words" value="{$words}" />
-<input type="hidden" name="where" value="{$where}" />
+<input type="hidden" name="how" value="{$how|escape}" />
+<input type="hidden" name="words" value="{$words|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
 {tr}Sort by{/tr}: <select name="sort_mode">
 <option value="name_desc" {if $sort_mode eq 'name_desc'}selected="selected"{/if}>{tr}name (desc){/tr}</option>
 <option value="name_asc" {if $sort_mode eq 'name_asc'}selected="selected"{/if}>{tr}name (asc){/tr}</option>
@@ -35,13 +35,13 @@
 </select>
 <input type="submit" name="xx" value="sort" />
 </form>
-<br/>
+<br />
 {section name=ix loop=$items}
 <div class="dirsite">
 <img alt="flag" src="img/flags/{$items[ix].country}.gif" />
-<a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_new'{/if}>{$items[ix].name}</a>
-{if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?parent={$parent}&amp;siteId={$items[ix].siteId}">edit</a>]{/if} <br/>
-<span class="dirsitedesc">{$items[ix].description}</span><br/>
+<a class="dirsitelink" href="tiki-directory_redirect.php?siteId={$items[ix].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[ix].name}</a>
+{if $tiki_p_admin_directory_sites eq 'y'} [<a class="dirsitelink" href="tiki-directory_admin_sites.php?siteId={$items[ix].siteId}">edit</a>]{/if} <br />
+<span class="dirsitedesc">{$items[ix].description}</span><br />
 {assign var=fsfs value=1}
 <span class="dirsitecats">
 {tr}categories{/tr}:
@@ -49,12 +49,12 @@
   {if $fsfs}{assign var=fsfs value=0}{else}, {/if}
   <a class="dirsublink" href="tiki-directory_browse.php?parent={$items[ix].cats[ii].categId}">{$items[ix].cats[ii].path}</a>
 {/section}
-</span><br/>
+</span><br />
 <span class="dirsitetrail">{tr}Added{/tr}: {$items[ix].created|tiki_short_date} {tr}Last updated{/tr}: {$items[ix].lastModif|tiki_short_date} {tr}Hits{/tr}: {$items[ix].hits}</span>
 </div>
 {/section}
 </div>
-<br/>
+<br />
 {* next and prev links *}
 <div align="center">
 <div class="mini">
@@ -66,7 +66,7 @@
 &nbsp;[<a class="prevnext" href="tiki-directory_browse.php?$words={$words}&amp;how={$how}&amp;where={$where}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-directory_admin_sites.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

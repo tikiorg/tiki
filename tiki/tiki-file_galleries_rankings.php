@@ -22,9 +22,9 @@ if($tiki_p_view_file_gallery != 'y') {
 }
 
 $allrankings = Array(
-  Array( 'name'=> 'Top visited file galleries', 'value'=> tra('filegal_ranking_top_galleries')),
-  Array( 'name'=> 'Most downloaded files', 'value'=>tra('filegal_ranking_top_files')),
-  Array( 'name'=> 'Last files', 'value'=>tra('filegal_ranking_last_files')),
+  Array( 'name'=> tra('Top visited file galleries'), 'value'=> 'filegal_ranking_top_galleries'),
+  Array( 'name'=> tra('Most downloaded files'), 'value'=>'filegal_ranking_top_files'),
+  Array( 'name'=> tra('Last files'), 'value'=>'filegal_ranking_last_files'),
 );
 $smarty->assign('allrankings',$allrankings);
 

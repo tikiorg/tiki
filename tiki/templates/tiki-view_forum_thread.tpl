@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-view_forum.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="forumspagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
+<a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="forumspagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 <br/><br/>
 {if $unread > 0}
 	<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br/><br/></a>
@@ -60,9 +60,9 @@ a moderator approves it.{/tr}</small>
 	
 	  {if $user and $feature_user_watches eq 'y'}
 		{if $user_watching_topic eq 'n'}
-			<a href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=add"><img border='0' alt='{tr}monitor this forum{/tr}' title='{tr}monitor this topic{/tr}' src='img/icons/icon_watch.png' /></a>
+			<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=add"><img border='0' alt='{tr}monitor this forum{/tr}' title='{tr}monitor this topic{/tr}' src='img/icons/icon_watch.png' /></a>
 		{else}
-			<a href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this forum{/tr}' title='{tr}stop monitoring this topic{/tr}' src='img/icons/icon_unwatch.png' /></a>
+			<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this forum{/tr}' title='{tr}stop monitoring this topic{/tr}' src='img/icons/icon_unwatch.png' /></a>
 		{/if}
 	  {/if}
 
@@ -105,7 +105,7 @@ a moderator approves it.{/tr}</small>
 
   </td>
   <td class="viewthreadr">  
-  <table vertical-align: bottom;">
+  <table style="vertical-align: bottom;">
   <tr>
     <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
     {if $forum_info.vote_threads eq 'y'}
@@ -170,16 +170,16 @@ a moderator approves it.{/tr}</small>
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$smarty.request.comments_parentId}&amp;forumId={$forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
     <form enctype="multipart/form-data" method="post" action="tiki-view_forum_thread.php">
-    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
-    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
-    <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
-    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
-    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
-    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset}" />
-    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find}" />
-    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode}" />    
-    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold}" />    
-    <input type="hidden" name="forumId" value="{$forumId}" />
+    <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+    <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
+    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
+    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
+    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
+    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
+    <input type="hidden" name="forumId" value="{$forumId|escape}" />
     <table class="forumformtable">
     <tr>
       <td class="forumform">{tr}Post{/tr}</td>
@@ -190,7 +190,7 @@ a moderator approves it.{/tr}</small>
     </tr>
     <tr>
       <td class="forumform">{tr}Title{/tr}</td>
-      <td class="forumform"><input type="text" name="comments_title" value="{$comment_title}" /></td>
+      <td class="forumform"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
       {if $feature_smileys eq 'y'}
       <td rowspan="3" class="forumform">
       <table>
@@ -245,13 +245,13 @@ a moderator approves it.{/tr}</small>
 {/if}
     <tr>
       <td class="forumform">Comment</td>
-      <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data}</textarea></td>
+      <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data|escape}</textarea></td>
     </tr>
     {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
     <tr>
 	  <td class="forumform">{tr}Attach file{/tr}</td>
 	  <td class="forumform">
-	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size}"><input name="userfile1" type="file" />
+	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}"><input name="userfile1" type="file" />
 	  </td>   
     </tr>
     {/if}
@@ -274,13 +274,13 @@ a moderator approves it.{/tr}</small>
 <!-- TOOLBAR -->
   <div class="forumtoolbar">
   <form method="post" action="tiki-view_forum_thread.php">
-  <input type="hidden" name="forumId" value="{$forum_info.forumId}" />    
-  <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />    
+  <input type="hidden" name="forumId" value="{$forum_info.forumId|escape}" />    
+  <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />    
   <input type="hidden" name="comments_offset" value="0" />
-  <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset}" />
-  <input type="hidden" name="topics_find" value="{$smarty.request.topics_find}" />
-  <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode}" />    
-  <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold}" />    
+  <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
+  <input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
+  <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
+  <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
 
   <table class="normal">
   <tr>
@@ -311,7 +311,7 @@ a moderator approves it.{/tr}</small>
     
     </td>
     <td class="heading">{tr}Search{/tr}
-        <input type="text" size="7" name="comments_commentFind" value="{$comments_commentFind}" />
+        <input type="text" size="7" name="comments_commentFind" value="{$comments_commentFind|escape}" />
     </td>
     
     <td class="heading"><input type="submit" name="comments_setOptions" value="{tr}set{/tr}" /></td>
@@ -325,16 +325,16 @@ a moderator approves it.{/tr}</small>
 <!-- TOOLBAR ENDS -->
 
 <form method="post" action="tiki-view_forum_thread.php">
-    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
-    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
-    <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
-    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
-    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
-    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset}" />
-    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find}" />
-    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode}" />    
-    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold}" />    
-    <input type="hidden" name="forumId" value="{$forumId}" />
+    <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+    <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
+    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
+    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
+    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
+    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
+    <input type="hidden" name="forumId" value="{$forumId|escape}" />
 {if $tiki_p_admin_forum eq 'y'}
 <table class="normal">
 	<tr>
@@ -349,7 +349,7 @@ a moderator approves it.{/tr}</small>
 			<select name="moveto">
 			{section name=ix loop=$topics}
 				{if $topics[ix].threadId ne $comments_parentId}
-					<option value="{$topics[ix].threadId}">{$topics[ix].title}</option>
+					<option value="{$topics[ix].threadId|escape}">{$topics[ix].title}</option>
 				{/if}
 			{/section}
 			</select>
@@ -400,7 +400,7 @@ a moderator approves it.{/tr}</small>
   	</td>
   	<td style="text-align:right;">
 	  {if $tiki_p_admin_forum eq 'y'}
-		<input type="checkbox" name="forumthread[]" value="{$comments_coms[ix].threadId}"  {if $smarty.request.forumthread and in_array($comments_coms[ix].threadId,$smarty.request.forumthread)}checked="checked"{/if} />
+		<input type="checkbox" name="forumthread[]" value="{$comments_coms[ix].threadId|escape}"  {if $smarty.request.forumthread and in_array($comments_coms[ix].threadId,$smarty.request.forumthread)}checked="checked"{/if} />
 	  {/if}	
 
 	  {if $tiki_p_admin_forum eq 'y'}
@@ -474,11 +474,11 @@ a moderator approves it.{/tr}</small>
     <td align="right" style="font-size:8pt;">
     <b>{tr}Vote{/tr}</b>: 
     
-  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
-  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
-  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
-  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
-  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
+  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
+  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
+  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
+  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
+  <a class="forumvotelink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$comments_coms[ix].threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
     </td>
     {/if}
     {/if}
@@ -497,17 +497,17 @@ a moderator approves it.{/tr}</small>
   <div align="center">
   <div class="mini">
   {if $comments_prev_offset >= 0}
-  [<a class="prevnext" href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_prev_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}prev{/tr}</a>]&nbsp;
+  [<a class="prevnext" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_prev_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}prev{/tr}</a>]&nbsp;
   {/if}
   {tr}Page{/tr}: {$comments_actual_page}/{$comments_cant_pages}
   {if $comments_next_offset >= 0}
-  &nbsp;[<a class="prevnext" href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}next{/tr}</a>]
+  &nbsp;[<a class="prevnext" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}next{/tr}</a>]
   {/if}
   {if $direct_pagination eq 'y'}
 <br/>
 {section loop=$comments_cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$comments_maxComments}
-<a class="prevnext" href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">
+<a class="prevnext" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
@@ -520,16 +520,16 @@ a moderator approves it.{/tr}</small>
 <tr>
 <td style="text-align:left;">
 <form id='time_control' method="post" action="tiki-view_forum_thread.php">
-    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
-    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
-    <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
-    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
-    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
-    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset}" />
-    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find}" />
-    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode}" />    
-    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold}" />    
-    <input type="hidden" name="forumId" value="{$forumId}" />
+    <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+    <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
+    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
+    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
+    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
+    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
+    <input type="hidden" name="forumId" value="{$forumId|escape}" />
     <small>{tr}Show posts{/tr}:</small>
     <select name="time_control" onChange="javascript:document.getElementById('time_control').submit();">
     	<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
@@ -545,7 +545,7 @@ a moderator approves it.{/tr}</small>
 <small>{tr}Jump to forum{/tr}:</small>
 <select name="forumId" onChange="javascript:document.getElementById('quick').submit();">
 {section name=ix loop=$all_forums}
-<option value="{$all_forums[ix].forumId}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
 {/section}
 </select>
 </form>

@@ -14,7 +14,8 @@ class MenuLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (name like '%".$find."%' or description like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }

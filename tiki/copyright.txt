@@ -1,0 +1,256 @@
+Tiki Copyright
+----------------
+$ Id: $
+
+The following list gathers the copyrights holders for tikiwiki 
+at the state of 1.7 version. Each member of that list wrote at 
+least one line, directly or indirectly, in tikiwiki code source. 
+The exact proportion of the contribution of each is not an issue, 
+as any copyright change will involve the agreement of everybody. 
+
+This is how we implement the TikiWikiSocialContract.
+http://tikiwiki.org/TikiWikiSocialContract
+
+
+Aaron Holmes
+sfn: pyrotknix
+
+Al Brown
+US - CA - gmt-7
+sfn: albrown
+two: albrown
+irc: albrown, Icarus
+
+Arthur A. Vanderbilt
+sfn: avanderbilt
+
+Ben Tallman
+sfn: btallman
+two: btallman
+
+Chris Austin
+CA - BC - GMT-8 (PST)
+sfn: caustin_ats
+two: Stryker
+irc: Stryker
+
+Chris Kaleiki
+sfn: anenga
+
+Christoph Drieschner
+DE - gmt+2
+sfn: drieschner
+two: tex
+irc: drieschner, tex
+
+Damian Parker
+UK - gmt
+sfn: damosoft
+two: Damian
+
+Damien Mc Kenna
+sfn: damienmckenna
+
+Dave Sanders
+US (MD) - GMT-5
+sfn: vulgrin
+two: UserPageDaveSanders
+irc: Vulgrin
+aim: Vulgrin The Mad
+
+Dennis Daniels
+sfn: dgdaniels
+two: DennisDaniels
+irc: dgd
+
+Dennis Heltzel
+US - GMT-5 (EST)
+sfn: dheltzel
+two: dheltzel
+irc: dheltzel
+
+Diego Zamboni
+CH - GMT+1 (CET)
+sfn: zamboni
+two: ZZamboni
+
+Dietmar Neidhart
+sfn: neidhart
+
+Douglas Green
+sfn: dgreen34
+
+Eduardo Daniel Polidor
+sfn: epolidor
+
+Elliot McGucken?
+sfn: mcgucken
+
+Flo G.
+sfn: redflo
+two: redflo
+irc: redflo
+
+Gil Shwartz
+sfn: gilshwartz
+
+Greg Rundlett
+sfn: freephile
+two: freephile
+
+Inge Solvoll
+sfn: ingesol
+
+Joan Vilarino
+sfn: lechuckdapirate
+
+Kent Primrose
+sfn: krose
+
+Luis Argerich
+AR
+sfn: lrargerich
+two: luis
+irc: luigi, luis
+
+Marc Laporte
+CA
+sfn: marclaporte
+two: marclaporte
+irc: marclaporte, marclaporte_
+
+Mariana Tome
+AR - gmt-3
+sfn: marianat
+two: mariana
+
+Mario Mene
+AR - gmt-3
+sfn: pippone
+
+Mark Limburg
+AU -
+sfn: mlimburg
+two: MLimburg
+irc: MLimburg
+
+Mike Nielsen
+US gmt-6
+sfn: mikenielsen
+two: mikenielsen
+irc: paradime
+
+Natalia Golmar
+sfn: natig
+
+Norbert Huffschmid
+DE gmt+1
+sfn: nhuffschmid
+two: NorbertHuffschmid?
+
+Oliver Hertel
+DE gmt+1
+sfn: ohertel
+two: ohertel
+irc: ohertel
+
+Oliver Scheck
+sfn: oliverscheck
+
+Patrick Van der Veken
+BE gmt+1
+sfn: patvdv
+two: patvdv
+
+Ramiro Vera
+sfn: ramiro_v
+
+Ricardo Gladwell
+sfn: axonrg
+two: ricardo
+
+Rodolphe Saugier
+FR gmt+1
+sfn: rsaugier
+
+Ross Smith
+US gmt-7 (PST8PDT)
+sfn: rossta
+two: rasa (UserPagerasa)
+irc: rasa
+
+Stephen Kurkowski
+sfn: plungerman
+
+Sylvie Greverend
+CA gmt-6
+sfn: sylvieg
+two: sylvie
+
+Tom Bouillut
+FR gmt+1
+sfn: tombombadilom
+two: tom
+irc: tomtom
+
+Tony Colley
+US gmt-5 (all year)
+sfn: awcolley
+two: TonyColley
+irc: frodo1990
+
+mose
+FR gmt+1
+sfn: mose
+two: mose
+irc: mose
+
+zaufi
+RU gmt+3
+sfn: zaufi
+two: zaufi
+irc: zaufi
+
+Loic Monthorin
+FR - gmt+1
+sfn: monthorin
+two: loic
+irc: loic_m
+
+Terence
+US - GMT-5 (EST)
+sfn: teedog
+two: Terence
+irc: teedog
+aim: teedog00
+
+Garland Foster
+
+Wang Wells
+CN 
+
+Lorinc Czegledi
+HU gtm+1
+sfn: ang
+two: ang
+irc: lorinc/ang
+
+Scott W Fischer
+US gmt-6
+sfn: fischesw
+two: swf
+
+
+That list is constantly evolving and new contributors 
+are very welcome to grow that file. Maybe some recent 
+contributor can have been omitted, and some of above
+information can be inadequate or outdated.
+
+In case of need for modification, please contact 
+any of the following coordinator :
+
+Luis Argerich <luis@fuegolabs.com>
+Marc Laporte <marc@marclaporte.com>
+Mose <mose@mose.fr>
+
+

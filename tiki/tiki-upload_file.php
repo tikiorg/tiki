@@ -69,18 +69,18 @@ if(isset($_REQUEST["upload"])) {
 	$errors = Array();     
 	$uploads = Array();
 
-	for($i=0;$i<5;$i++) {
+	for($i=1;$i<=6;$i++) {
 		// We process here file uploads
 		if(isset($_FILES["userfile$i"])&&is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
 	    	// Check the name
 	       	if(!empty($fgal_match_regex)) {
 	        	if(!preg_match("/$fgal_match_regex/",$_FILES["userfile$i"]['name'],$reqs)) {
-	           		$errors[] = tra('Invalid filename (using filters for filenames)'.': '.$_FILES["userfile$i"]['name']);
+	           		$errors[] = tra('Invalid filename (using filters for filenames)').': '.$_FILES["userfile$i"]['name'];
 	         	}
 	       	}
 	       	if(!empty($fgal_nmatch_regex)) {
 	          	if(preg_match("/$fgal_nmatch_regex/",$_FILES["userfile$i"]['name'],$reqs)) {
-	           		$errors[] = tra('Invalid filename (using filters for filenames)'.': '.$_FILES["userfile$i"]['name']);
+	           		$errors[] = tra('Invalid filename (using filters for filenames)').': '.$_FILES["userfile$i"]['name'];
 	         	}
 	       	}
 	       	$name = $_FILES["userfile$i"]['name'];
@@ -137,7 +137,7 @@ if(isset($_REQUEST["upload"])) {
 		  	if(isset($data)) {
 		     	$fileId = $filegallib->insert_file($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user,$fhash);
 		      	if(!$fileId) {
-			     	$errors[] = tra('Upload was not successful (maybe a duplicate file)'.': '.$name);
+			     	$errors[] = tra('Upload was not successful (maybe a duplicate file)').': '.$name;
 		      	} 
 		      	if(count($errors)==0) {
 			      	$aux['name']=$name;

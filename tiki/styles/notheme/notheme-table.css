@@ -1,0 +1,114 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-table.css,v 1.2 2003-08-01 10:31:08 redflo Exp $
+ *
+ */
+
+
+/* General tables */
+
+/*
+ * These styles apply to tables used to display
+ * common listings such as the wiki page listing,
+ * last changes, listings in admin screens, etc.
+ */
+
+/* The table */
+table.normal
+{
+  width: 100%;
+  border: 2px ridge WindowFrame;
+}
+table.normalnoborder
+{
+  width: 100%;
+}
+/* Do not show border if normaltab inside a simplebox */
+div.simplebox table.normal
+{
+  width: 100%;
+  border: none;
+}
+
+/* Cells where nothing is specified */
+td
+{
+  vertical-align: top;
+}
+
+/* Cells in forms without background color (inside a div for example) */
+td.form
+{
+  color: WindowText;
+  font-size: small;
+  vertical-align: top;
+}
+/* Cells in forms using a background color */
+td.formcolor
+{
+  color: WindowText;
+  background-color: Button;
+  font-size: small;
+  text-align: left;
+  vertical-align: top;
+  border: 1px outset WindowFrame;
+}
+
+/* Table headings */
+td.heading
+{
+  color: HighlightText;
+  background-color: Highlight;
+  font-weight : bold;
+  border: 1px outset WindowFrame;
+  height: 25px;
+  padding-left: 2px;
+  padding-right: 5px;
+  vertical-align: middle;
+
+}
+td.button
+{
+  height: 25px;
+  text-align: center; 
+  vertical-align: middle;
+}
+
+/* Links in table headings */
+.tableheading, .tableheading:visited, .tableheading:visited:hover, .tableheading:hover
+{
+  color: HighlightText;
+  text-decoration: none;
+}
+
+/*
+ * When a find button is provided for a listing the table
+ *form is displayed in a table with the following style
+ */
+table.findtable { width: 100%; margin-bottom: 20px; }
+td.findtitle {}
+
+/* Tables odd rows */
+td.odd
+{
+  background-color: Window;
+  border: 1px outset WindowFrame;
+}
+td.even
+{
+  border: 1px outset WindowFrame;
+}
+/* currently unused as `grep` shows */
+td.third
+{
+}
+
+/*
+ * Caption in tables.
+ * Currently in Attachments and comments only.
+ */
+caption
+{
+  font-weight: bold;
+  text-align: right;
+  vertical-align: middle;
+}

@@ -76,11 +76,11 @@ div.box {
 
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
-  background-image: url(mozilla/mozilla-menubar.png);  */
+  background-image: url(mozilla/mozilla-menubar.png); 
   background-repeat: no-repeat;
   height: 19px;
   padding-top: 6px;
-  border-bottom: 0px solid black;
+  border-bottom: 0px;
   color: black;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 13px;  color: black;  font-weight: bold;
   overflow: hidden;
@@ -109,8 +109,8 @@ TD.module { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-si
 
 /* Links in modules */
 .linkmodule {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: none;}
-.linkmodule:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : grey; text-decoration: none;}
-.linkmodule:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : grey; text-decoration: none;}
+.linkmodule:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : gray; text-decoration: none;}
+.linkmodule:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : gray; text-decoration: none;}
 
 
 /* Now the boxes for the rest of Tiki (non-modules */
@@ -136,7 +136,7 @@ div.cbox-title {
 /* When there's a link in a cbox-title */
 .cboxtlink { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color : black; text-decoration: none;}
 .cboxtlink:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; color : black; text-decoration: none;}
-.cboxtlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : grey; text-decoration: none; }
+.cboxtlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : gray; text-decoration: none; }
 
 
 /* And this is the data */
@@ -166,23 +166,23 @@ div.separator {
 /* Links in menus */
 .linkmenu, .rsslink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: none;}
 .linkmenu:active, .rsslink:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; color: black; text-decoration: none;}
-.linkmenu:hover, .rsslink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : grey; text-decoration: none;}
+.linkmenu:hover, .rsslink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : gray; text-decoration: none;}
 
 /* Links to extend/collapse menus */
 .separator {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : black;  text-decoration: none;}
 .separator:active {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : black;  text-decoration: none;}
-.separator:hover {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : grey;  text-decoration: none;}
+.separator:hover {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : gray;  text-decoration: none;}
 
 /* Links to collapse menus for example the main menu can be completely collapsed*/
 .flip {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 13px;  color : black;  text-decoration: none;}
 .flip:active {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 13px;  color : black;  text-decoration: none;}
-.flip:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 13px;  color : grey;  text-decoration: none;}
+.flip:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 13px;  color : gray;  text-decoration: none;}
 
 
 /* Banners of type text (textadds) are displayed as links using the following style */
 .bannertext {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black;  text-decoration: none;}
 .bannertext:active {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black;  text-decoration: none;}
-.bannertext:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : grey;  text-decoration: none;}
+.bannertext:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : gray;  text-decoration: none;}
 
 /* Some boxes uses thumbnails this is the image style */
 div.imagerank {  margin-left: 5px;  margin-right: 5px;  margin-bottom: 10px;  margin-top: 10px; }
@@ -240,6 +240,19 @@ td.listfilesheading, td.listartheading, td.forumheading, td.thead
   padding-right: 5px;
 }
 
+TD.button
+{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  color: white; font-size: 11px; font-weight : bold;
+  background-color: black; 
+  /*background-image: url(dblue/back1.jpeg);  */
+  height: 20px;
+  padding-left: 2px;
+  padding-right: 5px;
+  text-align: center; 
+  vertical-align: middle;
+}
+
 /* Links to view an object from a table listing objects can be generalized to this link */
 a.tablename, a.galname, a.imagename, a.blogname, a.fgalname, a.artname, a.forumname
 { font-weight: bold; font-size: 12px ; letter-spacing: 1px; color : black; text-decoration: none;}
@@ -264,7 +277,7 @@ a.forumnameread:hover
 {  font-family: Verdana, Arial, Helvetica, sans-serif;  color: white; font-size: 11px; font-weight : bold;  text-decoration: none;}
 .tableheading:hover,gallistheading:hover,.listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover,
 .llistfileslink:hover, .llistart:hover,.lforumheading:hover
-{  font-family: Verdana, Arial, Helvetica, sans-serif;  color: grey;   font-size: 11px; font-weight : bold;  text-decoration: none;}
+{  font-family: Verdana, Arial, Helvetica, sans-serif;  color: gray;   font-size: 11px; font-weight : bold;  text-decoration: none;}
 
 /* When a find button is provided for a listing the table form is displayed in a table with the following style */
 table.findtable { width: 97%; margin-bottom: 20px; padding-bottom: 10px;}
@@ -345,7 +358,7 @@ span.warn {  color: red;}
 div.titlebar {
   background: #b5c1cc;
   color: black;
-  border: 1px solid grey;
+  border: 1px solid gray;
   padding-left: 1px; 
   padding-right: 1px; 
   padding-top: 1px;
@@ -392,8 +405,8 @@ div.cachedpage {
 }
 
 /* When an external link is cached a small link to the cached version (cache) is displayed using this style */
-.wikicache {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;	font-size: 9px;	color : grey; text-decoration: none;}
-.wikicache:active { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 9px; color : grey; text-decoration: none;}
+.wikicache {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;	font-size: 9px;	color : gray; text-decoration: none;}
+.wikicache:active { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 9px; color : gray; text-decoration: none;}
 .wikicache:hover { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 9px; color : black; text-decoration: none;}
 
 table.wikitable {
@@ -417,7 +430,7 @@ div.wikitext {
 
 /* Links to wiki pages */
 .wiki { color:black; font-weight:bold; text-decoration:underline;}
-.wiki:hover {color: grey; font-weight:bold; text-decoration:underline;}
+.wiki:hover {color: gray; font-weight:bold; text-decoration:underline;}
 
 /* Date displayed for last modification date of pages */
 p.editdate { color: black; font-size: smaller; margin-bottom: -1ex; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
@@ -496,7 +509,7 @@ span.posthead {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  fo
 /* When there's a link in a cbox-title */
 .blogt { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; color : black; text-decoration: none;}
 .blogt:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; color : black; text-decoration: none;}
-.blogt:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : grey; text-decoration: underline; }
+.blogt:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : gray; text-decoration: underline; }
 
 /* The post body */
 div.postbody {
@@ -567,7 +580,7 @@ div.blogtools {
 
 /* Listing contents of a file gallery (listing files) */
 div.fgaldesc 
-{  color: black; background: #b5c1cc;  border: 1px solid grey;  padding-left: 0.8em; padding-right: 0.8em; padding-top: 0.5em;  padding-bottom: 0.5em;  margin: 0.5ex 0px;  width: 100%;  clear: both;}
+{  color: black; background: #b5c1cc;  border: 1px solid gray;  padding-left: 0.8em; padding-right: 0.8em; padding-top: 0.5em;  padding-bottom: 0.5em;  margin: 0.5ex 0px;  width: 100%;  clear: both;}
 
 
 /****************************************************** CMS ***************************************************************/
@@ -605,7 +618,7 @@ div.articletrailer {
   background: white;
   border: 1px solid black;
   border-bottom: 1px solid black;
-  border-top: 1px thin blue;
+  border-top: thin solid blue;
   margin-bottom: 20px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -647,7 +660,7 @@ span.trailer {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  fon
 
 /* LINKS FOR TODAY */
 .today {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  text-decoration: none;  color : black;  font-weight : bold;  text-decoration: none; }
-.today:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  color : cyan;  text-decoration: none;   font-weight : bold;}
+.today:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  color : #336699;  text-decoration: none;   font-weight : bold;}
 
 /* Links to change month, year or go to today */
 .nav {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  text-decoration: none;  color : black;  font-weight : bold;   text-decoration: none; }
@@ -817,13 +830,13 @@ td.tdsubcat {width: 25%; background: #B5C6DE;}
 .categlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : #00FFFF; text-decoration: underline;font-weight: bold;}
 
 table.catobjects { width: 97%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 0px;}
-td.categobjectsname {
+td.categobjectsnameeven,td.categobjectsnameodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
   color: white;
   background: #4284B6;
 }
-td.categobjectsdata {
+td.categobjectsdataeven,td.categobjectsdataodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
   background-color: #B5C6DE;
@@ -1002,7 +1015,7 @@ div.tocnav {
 .tocnavlink { color:white; text-decoration: underline;font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px; }
 .tocnavlink:hover {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 10px; color: cyan; text-decoration:underline;}
+  font-size: 10px; color: #336699; text-decoration:underline;}
 
 /*************************************************** DIRECTORY ***************************************************/
 /* The list of categories */
@@ -1170,7 +1183,7 @@ font-size: 11px;
 }
 a.caltabon:hover
 {
-background-color: none;
+background-color: transparent;
 }
 div#tab, div#tabcal, div#tabnav
 {
@@ -1209,7 +1222,7 @@ background-color: #ffffff;
 .calfocus
 {
 font-size:7px;
-background-color: none;
+background-color: transparent;
 }
 .calfocus a
 {
@@ -1581,11 +1594,67 @@ background-color: #DAAAAA;
 background-color: #DA9A9A;
 }
 
-/* To set initial state for 'wiki quick help' panel
- * just set display to 'none' (hidden) or 'block' (show)
- * /
 div#edithelpzone { display: none;  }
-/* To set initial state for 'attachments' table
- * just set display to 'none' (hidden) or 'block' (show)
- * /
 div#attzone      { display: none; margin-top: 10px; }
+div#attzoneopen      { display: block; margin-top: 10px; }
+
+/* Links to up/top categories */
+.categpath {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
+.categpath:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
+.categpath:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
+
+.highlight { background-color: #FFAAAA; color: #000000; }
+
+/*
+ * Caption in tables.
+ * Currently in Attachments and comments only.
+ */
+caption
+{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight : bold;
+  text-align: right;
+}
+
+/* trees */
+div.tree
+{
+  text-align: left;
+  padding-left: 1.5em;
+}
+/* Root of tree (outer div) */
+div.tree#top
+{
+  border: 1px outset #00E000;
+  padding: 10px 1.5em 20px 1.5em;
+}
+
+/* Wiki editpage textarea */
+textarea.wikiedit
+{
+	width: 100%;
+}
+/* help links style */
+a.tikihelp, a.tikihelp:visited {
+color: inherit;
+border: inherit;
+background-color: inherit;
+font-size: inherit;
+font-weight: inherit;
+margin: inherit;
+padding: inherit;
+text-decoration: inherit;
+}
+a.tikihelp:hover {
+color: #224466;
+border: inherit;
+background-color: inherit;
+font-size: inherit;
+font-weight: inherit;
+margin: inherit;
+padding: inherit;
+cursor: help;
+text-decoration: inherit;
+}
+

@@ -2,7 +2,7 @@
  
 class WebMailLib extends TikiLib {
   
-  function WebMailLib($db) 
+  function WebMailLib($db)
   {
     parent::TikiLib($db);
   }
@@ -12,7 +12,8 @@ class WebMailLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where user='$user' and (nickname like '%".$find."%' or firstName like '%".$find."%' or lastName like'%".$find."%' or email like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where user='$user' and (nickname like $findesc or firstName like $findesc or lastName like $findesc or email like $findesc)";  
     } else {
       $mid=" where user='$user' "; 
     }
@@ -163,7 +164,8 @@ class WebMailLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where user='$user' and (account like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where user='$user' and (account like $findesc)";  
     } else {
       $mid=" where user='$user'"; 
     }

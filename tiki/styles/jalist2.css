@@ -28,6 +28,7 @@ DIV#tiki-main {  background: #EFEFE7;  height: 100%;  margin-top: 0px; margin-bo
 
 /* This is the header */
 DIV#tiki-top {  font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;   background-image: url(jalist/maincap.png); color: white; padding-right: 0px;}
+DIV#tiki-top a { color: white; text-decoration: none; }
 
 /* This is the middle */
 DIV#tiki-mid {  background: #EFEFE7;  height: auto;  padding-bottom: 0px; }
@@ -43,6 +44,22 @@ TD#centercolumn { padding-right: 14px;background: #EFEFEF; vertical-align: top; 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  padding-right: 5px; }
 
+div#debugconsole {
+  position: absolute;
+  background-color: #EFEFE7;
+  color: #009000;
+  top: 0px;
+  left: 20px;
+  right: 310px;
+  height: auto;
+  width: auto;
+  z-index: 1;
+  padding: 5px;
+  border: 6px ridge #996600;
+  font-size: 12px;
+} 
+span.on-option { color: #00C000; }
+span.off-option { color: #005000; }
 
 /********************************************* GENERAL STYLE PROPERTIES **********************************************/
 
@@ -190,6 +207,17 @@ td.listfilesheading, td.listartheading, td.forumheading, td.thead
   color: white; font-size: 11px;
   background-color: #6884ad; 
   padding-left: 2px;  padding-right: 5px;
+}
+
+TD.button
+{
+  background-image: url(jalist/fcap.png);
+  font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+  color: white; font-size: 12px;
+  background-color: #6884ad; 
+  padding-left: 2px;  padding-right: 5px;
+  text-align: center; 
+  vertical-align: middle;
 }
 
 
@@ -532,7 +560,7 @@ div.articletrailer {
   background: white;
   border: 1px solid black;
   border-bottom: 1px solid black;
-  border-top: 1px thin blue;
+  border-top: thin solid blue;
   margin-bottom: 20px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
@@ -574,7 +602,7 @@ span.trailer {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  fon
 
 /* LINKS FOR TODAY */
 .today {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  text-decoration: none;  color : black;  font-weight : bold;  text-decoration: none; }
-.today:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  color : black;  text-decoration: none;   font-weight : #636363; }
+.today:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  color : black;  text-decoration: none;   font-weight : bold; }
 
 /* Links to change month, year or go to today */
 .nav {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 9px;  text-decoration: none;  color : black;  font-weight : bold;   text-decoration: none; }
@@ -722,8 +750,9 @@ td.tdcategpath {
   padding-right: 5px;}
 
 /* Links to up/top categories */
-.categpath {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : white;  text-decoration: none;}
-.categpath:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #CCCCCC;  text-decoration: underline;}
+.categpath {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
+.categpath:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
+.categpath:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
 
 /* Table with the subcategories */
 table.subcats { padding-top: 20px; padding-bottom: 20px; width: 97%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 1px;}
@@ -734,12 +763,12 @@ td.tdsubcat {width: 25%;}
 .categlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #636363; text-decoration: none;font-weight: bold;}
 
 table.catobjects { width: 97%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 0px;}
-td.categobjectsname {
+td.categobjectsnameeven,td.categobjectsnameodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
   background-color: #DCDCDC;
 }
-td.categobjectsdata {
+td.categobjectsdataeven,td.categobjectsdataodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
   background-color: #CCCCCC;
@@ -1040,7 +1069,7 @@ font-size: 11px;
 }
 a.caltabon:hover
 {
-background-color: none;
+background-color: transparent;
 }
 div#tab, div#tabcal, div#tabnav
 {
@@ -1079,7 +1108,7 @@ background-color: #ffffff;
 .calfocus
 {
 font-size:7px;
-background-color: none;
+background-color: transparent;
 }
 .calfocus a
 {
@@ -1451,11 +1480,62 @@ background-color: #DAAAAA;
 background-color: #DA9A9A;
 }
 
-/* To set initial state for 'wiki quick help' panel
- * just set display to 'none' (hidden) or 'block' (show)
- * /
 div#edithelpzone { display: none;  }
-/* To set initial state for 'attachments' table
- * just set display to 'none' (hidden) or 'block' (show)
- * /
 div#attzone      { display: none; margin-top: 10px; }
+div#attzoneopen      { display: block; margin-top: 10px; }
+
+.highlight { background-color: #FFAAAA; color: #000000; }
+
+/*
+ * Caption in tables.
+ * Currently in Attachments and comments only.
+ */
+caption
+{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight : bold;
+  text-align: right;
+}
+
+/* trees */
+div.tree
+{
+  text-align: left;
+  padding-left: 1.5em;
+}
+/* Root of tree (outer div) */
+div.tree#top
+{
+  border: 1px outset #00E000;
+  padding: 10px 1.5em 20px 1.5em;
+}
+
+/* Wiki editpage textarea */
+textarea.wikiedit
+{
+	width: 100%;
+}
+/* help links style */
+a.tikihelp, a.tikihelp:visited {
+color: inherit;
+border: inherit;
+background-color: inherit;
+font-size: inherit;
+font-weight: inherit;
+margin: inherit;
+padding: inherit;
+text-decoration: inherit;
+}
+a.tikihelp:hover {
+color: #224466;
+border: inherit;
+background-color: inherit;
+font-size: inherit;
+font-weight: inherit;
+margin: inherit;
+padding: inherit;
+cursor: help;
+text-decoration: inherit;
+}
+

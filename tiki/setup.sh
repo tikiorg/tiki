@@ -81,6 +81,7 @@ if [ -n "$1" ]; then
 fi
 if [ -n "$1" ]; then
 	RIGHTS=$1
+	shift
 fi
 
 if [ -n "$1" ]; then

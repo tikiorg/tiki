@@ -1,5 +1,5 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-eph.php">{tr}Ephemerides{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-eph.php">{tr}Ephemerides{/tr}</a><br /><br />
 <table class="normal">
 <tr>
 	<td class="formcolor">
@@ -40,7 +40,6 @@
 </tr>
 {/section}
 </table>
-</form>
 <div class="mini">
 <div align="center">
 {if $prev_offset >= 0}
@@ -51,7 +50,7 @@
 &nbsp;[<a class="prevnext" href="tiki-userfiles.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-userfiles.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

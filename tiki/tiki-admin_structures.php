@@ -14,7 +14,7 @@ if(isset($_REQUEST['rremove'])) {
   $structlib->s_remove_page($_REQUEST["rremove"],false);	
 }
 if(isset($_REQUEST['rremovex'])) {
-  $structlib->s_remove_page($_REQUEST["rremovex"],false);	
+  $structlib->s_remove_page($_REQUEST["rremovex"],true);	
 }
 
 if(isset($_REQUEST['export'])) {

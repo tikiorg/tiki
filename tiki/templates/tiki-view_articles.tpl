@@ -1,7 +1,7 @@
 {section name=ix loop=$listpages}
 <div class="articletitle">
-<span class="titlea">{$listpages[ix].title}</span><br/>
-<span class="titleb">{tr}By:{/tr}{$listpages[ix].authorName} {tr}on:{/tr}{$listpages[ix].publishDate|tiki_short_datetime} ({$listpages[ix].reads} {tr}reads{/tr})</span><br/>
+<span class="titlea">{$listpages[ix].title}</span><br />
+<span class="titleb">{tr}By:{/tr}{$listpages[ix].authorName} {tr}on:{/tr}{$listpages[ix].publishDate|tiki_short_datetime} ({$listpages[ix].reads} {tr}reads{/tr})</span><br />
 </div>
 {if $listpages[ix].type eq 'Review'}
 <div class="articleheading">

@@ -80,7 +80,7 @@ function pollForEvents() {
 }
 
 function chat_close(role,user) {
-  write_msg('<i>' + user + ' has left the chat' + '</i>',role,user);
+  write_msg('<i>' + user + tra(' has left the chat') + '</i>',role,user);
 }
 
 

@@ -10,6 +10,11 @@ if($feature_file_galleries != 'y') {
   die;  
 }
 
+if($tiki_p_view_file_gallery != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;
+}
 
 if(!isset($_REQUEST["galleryId"])) {
   $_REQUEST["galleryId"]=0;

@@ -1,7 +1,7 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-notepad_list.php">{tr}Notes{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-notepad_list.php">{tr}Notes{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
-<br/>
+<br />
 <div align="center">
 <table border='0' cellpadding='0' cellspacing='0'>
 	<tr>
@@ -26,15 +26,18 @@
 </table>
 </div>
 
-<br/>
-<a class="link" href="tiki-notepad_write.php">[{tr}Write a note{/tr}]</a>
+<br />
+<table border="0"><tr><td><div class="button2">
+<a class="linkbut" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a>
+</div></td></tr></table>
+{if count($channels) > 0}
+<br />
 <table>
 <tr><td class="findtable">
-   <td class="findtable">
    <form method="get" action="tiki-notepad_list.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -78,7 +81,7 @@
 &nbsp;[<a class="prevnext" href="tiki-notepad_list.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-notepad_list.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
@@ -87,6 +90,7 @@
 {/if}
 </div>
 </div>
+{/if}
 
 <h3>{tr}Upload file{/tr}</h3>
 <form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post">

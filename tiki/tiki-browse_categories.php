@@ -1,7 +1,13 @@
 <?php
+//
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.8 2003-08-01 10:30:45 redflo Exp $
+//
+
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/categories/categlib.php');
+include_once('lib/tree/categ_browse_tree.php');
+
 
 if($feature_categories != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -29,8 +35,24 @@ if($_REQUEST["parentId"]) {
 $smarty->assign('path',$path);
 $smarty->assign('father',$father);
 
-$children = $categlib->get_child_categories($_REQUEST["parentId"]);
-$smarty->assign_by_ref('children',$children);
+//$children = $categlib->get_child_categories($_REQUEST["parentId"]);
+//$smarty->assign_by_ref('children',$children);
+
+// Convert $childrens 
+//$debugger->var_dump('$children');
+$ctall = $categlib->get_all_categories();
+$tree_nodes = array();
+foreach ($ctall as $c)
+{
+  $tree_nodes[] = array("id"=>$c["categId"],
+                        "parent"=>$c["parentId"],
+                        "data"=>'<a class="catname" href="tiki-browse_categories.php?parentId='.$c["categId"].'">'.$c["name"].'</a><br />');
+  
+}
+//$debugger->var_dump('$tree_nodes');
+$tm = new CatBrowseTreeMaker("categ");
+$res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
+$smarty->assign('tree', $res);
 
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'name_asc'; 

@@ -1,13 +1,18 @@
 <h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a></h1>
-<h2>{tr}Create/edit Forums{/tr}</h2>
+{if $forumId > 0}
+<h2>{tr}Edit this Forum:{/tr} {$name}</h2>
+<a href="tiki-admin_forums.php">Create new forum</a>
+{else}
+<h2>{tr}Create New Forum{/tr}</h2>
+{/if}
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName=forum%20{$name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$galleryId}">{tr}There are individual permissions set for this forum{/tr}</a>
 {/if}
 <form action="tiki-admin_forums.php" method="post">
-<input type="hidden" name="forumId" value="{$forumId}" />
+<input type="hidden" name="forumId" value="{$forumId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Show description{/tr}:</td><td class="formcolor"><input type="checkbox" {if $show_description eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Prevent flooding{/tr}:</td><td class="formcolor"><input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} /> 
 {tr}Minimum time between posts{/tr}: 
@@ -18,13 +23,13 @@
 <option value="120" {if $floodInterval eq 120}selected="selected"{/if}>2 {tr}mins{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Topics per page{/tr}:</td><td class="formcolor"><input type="text" name="topicsPerPage" value="{$topicsPerPage}" /></td></tr>
+<tr><td class="formcolor">{tr}Topics per page{/tr}:</td><td class="formcolor"><input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Section{/tr}:</td><td class="formcolor">
 <select name="section">
 <option value="" {if $section eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
 <option value="__new__"}>{tr}Create new{/tr}</option>
 {section name=ix loop=$sections}
-<option  {if $section eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]}">{$sections[ix]}</option>
+<option  {if $section eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]|escape}">{$sections[ix]}</option>
 {/section}
 </select>
 <input name="new_section" type="text" />
@@ -32,7 +37,7 @@
 <tr><td class="formcolor">{tr}Moderator user{/tr}:</td><td class="formcolor">
 <select name="moderator">
 {section name=ix loop=$users}
-<option value="{$users[ix].user}" {if $moderator eq $users[ix].user}selected="selected"{/if}>{$users[ix].user}</option>
+<option value="{$users[ix]|escape}" {if $moderator eq $users[ix]}selected="selected"{/if}>{$users[ix]}</option>
 {/section}
 </select>
 </td></tr>
@@ -40,7 +45,7 @@
 <select name="moderator_group">
 <option value="" {if $moderator_group eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 {section name=ix loop=$groups}
-<option value="{$groups[ix].groupName}" {if $moderator_group eq $groups[ix].groupName}selected="selected"{/if}>{$groups[ix].groupName}</option>
+<option value="{$groups[ix].groupName|escape}" {if $moderator_group eq $groups[ix].groupName}selected="selected"{/if}>{$groups[ix].groupName}</option>
 {/section}
 </select>
 </td></tr>
@@ -51,7 +56,7 @@
 <option value="a" {if $forum_use_password eq 'a'}selected="selected"{/if}>{tr}All posts{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Forum password{/tr}</td><td class="formcolor"><input type="text" name="forum_password" value="{$forum_password}" /></td></tr>
+<tr><td class="formcolor">{tr}Forum password{/tr}</td><td class="formcolor"><input type="text" name="forum_password" value="{$forum_password|escape}" /></td></tr>
 
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Default ordering for topics{/tr}:</td><td class="formcolor">
@@ -74,7 +79,7 @@
 <option value="title_asc" {if $topicOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor"><input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email{/tr}:</td><td class="formcolor"><input type="text" name="mail" value="{$mail}" /></td></tr>
+<tr><td class="formcolor"><input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email{/tr}:</td><td class="formcolor"><input type="text" name="mail" value="{$mail|escape}" /></td></tr>
 <tr><td class="formcolor"><input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} /> {tr}Prune unreplied messages after{/tr}:</td><td class="formcolor">
 <select name="pruneUnrepliedAge">
 <option value="86400" {if $pruneUnrepliedAge eq 86400}selected="selected"{/if}>1 {tr}day{/tr}</option>
@@ -126,7 +131,7 @@
 </tr>
 <tr>
 	<td class="formcolor">{tr}Forward messages to this forum to this email{/tr}</td>
-	<td class="formcolor"><input type="text" name="outbound_address" value="{$outbound_address}" /></td>
+	<td class="formcolor"><input type="text" name="outbound_address" value="{$outbound_address|escape}" /></td>
 </tr>
 <tr>
 	<td class="formcolor">{tr}Add messages from this email to the forum{/tr}</td>
@@ -134,15 +139,15 @@
 		<table>
 		<tr>
 			<td class="formcolor">{tr}POP3 server{/tr}:</td>
-			<td><input type="text" name="inbound_pop_server" value="{$inbound_pop_server}" /></td>
+			<td><input type="text" name="inbound_pop_server" value="{$inbound_pop_server|escape}" /></td>
 		</tr>
 		<tr>
 			<td class="formcolor">{tr}User{/tr}:</td>
-			<td><input type="text" name="inbound_pop_user" value="{$inbound_pop_user}" /></td>
+			<td><input type="text" name="inbound_pop_user" value="{$inbound_pop_user|escape}" /></td>
 		</tr>
 		<tr>
 			<td class="formcolor">{tr}Password{/tr}:</td>
-			<td><input type="text" name="inbound_pop_password" value="{$inbound_pop_password}" /></td>
+			<td><input type="text" name="inbound_pop_password" value="{$inbound_pop_password|escape}" /></td>
 		</tr>
 		</table>
 	</td>
@@ -198,7 +203,7 @@
 			<option value="att_perm" {if $att eq 'att_perm'}selected="selected"{/if}>{tr}Only users with attach permission{/tr}</option>
 			<option value="att_admin" {if $att eq 'att_admin'}selected="selected"{/if}>{tr}Moderators and admin can attach{/tr}</option>
 		</select>
-		<br/>
+		<br />
 		{tr}Store attachments in:{/tr}
 		<table>
 			<tr>
@@ -208,12 +213,12 @@
 			</tr>
 			<tr>
 				<td>
-				<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Directory (include trailing slash){/tr}: <input type="text" name="att_store_dir" value="{$att_store_dir}" size="14" />
+				<input type="radio" name="att_store" value="dir" {if $att_store eq 'dir'}checked="checked"{/if} /> {tr}Directory (include trailing slash){/tr}: <input type="text" name="att_store_dir" value="{$att_store_dir|escape}" size="14" />
 				</td>
 			</tr>
 			<tr>
 				<td>
-				{tr}Max attachment size (bytes){/tr}: <input type="text" name="att_max_size" value="{$att_max_size}" />
+				{tr}Max attachment size (bytes){/tr}: <input type="text" name="att_max_size" value="{$att_max_size|escape}" />
 				</td>
 			</tr>
 		</table>
@@ -229,9 +234,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_forums.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

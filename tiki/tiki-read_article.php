@@ -9,7 +9,11 @@ if($feature_articles != 'y') {
   die;  
 }
 
-
+if($tiki_p_read_article != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+  $smarty->display("styles/$style_base/error.tpl");
+  die;  
+}
 
 
 if(!isset($_REQUEST["articleId"])) {

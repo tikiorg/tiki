@@ -1,7 +1,36 @@
 <?php 
-// $Id: tiki-edit_css.php,v 1.2 2003-07-04 17:35:32 mose Exp $
+// $Id: tiki-edit_css.php,v 1.3 2003-08-01 10:30:45 redflo Exp $
 include_once("tiki-setup.php");
 include_once("lib/csslib.php");
+
+
+//
+// Load CSS2 styled file (@import aware)
+//
+// TODO: Will M$ windowz eat '/' as path delimiter?
+//
+function load_css2_file($filename, $styledir)
+{
+    $data = '';
+    $lines = file($filename);
+    //
+    foreach ($lines as $line)
+    {
+	if (preg_match_all("/@import( |\t)+('|\")(.*)(|\")( |\t)*;/U", $line, $importfiles, PREG_SET_ORDER))
+	{
+	    foreach ($importfiles as $file)
+	    {
+		$import = $styledir.'/'.$file[3];
+		$data .= load_css2_file($import, substr($import, 0, strrpos($import, "/")));
+		$line = str_replace($file[0], "", $line);
+	    }
+	}
+	// TODO: Does it matter what $line may contain smth before '@import'? :)
+	$data .= $line;
+    }
+    return $data;    
+}
+
 // remove soon..
 #$feature_edit_css = 'y';
 #$tiki_p_create_css = 'y';
@@ -28,7 +57,8 @@ $styledir = "styles";
 
 if (isset($_REQUEST["edit"]) and $_REQUEST["edit"]) {
 	$action = 'edit';
-	$data = implode("",file("$styledir/$editstyle.css"));
+//	$data = implode("",file("$styledir/$editstyle.css"));
+	$data = load_css2_file("$styledir/$editstyle.css", $styledir);
 } elseif (isset($_REQUEST["save"]) and $_REQUEST["save"]) {
 	$action = 'display';
 	$data = '';

@@ -7,8 +7,8 @@
 
 {* FILTERING FORM *}
 <form action="tiki-g-user_processes.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 <tr>
 <td>
@@ -21,7 +21,7 @@
 
 <tr>
 <td >
-	<input size="8" type="text" name="find" value="{$find}" />
+	<input size="8" type="text" name="find" value="{$find|escape}" />
 </td>
 <td >	
 	<input type="submit" name="filter" value="{tr}filter{/tr}" />
@@ -33,16 +33,15 @@
 
 {*LISTING*}
 <form action="tiki-g-user_processes.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="where" value="{$where}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="where" value="{$where|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
 <td width="55%" class="heading" ><a class="tableheading" href="{if $sort_mode eq 'procname_desc'}{sameurl sort_mode='procname_asc'}{else}{sameurl sort_mode='procname_desc'}{/if}">{tr}Process{/tr}</a></td>
 <td width="5%" class="heading" >{tr}Activities{/tr}</td>
 <td width="5%" class="heading" >{tr}Instances{/tr}</td>
-</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

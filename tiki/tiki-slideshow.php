@@ -116,7 +116,7 @@ if($tiki_p_admin_wiki == 'y') {
 preg_match_all("/-=([^=]+)=-/",$info["data"],$reqs);
 $slides = split("-=[^=]+=-",$info["data"]);
 if(count($slides)<2) {
-	$slides = explode("\n...page...\n",$info["data"]);
+	$slides = explode("...page...",$info["data"]);
 	array_unshift($slides,'');
 }
 

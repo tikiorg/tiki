@@ -42,7 +42,8 @@ class BanLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where ((message like '%".$find."%') or (title like '%".$find."%'))";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where ((message like $findesc) or (title like $findesc))";
     } else {
       $mid="";
     }

@@ -1,9 +1,9 @@
 {popup_init src="lib/overlib.js"}
-<a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a><br /><br />
 {if $wysiwyg eq 'n'}
-		[<a class="link" href="{sameurl wysiwyg='y'}">{tr}Use wysiwyg editor{/tr}</a>]
+		[<a class="link" href="tiki-blog_post.php?wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a>]
 {else}
-		[<a class="link" href="{sameurl wysiwyg='n'}">{tr}Use normal editor{/tr}</a>]
+		[<a class="link" href="tiki-blog_post.php?wysiwyg=n">{tr}Use normal editor{/tr}</a>]
 {/if}
 {if $preview eq 'y'}
 	{include file=tiki-preview_post.tpl}
@@ -12,19 +12,19 @@
 <a class="bloglink" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>|
 {/if}
 <a class="bloglink" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>]
-<br/><br/>
+<br /><br />
 <div class="wikitext"><small>{tr}Note: if you want to use images please save the post first and you
 will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor
 or use the image URL to include images using the WYSIWYG editor. {/tr}</small></div>
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php">
-<input type="hidden" name="wysiwyg" value="{$wysiwyg}" />
-<input type="hidden" name="postId" value="{$postId}" />
-<input type="hidden" name="blogId" value="{$blogId}" />
+<input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
+<input type="hidden" name="postId" value="{$postId|escape}" />
+<input type="hidden" name="blogId" value="{$blogId|escape}" />
 <table class="editblogform">
 <tr><td class="editblogform">{tr}Blog{/tr}</td><td class="editblogform">
 <select name="blogId">
 {section name=ix loop=$blogs}
-<option value="{$blogs[ix].blogId}" {if $blogs[ix].blogId eq $blogId}selected="selected"{/if}>{$blogs[ix].title}</option>
+<option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $blogId}selected="selected"{/if}>{$blogs[ix].title}</option>
 {/section}
 </select>
 </td></tr>
@@ -65,15 +65,15 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
 {assign var=area_name value="blogedit"}
 {include file=tiki-edit_help_tool.tpl}
-</td>
+</td></tr>
 {if $blog_data.use_title eq 'y'}
 <tr><td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
-<input type="text" size="30" name="title" value="{$title}" />
+<input type="text" size="30" name="title" value="{$title|escape}" />
 </td></tr>
 {/if}
 <tr><td class="editblogform">{tr}Data{/tr}</td><td class="editblogform">
-<b>{tr}Use ...page... to separate pages in a multi-page post{/tr}</b><br/>
-<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="60" wrap="virtual">{$data}</textarea>
+<b>{tr}Use ...page... to separate pages in a multi-page post{/tr}</b><br />
+<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="60" wrap="virtual">{$data|escape}</textarea>
 {if $wysiwyg eq 'y'}
 	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
 	<script type="text/javascript" src="lib/htmlarea/htmlarea-lang-en.js"></script>
@@ -100,8 +100,8 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 				<a class="link" href="tiki-view_blog_post_image.php?imgId={$post_images[ix].imgId}">{$post_images[ix].filename}</a> 
 			</td>
 			<td>
-				<textarea rows="2" cols="40">{$post_images[ix].link|escape}</textarea><br/>
-				<textarea rows="1" cols="40">{$post_images[ix].absolute}</textarea>
+				<textarea rows="2" cols="40">{$post_images[ix].link|escape}</textarea><br />
+				<textarea rows="1" cols="40">{$post_images[ix].absolute|escape}</textarea>
 			</td>
 			<td>
 				<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img border='0' src='img/icons/trash.gif' /></a>
@@ -114,9 +114,9 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 {/if}
 <tr><td class="editblogform">{tr}Send trackback pings to:{/tr}<small>{tr}(comma separated list of URIs){/tr}</small></td><td class="editblogform">
 <textarea name="trackback" rows="3" cols="60">{section name=ix loop=$trackbacks_to}{if not $smarty.section.ix.first},{/if}{$trackbacks_to[ix]}{/section}</textarea>
-</td>
+</td></tr>
 {if $blog_spellcheck eq 'y'}
-<tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
+<tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
 <input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
@@ -124,5 +124,5 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 </td></tr>
 </table>
 </form>
-<br/>
+<br />
 {include file=tiki-edit_help.tpl}

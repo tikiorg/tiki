@@ -688,3 +688,23 @@ INSERT INTO tiki_preferences(name,value) VALUES ('wiki_feature_copyrights','n');
 
 # for wiki automonospaced text
 INSERT INTO tiki_preferences(name,value) VALUES ('feature_wiki_monosp','y');
+
+# for debugger console
+INSERT INTO tiki_preferences(name,value) VALUES ('feature_debugger_console','n');
+
+# last minute changes, rather minor
+UPDATE tiki_preferences set name='Can post messages in shoutbox' where name='Can pot messages in shoutbox';
+
+# change of charlength for some fields
+ALTER TABLE `tiki_dsn` CHANGE `name` `name` VARCHAR( 200 ) NOT NULL;
+ALTER TABLE `tiki_extwiki` CHANGE `name` `name` VARCHAR( 200 ) NOT NULL;
+ALTER TABLE `tiki_menu_options` CHANGE `name` `name` VARCHAR( 200 ) NOT NULL;
+ALTER TABLE `tiki_menus` CHANGE `name` `name` VARCHAR( 200 ) NOT NULL;
+ALTER TABLE `tiki_featured_links` CHANGE `title` `title` VARCHAR( 200 ) default NULL;
+ALTER TABLE `tiki_files` CHANGE `name` `name` VARCHAR( 200 ) NOT NULL default '';
+ALTER TABLE `tiki_html_pages` CHANGE `pageName` `pageName` VARCHAR( 200 ) NOT NULL default '';
+ALTER TABLE `tiki_html_pages_dynamic_zones` CHANGE `pageName` `pageName` VARCHAR( 200 ) NOT NULL default '';
+ALTER TABLE `tiki_images` CHANGE `name` `name` VARCHAR( 200 ) NOT NULL default '';
+ALTER TABLE `tiki_wiki_attachments` CHANGE `page` `page` VARCHAR( 200 ) NOT NULL default '';
+
+

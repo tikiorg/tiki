@@ -12,7 +12,7 @@ $userlib = new UsersLib($dbTiki);
 $rememberme = $tikilib->get_preference('rememberme','disabled');
 if($rememberme != 'disabled') {
 if(isset($_COOKIE['tiki-user'])) {
-  if(!isset($user) || !$user) {
+  if(!isset($user) and !isset($_SESSION['user'])) {
     $user = $userlib->get_user_by_hash($_COOKIE['tiki-user']);
     $_SESSION['user']=$user;
   }
@@ -21,7 +21,7 @@ if(isset($_COOKIE['tiki-user'])) {
 
 
 $auth_method = $tikilib->get_preference('auth_method','tiki');
-if($auth_method = 'ws') {
+if($auth_method == 'ws') {
 	if(isset($_SERVER['REMOTE_USER'])) {
 		if($userlib->user_exists($_SERVER['REMOTE_USER'])) {
 			$_SESSION["user"] = $_SERVER['REMOTE_USER'];	
@@ -225,7 +225,7 @@ if($tiki_p_admin_cms == 'y') {
 
 $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 
-$style = $tikilib->get_preference("style", 'elegant.css');
+$style = $tikilib->get_preference("style", 'moreneat.css');
 $smarty->assign('style',$style);
 
 $slide_style = $tikilib->get_preference("slide_style",'slidestyle.css');
@@ -239,7 +239,7 @@ $language = $tikilib->get_preference('language','en');
 
 if($feature_userPreferences == 'y') {
   // Check for FEATURES for the user
-  $user_style = $tikilib->get_preference("style", 'elegant.css');
+  $user_style = $tikilib->get_preference("style", 'moreneat.css');
   if($user) {
     if($change_theme == 'y') {
       $user_style = $tikilib->get_user_preference($user,'theme',$style);

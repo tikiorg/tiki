@@ -4,7 +4,6 @@ require_once('tiki-setup.php');
 include_once('lib/blogs/bloglib.php');
 
 
-
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
@@ -108,6 +107,7 @@ if(isset($_REQUEST["preview"])) {
   }
   if(empty($data)) $data=' ';
   $smarty->assign('data',$data);
+  $smarty->assign('title',isset($_REQUEST["title"])?$_REQUEST['title']:'');
   $smarty->assign('parsed_data',$parsed_data);
   $smarty->assign('preview','y');
 }

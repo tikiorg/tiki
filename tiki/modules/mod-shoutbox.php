@@ -41,5 +41,9 @@ if($tiki_p_post_shoutbox == 'y') {
 
 $shout_msgs = $shoutboxlib->list_shoutbox(0,$module_rows,'timestamp_desc','');
 $smarty->assign('shout_msgs',$shout_msgs["data"]);
+
+// Subst module parameter 'tooltip'
+$smarty->assign('tooltip',isset($module_params["tooltip"])?$module_params["tooltip"]:0);
+
 }
 ?>

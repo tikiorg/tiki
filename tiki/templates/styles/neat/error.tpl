@@ -21,14 +21,14 @@
       </td>
       {/if}
       <td id="centercolumn"><div id="tiki-center">
-      <br/>
+      <br />
         <div class="cbox">
         <div class="cbox-title">
         {tr}Error{/tr}
         </div>
         <div class="cbox-data">
-        {$msg}<br/><br/>
-        <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br/><br/>
+        {$msg}<br /><br />
+        <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
         <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
         </div>
         </div>

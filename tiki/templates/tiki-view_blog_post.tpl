@@ -11,12 +11,12 @@
 -->
 <h2>{tr}Viewing blog post{/tr}</h2>
 <a class="link" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
-<br/><br/>
+<br /><br />
 <div class="posthead">
 <table width="100%"><tr><td align="left">
 <span class="posthead">
 {if $blog_data.use_title eq 'y'}
-	{$post_info.title}<br/>
+	{$post_info.title}<br />
 	<small> {tr}posted by{/tr} {$post_info.user} on {$post_info.created|tiki_short_datetime}</small>
 {else}
 	{$post_info.created|tiki_short_datetime}<small> {tr}posted by{/tr} {$post_info.user}</small>
@@ -76,13 +76,24 @@
 {foreach from=$post_info.trackbacks_from key=key item=item}
 <tr>
   <td  class="{cycle advance=false}">{$item.title}</td>
-  <td  class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_new">{$key|truncate:"40"}</td>
+  <td  class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"}</td>
   <td  class="{cycle}">{$item.blog_name}</td>
 </tr>
 {/foreach}
 </table>
 {/if}
+
 {if $blog_data.allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
+{if $tiki_p_read_comments eq 'y'}
+<div id="page-bar">
+<table>
+<tr><td>
+<div class="button2">
+<a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a>
+</div>
+</td></tr></table>
+</div>
 {include file=comments.tpl}
+{/if}
 {/if}
 

@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.6 2003-06-24 21:04:46 mose Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-editdrawing.php,v 1.7 2003-08-01 10:30:45 redflo Exp $
 
 include_once("tiki-setup_base.php");
 
@@ -7,8 +7,8 @@ if(($tiki_p_admin_drawings != 'y') && ($tiki_p_edit_drawings != 'y')) {
 }
 
 if(isset($_REQUEST["close"])) {
-  print("<script>window.opener.location.reload();</script>");
-  print("<script>window.close();</script>");
+  print("<script language='Javascript' type='text/javascript'>window.opener.location.reload();</script>");
+  print("<script language='Javascript' type='text/javascript'>window.close();</script>");
   die;
 }
 $tikilib->invalidate_cache($_REQUEST['page']);

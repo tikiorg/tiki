@@ -8,7 +8,7 @@
 {tr}Event{/tr}:<select name="event" onChange="javascript:document.getElementById('formi').submit();">
 <option value"" {if $smarty.request.event eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
 {section name=ix loop=$events}
-<option value="{$events[ix]}" {if $events[ix] eq $smarty.request.event}selected="selected"{/if} />{$events[ix]}</option>
+<option value="{$events[ix]|escape}" {if $events[ix] eq $smarty.request.event}selected="selected"{/if} />{$events[ix]}</option>
 {/section}
 </select>
 </form>

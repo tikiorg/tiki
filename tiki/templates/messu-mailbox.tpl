@@ -23,18 +23,18 @@
 <option value="5" {if $priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 </select>
 {tr}Containing{/tr}:
-<input type="text" name="find" value="{$find}" />
+<input type="text" name="find" value="{$find|escape}" />
 <input type="submit" name="filter" value="{tr}filter{/tr}" />
 </form>
 <br/>
 
 <form action="messu-mailbox.php" method="post">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="find" value="{$find}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="flag" value="{$flag}" />
-<input type="hidden" name="flagval" value="{$flagval}" />
-<input type="hidden" name="priority" value="{$priority}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="flag" value="{$flag|escape}" />
+<input type="hidden" name="flagval" value="{$flagval|escape}" />
+<input type="hidden" name="priority" value="{$priority|escape}" />
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 <select name="action">
 <option value="isRead_n">{tr}Mark as unread{/tr}</option>

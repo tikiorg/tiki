@@ -1,5 +1,8 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.css,v 1.4 2003-07-13 05:35:21 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-other.css,v 1.5 2003-08-01 10:31:07 redflo Exp $
+ *
+ * Define styles for:
+ *  Messages, RSS, Shoutbox, Categories
  *
  */
 
@@ -59,6 +62,53 @@ div.messureadbody
   text-decoration: none;
 }
 
+/*
+ * RSS
+ */
+.rsslink, rsslink:visited, .rsslink:active
+{
+  color: #00E000;
+  text-decoration: none;
+}
+rsslink:visited
+{
+  color: #00E000;
+  text-decoration: none;
+}
+.rsslink:hover, .rsslink:visited:hover
+{
+  color: #00F000;
+  text-decoration: none;
+}
+
+/*
+ * Shoutbox
+ */
+
+div.shoutboxmsg
+{
+  border: 1px outset #00B000;
+  margin-top: 5px;
+}
+div.shoutboxmodmsg
+{
+  /* Looks like transparent buggy in CVS konqueror */
+  /* border: 1px inset transparent; */
+}
+div.shoutboxmsg:hover /*,
+div.shoutboxmodmsg:hover */
+{
+  border: 1px inset #00E000;
+}
+textarea.tshoutbox {}
+
+div.shoutboxmodmsg .linkmodule,
+div.shoutboxmodmsg .linkmodule:visited
+{
+  color: #00E000;
+  text-decoration: none;
+}
+
 /* Hack to make timesone selector shorter in user prefs of MyTiki */
 select[name='display_timezone']
 {
@@ -66,3 +116,16 @@ select[name='display_timezone']
   width: 450px;
 }
 
+/* help links style */
+.tikihelp, .tikihelp:visited
+{
+  color: #001000;
+  text-decoration: none;
+}
+/* help links style */
+.tikihelp:visited:hover, .tikihelp:hover
+{
+  color: #001000;
+  cursor: help;
+  text-decoration: none;
+}

@@ -86,10 +86,11 @@ class BannerLib extends TikiLib {
     }
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
+	$findesc = $this->qstr('%'.$find.'%');
       if($mid) {
-        $mid.=" and url like '%".$find."%' ";
+        $mid.=" and url like $findesc ";
       } else {
-        $mid.=" where url like '%".$find."%' ";
+        $mid.=" where url like $findesc ";
       }
     }
     $query = "select * from tiki_banners $mid order by $sort_mode limit $offset,$maxRecords";
@@ -173,6 +174,7 @@ class BannerLib extends TikiLib {
                 zone = '$zone',
                 hourFrom = '$hourFrom',
                 hourTo = '$hourTo',
+                mon = '$mon' ,tue = '$tue', wed = '$wed', thu = '$thu', fri = '$fri', sat = '$sat', sun = '$sun',
                 maxImpressions = $maxImpressions where bannerId=$bannerId";
        $result = $this->query($query);
     } else {

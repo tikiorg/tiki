@@ -819,8 +819,8 @@ class WikiDiffFormatter
 
   function format ($diff, $from_lines)
       {
-	$html = '<table width="97%" bgcolor="black"' .
-		"cellspacing=2 cellpadding=2 border=0>\n";
+	$html = '<table width="97%" bgcolor="black" ' .
+		'cellspacing="2" cellpadding="2" border="0"><br />';
 	$html .= $this->_format($diff->edits, $from_lines);
 	$html .= "</table>\n";
 
@@ -936,11 +936,11 @@ class WikiDiffFormatter
   function _emit_diff ($xbeg,$xlen,$ybeg,$ylen,$hunks)
       {
 	$html = '<tr><td><table width="100%" bgcolor="white"'
-	      . " cellspacing=0 border=0 cellpadding=4>\n"
+	      . ' cellspacing="0" border="0" cellpadding="4"><br />'
 	      . '<tr bgcolor="#cccccc"><td><tt>'
 	      . $this->_diff_header($xbeg, $xlen, $ybeg, $ylen)
 	      . "</tt></td></tr>\n<tr><td>\n"
-	      . "<table width=\"100%\" cellspacing=0 border=0 cellpadding=2>\n";
+	      . '<table width="100%" cellspacing="0" border="0" cellpadding="2"><br />';
 
 	$prefix = array('c' => $this->context_prefix,
 			'a' => $this->adds_prefix,

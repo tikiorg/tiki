@@ -15,7 +15,7 @@
   <tr><td  class="form">{tr}Select the language to Import{/tr}:</td><td>
         <select name="imp_language">
         {section name=ix loop=$languages_files}
-        <option value="{$languages_files[ix]}" {if $imp_language eq $languages_files[ix]}selected="selected"{/if}>{$languages_files[ix]}</option>
+        <option value="{$languages_files[ix]|escape}" {if $imp_language eq $languages_files[ix]}selected="selected"{/if}>{$languages_files[ix]}</option>
         {/section}
         </select></td></tr>
   <tr><td align="center" colspan="2"><input type="submit" name="import" value="{tr}import{/tr}" /></td></tr>
@@ -30,7 +30,7 @@
   <tr><td  class="form">{tr}Select the language to Export{/tr}:</td><td>
         <select name="exp_language">
         {section name=ix loop=$languages}
-        <option value="{$languages[ix]}" {if $exp_language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
+        <option value="{$languages[ix]|escape}" {if $exp_language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
         {/section}
         </select></td></tr>
   <tr><td align="center" colspan="2"><input type="submit" name="export" value="{tr}export{/tr}" /></td></tr>

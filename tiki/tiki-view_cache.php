@@ -10,8 +10,8 @@ if($feature_listPages != 'y') {
 }
 */
 
-if(isset($_REQUEST["url"])) {
-  $id = $tikilib->get_cache_id($_REQUEST["url"]);
+if(isset($_REQUEST['url'])) {
+  $id = $tikilib->get_cache_id($_REQUEST['url']);
   if(!$id) {
     $smarty->assign('msg',tra("No cache information available"));
     $smarty->display("styles/$style_base/error.tpl");
@@ -30,10 +30,13 @@ if(!isset($_REQUEST["cacheId"])) {
 
 // Get a list of last changes to the Wiki database
 $info = $tikilib->get_cache($_REQUEST["cacheId"]);
+$ggcacheurl = 'http://google.com/search?q=cache:'.strstr($info['url'],'http://');
+
 // test if url ends with .txt : formatting for text
 if (substr($info["url"],-4,4) == ".txt") {
 	$info["data"] = "<pre>".$info["data"]."</pre>";
 }
+$smarty->assign('ggcacheurl',$ggcacheurl);
 $smarty->assign_by_ref('info',$info);
 $smarty->assign('mid','tiki-view_cache.tpl');
 $smarty->display('tiki-view_cache.tpl');

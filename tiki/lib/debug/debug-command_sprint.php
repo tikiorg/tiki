@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_sprint.php,v 1.1 2003-07-13 00:35:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_sprint.php,v 1.2 2003-08-01 10:30:55 redflo Exp $
  *
  * \brief Print Smarty vars
  *
@@ -10,7 +10,7 @@
 require_once('lib/debug/debugger-ext.php');
 
 /**
- * \brief Debugger command to print smatry vars
+ * \brief Debugger command to print smarty vars
  */
 class DbgSPrint extends DebuggerCommand
 {
@@ -22,23 +22,23 @@ class DbgSPrint extends DebuggerCommand
   /// \b Must have function to provide help to debugger console
   function description()
   {
-    return 'Print Smatry variable';
+    return 'Print Smarty variable';
   }
   /// \b Must have function to provide help to debugger console
   function syntax()
   {
-    return 'sprint $var1 $var2 var3 ...';
+    return 'sprint var1 var2 var3 ...';
   }
-  /// \b Must have functio to show exampla of usage of given command
+  /// \b Must have functio to show example of usage of given command
   function example()
   {
-    return 'sprint $user $feature_left_column';
+    return 'sprint user feature_left_column';
   }
-  /// Execute command with given set of arguments. Must return string of result.
+  /// Execute command with given set of arguments.
   function execute($params)
   {
     global $smarty;
-    $this->set_result_type(HTML_RESULT);
+    $this->set_result_type(TEXT_RESULT);
     $result = '';
     $vars = explode(" ", $params);
     foreach ($vars as $v)
@@ -47,7 +47,7 @@ class DbgSPrint extends DebuggerCommand
       if (strlen($v) != 0)
       {
 	$tmp = $smarty->get_template_vars();
-	if (is_array($tmp) &&  isset($tmp[$v]))
+	if (is_array($tmp) && isset($tmp[$v]))
 	  $result .= $v.' = '.print_r($tmp[$v], true)."\n";
 	else
 	  $result .= 'Smarty variable "'.$v.'" not found';

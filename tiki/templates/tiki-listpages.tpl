@@ -1,19 +1,21 @@
-<a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a><br/><br/>
+{* $Hader: $ *}
+
+<a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a><br /><br />
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>
    <td class="findtitle">
    <form method="get" action="tiki-listpages.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" name="search" value="{tr}find{/tr}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
 </table>
 <div align="center">
-<form name="checkform" method="POST" action="{$smarty.server.PHP_SELF}">
-<input type="hidden" name="offset" value="{$offset}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
 {*  at the moment, the only working option to use the checkboxes for is deleting pages.
@@ -66,16 +68,16 @@
 	<td style="text-align:right;" class="heading"><a class="tableheading" href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
 {/if}
 </tr>
-{cycle values="odd,even" print=false}
+{cycle values="even,odd" print=false}
 {section name=changes loop=$listpages}
 <tr>
 {if $checkboxes_on eq 'y'}
-<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName}"/></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/></td>
 {/if}
 {if $wiki_list_name eq 'y'}
 	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>
 	{if $tiki_p_edit eq 'y'}
-	<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
+	<br />(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
 	{/if}
 	</td>
 {/if}
@@ -125,8 +127,9 @@
 	{/if}
 {/if}
 {if $wiki_list_size eq 'y'}
-	<td style="text-align:right;" class="{cycle}">{$listpages[changes].len|kbsize}</td>
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].len|kbsize}</td>
 {/if}
+       {cycle print=false}
 </tr>
 {sectionelse}
 <tr><td colspan="16">
@@ -134,7 +137,7 @@
 </td></tr>
 {/section}
 {if $checkboxes_on eq 'y'}
-  <script type="text/javascript" language="javascript">
+  <script language='Javascript' type='text/javascript'>
   <!--
   // check / uncheck all.
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
@@ -154,7 +157,7 @@
     {/if}
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
   </select>                
-  <script type="text/javascript" language="javascript">
+  <script language='Javascript' type='text/javascript'>
   <!--
   // Fake js to allow the use of the <noscript> tag (so non-js-users kenn still submit)
   //-->
@@ -165,7 +168,7 @@
   </p>
 {/if}
 </form>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-listpages.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]
@@ -175,7 +178,7 @@
 [<a class="prevnext" href="tiki-listpages.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-listpages.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
@@ -185,7 +188,7 @@
 </div>
 </div>
 {if $tiki_p_admin eq 'y'}
-<br/><br/>
+<br /><br />
 <a href="tiki-admin.php?page=wiki"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}
 

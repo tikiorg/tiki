@@ -1,0 +1,74 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-categories.css,v 1.2 2003-08-01 10:31:06 redflo Exp $
+ *
+ * Define styles for: Categories
+ *
+ */
+
+/*
+ * Categories
+ */
+
+/* Table containing the category path */
+table.tcategpath
+{
+  width: 100%;
+  margin-bottom: 30px;
+}
+td.tdcategpath
+{
+  vertical-align: middle;
+}
+/* Links to up/top categories */
+/* Links to subcategories */
+.categpath, .categpath:visited, .categpath:active,
+.categlink, .categlink:visited, .categlink:active,
+.catname,   .catname:visited,   .catname:active
+{
+  color: #00B000;
+  text-decoration: none;
+}
+.categpath:hover, .categpath:visited:hover,
+.categlink:hover, .categlink:visited:hover,
+.catname:hover,   .catname:visited:hover
+{
+  color: #00F000;
+  text-decoration: none;
+}
+
+/* Table with the subcategories (old way to show subcategories) */
+table.subcats
+{
+}
+td.tdsubcat:hover
+{
+}
+
+table.catobjects
+{
+  color: #001000;
+  width: 100%;
+  border: 2px ridge #00B000;
+}
+
+td.categobjectsnameeven,td.categobjectsdataodd {}
+td.categobjectsdataeven,td.categobjectsdataodd {}
+
+/* trees */
+div.tree
+{
+  text-align: left;
+  padding-left: 1.5em;
+}
+/* Root of tree (outer div) */
+div.tree#top
+{
+  border: 2px ridge #00B000;
+  padding: 10px 1em 20px 1em;
+}
+
+/* Initail state for categorization form on wiki edit page */
+div#categorizator
+{
+  display: none;
+}

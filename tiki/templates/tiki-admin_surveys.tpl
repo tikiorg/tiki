@@ -1,16 +1,21 @@
-<a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a><br /><br />
 [<a class="link" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a>
 |<a class="link" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
-]<br/><br/>
-<h2>{tr}Create/edit surveys{/tr}</h2>
+]<br /><br />
+{if $info.surveyId > 0}
+<h2>{tr}Edit this Survey:{/tr} {$info.name}</h2>
+<a href="tiki-admin_surveys.php">Create new survey</a>
+{else}
+<h2>{tr}Create New Survey:{/tr}</h2>
+{/if}
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$info.name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$info.surveyId}">{tr}There are individual permissions set for this survey{/tr}</a><br/><br/>
+<a class="link" href="tiki-objectpermissions.php?objectName=Survey%20{$info.name}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$info.surveyId}">{tr}There are individual permissions set for this survey{/tr}</a><br /><br />
 {/if}
 <form action="tiki-admin_surveys.php" method="post">
-<input type="hidden" name="surveyId" value="{$info.surveyId}" />
+<input type="hidden" name="surveyId" value="{$info.surveyId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$info.name}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$info.description}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$info.name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$info.description|escape}</textarea></td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Status{/tr}</td><td class="formcolor">
 <select name="status">
@@ -27,9 +32,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_surveys.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -75,7 +80,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_surveys.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_surveys.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

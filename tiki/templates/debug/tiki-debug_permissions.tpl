@@ -1,11 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_permissions.tpl,v 1.1 2003-07-13 00:11:00 zaufi Exp $ *}
-{* Show help for debugger commands *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_permissions.tpl,v 1.2 2003-08-01 10:31:14 redflo Exp $ *}
+{* Show permissions table *}
 
 {if count($command_result) > 0} {* Can it be == 0 ?? *}
-<table border="0">
-<tr>
-<small>Current user: {if $user}{$user}{else}anonymous{/if}</small>
-<hr>
+<table width="100%" id="permissions">
+<caption>Permissions for {if $user}{$user}{else}anonymous{/if}</caption>
 {section name=i loop=$command_result}
   {* make row new start *}
   {if ($smarty.section.i.index % 3) == 0}
@@ -13,7 +11,7 @@
   {/if}
 
   <td>
-    <span class="o{if $command_result[i].value == 'y' }n{else}ff{/if}-option">
+    <span class="o{if $command_result[i].value == 'y' }n{else}ff{/if}-option" title="{$command_result[i].description}">
       {$command_result[i].name}
     </span>
   </td>
@@ -29,7 +27,6 @@
 {/if}
 
 </table>
-<hr>
 <small>Total {$smarty.section.i.total} permissions matched</small>
 
 {/if}{* if count($command_result) > 0 *}

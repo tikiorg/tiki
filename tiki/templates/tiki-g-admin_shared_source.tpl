@@ -11,8 +11,8 @@ Errors:<br/>
 {/if}
 
 <form id='editsource' action="tiki-g-admin_shared_source.php" method="post">
-<input type="hidden" name="pid" value="{$pid}" />
-<input type="hidden" name="source_name" value="{$source_name}" />
+<input type="hidden" name="pid" value="{$pid|escape}" />
+<input type="hidden" name="source_name" value="{$source_name|escape}" />
 <table class="normal">
 <tr>
   <td class="formcolor">{tr}select source{/tr}</td>
@@ -20,7 +20,7 @@ Errors:<br/>
 		<select name="activityId" onChange="document.getElementById('editsource').submit();">
 		<option value="" {if $activityId eq 0}selected="selected"{/if}>{tr}Shared code{/tr}</option>
 		{section loop=$items name=ix}
-		<option value="{$items[ix].activityId}" {if $activityId eq $items[ix].activityId}selected="selected"{/if}>{$items[ix].name}</option>
+		<option value="{$items[ix].activityId|escape}" {if $activityId eq $items[ix].activityId}selected="selected"{/if}>{$items[ix].name}</option>
 		{/section}
 		</select>
   </td>
@@ -45,7 +45,7 @@ Errors:<br/>
     <table>
     <tr>
     <td>
-  	<textarea id='src' name="source" rows="20" cols="80">{$data}</textarea>
+  	<textarea id='src' name="source" rows="20" cols="80">{$data|escape}</textarea>
   	</td>
   	<td>
   	{if $template eq 'y'}

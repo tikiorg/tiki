@@ -14,7 +14,8 @@ class PollLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (title like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (title like $findesc)";
     } else {
       $mid="";
     }
@@ -39,7 +40,8 @@ class PollLib extends TikiLib {
     $now = date("U");
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (active='a' or active='c') and publishDate<=$now and (title like '%".$find."%)'";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (active='a' or active='c') and publishDate<=$now and (title like $findesc)";
     } else {
       $mid=" where (active='a' or active='c') and publishDate<=$now ";
     }
@@ -62,7 +64,8 @@ class PollLib extends TikiLib {
     $now = date("U");
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where active='c' and publishDate<=$now and (title like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where active='c' and publishDate<=$now and (title like $findesc)";
     } else {
       $mid=" where active='c' and publishDate<=$now ";
     }
@@ -85,7 +88,8 @@ class PollLib extends TikiLib {
     $now = date("U");
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where publishDate<=$now and (title like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where publishDate<=$now and (title like $findesc)";
     } else {
       $mid=" where publishDate<=$now ";
     }
@@ -107,7 +111,8 @@ class PollLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where pollId=$pollId and (title like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where pollId=$pollId and (title like $findesc)";
     } else {
       $mid=" where pollId=$pollId ";
     }

@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.14 2003-08-01 10:31:09 redflo Exp $ *}
+
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a><br/><br/>
 [<a class="link" href="#assign">{tr}assign module{/tr}</a>|
 <a class="link" href="#leftmod">{tr}left modules{/tr}</a>|
@@ -15,33 +17,24 @@ have turned off the option 'display modules to all groups always'
 from Admin->General
 {/tr}
 </div>
-
-<h3>{tr}User Modules{/tr}</h3>
-
+<br />
+<br />
 <table class="normal">
+<caption>{tr}User Modules{/tr}</caption>
 <tr>
 <td class="heading">{tr}name{/tr}</td>
 <td class="heading">{tr}title{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle print=false values="even,odd"}
 {section name=user loop=$user_modules}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$user_modules[user].name}</td>
-<td class="odd">{$user_modules[user].title}</td>
-<td class="odd"><a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}">{tr}delete{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}">{tr}assign{/tr}</a></td>
+<td class="{cycle advance=false}">{$user_modules[user].name}</td>
+<td class="{cycle advance=false}">{$user_modules[user].title}</td>
+<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}">{tr}delete{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}#editcreate">{tr}edit{/tr}</a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign">{tr}assign{/tr}</a></td>
 </tr>
-{else}
-<tr>
-<td class="even">{$user_modules[user].name}</td>
-<td class="even">{$user_modules[user].title}</td>
-<td class="even"><a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name}">{tr}delete{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name}">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}">{tr}assign{/tr}</a></td>
-</tr>
-{/if}
 {sectionelse}
 <tr><td colspan="6">
 <b>{tr}No records found{/tr}</b>
@@ -50,7 +43,12 @@ from Admin->General
 </table>
 <br/>
 <a name="assign"></a>
-<h3>{tr}Assign module{/tr}</h3>
+{if $assign_name eq ''}
+<h3>{tr}Assign new module{/tr}</h3>
+{else}
+<h3>{tr}Edit this assigned module:{/tr} {$assign_name}</h3>
+<a href="tiki-admin_modules.php">{tr}Assign new module{/tr}</a>
+{/if}
 {if $preview eq 'y'}
 {tr}Preview{/tr}<br/>
 {$preview_data}
@@ -60,11 +58,11 @@ from Admin->General
 <tr><td class="formcolor">{tr}Module Name{/tr}</td><td class="formcolor">
 <select name="assign_name">
 {section name=ix loop=$all_modules}
-<option value="{$all_modules[ix]}" {if $assign_name eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
+<option value="{$all_modules[ix]|escape}" {if $assign_name eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
 {/section}
 </select>
 </td></tr>
-<!--<tr><td>{tr}Title{/tr}</td><td><input type="text" name="assign_title" value="{$assign_title}"></td></tr>-->
+<!--<tr><td>{tr}Title{/tr}</td><td><input type="text" name="assign_title" value="{$assign_title|escape}"></td></tr>-->
 <tr><td class="formcolor">{tr}Position{/tr}</td><td class="formcolor">
 <select name="assign_position">
 <option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}left{/tr}</option>
@@ -74,17 +72,17 @@ from Admin->General
 <tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor">
 <select name="assign_order">
 {section name=ix loop=$orders}
-<option value="{$orders[ix]}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
+<option value="{$orders[ix]|escape}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache}" /></td></tr>
-<tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows}" /></td></tr>
-<tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params}" /></td></tr>
+<tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
 <select multiple="multiple" name="groups[]">
 {section name=ix loop=$groups}
-<option value="{$groups[ix].groupName}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName}</option>
+<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName}</option>
 {/section}
 </select>
 </td></tr>
@@ -94,8 +92,8 @@ from Admin->General
 <br/>
 <h3>{tr}Assigned Modules{/tr}</h3>
 <a name="leftmod"></a>
-<h3>{tr}Left Modules{/tr}</h3>
 <table class="normal">
+<caption>{tr}Left Modules{/tr}</caption>
 <tr>
 <td class="heading">{tr}name{/tr}</td>
 <!--<td class="heading">{tr}title{/tr}</td>-->
@@ -105,46 +103,32 @@ from Admin->General
 <td class="heading">{tr}groups{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle print=false values="even,odd"}
 {section name=user loop=$left}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$left[user].name}</td>
-<!--<td class="odd">{$left[user].title}</td>-->
-<td class="odd">{$left[user].ord}</td>
-<td class="odd">{$left[user].cache_time}</td>
-<td class="odd">{$left[user].rows}</td>
-<td class="odd">{$left[user].module_groups}</td>
-<td class="odd">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name}">{tr}edit{/tr}</a>
+<td class="{cycle advance=false}">{$left[user].name}</td>
+<!--<td class="{cycle advance=false}">{$left[user].title}</td>-->
+<td class="{cycle advance=false}">{$left[user].ord}</td>
+<td class="{cycle advance=false}">{$left[user].cache_time}</td>
+<td class="{cycle advance=false}">{$left[user].rows}</td>
+<td class="{cycle advance=false}">{$left[user].module_groups}</td>
+<td class="{cycle}">
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name}#assign">{tr}edit{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?modup={$left[user].name}">{tr}up{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?moddown={$left[user].name}">{tr}down{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name}">{tr}x{/tr}</a></td>
+             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name}#leftmod">{tr}x{/tr}</a></td>
 </tr>
-{else}
-<tr>
-<td class="even">{$left[user].name}</td>
-<!--<td class="even">{$left[user].title}</td>-->
-<td class="even">{$left[user].ord}</td>
-<td class="even">{$left[user].cache_time}</td>
-<td class="even">{$left[user].rows}</td>
-<td class="even">{$left[user].module_groups}</td>
-<td class="even">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].name}">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?modup={$left[user].name}">{tr}up{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].name}">{tr}down{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].name}">{tr}x{/tr}</a></td>
-</tr>
-{/if}
 {sectionelse}
 <tr><td colspan="6">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
 </table>
+<br />
+<br />
 <a name="rightmod"></a>
-<h3>{tr}Right Modules{/tr}</h3>
-
 <table class="normal">
+<caption>{tr}Right Modules{/tr}</caption>
 <tr>
 <td class="heading">{tr}name{/tr}</td>
 <!--<td class="heading">{tr}title{/tr}</td>-->
@@ -154,36 +138,21 @@ from Admin->General
 <td class="heading">{tr}groups{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
+{cycle print=false values="even,odd"}
 {section name=user loop=$right}
-{if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$right[user].name}</td>
-<!--<td class="odd">{$right[user].title}</td>-->
-<td class="odd">{$right[user].ord}</td>
-<td class="odd">{$right[user].cache_time}</td>
-<td class="odd">{$right[user].rows}</td>
-<td class="odd">{$right[user].module_groups}</td>
-<td class="odd">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name}">{tr}edit{/tr}</a>
+<td class="{cycle advance=false}">{$right[user].name}</td>
+<!--<td class="{cycle advance=false}">{$right[user].title}</td>-->
+<td class="{cycle advance=false}">{$right[user].ord}</td>
+<td class="{cycle advance=false}">{$right[user].cache_time}</td>
+<td class="{cycle advance=false}">{$right[user].rows}</td>
+<td class="{cycle advance=false}">{$right[user].module_groups}</td>
+<td class="{cycle}">
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name}#assign">{tr}edit{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?modup={$right[user].name}">{tr}up{/tr}</a>
              <a class="link" href="tiki-admin_modules.php?moddown={$right[user].name}">{tr}down{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name}">{tr}x{/tr}</a></td>
+             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name}#rightmod">{tr}x{/tr}</a></td>
 </tr>
-{else}
-<tr>
-<td class="even">{$right[user].name}</td>
-<!--<td class="even">{$right[user].title}</td>-->
-<td class="even">{$right[user].ord}</td>
-<td class="even">{$right[user].cache_time}</td>
-<td class="even">{$right[user].rows}</td>
-<td class="even">{$right[user].module_groups}</td>
-<td class="even">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].name}">{tr}edit{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?modup={$right[user].name}">{tr}up{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].name}">{tr}down{/tr}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].name}">{tr}x{/tr}</a></td>
-</tr>
-{/if}
 {sectionelse}
 <tr><td colspan="6">
 <b>{tr}No records found{/tr}</b>
@@ -193,22 +162,28 @@ from Admin->General
 <br/>
 <a name="editcreate"></a>
 <table class="normal"><tr><td valign="top" class="odd">
-<h3>{tr}Edit/Create user module{/tr} 
+{if $um_name eq ''}
+<h3>{tr}Create new user module{/tr}
+{else}
+<h3>{tr}Edit this user module:{/tr} {$um_name}
+{/if}
 	{if $wysiwyg eq 'n'}
-		<a class="link" href="tiki-admin_modules.php?wysiwyg='y'">{tr}Use wysiwyg editor{/tr}</a>
+		<a class="link" href="tiki-admin_modules.php?wysiwyg=y#editcreate">{tr}Use wysiwyg editor{/tr}</a>
 	{else}
-		<a class="link" href="tiki-admin_modules.php?wysiwyg='n'">{tr}Use normal editor{/tr}</a>
+		<a class="link" href="tiki-admin_modules.php?wysiwyg=n#editcreate">{tr}Use normal editor{/tr}</a>
 	{/if}
-	
 </h3>
+{if $um_name ne ''}
+<a href="tiki-admin_modules.php#editcreate">{tr}Create new user module{/tr}</a>
+{/if}
 <form name='editusr' method="post" action="tiki-admin_modules.php">
 <table>
-<tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name}" /></td></tr>
-<tr><td class="form">{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title}" /></td></tr>
+<tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}" /></td></tr>
+<tr><td class="form">{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title|escape}" /></td></tr>
 <tr><td class="form">{tr}Data{/tr}</td><td>
 
 
-<textarea id='usermoduledata' name="um_data" rows="10" cols="40">{$um_data}</textarea>
+<textarea id='usermoduledata' name="um_data" rows="10" cols="40">{$um_data|escape}</textarea>
 
 {if $wysiwyg eq 'y'}
 	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>

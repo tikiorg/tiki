@@ -14,7 +14,8 @@ class ShoutboxLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (message like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (message like $findesc)";
     } else {
       $mid="";
     }
@@ -25,6 +26,7 @@ class ShoutboxLib extends TikiLib {
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       if(!$res["user"]) $res["user"]='Anonymous';
+			$res["message"] = htmlspecialchars($res["message"]);
       $ret[] = $res;
     }
     $retval = Array();
@@ -38,7 +40,8 @@ class ShoutboxLib extends TikiLib {
     $hash = md5($message);
     $cant = $this->getOne("select count(*) from tiki_shoutbox where hash = '$hash' and user='$user'");
     if($cant) return;
-    $message=addslashes(strip_tags($message,'<a>'));
+    $message=addslashes(strip_tags($message));
+		
     // Check the name
     $now=date("U");
     if($msgId) {

@@ -2,8 +2,8 @@
 {include file="header.tpl"}
 <div id="tiki-main">
 <div class="articletitle">
-<span class="titlea">{$title}</span><br/>
-<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br/>
+<span class="titlea">{$title}</span><br />
+<span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br />
 </div>
 <div class="articleheading">
 <table width="100%" cellpadding="0" cellspacing="0">

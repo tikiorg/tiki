@@ -202,34 +202,48 @@ class TikiSetup {
 			ob_end_clean();
 
 			print "
+<html><body>
+<h2><font color='red'>TikiWiki is not properly set up:</font></h1>
 <pre>
-Your tiki is not properly set up:
-
 $errors
 ";
 
 			if (!TikiSetup::isWindows()) {
-				print "To set up your tiki, log in to the system running tiki,
-and type the following commands:
+				print "You may either chmod the directories above manually to 777, or run one of the sets of commands below.
+<b><a href='tiki-install.php'>Procceed to the Tiki installer</a></b> after you run the commands below.
 
-\$ bash
-\$ cd $docroot
-\$ chmod +x setup.sh
-\$ su -c './setup.sh $wwwuser'
+If you cannot become root, and are NOT part of the group $wwwgroup:
+	\$ bash
+	\$ cd $docroot
+	\$ chmod +x setup.sh
+	\$ ./setup.sh yourlogin yourgroup 02777
+	Tip: You can find your group using the command 'id'.
 
-or if you can't become root, but are a member of the group $wwwgroup:
+If you cannot become root, but are a member of the group $wwwgroup:
+	\$ bash
+	\$ cd $docroot
+	\$ chmod +x setup.sh
+	\$ ./setup.sh mylogin $wwwgroup</i>
 
-\$ bash
-\$ cd $docroot
-\$ chmod +x setup.sh
-\$ ./setup.sh mylogin $wwwgroup
+If you can become root:
+	\$ bash
+	\$ cd $docroot
+	\$ chmod +x setup.sh
+	\$ su -c './setup.sh $wwwuser'
 
 If you have problems accessing a directory, check the open_basedir entry in 
 $PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
 Once you have executed these commands, this message will disappear!
 
-	";
+Note: If you cannot become root, you will not be able to delete certain
+files created by apache, and will need to ask your system administrator
+to delete them for you if needed.
+
+<a href='http://tikiwiki.org/InstallTiki' target='_blank'>Consult the tikiwiki.org installation guide</a> if you need more help.
+
+<b><a href='tiki-install.php'>Procceed to the Tiki installer</a></b> if you've completed the steps above.
+</pre></body></html>";
 			}
 			exit;
 		}
@@ -319,6 +333,8 @@ $feature_smileys = 'y';
 $feature_quizzes = 'n';
 $feature_comm = 'n';
 $feature_categories = 'n';
+$feature_categorypath = 'n';
+$feature_categoryobjects = 'n';
 $feature_faqs = 'n';
 $feature_shoutbox = 'n';
 $feature_stats = 'n';
@@ -366,6 +382,9 @@ $feature_menusfolderstyle = 'n';
 $feature_calendar = 'n';
 $feature_editcss = 'n';
 $feature_wiki_monosp = 'y';
+
+$feature_help = 'y';
+$smarty->assign('feature_help',$feature_help);
 
 $wiki_feature_copyrights = 'n';
 $wiki_creator_admin = 'n';
@@ -470,6 +489,8 @@ $feature_wiki_description = 'n';
 $smarty->assign('feature_wiki_description',$feature_wiki_description);
 $feature_wiki_pictures = 'n';
 $smarty->assign('feature_wiki_pictures',$feature_wiki_pictures);
+$feature_wikiwords = 'y';
+$smarty->assign('feature_wikiwords',$feature_wikiwords);
 $feature_surveys = 'n';
 $smarty->assign('feature_surveys',$feature_surveys);
 $feature_newsletters = 'n';
@@ -604,7 +625,7 @@ $smarty->assign('webmail_view_html',$webmail_view_html);
 $webmail_max_attachment = 1500000;
 $smarty->assign('webmail_max_attachment',$webmail_max_attachment);
 
-$feature_clear_passwords = 'y';
+$feature_clear_passwords = 'n';
 $smarty->assign('feature_clear_passwords','n');
 $feature_challenge = 'n';
 $smarty->assign('feature_challenge','n');
@@ -768,6 +789,8 @@ $smarty->assign('feature_hotwords_nw',$feature_hotwords_nw);
 $smarty->assign('feature_lastChanges',$feature_lastChanges);
 $smarty->assign('feature_dump',$feature_dump);
 $smarty->assign('feature_categories',$feature_categories);
+$smarty->assign('feature_categorypath',$feature_categorypath);
+$smarty->assign('feature_categoryobjects',$feature_categoryobjects);
 $smarty->assign('feature_faqs',$feature_faqs);
 $smarty->assign('feature_shoutbox',$feature_shoutbox);
 $smarty->assign('feature_stats',$feature_stats);
@@ -1057,7 +1080,7 @@ if(!file_exists("templates_c/".$tikidomain."preferences.php")) {
 $user_dbl='y';
 if($feature_userPreferences == 'y') {
   // Check for FEATURES for the user
-  $user_style = $tikilib->get_preference("style", 'elegant.css');
+  $user_style = $tikilib->get_preference("style", 'moreneat.css');
   if($user) {
     $user_dbl=$tikilib->get_user_preference($user,'user_dbl','y'); 
     if($change_theme == 'y') {
@@ -1248,8 +1271,8 @@ $smarty->assign('beingEdited','n');
 
 if($feature_warn_on_edit == 'y') {
   // Check if the page is being edited
-  if(isset($_REQUEST["page"])) {
-   $chkpage = $_REQUEST["page"];
+  if(isset($_REQUEST['page'])) {
+   $chkpage = $_REQUEST['page'];
   } else {
    $chkpage = $wikiHomePage;
   }
@@ -1257,9 +1280,9 @@ if($feature_warn_on_edit == 'y') {
   //print($GLOBALS["HTTP_REFERER"]);
   // IF isset the referer and if the referer is editpage then unset taking the pagename from the
   // query or homepage if not query
-  if(isset($HTTP_SERVER_VARS["HTTP_REFERER"])) {
-    if(strstr($HTTP_SERVER_VARS["HTTP_REFERER"],'tiki-editpage')) {
-      $purl = parse_url($HTTP_SERVER_VARS["HTTP_REFERER"]);
+  if(isset($_SERVER['HTTP_REFERER'])) {
+    if(strstr($_SERVER['HTTP_REFERER'],'tiki-editpage')) {
+      $purl = parse_url($_SERVER['HTTP_REFERER']);
       if(!isset($purl["query"])) {
         $purl["query"]='';
       }
@@ -1272,8 +1295,8 @@ if($feature_warn_on_edit == 'y') {
       }
     }
   }
-  if(strstr($_SERVER["REQUEST_URI"],'tiki-editpage')) {
-    $purl = parse_url($_SERVER["REQUEST_URI"]);
+  if(strstr($_SERVER['REQUEST_URI'],'tiki-editpage')) {
+    $purl = parse_url($_SERVER['REQUEST_URI']);
     if(!isset($purl["query"])) {
       $purl["query"]='';
     }
@@ -1281,8 +1304,18 @@ if($feature_warn_on_edit == 'y') {
     if(!isset($purlquery["page"])) {
       $purlquery["page"]=$wikiHomePage;
     }
-    $_SESSION["edit_lock"]=$tikilib->semaphore_set($purlquery["page"]);
-  } 
+    //When tiki-editpage.php is loading, check to see if there is an editing conflict
+    if($tikilib->semaphore_is_set($chkpage,$warn_on_edit_time*60) && $tikilib->get_semaphore_user($chkpage) != $user) {
+	$smarty->assign('editpageconflict','y');
+	$editpageconflict='y';
+    } else {
+	if (!(isset($_REQUEST['save']))) {	// Don't editlock $wikiHomePage when saving any wiki page
+		$_SESSION["edit_lock"]=$tikilib->semaphore_set($purlquery["page"]);
+		$smarty->assign('editpageconflict','n');
+		$editpageconflict='n';
+	}
+    }
+  }
   
   
   if($tikilib->semaphore_is_set($chkpage,$warn_on_edit_time*60)) {
@@ -1351,8 +1384,8 @@ if($feature_live_support == 'y') {
 
 if($feature_referer_stats == 'y') {
 // Referer tracking
-if(isset($HTTP_SERVER_VARS["HTTP_REFERER"])) {
-  $pref = parse_url($HTTP_SERVER_VARS["HTTP_REFERER"]);
+if(isset($_SERVER['HTTP_REFERER'])) {
+  $pref = parse_url($_SERVER['HTTP_REFERER']);
   if(!strstr($_SERVER["SERVER_NAME"],$pref["host"])) {
     $tikilib->register_referer($pref["host"]);
   }
@@ -1390,5 +1423,10 @@ include_once('tiki-handlers.php');
 if($feature_obzip == 'y') {
   ob_start("ob_gzhandler");
 }
+
+/* Include debugger class declaration. So use loggin facility in
+ * php files become much easier :)
+ */
+include_once('lib/debug/debugger.php');
 
 ?>

@@ -11,7 +11,7 @@ if($feature_charts != 'y') {
 }
 
 if(!isset($_REQUEST['itemId'])) {
-  $smarty->assign('msg',tra("No itemindicated"));
+  $smarty->assign('msg',tra("No item indicated"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 

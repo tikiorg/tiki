@@ -19,7 +19,7 @@
 
 <h2>{tr}Add a subscription newsletters{/tr}</h2>
 <form action="tiki-admin_newsletter_subscriptions.php" method="post">
-<input type="hidden" name="nlId" value="{$nlId}" />
+<input type="hidden" name="nlId" value="{$nlId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Email{/tr}:</td><td class="formcolor"><input type="text" name="email" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
@@ -33,9 +33,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_newsletter_subscriptions.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

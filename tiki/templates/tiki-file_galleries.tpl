@@ -1,16 +1,21 @@
 <a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a><br/><br/>
 {if $tiki_p_create_file_galleries eq 'y'}
 {if $edit_mode eq 'y'}
-<h3>{tr}Create or edit a file gallery using this form{/tr}</h3>
+{if $galleryId eq 0}
+<h3>{tr}Create a file gallery{/tr}</h3>
+{else}
+<h3>{tr}Edit this file gallery:{/tr} {$name}</h3>
+<a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>
+{/if}
 {if $individual eq 'y'}
 <a class="fgallink" href="tiki-objectpermissions.php?objectName=file%20gallery%20{$name}&amp;objectType=file%20gallery&amp;permType=file%20galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
 {/if}
 <div  align="center">
 <form action="tiki-file_galleries.php" method="post">
-<input type="hidden" name="galleryId" value="{$galleryId}" />
+<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
 <table class="editfgalform">
-<tr><td class="editfgalform">{tr}Name{/tr}:</td><td class="editfgalform"><input type="text" name="name" value="{$name}"/></td></tr>
-<tr><td class="editfgalform">{tr}Description{/tr}:</td><td class="editfgalform"><textarea rows="5" cols="40" name="description">{$description}</textarea></td></tr>
+<tr><td class="editfgalform">{tr}Name{/tr}:</td><td class="editfgalform"><input type="text" name="name" value="{$name|escape}"/></td></tr>
+<tr><td class="editfgalform">{tr}Description{/tr}:</td><td class="editfgalform"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
 <!--<tr><td>{tr}Theme{/tr}:</td><td><select name="theme">
        <option value="default" {if $theme eq 'default'}selected="selected"{/if}>default</option>
        <option value="dark" {if $theme eq 'dark'}selected="selected"{/if}>dark</option>
@@ -51,12 +56,12 @@
 </tr>
 <tr>
 	<td class="editfgalform">{tr}Max description display size{/tr}</td>
-	<td class="editfgalform"><input type="text" name="max_desc" value="{$max_desc}" /></td>
+	<td class="editfgalform"><input type="text" name="max_desc" value="{$max_desc|escape}" /></td>
 </tr>
-<tr><td class="editfgalform">{tr}Max Rows per page{/tr}:</td><td class="editfgalform"><input type="text" name="maxRows" value="{$maxRows}" /></td></tr>
+<tr><td class="editfgalform">{tr}Max Rows per page{/tr}:</td><td class="editfgalform"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
 {include file=categorize.tpl}
 <tr><td class="editfgalform">{tr}Other users can upload files to this gallery{/tr}:</td><td class="editfgalform"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="editfgalform">&nbsp;</td><td class="editfgalform"><input type="submit" value="{tr}edit/create{/tr}" name="edit" /></td></tr>
+<tr><td class="editfgalform">&nbsp;</td><td class="editfgalform"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
 </table>
 </form>
 </div>
@@ -80,9 +85,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-file_galleries.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

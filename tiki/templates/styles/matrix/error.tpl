@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/error.tpl,v 1.4 2003-07-13 02:19:37 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/error.tpl,v 1.5 2003-08-01 10:31:17 redflo Exp $ *}
 {* Index we display a wiki page here *}
 
 {include file="header.tpl"}
@@ -44,7 +44,7 @@
           {tr}Error{/tr}
         </div>
         <div class="cbox-data" id="error-data">
-          {$msg}<br/><br/>
+          {$msg}<br /><br />
           <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
         </div>
       </div>

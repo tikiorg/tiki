@@ -1,29 +1,28 @@
-<a name="wiki"></a>
 <div class="cbox">
 <div class="cbox-title">{tr}Wiki settings{/tr}</div>
 <div class="cbox-data">
     <table>
     <tr><td width="60%" valign="top">
     <div class="simplebox">
-    {tr}Dumps{/tr}:<br/>
-    <a class="link" href="tiki-admin.php?page=wiki&dump=1">{tr}Generate dump{/tr}</a><br/>
+    {tr}Dumps{/tr}:<br />
+    <a class="link" href="tiki-admin.php?page=wiki&dump=1">{tr}Generate dump{/tr}</a><br />
     <a class="link" href="dump/{$tikidomain}new.tar">{tr}Download last dump{/tr}</a>
     </div>
     
     <div class="simplebox">
-    <form action="tiki-admin.php#wiki" method="post">
-    {tr}Create a tag for the current wiki{/tr}<br/>
+    <form action="tiki-admin.php?page=wiki" method="post">
+    {tr}Create a tag for the current wiki{/tr}<br />
     {tr}Tag Name{/tr}<input  maxlength="20" size="10" type="text" name="tagname"/>
     <input type="submit" name="createtag" value="{tr}create{/tr}"/>
     </form>
     </div>
     
     <div class="simplebox">
-    <form action="tiki-admin.php#wiki" method="post">
-    {tr}Restore the wiki{/tr}<br/>
+    <form action="tiki-admin.php?page=wiki" method="post">
+    {tr}Restore the wiki{/tr}<br />
     {tr}Tag Name{/tr}: <select name="tagname">
           {section name=sel loop=$tags}
-          <option value="{$tags[sel]}">{$tags[sel]}</option>
+          <option value="{$tags[sel]|escape}">{$tags[sel]}</option>
           {sectionelse}
           <option value=''></option>
           {/section}
@@ -33,11 +32,11 @@
     </div>
     
     <div class="simplebox">
-    <form action="tiki-admin.php#wiki" method="post">
-    {tr}Remove a tag{/tr}<br/>
+    <form action="tiki-admin.php?page=wiki" method="post">
+    {tr}Remove a tag{/tr}<br />
     {tr}Tag Name{/tr}<select name="tagname">
           {section name=sel loop=$tags}
-          <option value="{$tags[sel]}">{$tags[sel]}</option>
+          <option value="{$tags[sel]|escape}">{$tags[sel]}</option>
           {sectionelse}
           <option value=''></option>
           {/section}
@@ -49,9 +48,9 @@
     
     <div class="simplebox">
     {tr}Wiki comments settings{/tr}
-    <form method="post" action="tiki-admin.php#wiki">
+    <form method="post" action="tiki-admin.php?page=wiki">
     <table>
-    <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="wiki_comments_per_page" value="{$wiki_comments_per_page}" /></td></tr>
+    <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="wiki_comments_per_page" value="{$wiki_comments_per_page|escape}" /></td></tr>
     <tr><td class="form">{tr}Comments default ordering{/tr}
     </td><td>
     <select name="wiki_comments_default_ordering">
@@ -66,11 +65,11 @@
     
     <div class="simplebox">
     {tr}Wiki attachments{/tr}
-    <form method="post" action="tiki-admin.php#wiki">
+    <form method="post" action="tiki-admin.php?page=wiki">
     <table>
     <tr><td class="form">{tr}Wiki attachments{/tr}:</td><td><input type="checkbox" name="feature_wiki_attachments" {if $feature_wiki_attachments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="y" {if $w_use_db eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="n" {if $w_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="w_use_dir" value="{$w_use_dir}" /> </tr>
+    <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="n" {if $w_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="w_use_dir" value="{$w_use_dir|escape}" /> </td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
@@ -78,7 +77,7 @@
     
     <div class="simplebox">
     {tr}Export Wiki Pages{/tr}
-    <form method="post" action="tiki-admin.php#wiki">
+    <form method="post" action="tiki-admin.php?page=wiki">
     <table>
     <tr><td align="center" colspan="2"><a class="link" href="tiki-export_wiki_pages.php">{tr}Export{/tr}</a></tr>
     </table>
@@ -87,13 +86,13 @@
     
     
     <div class="simplebox">
-    <a class="link" href="tiki-admin.php#wiki?rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a>
+    <a class="link" href="tiki-admin.php?page=wiki&amp;rmvunusedpic=1">{tr}Remove unused pictures{/tr}</a>
     </div>
     
     <div class="simplebox">
-    <form method="post" action="tiki-admin.php#wiki">
+    <form method="post" action="tiki-admin.php?page=wiki">
     <table><tr>
-    <td class="form">{tr}Wiki Home Page{/tr}</td><td class="form"><input type="text" name="wikiHomePage" value="{$wikiHomePage}" />
+    <td class="form">{tr}Wiki Home Page{/tr}</td><td class="form"><input type="text" name="wikiHomePage" value="{$wikiHomePage|escape}" />
     <input type="submit" name="setwikihome" value="{tr}set{/tr}" />
     </td>
     </tr></table>
@@ -101,13 +100,13 @@
     </div>
     
     <div class="simplebox">
-    <form method="post" action="tiki-admin.php#wiki">
+    <form method="post" action="tiki-admin.php?page=wiki">
     <table><tr>
     <td colspan="2" class="form">{tr}Wiki Discussion{/tr}</td></tr><tr><td class="form">
     {tr}Discuss pages on forums{/tr}: </td><td>
     <input type="checkbox" name="feature_wiki_discuss" {if $feature_wiki_discuss eq 'y'}checked="checked"{/if}/> </td></tr>
     <tr><td class="form">{tr}Forum{/tr}:</td><td class="form">
-    <input maxlength="20" size="10" type="text" name="wiki_forum" value="{$wiki_forum}"/>
+    <input maxlength="20" size="10" type="text" name="wiki_forum" value="{$wiki_forum|escape}"/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikidiscussprefs" value="{tr}Change preferences{/tr}" />
     </td>
     </tr></table>
@@ -115,7 +114,7 @@
     </div>
   
     <div class="simplebox">
-    <form method="post" action="tiki-admin.php#wiki">
+    <form method="post" action="tiki-admin.php?page=wiki">
     <table><tr>
     <td colspan="2" class="form">{tr}Wiki Page Names{/tr}</td></tr><tr><td class="form">
     <select name="wiki_page_regex">
@@ -130,7 +129,7 @@
     
     <div class="simplebox">
     {tr}Wiki page list configuration{/tr}
-    <form method="post" action="tiki-admin.php#wiki">
+    <form method="post" action="tiki-admin.php?page=wiki">
     <table>
     	<tr>
     		<td class="form">{tr}Name{/tr}</td>
@@ -219,8 +218,8 @@
     
     <td width="40%" valign="top">
     <div class="simplebox">
-    {tr}Wiki Features{/tr}:<br/>
-    <form action="tiki-admin.php#wiki" method="post">
+    {tr}Wiki Features{/tr}:<br />
+    <form action="tiki-admin.php?page=wiki" method="post">
     <table width="100%">
     <tr><td class="form">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
@@ -264,6 +263,7 @@
     </td></tr>
     <tr><td class="form">{tr}Footnotes{/tr}:</td><td><input type="checkbox" name="feature_wiki_footnotes" {if $feature_wiki_footnotes eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Users can lock pages (if perm){/tr}:</td><td><input type="checkbox" name="feature_wiki_usrlock" {if $feature_wiki_usrlock eq 'y'}checked="checked"{/if}/></td></tr>    
+    <tr><td class="form">{tr}Use WikiWords{/tr}:</td><td><input type="checkbox" name="feature_wikiwords" {if $feature_wikiwords eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Page creators are admin of their pages{/tr}:</td><td><input type="checkbox" name="wiki_creator_admin" {if $wiki_creator_admin eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Tables syntax{/tr}:</td><td>
     <select name="feature_wiki_tables">
@@ -279,10 +279,10 @@
     
     <div class="simplebox">
     {tr}Wiki History{/tr}
-    <form action="tiki-admin.php#wiki" method="post">
+    <form action="tiki-admin.php?page=wiki" method="post">
     <table>
-    <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions}" /></td></tr>
-    <tr><td class="form">{tr}Never delete versions younger than days{/tr}: </td><td><input size="5" type="text" name="keep_versions" value="{$keep_versions}" /></td></tr>
+    <tr><td class="form">{tr}Maximum number of versions for history{/tr}: </td><td><input size="5" type="text" name="maxVersions" value="{$maxVersions|escape}" /></td></tr>
+    <tr><td class="form">{tr}Never delete versions younger than days{/tr}: </td><td><input size="5" type="text" name="keep_versions" value="{$keep_versions|escape}" /></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikisetprefs" value="{tr}Set{/tr}" /></td></tr>    
     </table>
     </form>
@@ -290,11 +290,11 @@
 
     <div class="simplebox">
     {tr}Copyright Management{/tr}
-    <form action="tiki-admin.php#wiki" method="post">
+    <form action="tiki-admin.php?page=wiki" method="post">
     <table>
     <tr><td class="form">{tr}Enable Feature{/tr}:</td><td><input type="checkbox" name="wiki_feature_copyrights" {if $wiki_feature_copyrights eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}License Page{/tr}: </td><td><input type="text" name="wikiLicensePage" value="{$wikiLicensePage}" /></td></tr>
-    <tr><td class="form">{tr}Submit Notice{/tr}: </td><td><input type="text" name="wikiSubmitNotice" value="{$wikiSubmitNotice}" /></td></tr>
+    <tr><td class="form">{tr}License Page{/tr}: </td><td><input type="text" name="wikiLicensePage" value="{$wikiLicensePage|escape}" /></td></tr>
+    <tr><td class="form">{tr}Submit Notice{/tr}: </td><td><input type="text" name="wikiSubmitNotice" value="{$wikiSubmitNotice|escape}" /></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikisetcopyright" value="{tr}Set{/tr}" /></td></tr>    
     </table>
     </form>

@@ -66,7 +66,8 @@ class MiniCalLib extends TikiLib {
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (name like '%".$find."%' or filename like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (name like $findesc or filename like $findesc)";  
     } else {
       $mid=" "; 
     }
@@ -99,7 +100,8 @@ user='$user' $mid";
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or description like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (title like $findesc or description like $findesc)";  
     } else {
       $mid=" "; 
     }
@@ -132,7 +134,8 @@ user='$user' $mid";
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (title like '%".$find."%' or description like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (title like $findesc or description like $findesc)";  
     } else {
       $mid=" "; 
     }

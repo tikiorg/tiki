@@ -1,0 +1,71 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-categories.css,v 1.2 2003-08-01 10:31:08 redflo Exp $
+ *
+ * Define styles for: Categories
+ *
+ */
+
+/*
+ * Categories
+ */
+
+/* Table containing the category path */
+table.tcategpath
+{
+  color: InfoText;
+  background-color: InfoBackground;
+  width: 100%;
+  margin-bottom: 30px;
+}
+td.tdcategpath
+{
+  vertical-align: middle;
+}
+/* Links to up/top categories */
+/* Links to subcategories */
+.categpath, .categpath:visited, .categpath:active,
+.categlink, .categlink:visited, .categlink:active,
+.catname,   .catname:visited,   .catname:active
+{
+  text-decoration: none;
+}
+.categpath:hover, .categpath:visited:hover,
+.categlink:hover, .categlink:visited:hover,
+.catname:hover,   .catname:visited:hover
+{
+  text-decoration: underline;
+}
+
+/* Table with the subcategories (old way to show subcategories) */
+table.subcats
+{
+}
+td.tdsubcat:hover
+{
+}
+
+table.catobjects
+{
+  color: WindowText;
+  background-color: Window;
+  width: 100%;
+  border: 3px ridge WindowFrame;
+}
+
+td.categobjectsnameeven,td.categobjectsdataodd {}
+td.categobjectsdataeven,td.categobjectsdataodd {}
+
+/* trees */
+div.tree
+{
+  text-align: left;
+  padding-left: 1.5em;
+}
+/* Root of tree (outer div) */
+div.tree#top
+{
+  color: WindowText;
+  background-color: Window;
+  border: 3px ridge WindowFrame;
+  padding: 10px 1em 20px 1em;
+}

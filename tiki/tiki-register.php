@@ -96,7 +96,8 @@ if(isset($_REQUEST["register"])) {
 
   
   if($validateUsers == 'y') {
-    $apass = addslashes(substr(md5($tikilib->genPass()),0,25));
+    //$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
+    $apass = addslashes(md5($tikilib->genPass()));
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
     $machine =httpPrefix().$foo1;

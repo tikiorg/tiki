@@ -1,9 +1,6 @@
-{if $tiki_p_read_comments eq 'y'}
-<br/>
-<small>({$comments_cant} {tr}comments{/tr})</small>
-<small> [ <a href="javascript:flip('comzone');" class="linkbut" title="{tr}Click twice if once is not enough !{/tr}">{tr}Toggle display of comment zone{/tr}</a> ]</small>
-{/if}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.17 2003-08-01 10:31:08 redflo Exp $ *}
 
+<br />
 {if $comments_show eq 'y'}
 <div id="comzoneopen">
 {else}
@@ -16,18 +13,19 @@
 
   <form method="post" action="{$comments_father}">
   {section name=i loop=$comments_request_data}
-  <input type="hidden" name="{$comments_request_data[i].name}" value="{$comments_request_data[i].value}" />
+  <input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
   {/section}
-  <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />    
+  <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />    
   <input type="hidden" name="comments_offset" value="0" />
   <table class="normal">
+  <caption> {tr}Posted comments{/tr} </caption>
   <tr>
     <td class="heading">{tr}Comments{/tr} 
         <select name="comments_maxComments">
         <option value="10" {if $comments_maxComments eq 10 }selected="selected"{/if}>10</option>
         <option value="20" {if $comments_maxComments eq 20 }selected="selected"{/if}>20</option>
         <option value="30" {if $comments_maxComments eq 30 }selected="selected"{/if}>30</option>
-        <option value="999999" {if $comments_maxComments eq 999999 }selected="selected"{/if}>All</option>
+        <option value="999999" {if $comments_maxComments eq 999999 }selected="selected"{/if}>{tr}All{/tr}</option>
         </select>
     </td>
     <td class="heading">{tr}Sort{/tr}
@@ -48,7 +46,7 @@
     
     </td>
     <td class="heading">{tr}Search{/tr}
-        <input type="text" size="7" name="comments_commentFind" value="{$comments_commentFind}" />
+        <input type="text" size="7" name="comments_commentFind" value="{$comments_commentFind|escape}" />
     </td>
     
     <td class="heading"><input type="submit" name="comments_setOptions" value="{tr}set{/tr}" /></td>
@@ -62,11 +60,11 @@
   <table class="normal">
   <tr>
   	<td class="odd">
-  		<a name="threadId{$comments_coms[com].threadId}" />
+  		<a name="threadId{$comments_coms[com].threadId}"></a>
   		<table width="100%">
   			<tr>
 			  	<td>
-			    	<span class="commentstitle">{$comments_coms[com].title}</span><br/>
+			    	<span class="commentstitle">{$comments_coms[com].title}</span><br />
 			  		{tr}by{/tr} {$comments_coms[com].userName} {tr}on{/tr} {$comments_coms[com].commentDate|tiki_long_datetime} [{tr}Score{/tr}:{$comments_coms[com].average|string_format:"%.2f"}]
 			  	</td>
 			  	<td valign="top" style="text-align:right;" width="20%">
@@ -92,14 +90,14 @@
   <tr>
   	<td class="even">
   		{$comments_coms[com].parsed}
-  		<br/><br/>
+  		<br /><br />
   		[<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}">{tr}reply to this{/tr}</a>
   		{if $comments_parentId > 0}
   			|<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].grandFather}">{tr}parent{/tr}</a>
   		{/if}
   		]
   		{if $comments_coms[com].replies.numReplies > 0}
-  			<br/>
+  			<br />
   			<ul>
   			{section name=rep loop=$comments_coms[com].replies.replies}
   				<li><a class="commentshlink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}#threadId{$comments_coms[com].replies.replies[rep].threadId}">{$comments_coms[com].replies.replies[rep].title}</a>
@@ -112,7 +110,7 @@
   </table>
   {/section}
 
-<br/>
+<br />
 <div align="center">   
     <small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>
   <div class="mini">
@@ -124,7 +122,7 @@
   		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}next{/tr}</a>]
   	{/if}
   	{if $direct_pagination eq 'y'}
-		<br/>
+		<br />
 		{section loop=$comments_cant_pages name=foo}
 		{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_maxComments}
 		<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">
@@ -132,7 +130,7 @@
 		{/section}
 	{/if}
   </div>
-  <br/>
+  <br />
 </div>  
 
   {/if}
@@ -143,7 +141,7 @@
   <table class="normal">
   	<tr>
   		<td class="odd">
-  			<span class="commentstitle">{$comments_preview_title}</span><br/>
+  			<span class="commentstitle">{$comments_preview_title}</span><br />
   			{tr}by{/tr} {$user|userlink}
   		</td>
   	</tr>
@@ -160,14 +158,14 @@
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="link" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">{tr}post new comment{/tr}</a>)
     {/if}
     <form method="post" action="{$comments_father}">
-    <input type="hidden" name="comments_parentId" value="{$comments_parentId}" />
-    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
-    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
-    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
-    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
+    <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
+    <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
     {* Traverse request variables that were set to this page adding them as hidden data *}
     {section name=i loop=$comments_request_data}
-    <input type="hidden" name="{$comments_request_data[i].name}" value="{$comments_request_data[i].value}" />
+    <input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
     {/section}
     <table class="normal">
     <tr>
@@ -182,7 +180,7 @@
     </tr>
     <tr>
       <td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="comments_title" value="{$comment_title}" /></td>
+      <td class="formcolor"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
       {if $feature_smileys eq 'y'}
       <td class="formcolor" rowspan="2">
       <table>
@@ -222,18 +220,18 @@
     </tr>
     <tr>
       <td class="formcolor">{tr}Comment{/tr}</td>
-      <td class="formcolor"><textarea id="editpost" name="comments_data" rows="6" cols="60">{$comment_data}</textarea></td>
+      <td class="formcolor"><textarea id="editpost" name="comments_data" rows="6" cols="60">{$comment_data|escape}</textarea></td>
     </tr>
     </table>
     </form>
-  <br/>
-  <table class="normal">
+  <br />
+  <table class="normal" id="commentshelp">
   <tr><td class="even">
-  <b>{tr}Posting comments{/tr}:</b><br/><br/>
-  {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br/>
-  {tr}HTML tags are not allowed inside comments{/tr}<br/>
+  <b>{tr}Posting comments{/tr}:</b><br /><br />
+  {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br />
+  {tr}HTML tags are not allowed inside comments{/tr}<br />
   </td></tr></table>
-  <br/>
+  <br />
 
   {/if}
   {/if}

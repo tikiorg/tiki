@@ -42,6 +42,7 @@ DIV#tiki-main {  background: white;  height: 100%;  width: 100%;  margin-top: 0p
 
 /* This is the header */
 DIV#tiki-top {  background: #EFEFEF; color: black; padding-right: 0px;  width: 100%; }
+DIV#tiki-top a { color: black; text-decoration: none; }
 
 /* This is the middle */
 DIV#tiki-mid {  background: white;  height: auto;  padding-bottom: 0px; }
@@ -56,6 +57,23 @@ TD#centercolumn {  background: white;  vertical-align: top;  width: auto; }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {  margin-left: 0px;  margin-right: 5px;  padding-left: 2px;  padding-right: 5px; }
+
+div#debugconsole {
+  position: absolute;
+  background-color: #eeddcc;
+  color: #009000;
+  top: 0px;
+  left: 20px;
+  right: 310px;
+  height: auto;
+  width: auto;
+  z-index: 1;
+  padding: 5px;
+  border: 6px ridge #996600;
+  font-size: 12px;
+} 
+span.on-option { color: #00C000; }
+span.off-option { color: #005000; }
 
 
 /********************************************* GENERAL STYLE PROPERTIES **********************************************/
@@ -808,7 +826,7 @@ div.articletrailer {
   background: #EFEFEF;
   border: 1px solid black;
   border-bottom: 1px solid black;
-  border-top: 1px thin blue;
+  border-top: thin solid blue;
   margin-bottom: 20px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -1169,12 +1187,12 @@ td.tdsubcat {width: 25%;}
 .categlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : red; text-decoration: underline;}
 
 table.catobjects { width: 98%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: #00639C; border-style: solid; border-width: 0px;}
-td.categobjectsname {
+td.categobjectsnameeven,td.categobjectsdataodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
   background-color: #DEDEE7;
 }
-td.categobjectsdata {
+td.categobjectsdataeven,td.categobjectsdataodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
   background-color: #EFEFEF;
@@ -1474,7 +1492,7 @@ color: #000000;
 }
 a.caltabon:hover
 {
-background-color: none;
+background-color: transparent;
 }
 div#tab, div#tabcal, div#tabnav
 {
@@ -1513,7 +1531,7 @@ background-color: #EFEFEF;
 .calfocus
 {
 font-size:7px;
-background-color: none;
+background-color: transparent;
 }
 .calfocus a
 {
@@ -1886,11 +1904,63 @@ background-color: #DAAAAA;
 {
 background-color: #DA9A9A;
 }
-/* To set initial state for 'wiki quick help' panel
- * just set display to 'none' (hidden) or 'block' (show)
- * /
-divdiv#edithelpzone { display: none;  }
-/* To set initial state for 'attachments' table
- * just set display to 'none' (hidden) or 'block' (show)
- * /
-divdiv#attzone      { display: none; margin-top: 10px; }
+
+div#edithelpzone { display: none;  }
+div#attzone      { display: none; margin-top: 10px; }
+div#attzoneopen      { display: block; margin-top: 10px; }
+
+.highlight { background-color: #FFAAAA; color: #000000; }
+
+/*
+ * Caption in tables.
+ * Currently in Attachments and comments only.
+ */
+caption
+{
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight : bold;
+  text-align: right;
+}
+
+/* trees */
+div.tree
+{
+  text-align: left;
+  padding-left: 1.5em;
+}
+/* Root of tree (outer div) */
+div.tree#top
+{
+  border: 1px outset #00E000;
+  padding: 10px 1.5em 20px 1.5em;
+}
+
+/* Wiki editpage textarea */
+textarea.wikiedit
+{
+	width: 100%;
+}
+/* help links style */
+a.tikihelp, a.tikihelp:visited {
+color: inherit;
+border: inherit;
+background-color: inherit;
+font-size: inherit;
+font-weight: inherit;
+margin: inherit;
+padding: inherit;
+text-decoration: inherit;
+}
+a.tikihelp:hover {
+color: #224466;
+border: inherit;
+background-color: inherit;
+font-size: inherit;
+font-weight: inherit;
+margin: inherit;
+padding: inherit;
+cursor: help;
+text-decoration: inherit;
+}
+

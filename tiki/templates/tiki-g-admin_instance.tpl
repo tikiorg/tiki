@@ -5,7 +5,7 @@
 {include file=tiki-g-monitor_bar.tpl}
 <h3>{tr}Instance{/tr}: {$ins_info.instanceId} (Process: {$proc_info.name} {$proc_info.version})</h3>
 <form action="tiki-g-admin_instance.php" method="post">
-<input type="hidden" name="iid" value="{$iid}" />
+<input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">
 <tr>
 	<td class="formcolor">{tr}Created{/tr}</td>
@@ -31,7 +31,7 @@
 	<td class="formcolor">
 	<select name="owner">
 	{section name=ix loop=$users}
-	<option value="{$users[ix].user}" {if $users[ix].user eq $ins_info.owner}selected="selected"{/if}>{$users[ix].user}</option>
+	<option value="{$users[ix].user|escape}" {if $users[ix].user eq $ins_info.owner}selected="selected"{/if}>{$users[ix].user}</option>
 	{/section}
 	</select>
 	</td>
@@ -42,7 +42,7 @@
 	<select name="sendto">
 	  <option value="">{tr}Don't move{/tr}</option>
 	  {section loop=$activities name=ix}
-	  <option value="{$activities[ix].activityId}">{$activities[ix].name}</option>
+	  <option value="{$activities[ix].activityId|escape}">{$activities[ix].name}</option>
 	  {/section}
 	</select>
 	</td>
@@ -74,7 +74,7 @@
 			<select name="acts[{$acts[ix].activityId}]">
 			<option value="*" value="*" {if $acts[ix].user eq '*'}selected='selected'{/if}>*</option>
 			{section name=ix loop=$users}
-			<option value="{$users[ix].user}" {if $users[ix].user eq $acts[ix].user}selected="selected"{/if}>{$users[ix].user}</option>
+			<option value="{$users[ix].user|escape}" {if $users[ix].user eq $acts[ix].user}selected="selected"{/if}>{$users[ix].user}</option>
 			{/section}
 			</select>
 			</td>
@@ -94,7 +94,7 @@
 </form>
 <h3>{tr}Properties{/tr}</h3>
 <form action="tiki-g-admin_instance.php" method="post">
-<input type="hidden" name="iid" value="{$iid}" />
+<input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">
 <tr>
 	<td class="heading">{tr}Property{/tr}</td>
@@ -109,9 +109,9 @@
 	 </td>
 	<td class="odd">
 	{if strlen($item)>80}
-	<textarea name="props[$key]" cols="80" rows="{$item|div:80:20}">{$item}</textarea>
+	<textarea name="props[$key]" cols="80" rows="{$item|div:80:20}">{$item|escape}</textarea>
 	{else}
-	<input type="text" name="props[{$key}]" value="{$item}" />
+	<input type="text" name="props[{$key}]" value="{$item|escape}" />
 	{/if}
 	</td>
 </tr>
@@ -125,7 +125,7 @@
 </form>
 <h3>{tr}Add property{/tr}</h3>
 <form action="tiki-g-admin_instance.php" method="post">
-<input type="hidden" name="iid" value="{$iid}" />
+<input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">
 <tr>
 	<td class="formcolor">{tr}name{/tr}</td>
@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td class="formcolor">{tr}value{/tr}</td>
-	<td class="formcolor"><textarea" name="value" rows="4" cols="80"></textarea></td>
+	<td class="formcolor"><textarea name="value" rows="4" cols="80"></textarea></td>
 </tr>
 <tr>
 	<td class="formcolor">&nbsp;</td>

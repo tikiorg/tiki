@@ -1,5 +1,5 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-eph_admin.php">{tr}Admin ephemerides{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-eph_admin.php">{tr}Admin ephemerides{/tr}</a><br /><br />
 
 
 <table class="normal">
@@ -13,18 +13,18 @@
 	<!-- Form to upload/edit -->
 	  <b>{$pdate|tiki_long_date}</b>
 	  <form enctype="multipart/form-data" action="tiki-eph_admin.php" method="post">
-		<input type="hidden" name="ephId" value="{$ephId}" />
-		<input type="hidden" name="day" value="{$day}" />
-		<input type="hidden" name="mon" value="{$mon}" />
-		<input type="hidden" name="year" value="{$year}" />
+		<input type="hidden" name="ephId" value="{$ephId|escape}" />
+		<input type="hidden" name="day" value="{$day|escape}" />
+		<input type="hidden" name="mon" value="{$mon|escape}" />
+		<input type="hidden" name="year" value="{$year|escape}" />
 		<table class="normal">
 		<tr>
 			<td class="formcolor">{tr}Title{/tr}</td>
-			<td class="formcolor"><input size="20" type="text" name="title" value="{$info.title}" /></td>
+			<td class="formcolor"><input size="20" type="text" name="title" value="{$info.title|escape}" /></td>
 		</tr>
 		<tr>
 			<td class="formcolor">{tr}Text{/tr}</td>
-			<td class="formcolor"><textarea rows="5" cols="20" name="textdata">{$info.textdata}</textarea></td>
+			<td class="formcolor"><textarea rows="5" cols="20" name="textdata">{$info.textdata|escape}</textarea></td>
 		
 		</tr>
 		<tr>
@@ -81,7 +81,7 @@
 &nbsp;[<a class="prevnext" href="tiki-userfiles.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-userfiles.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

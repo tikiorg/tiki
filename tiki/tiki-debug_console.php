@@ -1,11 +1,16 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.1 2003-07-13 00:18:56 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.2 2003-08-01 10:30:45 redflo Exp $
 //
 
+global $debugger;
+require_once('lib/debug/debugger.php');
+
+global $smarty;
+
 // Get current URL
-$console_parsed = parse_url($_SERVER["REQUEST_URI"]);
-$smarty->assign('console_father', $console_parsed["path"]);
+$smarty->assign('console_father', $_SERVER["REQUEST_URI"]);
+
 
 // Set default value
 $smarty->assign('result_type', NO_RESULT);
@@ -13,7 +18,6 @@ $smarty->assign('result_type', NO_RESULT);
 // Exec user command in internal debugger
 if (isset($_REQUEST["command"]))
 {
-  require_once('lib/debug/debugger.php');
   // Exec command in debugger
   $command_result = $debugger->execute($_REQUEST["command"]);
 
@@ -27,6 +31,31 @@ if (isset($_REQUEST["command"]))
     $smarty->assign_by_ref('command_result', $command_result);
   }
   else $smarty->assign('command_result', $command_result);
+} else {
+  $smarty->assign('command', "");
 }
+
+// Draw tabs to array. Note that it MUST be AFTER exec command.
+// Bcouse 'exec' can change state of smth so tabs content should be changed...
+$tabs_list = $debugger->background_tabs_draw();
+// Add results tab which is always exists...
+$tabs_list["console"] = $smarty->fetch("debug/tiki-debug_console_tab.tpl");
+ksort($tabs_list);
+$tabs = array(); 
+// TODO: Use stupid dbl loop to generate links code and divs,
+//       but it is quite suitable for
+foreach ($tabs_list as $tname => $tcode)
+{
+  // Generate href code for current button
+  $href = 'javascript:';
+  foreach ($tabs_list as $tn => $t)
+    $href .= (($tn == $tname) ? 'show' : 'hide')."('".md5($tn)."');";
+  //
+  $tabs[] = array("button_caption" => $tname, 
+                  "tab_id"         => md5($tname),
+                  "button_href"    => $href, 
+                  "tab_code"       => $tcode);
+}
+$smarty->assign_by_ref('tabs', $tabs);
 
 ?>

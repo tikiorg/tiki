@@ -32,6 +32,7 @@ if(isset($_REQUEST["subId"])) {
 $smarty->assign('subId',$subId);
 $smarty->assign('allowhtml','y');
 $publishDate=date('U');
+$dc =& $tikilib->get_date_converter($user);
 $smarty->assign('title','');
 $smarty->assign('authorName','');
 $smarty->assign('topicId','');
@@ -131,9 +132,7 @@ $smarty->assign('preview',0);
 // If we are in preview mode then preview it!
 if(isset($_REQUEST["preview"])) {
   # convert from the displayed 'site' time to 'server' time
-  $publishDate = $tikilib->make_server_time($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,
-    $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"],
-    $tikilib->get_display_timezone($user));
+  $publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0, $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]));
 
   $smarty->assign('reads','0');
   $smarty->assign('preview',1); 
@@ -237,9 +236,7 @@ if(isset($_REQUEST["preview"])) {
 if(isset($_REQUEST["save"])) {
   include_once("lib/imagegals/imagegallib.php");
   # convert from the displayed 'site' time to 'server' time
-  $publishDate = $tikilib->make_server_time($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,
-    $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"],
-    $tikilib->get_display_timezone($user));
+  $publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0, $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]));
   
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
     $body = $_REQUEST["body"];  
@@ -343,8 +340,8 @@ if($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {
 $smarty->assign_by_ref('templates',$templates["data"]);
 
 $smarty->assign('publishDate',		$publishDate);
-$smarty->assign('publishDateSite',	$tikilib->get_site_time($publishDate, $user));
-$smarty->assign('siteTimeZone',		$tikilib->get_site_timezone_shortname($user));
+$smarty->assign('publishDateSite',	$dc->getDisplayDateFromServerDate($publishDate));
+$smarty->assign('siteTimeZone',		$dc->getTzName());
 
 // Display the Index Template
 $smarty->assign('mid','tiki-edit_submission.tpl');

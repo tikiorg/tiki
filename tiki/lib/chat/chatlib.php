@@ -126,7 +126,8 @@ class ChatLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (name like '%".$find."%' or description like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (name like $findesc or description like $findesc)";
     } else {
       $mid="";
     }
@@ -148,7 +149,8 @@ class ChatLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where active='y' and (name like '%".$find."%' or description like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where active='y' and (name like $findesc or description like $findesc)";
     } else {
       $mid=" where active='y' ";
     }

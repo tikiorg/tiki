@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a><br/><br/>
+<a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a><br /><br />
 [{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner)}
   <a  href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> 
 {/if}
@@ -9,29 +9,29 @@
 {/if}
 {if $rss_file_gallery eq 'y'}
 |<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}" class="gallink">RSS</a>
-{/if}]<br/><br/>
+{/if}]<br /><br />
 {if $tiki_p_create_file_galleries eq 'y'}
 {if $edit_mode eq 'y'}
 <h3>{tr}Edit a file using this form{/tr}</h3>
 <div  align="center">
 <form action="tiki-list_file_gallery.php" method="post">
-<input type="hidden" name="galleryId" value="{$galleryId}" />
-<input type="hidden" name="fileId" value="{$fileId}" />
+<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
+<input type="hidden" name="fileId" value="{$fileId|escape}" />
 <table class="editfgalform">
-<tr><td class="editfgalform">{tr}Name{/tr}:</td><td class="editfgalform"><input type="text" name="fname" value="{$fname}"/></td></tr>
-<tr><td class="editfgalform">{tr}Description{/tr}:</td><td class="editfgalform"><textarea rows="5" cols="40" name="fdescription">{$fdescription}</textarea></td></tr>
+<tr><td class="editfgalform">{tr}Name{/tr}:</td><td class="editfgalform"><input type="text" name="fname" value="{$fname|escape}"/></td></tr>
+<tr><td class="editfgalform">{tr}Description{/tr}:</td><td class="editfgalform"><textarea rows="5" cols="40" name="fdescription">{$fdescription|escape}</textarea></td></tr>
 <tr><td class="editfgalform">&nbsp;</td><td class="editfgalform"><input type="submit" value="{tr}edit{/tr}" name="edit" /></td></tr>
 </table>
 </form>
 </div>
-<br/>
+<br />
 {/if}
 {/if}
 
   
 {if strlen($description) > 0}
     {$description}
-    <br/>
+    <br />
 {/if}
 
   <h3>{tr}Gallery Files{/tr}</h3>
@@ -40,18 +40,18 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-list_file_gallery.php">
-     <input type="hidden" name="galleryId" value="{$galleryId}" />
-     <input type="text" name="find" value="{$find}" />
+     <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
 </table>
 <form method="get" action="tiki-list_file_gallery.php">
-	<input type="hidden" name="galleryId" value="{$galleryId}" />
-    <input type="hidden" name="find" value="{$find}" />
-    <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+	<input type="hidden" name="galleryId" value="{$galleryId|escape}" />
+    <input type="hidden" name="find" value="{$find|escape}" />
+    <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="listfiles">
 {if $tiki_p_admin_file_galleries eq 'y'}
 <tr>
@@ -74,7 +74,7 @@
 	<select name="moveto">
 		{section name=ix loop=$all_galleries}
 			{if $all_galleries[ix].galleryId ne $galleryId}
-				<option value="{$all_galleries[ix].galleryId}">{$all_galleries[ix].name}</option>
+				<option value="{$all_galleries[ix].galleryId|escape}">{$all_galleries[ix].name}</option>
 			{/if}
 		{/section}
 	</select>
@@ -116,7 +116,7 @@
 
 {if $tiki_p_admin_file_galleries eq 'y'}
 <td width="2%" style="text-align:center;" class="listfilesid{cycle advance=false}">
-	<input type="checkbox" name="file[]" value="{$images[changes].fileId}"  {if $smarty.request.file and in_array($images[changes].fileId,$smarty.request.file)}checked="checked"{/if} />
+	<input type="checkbox" name="file[]" value="{$images[changes].fileId|escape}"  {if $smarty.request.file and in_array($images[changes].fileId,$smarty.request.file)}checked="checked"{/if} />
 </td>
 {/if}
 
@@ -169,7 +169,6 @@
 	&nbsp;
 </td>
 <!--<td class="listfilesuser{cycle advance=false}">{$images[changes].user}&nbsp;</td>-->
-</td>
 </tr>
 {sectionelse}
 <tr><td colspan="16">
@@ -179,7 +178,7 @@
 </table>
 </form>
 
-<br/>
+<br />
   <div class="mini">
       {if $prev_offset >= 0}
         [<a class="fgalprevnext" href="tiki-list_file_gallery.php?find={$find}&amp;galleryId={$galleryId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -189,7 +188,7 @@
       &nbsp;[<a class="fgalprevnext" href="tiki-list_file_gallery.php?find={$find}&amp;galleryId={$galleryId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
       {/if}
       {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-list_file_gallery.php?find={$find}&amp;galleryId={$galleryId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
@@ -200,5 +199,15 @@
   </div>
 </div>
 {if $feature_file_galleries_comments eq 'y'}
+{if $tiki_p_read_comments eq 'y'}
+<div id="page-bar">
+<table>
+<tr><td>
+<div class="button2">
+<a href="javascript:toggle('comzone');" class="linkbut">{$comments_cant} {tr}comments{/tr}</a>
+</div>
+</td></tr></table>
+</div>
 {include file=comments.tpl}
+{/if}
 {/if}

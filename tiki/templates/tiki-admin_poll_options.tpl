@@ -15,10 +15,10 @@
 
 <h2>{tr}Edit or add poll options{/tr}</h2>
 <form action="tiki-admin_poll_options.php" method="post">
-<input type="hidden" name="optionId" value="{$optionId}" />
-<input type="hidden" name="pollId" value="{$pollId}" />
+<input type="hidden" name="optionId" value="{$optionId|escape}" />
+<input type="hidden" name="pollId" value="{$pollId|escape}" />
 <table>
-<tr><td class="form">{tr}Option{/tr}:</td><td><input type="text" name="title" value="{$title}" /></td>
+<tr><td class="form">{tr}Option{/tr}:</td><td><input type="text" name="title" value="{$title|escape}" /></td>
 <td colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -29,9 +29,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_poll_options.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

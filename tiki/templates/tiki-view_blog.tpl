@@ -3,8 +3,8 @@
 {else}
 <div class="blogtitle">{tr}Blog{/tr}: {$title}</div>
 <div class="bloginfo">
-{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br/>
-{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br/><br/>
+{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br />
+{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br /><br />
 <table width="100%">
 <tr>
 	<td>
@@ -42,8 +42,8 @@
 <div class="blogtools">
 <table><tr><td>
 <form action="tiki-view_blog.php" method="get">
-<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-<input type="hidden" name="blogId" value="{$blogId}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+<input type="hidden" name="blogId" value="{$blogId|escape}" />
 {tr}Find:{/tr}<input type="text" name="find" /><input type="submit" name="search" value="{tr}find{/tr}" />
 </form>
 </td><td>
@@ -60,7 +60,7 @@
 <table width="100%"><tr><td align="left">
 <span class="posthead">
 {if $use_title eq 'y'}
-	{$listpages[ix].title}<br/>
+	{$listpages[ix].title}<br />
 	<small> {tr}posted by{/tr} {$listpages[ix].user} on {$listpages[ix].created|tiki_short_datetime}</small>
 {else}
 	{$listpages[ix].created|tiki_short_datetime}<small> {tr}posted by{/tr} {$listpages[ix].user}</small>
@@ -85,7 +85,7 @@
 <table width="100%"><tr><td>
 <small>
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}Permalink{/tr}</a>
- ({tr}referenced by{/tr}: {$listpages[ix].trackbacks_from_count} {tr}posts{/tr}  {tr}refereces{/tr}: {$listpages[ix].trackbacks_to_count} {tr}posts{/tr})
+ ({tr}referenced by{/tr}: {$listpages[ix].trackbacks_from_count} {tr}posts{/tr} / {tr}references{/tr}: {$listpages[ix].trackbacks_to_count} {tr}posts{/tr})
 {if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}view comments{/tr}</a>]
@@ -98,7 +98,7 @@
 </div>
 </div>
 {/section}
-<br/>
+<br />
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
@@ -109,7 +109,7 @@
 &nbsp;[<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
@@ -118,7 +118,18 @@
 {/if}
 </div>
 </div>
+
 {if $feature_blog_comments eq 'y'}
+{if $tiki_p_read_comments eq 'y'}
+<div id="page-bar">
+<table>
+<tr><td>
+<div class="button2">
+<a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a>
+</div>
+</td></tr></table>
+</div>
 {include file=comments.tpl}
+{/if}
 {/if}
 

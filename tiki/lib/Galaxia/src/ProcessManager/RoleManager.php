@@ -78,7 +78,8 @@ class RoleManager extends BaseManager {
   function list_mappings($pId,$offset,$maxRecords,$sort_mode,$find)  {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where gr.roleId=gur.roleId and gur.pId=$pId and ((name like '%".$find."%') or (user like '%".$find."%') or (description like '%".$find."%'))";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where gr.roleId=gur.roleId and gur.pId=$pId and ((name like $findesc) or (user like $findesc) or (description like $findesc))";
     } else {
       $mid=" where gr.roleId=gur.roleId and gur.pId=$pId ";
     }
@@ -103,7 +104,8 @@ class RoleManager extends BaseManager {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where pId=$pId and ((name like '%".$find."%') or (description like '%".$find."%'))";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where pId=$pId and ((name like $findesc) or (description like $findesc))";
     } else {
       $mid=" where pId=$pId ";
     }

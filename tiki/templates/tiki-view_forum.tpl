@@ -89,11 +89,11 @@ a moderator approves it.{/tr}</small>
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
     <form method="post" enctype="multipart/form-data" action="tiki-view_forum.php">
-    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
-    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
-    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
-    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
-    <input type="hidden" name="forumId" value="{$forumId}" />
+    <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
+    <input type="hidden" name="forumId" value="{$forumId|escape}" />
     <table class="forumformtable">
     <tr>
       <td class="forumform">{tr}Post{/tr}</td>
@@ -105,7 +105,7 @@ a moderator approves it.{/tr}</small>
     </tr>
     <tr>
       <td class="forumform">{tr}Title{/tr}</td>
-      <td class="forumform"><input type="text" name="comments_title" value="{$comment_title}" /></td>
+      <td class="forumform"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
       
       {if $feature_smileys eq 'y'}<td rowspan="6" class="forumform">
       <table>
@@ -182,7 +182,7 @@ a moderator approves it.{/tr}</small>
     <tr>
     	<td class="forumform">{tr}Summary{/tr}</td>
     	<td class="forumform">
-    		<input type="text" size="60" name="comment_topicsummary" value="{$comment_topicsummary}" maxlength="240" />
+    		<input type="text" size="60" name="comment_topicsummary" value="{$comment_topicsummary|escape}" maxlength="240" />
     	</td>
     </tr>
     {/if}
@@ -195,13 +195,13 @@ a moderator approves it.{/tr}</small>
 {/if}
     <tr>
       <td class="forumform">{tr}Comment{/tr}</td>
-      <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data}</textarea></td>
+      <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data|escape}</textarea></td>
     </tr>
     {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
     <tr>
 	  <td class="forumform">{tr}Attach file{/tr}</td>
 	  <td class="forumform">
-	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size}"><input name="userfile1" type="file" />
+	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}"><input name="userfile1" type="file" />
 	  </td>   
     </tr>
     {/if}
@@ -221,11 +221,11 @@ a moderator approves it.{/tr}</small>
 
 
 <form method="post" action="tiki-view_forum.php">
-    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
-    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
-    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
-    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
-    <input type="hidden" name="forumId" value="{$forumId}" />
+    <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
+    <input type="hidden" name="forumId" value="{$forumId|escape}" />
 <table class="forumstable">
 {if $tiki_p_admin_forum eq 'y'}
 <tr>
@@ -253,7 +253,7 @@ a moderator approves it.{/tr}</small>
 	<select name="moveto">
 		{section name=ix loop=$all_forums}
 			{if $all_forums[ix].forumId ne $forumId}
-				<option value="{$all_forums[ix].forumId}">{$all_forums[ix].name}</option>
+				<option value="{$all_forums[ix].forumId|escape}">{$all_forums[ix].name}</option>
 			{/if}
 		{/section}
 	</select>
@@ -269,7 +269,7 @@ a moderator approves it.{/tr}</small>
 	<select name="mergetopic">
 		{section name=ix loop=$comments_coms}
 			{if in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}
-				<option value="{$comments_coms[ix].threadId}">{$comments_coms[ix].title}</option>
+				<option value="{$comments_coms[ix].threadId|escape}">{$comments_coms[ix].title}</option>
 			{/if}
 		{/section}
 	</select>
@@ -320,7 +320,7 @@ a moderator approves it.{/tr}</small>
   {if $tiki_p_admin_forum eq 'y'}
   <td width="2%" class="topictitle{cycle advance=false}">
   	
-	<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId}"  {if $smarty.request.forumtopic and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if} />
+	<input type="checkbox" name="forumtopic[]" value="{$comments_coms[ix].threadId|escape}"  {if $smarty.request.forumtopic and in_array($comments_coms[ix].threadId,$smarty.request.forumtopic)}checked="checked"{/if} />
   </td>
   {/if}	
   <td style="text-align:center;" class="topictitle{cycle advance=false}">
@@ -389,7 +389,7 @@ a moderator approves it.{/tr}</small>
 </tr>
 {sectionelse}
 <tr>
-	<td class="odd" colspan="7">{tr}No topics yet{/tr}</td>
+	<td class="odd" colspan="8">{tr}No topics yet{/tr}</td>
 </tr>
 {/section}
 </table>
@@ -421,11 +421,11 @@ a moderator approves it.{/tr}</small>
 <td style="text-align:left;">
 
 <form id='time_control' method="post" action="tiki-view_forum.php">
-    <input type="hidden" name="comments_offset" value="{$comments_offset}" />
-    <input type="hidden" name="comments_threadId" value="{$comments_threadId}" />
-    <input type="hidden" name="comments_threshold" value="{$comments_threshold}" />
-    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode}" />
-    <input type="hidden" name="forumId" value="{$forumId}" />
+    <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+    <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+    <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+    <input type="hidden" name="comments_sort_mode" value="{$comments_sort_mode|escape}" />
+    <input type="hidden" name="forumId" value="{$forumId|escape}" />
     <small>{tr}Show posts{/tr}:</small>
     <select name="time_control" onChange="javascript:document.getElementById('time_control').submit();">
     	<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
@@ -441,7 +441,7 @@ a moderator approves it.{/tr}</small>
 <small>{tr}Jump to forum{/tr}:</small>
 <select name="forumId" onChange="javascript:document.getElementById('quick').submit();">
 {section name=ix loop=$all_forums}
-<option value="{$all_forums[ix].forumId}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
 {/section}
 </select>
 </form>

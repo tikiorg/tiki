@@ -2,7 +2,7 @@
  
 class StructLib extends TikiLib {
 
-  function StructLib($db) 
+  function StructLib($db)
   {
   	# this is probably uneeded now
     if(!$db) {
@@ -330,7 +330,8 @@ class StructLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where parent='' and (page like '%".$find."%' or parent like '%".$find."%')";  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where parent='' and (page like $findesc or parent like $findesc)";  
     } else {
       $mid=" where parent=''"; 
     }

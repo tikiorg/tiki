@@ -1,6 +1,6 @@
-<a class="pagetitle" href="tiki-directory_ranking.php?sort_mode={$sort_mode}">{tr}Directory ranking{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-directory_ranking.php?sort_mode={$sort_mode}">{tr}Directory ranking{/tr}</a><br /><br />
 {* Display the title using parent *}
-{include file=tiki-directory_bar.tpl}<br/><br/>
+{include file=tiki-directory_bar.tpl}<br /><br />
 {* Navigation bar to admin, admin related, etc *}
 
 {* Display the list of categories (items) using pagination *}
@@ -15,7 +15,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr>
-<td class="{cycle advance=false}"><a class="link" href="tiki-directory_redirect.php?siteId={$items[user].siteId}" {if $directory_open_links eq 'n'}target='_new'{/if}>{$items[user].name}</a></td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-directory_redirect.php?siteId={$items[user].siteId}" {if $directory_open_links eq 'n'}target='_blank'{/if}>{$items[user].name}</a></td>
 <td class="{cycle advance=false}">{$items[user].url}</td>
 <td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
 <td class="{cycle advance=false}">{$items[user].hits}</td>
@@ -31,7 +31,7 @@
 </tr>
 {/section}
 </table>
-<br/>
+<br />
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
@@ -42,7 +42,7 @@
 &nbsp;[<a class="prevnext" href="tiki-directory_ranking.php?parent={$parent}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-directory_ranking.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

@@ -3,9 +3,9 @@
 <tr><td class="findtitle">{tr}Find{/tr}</td>
    <td class="findtitle">
    <form method="get" action="tiki-list_cache.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>

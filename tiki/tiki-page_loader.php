@@ -6,7 +6,7 @@ $refresh=1000*$_REQUEST["refresh"];
 ?>
 <html>
 <head>
-<script>
+<script language='Javascript' type='text/javascript'>
 <?php
 $zones = $htmlpageslib->list_html_page_content($_REQUEST["pageName"],0,-1,'zone_asc','');
 $cmds=Array();

@@ -23,7 +23,7 @@
 			<script src="lib/tabs/global.js" type="text/javascript"></script>
 			<script src="lib/tabs/cookie.js" type="text/javascript"></script>
 			<script src="lib/tabs/tabs.js" type="text/javascript"></script>
-			<script type="text/javascript">
+			<script language='Javascript' type='text/javascript'>
 				// <![CDATA[
 			
 			

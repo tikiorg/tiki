@@ -1,17 +1,17 @@
-<a class="pagetitle" href="tiki-survey_stats.php">{tr}Stats for surveys{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-survey_stats.php">{tr}Stats for surveys{/tr}</a><br /><br />
 [<a class="link" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a>
 |<a class="link" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a>
-|<a class="link" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a>]<br/><br/>
+|<a class="link" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a>]<br /><br />
 <h2>{tr}Surveys{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-survey_stats.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
-     <input type="hidden" name="surveyId" value="{$surveyId}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
    </form>
    </td>
 </tr>
@@ -44,7 +44,7 @@
 &nbsp;[<a class="prevnext" href="tiki-survey_stats.php?surveyId={$surveyId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-survey_stats.php?surveyId={$surveyId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

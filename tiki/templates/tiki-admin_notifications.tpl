@@ -1,10 +1,10 @@
-<a class="pagetitle" href="tiki-admin_notifications.php">{tr}Mail notifications{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_notifications.php">{tr}Mail notifications{/tr}</a><br /><br />
 <h2>{tr}Add notification{/tr}</h2>
 <table class="normal">
 <form action="tiki-admin_notifications.php" method="post">
-     <input type="hidden" name="find" value="{$find}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
-     <input type="hidden" name="offset" value="{$offset}" />
+     <input type="hidden" name="find" value="{$find|escape}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="offset" value="{$offset|escape}" />
 <tr><td class="formcolor">{tr}Event{/tr}:</td>
     <td class="formcolor">
     <select name="event">
@@ -24,15 +24,15 @@
 </tr>    
 </form>
 </table>
-<br/><br/>
+<br /><br />
 
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_notifications.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -66,7 +66,7 @@
 {/if}
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admin_notifications.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -76,12 +76,11 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_notifications.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_notifications.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-</div>
 </div>

@@ -1,0 +1,17 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme.css,v 1.2 2003-08-01 10:31:05 redflo Exp $
+ *
+ * My second theme :)
+ * The main feature of this theme -- NO COLORS AND BACKGROUNDS AT ALL :)
+ * Used only system default colors which is user choose for desktop
+ */
+
+@import "notheme/notheme-general.css";
+@import "notheme/notheme-tc.css";
+@import "notheme/notheme-box.css";
+@import "notheme/notheme-wiki.css";
+@import "notheme/notheme-table.css";
+@import "notheme/notheme-categories.css";
+@import "notheme/notheme-other.css";
+@import "notheme/notheme-debug.css";
+@import "notheme/notheme-dir.css";

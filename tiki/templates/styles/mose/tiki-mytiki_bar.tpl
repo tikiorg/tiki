@@ -1,4 +1,4 @@
-<span style="position:absolute;left:195px;top:0;" id="tiki-top">
+<span style="position:absolute;left:197px;top:2px;" id="tiki-top">
 
 <table callpadding="0" cellspacing="0" border="0">
 <tr>

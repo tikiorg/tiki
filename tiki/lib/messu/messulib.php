@@ -3,7 +3,7 @@
 class Messu extends Tikilib {
   var $db;
   
-  function Messu($db) 
+  function Messu($db)
   {
     
     if(!$db) {
@@ -82,7 +82,8 @@ class Messu extends Tikilib {
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (subject like '%".$find."%' or body like '%".$find."%')".$flag.$prio;  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (subject like $findesc or body like $findesc)".$flag.$prio;  
     } else {
       $mid="".$flag.$prio; 
     }
@@ -128,7 +129,8 @@ class Messu extends Tikilib {
     } 
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (subject like '%".$find."%' or body like '%".$find."%')".$flag.$prio;  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (subject like $findesc or body like $findesc)".$flag.$prio;  
     } else {
       $mid="".$flag.$prio; 
     } 
@@ -151,7 +153,8 @@ class Messu extends Tikilib {
     } 
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and (subject like '%".$find."%' or body like '%".$find."%')".$flag.$prio;  
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" and (subject like $findesc or body like $findesc)".$flag.$prio;  
     } else {
       $mid="".$flag.$prio; 
     } 

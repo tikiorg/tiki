@@ -36,7 +36,9 @@ class CommLib extends TikiLib {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where (heading like '%".$find."%' or title like '%".$find."%' or body like '%".$find."% ')";
+	$findesc = $this->qstr('%'.$find.'%');
+    $findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (heading like $findesc or title like $findesc or body like $findesc)";
     } else {
       $mid="";
     }

@@ -39,7 +39,7 @@ class WikiLib extends TikiLib {
       $data=str_replace($preparse[1][$idx].$pp.$preparse[4][$idx],$key,$data);
       $idx=$idx+1;
     }
-    $parts = explode("\n...page...\n",$data);
+    $parts = explode("...page...",$data);
     return count($parts);	
   }
   
@@ -61,7 +61,7 @@ class WikiLib extends TikiLib {
       $idx=$idx+1;
     }
     // Get slides
-    $parts = explode("\n...page...\n",$data);
+    $parts = explode("...page...",$data);
     if(substr($parts[$i-1],1,5)=="<br/>") $ret=substr($parts[$i-1],6);
     else $ret=$parts[$i-1];
     // Replace back <PRE> sections
@@ -78,16 +78,35 @@ class WikiLib extends TikiLib {
   
   function wiki_page_graph(&$str, &$graph) {
 	  $page=$str['name'];
-	  $graph->addNode("$page",array('URL'=>"tiki-index.php?page=$page",
+		$graph->addAttributes(array(
+											'nodesep'=>'.3',
+											'rankdir'=>'LR',
+											'size'=> '6',
+											'bgcolor'=> 'transparent',
+											'URL'=>'tiki-index.php'
+											)
+										);
+	  $graph->addNode("$page",array(
+											'URL'=>"tiki-index.php?page=".addslashes($page),
 	  							    'label'=>"$page",
-/*	  							    'fontsize' => '10', */
-	  							    'shape' => 'box'
+											'fontname'=>"Arial",
+	  							    'fontsize' => '9',
+											'shape' =>'ellipse',
+											'color' =>'#AAAAAA',
+											'style' =>'filled',
+											'fillcolor' =>'#FFFFFF',
+	  							    'width'=>'.5',
+											'height'=>'.25'
 	  							    )
 	                 );	
 	  //print("add node $page<br/>");
 	  foreach($str['pages'] as $neig) {
 	    $this->wiki_page_graph($neig, $graph);	
-	    $graph->addEdge(array($page => $neig['name']), array('color'=>'black'));	
+	    $graph->addEdge(array($page => $neig['name']), array(
+											'color'=>'#998877',
+											'style'=>'solid'
+					)
+				);	
 	    //print("add edge $page to ".$neig['name']."<br/>");
 	  }
   }
@@ -139,7 +158,11 @@ class WikiLib extends TikiLib {
       $page = $res['fromPage'];
       $page_as=addslashes($page);
 	  $info = $this->get_page_info($page);
-	  $data=addslashes(str_replace($oldName,$newName,$info['data']));
+	  //$data=addslashes(str_replace($oldName,$newName,$info['data']));
+      $data = $info['data'];
+	  $data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
+      $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
+      $data = addslashes($data);
 	  $query = "update tiki_pages set data='$data' where pageName='$page_as'";
 	  $this->query($query);	  
 	  $this->invalidate_cache($page);
@@ -147,9 +170,9 @@ class WikiLib extends TikiLib {
     
     // correct toPage and fromPage in tiki_links
   	$query = "update tiki_links set fromPage='$newName_as' where fromPage='$oldName_as'";
-    $this->query($query);	  	
+    $this->query($query,false);	  	//TODO how do we avoid the error where fromPage/toPage pair already exists?
   	$query = "update tiki_links set toPage='$newName_as' where toPage='$oldName_as'";
-    $this->query($query);	    	
+    $this->query($query,false);	    //TODO how do we avoid the error where fromPage/toPage pair already exists?
   	
   	// tiki_footnotes change pageName
   	$query = "update tiki_page_footnotes set pageName='$newName_as' where pageName='$oldName_as'";
@@ -170,8 +193,12 @@ class WikiLib extends TikiLib {
 	$newId = 'wiki page' + md5($newName);
   	
   	// in tiki_categorized_objects update objId
-	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
-    $this->query($query);	  	  	  	
+	$newcathref = 'tiki-index.php?page='.urlencode($newName_as);
+	$query = "update tiki_categorized_objects set objId='$newName_as',name='$newName_as',href='$newcathref' where objId='$oldName_as'";
+	$this->query($query);
+// old code that doesn't seem to be working
+//	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
+//    $this->query($query);	  	  	  	
   	
   	// in tiki_comments update object  
   	$query = "update tiki_comments set object='$newId' where object='$oldId'";
@@ -257,7 +284,8 @@ class WikiLib extends TikiLib {
     $page=addslashes($page);
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" where page='$page' and (filename like '%".$find."%')";
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where page='$page' and (filename like $findesc)";
     } else {
       $mid=" where page='$page' ";
     }

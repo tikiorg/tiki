@@ -29,7 +29,7 @@
 	</table>
 </BODY></HTML>
 {else}
-<SCRIPT language=javascript>
+<script language='Javascript' type='text/javascript'>
 	if( self.name == '' ) {ldelim}
 	   var title = 'Console';
 	{rdelim}

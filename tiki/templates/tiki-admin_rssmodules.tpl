@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-admin_rssmodules.php">{tr}Admin RSS modules{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_rssmodules.php">{tr}Admin RSS modules{/tr}</a><br /><br />
 {if $preview eq 'y'}
 <div class="simplebox">
 <h2>{tr}Content for the feed{/tr}</h2>
@@ -9,13 +9,18 @@
 </ul>
 </div>
 {/if}
-<h2>{tr}Create/edit RSS module{/tr}</h2>
+{if $rssId > 0}
+<h2>{tr}Edit this RSS module:{/tr} {$name}</h2>
+<a href="tiki-admin_rssmodules.php">{tr}Create new RSS module{/tr}</a>
+{else}
+<h2>{tr}Create new RSS module{/tr}</h2>
+{/if}
 <form action="tiki-admin_rssmodules.php" method="post">
-<input type="hidden" name="rssId" value="{$rssId}" />
+<input type="hidden" name="rssId" value="{$rssId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description}</textarea></td></tr>
-<tr><td class="formcolor">{tr}URL{/tr}:</td><td class="formcolor"><input size="47" type="text" name="url" value="{$url}" /></td></tr>
+<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}URL{/tr}:</td><td class="formcolor"><input size="47" type="text" name="url" value="{$url|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Refresh rate{/tr}:</td><td class="formcolor">
 <select name="refresh">
 <option value="1" {if $minutes eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
@@ -42,9 +47,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_rssmodules.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -91,7 +96,7 @@
 {/if}
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admin_rssmodules.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -101,7 +106,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_rssmodules.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_rssmodules.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

@@ -1,31 +1,29 @@
-<a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
 <a href="tiki-admin_menus.php" class="link">{tr}List menus{/tr}</a> |
 <a href="tiki-admin_menus.php?menuId={$menuId}" class="link">{tr}Edit this menu{/tr}</a>
 <h2>{tr}Preview menu{/tr}</h2>
-<div align="center">
-<div style="text-align:left;width:180px;" class="box">
+<div class="box">
 <div class="box-title">[{$menu_info.name}]</div>
 <div class="box-data">
 {include file=tiki-user_menu.tpl}
 </div>
 </div>
-</div>
-<br/>
+<br />
 <table class="normal"><tr><td valign="top" class="odd">
 <h2>{tr}Edit menu options{/tr}</h2>
 <form action="tiki-admin_menu_options.php" method="post">
-<input type="hidden" name="optionId" value="{$optionId}" />
-<input type="hidden" name="menuId" value="{$menuId}" />
+<input type="hidden" name="optionId" value="{$optionId|escape}" />
+<input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table>
-<tr><td class="form">{tr}Name{/tr}:</td><td><input id="menu_name" type="text" name="name" value="{$name}" /></td></tr>
-<tr><td class="form">{tr}URL{/tr}:</td><td><input id="menu_url" type="text" name="url" value="{$url}" /></td></tr>
+<tr><td class="form">{tr}Name{/tr}:</td><td><input id="menu_name" type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td class="form">{tr}URL{/tr}:</td><td><input id="menu_url" type="text" name="url" value="{$url|escape}" /></td></tr>
 <tr><td class="form">{tr}Type{/tr}:</td><td>
 <select name="type">
 <option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section{/tr}</option>
 <option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="form">{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position}" /></td></tr>
+<tr><td class="form">{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" /></td></tr>
 <tr><td  class="form">&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -35,46 +33,46 @@
 |<a class="link" href="javascript:setMenuCon('tiki-view_blog.php?blogId={$home_blog}','{tr}Home Blog{/tr}');">{tr}Home Blog{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-browse_gallery.php?galleryId={$home_gallery}','{tr}Home Image Gal{/tr}');">{tr}Home Image Gallery{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-list_file_gallery?galleryId={$home_file_gallery}','{tr}Home File Gal{/tr}');">{tr}Home File Gallery{/tr}</a>]
-<br/>
+<br />
 [<a class="link" href="javascript:setMenuCon('tiki-chat.php','{tr}Chat{/tr}');">{tr}Chat{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-stats.php','{tr}Stats{/tr}');">{tr}Stats{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-games.php','{tr}Games{/tr}');">{tr}Games{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-browse_categories.php','{tr}Categories{/tr}');">{tr}Categories{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-user_preferences.php','{tr}User preferences{/tr}');">{tr}User prefs{/tr}</a>]
-<br/>
+<br />
 [<a class="link" href="javascript:setMenuCon('tiki-index.php','{tr}Wiki Home{/tr}');">{tr}Wiki Home{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-lastchanges.php','{tr}Last changes{/tr}');">{tr}Last changes{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-wiki_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-listpages.php','{tr}List pages{/tr}');">{tr}List pages{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-index.php?page=SandBox','{tr}Sandbox{/tr}');">{tr}Sandbox{/tr}</a>]
-<br/>
+<br />
 [<a class="link" href="javascript:setMenuCon('tiki-galleries.php','{tr}List galleries{/tr}');">{tr}List image galleries{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-upload_image.php','{tr}Upload image{/tr}');">{tr}Upload{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-galleries_rankings.php','{tr}Gallery Rankings{/tr}');">{tr}Rankings{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-browse_gallery.php?galleryId=','');">{tr}Browse a gallery{/tr}</a>]
-<br/>
+<br />
 [<a class="link" href="javascript:setMenuCon('tiki-articles_home.php','{tr}Articles{/tr}');">{tr}Articles home{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-list_articles.php','{tr}All articles{/tr}');">{tr}List articles{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-cms_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-edit_submission.php','{tr}Submit{/tr}');">{tr}Submit{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-list_submissions.php','{tr}Submissions{/tr}');">{tr}Submissions{/tr}</a>]
-<br/>
+<br />
 [<a class="link" href="javascript:setMenuCon('tiki-list_blogs.php','{tr}List Blogs{/tr}');">{tr}List Blogs{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-blog_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-edit_blog.php','{tr}Create blog{/tr}');">{tr}Create blog{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-blog_post.php','{tr}Post{/tr}');">{tr}Post{/tr}</a>]
-<br/>
+<br />
 [<a class="link" href="javascript:setMenuCon('tiki-file_galleries.php','{tr}File galleries{/tr}');">{tr}File galleries{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-upload_file.php','{tr}Upload file{/tr}');">{tr}Upload file{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-file_galleries_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>]
-<br/>
+<br />
 [<a class="link" href="javascript:setMenuCon('tiki-forums.php','{tr}Forums{/tr}');">{tr}Forums{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-view_forum.php?forumId=','');">{tr}View a forum{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-view_forum_thread.php?forumId=&amp;comments_parentId=','');">{tr}View a thread{/tr}</a>]
-<br/>
+<br />
 [<a class="link" href="javascript:setMenuCon('tiki-list_faqs.php','{tr}FAQs{/tr}');">{tr}FAQs{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-view_faq.php?faqId=','');">{tr}View a FAQ{/tr}</a>]
-<br/>
+<br />
 [<a class="link" href="javascript:setMenuCon('tiki-list_quizzes.php','{tr}Quizzes{/tr}');">{tr}Quizzes{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-take_quiz.php?quizId=','');">{tr}Take a quiz{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-quiz_stats.php','{tr}Quiz stats{/tr}');">{tr}Quiz stats{/tr}</a>
@@ -86,9 +84,9 @@
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-admin_menu_options.php">
-     <input type="text" name="find" value="{$find}" />
+     <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
    </td>
 </tr>
@@ -131,7 +129,7 @@
 {/if}
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -141,7 +139,7 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

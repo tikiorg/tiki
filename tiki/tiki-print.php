@@ -83,12 +83,26 @@ if(empty($info["user"])) {
 }
 $smarty->assign_by_ref('lastUser',$info["user"]);
 
+//Store the page URL to be displayed on print page
+$http_domain = $tikilib->get_preference('http_domain', false);
+$http_port = $tikilib->get_preference('http_port', 80);
+$http_prefix = $tikilib->get_preference('http_prefix', '/');
+if ($http_domain) {
+	$prefix = 'http://' . $http_domain;
+	if ($http_port != 80)
+		$prefix .= ':' . $http_port;
+	$prefix .= $https_prefix;
+	$smarty->assign('urlprefix',$prefix);
+}
 
 
 // Display the Index Template
 
+$creator = $wikilib->get_creator($page);
+$smarty->assign('creator',$creator);
 $smarty->assign('mid','tiki-show_page.tpl');
-$smarty->assign('show_page_bar','y');
+$smarty->assign('show_page_bar','n');
+$smarty->assign('print_page','y');
 $smarty->display("styles/$style_base/tiki-print.tpl");
 
 ?>

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.l.css,v 1.5 2003-07-15 17:24:38 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.l.css,v 1.6 2003-08-01 10:31:06 redflo Exp $
  *
  * Backgrounds for light version of 'Matrix' theme
  *
@@ -13,11 +13,14 @@
  */
 
 .linkmenu:hover,
-div.cbox,
 div.separator:hover,
 div#tiki-center > div.simplebox
 {
   background: #70B080;
+}
+div.cbox
+{
+  background: #507050;
 }
 
 div.box
@@ -31,7 +34,7 @@ div.box:hover
 
 div.cbox#error-box
 {
-  background-image: url(img/error-page.png);
+  background-image: url(img/red.png);
   background-repeat: repeat;
 }
 

@@ -1,4 +1,4 @@
-<a href="tiki-admin_links.php" class="pagetitle">{tr}Featured links{/tr}</a><br/><br/>
+<a href="tiki-admin_links.php" class="pagetitle">{tr}Featured links{/tr}</a><br /><br />
 <a class="link" href="tiki-admin_links.php?generate=1">{tr}Generate positions by hits{/tr}</a>
 <h3>{tr}List of featured links{/tr}</h3>
 <table class="normal">
@@ -29,19 +29,24 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
+{if $editurl eq 'n'}
 <h3>{tr}Add Featured Link{/tr}</h3>
+{else}
+<h3>{tr}Edit this Featured Link:{/tr} {$title}</h3>
+<a href="tiki-admin_links.php">{tr}Create new Featured Link{/tr}</a>
+{/if}
 <form action="tiki-admin_links.php" method="post">
 <table class="normal">
 {if $editurl eq 'n'}
 <tr><td class="formcolor">URL</td><td class="formcolor"><input type="text" name="url" /></td></tr>
 {else}
 <tr><td class="formcolor">URL</td><td class="formcolor">{$editurl}
-<input type="hidden" name="url" value="{$editurl}" />
+<input type="hidden" name="url" value="{$editurl|escape}" />
 </td></tr>
 {/if}
-<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title}" /></td></tr>
-<tr><td class="formcolor">{tr}Position{/tr}</td><td class="formcolor"><input type="text" size="3" name="position" value="{$position}" /> (0 {tr}disables the link{/tr})</td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Position{/tr}</td><td class="formcolor"><input type="text" size="3" name="position" value="{$position|escape}" /> (0 {tr}disables the link{/tr})</td></tr>
 <tr><td class="formcolor">{tr}Link type{/tr}</td><td class="formcolor">
 <select name="type">
 <option value="r" {if $type eq 'r'}selected="selected"{/if}>{tr}replace current page{/tr}</option>
@@ -49,6 +54,6 @@
 <option value="n" {if $type eq 'n'}selected="selected"{/if}>{tr}open new window{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="add" value="{tr}add{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="add" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>

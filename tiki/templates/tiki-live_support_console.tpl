@@ -17,7 +17,7 @@
   {literal}
   <body>
   {/literal}
-   	<input type="hidden" id="user" value="{$user}" />
+   	<input type="hidden" id="user" value="{$user|escape}" />
   	<input type="hidden" id="status" value="online" />
 	<table class="normal" width="100%">
 		<tr>
@@ -36,7 +36,7 @@
     {if count($requests) > 0}
     <h3>{tr}Support requests{/tr}</h3>
     {if $new_requests eq 'y'}
-		<script>
+		<script language='Javascript' type='text/javascript'>
 			sound();
 		</script>
     {/if}
@@ -65,7 +65,7 @@
 		{/section}
 	</table>
 	{/if}
-    <script>
+    <script language='Javascript' type='text/javascript'>
         var last_req={$last};
     	console_poll();
     </script>
