@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.26 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.27 2004-03-31 09:57:56 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -115,6 +115,7 @@ if (isset($_REQUEST["remove"])) {
   if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
     key_check($area);
 		$trklib->remove_tracker($_REQUEST["remove"]);
+		$logslib->add_log('admintrackers','removed tracker '.$_REQUEST["remove"]);
 	} else {
 		key_get($area);
 	}
@@ -234,6 +235,7 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["orderAttachments"] = $orderat;
 	}
 	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
+	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
 	$smarty->assign('trackerId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');
