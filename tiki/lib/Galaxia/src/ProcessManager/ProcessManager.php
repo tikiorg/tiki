@@ -10,7 +10,7 @@ class ProcessManager extends BaseManager {
   var $parser;
   var $tree;
   var $current;
-  var $buffer;
+  var $buffer = '';
   
   /*!
     Constructor takes a PEAR::Db object to be used
