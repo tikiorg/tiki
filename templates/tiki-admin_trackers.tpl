@@ -1,24 +1,20 @@
 <a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
-<!-- the help link info --->
   
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Trackers" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Trackers{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
-
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Trackers tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
-
-<!--- beginning of next bit --->
-
-
 <br /><br />
-<a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a>
+
+<div>
+<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {if $tiki_p_admin_trackers eq 'y'}
-<a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a>
+<span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
 {/if}
+</div>
 <br /><br />
 
 <h2>{tr}Create/edit trackers{/tr}</h2>
