@@ -240,8 +240,8 @@ class UsersLib extends TikiDB {
 	$cas_create_tiki = ($tikilib->get_preference('cas_create_user_tiki', 'n') == 'y');
 	$cas_skip_admin = ($tikilib->get_preference('cas_skip_admin', 'n') == 'y');
 
-	// first attempt a login via the standard Tiki system, unless CAS auth is being used
-	if (!$auth_cas) {
+	// first attempt a login via the standard Tiki system
+	if (!$auth_cas || $user == 'admin') {
 		$result = $this->validate_user_tiki($user, $pass, $challenge, $response);
 	}
 
@@ -497,7 +497,7 @@ class UsersLib extends TikiDB {
 		if ($tikilib->get_preference('auth_method', 'tiki') != 'cas')
 		    return false;
 
-		$cas_version = $tikilib->get_preference('cas_version', 'CAS_VERSION_1_0');
+		$cas_version = $tikilib->get_preference('cas_version', '1.0');
 		$cas_hostname = $tikilib->get_preference('cas_hostname');
 		$cas_port = $tikilib->get_preference('cas_port');
 		$cas_path = $tikilib->get_preference('cas_path');
