@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.32 2004-03-04 03:37:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.33 2004-03-04 05:13:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -175,8 +175,8 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 			if (isset($re["groupFieldId"]) and $re["groupFieldId"]) {
 				$groupfieldid = $re["groupFieldId"];
 				$smarty->assign('groupfieldid',$groupfieldid);
-				$groupitemId = $trklib->get_item_id($grouptrackerid,$groupfieldid,$groupname);
-				$smarty->assign('groupitemId',$groupitemId);
+				$groupitemid = $trklib->get_item_id($grouptrackerid,$groupfieldid,$groupname);
+				$smarty->assign('groupitemid',$groupitemid);
 			}
 		}
 	}
