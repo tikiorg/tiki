@@ -32,7 +32,7 @@ if (!$_SESSION['CalendarViewGroups'] and !$_SESSION['CalendarViewTikiCals']) {
 if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
 	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
 }
-if (!$_SESSION['CalendarViewMode']) $_SESSION['CalendarViewMode'] = 'week';
+if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) $_SESSION['CalendarViewMode'] = 'week';
 
 $smarty->assign('viewmode',$_SESSION['CalendarViewMode']);
 
@@ -63,21 +63,84 @@ foreach ($_SESSION['CalendarViewTikiCals'] as $calt) {
 $smarty->assign('tikical',$tikical);
 $smarty->assign('displayedtikicals',$_SESSION['CalendarViewTikiCals']);
 
-if(!isset($_REQUEST["calcatIdedit"])) $_REQUEST["calcatIdedit"]=$_SESSION['CalendarViewGroups'][0];
+if (isset($_REQUEST["save"]) and ($_REQUEST["save"])) {
+	$calendarlib->set_item($user,$calitemId,array(
+	"organizer" => $_REQUEST["organizer"],
+	"calendarId" => $_REQUEST["calendarId"],
+	"start" => $tikilib->make_server_time($_REQUEST["starth_Hour"],$_REQUEST["starth_Minute"],0,
+		$_REQUEST["start_Month"],$_REQUEST["start_Day"],$_REQUEST["start_Year"],$tikilib->get_display_timezone($user)),
+	"end" => $tikilib->make_server_time($_REQUEST["endh_Hour"],$_REQUEST["endh_Minute"],0,
+		$_REQUEST["end_Month"],$_REQUEST["end_Day"],$_REQUEST["end_Year"],$tikilib->get_display_timezone($user)),
+	"locationId" => $_REQUEST["locationId"],
+	"newloc" => addslashes($_REQUEST["newloc"].' '),
+	"categoryId" => $_REQUEST["categoryId"],
+	"newcat" => addslashes($_REQUEST["newcat"].' '),
+	"public" => $_REQUEST["public"],
+	"priority" => $_REQUEST["priority"],
+	"status" => $_REQUEST["status"],
+	"url" => $_REQUEST["url"],
+	"lang" => $_REQUEST["lang"],
+	"name" => addslashes(@$_REQUEST["name"]." "),
+	"description" => addslashes(@$_REQUEST["description"]." ")
+	));
+}
+
+if (!isset($_REQUEST["calitemId"])) $_REQUEST["calitemId"] = 0;
+if($_REQUEST["calitemId"]) {
+	$info = $calendarlib->get_item($_REQUEST["calitemId"]);
+	if (!isset($_REQUEST["calendarId"]) or !$_REQUEST["calendarId"]) {
+		$_REQUEST["calendarId"] = $info["calendarId"];
+	}
+} else {
+	$info = array();
+	$info["calendarId"] = $_SESSION['CalendarViewGroups'][0];
+	$info["organizer"] = $user;
+	$info["participants"] = '';
+	$info["start"] = time();
+	$info["end"] = time() + 60*60*2;
+	$info["locationId"] = 0;
+	$info["categoryId"] = 0;
+	$info["priority"] = 5;
+	$info["url"] = '';
+	$info["lang"] = $lang;
+	$info["name"] = '';
+	$info["description"] = '';
+	$info["created"] = time();
+	$info["lastModif"] = time();
+}
+$smarty->assign('calendarId',$info["calendarId"]);
+$smarty->assign('organizer',$info["organizer"]);
+$smarty->assign('start',$info["start"]);
+$smarty->assign('end',$info["end"]);
+$smarty->assign('locationId',$info["locationId"]);
+$smarty->assign('categoryId',$info["categoryId"]);
+$smarty->assign('priority',$info["priority"]);
+$smarty->assign('url',$info["url"]);
+$smarty->assign('lang',$info["lang"]);
+$smarty->assign('name',$info["name"]);
+$smarty->assign('description',$info["description"]);
+$smarty->assign('created',$info["created"]);
+$smarty->assign('lastModif',$info["lastModif"]);
+
 if(!isset($_REQUEST["editmode"])) $_REQUEST["editmode"]=0;
 $smarty->assign('editmode',$_REQUEST["editmode"]);
 
 if ($_REQUEST["editmode"]) {
-	$listcat[] = $calendarlib->list_categories($_REQUEST["calcatIdedit"]);
+	$listcat[] = $calendarlib->list_categories($info["calendarId"]);
 	$smarty->assign('listcat',$listcat);
-	$listloc[] = $calendarlib->list_locations($_REQUEST["calcatIdedit"]);
+	$listloc[] = $calendarlib->list_locations($info["calendarId"]);
 	$smarty->assign('listloc',$listloc);
-	if(!isset($_REQUEST["calcatIdedit"])) {
-		$_REQUEST["calcatIdedit"] = $_SESSION['CalendarViewGroups'][0];
-	}
-	$smarty->assign('calcatIdedit',$_REQUEST["calcatIdedit"]);
-	$listpeople = $calendarlib->list_cal_users($_REQUEST["calcatIdedit"]);
+	$listpeople = $calendarlib->list_cal_users($info["calendarId"]);
 	$smarty->assign('listpeople',$listpeople);
+	$languages=Array();
+	$h=opendir("lang/");
+	while($file=readdir($h)) {
+		if($file!='.' && $file!='..' && is_dir('lang/'.$file) && strlen($file)==2) {
+			$languages[]=$file;
+		}
+	}
+	closedir($h);
+	$smarty->assign_by_ref('languages',$languages);
 }
 
 if(isset($_REQUEST["find"])) {

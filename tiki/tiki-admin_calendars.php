@@ -57,7 +57,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 
-$calendars = $calendarlib->list_calendars(0,-1,$sort_mode,$find);
+$calendars = $calendarlib->list_calendars(0,-1,$sort_mode,$find,0);
 $smarty->assign_by_ref('calendars',$calendars);
 
 $groups = $userlib->get_groups();

@@ -189,33 +189,35 @@ onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|trunca
 {if $editmode}
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
 <input type="hidden" name="editmode" value="1">
+<input type="hidden" name="calitemId" value="{$calitemId}">
 <table class="normal">
 <tr><td class="formcolor">{tr}Calendrier{/tr}</td><td class="formcolor">
-<select name="calcatIdedit">
+<select name="calendarId">
 {section name=lc loop=$listcals}
 {if $listcals[lc]}
-<option value="{$listcals[lc].calendarId}" {if $calcatIdedit eq $listcals[lc].calendarId}selected="selected"{/if} onchange="document.forms[f].submit();">{$listcals[lc].name}</option>
+<option value="{$listcals[lc].calendarId}" {if $calendarId eq $listcals[lc].calendarId}selected="selected"{/if} onchange="document.forms[f].submit();">{$listcals[lc].name}</option>
 {/if}
 {/section}
 </select>
-<input type="submit"name="save" value="{tr}update{/tr}" />
+<input type="submit" name="refresh" value="{tr}refresh{/tr}" /><br/>
+{tr}If you change the calendar selection, please refresh to get the appropriated list in Category, Location and people.{/tr}<br/>
 </td></tr>
-<tr><td class="formcolor">{tr}Category{/tr}</td><td class="formcolor">
-<select name="calcatId">
+<tr><td class="form">{tr}Category{/tr}</td><td class="form">
+<select name="categoryId">
 {section name=t loop=$listcat}
 {if $listcat[t]}
-<option value="{$listcat[t].calcatId}" {if $calcatId eq $listcat[t].calcatId}selected="selected"{/if}>{$listcat[t].name}</option>
+<option value="{$listcat[t].calcatId}" {if $categoryId eq $listcat[t].calcatId}selected="selected"{/if}>{$listcat[t].name}</option>
 {/if}
 {/section}
 </select>
 {tr}or create a new category{/tr} 
 <input type="text" name="newcat" value="">
 </td></tr>
-<tr><td class="formcolor">{tr}Location{/tr}</td><td class="formcolor">
-<select name="callocId">
+<tr><td class="form">{tr}Location{/tr}</td><td class="form">
+<select name="locationId">
 {section name=l loop=$listloc}
 {if $listloc[l]}
-<option value="{$listloc[l].callocId}" {if $callocId eq $listloc[l].callocId}selected="selected"{/if}>{$listloc[l].name}</option>
+<option value="{$listloc[l].callocId}" {if $locationId eq $listloc[l].callocId}selected="selected"{/if}>{$listloc[l].name}</option>
 {/if}
 {/section}
 </select>
@@ -223,10 +225,10 @@ onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|trunca
 <input type="text" name="newloc" value="">
 </td></tr>
 
-<tr><td class="formcolor">{tr}Organized by{/tr}</td><td class="formcolor">
-<input type="text" name="organized" value="" id="organizers">
+<tr><td class="form">{tr}Organized by{/tr}</td><td class="form">
+<input type="text" name="organizer" value="" id="organizers">
 {tr}comma separated of usernames from the list{/tr}:
-<select name="organizerlist" onchange="javascript:document.getElementById('organizers').value+=this.options[this.selectedIndex].value+',';">
+<select name="organizer" onchange="javascript:document.getElementById('organizers').value+=this.options[this.selectedIndex].value+',';">
 <option value="">{tr}choose{/tr}</option>
 {section name=lp loop=$listpeople}
 <option value="{$listpeople[lp]}">{$listpeople[lp]}</option>
@@ -234,7 +236,7 @@ onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|trunca
 </select>
 </td></tr>
 
-<tr><td class="formcolor">{tr}Participants{/tr}</td><td class="formcolor">
+<tr><td class="form">{tr}Participants{/tr}</td><td class="form">
 <input type="text" name="participants" value="" id="participants">
 {tr}comma separated of usernames:role from the list{/tr}:
 <select name="roles" id="roles">
@@ -243,7 +245,7 @@ onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|trunca
 <option value="2">{tr}2: Optionnal{/tr}</option>
 <option value="3">{tr}3: None{/tr}</option>
 </select>
-<select name="participantlist" onchange="javascript:document.getElementById('participants').value+=this.options[this.selectedIndex].value+":"+document.getElementById('roles').options[document.getElementById('roles').selectedIndex].value+',';">
+<select name="participants" onchange="javascript:document.getElementById('participants').value+=this.options[this.selectedIndex].value+":"+document.getElementById('roles').options[document.getElementById('roles').selectedIndex].value+',';">
 <option value="">{tr}choose{/tr}</option>
 {section name=lp loop=$listpeople}
 <option value="{$listpeople[lp]}">{$listpeople[lp]}</option>
@@ -252,18 +254,50 @@ onmouseout="return nd();" class="linkmenu">{$cell[w][d].items[items].name|trunca
 </td></tr>
 
 <tr><td class="formcolor">{tr}Start{/tr}</td><td class="formcolor">
-{html_select_date time=$startedit prefix="start_" field_order=DMY}
-{html_select_time minute_interval=10 time=$startedit display_seconds=false use_24_hours=true}
+{html_select_date time=$start prefix="start_" field_order=DMY}
+{html_select_time minute_interval=10 time=$start prefix="starth_" display_seconds=false use_24_hours=true}
 </td></tr>
 
 <tr><td class="formcolor">{tr}End{/tr}</td><td class="formcolor">
-{html_select_date time=$startedit prefix="end_" field_order=DMY}
-{html_select_time minute_interval=10 time=$startedit display_seconds=false use_24_hours=true}
+{html_select_date time=$end prefix="end_" field_order=DMY}
+{html_select_time minute_interval=10 time=$end prefix="endh_" display_seconds=false use_24_hours=true}
 </td></tr>
 
 <tr><td class="formcolor">{tr}Name{/tr}</td><td class="formcolor"><input type="text" name="name" value="{$name}" /></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}</td><td class="formcolor">
 <textarea class="wikiedit" id="body" name="body" rows="8" cols="80" id='subbody' wrap="virtual">{$body}</textarea>
+</td></tr>
+
+<tr><td class="formcolor">{tr}Url{/tr}</td><td class="formcolor"><input type="text" name="url" value="{$url}" /></td></tr>
+
+<tr><td class="formcolor">{tr}Priority{/tr}</td><td class="formcolor">
+<select name="priority">
+<option value="1" {if $priority eq 1}selected="selected"{/if}>1</option>
+<option value="2" {if $priority eq 2}selected="selected"{/if}>2</option>
+<option value="3" {if $priority eq 3}selected="selected"{/if}>3</option>
+<option value="4" {if $priority eq 4}selected="selected"{/if}>4</option>
+<option value="5" {if $priority eq 5}selected="selected"{/if}>5</option>
+<option value="6" {if $priority eq 6}selected="selected"{/if}>6</option>
+<option value="7" {if $priority eq 7}selected="selected"{/if}>7</option>
+<option value="8" {if $priority eq 8}selected="selected"{/if}>8</option>
+<option value="9" {if $priority eq 9}selected="selected"{/if}>9</option>
+</select>
+</td></tr>
+
+<tr><td class="formcolor">{tr}Status{/tr}</td><td class="formcolor">
+<select name="status">
+<option value="0" {if $status eq 0}selected="selected"{/if}>{tr}Tentative{/tr}</option>
+<option value="1" {if $status eq 1}selected="selected"{/if}>{tr}Confirmed{/tr}</option>
+<option value="2" {if $status eq 2}selected="selected"{/if}>{tr}Cancelled{/tr}</option>
+</select>
+</td></tr>
+
+<tr><td class="formcolor">{tr}Language{/tr}</td><td class="formcolor">
+<select name="lang">
+{section name=ix loop=$languages}
+<option value="{$languages[ix]}" {if $lang eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
+{/section}
+</select>
 </td></tr>
 
 <tr><td class="formcolor"></td><td class="formcolor">
