@@ -978,3 +978,115 @@ textarea.tshoutbox{
     padding: 0px;
     color: #AAAAAA;
   }
+
+  /*************************************************** WIKI TOCS ***************************************************/
+
+div.tocnav {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 9px;
+  background: #7B99CD;
+  color: white;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  margin-bottom: 2px;
+}
+
+.tocnavlink { color:white; text-decoration: underline;font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px; }
+.tocnavlink:hover {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px; color: cyan; text-decoration:underline;}
+
+/*************************************************** DIRECTORY ***************************************************/
+/* The list of categories */
+div.dircategs {
+  border: 0.5px solid black;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+/* Links to categories */
+.dirlink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : black; text-decoration: underline; font-weight: bold;}
+.dirlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #636363; text-decoration: underline; font-weight: bold;}
+
+/* Links to subcategories */
+.dirsublink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : black; text-decoration: underline;}
+.dirsublink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #636363; text-decoration: underline;}
+
+
+/* The list of sites in any category */
+div.dirlistsites {
+  background-color: white;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  border: 0.5px solid black;
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* each site in the list of sites */
+div.dirsite {
+  background-color: #EFEFEF;
+  margin-bottom: 10px;
+}
+
+span.dirsitedesc {}
+span.dirsitetrail {font-size: 10px;}
+span.dirsitecats {}
+
+/* Links to sites */
+.dirsitelink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : black; text-decoration: underline;}
+.dirsitelink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #636363; text-decoration: underline;}
+
+/* Related categories */
+div.dirrelated {
+  background-color: White;
+  margin-top: 10px;
+  border: 0.5px solid black;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  margin-left: 5px;
+}
+
+/* Footer with stats for the directory */
+td.dirfooter {
+ font-size: 9px;
+}
+
+div.dirfooter {
+  margin-top: 10px;
+  border: 1px solid black;
+}
+
+
+/*************************************************** MESSAGES ***************************************************/
+/* Links for priority colors */
+td.prio1 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px; background-color: #AAB7CD;}
+td.prio2 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px;background-color: #9CAECD;}
+td.prio3 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px;background-color: #85A0CD;}
+td.prio4 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px;background-color: #658BCD;}
+td.prio5 { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; padding-left: 2px; background-color: #4477CD;}
+
+/* Div containing links to flag/unflag messages when reading a message */
+div.messureadflag {
+  background-color: #CCCCCC;
+  padding-left: 5px;
+}
+
+/* Header when reading a message */
+div.messureadhead {
+  background-color: #DEDEDE;
+  margin-top: 2px;
+}
+
+/* Message body when reading */
+div.messureadbody {
+ margin-top: 5px;
+ background-color: #DEDEDE;
+}
+
+/* Links to read emails (the subject in the mailbox listing) */
+.readlink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : black; text-decoration: underline;}
+.readlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;  color : #636363; text-decoration: underline;}
