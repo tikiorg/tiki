@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.13 2004-01-24 23:10:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.14 2004-01-25 14:55:05 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,6 +41,7 @@ $info["description"] = '';
 $info["showCreated"] = '';
 $info["showStatus"] = '';
 $info["showStatusAdminOnly"] = '';
+$info["newItemsClosed"] = '';
 $info["showLastModif"] = '';
 $info["useComments"] = '';
 $info["useAttachments"] = '';
@@ -59,6 +60,7 @@ $smarty->assign('description', $info["description"]);
 $smarty->assign('showCreated', $info["showCreated"]);
 $smarty->assign('showStatus', $info["showStatus"]);
 $smarty->assign('showStatusAdminOnly', $info["showStatusAdminOnly"]);
+$smarty->assign('newItemsClosed', $info["newItemsClosed"]);
 $smarty->assign('showLastModif', $info["showLastModif"]);
 $smarty->assign('useComments', $info["useComments"]);
 $smarty->assign('useAttachments', $info["useAttachments"]);
@@ -102,6 +104,10 @@ if (isset($_REQUEST["save"])) {
 	if (isset($_REQUEST["showStatusAdminOnly"]) && $_REQUEST["showStatusAdminOnly"] == 'on') {
 		$tracker_options["showStatusAdminOnly"] = 'y';
 	}
+	
+	if (isset($_REQUEST["newItemsClosed"]) && $_REQUEST["newItemsClosed"] == 'on') {
+		$tracker_options["newItemsClosed"] = 'y';
+	}
 
 	if (isset($_REQUEST["useComments"]) && $_REQUEST["useComments"] == 'on') {
 		$tracker_options["useComments"] = 'y';
@@ -138,7 +144,7 @@ if (isset($_REQUEST["save"])) {
 		}
 		$tracker_options[" orderAttachments"] = $orderat;
 	}
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 
 	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
 	$smarty->assign('trackerId', 0);
