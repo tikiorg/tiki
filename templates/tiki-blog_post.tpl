@@ -34,8 +34,10 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
    {include file="tiki-smileys.tpl" area_name='blogedit'}
 </td></tr>
 {/if}
-<tr><td class="editblogform">{tr}Quicklinks{/tr}</td><td class="editblogform">
-</td></tr>
+<!--<tr>
+ <td class="editblogform">{tr}Quicklinks{/tr}</td>
+<td class="editblogform">
+</td></tr> --->
 {if $blog_data.use_title eq 'y'}
 <tr><td class="editblogform">{tr}Title{/tr}</td><td class="editblogform">
 <input type="text" size="80" name="title" value="{$title|escape}" />
