@@ -3905,12 +3905,12 @@ class TikiLib extends TikiDB {
 
 	    // Find the plugins
 	    // note: [1] is plugin name, [2] is plugin arguments
-	    if ($feature_wiki_plugins_allcaps == 'y') {
+	    if (!empty($feature_wiki_plugins_allcaps) && $feature_wiki_plugins_allcaps == 'y') {
 	    	// match PLUGIN in all caps
 		    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
 	    } else {
 	    	// match PLUGIN, case-insensitive
-	    	preg_match_all("/\{([a-zA-Z]+)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
+	    	preg_match_all("/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}/i", $data, $plugins);
 	    }
 
 	    // if true, replace only CODE plugin, if false, replace all other plugins

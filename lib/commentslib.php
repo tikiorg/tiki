@@ -1329,11 +1329,17 @@ class Comments extends TikiLib {
     }
     
     function parse_quote(&$data, $quote_parsed = FALSE) {
-    	global $tikilib;
+    	global $tikilib, $feature_wiki_plugins_allcaps;
     	
 	    // Find the plugins
 	    // note: [1] is plugin name, [2] is plugin arguments
-	    preg_match_all("/\{(QUOTE)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
+	    if (!empty($feature_wiki_plugins_allcaps) && $feature_wiki_plugins_allcaps == 'y') {
+	    	// match QUOTE plugin in all caps
+		    preg_match_all("/\{(QUOTE)\(([^\)]*)\)( *\/ *)?\}/", $data, $plugins);
+	    } else {
+	    	// match QUOTE plugin, case-insensitive
+	    	preg_match_all("/\{(QUOTE)\(([^\)]*)\)( *\/ *)?\}/i", $data, $plugins);
+	    }
 
 	    // Process plugins in reverse order, so that nested plugins are handled
 	    // from the inside out.
