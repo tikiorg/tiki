@@ -168,6 +168,7 @@ class SearchLib extends TikiLib {
 		    if (count($forbiddenCatList) > 0) {
 			$forbiddenCatStr = '?' . str_repeat(',?',count($forbiddenCatList)-1);
 		    }
+                    if( $forbiddenCatStr == "" ) $forbiddenCatStr = '\'\'';
 
 		    $sqlFields .= ', co.`objId` IS NOT NULL as categorized, MAX(cat.`categId` IN ('.$forbiddenCatStr.')) as forbidden ';
 		    $bindFields = array_merge($bindFields, $forbiddenCatList);
