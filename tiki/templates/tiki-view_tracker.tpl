@@ -53,7 +53,7 @@ class="statusimg">{html_image file=$stdata.image title=$stdata.label alt=$stdata
 <select name="filterfield">
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].isSearchable eq 'y' and $fields[ix].type ne 'f' and $fields[ix].type ne 'j' and $fields[ix].type ne 'i'}
-<option value="{$fields[ix].fieldId|escape}"{if $fields[ix].fieldId eq filterfield} selected="selected"{/if}>{$fields[ix].name|truncate:255:"..."}</option>
+<option value="{$fields[ix].fieldId|escape}"{if $fields[ix].fieldId eq $filterfield} selected="selected"{/if}>{$fields[ix].name|truncate:255:"..."}</option>
 {/if}
 {/section}
 </select>
