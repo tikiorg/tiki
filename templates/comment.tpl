@@ -68,7 +68,7 @@
 		    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_threadId={$comment.threadId}&amp;comments_remove=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
 		{/if}
 		{if $tiki_p_edit_comments eq 'y'}
-		    &nbsp;&nbsp;<a title="{tr}edit{/tr}" class="link" href="{$comments_complete_father}comments_threadId={$comment.threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+		    &nbsp;&nbsp;<a title="{tr}edit{/tr}" class="link" href="{$comments_complete_father}comments_threadId={$comment.threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}&amp;edit_reply=1"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 		{/if}
 		{if $tiki_p_post_comments == 'y'}
 			{if $forum_mode neq 'y'}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.42 2004-07-13 21:55:21 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.43 2004-07-13 22:53:53 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -438,6 +438,8 @@ if (isset($_REQUEST["comments_parentId"]) &&
 
 if (!empty($_REQUEST['post_reply'])) {
 	$smarty->assign('post_reply', $_REQUEST['post_reply']);
+} elseif (!empty($_REQUEST['edit_reply'])) {
+	$smarty->assign('edit_reply', $_REQUEST['edit_reply']);
 }
 
 ?>
