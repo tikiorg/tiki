@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.2 2004-03-31 09:53:20 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/logs/logslib.php,v 1.3 2004-04-01 05:20:28 mose Exp $
 
 class LogsLib extends TikiLib {
 	
@@ -25,7 +25,7 @@ class LogsLib extends TikiLib {
 		if (!$time) {
 			$time = date("U");
 		}
-		$query = "insert into `tiki_systemlog` (`logtype`,`logmessage`,`loguser`,`logip`,`logclient`,`logtime`) values (?,?,?,?,?,?)";
+		$query = "insert into `tiki_logs` (`logtype`,`logmessage`,`loguser`,`logip`,`logclient`,`logtime`) values (?,?,?,?,?,?)";
 		$result = $this->query($query,array($type,$message,$who,$ip,$client,(int)$time));
 	}
 
@@ -58,7 +58,7 @@ class LogsLib extends TikiLib {
 			$mid = " where ".implode(" and ",$amid)." ";
 		}
 		$query = "select `logId`,`loguser`,`logtype`,`logmessage`,`logtime`,`logip`,`logclient` ";
-		$query.= " from `tiki_systemlog` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query.= " from `tiki_logs` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_systemlog` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
