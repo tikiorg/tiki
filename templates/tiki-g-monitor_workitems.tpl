@@ -39,17 +39,17 @@
 <td >
 	<select name="filter_process">
 	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
-	{section loop=$all_procs name=ix}
-	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId|escape}">{$all_procs[ix].name} {$all_procs[ix].version}</option>
-	{/section}
+    {foreach from=$all_procs item=proc}
+	<option {if $proc.pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$proc.pId|escape}">{$proc.name} {$proc.version}</option>
+	{/foreach}
 	</select>
 </td>
 <td >
 	<select name="filter_activity">
 	<option {if '' eq $smarty.request.filter_activity}selected="selected"{/if} value="">{tr}All{/tr}</option>
-	{section loop=$all_procs name=ix}
-	<option {if $all_acts[ix].activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$all_acts[ix].activityId|escape}">{$all_acts[ix].name}</option>
-	{/section}
+    {foreach from=$all_procs item=proc}
+	<option {if $proc.activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$proc.activityId|escape}">{$proc.name}</option>
+	{/foreach}
 	</select>
 </td>
 <td >
@@ -90,52 +90,40 @@
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='user_desc'}{/if}">{tr}User{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
-{section name=ix loop=$items}
+{foreach from=$items item=workitem}
 <tr>
 	<td class="{cycle advance=false}" style="text-align:left;">  
-		<a href="tiki-g-view_workitem.php?itemId={$items[ix].itemId}" class="link">{$items[ix].itemId}</a>
+		<a href="tiki-g-view_workitem.php?itemId={$workitem.itemId}" class="link">{$workitem.itemId}</a>
 	</td>
-
 	<td class="{cycle advance=false}" style="text-align:left;">  
-		{$items[ix].procname} {$items[ix].version}
+		{$workitem.procname} {$workitem.version}
 	</td>
-
 	<td class="{cycle advance=false}" style="text-align:left;">
-		{$items[ix].type|act_icon:"$items[ix].isInteractive"} {$items[ix].actname} 
+		{$workitem.type|act_icon:"$workitem.isInteractive"} {$workitem.actname} 
 	</td>
-
 	<td class="{cycle advance=false}">
-	  <a class="link" href="tiki-g-admin_instance.php?iid={$items[ix].instanceId}">{$items[ix].instanceId}</a>
+	  <a class="link" href="tiki-g-admin_instance.php?iid={$workitem.instanceId}">{$workitem.instanceId}</a>
 	</td>
-	
 	<td class="{cycle advance=false}">
-	  {$items[ix].orderId}
+	  {$workitem.orderId}
 	</td>
-
 	<td class="{cycle advance=false}">
-	  {$items[ix].started|tiki_short_datetime}
+	  {$workitem.started|tiki_short_datetime}
 	</td>
-	
 	<td class="{cycle advance=false}">
-	  {$items[ix].duration|duration}
+	  {$workitem.duration|duration}
 	</td>
-
 	<td class="{cycle}">
-	  {$items[ix].user}
+	  {$workitem.user}
 	</td>
-
-	
-
-	
-	
 </tr>
-{sectionelse}
+{foreachelse}
 <tr>
 	<td class="{cycle advance=false}" colspan="7">
 	{tr}No instances created yet{/tr}
 	</td>
 </tr>	
-{/section}
+{/foreach}
 </table>
 </form>
 {* END OF LISTING *}
