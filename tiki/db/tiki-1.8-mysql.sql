@@ -2936,6 +2936,7 @@ CREATE TABLE tiki_tracker_fields (
   trackerId int(12) NOT NULL default '0',
   name varchar(80) default NULL,
   options text,
+  position int(4) default NULL,
   type char(1) default NULL,
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,

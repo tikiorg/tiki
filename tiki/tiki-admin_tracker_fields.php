@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.9 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.10 2003-12-08 09:07:43 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,14 +21,12 @@ if ($feature_trackers != 'y') {
 // To admin tracker fields the user must have permission to admin trackers
 if ($tiki_p_admin_trackers != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }	
 
 if (!isset($_REQUEST["trackerId"])) {
 	$smarty->assign('msg', tra("No tracker indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -43,6 +41,10 @@ if (!isset($_REQUEST["fieldId"])) {
 
 $smarty->assign('fieldId', $_REQUEST["fieldId"]);
 
+if (!isset($_REQUEST['position'])) {
+	$_REQUEST['position'] = 1;
+}
+
 if (!isset($_REQUEST['options'])) {
 	$_REQUEST['options'] = '';
 }
@@ -54,6 +56,7 @@ if ($_REQUEST["fieldId"]) {
 
 	$info["name"] = '';
 	$info["options"] = '';
+	$info["position"] = 1;
 	$info["type"] = 'o';
 	$info["isMain"] = 'n';
 	$info["isTblVisible"] = 'y';
@@ -62,6 +65,7 @@ if ($_REQUEST["fieldId"]) {
 $smarty->assign('name', $info["name"]);
 $smarty->assign('type', $info["type"]);
 $smarty->assign('options', $info["options"]);
+$smarty->assign('position', $info["position"]);
 $smarty->assign('isMain', $info["isMain"]);
 $smarty->assign('isTblVisible', $info["isTblVisible"]);
 
@@ -85,13 +89,13 @@ if (isset($_REQUEST["save"])) {
 
 	$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
 	$trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain,
-		$isTblVisible, $_REQUEST["options"]);
+		$isTblVisible, $_REQUEST["position"], $_REQUEST["options"]);
 	$smarty->assign('fieldId', 0);
 	$smarty->assign('name', '');
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'name_asc';
+	$sort_mode = 'position_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -101,7 +105,6 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
-
 $smarty->assign_by_ref('offset', $offset);
 
 if (isset($_REQUEST["find"])) {
@@ -109,7 +112,6 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
-
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
@@ -132,6 +134,11 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('channels', $channels["data"]);
+
+$orders = array(); 
+for ($i=1;$i<50;$i++) { $orders[] = $i; }
+$smarty->assign('orders', $orders);
+
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_tracker_fields.tpl');

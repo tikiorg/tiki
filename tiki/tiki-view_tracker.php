@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.13 2003-12-08 02:18:44 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.14 2003-12-08 09:07:44 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,7 @@ if ($tiki_p_view_trackers != 'y') {
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
 
-$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'fieldId_desc', '');
+$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_desc', '');
 $ins_fields = $fields;
 
 for ($i = 0; $i < count($fields["data"]); $i++) {
