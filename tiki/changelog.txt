@@ -1,5 +1,8 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Some tiki objects can be saved in 1-click to the user notepad.
+* [NEW] Mini calendar for events by user with daily, weekly and lit view, 
+  event topics, find events, etc.
 * [NEW] Users can configure if they want to double-click to
   edit wiki pages.
 * [NEW] Themes can redefine ANY template of Tiki, just create the template in

@@ -10,6 +10,69 @@ class WikiLib extends TikiLib {
     $this->db = $db;  
   }
   
+  // This method renames a wiki page
+  // If you think this is easy you are very very wrong
+  function wiki_rename_page($oldName,$newName)
+  {
+  	// 1st rename the page in tiki_pages
+  	$query = "update tiki_pages set pageName='$newName' where pageName='$oldName'";
+  	$this->query($query);
+  	// correct pageName in tiki_history
+  	$query = "update tiki_history set pageName='$newName' where pageName='$oldName'";
+  	$this->query($query);
+  	// get pages linking to the old page
+  	$query = "select fromPage from tiki_links where toPage='$oldName'";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $page = $res['fromPage'];
+      print("Examining $page<br/>");
+	  $info = $this->get_page_info($page);
+	  $data=addslashes(str_replace($oldName,$newName,$info['data']));
+	  $query = "update tiki_pages set data='$data' where pageName='$page'";
+	  $this->query($query);	  
+    }
+    
+    // correct toPage and fromPage in tiki_links
+  	$query = "update tiki_links set fromPage='$newName' where fromPage='$oldName'";
+    $this->query($query);	  	
+  	$query = "update tiki_links set toPage='$toPage' where toPage='$toPage'";
+    $this->query($query);	    	
+  	
+  	// tiki_footnotes change pageName
+  	$query = "update tiki_footnotes set pageName='$newName' where pageName='$oldName'";
+    $this->query($query);	  	  	
+  	
+  	// tiki_structures change page and parent
+  	$query = "update tiki_structures set page='$newName' where page='$oldName'";
+    $this->query($query);	  	  	  	
+  	
+  	// user_bookmarks_urls (url)
+
+  	// user notes (data)
+
+	// Build objectId using 'wiki page' and the name
+	$oldId = 'wiki page' + md5($oldName);
+	$newId = 'wiki page' + md5($newName);
+  	
+  	// in tiki_categorized_objects update objId
+	$query = "update tiki_categorized objects set objId='$newId' where objId='$oldId'";
+    $this->query($query);	  	  	  	
+  	
+  	// in tiki_comments update object  
+  	$query = "update tiki_comments set object='$newId' where object='$oldId'";
+    $this->query($query);	  	  	  	
+  	
+  	// in tiki_mail_events by object
+  	$query = "update tiki_mail_events set object='$newId' where object='$oldId'";
+    $this->query($query);	  	  	  	
+  	
+  	// theme_control_objects(objId,name)
+  	$query = "update tiki_control_objects set objId='newId',name='$newName' where objId='$oldId'";
+    $this->query($query);	  	  	  	
+  	
+  	
+  }
+  
   function save_notepad($user,$title,$data)
   {
     $data = addslashes($data);
