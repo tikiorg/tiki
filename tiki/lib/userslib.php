@@ -356,14 +356,14 @@ class UsersLib extends TikiLib {
 		$user = addslashes($user);
 
 		// first verify that the user exists
-		$query = "select `login` from `users_users` where " . $this->convert_binary(). " `login` = ?";
+		$query = "select `email` from `users_users` where " . $this->convert_binary(). " `login` = ?";
 		$result = $this->query($query, array($user));
 
 		if (!$result->numRows())
 			return USER_NOT_FOUND;
 
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-		$hash=md5($user.$pass);
+		$hash=md5($user.$pass.$res['email']);
 		$hash2 = md5($pass);
 
 		// next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
