@@ -120,49 +120,30 @@ class HistLib extends TikiLib {
 	// function parameters modified by ramiro_v on 11/03/2002
 	function get_last_changes($days, $offset = 0, $limit = -1, $sort_mode = 'lastModif_desc', $findwhat = '') {
 
-		// section added by ramiro_v on 11/03/2002 begins here
+		$where = "where (th.`version` != '' or tp.`version` != '') ";
 		if ($findwhat == '') {
 			$bindvars=array();
 		} else {
-			$findstr='%" . $findwhat . "%';
-			$where = " where ta.`pageName` like ? or
-			ta.`user` like ? or ta.`comment` like ? ";
+			$findstr='%' . $findwhat . '%';
+			$where.= " and ta.`pageName` like ? or ta.`user` like ? or ta.`comment` like ? ";
 			$bindvars=array($findstr,$findstr,$findstr);
 		}
-		// section added by ramiro_v on 11/03/2002 ends here
+
 		if ($days) {
 			$toTime = mktime(23, 59, 59, date("m"), date("d"), date("Y"));
-
 			$fromTime = $toTime - (24 * 60 * 60 * $days);
-			if (!isset($where)) {
-				$where="where ";
-			} else {
-				$where.="and ";
-			}
-			$where .= " ta.`lastModif`>=? and ta.`lastModif`<=? ";
-			$bindvars[]=$fromTime;
-			$bindvars[]=$toTime;
+			$where .= " and ta.`lastModif`>=? and ta.`lastModif`<=? ";
+			$bindvars[] = $fromTime;
+			$bindvars[] = $toTime;
 		}
 
-			if (!isset($where)) {
-				$where="where
-				ta.`lastModif` =
-				th.`lastModif`";
-			} else {
-				$where.="and
-				ta.`lastModif` =
-				th.`lastModif`";
-			}
+		$query = "select ta.`action`, ta.`lastModif`, ta.`user`, ta.`ip`, ta.`pageName`,ta.`comment`, th.`version` as version, tp.`version` as versionlast from `tiki_actionlog` ta 
+			left join `tiki_history` th on  ta.`pageName`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
+			left join `tiki_pages` tp on ta.`pageName`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where . " order by ta.".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_actionlog` ta 
+			left join `tiki_history` th on  ta.`pageName`=th.`pageName` and ta.`lastModif`=th.`lastModif` 
+			left join `tiki_pages` tp on ta.`pageName`=tp.`pageName` and ta.`lastModif`=tp.`lastModif` " . $where;
 
-		$query = "select ta.`action`, ta.`lastModif`, ta.`user`,
-		ta.`ip`, ta.`pageName`,ta.`comment`, `version` from
-		`tiki_actionlog` ta left join `tiki_history` th on
-		th.`pageName`=ta.`pageName` and th.`lastModif`=ta.`lastModif` " .
-		$where . " order by
-		".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_actionlog`
-		ta left join `tiki_history` th on 
-		th.`pageName`=ta.`pageName` and th.`lastModif`=ta.`lastModif` " . $where;
 		$result = $this->query($query,$bindvars,$limit,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -177,6 +158,7 @@ class HistLib extends TikiLib {
 			$r["pageName"] = $res["pageName"];
 			$r["comment"] = $res["comment"];
 			$r["version"] = $res["version"];
+			$r["versionlast"] = $res["versionlast"];
 			$ret[] = $r;
 		}
 
