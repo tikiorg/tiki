@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.37 2004-02-02 11:00:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.38 2004-02-03 04:35:44 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -224,7 +224,9 @@ if ($_REQUEST["itemId"]) {
 					}
 				} elseif  ($fields["data"][$i]["type"] == 'l') {
 					if (isset($fields["data"][$i]["options_array"][3])) {
-						$lst = $last["{$fields["data"][$i]["options_array"][2]}"];
+						if (isset($last["{$fields["data"][$i]["options_array"][2]}"])) {
+							$lst = $last["{$fields["data"][$i]["options_array"][2]}"];
+						}
 						$ins_fields["data"][$i]['links'] = array();
 						if ($lst) {
 							$links = $tikilib->get_items_list($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$lst);
