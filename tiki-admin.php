@@ -1252,6 +1252,15 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_wiki_footnotes",'n');
     $smarty->assign("feature_wiki_footnotes",'n');
   }
+
+  if(isset($_REQUEST["feature_wiki_monosp"]) && $_REQUEST["feature_wiki_monosp"]=="on") {
+    $tikilib->set_preference("feature_wiki_monosp",'y'); 
+    $smarty->assign("feature_wiki_monosp",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_monosp",'n');
+    $smarty->assign("feature_wiki_monosp",'n');
+  }
+
 /*  
   if(isset($_REQUEST["feature_wiki_notepad"]) && $_REQUEST["feature_wiki_notepad"]=="on") {
     $tikilib->set_preference("feature_wiki_notepad",'y'); 

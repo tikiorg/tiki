@@ -3277,7 +3277,8 @@ class TikiLib {
 	continue;
       }
       // If the first character is ' ' and we are not in pre then we are in pre
-      if(substr($line,0,1)==' ') {
+      global $feature_wiki_monosp; //var_dump($feature_wiki_monosp);
+      if(substr($line,0,1)==' ' && $feature_wiki_monosp=='y') {
         // This is not list item -- must close lists currently opened
 	while(count($listbeg)) $data.=array_shift($listbeg);
         // If the first character is space then

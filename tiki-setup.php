@@ -361,6 +361,8 @@ $feature_newsreader = 'n';
 $smarty->assign('feature_newsreader',$feature_newsreader);
 $feature_wiki_footnotes = 'n';
 $smarty->assign('feature_wiki_footnotes',$feature_wiki_footnotes);
+$feature_wiki_monosp = 'y';
+$smarty->assign('feature_wiki_monosp',$feature_wiki_monosp);
 
 $system_os = $tikilib->get_preference('system_os',TikiSetup::os());
 $smarty->assign('system_os',$system_os);
