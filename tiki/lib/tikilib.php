@@ -2283,28 +2283,13 @@ function list_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', 
 function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '') {
     global $userlib;
 
-    $mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
+    $mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
     $bindvars=array();
     if ($find) {
 	$findesc = '%' . $find . '%';
 	$mid .= " and (`title` like ? or `heading` like ? or `body` like ?) ";
 	$bindvars=array($findesc,$findesc,$findesc);
-    //} else {
-//	$mid = '';
     }
-/*
-    $bindvars=array();
-    if ($date) {
-	$bindvars[]=(int) $date;
-	if ($mid) {
-	    $mid .= " and  ";
-	} else {
-	    $mid = " where ";
-	}
-	$mid .= "(`publishDate`<=? and `tiki_articles`.`type`<>?) or (`publishDate`>=? and `tiki_articles`.`type`=?)";
-	$bindvars=array((int) $date,'Event',(int) $date,'Event');
-    }
-*/
     if ($type) {
 	$bindvars[]=$type;
 	if ($mid) {
@@ -2320,34 +2305,12 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	    $mid .= " and `topicId`=? ";
 	} else {
 	    $mid = " where `topicId`=? ";
-	    //$mid = '';
-	    //$bindvars=array($topicId);
 	}
 
-	/*
-	   $query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
-	   $query_cant = "select count(*) from `tiki_blog_posts` $mid";
-	   $result = $this->query($query,$bindvars,$maxRecords,$offset);
-	   $cant = $this->getOne($query_cant,$bindvars);
-	   $ret = array();
-
-	   while ($res = $result->fetchRow()) {
-	   $blogId = $res["blogId"];
-
-	   $query = "select `title`  from `tiki_blogs` where `blogId`=?";
-	   $cant_com = $this->getOne("select count(*) from
-	   `tiki_comments` where `object`=? and `objectType` =?",
-	   array((string) $res["postId"], 'blog'));
-	   $res["comments"] = $cant_com;
-	   $res["blogTitle"] = $this->getOne($query,array($blogId));
-	   $res["size"] = strlen($res["data"]);
-	   $ret[] = $res;
-	   }
-	 */
     }
 
-    //$query = "select * from `tiki_articles` $mid order by ".$this->convert_sortmode($sort_mode);
     $query = "select `tiki_articles`.*,
+	`users_users`.`avatarLibName`,
 	`tiki_article_types`.`use_ratings`,
 	`tiki_article_types`.`show_pre_publ`,
 	`tiki_article_types`.`show_post_expire`,
@@ -2360,8 +2323,8 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	`tiki_article_types`.`show_expdate`,
 	`tiki_article_types`.`show_reads`,
 	`tiki_article_types`.`show_size`
-	from `tiki_articles`, `tiki_article_types` $mid order by ".$this->convert_sortmode($sort_mode);
-    $query_cant = "select count(*) from `tiki_articles`, `tiki_article_types` $mid";
+	from `tiki_articles`, `tiki_article_types`, `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
+    $query_cant = "select count(*) from `tiki_articles`, `tiki_article_types`, `users_users` $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = array();
