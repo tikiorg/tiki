@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.16 2004-03-17 23:06:12 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.17 2004-03-18 17:02:13 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -83,7 +83,7 @@ class Smarty_TikiWiki extends Smarty {
 		$_smarty_compile_id = $language . $_smarty_compile_id;
 		$res = parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
 		$language = $lgSave;
-		return $res;
+		return ereg_replace("^[ \t]*", "", $res);
 	}
 }
 
