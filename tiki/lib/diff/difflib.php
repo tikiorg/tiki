@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.4 2004-07-08 12:50:36 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/difflib.php,v 1.5 2004-08-11 18:34:35 sylvieg Exp $
 
 function diff2($page1, $page2) {
 	$page1 = split("\n", $page1);
@@ -8,6 +8,7 @@ function diff2($page1, $page2) {
 	if ($z->isEmpty()) {
 		$html = '<hr><br />[' . tra("Versions are identical"). ']<br /><br />';
 	} else {
+//echo "<pre>";print_r($z);echo "</pre>";
 		require_once('renderer.php');
 		global $feature_wiki_diff_style;
 		if (!empty($feature_wiki_diff_style) && $feature_wiki_diff_style == 'sidebyside') {
@@ -20,6 +21,22 @@ function diff2($page1, $page2) {
 		$html = $renderer->render($z);
 	}
 	return $html;
+}
+/* @brief compute the characters differences between a list of lines
+ * @param $orig array list lines in the original version
+ * @param $final array the same lines in the final version
+ */
+function diffChar($orig, $final) {
+	$line1 = preg_split('//', implode("<br />", $orig), -1, PREG_SPLIT_NO_EMPTY);
+	$line2 = preg_split('//', implode("<br />", $final), -1, PREG_SPLIT_NO_EMPTY);
+	$z = new Text_Diff($line1, $line2);
+	if ($z->isEmpty())
+		return array($orig[0], $final[0]);
+//echo "<pre>";print_r($z);echo "</pre>";
+	require_once('renderer.php');
+	require_once('renderer_character.php');
+	$renderer = new Text_Diff_Renderer_character(sizeof($line1));
+	return $renderer->render($z);
 }
 
 // Tiki's current PHP requirement is 4.1, but is_a() requires PHP 4.2+,
