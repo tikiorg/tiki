@@ -1092,6 +1092,17 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
  */
 class TikiSheetOutputHandler extends TikiSheetDataHandler
 {
+	var $heading;
+	
+	/** Constructor {{{2
+	 * Identifies the caption of the table if it applies.
+	 * @param $heading The heading
+	 */
+	function TikiSheetOutputHandler( $heading = null )
+	{
+		$this->heading = $heading;
+	}
+	
 	// _save {{{2
 	function _save( &$sheet )
 	{
@@ -1100,6 +1111,9 @@ class TikiSheetOutputHandler extends TikiSheetDataHandler
 
 		$class = empty( $sheet->cssName ) ? "" : " class='{$sheet->cssName}'";
 		echo "<table{$class}>\n";
+
+		if( !is_null( $this->heading ) )
+			echo "	<caption>{$this->heading}</caption>\n";
 		
 		if( $sheet->headerRow > 0 )
 		{

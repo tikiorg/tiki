@@ -1,3 +1,5 @@
+/* Panel {{{1 */
+
 div#panel	li
 {
 	list-style:		none;
@@ -24,19 +26,4 @@ form#Grid	table	input.selected
 	color:			#ffffff;
 }
 
-/* }}}1 */
-
-/* Default Style {{{1 */
-table.default	thead	td,	table.default	tfoot	td
-{
-	font-weight:		bold;
-	text-align:			center;
-}
-
-table.default	td
-{
-	border-style:		solid;
-	border-width:		1px;
-	border-color:		#000000;
-}
 /* }}}1 */
