@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.2 2003-08-01 10:31:09 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-debug_console.tpl,v 1.3 2003-08-08 20:22:33 zaufi Exp $ *}
 
 {if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y'}
 <div class="debugconsole" id="debugconsole" style="{$debugconsole_style}">
@@ -18,7 +18,7 @@
   </tr>
   <tr>
     <td class="formcolor">{tr}Command{/tr}:</td>
-    <td class="formcolor"><input type="text" name="command" size=90 value='{$command|escape:"quotes"}'></td>
+    <td class="formcolor"><input type="text" name="command" size=90 value='{$command|escape:"html"}'></td>
   </tr>
   <tr>
     <td class="formcolor"></td>
