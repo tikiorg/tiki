@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.21 2003-11-19 05:25:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-admin_menu.tpl,v 1.22 2003-11-20 23:49:04 mose Exp $ *}
 
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Admin Menu{/tr}" module_name="admin_menu"}
+{include file="module-title.tpl" module_title="{tr}Admin Menu{/tr}" module_name="admin_menu"}
 </div>
 <div id='adminmnu' class="box-data">
 {if $tiki_p_admin eq 'y' or 

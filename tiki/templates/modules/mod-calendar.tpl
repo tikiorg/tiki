@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.30 2003-11-16 22:52:20 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.31 2003-11-20 23:49:04 mose Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -68,7 +68,7 @@ if (!strstr($father,"?")) {
 {/php}
 <div class="box">
 <div class="box-title" style="margin:0px;">
-{include file="modules/module-title.tpl" module_title="{tr}Calendar{/tr}-{tr}Filter{/tr}" module_name="calendar"}
+{include file="module-title.tpl" module_title="{tr}Calendar{/tr}-{tr}Filter{/tr}" module_name="calendar"}
 </div>
 <div class="box-data" style="margin:0px;padding-right:4px;">
 

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modified_blogs.tpl,v 1.6 2003-10-20 01:13:16 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modified_blogs.tpl,v 1.7 2003-11-20 23:49:04 mose Exp $ *}
 
 {if $feature_blogs eq 'y'}
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Last Modified blogs{/tr}" module_name="last_modified_blogs"}
+{include file="module-title.tpl" module_title="{tr}Last Modified blogs{/tr}" module_name="last_modified_blogs"}
 </div>
 <div class="box-data">
 <table  border="0" cellpadding="0" cellspacing="0">

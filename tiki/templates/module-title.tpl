@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/module-title.tpl,v 1.11 2003-11-15 23:56:02 zaufi Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module-title.tpl,v 1.1 2003-11-20 23:49:29 mose Exp $ *}
 {* Title bar for module with controls on it *}
 
 {* Draw module controls for logged user only *}
@@ -23,6 +23,6 @@
 
 {else}
 
-  {$module_title}
+{$module_title}
 
 {/if}

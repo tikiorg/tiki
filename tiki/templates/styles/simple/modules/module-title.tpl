@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/module-title.tpl,v 1.1 2003-09-19 19:38:21 luciash Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/module-title.tpl,v 1.2 2003-11-20 23:49:06 mose Exp $*}
 {* Title bar for module with controls on it. Draws module controls for logged user only *}
 {if $user and $user_assigned_modules == 'y' and $no_module_controls ne 'y' and $feature_modulecontrols eq 'y'}
   <span class="modcontrols">

@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-featured_links.tpl,v 1.8 2003-09-25 01:05:22 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-featured_links.tpl,v 1.9 2003-11-20 23:49:04 mose Exp $ *}
 
 {if $feature_featuredLinks eq 'y'}
  <div class="box">
   <div class="box-title">
-    {include file="modules/module-title.tpl" module_title="{tr}Featured links{/tr}" module_name="featured_links"}
+    {include file="module-title.tpl" module_title="{tr}Featured links{/tr}" module_name="featured_links"}
   </div>
   <div class="box-data">
    <table  border="0" cellpadding="0" cellspacing="0">

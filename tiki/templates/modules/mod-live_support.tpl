@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.7 2003-08-28 20:33:53 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.8 2003-11-20 23:49:04 mose Exp $ *}
 
 {if $feature_live_support eq 'y'}
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Live support{/tr}" module_name="live_support"}
+{include file="module-title.tpl" module_title="{tr}Live support{/tr}" module_name="live_support"}
 </div>
 <div class="box-data" align="center" style="margin:0px;padding:0px;">
 {if $modsupport > 0}

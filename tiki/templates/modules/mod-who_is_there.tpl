@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.3 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.4 2003-11-20 23:49:04 mose Exp $ *}
 
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Online users{/tr}" module_name="who_is_there"}
+{include file="module-title.tpl" module_title="{tr}Online users{/tr}" module_name="who_is_there"}
 </div>
 <div class="box-data">
 <div class="user-box-text">{$logged_users} 

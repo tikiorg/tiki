@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.2 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.3 2003-11-20 23:49:04 mose Exp $ *}
 
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Online users{/tr}" module_name="online_users"}
+{include file="module-title.tpl" module_title="{tr}Online users{/tr}" module_name="online_users"}
 </div>
 <div class="box-data">
 {section name=ix loop=$online_users}

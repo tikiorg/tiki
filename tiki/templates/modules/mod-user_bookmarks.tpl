@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_bookmarks.tpl,v 1.9 2003-09-25 01:05:23 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_bookmarks.tpl,v 1.10 2003-11-20 23:49:04 mose Exp $ *}
 
 {if $feature_user_bookmarks eq 'y' and $user and $tiki_p_create_bookmarks eq 'y'}
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title='<a href="tiki-user_bookmarks.php" class="flip">{tr}Bookmarks{/tr}</a>' module_name="user_bookmarks"}
+{include file="module-title.tpl" module_title='<a href="tiki-user_bookmarks.php" class="flip">{tr}Bookmarks{/tr}</a>' module_name="user_bookmarks"}
 </div>
 <div class="box-data">
 <table  border="0" cellpadding="0" cellspacing="0">

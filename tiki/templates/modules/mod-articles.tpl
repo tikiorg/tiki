@@ -1,7 +1,7 @@
 {if $feature_articles eq 'y'}
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title=$title module_name="articles"}
+{include file="module-title.tpl" module_title=$title module_name="articles"}
 </div>
 <div class="box-data">
 <table  border="0" cellpadding="0" cellspacing="0">

@@ -1,6 +1,6 @@
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Whats related{/tr}" module_name="whats_related"}
+{include file="module-title.tpl" module_title="{tr}Whats related{/tr}" module_name="whats_related"}
 </div>
 <div class="box-data">
 <table  border="0" cellpadding="0" cellspacing="0">
