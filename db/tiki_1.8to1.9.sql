@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.74 2004-06-15 12:05:51 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.75 2004-06-15 14:38:08 fhcorrea Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -580,4 +580,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_score','n');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Community','tiki-list_users.php','187','feature_friends','tiki_p_list_users','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Member list','tiki-list_users.php','188','feature_friends','tiki_p_list_users'','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Friendship Network','tiki-friends.php','189','feature_friends','','');
+
+# Added June 15th fhcorrea
+ALTER TABLE `tiki_articles` ADD `bibliographical_references` TEXT DEFAULT NULL AFTER `created` , ADD `resume` TEXT DEFAULT NULL AFTER `bibliographical_references`;
+ALTER TABLE `tiki_submissions` ADD `bibliographical_references` TEXT DEFAULT NULL AFTER `created` , ADD `resume` TEXT DEFAULT NULL AFTER `bibliographical_references`;
 
