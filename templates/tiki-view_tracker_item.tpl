@@ -71,7 +71,7 @@
 
 {elseif $ins_fields[ix].type eq 'c'}
 {$ins_fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
-{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+{if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
 {else}
@@ -83,9 +83,13 @@
 {if $ins_fields[ix].options_array[2]}
 {$ins_fields[ix].value|default:"0"} <span class="formunit">&nbsp;{$ins_fields[ix].options_array[2]}</span>
 {else}
+{if $ins_fields[ix].linkId}
+<a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value}</a>
+{else}
 {$ins_fields[ix].value}
 {/if}
-{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+{/if}
+{if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
 {else}
@@ -95,7 +99,7 @@
 
 {else}
 {$ins_fields[ix].value}
-{if $fields[ix].options_array[0] eq '1' and $stick ne 'y'}
+{if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
 </td>
 {assign var=stick value="y"}
 {else}

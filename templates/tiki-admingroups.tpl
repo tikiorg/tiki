@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.34 2004-01-28 03:37:41 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.35 2004-01-28 04:55:45 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -257,7 +257,7 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 {* end of copypasted block *}
 
 </table>
-<span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$groupTrackerId}&amp;itemId={$useritemId}&amp;show=mod" class="linkbut">{tr}Edit informations{/tr}</a></span>
+<span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemId}&amp;show=mod" class="linkbut">{tr}Edit informations{/tr}</a></span>
 </div>
 {/if}
 
