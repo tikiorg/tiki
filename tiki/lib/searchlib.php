@@ -104,7 +104,7 @@ class SearchLib extends TikiLib {
 		}
 
 		$sql .= $sql2 . ' ORDER BY ' . $orderby . ' DESC LIMIT ' . $offset . ',' . $maxRecords;
-echo $sql;
+
 		$result = $this->query($sql);
 		$ret = array();
 
