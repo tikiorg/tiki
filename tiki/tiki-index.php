@@ -35,9 +35,14 @@ if(!isset($_REQUEST["page"])) {
 }
 $smarty->assign_by_ref('page',$page);
 
+require_once('tiki-pagesetup.php');
+
+$creator = $wikilib->get_creator($page);
+$smarty->assign('creator',$creator);
+
 // Let creator set permissions
 if($wiki_creator_admin == 'y') {
-  if (isset($creator) && $creator && $user && ($creator==$user)) {
+  if ($creator && $user && ($creator==$user)) {
     $tiki_p_admin_wiki = 'y';
     $smarty->assign( 'tiki_p_admin_wiki', 'y' );
   }
@@ -68,11 +73,6 @@ if(empty($info)) {
   // followed, then it still says 'About Me' in the title.
   $page = $info['pageName'];
 }
-
-require_once('tiki-pagesetup.php');
-
-$creator = $wikilib->get_creator($page);
-$smarty->assign('creator',$creator);
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
