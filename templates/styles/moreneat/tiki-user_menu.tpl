@@ -34,9 +34,13 @@
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 <script language='Javascript' type='text/javascript'>
 {foreach key=pos item=chdata from=$channels}
-{if $chdata.type eq 's'}{if $feature_menusfolderstyle eq 'y'}
-setfolderstate('{$menu_info.menuId|cat:'__'|cat:$chdata.position}');
-{/if}{/if}
+{if $chdata.type eq 's'}
+  {if $feature_menusfolderstyle eq 'y'}
+    setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}');
+  {else}
+    setsectionstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}');
+  {/if}
+{/if}
 {/foreach}
 </script>
 {/if}
