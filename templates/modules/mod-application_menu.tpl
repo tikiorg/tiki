@@ -1,7 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.85 2004-01-06 20:46:58 gravesweeper Exp $ *}
-{php}
-bt();
-{/php}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.86 2004-01-07 10:15:46 gravesweeper Exp $ *}
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
