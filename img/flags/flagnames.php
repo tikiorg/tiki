@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.3 2004-09-08 19:51:57 mose Exp $
+<?php // -*- coding:utf-8 -*- $Header: /cvsroot/tikiwiki/tiki/img/flags/flagnames.php,v 1.4 2004-10-08 09:59:46 damosoft Exp $
 /* 
  * The listing associates country names used as filenames for flags in TikiWiki for language translation
  */
@@ -75,6 +75,7 @@ tra('Kuwait');
 tra('Latvia');
 tra('Lebanon');
 tra('Lithuania');
+tra('Luxemburg');
 tra('Malawi');
 tra('Malaysia');
 tra('Malta');

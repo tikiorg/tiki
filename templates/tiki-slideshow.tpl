@@ -10,7 +10,7 @@
 </head>
 <body>
 <div align="center">
-<div><a href="tiki-index.php?page={$page}" class="buttons">{$page}</a></div>
+<div><a href="tiki-index.php?page={$page|escape:url}" class="buttons">{$page}</a></div>
 <table class="maintable" cellpadding="0" cellspacing="0" border="0">
 <tr>
 <td colspan="3" class="title"><h1>{$slide_title}</h1></td>
@@ -27,15 +27,15 @@
 <tr class="footer">
 <td width="30%">
 {if $prev_slide > -1}
-<a class="buttons" accesskey="s" title="back to first [alt-s]" href="tiki-slideshow.php?page={$page}&amp;slide={$prev_slide}">{$slide_prev_title|default:"previous"}</a>
+<a class="buttons" accesskey="s" title="back to first [alt-s]" href="tiki-slideshow.php?page={$page|escape:url}&amp;slide={$prev_slide}">{$slide_prev_title|default:"previous"}</a>
 {else}
 <i>{tr}first{/tr}</i>
 {/if}
 </td>
-<td align="center"><a accesskey="p" title="previous [alt-p]" href="tiki-slideshow.php?page={$page}" class="buttons">{$current_slide} of {$total_slides}</a></td>
+<td align="center"><a accesskey="p" title="previous [alt-p]" href="tiki-slideshow.php?page={$page|escape:url}" class="buttons">{$current_slide} of {$total_slides}</a></td>
 <td align="right" width="30%">
 {if $next_slide < $total_slides}
-<a class="buttons" title="next [alt-space]" accesskey=" " href="tiki-slideshow.php?page={$page}&amp;slide={$next_slide}">{$slide_next_title|default:"next"}</a>
+<a class="buttons" title="next [alt-space]" accesskey=" " href="tiki-slideshow.php?page={$page|escape:url}&amp;slide={$next_slide}">{$slide_next_title|default:"next"}</a>
 {else}
 <i>{tr}last{/tr}</i>
 {/if}
@@ -50,7 +50,7 @@
 {if $smarty.capture.navbar ne ''}{$smarty.capture.navbar}{/if}
 
 </table>
-<a href="tiki-editpage.php?page={$page_info.pageName}">o</a>
+<a href="tiki-editpage.php?page={$page_info.pageName|escape:url}">o</a>
 </div>
 </body>
 </html>

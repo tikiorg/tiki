@@ -1,19 +1,19 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.32 2004-08-27 02:23:22 chealer Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.33 2004-10-08 10:00:04 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
-<!-- the help link info -->
+{* the help link info *}
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}ModuleDoc" target="tikihelp" class="tikihelp" title="{tr}admin modules{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
-<!-- link to tpl -->
+{* link to tpl *}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin modules template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
 
-<!-- begin -->
+{* begin *}
 
 <br /><p>
 <a class="linkbut" href="#assign">{tr}assign module{/tr}</a>
@@ -51,7 +51,7 @@ from Admin->General
              <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name}#assign">{tr}assign{/tr}</a></td>
 </tr>
 {sectionelse}
-<tr><td colspan="6">
+<tr><td colspan="6" class="odd">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
@@ -73,7 +73,7 @@ from Admin->General
 <tr><td class="formcolor">{tr}Module Name{/tr}</td><td class="formcolor">
 <select name="assign_name">
 {section name=ix loop=$all_modules}
-<option value="{$all_modules[ix]|escape}" {if $assign_name eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
+<option value="{$all_modules[ix]|escape}" {if $assign_name eq $all_modules[ix] || $assign_selected eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
 {/section}
 </select>
 </td></tr>
@@ -121,7 +121,6 @@ from Admin->General
 <caption>{tr}Left Modules{/tr}</caption>
 <tr>
 <td class="heading">{tr}name{/tr}</td>
-<!--<td class="heading">{tr}title{/tr}</td>-->
 <td class="heading">{tr}order{/tr}</td>
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>
@@ -132,7 +131,6 @@ from Admin->General
 {section name=user loop=$left}
 <tr>
 <td class="{cycle advance=false}">{$left[user].name}</td>
-<!--<td class="{cycle advance=false}">{$left[user].title}</td>-->
 <td class="{cycle advance=false}">{$left[user].ord}</td>
 <td class="{cycle advance=false}">{$left[user].cache_time}</td>
 <td class="{cycle advance=false}">{$left[user].rows}</td>
@@ -156,7 +154,6 @@ from Admin->General
 <caption>{tr}Right Modules{/tr}</caption>
 <tr>
 <td class="heading">{tr}name{/tr}</td>
-<!--<td class="heading">{tr}title{/tr}</td>-->
 <td class="heading">{tr}order{/tr}</td>
 <td class="heading">{tr}cache{/tr}</td>
 <td class="heading">{tr}rows{/tr}</td>
@@ -167,7 +164,6 @@ from Admin->General
 {section name=user loop=$right}
 <tr>
 <td class="{cycle advance=false}">{$right[user].name}</td>
-<!--<td class="{cycle advance=false}">{$right[user].title}</td>-->
 <td class="{cycle advance=false}">{$right[user].ord}</td>
 <td class="{cycle advance=false}">{$right[user].cache_time}</td>
 <td class="{cycle advance=false}">{$right[user].rows}</td>

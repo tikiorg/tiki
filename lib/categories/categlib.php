@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.60 2004-08-26 19:23:46 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.61 2004-10-08 10:00:00 damosoft Exp $
  *
  * \brief Categories support class
  *
@@ -791,49 +791,47 @@ class CategLib extends TikiLib {
     }
 
     // Moved from tikilib.php
-    // \todo remove hardcoded html from get_categorypath()
     function get_categorypath($cats) {
-		global $dbTiki;
-		global $smarty;
-		global $tikilib;
-		global $feature_categories;
-	//	global $categlib;
+			global $smarty;
+			global $feature_categories;
 
-	//	if (!is_object($categlib)) {
-	//	    require_once ("lib/categories/categlib.php");
-	//	}
-
-		$catpath = '';
-		foreach ($cats as $categId) {
-		    $catpath .= '<span class="categpath">';
-		    $path = '';
-		    $info = $this->get_category($categId);
-		    $path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>';
-
-		    while ($info["parentId"] != 0) {
-				$info = $this->get_category($info["parentId"]);
-				$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a> > ' . $path;
-		    }
-		    $catpath .= $path . '</span><br />';
-		}
-		return $catpath;
+			$catpath = '';
+			$catp = array();
+			foreach ($cats as $categId) {
+				$info = $this->get_category($categId);
+				$catp["{$info['categId']}"] = $info["name"];
+				while ($info["parentId"] != 0) {
+					$info = $this->get_category($info["parentId"]);
+					$catp["{$info['categId']}"] = $info["name"];
+				}
+				$smarty->assign('catp',array_reverse($catp,true));
+				$catpath.= $smarty->fetch('categpath.tpl');
+			}
+			return $catpath;
     }
     
     //Moved from tikilib.php
-    function get_categoryobjects($catids) {
-		global $dbTiki;
+    function get_categoryobjects($catids,$types="*",$sort='created_desc',$split=true,$sub=false) {
+			global $smarty;
+			global $feature_categories;
 
-		global $smarty;
-		global $tikilib;
-		global $feature_categories;
-	//	global $categlib;
-
-	//	if (!is_object($categlib)) {
-	//	    require_once ("lib/categories/categlib.php");
-	//	}
-
-		// TODO: move this array to a lib
-		// array for converting long type names to translatable headers (same strings as in application menu)
+		$typetokens = array(
+			"article" => "article",
+			"blog" => "blog",
+			"directory" => "directory",
+			"faq" => "faq",
+			"fgal" => "file gallery",
+			"forum" => "forum",
+			"igal" => "image gallery",
+			"newsletter" => "newsletter",
+			"poll" => "poll",
+			"quiz" => "quiz",
+			"survey" => "survey",
+			"tracker" => "tracker",
+			"wiki" => "wiki page",
+			"img" => "image"
+		);
+			
 		$typetitles = array(
 			"article" => "Articles",
 			"blog" => "Blogs",
@@ -847,69 +845,76 @@ class CategLib extends TikiLib {
 			"quiz" => "Quizzes",
 			"survey" => "Surveys",
 			"tracker" => "Trackers",
-			"wiki page" => "Wiki"
+			"wiki page" => "Wiki",
+			"image" => "Image"
 		);
 
-		// string given back to caller
 		$out = "";
-
-		// array with items to be displayed
 		$listcat = array();
-		// title of categories
 		$title = '';
 		$find = "";
 		$offset = 0;
 		$maxRecords = 500;
-		$count = 0;
-		$sort = 'name_asc';
-
+		$typesallowed = array();
+		if ($types == '*') {
+			$typesallowed = array_keys($typetitles);
+		} elseif (strpos($types,'+')) {
+			$alltypes = split('\+',$types);
+			foreach ($alltypes as $t) {
+				if (isset($typetokens["$t"])) {
+					$typesallowed[] = $typetokens["$t"];
+				} elseif (isset($typetitles["$t"])) {
+					$typesallowed[] = $t;
+				}
+			}
+		} elseif (isset($typetokens["$types"])) {
+			$typesallowed = array($typetokens["$types"]);
+		} elseif (isset($typetitles["$types"])) {
+			$typesallowed = array($types);
+		}
+		
 		foreach ($catids as $id) {
-		    // get data of category
-		    $cat = $this->get_category($id);
+			$cat = $this->get_category($id);
 
-		    // store name of category
-		    // \todo remove hardcoded html
-		    if ($count != 0) {
-				$title .= "| <a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
-		    } else {
-				$title .= "<a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
-	    	}
-
-			// keep track of how many categories there are for split mode off
-			$count++;
-			$subcategs = array();
-			$subcategs = $this->get_category_descendants($id);
-
-			// array with objects in category
+			$titles["$id"] = $cat["name"];
 			$objectcat = array();
-			$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, $find);
+			if ($sub) {
+				$objectcat = $this->list_category_objects_deep($id, $offset, $maxRecords, $sort, $find);
+			} else {
+				$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, $find);
+			}
 
 			foreach ($objectcat["data"] as $obj) {
 				$type = $obj["type"];
-				if (!($tikilib->in_multi_array($obj['name'], $listcat))) {
-					if (isset($typetitles["$type"])) {
-						$listcat["{$typetitles["$type"]}"][] = $obj;
-					} elseif (isset($type)) {
-						$listcat["$type"][] = $obj;
+				if (($types == '*') || in_array($type,$typesallowed)) {
+					if ($split) {
+						$listcat[$typetitles["$type"]][] = $obj;
+					} else {
+						if (!($this->in_multi_array($obj['name'], $listcat))) {
+							if (isset($typetitles["$type"])) {
+								$listcat["{$typetitles["$type"]}"][] = $obj;
+							} elseif (isset($type)) {
+								$listcat["$type"][] = $obj;
+							}
+						}
 					}
 				}
 			}
-
-			// split mode: appending onto $out each time
-			$smarty->assign("title", $title);
-			$smarty->assign("listcat", $listcat);
-			$out .= $smarty->fetch("tiki-simple_plugin.tpl");
-			// reset array for next loop
-			$listcat = array();
-			// reset title
-			$title = '';
-			$count = 0;
+			if ($split) {
+				$smarty->assign("id", $id);
+				$smarty->assign("titles", $titles);
+				$smarty->assign("listcat", $listcat);
+				$out .= $smarty->fetch("categobjects.tpl");
+				$listcat = array();
+				$titles = array();
+			}
 		}
-
-		// non-split mode
-		//  $smarty -> assign("title", $title);
-		//  $smarty -> assign("listcat", $listcat);
-		//  $out = $smarty -> fetch("tiki-simple_plugin.tpl");
+		if (!$split) {
+			$smarty->assign("id", $id);
+			$smarty->assign("titles", $titles);
+			$smarty->assign("listcat", $listcat);
+			$out = $smarty->fetch("categobjects.tpl");
+		}
 		return $out;
 	}
 	

@@ -86,8 +86,17 @@
 </div>
 
 <table class="normal">
-
+{if $categIds}
+{section name=o loop=$categIds}
+<input type="hidden" name="cat_categories[]" value="{$categIds[o]}" />
+{/section}
+<input type="hidden" name="categId" value="{$categIdstr}" />
+<input type="hidden" name="cat_categorize" value="on" />
+{else}
+{if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}
+{/if}
+{/if}
 {include file=structures.tpl}
 
 {if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}

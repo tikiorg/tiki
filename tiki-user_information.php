@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.24 2004-09-21 23:41:15 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.25 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -127,10 +127,8 @@ if ($email_isPublic != 'n') {
 $smarty->assign_by_ref('userinfo', $userinfo);
 $smarty->assign_by_ref('email_isPublic',$email_isPublic);
 $userPage = $feature_wiki_userpage_prefix.$userinfo['login'];
-if ($tikilib->page_exists($userPage))
-	$smarty->assign('userPage', $userPage);
-else
-	$smarty->assign('userPage', '');
+$exist = $tikilib->page_exists($userPage);
+$smarty->assign("userPage_exists", $exist);
 
 ask_ticket('user-information');
 

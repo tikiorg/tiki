@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.18 2004-09-08 19:53:05 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.19 2004-10-08 10:00:07 damosoft Exp $ *}
 
 <a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a><br /><br />
 
@@ -21,7 +21,7 @@
 
 <table class="normal">
 
-<!-- Site stats -->
+{* Site stats *}
 <tr><td colspan="2"><a name="site_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}Site Stats{/tr}</td></tr>
 <tr><td class="even">{tr}Started{/tr}</td><td class="even" style="text-align:right;">{$site_stats.started|tiki_short_date}</td></tr>
@@ -30,9 +30,9 @@
 <tr><td class="odd">{tr}Average pageviews per day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.ppd|string_format:"%.2f"}</td></tr>
 <tr><td class="even">{tr}Best day{/tr}</td><td class="even" style="text-align:right;">{$site_stats.bestday|tiki_short_date} ({$site_stats.bestpvs} {tr}pvs{/tr})</td></tr>
 <tr><td class="odd">{tr}Worst day{/tr}</td><td class="odd" style="text-align:right;">{$site_stats.worstday|tiki_short_date} ({$site_stats.worstpvs} {tr}pvs{/tr})</td></tr>
-<!-- Site stats --> 
+{* Site stats *}
 
-<!-- Wiki Stats -->
+{* Wiki Stats *}
 {if $wiki_stats}
 <tr><td colspan="2"><a name="wiki_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}Wiki Stats{/tr}</td></tr>
@@ -45,9 +45,9 @@
 <tr><td class="even">{tr}Orphan pages{/tr}</td><td class="even" style="text-align:right;">{$wiki_stats.orphan}</td></tr>
 <tr><td class="odd">{tr}Average links per page{/tr}</td><td class="odd" style="text-align:right;">{$wiki_stats.lpp|string_format:"%.2f"}</td></tr>
 {/if}
-<!-- Wiki Stats -->
+{* Wiki Stats *}
 
-<!-- Image gallleries stats -->
+{* Image gallleries stats *}
 {if $igal_stats}
 <tr><td colspan="2"><a name="igal_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}Image galleries Stats{/tr}</td></tr>
@@ -58,9 +58,9 @@
 <tr><td class="even">{tr}Average image size{/tr}</td><td class="even" style="text-align:right;">{$igal_stats.bpi|string_format:"%.2f"} {tr}bytes{/tr}</td></tr>
 <tr><td class="odd">{tr}Visits to image galleries{/tr}</td><td class="odd" style="text-align:right;">{$igal_stats.visits}</td></tr>
 {/if}
-<!-- Image gallleries stats -->
+{* Image gallleries stats *}
 
-<!-- File gallleries stats -->
+{* File gallleries stats *}
 {if $fgal_stats}
 <tr><td colspan="2"><a name="fgal_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}File galleries Stats{/tr}</td></tr>
@@ -72,9 +72,9 @@
 <tr><td class="odd">{tr}Visits to file galleries{/tr}</td><td class="odd" style="text-align:right;">{$fgal_stats.visits}</td></tr>
 <tr><td class="even">{tr}Downloads{/tr}</td><td class="even" style="text-align:right;">{$fgal_stats.downloads}</td></tr>
 {/if}
-<!-- File gallleries stats -->
+{* File gallleries stats *}
 
-<!-- CMS stats -->
+{* CMS stats *}
 {if $cms_stats}
 <tr><td colspan="2"><a name="cms_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}CMS Stats{/tr}</td></tr>
@@ -85,9 +85,9 @@
 <tr><td class="even">{tr}Average article size{/tr}</td><td class="even" style="text-align:right;">{$cms_stats.bpa|string_format:"%.2f"} {tr}bytes{/tr}</td></tr>
 <tr><td class="odd">{tr}Topics{/tr}</td><td class="odd" style="text-align:right;">{$cms_stats.topics}</td></tr>
 {/if}
-<!-- CMS stats -->
+{* CMS stats *}
 
-<!-- Forum stats -->
+{* Forum stats *}
 {if $forum_stats}
 <tr><td colspan="2"><a name="forum_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}Forum Stats{/tr}</td></tr>
@@ -98,9 +98,9 @@
 <tr><td class="even">{tr}Average threads per topic{/tr}</td><td class="even" style="text-align:right;">{$forum_stats.tpt|string_format:"%.2f"}</td></tr>
 <tr><td class="odd">{tr}Visits to forums{/tr}</td><td class="odd" style="text-align:right;">{$forum_stats.visits}</td></tr>
 {/if}
-<!-- Forum stats -->
+{* Forum stats *}
 
-<!-- Blogs stats -->
+{* Blogs stats *}
 {if $blog_stats}
 <tr><td colspan="2"><a name="blog_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}Blog Stats{/tr}</td></tr>
@@ -111,9 +111,9 @@
 <tr><td class="even">{tr}Average posts size{/tr}</td><td class="even" style="text-align:right;">{$blog_stats.bpp|string_format:"%.2f"}</td></tr>
 <tr><td class="odd">{tr}Visits to weblogs{/tr}</td><td class="odd" style="text-align:right;">{$blog_stats.visits}</td></tr>
 {/if}
-<!-- Blogs stats -->
+{* Blogs stats *}
 
-<!-- Poll stats -->
+{* Poll stats *}
 {if $poll_stats}
 <tr><td colspan="2"><a name="poll_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}Poll Stats{/tr}</td></tr>
@@ -121,9 +121,9 @@
 <tr><td class="odd">{tr}Total votes{/tr}</td><td class="odd" style="text-align:right;">{$poll_stats.votes}</td></tr>
 <tr><td class="even">{tr}Average votes per poll{/tr}</td><td class="even" style="text-align:right;">{$poll_stats.vpp|string_format:"%.2f"}</td></tr>
 {/if}
-<!-- Poll stats -->
+{* Poll stats *}
 
-<!-- FAQ stats -->
+{* FAQ stats *}
 {if $faq_stats}
 <tr><td colspan="2"><a name="faq_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}Faq Stats{/tr}</td></tr>
@@ -131,9 +131,9 @@
 <tr><td class="odd">{tr}Total questions{/tr}</td><td class="odd" style="text-align:right;">{$faq_stats.questions}</td></tr>
 <tr><td class="even">{tr}Average questions per FAQ{/tr}</td><td class="even" style="text-align:right;">{$faq_stats.qpf|string_format:"%.2f"}</td></tr>
 {/if}
-<!-- FAQ stats -->
+{* FAQ stats *}
 
-<!-- Users stats -->
+{* Users stats *}
 {if $user_stats}
 <tr><td colspan="2"><a name="user_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}User Stats{/tr}</td></tr>
@@ -141,9 +141,9 @@
 <tr><td class="odd">{tr}User bookmarks{/tr}</td><td class="odd" style="text-align:right;">{$user_stats.bookmarks}</td></tr>
 <tr><td class="even">{tr}Average bookmarks per user{/tr}</td><td class="even" style="text-align:right;">{$user_stats.bpu|string_format:"%.2f"}</td></tr>
 {/if}
-<!-- Usersstats -->
+{* Usersstats *}
 
-<!-- Quiz stats -->
+{* Quiz stats *}
 {if $quiz_stats}
 <tr><td colspan="2"><a name="quiz_stats"></a></td></tr>
 <tr><td class="heading" colspan="2">{tr}Quiz Stats{/tr}</td></tr>
@@ -154,36 +154,8 @@
 <tr><td class="even">{tr}Average quiz score{/tr}</td><td class="even" style="text-align:right;">{$quiz_stats.avg|string_format:"%.2f"}</td></tr>
 <tr><td class="odd">{tr}Average time per quiz{/tr}</td><td class="odd" style="text-align:right;">{$quiz_stats.avgtime|string_format:"%.2f"} {tr}secs{/tr}</td></tr>
 {/if}
-<!-- Quiz stats -->
+{* Quiz stats *}
 </table>
-{* commented charts section depending on removed (apparently temporarily) phplot library
-<br />
-<br />
-<br />
-<a href="tiki-stats.php?chart=usage" class="link">{tr}Usage chart{/tr}</a><br /><br />
-
-
-{if $usage_chart eq 'y'}
-<br /> 
-<div align="center">
-<img src="tiki-usage_chart.php" alt='{tr}Usage chart image{/tr}'/>
-</div>
-<br /><br />
-{/if}
-<form action="tiki-stats.php" method="post">
-{tr}Show chart for the last {/tr}
-<input type="text" name="days" size="10" value="{$days|escape}" /> {tr}days (0=all){/tr}
-<input type="submit" name="pv_chart" value="{tr}display{/tr}" />
-</form>
-{if $pv_chart eq 'y'} 
-<br /> 
-<div align="center">
-<img src="tiki-pv_chart.php?days={$days}" alt=''/>
-</div>
-<br />
-{/if}
-<br />
-*}
 <br />
 <br />
 <br />

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.29 2004-08-26 19:24:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.30 2004-10-08 10:00:06 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -39,9 +39,7 @@
        <option value="default" {if $theme eq 'default'}selected="selected"{/if}>default</option>
        <option value="dark" {if $theme eq 'dark'}selected="selected"{/if}>dark</option>
        </select></td></tr>-->
-{if $tiki_p_admin_file_galleries eq 'y'}       
 <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
-{/if}
 <tr>
 	<td class="formcolor">{tr}Listing configuration{/tr}</td>
 	<td class="formcolor">
@@ -212,7 +210,7 @@
 {/if}
 
 {sectionelse}
-<tr><td colspan="6">
+<tr><td class="odd" colspan="7">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}

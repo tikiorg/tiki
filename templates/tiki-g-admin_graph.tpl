@@ -2,21 +2,21 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-g-admin_graph.php">{tr}Process Graph{/tr}</a>
 
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=GalaxiaAdminGraph" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia Admin Graph{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" />{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-admin_graph.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Admin Graph tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
-<!-- beginning of next bit -->
+
 
 
 

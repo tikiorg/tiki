@@ -1,20 +1,20 @@
 <a class="pagetitle" href="tiki-referer_stats.php">{tr}Referer stats{/tr}</a>
 
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}RefererStats" target="tikihelp" class="tikihelp" title="{tr}admin Referer stats{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' />{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-referer_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Referer stats tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
-<!-- begin -->
+
 
 <br /><br />
 <a class="linkbut" href="tiki-referer_stats.php?clear=1">{tr}clear stats{/tr}</a><br /><br />

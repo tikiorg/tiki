@@ -22,7 +22,13 @@
   <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>
   <tr><td class="form">{tr}Homepage{/tr}:</td><td>{$homePage}</td></tr>
 {if $feature_wiki eq 'y' && $feature_wiki_userpage eq 'y'}
-  <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td>{if $userPage}<a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a>{else}&nbsp;{/if}</td></tr>
+  <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td>
+{if $userPage_exists}
+<a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a>
+{elseif $user == $userinfo.login}
+{$feature_wiki_userpage_prefix}{$userinfo.login}<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix|escape:'url'}{$userinfo.login|escape:'url'}" title="{tr}Create page{/tr}">?</a>
+{else}&nbsp;{/if}
+</td></tr>
 {/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
 {if $feature_friends eq 'y' && $user ne $userwatch}

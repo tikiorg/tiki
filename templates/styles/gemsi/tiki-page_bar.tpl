@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.5 2004-08-12 22:32:14 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.6 2004-10-08 10:00:13 damosoft Exp $ *}
 
 <div id="page-bar">
 
@@ -70,6 +70,7 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</s
 
 {if $show_page == 'y'}
   {if $feature_wiki_comments == 'y'
+	&& $tiki_p_wiki_view_comments == 'y'
   && ($tiki_p_read_comments  == 'y'
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
@@ -109,11 +110,11 @@ class="linkbut">{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_ca
 </div>
 
 {if $wiki_extras eq 'y'}
-{if $feature_wiki_attachments eq 'y'}
+{if $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
 {/if}
 
-{if $feature_wiki_comments}
+{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y'}
 {include file=comments.tpl}
 {/if}

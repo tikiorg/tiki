@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.43 2004-09-08 19:51:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.44 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -133,7 +133,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 		} else {
 			$fp = fopen($cachefile, "r");
-			$data = fread($fp, filesize($cachefile));
+			$data = @fread($fp, filesize($cachefile));
 			fclose ($fp);
 			$r["data"] = $data;
 		}

@@ -1,17 +1,17 @@
 <a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}BanningSystem" target="tikihelp" class="tikihelp" title="{tr}Banning{/tr}">
 <img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin banning tpl{/tr}">
 <img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
 
-<!-- beginning of next bit -->
+
 
 <br /><br />
 <h2>{tr}Add or edit a rule{/tr}</h2>

@@ -1,18 +1,18 @@
 <a class="pagetitle" href="tiki-import_structuredtext.php">{tr}Import pages from a Structured Text Dump{/tr}</a>
 
-<!-- the help link info -->
+
   
 {if $feature_help eq 'y'}
 <a href="{$helpurl}ImportingPagesAdmin" target="tikihelp" class="tikihelp" title="{tr}ImportingPagesPhpWikiPageAdmin{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
+
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-import_phpwiki.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}tiki-import_phpwiki tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
 
-<!-- begin -->
+
 
 
 

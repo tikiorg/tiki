@@ -102,14 +102,6 @@ $smarty->assign("page",$map->name." Map");
  
 $layerbol=FALSE;
 
-/*if (isset($_REQUEST['Redraw'])) {
-	
-        //$_REQUEST['x'] = floor($map->width / 2);
-        //$_REQUEST['y'] = floor($map->height / 2);
-	$_REQUEST['x'] = floor($_REQUEST['size']/2);
-	$_REQUEST['x'] = floor($_REQUEST['size']*2/$_REQUEST['x']);
-}
-  */
 if(isset($_REQUEST['size'])&&is_numeric($_REQUEST['size'])&&($_REQUEST['size']>0)&&($_REQUEST['size']<2000))
 {
     $xsize=floor($_REQUEST['size']);
@@ -173,32 +165,6 @@ for($i=1;$i<$number_of_views;$i++)
 
 if (isset($_REQUEST['minx']) && isset($_REQUEST['miny'])&& isset($_REQUEST['maxx']) && isset($_REQUEST['maxy']))
 {	 			 
-
-if(isset($_REQUEST['search'])){
-
-//$smarty->assign('msg', tra("enter your search "));
-
-	if(empty($_REQUEST['mapsearch'])){
-              print_r("empty search");
-	}
-	else{
-		for($view_count=1;$view_count<$counter+1;$view_count++){
-		    if($_REQUEST['mapsearch']==$view_name[$view_count]){
-			print_r($_REQUEST['mapsearch']);
-			print_r($view_name[$view_count]);
-			$j=$view_count;
-			$view_minx=$view_values[$j][0];
-			$view_miny=$view_values[$j][1];
-			$view_maxx=$view_values[$j][2];
-			$view_maxy=$view_values[$j][3];
-			$my_extent=ms_newrectObj();
-			$my_extent->setextent($view_minx,$view_miny,$view_maxx,$view_maxy);
-
-		   }
-		}
-	}	
-
-}
 
 if(isset($_REQUEST['Go']))
 	 {

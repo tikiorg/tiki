@@ -1,21 +1,17 @@
 <a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a>
- <!-- help links -->
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserBookmarks" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
- <!-- link to tpl for editing -->
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_bookmarks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Bookmarks tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
 
 
-<!-- links to options-->
 {include file=tiki-mytiki_bar.tpl}
 <br />
 <br />
-<!-- folder list, not quite a tree-->
 {if $parentId>0}[<a class="link" href="tiki-user_bookmarks.php">{tr}top{/tr}</a>] {/if}{tr}Current folder{/tr}: {$path}<br />
 <h3>{tr}Folders{/tr}</h3>
 <table class="normal">
@@ -35,7 +31,6 @@
 {/section}
 </table>
 
-<!-- all of a users bookmarks, no sorting on the headers easy enough to add though-->
 
 <h3>{tr}Bookmarks{/tr}</h3>
 <table class="normal">
@@ -70,7 +65,7 @@
   <td >
     <b>{tr}Add or edit folder{/tr}</b>
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editfolder=0">{tr}new{/tr}</a>
-    <!-- form to add a category -->
+    {* form to add a category *}
     <table >
       <form action="tiki-user_bookmarks.php" method="post">
       <input type="hidden" name="editfolder" value="{$editfolder|escape}" />
@@ -86,7 +81,7 @@
     </table>
   </td>
   <td >
-    <!-- form to add a url -->
+    {* form to add a url *}
     <b>{tr}Add or edit a URL{/tr}</b>
     <a class="link" href="tiki-user_bookmarks.php?parentId={$parentId}&amp;editurl=0">{tr}new{/tr}</a>
     <table >

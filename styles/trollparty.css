@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.38 2004-09-19 19:37:10 mose Exp $
+$Id: trollparty.css,v 1.39 2004-10-08 10:00:02 damosoft Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -45,9 +45,11 @@ color: #aea067;
 This div encloses the whole Tiki application 
 */
 DIV#tiki-main {
-height: 100%;
-width: 100%;
 margin: 0px;
+}
+
+DIV#tiki-main > table:first-child {
+width : 100%;
 }
 
 DIV#tiki-top {
@@ -77,17 +79,13 @@ padding-right : 1px;
 
 TD#rightcolumn {
 vertical-align: top;
-width: 2000px;
+width: 180px;
 border-left: 1px solid #003388;
 padding-left : 1px;
-}
-TD#leftcolumn div.box,TD#rightcolumn div.box {
-width: 200px;
 }
 
 TD#centercolumn {
 vertical-align: top;
-width: 100%;
 border-left: 1px solid #003388;
 border-right: 1px solid #003388;
 padding : 0 1px;

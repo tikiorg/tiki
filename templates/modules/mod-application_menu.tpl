@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.114 2004-09-28 12:59:40 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.115 2004-10-08 10:00:13 damosoft Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -639,9 +639,7 @@
       &nbsp;<a href="tiki-admin_dsn.php" class="linkmenu">{tr}DSN{/tr}</a><br />
       &nbsp;<a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br />
       &nbsp;<a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a><br />
-    {/if}
-    {if $feature_score eq 'y' && ($tiki_p_admin_score eq 'y' || $tiki_p_admin eq 'y')}
-      &nbsp;<a href="tiki-admin_score.php" class="linkmenu">{tr}Score{/tr}</a><br />
+      &nbsp;<a href="tiki-mods.php" class="linkmenu">{tr}Mods Management{/tr}</a><br />
     {/if}
     {/sortlinks}
   </div>

@@ -18,15 +18,13 @@ if (isset($module_params["topicId"])) {
 } else {
 	$topicId = '';
 }
-/*
-$smarty->assign('type', isset($module_params["type"]) ? $module_params["type"] : '');
-$smarty->assign('topicId', isset($module_params["topicId"]) ? $module_params["topicId"] : '');
+if (isset($module_params["topic"])) {
+	$topic = $module_params["topic"];
+} else {
+	$topic = '';
+}
 
-function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '') {
-*/
-
-$ranking = $tikilib->list_articles(0, $module_rows, 'publishDate_desc', '', '', $user, $type, $topicId);
-//$ranking = $tikilib->list_articles(0, $module_rows, 'reads_desc', '', '', $user);
+$ranking = $tikilib->list_articles(0, $module_rows, 'publishDate_desc', '', '', $user, $type, $topicId, 'y', $topic);
 
 $smarty->assign('modArticles', $ranking["data"]);
 

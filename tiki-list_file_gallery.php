@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.22 2004-09-08 19:51:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.23 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,15 +25,15 @@ if ($feature_file_galleries != 'y') {
 	die;
 }
 
-if ($_REQUEST["galleryId"] == 0) {
-	$smarty->assign('msg', tra("Non-existent gallery"));
+if (!isset($_REQUEST["galleryId"])) {
+	$smarty->assign('msg', tra("No gallery indicated"));
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if (!isset($_REQUEST["galleryId"])) {
-	$smarty->assign('msg', tra("No gallery indicated"));
+if ($_REQUEST["galleryId"] == 0) {
+	$smarty->assign('msg', tra("Non-existent gallery"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -42,6 +42,8 @@ if (!isset($_REQUEST["galleryId"])) {
 if ($_REQUEST["galleryId"] != 0) {
 	$gal_info = $filegallib->get_file_gallery($_REQUEST["galleryId"]);
 } else {
+	// This is an unreachable block. Remove this code or the verification above?
+	// rbschmidt and lfagundes
 	$gal_info["galleryId"] = 0;
 
 	$gal_info["user"] = 'admin';

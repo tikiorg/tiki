@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.18 2004-06-28 16:16:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.19 2004-10-08 10:00:06 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 
@@ -27,8 +27,6 @@
 {if $forum_list_posts eq 'y'}
 	<td class="heading"><a class="tableheading" href="tiki-forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}posts{/tr}</a></td>
 {/if}	
-<!--<td class="heading">{tr}users{/tr}</td>-->
-<!--<td class="heading">{tr}age{/tr}</td>-->
 {if $forum_list_ppd eq 'y'}
 	<td class="heading">{tr}ppd{/tr}</td>
 {/if}	
@@ -64,8 +62,6 @@
 {if $forum_list_posts eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
 {/if}
-<!--<td class="inf{cycle advance=false}">{$channels[user].users}</td> -->
-<!--<td class="{cycle advance=false}">{$channels[user].age}</td> -->
 {if $forum_list_ppd eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
 {/if}

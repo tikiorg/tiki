@@ -220,6 +220,11 @@ class ArtLib extends TikiLib {
 		    // Fixed query. -rlpowell
 		    $query2 = "select max(`articleId`) from `tiki_articles` where `created` = ? and `title`=? and `hash`=?";
 		    $articleId = $this->getOne($query2, array( (int) $now, $title, $hash ) );
+
+		    global $feature_score;
+		    if ($feature_score == 'y') {
+			$this->score_event($user, 'article_new');
+		    }		    
 		}
 
 		return $articleId;

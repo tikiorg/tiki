@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.9 2004-09-19 19:37:09 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.10 2004-10-08 10:00:01 damosoft Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -19,8 +19,7 @@
  * 
   */
 function wikiplugin_category_help() {
-	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3,types=>article+blog+faq+fgal+igal+newsletter+poll+quiz+survey+tracker+wiki
-	,sort=>[type|created|name|hits]_[asc|desc],sub=>true|false,split=>y|n,title=>0|1|text)}{CATEGORY}~/np~";
+	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3,types=>article+blog+faq+fgal+igal+newsletter+poll+quiz+survey+tracker+wiki+img,sort=>[type|created|name|hits]_[asc|desc],sub=>true|false,split=>y|n)}{CATEGORY}~/np~";
 }
 
 function in_multi_array($needle, $haystack) {
@@ -61,173 +60,29 @@ function wikiplugin_category($data, $params) {
 
 	extract ($params);
 
-	// array for converting long type names (as in database) to short names (as used in plugin)
-	$typetokens = array(
-		"article" => "article",
-		"blog" => "blog",
-		"directory" => "directory",
-		"faq" => "faq",
-		"file gallery" => "fgal",
-		"forum" => "forum",
-		"image gallery" => "igal",
-		"newsletter" => "newsletter",
-		"poll" => "poll",
-		"quiz" => "quiz",
-		"survey" => "survey",
-		"tracker" => "tracker",
-		"user" => "user",
-		"wiki page" => "wiki"
-	);
-
-	// TODO: move this array to a lib
-	// array for converting long type names to translatable headers (same strings as in application menu)
-	$typetitles = array(
-		"article" => "Articles",
-		"blog" => "Blogs",
-		"directory" => "Directory",
-		"faq" => "FAQs",
-		"file gallery" => "File Galleries",
-		"forum" => "Forums",
-		"image gallery" => "Image Gals",
-		"newsletter" => "Newsletters",
-		"poll" => "Polls",
-		"quiz" => "Quizzes",
-		"survey" => "Surveys",
-		"tracker" => "Trackers",
-		"user" => "Users",
-		"wiki page" => "Wiki",
-		'image' => 'Image'
-	);
-
-	// string given back to caller
-	$out = "";
-
 	// TODO: use categ name instead of id (alternative)
 	$id = (isset($id)) ? $id : 'current'; // use current category if none is given
 
 	if ($id == 'current') {
 		$objId = urldecode($_REQUEST['page']);
-
 		$catids = $categlib->get_object_categories('wiki page', $objId);
 	} else {
-		$catids = explode("+", $id);      // create array of category ids to be displayed
+		$catids = explode("+", $id);
 	}
-
-	// default setting for $split is 'yes'
-	if (!(isset($split))) {
-		$split = 'yes';
-	} elseif ($split != 'y' and $split != 'yes' and $split != 'n' and $split != 'no' and $split != 'true' and $split != 'false') {
-		$split = 'yes';
-	}
-
-	// array with items to be displayed
-	$listcat = array();
-
-	// TODO: allow 'find' and 'maxRecords'
-	$find = "";
-	$offset = 0;
-	$maxRecords = 500;
-	$count = 0;
-
-	$sort = (isset($sort)) ? $sort : "name_asc";
-	$types = (isset($types)) ? "+" . strtolower($types) : "*";
-
-	$typesallowed = split("\+", $types); // create array of types the user allowed to be displayed
-	
-	if (!isset($title)) {
-		$title = 'n';
-	}
-	if ($title == 'y') {
-		$showtitle = true;
-		$titlecateg = true;
-	} elseif ($title == 'n') {
-		$showtitle = false;
-		$titlecateg = false;
+	if (isset($split) and substr(strtolower($split),0,1) == 'n') {
+		$split = false;
 	} else {
-		$showtitle = true;
-		$titlecateg = false;
+		$split = true;
 	}
-	$title = '';
-
-	foreach ($catids as $id) {
-		// get data of category
-		$cat = $categlib->get_category($id);
-
-		if ($showtitle and $titlecateg) {
-			if ($count != 0) {
-				$title .= "| <a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
-			} else {
-				$title .= "<a href='tiki-browse_categories.php?parentId=" . $id . "'>" . $cat['name'] . "</a> ";
-			}
-		}
-		// keep track of how many categories there are for split mode off
-		$count++;
-
-		// check if sub=>true and get sub category data
-		if (!(isset($sub))) {
-			$sub = true;
-		} elseif ($sub == 'no' or $sub == 'n' or $sub == 'false') {
-			$sub = false;
-		} else {
-			$sub = true;
-		}
-
-		$subcategs = array();
-
-		if ($sub) {
-			$subcategs = $categlib->get_category_descendants($id);
-		}
-
-		// array with objects in category
-		$objectcat = array();
-
-		if ($sub) {
-			// get all items for category and sub category
-			$objectcat = $categlib->list_category_objects_deep($id, $offset, $maxRecords, $sort, $find);
-		} else {
-			// get all items for category
-			$objectcat = $categlib->list_category_objects($id, $offset, $maxRecords, $sort, $find);
-		}
-
-		foreach ($objectcat["data"] as $obj) {
-			$type = $obj["type"];
-			// check if current type is in allowed type list: * = everything allowed
-			if (($types == '*') || array_search($typetokens[strtolower($type)], $typesallowed)) {
-				// remove duplicates in non-split mode
-				if ($split == 'n' or $split == 'no' or $split == 'false') {
-					if (!(in_multi_array($obj['name'], $listcat))) // TODO: check for name+type
-						{
-						$listcat[$typetitles["$type"]][] = $obj;
-					}
-				} else {
-					$listcat[$typetitles["$type"]][] = $obj;
-				}
-			}
-		}
-
-		// split mode: appending onto $out each time
-		if ($split == 'y' or $split == 'yes' or $split == 'true') {
-			$smarty->assign("title", $title);
-
-			$smarty->assign("listcat", $listcat);
-			$out .= $smarty->fetch("tiki-simple_plugin.tpl");
-			// reset array for next loop
-			$listcat = array();
-			// reset title
-			$title = '';
-			$count = 0;
-		}
+	if (isset($sub) and substr(strtolower($sub),0,1) == 'n') {
+		$sub = false;
+	} else {
+		$sub = true;
 	}
+	$sort = (isset($sort)) ? $sort : "created_desc";
+	$types = (isset($types)) ? strtolower($types) : "*";
 
-	// non-split mode
-	if ($split == 'n' or $split == 'no' or $split == 'false') {
-		$smarty->assign("title", $title);
-
-		$smarty->assign("listcat", $listcat);
-		$out = $smarty->fetch("tiki-simple_plugin.tpl");
-	}
-
-	return $out;
+	return $categlib->get_categoryobjects($catids,$types,$sort,$split,$sub);
 }
 
 ?>

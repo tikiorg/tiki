@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.35 2004-08-26 19:23:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.36 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,8 +14,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
+// Just change site style
+if (isset($_REQUEST["style"])) {
+    check_ticket('admin-inc-general');
+    byref_set_value("site_style", "style");
+}
 // Handle Update
-if (isset($_REQUEST["prefs"])) {
+elseif (isset($_REQUEST["prefs"])) {
 	check_ticket('admin-inc-general');
     $pref_toggles = array(
         "anonCanEdit",

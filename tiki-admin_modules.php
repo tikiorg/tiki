@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.34 2004-07-15 21:28:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.35 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -101,6 +101,10 @@ if (isset($_REQUEST["edit_assign"])) {
 	}
 
 	$smarty->assign_by_ref('assign_order', $cosa);
+
+	if (!$info['name']) {
+	  $smarty->assign('assign_selected', $_REQUEST['edit_assign']);
+	}
 }
 
 if (isset($_REQUEST["unassign"])) {

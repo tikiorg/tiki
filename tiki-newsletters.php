@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.17 2004-06-16 19:23:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.18 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,6 +17,9 @@ if ($feature_newsletters != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
+$smarty->assign('confirm', 'n');
+
 //TODO: memorize the charset for each subscription
 if (isset($_REQUEST["confirm_subscription"])) {
 	$conf = $nllib->confirm_subscription($_REQUEST["confirm_subscription"]);
@@ -92,8 +95,6 @@ if ($user) {
 }
 
 $smarty->assign('email', $user_email);
-
-$smarty->assign('confirm', 'n');
 
 if ($tiki_p_subscribe_newsletters == 'y') {
 	if (isset($_REQUEST["subscribe"])) {

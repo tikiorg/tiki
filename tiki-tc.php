@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tc.php,v 1.6 2004-04-13 06:00:51 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tc.php,v 1.7 2004-10-08 09:59:44 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,7 +54,11 @@ if ($feature_theme_control == 'y') {
 
 		$tc_parts = explode('.', $style);
 		$style_base = $tc_parts[0];
-		$smarty->assign('style', $style);
+		if ($tikidomain and is_file("styles/$tikidomain/$style")) {
+			$smarty->assign('style', "$tikidomain/$style");
+		} else {
+			$smarty->assign('style', $style);
+		}
 		$smarty->assign('style_base', $style_base);
 	}
 }

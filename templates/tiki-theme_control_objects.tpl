@@ -1,19 +1,19 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-theme_control_objects.php">{tr}Theme Control Center: Objects{/tr}</a>
 
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}ThemeControl" target="tikihelp" class="tikihelp" title="{tr}ThemeControl Objects{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-theme_control_objects.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}theme control objects tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
 
-<!-- beginning of next bit -->
+
 
 <br /><br />
 <div class="simplebox">

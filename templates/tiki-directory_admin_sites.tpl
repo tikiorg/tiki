@@ -1,18 +1,18 @@
 <a class="pagetitle" href="tiki-directory_admin_sites.php?parent={$parent}">{tr}Admin sites{/tr}</a>
 
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}DirectoryDoc" target="tikihelp" class="tikihelp" title="{tr}Admin Directory Sites{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-directory_admin_sites.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Directory Sites tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit tpl{/tr}' /></a>{/if}
 
-<!-- beginning of next bit -->
+
 
 <br /><br />
 {* Display the title using parent *}

@@ -1,18 +1,18 @@
 <a class="pagetitle" href="tiki-admin_dsn.php">{tr}Admin dsn{/tr}</a> 
 
-<!-- the help link info -->
+
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}AdminDSN" target="tikihelp" class="tikihelp" title="{tr}AdminDSN{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
-<!-- link to tpl -->
+
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_dsn.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki-admin_dsn tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
-<!-- begin -->
+
 
 <br /><br />
 <h2>{tr}Create/edit dsn{/tr}</h2>

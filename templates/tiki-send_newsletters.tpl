@@ -37,7 +37,7 @@
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
-<option value="{$templates[ix].templateId|escape}">{$templates[ix].name}</option>
+<option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{$templates[ix].name}</option>
 {/section}
 </select>
 </td></tr>

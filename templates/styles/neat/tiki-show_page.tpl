@@ -308,8 +308,7 @@
 {if $feature_wiki_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
-
-{if $feature_wiki_comments eq 'y'}
+{if $feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
 {/if}

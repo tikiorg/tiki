@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+if (!function_exists('since_last_visit_new')) {
 function since_last_visit_new($user) {
   if (!$user) return false;
 
@@ -298,6 +298,7 @@ function since_last_visit_new($user) {
   $ret["items"]["users"]["count"] = $count;
   
   return $ret;
+}
 }
    
 $slvn_info = since_last_visit_new($user);

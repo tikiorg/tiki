@@ -151,11 +151,11 @@
 
 {if $wiki_extras eq 'y'}
 <br />
-{if $feature_wiki_attachments eq 'y'}
+{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
 
-{if $feature_wiki_comments}
+{if $feature_wiki_comments and $tiki_p_wiki_view_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
 {/if}
