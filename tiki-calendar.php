@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.18 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.19 2003-12-01 14:45:45 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,30 +29,24 @@ if ($tiki_p_view_calendar != 'y') {
 
 $infocals = array();
 $infocals = $calendarlib->list_calendars();
-$smarty->assign('infocals', $infocals);
+$listcals = array_keys($infocals["data"]);
 
-$listcals = array_keys($infocals);
-$smarty->assign('listcals', $listcals);
-
-/* that is for specific perms per calendar. TODO
 $outsess = array();
 foreach ($listcals as $grp) {
-	if($userlib->object_has_one_permission($grp,'calendar')) {                # does that object has specific rights defined ?
-		$perms = $userlib->get_permissions(0,-1,'permName_desc','','calendar'); # yes, $perms is the list or permNames
-		foreach($perms["data"] as $perm) {                                      # so we scan each perm ..
-			if (($tiki_p_admin == 'y') or $userlib->object_has_permission($user,$grp,'calendar',$permName)) {
-				$$permName = 'y';                                                   # if that perm is present set $tiki_p_stuff to 'y'
-				$smarty->assign("$permName",array("$grp"=>'y'));                    
+	if($userlib->object_has_one_permission($grp,'calendar')) { 
+		$perms = $userlib->get_permissions(0,-1,'permName_desc','','calendar');
+		foreach($perms["data"] as $perm) {    
+			if ($userlib->object_has_permission($user,$grp,'calendar','tiki_p_view_calendar')) {
 				$outsess[] = $grp;                                                 
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName",array("$grp"=>'n'));                    # if not it's set to 'n', value is overidden
 			}
 		}
 	}
 }
 $listcals = $outsess;
-*/
+
+$smarty->assign('infocals', $infocals["data"]);
+$smarty->assign('listcals', $listcals);
+
 function dropthat($value) {
 	global $match;
 	return ($value != $match);
@@ -216,7 +210,6 @@ if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 } else {
 	$_SESSION['CalendarFocusDate'] = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
-
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 }
 
@@ -227,18 +220,17 @@ list($focus_day, $focus_month, $focus_year) = array(
 	date("Y", $focusdate)
 );
 
-if (isset($_REQUEST["viewmode"])and $_REQUEST["viewmode"]) {
+if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
 	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
 }
 
-if (!isset($_SESSION['CalendarViewMode'])or !$_SESSION['CalendarViewMode'])
+if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
 	$_SESSION['CalendarViewMode'] = 'week';
-
+}
 $smarty->assign('viewmode', $_SESSION['CalendarViewMode']);
 
 if (isset($_REQUEST["delete"])and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"])) {
 	$calendarlib->drop_item($user, $_REQUEST["calitemId"]);
-
 	$_REQUEST["calitemId"] = 0;
 }
 
@@ -309,22 +301,16 @@ if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
 		"start" => $event_start,
 		"end" => $event_end,
 		"locationId" => $_REQUEST["locationId"],
-		"newloc" => addslashes($_REQUEST["newloc"] . ' '),
+		"newloc" => $_REQUEST["newloc"],
 		"categoryId" => $_REQUEST["categoryId"],
-		"newcat" => addslashes($_REQUEST["newcat"] . ' '),
+		"newcat" => $_REQUEST["newcat"],
 		"priority" => $_REQUEST["priority"],
 		"status" => $_REQUEST["status"],
 		"url" => $_REQUEST["url"],
 		"lang" => $_REQUEST["lang"],
-		"name" => addslashes($_REQUEST["name"]),
-		"description" => addslashes(@$_REQUEST["description"] . " ")
+		"name" => $_REQUEST["name"],
+		"description" => $_REQUEST["description"]
 	));
-}
-
-if (isset($_SESSION['CalendarViewGroups'][0])) {
-	$defaultcalId = $_SESSION['CalendarViewGroups'][0];
-} else {
-	$defaultcalId = 0;
 }
 
 if ($_REQUEST["calitemId"]) {
@@ -333,7 +319,7 @@ if ($_REQUEST["calitemId"]) {
 	$info = array();
 
 	$info["calitemId"] = "";
-	$info["calendarId"] = $defaultcalId;
+	$info["calendarId"] = "";
 	$info["user"] = "";
 	$info["calname"] = "";
 	$info["organizers"] = $user . ",";
@@ -384,10 +370,7 @@ $smarty->assign('lastModif', $info["lastModif"]);
 $smarty->assign('lastUser', $info["user"]);
 $smarty->assign('status', $info["status"]);
 
-if (!isset($_REQUEST["editmode"]))
-	$_REQUEST["editmode"] = 0;
-
-$smarty->assign('editmode', $_REQUEST["editmode"]);
+if (!isset($_REQUEST["editmode"])) $_REQUEST["editmode"] = 0;
 
 if ($_REQUEST["editmode"]) {
 	$thatcal = $calendarlib->get_calendar($_REQUEST["calendarId"]);
@@ -410,17 +393,12 @@ if ($_REQUEST["editmode"]) {
 		$listloc = $calendarlib->list_locations($_REQUEST["calendarId"]);
 	}
 
-	if ($thatcal["customparticipants"] == 'y') {
-		$listpeople = $calendarlib->list_cal_users($_REQUEST["calendarId"]);
-	}
-
 	if ($thatcal["customlanguages"] == 'y') {
 		$languages = $tikilib->list_languages();
 	}
 
 	$smarty->assign('listcat', $listcat);
 	$smarty->assign('listloc', $listloc);
-	$smarty->assign('listpeople', $listpeople);
 	$smarty->assign_by_ref('languages', $languages);
 }
 
@@ -479,12 +457,10 @@ $wd = date('w', $focusdate);
 // calculate timespan for sql query
 if ($_SESSION['CalendarViewMode'] == 'month') {
 	$firstweek = date("W", mktime(0, 0, 0, $focus_month, 2, $focus_year)) - 1;
-
 	$lastweek = date("W", mktime(0, 0, 0, $focus_month + 1, 1, $focus_year)) - 1;
 
 	if ($lastweek < $firstweek) {
 		$lastweek += 52;
-
 		$currentweek += 52;
 	}
 
@@ -493,14 +469,12 @@ if ($_SESSION['CalendarViewMode'] == 'month') {
 	$numberofweeks = $lastweek - $firstweek;
 } elseif ($_SESSION['CalendarViewMode'] == 'week') {
 	$firstweek = $currentweek;
-
 	$lastweek = $currentweek;
 	$viewstart = $focusdate - ($wd * $d);
 	$viewend = $viewstart + ((7 * $d) - 1);
 	$numberofweeks = 0;
 } else {
 	$firstweek = $currentweek;
-
 	$lastweek = $currentweek;
 	$viewstart = $focusdate;
 	$viewend = $focusdate + ($d - 1);
@@ -600,6 +574,9 @@ $smarty->assign('weeks', $weeks);
 $smarty->assign('daysnames', $daysnames);
 $smarty->assign('cell', $cell);
 $smarty->assign('var', '');
+
+$section = 'calendar';
+include_once ('tiki-section_options.php');
 
 $smarty->assign('mid', 'tiki-calendar.tpl');
 $smarty->display("tiki.tpl");

@@ -1,24 +1,27 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.26 2003-11-12 00:44:24 chealer Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.27 2003-12-01 14:45:47 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
-<script type="javascript" src="lib/calendar/dates.js"></script>
+
 <a class="pagetitle" href="tiki-calendar.php?view={$view}">{tr}Calendar{/tr}</a>
 {if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
-<span class="mini"><a href="tiki-admin_calendars.php" class="link">{tr}admin{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_calendars.php" class="linkbut">{tr}admin{/tr}</a></span>
 {/if}
 <br />
 
-<div id="tab">
-<a href="javascript:show('tabcal');hide('tabnav');hide('tab');" class="caltab">{tr}Calendars Panel{/tr}</a>
-<a href="javascript:hide('tabcal');show('tabnav');hide('tab');" class="caltab">{tr}Navigation Panel{/tr}</a>
-<a href="javascript:hide('tabcal');hide('tabnav');show('tab');" class="caltabon">{tr}Hide Panels{/tr}</a>
+{* ----------------------------------- *}
+
+<div id="tab" style="display:{if $smarty.cookies.tab eq 'c' or $show_navtab}none{else}block{/if};">
+<a href="javascript:show('tabcal',1);hide('tabnav',1);hide('tab',1);" class="caltab">{tr}Calendars Panel{/tr}</a>
+<a href="javascript:hide('tabcal',1);show('tabnav',1);hide('tab',1);" class="caltab">{tr}Events Panel{/tr}</a>
 </div>
 
-<div id="tabcal" style="display:none;">
+{* ----------------------------------- *}
+
+<div id="tabcal" style="display:{if $smarty.cookies.tabcal eq 'o' and !$show_navtab}block{else}none{/if};">
 <div>
-<a href="javascript:show('tabcal');hide('tabnav');hide('tab');" class="caltabon">{tr}Calendars Panel{/tr}</a>
-<a href="javascript:hide('tabcal');show('tabnav');hide('tab');" class="caltab">{tr}Navigation Panel{/tr}</a>
-<a href="javascript:hide('tabcal');hide('tabnav');show('tab');" class="caltab">{tr}Hide Panels{/tr}</a>
+<a href="javascript:show('tabcal',1);hide('tabnav',1);hide('tab',1);" class="caltabon">{tr}Calendars Panel{/tr}</a>
+<a href="javascript:hide('tabcal',1);show('tabnav',1);hide('tab',1);" class="caltab">{tr}Events Panel{/tr}</a>
+<a href="javascript:hide('tabcal',1);hide('tabnav',1);show('tab',1);" class="caltab">{tr}Hide Panels{/tr}</a>
 </div>
 
 <form class="box" method="get" action="tiki-calendar.php" name="f">
@@ -64,109 +67,26 @@ onmouseover="this.style.textDecoration='underline';"
 </div></div>
 </form>
 
-<div id="tabnav" style="display:none;">
+{* ----------------------------------- *}
+
+<div id="tabnav" style="display:{if $smarty.cookies.tabnav eq 'o' or $show_navtab}block{else}none{/if};">
 <div>
-<a href="javascript:hide('tabnav');hide('tab');show('tabcal');" class="caltab">{tr}Calendars Panel{/tr}</a>
-<a href="javascript:show('tabnav');hide('tab');hide('tabcal');" class="caltabon">{tr}Navigation Panel{/tr}</a>
-<a href="javascript:hide('tabnav');show('tab');hide('tabcal');" class="caltab">{tr}Hide Panels{/tr}</a>
+<a href="javascript:show('tabcal',1);hide('tabnav',1);hide('tab',1);" class="caltab">{tr}Calendars Panel{/tr}</a>
+<a href="javascript:hide('tabcal',1);show('tabnav',1);hide('tab',1);" class="caltabon">{tr}Events Panel{/tr}</a>
+<a href="javascript:hide('tabcal',1);hide('tabnav',1);show('tab',1);" class="caltab">{tr}Hide Panels{/tr}</a>
 </div>
+
 <div class="tabnav">
-{if $displayedcals}
-<br /><b>{tr}Group Calendars{/tr} :</b>
-{foreach item=dc from=$displayedcals}
-{$infocals.$dc.name} <a href="tiki-calendar.php?hidegroup={$infocals.$dc.calendarId}" class="link" title="{tr}hide from display{/tr}">x</a>, 
-{/foreach}
-{/if}
-{if $displayedtikicals}
-<br /><b>{tr}Tiki Calendars{/tr}:</b>
-{foreach item=dc from=$displayedtikicals}
-<span class="Cal{$dc}">={$dc} <a href="tiki-calendar.php?hidetiki={$dc}" class="link" title="{tr}hide from display{/tr}">x</a></span>, 
-{/foreach}
-{/if}
-<div align="center" style="margin-top:10px;">
-<span style="float:right;">
-{tr}today{/tr}: <a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_long_date}">{$now|tiki_long_date}</a>
-</span>
-<span style="float:left;">
-<a href="tiki-calendar.php?todate={$monthbefore}" class="link" title="{$monthbefore|tiki_long_date}">{tr}-1m{/tr}</a>
-<a href="tiki-calendar.php?todate={$weekbefore}" class="link" title="{$weekbefore|tiki_long_date}">{tr}-7d{/tr}</a>
-<a href="tiki-calendar.php?todate={$daybefore}" class="link" title="{$daybefore|tiki_long_date}">{tr}-1d{/tr}</a> 
-<b>{$focusdate|tiki_long_date}</b>
-<a href="tiki-calendar.php?todate={$dayafter}" class="link" title="{$dayafter|tiki_long_date}">{tr}+1d{/tr}</a>
-<a href="tiki-calendar.php?todate={$weekafter}" class="link" title="{$weekafter|tiki_long_date}">{tr}+7d{/tr}</a>
-<a href="tiki-calendar.php?todate={$monthafter}" class="link" title="{$monthafter|tiki_long_date}">{tr}+1m{/tr}</a>
-</span>
-{tr}browse by{/tr}
-<!-- <a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}">{tr}day{/tr}</a> -->
-<a href="tiki-calendar.php?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}">{tr}week{/tr}</a>
-<a href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}">{tr}month{/tr}</a>
-<br />
-</div>
-</div>
-</div>
+{* ······························· *}{if $calitemId > 0 or $calendarId > 0}
 
+{* ················ *}{if $calitemId}
+<div class="pagetitle">{tr}Edit Calendar Item{/tr} : </span>{$name|default:"new event"} {if $calitemId}(id #{$calitemId}){/if}</div>
+<div class="mininotes">{tr}Created{/tr}: {$created|tiki_long_date} {$created|tiki_long_time} </div>
+<div class="mininotes">{tr}Modified{/tr}: {$lastModif|tiki_long_date} {$lastModif|tiki_long_time} </div>
+<div class="mininotes">{tr}by{/tr}: {$lastUser} </div>
+{* ················ *}{/if}
 
-<table cellpadding="0" cellspacing="0" border="0"  id="calendar">
-{if $viewmode eq 'day'}
-
-{else}
-<tr><td></td>
-{section name=dn loop=$daysnames}
-<td class="heading">{$daysnames[dn]}</td>
-{/section}
-</tr>
-{cycle values="odd,even" print=false}
-{section name=w loop=$cell}
-<tr><td width="20" class="heading">{$weeks[w]}</td>
-{section name=d loop=$weekdays}
-{if $cell[w][d].day|date_format:"%m" eq $focusmonth}
-{cycle values="odd,even" print=false advance=false}
-{else}
-{cycle values="odddark" print=false advance=false}
-{/if}
-<td class="{cycle}">
-<div align="center" class="calfocus{if $cell[w][d].day eq $focusdate}on{/if}">
-<span style="float:left;">
-<a href="tiki-calendar.php?todate={$cell[w][d].day}">{$cell[w][d].day|date_format:"%d/%m"}</a>
-</span>
-<span style="float:right;margin-right:3px;padding-right:4px;">
-{if $tiki_p_add_events and count($listcals) > 0}
-<a href="tiki-calendar.php?todate={$cell[w][d].day}&amp;editmode=add">{tr}+{/tr}</a>
-{/if}
-</span>
-.<br />
-</div>
-{section name=items loop=$cell[w][d].items}
-{assign var=over value=$cell[w][d].items[items].over}
-<div class="Cal{$cell[w][d].items[items].type}" id="cal{$cell[w][d].items[items].type}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
-<span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text="$over"} 
-class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}</a></span>
-{if $cell[w][d].items[items].web}
-<a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}">w</a>
-{/if}
-<br />
-</div>
-{/section}
-</td>
-{/section}
-</tr>
-{/section}
-{/if}
-</table>
-
-{if $editmode and $tiki_p_add_events}
-{if $calendarId}
-<br />
-<h2>{tr}Edit Calendar Item{/tr} : <span class="mini">{$name|default:"new event"} {if $calitemId}(id #{$calitemId}){/if}</span></h2>
-
-{if $calitemId}
-<div class="mini">
-<span style="color:#666666;">{tr}Created{/tr}:</span> {$created|tiki_long_date} {$created|tiki_long_time} 
-<span style="color:#666666;">{tr}Modified{/tr}:</span> {$lastModif|tiki_long_date} {$lastModif|tiki_long_time} 
-<span style="color:#666666;">{tr}by{/tr}:</span> {$lastUser} 
-</div>
-{/if}
-
+<div>
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
 <input type="hidden" name="editmode" value="1">
 {if $tiki_p_change_events}
@@ -199,7 +119,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 {tr}or create a new category{/tr} 
 <input type="text" name="newcat" value="">
 {if $categoryId}
-<span class="mini">( {$categoryName})</span>
+<span class="mini">( {$categoryName} )</span>
 {/if}
 </td></tr>
 {/if}
@@ -225,39 +145,12 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 <tr><td class="form">{tr}Organized by{/tr}</td><td class="form">
 <input type="text" name="organizers" value="{$organizers|escape}" id="organizers">
 {tr}comma separated usernames{/tr}
-{if $groupname ne 'Anonymous'}
- {tr}from the list{/tr}:
-<select name="organizerrole" onchange="javascript:document.getElementById('organizers').value+=this.options[this.selectedIndex].value+',';">
-<option value="">{tr}choose{/tr}</option>
-{section name=lp loop=$listpeople}
-<option value="{$listpeople[lp]|escape}">{$listpeople[lp]}</option>
-{/section}
-</select>
-{/if}
 </td></tr>
 
 <tr><td class="form">{tr}Participants{/tr}</td><td class="form">
 <input type="text" name="participants" value="{$participants|escape}" id="participants">
 {tr}comma separated username:role{/tr} 
-{if $groupname ne 'Anonymous'}
-{tr}from the list{/tr}:
-<select name="participants" 
-onchange="javascript:document.getElementById('participants').value+=this.options[this.selectedIndex].value+':'+document.getElementById('roles').options[document.getElementById('roles').selectedIndex].value+',';">
-<option value="">{tr}choose{/tr}</option>
-{section name=lp loop=$listpeople}
-<option value="{$listpeople[lp]|escape}">{$listpeople[lp]}</option>
-{/section}
-</select>
- {tr}with role{/tr} 
- <select name="roles" id="roles">
-<option value="0">{tr}Chair{/tr}:0 </option>
-<option value="1">{tr}Required{/tr}:1 </option>
-<option value="2">{tr}Optional{/tr}:2 </option>
-<option value="3">{tr}None{/tr}:3 </option>
-</select>
-{else}
- {tr}with roles{/tr} {tr}Chair{/tr}:0, {tr}Required{/tr}:1, {tr}Optional{/tr}:2, {tr}None{/tr}:3
-{/if}
+{tr}with roles{/tr} {tr}Chair{/tr}:0, {tr}Required{/tr}:1, {tr}Optional{/tr}:2, {tr}None{/tr}:3
 </td></tr>
 {/if}
 
@@ -326,13 +219,120 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 {/if}
 
 <tr><td class="formcolor"></td><td class="formcolor">
-{if $calitemId and $tiki_p_change_events}<input type="submit" name="copy" value="{tr}duplicate{/tr}" />{/if}
+{if $calitemId and $tiki_p_change_events}
+<input type="submit" name="copy" value="{tr}duplicate{/tr}" />
+{/if}
 <input type="submit" name="save" value="{tr}save{/tr}" />
 <a href="tiki-calendar.php?calitemId={$calitemId}&amp;delete=1" class="link" style="margin-left:42px;"/>{tr}delete{/tr}</a>
 </td></tr>
 </table>
 </form>
-{elseif $editmode and $tiki_p_add_events}
+</div>
+{* ······························· *}{else}
+<h2>{tr}Add Calendar Item{/tr}</h2>
+
+{* ················ *}{if count($listcals) gt 0}
+{tr}Choose a calendar where to put events{/tr} : 
+<ul>
+{foreach item=k from=$listcals}
+<li><a href="tiki-calendar.php?todate={$focusdate}&amp;calendarId={$k}&amp;editmode=add" class="link">{$infocals.$k.name}</a></li>
+{/foreach}
+</ul>
+{* ················ *}{else}
 <h1>{tr}You should first ask that a calendar is created, so you can create events attached to it.{/tr}</h1>
+{* ················ *}{/if}
+
+{* ······························· *}{/if}
+</div>
+</div>
+
+{* ----------------------------------- *}
+
+<div class="tabrow">
+<table cellpadding="0" cellspacing="0" border="0">
+<tr><td class="middle" nowrap="nowrap">
+{if $feature_jscalendar eq 'y'}
+<form action="#" method="get">
+<input type="text" id="todate" name="todate" value="" />
+<button type="reset" id="trigger">...</button>
+</form>
+<script type="text/javascript">
+{literal}Calendar.setup( { {/literal}
+inputField  : "todate",      // ID of the input field
+ifFormat    : "%d-%m-%Y",    // the date format
+button      : "trigger"    // ID of the button
+{literal} } );{/literal}
+</script>
+{else}
+<div class="daterow">
+<a href="tiki-calendar.php?todate={$monthbefore}" class="link" title="{$monthbefore|tiki_long_date}">{tr}-1m{/tr}</a>
+<a href="tiki-calendar.php?todate={$weekbefore}" class="link" title="{$weekbefore|tiki_long_date}">{tr}-7d{/tr}</a>
+<a href="tiki-calendar.php?todate={$daybefore}" class="link" title="{$daybefore|tiki_long_date}">{tr}-1d{/tr}</a> 
+<b>{$focusdate|tiki_short_date}</b>
+<a href="tiki-calendar.php?todate={$dayafter}" class="link" title="{$dayafter|tiki_long_date}">{tr}+1d{/tr}</a>
+<a href="tiki-calendar.php?todate={$weekafter}" class="link" title="{$weekafter|tiki_long_date}">{tr}+7d{/tr}</a>
+<a href="tiki-calendar.php?todate={$monthafter}" class="link" title="{$monthafter|tiki_long_date}">{tr}+1m{/tr}</a>
+</div>
 {/if}
+</td>
+<td align="center" width="100%" class="middle">
+<div><b><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_long_date}">{tr}today{/tr} {$now|tiki_long_date}</a></b></div>
+</td>
+<td align="right" class="middle" nowrap="nowrap" width="90">
+<a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" align="top" /></a><a 
+href="tiki-calendar.php?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" align="top" /></a><a 
+href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" align="top" /></a>
+</td></tr></table>
+</div>
+
+<table cellpadding="0" cellspacing="0" border="0"  id="caltable">
+{if $viewmode eq 'day'}
+<tr><td></td>
+<td> nums</td><td>rows</td>
+</tr>
+{else}
+<tr><td width="2%">&nbsp;</td>
+{section name=dn loop=$daysnames}
+<td class="heading"  width="14%">{$daysnames[dn]}</td>
+{/section}
+</tr>
+{cycle values="odd,even" print=false}
+{section name=w loop=$cell}
+<tr><td width="2%" class="heading">{$weeks[w]}</td>
+{section name=d loop=$weekdays}
+{if $cell[w][d].day|date_format:"%m" eq $focusmonth}
+{cycle values="odd,even" print=false advance=false}
+{else}
+{cycle values="odddark" print=false advance=false}
 {/if}
+<td class="{cycle}" width="14%">
+<div align="center" class="calfocus{if $cell[w][d].day eq $focusdate}on{/if}">
+<span style="float:left;">
+<a href="tiki-calendar.php?todate={$cell[w][d].day}">{$cell[w][d].day|date_format:"%d/%m"}</a>
+</span>
+<span style="float:right;margin-right:3px;padding-right:4px;">
+{if $tiki_p_add_events eq 'y' and count($listcals) > 0}
+<a href="tiki-calendar.php?todate={$cell[w][d].day}&amp;editmode=add">{tr}+{/tr}</a>
+{/if}
+</span>
+.<br />
+</div>
+{section name=items loop=$cell[w][d].items}
+{assign var=over value=$cell[w][d].items[items].over}
+<div class="Cal{$cell[w][d].items[items].type}" id="cal{$cell[w][d].items[items].type}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
+<span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text="$over"} 
+class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}</a></span>
+{if $cell[w][d].items[items].web}
+<a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}">w</a>
+{/if}
+<br />
+</div>
+{/section}
+</td>
+{/section}
+</tr>
+{/section}
+{/if}
+</table>
+
+

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.8 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.9 2003-12-01 14:45:45 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,7 +75,33 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $calendars = $calendarlib->list_calendars(0, -1, $sort_mode, $find, 0);
-$smarty->assign_by_ref('calendars', $calendars);
+
+if (!isset($_REQUEST["offset"])) {
+	$offset = 0;
+} else {
+	$offset = $_REQUEST["offset"];
+}
+$smarty->assign_by_ref('offset', $offset);
+
+$cant_pages = ceil($calendars["cant"] / $maxRecords);
+$smarty->assign_by_ref('cant_pages', $cant_pages);
+$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+
+if ($calendars["cant"] > ($offset + $maxRecords)) {
+	$smarty->assign('next_offset', $offset + $maxRecords);
+} else {
+	$smarty->assign('next_offset', -1);
+}
+
+// If offset is > 0 then prev_offset
+if ($offset > 0) {
+	$smarty->assign('prev_offset', $offset - $maxRecords);
+} else {
+	$smarty->assign('prev_offset', -1);
+}
+
+$smarty->assign_by_ref('calendars', $calendars["data"]);
+
 
 $groups = $userlib->get_groups();
 
@@ -84,6 +110,7 @@ $cat_objid = $_REQUEST["calendarId"];
 include_once ("categorize_list.php");
 
 // Display the template
+$smarty->assign('uses_tabs', 'y');
 $smarty->assign('mid', 'tiki-admin_calendars.tpl');
 $smarty->display("tiki.tpl");
 
