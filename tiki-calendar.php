@@ -1,40 +1,68 @@
 <?php
 require_once('tiki-setup.php');
 include_once('lib/userslib.php');
-include_once('lib/class_calendar.php');
 include_once('lib/calendar/calendarlib.php');
 
-$cal = new Calendar('en');
-$listcals = $calendarlib->list_calIds();
+# perms are 
+# 	$tiki_p_view_calendar
+# 	$tiki_p_admin_calendar
+# 	$tiki_p_change_events
+# 	$tiki_p_add_events
 
-if($feature_calendar != 'y') {
+
+if ($feature_calendar != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 
-
-if(isset($_REQUEST["calIds"]) and is_array($_REQUEST["calIds"]) and count($_REQUEST["calIds"])) {
-	$_SESSION['CalendarViewGroups'] = $_REQUEST["calIds"];
-} elseif (!isset($_SESSION['CalendarViewGroups'])) {
-	$_SESSION['CalendarViewGroups'] = $listcals["calendarId"];
-} elseif (isset($_REQUEST["refresh"]) and !isset($_REQUEST["calIds"])) {
-	$_SESSION['CalendarViewGroups'] = array();
+if ($tiki_p_view_calendar != 'y') {
+	$smarty->assign('msg',tra("Permission denied you cannot view the calendar"));
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
 }
 
-if(isset($_REQUEST["tikicals"]) and is_array($_REQUEST["tikicals"]) and count($_REQUEST["tikicals"])) {
-	$_SESSION['CalendarViewTikiCals'] = $_REQUEST["tikicals"];
-} elseif (!isset($_SESSION['CalendarViewTikiCals'])) {
-	$_SESSION['CalendarViewTikiCals'] = array();
-} elseif (isset($_REQUEST["refresh"]) and !isset($_REQUEST["tikicals"])) {
-	$_SESSION['CalendarViewTikiCals'] = array();
-}
+$infocals = array();
+$infocals = $calendarlib->list_calendars();
+$smarty->assign('infocals',$infocals);
 
+$listcals = array_keys($infocals);
+$smarty->assign('listcals',$listcals);
+
+
+/* that is for specific perms per calendar. TODO
+$outsess = array();
+foreach ($listcals as $grp) {
+	if($userlib->object_has_one_permission($grp,'calendar')) {                # does that object has specific rights defined ?
+		$perms = $userlib->get_permissions(0,-1,'permName_desc','','calendar'); # yes, $perms is the list or permNames
+		foreach($perms["data"] as $perm) {                                      # so we scan each perm ..
+			if (($tiki_p_admin == 'y') or $userlib->object_has_permission($user,$grp,'calendar',$permName)) {
+				$$permName = 'y';                                                   # if that perm is present set $tiki_p_stuff to 'y'
+				$smarty->assign("$permName",array("$grp"=>'y'));                    
+				$outsess[] = $grp;                                                 
+			} else {
+				$$permName = 'n';
+				$smarty->assign("$permName",array("$grp"=>'n'));                    # if not it's set to 'n', value is overidden
+			}
+		}
+	}
+}
+$listcals = $outsess;
+*/
 function dropthat($value) {
 	global $match;
 	return ($value != $match);
 }
 
+// set up list of groups 
+if(isset($_REQUEST["calIds"]) and is_array($_REQUEST["calIds"]) and count($_REQUEST["calIds"])) {
+	$_SESSION['CalendarViewGroups'] = $_REQUEST["calIds"];
+} elseif (!isset($_SESSION['CalendarViewGroups'])) {
+	$_SESSION['CalendarViewGroups'] = $listcals;
+} elseif (isset($_REQUEST["refresh"]) and !isset($_REQUEST["calIds"])) {
+	$_SESSION['CalendarViewGroups'] = array();
+}
+// drop those inhibited if any
 if(isset($_REQUEST["hidegroup"]) and $_REQUEST["hidegroup"]) {
 	if (is_array($_REQUEST["hidegroup"])) {
 		foreach ($_REQUEST["hidegroup"] as $h) {
@@ -47,6 +75,15 @@ if(isset($_REQUEST["hidegroup"]) and $_REQUEST["hidegroup"]) {
 	}
 }
 
+// setup list of tiki items displayed
+if(isset($_REQUEST["tikicals"]) and is_array($_REQUEST["tikicals"]) and count($_REQUEST["tikicals"])) {
+	$_SESSION['CalendarViewTikiCals'] = $_REQUEST["tikicals"];
+} elseif (!isset($_SESSION['CalendarViewTikiCals'])) {
+	$_SESSION['CalendarViewTikiCals'] = array();
+} elseif (isset($_REQUEST["refresh"]) and !isset($_REQUEST["tikicals"])) {
+	$_SESSION['CalendarViewTikiCals'] = array();
+}
+// drop those inhibited if any
 if(isset($_REQUEST["hidetiki"]) and $_REQUEST["hidetiki"]) {
 	if (is_array($_REQUEST["hidetiki"])) {
 		foreach ($_REQUEST["hidetiki"] as $h) {
@@ -59,27 +96,7 @@ if(isset($_REQUEST["hidetiki"]) and $_REQUEST["hidetiki"]) {
 	}
 }
 
-$outsess = array();
-if (is_array($_SESSION['CalendarViewGroups']) and count($_SESSION['CalendarViewGroups']) > 0) {
-	foreach ($_SESSION['CalendarViewGroups'] as $grp) {
-		if($userlib->object_has_one_permission($grp,'calendar')) {
-			if($tiki_p_admin != 'y') {
-				$perms = $userlib->get_permissions(0,-1,'permName_desc','','calendar');
-				foreach($perms["data"] as $perm) {
-					if($userlib->object_has_permission($user,$grp,'calendar',$permName)) {
-						$$permName = 'y';
-						$smarty->assign("$permName",array("$grp"=>'y'));
-						$outsess[] = $grp;
-					} else {
-						$$permName = 'n';
-						$smarty->assign("$permName",array("$grp"=>'n'));
-					}
-				}
-			}
-		}
-	}
-}
-$_SESSION['CalendarViewGroups'] = $outsess;
+// that should be a global array set up in tiki-setup.php
 $tikiItems = array(
 	"wiki"=>array(
 		"label"=>tra("Wiki"),
@@ -154,9 +171,29 @@ $tikiItems = array(
 );
 $smarty->assign('tikiItems',$tikiItems);
 
+// set up the default thing to display 
 if (!$_SESSION['CalendarViewGroups'] and !$_SESSION['CalendarViewTikiCals']) {
 	$_SESSION['CalendarViewTikiCals'] = array("wiki");
 }
+$smarty->assign('displayedcals',$_SESSION['CalendarViewGroups']);
+$smarty->assign('displayedtikicals',$_SESSION['CalendarViewTikiCals']);
+
+$thiscal = array();
+foreach ($listcals as $thatid) {
+	if (is_array($_SESSION['CalendarViewGroups']) && (in_array("$thatid",$_SESSION['CalendarViewGroups']))) {
+		$thiscal["$thatid"] = 1;
+	} else {
+		$thiscal["$thatid"] = 0;
+	}
+}
+$smarty->assign('thiscal',$thiscal);
+
+$tikical = array();
+foreach ($_SESSION['CalendarViewTikiCals'] as $calt) {
+	$tikical["$calt"] = 1;
+}
+$smarty->assign('tikical',$tikical);
+
 
 if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
 	$_SESSION['CalendarFocusDate'] = $_REQUEST['todate'];
@@ -176,32 +213,6 @@ if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) $_S
 
 $smarty->assign('viewmode',$_SESSION['CalendarViewMode']);
 
-$displayedcals = array();
-$tikical = array();
-foreach ($listcals as $ucal) {
-	if (is_array($_SESSION['CalendarViewGroups']) && (in_array($ucal,$_SESSION['CalendarViewGroups']))) {
-		$displayedcals[] = $calendarlib->get_calendar($ucal);
-	}
-}
-
-$smarty->assign('listcals',$listcals);
-$smarty->assign('displayedcals',$displayedcals);
-foreach ($listcals as $whichcal) {
-	$thatid = $whichcal["calendarId"];
-	if (is_array($_SESSION['CalendarViewGroups']) && (in_array($thatid,$_SESSION['CalendarViewGroups']))) {
-		$thiscal[] = 1;
-	} else {
-		$thiscal[] = 0;
-	}
-}
-$smarty->assign('thiscal',$thiscal);
-
-foreach ($_SESSION['CalendarViewTikiCals'] as $calt) {
-	$tikical["$calt"] = 1;
-}
-$smarty->assign('tikical',$tikical);
-$smarty->assign('displayedtikicals',$_SESSION['CalendarViewTikiCals']);
-
 if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"])) {
 	$calendarlib->drop_item($user,$calitemId);
 	$_REQUEST["calitemId"] = 0;
@@ -210,6 +221,12 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"])) {
 if (!isset($_REQUEST["calitemId"])) $_REQUEST["calitemId"] = 0;
 if (!isset($_REQUEST["locationId"])) $_REQUEST["locationId"] = 0;
 if (!isset($_REQUEST["categoryId"])) $_REQUEST["categoryId"] = 0;
+if (!isset($_REQUEST["organizers"])) $_REQUEST["organizers"] = "";
+if (!isset($_REQUEST["participants"])) $_REQUEST["participants"] = "";
+if (!isset($_REQUEST["newloc"])) $_REQUEST["newloc"] = "";
+if (!isset($_REQUEST["newcat"])) $_REQUEST["newcat"] = "";
+if (!isset($_REQUEST["priority"])) $_REQUEST["priority"] = "5";
+if (!isset($_REQUEST["lang"])) $_REQUEST["lang"] = $lang;
 if (!isset($_REQUEST["status"])) $_REQUEST["status"] = 0;
 
 if (isset($_REQUEST["copy"]) and ($_REQUEST["copy"])) {
@@ -221,15 +238,25 @@ if (isset($_REQUEST["save"]) and ($_REQUEST["save"])) {
 	if (!isset($_REQUEST["name"]) or !(trim($_REQUEST["name"]))) {
 		$_REQUEST["name"] = tra("event without name");
 	}
+	if (isset($_REQUEST["start_freeform"]) and $_REQUEST["start_freeform"]) {
+		$event_start = strtotime($_REQUEST["start_freeform"]);
+	}
+	if (isset($_REQUEST["end_freeform"]) and $_REQUEST["end_freeform"]) {
+		$event_end = strtotime($_REQUEST["end_freeform"]);
+	}
+	if (!isset($event_start)) {
+		$event_start = mktime($_REQUEST["starth_Hour"],$_REQUEST["starth_Minute"],0,$_REQUEST["start_Month"],$_REQUEST["start_Day"],$_REQUEST["start_Year"]);
+	}
+	if (!isset($event_end)) {
+		$event_end = mktime($_REQUEST["endh_Hour"],$_REQUEST["endh_Minute"],0,$_REQUEST["end_Month"],$_REQUEST["end_Day"],$_REQUEST["end_Year"]);
+	}
 	$_REQUEST["calitemId"] = $calendarlib->set_item($user,$_REQUEST["calitemId"],array(
 	"user" => $user,
 	"organizers" => $_REQUEST["organizers"],
 	"participants" => $_REQUEST["participants"],
 	"calendarId" => $_REQUEST["calendarId"],
-	"start" => mktime($_REQUEST["starth_Hour"],$_REQUEST["starth_Minute"],0,
-		$_REQUEST["start_Month"],$_REQUEST["start_Day"],$_REQUEST["start_Year"]),
-	"end" => mktime($_REQUEST["endh_Hour"],$_REQUEST["endh_Minute"],0,
-		$_REQUEST["end_Month"],$_REQUEST["end_Day"],$_REQUEST["end_Year"]),
+	"start" => $event_start,
+	"end" => $event_end,
 	"locationId" => $_REQUEST["locationId"],
 	"newloc" => addslashes($_REQUEST["newloc"].' '),
 	"categoryId" => $_REQUEST["categoryId"],
@@ -329,13 +356,7 @@ if ($_REQUEST["editmode"]) {
 		$listpeople = $calendarlib->list_cal_users($_REQUEST["calendarId"]);
 	}
 	if ($thatcal["customlanguages"] == 'y') {
-		$h=opendir("lang/");
-		while($file=readdir($h)) {
-			if($file!='.' && $file!='..' && is_dir('lang/'.$file) && strlen($file)==2) {
-				$languages[]=$file;
-			}
-		}
-		closedir($h);
+		$languages = $tikilib->list_languages();
 	}
 	$smarty->assign('listcat',$listcat);
 	$smarty->assign('listloc',$listloc);
@@ -436,6 +457,8 @@ if ($_SESSION['CalendarViewTikiCals']) {
 } else {
 	$listtikievents = array();
 }
+
+
 for ($i=0;$i<=$numberofweeks;$i++) {
 	$wee = $firstweek + $i;
 	$weeks[] = $wee;

@@ -24,22 +24,24 @@
 </td>
 <td>
 {tr}Group Calendars{/tr} :<br/>
-{section name=lc loop=$listcals}
+{foreach item=k from=$listcals}
 <div style="background-color:#ffffff;" 
-onclick="document.getElementById('groupcal_{$listcals[lc].name}').checked=!document.getElementById('groupcal_{$listcals[lc].name}').checked;"
+onclick="document.getElementById('groupcal_{$k}').checked=!document.getElementById('groupcal_{$k}').checked;"
 onmouseout="this.style.backgroundColor='#ffffff';" 
 onmouseover="this.style.backgroundColor='#cccccc';"
-><input type="checkbox" name="calIds[]" value="{$listcals[lc].calendarId}" id="groupcal_{$listcals[lc].name}" {if $thiscal[lc]}checked="checked"{/if}
+><input type="checkbox" name="calIds[]" value="{$k}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if}
 onclick="this.checked=!this.checked;"/>
-{$listcals[lc].name} ({tr}groupe{/tr} {$listcals[lc].groupname})
+{$infocals.$k.name} (id #{$k})
+<!--
 <div class="simplebox">
 tiki_p_view_calendar : {$tiki_p_view_calendar.$loopcal}<br/>
 tiki_p_admin_calendar : {$tiki_p_admin_calendar.$loopcal}<br/>
 tiki_p_change_events : {$tiki_p_change_events.$loopcal}<br/>
 tiki_p_add_events : {$tiki_p_add_events.$loopcal}<br/>
 </div>
+-->
 </div>
-{/section}
+{/foreach}
 </td>
 <td>
 {tr}Tools Calendars{/tr} :<br/>
@@ -64,19 +66,15 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 <div class="mini">
 {if $displayedcals}
 <b>{tr}Group Calendars{/tr} :</b>
-{section name=dc loop=$displayedcals}
-{if $displayedcals[dc].calendarId}
-{$displayedcals[dc].name} <a href="tiki-calendar.php?hidegroup={$displayedcals[dc].calendarId}" class="link" title="{tr}hide from display{/tr}">x</a>, 
-{/if}
-{/section}
+{foreach item=dc from=$displayedcals}
+{$infocals.$dc.name} <a href="tiki-calendar.php?hidegroup={$infocals.$dc.calendarId}" class="link" title="{tr}hide from display{/tr}">x</a>, 
+{/foreach}
 {/if}
 {if $displayedtikicals}
 <b>{tr}Tiki Calendars{/tr}:</b>
-{section name=dc loop=$displayedtikicals}
-{if $displayedtikicals[dc]}
-<span class="Cal{$displayedtikicals[dc]}">={$displayedtikicals[dc]} <a href="tiki-calendar.php?hidetiki={$displayedtikicals[dc]}" class="link" title="{tr}hide from display{/tr}">x</a></span>, 
-{/if}
-{/section}
+{foreach item=dc from=$displayedtikicals}
+<span class="Cal{$dc}">={$dc} <a href="tiki-calendar.php?hidetiki={$dc}" class="link" title="{tr}hide from display{/tr}">x</a></span>, 
+{/foreach}
 {/if}
 </div>
 </td></tr></table>
@@ -132,7 +130,7 @@ onmouseover="this.style.backgroundColor='#cccccc';"
 .<br/>
 </div>
 {section name=items loop=$cell[w][d].items}
-<div class="Cal{$cell[w][d].items[items].type}" id="{$cell[w][d].items[items].type}">
+<div class="Cal{$cell[w][d].items[items].type}" id="{$cell[w][d].items[items].type}" {if $cell[w][d].items[items].calitemId eq $calitemId}style="padding:5px;border:1px solid black;"{/if}>
 <span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text="$cell[w][d].items[items].over"} 
 class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}</a></span>
 {if $cell[w][d].items[items].web}
@@ -166,18 +164,16 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 <table class="normal" style="width:100%;">
 <tr><td class="formcolor">{tr}Calendrier{/tr}</td><td class="formcolor">
 <select name="calendarId">
-{section name=lc loop=$listcals}
-{if $listcals[lc]}
-<option value="{$listcals[lc].calendarId}" {if $calendarId eq $listcals[lc].calendarId}selected="selected"{/if} onchange="document.forms[f].submit();">{$listcals[lc].name}</option>
-{/if}
-{/section}
+{foreach item=lc from=$listcals}
+<option value="{$lc}" {if $calendarId eq $lc}selected="selected"{/if} onchange="document.forms[f].submit();">{$infocals.$lc.name}</option>
+{/foreach}
 </select>
 <input type="submit" name="refr" value="{tr}refresh{/tr}" />
 {if $calendarId}
 <span class="mini">( {$calname} )</span>
 {/if}
 <br/>
-{tr}If you change the calendar selection, please refresh to get the appropriated list in Category, Location and people.{/tr}<br/>
+{tr}If you change the calendar selection, please refresh to get the appropriated list in Category, Location and people (if applicable to the calendar you choose).{/tr}<br/>
 </td></tr>
 
 {if $customcategories eq 'y'}
@@ -255,11 +251,13 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 {/if}
 
 <tr><td class="formcolor">{tr}Start{/tr}</td><td class="formcolor">
+<input type="text" name="start_freeform" value=""> {tr}or{/tr}
 {html_select_date time=$start prefix="start_" field_order=DMY}
 {html_select_time minute_interval=10 time=$start prefix="starth_" display_seconds=false use_24_hours=true}
 </td></tr>
 
 <tr><td class="formcolor">{tr}End{/tr}</td><td class="formcolor">
+<input type="text" name="end_freeform" value=""> {tr}or{/tr}
 {html_select_date time=$end prefix="end_" field_order=DMY}
 {html_select_time minute_interval=10 time=$end prefix="endh_" display_seconds=false use_24_hours=true}
 </td></tr>

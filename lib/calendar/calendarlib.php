@@ -20,18 +20,12 @@ class CalendarLib extends TikiLib {
 		}
 		$query = "select * from tiki_calendars $mid order by $sort_mode limit $offset,$maxRecords";
 		$result = $this->query($query);
-		$ret = array();
+		$res = array();
 		while ($r = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$res[] = $r;
+			$k = $r["calendarId"];
+			$res["$k"] = $r;
 		}
 		return $res;
-	}
-
-	function list_calIds($offset=0,$maxRecords=-1,$sort_mode='created desc',$find='',$hide=1)
-	{
-		$result = $this->query("select calendarId from tiki_calendars");
-		if(!$result->numRows()) return false;
-		return $result->fetchRow(DB_FETCHMODE_ASSOC);
 	}
 
 	// give out an array with Ids viewable by $user
@@ -90,10 +84,9 @@ class CalendarLib extends TikiLib {
 
 	function get_calendar($calendarId)
 	{
-		$query = "select * from tiki_calendars where calendarId=$calendarId";
-		$result = $this->query($query);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-		return $res;
+		
+		$res = $this->query("select * from tiki_calendars where calendarId='$calendarId' ");
+		return $res->fetchRow(DB_FETCHMODE_ASSOC);
 	}
 
 	function drop_calendar($calendarId)
@@ -131,16 +124,6 @@ class CalendarLib extends TikiLib {
 				} else {
 					$head = " ... ".tra("continued")." ... ";
 				}
-				// have to extract all that in a template !!!
-				$notice = '<div class=box><div class=box-title>'.$head;
-				$notice.= "<span class=calprio".$res["priority"]." style=margin-left:7px;color:black;padding-left:5px;padding-right:5px>".$res["priority"]."</span>";
-				$notice.= '</div>';
-				$notice.= "<div class=box-title>".tra("in")." <b>".$res["calname"]."</b></div>";
-				$notice.= '<div class=box-data>';
-				$notice.= "<b>".$res["name"]."</b><br/>".str_replace("\n|\r","",$res["description"]);
-				$notice.= "<br/><i>... ".tra("Click to edit")."</i>";
-				$notice.= "</div>";
-				$notice.= "</div>";
 				$ret["$i"][] = array(
 					"result" => $res,
 					"calitemId" => $res["calitemId"],
@@ -182,7 +165,7 @@ class CalendarLib extends TikiLib {
 							"type" => "wiki",
 							"url" => "tiki-index.php?page=".$res["pageName"],
 							"name" => $res["pageName"]." ".tra($res["action"]),
-							"head" => "<b>".date("H:i",$tstart)."</b> ".tra("in")." <b>$tik</b>",
+							"head" => "<b>".date("H:i",$res["lastModif"])."</b> ".tra("in")." <b>$tik</b>",
 							"description" => str_replace("\n|\r","",$quote)
 						);
 					}
@@ -564,6 +547,7 @@ class CalendarLib extends TikiLib {
 		}
 		return $res;
 	}
+
 }
 
 $calendarlib= new CalendarLib($dbTiki);

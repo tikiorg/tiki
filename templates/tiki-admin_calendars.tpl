@@ -59,20 +59,20 @@
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
-{section name=cal loop=$calendars}
+{foreach key=id item=cal from=$calendars}
 <tr>
-<td class="{cycle advance=false}">{$calendars[cal].calendarId}</td>
-<td class="{cycle advance=false}"><a class="tablename" href="tiki-calendar.php?calIds[]={$calendars[cal].calendarId}">{$calendars[cal].name}</a></td>
-<td class="{cycle advance=false}">{$calendars[cal].customlocations}</td>
-<td class="{cycle advance=false}">{$calendars[cal].customcategories}</td>
-<td class="{cycle advance=false}">{$calendars[cal].customlanguages}</td>
-<td class="{cycle advance=false}">{$calendars[cal].custompriorities}</td>
+<td class="{cycle advance=false}">{$id}</td>
+<td class="{cycle advance=false}"><a class="tablename" href="tiki-calendar.php?calIds[]={$id}">{$cal.name}</a></td>
+<td class="{cycle advance=false}">{$cal.customlocations}</td>
+<td class="{cycle advance=false}">{$cal.customcategories}</td>
+<td class="{cycle advance=false}">{$cal.customlanguages}</td>
+<td class="{cycle advance=false}">{$cal.custompriorities}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&drop={$calendars[cal].calendarId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&calendarId={$calendars[cal].calendarId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&drop={$id}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&calendarId={$id}">{tr}edit{/tr}</a>
 </td>
 </tr>
-{/section}
+{/foreach}
 </table>
 <br/>
 </div>
