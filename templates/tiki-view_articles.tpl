@@ -56,8 +56,7 @@
 </a>
 {if ($listpages[ix].show_avatar eq 'y')}
   <td valign="top"><a href="tiki-user_preferences.php?view_user={$listpages[ix].author}">
-  {* <img alt="{$listpages[ix].author}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" /> *}
-  <img alt="{$listpages[ix].author}" border="1" src="user_avatar.php?user=admin" />
+  <img alt="{$listpages[ix].author}" border="1" src="{$listpages[ix].avatarLibName}" />
   </a></td>
 {/if}
 {if $listpages[ix].isfloat eq 'n'}
