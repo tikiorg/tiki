@@ -112,8 +112,8 @@ foreach($files as $file) {
 }
 print('"'.'##end###'.'" => "'.'###end###'.'"'.");?&gt;\n<br/>");  
 foreach($lang as $key=>$val) {
-  fwrite($fw,'"'.str_replace("\$", "\\\$",$key).'" => "'.str_replace("\$", "\\\$", $val).'",');
-  //fwrite($fw,'"'.str_replace("\$", "\\\$",$key).'" => "'.utf8_decode(str_replace("\$", "\\\$", $val)).'",');
+  // backslash $ and \
+  fwrite($fw,'"'.str_replace("\$", "\\\$",str_replace("\\", "\\\\", $key)).'" => "'.str_replace("\$", "\\\$", str_replace("\\", "\\\\", $val)).'",');
   if (isset($used[$key]))
      fwrite($fw, "\n");
   else
