@@ -46,11 +46,11 @@ else {
 }
 if(isset($page_ref_id)) {
  	$smarty->assign('structure','y');
- 	$page_info = $structlib->get_page_info($page_ref_id);
+ 	$page_info = $structlib->s_get_page_info($page_ref_id);
  	$smarty->assign('page_info', $page_info);
-  $structure_info = $structlib->get_structure_info($page_ref_id);
+  $structure_info = $structlib->s_get_structure_info($page_ref_id);
  	$smarty->assign('structure_info', $structure_info);
-  $parent_info = $structlib->get_parent_info($page_ref_id);
+  $parent_info = $structlib->s_get_parent_info($page_ref_id);
  	$smarty->assign('parent_info', $parent_info);
  	$prev_next_pages = $structlib->get_prev_next_pages($page_ref_id);
  	$smarty->assign('struct_prev_next', $prev_next_pages);

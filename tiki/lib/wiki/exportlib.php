@@ -27,11 +27,9 @@ class ExportLib extends TikiLib {
 		return '';
 	}
 
-	function export_wiki_page($pageName, $nversions = 1) {
-		$info = $this->get_page_info($pageName);
-
+	function export_wiki_page($page_info, $nversions = 1) {
 		$head = '';
-		$head .= "Date: " . $this->get_rfc2822_datetime($info["lastModif"]). "\r\n";
+		$head .= "Date: " . $this->get_rfc2822_datetime(). "\r\n";
 		$head .= sprintf("Mime-Version: 1.0 (Produced by Tiki)\r\n");
 		$iter = $this->get_page_history($pageName);
 		$parts = array();

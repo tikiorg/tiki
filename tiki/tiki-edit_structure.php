@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.10 2003-11-11 10:01:17 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.11 2003-11-14 09:02:45 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,8 +29,8 @@ if (!isset($_REQUEST["page_ref_id"])) {
 	$_REQUEST["page_ref_id"] = $_REQUEST["structure_id"];
 }
 
-$structure_info = $structlib->get_page_info($_REQUEST["structure_id"]);
-$page_info = $structlib->get_page_info($_REQUEST["page_ref_id"]);
+$structure_info = $structlib->s_get_page_info($_REQUEST["structure_id"]);
+$page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 if (!isset($structure_info) or !isset($page_info) ) {
 	$smarty->assign('msg', tra("Invalid structure_id or page_ref_id"));
 
@@ -67,7 +67,7 @@ $smarty->assign('remove', 'n');
 
 if (isset($_REQUEST["remove"])) {
 	$smarty->assign('remove', 'y');
-  $remove_info = $structlib->get_page_info($_REQUEST["remove"]);
+  $remove_info = $structlib->s_get_page_info($_REQUEST["remove"]);
 	$smarty->assign('removepage', $_REQUEST["remove"]);
 	$smarty->assign('removePageName', $remove_info["pageName"]);
 }
@@ -80,7 +80,7 @@ if (isset($_REQUEST["sremove"])) {
 	$structlib->s_remove_page($_REQUEST["sremove"], true);
 }
 
-$page_info = $structlib->get_page_info($_REQUEST["page_ref_id"]);
+$page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 $smarty->assign('pageName', $page_info["pageName"]);
 $smarty->assign('pageAlias', $page_info["page_alias"]);
 
