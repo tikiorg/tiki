@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.22 2004-04-30 10:42:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.23 2004-07-15 16:39:03 teedog Exp $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}
@@ -15,6 +15,22 @@
    </form>
    </td>
 </tr>
+
+<form method="post" action="tiki-listpages.php">
+<tr><td colspan="2">Show
+<select name="max_records" onchange="this.form.submit();">
+<option value="10" {if $maxRecords eq 10}selected {/if}>10</option>
+<option value="20" {if $maxRecords eq 20}selected {/if}>20</option>
+<option value="50" {if $maxRecords eq 50}selected {/if}>50</option>
+<option value="100" {if $maxRecords eq 100}selected {/if}>100</option>
+{if $tiki_p_admin eq y}
+<option value="250" {if $maxRecords eq 250}selected {/if}>250</option>
+<option value="500" {if $maxRecords eq 500}selected {/if}>500</option>
+<option value="1000" {if $maxRecords eq 500}selected {/if}>1000</option>
+{/if}
+</select>
+per page</td></tr>
+
 </table>
 <div align="center">
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}">
