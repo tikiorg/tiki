@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.5 2003-10-13 21:20:42 awcolley Exp $
+// $Id: GraphViz.php,v 1.6 2004-01-20 16:51:13 halon Exp $
 //
 
 /**
@@ -154,8 +154,8 @@ class Process_GraphViz {
     
     function image_and_map($format = 'png') {
         if ($file = $this->saveParsedGraph()) {
-            $outputfile = $file . '.' . $format;
-            $outputfile2 = $file . '.' . 'map';
+            $outputfile = '"'.GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid.'.'.$format.'"';
+            $outputfile2 = '"'.GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid.'.map'.'"';
             if(!isset($this->graph['directed'])) $this->graph['directed']=true;
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
             $command .= " -T$format -o $outputfile $file";
@@ -172,9 +172,8 @@ class Process_GraphViz {
     
     function map() {
         if ($file = $this->saveParsedGraph()) {
-            
-            $outputfile2 = $file . '.' . 'map';
-            
+            $outputfile2 = '"'.GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid.'.map'.'"';
+
             $command = $this->dotCommand;
             $command.= " -Tcmap -o$outputfile2 $file";
             @`$command`;
@@ -182,7 +181,7 @@ class Process_GraphViz {
             $map = fread($fr,filesize($outputfile2));
             fclose($fr);
             
-            @unlink($outputfile2);
+            //@unlink($outputfile2);
             @unlink($file);
             return $map;
         }
@@ -449,10 +448,11 @@ class Process_GraphViz {
     function saveParsedGraph($file = '') {
         $parsedGraph = $this->parse();
         if (!empty($parsedGraph)) {
+            //$file = GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid;
+            $file = 'temp/'.md5(uniqid("."));
 
-                $file = GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid;
             if ($fp = @fopen($file, 'w')) {
-                @fputs($fp, $parsedGraph);
+                @fputs($fp, $parsedGraph, strlen($parsedGraph));
                 @fclose($fp);
 
                 return $file;
