@@ -57,7 +57,7 @@
 <td colspan="3">
 {/if}
 {if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
-{$ins_fields[ix].value|date_format:$daformat}</td></tr>
+{$ins_fields[ix].value|tiki_long_date}</td></tr>
 
 {elseif $ins_fields[ix].type eq 'l'}
 {foreach key=tid item=tlabel from=$ins_fields[ix].links}
@@ -329,14 +329,14 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {elseif $ins_fields[ix].type eq 'j'}
 <input type="hidden" name="ins_{$ins_fields[ix].id}" value="{$ins_fields[ix].value|default:$smarty.now}" id="ins_{$ins_fields[ix].id}" />
-<span id="disp_{$ins_fields[ix].id}" class="daterow">{$ins_fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
+<span id="disp_{$ins_fields[ix].id}" class="daterow">{$ins_fields[ix].value|default:$smarty.now|tiki_long_datetime}</span>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
 date        : "{$ins_fields[ix].value|default:$smarty.now|date_format:"%B %e, %Y %H:%M"}",      // initial date
 inputField  : "ins_{$ins_fields[ix].id}",      // ID of the input field
 ifFormat    : "%s",    // the date format
 displayArea : "disp_{$ins_fields[ix].id}",       // ID of the span where the date is to be shown
-daFormat    : "{$daformat}",  // format of the displayed date
+daFormat    : "{$long_date_format}",  // format of the displayed date
 showsTime   : true,
 singleClick : true,
 align       : "bR"
