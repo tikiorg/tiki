@@ -3825,8 +3825,8 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
     return true;
 }
 
-function get_user_pages($user, $max) {
-    $query = "select `pageName`  from `tiki_pages` where `user`='$user' limit 0,$max";
+function get_user_pages($user, $max, $who='user') {
+    $query = "select `pageName` from `tiki_pages` where `$who`='$user' limit 0,$max";
 
     $result = $this->query($query);
     $ret = array();
