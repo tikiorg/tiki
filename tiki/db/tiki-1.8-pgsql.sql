@@ -2528,7 +2528,7 @@ CREATE TABLE "tiki_pages" (
   "creator" varchar(200) default NULL,
   "page_size" bigint default 0,
   PRIMARY KEY ("page_id")
-  UNIQUE KEY (pageName),
+
 
 
 
@@ -2537,6 +2537,7 @@ CREATE TABLE "tiki_pages" (
 CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data");
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank");
 CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName" "description" "data");
+CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
 
 -- --------------------------------------------------------
 

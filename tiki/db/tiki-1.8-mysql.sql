@@ -2070,7 +2070,7 @@ CREATE TABLE tiki_pages (
   creator varchar(200) default NULL,
   page_size int(10) unsigned default 0,
   PRIMARY KEY  (page_id),
-  UNIQUE KEY (pageName),
+  UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
   KEY pageRank (pageRank),
   FULLTEXT KEY ft (pageName, description, data)
