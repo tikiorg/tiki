@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.9 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.10 2003-10-14 10:41:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,8 +23,8 @@ if ($tiki_p_edit_languages != 'y') {
 	die;
 }
 
-$query = "select lang from tiki_languages";
-$result = $tikilib->query($query);
+$query = "select `lang` from `tiki_languages`";
+$result = $tikilib->query($query,array());
 $languages = array();
 
 while ($res = $result->fetchRow()) {
@@ -58,13 +58,12 @@ if (isset($_REQUEST["import"])) {
 	include_once ('lang/' . $imp_language . '/language.php');
 
 	$impmsg = "Included lang/" . $imp_language . "/language.php";
-	$query = "insert into tiki_languages values ('" . $imp_language . "','')";
-	$result = $tikilib->query($query, array(), -1, -1, false);
+	$query = "insert into `tiki_languages` values (?,?)";
+	$result = $tikilib->query($query, array($imp_language,''), -1, -1, false);
 
 	while (list($key, $val) = each($lang)) {
-		$query = "insert into tiki_language values ('" . addslashes($key). "','" . $imp_language . "','" . addslashes($val). "')";
-
-		$result = $tikilib->query($query, array(), -1, -1, false);
+		$query = "insert into `tiki_language` values (?,?,?)";
+		$result = $tikilib->query($query, array($key,$imp_language,$val), -1, -1, false);
 	}
 
 	$smarty->assign('impmsg', $impmsg);
@@ -72,9 +71,8 @@ if (isset($_REQUEST["import"])) {
 
 // Export
 if (isset($_REQUEST["export"])) {
-	$query = "select source, tran from tiki_language where lang='" . $exp_language . "'";
-
-	$result = $tikilib->query($query);
+	$query = "select `source`, `tran` from `tiki_language` where `lang`=?";
+	$result = $tikilib->query($query,array($exp_language));
 	$data = "<?php\n\$lang=Array(\n";
 
 	while ($res = $result->fetchRow()) {
