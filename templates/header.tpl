@@ -87,7 +87,7 @@
 </head>
 
 <body
-{if $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'whole_page' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
+{if $is_a_wiki_page eq 'y' and $user_dbl eq 'y' and $feature_wiki_dblclickedit eq 'whole_page' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
 {if $feature_article_comments eq 'y' and $show_comzone eq 'y'}onload="javascript:flip('comzone');"{/if}>
 {if $minical_reminders>100}
 	<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
