@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pv_chart.php,v 1.4 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pv_chart.php,v 1.5 2003-08-18 08:42:22 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,8 +30,8 @@ $example_data = $tikilib->get_pv_chart_data($_REQUEST["days"]);
 $graph->SetDataValues($example_data);
 //$graph->SetPlotType('bars');
 $graph->SetPlotType('lines');
-$graph->SetYLabel('pageviews');
-$graph->SetXLabel('day');
+$graph->SetYLabel(tra('pageviews'));
+$graph->SetXLabel(tra('day')); 
 //Draw it
 $graph->DrawGraph();
 

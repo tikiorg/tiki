@@ -66,7 +66,7 @@ Errors:<br/>
   			{literal}
 			<a class="link" href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');">{tr}Set Next act{/tr}</a><hr />  		    
 			<a class="link" href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');">{tr}If:SetNextact{/tr}</a><hr />  		    
-			<a class="link" href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');">{tr}Swicth construct{/tr}</a><hr />
+			<a class="link" href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');">{tr}Switch construct{/tr}</a><hr />
 			{/literal}
   		{/if}
   	{/if}
