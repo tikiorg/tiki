@@ -7,7 +7,9 @@ function smarty_prefilter_tr($source) {
 
 function _translate_lang($key) {
   global $language;
+  global $lang_use_db;
   if ($lang_use_db!='y') {
+
   include("lang/$language/language.php");
   if(isset($lang[$key[1]])) {
     return $lang[$key[1]];

@@ -52,16 +52,16 @@ class TikiLib {
   */
 
   // Queries the database reporting an error if detected
-  function query($query) {
+  function query($query,$reporterrors=true) {
     $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
     return $result;
   }
 
   // Gets one column for the database.
-  function getOne($query) {
+  function getOne($query,$reporterrors=true) {
     $result = $this->db->getOne($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
     return $result;
   }
   

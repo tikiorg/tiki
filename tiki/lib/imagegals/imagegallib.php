@@ -504,7 +504,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   }
 
 
-  function insert_image($galleryId,$name,$description,$filename, $filetype, &$data, $size, $xsize, $ysize, $user,&$t_data,$t_type)
+  function insert_image($galleryId,$name,$description,$filename, $filetype, &$data, $size, $xsize, $ysize, $user,$t_data,$t_type)
   {
     global $gal_use_db;
     global $gal_use_dir;
