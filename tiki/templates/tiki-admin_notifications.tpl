@@ -1,4 +1,32 @@
-<a class="pagetitle" href="tiki-admin_notifications.php">{tr}Mail notifications{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-admin_notifications.php">{tr}EMail notifications{/tr}</a>
+
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=EmailNotificationsAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Email Notifications{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin notifications tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+
+
+
+
+
+
+
+<br /><br />
 <h2>{tr}Add notification{/tr}</h2>
 <table class="normal">
 <form action="tiki-admin_notifications.php" method="post">
