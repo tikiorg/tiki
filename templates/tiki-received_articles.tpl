@@ -1,6 +1,6 @@
-<a class="pagetitle" href="tiki-received_articles.php">Received articles</a><br/><br/>
+<a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br/><br/>
 {if $preview eq 'y'}
-<h2>Preview</h2>
+<h2>{tr}Preview{/tr}</h2>
 <div class="articletitle">
 <span class="titlea">{$title}</span><br/>
 <span class="titleb">{tr}By:{/tr}{$authorName} {tr}on:{/tr}{$publishDate|tiki_short_datetime} (0 {tr}reads{/tr})</span>
@@ -105,14 +105,14 @@
 </form>
 {/if}
 
-<h2>Received Articles</h2>
+<h2>{tr}Received Articles{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-received_articles.php">
      <input type="text" name="find" />
-     <input type="submit" value="find" name="search" />
+     <input type="submit" name="search" value="{tr}find{/tr}" />
      <input type="hidden" name="sort_mode" value="{$sort_mode}" />
    </form>
    </td>
