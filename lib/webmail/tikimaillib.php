@@ -26,9 +26,10 @@ class TikiMail extends HtmlMimeMail {
 		$this->setHeadCharset($this->charset);
 	}
 		
-	function _encodeHeader($input, $charset = 'ISO-8859-1') {
-		if (ereg('/[\x80-\xFF]/', $input)) {
-			$input = preg_replace('/([\x80-\xFF]= )/e', '"=" . strtoupper(dechex(ord("\1")))', $input);
+	function _encodeHeader($input, $charset = 'ISO-8859-1') { echo "AAAA".$input.ereg('/[\x80-\xFF]/', $input);
+// todo perhaps chunk_split
+		if (preg_match('/[\x80-\xFF]/', $input)) {
+			$input = preg_replace('/([\x80-\xFF =])/e', '"=" . strtoupper(dechex(ord("\1")))', $input);
 			return '=?'.$charset .'?Q?'.$input.'?=';
 		}
 		else
