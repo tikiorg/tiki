@@ -3,7 +3,7 @@
 <div id="tiki-main">
   {if $feature_top_bar eq 'y'}
   <div id="tiki-top">
-    {include file="tiki-top_bar.tpl"}
+    {include file="tiki-top_bar.tpl" mytikivis="show"}
   </div>
   {/if}
   <div id="tiki-mid">
