@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 29. June 2003
+// Last modified: 2. July 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -24,6 +24,8 @@
 // changes against V5.0:
 // - bugfix: HAW_linkset: dtmf attribute in VoiceXML option tag 1-9 only
 // - new text format attribute: HAW_TEXTFORMAT_BOXED
+// - bugfix: VoiceXML <enumerate>'s require breaks to be understandable
+// - bugfix: VoiceXML <option> element does not allow some special characters
 
 // miscellaneous constants
 define("HAW_VERSION", "HAWHAW V5.1b");
@@ -3907,7 +3909,7 @@ class HAW_select
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                           $this->voice_audio_src, 0);
         else
-          echo "<enumerate/>";
+          echo "<enumerate><value expr=\"_prompt\"/><break time=\"300ms\"/></enumerate>";
 
         echo "</prompt>\n";
       }
@@ -3919,8 +3921,8 @@ class HAW_select
         else
           $dtmf = "";
 
-        printf("<option%s value=\"%s\">%s</option>\n",
-                $dtmf, $val["value"], strtolower(HAW_specchar($val["label"], $deck)));
+        printf("<option%s value=\"%s\">%s</option>\n", $dtmf, $val["value"],
+               ereg_replace("[\?!]"," ",strtolower(HAW_specchar($val["label"], $deck))));
       }
 
       // create event handlers
@@ -4148,7 +4150,7 @@ class HAW_radio
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                           $this->voice_audio_src, 0);
         else
-          echo "<enumerate/>";
+          echo "<enumerate><value expr=\"_prompt\"/><break time=\"300ms\"/></enumerate>";
 
         echo "</prompt>\n";
       }
@@ -4160,8 +4162,8 @@ class HAW_radio
         else
           $dtmf = "";
 
-        printf("<option%s value=\"%s\">%s</option>\n",
-                $dtmf, $val["value"], strtolower(HAW_specchar($val["label"], $deck)));
+        printf("<option%s value=\"%s\">%s</option>\n", $dtmf, $val["value"],
+                ereg_replace("[\?!]"," ",strtolower(HAW_specchar($val["label"], $deck))));
       }
 
       // create event handlers
@@ -5190,7 +5192,7 @@ class HAW_linkset
             HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                             $this->voice_audio_src, 0);
           else
-            echo "<enumerate/>";
+            echo "<enumerate><value expr=\"_prompt\"/><break time=\"300ms\"/></enumerate>";
   
           echo "</prompt>\n";
         }
@@ -5204,7 +5206,7 @@ class HAW_linkset
 
           printf("<option%s value=\"%s\">%s</option>\n",
                  $dtmf, HAW_specchar($val->get_url(), $deck),
-                 strtolower(HAW_specchar($val->get_label(), $deck)));
+                 ereg_replace("[\?!]"," ",strtolower(HAW_specchar($val->get_label(), $deck))));
         }
 
         // create event handlers
