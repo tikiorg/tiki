@@ -178,26 +178,16 @@ class WikiLib extends TikiLib {
 	    $data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
 	    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
 	    $query = "update `tiki_pages` set `data`=? where `pageName`=?";
-	    $this->query($query, array(
-			$data,
-			$page
-			));
-
+	    $this->query($query, array( $data, $page));
 	    $this->invalidate_cache($page);
 	}
 
 	// correct toPage and fromPage in tiki_links
 	$query = "update `tiki_links` set `fromPage`=? where `fromPage`=?";
-	$this->query($query, array(
-		    $newName,
-		    $oldName
-		    ));
+	$this->query($query, array( $newName, $oldName));
 
 	$query = "update `tiki_links` set `toPage`=? where `toPage`=?";
-	$this->query($query, array(
-		    $newName,
-		    $oldName
-		    ));
+	$this->query($query, array( $newName, $oldName));
 
 	// tiki_footnotes change pageName
 	$query = "update `tiki_page_footnotes` set `pageName`=? where `pageName`=?";
@@ -219,22 +209,15 @@ class WikiLib extends TikiLib {
 
 	// in tiki_categorized_objects update objId
 	$newcathref = 'tiki-index.php?page=' . urlencode($newName);
-	$query = "update `tiki_categorized_objects` set
-	    `objId`=?,`name`=?,`href`=? where `objId`=?";
-	$this->query($query, array(
-		    $newName,
-		    $newName,
-		    $newcathref,
-		    $oldName
-		    ));
+	$query = "update `tiki_categorized_objects` set `objId`=?,`name`=?,`href`=? where `objId`=?";
+	$this->query($query, array( $newName, $newName, $newcathref, $oldName));
 
 	// old code that doesn't seem to be working
 	//	$query = "update tiki_categorized_objects set objId='$newId' where objId='$oldId'";
 	//    $this->query($query);	  	  	  	
 
 	// in tiki_comments update object  
-	$query = "update `tiki_comments` set
-	    `object`=? where `object`=?";
+	$query = "update `tiki_comments` set `object`=? where `object`=?";
 	$this->query($query, array( $newName, $oldName ) );
 
 	// in tiki_mail_events by object
@@ -365,7 +348,7 @@ class WikiLib extends TikiLib {
     }
 
     function wiki_link_structure() {
-	$query = "select `pageName` from `tiki_pages` order by pageName asc";
+	$query = "select `pageName` from `tiki_pages` order by ".$this->convert_sortmode("pageName_asc");
 
 	$result = $this->query($query);
 
@@ -380,7 +363,6 @@ class WikiLib extends TikiLib {
 	    while ($res2 = $result2->fetchRow()) {
 		if (($res2["toPage"] <> $res["pageName"]) && (!in_array($res2["toPage"], $pages))) {
 		    $pages[] = $res2["toPage"];
-
 		    print ($res2["toPage"] . " ");
 		}
 	    }
@@ -395,7 +377,7 @@ class WikiLib extends TikiLib {
 	global $histlib;
 
 	$this->invalidate_cache($page);
-	$query = "select * from `tiki_history` where `pageName`=? order by lastModif desc";
+	$query = "select * from `tiki_history` where `pageName`=? order by ".$this->convert_sortmode("lastModif_desc");
 	$result = $this->query($query, array( $page ) );
 
 	if ($result->numRows()) {
@@ -410,9 +392,8 @@ class WikiLib extends TikiLib {
 
 	$action = "Removed last version";
 	$t = date("U");
-	$query = "insert into tiki_actionlog( action, pageName,
-	lastModif, user, ip, comment) values( ?, ?, ?, 'admin', ?, ?)";
-	$result = $this->query($query, array( $action, $page, $t, $_SERVER["REMOTE_ADDR"], $comment ) );
+	$query = "insert into `tiki_actionlog`( `action`, `pageName`, `lastModif`, `user`, `ip`, `comment`) values( ?, ?, ?, ?, ?, ?)";
+	$result = $this->query($query, array( $action, $page, $t, "admin", $_SERVER["REMOTE_ADDR"], $comment ) );
     }
 
     // Like pages are pages that share a word in common with the current page
@@ -467,8 +448,7 @@ class WikiLib extends TikiLib {
     }
 
     function unlock_page($page) {
-	$query = "update `tiki_pages` set `flag`='' where
-	`pageName`=?";
+	$query = "update `tiki_pages` set `flag`='' where `pageName`=?";
 	$result = $this->query($query, array( $page ) );
 	return true;
     }
@@ -476,7 +456,6 @@ class WikiLib extends TikiLib {
     // Returns backlinks for a given page
     function get_backlinks($page) {
 	$query = "select `fromPage` from `tiki_links` where `toPage` = ?";
-
 	$result = $this->query($query, array( $page ));
 	$ret = array();
 
@@ -498,11 +477,9 @@ class WikiLib extends TikiLib {
 		    if (preg_match("/^wikiplugin_.*\.php$/", $file))
 			array_push($files, $file);
 		}
-
 		closedir ($dh);
 	    }
 	}
-
 	return $files;
     }
 
