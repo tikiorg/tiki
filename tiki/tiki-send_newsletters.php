@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.11 2004-03-16 16:16:39 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.12 2004-03-18 22:01:03 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -72,10 +72,9 @@ $smarty->assign('preview', 'n');
 
 if (isset($_REQUEST["preview"])) {
 	$smarty->assign('preview', 'y');
-
-	//$parsed = $tikilib->parse_data($_REQUEST["content"]);
-	$parsed = $_REQUEST["data"];
-	$smarty->assign('parsed', $parsed);
+	//if (eregi("\<[ \t]*html[ \t\>]",  $_REQUEST["data"]))  // html newsletter - this will be the text sent with the html part
+	//	$smarty->assign('txt', nl2br(strip_tags($_REQUEST["data"])));
+	//TODO: the sent text version is not pretty: the text must be a textarea
 	$info["data"] = $_REQUEST["data"];
 	$info["subject"] = $_REQUEST["subject"];
 	$smarty->assign('info', $info);
@@ -172,6 +171,7 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 if ($tiki_p_use_content_templates == 'y') {
 	$templates = $tikilib->list_templates('newsletters', 0, -1, 'name_asc', '');
 }
+include_once("textareasize.php");
 
 $smarty->assign_by_ref('templates', $templates["data"]);
 
