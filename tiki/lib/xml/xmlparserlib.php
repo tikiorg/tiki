@@ -10,6 +10,43 @@
 // Code below licensed under the LGPL
 // See license.txt for details
 //
+// Sample usage:
+//
+//  require_once('XMLParser.php');
+//
+//... string buffer ...
+//  $data = '<?xml version="1.0" encoding="ISO-8859-1" ?>
+//<country name="usa">
+//    <city name="mountain view">baz
+//        <user>Jack</user>
+//        <user>Jill</user>bam
+//    </city>
+//</country>
+//';
+//  $parser = new XMLParser($data, 'raw', 1);
+//  $tree = $parser->getTree();
+//
+//... file handle ...
+//  if($fh = popen("./demo.pl", "r")) {
+//    $parser = new XMLParser($fh, 'stream', 1);
+//    $result = $parser->getTree();
+//    pclose($fh);
+//  }
+//
+//... file name ...
+//  $parser = new XMLParser('./foo.xml', 'file', 1);
+//  $tree = $parser->getTree();
+//
+//... url ...
+//  $parser = new XMLParser('http://example.com/foo.xml', 'url', 1);
+//  $tree = $parser->getTree();
+//
+//... view output ...
+//  // Display the array
+//  echo '<PRE>';
+//  print_r($tree);
+//  echo '</PRE>';
+//
 
 class XMLParser {
 	var $data;		// Input XML data buffer
