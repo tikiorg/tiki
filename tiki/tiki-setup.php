@@ -979,7 +979,7 @@ if($feature_stats == 'y') {
   }
 }
 
-
+$user_preferences=Array();
 
 if($feature_obzip == 'y') {
   ob_start("ob_gzhandler");

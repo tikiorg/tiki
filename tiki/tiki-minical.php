@@ -85,14 +85,19 @@ if(!isset($_REQUEST['view'])) {
 }
 $smarty->assign('view',$_REQUEST['view']);
 
+$minical_interval = $tikilib->get_user_preference($user,'minical_interval',60*60);
+$minical_start_hour = $tikilib->get_user_preference($user,'minical_start_hour',9);
+$minical_end_hour = $tikilib->get_user_preference($user,'minical_end_hour',20);
+$minical_public = $tikilib->get_user_preference($user,'minical_public','n');
+
 // Interval is in hours
 if($_REQUEST['view']=='daily') {
-	$interval=1;
-	$slot_start = $pdate + 60*60*9;
-	$slot_end = $pdate + 60*60*20;
+	$slot_start = $pdate + 60*60*$minical_start_hour;
+	$slot_end = $pdate + 60*60*$minical_end_hour;
+	$interval = $minical_interval;
 }
 if($_REQUEST['view']=='weekly') {
-	$interval=24;
+	$interval=24*60*60;
 	// Determine weekday
 	$wd = date('w',$pdate);
 	if($wd==0) $w=7;

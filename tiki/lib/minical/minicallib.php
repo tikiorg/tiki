@@ -18,7 +18,7 @@ class MiniCalLib extends TikiLib {
   function minical_events_by_slot($user,$start,$end,$interval)
   {
     // since interval is in hour convert it to seconds
-    $interval = $interval * 60 * 60;
+    //$interval = $interval * 60 * 60;
     $slots = Array();
     while($start<=$end) {
       $aux=Array();
@@ -102,6 +102,8 @@ tiki_minical_events where user='$user' and start=$start");
     and eventId=$eventId";
     $this->query($query);  	
   }	
+  
+
 }
 
 $minicallib= new MiniCalLib($dbTiki);
