@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+require_once('lib/tikilib.php'); # httpScheme()
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -79,7 +80,7 @@ if($offset>0) {
 } else {
   $smarty->assign('prev_offset',-1); 
 }
-$smarty->assign('ownurl','http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
+$smarty->assign('ownurl',httpScheme().'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
 $smarty->assign_by_ref('channels',$channels["data"]);
 
 

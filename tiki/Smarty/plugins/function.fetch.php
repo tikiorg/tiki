@@ -17,7 +17,7 @@ function smarty_function_fetch($params, &$smarty)
         return;
     }
 
-    if ($smarty->security && !preg_match('!^(http|ftp)://!i', $file)) {
+    if ($smarty->security && !preg_match('!^(http|https|ftp)://!i', $file)) {
         // fetching file, make sure it comes from secure directory
         foreach ($smarty->secure_dir as $curr_dir) {
             if (substr(realpath($file), 0, strlen(realpath($curr_dir))) == realpath($curr_dir)) {
@@ -41,7 +41,7 @@ function smarty_function_fetch($params, &$smarty)
 		}
     } else {
 		// not a local file
-		if(preg_match('!^http://!i',$file)) {
+		if(preg_match('!^https?://!i',$file)) {
 			// http fetch
 			if($uri_parts = parse_url($file)) {
 				// set defaults

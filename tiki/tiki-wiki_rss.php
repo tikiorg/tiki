@@ -1,5 +1,7 @@
 <?
 require_once('tiki-setup.php');
+require_once('lib/tikilib.php'); # httpScheme()
+
 if($rss_wiki != 'y') {
  die;
 }
@@ -7,8 +9,8 @@ header("content-type: text/xml");
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-wiki_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-wiki_rss.php","img/tiki.jpg",$foo["path"]);
-$home = 'http://'.$_SERVER["SERVER_NAME"].$foo1;
-$img = 'http://'.$_SERVER["SERVER_NAME"].$foo2;
+$home = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo1;
+$img = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo2;
 $title = $tikilib->get_preference("title","pepe");
 $changes =   $tikilib->get_last_changes(999, 0, $max_rss_wiki, $sort_mode = 'lastModif_desc');
 //print_r($changes);die;

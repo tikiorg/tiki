@@ -21,10 +21,12 @@
 // Read the documentation in rss_parser.html
 // ##################################################################################
 
-if(defined("_class_rss_parser_is_included")) {
+if (defined("_class_rss_parser_is_included")) {
+  return;
   // do nothing since the class is already included
-} else {
-  define("_class_rss_parser_is_included",1);
+}
+
+define("_class_rss_parser_is_included",1);
 
 include_once("class_rdf_parser.php");
 
@@ -60,7 +62,6 @@ class RSS_parser {
     // Return item properties
     return $this->item_properties;
   }
-
 
   function rss_parse($rss) {
     $base=$rss;
@@ -119,16 +120,7 @@ class RSS_parser {
     return true;
   }
 
-
-
 }
-
-}
-
-
-
-
-
 
 /* handlers */
 function my_statement_handler(
@@ -169,7 +161,6 @@ function my_statement_handler(
           // Save the subject as the subject that will list all the items that we'll be described later
         }
 
-
         // If we found a resource in the list of items then add the property to the array of properties
         // if it is a RSS property
         // If we had an unreported item then call the handler for the item
@@ -186,7 +177,6 @@ function my_statement_handler(
           $user_data->channel_image[$prop]=$object;
         }
 
-
         // If we found the image element of the the channel
         if(isset($user_data->channel_properties["textinput"]) && $subject == $user_data->channel_properties["textinput"] && strstr($predicate, "http://purl.org/rss/1.0/")) {
           $props=explode("/",$predicate);
@@ -194,14 +184,11 @@ function my_statement_handler(
           $user_data->channel_textinput[$prop]=$object;
         }
 
-
 }
-
 
 function my_warning_handler($warning )
 {
     printf( "**** WARNING **** : %s<br/>", $warning );
 }
+
 ?>
-
-

@@ -1,9 +1,9 @@
 <?
-include_once('db/tiki-db.php');
-include_once('lib/tikilib.php');
-include_once('lib/userslib.php');
-include_once("lib/xmlrpc.inc");
-include_once("lib/xmlrpcs.inc");
+require_once('db/tiki-db.php');
+require_once('lib/tikilib.php');
+require_once('lib/userslib.php');
+require_once("lib/xmlrpc.inc");
+require_once("lib/xmlrpcs.inc");
 
 
 
@@ -288,7 +288,7 @@ function getUserBlogs($params) {
  
  $blogs = $tikilib->list_user_blogs($username,true);
  $foo = parse_url($_SERVER["REQUEST_URI"]);
- $foo1='http://'.$_SERVER["SERVER_NAME"].str_replace("xmlrpc","tiki-view_blog",$foo["path"]);
+ $foo1=httpScheme().'://'.$_SERVER["SERVER_NAME"].str_replace("xmlrpc","tiki-view_blog",$foo["path"]);
 
  foreach($blogs as $blog) {
    $myStruct=new xmlrpcval(array("blogName" => new xmlrpcval($blog["title"]),

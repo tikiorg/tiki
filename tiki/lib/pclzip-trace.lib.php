@@ -24,8 +24,9 @@
 // --------------------------------------------------------------------------------
 
 // ----- Look for double include
-if (!defined("PCL_ZIP"))
-{
+if (defined("PCL_ZIP"))
+  return;
+
   define( "PCL_ZIP", 1 );
 
   // ----- Error codes
@@ -3528,7 +3529,4 @@ if (!defined("PCL_ZIP"))
   }
   // --------------------------------------------------------------------------------
 
-
-// ----- End of double include look
-}
 ?>

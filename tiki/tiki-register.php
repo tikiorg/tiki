@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+require_once('lib/tikilib.php'); # httpScheme()
 
 // Permission: needs p_register
 if($allowRegister != 'y') {
@@ -77,7 +78,7 @@ if(isset($_REQUEST["register"])) {
     $apass = addslashes(substr(md5($tikilib->genPass()),0,25));
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
-    $machine ='http://'.$_SERVER["SERVER_NAME"].$foo1;
+    $machine =httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo1;
     $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
     $emails = $tikilib->get_mail_events('user_registers','*');
     foreach($emails as $email) {

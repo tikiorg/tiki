@@ -1,14 +1,15 @@
 <?php
+require_once('lib/tikilib.php'); # httpScheme()
+
 $setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
 if(isset($setup_parsed_uri["query"])) {
   parse_str($setup_parsed_uri["query"],$setup_query_data);
 } else {
   $setup_query_data = Array();	
 }
-
 if ($feature_user_bookmarks=='y' && $user && $tiki_p_create_bookmarks=='y') {
 // check the session to get the parent or create parent =0
-$smarty->assign('ownurl','http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
+$smarty->assign('ownurl',httpScheme().'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
 if(!isset($_SESSION["bookmarks_parent"])) {
   $_SESSION["bookmarks_parent"]=0;
 }

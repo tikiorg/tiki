@@ -22,8 +22,10 @@
 
 if(defined("_class_rdf_is_included")) {
   // do nothing since the class is already included
-} else {
-  define("_class_rdf_is_included",1);
+  return;
+}
+
+define("_class_rdf_is_included",1);
 
 /* First we define some constants */
 define("XML_NAMESPACE_URI","http://www.w3.org/XML/1998/namespace" );
@@ -1625,13 +1627,4 @@ function rdf_resolve_uri($uri_reference,&$buffer)
 
 }
 
-
-
-
-
-
-
-
-
-}
 ?>

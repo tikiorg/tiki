@@ -36,8 +36,9 @@
 // --------------------------------------------------------------------------------
 
 // ----- Look for double include
-if (!defined("PCLERROR_LIB"))
-{
+if (defined("PCLERROR_LIB"))
+  return;
+  
   define( "PCLERROR_LIB", 1 );
 
   // ----- Version
@@ -126,7 +127,4 @@ if (!defined("PCLERROR_LIB"))
   }
   // --------------------------------------------------------------------------------
 
-
-// ----- End of double include look
-}
 ?>

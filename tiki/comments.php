@@ -7,6 +7,9 @@
 // Setup URLS for the Comments next and prev buttons and use variables that
 // cannot be aliased by normal tiki variables.
 // Traverse each _REQUEST data adn put them in an array
+
+require_once('lib/tikilib.php'); # httpScheme()
+
 if(!isset($comments_per_page)) {
   $comments_per_page = 10;
 } 
@@ -44,7 +47,7 @@ if(!isset($comments_parsed["query"])) {
   $comments_parsed["query"]='';
 }
 parse_str($comments_parsed["query"],$comments_query);
-$comments_father='http://'.$comments_server.$comments_parsed["path"];
+$comments_father=httpScheme().'://'.$comments_server.$comments_parsed["path"];
 $comments_complete_father = $comments_father;
 
 /*
