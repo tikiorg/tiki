@@ -2963,6 +2963,7 @@ function add_pageview() {
 
     }
 
+/* Moved to userlib.php (a while ago I think)
     function add_user($user, $pass, $email) {
 	global $wikiHomePage;
 
@@ -2979,13 +2980,17 @@ function add_pageview() {
 	return true;
     }
 
+	// Moved to userlib.php (a while ago I think)
     function get_user_password($user) {
 	return $this->getOne("select `password`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
     }
+*/
 
+/*  Moved to userlib
     function get_user_email($user) {
 	return $this->getOne("select `email` from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
     }
+*/
 
     function get_user_info($user) {
 	$query = "select `user` , `email`, `lastLogin` from `tiki_users` where `user`=?";

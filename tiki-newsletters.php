@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.15 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.16 2004-06-11 02:55:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,7 +86,7 @@ if (isset($_REQUEST["nlId"])) {
 }
 
 if ($user) {
-	$user_email = $tikilib->get_user_email($user);
+	$user_email = $userlib->get_user_email($user);
 } else {
 	$user_email = '';
 }

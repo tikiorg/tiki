@@ -29,7 +29,7 @@ if (isset($_REQUEST['save'])) {
 }
 
 if ($user) {
-	$smarty->assign('user_email', $tikilib->get_user_email($user));
+	$smarty->assign('user_email', $userlib->get_user_email($user));
 }
 
 $smarty->assign('modules', $lsadminlib->get_modules());

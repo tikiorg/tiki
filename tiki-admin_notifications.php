@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.9 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_notifications.php,v 1.10 2004-06-11 02:55:15 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,7 +77,7 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
-$admin_mail = $tikilib->get_user_email('admin');
+$admin_mail = $userlib->get_user_email('admin');
 $smarty->assign('admin_mail', $admin_mail);
 ask_ticket('admin-notif');
 // Display the template
