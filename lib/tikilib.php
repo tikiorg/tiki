@@ -3758,7 +3758,11 @@ function parse_first(&$data, &$preparsed, &$noparsed) {
 		$this->parse_first($ret, $preparsed, $noparsed);
 
 		// Replace plugin section with its output in data
-		$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
+		$data = substr_replace($data, "~np~" . $ret . "~/np~", $pos, $pos_end - $pos + strlen($plugin_end));
+
+		// Handle pre- and no-parse sections, again, to deal
+		// with the one we just added.
+		$this->parse_pp_np($data, $preparsed, $noparsed);
 	    }
 	}
 
