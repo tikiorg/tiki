@@ -147,7 +147,7 @@
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:toggle('galmenu');"><img src="styles/mose/fo.gif" width="16" height="12" alt="[+]" border="0" name="galmenu" />&nbsp;</a>
   {else}<a class="separator" href="javascript:toggle('galmenu');">[-]</a>{/if} 
-  <a class="separator" href="tiki-galleries.php">{tr}Image Gals{/tr}</a> 
+  <a class="separator" href="tiki-galleries.php">{tr}Image Galleries{/tr}</a> 
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('galmenu');">[+]</a>{/if}
   </div>
   <div id="galmenu" style="{$mnu_galmenu}">

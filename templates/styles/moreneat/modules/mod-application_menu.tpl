@@ -91,7 +91,7 @@
 {if $feature_galleries eq 'y'}
   <div class="separator">
   <a class='separator' href="javascript:toggle('galmenu');">::</a>
-  <a class='separator' href="tiki-galleries.php">{tr}Image Gals{/tr}</a> 
+  <a class='separator' href="tiki-galleries.php">{tr}Image Galleries{/tr}</a> 
   </div>
   <div id='galmenu' style="{$mnu_galmenu}">
   {if $tiki_p_view_image_gallery eq 'y'}
