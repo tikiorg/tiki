@@ -481,11 +481,11 @@ input {
 
 /* Cells in forms using a background color */
 .formcolor, 
-.galform td, 
-.editblogform td, 
-.editfgalform td, 
-.comform td, 
-.forumform td {
+.galform, 
+.editblogform, 
+.editfgalform, 
+.comform, 
+.forumform {
 	background-color: #f2f6e4;
 	color: black;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
