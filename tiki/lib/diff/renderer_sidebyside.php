@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.7 2004-08-17 16:33:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.8 2004-08-20 11:26:09 sylvieg Exp $
 
 /**
  * "Side-by-Side" diff renderer.
@@ -70,12 +70,12 @@ class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
     	} elseif ($type == 'added') {
 	        foreach ($lines as $line) {
 	        	if (!empty($line))
-	            echo "<tr class='diffadded'><td colspan='2'>&nbsp;</td><td>$prefix</td><td>$line</td></tr>\n";
+	            echo "<tr><td colspan='2'>&nbsp;</td><td class='diffadded'>$prefix</td><td class='diffadded'>$line</td></tr>\n";
 	        }
     	} elseif ($type == 'deleted') {
 	        foreach ($lines as $line) {
 	        	if (!empty($line))
-	            echo "<tr class='diffdeleted'><td>$prefix</td><td>$line</td><td colspan='2'>&nbsp;</td></tr>\n";
+	            echo "<tr><td class='diffdeleted'>$prefix</td><td class='diffdeleted'>$line</td><td colspan='2'>&nbsp;</td></tr>\n";
 	        }
     	} elseif ($type == 'change-deleted') {
     		echo '<tr><td class="diffdeleted" valign="top">'.$prefix.'</td><td class="diffdeleted" valign="top">'.implode("<br />", $lines)."</td>\n";
