@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.14 2003-11-19 15:45:35 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.15 2003-11-24 01:20:03 gongo Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -13,7 +13,7 @@
     <td>&nbsp;</td>
 
     <td><div class="button2">
-      <a href="tiki-admin_integrator.php?action=edit&repID={$repID|escape}" class="linkbut">{tr}configure this repository{/tr}</a>
+      <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repID|escape}" class="linkbut">{tr}configure this repository{/tr}</a>
     </div></td>
     <td><div class="button2">
       <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view this repository{/tr}</a>
@@ -158,10 +158,10 @@
       <td class="{cycle advance=false}">{$rules[rule].type|escape}</td>
       <td class="{cycle advance=false}">{$rules[rule].casesense|escape}</td>
       <td class="{if (strlen($rules[rule].description) > 0)}{cycle advance=false}{else}{cycle}{/if}">
-        <a href="tiki-admin_integrator_rules.php?action=edit&repID={$repID|escape}&ruleID={$rules[rule].ruleID|escape}" title="{tr}edit{/tr}">
+        <a href="tiki-admin_integrator_rules.php?action=edit&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" title="{tr}edit{/tr}">
             <img src="img/icons/config.gif" alt="{tr}edit{/tr}" border="0" />
         </a>
-        <a href="tiki-admin_integrator_rules.php?action=rm&repID={$repID|escape}&ruleID={$rules[rule].ruleID|escape}" title="{tr}remove{/tr}">
+        <a href="tiki-admin_integrator_rules.php?action=rm&amp;repID={$repID|escape}&amp;ruleID={$rules[rule].ruleID|escape}" title="{tr}remove{/tr}">
             <img src="img/icons2/delete.gif" alt="{tr}remove{/tr}" border="0" />
         </a>
       </td>
