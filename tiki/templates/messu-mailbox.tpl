@@ -1,5 +1,6 @@
 {*Smarty template*}
 <a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a><br/><br/>
+{include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
 <br/><br/>
 

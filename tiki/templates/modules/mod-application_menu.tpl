@@ -12,7 +12,7 @@
 
 {if $user}
 {if $feature_userPreferences eq 'y' and $user}
-  &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}user preferences{/tr}</a><br/>
+  &nbsp;<a href="tiki-my_tiki.php" class="linkmenu">{tr}My Tiki{/tr}</a><br/>
 {/if}
 {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
   &nbsp;<a href="messu-mailbox.php" class="linkmenu">{tr}messages{/tr}</a><br/>

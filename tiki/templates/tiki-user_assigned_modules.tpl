@@ -1,8 +1,6 @@
 <a class="pagetitle" href="tiki-user_assigned_modules.php">{tr}User assigned modules{/tr}</a><br/><br/>
-[<a href="tiki-user_preferences.php" class="link">{tr}User Preferences{/tr}</a>
-{if $feature_user_bookmarks eq 'y'}|<a href="tiki-user_bookmarks.php" class="link">{tr}User Bookmarks{/tr}</a>{/if}
-|<a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a>
-{if $user_assigned_modules eq 'y'}|<a href="tiki-user_assigned_modules.php" class="link">{tr}Configure modules{/tr}</a>{/if}]<br/><br/>
+{include file=tiki-mytiki_bar.tpl}
+<br/><br/>
 <a class="link" href="tiki-user_assigned_modules.php?recreate=1">{tr}Restore defaults{/tr}</a><br/><br/>
 <h2>{tr}User assigned modules{/tr}</h2>
 <table class="normal">

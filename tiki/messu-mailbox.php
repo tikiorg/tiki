@@ -64,6 +64,7 @@ $smarty->assign('find',$find);
 $items = $messulib->list_user_messages($user,$offset,$maxRecords,$sort_mode,$find,$_REQUEST["flag"],$_REQUEST["flagval"],$_REQUEST['priority']);
 
 
+
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));
@@ -71,6 +72,11 @@ if($items["cant"] > ($offset+$maxRecords)) {  $smarty->assign('next_offset',$off
 if($offset>0) {  $smarty->assign('prev_offset',$offset - $maxRecords);  } else {  $smarty->assign('prev_offset',-1); }
 $smarty->assign_by_ref('items',$items["data"]);
 
+
+if($feature_messages=='y' && $tiki_p_messages=='y') {
+  $unread = $tikilib->user_unread_messages($user);
+  $smarty->assign('unread',$unread);
+}
 
 
 $smarty->assign('mid','messu-mailbox.tpl');

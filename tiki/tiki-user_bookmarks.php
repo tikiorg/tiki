@@ -104,6 +104,13 @@ if($_REQUEST["parentId"]) {
   $folders = array_merge($pfs,$folders);
 }
 $smarty->assign('folders',$folders);
+
+if($feature_messages=='y' && $tiki_p_messages=='y') {
+  $unread = $tikilib->user_unread_messages($user);
+  $smarty->assign('unread',$unread);
+}
+
+
 // Display the template
 $smarty->assign('mid','tiki-user_bookmarks.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

@@ -1,4 +1,5 @@
 <a class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a><br/><br/>
+{include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
 <br/><br/>
 {if $sent}

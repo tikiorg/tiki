@@ -1,6 +1,7 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-user_tasks.php?tasks_useDates={$tasks_useDates}">{tr}Tasks{/tr}</a><br/><br/>
-
+{include file=tiki-mytiki_bar.tpl}
+<br/><br/>
 <a class="link" href="tiki-user_tasks.php?tasks_useDates=y">{tr}Use dates{/tr}</a>
 <a class="link" href="tiki-user_tasks.php?tasks_useDates=n">{tr}All tasks{/tr}</a>
 <br/><br/>
