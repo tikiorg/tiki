@@ -101,12 +101,10 @@
 {include file=categorize.tpl}
 
 <tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" id='subheading' name="heading" rows="5" cols="80" wrap="virtual">{$heading|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
-{assign var=area_name value="subbody"}
-{include file=tiki-edit_help_tool.tpl}
-</td>
-</tr>
-<tr><td class="formcolor">{tr}Body{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Body{/tr}
+<br />{include file=tiki-edit_help_tool.tpl area_name="subbody"}
+
+</td><td class="formcolor">
 <b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br />
 <textarea class="wikiedit" id='subbody' name="body" rows="25" cols="80" wrap="virtual">{$body|escape}</textarea></td></tr>
 {if $cms_spellcheck eq 'y'}

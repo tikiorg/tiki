@@ -20,14 +20,9 @@
 </td>
 </tr>
 <tr>
-<td class="formcolor">{tr}Quicklinks{/tr}</td>
-<td class="formcolor">
-{assign var=area_name value="faqans"}
-{include file=tiki-edit_help_tool.tpl}
+<td class="formcolor">{tr}Answer{/tr}:
+<br />{include file=tiki-edit_help_tool.tpl area_name="faqans"}
 </td>
-</tr>
-<tr>
-<td class="formcolor">{tr}Answer{/tr}:</td>
 <td class="formcolor" >
 <textarea id='faqans' type="text" rows="8" cols="80" name="answer">{$answer|escape}</textarea>
 </td>
