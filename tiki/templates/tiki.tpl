@@ -1,5 +1,8 @@
 {* Index we display a wiki page here *}
 {include file="header.tpl"}
+{if $feature_bidi eq 'y'}
+<table dir="rtl" ><tr><td>
+{/if}
 <div id="tiki-main">
   {if $feature_top_bar eq 'y'}
   <div id="tiki-top">
@@ -40,4 +43,7 @@
   </div>
   {/if}
 </div>
+{if $feature_bidi eq 'y'}
+</td></tr></table>
+{/if}
 {include file="footer.tpl"}
