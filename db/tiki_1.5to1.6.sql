@@ -1,5 +1,7 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_rename','wiki','Can rename pages','editor');
+
 drop table if exists tiki_dsn;
 create table tiki_dsn(
   dsnId integer(12) not null auto_increment,
