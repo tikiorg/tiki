@@ -294,7 +294,7 @@ class ChartLib extends TikiLib {
 		} else {
 			unset ($vars['chartId']);
 
-			$vars['hist'] = 0;
+			$vars['hits'] = 0;
 			// insert mode
 			$first = true;
 			$query = "insert into `$TABLE_NAME`(";
