@@ -133,7 +133,7 @@ class StructLib extends TikiLib {
 		if (!$this->page_exists($name)) {
 			$now = date("U");
 
-			$this->create_page($name, 0, '', $now, 'created from stucture', 'system', '0.0.0.0', '');
+			$this->create_page($name, 0, '', $now, tra('created from structure'), 'system', '0.0.0.0', '');
 		}
     //Get the page Id
 		$query = "select `page_id` from `tiki_pages` where `pageName`=?";
