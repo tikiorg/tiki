@@ -103,9 +103,10 @@ class UsersLib {
   function user_logout($user)
   {
     $t = date("U");
-    $query = "update users_users set lastLogin=$t where login='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
+    // No need to change lastLogin since it is handled at the validateUser method
+    //$query = "update users_users set lastLogin=$t where login='$user'";
+    //$result = $this->db->query($query);
+    //if(DB::isError($result)) $this->sql_error($query,$result);
   }
   
   function genPass()
@@ -133,16 +134,28 @@ class UsersLib {
   {
     global $feature_challenge;
     $hash=md5($pass);
-    if($feature_challenge=='n' || empty($response)) {
+    // If the user is loggin in the the lastLogin should be the last currentLogin?
+    // 
     
+    
+    if($feature_challenge=='n' || empty($response)) {
       $query = "select login from users_users where login='$user' and hash='$hash'"; 
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query,$result);
       if($result->numRows()) {
         $t = date("U");
+        // Check
+        $current = $this->db->getOne("select currentLogin from users_users where login='$user'");
+        $query = "update users_users set lastLogin=$current where login='$user'";
+        $result = $this->db->query($query);
+        if(DB::isError($result)) $this->sql_error($query,$result);
+        // check
+        
         $query = "update users_users set currentLogin=$t where login='$user'";
         $result = $this->db->query($query);
         if(DB::isError($result)) $this->sql_error($query,$result);
+        
+        
         return true; 
       }
     } else {
@@ -156,6 +169,12 @@ class UsersLib {
       //print("response : $response<br/>");
       if($response == md5($user.$hash.$_SESSION["challenge"])) {
         $t = date("U");
+        // Check
+        $current = $this->db->getOne("select currentLogin from users_users where login='$user'");
+        $query = "update users_users set lastLogin=$current where login='$user'";
+        $result = $this->db->query($query);
+        if(DB::isError($result)) $this->sql_error($query,$result);
+        // check
         $query = "update users_users set currentLogin=$t where login='$user'";
         $result = $this->db->query($query);
         if(DB::isError($result)) $this->sql_error($query,$result);

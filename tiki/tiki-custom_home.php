@@ -9,6 +9,7 @@ if($feature_custom_home != 'y') {
     die;
 }
 
+
 // Display the template
 $smarty->assign('mid','tiki-custom_home.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

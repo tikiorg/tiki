@@ -5540,10 +5540,11 @@ class TikiLib {
   function get_links($data)
   {
     $links = Array();
-    if(preg_match_all("/\[([^\|\]]+)/",$data,$r1)) {
+    if(preg_match_all("/\[([^\[\|\]]+)\]/",$data,$r1)) {
       $res = $r1[1];
       $links = array_unique($res);
     }
+    print_r($links);
     return $links;
   }
 

@@ -294,7 +294,6 @@ class TrackerLib extends TikiLib {
         $result = $this->query($query);
       } else {
         // We add an item
-        
         $query = "replace into tiki_tracker_item_fields(itemId,fieldId,value) values($new_itemId,$fieldId,'$value')";
         $result = $this->query($query);
       }
