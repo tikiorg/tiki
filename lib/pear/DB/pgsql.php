@@ -17,7 +17,7 @@
 // |          Stig Bakken <ssb@php.net>                                   |
 // +----------------------------------------------------------------------+
 //
-// $Id: pgsql.php,v 1.4 2003-07-15 20:30:35 rossta Exp $
+// $Id: pgsql.php,v 1.5 2003-07-15 20:54:48 rossta Exp $
 //
 // Database independent query interface definition for PHP's PostgreSQL
 // extension.
@@ -538,11 +538,11 @@ class DB_pgsql extends DB_common
 	    if ($count < 0 || $count > 0x7fffffff) {
 	    	$count = 0x7fffffff;
 	    }
-	    if ($offset < 0) {
-	    	$offset = 0;
+	    if ($from < 0) {
+	    	$from = 0;
 	    }
-	    if ($offset > 0x7fffffff) {
-	    	$count = 0x7fffffff;
+	    if ($from > 0x7fffffff) {
+	    	$from = 0x7fffffff;
 	    }
     	// </rasa's patch>
         $query = $query . " LIMIT $count OFFSET $from";
