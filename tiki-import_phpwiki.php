@@ -30,6 +30,19 @@ function parse_output(&$obj, &$parts,$i) {
          
          
          $parts[]=$aux;
+         break;
+      case 'application/x-tikiwiki':
+         $aux["body"] = $obj->body;  
+         $ccc=$obj->headers["content-type"];
+         $items = split(';',$ccc);
+         foreach($items as $item) {
+           $portions = split('=',$item);
+           if(isset($portions[0])&&isset($portions[1])) {
+             $aux[trim($portions[0])]=trim($portions[1]);
+           }
+         }
+         $parts[]=$aux;
+         break;
          
     }  
   }
@@ -45,7 +58,7 @@ if(isset($_REQUEST["import"])) {
 $path = $_REQUEST["path"];
 $h=opendir("$path/");
 $lines=Array();
-while($file=readdir($h)) {
+while(false !== $file=readdir($h)) {
   if(is_file("$path/$file")) {
     $fp=fopen("$path/$file","r");
     $full=fread($fp,filesize("$path/$file"));
