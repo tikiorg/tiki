@@ -3484,7 +3484,7 @@ CREATE TABLE users_users (
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 ### Administrator account
-INSERT INTO users_users(email,login,password,realname,hash) VALUES('','admin','admin','System Administrator',md5('adminadmin'));
+INSERT INTO users_users(email,login,password,realname,hash) VALUES ('','admin','admin','System Administrator',md5('adminadmin'));
 UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin;
 # --------------------------------------------------------
 

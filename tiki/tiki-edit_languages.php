@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.6 2003-10-14 10:27:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.7 2003-10-14 14:43:40 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ $result = $tikilib->query($query);
 $languages = array();
 
 while ($res = $result->fetchRow()) {
-	$languages[] = $res["0"];
+	$languages[] = $res["lang"];
 }
 
 $smarty->assign_by_ref('languages', $languages);
@@ -89,11 +89,11 @@ if (isset($_REQUEST["add_tran"])) {
 	$add_tran_tran = $_REQUEST["add_tran_tran"];
 
 	if (strlen($add_tran_source) != 0 && strlen($add_tran_tran) != 0) {
-		$add_tran_source = addslashes(htmlentities(strip_tags($add_tran_source), ENT_NOQUOTES));
+		$add_tran_source = htmlentities(strip_tags($add_tran_source), ENT_NOQUOTES);
 
-		$add_tran_tran = addslashes(htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES));
+		$add_tran_tran = htmlentities(strip_tags($add_tran_tran), ENT_NOQUOTES);
 		$query = "insert into `tiki_language` values (?,?,?)";
-		$result = $tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran);
+		$result = $tikilib->query($query,array($add_tran_source,$edit_language,$add_tran_tran));
 		// remove from untranslated Table
 		$query = "delete from `tiki_untranslated` where `source`=? and `lang`=?";
 		$result = $tikilib->query($query,array($add_tran_source,$edit_language));
