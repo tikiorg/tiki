@@ -347,16 +347,16 @@ class StructLib extends TikiLib {
   
 	// that is intended to replace the get_subtree_toc and get_subtree_toc_slide
 	// it's used only in {toc} thing hardcoded in parse tikilib->parse -- (mose)
-	function build_subtree_toc($id,$slide=false) {
+	function build_subtree_toc($id,$slide=false,$order='asc') {
 		$ret = array();
 		$cant = $this->getOne("select count(*) from `tiki_structures` where `parent_id`=?",array((int)$id));
 		if ($cant) {
-			$query = "select `page_ref_id`, `pageName`, `page_alias` from `tiki_structures` ts, `tiki_pages` tp ";
-			$query.= "where ts.`page_id`=tp.`page_id` and `parent_id`=? order by ".$this->convert_sortmode("pos_asc");
+			$query = "select `page_ref_id`, `pageName`, `page_alias`, tp.`description` from `tiki_structures` ts, `tiki_pages` tp ";
+			$query.= "where ts.`page_id`=tp.`page_id` and `parent_id`=? order by ".$this->convert_sortmode("pos_".$order);
 			$result = $this->query($query,array((int)$id));
 			while ($res = $result->fetchRow()) {
 				if ($res['page_ref_id'] != $id) {
-					$sub = $this->build_subtree_toc($res['page_ref_id']);
+					$sub = $this->build_subtree_toc($res['page_ref_id'],$slide,$order);
 					if (is_array($sub)) {
 						$res['sub'] = $sub;	
 					}
@@ -369,10 +369,11 @@ class StructLib extends TikiLib {
 		return $back;
 	}
 
-	function get_toc($page_ref_id) {
+	function get_toc($page_ref_id,$order='asc',$showdesc=false) {
 		global $smarty;
-		$structure_tree = $this->build_subtree_toc($page_ref_id);
+		$structure_tree = $this->build_subtree_toc($page_ref_id,false,$order);
 		$smarty->assign('structure_tree',$structure_tree);
+		$smarty->assign('showdesc',$showdesc);
 		return $smarty->fetch("structures_toc.tpl");
 	}
 	// end of replacement

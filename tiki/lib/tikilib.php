@@ -3686,15 +3686,23 @@ function parse_data($data) {
     $this->parse_htmlchar($data);
 
     // Now replace a TOC
-    preg_match_all("/\{toc\}/i", $data, $tocs);
+    preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?\}/i", $data, $tocs);
 
     //If there are instances of {toc} on this page
     if (count($tocs[0]) > 0) {
+			$order = 'asc';
+			$showdesc = false;
+			if ($tocs[2][0] == 'desc') {
+				$order = 'desc';
+			}
+			if ($tocs[4][0] == 1) {
+				$showdesc = true;
+			}
  	    include_once ("lib/structures/structlib.php");
       //And we are currently viewing a structure
       $page_info = $structlib->s_get_page_info($page_ref_id);
       if (isset($page_info)) {
-				$html = $structlib->get_toc($page_ref_id);
+				$html = $structlib->get_toc($page_ref_id,$order,$showdesc);
 
     	  // Loop over all the case-specific versions of {toc} used
     	  // (if the user is consistent, this is a loop of count 1)
