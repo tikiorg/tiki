@@ -1,17 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.18 2003-09-25 01:05:21 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.19 2004-03-07 06:26:40 chealer Exp $ *}
 
 <a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a><br /><br />
-[{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner)}
-  <a  href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> 
+{if $tiki_p_admin_file_galleries eq 'y' or $user eq $owner}
+  <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut">{tr}edit gallery{/tr}</a>
 {/if}
-{if $tiki_p_upload_files eq 'y'}
-{if $tiki_p_admin_file_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-    |<a href="tiki-upload_file.php?galleryId={$galleryId}" class="gallink">{tr}upload file{/tr}</a>
-{/if}
+{if $tiki_p_upload_files eq 'y' && ($tiki_p_admin_file_galleries eq 'y' or $user eq $owner or $public eq 'y')}
+  <a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}upload file{/tr}</a>
 {/if}
 {if $rss_file_gallery eq 'y'}
-|<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}" class="gallink">RSS</a>
-{/if}]<br /><br />
+<a href="tiki-file_gallery_rss.php?galleryId={$galleryId}" class="linkbut">RSS</a>
+{/if}<br /><br />
 {if $tiki_p_create_file_galleries eq 'y'}
 {if $edit_mode eq 'y'}
 <h3>{tr}Edit a file using this form{/tr}</h3>
