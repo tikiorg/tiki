@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.18 2004-07-16 19:26:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.19 2004-07-19 21:42:33 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,7 +60,7 @@ if (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 
 	foreach ($_REQUEST["checked"] as $deletepage) {
 		$histlib->remove_all_versions($deletepage);
-		$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> successfully deleted."),tra("page"),$deletepage));
+		$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Page <b>%s</b> successfully deleted."),$deletepage));
 	}
 	} elseif ($_REQUEST['submit_mult'] == 'categorize') {
 		$categorize_mode = TRUE;
@@ -68,6 +68,9 @@ if (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 		include_once ('lib/categories/categlib.php');
 		$categories = $categlib->list_categs();
 		$smarty->assign('categories', $categories);
+	} elseif ($_REQUEST['submit_mult'] == 'rename') {
+		$rename_mode = TRUE;
+		$smarty->assign('rename_mode', 'y');
 	}
 }
 // to-do: place the following code in categorize.php?
@@ -100,7 +103,7 @@ elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'a
 					$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
 				}
 				$categlib->categorize($catObjectId, $cat_acat);
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> added to %s <b>%s</b>."),tra("page"),$cat_objid,tra("category"),$categ_object['name']));
+				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Page <b>%s</b> added to %s <b>%s</b>."),$cat_objid,tra("category"),$categ_object['name']));
 			}
 		}
 	}
@@ -128,9 +131,24 @@ elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'r
 				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
 				if ($catObjectId) {
 					$categlib->remove_object_from_category($catObjectId, $cat_acat);
-					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s <b>%s</b> removed from %s <b>%s</b>."),tra("page"),$cat_objid,tra("category"),$categ_object['name']));
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Page <b>%s</b> removed from %s <b>%s</b>."),$cat_objid,tra("category"),$categ_object['name']));
 				}
 			}
+		}
+	}
+}
+// mass page renaming
+elseif (!empty($_REQUEST['newpages'])) {
+	$newpages = $_REQUEST['newpages'];
+	global $wikilib;
+	if (!is_object($wikilib)) {
+		include_once ('lib/wiki/wikilib.php');
+	}
+	foreach ($newpages as $oldpage => $newpage) {
+		if ($wikilib->wiki_rename_page($oldpage, $newpage)) {
+			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Page <b>%s</b> renamed to <b>%s</b>."),$oldpage,$newpage));
+		} else {
+			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("Failed to rename page <b>%s</b> to <b>%s</b>; perhaps <b>%s</b> already exists."),$oldpage,$newpage,$newpage));
 		}
 	}
 }
@@ -173,7 +191,7 @@ $smarty->assign('find', $find);
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find);
 
-if (!empty($categorize_mode)) {
+if (!empty($categorize_mode) || !empty($rename_mode)) {
 	$arraylen = count($listpages['data']);
 	for ($i=0; $i<$arraylen; $i++) {
 		if (in_array($listpages['data'][$i]['pageName'], $_REQUEST["checked"])) {
