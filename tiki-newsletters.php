@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.11 2004-02-17 08:54:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.12 2004-02-17 09:03:20 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,6 @@ if (isset($_REQUEST["confirm_subscription"])) {
 $smarty->assign('unsub', 'n');
 
 if (isset($_REQUEST["unsubscribe"])) {
-	check_ticket('newsletters');
 	$conf = $nllib->unsubscribe($_REQUEST["unsubscribe"]);
 
 	if ($conf) {
