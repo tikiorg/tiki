@@ -10,15 +10,7 @@ class BalanceThread implements Runnable {
 		this.c = c;
 
 	}
-	public void stopanimate() {
 
-		animating = false;
-		
-	}
-	public void animate() {
-		animating = true;
-
-	}
 	public void add(Node vr) {
 
 		v.addElement(vr);
@@ -43,25 +35,25 @@ class BalanceThread implements Runnable {
 				Enumeration e;
 				if (i++ % 5 == 0) {
 					
-					e = this.c.vertexes.elements();
+					e = this.c.graph.elements();
 					while (e.hasMoreElements()) {
 						Node node = (Node) e.nextElement();
 						node.clearSpeed();
 					}
 
-					for (int j = 0; j < this.c.vertexes.count; j++) {
+					for (int j = 0; j < this.c.graph.size(); j++) {
 						Node node1 =
-							(Node) this.c.vertexes.elementAt(j);
-						for (int k = j + 1; k < this.c.vertexes.count; k++) {
+							(Node) this.c.graph.elementAt(j);
+						for (int k = j + 1; k < this.c.graph.size(); k++) {
 							Node node2 =
-								(Node) this.c.vertexes.elementAt(k);
+								(Node) this.c.graph.elementAt(k);
 							SpeedVector sp = node1.getForceFromNode(node2);
 							node1.addSpeed(sp);
 							node2.addSpeed(sp.reverse());
 						}
 					}
 				}
-				Enumeration en = this.c.vertexes.elements();
+				Enumeration en = this.c.graph.elements();
 				while (en.hasMoreElements()) {
 					Node node = (Node) en.nextElement();
 					node.balance();

@@ -1,11 +1,18 @@
 package wiki3d;
-import java.awt.*;
-import java.awt.event.*;
-import java.applet.*;
-import java.awt.image.*;
-
-import java.io.*;
-import java.net.*;
+import java.applet.Applet;
+import java.awt.BasicStroke;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 public class Can3d
 	extends Applet
 	implements MouseListener, MouseMotionListener {
@@ -40,14 +47,18 @@ public class Can3d
 	BufferedImage bi;
 	int XO, YO;
 	//Graph cv;
-	Vertexes vertexes;
+	Graph graph;
 	//stores all the nodes links actions which are latter used for display
 	XmlReader xr;
 	Graphics2D bg;
 	Dimension bd;
 
-	String ips = null;
+	String url = null;
 	String message = null;
+	
+	String startNodeName = "Krico";
+	
+	int clickX, clickY; // Position where the user clicked;
 
 	//Construct the applet
 
@@ -68,7 +79,7 @@ public class Can3d
 
 		// ObjectVertex.origin=new Vertex(400,450,0);
 
-		vertexes = new Vertexes();
+		graph = new Graph();
 
 		ps =
 			"<graph node=\"My Graph\"><link name=\"vt\"><action label=\"heard about that\" url=\"www.visualthearus.com\"/><action label=\"my thearasus\" url= \"www.myhome.com\"/></link><link name=\"hi click me for fun\"><action label=\"The last action\" url=\"www.thelast.com\"/></link><link name=\"see these also\"><action label=\"Me first\" url=\"www.greaturl.com\"/><action label=\"Me second\" url=\"www.greaturl.com\"/></link></graph>";
@@ -113,12 +124,13 @@ public class Can3d
 	private void jbInit() throws Exception {
 		this.setSize(Config.windowwidth, Config.windowheight);
 		try {
-			ips = getParameter("url"); //reads from
+			url = getParameter("url"); //reads from
 			// http://vt.php?node=someword
-			String node = getParameter("node");
-			ips = ips + "?page=" + node;
+			startNodeName = getParameter("node");
+			//url = url + "?page=" + startNodeName;
 
 		} catch (Exception e) {
+			url = "http://c3po.kriconet.com.br/tiki-dev/tikiwiki/tiki-wiki3d_xml.php";
 		};
 
 		resize(
@@ -131,32 +143,12 @@ public class Can3d
 	//Start the applet
 
 	public void start() {
-		URL u;
-		StringBuffer st = new StringBuffer();
-		if (ips != null) {
 
-			try {
-				String ps = " ";
-				u = new URL(ips);
-				DataInputStream b1 = new DataInputStream(u.openStream());
-				int j;
-				while (true) {
-
-					j = b1.read();
-					if (j == -1)
-						break;
-					System.out.print((char) j);
-					st.append((char) j);
-
-				}
-			} catch (Exception ee) {
-				System.out.println("other exception");
-			}
-			ps = st.toString();
-		}
-
-		xr = new XmlReader(ps, vertexes);
-
+		xr = new XmlReader(url);
+		graph.setXmlReader(xr);
+		xr.getNodeData(startNodeName,graph);
+		graph.navigateTo(Graph.centerNode);
+		
 		bi =
 			new BufferedImage(
 				Config.windowwidth,
@@ -190,8 +182,8 @@ public class Can3d
 
 	public void mouseClicked(MouseEvent e) {
 
-		if (vertexes.contains(e.getX(), e.getY())) {
-			vertexes.focus = vertexes.focus;
+		if (graph.contains(e.getX(), e.getY())) {
+			graph.focus = graph.focus;
 
 			/*
 			 * This code is here as an example on how to open an url and how to
@@ -211,10 +203,12 @@ public class Can3d
 		int y = e.getY();
 		System.out.println("mouse pressed");
 
-		if (vertexes.contains(x, y)) {
+		if (graph.contains(x, y)) {
 			setCursor(cur);
-			vertexes.focus.fixPosition();
+			graph.focus.fixPosition();
 			focussed = true;
+			clickX = x;
+			clickY = y;
 		}
 		prevx = x;
 		prevy = y;
@@ -225,7 +219,7 @@ public class Can3d
 
 		int x = e.getX();
 		int y = e.getY();
-		if (vertexes.contains(x, y)) {
+		if (graph.contains(x, y)) {
 			setCursor(cur);
 			if (painted) {
 				painted = false;
@@ -241,10 +235,12 @@ public class Can3d
 	}
 
 	public void mouseReleased(MouseEvent e) {
-
+        if (e.getX() == clickX && e.getY() == clickY) {
+        	graph.navigateTo(graph.focus);
+        }
 		if (focussed) {
 			focussed = false;
-			vertexes.focus.releasePosition();
+			graph.focus.releasePosition();
 		}
 		setCursor(Cursor.getDefaultCursor());
 		if (painted) {
@@ -269,14 +265,7 @@ public class Can3d
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		balancing.stopanimate();
-		//notifyAll();
-
-		//EventQueue aq=Toolkit.getDefaultToolkit().getSystemEventQueue();
-		//try{
-		//while(aq.peekEvent()!=null)
-		//aq.getNextEvent();
-		//}catch(Exception exe){};
+		
 		float scalex = Config.scalex;
 		float scaley = Config.scaley;
 		int x = e.getX();
@@ -330,7 +319,7 @@ public class Can3d
 			if (e.isAltDown()) {
 				Node.mat.translate(0, 0, dx + dy);
 			} else
-				vertexes.focus.change(-dx, -dy, 0);
+				graph.focus.change(-dx, -dy, 0);
 
 			if (painted) {
 				painted = false;
@@ -388,11 +377,11 @@ public class Can3d
 				System.out.println("ne1");
 			}
 			if (!focussed) {
-				vertexes.transform(tmmat);
+				graph.transform(tmmat);
 				face.transform(amat);
 			} else {
-				vertexes.focus.transform();
-				vertexes.focus.proj();
+				graph.focus.transform();
+				graph.focus.proj();
 				//cv.focus.transform();
 				//cv.focus.transform(imat);
 				imat.unit();
@@ -403,7 +392,7 @@ public class Can3d
 
 				bg.setColor(getBackground());
 				bg.fillRect(0, 0, getSize().width, getSize().height);
-				vertexes.paint(bg);
+				graph.paint(bg);
 				//if(rotate)
 				face.paint(bg);
 
@@ -418,7 +407,7 @@ public class Can3d
 
 				g.drawImage(bi, 0, 0, this);
 			} else {
-				vertexes.paint(g);
+				graph.paint(g);
 				face.paint(g);
 				g.setColor(Config.facecolorblue);
 				g.draw3DRect(
