@@ -68,8 +68,10 @@ foreach($files as $file) {
   $fp = fopen($file,"r");
   $data = fread($fp,filesize($file));
   fclose($fp);
-  preg_match_all("/\{tr\}([^\{]+)\{\/tr\}/",$data,$words);
+  preg_match_all("/\{tr\}(.+?)\{\/tr\}/",$data,$words);
   foreach(array_unique($words[1]) as $word) {
+    if (ereg("^\{[$][^\}]*\}$", $word))
+       continue;
     if (!isset($used[$word]))
        $used[$word] = 1;
     if(isset($lang[$word])) {
@@ -110,8 +112,8 @@ foreach($files as $file) {
 }
 print('"'.'##end###'.'" => "'.'###end###'.'"'.");?&gt;\n<br/>");  
 foreach($lang as $key=>$val) {
-  fwrite($fw,'"'.str_replace("{\$", "{\\\$",$key).'" => "'.str_replace("{\$", "{\\\$", $val).'",');
-  //fwrite($fw,'"'.str_replace("{\$", "{\\\$",$key).'" => "'.utf8_decode(str_replace("{\$", "{\\\$", $val)).'",');
+  fwrite($fw,'"'.str_replace("\$", "\\\$",$key).'" => "'.str_replace("\$", "\\\$", $val).'",');
+  //fwrite($fw,'"'.str_replace("\$", "\\\$",$key).'" => "'.utf8_decode(str_replace("\$", "\\\$", $val)).'",');
   if (isset($used[$key]))
      fwrite($fw, "\n");
   else
