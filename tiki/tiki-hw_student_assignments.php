@@ -1,14 +1,13 @@
 <?php
 
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_student_assignments.php,v 1.3 2004-02-22 14:35:49 ggeller Exp $
+
 // Copyright (c) 2004, George Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 error_reporting(E_ALL);
-
-require_once("ggg-trace.php");
-$ggg_tracer->outln(__FILE__.": ".__LINE__);
 
 // Initialization
 require_once ('tiki-setup.php');
@@ -53,7 +52,7 @@ $find = '';                      // stupid - this variable is not used.
 $type = '';                      // stupid - this variable is not used.
 $topic = '';                     // stupid - this variable is not used.
 
-$listpages = $homeworklib->list_assignments(0, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic);
+$listpages = $homeworklib->hw_assignments_list(0, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic);
 
 for ($i = 0; $i < count($listpages["data"]); $i++) {
   $listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
