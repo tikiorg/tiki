@@ -5,26 +5,15 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ThemeControl" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ThemeControl Objects{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-theme_control_objects.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}theme control objects tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!--- beginning of next bit --->
-
-
-
-
-
-
-
-
-
 
 <br/><br/>
 <div class="simplebox">
@@ -36,9 +25,9 @@
 5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}<br/>
 </div>
 <br/><br/>
-[<a class="link" href="tiki-theme_control.php">{tr}Control by category{/tr}</a>
- | <a class="link" href="tiki-theme_control_sections.php">{tr}Control by Sections{/tr}</a>]
-<h3>{tr}Assign themes to objects{/tr}</h3>
+<a class="linkbut" href="tiki-theme_control.php">{tr}Control by category{/tr}</a>
+ <a class="linkbut" href="tiki-theme_control_sections.php">{tr}Control by Sections{/tr}</a>
+<h2>{tr}Assign themes to objects{/tr}</h2>
 <form id='objform' action="tiki-theme_control_objects.php" method="post">
 <select name="type" onchange="javascript:document.getElementById('objform').submit();">
 {section name=ix loop=$types}
@@ -74,7 +63,7 @@
 </table>
 </form> 
 
-<h3>{tr}Assigned objects{/tr}</h3>
+<h2>{tr}Assigned objects{/tr}</h2>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
