@@ -340,30 +340,26 @@ class WikiLib extends TikiLib {
 
 	// Functions for wiki page footnotes
 	function get_footnote($user, $page) {
-		$page = addslashes($page);
 
-		$count = $this->getOne("select count(*) from `tiki_page_footnotes` where `user`='$user' and pageName='$page'");
+		$count = $this->getOne("select count(*) from `tiki_page_footnotes` where `user`=? and `pageName`=?",array($user,$page));
 
 		if (!$count) {
 			return '';
 		} else {
-			return $this->getOne("select `data` from `tiki_page_footnotes` where `user`='$user' and pageName='$page'");
+			return $this->getOne("select `data` from `tiki_page_footnotes` where `user`=? and `pageName`=?",array($user,$page));
 		}
 	}
 
 	function replace_footnote($user, $page, $data) {
-		$page = addslashes($page);
-
-		$data = addslashes($data);
-		$query = "replace into tiki_page_footnotes(user,pageName,data) values('$user','$page','$data')";
-		$this->query($query);
+		$querydel = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
+		$this->query($querydel,array($user, $page),-1,-1,false);
+		$query = "insert into `tiki_page_footnotes`(`user`,`pageName`,`data`) values(?,?,?)";
+		$this->query($query,array($user,$page,$data));
 	}
 
 	function remove_footnote($user, $page) {
-		$page = addslashes($page);
-
-		$query = "delete from `tiki_page_footnotes` where `user`='$user' and pageName='$page'";
-		$this->query($query);
+		$query = "delete from `tiki_page_footnotes` where `user`=? and `pageName`=?";
+		$this->query($query,array($user,$page));
 	}
 
 	function wiki_link_structure() {

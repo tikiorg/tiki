@@ -11,23 +11,24 @@ class NotificationLib extends TikiLib {
 	}
 
 	function list_mail_events($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (event like $findesc or email like $findesc)";
+			$mid = " where (`event` like ? or `email` like ?)";
+			$bindvars=array($findesc,$findesc);
 		} else {
 			$mid = " ";
+			$bindvars=array();
 		}
 
-		$query = "select * from tiki_mail_events $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_mail_events $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_mail_events` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_mail_events` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -38,28 +39,26 @@ class NotificationLib extends TikiLib {
 	}
 
 	function add_mail_event($event, $object, $email) {
-		$object = addslashes($object);
-
-		$email = addslashes($email);
-		$query = "replace into tiki_mail_events(event,object,email) values('$event','$object','$email')";
-		$result = $this->query($query);
+		$bindvars = array($event,$object,$email);
+		$query = "delete from `tiki_mail_events` where `event`=? and `object`=? and `email`=?";
+		$this->query($query,$bindvars,-1,-1,false);
+		$query = "insert into `tiki_mail_events`(`event`,`object`,`email`) values(?,?,?)";
+		$result = $this->query($query,$bindvars);
 	}
 
 	function remove_mail_event($event, $object, $email) {
-		$object = addslashes($object);
-
-		$query = "delete from tiki_mail_events where event='$event' and object='$object' and email='$email'";
-		$result = $this->query($query);
+		
+		$query = "delete from `tiki_mail_events` where `event`=? and `object`=? and `email`=?";
+		$result = $this->query($query,array($event,$object,$email));
 	}
 
 	function get_mail_events($event, $object) {
-		$object = addslashes($object);
 
-		$query = "select email from tiki_mail_events where event='$event' and object='$object'";
-		$result = $this->query($query);
+		$query = "select `email` from `tiki_mail_events` where `event`=? and `object`=?";
+		$result = $this->query($query,array($event,$object));
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res["email"];
 		}
 

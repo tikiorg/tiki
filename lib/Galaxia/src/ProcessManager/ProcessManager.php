@@ -141,7 +141,7 @@ class ProcessManager extends BaseManager {
 	// keep contexts and parse
 	$this->parser = xml_parser_create(); 
 	xml_parser_set_option($this->parser,XML_OPTION_CASE_FOLDING,0);
-	xml_set_object($this->parser, &$this);
+	xml_set_object($this->parser, $this);
 	xml_set_element_handler($this->parser, "_start_element_handler", "_end_element_handler");
     xml_set_character_data_handler($this->parser, "_data_handler"); 
     $aux=Array(

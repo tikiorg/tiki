@@ -570,8 +570,8 @@ class TikiLib {
 	function get_user_items($user) {
 		$items = array();
 
-		$query = "select `ttf` .trackerId, tti.itemId from `tiki_tracker_fields` ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='u' and tti.status='o' and value=?";
-		$result = $this->query($query,array($user));
+		$query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and `value`=?";
+		$result = $this->query($query,array('u','o',$user));
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -579,10 +579,10 @@ class TikiLib {
 
 			$trackerId = $res["trackerId"];
 			// Now get the isMain field for this tracker
-			$fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`='y' and `trackerId`=$trackerId");
+			$fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',$trackerId));
 			// Now get the field value
-			$value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=$fieldId and `itemId`=$itemId");
-			$tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=$trackerId");
+			$value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array($fieldId,$itemId));
+			$tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array($trackerId));
 			$aux["trackerId"] = $trackerId;
 			$aux["itemId"] = $itemId;
 			$aux["value"] = $value;
@@ -598,19 +598,19 @@ class TikiLib {
 		$groups = $this->get_user_groups($user);
 
 		foreach ($groups as $group) {
-			$query = "select `ttf` .trackerId, tti.itemId from `tiki_tracker_fields` ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='g' and tti.status='o' and value=?";
+			$query = "select ttf.`trackerId`, tti.`itemId` from `tiki_tracker_fields` ttf, `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif where ttf.`fieldId`=ttif.`fieldId` and ttif.`itemId`=tti.`itemId` and `type`=? and tti.`status`=? and value=?";
 
-			$result = $this->query($query,array($group));
+			$result = $this->query($query,array('g','o',$group));
 
 			while ($res = $result->fetchRow()) {
 				$itemId = $res["itemId"];
 
 				$trackerId = $res["trackerId"];
 				// Now get the isMain field for this tracker
-				$fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`='y' and `trackerId`=$trackerId");
+				$fieldId = $this->getOne("select `fieldId`  from `tiki_tracker_fields` ttf where `isMain`=? and `trackerId`=?",array('y',$trackerId));
 				// Now get the field value
-				$value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=$fieldId and `itemId`=$itemId");
-				$tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=$trackerId");
+				$value = $this->getOne("select `value`  from `tiki_tracker_item_fields` where `fieldId`=? and `itemId`=?",array($fieldId,$itemId));
+				$tracker = $this->getOne("select `name`  from `tiki_trackers` where `trackerId`=?",array($trackerId));
 				$aux["trackerId"] = $trackerId;
 				$aux["itemId"] = $itemId;
 				$aux["value"] = $value;
@@ -632,22 +632,22 @@ class TikiLib {
 		$data = '';
 
 		$now = date("U");
-		$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=$contentId and `publishDate`<=$now";
-		$res = $this->getOne($query);
+		$query = "select max(`publishDate`) from `tiki_programmed_content` where `contentId`=? and `publishDate`<=?";
+		$res = $this->getOne($query,array($contentId,$now));
 
 		if (!$res)
 			return '';
 
-		$query = "select `data`  from `tiki_programmed_content` where `contentId`=$contentId and `publishDate`=$res";
-		$data = $this->getOne($query);
+		$query = "select `data`  from `tiki_programmed_content` where `contentId`=? and `publishDate`=?";
+		$data = $this->getOne($query,array($contentId,$res));
 		return $data;
 	}
 
 	/*shared*/
 	function get_quiz($quizId) {
-		$query = "select * from `tiki_quizzes` where `quizId`=$quizId";
+		$query = "select * from `tiki_quizzes` where `quizId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($quizId));
 
 		if (!$result->numRows())
 			return false;
@@ -660,20 +660,22 @@ class TikiLib {
 	function compute_quiz_stats() {
 		$query = "select `quizId`  from `tiki_user_quizzes`";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array());
 
 		while ($res = $result->fetchRow()) {
 			$quizId = $res["quizId"];
 
-			$quizName = $this->getOne("select `name`  from `tiki_quizzes` where `quizId`=$quizId");
-			$timesTaken = $this->getOne("select count(*) from `tiki_user_quizzes` where `quizId`=$quizId");
-			$avgpoints = $this->getOne("select avg(`points`) from `tiki_user_quizzes` where `quizId`=$quizId");
-			$maxPoints = $this->getOne("select max(`maxPoints`) from `tiki_user_quizzes` where `quizId`=$quizId");
+			$quizName = $this->getOne("select `name`  from `tiki_quizzes` where `quizId`=?",array($quizId));
+			$timesTaken = $this->getOne("select count(*) from `tiki_user_quizzes` where `quizId`=?",array($quizId));
+			$avgpoints = $this->getOne("select avg(`points`) from `tiki_user_quizzes` where `quizId`=?",array($quizId));
+			$maxPoints = $this->getOne("select max(`maxPoints`) from `tiki_user_quizzes` where `quizId`=?",array($quizId));
 			$avgavg = ($maxPoints != 0) ? $avgpoints / $maxPoints * 100 : 0.0;
-			$avgtime = $this->getOne("select avg(`timeTaken`) from `tiki_user_quizzes` where `quizId`=$quizId");
-			$query2 = "replace into `tiki_quiz_stats_sum`(`quizId`,`quizName`,`timesTaken`,`avgpoints`,`avgtime`,`avgavg`)
-      values($quizId,'$quizName',$timesTaken,$avgpoints,$avgtime,$avgavg)";
-			$result2 = $this->query($query2);
+			$avgtime = $this->getOne("select avg(`timeTaken`) from `tiki_user_quizzes` where `quizId`=?",array($quizId));
+			$querydel = "delete from `tiki_quiz_stats_sum` where `quizId`=?";
+			$resultdel = $this->query($querydel,array($quizId),-1,-1,false);
+			$query2 = "insert into `tiki_quiz_stats_sum`(`quizId`,`quizName`,`timesTaken`,`avgpoints`,`avgtime`,`avgavg`)
+      values(?,?,?,?,?,?)";
+			$result2 = $this->query($query2,array($quizId,$quizName,$timesTaken,$avgpoints,$avgtime,$avgavg));
 		}
 	}
 
@@ -3092,48 +3094,50 @@ class TikiLib {
 	}
 
 	function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
-		$sort_mode = str_replace("_", " ", $sort_mode);
+		$sort_mode = $this->convert_sortmode($sort_mode);
 
-		if ($sort_mode == 'size desc') {
-			$sort_mode = ' length(data) desc';
+		if ($sort_mode == '`size` desc') {
+			$sort_mode = ' length(`data`) desc';
 		}
 
-		if ($sort_mode == 'size asc') {
-			$sort_mode = ' length(data) asc';
+		if ($sort_mode == '`size` asc') {
+			$sort_mode = ' length(`data`) asc';
 		}
 
 		$old_sort_mode = '';
 
 		if (in_array($sort_mode, array(
-			'versions desc',
-			'versions asc',
-			'links asc',
-			'links desc',
-			'backlinks asc',
-			'backlinks desc'
+			'`versions` desc',
+			'`versions` asc',
+			'`links` asc',
+			'`links` desc',
+			'`backlinks` asc',
+			'`backlinks` desc'
 		))) {
 			$old_offset = $offset;
 
 			$old_maxRecords = $maxRecords;
 			$old_sort_mode = $sort_mode;
-			$sort_mode = 'user desc';
+			$sort_mode = '`user` desc';
 			$offset = 0;
 			$maxRecords = -1;
 		}
 
 		if ($find) {
-			$mid = " where `pageName` like '%" . $find . "%' ";
+			$mid = " where `pageName` like ? ";
+			$bindvars=array('%" . $find . "%');
 		} else {
 			$mid = "";
+			$bindvars=array();
 		}
 
 		// If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 		// If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-		$query = "select `creator` ,`pageName`, `hits`, length(`data`) as len ,`lastModif`, `user`, `ip`, `comment`, `version`, `flag` from `tiki_pages` $mid order by $sort_mode limit $offset,$maxRecords";
+		$query = "select `creator` ,`pageName`, `hits`, length(`data`) as len ,`lastModif`, `user`, `ip`, `comment`, `version`, `flag` from `tiki_pages` $mid order by $sort_mode";
 		$query_cant = "select count(*) from `tiki_pages` $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -3141,7 +3145,6 @@ class TikiLib {
 
 			$aux["pageName"] = $res["pageName"];
 			$page = $aux["pageName"];
-			$page_as = addslashes($page);
 			$aux["hits"] = $res["hits"];
 			$aux["lastModif"] = $res["lastModif"];
 			$aux["user"] = $res["user"];
@@ -3151,44 +3154,44 @@ class TikiLib {
 			$aux["creator"] = $res["creator"];
 			$aux["version"] = $res["version"];
 			$aux["flag"] = $res["flag"] == 'L' ? tra('locked') : tra('unlocked');
-			$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`='$page_as'");
-			$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`='$page_as'");
-			$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`='$page_as'");
+			$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
+			$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
+			$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
 			$ret[] = $aux;
 		}
 
 		// If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offse and old_maxRecords
-		if ($old_sort_mode == 'versions asc') {
+		if ($old_sort_mode == '`versions` asc') {
 			usort($ret, 'compare_versions');
 		}
 
-		if ($old_sort_mode == 'versions desc') {
+		if ($old_sort_mode == '`versions` desc') {
 			usort($ret, 'r_compare_versions');
 		}
 
-		if ($old_sort_mode == 'links desc') {
+		if ($old_sort_mode == '`links` desc') {
 			usort($ret, 'compare_links');
 		}
 
-		if ($old_sort_mode == 'links asc') {
+		if ($old_sort_mode == '`links` asc') {
 			usort($ret, 'r_compare_links');
 		}
 
-		if ($old_sort_mode == 'backlinks desc') {
+		if ($old_sort_mode == '`backlinks` desc') {
 			usort($ret, 'compare_backlinks');
 		}
 
-		if ($old_sort_mode == 'backlinks asc') {
+		if ($old_sort_mode == '`backlinks` asc') {
 			usort($ret, 'r_compare_backlinks');
 		}
 
 		if (in_array($old_sort_mode, array(
-			'versions desc',
-			'versions asc',
-			'links asc',
-			'links desc',
-			'backlinks asc',
-			'backlinks desc'
+			'`versions` desc',
+			'`versions` asc',
+			'`links` asc',
+			'`links` desc',
+			'`backlinks` asc',
+			'`backlinks` desc'
 		))) {
 			$ret = array_slice($ret, $old_offset, $old_maxRecords);
 		}
@@ -4723,9 +4726,6 @@ foreach(array_unique($pages[1]) as $page_parse) {
 		$this->invalidate_cache($pageName);
 		// Collect pages before modifying edit_data (see update of links below)
 		$pages = $this->get_pages($edit_data);
-		$edit_data = addslashes($edit_data);
-		$description = addslashes($description);
-		$edit_comment = addslashes($edit_comment);
 
 		if (!$this->page_exists($pageName))
 			return false;
@@ -4739,22 +4739,20 @@ foreach(array_unique($pages[1]) as $page_parse) {
 		$user = $info["user"];
 		$ip = $info["ip"];
 		$comment = $info["comment"];
-		$data = addslashes($info["data"]);
+		$data = $info["data"];
 		// WARNING: POTENTIAL BUG
 		// The line below is not consistent with the rest of Tiki
 		// (I commented it out so it can be further examined by CVS change control)
 		//$pageName=addslashes($pageName);
 		// But this should work (comment added by redflo):
-		$pageName_sl = addslashes($pageName);
-		$comment = addslashes($comment);
 		$version += 1;
 
 		if (!$minor) {
-			$query = "insert into `tiki_history`(pageName, version, lastModif, user, ip, comment, data, description)
-              values('$pageName_sl',$version,$lastModif,'$user','$ip','$comment','$data','$description')";
+			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
+              values(?,?,?,?,?,?,?,?)";
 
 			if ($pageName != 'SandBox') {
-				$result = $this->query($query);
+				$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
 			}
 
 			// Update the pages table with the new version of this page
@@ -4809,8 +4807,8 @@ foreach(array_unique($pages[1]) as $page_parse) {
 			}
 		}
 
-		$query = "update `tiki_pages` set `description`='$description', `data`='$edit_data', `comment`='$edit_comment', `lastModif`=$t, version=$version, `user`='$edit_user', `ip`='$edit_ip' where `pageName`='$pageName_sl'";
-		$result = $this->query($query);
+		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=? where `pageName`=?";
+		$result = $this->query($query,array($description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,$pageName));
 		// Parse edit_data updating the list of links from this page
 		$this->clear_links($pageName);
 
@@ -4823,8 +4821,8 @@ foreach(array_unique($pages[1]) as $page_parse) {
 		if ($pageName != 'SandBox' && !$minor) {
 			$action = "Updated";
 
-			$query = "insert into `tiki_actionlog`(action,pageName,lastModif,user,ip,comment) values('$action','$pageName_sl',$t,'$edit_user','$edit_ip','$edit_comment')";
-			$result = $this->query($query);
+			$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+			$result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));
 			$maxversions = $this->get_preference("maxVersions", 0);
 
 			if ($maxversions) {
@@ -4833,16 +4831,16 @@ foreach(array_unique($pages[1]) as $page_parse) {
 
 				$now = date("U");
 				$oktodel = $now - ($keep * 24 * 3600);
-				$query = "select `pageName` ,`version` from `tiki_history` where `pageName`='$pageName_sl' and `lastModif`<=$oktodel order by `lastModif` desc limit $maxversions,-1";
-				$result = $this->query($query);
+				$query = "select `pageName` ,`version` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` desc";
+				$result = $this->query($query,array($pageName,$oktodel),-1,$maxversions);
 				$toelim = $result->numRows();
 
 				while ($res = $result->fetchRow()) {
 					$page = $res["pageName"];
 
 					$version = $res["version"];
-					$query = "delete from `tiki_history` where `pageName`='$pageName_sl' and `version`='$version'";
-					$this->query($query);
+					$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
+					$this->query($query,array($pageName,$version));
 				}
 			}
 		}
