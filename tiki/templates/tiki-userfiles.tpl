@@ -1,14 +1,32 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-userfiles.php">{tr}User Files{/tr}</a><br /><br />
-{include file=tiki-mytiki_bar.tpl}
+<a class="pagetitle" href="tiki-userfiles.php">{tr}User Files{/tr}</a>
+
+
+<!-- the help link info -->
+
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=UserFiles" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit user files{/tr}">
+<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+
+<!-- link to tpl -->
+
+     {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-userfiles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz stats tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" />
+</a>
+{/if}
+
+
 <br /><br />
+<!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
+{include file=tiki-mytiki_bar.tpl}
 <h3>{tr}User Files{/tr}</h3>
 
 <div align="center">
 <table border='0' cellpadding='0' cellspacing='0'>
 	<tr>
 		<td>
-			<table border='0' height='20' cellpadding='0' cellspacing='0' 
+			<table border='0' height='20' cellpadding='0' cellspacing='0'
 			       width='200' style='background-color:#666666;'>
 				<tr>
 					<td style='background-color:red;' width='{$cellsize}'>&nbsp;</td>
@@ -79,13 +97,15 @@
   <td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td>
 </tr>
 -->
+<!--You've got to see how easy it is to add more to the smarty code to get more upload areas
+made the input size legible for longer file names-->
 <tr>
   <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor">
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile2" type="file" /><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile3" type="file" /><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile4" type="file" /><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile5" type="file" /><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile1" type="file" /><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile2" type="file" /><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile3" type="file" /><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile4" type="file" /><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="80" name="userfile5" type="file" /><br />
   <input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" />
   </td>
 </tr>
