@@ -513,8 +513,8 @@ class UsersLib {
   function add_user($user,$pass,$email,$provpass='')
   {
     global $pass_due;
-    $hash = md5($pass);
     global $feature_clear_passwords;
+    $hash = md5($pass);
     if($feature_clear_passwords == 'n') $pass='';
     if($this->user_exists($user)) return false;  
     $now=date("U");

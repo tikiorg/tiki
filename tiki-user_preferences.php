@@ -68,7 +68,7 @@ if(isset($_REQUEST["chgpswd"])) {
     die;
   }
   
-  if(!$userlib->validate_user($userwatch,$_REQUEST["pass1"],'','')) {
+  if(!$userlib->validate_user($userwatch,$_REQUEST["old"],'','')) {
     $smarty->assign('msg',tra("Invalid old password"));
     $smarty->display("styles/$style_base/error.tpl");
     die;
