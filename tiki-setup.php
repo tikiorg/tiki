@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.240 2004-06-20 09:33:25 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.241 2004-06-21 13:46:42 luciash Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -994,6 +994,17 @@ $smarty->assign('wikiHomePage', $wikiHomePage);
 
 $wiki_page_regex = $tikilib->get_preference('wiki_page_regex', 'strict');
 $smarty->assign('wiki_page_regex', $wiki_page_regex);
+
+// Wiki dump tarball doesn't exist by default
+$wiki_dump_exists = 'n';
+$dump_path = 'dump';
+if ($tikidomain) {
+	$dump_path.= '/$tikidomain';
+}
+if (file_exists($dump_path.'/new.tar')){
+	$wiki_dump_exists = 'y';
+};
+$smarty->assign('wiki_dump_exists', $wiki_dump_exists);
 
 // Please DO NOT modify any of the brackets in the regex(s).
 // It may seem redundent but, really, they are ALL REQUIRED.

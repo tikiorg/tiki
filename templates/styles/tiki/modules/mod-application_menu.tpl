@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.24 2004-06-20 21:09:45 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.25 2004-06-21 13:46:41 luciash Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -112,7 +112,7 @@
   {if $feature_lastChanges eq 'y' and $tiki_p_view eq 'y'}
     <div class="separated"><a href="tiki-lastchanges.php" class="linkmenu">{tr}last changes{/tr}</a></div>
   {/if}
-  {if $feature_dump eq 'y' and $tiki_p_view eq 'y'}
+  {if $feature_dump eq 'y' and $tiki_p_view eq 'y' and $wiki_dump_exists eq 'y'}
     <div class="separated"><a href="dump/{if $tikidomain}{$tikidomain}/{/if}new.tar" class="linkmenu">{tr}dump{/tr}</a></div>
   {/if}
   {if $feature_wiki_rankings eq 'y' and $tiki_p_view eq 'y'}
