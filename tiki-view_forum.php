@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.39 2003-11-12 15:55:34 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.40 2003-11-12 20:02:10 traivor Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -690,21 +690,22 @@ if (!isset($_REQUEST['time_control']))
 $_REQUEST['time_control'] = 0;
 
 $commentslib->set_time_control($_REQUEST['time_control']);
-$comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"], $comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"], $_REQUEST['comments_threshold']);
-// Get the last "n" comments to this forum
+$comments_coms = $commentslib->get_forum_topics($forumId, $comments_offset,
+		$_REQUEST['comments_maxComments'],
+		$_REQUEST['comments_sort_mode']);
 
-$last_comments = $commentslib->get_all_comments($comments_objectId, 0, $forum_info['forum_last_n'], 'commentDate_desc');
-$smarty->assign_by_ref('last_comments',$last_comments['data']);
+// Get the last "n" comments to this forum
+$last_comments = $commentslib->get_last_forum_posts($forumId, $forum_info['forum_last_n']);
+$smarty->assign_by_ref('last_comments',$last_comments);
 $comments_cant = $commentslib->count_comments($comments_objectId);
-$smarty->assign('comments_below', $comments_coms["below"]);
 $smarty->assign('comments_cant', $comments_cant);
 
 $comments_maxRecords = $_REQUEST["comments_maxComments"];
-$comments_cant_pages = ceil($comments_coms["cant"] / $comments_maxRecords);
+$comments_cant_pages = ceil(count($comments_coms) / $comments_maxRecords);
 $smarty->assign('comments_cant_pages', $comments_cant_pages);
 $smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
 
-if ($comments_coms["cant"] > ($comments_offset + $comments_maxRecords)) {
+if (count($comments_coms) > ($comments_offset + $comments_maxRecords)) {
     $smarty->assign('comments_next_offset', $comments_offset + $comments_maxRecords);
 } else {
     $smarty->assign('comments_next_offset', -1);
@@ -717,7 +718,7 @@ if ($comments_offset > 0) {
     $smarty->assign('comments_prev_offset', -1);
 }
 
-$smarty->assign('comments_coms', $comments_coms["data"]);
+$smarty->assign_by_ref('comments_coms', $comments_coms);
 
 $section = 'forums';
 include_once ('tiki-section_options.php');

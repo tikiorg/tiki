@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.38 2003-10-22 17:51:09 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.39 2003-11-12 20:02:10 traivor Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,11 +130,12 @@ if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
     die;
 }
 
-$next_thread = $commentslib->get_comments('forum:' . $_REQUEST['forumId'], 0, $_REQUEST['topics_offset'] + 1,
-	1, $_REQUEST["topics_sort_mode"], $_REQUEST["topics_find"], $_REQUEST['topics_threshold']);
+$next_thread = $commentslib->get_forum_topics($_REQUEST['forumId'],
+		$_REQUEST['topics_offset'] + 1, 1,
+		$_REQUEST["topics_sort_mode"]);
 
-if (count($next_thread['data'])) {
-    $smarty->assign('next_topic', $next_thread['data'][0]['threadId']);
+if (count($next_thread)) {
+    $smarty->assign('next_topic', $next_thread[0]['threadId']);
 } else {
     $smarty->assign('next_topic', false);
 }
@@ -143,11 +144,12 @@ $smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
 $smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
 
 // Use topics_offset, topics_find, topics_sort_mode to get the next and previous topics!
-$prev_thread = $commentslib->get_comments('forum:' . $_REQUEST['forumId'], 0, $_REQUEST['topics_offset'] - 1,
-	1, $_REQUEST["topics_sort_mode"], $_REQUEST["topics_find"], $_REQUEST['topics_threshold']);
+$prev_thread = $commentslib->get_forum_topics($_REQUEST['forumId'],
+		$_REQUEST['topics_offset'] - 1, 1,
+		$_REQUEST["topics_sort_mode"]);
 
-if (count($prev_thread['data'])) {
-    $smarty->assign('prev_topic', $prev_thread['data'][0]['threadId']);
+if (count($prev_thread)) {
+    $smarty->assign('prev_topic', $prev_thread[0]['threadId']);
 } else {
     $smarty->assign('prev_topic', false);
 }
