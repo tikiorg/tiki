@@ -26,20 +26,24 @@
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Users can vote only one item from this chart per period{/tr}</td>
-		<td class="formcolor"><input type="checkbox" name="singleChartVotes" {if $info.singleChartVotes eq 'y'}checked="checked"{/if} /></td>
+		<td class="formcolor"><input id='chksc' type="checkbox" name="singleChartVotes" {if $info.singleChartVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Prevent users from voting same item more than one time{/tr}</td>
-		<td class="formcolor"><input type="checkbox" name="singleItemVotes" {if $info.singleItemVotes eq 'y'}checked="checked"{/if} /></td>
+		<td class="formcolor"><input id='chksi' type="checkbox" name="singleItemVotes" {if $info.singleItemVotes eq 'y'}checked="checked"{/if} /></td>
 	</tr>	
 
 	<tr>
 		<td class="formcolor">{tr}Users can suggest new items{/tr}</td>
-		<td class="formcolor"><input type="checkbox" name="suggestions" {if $info.suggestions eq 'y'}checked="checked"{/if} /></td>
+		
+		<td class="formcolor"><input {literal}onChange="javascript:if(!document.getElementById('chksug').checked) {document.getElementById('chkaut').checked=false;};"{/literal} id='chksug' type="checkbox" name="suggestions" {if $info.suggestions eq 'y'}checked="checked"{/if} /></td>
+		
 	</tr>
 	<tr>
 		<td class="formcolor">{tr}Auto validate user suggestions{/tr}</td>
-		<td class="formcolor"><input type="checkbox" name="autoValidate" {if $info.autoValidate eq 'y'}checked="checked"{/if}</td>
+		
+		<td class="formcolor"><input {literal}onChange="javascript:if(document.getElementById('chkaut').checked) {document.getElementById('chksug').checked=true;};"{/literal} id='chkaut' type="checkbox" name="autoValidate" {if $info.autoValidate eq 'y'}checked="checked"{/if}</td>
+		
 	</tr>
 	
 	<tr>
@@ -93,11 +97,11 @@
 	<tr>
 		<td class="formcolor">{tr}Users can vote again after{/tr}</td>
 		<td class="formcolor">
-			<select name="voteAgainAfter">
-				<option value="0" {if $info.frequency eq "0"}selected="selected"{/if}>{tr}Anytime{/tr}</option>
-				<option value="1" {if $info.frequency eq "1"}selected="selected"{/if}>{tr}1 day{/tr}</option>
-				<option value="7" {if $info.frequency eq "7"}selected="selected"{/if}>{tr}1 week{/tr}</option>
-				<option value="30" {if $info.frequency eq "30"}selected="selected"{/if}>{tr}1 month{/tr}</option>			
+			<select id='selva' name="voteAgainAfter" {literal}onChange="javascript:if(document.getElementById('selva').value==0){document.getElementById('chksc').checked=false;document.getElementById('chksi').checked=false;};"{/literal} >
+				<option value="0" {if $info.voteAgainAfter eq "0"}selected="selected"{/if}>{tr}Anytime{/tr}</option>
+				<option value="1" {if $info.voteAgainAfter eq "1"}selected="selected"{/if}>{tr}1 day{/tr}</option>
+				<option value="7" {if $info.voteAgainAfter eq "7"}selected="selected"{/if}>{tr}1 week{/tr}</option>
+				<option value="30" {if $info.voteAgainAfter eq "30"}selected="selected"{/if}>{tr}1 month{/tr}</option>			
 			</select>
 		</td>
 	</tr>	
