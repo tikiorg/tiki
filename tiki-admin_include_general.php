@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.7 2003-08-13 11:52:14 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.8 2003-08-14 04:40:56 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,7 @@ if (isset($_REQUEST["prefs"])) {
 		"modallgroups",
 		"popupLinks",
 		"record_untranslated",
+		"site_closed",
 		"useGroupHome",
 		"useUrlIndex",
 		"use_proxy",
@@ -43,7 +44,8 @@ if (isset($_REQUEST["prefs"])) {
 		"urlIndex",
 		"proxy_host",
 		"proxy_port",
-		"session_lifetime"
+		"session_lifetime",
+		"site_closed_msg"
 	);
 
 	foreach ($pref_simple_values as $svitem) {
@@ -165,6 +167,8 @@ $smarty->assign("maxRecords", $tikilib->get_preference("maxRecords", 10));
 $smarty->assign("title", $tikilib->get_preference("title", ""));
 $smarty->assign("popupLinks", $tikilib->get_preference("popupLinks", 'n'));
 $smarty->assign("style_site", $tikilib->get_preference("style", "default.css"));
+$smarty->assign("site_closed", $tikilib->get_preference("site_closed", "n"));
+$smarty->assign("site_closed_msg", $tikilib->get_preference("site_closed_msg", "Site is down for maintainance."));
 
 // Get information for alternate homes
 $smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $home_forum);
