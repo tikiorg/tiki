@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.18 2003-11-08 14:50:21 nhuffschmid Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.19 2003-11-16 00:17:16 xenfasa Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -123,6 +123,7 @@ $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 
 if ($feature_article_comments == 'y') {
+	$smarty->assign('comment_can_rate_article', $article_data["comment_can_rate_article"]); 
 	$comments_per_page = $article_comments_per_page;
 
 	$comments_default_ordering = $article_comments_default_ordering;

@@ -312,7 +312,7 @@ class Comments extends TikiLib {
 
 	    // post
 	    $this->post_new_comment( 'forum:' . $forumId,
-		    $parentId, $userName, $title, $body,
+		    $parentId, $userName, $title, '', $body,
 		    $message_id, $in_reply_to);
 
 	    $pop3->DeleteMessage($i);
@@ -432,7 +432,7 @@ class Comments extends TikiLib {
 	$message_id = '';
 	$threadId = $this->post_new_comment(
 		'forum:' . $info['forumId'], $info['parentId'],
-		$info['user'], $info['title'], $info['data'], 
+		$info['user'], $info['title'], '', $info['data'], 
 		$message_id, '', //in_reply_to
 		$info['type'],
 		$info['summary'], $info['topic_smiley']
@@ -1344,11 +1344,11 @@ class Comments extends TikiLib {
 	$this->query($query, array( (int) $threadId ) );
     }
 
-    function update_comment($threadId, $title, $data, $type = 'n', $summary = '', $smiley = '') {
-	$query = "update `tiki_comments` set `title`=?,
+    function update_comment($threadId, $title, $comment_rating, $data, $type = 'n', $summary = '', $smiley = '') {
+	$query = "update `tiki_comments` set `title`=?, `comment_rating`=?,
 	data=?, type=?, summary=?, smiley=?
 	    where `threadId`=?";
-	$result = $this->query($query, array( $title, $data, $type,
+	$result = $this->query($query, array( $title, $comment_rating, $data, $type,
 		    $summary, $smiley, (int) $threadId ) );
     }
 
@@ -1356,7 +1356,7 @@ class Comments extends TikiLib {
     // the old comment instead, if it finds one.  The threadId is
     // returned in the $getold variable iteslf. -Robin
     function post_new_comment($objectId, $parentId, $userName,
-	    $title, $data, &$message_id, $in_reply_to = '', $type = 'n',
+	    $title, $comment_rating, $data, &$message_id, $in_reply_to = '', $type = 'n',
 	    $summary = '', $smiley = '', $getold = false
 	    )
     {
@@ -1460,16 +1460,16 @@ class Comments extends TikiLib {
 		`commentDate`, `userName`, `title`, `data`, `votes`,
 		`points`, `hash`, `parentId`, `average`, `hits`,
 		`type`, `summary`, `smiley`, `user_ip`,
-		`message_id`, `in_reply_to` )
+		`message_id`, `in_reply_to`, `comment_rating` )
 		values ( ?, ?, ?, ?, ?, ?,
 			0, 0, ?, ?, 0, 0, ?, ?, 
-			?, ?, ?, ?)";
+			?, ?, ?, ?, ?)";
 
 	    $result = $this->query($query, 
 		    array( $object[0], $object[1], $now, $userName,
 		    $title, $data, $hash, (int) $parentId, $type,
 		    $summary, $smiley, $_SERVER["REMOTE_ADDR"],
-		    $message_id, $in_reply_to )
+		    $message_id, $in_reply_to, $comment_rating )
 		    );
 	} else {
 	    // If we have been asked to get the old page threadId, we don't quit here.

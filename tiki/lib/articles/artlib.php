@@ -297,13 +297,14 @@ class ArtLib extends TikiLib {
 	}
 
 // Article Type functions
-	function add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit) {
+	function add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $comment_can_rate_article, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit) {
 
 		if ($use_ratings == 'on') {$use_ratings = 'y';} else {$use_ratings = 'n';}
 		if ($show_pre_publ == 'on') {$show_pre_publ = 'y';} else {$show_pre_publ = 'n';}
 		if ($show_post_expire == 'on') {$show_post_expire = 'y';} else {$show_post_expire = 'n';}
 		if ($heading_only == 'on') {$heading_only = 'y';} else {$heading_only = 'n';}
 		if ($allow_comments == 'on') {$allow_comments = 'y';} else {$allow_comments = 'n';}
+		if ($comment_can_rate_article == 'on') {$comment_can_rate_article = 'y';} else {$comment_can_rate_article = 'n';}		
 		if ($show_image == 'on') {$show_image = 'y';} else {$show_image = 'n';}
 		if ($show_avatar == 'on') {$show_avatar = 'y';} else {$show_avatar = 'n';}
 		if ($show_author == 'on') {$show_author = 'y';} else {$show_author = 'n';}
@@ -322,9 +323,9 @@ class ArtLib extends TikiLib {
 			$result = $this->query($query,array($type));
 		}
 
-		$query = "insert into `tiki_article_types`(`type`,`use_ratings`,`show_pre_publ`,`show_post_expire`,`heading_only`,`allow_comments`,`show_image`,`show_avatar`,`show_author`,`show_pubdate`,`show_expdate`,`show_reads`,`show_size`,`creator_edit`)
-                     values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit));
+		$query = "insert into `tiki_article_types`(`type`,`use_ratings`,`show_pre_publ`,`show_post_expire`,`heading_only`,`allow_comments`,`comment_can_rate_article`,`show_image`,`show_avatar`,`show_author`,`show_pubdate`,`show_expdate`,`show_reads`,`show_size`,`creator_edit`)
+                     values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $comment_can_rate_article, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit));
 
 		return true;
 	}
