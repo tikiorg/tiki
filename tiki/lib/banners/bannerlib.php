@@ -196,10 +196,10 @@ class BannerLib extends TikiLib {
                 `zone` = ?,
                 `hourFrom` = ?,
                 `hourTo` = ?,
-                `mon = ? ,`tue` = ?, `wed` = ?, `thu` = ?, `fri` = ?, `sat` = ?, `sun` = ?,
+                `mon` = ? ,`tue` = ?, `wed` = ?, `thu` = ?, `fri` = ?, `sat` = ?, `sun` = ?,
                 `maxImpressions` = ? where `bannerId`=?";
 
-                $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$HTMLData,
+                $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$imageName,$HTMLData,
                                 $fixedURLData, $textData, $fromDate, $toDate, $useDates,$now,$zone,$hourFrom,$hourTo,
 				$mon,$tue,$wed,$thu,$fri,$sat,$sun,$maxImpressions,$bannerId);
 
