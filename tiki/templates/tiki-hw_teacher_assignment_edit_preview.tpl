@@ -1,64 +1,25 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment_edit_preview.tpl,v 1.4 2004-02-22 17:07:28 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment_edit_preview.tpl,v 1.5 2004-03-11 17:12:32 ggeller Exp $ *}
 {* George G. Geller *}
 
 <!-- tiki-hw_teacher_assignment_edit_preview.tpl start -->
 
 <h2>{tr}Preview{/tr}: {$page}</h2>
 <div class="article">
-<div class="articletitle">
-<span class="titlea">{$title}</span><br/>
-<span class="titleb">{tr}Due{/tr} {tr}on:{/tr} {$expireDate|tiki_short_datetime} </span>
-</div>
-
-{* GGG No reviews or ratings
-{if $type eq 'Review'}
-<div class="articleheading">
-{tr}Rating{/tr}: 
-{repeat count=$rating}
-<img src="img/icons/blue.gif" alt=''/>
-{/repeat}
-{if $rating > $entrating}
-<img src="img/icons/bluehalf.gif" alt=''/>
-{/if}
-({$rating}/10)
-</div>
-{/if}
-GGG *}
-
-<div class="articleheading">
-<table  cellpadding="0" cellspacing="0">
-<tr><td  valign="top">
-{* GGG No images for assignments, maybe activate later
-{if $useImage eq 'y'}
-  {if $hasImage eq 'y'}
-    {if $articleId gt 0}
-      <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?id={$articleId}" />
-    {else}
-      <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" />
-    {/if}
-  {else}
-    <img alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
-  {/if}
-{else}
-  <img alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
-{/if}
- GGG *}
-</td><td  valign="top">
-<span class="articleheading">{$parsed_heading}</span>
-</td></tr>
-</table>
-</div>
-
-{* GGG No byte size for assignments, maybe activate later
-<div style="padding:5px;" class="articletrailer">
-({$size} bytes
-)
-</div>
- GGG *}
-
-<div class="articlebody">
-{$parsed_body}
-</div>
+  <div class="articletitle">
+    <span class="titlea">{$assignment_data.parsed_title}</span><br/>
+    <span style="color: rgb(0, 0, 255);">{tr}Due{/tr} {tr}on:{/tr} {$assignment_data.dueDate|tiki_short_datetime} </span>
+  </div>
+  <div class="articleheading">
+    <table  cellpadding="0" cellspacing="0">
+      <tr>
+        <td  valign="top"></td>
+        <td  valign="top">
+          <span class="articleheading">{$assignment_data.parsed_heading}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="articlebody">{$assignment_data.parsed_body}</div>
 </div>
 
 <!-- tiki-hw_teacher_assignment_edit_preview.tpl end -->

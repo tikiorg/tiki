@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.8 2004-03-01 04:49:00 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.9 2004-03-11 17:12:33 ggeller Exp $
 
 // 20040207 - added function hw_assignment_fetch
 
@@ -35,6 +35,38 @@ class HomeworkLib extends TikiLib {
 	else if (isset($tiki_p_hw_grader) && $tiki_p_hw_grader == 'y'){
 	  $tiki_p_hw_student = 'y';
 	}
+  }
+
+  // Called by: tiki-hw_teacher_assignment_edit.php
+  function hw_assignment_store(&$assignment_data) {
+	if ($assignment_data["assignmentId"] == 0){ // new assignment
+	  $data = array($assignment_data["title"],
+                      $assignment_data["teacherName"],
+                      $assignment_data["created"],
+                      $assignment_data["dueDate"],
+                      $assignment_data["modified"],
+                      $assignment_data["heading"],
+                      $assignment_data["body"],
+                      0);
+	  $query = "insert into `hw_assignments` (`title`, `teacherName`, `created`, `dueDate`, 
+          `modified`, `heading`, `body`, `deleted`)";
+	  $query.= " values (?, ?, ?, ?, ?, ?, ?, ?)";
+	  $result = $this->query($query,$data);
+	}
+	else { // Revise existing assignment
+	  $data = array($assignment_data["title"],
+                      $assignment_data["teacherName"],
+                      $assignment_data["dueDate"],
+                      $assignment_data["modified"],
+                      $assignment_data["heading"],
+                      $assignment_data["body"],
+                      $assignment_data["assignmentId"]);
+	  $query = "update `hw_assignments` set `title` = ?, `teacherName` = ?,
+               `dueDate` = ?, `modified` = ?, `heading` = ?, `body` = ? where assignmentId = ?";
+	  $result = $this->query($query,$data);
+	}
+
+    return 'HW_OK';
   }
 
   // See if $studentName is a user with $tiki_p_hw_student
@@ -345,15 +377,15 @@ class HomeworkLib extends TikiLib {
     return('HW_STUDENT');
   }
 
-  // Called by: tiki-hw_rollback.php
+  // Called by: tiki-hw_rollback.php, tiki-hw_teacher_assignment_edit.php
   // Fetch data for an assignment.
   // $data - wo - row from hw_assignments table
   // $id   - wo - index to hw_assignments table
-  // db hw_assignments
+  // db hw_assignments table
   // Return true if successful, otherwise false
   function hw_assignment_fetch(&$data, $id) {
 	$bResult = false;
-    $query = "select * from `hw_assignments` where `articleId`=?";
+    $query = "select * from `hw_assignments` where `assignmentId`=?";
     $result = $this->query($query,array((int)$id));
 	if ($result->numRows()) {
 	  $data = $result->fetchRow();
