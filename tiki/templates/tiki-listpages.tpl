@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.24 2004-07-15 19:21:12 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.25 2004-07-15 20:05:09 teedog Exp $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}List Wiki Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}
@@ -42,7 +42,7 @@ per page</td></tr>
     so for now the checkboxes are visible iff $tiki_p_remove is set. Other applications make 
     sense as well (categorize, convert to pdf, etc). Add necessary corresponding permission here:
 *}    
-{if $tiki_p_remove eq 'y'}              {* ... "or $tiki_p_other_sufficient_condition_for_checkboxes eq 'y'"  *}
+{if $tiki_p_admin eq 'y' || $tiki_p_remove eq 'y' || $tiki_p_admin_categories eq 'y'}              {* ... "or $tiki_p_other_sufficient_condition_for_checkboxes eq 'y'"  *}
   {assign var='checkboxes_on' value='y'}
 {else}
   {assign var='checkboxes_on' value='n'}
@@ -178,7 +178,9 @@ per page</td></tr>
       <option value="remove_pages" >{tr}remove{/tr}</option>
     {/if}
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
+    {if $feature_categories eq 'y' && $tiki_p_admin_categories eq 'y'}
       <option value="categorize" >{tr}add to or remove from categories{/tr}</option>
+    {/if}
   </select>
 {*
   <script language='Javascript' type='text/javascript'>
