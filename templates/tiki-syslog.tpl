@@ -28,13 +28,13 @@
 <div class="simplebox">
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logid_{if $sort_mode eq 'logid_desc'}_asc{else}_desc{/if}" class="heading">{tr}Id{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logtype_{if $sort_mode eq 'logtype_desc'}_asc{else}_desc{/if}" class="heading">{tr}Type{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logtime_{if $sort_mode eq 'logtime_desc'}_asc{else}_desc{/if}" class="heading">{tr}Time{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logmessage_{if $sort_mode eq 'logmessage_desc'}_asc{else}_desc{/if}" class="heading">{tr}Message{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=loguser_{if $sort_mode eq 'loguser_desc'}_asc{else}_desc{/if}" class="heading">{tr}User{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logip_{if $sort_mode eq 'logip_desc'}_asc{else}_desc{/if}" class="heading">{tr}IP{/tr}</a></td>
-<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logclient_{if $sort_mode eq 'logclient_desc'}_asc{else}_desc{/if}" class="heading">{tr}Client{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logid_{if $sort_mode eq 'logid_desc'}asc{else}desc{/if}" class="heading">{tr}Id{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logtype_{if $sort_mode eq 'logtype_desc'}asc{else}desc{/if}" class="heading">{tr}Type{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logtime_{if $sort_mode eq 'logtime_desc'}asc{else}desc{/if}" class="heading">{tr}Time{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logmessage_{if $sort_mode eq 'logmessage_desc'}asc{else}desc{/if}" class="heading">{tr}Message{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=loguser_{if $sort_mode eq 'loguser_desc'}asc{else}desc{/if}" class="heading">{tr}User{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logip_{if $sort_mode eq 'logip_desc'}asc{else}desc{/if}" class="heading">{tr}IP{/tr}</a></td>
+<td class="heading"><a href="tiki-syslog.php?find={$find|escape}&amp;offset={$offset}&amp;sort_mode=logclient_{if $sort_mode eq 'logclient_desc'}asc{else}desc{/if}" class="heading">{tr}Client{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list}
