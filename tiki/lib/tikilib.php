@@ -5253,11 +5253,12 @@ function get_locale($user = false) {
 	    'tw' => 'tw_TW',
 	    );
 
-    if (!isset($locale) or !$locale) {
+ if (!isset($locale) or !$locale) {
+  $locale = '';
 	if (isset($locales[$this->get_language($user)]))
 	    $locale = $locales[$this->get_language($user)];
 #print "<pre>get_locale(): locale=$locale\n</pre>";
-    }
+ }
 
     return $locale;
 }
