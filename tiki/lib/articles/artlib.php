@@ -393,7 +393,7 @@ class ArtLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res['article_cnt'] = $this->getOne("select count(*) from tiki_articles where type = ?",array($res['type']));
+			$res['article_cnt'] = $this->getOne("select count(*) from `tiki_articles` where `type` = ?",array($res['type']));
 			$ret[] = $res;
 		}
 
