@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignments.tpl,v 1.5 2004-03-19 18:09:59 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignments.tpl,v 1.6 2004-06-19 15:20:34 ohertel Exp $ *}
 {* George G. Geller *}
 
 <!-- templates/tiki-hw_teacher_assignments.tpl start -->
@@ -9,7 +9,7 @@
       <span class="titlea">{$listassignments[ix].title}</span><br />
       <span class="titleb">
         <span style="color: rgb(0, 0, 255);">
-          {tr}Due Date:{/tr} {$listassignments[ix].dueDate|tiki_short_datetime}
+          {tr}Due Date{/tr}: {$listassignments[ix].dueDate|tiki_short_datetime}
         </span>
       </span><br />
     </div>
