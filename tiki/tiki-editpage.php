@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.52 2003-10-26 00:15:27 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.53 2003-10-26 00:45:37 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -139,10 +139,11 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
  *
  * \param &$c array -- parsed HTML
  * \param &$src string -- output string
- * \param &$stack array -- closing strings stack
- * \param &$listack -- stack of list types currently opened
+ * \param &$p array -- ['stack'] = closing strings stack,
+                       ['listack'] = stack of list types currently opened
+                       ['first_td'] = flag: 'is <tr> was just before this <td>'
  */
-function walk_and_parse(&$c, &$src, &$stack, &$listack)
+function walk_and_parse(&$c, &$src, &$p)
 {
     for ($i=0; $i <= $c["contentpos"]; $i++)
     {
@@ -155,38 +156,42 @@ function walk_and_parse(&$c, &$src, &$stack, &$listack)
                 // Open tag type
                 switch ($c[$i]["data"]["name"])
                 {
-                case "title"; $src .= "\n!"; $stack[] = array('tag' => 'title', 'string' => "\n"); break;
-                case "p": $src .= "\n"; $stack[] = array('tag' => 'p', 'string' => "\n"); break;
-                case "b": $src .= '__'; $stack[] = array('tag' => 'b', 'string' => '__'); break;
-                case "i": $src .= "''"; $stack[] = array('tag' => 'i', 'string' => "''"); break;
-                case "u": $src .= "=="; $stack[] = array('tag' => 'u', 'string' => "=="); break;
-                case "center": $src .= '::'; $stack[] = array('tag' => 'center', 'string' => '::'); break;
-                case "code": $src .= '-+';  $stack[] = array('tag' => 'code', 'string' => '+-'); break;
+                case "br": $src .= "\n"; break;
+                case "title"; $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
+                case "p": $src .= "\n"; $p['stack'][] = array('tag' => 'p', 'string' => "\n"); break;
+                case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
+                case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
+                case "u": $src .= "=="; $p['stack'][] = array('tag' => 'u', 'string' => "=="); break;
+                case "center": $src .= '::'; $p['stack'][] = array('tag' => 'center', 'string' => '::'); break;
+                case "code": $src .= '-+';  $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
                 // headers detection looks like real suxx code...
                 // but possible it run faster :) I don't know where is profiler in PHP...
-                case "h1": $src .= "\n!"; $stack[] = array('tag' => 'h1', 'string' => "\n"); break;
-                case "h2": $src .= "\n!!"; $stack[] = array('tag' => 'h2', 'string' => "\n"); break;
-                case "h3": $src .= "\n!!!"; $stack[] = array('tag' => 'h3', 'string' => "\n"); break;
-                case "h3": $src .= "\n!!!!"; $stack[] = array('tag' => 'h4', 'string' => "\n"); break;
-                case "h5": $src .= "\n!!!!!"; $stack[] = array('tag' => 'h5', 'string' => "\n"); break;
-                case "h6": $src .= "\n!!!!!!"; $stack[] = array('tag' => 'h6', 'string' => "\n"); break;
-                case "pre": $src .= '~pp~'; $stack[] = array('tag' => 'pre', 'string' => '~/pp~'); break;
-                case "br": $src .= "\n"; break;
-                case "ul": $listack[] = '*'; break;
-                case "ol": $listack[] = '#'; break;
+                case "h1": $src .= "\n!"; $p['stack'][] = array('tag' => 'h1', 'string' => "\n"); break;
+                case "h2": $src .= "\n!!"; $p['stack'][] = array('tag' => 'h2', 'string' => "\n"); break;
+                case "h3": $src .= "\n!!!"; $p['stack'][] = array('tag' => 'h3', 'string' => "\n"); break;
+                case "h3": $src .= "\n!!!!"; $p['stack'][] = array('tag' => 'h4', 'string' => "\n"); break;
+                case "h5": $src .= "\n!!!!!"; $p['stack'][] = array('tag' => 'h5', 'string' => "\n"); break;
+                case "h6": $src .= "\n!!!!!!"; $p['stack'][] = array('tag' => 'h6', 'string' => "\n"); break;
+                case "pre": $src .= '~pp~'; $p['stack'][] = array('tag' => 'pre', 'string' => '~/pp~'); break;
+                // Table parser
+                case "table": $src .= '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); break;
+                case "tr": $p['first_td'] = true; break;
+                case "td": $src .= $p['first_td'] ? '' : '|'; $p['first_td'] = false; break;
+                // Lists parser
+                case "ul": $p['listack'][] = '*'; break;
+                case "ol": $p['listack'][] = '#'; break;
                 case "li":
                     // Generate wiki list item according to current list depth.
-                    // Hope count($listack) is O(0) :))
-                    $src .= "\n";
-                    for ($l = 0; $l < count($listack); $l++) $src .= end($listack);
-                    $src .= " ";
+                    // (ensure '*/#' starts from begining of line)
+                    for ($l = ''; strlen($l) < count($p['listack']); $l .= end($p['listack']));
+                    $src .= "\n$l ";
                     break;
                 case "font":
                     // If color attribute present in <font> tag
                     if (isset($c[$i]["pars"]["color"]["value"]))
                     {
                         $src .= '~~'.$c[$i]["pars"]["color"]["value"].':';
-                        $stack[] = array('tag' => 'font', 'string' => '~~');
+                        $p['stack'][] = array('tag' => 'font', 'string' => '~~');
                     }
                     break;
                 case "img":
@@ -200,7 +205,7 @@ function walk_and_parse(&$c, &$src, &$stack, &$listack)
                     if (isset($c[$i]["pars"]["href"]["value"]))
                     {
                         $src .= '['.$c[$i]["pars"]["href"]["value"].'|';
-                        $stack[] = array('tag' => 'a', 'string' => ']');
+                        $p['stack'][] = array('tag' => 'a', 'string' => ']');
                     }
                     break;
                 }
@@ -211,17 +216,17 @@ function walk_and_parse(&$c, &$src, &$stack, &$listack)
                 switch ($c[$i]["data"]["name"])
                 {
                 case "ul":
-                    if (end($listack) == '*') array_pop($listack);
+                    if (end($p['listack']) == '*') array_pop($p['listack']);
                     break;
                 case "ol":
-                    if (end($listack) == '#') array_pop($listack);
+                    if (end($p['listack']) == '#') array_pop($p['listack']);
                     break;
                 default:
-                    $e = end($stack);
+                    $e = end($p['stack']);
                     if ($c[$i]["data"]["name"] == $e['tag'])
                     {
                         $src .= $e['string'];
-                        array_pop($stack);
+                        array_pop($p['stack']);
                     }
                     break;
                 }
@@ -231,7 +236,7 @@ function walk_and_parse(&$c, &$src, &$stack, &$listack)
         if (isset($c[$i]["content"]))
         {
 //            if (substr($src, -1) != " ") $src .= " ";
-            walk_and_parse($c[$i]["content"], $src, $stack, $listack);
+            walk_and_parse($c[$i]["content"], $src, $p);
         }
     }
 }
@@ -276,26 +281,25 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
         $htmlparser->Parse();
         // Should I try to convert HTML to wiki?
         $parseddata = '';
-        $close_stack = array();
-        $list_stack = array();
-        walk_and_parse($htmlparser->content, $parseddata, $close_stack, $list_stack);
+        $p =  array('stack' => array(), 'listack' => array(), 'first_td' => false);
+        walk_and_parse($htmlparser->content, $parseddata, $p);
         // Is some tags still opened? (It can be if HTML not valid, but this is not reason
         // to produce invalid wiki :)
-        while (count($close_stack))
+        while (count($p['stack']))
         {
-            $e = end($close_stack);
+            $e = end($p['stack']);
             $sdta .= $e['string'];
-            array_pop($close_stack);
+            array_pop($p['stack']);
         }
         // Unclosed lists r ignored... wiki have no special start/end lists syntax....
 
         // OK. Things remains to do:
         // 1) fix linked images
         $parseddata = preg_replace(',\[(.*)\|\(img src=(.*)\)\],mU','{img src=$2 link=$1}', $parseddata);
-        var_dump($parsedata);
         // 2) fix remains images (not in links)
         $parseddata = preg_replace(',\(img src=(.*)\),mU','{img src=$1}', $parseddata);
-
+        // 3) remove empty lines
+        $parseddata = preg_replace(",[\n]+,mU","\n", $parseddata);
         // Reassign previous data
         $sdta = $parseddata;
     }
