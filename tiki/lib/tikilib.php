@@ -574,7 +574,7 @@ class TikiLib {
     return $retval;
   }
 
-  /*shared*/ function get_user_avatar($user)
+  /*shared*/ function get_user_avatar($user,$float="")
   {
     if(empty($user)) return '';
     if(!$this->user_exists($user)) {
@@ -583,15 +583,21 @@ class TikiLib {
     $type = $this->getOne("select avatarType from users_users where login='$user'");
     $libname = $this->getOne("select avatarLibName from users_users where login='$user'");
     $ret='';
+    $style='';
+    if (strcasecmp($float,"left")==0) {
+      $style = "style='float:left;margin-right:5px;'";
+    } else if (strcasecmp($float,"right")==0) {
+      $style = "style='float:right;margin-left:5px;'";
+    }
     switch($type) {
       case 'n':
         $ret = '';
         break;
       case 'l':
-        $ret = "<img border='0' width='45' height='45' src='".$libname."' />";
+        $ret = "<img border='0' width='45' height='45' src='".$libname."' ".$style." />";
         break;
       case 'u':
-        $ret = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$user' />";
+        $ret = "<img border='0' width='45' height='45' src='tiki-show_user_avatar.php?user=$user' ".$style." />";
         break;
     }
     return $ret;
@@ -2610,7 +2616,29 @@ class TikiLib {
       $this->pos_handlers[]=$name;
     }
   }
-  
+
+  // This function handles wiki codes for those special HTML characters
+  // that textarea won't leave alone.
+  function parse_htmlchar(&$data)
+  {
+    // oft-used characters (case insensitive)
+    $data = preg_replace( "/~bs~/i", "&#92;", $data );
+    $data = preg_replace( "/~hs~/i", "&nbsp;", $data );
+    $data = preg_replace( "/~amp~/i", "&amp;", $data );
+    $data = preg_replace( "/~ldq~/i", "&ldquo;", $data );
+    $data = preg_replace( "/~rdq~/i", "&rdquo;", $data );
+    $data = preg_replace( "/~lsq~/i", "&lsquo;", $data );
+    $data = preg_replace( "/~rsq~/i", "&rsquo;", $data );
+    $data = preg_replace( "/~c~/i", "&copy;", $data );
+    $data = preg_replace( "/~--~/", "&mdash;", $data );
+    $data = preg_replace( "/~lt~/i", "&lt;", $data );
+    $data = preg_replace( "/~gt~/i", "&gt;", $data );
+
+    // HTML numeric character entities
+    $data = preg_replace( "/~([0-9]+)~/", "&#$1;", $data );
+  }
+
+  // AWC ADDITION
   // This function replaces pre- and no-parsed sections with unique keys
   // and saves the section contents for later reinsertion.
   function parse_pp_np( &$data, &$preparsed, &$noparsed )
@@ -2788,7 +2816,10 @@ class TikiLib {
     $noparsed  = Array();
     $this->parse_first( $data, $preparsed, $noparsed );
 
-    //Extract [link] sections (to be re-inserted later)
+    // Replace special characters
+    $this->parse_htmlchar( $data );
+
+    // Extract [link] sections (to be re-inserted later)
     $noparsedlinks=Array();
     preg_match_all("/\[([^\]]*)\]/",$data,$noparseurl);
     foreach(array_unique($noparseurl[1]) as $np) {
