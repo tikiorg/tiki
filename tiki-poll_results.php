@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.5 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.6 2003-10-01 21:38:08 traivor Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,7 +31,7 @@ if (!isset($_REQUEST["pollId"])) {
 
 $poll_info = $tikilib->get_poll($_REQUEST["pollId"]);
 $polls = $polllib->list_active_polls(0, -1, 'publishDate_desc', '');
-$options = $polllib->list_poll_options($_REQUEST["pollId"], 0, -1, 'title_desc', '');
+$options = $polllib->list_poll_options($_REQUEST["pollId"], 0, -1, 'optionId_asc', '');
 
 for ($i = 0; $i < count($options["data"]); $i++) {
 	if ($poll_info["votes"] == 0) {
