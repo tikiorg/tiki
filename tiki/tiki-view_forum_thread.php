@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.53 2004-01-26 23:09:05 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.54 2004-01-28 14:38:05 hsaelens Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -442,7 +442,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 				    $smarty->assign('mail_forum', $forum_info["name"]);
 
 				    $smarty->assign('mail_title', $_REQUEST["comments_title"]);
-				    $smarty->assign('mail_date', date("u"));
+				    $smarty->assign('mail_date', date("U"));
 				    $smarty->assign('mail_message', $_REQUEST["comments_data"]);
 				    $smarty->assign('mail_author', $user);
 				    $smarty->assign('mail_topic', tra('topic:'). $thread_info['title']);
@@ -456,7 +456,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 				$smarty->assign('mail_forum', $forum_info["name"]);
 
 				$smarty->assign('mail_title', $_REQUEST["comments_title"]);
-				$smarty->assign('mail_date', date("u"));
+				$smarty->assign('mail_date', date("U"));
 				$smarty->assign('mail_message', $_REQUEST["comments_data"]);
 				$smarty->assign('mail_author', $user);
 
