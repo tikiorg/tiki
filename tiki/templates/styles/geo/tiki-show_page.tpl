@@ -48,7 +48,11 @@
 {/if}
 {/if}
 {if $feature_page_title eq 'y'}
-<a href="tiki-index.php?page={$page}" class="link" style="font-weight:bold;">{$page}</a> :: 
+<a href="tiki-index.php?page={$page}" class="link" style="font-weight:bold;">{$page}</a>
+{if $feature_wiki_pageid eq 'y'}
+	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
+{/if}
+:: 
 {/if}
 {$description}</div>
 {/if}

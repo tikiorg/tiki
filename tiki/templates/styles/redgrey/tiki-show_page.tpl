@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.6 2004-06-27 03:05:55 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.7 2004-06-30 20:25:34 teedog Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -10,6 +10,9 @@
     <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
   {/if}
   </h1>
+{/if}
+{if $feature_wiki_pageid eq 'y'}
+	<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}
 <table class="wikitopline" width="100%">
   <tr>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.115 2004-06-27 03:05:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.116 2004-06-30 20:25:30 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -547,6 +547,8 @@ $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
 $smarty->assign('categorypath',$feature_categorypath);
 $smarty->assign('categoryobjects',$feature_categoryobjects);
+$smarty->assign('feature_wiki_pageid', $feature_wiki_pageid);
+$smarty->assign('page_id',$info['page_id']);
 $smarty->display("tiki.tpl");
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
