@@ -235,8 +235,8 @@ class TikiLib {
   {
     $query = "select * from tiki_user_mail_accounts where current='y' and user='$user'";
     $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
     if(DB::isError($result)) $this->sql_error($query, $result);
+    if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
@@ -253,8 +253,8 @@ class TikiLib {
   {
     $query = "select * from tiki_user_mail_accounts where accountId=$accountId and user='$user'";
     $result = $this->db->query($query);
-    if(!$result->numRows()) return false;
     if(DB::isError($result)) $this->sql_error($query, $result);
+    if(!$result->numRows()) return false;
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
   }
