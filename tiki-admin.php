@@ -167,7 +167,6 @@ if(isset($_REQUEST["rss"])) {
 // Change preferences
 if(isset($_REQUEST["prefs"])) {
   
-  
   if(isset($_REQUEST["tikiIndex"])) {
     $tikilib->set_preference("tikiIndex",$_REQUEST["tikiIndex"]); 
     $smarty->assign_by_ref('tikiIndex',$_REQUEST["tikiIndex"]);
@@ -207,22 +206,7 @@ if(isset($_REQUEST["prefs"])) {
     $smarty->assign('modallgroups','n');
   }
   
-  if(isset($_REQUEST["change_theme"]) && $_REQUEST["change_theme"]=="on") {
-    $tikilib->set_preference("change_theme",'y'); 
-    $smarty->assign('change_theme','y');
-  } else {
-    $tikilib->set_preference("change_theme",'n');
-    $smarty->assign('change_theme','n');
-  }
-  
-  if(isset($_REQUEST["change_language"]) && $_REQUEST["change_language"]=="on") {
-    $tikilib->set_preference("change_language",'y'); 
-    $smarty->assign('change_language','y');
-  } else {
-    $tikilib->set_preference("change_language",'n');
-    $smarty->assign('change_language','n');
-  }
-
+ 
   if(isset($_REQUEST["cachepages"]) && $_REQUEST["cachepages"]=="on") {
     $tikilib->set_preference("cachepages",'y'); 
     $smarty->assign('cachepages','y');
@@ -252,17 +236,6 @@ if(isset($_REQUEST["prefs"])) {
   } else {
     $tikilib->set_preference("popupLinks",'n');
   }
-  if(isset($_REQUEST["allowRegister"]) && $_REQUEST["allowRegister"]=="on") {
-    $tikilib->set_preference("allowRegister",'y'); 
-  } else {
-    $tikilib->set_preference("allowRegister",'n');
-  }
-  if(isset($_REQUEST["useRegisterPasscode"]) && $_REQUEST["useRegisterPasscode"]=="on") {
-    $tikilib->set_preference("useRegisterPasscode",'y'); 
-  } else {
-    $tikilib->set_preference("useRegisterPasscode",'n');
-  }
-  $tikilib->set_preference("registerPasscode",$_REQUEST["registerPasscode"]);
   
   if(isset($_REQUEST["useUrlIndex"]) && $_REQUEST["useUrlIndex"]=="on") {
     $tikilib->set_preference("useUrlIndex",'y'); 
@@ -270,18 +243,7 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("useUrlIndex",'n');
   }
   $tikilib->set_preference("urlIndex",$_REQUEST["urlIndex"]);
-  
-  
-  if(isset($_REQUEST["validateUsers"]) && $_REQUEST["validateUsers"]=="on") {
-    $tikilib->set_preference("validateUsers",'y'); 
-  } else {
-    $tikilib->set_preference("validateUsers",'n');
-  }
-  if(isset($_REQUEST["forgotPass"]) && $_REQUEST["forgotPass"]=="on") {
-    $tikilib->set_preference("forgotPass",'y'); 
-  } else {
-    $tikilib->set_preference("forgotPass",'n');
-  }
+ 
   
   if(isset($_REQUEST["maxRecords"])) {
     $tikilib->set_preference("maxRecords",$_REQUEST["maxRecords"]);
@@ -289,6 +251,90 @@ if(isset($_REQUEST["prefs"])) {
   
   
   
+}
+
+if(isset($_REQUEST["loginprefs"])) {
+ if(isset($_REQUEST["change_theme"]) && $_REQUEST["change_theme"]=="on") {
+    $tikilib->set_preference("change_theme",'y'); 
+    $smarty->assign('change_theme','y');
+  } else {
+    $tikilib->set_preference("change_theme",'n');
+    $smarty->assign('change_theme','n');
+  }
+  
+  if(isset($_REQUEST["change_language"]) && $_REQUEST["change_language"]=="on") {
+    $tikilib->set_preference("change_language",'y'); 
+    $smarty->assign('change_language','y');
+  } else {
+    $tikilib->set_preference("change_language",'n');
+    $smarty->assign('change_language','n');
+  }
+
+  if(isset($_REQUEST["allowRegister"]) && $_REQUEST["allowRegister"]=="on") {
+    $tikilib->set_preference("allowRegister",'y'); 
+    $smarty->assign('allowRegister','y');
+  } else {
+    $tikilib->set_preference("allowRegister",'n');
+    $smarty->assign('allowRegister','n');
+  }
+
+  if(isset($_REQUEST["useRegisterPasscode"]) && $_REQUEST["useRegisterPasscode"]=="on") {
+    $tikilib->set_preference("useRegisterPasscode",'y'); 
+    $smarty->assign('useRegisterPasscode','y');
+  } else {
+    $tikilib->set_preference("useRegisterPasscode",'n');
+    $smarty->assign('useRegisterPasscode','n');
+  }
+  
+  $tikilib->set_preference("registerPasscode",$_REQUEST["registerPasscode"]);
+  $smarty->assign('registerPasscode',$_REQUEST["registerPasscode"]);
+
+  $tikilib->set_preference("min_pass_length",$_REQUEST["min_pass_length"]);
+  $smarty->assign('min_pass_length',$_REQUEST["min_pass_length"]);
+  
+  $tikilib->set_preference("pass_due",$_REQUEST["pass_due"]);
+  $smarty->assign('pass_due',$_REQUEST["pass_due"]);
+
+  if(isset($_REQUEST["validateUsers"]) && $_REQUEST["validateUsers"]=="on") {
+    $tikilib->set_preference("validateUsers",'y'); 
+    $smarty->assign('validateUsers','y');
+  } else {
+    $tikilib->set_preference("validateUsers",'n');
+    $smarty->assign('validateUsers','n');
+  }
+  
+  if(isset($_REQUEST["pass_chr_num"]) && $_REQUEST["pass_chr_num"]=="on") {
+    $tikilib->set_preference("pass_chr_num",'y'); 
+    $smarty->assign('pass_chr_num','y');
+  } else {
+    $tikilib->set_preference("pass_chr_num",'n');
+    $smarty->assign('pass_chr_num','n');
+  }
+  
+  if(isset($_REQUEST["feature_challenge"]) && $_REQUEST["feature_challenge"]=="on") {
+    $tikilib->set_preference("feature_challenge",'y'); 
+    $smarty->assign('feature_challenge','y');
+  } else {
+    $tikilib->set_preference("feature_challenge",'n');
+    $smarty->assign('feature_challenge','n');
+  }
+  
+  if(isset($_REQUEST["feature_clear_passwords"]) && $_REQUEST["feature_clear_passwords"]=="on") {
+    $tikilib->set_preference("feature_clear_passwords",'y'); 
+    $smarty->assign('feature_clear_passwords','y');
+  } else {
+    $tikilib->set_preference("feature_clear_passwords",'n');
+    $smarty->assign('feature_clear_passwords','n');
+  }  
+  
+  if(isset($_REQUEST["forgotPass"]) && $_REQUEST["forgotPass"]=="on") {
+    $tikilib->set_preference("forgotPass",'y'); 
+    $smarty->assign('forgotPass','y');
+  } else {
+    $tikilib->set_preference("forgotPass",'n');
+    $smarty->assign('forgotPass','n');
+  }
+
 }
 
 if(isset($_REQUEST["cmsprefs"])) {
@@ -322,6 +368,13 @@ if(isset($_REQUEST["wikiattprefs"])) {
     $tikilib->set_preference("feature_wiki_attachments",'n');
     $smarty->assign('feature_wiki_attachments','n');
   }
+}
+
+if(isset($_REQUEST["trkset"])) {
+  $tikilib->set_preference('t_use_db',$_REQUEST["t_use_db"]);
+  $tikilib->set_preference('t_use_dir',$_REQUEST["t_use_dir"]);
+  $smarty->assign('t_use_db',$_REQUEST["t_use_db"]);
+  $smarty->assign('t_use_dir',$_REQUEST["t_use_dir"]);
 }
 
 
@@ -789,6 +842,14 @@ if(isset($_REQUEST["features"])) {
   } else {
     $tikilib->set_preference("feature_xmlrpc",'n');
     $smarty->assign("feature_xmlrpc",'n');
+  }
+  
+  if(isset($_REQUEST["feature_trackers"]) && $_REQUEST["feature_trackers"]=="on") {
+    $tikilib->set_preference("feature_trackers",'y'); 
+    $smarty->assign("feature_trackers",'y');
+  } else {
+    $tikilib->set_preference("feature_trackers",'n');
+    $smarty->assign("feature_trackers",'n');
   }
   
   if(isset($_REQUEST["feature_drawings"]) && $_REQUEST["feature_drawings"]=="on") {

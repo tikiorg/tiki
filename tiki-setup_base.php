@@ -12,6 +12,18 @@ if(isset($_SESSION["user"])) {
   $user = false;
 }
 
+function tra($content)
+{
+    global $lang;
+    if ($content) {
+      if(isset($lang[$content])) {
+        return $lang[$content];  
+      } else {
+        return $content;        
+      }
+    }
+}
+
 
 // function user_has_permission($user,$perm) 
 $allperms = $userlib->get_permissions(0,-1,'permName_desc','','');
@@ -46,7 +58,7 @@ if($tiki_p_admin_file_galleries == 'y') {
     $$perm='y';
   }
 }
- 
+
 if($tiki_p_blog_admin == 'y') {
   $perms = $userlib->get_permissions(0,-1,'permName_desc','','blogs');
   foreach($perms["data"] as $perm) {
@@ -55,6 +67,16 @@ if($tiki_p_blog_admin == 'y') {
     $$perm='y';
   }
 } 
+
+if($tiki_p_admin_trackers == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','trackers');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+} 
+
 
 if($tiki_p_admin_galleries == 'y') {
   $perms = $userlib->get_permissions(0,-1,'permName_desc','','image galleries');
@@ -128,5 +150,6 @@ if($tiki_p_admin_cms == 'y') {
   }
 }
 
+$tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 
 ?>

@@ -23,6 +23,62 @@ class TikiLib {
   
   
   /* Tiki tracker construction options */
+  // Return an array with items assigned to the user or a user group
+  function get_user_items($user)
+  {
+    $items = Array();
+    $query = "select ttf.trackerId, tti.itemId from tiki_tracker_fields ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='u' and tti.status='o' and value='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $itemId=$res["itemId"];
+      $trackerId=$res["trackerId"];
+      // Now get the isMain field for this tracker
+      $fieldId=$this->db->getOne("select fieldId from tiki_tracker_fields ttf where isMain='y' and trackerId=$trackerId");
+      // Now get the field value
+      $value = $this->db->getOne("select value from tiki_tracker_item_fields where fieldId=$fieldId and itemId=$itemId");
+      $tracker = $this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
+      $aux["trackerId"]=$trackerId;
+      $aux["itemId"]=$itemId;
+      $aux["value"]=$value;
+      $aux["name"]=$tracker;
+      if(!in_array($itemId,$items)) {
+        $ret[]=$aux;
+        $items[]=$itemId;
+      }
+    }
+    
+    $groups = $this->get_user_groups($user);
+    
+    foreach($groups as $group) {
+      $query = "select ttf.trackerId, tti.itemId from tiki_tracker_fields ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='g' and tti.status='o' and value='$group'";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);
+      while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+        $itemId=$res["itemId"];
+        $trackerId=$res["trackerId"];
+        // Now get the isMain field for this tracker
+        $fieldId=$this->db->getOne("select fieldId from tiki_tracker_fields ttf where isMain='y' and trackerId=$trackerId");
+        // Now get the field value
+        $value = $this->db->getOne("select value from tiki_tracker_item_fields where fieldId=$fieldId and itemId=$itemId");
+        $tracker = $this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
+        $aux["trackerId"]=$trackerId;
+        $aux["itemId"]=$itemId;
+        $aux["value"]=$value;
+        $aux["name"]=$tracker;
+        if(!in_array($itemId,$items)) {
+          $ret[]=$aux;
+          $items[]=$itemId;
+        }
+      }
+    
+    }
+    
+    return $ret;
+  }
+  
+  
   function add_item_attachment_hit($id) 
   {
     $query = "update tiki_tracker_item_attachments set downloads=downloads+1 where attId=$id";
@@ -96,6 +152,7 @@ class TikiLib {
   
   function replace_item_comment($commentId,$itemId,$title,$data,$user)
   {
+    global $smarty;
     $title=addslashes(strip_tags($title));
     $data=addslashes(strip_tags($data,"<a>"));
     if($commentId) {
@@ -108,6 +165,19 @@ class TikiLib {
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query, $result);
       $commentId=$this->db->getOne("select max(commentId) from tiki_tracker_item_comments where posted=$now and title='$title' and itemId=$itemId");
+    }
+    $trackerId=$this->db->getOne("select trackerId from tiki_tracker_items where itemId=$itemId");
+    $trackerName=$this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
+    $emails = $this->get_mail_events('tracker_modified',$trackerId);
+    $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
+    $emails=array_merge($emails,$emails2);
+    $smarty->assign('mail_date',date("U"));
+    $smarty->assign('mail_user',$user);
+    $smarty->assign('mail_action','New comment added for item:'.$itemId.' at tracker '.$trackerName);
+    $smarty->assign('mail_data',$title."\n\n".$data);
+    foreach ($emails as $email) {      
+      $mail_data=$smarty->fetch('mail/tracker_changed_notification.tpl');
+      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data);
     }
     return $commentId;
   }
@@ -154,7 +224,7 @@ class TikiLib {
     return $res;
   }
   
-  function list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields)
+  function list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields,$status='')
   {
     $filters=Array();
     if($fields) {
@@ -170,6 +240,9 @@ class TikiLib {
     
     $sort_mode = str_replace("_"," ",$sort_mode);
     $mid=" where trackerId=$trackerId "; 
+    if($status) {
+      $mid.=" and status='$status' ";
+    }
     $query = "select * from tiki_tracker_items $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_tracker_items $mid";
     $result = $this->db->query($query);
@@ -179,7 +252,7 @@ class TikiLib {
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $fields=Array();
       $itid=$res["itemId"];
-      $query2="select ttif.fieldId,name,value,isTblVisible,isMain from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=".$res["itemId"]." order by fieldId asc";
+      $query2="select ttif.fieldId,name,value,type,isTblVisible,isMain from tiki_tracker_item_fields ttif, tiki_tracker_fields ttf where ttif.fieldId=ttf.fieldId and itemId=".$res["itemId"]." order by fieldId asc";
       $result2 = $this->db->query($query2);
       if(DB::isError($result2)) $this->sql_error($query2, $result2);
       $pass=true;
@@ -276,8 +349,10 @@ class TikiLib {
     return $res;
   }
 
-  function replace_item($trackerId,$itemId,$ins_fields)
+  function replace_item($trackerId,$itemId,$ins_fields,$status='o')
   {
+    global $user;
+    global $smarty;
     $now = date("U");
     $query="update tiki_trackers set lastModif=$now where trackerId=$trackerId";
     $result = $this->db->query($query);
@@ -285,28 +360,28 @@ class TikiLib {
     if(DB::isError($result)) $this->sql_error($query, $result);
     
     if($itemId) {
-      $query="update tiki_tracker_items set lastModif=$now where itemId=$itemId";
+      $query="update tiki_tracker_items set status='$status',lastModif=$now where itemId=$itemId";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query, $result);
     } else {
-      $query="replace into tiki_tracker_items(trackerId,created,lastModif) values($trackerId,$now,$now)";
+      $query="replace into tiki_tracker_items(trackerId,created,lastModif,status) values($trackerId,$now,$now,'$status')";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query, $result);
       $new_itemId=$this->db->getOne("select max(itemId) from tiki_tracker_items where created=$now and trackerId=$trackerId");
     }
-    
+    $the_data = '';
     for($i=0;$i<count($ins_fields["data"]);$i++) {
       $name=$ins_fields["data"][$i]["name"];
       $fieldId=$ins_fields["data"][$i]["fieldId"];
       $value=$ins_fields["data"][$i]["value"];
       // Now check if the item is 0 or not
+      $the_data.="$name = $value\n";
       if($itemId) {
         $query = "update tiki_tracker_item_fields set value='$value' where itemId=$itemId and fieldId=$fieldId";
         $result = $this->db->query($query);
         if(DB::isError($result)) $this->sql_error($query, $result);
       } else {
         // We add an item
-        
         $query="update tiki_trackers set items=items+1 where trackerId=$trackerId";
         $result = $this->db->query($query);
         if(DB::isError($result)) $this->sql_error($query, $result);
@@ -315,6 +390,20 @@ class TikiLib {
         if(DB::isError($result)) $this->sql_error($query, $result);
       }
     }
+    $trackerName=$this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
+    $emails = $this->get_mail_events('tracker_modified',$trackerId);
+    $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
+    $emails=array_merge($emails,$emails2);
+    $smarty->assign('mail_date',date("U"));
+    $smarty->assign('mail_user',$user);
+    $smarty->assign('mail_action','New item added or modified:'.$itemId.' at tracker '.$trackerName);
+    $smarty->assign('mail_data',$the_data);
+    foreach ($emails as $email) {      
+      $mail_data=$smarty->fetch('mail/tracker_changed_notification.tpl');
+      @mail($email, tra('Tracker was modified at ').$_SERVER["SERVER_NAME"],$mail_data);
+    }
+    if(!$itemId) $itemId=$new_itemId;
+    return $itemId;
   }
   
   function remove_tracker_item($itemId)
@@ -390,19 +479,19 @@ class TikiLib {
   }
 
   // Inserts or updates a tracker  
-  function replace_tracker($trackerId, $name, $description,$showCreated,$showLastModif,$useComments,$useAttachments)
+  function replace_tracker($trackerId, $name, $description,$showCreated,$showLastModif,$useComments,$useAttachments,$showStatus)
   {
     $description = addslashes($description);
     $name = addslashes($name);
         
     if($trackerId) {
-      $query = "update tiki_trackers set name='$name',description='$description', useAttachments='$useAttachments',useComments='$useComments', showCreated='$showCreated',showLastModif='$showLastModif' where trackerId=$trackerId";
+      $query = "update tiki_trackers set name='$name',description='$description', useAttachments='$useAttachments',useComments='$useComments', showCreated='$showCreated',showLastModif='$showLastModif',showStatus='$showStatus' where trackerId=$trackerId";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query, $result);
     } else {
       $now = date("U");
-      $query = "replace into tiki_trackers(name,description,created,lastModif,items,showCreated,showLastModif,useComments,useAttachments)
-                values('$name','$description',$now,$now,0,'$showCreated','$showLastModif','$useComments','$useAttachments')";
+      $query = "replace into tiki_trackers(name,description,created,lastModif,items,showCreated,showLastModif,useComments,useAttachments,showStatus)
+                values('$name','$description',$now,$now,0,'$showCreated','$showLastModif','$useComments','$useAttachments','$showStatus')";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query, $result);
       $trackerId=$this->db->getOne("select max(trackerId) from tiki_trackers where name='$name' and created=$now");
@@ -8559,6 +8648,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         $data = str_replace($rsss[0][$i],$repl,$data);
       }
     }
+    
+    // Replace links to slideshows
+    
     
     if($feature_drawings == 'y') {
     // Replace drawings

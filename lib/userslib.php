@@ -108,17 +108,58 @@ class UsersLib {
     if(DB::isError($result)) $this->sql_error($query,$result);
   }
   
-  function validate_user($user,$pass)
+  function genPass()
   {
-    $query = "select login from users_users where login='$user' and password='$pass'"; 
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    if($result->numRows()) {
-    $t = date("U");
-    $query = "update users_users set currentLogin=$t where login='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-      return true; 
+        $vocales="aeiou";
+        $consonantes="bcdfghjklmnpqrstvwxyz";
+        $r='';
+        for($i=0; $i<5; $i++){
+                if ($i%2){
+                        $r.=$vocales{rand(0,strlen($vocales)-1)};
+                }else{
+                        $r.=$consonantes{rand(0,strlen($consonantes)-1)};
+                }
+        }
+        return $r;
+  }
+  
+  function generate_challenge()
+  {
+    $val = md5($this->genPass());
+    return $val;
+  }
+  
+  function validate_user($user,$pass,$challenge)
+  {
+    global $feature_challenge;
+    $hash=md5($pass);
+    if($feature_challenge=='n') {
+      $query = "select login from users_users where login='$user' and hash='$hash'"; 
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query,$result);
+      if($result->numRows()) {
+        $t = date("U");
+        $query = "update users_users set currentLogin=$t where login='$user'";
+        $result = $this->db->query($query);
+        if(DB::isError($result)) $this->sql_error($query,$result);
+        return true; 
+      }
+    } else {
+      // Use challenge-reponse method
+      // Compare pass against md5(user,challenge,hash)
+      $hash = $this->db->getOne("select hash from users_users where login='$user'");
+      if(!isset($_SESSION["challenge"])) return false;
+      //print("pass: $pass user: $user hash: $hash <br/>");
+      //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br/>");
+      if($pass == md5($user.$hash.$_SESSION["challenge"])) {
+        $t = date("U");
+        $query = "update users_users set currentLogin=$t where login='$user'";
+        $result = $this->db->query($query);
+        if(DB::isError($result)) $this->sql_error($query,$result);
+        return true;
+      } else {
+        return false;      
+      }
     }
     return false;
   }
@@ -421,9 +462,14 @@ class UsersLib {
   
   function add_user($user,$pass,$email,$provpass='')
   {
+    global $pass_due;
+    $hash = md5($pass);
+    global $feature_clear_passwords;
+    if($feature_clear_passwords == 'n') $pass='';
     if($this->user_exists($user)) return false;  
     $now=date("U");
-    $query = "insert into users_users(login,password,email,provpass,registrationDate) values('$user','$pass','$email','$provpass',$now)";
+    $new_pass_due=$now+(60*60*24*$pass_due);
+    $query = "insert into users_users(login,password,email,provpass,registrationDate,hash,pass_due,created) values('$user','$pass','$email','$provpass',$now,'$hash',$new_pass_due,$now)";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     $this->assign_user_to_group($user,'Registered');
@@ -441,6 +487,18 @@ class UsersLib {
   {
     $query = "select password from users_users where login='$user'";
     $pass = $this->db->getOne($query);
+    return $pass;
+  }
+  
+  function renew_user_password($user)
+  {
+    $pass = $this->genPass();
+    $hash = md5($pass);
+    // Note that tiki-generated passwords are due inmediatley
+    $now=date("U");
+    $query = "update users_users set password='$pass', hash='$hash',pass_due=$now where login='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
     return $pass;
   }
   

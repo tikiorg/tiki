@@ -118,5 +118,20 @@
   {/section}
   </table>
   </div>
-
-
+  </div>
+<br/>
+  <div class="cbox">
+  <div class="cbox-title">Assigned items</div>
+  <div class="cbox-data">
+  <table width="100%">
+  {section name=ix loop=$user_items}
+  <tr><td>
+  <b>{$user_items[ix].value}</b> {tr}at tracker{/tr} {$user_items[ix].name}  
+  </td><td align="right">
+  <a class="link" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">({tr}edit{/tr})</a>
+  </td>
+  </tr>
+  {/section}
+  </table>
+  </div>
+  </div>

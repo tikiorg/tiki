@@ -858,6 +858,7 @@ CREATE TABLE tiki_user_assigned_modules (
   cache_time integer(14),
   rows integer(4),
   groups text,
+  params varchar(250),
   user varchar(200) not null,
   primary key(name,user)
 );

@@ -1,0 +1,289 @@
+<?php
+// Initialization
+require_once('tiki-setup.php');
+
+if($feature_trackers != 'y') {
+  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
+if(!isset($_REQUEST["itemId"])) {
+    $smarty->assign('msg',tra("No item indicated"));
+    $smarty->display('error.tpl');
+    die;
+}
+$smarty->assign('itemId',$_REQUEST["itemId"]);
+$item_info=$tikilib->get_tracker_item($_REQUEST["itemId"]);
+$smarty->assign('item_info',$item_info);
+
+if(!isset($_REQUEST["trackerId"])) {
+    $smarty->assign('msg',tra("No tracker indicated"));
+    $smarty->display('error.tpl');
+    die;
+}
+$smarty->assign('trackerId',$_REQUEST["trackerId"]);
+
+$smarty->assign('individual','n');
+if($userlib->object_has_one_permission($_REQUEST["trackerId"],'tracker')) {
+  $smarty->assign('individual','y');
+  if($tiki_p_admin != 'y') {
+    $perms = $userlib->get_permissions(0,-1,'permName_desc','','trackers');
+    foreach($perms["data"] as $perm) {
+      $permName=$perm["permName"];
+      if($userlib->object_has_permission($user,$_REQUEST["trackerId"],'tracker',$permName)) {
+        $$permName = 'y';
+        $smarty->assign("$permName",'y');
+      } else {
+        $$permName = 'n';
+        $smarty->assign("$permName",'n');
+      }
+    }
+  }
+}
+
+if($tiki_p_view_trackers != 'y') {
+    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->display('error.tpl');
+    die;
+}
+
+$tracker_info = $tikilib->get_tracker($_REQUEST["trackerId"]);
+$smarty->assign('tracker_info',$tracker_info);
+
+$fields = $tikilib->list_tracker_fields($_REQUEST["trackerId"],0,-1,'fieldId_asc','');
+$ins_fields=$fields;
+
+for($i=0;$i<count($fields["data"]);$i++ ) {
+  $name=$fields["data"][$i]["name"];
+  $ins_name='ins_'.$name;
+  $ins_fields["data"][$i]["ins_name"]=$ins_name;
+  if($fields["data"][$i]["type"]!='c' && $fields["data"][$i]["type"]!='f') {
+    if(isset($_REQUEST["$name"])) {
+      $fields["data"][$i]["value"]=$_REQUEST["$name"];
+    } else {
+      $fields["data"][$i]["value"]='';
+    }
+    if(isset($_REQUEST["$ins_name"])) {
+      $ins_fields["data"][$i]["value"]=$_REQUEST["$ins_name"];
+    } else {
+      $ins_fields["data"][$i]["value"]='';
+    }
+  }
+  if($fields["data"][$i]["type"]=='f') {
+    $fields["data"][$i]["value"]='';
+    if(isset($_REQUEST["$ins_name"."Day"])) {
+      $ins_fields["data"][$i]["value"]=mktime($_REQUEST["$ins_name"."Hour"],$_REQUEST["$ins_name"."Minute"],0,$_REQUEST["$ins_name"."Month"],$_REQUEST["$ins_name"."Day"],$_REQUEST["$ins_name"."Year"]);
+    } 
+  }
+  if($fields["data"][$i]["type"]=='c') {
+    if(isset($_REQUEST["$name"])) {
+      $fields["data"][$i]["value"]=$_REQUEST["$name"];;
+    } else {
+      $fields["data"][$i]["value"]='';
+    }
+    if(isset($_REQUEST["$ins_name"]) && $_REQUEST["$ins_name"]=='on') {
+      $ins_fields["data"][$i]["value"]='y';
+    } else {
+      $ins_fields["data"][$i]["value"]='n';
+    }
+  }
+}
+
+if($tiki_p_admin_trackers == 'y') {
+if(isset($_REQUEST["remove"])) {
+  $tikilib->remove_tracker_item($_REQUEST["remove"]);
+}
+}
+
+
+
+if($tiki_p_modify_tracker_items == 'y') {
+if(isset($_REQUEST["save"])) {
+  // Save here the values for this item
+  $tikilib->replace_item($_REQUEST["trackerId"],$_REQUEST["itemId"],$ins_fields,$status);
+  for($i=0;$i<count($fields["data"]);$i++ ) {
+    $name=$fields["data"][$i]["name"];
+    $ins_name='ins_'.$name;
+    $ins_fields["data"][$i]["value"]='';
+  } 
+  $item_info=$tikilib->get_tracker_item($_REQUEST["itemId"]);
+  $smarty->assign('item_info',$item_info);
+}
+}
+
+if($_REQUEST["itemId"]) {
+  $info = $tikilib->get_tracker_item($_REQUEST["itemId"]);
+  for($i=0;$i<count($fields["data"]);$i++ ) {
+    $name=$fields["data"][$i]["name"];
+    $ins_name='ins_'.$name;
+    $ins_fields["data"][$i]["value"]=$info["$name"];
+  }
+}
+
+
+
+$smarty->assign_by_ref('fields',$fields["data"]);
+$smarty->assign_by_ref('ins_fields',$ins_fields["data"]);
+
+if(!isset($_REQUEST["sort_mode"])) {
+  $sort_mode = 'created_desc'; 
+} else {
+  $sort_mode = $_REQUEST["sort_mode"];
+} 
+
+if(!isset($_REQUEST["offset"])) {
+  $offset = 0;
+} else {
+  $offset = $_REQUEST["offset"]; 
+}
+$smarty->assign_by_ref('offset',$offset);
+
+if(isset($_REQUEST["find"])) {
+  $find = $_REQUEST["find"];  
+} else {
+  $find = ''; 
+}
+$smarty->assign('find',$find);
+$smarty->assign_by_ref('sort_mode',$sort_mode);
+
+/*
+$items=$tikilib->list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields);
+$cant_pages = ceil($items["cant"] / $maxRecords);
+$smarty->assign_by_ref('cant_pages',$cant_pages);
+$smarty->assign('actual_page',1+($offset/$maxRecords));
+if($items["cant"] > ($offset+$maxRecords)) {
+  $smarty->assign('next_offset',$offset + $maxRecords);
+} else {
+  $smarty->assign('next_offset',-1); 
+}
+// If offset is > 0 then prev_offset
+if($offset>0) {
+  $smarty->assign('prev_offset',$offset - $maxRecords);  
+} else {
+  $smarty->assign('prev_offset',-1); 
+}
+
+$smarty->assign_by_ref('items',$items["data"]);
+*/
+
+$users = $userlib->get_users(0,-1,'login_asc', '');
+$groups = $userlib->get_groups(0,-1,'groupName_asc','');
+$smarty->assign_by_ref('users',$users["data"]);
+$smarty->assign_by_ref('groups',$groups["data"]);
+
+
+$smarty->assign('mail_msg','');
+$smarty->assign('email_mon','');
+if($user) {
+  if(isset($_REQUEST["monitor"])) {
+    $user_email = $tikilib->get_user_email($user);
+    $emails = $tikilib->get_mail_events('tracker_item_modified',$_REQUEST["itemId"]);
+    if(in_array($user_email,$emails)) {
+      $tikilib->remove_mail_event('tracker_item_modified',$_REQUEST["itemId"],$user_email);
+      $mail_msg=tra('Your email address has been removed from the list of addresses monitoring this item');
+    } else {
+      $tikilib->add_mail_event('tracker_item_modified',$_REQUEST["itemId"],$user_email);
+      $mail_msg=tra('Your email address has been added to the list of addresses monitoring this item');
+    }
+    $smarty->assign('mail_msg',$mail_msg);
+  }
+  $user_email = $tikilib->get_user_email($user);
+  $emails = $tikilib->get_mail_events('tracker_item_modified',$_REQUEST["itemId"]);
+  if(in_array($user_email,$emails)) {
+    $smarty->assign('email_mon',tra('Cancel monitoring'));
+  } else {
+    $smarty->assign('email_mon',tra('Monitor'));
+  }
+}
+
+
+if($tracker_info["useComments"] == 'y') {
+  
+  if($tiki_p_admin_trackers == 'y') {
+  if(isset($_REQUEST["remove_comment"])) {
+    $tikilib->remove_item_comment($_REQUEST["remove_comment"]);
+  }
+  }
+
+  if(isset($_REQUEST["commentId"])) {
+    $comment_info=$tikilib->get_item_comment($_REQUEST["commentId"]);
+    $smarty->assign('comment_title',$comment_info["title"]);
+    $smarty->assign('comment_data',$comment_info["data"]);
+  } else {
+    $_REQUEST["commentId"]=0;
+    $smarty->assign('comment_title','');
+    $smarty->assign('comment_data','');
+  }
+  $smarty->assign('commentId',$_REQUEST["commentId"]);
+
+  if($_REQUEST["commentId"] && $tiki_p_admin_trackers != 'y') {
+    $_REQUEST["commentId"]=0;
+  }
+
+  if($tiki_p_comment_tracker_items == 'y') {  
+  if(isset($_REQUEST["save_comment"])) {
+    $tikilib->replace_item_comment($_REQUEST["commentId"],$_REQUEST["itemId"],$_REQUEST["comment_title"],$_REQUEST["comment_data"],$user);
+    $smarty->assign('comment_title','');
+    $smarty->assign('comment_data','');
+    $smarty->assign('commentId',0);
+  }
+  }
+  
+  $comments=$tikilib->list_item_comments($_REQUEST["itemId"],0,-1,'posted_desc','');
+  $smarty->assign_by_ref('comments',$comments["data"]);
+}
+
+if($tracker_info["useAttachments"] == 'y') {
+  
+  if(isset($_REQUEST["removeattach"])) {
+    $owner = $tikilib->get_item_attachment_owner($_REQUEST["removeattach"]);
+    if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
+      $tikilib->remove_item_attachment($_REQUEST["removeattach"]);
+    }
+  }
+  if(isset($_REQUEST["attach"]) && ($tiki_p_attach_trackers == 'y' )) {
+    // Process an attachment here
+    if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+      $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+      $data = '';
+      $fhash='';
+      if($t_use_db == 'n') {
+        $fhash = md5($name = $_FILES['userfile1']['name']);    
+        $fw = fopen($t_use_dir.$fhash,"w");
+        if(!$fw) {
+          $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
+          $smarty->display('error.tpl');
+          die;  
+        }
+      }
+      while(!feof($fp)) {
+        if($t_use_db == 'y') {
+          $data .= fread($fp,8192*16);
+        } else {
+          $data = fread($fp,8192*16);
+          fwrite($fw,$data);
+        }
+      }
+      fclose($fp);
+      if($t_use_db == 'n') {
+        fclose($fw);
+        $data='';
+      }
+      $size = $_FILES['userfile1']['size'];
+      $name = $_FILES['userfile1']['name'];
+      $type = $_FILES['userfile1']['type'];
+      $tikilib->item_attach_file($_REQUEST["itemId"],$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
+    }
+  }
+
+  $atts = $tikilib->list_item_attachments($_REQUEST["itemId"],0,-1,'created_desc','');
+  $smarty->assign('atts',$atts["data"]);
+}
+
+
+// Display the template
+$smarty->assign('mid','tiki-view_tracker_item.tpl');
+$smarty->display('tiki.tpl');
+?>

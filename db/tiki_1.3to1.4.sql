@@ -75,6 +75,7 @@ INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_draw
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_drawings','drawings','Can edit drawings');
 
 alter table tiki_modules add params varchar(250);
+alter table tiki_user_assigned_modules add params varchar(250);
 
 ## search stats
 

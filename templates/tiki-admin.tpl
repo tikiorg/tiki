@@ -1,16 +1,18 @@
 {popup_init src="lib/overlib.js"}
 <h2><a class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a></h2>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <a name="features"></a>
 <div class="cbox">
@@ -55,6 +57,7 @@
 <tr><td class="form">{tr}HTML pages{/tr}:</td><td><input type="checkbox" name="feature_html_pages" {if $feature_html_pages eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Drawings{/tr}:</td><td><input type="checkbox" name="feature_drawings" {if $feature_drawings eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Referer stats{/tr}:</td><td><input type="checkbox" name="feature_referer_stats" {if $feature_referer_stats eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Trackers{/tr}:</td><td><input type="checkbox" name="feature_trackers" {if $feature_trackers eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
@@ -84,17 +87,19 @@
 </div>
 
 <a name="general"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}General preferences and settings{/tr}</div>
@@ -116,10 +121,6 @@
 </select>
 </td></tr>
 <tr><td class="form">{tr}Use URI as Home Page{/tr}:</td><td><input type="checkbox" name="useUrlIndex" {if $useUrlIndex eq 'y'}checked="checked"{/if}/><input type="text" name="urlIndex" value="{$urlIndex}"/></td></tr>
-<tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$registerPasscode}"/></td></tr>
-<tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Remind passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Open external links in new window{/tr}:</td><td><input type="checkbox" name="popupLinks" {if $popupLinks eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Display modules to all groups always{/tr}:</td><td><input type="checkbox" name="modallgroups" {if $modallgroups eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use cache for external pages{/tr}:</td><td><input type="checkbox" name="cachepages" {if $cachepages eq 'y'}checked="checked"{/if}/></td></tr>
@@ -140,8 +141,7 @@
         {/section}
         </select></td></tr>
 <tr><td class="form">{tr}Browser title{/tr}:</td><td><input type="text" name="siteTitle" value="{$siteTitle}" /></td></tr>
-<tr><td class="form">{tr}Reg users can change theme{/tr}:</td><td><input type="checkbox" name="change_theme" {if $change_theme eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Reg users can change language{/tr}:</td><td><input type="checkbox" name="change_language" {if $change_language eq 'y'}checked="checked"{/if}/></td></tr>
+
 <tr><td>&nbsp;</td><td><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </div>
@@ -164,18 +164,62 @@
 </div>
 </div>
 
-<a name="wiki"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+
+<a name="login"></a>
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+]
+<div class="cbox">
+<div class="cbox-title">{tr}User registration and login{/tr}</div>
+<div class="cbox-data">
+<div class="simplebox">
+<form action="tiki-admin.php" method="post">
+<table width="100%">
+<tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$registerPasscode}"/></td></tr>
+<tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Remind passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Reg users can change theme{/tr}:</td><td><input type="checkbox" name="change_theme" {if $change_theme eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Reg users can change language{/tr}:</td><td><input type="checkbox" name="change_language" {if $change_language eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Store plaintext passwords{/tr}:</td><td><input type="checkbox" name="feature_clear_passwords" {if $feature_clear_passwords eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Use challenge/response authentication{/tr}:</td><td><input type="checkbox" name="feature_challenge" {if $feature_challenge eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Force to use chars and nums in passwords{/tr}:</td><td><input type="checkbox" name="pass_chr_num" {if $pass_chr_num eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Minimum password length{/tr}:</td><td><input type="text" name="min_pass_length" value="{$min_pass_length}" /></td></tr>
+<tr><td class="form">{tr}Password invalid after days{/tr}:</td><td><input type="text" name="pass_due" value="{$pass_due}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+</div>
+</div>
+
+
+
+<a name="wiki"></a>
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Wiki settings{/tr}</div>
@@ -246,7 +290,7 @@
     {tr}Wiki attachments{/tr}
     <form method="post" action="tiki-admin.php">
     <table>
-    <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_wiki_attachments" {if $feature_wiki_attachments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Wiki attachments{/tr}:</td><td><input type="checkbox" name="feature_wiki_attachments" {if $feature_wiki_attachments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="y" {if $w_use_db eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="n" {if $w_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="w_use_dir" value="{$w_use_dir}" /> 
     <tr><td align="center" colspan="2"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
@@ -310,17 +354,19 @@
 </div>
 
 <a name="gal"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Image galleries{/tr}</div>
@@ -382,17 +428,19 @@
 </div>
 
 <a name="fgal"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}File galleries{/tr}</div>
@@ -451,17 +499,19 @@
 </div>
 
 <a name="cms"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}CMS settings{/tr}</div>
@@ -511,17 +561,19 @@
 </div>
 
 <a name="polls"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Poll settings{/tr}</div>
@@ -548,17 +600,19 @@
 
 
 <a name="blogs"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Blog settings{/tr}</div>
@@ -625,17 +679,19 @@
 </div>
 
 <a name="forums"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Forums{/tr}</div>
@@ -683,17 +739,19 @@
 
 
 <a name="faqs"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}FAQs settings{/tr}</div>
@@ -722,19 +780,54 @@
 </div>
 
 
-
-<a name="rss"></a>
-[ <a href="#features" class="link">{tr}features{/tr}</a> |
-<a href="#general" class="link">{tr}general{/tr}</a> |
+<a name="trackers"></a>
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
 <a href="#wiki" class="link">{tr}wiki{/tr}</a> |
-<a href="#gal" class="link">{tr}image galleries{/tr}</a> |
-<a href="#fgal" class="link">{tr}file galleries{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
 <a href="#blogs" class="link">{tr}blogs{/tr}</a> |
-<a href="#forums" class="link">{tr}forums{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
 <a href="#polls" class="link">{tr}polls{/tr}</a> |
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
-<a href="#faqs" class="link">{tr}FAQs{/tr}</a>
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+]
+<div class="cbox">
+<div class="cbox-title">{tr}Trackers{/tr}</div>
+<div class="cbox-data">
+<div class="simplebox">
+<form action="tiki-admin.php" method="post">
+<table width="100%">
+<tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="y" {if $t_use_db eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="n" {if $t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="t_use_dir" value="{$t_use_dir}" /> 
+<tr><td align="center" colspan="2"><input type="submit" name="trkset" value="{tr}Set prefs{/tr}" /></td></tr>    
+</table>
+</form>
+</div>
+</div>
+</div>
+
+
+
+
+
+<a name="rss"></a>
+[ <a href="#features" class="link">{tr}feat{/tr}</a> |
+<a href="#general" class="link">{tr}gral{/tr}</a> |
+<a href="#login" class="link">{tr}login{/tr}</a> |
+<a href="#wiki" class="link">{tr}wiki{/tr}</a> |
+<a href="#gal" class="link">{tr}img gls{/tr}</a> |
+<a href="#fgal" class="link">{tr}file gls{/tr}</a> |
+<a href="#blogs" class="link">{tr}blogs{/tr}</a> |
+<a href="#forums" class="link">{tr}frms{/tr}</a> |
+<a href="#polls" class="link">{tr}polls{/tr}</a> |
+<a href="#rss" class="link">{tr}rss{/tr}</a> |
+<a href="#cms" class="link">{tr}cms{/tr}</a> |
+<a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}RSS feeds{/tr}</div>
