@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.11 2003-12-05 11:51:39 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.12 2004-01-25 02:23:24 lueders Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: {$page}</h2>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
@@ -34,9 +34,7 @@
 </select>
 {tr}for{/tr}
 <input type="submit" name="assign" value="{tr}this page{/tr}" />
-{* CURRENT STRUCTURES CANNOT BE ASSIGNED PERMISSIONS
 <input type="submit" name="assignstructure" value="{tr}this structure{/tr}" />
-*}
 </form>
 <h2>{tr}Send email notifications when this page changes to{/tr}:</h2>
 <form action="tiki-pagepermissions.php" method="post">
