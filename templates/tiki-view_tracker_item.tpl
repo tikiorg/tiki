@@ -358,9 +358,9 @@ align       : "bR"
 
 {capture name=trkaction}
 {if $ins_fields[ix].options_array[1] eq 'post'}
-<form action="{$ins_fields[ix].options_array[2]}" method="post" target="_blank">
+<form action="{$ins_fields[ix].options_array[2]}" method="post">
 {else}
-<form action="{$ins_fields[ix].options_array[2]}" method="get" target="_blank">
+<form action="{$ins_fields[ix].options_array[2]}" method="get">
 {/if}
 {section name=tl loop=$ins_fields[ix].options_array start=3}
 {assign var=valvar value=$ins_fields[ix].options_array[tl]|regex_replace:"/^[^:]*:/":""|escape}
