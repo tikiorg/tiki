@@ -32,6 +32,20 @@
 {cycle name=content values="1,2,3,4,5" print=false advance=false}
 {* --- tab with list --- *}
 <div id="content{cycle name=content}" class="content">
+<div align="center">
+
+{section name=ini loop=$initials}
+{if $initial and $initials[ini] eq $initial}
+<span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
+{else}
+<a href="tiki-view_tracker.php?initial={$initials[ini]}&amp;trackerId={$trackerId}{if $find}&amp;find={$find|escape:"url"}{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
+class="prevnext">{$initials[ini]}</a> . 
+{/if}
+{/section}
+<a href="tiki-view_tracker.php?initial=&amp;trackerId={$trackerId}{if $find}&amp;find={$find|escape:"url"}{/if}{if $offset}&amp;offset={$offset}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
+class="prevnext">{tr}All{/tr}</a>
+</div>
+
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y'}
@@ -46,7 +60,7 @@
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
 <td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if
-$fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode=f_{if $sort_mode eq $fields[ix].name|escape:'url'|cat:'_desc'}{$fields[ix].name|escape:"url"}_asc{else}{$fields[ix].name|escape:"url"}_desc{/if}">{$fields[ix].label}</a></td>
+$fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode=f_{if $sort_mode|escape:"url" eq $fields[ix].label|escape:'url'|cat:'_desc'}{$fields[ix].label|escape:"url"}_asc{else}{$fields[ix].label|escape:"url"}_desc{/if}">{$fields[ix].label}</a></td>
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}

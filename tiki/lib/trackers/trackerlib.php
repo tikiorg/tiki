@@ -7,11 +7,6 @@ class TrackerLib extends TikiLib {
 		parent::TikiLib($db);
 	}
 
-	function array_csort($marray, $column) {
-		foreach ($marray as $key=>$row) { $sortarr[$key] = $row[$column]; }
-		array_multisort($sortarr, $marray); return $marray;
-	}
-
 	/* Tiki tracker construction options */
 	// Return an array with items assigned to the user or a user group
 	function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '') {
@@ -33,17 +28,24 @@ class TrackerLib extends TikiLib {
 			list($a,$csort_mode,$corder) = split('_',$sort_mode);
 			$sort_mode = "lastModif_desc";
 		}
-		$mid = " where `trackerId`=? ";
+		$mid = " where tti.`trackerId`=? ";
 		$bindvars=array((int) $trackerId);
 
 		if ($status) {
-			$mid .= " and `status`=? ";
+			$mid .= " and tti.`status`=? ";
 			$bindvars[]=$status;
 		}
 
-		$query = "select * from `tiki_tracker_items` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_tracker_items` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		if ($csort_mode) {
+			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+			$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttf.`name`=? order by ttif.`value`";
+			$bdvars = array_merge($bindvars,array($csort_mode));
+		} else {
+			$query = "select * from `tiki_tracker_items` tti $mid order by ".$this->convert_sortmode($sort_mode);
+			$bdvars = $bindvars;
+		}
+		$query_cant = "select count(*) from `tiki_tracker_items` tti $mid";
+		$result = $this->query($query,$bdvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
@@ -57,6 +59,7 @@ class TrackerLib extends TikiLib {
 			$result2 = $this->query($query2,array((int) $res["itemId"]));
 			$pass = true;
 
+			$kx = "";
 			while ($res2 = $result2->fetchRow()) {
 				// Check if the field is visible!
 				$fieldId = $res2["fieldId"];
@@ -71,27 +74,24 @@ class TrackerLib extends TikiLib {
 								$pass = false;
 						}
 					}
+					if (ereg_replace("[^a-zA-Z0-9]","",$res2["name"]) == $csort_mode) {
+						$kx = $res2["value"].$itid;
+					}
 				}
-
 				$fields[] = $res2;
-			}
-			if ($csort_mode) {
-				if ($corder == "asc") {
-					$this->array_csort($fields,$csort_mode,SORT_ASC);
-				} else {
-					$this->array_csort($fields,$csort_mode,SORT_DESC);
-				}
 			}
 			$res["field_values"] = $fields;
 			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
-
-			if ($pass)
-				$ret[] = $res;
+			if ($pass) {
+				$kl = $kx.$itid;
+				$ret["$kl"] = $res;
+			}
 		}
 
+		ksort($ret);
 		//$ret=$this->sort_items_by_condition($ret,$sort_mode);
 		$retval = array();
-		$retval["data"] = $ret;
+		$retval["data"] = array_values($ret);
 		$retval["cant"] = $cant;
 		return $retval;
 	}
