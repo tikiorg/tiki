@@ -13,6 +13,8 @@
 <h2>{tr}Create/Edit QuickTags{/tr}</h2>
 <form action="tiki-admin_quicktags.php" method="post">
 <input type="hidden" name="tagId" value="{$tagId|escape}" />
+<input type="hidden" name="offset" value="{$offset|escape}" />
+<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}label{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="10" name="taglabel" value="{$info.taglabel|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Insert (use 'text' for figuring the selection){/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="taginsert" value="{$info.taginsert|escape}" /></td></tr>
@@ -35,7 +37,7 @@
 <tr>
 <td class="{cycle advance=false}">{$quicktags[tag].taglabel}</td>
 <td class="{cycle advance=false}">{$quicktags[tag].taginsert}</td>
-<td class="{cycle advance=false}">{html_image file=$quicktags[tag].tagicon} {$quicktags[tag].tagicon}</td>
+<td class="{cycle advance=false}">{html_image file=$quicktags[tag].tagicon} {$quicktags[tag].iconpath}</td>
 <td class="{cycle}">
    <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$quicktags[tag].tagId}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-admin_quicktags.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;tagId={$quicktags[tag].tagId}">{tr}edit{/tr}</a>
