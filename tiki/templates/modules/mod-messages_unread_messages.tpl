@@ -4,7 +4,7 @@
 {tr}Messages{/tr}
 </div>
 <div class="box-data">
-{tr}You have{/tr} {$modUnread} {tr}new message{/tr}{if $modUnread>1}s{/if}
+{tr}You have{/tr} {$modUnread} {if $modUnread>1}{tr}new message{/tr}{else}{tr}new messages{/tr}{/if}
 {/if}
 </div>
 </div>
