@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.22 2004-09-08 19:51:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.23 2004-09-21 21:05:43 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,6 +11,12 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
+
+if (!$user) {
+  $smarty->assign('msg', tra("You must be logged in to view user information"));
+  $smarty->display("error.tpl");
+  die;
+}
 
 if (isset($_REQUEST['view_user'])) {
 	$userwatch = $_REQUEST['view_user'];
