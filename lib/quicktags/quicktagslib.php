@@ -25,6 +25,8 @@ class QuickTagsLib extends TikiLib {
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
+			$res['iconpath'] = $res['tagicon'];
+			if (!is_file($res['tagicon'])) $res['tagicon'] = 'images/ed_html.gif';
 			$ret[] = $res;
 		}
 		$retval = array();
