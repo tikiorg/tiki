@@ -144,9 +144,8 @@ function add_user_watch($user, $event, $object, $type, $title, $url) {
 
     $hash = md5(uniqid('.'));
     $email = $userlib->get_user_email($user);
-    $query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=? and ";
-    $query.= "`email`=? and `hash`=? and `type`=? and `title`=? and `url`=?";
-    $this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url),-1,-1,false);
+    $query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
+    $this->query($query,array($user,$event,$object);
     $query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`) ";
     $query.= "values(?,?,?,?,?,?,?,?)";
     $this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url));
@@ -2387,8 +2386,7 @@ function refresh_cache($cacheId) {
 }
 
 function remove_cache($cacheId) {
-    $query = "delete from `tiki_link_cache`
-	where `cacheId`=?";
+    $query = "delete from `tiki_link_cache` where `cacheId`=?";
 
     $result = $this->query($query, array( $cacheId ) );
     return true;
@@ -2550,8 +2548,7 @@ function remove_from_structure($page) {
 	$this->remove_from_structure($res["page"]);
     }
 
-    $query = "delete from `tiki_structures`
-	where `page`=?";
+    $query = "delete from `tiki_structures` where `page`=?";
     $result = $this->query($query, array( $page ) );
     return true;
 }
@@ -3065,9 +3062,7 @@ function set_user_preference($user, $name, $value) {
 	$query = "delete from `tiki_user_preferences`where `user`=? and `prefName`=?";
 	$bindvars=array($user,$name);
 	$result = $this->query($query, $bindvars, -1,-1,false);
-	$query = "insert into
-	`tiki_user_preferences`(`user`,`prefName`,`value`)
-	values(?, ?, ?)";
+	$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
 	$bindvars[]=$value;
 	$result = $this->query($query, $bindvars);
 	return true;
