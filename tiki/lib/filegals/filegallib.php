@@ -184,7 +184,7 @@ class FileGalLib extends TikiLib {
 
 		if ($galleryId > 0) {
 			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?, `description`=?,`lastModif`=?, `public`=?, `visible`=?,`show_icon`=?,`show_id`=?,`show_name`=?,`show_description`=?,`show_size`=?,`show_created`=?,`show_dl`=?,`max_desc`=? where `galleryId`=?";
-			$bindvars=array($name,$maxRows,$description,$now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,$max_desc,$galleryId);
+			$bindvars=array($name,(int) $maxRows,$description,(int) $now,$public,$visible,$show_icon,$show_id,$show_name,$show_description,$show_size,$show_created,$show_dl,(int) $max_desc,(int) $galleryId);
 
 			$result = $this->query($query,$bindvars);
 		} else {
@@ -192,12 +192,12 @@ class FileGalLib extends TikiLib {
 			$query = "insert into `tiki_file_galleries`(`name`,`description`,`created`,`user`,`lastModif`,`maxRows`,`public`,`hits`,`visible`,`show_id`,`show_icon`,`show_name`,`show_description`,`show_created`,`show_dl`,`max_desc`)
                                     values (?,?,?,?,?,?,?,?,?,
                                     ?,?,?,?,?,?,?)";
-			$bindvars=array($name,$description,$now,$user,$now,$maxRows,$public,0,$visible,
-					$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,$max_desc);
+			$bindvars=array($name,$description,(int) $now,$user,(int) $now,(int) $maxRows,$public,0,$visible,
+					$show_id,$show_icon,$show_name,$show_description,$show_created,$show_dl,(int) $max_desc);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId
-				= $this->getOne("select max(`galleryId`) from `tiki_file_galleries` where `name`=? and `lastModif`=?",array($name,$now));
+				= $this->getOne("select max(`galleryId`) from `tiki_file_galleries` where `name`=? and `lastModif`=?",array($name,(int) $now));
 		}
 
 		return $galleryId;
