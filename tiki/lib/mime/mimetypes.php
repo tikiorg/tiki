@@ -5,7 +5,7 @@
 //  egrep -v "^#" /etc/mime.types |awk '{if ($'$i'){print "\"" $'$i' "\" => \"" $1 "\","}}' >> mimetypes.php.new
 // done
 // echo ");"
-$mimetypes=Array(
+static $mimetypes=Array(
 "ez" => "application/andrew-inset",
 "hqx" => "application/mac-binhex40",
 "cpt" => "application/mac-compactpro",
