@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.223 2004-05-07 22:29:12 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.224 2004-05-17 08:50:22 chealer Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -463,7 +463,7 @@ $forums_ordering = 'created_desc';
 $forums_comments_per_page = 10;
 
 $feature_image_galleries_comments = 'n';
-$image_galleries_comments_default_ordering = 'points_desc';
+$image_galleries_comments_default_order = 'points_desc';
 $image_galleries_comments_per_page = 10;
 
 $feature_file_galleries_comments = 'n';
@@ -913,7 +913,7 @@ $smarty->assign('forums_ordering', $forums_ordering);
 $smarty->assign('forums_comments_per_page', $forums_comments_per_page);
 
 $smarty->assign('feature_image_galleries_comments', $feature_image_galleries_comments);
-$smarty->assign('image_galleries_comments_default_ordering', $image_galleries_comments_default_ordering);
+$smarty->assign('image_galleries_comments_default_order', $image_galleries_comments_default_order);
 $smarty->assign('image_galleries_comments_per_page', $image_galleries_comments_per_page);
 
 $smarty->assign('feature_file_galleries_comments', $feature_file_galleries_comments);

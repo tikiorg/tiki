@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.196 2004-05-05 13:53:59 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.197 2004-05-17 08:50:20 chealer Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4192,7 +4192,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_login','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_login_required','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_port','443');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('https_prefix','/');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('image_galleries_comments_default_orderin','points_desc');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('image_galleries_comments_default_order','points_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('image_galleries_comments_per_page','10');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('keep_versions','1');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('language','en');
