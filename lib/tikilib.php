@@ -1,6 +1,6 @@
 <?php
 include_once('lib/diff.php');
-require_once('lib/Date.php');
+require_once('lib/pear/Date.php');
 include_once('lib/pear/HTTP/Request.php');
 require_once('lib/tikidate.php');
 

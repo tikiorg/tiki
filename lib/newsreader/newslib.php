@@ -1,5 +1,5 @@
 <?php
-require_once "lib/NNTP.php";
+require_once "lib/pear/NNTP.php";
 
 
 class Newslib extends Tikilib {
