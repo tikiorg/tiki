@@ -11,7 +11,7 @@
 <!-- li>requires approval: do people need your agreement to register to use this currency?</li>  -->
 <li>listed publicly: set currency as visible or hidden in the public currency list.  Hiding gives no guarantee the id will not become known, but it helps preserve private groups from casual access.</li>
 <li>register owner: auto-register (or not) the currency owner.</li>
-<li>owner: the registry administrator can create a cc and specify an account holder as currency owner.</li>
+<li>owner: the registry administrator can create a cc and specify any account holder as currency owner.</li>
 </ul>
 <br>
 <h2><a href="cc.php?page=transactions&new">Add Transaction</a></h2>
@@ -33,6 +33,7 @@
 <br>
 
 <h2><a href="cc.php?page=currencies">Register for cc</a> </h2>
+<p>You can only use a currency when you have registered for it.</p>
 <ul>
 <li>list of available currencies.</li>
 <li>click "register" to join a system.</li>
@@ -40,7 +41,5 @@
 </ul>
 <br>
 <h2><a href="cc.php?page=currencies&own">cc administration</a></h2>
-<ul>
-<li>presents a menu of all cc this user administers / owns.</li>
-</ul>
+<p>This lists all the cc administered ("owned") by this user.</p>
 
