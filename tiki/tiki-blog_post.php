@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.26 2003-11-24 05:52:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.27 2003-12-04 08:59:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -259,6 +259,10 @@ $section = 'blogs';
 include_once ('tiki-section_options.php');
 
 include_once("textareasize.php");
+
+include_once ('lib/quicktags/quicktagslib.php');
+$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
+$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-blog_post.tpl');
