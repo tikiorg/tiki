@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.2 2003-08-01 10:31:08 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.3 2003-08-07 00:55:18 rossta Exp $
  *
  */
 
@@ -123,7 +123,7 @@ div.button2:hover
 .wikicache,  .wikicache:visited, .wikicache:visited:hover, .wikicache:hover, .wikicache:active
 {
   color: GrayText;
-  font-size: small
+  font-size: small;
   text-decoration: none;
 }
 
