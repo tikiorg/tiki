@@ -1,6 +1,7 @@
 Version 1.7 -Eta Carinae-
 
-* [NEW] Forums: Breadcrumb added. Links to next/prev topic when browsing threads added.
+* [NEW] Forums: Breadcrumb added. Links to next/prev topic when browsing threads
+  added.
 * [NEW] Forums: Topic summaries added and can be used (optional)
 * [NEW] Forums: Topic smileys can be used
 * [NEW] File galleries: you can edit the name/description of files (Joan)
@@ -18,11 +19,11 @@ Version 1.7 -Eta Carinae-
   update the content of any wiki page (if permitted)
 * [NEW] Notepad: notes can be merged into a single note.
 * [NEW] Weblogs:Trackback pings implemented, you can send a ping from any weblog
-  post to any URI accepting trackback pings. Tiki will also accept trackback pings
-  the tiki-view_blog_post.php script implements the discovery mechanism, then Tiki
-  can display a list of trackback pings to your blog posts from other sites. 
-  Compatible with geeklog, movabletype and other wonderful weblogging packages
-  that are-now-eclipsed-by-the-amazing-tiki-machine!
+  post to any URI accepting trackback pings. Tiki will also accept trackback
+  pings the tiki-view_blog_post.php script implements the discovery mechanism,
+  then Tiki can display a list of trackback pings to your blog posts from other
+  sites. Compatible with geeklog, movabletype and other wonderful weblogging
+  packages that are-now-eclipsed-by-the-amazing-tiki-machine!
 * [NEW] Weblogs: interface added to add images to a weblog post, this works
   with the traditional editor or the brand-new WYSIWYG editor.
 * [NEW] Customizable heading (all the html before posts) for weblogs.
@@ -37,19 +38,23 @@ Version 1.7 -Eta Carinae-
 * [NEW] Workflow engine added. Create processes, monitor processes and
   execute processes. Processes are mapped to PHP scripts. Please read
   the workflow documentation for a detailed overview of the Workflow engine.
-* [NEW] The special Smarty plugin {helplink page="PageName"} can be used to create
-  a link that will display a wiki page as a help popup. This allows your site to
-  create an online help system based on Wiki pages. 
+* [NEW] The special Smarty plugin {helplink page="PageName"} can be used to
+  create a link that will display a wiki page as a help popup. This allows your
+  site to create an online help system based on Wiki pages. 
 * [NEW] In file galleries, the file title and description now can be edited.
-* [FIX] In file galleries, when a file had a title the filename was showed instead.
-  Now it shows title correctly, and title itself is not forced to be entered, the 
-  filename is shown when no file title has been provided.
-* [NEW] New popup window to see images in image galleries. It autosizes to the image's
-  size.
-* [NEW] Batch user import in Users administration. Now you can import users from a
-  CSV file. The CSV file needs to have the column names in the first record. The
-  column titles must match with fields in "users_users" table. Login, password and 
-  email are forced. If an unexistant field is specified, it's ignored.
+* [FIX] In file galleries, when a file had a title the filename was showed
+  instead. Now it shows title correctly, and title itself is not forced to be
+  entered, the filename is shown when no file title has been provided.
+* [NEW] New popup window to see images in image galleries. It autosizes to the
+  image's size.
+* [NEW] Batch user import in Users administration. Now you can import users
+  from a CSV file. The CSV file needs to have the column names in the first
+  record. The column titles must match with fields in "users_users" table.
+  Login, password and  mail are forced. If an unexistant field is specified,
+  it's ignored.
+* [NEW] Default .htaccess contains many apache/mod_rewrite commands: 
+  http://ex.com/tiki-index.php?page=HomePage => http://ex.com/HomePage,
+  http://ex.com/tiki-view_blog.php?blogId=1  => http://ex.com/blog/1, etc.
 
 Version 1.6 -Tau Ceti-
 
