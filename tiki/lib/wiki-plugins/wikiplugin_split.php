@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.12 2003-11-02 03:08:22 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.13 2003-11-20 23:19:30 zaufi Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -75,9 +75,12 @@ function wikiplugin_split($data, $params) {
             // Generate colspan for last element if needed
             $colspan = ((count($r) == $idx) && (($maxcols - $idx) > 0) ? ' colspan="'.($maxcols - $idx + 1).'"' : '');
             $idx++;
+            var_dump((substr($i, -1) == "\n" || substr($i, -1) == "\r"));
             // Add cell to table
-    		$result .= '<td valign="top"'.($fixedsize ? ' width="'.$columnSize.'%"' : '').$colspan.">
-                       \n".((substr($i, 0, 1) == "\n") ? substr($i, 1) : $i)."\n</td>";
+    		$result .= '<td valign="top"'.($fixedsize ? ' width="'.$columnSize.'%"' : '').$colspan.'>'
+                     . ((substr($i, 0, 1) == "\n") || (substr($i, 0, 1) == "\r") ? $i : "\n".$i)
+                     . ((substr($i, -1) == "\n") || (substr($i, -1) == "\r") ? '' : "\n")
+                     . '</td>';
         }
         
         $result .= "</tr>";
