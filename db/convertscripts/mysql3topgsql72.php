@@ -48,8 +48,8 @@ function parse($stmt)
   //postgres cannot DROP TABLE IF EXISTS
   $stmt=preg_replace("/DROP TABLE IF EXISTS/","DROP TABLE",$stmt);
   //auto_increment things
-  $stmt=preg_replace("/int\(.\) NOT NULL auto_increment/","serial",$stmt);
-  $stmt=preg_replace("/int\(..\) NOT NULL auto_increment/","bigserial",$stmt);
+  $stmt=preg_replace("/int\(.\) (unsigned )*NOT NULL auto_increment/","serial",$stmt);
+  $stmt=preg_replace("/int\(..\) (unsigned )*NOT NULL auto_increment/","bigserial",$stmt);
   // integer types
   $stmt=preg_replace("/tinyint\([1-4]\)/","smallint",$stmt);
   $stmt=preg_replace("/int\([1-4]\) unsigned/","smallint",$stmt);
@@ -83,6 +83,7 @@ function parse($stmt)
   $stmt=preg_replace("/insert into ([a-zA-Z0-9_]*).*\(([^\)]+)\) values(.*)/e","do_inserts('$1','$2','$3')",$stmt);
   // the update
   $stmt=preg_replace("/update ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
+  $stmt=preg_replace("/UPDATE ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
   return $stmt.";".$poststmt;
 }
 

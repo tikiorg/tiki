@@ -648,7 +648,7 @@ CREATE  INDEX "tiki_blog_posts_blogId" ON "tiki_blog_posts"("blogId")
 go
 CREATE  INDEX "tiki_blog_posts_created" ON "tiki_blog_posts"("created")
 go
-CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data" "title")
+CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title")
 go
 
 -- --------------------------------------------------------
@@ -1510,7 +1510,7 @@ go
 -- --------------------------------------------------------
 
 
-DROP TABLE "if" exists tiki_dynamic_variables
+-- DROP TABLE "tiki_dynamic_variables"
 go
 
 
@@ -3516,7 +3516,7 @@ go
 
 
 -- --------------------------------------------------------
-INSERT INTO tiki_menus(menuId,name,description,type) VALUES('42','Application menu','Main extensive navigation menu','d')
+INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Application menu','Main extensive navigation menu','d')
 go
 
 
@@ -3807,7 +3807,7 @@ CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data")
 go
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank")
 go
-CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName" "description" "data")
+CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","description","data")
 go
 CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName")
 go
@@ -6414,12 +6414,12 @@ go
 
 
 -- --------------------------------------------------------
-INSERT INTO users_groups(groupName,groupDesc) VALUES('Anonymous','Public users not logged')
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Anonymous','Public users not logged')
 go
 
 
 
-INSERT INTO users_groups(groupName,groupDesc) VALUES('Registered','Users logged into the system')
+INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users logged into the system')
 go
 
 
@@ -6474,7 +6474,7 @@ go
 
 
 
-UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin
+UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin"
 go
 
 
@@ -8228,7 +8228,7 @@ ruleID numeric(11 ,0) identity,
   "rxmod" varchar(20) default '' NOT NULL,
   "enabled" char(1) default 'n' NOT NULL,
   "description" text NOT NULL,
-  PRIMARY KEY (ruleID),
+  PRIMARY KEY ("ruleID")
 
 ) 
 go
@@ -8280,7 +8280,7 @@ go
 
 
 CREATE TABLE "tiki_quicktags" (
-  "tagId" numeric(4,0) NOT NULL auto_increment,
+tagId numeric(4 ,0) identity,
   "taglabel" varchar(255) default NULL NULL,
   "taginsert" varchar(255) default NULL NULL,
   "tagicon" varchar(255) default NULL NULL,
