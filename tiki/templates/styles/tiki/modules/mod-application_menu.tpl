@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.17 2003-12-16 14:29:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.18 2004-01-03 00:28:58 mose Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
@@ -433,7 +433,7 @@
     <div class="separated"><a href="tiki-phpinfo.php" class="linkmenu">{tr}phpinfo{/tr}</a></div>
     <div class="separated"><a href="tiki-admin_dsn.php" class="linkmenu">{tr}Admin dsn{/tr}</a></div>
     <div class="separated"><a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a></div>
-    <div class="separated"><a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a></div>
+		<div class="separated"><a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a></div>
     {/if}
 		{/sortlinks}
   </div>

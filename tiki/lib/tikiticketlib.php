@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.2 2003-12-28 20:12:55 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.3 2004-01-03 00:28:56 mose Exp $
 
 Tikiwiki CSRF protection.
 also called : anti-banana-skin (oops)
@@ -108,8 +108,12 @@ function check_ticket($area) {
 		@mail($_SERVER['SERVER_ADMIN'],"[CSRF] alert",$body);
 		*/
 		global $smarty;
+		$_SESSION['antisurf'] =  $area; 
+		$smarty->assign('post',$_POST);
+		$smarty->assign('query',$_SERVER["QUERY_STRING"]);
+		$smarty->assign('self',$_SERVER["PHP_SELF"]);
 		$smarty->assign('msg',tra("Sea Surfing (CSRF) detected. Operation blocked."));
-		$smarty->display('error.tpl');
+		$smarty->display('error_ticket.tpl');
 		die;
 	}
 }
