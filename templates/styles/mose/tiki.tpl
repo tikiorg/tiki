@@ -7,7 +7,7 @@
   </div>
   {/if}
   <div id="tiki-mid">
-    <table >
+    <table>
     <tr>
       {if $feature_left_column eq 'y'}
       <td id="leftcolumn">
