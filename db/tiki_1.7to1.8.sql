@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.97 2003-12-21 17:47:21 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.98 2003-12-23 08:57:32 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -868,4 +868,7 @@ UPDATE tiki_menu_options set `url`='tiki-forum_rankings.php' where `url`='tiki-f
 # added on 2003-12-20 by gmuslera
 # Updating the URL for games to tiki-list_games.php instead of tiki-games.php
 UPDATE tiki_menu_options SET `url` = 'tiki-list_games.php' WHERE `url`='tiki-games.php';
+
+# added on 2003-12-23 by mose
+UPDATE users_permissions SET `level`='editors' WHERE `level`='editor';
 
