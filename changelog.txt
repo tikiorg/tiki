@@ -53,8 +53,18 @@ Version 1.3 --
 * [NEW] Games section to play flash games, upload games or use the provided additional game-pack. You can upload new
   games, edit the descriptions and play. 
 * [NEW] Added a new theme: dblue.
-*
-      
+* [NEW] Now the list of users in the current chat channel is displayed in the chatrooms.\
+* [NEW] Now you can send private messages in the chatrooms using ":username:message"
+* [NEW] Reviews added, now articles can be normal articles or reviews, for reviews the editor can rate whatever
+  he is reviewing.
+* [NEW] Undo feature in the wiki, if a user can edit pages then he can undo what he edited pressing an undo button,
+  users without permission to remove versions won't be able to undo what other users edited only his editions can
+  be undone.
+* [NEW] Individual permissions for CMS topics added, you can now control who can read some topics, if the topic
+  has no individual permissions then it will be displayed to all the groups. But if you want you can assign the
+  tiki_p_read_topic permission to some groups for a topic and only those groups will be able to read that topic.
+* [NEW] A mini-popup window can be opened when editing objects to help the user insert special characters in the
+  text, specially latin characters, accents, etc. This is taken from the horde project and submited by Marc Laporte.      
 
 Version 1.2 -Antares-
 
