@@ -3379,5 +3379,6 @@ $lang=Array(
 //"Edit Templates" => "Edit templates",
 //"Referer Stats" => "Referer stats",
 //"Theme Control" => "Theme control",
-//"###end###"=>"###end###");
+//"###end###"=>"###end###"
+);
 ?>
