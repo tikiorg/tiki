@@ -1,16 +1,17 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.10 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.11 2003-08-16 00:13:41 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.10 2003-08-07 04:33:56 rossta Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.11 2003-08-16 00:13:41 redflo Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
-include_once ("tiki-setup_base.php");
+//include_once ("tiki-setup_base.php");
+include_once ("tiki-setup.php");
 include_once ("lib/imagegals/imagegallib.php");
 
 // show_image.php
