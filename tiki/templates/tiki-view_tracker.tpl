@@ -1,147 +1,35 @@
 <a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a><br/><br/>
-<a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a>
+<div>
+<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 {if $tiki_p_admin_trackers eq 'y'}
-<a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a>
-<a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a>
+<span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
 {if $user}
-<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;monitor=1" class="linkbut">{tr}{$email_mon}{/tr}</a>
+<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;monitor=1" class="linkbut">{tr}{$email_mon}{/tr}</a></span>
 {/if}
 {/if}
-<br/><br/>
-<div class="simplebox">{$tracker_info.description}</div>
+</div>
+<br/>
+<div class="wikitext">{$tracker_info.description}</div>
 {if $mail_msg}
-<br/><br/>
-<div class="simplebox">{$mail_msg}</div>
+<div class="wikitext">{$mail_msg}</div>
 {/if}
-<form action="tiki-view_tracker.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<input type="hidden" name="itemId" value="{$itemId|escape}" />
-{section name=ix loop=$fields}
-<input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
-{/section}
-
-{if $tiki_p_create_tracker_items eq 'y'}
-<h3>{tr}Insert new item{/tr}</h3>
-<table class="normal">
-{section name=ix loop=$ins_fields}
-<tr><td class="formcolor">{$ins_fields[ix].name}</td>
-<td class="formcolor">
-{if $ins_fields[ix].type eq 'u'}
-<select name="ins_{$ins_fields[ix].name}">
-<option value="">{tr}None{/tr}</option>
-{section name=ux loop=$users}
-<option value="{$users[ux]|escape}">{$users[ux]}</option>
-{/section}
-</select>
-{/if}
-{if $ins_fields[ix].type eq 'g'}
-<select name="ins_{$ins_fields[ix].name}">
-<option value="">{tr}None{/tr}</option>
-{section name=ux loop=$groups}
-<option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
-{/section}
-</select>
-{/if}
-{if $ins_fields[ix].type eq 'i'}
-<input type="file" name="ins_{$ins_fields[ix].name}"/>
-{/if}
-{if $ins_fields[ix].type eq 't'}
-<input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />
-{/if}
-{if $ins_fields[ix].type eq 'a'}
-<textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
-{/if}
-{if $ins_fields[ix].type eq 'f'}
-{html_select_date prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value display_seconds=false}
-{/if}
-{if $ins_fields[ix].type eq 'd'}
-<select name="ins_{$ins_fields[ix].name}">
-{section name=jx loop=$ins_fields[ix].options_array}
-<option value="{$ins_fields[ix].options_array[jx]|escape}" {if $ins_fields[ix].value eq $ins_fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
-{/section}
-</select>
-{/if}
-{if $ins_fields[ix].type eq 'c'}
-<input type="checkbox" name="ins_{$ins_fields[ix].name}" {if $ins_fields[ix].value eq 'y'}checked="checked"{/if}/>
-{/if}
-</td>
-</tr>
-{/section}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
-</table>
-</form>
-{/if}
-
-<h3>{tr}Tracker Items{/tr}</h3>
-<form action="tiki-view_tracker.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<table class="normal">
-<tr><td class="heading" colspan="2">{tr}Filters{/tr}</td></tr>
-<tr><td class="formcolor">{tr}Status{/tr}</td>
-<td class="formcolor">
-<select name="status">
-<option value="" {if $status eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
-<option value="o" {if $status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
-<option value="c" {if $status eq 'c'}selected="selected"{/if}>{tr}closed{/tr}</option>
-</select>
-{if $fields[ix].type ne 'i'}
-</td></tr>
-{/if}
-{section name=ix loop=$fields}
-{if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'f'}
-{if $fields[ix].type ne 'i'}
-<tr><td class="formcolor">{$fields[ix].name}</td>
-{/if}
-{if $fields[ix].type ne 'i'}
-<td class="formcolor">
-{/if}
-{if $fields[ix].type eq 't' or $fields[ix].type eq 'a'}
-<input type="text" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
-{/if}
-{if $fields[ix].type eq 'u'}
-<select name="{$fields[ix].name|escape}">
-<option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
-{section name=ux loop=$users}
-<option value="{$users[ux]|escape}">{$users[ux]}</option>
-{/section}
-</select>
-{/if}
-{if $fields[ix].type eq 'g'}
-<select name="{$fields[ix].name|escape}">
-<option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
-{section name=ux loop=$groups}
-<option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
-{/section}
-</select>
-{/if}
-{if $fields[ix].type eq 'd'}
-<select name="{$fields[ix].name|escape}">
-<option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
-{section name=jx loop=$fields[ix].options_array}
-<option value="{$fields[ix].options_array[jx]|escape}" {if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
-{/section}
-</select>
-{/if}
-{if $fields[ix].type eq 'c'}
-<select name="{$fields[ix].name|escape}">
-<option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
-<option value="y" {if $fields[ix].value eq 'y'}selected="selected"{/if}>{tr}checked{/tr}</option>
-<option value="n" {if $fields[ix].value eq 'n'}selected="selected"{/if}>{tr}unchecked{/tr}</option>
-</select>
-{/if}
-{if $fields[ix].type ne 'i'}
-</td>
-</tr>
-{/if}
-{/if}
-{/section}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="filter" value="{tr}filter{/tr}" /></td></tr>
-</table>
-</form>
-
-
 <br/>
 
+{cycle name=tabs values="1,2,3,4,5" print=false advance=false}
+<div class="tabs">
+<span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></span>
+{if $tiki_p_filter_tracker_items eq 'y'}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Filters{/tr}</span>
+{/if}
+{if $tiki_p_create_tracker_items eq 'y'}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Insert new item{/tr}</span>
+{/if}
+</div>
+
+{cycle name=content values="1,2,3,4,5" print=false advance=false}
+{* --- tab with list --- *}
+<div id="content{cycle name=content}" class="content">
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y'}
@@ -234,3 +122,140 @@
 {/if}
 </div>
 </div>
+</div>
+
+{* --- tab with filters --- *}
+{if $tiki_p_filter_tracker_items eq 'y'}
+<div id="content{cycle name=content}" class="content">
+<h3>{tr}Tracker Items{/tr}</h3>
+<form action="tiki-view_tracker.php" method="post">
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+<table class="normal">
+<tr><td class="heading" colspan="2">{tr}Filters{/tr}</td></tr>
+<tr><td class="formcolor">{tr}Status{/tr}</td>
+<td class="formcolor">
+<select name="status">
+<option value="" {if $status eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
+<option value="o" {if $status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
+<option value="c" {if $status eq 'c'}selected="selected"{/if}>{tr}closed{/tr}</option>
+</select>
+{if $fields[ix].type ne 'i'}
+</td></tr>
+{/if}
+{section name=ix loop=$fields}
+{if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'f'}
+{if $fields[ix].type ne 'i'}
+<tr><td class="formcolor">{$fields[ix].name}</td>
+{/if}
+{if $fields[ix].type ne 'i'}
+<td class="formcolor">
+{/if}
+{if $fields[ix].type eq 't' or $fields[ix].type eq 'a'}
+<input type="text" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
+{/if}
+{if $fields[ix].type eq 'u'}
+<select name="{$fields[ix].name|escape}">
+<option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
+{section name=ux loop=$users}
+<option value="{$users[ux]|escape}">{$users[ux]}</option>
+{/section}
+</select>
+{/if}
+{if $fields[ix].type eq 'g'}
+<select name="{$fields[ix].name|escape}">
+<option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
+{section name=ux loop=$groups}
+<option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
+{/section}
+</select>
+{/if}
+{if $fields[ix].type eq 'd'}
+<select name="{$fields[ix].name|escape}">
+<option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
+{section name=jx loop=$fields[ix].options_array}
+<option value="{$fields[ix].options_array[jx]|escape}" {if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
+{/section}
+</select>
+{/if}
+{if $fields[ix].type eq 'c'}
+<select name="{$fields[ix].name|escape}">
+<option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
+<option value="y" {if $fields[ix].value eq 'y'}selected="selected"{/if}>{tr}checked{/tr}</option>
+<option value="n" {if $fields[ix].value eq 'n'}selected="selected"{/if}>{tr}unchecked{/tr}</option>
+</select>
+{/if}
+{if $fields[ix].type ne 'i'}
+</td>
+</tr>
+{/if}
+{/if}
+{/section}
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="filter" value="{tr}filter{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+{/if}
+
+{* --- tab with edit --- *}
+{if $tiki_p_create_tracker_items eq 'y'}
+<div id="content{cycle name=content}" class="content">
+<form action="tiki-view_tracker.php" method="post">
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+<input type="hidden" name="itemId" value="{$itemId|escape}" />
+{section name=ix loop=$fields}
+<input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
+{/section}
+
+<h3>{tr}Insert new item{/tr}</h3>
+<table class="normal">
+{section name=ix loop=$ins_fields}
+<tr><td class="formcolor">{$ins_fields[ix].name}</td>
+<td class="formcolor">
+{if $ins_fields[ix].type eq 'u'}
+<select name="ins_{$ins_fields[ix].name}">
+<option value="">{tr}None{/tr}</option>
+{section name=ux loop=$users}
+<option value="{$users[ux]|escape}">{$users[ux]}</option>
+{/section}
+</select>
+{/if}
+{if $ins_fields[ix].type eq 'g'}
+<select name="ins_{$ins_fields[ix].name}">
+<option value="">{tr}None{/tr}</option>
+{section name=ux loop=$groups}
+<option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
+{/section}
+</select>
+{/if}
+{if $ins_fields[ix].type eq 'i'}
+<input type="file" name="ins_{$ins_fields[ix].name}"/>
+{/if}
+{if $ins_fields[ix].type eq 't'}
+<input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />
+{/if}
+{if $ins_fields[ix].type eq 'a'}
+<textarea name="ins_{$ins_fields[ix].name}" rows="4" cols="50">{$ins_fields[ix].value|escape}</textarea>
+{/if}
+{if $ins_fields[ix].type eq 'f'}
+{html_select_date prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$ins_fields[ix].ins_name time=$ins_fields[ix].value display_seconds=false}
+{/if}
+{if $ins_fields[ix].type eq 'd'}
+<select name="ins_{$ins_fields[ix].name}">
+{section name=jx loop=$ins_fields[ix].options_array}
+<option value="{$ins_fields[ix].options_array[jx]|escape}" {if $ins_fields[ix].value eq $ins_fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
+{/section}
+</select>
+{/if}
+{if $ins_fields[ix].type eq 'c'}
+<input type="checkbox" name="ins_{$ins_fields[ix].name}" {if $ins_fields[ix].value eq 'y'}checked="checked"{/if}/>
+{/if}
+</td>
+</tr>
+{/section}
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
+</table>
+</form>
+</div>
+{/if}
+
+
