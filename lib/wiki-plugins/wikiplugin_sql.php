@@ -16,19 +16,38 @@ function wikiplugin_sql($data, $params) {
 	global $$perm_name;
 
 	if ($$perm_name != 'y') {
-		return ('');
+		return (tra('You do not have permission to use this feature'));
 	}
+
+	$bindvars = array();
+	if ($nb = preg_match_all("/\?/", $data, $out)) {
+		foreach($params as $key => $value) {
+			if (ereg("^[0-9]*$", $key)) {
+				if (strpos($value, "$") === 0) {
+					$value = substr($value, 1);
+					global $$value;
+					$bindvars[$key] = $$value;
+				}
+				else {
+					$bindvars[$key] = $value;
+				}
+			}
+		}
+		if (count($bindvars) != $nb) {
+			return tra('Missing db param');
+		}
+	}		
 
 	$ret = '';
 	if ($db == 'local') {
-		$result = $tikilib->query($data,array());
+		$result = $tikilib->query($data, $bindvars);
 	} else {
 		$dsn = $tikilib->get_dsn_by_name($db);
 		$dbPlugin = DB::connect($dsn);
 		if (DB::isError($dbPlugin)) {
 			return ($dbPlugin->getMessage());
 		}
-		@$result = $dbPlugin->query($data);
+		@$result = $dbPlugin->query($data, $bindvars);
 		if (DB::isError($result)) {
 			return $result->getMessage();
 		}
