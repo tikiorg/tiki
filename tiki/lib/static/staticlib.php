@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.6 2004-07-30 19:19:19 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.7 2004-07-30 20:32:46 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,7 +48,16 @@ class StaticLib extends TikiLib {
 	// build the static html page
 	function update_page($pagename) {
 		
-		global $smarty, $wiki_realtime_static_path, $wikiHomePage, $style, $tiki_p_edit;
+		global $smarty, $wiki_realtime_static_path, $wikiHomePage, $style, $style_base, $tiki_p_edit, $feature_categories, $feature_categorypath, $feature_categoryobjects;
+		
+		// variable for whether an error occured
+		$display_error = FALSE;
+		
+		global $tiki_p_admin, $tiki_p_view;
+		
+		global $wikilib;
+		require_once('lib/wiki/wikilib.php');
+
 		$filename = $wiki_realtime_static_path . $pagename . '.html';
 		
 		// find the base_href for the static pages
@@ -56,35 +65,129 @@ class StaticLib extends TikiLib {
 		$static_base_href = 'http://' . $_REQUEST['HTTP_HOST'] . $static_http_path;
 		
 		$tiki_p_edit = 'n';
-		$pageobject = $this->get_page_info($pagename);
-		$pagedata = $this->parse_data($pageobject["data"]);
+		$page = $pagename;
+		$info = $this->get_page_info($pagename);
+		$pagedata = $this->parse_data($info["data"]);
 		$pagedata = preg_replace("/tiki-index.php\?page=([^\'\"\$]+)/", "$static_base_href$1.html", $pagedata);
 		
 		$smarty->assign_by_ref('parsed',$pagedata);
 
+		require_once('tiki-pagesetup.php');
+		
+		$objId = urldecode($page);
+		if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
+			// Check to see if page is categorized
+			$perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
+		   	if (is_array($perms_array)) {
+		   		$is_categorized = TRUE;
+		    	foreach ($perms_array as $perm => $value) {
+		    		$$perm = $value;
+		    	}
+		   	} else {
+		   		$is_categorized = FALSE;
+		   	}
+			if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+				$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+			    $display_error = TRUE;
+			}
+		} elseif ($feature_categories == 'y') {
+			global $categlib;
+			require_once('lib/categories/categlib.php');
+			$is_categorized = $categlib->is_categorized('wiki page',$objId);
+		} else {
+			$is_categorized = FALSE;
+		}
+
+
+		// Now check permissions to access this page
+		if($tiki_p_view != 'y') {
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+		    $display_error = TRUE;
+		}
+		
+		// Get translated page
+		global $feature_multilingual;
+		if ($feature_multilingual == 'y' && $info['lang'] && $info['lang'] != "NULL") { //temporary patch
+			include_once("lib/multilingual/multilinguallib.php");
+			$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
+			$smarty->assign('trads', $trads);
+		}
+		
+		// Get the backlinks for the page "page"
+		$backlinks = $wikilib->get_backlinks($page);
+		$smarty->assign_by_ref('backlinks', $backlinks);
+
+		$smarty->assign('wiki_extras','y');
+		// Display category path or not (like {catpath()})
+		if ($feature_categories == 'y') {
+			if (isset($is_categorized) && $is_categorized) {
+				global $categlib;
+				include_once('lib/categories/categlib.php');
+			    $smarty->assign('is_categorized','y');
+			    if(isset($feature_categorypath) and $feature_categories == 'y') {
+					if ($feature_categorypath == 'y') {
+					    $cats = $categlib->get_object_categories('wiki page',$objId);
+					    $display_catpath = $categlib->get_categorypath($cats);
+					    $smarty->assign('display_catpath',$display_catpath);
+					}
+			    }
+			    // Display current category objects or not (like {category()})
+			    if (isset($feature_categoryobjects) and $feature_categories == 'y') {
+					if ($feature_categoryobjects == 'y') {
+					    $catids = $categlib->get_object_categories('wiki page', $objId);
+					    $display_catobjects = $categlib->get_categoryobjects($catids);
+					    $smarty->assign('display_catobjects',$display_catobjects);
+					}
+			    }
+			} else {
+			    $smarty->assign('is_categorized','n');
+			}
+		}
+
+		global $feature_wiki_dblclickedit, $feature_wiki_page_footer, $tiki_p_view_wiki_history;
+		$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
+		$smarty->assign('tiki_p_view_wiki_history',$tiki_p_view_wiki_history);
+		$smarty->assign('is_a_wiki_page', 'y');
+
+		if ($feature_wiki_page_footer == 'y') {
+			$smarty->assign('feature_wiki_page_footer', 'y');
+			global $wiki_page_footer_content;
+			$current_url = $static_base_href . $pagename . '.html';
+			$content = str_replace('{url}', $current_url, $wiki_page_footer_content);
+			$smarty->assign('wiki_page_footer_content', $content);
+		} else {
+			$smarty->assign('feature_wiki_page_footer', 'n');
+		}
+
 		// Display the Index Template
-		global $wikilib, $feature_wiki_pageid, $feature_categorypath, $feature_categoryobjects;
+		global $wikilib, $feature_wiki_pageid;
 		require_once('lib/wiki/wikilib.php');
 		$smarty->assign('page', $pagename);
 		$creator = $wikilib->get_creator($pagename);
 		$smarty->assign('creator', $creator);
-		$smarty->assign('lastUser',$pageobject["user"]);
-		$smarty->assign('description',$pageobject["description"]);
+		$smarty->assign('lastUser',$info["user"]);
+		$smarty->assign('description',$info["description"]);
 		$smarty->assign('feature_wiki_pageid', $feature_wiki_pageid);
-		$smarty->assign('page_id',$pageobject['page_id']);
+		$smarty->assign('page_id',$info['page_id']);
 		$smarty->assign('mid', 'tiki-show_page.tpl');
 		$smarty->assign('show_page_bar', 'y');
 		$smarty->assign('print_page', 'n');
 		$smarty->assign('categorypath',$feature_categorypath);
 		$smarty->assign('categoryobjects',$feature_categoryobjects);
-		
+		$smarty->assign('style', $style);
+		$smarty->assign('style_base', $style_base);
+
 		// find the base_href for the dynamic tiki pages
 		$path_parts = pathinfo($_SERVER['HTTP_REFERER']);
 		$base_href = $path_parts['dirname'] . '/';
 		$smarty->assign('base_href', $base_href);
 		$smarty->assign('static_mode', 'y');
 		
-		$smarty_result = $smarty->fetch('tiki-static.tpl');
+		if (!$display_error) {
+			$smarty_result = $smarty->fetch('tiki-static.tpl');
+		} else {
+			$smarty_result = $smarty->fetch('error.tpl');
+		}
 		
 		// delete file
 		@unlink($filename);
