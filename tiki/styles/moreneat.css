@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.52 2004-06-19 18:02:57 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.53 2004-06-20 07:58:46 mose Exp $
 
 MoreNeat theme
 */
@@ -572,10 +572,10 @@ div.wikitext {
   background: white;
      font-size: 12px;
   border: 1px solid #99bec6;
-  padding-left: 4px; padding-right: 4px; padding-top: 3px;padding-bottom: 1px;
   margin-left: 1px; margin-right: 1px; margin-top: 0px; margin-bottom: 5px;
   width: 100%; /*xen fixes IE formating.  i.e. Middle column sliding under right*/
   clear: both;
+	padding : 1ex 2ex;
 }
 
 /* Links to wiki pages */
