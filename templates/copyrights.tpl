@@ -13,9 +13,9 @@
     </table>
   </td><td class="formcolor" align="right">
     <input type="submit" name="editcopyright" value="{tr}edit{/tr}"/><br />
-    <a href="copyrights.php?page={$page|escape:"url"}&action=delete&copyrightId={$copyrights[i].copyrightId}">x</a>
-    <a href="copyrights.php?page={$page|escape:"url"}&action=up&copyrightId={$copyrights[i].copyrightId}">up</a>
-    <a href="copyrights.php?page={$page|escape:"url"}&action=down&copyrightId={$copyrights[i].copyrightId}">down</a>
+    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}">x</a>
+    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}">up</a>
+    <a href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}">down</a>
     </form>
   </td></tr>
 {/section}
