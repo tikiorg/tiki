@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/db/local_multi.php,v 1.5 2004-05-06 02:09:34 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/db/local_multi.php,v 1.6 2004-05-07 20:51:12 mose Exp $
 
 	-----------------------------------------------------------
   -> Multi-tiki trick for virtualhosting
@@ -31,7 +31,10 @@
 */
 
 if (isset($tikidomain_multi) and $tikidomain_multi) {
-	if (isset($_SERVER['SERVER_NAME'])) {
+	if (isset($_SERVER['TIKI_VIRTUAL'])) {
+		// declare in apache : SetEnv TIKI_VIRTUAL myvirtualhostname
+		$tikidomain = $_SERVER['TIKI_VIRTUAL'];
+	} elseif (isset($_SERVER['SERVER_NAME'])) {
 		$tikidomain = $_SERVER['SERVER_NAME'];
 	} elseif (isset($_SERVER['HTTP_HOST'])) {
 		$tikidomain = $_SERVER['HTTP_HOST'];
