@@ -51,8 +51,11 @@ function parse($stmt)
   $stmt=preg_replace("/int\(.\) NOT NULL auto_increment/","serial",$stmt);
   $stmt=preg_replace("/int\(..\) NOT NULL auto_increment/","bigserial",$stmt);
   // integer types
+  $stmt=preg_replace("/int\([1-4]\) unsigned/","smallint",$stmt);
   $stmt=preg_replace("/int\([1-4]\)/","smallint",$stmt);
+  $stmt=preg_replace("/int\([5-9]\) unsigned/","integer",$stmt);
   $stmt=preg_replace("/int\([5-9]\)/","integer",$stmt);
+  $stmt=preg_replace("/int\(..\) unsigned/","bigint",$stmt);
   $stmt=preg_replace("/int\(..\)/","bigint",$stmt);
   // timestamps
   $stmt=preg_replace("/timestamp\([^\)]+\)/","timestamp(3)",$stmt);

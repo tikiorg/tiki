@@ -515,7 +515,7 @@ CREATE TABLE "tiki_blog_posts" (
   "postId" serial,
   "blogId" integer NOT NULL default '0',
   "data" text,
-  "data_size" bigint unsigned NOT NULL default '0',
+  "data_size" bigint NOT NULL default '0',
   "created" bigint default NULL,
   "user" varchar(200) default NULL,
   "trackbacks_to" text,
@@ -2507,7 +2507,7 @@ CREATE TABLE "tiki_pages" (
   "cache_timestamp" bigint default NULL,
   "pageRank" decimal(4,3) default NULL,
   "creator" varchar(200) default NULL,
-  "page_size" bigint unsigned default 0,
+  "page_size" bigint default 0,
   PRIMARY KEY ("pageName")
 
 
