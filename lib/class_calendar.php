@@ -7,6 +7,7 @@
 // Constructor:
 //
 // new calendar('lan')           : Language for the calendar valid options: (ar,br,en)
+// Tiki: doesn't use the language translation, the translation is done at the calling level
 //
 // Methods:
 //
