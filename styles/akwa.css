@@ -494,7 +494,7 @@ div.wikitext {
 .wiki:hover {}
 
 /* Date displayed for last modification date of pages */
-p.editdate { color: #727272; font-size: smaller; margin-bottom: -1ex; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
+p.editdate { color: #727272; font-size: smaller; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp { background-color: white; border: 1px solid black; font-size: smaller; padding: 6pt;}
