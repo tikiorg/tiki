@@ -270,6 +270,8 @@ class Comments extends TikiLib {
 
 	    if (isset($parts["text"][0]))
 		$body = $parts["text"][0];
+  	    else
+		$body = "";
 
 	    // Remove 're:' and [forum]. -rlpowell
 	    $title = trim(
