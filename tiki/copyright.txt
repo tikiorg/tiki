@@ -1,6 +1,6 @@
 Tiki Copyright
 ----------------
-$ Id: $
+$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.3 2003-10-20 09:27:52 mose Exp $
 
 The following list gathers the copyrights holders for tikiwiki 
 at the state of 1.7 version. Each member of that list wrote at 
@@ -12,234 +12,531 @@ This is how we implement the TikiWikiSocialContract.
 http://tikiwiki.org/TikiWikiSocialContract
 
 
-Aaron Holmes
-sfn: pyrotknix
+List of members of the Community
 
-Al Brown
-US - CA - gmt-7
-sfn: albrown
-two: albrown
-irc: albrown, Icarus
+If you are not on that list and are member of the tikiwiki community,
+please contact an admin to be added. Operation is manual for now,
+working on its automatisation ..
 
-Arthur A. Vanderbilt
-sfn: avanderbilt
+That list is accessible on http://tikiwiki.org/whois for members only
+(soon public, the time to sort private from public data).
 
-Ben Tallman
-sfn: btallman
-two: btallman
 
-Chris Austin
-CA - BC - GMT-8 (PST)
-sfn: caustin_ats
-two: Stryker
-irc: Stryker
 
-Chris Kaleiki
-sfn: anenga
+BeastRider
+Country: Other
 
-Christoph Drieschner
-DE - gmt+2
-sfn: drieschner
-two: tex
-irc: drieschner, tex
+Chealer9
+Country: Canada
+Role: TikiWiki bug Trackers Organizer
+Name: Philippe Cloutier
+  Community  >  Tiki Teams  >  TeamDevelopment  
 
-Damian Parker
-UK - gmt
-sfn: damosoft
-two: Damian
 
-Damien Mc Kenna
-sfn: damienmckenna
+Damian
+Country: United_Kingdom
+Name: Damian Parker
+  Feature  >  Mobile/wap/voiceXML  
 
-Dave Sanders
-US (MD) - GMT-5
-sfn: vulgrin
-two: UserPageDaveSanders
-irc: Vulgrin
-aim: Vulgrin The Mad
 
-Dennis Daniels
-sfn: dgdaniels
-two: DennisDaniels
-irc: dgd
+DanielX
+Country: Canada
+Name: Daniel Descheneaux
 
-Dennis Heltzel
-US - GMT-5 (EST)
-sfn: dheltzel
-two: dheltzel
-irc: dheltzel
+DaveSanders
+Country: Other
+Name: Dave Sanders
 
-Diego Zamboni
-CH - GMT+1 (CET)
-sfn: zamboni
-two: ZZamboni
+DavorCengija
+Country: Croatia
 
-Dietmar Neidhart
-sfn: neidhart
+DennisDaniels
+Country: United_States
 
-Douglas Green
-sfn: dgreen34
+Franck
+Country: Other
+Role: mapserver expert
+Name: Franck Martin
+  Feature  >  Drawings, maps, charts & visualization  >  Maps  
 
-Eduardo Daniel Polidor
-sfn: epolidor
 
-Elliot McGucken?
-sfn: mcgucken
+Karneevor
+Country: Denmark
+Name: Michael B. Sørensen
 
-Flo G.
-sfn: redflo
-two: redflo
-irc: redflo
+MLimburg
+Country: Australia
+Name: Mark Limburg
+  Community  >  Tiki Teams  >  Team Usability  
+  Community  >  Tiki Teams  >  TeamDevelopment  >  ReleaseTeam  
 
-Gil Shwartz
-sfn: gilshwartz
 
-Greg Rundlett
-sfn: freephile
-two: freephile
+MagicFab
+Country: Colombia
+Name: Fabián Rodríguez
 
-Inge Solvoll
-sfn: ingesol
+MartinGeisler
+Country: Denmark
+Name: Martin Geisler
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
 
-Joan Vilarino
-sfn: lechuckdapirate
 
-Kent Primrose
-sfn: krose
+Mixolyde
+Country: United_States
+Name: Brian Williams
 
-Luis Argerich
-AR
-sfn: lrargerich
-two: luis
-irc: luigi, luis
+NorbertHuffschmid
+Country: Germany
+  Feature  >  Mobile/wap/voiceXML  
 
-Marc Laporte
-CA
-sfn: marclaporte
-two: marclaporte
-irc: marclaporte, marclaporte_
 
-Mariana Tome
-AR - gmt-3
-sfn: marianat
-two: mariana
+PrezKennedy
+Country: United_States
+Name: Matt Kennedy
 
-Mario Mene
-AR - gmt-3
-sfn: pippone
+Stryker
+Country: Canada
+Name: Chris Austin
+  Community  >  Tiki Teams  >  Team Community  
 
-Mark Limburg
-AU -
-sfn: mlimburg
-two: MLimburg
-irc: MLimburg
-
-Mike Nielsen
-US gmt-6
-sfn: mikenielsen
-two: mikenielsen
-irc: paradime
-
-Natalia Golmar
-sfn: natig
-
-Norbert Huffschmid
-DE gmt+1
-sfn: nhuffschmid
-two: NorbertHuffschmid?
-
-Oliver Hertel
-DE gmt+1
-sfn: ohertel
-two: ohertel
-irc: ohertel
-
-Oliver Scheck
-sfn: oliverscheck
-
-Patrick Van der Veken
-BE gmt+1
-sfn: patvdv
-two: patvdv
-
-Ramiro Vera
-sfn: ramiro_v
-
-Ricardo Gladwell
-sfn: axonrg
-two: ricardo
-
-Rodolphe Saugier
-FR gmt+1
-sfn: rsaugier
-
-Ross Smith
-US gmt-7 (PST8PDT)
-sfn: rossta
-two: rasa (UserPagerasa)
-irc: rasa
-
-Stephen Kurkowski
-sfn: plungerman
-
-Sylvie Greverend
-CA gmt-6
-sfn: sylvieg
-two: sylvie
-
-Tom Bouillut
-FR gmt+1
-sfn: tombombadilom
-two: tom
-irc: tomtom
-
-Tony Colley
-US gmt-5 (all year)
-sfn: awcolley
-two: TonyColley
-irc: frodo1990
-
-mose
-FR gmt+1
-sfn: mose
-two: mose
-irc: mose
-
-zaufi
-RU gmt+3
-sfn: zaufi
-two: zaufi
-irc: zaufi
-
-Loic Monthorin
-FR - gmt+1
-sfn: monthorin
-two: loic
-irc: loic_m
 
 Terence
-US - GMT-5 (EST)
-sfn: teedog
-two: Terence
-irc: teedog
-aim: teedog00
+Country: United_States
+Admin on tw.o
+Role: SpiderDog
+  Community  >  Tiki Teams  >  Team Community  
+  Community  >  Tiki Teams  >  Team Usability  
 
-Garland Foster
 
-Wang Wells
-CN 
+TonyColley
+Country: United_States
+Name: Tony Colley
 
-Lorinc Czegledi
-HU gtm+1
-sfn: ang
-two: ang
-irc: lorinc/ang
+Traivor
+Country: United_States
 
-Scott W Fischer
-US gmt-6
-sfn: fischesw
-two: swf
+ZZamboni
+Country: Other
 
+albrown
+Country: United_States
+Admin on tw.o
+Name: Al Brown
+  Community  >  Tiki Teams  >  Team Community  
+  Community  >  Tiki Teams  >  Team Usability  
+  Community  >  Tiki Teams  >  Team Communication  
+
+
+anarkim
+Country: Denmark
+Name: Kim Christopher Nielsen
+
+aw
+Country: United_Kingdom
+Name: Abdul-Wahid
+
+bligneri
+Country: Canada
+
+btallman
+Country: Other
+
+chris.holman
+Country: United_Kingdom
+Name: Chris
+
+clbustos
+Country: Other
+
+connermo
+Country: Other
+
+dheltzel
+Country: United_States
+Name: Dennis Heltzel
+  Feature  >  Performance & database  
+  Community  >  Tiki Teams  >  Team Getting Started  
+  Community  >  Tiki Teams  >  TeamDevelopment  >  DBAbstractionTeam  
+
+
+djamel
+Country: France
+Name: djamel
+
+einstine
+Country: United_States
+
+freephile
+Country: Other
+Name: Greg Rundlett
+
+freevic
+Country: Canada
+Name: alain Vicet
+
+fukuchi
+Country: Japan
+Name: Kentaro Fukuchi
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+gclift
+Country: Other
+Name: Gary Clift
+
+gmuslera
+Country: Uruguay
+Admin on tw.o
+Name: Gustavo Muslera
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+gongo
+Country: Belgium
+Name: Smits Dimitri
+
+grom
+  Feature  >  Major future features  >  Spreadsheet  
+
+
+guidewebmaster
+Country: Canada
+Name: Samuel Denis
+
+ibtubed
+Country: United_States
+
+ingesol
+
+isotopp
+
+jahlewis
+Country: United_States
+Name: John lewis
+
+jenolan
+Country: Australia
+Role: Dogsbody
+Name: Larry Lewis
+
+jjongsma
+Country: United_States
+Name: Jer
+
+jkring
+Country: United_States
+Name: Jim Kring
+
+jpg
+Country: Argentina
+Name: Juan Pablo Giménez
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+kodewulf
+Country: Australia
+Name: Kodewulf
+
+leehongfay
+
+loic
+Country: France
+Name: Loïc Monthorin
+  Community  >  Tiki Teams  >  Team Community  
+
+
+luca
+Country: Italy
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+luci
+Country: Czech_Republic
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+lueders
+
+luis
+Country: Argentina
+Admin on tw.o
+Name: Luis Argerich
+
+marclaporte
+Country: Canada
+Admin on tw.o
+Name: Marc Laporte
+
+mariana
+Country: Argentina
+Name: Mariana
+
+markusvk
+Country: Japan
+Name: Markus Gunske von Kölln
+
+maymann
+
+mchurchward
+Country: Canada
+Name: Mike Churchward
+
+mgfeller
+Country: Switzerland
+Name: Michael Gfeller
+
+michiel
+
+mikespub
+Country: Belgium
+  Feature  >  Workflow, trackers & tasks  
+
+
+mitchmurphy
+Country: Other
+
+mortenson
+Country: Japan
+Name: Leif Mortenson
+
+mose
+Country: France
+Admin on tw.o
+Role: misc technical lead and community support
+Name: mose
+  Feature  >  Calendar  
+  Feature  >  Theme & templates  >  Styles  
+  Feature  >  Workflow, trackers & tasks  
+  Community  >  tikiwiki.org  
+  Community  >  Tiki Teams  >  Team Community  
+  Community  >  Tiki Teams  >  TeamDevelopment  >  ReleaseTeam  
+  Community  >  Tiki Teams  >  Team Communication  
+  Feature  >  Major future features  >  Learning Management System (LMS)  
+  Contribution  >  Coding  
+
+
+mwexler
+Country: United_States
+
+natster
+Country: Other
+Name: Nathan Waterhouse
+
+ohertel
+Country: Germany
+Role: Developer, Translator de
+Name: Oliver Hertel
+  Feature  >  RSS & XML-RPC  
+  Community  >  Tiki Teams  >  TeamDevelopment  
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+pacoit
+  Feature  >  Major future features  >  Topic Maps / Faceted Classification  
+
+
+paradime
+Country: Other
+Name: mike
+
+patvdv
+Country: Belgium
+Admin on tw.o
+Name: Patrick Van der Veken
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+phil
+Country: France
+  Community  >  Tiki Teams  >  Team Community  
+  Community  >  Tiki Teams  >  Team Communication  
+
+
+rasa
+Country: United_States
+  Community  >  Tiki Teams  >  TeamDevelopment  >  DBAbstractionTeam  
+
+
+redflo
+Country: Germany
+  Community  >  Tiki Teams  >  TeamDevelopment  >  DBAbstractionTeam  
+
+
+reid
+Country: United_States
+Name: Reid Spence
+
+ricardo
+
+richtl
+Country: United_States
+Name: Richard Tango-Lowy
+
+rlpowell
+Country: United_States
+
+shinhan
+Country: Yugoslavia
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+siridhar
+Country: India
+Role: Documentation (video tutorials)
+  Contribution  >  Documentation  
+
+
+spaztica
+Country: Turkey
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+sting
+Country: Taiwan
+
+swythan
+Country: United_Kingdom
+Name: James Chaldecott
+
+sylvie
+Country: United_States
+Name: sylvie greverend
+  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+
+
+terris
+
+tex
+Country: Germany
+Name: Christoph Drieschner
+  Community  >  Tiki Teams  >  Team Getting Started  
+
+
+tom
+Country: France
+Role: developer
+Name: Tom Bouillut
+  Community  >  Tiki Teams  >  Team Community  
+  Community  >  Tiki Teams  >  Team Communication  
+
+
+van_woods
+Country: United_States
+
+vikas
+
+wolff_borg
+Country: Australia
+  Community  >  Tiki Teams  >  TeamDevelopment  >  DBAbstractionTeam  
+
+
+wvdploeg
+
+ysoya
+Country: South_Korea
+Name: Yongha Kim
+
+zaufi
+Country: Russia
+
+swf
+Country: United_States
+Admin on tw.o
+Name: Scott W Fischer
+
+ang
+Country: Hungary
+Admin on tw.o
+
+soshea
+Country: Other
+
+jasko
+Country: United_States
+
+oliver
+
+bpfaffenberger
+Country: United_States
+Name: Bryan Pfaffenberger
+
+andrzej
+Country: Poland
+Name: Andrzej
+
+amotl
+
+andreas_bac
+
+anenga
+
+avanderbilt
+
+broubrou
+
+carolg
+
+dabase
+
+damienmckenna
+
+dgreen34
+
+docekal
+
+epolidor
+
+gilshwartz
+
+ipso
+
+jwigdahl
+
+krose
+
+lechuckdapirate
+
+lonelyp
+
+marp2901
+
+mcgucken
+
+natig
+
+neidhart
+
+oliverscheck
+
+otalunak
+
+p3k
+
+pippone
+
+plungerman
+
+pyrotknix
+
+ramiro_v
+
+razorwyre
+
+ronchon
+
+rsaugier
+
+todd_here
+
+vaguery
+
+xbtheria
+
+
+
+--
+EOF
+=======
 
 That list is constantly evolving and new contributors 
 are very welcome to grow that file. Maybe some recent 
@@ -249,8 +546,6 @@ information can be inadequate or outdated.
 In case of need for modification, please contact 
 any of the following coordinator :
 
-Luis Argerich <luis@fuegolabs.com>
 Marc Laporte <marc@marclaporte.com>
 Mose <mose@mose.fr>
-
 
