@@ -16,23 +16,25 @@ class GameLib extends TikiLib {
 		global $user;
 
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
-			$cant = $this->getOne("select count(*) from tiki_games where gameName='$game'");
+			$cant = $this->getOne("select count(*) from `tiki_games` where `gameName`=?",array($game));
 
 			if ($cant) {
-				$query = "update tiki_games set hits = hits+1 where gameName='$game'";
+				$query = "update `tiki_games` set `hits` = `hits`+1 where `gameName`=?";
+				$bindvars=array($game);
 			} else {
-				$query = "insert into tiki_games(gameName,hits,points,votes) values('$game',1,0,0)";
+				$query = "insert into `tiki_games`(`gameName`,`hits`,`points`,`votes`) values(?,?,?,?)";
+				$bindvars=array($game,1,0,0);
 			}
 
-			$result = $this->query($query);
+			$result = $this->query($query,$bindvars);
 		}
 	}
 
 	function get_game_hits($game) {
-		$cant = $this->getOne("select count(*) from tiki_games where gameName='$game'");
+		$cant = $this->getOne("select count(*) from `tiki_games` where `gameName`=?",array($game));
 
 		if ($cant) {
-			$hits = $this->getOne("select hits from tiki_games where gameName='$game'");
+			$hits = $this->getOne("select `hits` from `tiki_games` where `gameName`=?",array($game));
 		} else {
 			$hits = 0;
 		}
