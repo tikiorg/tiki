@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.22 2004-03-05 01:25:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.23 2004-03-05 01:31:24 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -155,7 +155,9 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $trklib->list_tracker_fields($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $find);
 $plug = array();
 foreach ($channels['data'] as $c) {
-	$plug[] = $c['fieldId'];
+	if ($c['isPublic'] == 'y') {
+		$plug[] = $c['fieldId'];
+	}
 }
 $smarty->assign('plug', implode(':',$plug));
 	
