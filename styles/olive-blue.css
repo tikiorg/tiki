@@ -2698,3 +2698,10 @@ table.commentinfo { width: 100%; background-color: #e5f2f6; }
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting {
+ font-family : monospace;
+padding : 2ex;
+background-color : #F0F8FF;
+ margin : 1ex;
+ border : 1px dashed #adacaf; }
