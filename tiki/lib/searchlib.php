@@ -367,15 +367,21 @@ class SearchLib extends TikiLib {
 		$data = array();
 
 		$cant = 0;
+		
+		global $feature_wiki, $feature_directory, $feature_galleries, $feature_file_galleries, $feature_articles, $feature_forums, $feature_blogs, $feature_faqs;
+		
+		if ($feature_wiki == 'y') {
 		$rv = $this->find_wikis($words, $offset, $maxRecords, $fulltext);
-
 		foreach ($rv['data'] as $a) {
 			$a['type'] = tra('Wiki');
 
 			array_push($data, $a);
 		}
-
+		
 		$cant += $rv['cant'];
+		}
+		
+		if ($feature_galleries == 'y') {
 		$rv = $this->find_galleries($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -385,6 +391,9 @@ class SearchLib extends TikiLib {
 		}
 
 		$cant += $rv['cant'];
+		}
+		
+		if ($feature_faqs == 'y') {
 		$rv = $this->find_faqs($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -394,6 +403,9 @@ class SearchLib extends TikiLib {
 		}
 
 		$cant += $rv['cant'];
+		}
+		
+		if ($feature_galleries == 'y') {
 		$rv = $this->find_images($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -403,6 +415,9 @@ class SearchLib extends TikiLib {
 		}
 
 		$cant += $rv['cant'];
+		}
+		
+		if ($feature_forums == 'y') {
 		$rv = $this->find_forums($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -412,6 +427,9 @@ class SearchLib extends TikiLib {
 		}
 
 		$cant += $rv['cant'];
+		}
+		
+		if ($feature_file_galleries == 'y') {
 		$rv = $this->find_files($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -421,6 +439,9 @@ class SearchLib extends TikiLib {
 		}
 
 		$cant += $rv['cant'];
+		}
+		
+		if ($feature_blogs =='y') {
 		$rv = $this->find_blogs($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -430,6 +451,9 @@ class SearchLib extends TikiLib {
 		}
 
 		$cant += $rv['cant'];
+		}
+		
+		if ($feature_articles == 'y') {
 		$rv = $this->find_articles($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -439,6 +463,9 @@ class SearchLib extends TikiLib {
 		}
 
 		$cant += $rv['cant'];
+		}
+		
+		if ($feature_blogs == 'y') {
 		$rv = $this->find_posts($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -448,7 +475,9 @@ class SearchLib extends TikiLib {
 		}
 
 		$cant += $rv['cant'];
+		}
 
+		if ($feature_directory == 'y') {
 		$rv = $this->find_directory($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
@@ -459,6 +488,7 @@ class SearchLib extends TikiLib {
 		}
 
 		$cant += $rv['cant'];
+		}
 
 		if ($fulltext) {
 			function find_pages_cmp($a, $b) {
