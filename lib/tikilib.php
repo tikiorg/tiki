@@ -1902,7 +1902,7 @@ function register_user_vote($user, $id) {
 	} else {
 	$query = "delete from `tiki_user_votings` where `user`=? and `id`=?";
 	$result = $this->query($query,array($user,(int)$id));
-	$query = "insert `into tiki_user_votings`(`user`,`id`) values(?,?)";
+	$query = "insert into `tiki_user_votings`(`user`,`id`) values(?,?)";
 	$result = $this->query($query,array($user,(int)$id));
     }
 }
