@@ -84,7 +84,7 @@ if(isset($_REQUEST["edit_assign"])) {
   $smarty->assign_by_ref('assign_cache',$info["cache_time"]);
   $smarty->assign_by_ref('assign_rows',$info["rows"]);
   $smarty->assign_by_ref('assign_params',$info["params"]);
-  if (isset($info["ord"]) {
+  if (isset($info["ord"])) {
 		$cosa="".$info["ord"];
 	} else {
 		 $cosa="";
