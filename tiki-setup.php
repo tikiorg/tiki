@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.200 2004-03-02 10:27:18 djnz Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.201 2004-03-09 10:48:24 djnz Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -217,6 +217,10 @@ $num_queries=0;
 
 include_once ("tiki-setup_base.php");
 //print("tiki-setup: before rest of tiki-setup:".$tiki_timer->elapsed()."<br />");
+
+if ( $user ) { // load users_users and user_preferences cache for logged-in user
+    $tikilib->load_user_cache($user, 'all');
+}
 
 //check to see if admin has closed the site
 $site_closed = $tikilib->get_preference('site_closed','n');
