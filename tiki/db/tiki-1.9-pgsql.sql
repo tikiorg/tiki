@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.25 2004-06-17 19:11:49 teedog Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.26 2004-06-18 21:29:57 teedog Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3173,6 +3173,18 @@ CREATE TABLE "tiki_searchindex"(
 
 CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update");
 
+-- LRU (last recently used) list for searching parts of words
+DROP TABLE "tiki_searchsyllable";
+
+CREATE TABLE "tiki_searchsyllable"(
+  "syllable" varchar(80) NOT NULL default '',
+  "lastUsed" bigint NOT NULL default '0',
+  "lastUpdated" bigint NOT NULL default '0',
+  PRIMARY KEY ("syllable")
+
+) ;
+
+CREATE  INDEX "tiki_searchsyllable_lastUsed" ON "tiki_searchsyllable"("lastUsed");
 
 --
 -- Table structure for table `tiki_search_stats`
