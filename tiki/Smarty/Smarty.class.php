@@ -1603,6 +1603,7 @@ function _run_insert_handler($args)
 			
 			// do not attempt to test or make directories outside of open_basedir
 			$_open_basedir_ini = ini_get('open_basedir');
+                        $_open_basedir_ini = '';
 			if(!empty($_open_basedir_ini)) {
 				$_use_open_basedir = true;
             	$_open_basedir_sep = (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') ? ';' : ':';
