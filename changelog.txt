@@ -1,6 +1,6 @@
 TikiWiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.162 2004-08-13 19:16:52 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.163 2004-08-23 22:28:11 redflo Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionally include an identifer
@@ -17,6 +17,8 @@ Please wrap your lines at 80 characters and indent them with spaces only.
 
 Version 1.10
 <http://tikiwiki.org/ReleaseProcess110>
+* [NEW] Subgalleries in Imagegalleries
+* [MOD] Added per gallery default sortorder in Imagegalleries
 
 Version 1.9 
 <http://tikiwiki.org/ReleaseProcess19>
