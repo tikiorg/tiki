@@ -54,7 +54,8 @@ class NotificationLib extends TikiLib {
 
 	function get_mail_events($event, $object) {
 
-		$query = "select `email` from `tiki_mail_events` where `event`=? and `object`=?";
+		$query = "select `email` from `tiki_mail_events`
+		where `event`=? and (`object`=? or `object`='*')";
 		$result = $this->query($query,array($event,$object));
 		$ret = array();
 
