@@ -30,60 +30,64 @@ class SearchLib extends TikiLib {
 		}
 	}
 
+/**
+ * \brief generic search function
+ * \param $h the table containing the search parameter
+			'from': the table or tables to be looked (ex: 'tiki_pages') (ex: 'tiki_comments c, tiki_pages p'
+			'name': the column that contains the name
+			'data': the column that contains the data that will be displayed as description (the first characters only)
+			'hits': the column that contains the number that will be displyed as hits
+			'lastModif': the column that contains the date that will be displayed
+			'href': the link that will be displayed (each parameter is in the array id
+			'id': the list of parameters used in href 
+			'pageName': the value that will displayed as title
+			'search': the columns taht are searched (the index columns)
+			'orderby': a ordereing (will be added to relevance ordering)
+ * \param fulltext: if true a full text search is done, if no result, a simple search is done
+ * \param $words the list of words
+ * //todo: extract the short words from the list and do a simple search on them, them merge with the full search results on the remaining words
+ * \return the nb of results + array('name', 'data', 'hits', 'lastModif', 'href', 'pageName', 'relevance'
+**/
 	function _find($h, $words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
 		$words = trim($words);
 
 		$sql = sprintf(
-			'SELECT %s AS name, LEFT(%s, 240) AS data, %s AS hits, %s AS lastModif, %s	AS pageName', $h['name'], $h['data'],
-			$h['hits'], $h['lastModif'], $h['pageName']);
+			'SELECT %s AS name, LEFT(%s, 240) AS data, %s AS hits, %s AS lastModif, %s AS pageName',
+					$h['name'], $h['data'], $h['hits'], $h['lastModif'], $h['pageName']);
+		
 		$id = $h['id'];
-
 		for ($i = 0; $i < count($id); ++$i)
 			$sql .= ',' . $id[$i] . ' AS id' . ($i + 1);
-
 		if (count($id) < 2)
 			$sql .= ',1 AS id2';
 
 		$sql2 = ' FROM ' . $h['from'] . ' WHERE ';
 		$sql2 .= (isset($h['filter']))? $h['filter'] : '1';
-		$search_fields = array($h['name']);
-
-		if ($h['data'] && $h['name'] != $h['data'])
-			array_push($search_fields, $h['data']);
 
 		$orderby = (isset($h['orderby']) ? $h['orderby'] : $h['hits']);
 
 		if ($fulltext) {
-			if (count($h['search']))
-				if (!preg_match('/\./', $h['search'][0]))
-					$search_fields = array_merge($search_fields, $h['search']);
-
 			$qwords = $this->db->quote($words);
-			$sqlft = 'MATCH(' . join(',', $search_fields). ') AGAINST (' . $qwords . ')';
+
+			$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords . ')';
 			$sql2 .= ' AND ' . $sqlft ;
 			$sql .= ', ' . $sqlft . ' AS relevance';
 			$orderby = 'relevance desc, ' . $orderby;
-		#		if (count($h['search'])) {
-		#	    	$sqlft = ' MATCH(' . join(',', $h['search']) . ') AGAINST (' . $qwords . ')';
-		#	    	$sql2 .= ' OR ' . $sqlft . ' > 0';
-		#	    	$sql .= ', ' . $sqlft . ' AS score2';
-		#		}
 		} else if ($words) {
 			$sql .= ', -1 AS relevance';
 
 			$vwords = split(' ', $words);
-
 			foreach ($vwords as $aword) {
 				//$aword = $this->db->quote('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
 				$aword = $this->db->quote('.*' . strtoupper($aword). '.*');
 
 				$sql2 .= ' AND (';
 
-				for ($i = 0; $i < count($search_fields); ++$i) {
+				for ($i = 0; $i < count($h['search']); ++$i) {
 					if ($i)
 						$sql2 .= ' OR ';
 
-					$sql2 .= 'UPPER(' . $search_fields[$i] . ') REGEXP ' . $aword;
+					$sql2 .= 'UPPER(' . $h['search'][$i] . ') REGEXP ' . $aword;
 				}
 
 				$sql2 .= ')';
@@ -128,21 +132,54 @@ class SearchLib extends TikiLib {
 	}
 
 	function find_wikis($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
+		$rv = array();
+		static $search_wikis_comments = array(
+			'from' => 'tiki_comments c, tiki_pages p',
+			'name' => 'c.title',
+			'data' => 'c.data',
+			'hits' => 'p.hits', // c.hits is always null for a page comment!!
+			'lastModif' => 'c.commentDate',
+			'href' => 'tiki-index.php?page=%s#comments',
+			'id' => array('p.pageName', 'c.threadId'),
+			'pageName' => 'CONCAT(p.pageName, ": ", c.title)',
+			'search' => array('c.title', 'c.data'),
+			'filter' => 'c.objectType = "wiki page" AND p.pageName=c.object',
+		);
+		$rv = $this->_find($search_wikis_comments, $words, $offset, $maxRecords, $fulltext);
+
 		static $search_wikis = array(
 			'from' => 'tiki_pages',
 			'name' => 'pageName',
 			'data' => 'data',
-			'hits' => 'pageRank',
+			'hits' => 'hits', //'pageRank', pageRank is updated not very often since the line below is in comment
 			'lastModif' => 'lastModif',
 			'href' => 'tiki-index.php?page=%s',
 			'id' => array('pageName'),
 			'pageName' => 'pageName',
-			'search' => array(),
+			'search' => array('pageName', 'data'),
 		);
 
 		// that pagerank re-calculation was speed handicap (timex30)
 		//$this->pageRank();
-		return $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
+		if (!$rv['cant'])
+			return $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
+		else {
+			$data = array();
+			$data = $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
+			if (!$data['cant'])
+				return $rv;
+			// merge
+			// todo - take away the double entries and sort but comment relevance must be lower)
+			foreach ($rv['data'] as $a) {
+				array_push($data['data'], $a);
+			}
+			$data['cant'] += $rv['cant'];
+			return $data;
+		}
+			
+	}
+	function find_relevance_cmp($a, $b) {
+		return ($a['relevance'] > $b['relevance']) ? -1 : (($a['relevance'] < $b['relevance']) ? 1 : 0);
 	}
 
 	function find_galleries($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
@@ -155,7 +192,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-browse_gallery.php?galleryId=%d',
 			'id' => array('galleryId'),
 			'pageName' => 'name',
-			'search' => array(),
+			'search' => array('name', 'description'),
 		);
 
 		return $this->_find($search_galleries, $words, $offset, $maxRecords, $fulltext);
@@ -163,7 +200,7 @@ class SearchLib extends TikiLib {
 
 	function find_faqs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
 		static $search_faqs = array(
-			'from' => 'tiki_faqs f LEFT JOIN tiki_faq_questions q ON q.faqId = f.faqId',
+			'from' => 'tiki_faqs f , tiki_faq_questions q',
 			'name' => 'f.title',
 			'data' => 'f.description',
 			'hits' => 'f.hits',
@@ -171,10 +208,8 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-view_faq.php?faqId=%d',
 			'id' => array('f.faqId'),
 			'pageName' => 'CONCAT(f.title, ": ", q.question)',
-			'search' => array(
-			'q.question',
-			'q.answer'
-		),
+			'search' => array('q.question', 'q.answer'),
+			'filter' => 'q.faqId = f.faqId',
 		);
 
 		return $this->_find($search_faqs, $words, $offset, $maxRecords, $fulltext);
@@ -190,7 +225,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-directory_redirect.php?siteId=%d',
 			'id' => array('siteId'),
 			'pageName' => 'name',
-			'search' => array(),
+			'search' => array('name', 'description'),
 		);
 
 		return $this->_find($search_directory, $words, $offset, $maxRecords, $fulltext);
@@ -206,7 +241,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-browse_image.php?imageId=%d',
 			'id' => array('imageId'),
 			'pageName' => 'name',
-			'search' => array(),
+			'search' => array('name', 'description'),
 		);
 
 		return $this->_find($search_images, $words, $offset, $maxRecords, $fulltext);
@@ -222,7 +257,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-view_forum_thread.php?forumId=%d&amp;comments_parentId=%d',
 			'id' => array('f.forumId', 'c.threadId'),
 			'pageName' => 'CONCAT(name, ": ", title)',
-			'search' => array(),
+			'search' => array('c.title', 'c.data'),
 			'filter' => 'c.objectType = "forum" AND f.forumId=c.object',
 		);
 
@@ -239,7 +274,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-download_file.php?fileId=%d',
 			'id' => array('fileId'),
 			'pageName' => 'filename',
-			'search' => array(),
+			'search' => array('name', 'description'),
 		);
 
 		return $this->_find($search_files, $words, $offset, $maxRecords, $fulltext);
@@ -255,7 +290,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-view_blog.php?blogId=%d',
 			'id' => array('blogId'),
 			'pageName' => 'title',
-			'search' => array(),
+			'search' => array('title', 'description'),
 		);
 
 		return $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext);
@@ -271,7 +306,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-read_article.php?articleId=%d',
 			'id' => array('articleId'),
 			'pageName' => 'title',
-			'search' => array('body'),
+			'search' => array('title', 'heading', 'body'),
 		);
 
 		return $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext);
@@ -283,7 +318,7 @@ class SearchLib extends TikiLib {
 		$site_timezone_shortname = $this->get_site_timezone_shortname();
 		$site_time_difference = $this->get_site_time_difference($user);
 		# TODO localize?
-		$pagename = "CONCAT(b.title, ' [', " . "DATE_FORMAT(FROM_UNIXTIME(p.created + $site_time_difference), " . "'%M %d %Y %h:%i'), ' $site_timezone_shortname', '] by: ', p.user)";
+		$pagename = "CONCAT(b.title, ' [', " . "DATE_FORMAT(FROM_UNIXTIME(p.created + $site_time_difference), " . "'%M %d %Y %h:%i'), ' $site_timezone_shortname', '] : ', p.user)";
 
 		$search_posts = array(
 			'from' => 'tiki_blog_posts p LEFT JOIN tiki_blogs b ON b.blogId = p.blogId',
@@ -296,7 +331,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-view_blog.php?blogId=%d&amp;find=' . urlencode($words),
 			'id' => array('p.blogId'),
 			'pageName' => $pagename,
-			'search' => array(),
+			'search' => array('p.data'),
 		);
 
 		return $this->_find($search_posts, $words, $offset, $maxRecords, $fulltext);
@@ -381,7 +416,7 @@ class SearchLib extends TikiLib {
 		$rv = $this->find_posts($words, $offset, $maxRecords, $fulltext);
 
 		foreach ($rv['data'] as $a) {
-			$a['type'] = tra('Post');
+			$a['type'] = tra('Blog post');
 
 			array_push($data, $a);
 		}
@@ -392,6 +427,7 @@ class SearchLib extends TikiLib {
 
 		foreach ($rv['data'] as $a) {
 			$a['type'] = tra('Directory');
+			$a['relevance'] *= 0.7; // decrease artifically the relevance because as description is shorter than a wiki data, a directory is returned before wiki page
 
 			array_push($data, $a);
 		}
