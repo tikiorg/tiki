@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.25 2003-11-20 19:36:53 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.26 2003-11-20 23:47:51 markusvk Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -7,7 +7,7 @@
   <div class="cbox-data">
     <form action="tiki-admin.php?page=general" method="post">
       <table class="admin"><tr>
-        <td class="heading" colspan="2" 
+        <td class="heading" colspan="2"
             align="center">{tr}General Preferences{/tr}</td>
       </tr><tr>
         <td class="form" >{tr}Theme{/tr}:</td>
@@ -29,7 +29,7 @@
             {/section}
             </select>
         </td>
-      </tr><tr><td colspan="2"><hr/></td></tr>      
+      </tr><tr><td colspan="2"><hr/></td></tr>
       <tr>
         <td class="form">{tr}Use group homepages{/tr}:</td>
         <td><input type="checkbox" name="useGroupHome"
@@ -160,7 +160,7 @@
           {tr}Display modules to all groups always{/tr}:</td>
         <td ><input type="checkbox" name="modallgroups"
               {if $modallgroups eq 'y'}checked="checked"{/if} {popup text="Warning! New admins, there is currently a bug
-that should remove your login module if you disable this, making you unable to get back in Tiki. Use tiki-login_scr.php to 
+that should remove your login module if you disable this, making you unable to get back in Tiki. Use tiki-login_scr.php to
 get back in if this happens to you. The corresponding SF bug tracker is 835233." textcolor=red}/>
         </td>
       </tr><tr>
@@ -193,12 +193,14 @@ get back in if this happens to you. The corresponding SF bug tracker is 835233."
         <td><input type="checkbox" name="count_admin_pvs"
               {if $count_admin_pvs eq 'y'}checked="checked"{/if}/>
         </td>
+<!-- Still under discussion     
       </tr><tr>
         <td class="form">{tr}Hide anonymous-only modules from registered users{/tr}:</td>
         <td><input type="checkbox" name="modseparateanon"
               {if $modseparateanon eq 'y'}checked="checked"{/if}/>
         </td>
         <td>&nbsp;</td>
+-->     
       </tr></table>
       <table class="admin"><tr>
         <td colspan="2"><hr/></td>
@@ -261,7 +263,7 @@ get back in if this happens to you. The corresponding SF bug tracker is 835233."
                    value="{$maxRecords|escape}" />
       </tr></table>
       <table class="admin"><tr>
-        <td class="heading" colspan="2" 
+        <td class="heading" colspan="2"
             align="center">{tr}Date and Time Formats{/tr}</td>
       </tr><tr>
         <td class="form" >{tr}Long date format{/tr}:</td>
@@ -293,7 +295,7 @@ get back in if this happens to you. The corresponding SF bug tracker is 835233."
       </tr></table>
       <!-- Obsolete from 1.7 timezone changes
       <table class="admin"><tr>
-        <td class="heading" colspan="2" 
+        <td class="heading" colspan="2"
             align="center">{tr}Time Zone{/tr}</td>
       </tr><tr>
         <td class="form"  style="vertical-align:middle;">
