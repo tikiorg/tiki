@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_processes.php,v 1.7 2004-01-20 00:56:25 halon Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_processes.php,v 1.8 2004-01-25 00:44:19 halon Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,7 +97,7 @@ $sameurl_elements = array(
 	'filter_valid',
 	'filter_process',
 	'filter_active',
-	'processId'
+	'pid'
 );
 
 $smarty->assign('stats', $processMonitor->monitor_stats());
