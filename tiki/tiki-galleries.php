@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.25 2004-06-14 01:44:46 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.26 2004-06-16 06:12:08 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -248,7 +248,8 @@ $smarty->assign_by_ref('offset', $offset);
 // Get the list of libraries available for this user (or public galleries)
 $galleries = $tikilib->list_galleries($offset, $maxRecords, $sort_mode, 'admin', $find);
 
-for ($i = 0; $i < count($galleries["data"]); $i++) {
+$temp_max = count($galleries["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'image gallery')) {
 		$galleries["data"][$i]["individual"] = 'y';
 

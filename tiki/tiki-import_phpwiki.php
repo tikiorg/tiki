@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.16 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.17 2004-06-16 06:12:08 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,8 @@ require ("lib/webmail/mimeDecode.php");
 
 function parse_output(&$obj, &$parts, $i) {
     if (!empty($obj->parts)) {
-	for ($i = 0; $i < count($obj->parts); $i++)
+	$temp_max = count($obj->parts);
+	for ($i = 0; $i < $temp_max; $i++)
 	    parse_output($obj->parts[$i], $parts, $i);
     } else {
 	$ctype = $obj->ctype_primary . '/' . $obj->ctype_secondary;

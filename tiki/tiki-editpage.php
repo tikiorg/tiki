@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.87 2004-06-11 14:21:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.88 2004-06-16 06:14:54 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -234,7 +234,8 @@ function walk_and_parse(&$c, &$src, &$p)
                 case "li":
                     // Generate wiki list item according to current list depth.
                     // (ensure '*/#' starts from begining of line)
-                    for ($l = ''; strlen($l) < count($p['listack']); $l .= end($p['listack']));
+                    $temp_max = count($p['listack']);
+                    for ($l = ''; strlen($l) < $temp_max; $l .= end($p['listack']));
                     $src .= "\n$l ";
                     break;
                 case "font":

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.19 2004-06-13 21:27:20 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_blogs.php,v 1.20 2004-06-16 06:17:28 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -97,7 +97,8 @@ $smarty->assign('find', $find);
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_blogs($offset, $maxRecords, $sort_mode, $find);
 
-for ($i = 0; $i < count($listpages["data"]); $i++) {
+$temp_max = count($listpages["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($listpages["data"][$i]["blogId"], 'blog')) {
 		$listpages["data"][$i]["individual"] = 'y';
 
