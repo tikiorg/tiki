@@ -1,5 +1,11 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Inter wiki links, admin can define URLS in the format 
+  http://www.example.com?page=$page or similar ascociating the URL with 
+  a name then the syntax ((Wiki:name)) can be used to link to a page 
+  in an external wiki. This can be used with other Tiki sites or other
+  wikis as well provided that the URL to a page can be constructed putting
+  the page name somewhere in a URL.
 * [NEW] Wiki pages can be renamed.
 * [CHG] Comment and link to diff are now informed when notifying that a page
   has changed

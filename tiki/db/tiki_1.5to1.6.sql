@@ -3,6 +3,15 @@
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_rename','wiki','Can rename pages','editor');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_lock','wiki','Can lock pages','editor');
 
+drop table if exists tiki_extwiki;
+create table tiki_extwiki(
+  extwikiId integer(12) not null auto_increment,
+  name varchar(20) not null,
+  extwiki varchar(255),
+  primary key(extwikiId)
+);
+
+
 drop table if exists tiki_dsn;
 create table tiki_dsn(
   dsnId integer(12) not null auto_increment,
