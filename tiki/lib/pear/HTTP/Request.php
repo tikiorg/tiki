@@ -43,8 +43,8 @@
 // echo $a->getResponseBody();
 //
 
-require_once(TIKI_LIB_PATH.'/pear/Net/Socket.php');
-require_once(TIKI_LIB_PATH.'/pear/Net/URL.php');
+require_once('lib/pear/Net/Socket.php');
+require_once('lib/pear/Net/URL.php');
 
 define('HTTP_REQUEST_METHOD_GET',     'GET',     true);
 define('HTTP_REQUEST_METHOD_HEAD',    'HEAD',    true);
