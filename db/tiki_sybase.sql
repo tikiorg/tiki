@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::Sybase
--- Created on Tue Aug 12 12:36:52 2003
+-- Created on Sun Aug 17 01:05:49 2003
 -- 
 --
 -- Table: galaxia_activities
@@ -18,7 +18,7 @@ CREATE TABLE galaxia_activities (
   isInteractive char(1) DEFAULT NULL NULL,
   lastModif numeric(14) DEFAULT NULL NULL,
   description varchar(255) NULL,
-  CONSTRAINT chk_galaxia_activities_type CHECK (type IN (start,end,split,switch,join,activity,standalone)),
+  CONSTRAINT chk_galaxia_activities_type CHECK (type IN ('start','end','split','switch','join','activity','standalone')),
   CONSTRAINT pk_galaxia_activities PRIMARY KEY (activityId)
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE galaxia_instance_activities (
   ended numeric(14) DEFAULT '0' NOT NULL,
   user_ varchar(200) DEFAULT NULL NULL,
   status enumcharacter varying(9) DEFAULT NULL NULL,
-  CONSTRAINT chk_galaxia_instance_activitie CHECK (status IN (running,completed)),
+  CONSTRAINT chk_galaxia_instance_activitie CHECK (status IN ('running','completed')),
   CONSTRAINT pk_galaxia_instance_activities PRIMARY KEY (instanceId, activityId)
 );
 
@@ -82,7 +82,7 @@ CREATE TABLE galaxia_instances (
   ended numeric(14) DEFAULT NULL NULL,
   status enumcharacter varying(9) DEFAULT NULL NULL,
   properties longblob NULL,
-  CONSTRAINT chk_galaxia_instances_status CHECK (status IN (active,exception,aborted,completed)),
+  CONSTRAINT chk_galaxia_instances_status CHECK (status IN ('active','exception','aborted','completed')),
   CONSTRAINT pk_galaxia_instances PRIMARY KEY (instanceId)
 );
 
@@ -296,7 +296,7 @@ CREATE TABLE tiki_banning (
   use_dates char(1) DEFAULT NULL NULL,
   created numeric(14) DEFAULT NULL NULL,
   message varchar(255) NULL,
-  CONSTRAINT chk_tiki_banning_mode CHECK (mode IN (user,ip)),
+  CONSTRAINT chk_tiki_banning_mode CHECK (mode IN ('user','ip')),
   CONSTRAINT pk_tiki_banning PRIMARY KEY (banId)
 );
 
@@ -431,8 +431,8 @@ CREATE TABLE tiki_calendar_items (
   user_ varchar(40) DEFAULT NULL NULL,
   created numeric(14) DEFAULT '0' NOT NULL,
   lastmodif numeric(14) DEFAULT '0' NOT NULL,
-  CONSTRAINT chk_tiki_calendar_items_priori CHECK (priority IN (1,2,3,4,5,6,7,8,9)),
-  CONSTRAINT chk_tiki_calendar_items_status CHECK (status IN (0,1,2)),
+  CONSTRAINT chk_tiki_calendar_items_priori CHECK (priority IN ('1','2','3','4','5','6','7','8','9')),
+  CONSTRAINT chk_tiki_calendar_items_status CHECK (status IN ('0','1','2')),
   CONSTRAINT pk_tiki_calendar_items PRIMARY KEY (calitemId)
 );
 
@@ -461,7 +461,7 @@ CREATE TABLE tiki_calendar_roles (
   calitemId numeric(14) DEFAULT '0' NOT NULL,
   username varchar(40) DEFAULT '' NOT NULL,
   role enumcharacter varying(1) DEFAULT '0' NOT NULL,
-  CONSTRAINT chk_tiki_calendar_roles_role CHECK (role IN (0,1,2,3,6)),
+  CONSTRAINT chk_tiki_calendar_roles_role CHECK (role IN ('0','1','2','3','6')),
   CONSTRAINT pk_tiki_calendar_roles PRIMARY KEY (calitemId, username, role)
 );
 
@@ -482,11 +482,11 @@ CREATE TABLE tiki_calendars (
   customparticipants enumcharacter varying(1) DEFAULT 'n' NOT NULL,
   created numeric(14) DEFAULT '0' NOT NULL,
   lastmodif numeric(14) DEFAULT '0' NOT NULL,
-  CONSTRAINT chk_tiki_calendars_customlocat CHECK (customlocations IN (n,y)),
-  CONSTRAINT chk_tiki_calendars_customcateg CHECK (customcategories IN (n,y)),
-  CONSTRAINT chk_tiki_calendars_customlangu CHECK (customlanguages IN (n,y)),
-  CONSTRAINT chk_tiki_calendars_customprior CHECK (custompriorities IN (n,y)),
-  CONSTRAINT chk_tiki_calendars_customparti CHECK (customparticipants IN (n,y)),
+  CONSTRAINT chk_tiki_calendars_customlocat CHECK (customlocations IN ('n','y')),
+  CONSTRAINT chk_tiki_calendars_customcateg CHECK (customcategories IN ('n','y')),
+  CONSTRAINT chk_tiki_calendars_customlangu CHECK (customlanguages IN ('n','y')),
+  CONSTRAINT chk_tiki_calendars_customprior CHECK (custompriorities IN ('n','y')),
+  CONSTRAINT chk_tiki_calendars_customparti CHECK (customparticipants IN ('n','y')),
   CONSTRAINT pk_tiki_calendars PRIMARY KEY (calendarId)
 );
 
@@ -1274,8 +1274,6 @@ CREATE INDEX ti_gId ON tiki_images (galleryId);
 
 CREATE INDEX ti_cr ON tiki_images (created);
 
-CREATE INDEX ti_hi ON tiki_images (hits);
-
 CREATE INDEX ti_us ON tiki_images (user);
 
 CREATE INDEX ft ON tiki_images (name, description);
@@ -1672,8 +1670,6 @@ CREATE TABLE tiki_pages (
   creator varchar(200) DEFAULT NULL NULL,
   CONSTRAINT pk_tiki_pages PRIMARY KEY (pageName)
 );
-
-CREATE INDEX pageName ON tiki_pages (pageName);
 
 CREATE INDEX data ON tiki_pages (data(255));
 

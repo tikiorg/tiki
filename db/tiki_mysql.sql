@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::MySQL
--- Created on Tue Aug 12 12:39:30 2003
+-- Created on Sun Aug 17 01:09:07 2003
 -- 
 SET foreign_key_checks=0;
 
@@ -13,7 +13,7 @@ CREATE TABLE galaxia_activities (
   name varchar(80) DEFAULT NULL,
   normalized_name varchar(80) DEFAULT NULL,
   pId integer(14) NOT NULL DEFAULT '0',
-  type enum(10) DEFAULT NULL,
+  type enum('start','end','split','switch','join','activity','standalone') DEFAULT NULL,
   isAutoRouted char(1) DEFAULT NULL,
   flowNum integer(10) DEFAULT NULL,
   isInteractive char(1) DEFAULT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE galaxia_instance_activities (
   started integer(14) NOT NULL DEFAULT '0',
   ended integer(14) NOT NULL DEFAULT '0',
   user varchar(200) DEFAULT NULL,
-  status enum(9) DEFAULT NULL,
+  status enum('running','completed') DEFAULT NULL,
   PRIMARY KEY (instanceId, activityId)
 );
 
@@ -75,7 +75,7 @@ CREATE TABLE galaxia_instances (
   nextActivity integer(14) DEFAULT NULL,
   nextUser varchar(200) DEFAULT NULL,
   ended integer(14) DEFAULT NULL,
-  status enum(9) DEFAULT NULL,
+  status enum('active','exception','aborted','completed') DEFAULT NULL,
   properties longblob,
   PRIMARY KEY (instanceId)
 );
@@ -212,10 +212,10 @@ CREATE TABLE tiki_articles (
   type varchar(50) DEFAULT NULL,
   rating decimal(3, 2) DEFAULT NULL,
   isfloat char(1) DEFAULT NULL,
-  NORMAL title (title),
-  NORMAL heading (heading(255)),
-  NORMAL body (body(255)),
-  NORMAL reads (reads),
+  INDEX title (title),
+  INDEX heading (heading(255)),
+  INDEX body (body(255)),
+  INDEX reads (reads),
   FULLTEXT ft (title, heading, body),
   PRIMARY KEY (articleId)
 );
@@ -263,7 +263,7 @@ CREATE TABLE tiki_banners (
 DROP TABLE IF EXISTS tiki_banning;
 CREATE TABLE tiki_banning (
   banId integer(12) NOT NULL auto_increment,
-  mode enum(4) DEFAULT NULL,
+  mode enum('user','ip') DEFAULT NULL,
   title varchar(200) DEFAULT NULL,
   ip1 char(3) DEFAULT NULL,
   ip2 char(3) DEFAULT NULL,
@@ -312,9 +312,9 @@ CREATE TABLE tiki_blog_posts (
   trackbacks_to text,
   trackbacks_from text,
   title varchar(80) DEFAULT NULL,
-  NORMAL data (data(255)),
-  NORMAL blogId (blogId),
-  NORMAL created (created),
+  INDEX data (data(255)),
+  INDEX blogId (blogId),
+  INDEX created (created),
   FULLTEXT ft (data),
   PRIMARY KEY (postId)
 );
@@ -355,9 +355,9 @@ CREATE TABLE tiki_blogs (
   add_date char(1) DEFAULT NULL,
   add_poster char(1) DEFAULT NULL,
   allow_comments char(1) DEFAULT NULL,
-  NORMAL title (title),
-  NORMAL description (description(255)),
-  NORMAL hits (hits),
+  INDEX title (title),
+  INDEX description (description(255)),
+  INDEX hits (hits),
   FULLTEXT ft (title, description),
   PRIMARY KEY (blogId)
 );
@@ -385,8 +385,8 @@ CREATE TABLE tiki_calendar_items (
   end integer(14) NOT NULL DEFAULT '0',
   locationId integer(14) DEFAULT NULL,
   categoryId integer(14) DEFAULT NULL,
-  priority enum(1) NOT NULL DEFAULT '1',
-  status enum(1) NOT NULL DEFAULT '0',
+  priority enum('1','2','3','4','5','6','7','8','9') NOT NULL DEFAULT '1',
+  status enum('0','1','2') NOT NULL DEFAULT '0',
   url varchar(255) DEFAULT NULL,
   lang char(2) NOT NULL DEFAULT 'en',
   name varchar(255) NOT NULL DEFAULT '',
@@ -394,7 +394,7 @@ CREATE TABLE tiki_calendar_items (
   user varchar(40) DEFAULT NULL,
   created integer(14) NOT NULL DEFAULT '0',
   lastmodif integer(14) NOT NULL DEFAULT '0',
-  NORMAL calendarId (calendarId),
+  INDEX calendarId (calendarId),
   PRIMARY KEY (calitemId)
 );
 
@@ -418,7 +418,7 @@ DROP TABLE IF EXISTS tiki_calendar_roles;
 CREATE TABLE tiki_calendar_roles (
   calitemId integer(14) NOT NULL DEFAULT '0',
   username varchar(40) NOT NULL DEFAULT '',
-  role enum(1) NOT NULL DEFAULT '0',
+  role enum('0','1','2','3','6') NOT NULL DEFAULT '0',
   PRIMARY KEY (calitemId, username(16), role)
 );
 
@@ -431,11 +431,11 @@ CREATE TABLE tiki_calendars (
   name varchar(80) NOT NULL DEFAULT '',
   description varchar(255) DEFAULT NULL,
   user varchar(40) NOT NULL DEFAULT '',
-  customlocations enum(1) NOT NULL DEFAULT 'n',
-  customcategories enum(1) NOT NULL DEFAULT 'n',
-  customlanguages enum(1) NOT NULL DEFAULT 'n',
-  custompriorities enum(1) NOT NULL DEFAULT 'n',
-  customparticipants enum(1) NOT NULL DEFAULT 'n',
+  customlocations enum('n','y') NOT NULL DEFAULT 'n',
+  customcategories enum('n','y') NOT NULL DEFAULT 'n',
+  customlanguages enum('n','y') NOT NULL DEFAULT 'n',
+  custompriorities enum('n','y') NOT NULL DEFAULT 'n',
+  customparticipants enum('n','y') NOT NULL DEFAULT 'n',
   created integer(14) NOT NULL DEFAULT '0',
   lastmodif integer(14) NOT NULL DEFAULT '0',
   PRIMARY KEY (calendarId)
@@ -623,11 +623,11 @@ CREATE TABLE tiki_comments (
   user_ip varchar(15) DEFAULT NULL,
   summary varchar(240) DEFAULT NULL,
   smiley varchar(80) DEFAULT NULL,
-  NORMAL title (title),
-  NORMAL data (data(255)),
-  NORMAL object (object),
-  NORMAL hits (hits),
-  NORMAL tc_pi (parentId),
+  INDEX title (title),
+  INDEX data (data(255)),
+  INDEX object (object),
+  INDEX hits (hits),
+  INDEX tc_pi (parentId),
   FULLTEXT ft (title, data),
   PRIMARY KEY (threadId)
 );
@@ -803,9 +803,9 @@ CREATE TABLE tiki_faq_questions (
   position integer(4) DEFAULT NULL,
   question text,
   answer text,
-  NORMAL faqId (faqId),
-  NORMAL question (question(255)),
-  NORMAL answer (answer(255)),
+  INDEX faqId (faqId),
+  INDEX question (question(255)),
+  INDEX answer (answer(255)),
   FULLTEXT ft (question, answer),
   PRIMARY KEY (questionId)
 );
@@ -822,9 +822,9 @@ CREATE TABLE tiki_faqs (
   questions integer(5) DEFAULT NULL,
   hits integer(8) DEFAULT NULL,
   canSuggest char(1) DEFAULT NULL,
-  NORMAL title (title),
-  NORMAL description (description(255)),
-  NORMAL hits (hits),
+  INDEX title (title),
+  INDEX description (description(255)),
+  INDEX hits (hits),
   FULLTEXT ft (title, description),
   PRIMARY KEY (faqId)
 );
@@ -893,9 +893,9 @@ CREATE TABLE tiki_files (
   reference_url varchar(250) DEFAULT NULL,
   is_reference char(1) DEFAULT NULL,
   hash varchar(32) DEFAULT NULL,
-  NORMAL name (name),
-  NORMAL description (description(255)),
-  NORMAL downloads (downloads),
+  INDEX name (name),
+  INDEX description (description(255)),
+  INDEX downloads (downloads),
   FULLTEXT ft (name, description),
   PRIMARY KEY (fileId)
 );
@@ -1042,9 +1042,9 @@ CREATE TABLE tiki_galleries (
   thumbSizeX integer(10) DEFAULT NULL,
   thumbSizeY integer(10) DEFAULT NULL,
   public char(1) DEFAULT NULL,
-  NORMAL name (name),
-  NORMAL description (description(255)),
-  NORMAL hits (hits),
+  INDEX name (name),
+  INDEX description (description(255)),
+  INDEX hits (hits),
   FULLTEXT ft (name, description),
   PRIMARY KEY (galleryId)
 );
@@ -1146,13 +1146,12 @@ CREATE TABLE tiki_images (
   user varchar(200) DEFAULT NULL,
   hits integer(14) DEFAULT NULL,
   path varchar(255) DEFAULT NULL,
-  NORMAL name (name),
-  NORMAL description (description(255)),
-  NORMAL hits (hits),
-  NORMAL ti_gId (galleryId),
-  NORMAL ti_cr (created),
-  NORMAL ti_hi (hits),
-  NORMAL ti_us (user),
+  INDEX name (name),
+  INDEX description (description(255)),
+  INDEX hits (hits),
+  INDEX ti_gId (galleryId),
+  INDEX ti_cr (created),
+  INDEX ti_us (user),
   FULLTEXT ft (name, description),
   PRIMARY KEY (imageId)
 );
@@ -1170,7 +1169,7 @@ CREATE TABLE tiki_images_data (
   filetype varchar(80) DEFAULT NULL,
   filename varchar(80) DEFAULT NULL,
   data longblob,
-  NORMAL t_i_d_it (imageId, type),
+  INDEX t_i_d_it (imageId, type),
   PRIMARY KEY (imageId, xsize, ysize, type)
 );
 
@@ -1521,9 +1520,8 @@ CREATE TABLE tiki_pages (
   cache_timestamp integer(14) DEFAULT NULL,
   pageRank decimal(4, 3) DEFAULT NULL,
   creator varchar(200) DEFAULT NULL,
-  NORMAL pageName (pageName),
-  NORMAL data (data(255)),
-  NORMAL pageRank (pageRank),
+  INDEX data (data(255)),
+  INDEX pageRank (pageRank),
   FULLTEXT ft (pageName, data),
   PRIMARY KEY (pageName)
 );
@@ -2090,7 +2088,7 @@ CREATE TABLE tiki_untranslated (
   id integer(14) NOT NULL auto_increment,
   source tinyblob NOT NULL,
   lang char(2) NOT NULL DEFAULT '',
-  NORMAL id_2 (id),
+  INDEX id_2 (id),
   PRIMARY KEY (source(255), lang),
   UNIQUE (id)
 );

@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::Oracle
--- Created on Tue Aug 12 12:31:38 2003
+-- Created on Sun Aug 17 00:56:05 2003
 -- 
 -- We assume that default NLS_DATE_FORMAT has been changed
 -- but we set it here anyway to be self-consistent.
@@ -16,12 +16,12 @@ CREATE TABLE galaxia_activities (
   name varchar2(80) DEFAULT NULL,
   normalized_name varchar2(80) DEFAULT NULL,
   pId number(14) DEFAULT '0' CONSTRAINT nn_pId NOT NULL,
-  type varchar2(10) DEFAULT NULL CHECK (type IN (start,end,split,switch,join,activity,standalone)),
+  type varchar2(10) DEFAULT NULL CHECK (type IN ('start', 'end', 'split', 'switch', 'join', 'activity', 'standalone')),
   isAutoRouted char(1) DEFAULT NULL,
   flowNum number(10) DEFAULT NULL,
   isInteractive char(1) DEFAULT NULL,
   lastModif number(14) DEFAULT NULL,
-  description long,
+  description clob,
   CONSTRAINT pk_galaxia_activities PRIMARY KEY (activityId)
 );
 
@@ -60,7 +60,7 @@ CREATE TABLE galaxia_instance_activities (
   started number(14) DEFAULT '0' CONSTRAINT nn_started NOT NULL,
   ended number(14) DEFAULT '0' CONSTRAINT nn_ended NOT NULL,
   user_ varchar2(200) DEFAULT NULL,
-  status varchar2(9) DEFAULT NULL CHECK (status IN (running,completed)),
+  status varchar2(9) DEFAULT NULL CHECK (status IN ('running', 'completed')),
   CONSTRAINT pk_galaxia_instance_activities PRIMARY KEY (instanceId, activityId)
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE galaxia_instance_comments (
   activityId number(14) DEFAULT NULL,
   hash varchar2(32) DEFAULT NULL,
   title varchar2(250) DEFAULT NULL,
-  comment_ long,
+  comment_ clob,
   activity varchar2(80) DEFAULT NULL,
   timestamp number(14) DEFAULT NULL,
   CONSTRAINT pk_galaxia_instance_comments PRIMARY KEY (cId)
@@ -108,8 +108,8 @@ CREATE TABLE galaxia_instances (
   nextActivity number(14) DEFAULT NULL,
   nextUser varchar2(200) DEFAULT NULL,
   ended number(14) DEFAULT NULL,
-  status varchar2(9) DEFAULT NULL CHECK (status IN (active,exception,aborted,completed)),
-  properties CLOB,
+  status varchar2(9) DEFAULT NULL CHECK (status IN ('active', 'exception', 'aborted', 'completed')),
+  properties blob,
   CONSTRAINT pk_galaxia_instances PRIMARY KEY (instanceId)
 );
 
@@ -137,7 +137,7 @@ CREATE TABLE galaxia_processes (
   isValid char(1) DEFAULT NULL,
   isActive char(1) DEFAULT NULL,
   version varchar2(12) DEFAULT NULL,
-  description long,
+  description clob,
   lastModif number(14) DEFAULT NULL,
   normalized_name varchar2(80) DEFAULT NULL,
   CONSTRAINT pk_galaxia_processes PRIMARY KEY (pId)
@@ -166,7 +166,7 @@ CREATE TABLE galaxia_roles (
   pId number(14) DEFAULT '0' CONSTRAINT nn_pId04 NOT NULL,
   lastModif number(14) DEFAULT NULL,
   name varchar2(80) DEFAULT NULL,
-  description long,
+  description clob,
   CONSTRAINT pk_galaxia_roles PRIMARY KEY (roleId)
 );
 
@@ -230,7 +230,7 @@ CREATE TABLE galaxia_workitems (
   instanceId number(14) DEFAULT '0' CONSTRAINT nn_instanceId04 NOT NULL,
   orderId number(14) DEFAULT '0' CONSTRAINT nn_orderId NOT NULL,
   activityId number(14) DEFAULT '0' CONSTRAINT nn_activityId04 NOT NULL,
-  properties CLOB,
+  properties blob,
   started number(14) DEFAULT NULL,
   ended number(14) DEFAULT NULL,
   user_ varchar2(200) DEFAULT NULL,
@@ -259,11 +259,11 @@ CREATE TABLE messu_messages (
   msgId number(14) CONSTRAINT nn_msgId NOT NULL,
   user_ varchar2(200) DEFAULT '' CONSTRAINT nn_user_02 NOT NULL,
   user_from varchar2(200) DEFAULT '' CONSTRAINT nn_user_from NOT NULL,
-  user_to long,
-  user_cc long,
-  user_bcc long,
+  user_to clob,
+  user_cc clob,
+  user_bcc clob,
   subject varchar2(255) DEFAULT NULL,
-  body long,
+  body clob,
   hash varchar2(32) DEFAULT NULL,
   date_ number(14) DEFAULT NULL,
   isRead char(1) DEFAULT NULL,
@@ -318,11 +318,11 @@ CREATE TABLE tiki_articles (
   image_size number(14) DEFAULT NULL,
   image_x number(4) DEFAULT NULL,
   image_y number(4) DEFAULT NULL,
-  image_data CLOB,
+  image_data blob,
   publishDate number(14) DEFAULT NULL,
   created number(14) DEFAULT NULL,
-  heading long,
-  body long,
+  heading clob,
+  body clob,
   hash varchar2(32) DEFAULT NULL,
   author varchar2(200) DEFAULT NULL,
   reads number(14) DEFAULT NULL,
@@ -367,12 +367,12 @@ CREATE TABLE tiki_banners (
   title varchar2(255) DEFAULT NULL,
   alt varchar2(250) DEFAULT NULL,
   which varchar2(50) DEFAULT NULL,
-  imageData CLOB,
+  imageData blob,
   imageType varchar2(200) DEFAULT NULL,
   imageName varchar2(100) DEFAULT NULL,
-  HTMLData long,
+  HTMLData clob,
   fixedURLData varchar2(255) DEFAULT NULL,
-  textData long,
+  textData clob,
   fromDate number(14) DEFAULT NULL,
   toDate number(14) DEFAULT NULL,
   useDates char(1) DEFAULT NULL,
@@ -413,18 +413,18 @@ END;
 DROP TABLE tiki_banning;
 CREATE TABLE tiki_banning (
   banId number(12) CONSTRAINT nn_banId NOT NULL,
-  mode_ varchar2(4) DEFAULT NULL CHECK (mode IN (user,ip)),
+  mode_ varchar2(4) DEFAULT NULL CHECK (mode_ IN ('user', 'ip')),
   title varchar2(200) DEFAULT NULL,
   ip1 char(3) DEFAULT NULL,
   ip2 char(3) DEFAULT NULL,
   ip3 char(3) DEFAULT NULL,
   ip4 char(3) DEFAULT NULL,
   user_ varchar2(200) DEFAULT NULL,
-  date_from date(14) CONSTRAINT nn_date_from NOT NULL,
-  date_to date(14) CONSTRAINT nn_date_to NOT NULL,
+  date_from date CONSTRAINT nn_date_from NOT NULL,
+  date_to date CONSTRAINT nn_date_to NOT NULL,
   use_dates char(1) DEFAULT NULL,
   created number(14) DEFAULT NULL,
-  message long,
+  message clob,
   CONSTRAINT pk_tiki_banning PRIMARY KEY (banId)
 );
 
@@ -443,17 +443,17 @@ END;
 
 CREATE OR REPLACE TRIGGER ts_tiki_banning_date_from
 BEFORE INSERT OR UPDATE ON tiki_banning
-FOR EACH ROW WHEN (new.date_from} IS NULL)
+FOR EACH ROW WHEN (new.date_from IS NULL)
 BEGIN 
- SELECT sysdate INTO :new.date_from} FROM dual;
+ SELECT sysdate INTO :new.date_from FROM dual;
 END;
 /
 
 CREATE OR REPLACE TRIGGER ts_tiki_banning_date_to
 BEFORE INSERT OR UPDATE ON tiki_banning
-FOR EACH ROW WHEN (new.date_to} IS NULL)
+FOR EACH ROW WHEN (new.date_to IS NULL)
 BEGIN 
- SELECT sysdate INTO :new.date_to} FROM dual;
+ SELECT sysdate INTO :new.date_to FROM dual;
 END;
 /
 
@@ -488,11 +488,11 @@ DROP TABLE tiki_blog_posts;
 CREATE TABLE tiki_blog_posts (
   postId number(8) CONSTRAINT nn_postId NOT NULL,
   blogId number(8) DEFAULT '0' CONSTRAINT nn_blogId02 NOT NULL,
-  data long,
+  data clob,
   created number(14) DEFAULT NULL,
   user_ varchar2(200) DEFAULT NULL,
-  trackbacks_to long,
-  trackbacks_from long,
+  trackbacks_to clob,
+  trackbacks_from clob,
   title varchar2(80) DEFAULT NULL,
   CONSTRAINT pk_tiki_blog_posts PRIMARY KEY (postId)
 );
@@ -527,7 +527,7 @@ CREATE TABLE tiki_blog_posts_images (
   filename varchar2(80) DEFAULT NULL,
   filetype varchar2(80) DEFAULT NULL,
   filesize number(14) DEFAULT NULL,
-  data CLOB,
+  data blob,
   CONSTRAINT pk_tiki_blog_posts_images PRIMARY KEY (imgId)
 );
 
@@ -554,14 +554,14 @@ CREATE TABLE tiki_blogs (
   created number(14) DEFAULT NULL,
   lastModif number(14) DEFAULT NULL,
   title varchar2(200) DEFAULT NULL,
-  description long,
+  description clob,
   user_ varchar2(200) DEFAULT NULL,
   public_ char(1) DEFAULT NULL,
   posts number(8) DEFAULT NULL,
   maxPosts number(8) DEFAULT NULL,
   hits number(8) DEFAULT NULL,
   activity number(4, 2) DEFAULT NULL,
-  heading long,
+  heading clob,
   use_find char(1) DEFAULT NULL,
   use_title char(1) DEFAULT NULL,
   add_date char(1) DEFAULT NULL,
@@ -627,12 +627,12 @@ CREATE TABLE tiki_calendar_items (
   end number(14) DEFAULT '0' CONSTRAINT nn_end NOT NULL,
   locationId number(14) DEFAULT NULL,
   categoryId number(14) DEFAULT NULL,
-  priority varchar2(1) DEFAULT '1' CONSTRAINT nn_priority NOT NULL CHECK (priority IN (1,2,3,4,5,6,7,8,9)),
-  status varchar2(1) DEFAULT '0' CONSTRAINT nn_status NOT NULL CHECK (status IN (0,1,2)),
+  priority varchar2(1) DEFAULT '1' CONSTRAINT nn_priority NOT NULL CHECK (priority IN ('1', '2', '3', '4', '5', '6', '7', '8', '9')),
+  status varchar2(1) DEFAULT '0' CONSTRAINT nn_status NOT NULL CHECK (status IN ('0', '1', '2')),
   url varchar2(255) DEFAULT NULL,
   lang char(2) DEFAULT 'en' CONSTRAINT nn_lang NOT NULL,
   name varchar2(255) DEFAULT '' CONSTRAINT nn_name02 NOT NULL,
-  description CLOB,
+  description blob,
   user_ varchar2(40) DEFAULT NULL,
   created number(14) DEFAULT '0' CONSTRAINT nn_created NOT NULL,
   lastmodif number(14) DEFAULT '0' CONSTRAINT nn_lastmodif NOT NULL,
@@ -663,7 +663,7 @@ CREATE TABLE tiki_calendar_locations (
   callocId number(14) CONSTRAINT nn_callocId NOT NULL,
   calendarId number(14) DEFAULT '0' CONSTRAINT nn_calendarId03 NOT NULL,
   name varchar2(255) DEFAULT '' CONSTRAINT nn_name03 NOT NULL,
-  description CLOB,
+  description blob,
   CONSTRAINT pk_tiki_calendar_locations PRIMARY KEY (callocId),
   CONSTRAINT locname UNIQUE (calendarId, name)
 );
@@ -689,7 +689,7 @@ DROP TABLE tiki_calendar_roles;
 CREATE TABLE tiki_calendar_roles (
   calitemId number(14) DEFAULT '0' CONSTRAINT nn_calitemId02 NOT NULL,
   username varchar2(40) DEFAULT '' CONSTRAINT nn_username NOT NULL,
-  role varchar2(1) DEFAULT '0' CONSTRAINT nn_role NOT NULL CHECK (role IN (0,1,2,3,6)),
+  role varchar2(1) DEFAULT '0' CONSTRAINT nn_role NOT NULL CHECK (role IN ('0', '1', '2', '3', '6')),
   CONSTRAINT pk_tiki_calendar_roles PRIMARY KEY (calitemId, username, role)
 );
 
@@ -703,11 +703,11 @@ CREATE TABLE tiki_calendars (
   name varchar2(80) DEFAULT '' CONSTRAINT nn_name04 NOT NULL,
   description varchar2(255) DEFAULT NULL,
   user_ varchar2(40) DEFAULT '' CONSTRAINT nn_user_03 NOT NULL,
-  customlocations varchar2(1) DEFAULT 'n' CONSTRAINT nn_customlocations NOT NULL CHECK (customlocations IN (n,y)),
-  customcategories varchar2(1) DEFAULT 'n' CONSTRAINT nn_customcategories NOT NULL CHECK (customcategories IN (n,y)),
-  customlanguages varchar2(1) DEFAULT 'n' CONSTRAINT nn_customlanguages NOT NULL CHECK (customlanguages IN (n,y)),
-  custompriorities varchar2(1) DEFAULT 'n' CONSTRAINT nn_custompriorities NOT NULL CHECK (custompriorities IN (n,y)),
-  customparticipants varchar2(1) DEFAULT 'n' CONSTRAINT nn_customparticipants NOT NULL CHECK (customparticipants IN (n,y)),
+  customlocations varchar2(1) DEFAULT 'n' CONSTRAINT nn_customlocations NOT NULL CHECK (customlocations IN ('n', 'y')),
+  customcategories varchar2(1) DEFAULT 'n' CONSTRAINT nn_customcategories NOT NULL CHECK (customcategories IN ('n', 'y')),
+  customlanguages varchar2(1) DEFAULT 'n' CONSTRAINT nn_customlanguages NOT NULL CHECK (customlanguages IN ('n', 'y')),
+  custompriorities varchar2(1) DEFAULT 'n' CONSTRAINT nn_custompriorities NOT NULL CHECK (custompriorities IN ('n', 'y')),
+  customparticipants varchar2(1) DEFAULT 'n' CONSTRAINT nn_customparticipants NOT NULL CHECK (customparticipants IN ('n', 'y')),
   created number(14) DEFAULT '0' CONSTRAINT nn_created02 NOT NULL,
   lastmodif number(14) DEFAULT '0' CONSTRAINT nn_lastmodif02 NOT NULL,
   CONSTRAINT pk_tiki_calendars PRIMARY KEY (calendarId)
@@ -762,7 +762,7 @@ CREATE TABLE tiki_categorized_objects (
   catObjectId number(12) CONSTRAINT nn_catObjectId NOT NULL,
   type varchar2(50) DEFAULT NULL,
   objId varchar2(255) DEFAULT NULL,
-  description long,
+  description clob,
   created number(14) DEFAULT NULL,
   name varchar2(200) DEFAULT NULL,
   href varchar2(200) DEFAULT NULL,
@@ -813,7 +813,7 @@ DROP TABLE tiki_chart_items;
 CREATE TABLE tiki_chart_items (
   itemId number(14) CONSTRAINT nn_itemId02 NOT NULL,
   title varchar2(250) DEFAULT NULL,
-  description long,
+  description clob,
   chartId number(14) DEFAULT '0' CONSTRAINT nn_chartId NOT NULL,
   created number(14) DEFAULT NULL,
   URL varchar2(250) DEFAULT NULL,
@@ -844,7 +844,7 @@ DROP TABLE tiki_charts;
 CREATE TABLE tiki_charts (
   chartId number(14) CONSTRAINT nn_chartId02 NOT NULL,
   title varchar2(250) DEFAULT NULL,
-  description long,
+  description clob,
   hits number(14) DEFAULT NULL,
   singleItemVotes char(1) DEFAULT NULL,
   singleChartVotes char(1) DEFAULT NULL,
@@ -993,7 +993,7 @@ CREATE TABLE tiki_comments (
   votes number(8) DEFAULT NULL,
   average number(8, 4) DEFAULT NULL,
   title varchar2(100) DEFAULT NULL,
-  data long,
+  data clob,
   hash varchar2(32) DEFAULT NULL,
   user_ip varchar2(15) DEFAULT NULL,
   summary varchar2(240) DEFAULT NULL,
@@ -1031,7 +1031,7 @@ CREATE INDEX tc_pi_tiki_comments on tiki_comments (parentId);
 DROP TABLE tiki_content;
 CREATE TABLE tiki_content (
   contentId number(8) CONSTRAINT nn_contentId NOT NULL,
-  description long,
+  description clob,
   CONSTRAINT pk_tiki_content PRIMARY KEY (contentId)
 );
 
@@ -1055,7 +1055,7 @@ END;
 DROP TABLE tiki_content_templates;
 CREATE TABLE tiki_content_templates (
   templateId number(10) CONSTRAINT nn_templateId NOT NULL,
-  content CLOB,
+  content blob,
   name varchar2(200) DEFAULT NULL,
   created number(14) DEFAULT NULL,
   CONSTRAINT pk_tiki_content_templates PRIMARY KEY (templateId)
@@ -1147,7 +1147,7 @@ CREATE TABLE tiki_directory_categories (
   categId number(10) CONSTRAINT nn_categId04 NOT NULL,
   parent number(10) DEFAULT NULL,
   name varchar2(240) DEFAULT NULL,
-  description long,
+  description clob,
   childrenType char(1) DEFAULT NULL,
   sites number(10) DEFAULT NULL,
   viewableChildren number(4) DEFAULT NULL,
@@ -1190,14 +1190,14 @@ DROP TABLE tiki_directory_sites;
 CREATE TABLE tiki_directory_sites (
   siteId number(14) CONSTRAINT nn_siteId02 NOT NULL,
   name varchar2(240) DEFAULT NULL,
-  description long,
+  description clob,
   url varchar2(255) DEFAULT NULL,
   country varchar2(255) DEFAULT NULL,
   hits number(12) DEFAULT NULL,
   isValid char(1) DEFAULT NULL,
   created number(14) DEFAULT NULL,
   lastModif number(14) DEFAULT NULL,
-  cache CLOB,
+  cache blob,
   cache_timestamp number(14) DEFAULT NULL,
   CONSTRAINT pk_tiki_directory_sites PRIMARY KEY (siteId)
 );
@@ -1281,8 +1281,8 @@ CREATE TABLE tiki_eph (
   filename varchar2(250) DEFAULT NULL,
   filetype varchar2(250) DEFAULT NULL,
   filesize varchar2(250) DEFAULT NULL,
-  data CLOB,
-  textdata CLOB,
+  data blob,
+  textdata blob,
   publish number(14) DEFAULT NULL,
   hits number(10) DEFAULT NULL,
   CONSTRAINT pk_tiki_eph PRIMARY KEY (ephId)
@@ -1335,8 +1335,8 @@ CREATE TABLE tiki_faq_questions (
   questionId number(10) CONSTRAINT nn_questionId NOT NULL,
   faqId number(10) DEFAULT NULL,
   position number(4) DEFAULT NULL,
-  question long,
-  answer long,
+  question clob,
+  answer clob,
   CONSTRAINT pk_tiki_faq_questions PRIMARY KEY (questionId)
 );
 
@@ -1367,7 +1367,7 @@ DROP TABLE tiki_faqs;
 CREATE TABLE tiki_faqs (
   faqId number(10) CONSTRAINT nn_faqId NOT NULL,
   title varchar2(200) DEFAULT NULL,
-  description long,
+  description clob,
   created number(14) DEFAULT NULL,
   questions number(5) DEFAULT NULL,
   hits number(8) DEFAULT NULL,
@@ -1402,7 +1402,7 @@ DROP TABLE tiki_featured_links;
 CREATE TABLE tiki_featured_links (
   url varchar2(200) DEFAULT '' CONSTRAINT nn_url NOT NULL,
   title varchar2(200) DEFAULT NULL,
-  description long,
+  description clob,
   hits number(8) DEFAULT NULL,
   position number(6) DEFAULT NULL,
   type char(1) DEFAULT NULL,
@@ -1417,7 +1417,7 @@ DROP TABLE tiki_file_galleries;
 CREATE TABLE tiki_file_galleries (
   galleryId number(14) CONSTRAINT nn_galleryId NOT NULL,
   name varchar2(80) DEFAULT '' CONSTRAINT nn_name07 NOT NULL,
-  description long,
+  description clob,
   created number(14) DEFAULT NULL,
   visible char(1) DEFAULT NULL,
   lastModif number(14) DEFAULT NULL,
@@ -1460,12 +1460,12 @@ CREATE TABLE tiki_files (
   fileId number(14) CONSTRAINT nn_fileId NOT NULL,
   galleryId number(14) DEFAULT '0' CONSTRAINT nn_galleryId02 NOT NULL,
   name varchar2(200) DEFAULT '' CONSTRAINT nn_name08 NOT NULL,
-  description long,
+  description clob,
   created number(14) DEFAULT NULL,
   filename varchar2(80) DEFAULT NULL,
   filesize number(14) DEFAULT NULL,
   filetype varchar2(250) DEFAULT NULL,
-  data CLOB,
+  data blob,
   user_ varchar2(200) DEFAULT NULL,
   downloads number(14) DEFAULT NULL,
   votes number(8) DEFAULT NULL,
@@ -1509,7 +1509,7 @@ CREATE TABLE tiki_forum_attachments (
   filename varchar2(250) DEFAULT NULL,
   filetype varchar2(250) DEFAULT NULL,
   filesize number(12) DEFAULT NULL,
-  data CLOB,
+  data blob,
   dir varchar2(200) DEFAULT NULL,
   created number(14) DEFAULT NULL,
   path varchar2(250) DEFAULT NULL,
@@ -1550,7 +1550,7 @@ DROP TABLE tiki_forums;
 CREATE TABLE tiki_forums (
   forumId number(8) CONSTRAINT nn_forumId NOT NULL,
   name varchar2(200) DEFAULT NULL,
-  description long,
+  description clob,
   created number(14) DEFAULT NULL,
   lastPost number(14) DEFAULT NULL,
   threads number(8) DEFAULT NULL,
@@ -1626,7 +1626,7 @@ CREATE TABLE tiki_forums_queue (
   timestamp number(14) DEFAULT NULL,
   user_ varchar2(200) DEFAULT NULL,
   title varchar2(240) DEFAULT NULL,
-  data long,
+  data clob,
   type varchar2(60) DEFAULT NULL,
   hash varchar2(32) DEFAULT NULL,
   topic_smiley varchar2(80) DEFAULT NULL,
@@ -1671,7 +1671,7 @@ DROP TABLE tiki_galleries;
 CREATE TABLE tiki_galleries (
   galleryId number(14) CONSTRAINT nn_galleryId03 NOT NULL,
   name varchar2(80) DEFAULT '' CONSTRAINT nn_name09 NOT NULL,
-  description long,
+  description clob,
   created number(14) DEFAULT NULL,
   lastModif number(14) DEFAULT NULL,
   visible char(1) DEFAULT NULL,
@@ -1754,7 +1754,7 @@ CREATE TABLE tiki_history (
   user_ varchar2(200) DEFAULT NULL,
   ip varchar2(15) DEFAULT NULL,
   comment_ varchar2(200) DEFAULT NULL,
-  data CLOB,
+  data blob,
   CONSTRAINT pk_tiki_history PRIMARY KEY (pageName, version)
 );
 
@@ -1776,7 +1776,7 @@ CREATE TABLE tiki_hotwords (
 DROP TABLE tiki_html_pages;
 CREATE TABLE tiki_html_pages (
   pageName varchar2(200) DEFAULT '' CONSTRAINT nn_pageName02 NOT NULL,
-  content CLOB,
+  content blob,
   refresh number(10) DEFAULT NULL,
   type char(1) DEFAULT NULL,
   created number(14) DEFAULT NULL,
@@ -1792,7 +1792,7 @@ CREATE TABLE tiki_html_pages_dynamic_zones (
   pageName varchar2(40) DEFAULT '' CONSTRAINT nn_pageName03 NOT NULL,
   zone varchar2(80) DEFAULT '' CONSTRAINT nn_zone NOT NULL,
   type char(2) DEFAULT NULL,
-  content long,
+  content clob,
   CONSTRAINT pk_tiki_html_pages_dynamic_zon PRIMARY KEY (pageName, zone)
 );
 
@@ -1805,7 +1805,7 @@ CREATE TABLE tiki_images (
   imageId number(14) CONSTRAINT nn_imageId NOT NULL,
   galleryId number(14) DEFAULT '0' CONSTRAINT nn_galleryId05 NOT NULL,
   name varchar2(200) DEFAULT '' CONSTRAINT nn_name10 NOT NULL,
-  description long,
+  description clob,
   created number(14) DEFAULT NULL,
   user_ varchar2(200) DEFAULT NULL,
   hits number(14) DEFAULT NULL,
@@ -1836,8 +1836,6 @@ CREATE INDEX ti_gId_tiki_images on tiki_images (galleryId);
 
 CREATE INDEX ti_cr_tiki_images on tiki_images (created);
 
-CREATE INDEX ti_hi_tiki_images on tiki_images (hits);
-
 CREATE INDEX ti_us_tiki_images on tiki_images (user_);
 
 --
@@ -1853,7 +1851,7 @@ CREATE TABLE tiki_images_data (
   filesize number(14) DEFAULT NULL,
   filetype varchar2(80) DEFAULT NULL,
   filename varchar2(80) DEFAULT NULL,
-  data CLOB,
+  data blob,
   CONSTRAINT pk_tiki_images_data PRIMARY KEY (imageId, xsize, ysize, type)
 );
 
@@ -1865,9 +1863,9 @@ CREATE INDEX t_i_d_it_tiki_images_data on tiki_images_data (imageId, type);
 
 DROP TABLE tiki_language;
 CREATE TABLE tiki_language (
-  source CLOB CONSTRAINT nn_source NOT NULL,
+  source blob CONSTRAINT nn_source NOT NULL,
   lang char(2) DEFAULT '' CONSTRAINT nn_lang02 NOT NULL,
-  tran CLOB,
+  tran blob,
   CONSTRAINT pk_tiki_language PRIMARY KEY (source, lang)
 );
 
@@ -1890,7 +1888,7 @@ DROP TABLE tiki_link_cache;
 CREATE TABLE tiki_link_cache (
   cacheId number(14) CONSTRAINT nn_cacheId NOT NULL,
   url varchar2(250) DEFAULT NULL,
-  data CLOB,
+  data blob,
   refresh number(14) DEFAULT NULL,
   CONSTRAINT pk_tiki_link_cache PRIMARY KEY (cacheId)
 );
@@ -1930,7 +1928,7 @@ CREATE TABLE tiki_live_support_events (
   type varchar2(40) DEFAULT NULL,
   seqId number(14) DEFAULT NULL,
   senderId varchar2(32) DEFAULT NULL,
-  data long,
+  data clob,
   timestamp number(14) DEFAULT NULL,
   CONSTRAINT pk_tiki_live_support_events PRIMARY KEY (eventId)
 );
@@ -1956,7 +1954,7 @@ DROP TABLE tiki_live_support_message_comm;
 CREATE TABLE tiki_live_support_message_comm (
   cId number(12) CONSTRAINT nn_cId02 NOT NULL,
   msgId number(12) DEFAULT NULL,
-  data long,
+  data clob,
   timestamp number(14) DEFAULT NULL,
   CONSTRAINT pk_tiki_live_support_message_c PRIMARY KEY (cId)
 );
@@ -1981,7 +1979,7 @@ END;
 DROP TABLE tiki_live_support_messages;
 CREATE TABLE tiki_live_support_messages (
   msgId number(12) CONSTRAINT nn_msgId02 NOT NULL,
-  data long,
+  data clob,
   timestamp number(14) DEFAULT NULL,
   user_ varchar2(200) DEFAULT NULL,
   username varchar2(200) DEFAULT NULL,
@@ -2065,7 +2063,7 @@ CREATE TABLE tiki_live_support_requests (
   operator varchar2(200) DEFAULT NULL,
   operator_id varchar2(32) DEFAULT NULL,
   user_id varchar2(32) DEFAULT NULL,
-  reason long,
+  reason clob,
   req_timestamp number(14) DEFAULT NULL,
   timestamp number(14) DEFAULT NULL,
   status varchar2(40) DEFAULT NULL,
@@ -2180,7 +2178,7 @@ DROP TABLE tiki_menus;
 CREATE TABLE tiki_menus (
   menuId number(8) CONSTRAINT nn_menuId02 NOT NULL,
   name varchar2(200) DEFAULT '' CONSTRAINT nn_name11 NOT NULL,
-  description long,
+  description clob,
   type char(1) DEFAULT NULL,
   CONSTRAINT pk_tiki_menus PRIMARY KEY (menuId)
 );
@@ -2207,7 +2205,7 @@ CREATE TABLE tiki_minical_events (
   user_ varchar2(200) DEFAULT NULL,
   eventId number(12) CONSTRAINT nn_eventId02 NOT NULL,
   title varchar2(250) DEFAULT NULL,
-  description long,
+  description clob,
   start_ number(14) DEFAULT NULL,
   end number(14) DEFAULT NULL,
   security char(1) DEFAULT NULL,
@@ -2242,7 +2240,7 @@ CREATE TABLE tiki_minical_topics (
   filename varchar2(200) DEFAULT NULL,
   filetype varchar2(200) DEFAULT NULL,
   filesize varchar2(200) DEFAULT NULL,
-  data CLOB,
+  data blob,
   path varchar2(250) DEFAULT NULL,
   isIcon char(1) DEFAULT NULL,
   CONSTRAINT pk_tiki_minical_topics PRIMARY KEY (topicId)
@@ -2275,7 +2273,7 @@ CREATE TABLE tiki_modules (
   cache_time number(14) DEFAULT NULL,
   rows_ number(4) DEFAULT NULL,
   params varchar2(255) DEFAULT NULL,
-  groups long,
+  groups clob,
   CONSTRAINT pk_tiki_modules PRIMARY KEY (name)
 );
 
@@ -2301,7 +2299,7 @@ DROP TABLE tiki_newsletters;
 CREATE TABLE tiki_newsletters (
   nlId number(12) CONSTRAINT nn_nlId02 NOT NULL,
   name varchar2(200) DEFAULT NULL,
-  description long,
+  description clob,
   created number(14) DEFAULT NULL,
   lastSent number(14) DEFAULT NULL,
   editions number(10) DEFAULT NULL,
@@ -2373,7 +2371,7 @@ DROP TABLE tiki_page_footnotes;
 CREATE TABLE tiki_page_footnotes (
   user_ varchar2(200) DEFAULT '' CONSTRAINT nn_user_10 NOT NULL,
   pageName varchar2(250) DEFAULT '' CONSTRAINT nn_pageName04 NOT NULL,
-  data long,
+  data clob,
   CONSTRAINT pk_tiki_page_footnotes PRIMARY KEY (user_, pageName)
 );
 
@@ -2385,7 +2383,7 @@ DROP TABLE tiki_pages;
 CREATE TABLE tiki_pages (
   pageName varchar2(160) DEFAULT '' CONSTRAINT nn_pageName05 NOT NULL,
   hits number(8) DEFAULT NULL,
-  data long,
+  data clob,
   description varchar2(200) DEFAULT NULL,
   lastModif number(14) DEFAULT NULL,
   comment_ varchar2(200) DEFAULT NULL,
@@ -2395,14 +2393,12 @@ CREATE TABLE tiki_pages (
   flag char(1) DEFAULT NULL,
   points number(8) DEFAULT NULL,
   votes number(8) DEFAULT NULL,
-  cache long,
+  cache clob,
   cache_timestamp number(14) DEFAULT NULL,
   pageRank number(4, 3) DEFAULT NULL,
   creator varchar2(200) DEFAULT NULL,
   CONSTRAINT pk_tiki_pages PRIMARY KEY (pageName)
 );
-
-CREATE INDEX pageName_tiki_pages on tiki_pages (pageName);
 
 CREATE INDEX data_tiki_pages on tiki_pages (data);
 
@@ -2519,7 +2515,7 @@ CREATE TABLE tiki_programmed_content (
   pId number(8) CONSTRAINT nn_pId07 NOT NULL,
   contentId number(8) DEFAULT '0' CONSTRAINT nn_contentId02 NOT NULL,
   publishDate number(14) DEFAULT '0' CONSTRAINT nn_publishDate NOT NULL,
-  data long,
+  data clob,
   CONSTRAINT pk_tiki_programmed_content PRIMARY KEY (pId)
 );
 
@@ -2544,7 +2540,7 @@ DROP TABLE tiki_quiz_question_options;
 CREATE TABLE tiki_quiz_question_options (
   optionId number(10) CONSTRAINT nn_optionId03 NOT NULL,
   questionId number(10) DEFAULT NULL,
-  optionText long,
+  optionText clob,
   points number(4) DEFAULT NULL,
   CONSTRAINT pk_tiki_quiz_question_options PRIMARY KEY (optionId)
 );
@@ -2570,7 +2566,7 @@ DROP TABLE tiki_quiz_questions;
 CREATE TABLE tiki_quiz_questions (
   questionId number(10) CONSTRAINT nn_questionId02 NOT NULL,
   quizId number(10) DEFAULT NULL,
-  question long,
+  question clob,
   position number(4) DEFAULT NULL,
   type char(1) DEFAULT NULL,
   maxPoints number(4) DEFAULT NULL,
@@ -2600,7 +2596,7 @@ CREATE TABLE tiki_quiz_results (
   quizId number(10) DEFAULT NULL,
   fromPoints number(4) DEFAULT NULL,
   toPoints number(4) DEFAULT NULL,
-  answer long,
+  answer clob,
   CONSTRAINT pk_tiki_quiz_results PRIMARY KEY (resultId)
 );
 
@@ -2653,7 +2649,7 @@ DROP TABLE tiki_quizzes;
 CREATE TABLE tiki_quizzes (
   quizId number(10) CONSTRAINT nn_quizId03 NOT NULL,
   name varchar2(255) DEFAULT NULL,
-  description long,
+  description clob,
   canRepeat char(1) DEFAULT NULL,
   storeResults char(1) DEFAULT NULL,
   questionsPerPage number(4) DEFAULT NULL,
@@ -2696,11 +2692,11 @@ CREATE TABLE tiki_received_articles (
   image_size number(14) DEFAULT NULL,
   image_x number(4) DEFAULT NULL,
   image_y number(4) DEFAULT NULL,
-  image_data CLOB,
+  image_data blob,
   publishDate number(14) DEFAULT NULL,
   created number(14) DEFAULT NULL,
-  heading long,
-  body CLOB,
+  heading clob,
+  body blob,
   hash varchar2(32) DEFAULT NULL,
   author varchar2(200) DEFAULT NULL,
   type varchar2(50) DEFAULT NULL,
@@ -2729,7 +2725,7 @@ DROP TABLE tiki_received_pages;
 CREATE TABLE tiki_received_pages (
   receivedPageId number(14) CONSTRAINT nn_receivedPageId NOT NULL,
   pageName varchar2(160) DEFAULT '' CONSTRAINT nn_pageName06 NOT NULL,
-  data CLOB,
+  data blob,
   description varchar2(200) DEFAULT NULL,
   comment_ varchar2(200) DEFAULT NULL,
   receivedFromSite varchar2(200) DEFAULT NULL,
@@ -2782,11 +2778,11 @@ DROP TABLE tiki_rss_modules;
 CREATE TABLE tiki_rss_modules (
   rssId number(8) CONSTRAINT nn_rssId NOT NULL,
   name varchar2(30) DEFAULT '' CONSTRAINT nn_name14 NOT NULL,
-  description long,
+  description clob,
   url varchar2(255) DEFAULT '' CONSTRAINT nn_url03 NOT NULL,
   refresh number(8) DEFAULT NULL,
   lastUpdated number(14) DEFAULT NULL,
-  content CLOB,
+  content blob,
   CONSTRAINT pk_tiki_rss_modules PRIMARY KEY (rssId)
 );
 
@@ -2837,7 +2833,7 @@ CREATE TABLE tiki_sent_newsletters (
   users number(10) DEFAULT NULL,
   sent number(14) DEFAULT NULL,
   subject varchar2(200) DEFAULT NULL,
-  data CLOB,
+  data blob,
   CONSTRAINT pk_tiki_sent_newsletters PRIMARY KEY (editionId)
 );
 
@@ -2923,11 +2919,11 @@ CREATE TABLE tiki_submissions (
   image_size number(14) DEFAULT NULL,
   image_x number(4) DEFAULT NULL,
   image_y number(4) DEFAULT NULL,
-  image_data CLOB,
+  image_data blob,
   publishDate number(14) DEFAULT NULL,
   created number(14) DEFAULT NULL,
-  heading long,
-  body long,
+  heading clob,
+  body clob,
   hash varchar2(32) DEFAULT NULL,
   author varchar2(200) DEFAULT NULL,
   reads number(14) DEFAULT NULL,
@@ -2960,8 +2956,8 @@ DROP TABLE tiki_suggested_faq_questions;
 CREATE TABLE tiki_suggested_faq_questions (
   sfqId number(10) CONSTRAINT nn_sfqId NOT NULL,
   faqId number(10) DEFAULT '0' CONSTRAINT nn_faqId02 NOT NULL,
-  question long,
-  answer long,
+  question clob,
+  answer clob,
   created number(14) DEFAULT NULL,
   user_ varchar2(200) DEFAULT NULL,
   CONSTRAINT pk_tiki_suggested_faq_question PRIMARY KEY (sfqId)
@@ -2988,7 +2984,7 @@ DROP TABLE tiki_survey_question_options;
 CREATE TABLE tiki_survey_question_options (
   optionId number(12) CONSTRAINT nn_optionId05 NOT NULL,
   questionId number(12) DEFAULT '0' CONSTRAINT nn_questionId04 NOT NULL,
-  qoption long,
+  qoption clob,
   votes number(10) DEFAULT NULL,
   CONSTRAINT pk_tiki_survey_question_option PRIMARY KEY (optionId)
 );
@@ -3014,8 +3010,8 @@ DROP TABLE tiki_survey_questions;
 CREATE TABLE tiki_survey_questions (
   questionId number(12) CONSTRAINT nn_questionId05 NOT NULL,
   surveyId number(12) DEFAULT '0' CONSTRAINT nn_surveyId NOT NULL,
-  question long,
-  options long,
+  question clob,
+  options clob,
   type char(1) DEFAULT NULL,
   position number(5) DEFAULT NULL,
   votes number(10) DEFAULT NULL,
@@ -3045,7 +3041,7 @@ DROP TABLE tiki_surveys;
 CREATE TABLE tiki_surveys (
   surveyId number(12) CONSTRAINT nn_surveyId02 NOT NULL,
   name varchar2(200) DEFAULT NULL,
-  description long,
+  description clob,
   taken number(10) DEFAULT NULL,
   lastTaken number(14) DEFAULT NULL,
   created number(14) DEFAULT NULL,
@@ -3076,7 +3072,7 @@ CREATE TABLE tiki_tags (
   pageName varchar2(160) DEFAULT '' CONSTRAINT nn_pageName07 NOT NULL,
   hits number(8) DEFAULT NULL,
   description varchar2(200) DEFAULT NULL,
-  data CLOB,
+  data blob,
   lastModif number(14) DEFAULT NULL,
   comment_ varchar2(200) DEFAULT NULL,
   version number(8) DEFAULT '0' CONSTRAINT nn_version03 NOT NULL,
@@ -3132,7 +3128,7 @@ CREATE TABLE tiki_topics (
   image_name varchar2(80) DEFAULT NULL,
   image_type varchar2(80) DEFAULT NULL,
   image_size number(14) DEFAULT NULL,
-  image_data CLOB,
+  image_data blob,
   active char(1) DEFAULT NULL,
   created number(14) DEFAULT NULL,
   CONSTRAINT pk_tiki_topics PRIMARY KEY (topicId)
@@ -3160,7 +3156,7 @@ CREATE TABLE tiki_tracker_fields (
   fieldId number(12) CONSTRAINT nn_fieldId NOT NULL,
   trackerId number(12) DEFAULT '0' CONSTRAINT nn_trackerId NOT NULL,
   name varchar2(80) DEFAULT NULL,
-  options long,
+  options clob,
   type char(1) DEFAULT NULL,
   isMain char(1) DEFAULT NULL,
   isTblVisible char(1) DEFAULT NULL,
@@ -3192,7 +3188,7 @@ CREATE TABLE tiki_tracker_item_attachments (
   filetype varchar2(80) DEFAULT NULL,
   filesize number(14) DEFAULT NULL,
   user_ varchar2(200) DEFAULT NULL,
-  data CLOB,
+  data blob,
   path varchar2(255) DEFAULT NULL,
   downloads number(10) DEFAULT NULL,
   created number(14) DEFAULT NULL,
@@ -3222,7 +3218,7 @@ CREATE TABLE tiki_tracker_item_comments (
   commentId number(12) CONSTRAINT nn_commentId NOT NULL,
   itemId number(12) DEFAULT '0' CONSTRAINT nn_itemId06 NOT NULL,
   user_ varchar2(200) DEFAULT NULL,
-  data long,
+  data clob,
   title varchar2(200) DEFAULT NULL,
   posted number(14) DEFAULT NULL,
   CONSTRAINT pk_tiki_tracker_item_comments PRIMARY KEY (commentId)
@@ -3249,7 +3245,7 @@ DROP TABLE tiki_tracker_item_fields;
 CREATE TABLE tiki_tracker_item_fields (
   itemId number(12) DEFAULT '0' CONSTRAINT nn_itemId07 NOT NULL,
   fieldId number(12) DEFAULT '0' CONSTRAINT nn_fieldId02 NOT NULL,
-  value long,
+  value clob,
   CONSTRAINT pk_tiki_tracker_item_fields PRIMARY KEY (itemId, fieldId)
 );
 
@@ -3288,7 +3284,7 @@ DROP TABLE tiki_trackers;
 CREATE TABLE tiki_trackers (
   trackerId number(12) CONSTRAINT nn_trackerId03 NOT NULL,
   name varchar2(80) DEFAULT NULL,
-  description long,
+  description clob,
   created number(14) DEFAULT NULL,
   lastModif number(14) DEFAULT NULL,
   showCreated char(1) DEFAULT NULL,
@@ -3320,7 +3316,7 @@ END;
 DROP TABLE tiki_untranslated;
 CREATE TABLE tiki_untranslated (
   id number(14) CONSTRAINT nn_id NOT NULL,
-  source CLOB CONSTRAINT nn_source02 NOT NULL,
+  source blob CONSTRAINT nn_source02 NOT NULL,
   lang char(2) DEFAULT '' CONSTRAINT nn_lang04 NOT NULL,
   CONSTRAINT pk_tiki_untranslated PRIMARY KEY (source, lang),
   CONSTRAINT id UNIQUE (id)
@@ -3367,7 +3363,7 @@ CREATE TABLE tiki_user_assigned_modules (
   title varchar2(40) DEFAULT NULL,
   cache_time number(14) DEFAULT NULL,
   rows_ number(4) DEFAULT NULL,
-  groups long,
+  groups clob,
   params varchar2(250) DEFAULT NULL,
   user_ varchar2(200) DEFAULT '' CONSTRAINT nn_user_11 NOT NULL,
   CONSTRAINT pk_tiki_user_assigned_modules PRIMARY KEY (name, user_)
@@ -3408,7 +3404,7 @@ CREATE TABLE tiki_user_bookmarks_urls (
   urlId number(12) CONSTRAINT nn_urlId NOT NULL,
   name varchar2(30) DEFAULT NULL,
   url varchar2(250) DEFAULT NULL,
-  data CLOB,
+  data blob,
   lastUpdated number(14) DEFAULT NULL,
   folderId number(12) DEFAULT '0' CONSTRAINT nn_folderId02 NOT NULL,
   user_ varchar2(200) DEFAULT '' CONSTRAINT nn_user_13 NOT NULL,
@@ -3498,7 +3494,7 @@ DROP TABLE tiki_user_modules;
 CREATE TABLE tiki_user_modules (
   name varchar2(200) DEFAULT '' CONSTRAINT nn_name17 NOT NULL,
   title varchar2(40) DEFAULT NULL,
-  data CLOB,
+  data blob,
   CONSTRAINT pk_tiki_user_modules PRIMARY KEY (name)
 );
 
@@ -3513,7 +3509,7 @@ CREATE TABLE tiki_user_notes (
   created number(14) DEFAULT NULL,
   name varchar2(255) DEFAULT NULL,
   lastModif number(14) DEFAULT NULL,
-  data long,
+  data clob,
   size_ number(14) DEFAULT NULL,
   parse_mode varchar2(20) DEFAULT NULL,
   CONSTRAINT pk_tiki_user_notes PRIMARY KEY (noteId)
@@ -3608,7 +3604,7 @@ CREATE TABLE tiki_user_tasks (
   user_ varchar2(200) DEFAULT NULL,
   taskId number(14) CONSTRAINT nn_taskId NOT NULL,
   title varchar2(250) DEFAULT NULL,
-  description long,
+  description clob,
   date_ number(14) DEFAULT NULL,
   status char(1) DEFAULT NULL,
   priority number(2) DEFAULT NULL,
@@ -3670,7 +3666,7 @@ CREATE TABLE tiki_userfiles (
   filename varchar2(200) DEFAULT NULL,
   filetype varchar2(200) DEFAULT NULL,
   filesize varchar2(200) DEFAULT NULL,
-  data CLOB,
+  data blob,
   hits number(8) DEFAULT NULL,
   isFile char(1) DEFAULT NULL,
   path varchar2(255) DEFAULT NULL,
@@ -3770,7 +3766,7 @@ CREATE TABLE tiki_wiki_attachments (
   filetype varchar2(80) DEFAULT NULL,
   filesize number(14) DEFAULT NULL,
   user_ varchar2(200) DEFAULT NULL,
-  data CLOB,
+  data blob,
   path varchar2(255) DEFAULT NULL,
   downloads number(10) DEFAULT NULL,
   created number(14) DEFAULT NULL,
@@ -3885,7 +3881,7 @@ CREATE TABLE users_users (
   avatarName varchar2(80) DEFAULT NULL,
   avatarSize number(14) DEFAULT NULL,
   avatarFileType varchar2(250) DEFAULT NULL,
-  avatarData CLOB,
+  avatarData blob,
   avatarLibName varchar2(200) DEFAULT NULL,
   avatarType char(1) DEFAULT NULL,
   CONSTRAINT pk_users_users PRIMARY KEY (userId)
