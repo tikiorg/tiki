@@ -1,15 +1,15 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.7 2003-10-29 15:37:51 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.8 2003-11-29 23:24:20 marcius Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 if (isset($_SERVER["REQUEST_URI"])) {
-  ini_set('session.cookie_path',dirname($_SERVER["REQUEST_URI"]));
+  ini_set('session.cookie_path', str_replace( "\\", "/", dirname($_SERVER["REQUEST_URI"])));
 }
-	
+
 require_once ("db/tiki-db.php");
 
 error_reporting (E_ALL);
