@@ -1749,16 +1749,23 @@ function poll_vote($user, $pollId, $optionId) {
     {
 	$query = "update `tiki_polls` set `votes`=`votes`+1 where `pollId`=?";
 	$result = $this->query($query,array((int)$pollId));
+
+	$query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
+	$result = $this->query($query,array((int)$optionId));
     }
     else
     {
-	// Decrement old vote.
-	$query = "update `tiki_poll_options` set `votes`=`votes`-1 where `optionId`=?";
-	$result = $this->query($query,array((int)$previous_vote));
+	if( $previous_vote != $optionId)
+	{
+	    // Decrement old vote.
+	    $query = "update `tiki_poll_options` set `votes`=`votes`-1 where `optionId`=?";
+	    $result = $this->query($query,array((int)$previous_vote));
+
+	    $query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
+	    $result = $this->query($query,array((int)$optionId));
+	}
     }
 
-    $query = "update `tiki_poll_options` set `votes`=`votes`+1 where `optionId`=?";
-    $result = $this->query($query,array((int)$optionId));
 }
 
 // end polls ////
