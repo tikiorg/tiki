@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.33 2004-06-07 16:28:59 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.34 2004-06-07 16:44:38 teedog Exp $
  *
  * \brief Categiries support class
  *
@@ -625,6 +625,35 @@ class CategLib extends TikiDB {
 		    $query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
 		    $result = $this->query($query,array((int) $catObjectId));
 		}
+    }
+
+    // Moved from tikilib.php
+    // \todo remove hardcoded html from get_categorypath()
+    function get_categorypath($cats) {
+		global $dbTiki;
+		global $smarty;
+		global $tikilib;
+		global $feature_categories;
+		global $categlib;
+
+		if (!is_object($categlib)) {
+		    require_once ("lib/categories/categlib.php");
+		}
+
+		$catpath = '';
+		foreach ($cats as $categId) {
+		    $catpath .= '<span class="categpath">';
+		    $path = '';
+		    $info = $categlib->get_category($categId);
+		    $path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>';
+
+		    while ($info["parentId"] != 0) {
+				$info = $categlib->get_category($info["parentId"]);
+				$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a> > ' . $path;
+		    }
+		    $catpath .= $path . '</span><br />';
+		}
+		return $catpath;
     }
 
 }
