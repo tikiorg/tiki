@@ -846,7 +846,7 @@ class Comments extends TikiLib {
 	global $user;
 
 	if ($count_admin_pvs == 'y' || $user != 'admin') {
-	    $query = "update `tiki_forums` set `hits`=hits+1 where
+	    $query = "update `tiki_forums` set `hits`=`hits`+1 where
 	    `forumId`=?";
 
 	    $result = $this->query($query, array( $forumId ) );
@@ -862,7 +862,7 @@ class Comments extends TikiLib {
 	global $user;
 
 	if ($count_admin_pvs == 'y' || $user != 'admin') {
-	    $query = "update `tiki_comments` set `hits`=hits+1 where
+	    $query = "update `tiki_comments` set `hits`=`hits`+1 where
 	    `threadId`=?";
 
 	    $result = $this->query($query, array( $threadId ) );
@@ -922,9 +922,9 @@ class Comments extends TikiLib {
 	`objectType` = 'forum' and `object`=?";
 	$comments = $this->getOne($query, array( $forumId ) );
 	$query = "select count(*) from `tiki_comments` where
-	`objectType` = 'forum' and `object`=? and parentId=0";
+	`objectType` = 'forum' and `object`=? and `parentId`=0";
 	$threads = $this->getOne($query, array( $forumId ));
-	$query = "update `tiki_forums` set `comments`=?, threads=?
+	$query = "update `tiki_forums` set `comments`=?, `threads`=?
 	where `forumId`=?";
 	$result = $this->query($query, array( $comments, $threads,
 	$forumId) );
@@ -1381,7 +1381,7 @@ class Comments extends TikiLib {
 	$query = "update `tiki_comments`
 	    set `type`='l' where `threadId`=?";
 
-	$this->query($query, array( $threadId ) );
+	$this->query($query, array( (int) $threadId ) );
     }
 
     function set_comment_object($threadId, $objectId) {
@@ -1390,23 +1390,23 @@ class Comments extends TikiLib {
 
 	$query = "update `tiki_comments`
 	    set `objectType` = ?, object`=? where `threadId`=? or
-	    parentId=?";
+	    `parentId`=?";
 	$this->query($query, array( $object[0], $object[1],
-	$threadId, $threadId ) );
+	(int) $threadId, (int) $threadId ) );
     }
 
     function set_parent($threadId, $parentId) {
 	$query = "update `tiki_comments`
 	    set `parentId`=? where `threadId`=?";
 
-	$this->query($query, array( $parentId, $threadId ) );
+	$this->query($query, array( (int) $parentId, (int) $threadId ) );
     }
 
     function unlock_comment($threadId) {
 	$query = "update `tiki_comments`
 	    set `type`='n' where `threadId`=?";
 
-	$this->query($query, array( $threadId ) );
+	$this->query($query, array( (int) $threadId ) );
     }
 
     function update_comment($threadId, $title, $data, $type = 'n', $summary = '', $smiley = '') {
@@ -1550,7 +1550,7 @@ class Comments extends TikiLib {
     }
 
     function remove_comment($threadId) {
-	$query = "delete from `tiki_comments` where `threadId`=? or parentId=?";
+	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";
 
 	$result = $this->query($query, array( (int) $threadId, (int) $threadId ) );
 	$query = "delete from `tiki_forum_attachments` where `threadId`=?";
@@ -1562,7 +1562,7 @@ class Comments extends TikiLib {
     function vote_comment($threadId, $user, $vote) {
 
 	// Select user points for the user who is voting (it may be anonymous!)
-	$query = "select `points`,voted from `tiki_userpoints` where `user`=?";
+	$query = "select `points`,`voted` from `tiki_userpoints` where `user`=?";
 
 	$result = $this->query($query, array( $user ) );
 
