@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.28 2003-11-10 16:38:12 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.29 2003-11-11 18:03:25 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -339,6 +339,12 @@ if (isset($_REQUEST["save"])) {
 		header ("location: tiki-view_articles.php");
 		die;
 	}
+	$cat_type = 'article';
+	$cat_objid = $subId;
+	$cat_desc = substr($_REQUEST["heading"], 0, 200);
+	$cat_name = $_REQUEST["title"];
+	$cat_href = "tiki-read_article.php?articleId=" . $cat_objid;
+	include_once ("categorize.php");
 
 	header ("location: tiki-list_submissions.php");
 	die;
@@ -359,6 +365,10 @@ if ($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {
 }
 
 $smarty->assign_by_ref('templates', $templates["data"]);
+
+$cat_type = 'article';
+$cat_objid = $subId;
+include_once ("categorize_list.php");
 
 $smarty->assign('publishDate', $publishDate);
 $smarty->assign('publishDateSite', $dc->getDisplayDateFromServerDate($publishDate));
