@@ -1415,47 +1415,38 @@ function get_included_groups($group) {
 			return true;
     }
 
-    function add_group($group, $desc, $home, $utracker=0, $gtracker=0) {
-  	global $cachelib;  
-	if ($this->group_exists($group))
-	    return false;
+	function add_group($group, $desc, $home, $utracker=0, $gtracker=0) {
+		global $cachelib;  
+		if ($this->group_exists($group))
+			return false;
+		$query = "insert into `users_groups`(`groupName`, `groupDesc`, `groupHome`,`usersTrackerId`,`groupTrackerId`) values(?,?,?,?,?)";
+		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker) );
+		$cachelib->invalidate('grouplist');
+		return true;
+	}
 
-	$query = "insert into `users_groups`(`groupName`, `groupDesc`,
-		`groupHome`,`usersTrackerId`,`groupTrackerId`) values(?,?,?,?,?)";
-	$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker) );
-	$cachelib->invalidate('grouplist');
-	return true;
-    }
-
-		function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0) {
-  	global $cachelib;  
-	if (!$this->group_exists($olgroup))
-	    return $this->add_group($group, $desc, $home,$utracker,$gtracker);
-
-	$query = "update `users_groups` set `groupName` = ?, `groupDesc` = ?,
-		`groupHome` = ?, `usersTrackerId`=?, `groupTrackerId`=? where `groupName` = ?";
-	$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, $olgroup));
-
-	$query = "update `users_usergroups` set `groupName` = ? where `groupName` = ?";
-	$result = $this->query($query, array($group, $olgroup));
-
-	$query = "update `users_grouppermissions` set `groupName` = ? where `groupName` = ?";
-	$result = $this->query($query, array($group, $olgroup));
-
-	$query = "update `users_objectpermissions` set `groupName` = ?  where `groupName` = ?";
-	$result = $this->query($query, array($group, $olgroup));
-
-	$query = "update `tiki_group_inclusion` set `groupName` = ?  where `groupName` = ?";
-	$result = $this->query($query, array($group, $olgroup));
-
-	$query = "update `tiki_newsreader_marks` set `groupName` = ?  where `groupName` = ?";
-	$result = $this->query($query, array($group, $olgroup));
-
-	$query = "update `tiki_modules` set `groups`=replace(`groups`, ?, ?) where `groups` like ?";
-	$result = $this->query($query, array($olgroup, $group, '%'.$olgroup.'%'));
-	$cachelib->invalidate('grouplist');
-	return true;
-    }
+	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0) {
+		global $cachelib;  
+		if (!$this->group_exists($olgroup))
+			return $this->add_group($group, $desc, $home,$utracker,$gtracker);
+		$query = "update `users_groups` set `groupName`=?, `groupDesc`=?, `groupHome`=?, ";
+		$query.= " `usersTrackerId`=?, `groupTrackerId`=?, `usersFieldId`=?, `groupFieldId`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, (int)$ufield, (int)$gfield, $olgroup));
+		$query = "update `users_usergroups` set `groupName`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $olgroup));
+		$query = "update `users_grouppermissions` set `groupName`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $olgroup));
+		$query = "update `users_objectpermissions` set `groupName`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $olgroup));
+		$query = "update `tiki_group_inclusion` set `groupName`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $olgroup));
+		$query = "update `tiki_newsreader_marks` set `groupName`=? where `groupName`=?";
+		$result = $this->query($query, array($group, $olgroup));
+		$query = "update `tiki_modules` set `groups`=replace(`groups`,?,?) where `groups` like ?";
+		$result = $this->query($query, array($olgroup, $group, '%'.$olgroup.'%'));
+		$cachelib->invalidate('grouplist');
+		return true;
+	}
 
     function remove_all_inclusions($group) {
 	if (!$this->group_exists($group))
