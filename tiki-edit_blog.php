@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/blogs/bloglib.php');
 
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -71,7 +72,7 @@ if(isset($_REQUEST["save"])) {
   } else {
     $public = 'n';
   }
-  $bid=$tikilib->replace_blog($_REQUEST["title"],$_REQUEST["description"],$user,$public,$_REQUEST["maxPosts"],$_REQUEST["blogId"]);
+  $bid=$bloglib->replace_blog($_REQUEST["title"],$_REQUEST["description"],$user,$public,$_REQUEST["maxPosts"],$_REQUEST["blogId"]);
   
   $cat_type='blog';
   $cat_objid = $bid;

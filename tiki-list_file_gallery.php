@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/filegals/filegallib.php');
 
 
 if($feature_file_galleries != 'y') {
@@ -81,7 +82,7 @@ if(isset($_REQUEST["remove"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $tikilib->remove_file($_REQUEST["remove"]);
+  $filegallib->remove_file($_REQUEST["remove"]);
 }
 
 if(!isset($gal_info["maxRows"])) $gal_info["maxRows"]=10;

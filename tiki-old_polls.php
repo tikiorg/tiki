@@ -26,20 +26,7 @@ if($tiki_p_view != 'y') {
 }
 */
 
-/*
-if(isset($_REQUEST["remove"])) {
-  // Check if it is the owner
-  $data = $tikilib->get_blog($_REQUEST["remove"]);
-  if($data["user"]!=$user) {
-    if($tiki_p_blog_admin != 'y') {
-      $smarty->assign('msg',tra("Permission denied you cannot remove this blog"));
-      $smarty->display("styles/$style_base/error.tpl");
-      die;  
-    }
-  }
-  $tikilib->remove_blog($_REQUEST["remove"]);  
-}
-*/
+
 
 // This script can receive the thresold
 // for the information as the number of

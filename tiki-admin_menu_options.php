@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/menubuilder/menulib.php');
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -14,7 +15,7 @@ if(!isset($_REQUEST["menuId"])) {
     die;
 }
 
-$maxPos = $tikilib->get_max_option($_REQUEST["menuId"]);
+$maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
 
 $smarty->assign('menuId',$_REQUEST["menuId"]);
 $menu_info = $tikilib->get_menu($_REQUEST["menuId"]);
@@ -27,7 +28,7 @@ $smarty->assign('optionId',$_REQUEST["optionId"]);
 
 
 if($_REQUEST["optionId"]) {
-  $info = $tikilib->get_menu_option($_REQUEST["optionId"]);
+  $info = $menulib->get_menu_option($_REQUEST["optionId"]);
 } else {
   $info = Array();
   $info["name"]='';
@@ -41,13 +42,13 @@ $smarty->assign('type',$info["type"]);
 $smarty->assign('position',$info["position"]);
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_menu_option($_REQUEST["remove"]);
-  $maxPos = $tikilib->get_max_option($_REQUEST["menuId"]);
+  $menulib->remove_menu_option($_REQUEST["remove"]);
+  $maxPos = $menulib->get_max_option($_REQUEST["menuId"]);
    $smarty->assign('position',$maxPos+1);
 }
 
 if(isset($_REQUEST["save"])) {
-   $tikilib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"],$_REQUEST["position"]);
+   $menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"], $_REQUEST["type"],$_REQUEST["position"]);
    $smarty->assign('position',$_REQUEST["position"]+1);
    $smarty->assign('name','');
    $smarty->assign('optionId',0);
@@ -76,7 +77,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_menu_options($_REQUEST["menuId"],0,-1,$sort_mode,$find);
+$channels = $menulib->list_menu_options($_REQUEST["menuId"],0,-1,$sort_mode,$find);
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));

@@ -1,6 +1,6 @@
 <?php
-
 require_once('tiki-setup.php');
+include_once('lib/menubuilder/menulib.php');
 // PERMISSIONS: NEEDS p_admin
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
@@ -186,7 +186,7 @@ $contents = $tikilib->list_content(0,-1,'contentId_desc','');
 $smarty->assign('contents',$contents["data"]);
 $rsss = $tikilib->list_rss_modules(0,-1,'name_desc','');
 $smarty->assign('rsss',$rsss["data"]);
-$menus = $tikilib->list_menus(0,-1,'menuId_desc','');
+$menus = $menulib->list_menus(0,-1,'menuId_desc','');
 $smarty->assign('menus',$menus["data"]);
 $banners = $tikilib->list_zones();
 $smarty->assign('banners',$banners["data"]);

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/menubuilder/menulib.php');
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -27,12 +28,12 @@ $smarty->assign('type',$info["type"]);
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_menu($_REQUEST["remove"]);
+  $menulib->remove_menu($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
   
-  $tikilib->replace_menu($_REQUEST["menuId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["type"]);
+  $menulib->replace_menu($_REQUEST["menuId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["type"]);
   $smarty->assign('name','');
   $smarty->assign('description','');
   $smarty->assign('type','');
@@ -61,7 +62,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_menus($offset,$maxRecords,$sort_mode,$find);
+$channels = $menulib->list_menus($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

@@ -2,6 +2,7 @@
 
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
+include_once('lib/blogs/bloglib.php');
 
 if($rss_blogs != 'y') {
  die;
@@ -16,7 +17,7 @@ $img = httpPrefix().$foo2;
 $read = httpPrefix().$foo3;
 
 $now = date("U");
-$changes = $tikilib->list_all_blog_posts(0,$max_rss_blogs,'created_desc', '',$now);
+$changes = $bloglib->list_all_blog_posts(0,$max_rss_blogs,'created_desc', '',$now);
 
 //print_r($changes);die;
 print('<');

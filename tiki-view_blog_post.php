@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/blogs/bloglib.php');
 
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -15,7 +16,7 @@ if(!isset($_REQUEST["postId"])) {
 }
 
 $postId=$_REQUEST["postId"];
-$post_info = $tikilib->get_post($_REQUEST["postId"]);
+$post_info = $bloglib->get_post($_REQUEST["postId"]);
 $smarty->assign('post_info',$post_info);
 $smarty->assign('postId',$_REQUEST["postId"]);
 $_REQUEST["blogId"]=$post_info["blogId"];

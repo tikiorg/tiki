@@ -1,7 +1,7 @@
 <?php
-
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
+include_once('lib/blogs/bloglib.php');
 
 header("content-type: text/xml");
 $foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -19,7 +19,7 @@ $img = httpPrefix().$foo2;
 $read = httpPrefix().$foo3;
 $title = $tikilib->get_preference("title","pepe");
 $now = date("U");
-$changes = $tikilib->list_blog_posts($_REQUEST["blogId"], 0,$max_rss_blog,'created_desc', '', $now);
+$changes = $bloglib->list_blog_posts($_REQUEST["blogId"], 0,$max_rss_blog,'created_desc', '', $now);
 $info = $tikilib->get_blog($_REQUEST["blogId"]);
 $blogtitle = $info["title"];
 $blogdesc = $info["description"];
