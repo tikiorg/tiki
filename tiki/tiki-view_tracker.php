@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.46 2004-02-10 10:57:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.47 2004-02-12 13:37:18 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,18 +68,42 @@ $smarty->assign('tracker_info', $tracker_info);
 $field_types = $trklib->field_types();
 $smarty->assign('field_types', $field_types);
 
-$status_types = $trklib->status_types();
+$status_types = array();
+$status_raw = $trklib->status_types();
+
+if (isset($_REQUEST['status'])) {
+	$sts = preg_split('//', $_REQUEST['status'], -1, PREG_SPLIT_NO_EMPTY);
+} elseif (isset($tracker_info["defaultStatus"])) {
+	$sts = preg_split('//', $tracker_info["defaultStatus"], -1, PREG_SPLIT_NO_EMPTY);
+} else {
+	$sts = array('o');
+}
+
+foreach ($status_raw as $let=>$sta) {
+	if (isset($$sta['perm']) and $$sta['perm'] == 'y') {
+		if (in_array($let,$sts)) {
+			$sta['class'] = 'statuson';
+			$sta['statuslink'] = str_replace($let,'',implode('',$sts));
+		} else {
+			$sta['class'] = 'statusoff';
+			$sta['statuslink'] = implode('',$sts).$let;
+		}
+		$status_types["$let"] = $sta;
+	}
+}
+
 $smarty->assign('status_types', $status_types);
 
 $fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 $ins_fields = $fields;
 
+$mainfield = '';
+$mainfieldId = 0;
 $orderkey = false;
 $usecategs = false;
 $ins_categs = array();
 $listfields = array();
 $textarea_options = false;
-
 
 for ($i = 0; $i < count($fields["data"]); $i++) {
 	$fid = $fields["data"][$i]["fieldId"];
@@ -209,7 +233,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 	}
 }
-if (!isset($mainfield)) {
+if (!isset($mainfield) and isset($fields["data"][0]["fieldId"]) and isset($fields["data"][0]["value"])) {
 	$mainfield = $fields["data"][0]["value"];
 	$mainfieldId = $fields["data"][0]["fieldId"];
 }

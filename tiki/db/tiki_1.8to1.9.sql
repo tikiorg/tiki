@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.26 2004-02-11 14:59:24 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.27 2004-02-12 13:37:20 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -154,4 +154,7 @@ UPDATE `tiki_tracker_fields` set `isHidden`='y' where `isHidden`='';
 
 # added on 2004-02-10 by mose for more power to dennis daniels
 ALTER TABLE `tiki_trackers` CHANGE `name` `name` VARCHAR( 255 ) DEFAULT NULL ;
+
+# added on 2004-02-11 by mose for yet-another-perm
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_closed', 'Can view trackers pending items', 'registered', 'trackers');
 
