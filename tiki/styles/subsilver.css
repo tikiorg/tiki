@@ -1,4 +1,9 @@
 /* SubSilver style for TIKI based on the SubSilver style by phpBB full credits to the phpBB authors */
+/*
+ * Use default looking for doxygened docs 'till
+ * theme authors redefine needed styles...
+ */
+@import "doxygen.css";
 
 /* GENERAL COMMENTS  
  *

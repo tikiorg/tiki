@@ -1,4 +1,9 @@
 /* Tranquil style for TIKI based on the SubSilver style */
+/*
+ * Use default looking for doxygened docs 'till
+ * theme authors redefine needed styles...
+ */
+@import "doxygen.css";
 
 body {
 	background-color:    #FFFFCC;

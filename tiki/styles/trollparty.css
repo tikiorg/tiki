@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.6 2003-09-25 01:05:19 rlpowell Exp $
+$Id: trollparty.css,v 1.7 2003-10-07 23:30:04 zaufi Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -17,6 +17,14 @@ border-bottom: 1px dashed #2255aa;
 
 cbox: bg #333333;
 */
+
+/*
+ * Use default looking for doxygened docs 'till
+ * theme authors redefine needed styles...
+ */
+@import "doxygen.css";
+
+
 body
 {
 font-family: Helvetica, Verdana, Geneva, Arial, sans-serif;

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-doxygen.css,v 1.1 2003-10-06 22:48:29 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-doxygen.css,v 1.2 2003-10-07 23:30:04 zaufi Exp $
  *
  */
 
@@ -56,6 +56,19 @@ div.doxydoc td.mdescLeft,
 div.doxydoc td.mdescRight {
     font-size: small;
 }
+div.doxydoc td.mdescLeft,
+div.doxydoc td.memItemLeft {
+    width: 40%;
+    max-width: 40%;
+    font-size: small;
+}
+div.doxydoc td.mdescLeft,
+div.doxydoc td.mdescRight {
+    width: 60%;
+    min-width: 60%;
+    font-size: small;
+}
+
 
 div.doxydoc span.keyword       { color: #008000 }
 div.doxydoc span.keywordtype   { color: #604020 }
@@ -64,3 +77,14 @@ div.doxydoc span.comment       { color: #800000 }
 div.doxydoc span.preprocessor  { color: #806020 }
 div.doxydoc span.stringliteral { color: #002080 }
 div.doxydoc span.charliteral   { color: #008080 }
+
+div.doxydoc td.md {
+    vertical-align: middle;
+}
+div.doxydoc table.mdTable {
+    border: 1px solid WindowFrame;
+}
+/* Text in [] like [inline] or [virtual] */
+div.doxydoc td.md code {
+    font-size: small;
+}
