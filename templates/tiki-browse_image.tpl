@@ -17,9 +17,9 @@
   
   <div align="center">
     [{if $previmg}
-    <a href="tiki-browse_image?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}" class="gallink"> {tr}prev image{/tr}</a>{/if}{if $previmg and $nextimg} | {/if}
+    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}" class="gallink"> {tr}prev image{/tr}</a>{/if}{if $previmg and $nextimg} | {/if}
     {if $nextimg}
-    <a href="tiki-browse_image?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}" class="gallink">{tr}next image{/tr}</a> {/if}]
+    <a href="tiki-browse_image.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}" class="gallink">{tr}next image{/tr}</a> {/if}]
   </div>
 
   
