@@ -3,6 +3,9 @@
 include_once ('lib/notifications/notificationlib.php');
 
 class TrackerLib extends TikiLib {
+
+	var $trackerinfo_cache;
+
 	function TrackerLib($db) {
 		parent::TikiLib($db);
 	}
@@ -11,7 +14,6 @@ class TrackerLib extends TikiLib {
 		global $count_admin_pvs, $user;
 		if ($user != 'admin' || $count_admin_pvs == 'y' ) {
 			$query = "update `tiki_tracker_item_attachments` set `downloads`=`downloads`+1 where `attId`=?";
-			$result = $this->query($query,array((int) $id));
 		}
 		return true;
 	}
@@ -156,67 +158,6 @@ class TrackerLib extends TikiLib {
 		return $this->getOne("select max(`position`) from `tiki_tracker_fields` where `trackerId` = ?",array((int)$id));
 	}
 
-	function list_all_tracker_items($offset, $maxRecords, $sort_mode, $fields) {
-		$filters = array();
-
-		for ($i = 0; $i < count($fields["data"]); $i++) {
-			$fieldId = $fields["data"][$i]["fieldId"];
-
-			$type = $fields["data"][$i]["type"];
-			$value = $fields["data"][$i]["value"];
-			$aux["value"] = $value;
-			$aux["type"] = $type;
-			$filters[$fieldId] = $aux;
-		}
-
-		$mid = '';
-		$bindvars=array();
-		$query = "select * from `tiki_tracker_items` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_tracker_items` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$fields = array();
-
-			$itid = $res["itemId"];
-			$query2 = "select ttif.`fieldId`,`value`,`isTblVisible`,`isPublic`,`isMain`,`position` from `tiki_tracker_item_fields` ttif,
-			`tiki_tracker_fields` ttf where ttif.`fieldId`=ttf.`fieldId` and `itemId`=? order by `position` asc";
-			$result2 = $this->query($query2,array((int) $res["itemId"]));
-			$pass = true;
-
-			while ($res2 = $result2->fetchRow()) {
-				// Check if the field is visible!
-				$fieldId = $res2["fieldId"];
-
-				if ($filters["$fieldId"]["value"]) {
-					if ($filters["$fieldId"]["type"] == 'a' || $filters["$fieldId"]["type"] == 't') {
-						if (!strstr($res2["value"], $filters["$fieldId"]["value"]))
-							$pass = false;
-					} else {
-						if ($res2["value"] != $filters["$fieldId"]["value"])
-							$pass = false;
-					}
-				}
-
-				$fields[] = $res2;
-			}
-
-			$res["field_values"] = $fields;
-			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
-
-			if ($pass)
-				$ret[] = $res;
-		}
-
-		//$ret=$this->sort_items_by_condition($ret,$sort_mode);
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
-	}
-
 	function get_tracker_item($itemid) {
 		$query = "select * from `tiki_tracker_items` where `itemid`=?";
 
@@ -337,9 +278,9 @@ class TrackerLib extends TikiLib {
 						}
 					}
 				}
-				$fopt["links"] = array();
 				$fopt["linkId"] = '';
 				if ($fopt["type"] == 'r') {
+					$fopt["links"] = array();
 					if (!$opts) {
 						$opts = split(',',$fopt['options']);
 					}
@@ -470,35 +411,52 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,array((int) $itemId));
 	}
 
-	// List the available trackers
-	
 	// Lists all the fields for an existing tracker
 	function list_tracker_fields($trackerId, $offset, $maxRecords, $sort_mode, $find) {
+		global $cachelib;
 
-		if ($find) {
-			$findesc = '%' . $find . '%';
+		// that is a test of use of cachelib ..
+		if (!$cachelib->isCached("trackerfields$trackerId")) {		
+			if ($find) {
+				$findesc = '%' . $find . '%';
+				$mid = " where `trackerId`=? and (`name` like ?)";
+				$bindvars=array((int) $trackerId,$findesc);
+			} else {
+				$mid = " where `trackerId`=? ";
+				$bindvars=array((int) $trackerId);
+			}
+			$query = "select * from `tiki_tracker_fields` $mid order by ".$this->convert_sortmode($sort_mode);
+			$query_cant = "select count(*) from `tiki_tracker_fields` $mid";
+			$result = $this->query($query,$bindvars,$maxRecords,$offset);
+			$cant = $this->getOne($query_cant,$bindvars);
+			$ret = array();
 
-			$mid = " where `trackerId`=? and (`name` like ?)";
-			$bindvars=array((int) $trackerId,$findesc);
+			while ($res = $result->fetchRow()) {
+				$res["options_array"] = split(',', $res["options"]);
+				$ret[] = $res;
+			}
+			$retval = array();
+			$retval["data"] = $ret;
+			$retval["cant"] = $cant;
+			$cachelib->cacheItem("trackerfields$trackerId",serialize($retval));
 		} else {
-			$mid = " where `trackerId`=? ";
-			$bindvars=array((int) $trackerId);
+			$retval_c = unserialize($cachelib->getCached("trackerfields$trackerId"));
+			if ($find) {
+				foreach ($retval_c["data"] as $rtv) {
+					if (strpos(strtolower($find),$rtv['name'])) {
+						$outval[] = $rtv;
+					}
+				}
+				$retval["cant"] = sizeof($outval);
+				if ($offset != 0 or $maxRecords != -1) {
+					$retval["data"] = array_slice($outval,$offset,$maxRecords);
+				} else {
+					$retval["data"] = $outval;
+				}
+			} else {
+				$retval = $retval_c;
+			}
 		}
-
-		$query = "select * from `tiki_tracker_fields` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_tracker_fields` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$res["options_array"] = split(',', $res["options"]);
-			$ret[] = $res;
-		}
-
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
 		return $retval;
 	}
 
@@ -527,22 +485,23 @@ class TrackerLib extends TikiLib {
 		return $trackerId;
 	}
 
-	// Adds a new field to a tracker or modifies an existing field for a tracker
-	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $position, $options) {
-		// Check the name
+
+	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $position, $options) {
+		global $cachelib;
+	
 		if ($fieldId) {
 			$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
-				`isTblVisible`=?,`isPublic`=?,`position`=?,`options`=? where `fieldId`=?";
-			$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,(int)$position,$options,(int) $fieldId);
+				`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`position`=?,`options`=? where `fieldId`=?";
+			$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,(int)$position,$options,(int) $fieldId);
 
 			$result = $this->query($query, $bindvars);
 		} else {
 			$this->getOne("delete from `tiki_tracker_fields` where `trackerId`=? and `name`=?",
 				array((int) $trackerId,$name),false);
-			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`position`,`options`)
-                values(?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`position`,`options`)
+                values(?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$position,$options));
+			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$position,$options));
 			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 			// Now add the field to all the existing items
 			$query = "select `itemId` from `tiki_tracker_items` where `trackerId`=?";
@@ -557,11 +516,12 @@ class TrackerLib extends TikiLib {
 				$this->query($query2,array((int) $itemId,(int) $fieldId,''));
 			}
 		}
-
+		$cachelib->invalidate("trackerfields$trackerId");
 		return $fieldId;
 	}
 
 	function remove_tracker($trackerId) {
+		global $cachelib;
 		// Remove the tracker
 		$bindvars=array((int) $trackerId);
 		$query = "delete from `tiki_trackers` where `trackerId`=?";
@@ -585,15 +545,18 @@ class TrackerLib extends TikiLib {
 		$query = "delete from `tiki_tracker_items` where `trackerId`=?";
 		$result = $this->query($query,$bindvars);
 		$this->remove_object('tracker', $trackerId);
+		$cachelib->invalidate("trackerfields$trackerId");
 		return true;
 	}
 
-	function remove_tracker_field($fieldId) {
+	function remove_tracker_field($fieldId,$trackerId) {
+		global $cachelib;
 		$query = "delete from `tiki_tracker_fields` where `fieldId`=?";
 		$bindvars=array((int) $fieldId);
 		$result = $this->query($query,$bindvars);
 		$query = "delete from `tiki_tracker_item_fields` where `fieldId`=?";
 		$result = $this->query($query,$bindvars);
+		$cachelib->invalidate("trackerfields$trackerId");
 		return true;
 	}
 
