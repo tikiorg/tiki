@@ -68,7 +68,7 @@ $lang=Array(
 "definition" => "definicja",
 "for definiton lists" => "dla list definicyjnych",
 "References" => "Referencje",
-"JoinCapitalizedWords" => "Łącz Słowa Z Dużej Litery",
+"JoinCapitalizedWords" => "�?ącz Słowa Z Dużej Litery",
 "or use square brackets for an" => "lub używaj nawiasów kwadratowyh dla",
 "external link" => "zewnętrzny link",
 "link_description" => "opis linku",
@@ -2085,5 +2085,6 @@ from Admin->General
 "LDAP Member Is DN" => "LDAP Member Is DN",
 "LDAP Admin User" => "LDAP Admin User",
 "LDAP Admin Pwd" => "LDAP Admin Pwd",
+"picture not found" => "picture not found",
 "##end###" => "###end###");
 ?>

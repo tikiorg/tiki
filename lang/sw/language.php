@@ -2082,5 +2082,6 @@ from Admin->General
 "Cannot get messages" => "Cannot get messages",
 "File is too big" => "File is too big",
 "No note indicated" => "No note indicated",
+"picture not found" => "picture not found",
 "##end###" => "###end###");
 ?>

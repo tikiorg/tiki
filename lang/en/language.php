@@ -2103,5 +2103,6 @@ from Admin->General
 "LDAP Member Is DN" => "LDAP Member Is DN",
 "LDAP Admin User" => "LDAP Admin User",
 "LDAP Admin Pwd" => "LDAP Admin Pwd",
+"picture not found" => "picture not found",
 "##end###" => "###end###");
 ?>
