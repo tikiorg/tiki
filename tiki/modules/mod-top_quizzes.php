@@ -5,9 +5,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
-$ranking = $tikilib->list_quizzes(0, $module_rows, 'created_desc', '');
+global $quizlib;
+if (!is_object($quizlib)) {
+	require_once('lib/quizzes/quizlib.php');
+}
 
-$ranking = $tikilib->list_quiz_sum_stats(0, $module_rows, 'timesTaken_desc', '');
+$ranking = $quizlib->list_quizzes(0, $module_rows, 'created_desc', '');
+
+$ranking = $quizlib->list_quiz_sum_stats(0, $module_rows, 'timesTaken_desc', '');
 $smarty->assign('modTopQuizzes', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 

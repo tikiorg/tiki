@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.50 2004-07-15 18:44:24 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.51 2004-07-15 20:24:11 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -452,7 +452,11 @@ class CategLib extends TikiLib {
 
 		if (!$catObjectId) {
 			// The page is not cateorized
-			$info = $this->get_quiz($quizId);
+			global $quizlib;
+			if (!is_object($quizlib)) {
+				require_once('lib/quizzes/quizlib.php');
+			}
+			$info = $quizlib->get_quiz($quizId);
 
 			$href = 'tiki-take_quiz.php?quizId=' . $quizId;
 			$catObjectId
