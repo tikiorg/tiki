@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 2. July 2003
+// Last modified: 15. July 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -26,6 +26,7 @@
 // - new text format attribute: HAW_TEXTFORMAT_BOXED
 // - bugfix: VoiceXML <enumerate>'s require breaks to be understandable
 // - bugfix: VoiceXML <option> element does not allow some special characters
+// - bugfix: WML (UP): restrict "select option onpick" to pure menu decks only
 
 // miscellaneous constants
 define("HAW_VERSION", "HAWHAW V5.1b");
@@ -470,6 +471,8 @@ class HAW_deck
   var $number_of_elements;
   var $number_of_forms;
   var $number_of_linksets;
+  var $number_of_links;
+  var $number_of_phones;
   var $top_banners;
   var $number_of_top_banners = 0;
   var $bottom_banners;
@@ -669,6 +672,8 @@ class HAW_deck
     $this->number_of_elements = 0;
     $this->number_of_forms = 0;
     $this->number_of_linksets = 0;
+    $this->number_of_links = 0;
+    $this->number_of_phones = 0;
 
     if (($this->output == HAW_OUTPUT_PDA) ||
         strstr(strtolower($HTTP_USER_AGENT), "avantgo") ||
@@ -801,6 +806,7 @@ class HAW_deck
     $this->element[$this->number_of_elements] = $link;
 
     $this->number_of_elements++;
+    $this->number_of_links++;
   }
 
 
@@ -817,6 +823,7 @@ class HAW_deck
     $this->element[$this->number_of_elements] = $phone;
 
     $this->number_of_elements++;
+    $this->number_of_phones++;
   }
 
 
@@ -5148,10 +5155,13 @@ class HAW_linkset
       {
         // create linkset in WML
 
-        if ($deck->upbrowser)
+        if ($deck->upbrowser &&
+           ($deck->number_of_forms == 0) &&
+           ($deck->number_of_links == 0) &&
+           ($deck->number_of_phones == 0))
         {
           echo "<select>\n";
-  
+
           while (list($key, $val) = each($this->element))
           {
             if ($val->get_title())
@@ -5165,7 +5175,7 @@ class HAW_linkset
           echo "</select>\n";
         }
         else
-          // create normal WML links for non-UP-based WAP devices
+          // create normal WML links
           while (list($key, $val) = each($this->element))
             $val->create($deck);
       }
