@@ -95,7 +95,7 @@ if(isset($_REQUEST["send"])) {
            // We have a response
            $res=xmlrpc_decode($result->value());
            if($res) {
-             $msg.=tra('page').': '.$page.tra(' succesfully sent')."<br/>";
+             $msg.=tra('page').': '.$page.tra(' successfully sent')."<br/>";
            }
         } else {
            $errorMsg=$result->faultstring();
@@ -140,7 +140,7 @@ if(isset($_REQUEST["send"])) {
              // We have a response
              $res=xmlrpc_decode($result->value());
              if($res) {
-               $msg.=tra('article').': '.$article.tra(' succesfully sent')."<br/>";
+               $msg.=tra('article').': '.$article.tra(' successfully sent')."<br/>";
              }
           } else {
             $errorMsg=$result->faultstring();
