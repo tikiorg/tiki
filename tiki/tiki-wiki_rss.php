@@ -16,7 +16,7 @@ $title = $tikilib->get_preference("title","pepe");
 $changes =   $histlib->get_last_changes(999, 0, $max_rss_wiki, $sort_mode = 'lastModif_desc');
 //print_r($changes);die;
 print('<');
-print('?xml version="1.0" ?');
+print('?xml version="1.0" encoding="UTF-8" ?');
 print('>');
 ?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
