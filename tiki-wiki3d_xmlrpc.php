@@ -71,10 +71,7 @@ function getSubGraph($params) {
 	$queue = $nextQueue;
     }
 
-    @$wikilib->db->query($depth);
-
     $response = array("graph" => new XmlRpcVal($nodes, "struct"));
-
     
     return new XmlRpcResp(new XmlRpcVal($response, "struct"));
 }
