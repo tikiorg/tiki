@@ -1,6 +1,6 @@
 <?php
 /*
-V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.  
+V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.  
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -401,6 +401,9 @@ class ADODB_ibase extends ADOConnection {
 		return $blob; 
 	}
 	
+	
+	
+	
 	// old blobdecode function
 	// still used to auto-decode all blob's
 	function _BlobDecode( $blob ) 
@@ -579,6 +582,8 @@ class ADORecordset_ibase extends ADORecordSet
 		return false;
 	}
 
+	
+	
 	function _fetch() 
 	{
 		$f = @ibase_fetch_row($this->_queryID); 
@@ -588,10 +593,11 @@ class ADORecordset_ibase extends ADORecordSet
 		}
 		// OPN stuff start - optimized
 		// fix missing nulls and decode blobs automatically
+
 		for ($i=0, $max = $this->_numOfFields; $i < $max; $i++) { 
-			if ($this->_cacheType[$i]=="BLOB") { 
+			if ($this->_cacheType[$i]=="BLOB") {
 				if (isset($f[$i])) { 
-					$f[$i] = $this->_BlobDecode($f[$i]); 
+					$f[$i] = $this->connection->_BlobDecode($f[$i]); 
 				} else { 
 					$f[$i] = null; 
 				} 

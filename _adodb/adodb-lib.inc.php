@@ -1,6 +1,6 @@
 <?php
 /* 
-V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. See License.txt. 
@@ -399,7 +399,7 @@ function _adodb_getinsertsql(&$zthis,&$rs,$arrFields,$magicq=false)
 			// If the recordset field is one
 			// of the fields passed in then process.
 			$upperfname = strtoupper($field->name);
-			if (isset($arrFields[$upperfname])) {
+			if (key_exists($upperfname,$arrFields)) {
 	
 				// Set the counter for the number of fields that will be inserted.
 				$fieldInsertedCount++;

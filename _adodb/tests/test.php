@@ -1,6 +1,6 @@
 <?php
 /* 
-V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -239,7 +239,7 @@ GLOBAL $ADODB_vers,$ADODB_CACHE_DIR,$ADODB_FETCH_MODE, $HTTP_GET_VARS,$ADODB_COU
 		}
 		print "<p>Testing MetaPrimaryKeys</p>";
 		$a = $db->MetaPrimaryKeys('ADOXYZ');
-		print_r($a);
+		var_dump($a);
 	}
 	$rs = &$db->Execute('delete from ADOXYZ');
 	if ($rs) $rs->Close();
@@ -254,6 +254,11 @@ GLOBAL $ADODB_vers,$ADODB_CACHE_DIR,$ADODB_FETCH_MODE, $HTTP_GET_VARS,$ADODB_COU
 	case 'ibase':
 		print "<p>Encode=".$db->BlobEncode("abc\0d\"'
 ef")."</p>";//'
+
+		print "<p>Testing Foreign Keys</p>";
+		$arr = $db->MetaForeignKeys('adoxyz',false,true);
+		print_r($arr);
+		if (!$arr) Err("Bad MetaForeignKeys");
 		break;
 	
 	case 'odbc_mssql':
@@ -849,6 +854,12 @@ END adodb;
 	print "<p>ASSOC TEST 2<br>";
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	$rs = $db->query('select * from adoxyz order by id');
+	if ($ee = $db->ErrorMsg()) {
+		Err("Error message=$ee");
+	}
+	if ($ee = $db->ErrorNo()) {
+		Err("Error No = $ee");
+	}
 	print_r($rs->fields);
 	for($i=0;$i<$rs->FieldCount();$i++) 
 	{ 

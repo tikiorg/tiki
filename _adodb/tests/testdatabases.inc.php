@@ -1,7 +1,7 @@
 <?php
   
 /*
-V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V3.72 9 Aug 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -28,7 +28,7 @@ if (!empty($testpostgres)) {
 	//ADOLoadCode("postgres");
 	$db = &ADONewConnection('postgres');
 	print "<h1>Connecting $db->databaseType...</h1>";
-	if (@$db->PConnect("localhost","tester","test","test")) {
+	if (@$db->Connect("localhost","tester","test","test")) {
 		testdb($db,"create table ADOXYZ (id integer, firstname char(24), lastname varchar,created date)");
 	}else
 		print "ERROR: PostgreSQL requires a database called test on server, user tester, password test.<BR>".$db->ErrorMsg();
