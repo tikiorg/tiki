@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.51 2003-12-29 10:53:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.52 2004-01-11 11:01:38 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -608,7 +608,12 @@ if (isset($_REQUEST["quote"]) &&
     $qdata = implode("\n", $quoted_lines);
     $qdata = '> ' . $quote_info["userName"] . ":\n" . $qdata;
     $smarty->assign('comment_data', $qdata);
-    $smarty->assign('comment_title', tra('Re:').' '.$quote_info["title"]);
+// damian aka damosoft: to remove repeating Re:
+    if ( strstr($quote_info["title"], tra('Re:') ) ) {
+	$smarty->assign('comment_title', $quote_info["title"]);
+    } else {
+    	$smarty->assign('comment_title', tra('Re:').' '.$quote_info["title"]);
+    }
     $smarty->assign('openpost', 'y');
 }
 
