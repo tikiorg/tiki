@@ -46,3 +46,4 @@ hope this works
 
 hello
 Testing DNS @ home
+testing the line ending
