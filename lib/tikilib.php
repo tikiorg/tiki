@@ -327,7 +327,7 @@ class TikiLib {
   
   /*shared*/ function get_watches_events()
   {
-    $query = "select `distinct` (event) from tiki_user_watches";
+    $query = "select distinct(event) from tiki_user_watches";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow()) {
