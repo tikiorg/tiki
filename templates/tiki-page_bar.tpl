@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.28 2004-02-25 15:34:13 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.29 2004-02-25 17:17:42 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -93,7 +93,7 @@ hide('helptboxes');" class="linkbut">{tr}wiki help{/tr}</a>
          href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');"
          class="linkbut">
 	{if $comments_cant == 0}
-          {tr}comment{/tr}
+          {tr}add comment{/tr}
         {elseif $comments_cant == 1}
           <span class="highlight">{tr}1 comment{/tr}</span>
         {else}
