@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.4 2003-11-10 02:26:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.5 2003-11-12 00:09:06 franck Exp $ *}
 
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br/><br/>
 <h3>{tr}{$dir}{/tr}</h3>
@@ -16,7 +16,8 @@
 </td>
 <td class="odd">
 {if $tiki_p_map_delete}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir">
+<a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir"
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this directory?{/tr}')">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
 {/if}
@@ -31,7 +32,8 @@
 </td>
 <td class="even">
 {if $tiki_p_map_delete}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir">
+<a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir"
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this directory?{/tr}')">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
 {/if}
@@ -48,7 +50,8 @@
 </td>
 <td class="odd">
 {if $tiki_p_map_delete}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete">
+<a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete"
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this file?{/tr}')">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
 {/if}
@@ -61,7 +64,8 @@
 </td>
 <td class="even">
 {if $tiki_p_map_delete}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete">
+<a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete"
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this file?{/tr}')">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
 {/if}

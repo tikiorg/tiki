@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.21 2003-11-10 16:27:06 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.22 2003-11-12 00:09:05 franck Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -413,6 +413,28 @@ function targetBlank(url,mode) {
    }
    blankWin = window.open(url,'_blank',features);
 }
+
+// function:	confirmTheLink
+// desc:	pop up a dialog box to confirm the action
+// added by: 	Franck Martin
+// date:	Oct 12, 2003
+// params:	theLink: The link where it is called from
+// params: theMsg: The message to display
+function confirmTheLink(theLink, theMsg)
+{
+    // Confirmation is not required if browser is Opera (crappy js implementation)
+    if (typeof(window.opera) != 'undefined') {
+        return true;
+    }
+                                                                                                                  
+    var is_confirmed = confirm(theMsg);
+    if (is_confirmed) {
+        theLink.href += '&is_js_confirmed=1';
+    }
+                                                                                                                  
+    return is_confirmed;
+} 
+
 /** \brief: modif a textarea dimension
  * \elementId = textarea idea
  * \height = nb pixels to add to the height (the number can be negative)
@@ -431,4 +453,5 @@ function textareaSize(elementId, height, width, formId) {
 		form.cols.value = textarea.cols;
 	}
 }
+
 
