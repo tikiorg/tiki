@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.87 2003-12-02 15:04:44 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.88 2003-12-04 03:53:52 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -612,24 +612,24 @@ CREATE TABLE `tiki_quicktags` (
   PRIMARY KEY  (`tagId`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('bold','__text__','images/ed_format_bold.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('italic','\'\'text\'\'','images/ed_format_italic.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('underline','===text===','images/ed_format_underline.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','images/insert_table.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('external link','[http://example.com|text]','images/ed_link.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('wiki link','((text))','images/ed_copy.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('heading1','!text','images/ed_custom.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('title bar','-=text=-','images/fullscreen_maximize.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('box','^text^','images/ed_about.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('rss feed','{rss id= }','images/ico_link.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic content','{content id= }','images/book.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('tagline','{cookie}','images/footprint.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('hr','---','images/ed_hr.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('center text','::text::','images/ed_align_center.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('colored text','~~#FF0000:text~~','images/fontfamily.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic variable','%text%','images/book.gif');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (1,'bold','__text__','images/ed_format_bold.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (2,'italic','\'\'text\'\'','images/ed_format_italic.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (3,'underline','===text===','images/ed_format_underline.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (4,'table','||r1c1|r1c2||r2c1|r2c2||','images/insert_table.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (5,'table new','||r1c1|r1c2\nr2c1|r2c2||','images/insert_table.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (6,'external link','[http://example.com|text]','images/ed_link.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (7,'wiki link','((text))','images/ed_copy.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (8,'heading1','!text','images/ed_custom.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (9,'title bar','-=text=-','images/fullscreen_maximize.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (10,'box','^text^','images/ed_about.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (11,'rss feed','{rss id= }','images/ico_link.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (12,'dynamic content','{content id= }','images/book.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (13,'tagline','{cookie}','images/footprint.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (14,'hr','---','images/ed_hr.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (15,'center text','::text::','images/ed_align_center.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (16,'colored text','~~#FF0000:text~~','images/fontfamily.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (17,'dynamic variable','%text%','images/book.gif');
+INSERT INTO tiki_quicktags (tagId, taglabel, taginsert, tagicon) VALUES (18,'image','{img src= width= height= align= desc= link= }','images/ed_image.gif');
 
 # added on 2003-11-20 by mose for countering gustavo
 # variabilisation of application_menu
