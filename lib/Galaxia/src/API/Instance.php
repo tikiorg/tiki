@@ -79,8 +79,7 @@ class Instance extends Base {
   */
   function setNextUser($user) {
     $pId = $this->pId;
-		$user = addslashes($user);   
-    $this->nextUser=$user;
+    $this->nextUser = $user;
     $query = "update `galaxia_instances` set `nextUser`=? where `instanceId`=?";
     $this->query($query,array($user,$this->instanceId));
   }
@@ -102,14 +101,14 @@ class Instance extends Base {
   	$now = date("U");
   	$this->started=$now;
   	$this->owner = $user;
-  	$props=addslashes(serialize($this->properties));
+  	$props=serialize($this->properties);
 		$query = "insert into `galaxia_instances`(`started`,`ended`,`status`,`pId`,`owner`,`properties`) values(?,?,?,?,?,?)";
   	$this->query($query,array($now,0,'active',$pid,$user,$props));
   	$this->instanceId = $this->getOne("select max(`instanceId`) from `galaxia_instances` where `started`=? and `owner`=?",array($now,$user));
   	$iid=$this->instanceId;
   	
   	// Now update the properties!
-    $props = addslashes(serialize($this->properties));
+    $props = serialize($this->properties);
     $query = "update `galaxia_instances` set `properties`=? where `instanceId`=?";
     $this->query($query,array($props,$iid));
 
@@ -125,7 +124,7 @@ class Instance extends Base {
   */
   function set($name,$value) {
     $this->properties[$name] = $value;
-    $props = addslashes(serialize($this->properties));
+    $props = serialize($this->properties);
     $query = "update `galaxia_instances` set `properties`=? where `instanceId`=?";
     $this->query($query,array($props,$this->instanceId));
   }
@@ -387,7 +386,7 @@ class Instance extends Base {
 				$putuser = $act['user'];
 			}
 			$ended = date("U");
-			$properties = addslashes(serialize($this->properties));
+			$properties = serialize($this->properties);
 			$query="insert into `galaxia_workitems`(`instanceId`,`orderId`,`activityId`,`started`,`ended`,`properties`,`user`) values(?,?,?,?,?,?,?)";		
 			$this->query($query,array($iid,$max,$activityId,$started,$ended,$properties,$putuser));
   	}

@@ -8,6 +8,7 @@ database connection, database methods and the Observable interface.
 include_once('lib/Galaxia/src/common/Observable.php');
 class Base extends Observable {
   var $db;  // The PEAR db object used to access the database
+	var $num_queries = 0;
 
   // Constructor receiving a PEAR::Db database object.
   function Base($db)
