@@ -33,7 +33,7 @@
     {tr}compose{/tr}</a>
   </td>
   <td>
-    <a class="link" href="tiki-webmail.php?section=contacts" title="{tr}contacts{/tr}>
+    <a class="link" href="tiki-webmail.php?section=contacts" title="{tr}contacts{/tr}">
     <img border="0" src="img/webmail/contact.gif" alt="{tr}Contacts{/tr}" /><br />
     {tr}contacts{/tr}</a>
   </td>
