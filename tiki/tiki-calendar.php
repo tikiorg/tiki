@@ -213,8 +213,8 @@ if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) $_S
 
 $smarty->assign('viewmode',$_SESSION['CalendarViewMode']);
 
-if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"])) {
-	$calendarlib->drop_item($user,$calitemId);
+if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"])) {
+	$calendarlib->drop_item($user,$_REQUEST["calitemId"]);
 	$_REQUEST["calitemId"] = 0;
 }
 
