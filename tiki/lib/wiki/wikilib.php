@@ -147,6 +147,7 @@ class WikiLib extends TikiLib {
 
 		return $aux;
 	}
+	
 
 	// This method renames a wiki page
 	// If you think this is easy you are very very wrong

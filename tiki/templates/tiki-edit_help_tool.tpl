@@ -17,6 +17,7 @@
 <a title="{tr}hr{/tr}" class="link" href="javascript:insertAt('{$area_name}','---');"><img src='images/ed_hr.gif' alt='{tr}horizontal ruler{/tr}' title='{tr}horizontal ruler{/tr}' border='0' /></a>
 <a title="{tr}center text{/tr}" class="link" href="javascript:insertAt('{$area_name}','::text::');"><img src='images/ed_align_center.gif' alt='{tr}center{/tr}' title='{tr}center{/tr}' border='0' /></a>
 <a title="{tr}colored text{/tr}" class="link" href="javascript:insertAt('{$area_name}','~~#FF0000:text~~');"><img src='images/fontfamily.gif' alt='{tr}colored text{/tr}' title='{tr}colored text{/tr}' border='0' /></a>
+<a title="{tr}dynamic variable{/tr}" class="link" href="javascript:insertAt('{$area_name}','%name%');"><img src='images/book.gif' alt='{tr}dynamic content{/tr}' title='{tr}dynamic variable{/tr}' border='0' /></a>
 <!--<a class="link" href="javascript:insertAt('{$area_name}','{literal}{{/literal}img src=?nocache=1 width= height= align= desc= link= }');">{tr}img nc{/tr}</a>|-->
 <a title="{tr}image{/tr}" class="link" href="javascript:insertAt('{$area_name}','{literal}{{/literal}img src= width= height= align= desc= link= }');"><img src='images/ed_image.gif' alt='{tr}image{/tr}' title='{tr}image{/tr}' border='0' /></a>
 <a title="{tr}special chars{/tr}" class="link" href="#" onClick="javascript:window.open('templates/tiki-special_chars.php?area_name={$area_name}','','menubar=no,width=252,height=25');"><img src='images/ed_charmap.gif' alt='{tr}special characters{/tr}' title='{tr}special characters{/tr}' border='0' /></a>

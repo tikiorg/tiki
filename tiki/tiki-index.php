@@ -197,6 +197,8 @@ if(count($slides)>1) {
 if(isset($_REQUEST['refresh'])) {
   $tikilib->invalidate_cache($page);	
 }
+
+
 // Here's where the data is parsed
 // if using cache
 //

@@ -3802,3 +3802,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.map');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols', 'y');
+
+# Dynamic variables
+CREATE  TABLE tiki_dynamic_variables( name varchar( 40  ) not null,  DATA text,  PRIMARY  KEY ( name )  );
