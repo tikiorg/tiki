@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.3 2004-06-11 18:44:07 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.4 2004-06-11 19:33:10 lfagundes Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -15,6 +15,9 @@
  *  1) module.tpl = usual template to generate module look-n-feel
  *  2) module-error.tpl = to generate diagnostic error message about
  *     incorrect {tikimodule} parameters
+ *
+ * It also supports the param flip="y" to make this module flippable.
+ * flip="n" is the default.
 
 \Note
 error was used only in case the name was not there.
