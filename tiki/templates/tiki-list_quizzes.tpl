@@ -4,10 +4,31 @@
 {/if}
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a></td>
-<td class="heading">{tr}timeLimit{/tr}</td>
+<td class="heading">
+<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a>
+</td>
+<td class="heading">
+<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}description{/tr}</a>
+</td>
+<td class="heading">
+<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeLimit_desc'}timeLimit_asc{else}timeLimit_desc{/if}">{tr}timeLimit{/tr}</a>
+</td>
+
+{* 
+Why doesn't sort by questions work as well? I'm getting weird errors*
+//error message: 
+Warning: mysql error: Unknown column 'questionsLimit' in 'order clause' in query:
+select * from `tiki_quizzes` order by `questionsLimit` desc
+in /var/www/html/tikiwiki/lib/tikidblib.php on line 133
+
+Fatal error: Call to a member function on a non-object in /var/www/html/tikiwiki/lib/tikidblib.php on line 151
+// code
+<td class="heading">
+<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questionsLimit_desc{/if}">{tr}questions{/tr}</a>
+*}
+
 <td class="heading">{tr}questions{/tr}</td>
+
 </tr>
 {section name=user loop=$channels}
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_take_quiz eq 'y') or ($channels[user].individual_tiki_p_take_quiz eq 'y')}
