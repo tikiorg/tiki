@@ -2,8 +2,8 @@
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2002-12-25 23:16:30 $
-* CVS Revision...: $Revision: 1.1 $
+* Last Modified..: $Date: 2002-12-27 16:06:46 $
+* CVS Revision...: $Revision: 1.2 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -770,11 +770,8 @@ class htmlMimeMail
 
 		return implode(CRLF, $headers) . CRLF . CRLF . $this->output;
 	}
-} // End of class.
-?>
+} // class htmlMimeMail
 
-<?php
-//
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
@@ -846,7 +843,7 @@ class htmlMimeMail
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.1 $
+* @version $Revision: 1.2 $
 * @package Mail
 */
 
@@ -1104,10 +1101,8 @@ class Mail_mimePart {
         $output = substr($output, 0, -1 * strlen($eol)); // Don't want last crlf
         return $output;
     }
-} // End of class
-?>
+} // class Mail_mimePart
 
-<?php
 /**
 * RFC 822 Email address list validation Utility
 *
@@ -1127,7 +1122,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.1 $
+* @version $Revision: 1.2 $
 * @package Mail
 */
 
@@ -1976,11 +1971,8 @@ class Mail_RFC822
             return false;
         }
     }
-}
+} // class Mail_RFC822
 
-?>
-
-<?php
 /**
 * Filename.......: class.smtp.inc
 * Project........: SMTP Class
@@ -2337,5 +2329,5 @@ class Mail_RFC822
 			return TRUE;
 		}
 
-	} // End of class
+	} // class smtp
 ?>
