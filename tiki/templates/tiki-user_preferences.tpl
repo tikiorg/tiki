@@ -45,7 +45,7 @@
   </td></tr>
   <tr><td class="form">{tr}HomePage{/tr}:</td><td><input type="text" name="homePage" value="{$homePage}" /></td></tr>
   {if $feature_wiki eq 'y'}
-  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a>({tr}<a class="link" href="tiki-editpage.php?page=UserPage{$user}">{tr}edit{/tr}</a>{/tr})</td></tr>
+  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a>({tr}<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>{/tr})</td></tr>
   {/if}
   
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>

@@ -445,12 +445,12 @@ $smarty->assign('feature_bidi',$feature_bidi);
 
 $prefs = $tikilib->get_all_preferences();
 if(!file_exists('templates_c/preferences.php')) {
-  $fw=fopen('templates_c/preferences.php',"w");
+  $fw=fopen('templates_c/preferences.php',"wb");
   fwrite($fw,'<?php'."\n");
   foreach($prefs as $name => $val) {
     $$name = $val;
     fwrite($fw,'$'.$name."=\"".$val."\";");
-    fwrite($fw,'$smarty->assign("'.$name.'","'.$val.'");');
+    fwrite($fw,'$smarty->assign("'.$name.'","'.'$'.$name.'");');
     fwrite($fw,"\n");
     $smarty->assign("$name",$val);
   }
@@ -700,6 +700,7 @@ if($feature_stats == 'y') {
     }
   }
 }
+
 
 if($feature_obzip == 'y') {
   ob_start("ob_gzhandler");
