@@ -62,8 +62,7 @@
 <td class="odd">{$channels[user].cookie}</td>
 <td class="odd">
    &nbsp;&nbsp;<a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')" 
-title="{tr}Click here to delete this cookie{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
@@ -73,8 +72,7 @@ title="{tr}Click here to delete this cookie{/tr}"><img border="0" alt="{tr}Remov
 <td class="even">{$channels[user].cookie}</td>
 <td class="even">
    &nbsp;&nbsp;<a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].cookieId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')" 
-title="{tr}Click here to delete this cookie{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this cookie?{/tr}')"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
    <a class="link" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;cookieId={$channels[user].cookieId}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
