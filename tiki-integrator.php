@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.10 2003-11-08 20:03:00 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.11 2003-11-09 00:02:28 zaufi Exp $
  *
  * Integrated files viewer (wrapper)
  *
@@ -41,9 +41,16 @@ if ((substr($file, 0, 7) != 'http://')
     $smarty->display("styles/$style_base/error.tpl");
     die;
 }
-
-$data = $integrator->get_file($repID, $file, $rep["cacheable"], httpPrefix().$_SERVER["REQUEST_URI"]);
+// Needs to clear cached version of this file...
+if (isset($_REQUEST["clear_cache"]) && $rep["cacheable"])
+    $integrator->clear_cached_file($repID, (isset($_REQUEST["file"]) ? $_REQUEST["file"] : ''));
+//
+$url2cache = httpPrefix().$_SERVER["SCRIPT_NAME"]."?repID=".$repID.(isset($_REQUEST["file"]) ? "&file=".$_REQUEST["file"] : '');
+$data = $integrator->get_file($repID, $file, $rep["cacheable"], $url2cache);
 $smarty->assign_by_ref('data', $data);
+$smarty->assign('repID', $repID);
+$smarty->assign('cached', $rep["cacheable"]);
+if (isset($_REQUEST["file"])) $smarty->assign('file', $_REQUEST["file"]);
 
 // Display the template
 $smarty->assign('mid','tiki-integrator.tpl');
