@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.17 2004-02-25 08:18:31 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.18 2004-02-25 15:31:49 musus Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -111,21 +111,19 @@ show('helptboxes');">{tr}Tables/boxes{/tr}</a></span>
 		select 
 </font></div>
 		Italics<br />
-		<div class="simplebox">{tr}To{/tr} <i>{tr}italicize{/tr}</i> {tr}a word or phrase using Wiki syntax, 
-		simply surround it with two single quotes (apostrophes), like{/tr} ''<i>{tr}this{/tr}</i>''. {tr}If you 
-		wish to italicize an entire phrase, just{/tr} ''<i>{tr}surround the entire phrase{/tr}</i>''. 
+		<div class="simplebox">{tr}To{/tr} <i>{tr}italicize{/tr}</i> {tr}a word or phrase using Wiki syntax, simply surround it with two single quotes (apostrophes), like{/tr} ''<i>{tr}this{/tr}</i>''. {tr}If you wish to italicize an entire phrase, just{/tr} ''<i>{tr}surround the entire phrase{/tr}</i>''. 
 		{tr}Note: insert note about italics not carrying over line breaks.{/tr}<br />
 		{tr}Syntax: ''italics''{/tr}<br />
 		{tr}Example: "My friend Jane was ''very'' excited to get her new car."{/tr}<br />
 		{tr}Displayed: "My friend Jane was <i>very</i> excited to get her new car."{/tr}</div>
 
 		{tr}Underlining{/tr}
-		<div class="simplebox"><u>{tr}Underlining{/tr}</u> {tr}text is similar to{/tr} <i>{tr}italicizing{/tr}</i> text.{/tr} 
+		<div class="simplebox"><u>{tr}Underlining{/tr}</u> {tr}text is similar to{/tr} <i>{tr}italicizing{/tr}</i> text. 
 		{tr}You can underline an entire phrase by{/tr} ===<u>{tr}surrounding it with three equals signs on either side{/tr}</u>===, 
 		{tr}or just a single{/tr} ===<u>{tr}word{/tr}</u>===.<br />
 		{tr}Syntax: ===underlined==={/tr}<br />
 		{tr}Example: "My friend Scott is ===very=== nervous about his date on Friday."{/tr}<br />
-		{tr}Displayed: "My friend Scott is <u>very</u> nervous about his date on Friday."{/tr}</div>
+		Displayed: "My friend Scott is <u>very</u> nervous about his date on Friday."</div>
 
 		{tr}Bold{/tr}
 		<div class="simplebox"><b>{tr}Bolding{/tr}</b> {tr}text is (surprisingly enough) very similiar to{/tr} <i>{tr}italicizing{/tr}</i> 
@@ -136,10 +134,7 @@ show('helptboxes');">{tr}Tables/boxes{/tr}</a></span>
 		{tr}Displayed:{/tr} "<b>{tr}When{/tr}</b> {tr}are we going to the movies?"{/tr}</div>
 
 		{tr}Combinations of Tags{/tr}
-		<div class="simplebox">{tr}Tikiwiki gives you even more choices by allowing you to simply combine tags to form different formatting combinations. For example,{/tr} ''__<i><b>{tr}this text is both italicized &amp; 
-		bold{/tr}</b></i>__''. __===<b><u>{tr}This text is both bold &amp; underlined{/tr}</u></b>===__. 
-		''__<i><u>{tr}This text is both italicized &amp; underlined{/tr}</u></i>__''.
-</div>
+		<div class="simplebox">{tr}Tikiwiki gives you even more choices by allowing you to simply combine tags to form different formatting combinations. For example,{/tr} ''__<i><b>{tr}this text is both italicized &amp; bold{/tr}</b></i>__''. __===<b><u>{tr}This text is both bold &amp; underlined{/tr}</u></b>===__. ''__<i><u>{tr}This text is both italicized &amp; underlined{/tr}</u></i>__''.</div>
 		{tr}Colored text{/tr}
 		<div class="simplebox">
 			~~#FFEE33:{tr}your text{/tr}~~ Will display using the indicated HTML color
@@ -161,8 +156,8 @@ show('helptboxes');">{tr}Tables/boxes{/tr}</a></span>
 	<div id="helplinks">
 		{tr}WikiLinks{/tr}
 		<div class="simplebox">
-		(({tr}page{/tr})) or
-		(({tr}page|desc{/tr})) for wiki references
+		(({tr}WikiPageName{/tr})) would automatically link to the wiki page called "WikiPageName" with the text of the link displayed as, "WikiPageName"
+		(({tr}WikiPageName|description{/tr})) would automatically create the link for the page called "WikiPageName"for wiki references
 		)){tr}SomeName{/tr}(( prevents referencing
 		</div>
 
