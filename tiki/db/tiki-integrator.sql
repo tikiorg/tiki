@@ -8,6 +8,7 @@ CREATE TABLE tiki_integrator_repositories (
   path varchar(255) NOT NULL default '',
   start_page varchar(255) NOT NULL default '',
   css_file varchar(255) NOT NULL default '',
+  visibility char(1) NOT NULL default 'y',
   description text NOT NULL,
   PRIMARY KEY  (repID)
 ) TYPE=MyISAM;
@@ -17,7 +18,7 @@ CREATE TABLE tiki_integrator_repositories (
 --
 
 
-INSERT INTO tiki_integrator_repositories VALUES (1,'Doxygened (1.3.4) Documentation','unexisted','index.html','doxygen.css','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
+INSERT INTO tiki_integrator_repositories VALUES (1,'Doxygened (1.3.4) Documentation','unexisted','index.html','doxygen.css','n','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
 
 --
 -- Table structure for table 'tiki_integrator_rules'
@@ -39,10 +40,11 @@ CREATE TABLE tiki_integrator_rules (
 --
 -- Dumping data for table 'tiki_integrator_rules'
 --
-INSERT INTO tiki_integrator_rules VALUES (1,1,'img src=\"','img src=\"/{path}/','y','n','','Fix images path');
-INSERT INTO tiki_integrator_rules VALUES (2,1,'href=\"','href=\"tiki-integrator.php?repID=<N>&file=','y','n','','Relace links to integrator. Attention! Don not forget to replace <N> with ID of your repository!!!');
-INSERT INTO tiki_integrator_rules VALUES (3,1,'</html>','','y','n','','Remove </html>');
-INSERT INTO tiki_integrator_rules VALUES (4,1,'<\\!DOCTYPE','<!-- Commented by Tiki integrator <!DOCTYPE','y','n','i','Start comment from the begining of document');
-INSERT INTO tiki_integrator_rules VALUES (5,1,'<body>','-->','y','n','i','End of comment just after <body>');
-INSERT INTO tiki_integrator_rules VALUES (6,1,'</body>','','y','n','i','Remove </body>');
+
+INSERT INTO tiki_integrator_rules VALUES (1,1,'<\\!DOCTYPE','<!-- Commented by Tiki integrator <!DOCTYPE','y','n','i','Start comment from the begining of document');
+INSERT INTO tiki_integrator_rules VALUES (2,1,'</html>','','y','n','','Remove </html>');
+INSERT INTO tiki_integrator_rules VALUES (3,1,'<body>','-->','y','n','i','End of comment just after <body>');
+INSERT INTO tiki_integrator_rules VALUES (4,1,'</body>','','y','n','i','Remove </body>');
+INSERT INTO tiki_integrator_rules VALUES (5,1,'img src=\"','img src=\"/{path}/','y','n','','Fix images path');
+INSERT INTO tiki_integrator_rules VALUES (6,1,'href=\"','href=\"tiki-integrator.php?repID=<N>&file=','y','n','','Relace links to integrator. Attention! Don not forget to replace <N> with ID of your repository!!!');
 
