@@ -303,7 +303,7 @@ if($feature_theme_control == 'y') {
 if($feature_user_watches == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {
 	  if($_REQUEST['watch_action']=='add') {
-	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],tra('Wiki page'),$page,"tiki-index.php?page=$page");
 	  } else {
 	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
 	  }

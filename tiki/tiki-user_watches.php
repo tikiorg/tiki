@@ -14,9 +14,26 @@ if($feature_user_watches != 'y') {
 }
 
 if(isset($_REQUEST['hash'])) {
-  $query = "delete from tiki_user_watches where hash='$hash'";
-  $tikilib->query($query);
+  $tikilib->remove_user_watch_by_hash($_REQUEST['hash']);
 }
+
+if(isset($_REQUEST["delete"])&&isset($_REQUEST['watch'])) {
+  foreach(array_keys($_REQUEST["watch"]) as $item) { 
+    $tikilib->remove_user_watch_by_hash($item);
+  }
+}
+
+// Get watch events and put them in watch_events
+$events = $tikilib->get_watches_events();
+$smarty->assign('events',$events);
+
+// if not set event type then all
+if(!isset($_REQUEST['event'])) $_REQUEST['event']='';
+
+
+// get all the information for the event
+$watches = $tikilib->get_user_watches($user,$_REQUEST['event']);
+$smarty->assign('watches',$watches);
 
 
 $smarty->assign('mid','tiki-user_watches.tpl');

@@ -4,6 +4,9 @@ create table tiki_user_watches(
   event varchar(40) not null,
   object varchar(200) not null,
   hash char(32),
+  title varchar(250),
+  type varchar(200),
+  url varchar(250),
   email varchar(200),
   primary key(user,event,object)
 );
