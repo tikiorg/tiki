@@ -675,3 +675,4 @@ CREATE TABLE tiki_calendar_items (
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_calendar','calendar','Can browse the calendar','basic');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_calendar','calendar','Can create/admin calendars','admin');
 
+INSERT INTO tiki_preferences(name,value) VALUES ('wiki_feature_copyrights','n');
