@@ -65,5 +65,3 @@
 <div align="center">
 <small>{tr}Page generated in{/tr}: {elapsed} {tr}seconds{/tr}</small>
 </div>
-
-{php}phpinfo();{/php}
