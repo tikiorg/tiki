@@ -27,7 +27,7 @@ class NlLib extends TikiLib {
 			$now = date("U");
 
 			$query = "insert into tiki_newsletters(name,description,allowUserSub,allowAnySub,unsubMsg,validateAddr,lastSent,editions,users,created)
-      values('$name','$description','$allowUserSub',$allowAnySub,$unsubMsg,$validateAddr,$now,0,0,$now)";
+      values('$name','$description','$allowUserSub','$allowAnySub','$unsubMsg','$validateAddr',$now,0,0,$now)";
 			$result = $this->query($query);
 			$queryid = "select max(nlId) from tiki_newsletters where created=$now";
 			$nlId = $this->getOne($queryid);
