@@ -91,7 +91,7 @@
   <option value="10" {if $userbreadCrumb eq 10}selected="selected"{/if}>10</option>
   </select>
   </td></tr>
-  <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" name="homePage" value="{$homePage|escape}" /></td></tr>
+  <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
   {if $feature_wiki eq 'y'}
   <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
   {/if}
