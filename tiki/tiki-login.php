@@ -17,8 +17,8 @@ if(($_REQUEST["user"] == 'admin') && (!$userlib->user_exists("admin"))) {
   }  
 } else {
   if(!isset($_REQUEST["challenge"])) $_REQUEST["challenge"]='';
-  
-  $isvalid = $userlib->validate_user($_REQUEST["user"],$_REQUEST["pass"],$_REQUEST["challenge"]);
+  if(!isset($_REQUEST["response"])) $_REQUEST["reponse"]='';
+  $isvalid = $userlib->validate_user($_REQUEST["user"],$_REQUEST["pass"],$_REQUEST["challenge"],$_REQUEST["response"]);
   // If the password is valid but it is due then force the user to change the password by
   // sending the user to the new password change screen without letting him use tiki
   // The user must re-nter the old password so no secutiry risk here
@@ -35,12 +35,10 @@ if($isvalid) {
   header("location: $tikiIndex");
   die;
 } else {
-  if($feature_challenge == 'y') {
-    $chall=$userlib->generate_challenge();
-    $_SESSION["challenge"]=$chall;
-    $smarty->assign('challenge',$chall);
-  }  
-  $smarty->assign('msg',tra("Invalid username or password"));
-  $smarty->display('error.tpl');
+  $error=tra("Invalid username or password");
+  header("location: tiki-error.php?error=$error");
+  die;  
+  
+  
 }
 ?>

@@ -129,11 +129,11 @@ class UsersLib {
     return $val;
   }
   
-  function validate_user($user,$pass,$challenge)
+  function validate_user($user,$pass,$challenge,$response)
   {
     global $feature_challenge;
     $hash=md5($pass);
-    if($feature_challenge=='n') {
+    if($feature_challenge=='n' || empty($response)) {
       $query = "select login from users_users where login='$user' and hash='$hash'"; 
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query,$result);
@@ -152,7 +152,8 @@ class UsersLib {
       if(!isset($_SESSION["challenge"])) return false;
       //print("pass: $pass user: $user hash: $hash <br/>");
       //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br/>");
-      if($pass == md5($user.$hash.$_SESSION["challenge"])) {
+      //print("response : $response<br/>");
+      if($response == md5($user.$hash.$_SESSION["challenge"])) {
         $t = date("U");
         $query = "update users_users set currentLogin=$t where login='$user'";
         $result = $this->db->query($query);
