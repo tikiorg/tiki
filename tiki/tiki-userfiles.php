@@ -39,7 +39,7 @@ for($i=0;$i<5;$i++) {
 	 $name = $_FILES["userfile$i"]['name'];
 	 if($uf_use_db == 'n') {
 	   $fhash = md5(uniqid('.'));    
-	   $fw = fopen($uf_use_dir.$fhash,"w");
+	   $fw = fopen($uf_use_dir.$fhash,"wb");
 	   if(!$fw) {
 	     $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
 	     $smarty->display("styles/$style_base/error.tpl");

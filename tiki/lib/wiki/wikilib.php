@@ -142,6 +142,9 @@ class WikiLib extends TikiLib {
   	$query = "update tiki_theme_control_objects set objId='newId',name='$newName_as' where objId='$oldId'";
     $this->query($query);	  	  	  	
     
+    $query = "update tiki_wiki_attachments set page='$newName' where page='$oldName'";
+    $this->query($query);
+    
     //update structures
     $query = "update tiki_structures set page='$newName' where page='$oldName'";
     $this->query($query);

@@ -88,7 +88,7 @@ if(isset($_REQUEST["articleId"])) {
   
   if($hasImage=='y') {
      $tmpfname = tempnam ($tmpDir, "TMPIMG").$imgname;     
-     $fp = fopen($tmpfname,"w");
+     $fp = fopen($tmpfname,"wb");
      if($fp) {
        fwrite($fp,$data);
        fclose($fp);
