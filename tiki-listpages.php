@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.16 2004-07-15 20:05:09 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.17 2004-07-16 18:46:05 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -84,13 +84,13 @@ elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'a
 		include_once('lib/categories/categlib.php');
 	}
 	$cat_type='wiki page';
-	foreach ($_REQUEST['checked'] as $page) {
-		$pageinfo = $tikilib->get_page_info($page);
-		$cat_objid = $pageinfo['pageName'];
-		$cat_desc = ($feature_wiki_description == 'y') ? $pageinfo['description'] : '';
-		$cat_name = $pageinfo['pageName'];
-		$cat_href="tiki-index.php?page=".$cat_objid;
-		if (!empty($_REQUEST["cat_categories"])) {
+	if (!empty($_REQUEST["cat_categories"]) && !empty($_REQUEST["checked"])) {
+		foreach ($_REQUEST['checked'] as $page) {
+			$pageinfo = $tikilib->get_page_info($page);
+			$cat_objid = $pageinfo['pageName'];
+			$cat_desc = ($feature_wiki_description == 'y') ? $pageinfo['description'] : '';
+			$cat_name = $pageinfo['pageName'];
+			$cat_href="tiki-index.php?page=".$cat_objid;
 			foreach ($_REQUEST["cat_categories"] as $cat_acat) {
 				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
 				if (!$catObjectId) {
@@ -116,10 +116,10 @@ elseif (!empty($_REQUEST['categorization']) && $_REQUEST['categorization'] == 'r
 		include_once('lib/categories/categlib.php');
 	}
 	$cat_type='wiki page';
-	foreach ($_REQUEST['checked'] as $page) {
-		$pageinfo = $tikilib->get_page_info($page);
-		$cat_objid = $pageinfo['pageName'];
-		if (!empty($_REQUEST["cat_categories"])) {
+	if (!empty($_REQUEST["cat_categories"]) && !empty($_REQUEST["checked"])) {
+		foreach ($_REQUEST['checked'] as $page) {
+			$pageinfo = $tikilib->get_page_info($page);
+			$cat_objid = $pageinfo['pageName'];
 			foreach ($_REQUEST["cat_categories"] as $cat_acat) {
 				$catObjectId = $categlib->is_categorized($cat_type, $cat_objid);
 				if ($catObjectId) {
