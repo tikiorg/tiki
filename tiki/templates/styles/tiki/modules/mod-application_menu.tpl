@@ -143,6 +143,7 @@
   {/if}
   {if $tiki_p_admin_cms eq 'y'}
       <div class="separated"><a href="tiki-admin_topics.php" class="linkmenu">{tr}Admin topics{/tr}</a></div>
+      <div class="separated"><a href="tiki-article_types.php" class="linkmenu">{tr}Admin types{/tr}</a></div>
   {/if}  
   </div>
 {/if}
