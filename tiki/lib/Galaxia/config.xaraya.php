@@ -57,7 +57,11 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
 // Database handler
 global $dbGalaxia;
 if (!isset($dbGalaxia)) {
-    list($dbGalaxia) = xarDBGetConn();
+    // Note that we do NOT assign by reference here, because we do want a copy
+    $dbGalaxia = xarDBGetConn();
+
+    // Set the fetch mode to assoc by default (needed by lib/Galaxia)
+    $oldmode = $dbGalaxia->SetFetchMode(ADODB_FETCH_ASSOC);
 }
 
 // Specify how error messages should be shown (for use in compiler and activity code)
@@ -84,14 +88,6 @@ if (!function_exists('galaxia_execute_activity')) {
         }
     }
 }
-
-// Frequent fetchRow() argument used inside lib/Galaxia at the moment
-if (!defined('DB_FETCHMODE_ASSOC')) {
-    define('DB_FETCHMODE_ASSOC', 2);
-}
-
-// Set the fetch mode to assoc by default
-$oldmode = $dbGalaxia->SetFetchMode(DB_FETCHMODE_ASSOC);
 
 // Translate strings and variables
 if (!function_exists('tra')) {
