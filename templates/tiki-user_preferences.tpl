@@ -31,7 +31,11 @@
         {section name=ix loop=$styles}
         <option value="{$styles[ix]}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
         {/section}
-        </select></td></tr>
+        </select>
+		{if $feature_editcss and $tiki_p_create_css}
+			<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>
+		{/if}
+				</td></tr>
   {/if}
   {if $change_language eq 'y'}      
   <tr><td  class="form">{tr}Language{/tr}:</td><td>
