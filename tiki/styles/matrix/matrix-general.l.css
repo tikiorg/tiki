@@ -1,0 +1,104 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.l.css,v 1.1 2003-06-29 23:04:06 zaufi Exp $
+ *
+ */
+
+/*
+ * General HTML redefinitions
+ */
+body
+{
+  background-color: #001000;
+/*  background-image: url(matrix.jpg);
+  background-attachment: fixed;*/
+  color: #00B000;
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+}
+
+:link, :link:active
+{
+  color: #00E000;
+  text-decoration: none;
+}
+:link:visited
+{
+  color: #00B000;
+  text-decoration: none;
+}
+:link:hover
+{
+  color: #00F000;
+  text-decoration: underline;
+}
+:link:visited:hover
+{
+  color: #00F000;
+  text-decoration: underline;
+}
+/* Links to wiki pages without descriptions */
+:link[title='no description']
+{
+  color: #E0E0E0;
+  text-decoration: none;
+}
+:link[title~='Updated']:after
+{
+  display: marker;
+  /*content: url(hot.png);*/
+}
+hr
+{
+  color: #00A000;
+  border: 1px outset green;
+}
+
+h1
+{
+  font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+h2
+{
+  font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+  font-variant: small-caps;
+  font-size: 25px;
+}
+h3
+{
+  font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+  font-variant: small-caps;
+  font-size: 20px;
+}
+
+/* Description on wiki pages */
+small
+{
+  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+}
+
+/* Prevent forms from generating unwanted padding or margins */
+form { margin: 0px; padding: 0px; }
+
+/* General form elements */
+input, textarea, select
+{
+  color: #001000;
+  background: #D8DFC8;
+  font: normal 10px "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+}
+
+/* Warning background/color */
+span.warn { color: red; background: #900000; }
+
+/* Code fragments */
+pre, code
+{
+  font: normal 12px courier, Fixed;
+}

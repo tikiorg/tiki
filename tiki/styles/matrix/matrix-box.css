@@ -1,0 +1,196 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.1 2003-06-29 23:04:06 zaufi Exp $
+ *
+ */
+
+/*
+ * Boxes
+ *
+ * ... are used to present a box with a title bar and content,
+ * they are used for modules and they are also used in the
+ * rankings, admin screen etc.
+ * The box class is used for modules while the cbox class is
+ * used for other boxes
+ *
+ */
+
+/* A simple box is just a div with a border around and some margin
+ * used for example in the admin screen */
+div.simplebox
+{
+  color: #001000;
+  margin: 1px 5px 1px 5px;
+  padding: 5px;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px ridge #00A000;
+  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+/* Change color to light if simplebox placed on tiki-center
+ * which is darkest than usual wiki-page background...
+ */
+div#tiki-center > div.simplebox
+{
+  background-image: url(wiki-page.png);
+  background-repeat: repeat;
+  margin: 10px 0px 40px 0px;
+}
+
+/* Boxes used for modules (modules are those boxes in the left/right columns) */
+div.box
+{
+  background-image: url(module.data.png);
+  background-repeat: repeat;
+  margin: 4px;
+  margin-bottom: 6px;
+  border: 1px outset #00A000;
+  padding-bottom: 10px;
+  overflow: hidden;
+  width: 170px;
+}
+
+/* Boxes are divided in title and data, this is the title */
+div.box-title
+{
+  margin-top: 4px;
+  margin-bottom: 6px;
+  font-family: "Matrix_vs_miltown", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  color: #00E000;
+}
+
+/* And this is the data */
+div.box-data
+{
+  margin: 0px;
+  padding: 4px;
+  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  color: #00B000;
+}
+
+/* When modules display a list of items each item is enclosed
+ * in a cell with the following style
+ */
+td.module
+{
+  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: #00B000;
+  text-align: left;
+}
+
+/* Links in modules */
+.cboxtlink, .cboxtlink:active, .linkmodule, .linkmodule:active
+{
+  color: #00E000;
+  text-decoration: none;
+}
+.cboxtlink:visited, .linkmodule:visited
+{
+  color: #00B000;
+  text-decoration: none;
+}
+.cboxtlink:hover, .linkmodule:hover, .cboxtlink:visited:hover, .linkmodule:visited:hover
+{
+  color: #00FF00;
+  text-decoration: underline;
+}
+
+
+/* Now the boxes for the rest of Tiki (non-modules */
+div.cbox
+{
+  background-image: url(wiki-page.png);
+  background-repeat: repeat;
+  margin-top: 20px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-bottom: 20px;
+  border: 3px ridge #00B000;
+  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+div.cbox#error-box
+{
+  color: red;
+  background-image: url(error-page.png);
+  background-repeat: repeat;
+  margin: 20px;
+  margin-top: 120px;
+  margin-right: 30px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-bottom: 20px;
+  border: 3px outset #A00000;
+  font-family: "Urw Gothic l", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+/* Boxes are divided in title and data, this is the title */
+div.cbox-title
+{
+  font-family: "Matrix_vs_miltown", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 18px;
+  text-align: left;
+  margin-bottom: 20px;
+  border-bottom: 1px;
+  padding-left: 20px;
+}
+
+/* And this is the data */
+div.cbox-data
+{
+}
+
+/*
+ * Menus
+ *
+
+/* Separators are used to sepparate menu areas
+ * in the application menu and user created menus
+ */
+div.separator
+{
+  background-image: url(module.data.png);
+  background-repeat: repeat;
+  margin: 3px;
+  width: 95%;
+}
+div.separator:hover
+{
+  background-image: url(wiki-page.png);
+  background-repeat: repeat;
+  margin: 3px;
+  width: 95%;
+}
+/* submenu div */
+div.separator + div[id]
+{
+  margin: 2px 0px 5px 0px;
+  padding-left: 3ex;
+}
+
+
+/* Links in menus */
+.linkmenu, .linkmenu:active, .linkmenu:visited,
+.separator, .separator:active, .separator:visited, .separator:hover
+{
+  color: #00E000;
+  text-decoration: none;
+}
+.linkmenu:hover
+{
+  background-image: url(wiki-page.png);
+  background-repeat: repeat;
+}
+/* Links to extend/collapse menus */
+
+
+/* Links to collapse menus for example the main menu can be completely collapsed*/
+.flip
+.flip:active
+.flip:hover
+
