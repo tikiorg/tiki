@@ -83,7 +83,7 @@
   <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
   {/if}
 	{if $userTracker eq 'y'}
-  <tr><td class="form">{tr}Your personnal tracker information{/tr}:</td><td>
+  <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td>
 	{if $useritemId}
 	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}">{tr}Edit informations{/tr}</a>
 	{else}
