@@ -70,7 +70,7 @@
     <td>
     <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a>
     </td>
-    {if $listpages[ix].size > 0}
+    {if (($listpages[ix].size > 0) and ($listpages[ix].show_size eq 'y'))}
       <td>
       ({$listpages[ix].size} {tr}bytes{/tr})
       </td>

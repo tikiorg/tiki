@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.3 2003-10-28 21:45:06 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.4 2003-10-28 22:24:11 dheltzel Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -30,6 +30,7 @@
 <td class="heading">{tr}Show publish date{/tr}</td>
 <td class="heading">{tr}Show expire date{/tr}</td>
 <td class="heading">{tr}Show reads{/tr}</td>
+<td class="heading">{tr}Show size{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
@@ -47,6 +48,7 @@
 <td class="{cycle advance=false}">{if $types[user].show_pubdate eq 'y'}y{/if}</td>
 <td class="{cycle advance=false}">{if $types[user].show_expdate eq 'y'}y{/if}</td>
 <td class="{cycle advance=false}">{if $types[user].show_reads eq 'y'}y{/if}</td>
+<td class="{cycle advance=false}">{if $types[user].show_size eq 'y'}y{/if}</td>
 <td class="{cycle}">
 <a class="link" href="tiki-article_types.php?remove={$types[user].type}">{tr}Remove{/tr}</a>
 </td>
@@ -69,6 +71,7 @@
 <tr><td class="formcolor">{tr}Show publish date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_pubdate" {if $show_pubdate eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show expire date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_expdate" {if $show_expdate eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show reads{/tr}</td><td class="formcolor"><input type="checkbox" name="show_reads" {if $show_reads eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Show size{/tr}</td><td class="formcolor"><input type="checkbox" name="show_size" {if $show_size eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="addtype" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.2 2003-10-28 05:09:16 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.3 2003-10-28 22:24:09 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,8 +109,16 @@ if (isset($_REQUEST["show_reads"])) {
 	$smarty->assign('show_reads', 'y');
 }
 
+if (isset($_REQUEST["show_size"])) {
+	$show_size = $_REQUEST["show_size"];
+	$smarty->assign('show_size', $_REQUEST["show_size"]);
+} else {
+	$show_size = 'y';
+	$smarty->assign('show_size', 'y');
+}
+
 if (isset($_REQUEST["addtype"])) {
-	$artlib->add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads);
+	$artlib->add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size);
 }
 
 if (isset($_REQUEST["type"])) {
