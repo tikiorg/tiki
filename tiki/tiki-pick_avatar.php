@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.17 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.18 2004-04-03 09:36:49 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,7 +120,7 @@ $avatars = array();
 $h = opendir("img/avatars/");
 
 while ($file = readdir($h)) {
-	if ($file != '.' && $file != '..' && substr($file, 0, 1) != "." && $file != "CVS") {
+	if ($file != '.' && $file != '..' && $file != 'index.php' && substr($file, 0, 1) != "." && $file != "CVS") {
 		$avatars[] = 'img/avatars/' . $file;
 	}
 }

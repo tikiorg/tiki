@@ -2,11 +2,11 @@
 {if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
-<a class="pagetitle" href="tiki-edit_article.php">{tr}Edit{/tr}: {$title}
+<a class="pagetitle" href="tiki-edit_article.php">{tr}Edit{/tr}: {$title}</a>
 {assign var=area_name value="body"}
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Article" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Article{/tr}">
+<a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Article{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 
@@ -30,7 +30,7 @@
 <input type="hidden" name="image_name" value="{$image_name|escape}" />
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
 <table class="normal">
-<tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" size="80" /></td></tr>
+<tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" maxlength="80" size="80" /></td></tr>
 <tr class="formcolor"><td>{tr}Author Name{/tr}</td><td><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Topic{/tr}</td><td>
 <select name="topicId">
@@ -116,7 +116,7 @@
 <input type="hidden" name="cols" value="{$cols}"/>
 </td></tr>
 {if $cms_spellcheck eq 'y'}
-<tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
+<tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 <tr class="formcolor"><td>{tr}Publish Date{/tr}</td><td>
 {html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}

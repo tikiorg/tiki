@@ -126,10 +126,8 @@ class HistLib extends TikiLib {
 	function get_last_changes($days, $offset = 0, $limit = -1, $sort_mode = 'lastModif_desc', $findwhat = '') {
 
 		$where = "where (th.`version` != '' or tp.`version` != '') ";
-		if ($findwhat == '') {
-			$bindvars=array();
-			$where = '';
-		} else {
+		$bindvars = array();
+		if ($findwhat) {
 			$findstr='%' . $findwhat . '%';
 			$where.= " and ta.`pageName` like ? or ta.`user` like ? or ta.`comment` like ? ";
 			$bindvars=array($findstr,$findstr,$findstr);
@@ -153,22 +151,10 @@ class HistLib extends TikiLib {
 		$result = $this->query($query,$bindvars,$limit,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
-		$r = array();
-
-		while ($res = $result->fetchRow()) {
-			$r["action"] = $res["action"];
-
-			$r["lastModif"] = $res["lastModif"];
-			$r["user"] = $res["user"];
-			$r["ip"] = $res["ip"];
-			$r["pageName"] = $res["pageName"];
-			$r["comment"] = $res["comment"];
-			$r["version"] = $res["version"];
-			$r["versionlast"] = $res["versionlast"];
-			$ret[] = $r;
-		}
-
 		$retval = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;

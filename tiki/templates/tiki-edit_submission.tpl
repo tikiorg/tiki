@@ -2,9 +2,10 @@
 {if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
-<a class="pagetitle" href="tiki-edit_submission.php">{tr}Edit{/tr}: {$title}</a><br /><br />
+<a class="pagetitle" href="tiki-edit_submission.php">{tr}Edit{/tr}: {$title}</a>
+{assign var=area_name value="body"}
 
-{if $feature_view_tpl eq 'y'}
+{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Submissions{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
@@ -17,7 +18,7 @@
 <br /><br />
 <a class="linkbut" href="tiki-list_submissions.php">{tr}list submissions{/tr}</a>
 <br /><br />
-<form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='tikieditsubmission'>
+<form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='editpageform'>
 <input type="hidden" name="subId" value="{$subId|escape}" />
 <input type="hidden" name="image_data" value="{$image_data|escape}" />
 <input type="hidden" name="useImage" value="{$useImage|escape}" />
@@ -25,7 +26,7 @@
 <input type="hidden" name="image_name" value="{$image_name|escape}" />
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" maxlength="80" size="80" /></td></tr>
 <tr><td class="formcolor">{tr}Author Name{/tr}</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Topic{/tr}</td><td class="formcolor">
 <select name="topicId">
@@ -40,7 +41,7 @@
 <tr><td class="formcolor">{tr}Type{/tr}</td><td class="formcolor">
 <select id='articletype' name='type' onchange='javascript:chgArtType();'>
 {section name=t loop=$types}
-<option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{$types[t].type}</option>
+<option value="{$types[t].type|escape}" {if $type eq $types[t].type}selected="selected"{/if}>{tr}{$types[t].type}{/tr}</option>
 {/section}
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
@@ -74,9 +75,9 @@
 <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
 {if $hasImage eq 'y'}
-  <tr><td class="formcolor">Own Image: </td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
+  <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor">{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
   {if $tempimg ne 'n'}
-    <tr><td class="formcolor">Own Image:</td><td class="formcolor">
+    <tr><td class="formcolor">{tr}Own Image{/tr}</td><td class="formcolor">
     <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
     </td></tr>
   {/if}
@@ -84,12 +85,15 @@
 <tr><td class="formcolor">{tr}Use own image{/tr}</td><td class="formcolor">
 <input type="checkbox" name="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
 </td></tr>
+<tr><td class="formcolor">{tr}Float text around image{/tr}</td><td class="formcolor">
+<input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}/>
+</td></tr>
 <tr><td class="formcolor">{tr}Own image size x{/tr}</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Own image size y{/tr}</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
 
 {if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
-<select name="templateId" onchange="javascript:document.getElementById('tikieditsubmission').submit();">
+<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
 <option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
@@ -102,21 +106,24 @@
 
 <tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" id='subheading' name="heading" rows="5" cols="80" wrap="virtual">{$heading|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Body{/tr}
-<br />{include file=tiki-edit_help_tool.tpl area_name="subbody"}
-
+<br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
+<br />{include file=tiki-edit_help_tool.tpl area_name="body"}
 </td><td class="formcolor">
 <b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br />
-<textarea class="wikiedit" id='subbody' name="body" rows="25" cols="80" wrap="virtual">{$body|escape}</textarea></td></tr>
+<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
+<input type="hidden" name="rows" value="{$rows}"/>
+<input type="hidden" name="cols" value="{$cols}"/>
+</td></tr>
 {if $cms_spellcheck eq 'y'}
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 <tr><td class="formcolor">{tr}Publish Date{/tr}</td><td class="formcolor">
-{html_select_date prefix="publish_" time=$publishDateSite end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
+{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td></tr>
 <tr><td class="formcolor">{tr}Expiration Date{/tr}</td><td class="formcolor">
-{html_select_date prefix="expire_" time=$expireDateSite end_year="+1"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
+{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
 &nbsp;{$siteTimeZone}
 </span>
 </td></tr>

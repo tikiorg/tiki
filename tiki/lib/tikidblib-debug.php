@@ -243,6 +243,17 @@ function blob_encode(&$blob) {
 function convert_sortmode($sort_mode) {
     global $ADODB_LASTDB;
 
+    if ( !$sort_mode ) {
+        return '';
+    }
+    // parse $sort_mode for evil stuff
+    $sort_mode = preg_replace('/[^A-Za-z_,]/', '', $sort_mode);
+    $sep = strrpos($sort_mode, '_');
+    // force ending to either _asc or _desc
+    if ( substr($sort_mode, $sep)!=='_asc' ) {
+        $sort_mode = substr($sort_mode, 0, $sep) . '_desc';
+    }
+
     switch ($ADODB_LASTDB) {
         case "pgsql72":
             case "postgres7":

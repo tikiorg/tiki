@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.15 2004-03-31 07:38:41 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.16 2004-04-03 09:36:39 mose Exp $
  *
  * Admin interface for repositories management
  *
@@ -73,7 +73,6 @@ if (isset($_REQUEST["action"]))
         break;
     case 'rm':
         if ($repID != 0) {
-zsh: command not found: q
 					if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
 						key_check($area);
 						$integrator->remove_repository($repID);
