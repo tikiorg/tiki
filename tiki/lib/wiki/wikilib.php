@@ -266,9 +266,9 @@ class WikiLib extends TikiLib {
 	// Methods to cache and handle the cached version of wiki pages
 	// to prevent parsing large pages.
 	function get_cache_info($page) {
-		$query = "select `cache`,cache_timestamp from `tiki_pages` where `pageName`='$page'";
+		$query = "select `cache`,`cache_timestamp` from `tiki_pages` where `pageName`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query, array( $page ) );
 		$res = $result->fetchRow();
 		return $res;
 	}
@@ -277,8 +277,8 @@ class WikiLib extends TikiLib {
 		$now = date('U');
 
 		$data = addslashes($data);
-		$query = "update `tiki_pages` set `cache`='$data', cache_timestamp=$now where `pageName`='$page'";
-		$result = $this->query($query);
+		$query = "update `tiki_pages` set `cache`=?, cache_timestamp=$now where `pageName`=?";
+		$result = $this->query($query, array( $data, $page ) );
 		return true;
 	}
 
