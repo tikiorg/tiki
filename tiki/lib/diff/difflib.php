@@ -8,9 +8,15 @@ function diff2($page1, $page2) {
 		$html = '<hr><br />[' . tra("Versions are identical"). ']<br /><br />';
 	} else {
 		require_once('renderer.php');
-		require_once('renderer_unified.php');
-		$unified = new Text_Diff_Renderer_unified;
-		$html = $unified->render($z);
+		global $feature_wiki_diff_style;
+		if (!empty($feature_wiki_diff_style) && $feature_wiki_diff_style == 'sidebyside') {
+			require_once('renderer_sidebyside.php');
+			$renderer = new Text_Diff_Renderer_sidebyside;
+		} else {
+			require_once('renderer_unified.php');
+			$renderer = new Text_Diff_Renderer_unified;	
+		}
+		$html = $renderer->render($z);
 	}
 	return $html;
 }
