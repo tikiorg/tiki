@@ -1,5 +1,8 @@
 {* Index we display a wiki page here *}
 {include file="header.tpl"}
+{if $feature_bidi eq 'y'}
+<table dir="rtl" width="100%"><tr><td>
+{/if}
 <div id="tiki-main">
 <div class="articletitle">
 <span class="titlea">{$title}</span><br/>
@@ -36,4 +39,8 @@
 {$parsed_body}
 </div>
 </div>
+{if $feature_bidi eq 'y'}
+</td></tr></table>
+{/if}
+
 {include file="footer.tpl"}

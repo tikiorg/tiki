@@ -201,6 +201,7 @@ $w_use_dir = '';
 $feature_wiki_attachments = 'n';
 $feature_page_title = 'y';
 
+
 $t_use_db = 'y';
 $t_use_dir = '';
 $smarty->assign('t_use_db',$t_use_db);
@@ -419,13 +420,19 @@ $smarty->assign('cacheimages',$cacheimages);
 
 $smarty->assign('wiki_extras','n');
 
+$feature_server_name=$tikilib->get_preference('feature_server_name',$_SERVER["SERVER_NAME"]);
+$smarty->assign('feature_server_name',$feature_server_name);
+
+$feature_bidi='n';
+$smarty->assign('feature_bidi',$feature_bidi);
+
 $prefs = $tikilib->get_all_preferences();
 if(!file_exists('templates_c/preferences.php')) {
   $fw=fopen('templates_c/preferences.php',"w");
   fwrite($fw,'<?php'."\n");
   foreach($prefs as $name => $val) {
     $$name = $val;
-    fwrite($fw,'$'.$name."='".$val."';");
+    fwrite($fw,'$'.$name."=\"".$val."\";");
     fwrite($fw,'$smarty->assign("'.$name.'","'.$val.'");');
     fwrite($fw,"\n");
     $smarty->assign("$name",$val);

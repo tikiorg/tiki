@@ -1,4 +1,15 @@
 ### Webmail ###
+drop table if exists tiki_webmail_contacts;
+create table tiki_webmail_contacts (
+  contactId integer(12) not null auto_increment,
+  firstName varchar(80),
+  lastName varchar(80),
+  email varchar(250),
+  nickname varchar(200),
+  user varchar(200) not null,
+  primary key(contactId)
+);
+
 drop table if exists tiki_webmail_messages;
 create table tiki_webmail_messages (
   accountId integer(12) not null,
@@ -21,6 +32,9 @@ create table tiki_user_mail_accounts (
   username varchar(100),
   pass varchar(100),
   msgs integer(4),
+  smtp varchar(255),
+  useAuth char(1),
+  smtpPort integer(4),
   primary key(accountId)
 );
 
