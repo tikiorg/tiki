@@ -1,14 +1,14 @@
 contributor:
-$Author: damosoft $
+$Author: berryweb $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2004-10-25 13:58:18 $
+$Date: 2004-10-25 15:01:26 $
 
 files: 
-styles/underworld.css styles/underworld.css
+themes/underworld/styles/underworld.css styles/underworld.css
 
 author:
 mikelcu

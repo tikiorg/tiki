@@ -1,22 +1,22 @@
 contributor:
-$Author: damosoft $
+$Author: berryweb $
 
 revision:
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2004-10-25 14:10:37 $
+$Date: 2004-10-25 15:01:26 $
 
 files: 
-styles/3dblue.css styles/3dblue.css
-styles/3dblue/header.jpg styles/3dblue/header.jpg
-styles/3dblue/modheader.gif styles/3dblue/modheader.gif
-styles/3dblue/modl.gif styles/3dblue/modl.gif
-styles/3dblue/modr.gif styles/3dblue/modr.gif
-templates/tiki.tpl templates/styles/3dblue/tiki.tpl
-templates/error.tpl templates/styles/3dblue/error.tpl
-templates/error_ticket.tpl templates/styles/3dblue/error_ticket.tpl
-templates/tiki-top_bar.tpl templates/styles/3dblue/tiki-top_bar.tpl
+themes/3dblue/styles/3dblue.css styles/3dblue.css
+themes/3dblue/styles/3dblue/header.jpg styles/3dblue/header.jpg
+themes/3dblue/styles/3dblue/modheader.gif styles/3dblue/modheader.gif
+themes/3dblue/styles/3dblue/modl.gif styles/3dblue/modl.gif
+themes/3dblue/styles/3dblue/modr.gif styles/3dblue/modr.gif
+themes/3dblue/templates/tiki.tpl templates/styles/3dblue/tiki.tpl
+themes/3dblue/templates/error.tpl templates/styles/3dblue/error.tpl
+themes/3dblue/templates/error_ticket.tpl templates/styles/3dblue/error_ticket.tpl
+themes/3dblue/templates/tiki-top_bar.tpl templates/styles/3dblue/tiki-top_bar.tpl
 
 author:
 damosoft
@@ -24,11 +24,8 @@ damosoft
 licence:
 GNU/LGPL
 
-url:
-http://taryn.parkersworld.org
-
 Description: 
-This is the theme in action of TarynsWorld
+Blue and 3D
 
 Changelog:
 1 initial package
