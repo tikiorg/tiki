@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.40 2003-08-18 23:57:54 lueders Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.41 2003-08-19 20:57:39 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,7 +208,7 @@ if ($page != 'SandBox') {
 
 if ($tiki_p_admin != 'y') {
 	if ($tiki_p_use_HTML != 'y') {
-		$_REQUEST["allowhtml"] = 'on';
+		$_REQUEST["allowhtml"] = 'off';
 	}
 }
 
