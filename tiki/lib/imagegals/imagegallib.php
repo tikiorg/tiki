@@ -973,7 +973,7 @@ class ImageGalsLib extends TikiLib {
 			$bindvars=array((int)$id,$itype,(int)$xsize);
 		} 
 		if ($ysize != 0) {
-			$mid .= "and d.`ysize`=? ";
+			$mid = "and d.`ysize`=? ";
 			$bindvars=array((int)$id,$itype,(int)$ysize);
 		} 
 		if ($xsize != 0 && $ysize != 0) {
@@ -1156,20 +1156,20 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function remove_gallery_scale($galleryId, $xsize = 0, $ysize = 0) {
-		$mid = "";
-		$bindvars=array((int) $galleryId);
-		if ($xsize != 0) {
-			$mid = " and `xsize`=? ";
-			$bindvars=array((int) $galleryId,(int) $xsize);
-		}
-		if ($ysize != 0) {
-			$mid .= " and `ysize`=? ";
-			$bindvars=array((int) $galleryId,(int) $ysize);
-		}
-		$query = "delete from `tiki_galleries_scales` where
+                $mid = "";
+                $bindvars=array((int) $galleryId);
+                if ($xsize != 0) {
+                        $mid = " and `xsize`=? ";
+                        $bindvars[]=(int) $xsize;
+                }
+                if ($ysize != 0) {
+                        $mid .= " and `ysize`=? ";
+                        $bindvars[]=(int) $ysize;
+                }
+                $query = "delete from `tiki_galleries_scales` where
             `galleryId`=? $mid";
-		$result = $this->query($query,$bindvars);
-	}
+                $result = $this->query($query,$bindvars);
+        }
 
 	function remove_gallery($id) {
 		global $gal_use_dir;

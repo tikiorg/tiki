@@ -149,7 +149,8 @@ if ($rss_version >= 5)
 	  	if ($titleId == "created") { $title = gmdate('D, d M Y H:i:s T', $title); }		
 	    $title = htmlspecialchars($title);
 	
-	    $description = htmlspecialchars($tikilib->parse_data($chg["$descId"]));
+			$description = $chg["$descId"];
+			if ($description <> "") $description = htmlspecialchars($tikilib->parse_data($description));
 	
 	  	if ($rss_version < 2) {
 	  		$output .= '<item rdf:about="'.$about.'">'."\n";
@@ -167,8 +168,8 @@ if ($rss_version >= 5)
 	  	{
 				$author = "unknown";
 				if (array_key_exists("author",$chg)) $author = $chg["author"]; // for articles
-				if (array_key_exists("user",$chg)) $author = $chg["user"]; // for wiki pages/blogs/galleries
-				if (array_key_exists("username",$chg)) $author = $chg["username"]; // for forums
+				else if (array_key_exists("user",$chg)) $author = $chg["user"]; // for wiki pages/blogs/galleries
+				else if (array_key_exists("userName",$chg)) $author = $chg["userName"]; // for forums
 	  				
 	  		$output .= '<description>'.$description.'</description>'."\n";
 	  		$output .= "<author>".htmlspecialchars($author)."</author>\n";

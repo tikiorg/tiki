@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.15 2004-03-07 23:12:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums_rss.php,v 1.16 2004-03-15 21:27:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,8 +19,8 @@ if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
 }
 
 $feed = "forums";
-$title = "Tiki RSS feed for forums"; // TODO: make configurable
-$desc = "Last topics in forums."; // TODO: make configurable
+$title = tra("Tiki RSS feed for forums");
+$desc = tra("Last topics in forums.");
 $now = date("U");
 $id = "forumId";
 $descId = "data";

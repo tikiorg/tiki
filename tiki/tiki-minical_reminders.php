@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_reminders.php,v 1.7 2003-12-04 10:40:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_reminders.php,v 1.8 2004-03-15 21:27:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,6 +29,6 @@ foreach ($evs as $ev) {
 
 <?php
 
-print ('<body onLoad="window.setInterval(\'location.reload()\',' . $refresh . ');">');
+print ('<body onload="window.setInterval(\'location.reload()\',' . $refresh . ');">');
 
 ?>

@@ -9,7 +9,7 @@
 </script>
 {/if}
 
-<!--<a {popup sticky="true" trigger="onClick" caption="Special characters help" text="kj"}>foo</a><br />-->
+<!--<a {popup sticky="true" trigger="onclick" caption="Special characters help" text="kj"}>foo</a><br />-->
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}

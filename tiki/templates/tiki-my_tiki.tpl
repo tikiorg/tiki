@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.9 2004-01-30 08:49:21 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-my_tiki.tpl,v 1.10 2004-03-15 21:27:34 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
 
@@ -52,9 +52,9 @@
 <div id="content1" class="content">
   <div class="cbox">
   <div class="cbox-title">
-    <table width=100%>
+    <table width="100%">
     <tr>
-      <td width=70%>{tr}User Pages{/tr}</td>
+      <td width="70%">{tr}User Pages{/tr}</td>
       <td><div class="button2"><a href="tiki-my_tiki.php?by=creator" title="{tr}List pages where I am a creator{/tr}">{tr}by creator{/tr}</a></div></td>
       <td><div class="button2"><a href="tiki-my_tiki.php?by=modificator" title="{tr}List pages where I am a modificator{/tr}">{tr}by modificator{/tr}</a></div></td>
     </tr>

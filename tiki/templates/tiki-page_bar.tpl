@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.31 2004-03-07 23:12:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.32 2004-03-15 21:27:34 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -66,8 +66,7 @@
 {if $edit_page eq 'y'} {* Show this button only in editing mode *}
   <td>
     <div class="button2">
-      <a title="Show quick help for wiki syntax"
-         href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}wiki help{/tr}</a>
+      <a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}wiki help{/tr}</a>
     </div>
   </td>
 {/if}
@@ -82,8 +81,7 @@
   ||  $tiki_p_edit_comments  == 'y')}
    <td>
     <div class="button2">
-      <a title="View/post comments"
-         href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
+      <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
          class="linkbut">
 	{if $comments_cant == 0}
           {tr}add comment{/tr}
@@ -107,9 +105,8 @@
   ||  $tiki_p_wiki_admin_attachments == 'y')}
 
   <td>
-
     <div class="button2">
-      <a title="Manage attachments for this page" href="#attachments" onclick="javascript:flip('attzone');" class="linkbut">
+      <a href="#attachments" onclick="javascript:flip('attzone');" class="linkbut">
 
         {* display 'attach file' only if no attached files or
          * only $tiki_p_wiki_attach_files perm
@@ -135,10 +132,8 @@
 </table>
 </div>
 
-{if $wiki_extras eq 'y'}
-{if $feature_wiki_attachments eq 'y'}
+{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y'}
 {include file=attachments.tpl}
-{/if}
 {/if}
 
 {if $feature_wiki_comments}

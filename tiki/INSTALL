@@ -2,6 +2,9 @@ This directory contains source code to Tiki! The wiki with lot of features!
 
 DOCUMENTATION
 -------------------
+* official 1.8.x documentation website :
+  http://doc.tikiwiki.org
+
 * It is highly recommended you refer to the online documentation:
 * http://tikiwiki.org/InstallTikiDoc for a setup guide
 * http://tikiwiki.org/InstallTikiHelp for what to do in case of problems
@@ -10,8 +13,13 @@ DOCUMENTATION
   format (350 pages) (outdated at the time of this writing): http://tikiwiki.org/tiki.pdf
 * Tikiwiki is also a community : irc.freenode.net channel #tikiwiki
 
+
+INSTALL TIKI WITH POSTGRESQL
+----------------------------
+refer to http://tikiwiki.org/TikiPostgres
  
-INSTALL TIKI
+
+INSTALL TIKI WITH MYSQL
 -----------------------
 Before you get started it's a good idea to know:
 
@@ -28,8 +36,8 @@ Step one:
 Unpack and set the necessary permissions
 unpack to the document root of where you want tiki installed, e.g. /var/www/tiki/ 
 
-bz2 file? Use:
-tar xvjf tikiwikiv.xxx
+bz2 file Use:
+tar xjf tikiwiki-1.8.1.tar.bz2
 
 Step two:
 - - - - - - -
@@ -100,9 +108,10 @@ Next you can configure Tiki to your needs:
 * (Optionally) create groups of users that share permissions
 * Assign appropriate permissions 
 
-Good luck! And come on over to 
-  http://tikiwiki.org/tiki-index.php 
-and join the team!
+Good luck! 
 
+
+ps:
+Now you may want to come to http://tikiwiki.org and join the community !
 
 

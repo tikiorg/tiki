@@ -1,7 +1,7 @@
 <?php
-$feed = "Error Message";
-$title = "Tiki RSS Error Message"; // TODO: make configurable
-$desc = $errmsg; // TODO: make configurable
+$feed = tra("Error Message");
+$title = tra("Tiki RSS Feed Error Message");
+$desc = $errmsg;
 $dateId = "lastModif";
 $titleId = "name";
 $descId = "description";

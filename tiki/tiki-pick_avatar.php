@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.15 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.16 2004-03-15 21:27:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -110,6 +110,10 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 if (isset($_REQUEST["uselib"])) {
 	check_ticket('pick-avatar');
 	$userprefslib->set_user_avatar($user, 'l', $_REQUEST["avatar"], '', '', '', '');
+}
+if (isset($_REQUEST["reset"])) {
+	check_ticket('pick-avatar');
+	$userprefslib->set_user_avatar($user, '0', '', '', '', '', '');
 }
 
 $avatars = array();

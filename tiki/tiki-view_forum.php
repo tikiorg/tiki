@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.61 2004-03-11 23:40:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.62 2004-03-15 21:27:27 mose Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -55,10 +55,17 @@ if($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
 }
 
 
-// Now if the user is the moderator then give hime forum admin privs
-if($forum_info["moderator"]==$user) {
-  $tiki_p_admin_forum = 'y';
-  $smarty->assign('tiki_p_admin_forum','y');
+// Now if the user is the moderator then give him forum admin privs
+if ($user) {
+    if ($forum_info["moderator"] == $user) {
+	$tiki_p_admin_forum = 'y';
+
+	$smarty->assign('tiki_p_admin_forum', 'y');
+    } elseif (in_array($forum_info['moderator_group'], $userlib->get_user_groups($user))) {
+	$tiki_p_admin_forum = 'y';
+
+	$smarty->assign('tiki_p_admin_forum', 'y');
+    }
 }
 
 

@@ -844,7 +844,7 @@ function ol_content_caption(text, title, close) {
 	closing = "";
 	closeevent = "onMouseOver";
 
-	if (o3_closeclick == 1) closeevent = "onClick";
+	if (o3_closeclick == 1) closeevent = "onclick";
 	if (o3_capicon != "") o3_capicon = "<IMG SRC=\""+o3_capicon+"\"> ";
 
 	if (close != "") {

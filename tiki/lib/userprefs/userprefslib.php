@@ -11,7 +11,7 @@ class UserPrefsLib extends TikiLib {
 
 	function set_user_avatar($user, $type, $avatarLibName, $avatarName, $avatarSize, $avatarType, $avatarData) {
 		$query = "update `users_users` set `avatarType` = ?, `avatarLibName` = ?, `avatarName` = ?, `avatarSize` = ?, `avatarFileType` = ?, `avatarData` = ?  where `login`=?";
-		$result = $this->query($query,array($type,$avatarLibName,$avatarName,$avatarSize,$avatarType,$avatarData,$user));
+		$result = $this->query($query,array($type,$avatarLibName,$avatarName,($avatarSize?$avatarSize:NULL),$avatarType,$avatarData,$user));
 	}
 
 	function get_user_avatar_img($user) {

@@ -8,7 +8,7 @@
 // Version 3.0 developed by Mihai Bazon for InteractiveTools.
 //           http://students.infoiasi.ro/~mishoo
 //
-// $Id: htmlarea.js,v 1.1 2003-04-23 15:16:14 lrargerich Exp $
+// $Id: htmlarea.js,v 1.2 2004-03-15 21:27:31 mose Exp $
 
 // Creates a new HTMLArea object.  Tries to replace the textarea with the given
 // ID with it.
@@ -310,7 +310,7 @@ HTMLArea.prototype._createToolbar = function () {
 				if (obj.enabled) with (HTMLArea) {
 					_removeClass(el, "buttonActive");
 					_removeClass(el, "buttonHover");
-					editor._buttonClicked(txt);
+					editor._buttonclicked(txt);
 					_stopEvent(is_ie ? window.event : ev);
 				}
 			});
@@ -765,7 +765,7 @@ HTMLArea.prototype._insertTable = function() {
  ***************************************************/
 
 // txt is the name of the button, as in config.toolbar
-HTMLArea.prototype._buttonClicked = function(txt) {
+HTMLArea.prototype._buttonclicked = function(txt) {
 	var editor = this;	// needed in nested functions
 	this.focusEditor();
 	var btn = this.config.btnList[txt];

@@ -14,7 +14,7 @@
 	{/literal}
 	{$trl}
   </head>
-  <body onUnload="client_close();">
+  <body onunload="client_close();">
   	<div id='request_chat' align="center">
   		<input type="hidden" id="reqId" />
 		<input type="hidden" id="username" value="{$user|escape}" />
@@ -60,7 +60,7 @@
 		</table>
 		
 		<br /><br />				
-		<input onClick="request_chat(document.getElementById('username').value,document.getElementById('tiki_user').value,document.getElementById('emailaddress').value,document.getElementById('reason').value);" type="button" value="{tr}Request support{/tr}" />
+		<input onclick="request_chat(document.getElementById('username').value,document.getElementById('tiki_user').value,document.getElementById('emailaddress').value,document.getElementById('reason').value);" type="button" value="{tr}Request support{/tr}" />
 		<br /><br />
 		<!--<a href="tiki-live_support_message.php" class="link">{tr}Open a support ticket instead{/tr}</a>-->
 	</div>

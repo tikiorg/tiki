@@ -276,7 +276,7 @@ function linkFolderHTML(isTextLink)
   if (this.hreference) 
   { 
 	if (USEFRAMES)
-	  docW = docW + "<a onClick='parent.his[parent.his.length]=\"" + this.desc + "|" +this.hreference +"\"' class='menu' href='" + this.hreference + "' TARGET=\"content\" "
+	  docW = docW + "<a onclick='parent.his[parent.his.length]=\"" + this.desc + "|" +this.hreference +"\"' class='menu' href='" + this.hreference + "' TARGET=\"content\" "
 	else
 	  docW = docW + "<a class='menu' href='" + this.hreference + "' TARGET=_top "
         
@@ -285,7 +285,7 @@ function linkFolderHTML(isTextLink)
     }
 
     if (browserVersion > 0) 
-      docW = docW + "onClick='javascript:clickOnFolder(\""+this.getID()+"\")'"
+      docW = docW + "onclick='javascript:clickOnFolder(\""+this.getID()+"\")'"
 
     docW = docW + ">"
   } 
@@ -398,7 +398,7 @@ function drawItem(insertAtObj)
   var leftSide = leftSideHTML(this.leftSideCoded)
   var docW = ""
 
-  var fullLink = "href=\""+this.link+"\" target=\""+this.target+"\" onClick=\"parent.his[parent.his.length]='"+this.desc+"|"+this.link+"';clickOnLink('"+this.getID()+"\', '"+this.link+"','"+this.target+"');return false;\"";
+  var fullLink = "href=\""+this.link+"\" target=\""+this.target+"\" onclick=\"parent.his[parent.his.length]='"+this.desc+"|"+this.link+"';clickOnLink('"+this.getID()+"\', '"+this.link+"','"+this.target+"');return false;\"";
   this.isRendered = 1
 
   if (this.level>0) 

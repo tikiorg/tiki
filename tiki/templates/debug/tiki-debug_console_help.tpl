@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_console_help.tpl,v 1.2 2003-11-10 02:26:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_console_help.tpl,v 1.3 2004-03-15 21:27:35 mose Exp $ *}
 {* Show help for debugger commands *}
 
 {if $command_result.action eq 'one'}
@@ -6,7 +6,7 @@
   {* Show help about single command *}
   <table border="0">
    <tr>
-    <td width=15%><code>{$command_result.name}</code></td>
+    <td width="15%"><code>{$command_result.name}</code></td>
     <td>{$command_result.description} </td>
    </tr>
    <tr><td><br /></td></tr>
@@ -29,7 +29,7 @@
   <table border="0">
     {section name=i loop=$command_result[0]}
       <tr>
-	<td width=15%><code>{$command_result[0][i].cmd}</code></td>
+	<td width="15%"><code>{$command_result[0][i].cmd}</code></td>
 	<td>{$command_result[0][i].description}</td>
       </tr>
     {/section}

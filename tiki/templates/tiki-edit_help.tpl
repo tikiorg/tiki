@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.19 2004-02-25 17:28:24 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.20 2004-03-15 21:27:34 mose Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -16,8 +16,8 @@
 href="http://www.tikiwiki.org/tiki-index.php?page=WikiSyntax">WikiSyntax</a>
 on <a href="http://www.tikiwiki.org">TikiWiki.org</a>.{/tr}</p>
 
-<table width=100%>
-<tr><td width=20%><strong>{tr}Emphasis{/tr}:</strong></td><td> '<strong></strong>' {tr}for{/tr} <em>{tr}italics{/tr}</em>, _<em></em>_ {tr}for{/tr} <strong>{tr}bold{/tr}</strong>, '<strong></strong>'_<em></em>_ {tr}for{/tr} <em><strong>{tr}both{/tr}</strong></em></td></tr>
+<table width="100%">
+<tr><td width="20%"><strong>{tr}Emphasis{/tr}:</strong></td><td> '<strong></strong>' {tr}for{/tr} <em>{tr}italics{/tr}</em>, _<em></em>_ {tr}for{/tr} <strong>{tr}bold{/tr}</strong>, '<strong></strong>'_<em></em>_ {tr}for{/tr} <em><strong>{tr}both{/tr}</strong></em></td></tr>
 <tr><td><strong>{tr}Lists{/tr}:</strong></td><td> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}term{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr><td><strong>{tr}Wiki References{/tr}:</strong></td><td> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
 {if $feature_drawings eq 'y'}
@@ -52,10 +52,10 @@ on <a href="http://www.tikiwiki.org">TikiWiki.org</a>.{/tr}</p>
   </div>
 <br />
 
-<table width=100%>
+<table width="100%">
 {section name=i loop=$plugins}
  <tr>
-  <td width=20%><code>{$plugins[i].name}</code></td>
+  <td width="20%"><code>{$plugins[i].name}</code></td>
   <td>{if $plugins[i].help eq ''}{tr}No description available{/tr}{else}{$plugins[i].help}{/if}</td>
  </tr>
 {/section}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.23 2004-03-07 23:12:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rss.php,v 1.24 2004-03-15 21:27:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,8 +27,8 @@ if (!isset($_REQUEST["blogId"])) {
 $feed = "blog";
 $id = "blogId";
 $tmp = $tikilib -> get_blog($_REQUEST["$id"]);
-$title = "Tiki RSS feed for blog ".$tmp["title"]; // TODO: make configurable
-$desc = $tmp["description"]; // TODO: make configurable
+$title = tra("Tiki RSS feed for blog: ").$tmp["title"];
+$desc = $tmp["description"];
 $now = date("U");
 $descId = "data";
 $dateId = "created";

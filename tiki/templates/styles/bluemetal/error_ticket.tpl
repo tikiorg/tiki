@@ -70,7 +70,7 @@
 {/foreach}
 <input type="submit" name="ticket_action_button" value="{tr}Click here to confirm your action{/tr}" />
 </form><br /><br />
-<div class="button2"><a href="#" onClick="toggle('details');" class="linkbut">{tr}Details{/tr}</a></div>
+<div class="button2"><a href="#" onclick="toggle('details');" class="linkbut">{tr}Details{/tr}</a></div>
 <div class="wikitext" id="details" style="display:none;">
 {foreach key=kp item=ip from=$smarty.post}
 <div>POST {$kp} = {$ip|escape}</div>

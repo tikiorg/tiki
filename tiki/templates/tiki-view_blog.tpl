@@ -136,9 +136,7 @@
 <table>
 <tr><td>
 <div class="button2">
-      <a title="View/post comments"
-         href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
-         class="linkbut">
+      <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">
 	{if $comments_cant == 0}
           {tr}add comment{/tr}
         {elseif $comments_cant == 1}
