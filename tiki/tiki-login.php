@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.37 2004-08-09 20:17:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.38 2004-08-09 21:29:14 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.37 2004-08-09 20:17:22 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.38 2004-08-09 21:29:14 teedog Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -102,7 +102,8 @@ $isdue = false;
 // Verify user is valid
 $isvalid = $userslibadmin->validate_user($user, $pass, $challenge, $response);
 
-if ($isvalid && !empty($auth_ext_xml_enabled) && $auth_ext_xml_enabled == 'y') {
+global $auth_ext_xml_enabled, $auth_ext_xml_skip_admin;
+if ($isvalid && $auth_ext_xml_enabled == 'y' && ($auth_ext_xml_skip_admin != 'y' || $user != 'admin')) {
 	// Verify user with external XML
 	$isvalid = $userslibadmin->validate_user_external_xml($user);
 }
