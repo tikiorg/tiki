@@ -131,8 +131,7 @@ class ArtLib extends TikiLib {
 		}
 	}
 
-	function replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body,
-		$publishDate, $user, $subId, $image_x, $image_y, $type, $rating = 0, $isfloat = 'n') {
+	function replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, $rating = 0, $isfloat = 'n') {
 		global $smarty;
 
 		global $dbTiki;
