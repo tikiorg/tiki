@@ -12,6 +12,7 @@
 <select name="parse_mode" onChange="javascript:document.getElementById('formread').submit();">
 <option value="raw" {if $parse_mode eq 'raw'}selected="selected"{/if}>{tr}Normal{/tr}</option>
 <option value="wiki"{if $parse_mode eq 'wiki'}selected="selected"{/if}>{tr}Wiki{/tr}</option>
+<option value="template"{if $parse_mode eq 'template'}selected="selected"{/if}>{tr}Template{/tr}</option>
 </select>
 <!--<input type="submit" name="setpm" value="{tr}set{/tr}" />-->
 </form>
@@ -47,6 +48,12 @@
 </td>
 {/if}
 </tr></table>
+{if $smarty.request.parse_mode eq 'template'}
+  <div class="wikitext">
+  {eval var="$info.data"}
+  </div>
+{else}
   <div class="wikitext">
   {$info.parsed}
   </div>
+{/if}

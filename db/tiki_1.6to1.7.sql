@@ -1,3 +1,22 @@
+alter table tiki_user_notes add parse_mode char(20);
+update tiki_user_notes set parse_mode='raw';
+
+### Forums configuration ###
+alter table tiki_forums add topics_list_replies char(1);
+update tiki_forums set topics_list_replies='y';
+alter table tiki_forums add topics_list_reads char(1);
+update tiki_forums set topics_list_reads='y';
+alter table tiki_forums add topics_list_pts char(1);
+update tiki_forums set topics_list_pts='y';
+alter table tiki_forums add topics_list_lastpost char(1);
+update tiki_forums set topics_list_lastpost='y';
+alter table tiki_forums add topics_list_author char(1);
+update tiki_forums set topics_list_author='y';
+alter table tiki_forums add vote_threads char(1);
+update tiki_forums set vote_threads='y';
+
+### end of forums configuration ###
+
 ### New feature: charts ###
 drop table if exists tiki_charts;
 create table tiki_charts(

@@ -25,6 +25,7 @@
     <form method="post" action="tiki-admin.php">
     <table>
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_forum_rankings" {if $feature_forum_rankings eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Accept wiki syntax{/tr}:</td><td><input type="checkbox" name="feature_forum_parse" {if $feature_forum_parse eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Ordering for forums in the forum listing{/tr}
     </td><td>
     <select name="forums_ordering">
@@ -41,6 +42,42 @@
     </table>
     </form>
     </div>
+    
+    
+    <div class="simplebox">
+    <form method="post" action="tiki-admin.php">
+    {tr}Forum listing configuration{/tr}
+    <table>
+    <tr>
+		<td class="form">{tr}Topics{/tr}</td>
+		<td class="form"><input type="checkbox" name="forum_list_topics" {if $forum_list_topics eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Posts{/tr}</td>
+		<td class="form"><input type="checkbox" name="forum_list_posts" {if $forum_list_posts eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Posts per day{/tr}</td>
+		<td class="form"><input type="checkbox" name="forum_list_ppd" {if $forum_list_ppd eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Last post{/tr}</td>
+		<td class="form"><input type="checkbox" name="forum_list_lastpost" {if $forum_list_lastpost eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Visits{/tr}</td>
+		<td class="form"><input type="checkbox" name="forum_list_visits" {if $forum_list_visits eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Description{/tr}</td>
+		<td class="form"><input type="checkbox" name="forum_list_desc" {if $forum_list_desc eq 'y'}checked="checked"{/if} /></td>
+	</tr>
+	<tr><td align="center" colspan="2"><input type="submit" name="forumlistprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    </div>
+
+    
 </div>
 </div>    
 

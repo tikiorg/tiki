@@ -567,6 +567,51 @@ if(isset($_REQUEST["homeforumprefs"])&&isset($_REQUEST["homeForum"])) {
   $smarty->assign('home_forum',$_REQUEST["homeForum"]);
 }  
 
+if(isset($_REQUEST["forumlistprefs"])) {
+  if(isset($_REQUEST["forum_list_topics"]) && $_REQUEST["forum_list_topics"]=="on") {
+    $tikilib->set_preference("forum_list_topics",'y'); 
+    $smarty->assign("forum_list_topics",'y');
+  } else {
+    $tikilib->set_preference("forum_list_topics",'n');
+    $smarty->assign("forum_list_topics",'n');
+  }  
+  if(isset($_REQUEST["forum_list_posts"]) && $_REQUEST["forum_list_posts"]=="on") {
+    $tikilib->set_preference("forum_list_posts",'y'); 
+    $smarty->assign("forum_list_posts",'y');
+  } else {
+    $tikilib->set_preference("forum_list_posts",'n');
+    $smarty->assign("forum_list_posts",'n');
+  }  
+  if(isset($_REQUEST["forum_list_ppd"]) && $_REQUEST["forum_list_ppd"]=="on") {
+    $tikilib->set_preference("forum_list_ppd",'y'); 
+    $smarty->assign("forum_list_ppd",'y');
+  } else {
+    $tikilib->set_preference("forum_list_ppd",'n');
+    $smarty->assign("forum_list_ppd",'n');
+  }  
+  if(isset($_REQUEST["forum_list_lastpost"]) && $_REQUEST["forum_list_lastpost"]=="on") {
+    $tikilib->set_preference("forum_list_lastpost",'y'); 
+    $smarty->assign("forum_list_lastpost",'y');
+  } else {
+    $tikilib->set_preference("forum_list_lastpost",'n');
+    $smarty->assign("forum_list_lastpost",'n');
+  }  
+  if(isset($_REQUEST["forum_list_visits"]) && $_REQUEST["forum_list_visits"]=="on") {
+    $tikilib->set_preference("forum_list_visits",'y'); 
+    $smarty->assign("forum_list_visits",'y');
+  } else {
+    $tikilib->set_preference("forum_list_visits",'n');
+    $smarty->assign("forum_list_visits",'n');
+  }  
+  if(isset($_REQUEST["forum_list_desc"]) && $_REQUEST["forum_list_desc"]=="on") {
+    $tikilib->set_preference("forum_list_desc",'y'); 
+    $smarty->assign("forum_list_desc",'y');
+  } else {
+    $tikilib->set_preference("forum_list_desc",'n');
+    $smarty->assign("forum_list_desc",'n');
+  }  
+  
+}
 
 if(isset($_REQUEST["forumprefs"])) {
   if(isset($_REQUEST["feature_forum_rankings"]) && $_REQUEST["feature_forum_rankings"]=="on") {

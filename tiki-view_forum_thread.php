@@ -119,7 +119,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
           //Replace things between square brackets by links
           $_REQUEST["comments_data"]=strip_tags($_REQUEST["comments_data"]);
           if($_REQUEST["comments_threadId"]==0) {
-            $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"], $user, $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]))  ;
+            $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"], $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"]);
             if($forum_info["useMail"]=='y') {
               
               $smarty->assign('mail_forum',$forum_info["name"]);
@@ -136,7 +136,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
             $commentslib->register_forum_post($_REQUEST["forumId"],$_REQUEST["comments_parentId"]);
           } else {
             // if($tiki_p_edit_comments == 'y') {
-              $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]));
+              $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], $_REQUEST["comments_data"]);
             //}
           }
         } else {
@@ -191,9 +191,9 @@ $smarty->assign('comment_preview','n');
 if(isset($_REQUEST["comments_previewComment"])) {
   $smarty->assign('comments_preview_title',$_REQUEST["comments_title"]);
   if($feature_forum_parse == 'y') {
-  $smarty->assign('comments_preview_data',nl2br($tikilib->parse_data($_REQUEST["comments_data"])));
+  $smarty->assign('comments_preview_data',($tikilib->parse_data($_REQUEST["comments_data"])));
   } else {
-  $smarty->assign('comments_preview_data',nl2br($commentslib->parse_comment_data($_REQUEST["comments_data"])));
+  $smarty->assign('comments_preview_data',($commentslib->parse_comment_data($_REQUEST["comments_data"])));
   }
   $smarty->assign('comment_title',$_REQUEST["comments_title"]);
   $smarty->assign('comment_data',$_REQUEST["comments_data"]);
@@ -278,6 +278,13 @@ if($feature_theme_control == 'y') {
 	include('tiki-tc.php');
 }
 
+if($user 
+	&& $tiki_p_notepad == 'y' 
+	&& $feature_notepad == 'y' 
+	&& isset($_REQUEST['savenotepad'])) {
+	$info = $commentslib->get_comment($_REQUEST['savenotepad']);
+  $tikilib->replace_note($user,0,$info['title'],$info['data']);
+}
 
 
 // Display the template

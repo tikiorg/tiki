@@ -16,68 +16,64 @@
 <table class="forumstable">
 <tr>
 <td width="50%" class="forumheading"><a class="lforumheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="forumheading"><a class="lforumheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
-<td class="forumheading"><a class="lforumheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}posts{/tr}</a></td>
+{if $forum_list_topics eq 'y'}
+	<td class="forumheading"><a class="lforumheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
+{/if}	
+{if $forum_list_posts eq 'y'}
+	<td class="forumheading"><a class="lforumheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}posts{/tr}</a></td>
+{/if}	
 <!--<td class="forumheading">{tr}users{/tr}</td>-->
 <!--<td class="forumheading">{tr}age{/tr}</td>-->
-<td class="forumheading">{tr}ppd{/tr}</td>
-<td class="forumheading"><a class="lforumheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
-<td class="forumheading"><a class="lforumheading href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
+{if $forum_list_ppd eq 'y'}
+	<td class="forumheading">{tr}ppd{/tr}</td>
+{/if}	
+{if $forum_list_lastpost eq 'y'}	
+	<td class="forumheading"><a class="lforumheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>
+{/if}
+{if $forum_list_visits eq 'y'}
+	<td class="forumheading"><a class="lforumheading href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}visits{/tr}</a></td>
+{/if}	
 </tr>
 {assign var=section_old value=""}
+{cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 {assign var=section value=$channels[user].section}
 {if $section ne $section_old}
   {assign var=section_old value=$section}
   <tr><td class="third" colspan="6"><div align="center">{$section}</div></td></tr>
 {/if}
-{if $smarty.section.user.index % 2}
 <tr>
 {if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
-<td class="forumstableodd"><a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a>
+<td class="forumstable{cycle advance=false}"><a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a>
 {else}
-<td class="forumstableodd">{$channels[user].name}
+<td class="forumstable{cycle advance=false}">{$channels[user].name}
 {/if}
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-<a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{tr}admin{/tr}</a>
-{/if}<br/>
-<small><i>{$channels[user].description|truncate:240:"...":true}</i></small>
+<a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{tr}adm{/tr}</a>
+{/if}{if $forum_list_desc eq 'y'}<br/>
+<small><i>{$channels[user].description|truncate:240:"...":true}</i></small>{/if}
 </td>
-<td class="forumstableinfoodd">{$channels[user].threads}</td>
-<td class="forumstableinfoodd">{$channels[user].comments}</td>
-<!--<td class="forumstableinfodd">{$channels[user].users}</td> -->
-<!--<td class="forumstableinfoodd">{$channels[user].age}</td> -->
-<td class="forumstableinfoodd">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-<td class="forumstableinfoodd">
+{if $forum_list_topics eq 'y'}
+	<td style="text-align:right;" class="forumstableinfo{cycle advance=false}">{$channels[user].threads}</td>
+{/if}
+{if $forum_list_posts eq 'y'}
+	<td style="text-align:right;"class="forumstableinfo{cycle advance=false}">{$channels[user].comments}</td>
+{/if}
+<!--<td class="forumstableinf{cycle advance=false}">{$channels[user].users}</td> -->
+<!--<td class="forumstableinfo{cycle advance=false}">{$channels[user].age}</td> -->
+{if $forum_list_ppd eq 'y'}
+	<td style="text-align:right;" class="forumstableinfo{cycle advance=false}">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
+{/if}
+{if $forum_list_lastpost eq 'y'}	
+<td class="forumstableinfo{cycle advance=false}">
 {$channels[user].lastPost|tiki_short_datetime}<br/>
 <small><i>{$channels[user].lastPostData.title}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
 </td>
-<td class="forumstableinfoodd">{$channels[user].hits}</td>
-</tr>
-{else}
-<tr>
-{if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
-<td class="forumstableeven"><a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a>
-{else}
-<td class="forumstableeven">{$channels[user].name}
 {/if}
-{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-<a class="admlink" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{tr}admin{/tr}</a>
-{/if}<br/>
-<small><i>{$channels[user].description|truncate:240:"...":true}</i></small>
-</td>
-<td class="forumstableinfoeven">{$channels[user].threads}</td>
-<td class="forumstableinfoeven">{$channels[user].comments}</td>
-<!--<td class="forumstableinfoeven">{$channels[user].users}</td>-->
-<!--<td class="forumstableinfoeven">{$channels[user].age}</td> -->
-<td class="forumstableinfoeven">{$channels[user].posts_per_day|string_format:"%.2f"}</td>
-<td class="forumstableinfoeven">
-{$channels[user].lastPost|tiki_short_datetime}<br/>
-<small><i>{$channels[user].lastPostData.title}</i> {tr}by{/tr} {$channels[user].lastPostData.userName}</small>
-</td>
-<td class="forumstableinfoeven">{$channels[user].hits}</td>
+{if $forum_list_visits eq 'y'}
+	<td style="text-align:right;" class="forumstableinfo{cycle}">{$channels[user].hits}</td>
+{/if}	
 </tr>
-{/if}
 {/section}
 </table>
 <br/>
