@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZone.php,v 1.4 2003-05-01 18:06:52 rossta Exp $
+// $Id: TimeZone.php,v 1.5 2003-05-26 20:56:44 rossta Exp $
 //
 // Date_TimeZone Class
 //
@@ -3264,10 +3264,10 @@ $GLOBALS['_DATE_TIMEZONE_DATA'] = array(
         'dstshortname' => 'CST' ),
     'Australia/Broken_Hill' => array(
         'offset' => 34200000,
-        'longname' => "Central Standard Time (South Australia/New South Wales)",
+        'longname' => "Central Standard Time (S Australia/NSW)",
         'shortname' => 'CST',
         'hasdst' => true,
-        'dstlongname' => "Central Summer Time (South Australia/New South Wales)",
+        'dstlongname' => "Central Summer Time (S Australia/NSW)",
         'dstshortname' => 'CST' ),
     'Australia/Darwin' => array(
         'offset' => 34200000,
@@ -3288,10 +3288,10 @@ $GLOBALS['_DATE_TIMEZONE_DATA'] = array(
         'dstshortname' => 'CST' ),
     'Australia/Yancowinna' => array(
         'offset' => 34200000,
-        'longname' => "Central Standard Time (South Australia/New South Wales)",
+        'longname' => "Central Standard Time (S Australia/NSW)",
         'shortname' => 'CST',
         'hasdst' => true,
-        'dstlongname' => "Central Summer Time (South Australia/New South Wales)",
+        'dstlongname' => "Central Summer Time (S Australia/NSW)",
         'dstshortname' => 'CST' ),
     'AET' => array(
         'offset' => 36000000,
