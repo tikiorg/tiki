@@ -330,13 +330,20 @@ class tar {
 	// Open a TAR file
 	function openTAR($filename) {
 		// Clear any values from previous tar archives
-		unset($this->filename);
-		unset($this->isGzipped);
-		unset($this->tar_file);
-		unset($this->files);
-		unset($this->directories);
-		unset($this->numFiles);
-		unset($this->numDirectories);
+		//unset($this->filename);
+		$this->filename='';
+		//unset($this->isGzipped);
+		$this->isGzipped=0;
+		//unset($this->tar_file);
+		$this->tar_file=0;
+		//unset($this->files);
+		$this->files='';
+		//unset($this->directories);
+		//unset($this->numFiles);
+		//unset($this->numDirectories);
+		$this->directories='';
+		$this->numFiles=0;
+		$this->numDirectories=0;
 
 		// If the tar file doesn't exist...
 		if(!file_exists($filename))

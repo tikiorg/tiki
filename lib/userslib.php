@@ -22,7 +22,10 @@ class UsersLib {
 
   function set_admin_pass($pass) 
   {
-    $query = "update users_users set password='$pass' where login='admin'";
+    global $feature_clear_passwords;
+    $hash = md5($pass);
+    if($feature_clear_passwords == 'n') $pass='';
+    $query = "update users_users set password='$pass',hash='$hash' where login='admin'"; 
     $result=$this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;
@@ -133,6 +136,7 @@ class UsersLib {
   function validate_user($user,$pass,$challenge,$response)
   {
     global $feature_challenge;
+    $user=addslashes($user);
     $hash=md5($pass);
     // If the user is loggin in the the lastLogin should be the last currentLogin?
     // 
@@ -297,15 +301,24 @@ class UsersLib {
   
   function remove_user($user)
   {
+    $userId = $this->db->getOne("select userId from users_users where login = '$user'");
+       
     $query = "delete from users_users where login = '$user'";
     $result =  $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
+    $query = "delete from users_usergroups where userId=$userId";
+    $result =  $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    
     return true;
   }
 
   function remove_group($group)
   {
     $query = "delete from users_groups where groupName = '$group'";
+    $result =  $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    $query = "delete from tiki_group_inclusion where groupName = '$group'";
     $result =  $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
     return true;
