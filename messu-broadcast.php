@@ -67,8 +67,7 @@ if(isset($_REQUEST['send'])) {
   
   // Remove invalid users from the to, cc and bcc fields
   $users = Array();
-  foreach($all_users['data'] as $a_user) {
-    $a_user = $a_user['user'];
+  foreach($all_users as $a_user) {
     if(!empty($a_user)) {
       if($messulib->user_exists($a_user)) {
         if($messulib->get_user_preference($a_user,'allowMsgs','y')) {

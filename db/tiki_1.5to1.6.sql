@@ -1,5 +1,16 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+drop table if exists tiki_minical;
+create table tiki_minical_events(
+  user varchar(200),
+  eventId integer(12) not null auto_increment,
+  title varchar(250),
+  description text,
+  start integer(14),
+  duration integer(3),
+  primary key(eventId)
+);
+
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_usermenu','user','Can create items in personal menu','registered');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_minical','user','Can use the mini event calendar','registered');
 
