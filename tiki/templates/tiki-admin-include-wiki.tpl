@@ -324,6 +324,7 @@
     <tr><td class="form">{tr}Uses Slideshow{/tr}:</td><td><input type="checkbox" name="wiki_uses_slides" {if $wiki_uses_slides eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Allow HTML{/tr}:</td><td><input type="checkbox" name="feature_wiki_allowhtml" {if $feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Open page as structure{/tr}:</td><td><input type="checkbox" name="feature_wiki_open_as_structure" {if $feature_wiki_open_as_structure eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use external link icons{/tr}:</td><td><input type="checkbox" name="feature_wiki_ext_icon" {if $feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
