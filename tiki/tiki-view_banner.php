@@ -90,12 +90,13 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-view_banner","display_banner",$foo["path"]);
 
 
-$fp=fopen(httpPrefix().$foo1."?id=$bannerId","r");
 $raw='';
-while(!feof($fp)) {
-$raw .= fread($fp,8192);
+if ($fp = @fopen(httpPrefix().$foo1."?id=$bannerId","r")) {
+	while(!feof($fp)) {
+		$raw .= fread($fp,8192);
+	}
+	fclose($fp);
 }
-fclose($fp);
 $smarty->assign_by_ref('raw',$raw);
 
 $smarty->assign('mid','tiki-view_banner.tpl');
