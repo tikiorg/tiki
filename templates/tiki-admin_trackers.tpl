@@ -116,6 +116,11 @@ src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' /></a>{if $channel
 {include file=categorize.tpl}
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show status{/tr}</td><td>
 <input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Default status displayed in list mode{/tr}</td><td>
+{foreach key=st item=stdata from=$status_types}
+<input type="checkbox" name="defaultStatus[]" value="{$st}"{if $defaultStatusList.$st} checked="checked"{/if} />{$stdata.label}<br />
+{/foreach}
+</td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show status to tracker admin only{/tr}</td><td>
 <input type="checkbox" name="showStatusAdminOnly" {if $showStatusAdminOnly eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}New items are created with status{/tr}</td><td>
