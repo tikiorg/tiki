@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.14 2003-09-03 20:00:41 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.15 2003-09-26 01:02:10 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,8 +148,15 @@ if (isset($_REQUEST["save"])) {
 	$use_title = isset($_REQUEST['use_title']) ? 'y' : 'n';
 	$allow_comments = isset($_REQUEST['allow_comments']) ? 'y' : 'n';
 	$use_find = isset($_REQUEST['use_find']) ? 'y' : 'n';
-	$bid = $bloglib->replace_blog($_REQUEST["title"], $_REQUEST["description"], $user,
-		$public, $_REQUEST["maxPosts"], $_REQUEST["blogId"], $_REQUEST['heading'], $use_title, $use_find, $allow_comments);
+
+	// 'heading' was assumed set. -rlpowell
+	$heading = isset($_REQUEST['heading']) ? $_REQUEST['heading'] : '';
+
+	$bid = $bloglib->replace_blog($_REQUEST["title"],
+	    $_REQUEST["description"], $user, $public,
+	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
+	    $heading, $use_title, $use_find,
+	    $allow_comments);
 
 	$cat_type = 'blog';
 	$cat_objid = $bid;
