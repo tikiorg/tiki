@@ -415,48 +415,27 @@ class TrackerLib extends TikiLib {
 	function list_tracker_fields($trackerId, $offset, $maxRecords, $sort_mode, $find) {
 		global $cachelib;
 
-		// that is a test of use of cachelib ..
-		if (!$cachelib->isCached("trackerfields$trackerId")) {		
-			if ($find) {
-				$findesc = '%' . $find . '%';
-				$mid = " where `trackerId`=? and (`name` like ?)";
-				$bindvars=array((int) $trackerId,$findesc);
-			} else {
-				$mid = " where `trackerId`=? ";
-				$bindvars=array((int) $trackerId);
-			}
-			$query = "select * from `tiki_tracker_fields` $mid order by ".$this->convert_sortmode($sort_mode);
-			$query_cant = "select count(*) from `tiki_tracker_fields` $mid";
-			$result = $this->query($query,$bindvars,$maxRecords,$offset);
-			$cant = $this->getOne($query_cant,$bindvars);
-			$ret = array();
-
-			while ($res = $result->fetchRow()) {
-				$res["options_array"] = split(',', $res["options"]);
-				$ret[] = $res;
-			}
-			$retval = array();
-			$retval["data"] = $ret;
-			$retval["cant"] = $cant;
-			$cachelib->cacheItem("trackerfields$trackerId",serialize($retval));
+		if ($find) {
+			$findesc = '%' . $find . '%';
+			$mid = " where `trackerId`=? and (`name` like ?)";
+			$bindvars=array((int) $trackerId,$findesc);
 		} else {
-			$retval_c = unserialize($cachelib->getCached("trackerfields$trackerId"));
-			if ($find) {
-				foreach ($retval_c["data"] as $rtv) {
-					if (strpos(strtolower($find),$rtv['name'])) {
-						$outval[] = $rtv;
-					}
-				}
-				$retval["cant"] = sizeof($outval);
-				if ($offset != 0 or $maxRecords != -1) {
-					$retval["data"] = array_slice($outval,$offset,$maxRecords);
-				} else {
-					$retval["data"] = $outval;
-				}
-			} else {
-				$retval = $retval_c;
-			}
+			$mid = " where `trackerId`=? ";
+			$bindvars=array((int) $trackerId);
 		}
+		$query = "select * from `tiki_tracker_fields` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_tracker_fields` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$res["options_array"] = split(',', $res["options"]);
+			$ret[] = $res;
+		}
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
 		return $retval;
 	}
 
