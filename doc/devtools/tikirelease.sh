@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.6 2004-05-01 01:06:21 damosoft Exp $
+# $Id: tikirelease.sh,v 1.7 2004-06-21 10:55:12 mose Exp $
 # written and maintained by mose@feu.org
 
 # HOWTO release TikiWiki ?
@@ -40,8 +40,8 @@
 # start of configuration
 # change here what you need to fit your environment
 
-CVSROOT=":ext:mose@cvs.sf.net:/cvsroot/tikiwiki"
-WORKDIR="/home/mose/tikipack"
+CVSROOT=":ext:$USER@cvs.sf.net:/cvsroot/tikiwiki"
+WORKDIR="/home/$USER/tikipack"
 MODULE="tikiwiki"
 
 # end of configuration
@@ -67,6 +67,7 @@ fi
 mkdir $VER
 cd $VER
 cvs -z3 -q -d $CVSROOT co -d $MODULE-$VER -r $RELTAG $MODULE
+#cvs -z3 -q -d $CVSROOT co -d $MODULE-$VER $MODULE
 find $MODULE-$VER -name CVS -type d | xargs -- rm -rf
 find $MODULE-$VER -name .cvsignore -type f -exec rm -f {} \;
 find $MODULE-$VER -name Thumbs.db -exec rm -f {} \;
@@ -78,9 +79,13 @@ rm -rf $MODULE-$VER/db/convertscripts
 rm -rf $MODULE-$VER/db/convert_nulls_to_non_nulls.*
 rm -rf $MODULE-$VER/doc/devtools
 rm -rf $MODULE-$VER/bin
+rm -rf $MODULE-$VER/CVSROOT
+rm -rf $MODULE-$VER/SPIDERCORE
+rm -rf $MODULE-$VER/Smarty
+rm -rf $MODULE-$VER/templates_c/%*
 
 #uncomment for real release
-#grep -rl ' (CVS) ' templates | xargs -- perl -pi -e "s/ \(CVS\) / /"
+#grep -rl ' (CVS) ' $MODULE-$VER/templates | xargs -- perl -pi -e "s/ \(CVS\) / /"
 chmod 775 $MODULE-$VER/setup.sh
 
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
