@@ -14,7 +14,7 @@
 <tr><td class="module">
 <a class="linkmodule" href="{$modb_urls[ix].url}">{$modb_urls[ix].name}</a>
 {if $tiki_p_cache_bookmarks eq 'y' and $urls[ix].datalen > 0}
-(<a href="tiki-user_cached_bookmark.php?urlid={$modb_urls[ix].urlId}" class="linkmodule" target="_blank"><small>cache</small></a>)
+(<a href="tiki-user_cached_bookmark.php?urlid={$modb_urls[ix].urlId}" class="linkmodule" target="_blank"><small>{tr}cache{/tr}</small></a>)
 {/if}
 (<a class="linkmodule" href="{$ownurl}{$modb_sep}bookmark_removeurl={$modb_urls[ix].urlId}"><small>x</small></a>)
 </td></tr>

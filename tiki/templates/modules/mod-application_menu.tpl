@@ -164,7 +164,7 @@
   <a class='separator' href="javascript:setCookie('formenu','o');show('formenu');">[+]</a></div>
   <div id='formenu' style="{$mnu_formenu}">
   {if $tiki_p_forum_read eq 'y'}
-  &nbsp;<a href="tiki-forums.php" class="linkmenu">{tr}Forums{/tr}</a><br/>
+  &nbsp;<a href="tiki-forums.php" class="linkmenu">{tr}List forums{/tr}</a><br/>
   {/if}
   {if $feature_forum_rankings eq 'y' and $tiki_p_forum_read eq 'y'}
   &nbsp;<a href="tiki-forum_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br/>
@@ -181,10 +181,10 @@
   <a class='separator' href="javascript:setCookie('dirmenu','o');show('dirmenu');">[+]</a></div>
   <div id='dirmenu' style="{$mnu_dirmenu}">
   {if $tiki_p_view_directory eq 'y'}
-  &nbsp;<a href="tiki-directory_browse.php" class="linkmenu">{tr}Directory{/tr}</a><br/>
+  &nbsp;<a href="tiki-directory_browse.php" class="linkmenu">{tr}Browse Directory{/tr}</a><br/>
   {/if}
   {if $tiki_p_admin_directory_cats eq 'y' or $tiki_p_admin_directory_sites eq 'y' or $tiki_p_validate_links eq 'y'}
-  &nbsp;<a href="tiki-directory_admin.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  &nbsp;<a href="tiki-directory_admin.php" class="linkmenu">{tr}Admin directory{/tr}</a><br/>
   {/if}
   </div>
 {/if}
@@ -230,7 +230,7 @@
   &nbsp;<a href="tiki-quiz_stats.php" class="linkmenu">{tr}Quiz stats{/tr}</a><br/>
   {/if}
   {if $tiki_p_admin_quizzes eq 'y'}
-  &nbsp;<a href="tiki-edit_quiz.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  &nbsp;<a href="tiki-edit_quiz.php" class="linkmenu">{tr}Admin quiz{/tr}</a><br/>
   {/if}
   </div>
 {/if}
@@ -242,7 +242,7 @@
   <div id='trkmenu' style="{$mnu_trkmenu}">
   &nbsp;<a href="tiki-list_trackers.php" class="linkmenu">{tr}List Trackers{/tr}</a><br/>
   {if $tiki_p_admin_trackers eq 'y'}
-  &nbsp;<a href="tiki-admin_trackers.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  &nbsp;<a href="tiki-admin_trackers.php" class="linkmenu">{tr}Admin trackers{/tr}</a><br/>
   {/if}
   </div>
 {/if}
@@ -257,7 +257,7 @@
   &nbsp;<a href="tiki-survey_stats.php" class="linkmenu">{tr}Stats{/tr}</a><br/>
   {/if}
   {if $tiki_p_admin_surveys eq 'y'}
-  &nbsp;<a href="tiki-admin_surveys.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  &nbsp;<a href="tiki-admin_surveys.php" class="linkmenu">{tr}Admin surveys{/tr}</a><br/>
   {/if}
   </div>
 {/if}
@@ -268,8 +268,8 @@
   <a class='separator' href="javascript:setCookie('nlmenu','o');show('nlmenu');">[+]</a></div>
   <div id='nlmenu' style="{$mnu_nlmenu}">
   {if $tiki_p_admin_newsletters eq 'y'}
-  &nbsp;<a href="tiki-admin_newsletters.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
   &nbsp;<a href="tiki-send_newsletters.php" class="linkmenu">{tr}Send newsletters{/tr}</a><br/>
+  &nbsp;<a href="tiki-admin_newsletters.php" class="linkmenu">{tr}Admin newsletters{/tr}</a><br/>
   {/if}
   </div>
 {/if}

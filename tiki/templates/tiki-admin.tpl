@@ -127,9 +127,9 @@
 <table>
 <tr><td class="form">{tr}Home page{/tr}:</td><td>
 <select name="tikiIndex">
-<option value="tiki-index.php" {if $tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>Wiki</option>
-<option value="tiki-view_articles.php" {if $tikiIndex eq 'tiki-view_articles.php'}selected="selected"{/if}>Articles</option>
-<option value="{$home_blog_url}" {if $tikiIndex eq $home_blog_url}selected="selected"{/if}>Blog: {$home_blog_name}</option>
+<option value="tiki-index.php" {if $tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>{tr}Wiki{/tr}</option>
+<option value="tiki-view_articles.php" {if $tikiIndex eq 'tiki-view_articles.php'}selected="selected"{/if}>{tr}Articles{/tr}</option>
+<option value="{$home_blog_url}" {if $tikiIndex eq $home_blog_url}selected="selected"{/if}>{tr}Blog{/tr}: {$home_blog_name}</option>
 <option value="{$home_gallery_url}" {if $tikiIndex eq $home_gallery_url}selected="selected"{/if}>{tr}Image Gallery{/tr}: {$home_gal_name}</option>
 <option value="{$home_file_gallery_url}" {if $tikiIndex eq $home_file_gallery_url}selected="selected"{/if}>{tr}File Gallery{/tr}: {$home_fil_name}</option>
 <option value="{$home_forum_url}" {if $tikiIndex eq $home_forum_url}selected="selected"{/if}>{tr}Forum{/tr}: {$home_forum_name}</option>
@@ -181,7 +181,7 @@
 <tr><td class="form">{tr}Browser title{/tr}:</td><td><input type="text" name="siteTitle" value="{$siteTitle}" /></td></tr>
 <tr><td class="form">{tr}Temporary directory{/tr}:</td><td><input type="text" name="tmpDir" value="{$tmpDir}" /></td></tr>
 <tr><td class="form">{tr}Server time zone{/tr}:</td><td>{$timezone_server}
-&nbsp;<a class="link" target="http://www.worldtimezone.com/" href="http://www.worldtimezone.com/">Map</a>
+&nbsp;<a class="link" target="http://www.worldtimezone.com/" href="http://www.worldtimezone.com/">{tr}Map{/tr}</a>
 </td></tr>
 
 <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>
@@ -191,22 +191,22 @@
 </td></tr>
 
 <tr><td class="form">{tr}Long date format{/tr}:</td><td><input type="text" name="long_date_format" value="{$long_date_format}" size="50"/>
-&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">Help</a>
+&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Help{/tr}</a>
 </td>
 </tr>
 
 <tr><td class="form">{tr}Short date format{/tr}:</td><td><input type="text" name="short_date_format" value="{$short_date_format}" size="50"/>
-&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">Help</a>
+&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Help{/tr}</a>
 </td>
 </tr>
 
 <tr><td class="form">{tr}Long time format{/tr}:</td><td><input type="text" name="long_time_format" value="{$long_time_format}" size="50"/>
-&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">Help</a>
+&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Help{/tr}</a>
 </td>
 </tr>
 
 <tr><td class="form">{tr}Short time format{/tr}:</td><td><input type="text" name="short_time_format" value="{$short_time_format}" size="50"/>
-&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">Help</a>
+&nbsp;<a class="link" target="strftime" href="http://www.php.net/manual/en/function.strftime.php">{tr}Help{/tr}</a>
 </td>
 </tr>
 

@@ -4,7 +4,7 @@
 <h3>{tr}Create or edit a file gallery using this form{/tr}</h3>
 <div  align="center">
 {if $individual eq 'y'}
-<a class="fgallink" href="tiki-objectpermissions.php?objectName=file%20gallery%20{$name}&amp;objectType=file%20gallery&amp;permType=file%20galleries&amp;objectId={$galleryId}">{tr}There are inddividual permissions set for this file gallery{/tr}</a>
+<a class="fgallink" href="tiki-objectpermissions.php?objectName=file%20gallery%20{$name}&amp;objectType=file%20gallery&amp;permType=file%20galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
 {/if}
 <form action="tiki-file_galleries.php" method="post">
 <input type="hidden" name="galleryId" value="{$galleryId}" />

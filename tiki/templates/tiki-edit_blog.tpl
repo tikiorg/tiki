@@ -2,7 +2,7 @@
 <a class="bloglink" href="tiki-list_blogs.php">list blogs</a>
 <br/><br/>
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=blog%20{$title}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are inddividual permissions set for this blog{/tr}</a>
+<a class="link" href="tiki-objectpermissions.php?objectName=blog%20{$title}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are individual permissions set for this blog{/tr}</a>
 {/if}
 <form method="post" action="tiki-edit_blog.php">
 <input type="hidden" name="blogId" value="{$blogId}" />
