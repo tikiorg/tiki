@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.8 2003-11-19 05:20:57 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.9 2003-11-19 05:25:32 mose Exp $ *}
 
 <div class="box">
   <div class="box-title">
@@ -512,7 +512,7 @@
       <a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br />
       <a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br />
       <a href="tiki-theme_control.php" class="linkmenu">{tr}Theme control{/tr}</a><br />
-			<a href="tiki-quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
+			<a href="tiki-admin_quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
     {/if}
     {if $tiki_p_admin_chat eq 'y'}
       <a href="tiki-admin_chat.php" class="linkmenu">{tr}Chat{/tr}</a><br />
