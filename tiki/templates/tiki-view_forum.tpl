@@ -89,7 +89,7 @@ a moderator approves it.{/tr}</small>
   {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
-    <form method="post" enctype="multipart/form-data" action="tiki-view_forum.php">
+    <form method="post" enctype="multipart/form-data" action="tiki-view_forum.php" id="editpageform">
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
     <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
     <input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
@@ -144,9 +144,9 @@ a moderator approves it.{/tr}</small>
     	</td>
     </tr>
     {/if}
+{assign var=area_name value="editpost"}
 {if $feature_forum_parse eq 'y'}    
     <tr><td class="forumform">{tr}Quicklinks{/tr}</td><td class="forumform">
-{assign var=area_name value="editpost"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
 </tr>
@@ -158,8 +158,9 @@ a moderator approves it.{/tr}</small>
      </tr>
     {/if}
     <tr>
-      <td class="forumform">{tr}Comment{/tr}</td>
-      <td class="forumform"><textarea id='editpost' name="comments_data" rows="20" cols="80">{$comment_data|escape}</textarea></td>
+      <td class="forumform">{tr}Comment{/tr}<br/><br />{include file="textareaSize.tpl"}</td>
+      <td class="forumform"><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea><input type="hidden" name="rows" value="{$rows}"/>
+<input type="hidden" name="cols" value="{$cols}"/></td>
     </tr>
     {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
     <tr>
