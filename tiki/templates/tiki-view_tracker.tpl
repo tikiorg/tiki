@@ -318,14 +318,14 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {elseif $fields[ix].type eq 'j'}
 <input type="hidden" name="ins_{$fields[ix].ins_id}" value="" id="{$fields[ix].ins_id}" />
-<span id="disp_{$fields[ix].ins_id}" class="daterow">{$fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
+<span id="disp_{$fields[ix].ins_id}" class="daterow">{$fields[ix].value|default:$smarty.now|tiki_long_date}</span>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
 date        : "{$fields[ix].value|default:$now|date_format:"%B %e, %Y %H:%M"}",      // initial date
 inputField  : "{$fields[ix].ins_id}",      // ID of the input field
 ifFormat    : "%s",    // the date format
 displayArea : "disp_{$fields[ix].ins_id}",       // ID of the span where the date is to be shown
-daFormat    : "{$daformat}",  // format of the displayed date
+daFormat    : "{$tiki_long_date}",  // format of the displayed date
 showsTime   : true,
 singleClick : true,
 align       : "bR"

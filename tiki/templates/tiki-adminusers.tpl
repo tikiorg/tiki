@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.44 2004-02-08 11:40:20 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.45 2004-02-10 10:57:39 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -204,7 +204,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <td colspan="3">
 {/if}
 {if $fields[ix].type eq 'f' or $fields[ix].type eq 'j'}
-{$fields[ix].value|date_format:$daformat}</td></tr>
+{$fields[ix].value|tiki_long_date}</td></tr>
 
 {elseif $fields[ix].type eq 'a'}
 {$fields[ix].pvalue}

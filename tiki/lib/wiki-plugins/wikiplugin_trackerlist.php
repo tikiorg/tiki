@@ -25,6 +25,11 @@ function wikiplugin_trackerlist($data, $params) {
 		} else {
 			$listfields = split(':',$fields);
 		}
+
+		$tracker_info = $trklib->get_tracker($trackerId);
+		$tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($trackerId));
+		$smarty->assign_by_ref('tracker_info', $tracker_info);
+		
 		$query_array = array();
 		$quarray = array();
 		parse_str($_SERVER['QUERY_STRING'],$query_array);
@@ -54,8 +59,15 @@ function wikiplugin_trackerlist($data, $params) {
 			$query_array['tr_sort_mode'] = $_REQUEST['tr_sort_mode'];
 			$tr_sort_mode = $_REQUEST['tr_sort_mode'];
 		} else {
-			if (!isset($sort_mode)) {
-				$sort_mode = "";
+			if (isset($tracker_info['defaultOrderKey'])) {
+				$sort_mode = 'f_'.$tracker_info['defaultOrderKey'];
+				if (isset($tracker_info['defaultOrderDir'])) {
+					$sort_mode.= "_".$tracker_info['defaultOrderDir'];
+				} else {
+					$sort_mode.= "_asc";
+				}
+			} else {
+				$sort_mode = '';
 			}
 			$tr_sort_mode = $sort_mode;
 		}
@@ -94,10 +106,6 @@ function wikiplugin_trackerlist($data, $params) {
 
 		$status_types = $trklib->status_types();
 		$smarty->assign('status_types', $status_types);
-
-		$tracker_info = $trklib->get_tracker($trackerId);
-		$tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($trackerId));
-		$smarty->assign_by_ref('tracker_info', $tracker_info);
 
 		$allfields = $trklib->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
 

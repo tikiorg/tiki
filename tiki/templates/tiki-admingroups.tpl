@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.38 2004-02-05 19:10:53 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.39 2004-02-10 10:57:39 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -206,7 +206,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}demove{/tr}" src="img/icons2/de
 <td colspan="3">
 {/if}
 {if $fields[ix].type eq 'f' or $fields[ix].type eq 'j'}
-{$fields[ix].value|date_format:$daformat}</td></tr>
+{$fields[ix].value|tiki_long_date}</td></tr>
 
 {elseif $fields[ix].type eq 'a'}
 {$fields[ix].pvalue}
