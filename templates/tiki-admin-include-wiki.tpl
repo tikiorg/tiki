@@ -75,7 +75,7 @@
     </div>
     
      <div class="simplebox">
-    <a class="link" href="tiki-admin.php?page=wikiatt">{tr}Manage attachement oreferences{/tr}</a>
+    <a class="link" href="tiki-admin.php?page=wikiatt">{tr}Manage attachement preferences{/tr}</a>
     </div>
     
     <div class="simplebox">
