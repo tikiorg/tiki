@@ -54,7 +54,23 @@
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$ins_fields[ix].name}</td><td>
 {else}
-<tr class="formcolor"><td>{$ins_fields[ix].name}</td>
+<tr class="formcolor"><td>{$ins_fields[ix].name}
+{if ($ins_fields[ix].type eq 'l')}
+<br><div><a href="tiki-view_tracker.php?trackerId={$ins_fields[ix].trackerId}&amp;vals%5B{$ins_fields[ix].options_array[1]}%5D=
+{section name=ox loop=$ins_fields}
+{if $ins_fields[ox].fieldId eq $ins_fields[ix].options_array[2]}
+{$ins_fields[ox].value}
+{/if}
+{/section}
+">{tr}Insert new item{/tr}<br> 
+<a href="tiki-view_tracker.php?trackerId={$ins_fields[ix].trackerId}&amp;filterfield={$ins_fields[ix].options_array[1]}&amp;filtervalue=
+{section name=ox loop=$ins_fields}
+{if $ins_fields[ox].fieldId eq $ins_fields[ix].options_array[2]}
+{$ins_fields[ox].value}
+{/if}
+{/section}
+">{tr}Filter{/tr} {tr}Tracker Items{/tr}
+{/if}<br></td>
 <td colspan="3">
 {/if}
 {if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
