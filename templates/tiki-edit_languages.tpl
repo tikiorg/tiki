@@ -12,7 +12,7 @@
   <div class="simplebox">
   <table>
   <tr><td align="center" colspan=3>{tr}Create Language{/tr}</td></tr>
-  <tr><td class="form">{tr}Shortname{/tr}:</td><td><input name="cr_lang_short" size=2 maxlength=2 value="{$cr_lang_short|escape}"></td><td>({tr}like{/tr} en)</td></tr>
+  <tr><td class="form">{tr}Shortname{/tr}:</td><td><input name="cr_lang_short" size=6 maxlength=16 value="{$cr_lang_short|escape}"></td><td>({tr}like{/tr} en)</td></tr>
   <tr><td class="form">{tr}Longname{/tr}:</td><td><input name="cr_lang_long" size=20 maxlength=255 value="{$cr_lang_long|escape}"></td><td>({tr}like{/tr} English)</td></tr>
   <td align="center"><input type="submit" name="createlang" value="{tr}create{/tr}" /></td></tr>
   {if $crmsg}

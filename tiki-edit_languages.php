@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.15 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_languages.php,v 1.16 2004-04-13 10:00:41 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,7 +26,7 @@ if (isset($_REQUEST["createlang"])) {
 	check_ticket('edit-languages');
 	$_REQUEST["cr_lang_short"] = addslashes($_REQUEST["cr_lang_short"]);
 
-	if (strlen($_REQUEST["cr_lang_short"]) != 2) {
+	if (strlen($_REQUEST["cr_lang_short"]) < 2) {
 		$crerror = true;
 		$smarty->assign('crmsg', tra("Shortname must be 2 Characters"));
 	} elseif (strlen($_REQUEST["cr_lang_long"]) == 0) {
