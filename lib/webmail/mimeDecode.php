@@ -48,7 +48,7 @@
 *    perhaps even message/partial.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.3 $
+* @version $Revision: 1.4 $
 * @package Mail
 */
 
@@ -223,7 +223,7 @@ class Mail_mimeDecode extends PEAR{
                     }
                     break;
 
-                case 'content-disposition';
+                case 'content-disposition':
                     $content_disposition = $this->_parseHeaderValue($headers[$key]['value']);
                     $return->disposition   = $content_disposition['value'];
                     if (isset($content_disposition['other'])) {
