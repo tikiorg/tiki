@@ -55,7 +55,7 @@
 </td>
 <td class="{cycle advance=false}">
 {section name=grs loop=$users[user].perms}
-{$users[user].perms[grs]}(<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)&nbsp;
+{$users[user].perms[grs]}(<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)<br>
 {/section}
 </td>                                 
 <td class="{cycle}">
