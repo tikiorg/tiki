@@ -29,10 +29,10 @@
 {$init_grid}
 
 	controlInsertRowBefore = '<form name="insert" onSubmit="insertRowSubmit(this)"><input type="radio" name="pos" value="before" checked /> Before <input type="radio" name="pos" value="after" /> After <select name="row">';
-	controlInsertRowAfter = '</select><input type="submit" name="submit" value="Insert Row" /></form>';
+	controlInsertRowAfter = '</select><input type="text" name="qty" value="1" size="2" /><input type="submit" name="submit" value="Insert Row" /></form>';
 	
 	controlInsertColumnBefore = '<form name="insert" onSubmit="insertColumnSubmit(this)"><input type="radio" name="pos" value="before" checked /> Before <input type="radio" name="pos" value="after" /> After <select name="column">';
-	controlInsertColumnAfter = '</select><input type="submit" name="submit" value="Insert Column" /></form>';
+	controlInsertColumnAfter = '</select><input type="text" name="qty" value="1" size="2" /><input type="submit" name="submit" value="Insert Column" /></form>';
 
 	controlRemoveRowBefore = '<form name="remove" onSubmit="removeRowSubmit(this)"><select name="row">';
 	controlRemoveRowAfter = '</select><input type="submit" name="submit" value="Remove Row" /></form>';
