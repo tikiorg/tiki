@@ -8,8 +8,8 @@
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admin_hotwords.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin hotwords tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_hotwords.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin hotwords template{/tr}">
+<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>{/if}
 
 <!-- begin -->
 
@@ -49,7 +49,7 @@
 <td class="odd">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this hotword?{/tr}')" 
-title="Click here to delete this hotword"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {else}
@@ -59,7 +59,7 @@ title="Click here to delete this hotword"><img border="0" alt="{tr}Remove{/tr}" 
 <td class="even">
 &nbsp;&nbsp;<a class="link" href="tiki-admin_hotwords.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$words[user].word}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this hotword?{/tr}')" 
-title="Click here to delete this hotword"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {/if}

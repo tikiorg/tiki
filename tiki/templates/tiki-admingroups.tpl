@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.37 2004-01-28 12:17:49 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.38 2004-02-05 19:10:53 damosoft Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -8,7 +8,7 @@
 {if $feature_help eq 'y'}</a>{/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=templates/tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups tpl{/tr}">
+<a href="tiki-edit_templates.php?template=templates/tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' />{/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 <br />
@@ -81,8 +81,8 @@ class="prevnext">{tr}All{/tr}</a>
 {cycle values="even,odd" print=false}
 {section name=user loop=$users}
 <tr class="{cycle}">
-<td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Click here to edit this group{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a></td>
-<td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Click here to edit this group{/tr}">{$users[user].groupName}</a></td>
+<td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a></td>
+<td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}edit{/tr}">{$users[user].groupName}</a></td>
 <td>{$users[user].groupDesc}</td>
 <td>
 {section name=ix loop=$users[user].included}
@@ -92,13 +92,13 @@ class="prevnext">{tr}All{/tr}</a>
 <td>
 {capture assign=over}{section name=grs loop=$users[user].perms}{$users[user].perms[grs]}(<a class="link"
 href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName|escape:"url"}&amp;action=remove">x</a>)<br />{/section}{/capture}
-<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}Click here to assign permissions to this group{/tr}" {popup text="<br />$over"|escape:"javascript"|escape:"html"
-sticky="true" caption="{tr}Permissions{/tr}" closetext="{tr}close{/tr}" right="true"}><img border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /> ({$smarty.section.grs.total})</a>
+<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName|escape:"url"}" title="{tr}permissions{/tr}" {popup text="<br />$over"|escape:"javascript"|escape:"html"
+sticky="true" caption="{tr}Permissions{/tr}" closetext="{tr}close{/tr}" right="true"}><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key.gif" /> ({$smarty.section.grs.total})</a>
 </td>
 <td style="width: 20px;">
 {if $users[user].groupName !== 'Anonymous'}<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName|escape:"url"}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this group?{/tr}')" 
-title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>{/if}
+title="{tr}delete{/tr}"><img border="0" alt="{tr}demove{/tr}" src="img/icons2/delete.gif" /></a>{/if}
 </td>
 </tr>
 {/section}
