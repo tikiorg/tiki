@@ -1,10 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.23 2003-11-20 23:49:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.24 2003-11-23 03:15:07 zaufi Exp $ *}
 
-<div class="box">
-<div class="box-title">
-{include file="module-title.tpl" module_title="{tr}Login{/tr}" module_name="login_box"}
-</div>
-<div class="box-data">
+{tikimodule title="{tr}Login{/tr}" name="login_box"}
+
     {if $user}
       {tr}logged as{/tr}: {$user}<br />
       <a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a><br />
@@ -102,5 +99,4 @@
       {/if}
       </form>
     {/if}
-</div>
-</div>
+{/tikimodule}

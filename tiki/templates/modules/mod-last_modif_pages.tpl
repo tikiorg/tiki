@@ -1,11 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.14 2003-11-20 23:49:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_pages.tpl,v 1.15 2003-11-23 03:15:07 zaufi Exp $ *}
 
 {if $feature_wiki eq 'y'}
- <div class="box">
-  <div class="box-title">
-    {include file="module-title.tpl" module_title="{tr}Last changes{/tr}" module_name="last_modif_pages"}
-  </div>
-  <div class="box-data">
+{tikimodule title="{tr}Last changes{/tr}" name="last_modif_pages"}
    <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastModif}
      <tr>
@@ -25,6 +21,5 @@
      </tr>
     {/section}
    </table>
-  </div>
- </div>
+{/tikimodule}
 {/if}
