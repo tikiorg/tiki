@@ -7,7 +7,8 @@ syntax: {phplayers [type=tree|phptree|plain] [id=1] [file=/path/to/menufile]}
 
 */
 function smarty_function_phplayers($params, &$smarty) {
-	global $tikilib;
+	global $tikilib,$smarty;
+	$smarty->assign('uses_phplayers','y');
 	extract($params);
 
 	$types['vert'] = 'layersmenu.inc.php';
