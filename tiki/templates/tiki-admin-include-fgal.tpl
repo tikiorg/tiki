@@ -31,9 +31,9 @@
           <td class="form">{tr}Use database to store files{/tr}:</td>
           <td><input type="radio" name="fgal_use_db" value="y"
               {if $fgal_use_db eq 'y'}checked="checked"{/if}/></td>
-        </tr><tr>
-          <td class="form">{tr}Use a directory to store files{/tr}:</td>
-          <td class="form"><input type="radio" name="fgal_use_db" value="n"
+        </tr><tr class="form">
+          <td>{tr}Use a directory to store files{/tr}:</td>
+          <td><input type="radio" name="fgal_use_db" value="n"
               {if $fgal_use_db eq 'n'}checked="checked"{/if}/>
               {tr}Directory path{/tr}:<br /><input type="text" name="fgal_use_dir"
               value="{$fgal_use_dir|escape}" size="50" /></td>
@@ -65,33 +65,33 @@ c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td>
     <div class="simplebox">
       {tr}Gallery listing configuration{/tr}
       <form method="post" action="tiki-admin.php?page=fgal">
-        <table class="admin"><tr>
-          <td class="form">{tr}Name{/tr}</td>
-          <td class="form"><input type="checkbox" name="fgal_list_name"
+        <table class="admin"><tr class="form">
+          <td>{tr}Name{/tr}</td>
+          <td><input type="checkbox" name="fgal_list_name"
               {if $fgal_list_name eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr>
-          <td class="form">{tr}Description{/tr}</td>
-          <td class="form"><input type="checkbox" name="fgal_list_description"
+        </tr><tr class="form">
+          <td>{tr}Description{/tr}</td>
+          <td><input type="checkbox" name="fgal_list_description"
               {if $fgal_list_description eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr>
-          <td class="form">{tr}Created{/tr}</td>
-          <td class="form"><input type="checkbox" name="fgal_list_created"
+        </tr><tr class="form">
+          <td>{tr}Created{/tr}</td>
+          <td><input type="checkbox" name="fgal_list_created"
               {if $fgal_list_created eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr>
-          <td class="form">{tr}Last modified{/tr}</td>
-          <td class="form"><input type="checkbox" name="fgal_list_lastmodif"
+        </tr><tr class="form">
+          <td>{tr}Last modified{/tr}</td>
+          <td><input type="checkbox" name="fgal_list_lastmodif"
               {if $fgal_list_lastmodif eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr>
-          <td class="form">{tr}User{/tr}</td>
-          <td class="form"><input type="checkbox" name="fgal_list_user"
+        </tr><tr class="form">
+          <td>{tr}User{/tr}</td>
+          <td><input type="checkbox" name="fgal_list_user"
               {if $fgal_list_user eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr>
-          <td class="form">{tr}Files{/tr}</td>
-          <td class="form"><input type="checkbox" name="fgal_list_files"
+        </tr><tr class="form">
+          <td>{tr}Files{/tr}</td>
+          <td><input type="checkbox" name="fgal_list_files"
               {if $fgal_list_files eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr>
-          <td class="form">{tr}Hits{/tr}</td>
-          <td class="form"><input type="checkbox" name="fgal_list_hits"
+        </tr><tr class="form">
+          <td>{tr}Hits{/tr}</td>
+          <td><input type="checkbox" name="fgal_list_hits"
               {if $fgal_list_hits eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td colspan="2" class="button"><input type="submit"
