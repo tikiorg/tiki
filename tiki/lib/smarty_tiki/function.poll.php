@@ -3,6 +3,7 @@ require_once('lib/tikilib.php'); # httpScheme()
 
 function smarty_function_poll($params, &$smarty) {
     global $tikilib;
+    global $polllib;
     global $dbTiki;
 		global $commentslib;
 		global $feature_poll_comments;
