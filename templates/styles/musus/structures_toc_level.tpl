@@ -1,5 +1,5 @@
 <li class="toclevel">
-	<a href="tiki-index.php?page_ref_id={$that.page_ref_id}">{$that.pageName}</a>
+	<a title="" href="tiki-index.php?page_ref_id={$that.page_ref_id}">{$that.pageName}</a>
 </li>
 {if $that.sub}<ul>
 	{section name=xitem loop=$that.sub}

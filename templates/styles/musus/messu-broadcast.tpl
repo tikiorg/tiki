@@ -1,10 +1,10 @@
 <a class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a>
 {if $feature_help eq 'y'}
-	<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Message Broadcast{/tr}"><img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+	<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Message Broadcast{/tr}">{$helpIcon $helpIconDesc}</a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-	<a href="tiki-edit_templates.php?template=templates/messu-broadcast.tpl" target="tikihelp" class="tikihelp" title="{tr}Edit article template{/tr}"><img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
+	<a href="tiki-edit_templates.php?template=templates/messu-broadcast.tpl" target="tikihelp" class="tikihelp" title="{tr}Edit article template{/tr}">{$editIcon $editIconDesc}</a>
 {/if}
 
 <br /><br />
