@@ -22,14 +22,22 @@ if(($_REQUEST["user"] == 'admin') && (!$userlib->user_exists("admin"))) {
   // If the password is valid but it is due then force the user to change the password by
   // sending the user to the new password change screen without letting him use tiki
   // The user must re-nter the old password so no secutiry risk here
+  if($isvalid) {
+    $isdue=$userlib->is_due($_REQUEST["user"]);
+  }
 }
 
-if($isdue) {
-
+if($isvalid && $isdue) {
+  // Redirect the user to the screen where he must change his password.
+  // Note that the user is not logged in he's just validated to change his password
+  // The user must re-enter his old password so no secutiry risk involved
+  header("location: tiki-change_password.php?user=".$_REQUEST["user"]."&amp;oldpass=".$_REQUEST["pass"]);
+  die;
 }
 
 if($isvalid) {
-  session_register("user",$_REQUEST["user"]);
+  //session_register("user",$_REQUEST["user"]);
+  $_SESSION["user"]=$_REQUEST["user"];
   $user = $_REQUEST["user"];
   $smarty->assign_by_ref('user',$user);
   header("location: $tikiIndex");

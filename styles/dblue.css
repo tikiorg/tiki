@@ -757,13 +757,13 @@ div.forumspagetitle {  margin-top: 10px;  margin-bottom: 40px;}
 
 table.threads { width: 97%;}
 
-td.viewthreadl { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 30px; width: 30%;vertical-align: top;}
+td.viewthreadl { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 30px; vertical-align: top;}
 td.viewthreadr { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; background-color: #EFEFEF; height: 30px; vertical-align: top;}
 
 /* Cells for the threads table */
-td.threadsevenl { font-family: Verdana, Arial, Helvetica, sans-serif; width: 30%; font-size: 12px; background-color: #EFEFEF; vertical-align: top;}
+td.threadsevenl { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; background-color: #EFEFEF; vertical-align: top;}
 td.threadsevenr { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 13px; background-color: #EFEFEF; vertical-align: top;}
-td.threadsoddl { font-family: Verdana, Arial, Helvetica, sans-serif; width: 30%; font-size: 12px; background-color: #DDDDDD; vertical-align: top;}
+td.threadsoddl { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; background-color: #DDDDDD; vertical-align: top;}
 td.threadsoddr { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 13px; background-color: #DDDDDD; vertical-align: top;}
 td.threadseparator { background-color: #EEEEEE; height: 5px;}
 
@@ -943,3 +943,4 @@ textarea.tshoutbox{
 	font-size: 10px;
 }
 #trkmenu { display: none;}
+#srvmenu { display: none;}

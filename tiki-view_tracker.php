@@ -196,6 +196,9 @@ $groups = $userlib->get_groups(0,-1,'groupName_asc','');
 $smarty->assign_by_ref('users',$users["data"]);
 $smarty->assign_by_ref('groups',$groups["data"]);
 
+$section='trackers';
+include_once('tiki-section_options.php');
+
 // Display the template
 $smarty->assign('mid','tiki-view_tracker.tpl');
 $smarty->display('tiki.tpl');

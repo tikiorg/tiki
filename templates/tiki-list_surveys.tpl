@@ -12,7 +12,13 @@
 {section name=user loop=$channels}
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_take_survey eq 'y') or ($channels[user].individual_tiki_p_take_survey eq 'y')}
 <tr>
-<td class="{cycle advance=false}"><a class="tablename" href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name}</a>
+<td class="{cycle advance=false}">
+{if $channels[user].status eq 'o'}
+<a class="tablename" href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">
+{else}
+<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
+{/if}
+{$channels[user].name}</a>
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')} (<a class="link" href="tiki-admin_survey.php?surveyId={$channels[user].surveyId}"><small>adm</small></a>){/if}
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')} (<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}"><small>stats</small></a>){/if}
 </td>

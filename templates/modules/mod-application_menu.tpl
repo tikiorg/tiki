@@ -28,6 +28,10 @@
   &nbsp;<a href="tiki-list_games.php" class="linkmenu">{tr}games{/tr}</a><br/>
 {/if}
 
+{if $feature_webmail eq 'y' and $tiki_p_use_webmail eq 'y'}
+  &nbsp;<a href="tiki-webmail.php" class="linkmenu">{tr}webmail{/tr}</a><br/>
+{/if}
+
 
 {if $feature_wiki eq 'y'}
   <div class="separator"><a class='separator' href="javascript:hide('wikimenu');">[-]</a> <a class='separator' href='tiki-index.php'>Wiki</a> <a class='separator' href="javascript:show('wikimenu');">[+]</a></div>
@@ -213,6 +217,21 @@
   </div>
 {/if}
 
+{if $feature_surveys eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:hide('srvmenu');">[-]</a> 
+  <a href="tiki-list_surveys.php" class="separator">{tr}Surveys{/tr}</a>
+  <a class='separator' href="javascript:show('srvmenu');">[+]</a></div>
+  <div id='srvmenu'>
+  &nbsp;<a href="tiki-list_surveys.php" class="linkmenu">{tr}List Surveys{/tr}</a><br/>
+  {if $tiki_p_view_survey_stats eq 'y'}
+  &nbsp;<a href="tiki-survey_stats.php" class="linkmenu">{tr}Stats{/tr}</a><br/>
+  {/if}
+  {if $tiki_p_admin_surveys eq 'y'}
+  &nbsp;<a href="tiki-admin_surveys.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  {/if}
+  </div>
+{/if}
+
 
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or
@@ -278,7 +297,7 @@
     {if $tiki_p_view_referer_stats eq 'y'}
     &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br/>
     {/if}
-    &nbsp;<a href="tiki-import_phpwiki.php" class="linkmenu">{tr}PHPWiki Import{/tr}</a><br/>
+    &nbsp;<a href="tiki-import_phpwiki.php" class="linkmenu">{tr}Wiki Import dump{/tr}</a><br/>
   </div>
 {/if}
 

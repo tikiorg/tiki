@@ -2,14 +2,11 @@
 // Initialization
 require_once('tiki-setup.php');
 
-
-/*
-if($feature_quizzes != 'y') {
+if($feature_surveys != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
   die;  
 }
-*/
 
 if(!isset($_REQUEST["surveyId"])) {
   $_REQUEST["surveyId"] = 0;

@@ -193,6 +193,12 @@ create table users_users(
   currentLogin integer(14),
   registrationDate integer(14),
   country varchar(80),
+  avatarName varchar(80),
+  avatarSize integer(14),
+  avatarType varchar(250),
+  avatarData longblob,
+  avatarLibName varchar(200),
+  avatarType char(1),
   primary key(userId)
 );
 

@@ -2,13 +2,11 @@
 // Initialization
 require_once('tiki-setup.php');
 
-/*
-if($feature_quizzes != 'y') {
+if($feature_surveys != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
   die;  
 }
-*/
 
 /*
 if($tiki_p_take_quiz != 'y') {
@@ -17,7 +15,6 @@ if($tiki_p_take_quiz != 'y') {
     die;
 }
 */
-
 
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'created_desc'; 

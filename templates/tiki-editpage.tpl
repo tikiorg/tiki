@@ -10,7 +10,7 @@
 to preview the appeareance of the page, no versions are stored for this page.{/tr}
 </div>
 {/if}
-<form  method="post" action="tiki-editpage.php" id='editpageform'>
+<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
 <table class="normal">
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
 {assign var=area_name value="editwiki"}
@@ -73,6 +73,13 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
 {/if}
 {if $wiki_spellcheck eq 'y'}
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
+{/if}
+{if $tiki_p_admin_wiki eq 'y'}
+<tr><td class="formcolor">{tr}Import page{/tr}</td><td class="formcolor">
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+<input name="userfile1" type="file">
+<a href="tiki-export_wiki_pages.php?page={$page}&amp;all=1" class="linkbut">{tr}export all versions{/tr}</a>
+</td></tr>
 {/if}
 <input type="hidden" name="page" value="{$page}" />
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>

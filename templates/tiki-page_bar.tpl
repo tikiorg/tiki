@@ -44,6 +44,7 @@
 {if $show_slideshow eq 'y'}
 <td><div class="button2"><a href="tiki-slideshow.php?page={$page}" class="linkbut">{tr}slides{/tr}</a></div></td>
 {/if}
+<td><div class="button2"><a href="tiki-export_wiki_pages.php?page={$page}" class="linkbut">{tr}export{/tr}</a></div></td>
 </tr>
 </table>
 </div>
