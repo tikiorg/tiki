@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.49 2004-02-09 18:20:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.50 2004-02-22 23:55:52 mose Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -202,13 +202,6 @@ a moderator approves it.{/tr}</small>
     </tr>
     {/if}
     
-{if $feature_forum_parse eq 'y'}        
-    <tr class="formcolor"><td>{tr}Quicklinks{/tr}</td><td>
-{assign var=area_name value="editpost"}
-{include file=tiki-edit_help_tool.tpl}
-</td>
-</tr>
-{/if}
     {if $feature_smileys eq 'y'}
     <tr class="formcolor">
       <td>{tr}Smileys{/tr}</td>
@@ -216,7 +209,12 @@ a moderator approves it.{/tr}</small>
      </tr>
     {/if}
     <tr class="formcolor">
-      <td>{tr}Comment{/tr}<br /><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
+      <td>{tr}Comment{/tr}<br /><br />
+			{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}
+			{if $feature_forum_parse eq 'y'}
+			{include file=tiki-edit_help_tool.tpl area_name="editpost"}
+			{/if}
+			</td>
       <td><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment_edit.tpl,v 1.4 2004-02-22 17:04:33 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment_edit.tpl,v 1.5 2004-02-22 23:55:50 mose Exp $ *}
 {* tiki-hw_teacher_assignment_edit.tpl *}
 {* George G. Geller *}
 
@@ -129,14 +129,9 @@ GGG *}
 {include file=categorize.tpl}
 
 <tr><td class="formcolor">{tr}Summary{/tr}</td><td class="formcolor"><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
-{* GGG <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
-{include file=tiki-edit_help_tool.tpl} GGG *}
-</td>
-</tr>
 
 <tr><td class="formcolor">{tr}Details{/tr}<br /><br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
-<br /><br />{tr}Quicklinks{/tr}
-{include file=tiki-edit_help_tool.tpl}
+<br />{include file=tiki-edit_help_tool.tpl area_name="body"}
 </td><td class="formcolor">
 <textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>

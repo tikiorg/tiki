@@ -266,8 +266,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <tr class="formcolor"><td class="formlabel">{$fields[ix].name}
 {if $fields[ix].type eq 'a' and $fields[ix].options_array[0] eq 1}
 <br />
-{assign var=area_name value=$fields[ix].ins_id}
-{include file=tiki-edit_help_tool.tpl}
+{include file=tiki-edit_help_tool.tpl qtnum=$fid area_name=$fields[ix].ins_id}
 {/if}
 </td><td colspan="3" nowrap="nowrap">
 {/if}
