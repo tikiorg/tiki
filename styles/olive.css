@@ -544,7 +544,7 @@ a.forumnameread:hover {
 
 .tableheading:hover, gallistheading:hover, .listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover, .llistfileslink:hover, .llistart:hover, .lforumheading:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #CCCCCC;
+	color: white;
 	font-size: 11px;
 	font-weight: bold;
 	text-decoration: none;
@@ -586,7 +586,7 @@ TD.third {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: Black;
-	background-color: #CCCCCC;
+	background-color: #9cba00;
 	vertical-align: top;
 	text-align: left;
 }
@@ -664,7 +664,7 @@ H3 {
 div.searchdate {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	color: #333333;
+	color: Black;
 }
 
 /* Pagination for listings */
@@ -691,7 +691,7 @@ div.searchdate {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	color: black;
-	background-color: #EFEFEF;
+	background-color: White;
 }
 
 /* Warning background/color */
@@ -1000,7 +1000,7 @@ div.linksinfo {
 
 /* The header of a weblog post */
 div.posthead {
-	background-color: #5B6C71;
+	background-color: #9cba00;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	color: white;
@@ -1009,8 +1009,8 @@ div.posthead {
 	border: 1px solid #84aa00;
 	border-bottom: 0px #84aa00;
 	text-align: center;
-	padding-left: 0px;
-	padding-right: 0px;
+	padding-left: 5px;
+	padding-right: 5px;
 	margin-bottom: 0px;
 	width: 98%;
 }
@@ -1020,7 +1020,7 @@ span.posthead {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	font-weight: bold;
-	color: Black;
+	color: White;
 }
 
 /* Links in the weblog post heading (edit/remove) */
@@ -1046,6 +1046,22 @@ span.posthead {
 	text-decoration: underline;
 }
 
+/* The weblog title */
+div.blogtitle {
+	background-color: #9cba00;
+	border: 1px solid #84aa00;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin-top: 10px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	width: 98%;
+	clear: both;
+	color: white;
+}
+
 /* The post body */
 div.postbody {
 	overflow: hidden;
@@ -1053,7 +1069,7 @@ div.postbody {
 	border: 1px solid #84aa00;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	color: black;
+	color: Black;
 	width: 98%;
 	padding-left: 5px;
 	padding-top: 5px;
@@ -1061,63 +1077,18 @@ div.postbody {
 	margin-bottom: 10px;
 }
 
-/* The weblog title */
-div.blogtitle {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: white;
-	font-size: 11px;
-	font-weight: bold;
-	font-size: 18px;
-	background-color: #9cba00;
-	padding-left: 2px;
-	padding-right: 5px;
-	margin-top: 10px;
-	border: 1px solid #84aa00;
-	border-bottom: 0px #84aa00;
-	width: 97%;
-}
-
 /* The weblog information */
-div.bloginfo {
+div.bloginfo, div.blogdesc, div.blogtools, postbody {
 	background-color: white;
 	border: 1px solid #84aa00;
-	padding-left: 0.8em;
-	padding-right: 0.8em;
+	color: Black;
+	padding-left: 5px;
+	padding-right: 5px;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 	margin-bottom: 10px;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
-	width: 98%;
-	clear: both;
-}
-
-/* Weblog description */
-div.blogdesc {
-	background-color: white;
-	border: 1px solid #84aa00;
-	padding-left: 0.8em;
-	padding-right: 0.8em;
-	padding-top: 0.5em;
-	padding-bottom: 0.5em;
-	margin-bottom: 10px;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	width: 98%;
-	clear: both;
-}
-
-/* Links to post/edit/rss feed for the webelog are contained inside this div */
-div.blogtools {
-	background-color: white;
-	border: 1px solid #84aa00;
-	padding-left: 0.8em;
-	padding-right: 0.8em;
-	padding-top: 0.5em;
-	padding-bottom: 0.5em;
-	margin-bottom: 10px;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 10px;
 	width: 98%;
 	clear: both;
 }
