@@ -179,7 +179,7 @@ class ChartLib extends TikiLib {
 
 	function user_has_voted_item($user, $itemId) {
 		if ($user) {
-			return $this->getOne("select count(*) from `tiki_charts_votes` where `user`='$user' and itemId=$itemId");
+			return $this->getOne("select count(*) from `tiki_charts_votes` where `user`=? and `itemId`=?",array($user,(int) $itemId));
 		} else {
 			return isset($_SESSION['chart_item_votes']) && in_array($itemId, $_SESSION['chart_item_votes']);
 		}
@@ -467,7 +467,7 @@ class ChartLib extends TikiLib {
 		return $retval;
 	}
 
-	function list_chart_items($offset, $maxRecords, $sort_mode, $find, $where = '') {
+	function list_chart_items($offset, $maxRecords, $sort_mode, $find, $where = '',$whereval=0) {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
@@ -480,10 +480,11 @@ class ChartLib extends TikiLib {
 		}
 
 		if ($where) {
+			$bindvars[]=$whereval;
 			if ($mid) {
-				$mid .= " and ($where) ";
+				$mid .= " and (`$where` = ?) ";
 			} else {
-				$mid = "where ($where) ";
+				$mid = "where (`$where` = ?) ";
 			}
 		}
 
