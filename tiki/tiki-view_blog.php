@@ -188,7 +188,7 @@ if($user
 	&& $tiki_p_notepad == 'y' 
 	&& $feature_notepad == 'y' 
 	&& isset($_REQUEST['savenotepad'])) {
-  $post_info = $bloglib->get_post($_REQUEST['savenotepad']);	
+  $post_info = $bloglib->get_post($_REQUEST['savenotepad']);
   $tikilib->replace_note($user,0,$post_info['title']?$post_info['title']:date("d/m/Y [h:i]",$post_info['created']),$post_info['data']);
 }
 
@@ -210,19 +210,25 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
 	require_once("lib/hawhaw/hawhaw.inc");
 	require_once("lib/hawhaw/hawiki.inc");
 	error_reporting(E_WARNING);
-    $DemoPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
+    $BlogPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
     $title = new HAW_text("Tiki Blogs", HAW_TEXTFORMAT_BOLD);
-    $DemoPage->add_text($title);
+    $BlogPage->add_text($title);
     $linkset = new HAW_linkset();
 	for($i=0;$i<count($listpages['data']);$i++) {
 		$blog = $listpages['data'][$i];
 		// check for tiki_p_read_blog here
-			$link2 = new HAW_link(isset($blog['title'])?$blog['title']:date("d/m/Y [h:I]",$blog['created']),"tiki-view_blog_post.php?mode=wap&blogId=".$_REQUEST['blogId']."&amp;postId=".$blog['postId']);
+      if (isset($blog['title']) && strlen($blog['title'])>0)
+        $label = $blog['title'];
+      else
+        $label = date("d/m/Y [h:i]",$blog['created']);
+
+			//$link2 = new HAW_link(isset($blog['title'])?$blog['title']:date("d/m/Y [h:i]",$blog['created']),"tiki-view_blog_post.php?mode=wap&blogId=".$_REQUEST['blogId']."&amp;postId=".$blog['postId']);
+			$link2 = new HAW_link($label,"tiki-view_blog_post.php?mode=wap&blogId=".$_REQUEST['blogId']."&amp;postId=".$blog['postId']);
 			$linkset->add_link($link2);
 	}
-    $DemoPage->add_linkset($linkset);
-    $DemoPage->create_page();
-    $DemoPage->display();
+    $BlogPage->add_linkset($linkset);
+    $BlogPage->create_page();
+    $BlogPage->display();
 	die;
 
 }
