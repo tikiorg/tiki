@@ -25,9 +25,16 @@ if(isset($_REQUEST["delete"])) {
   $messulib->delete_message($_SESSION['user'],$_REQUEST['msgdel']);
 }
 
+$smarty->assign('sort_mode',$_REQUEST['sort_mode']);
+$smarty->assign('find',$_REQUEST['find']);
+$smarty->assign('flag',$_REQUEST['flag']);
+$smarty->assign('offset',$_REQUEST['offset']);
+$smarty->assign('flagval',$_REQUEST['flagval']);
+$smarty->assign('priority',$_REQUEST['priority']);
 $smarty->assign('legend','');
+
 if(!isset($_REQUEST['msgId'])||$_REQUEST['msgId']==0) {
-  $smarty->assign('legend','No more messages');
+  $smarty->assign('legend',tra("No more messages"));
   $smarty->assign('mid','messu-read.tpl');
   $smarty->display("styles/$style_base/tiki.tpl");
   die;
@@ -40,12 +47,6 @@ if(isset($_REQUEST['action'])) {
 }
 
 // Using the sort_mode, flag, flagval and find get the next and prev messages
-$smarty->assign('sort_mode',$_REQUEST['sort_mode']);
-$smarty->assign('find',$_REQUEST['find']);
-$smarty->assign('flag',$_REQUEST['flag']);
-$smarty->assign('offset',$_REQUEST['offset']);
-$smarty->assign('flagval',$_REQUEST['flagval']);
-$smarty->assign('priority',$_REQUEST['priority']);
 $smarty->assign('msgId',$_REQUEST['msgId']);
 $next = $messulib->get_next_message($_SESSION['user'],$_REQUEST['msgId'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['flag'], $_REQUEST['flagval'],$_REQUEST['priority']);
 $prev = $messulib->get_prev_message($_SESSION['user'],$_REQUEST['msgId'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['flag'], $_REQUEST['flagval'],$_REQUEST['priority']);

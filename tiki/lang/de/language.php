@@ -2161,5 +2161,6 @@ in Admin-Allgemein abgestellt haben.
 "If not then a theme for the section is used" => "Wenn nicht, dann wird die Theme, die Theme der Sektion gew&auml;hlt",
 "If none of the above was selected the user theme is used" => "Wenn nicht, dann wird die Theme des Benutzers gew&auml;hlt",
 "Finally if the user didn't select a theme the default theme is used" => "Trifft nichts der obrigen Punkte zu, dann wird die default-Theme benutzt",
+"No more messages" => "Keine Nachrichten vorhanden",
 "##end###" => "###end###");
 ?>
