@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.4 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.5 2003-11-17 11:45:28 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -117,18 +117,18 @@ if ($categ_info['allowSites'] == 'y') {
 	$smarty->assign_by_ref('sort_mode', $sort_mode);
 	$smarty->assign('find', $find);
 	$items = $dirlib->dir_list_sites($_REQUEST['parent'], $offset, $directory_links_per_page, $sort_mode, '', 'y');
-	$cant_pages = ceil($items["cant"] / $maxRecords);
+	$cant_pages = ceil($items["cant"] / $directory_links_per_page);
 	$smarty->assign_by_ref('cant_pages', $cant_pages);
-	$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+	$smarty->assign('actual_page', 1 + ($offset / $directory_links_per_page));
 
-	if ($items["cant"] > ($offset + $maxRecords)) {
-		$smarty->assign('next_offset', $offset + $maxRecords);
+	if ($items["cant"] > ($offset + $directory_links_per_page)) {
+		$smarty->assign('next_offset', $offset + $directory_links_per_page);
 	} else {
 		$smarty->assign('next_offset', -1);
 	}
 
 	if ($offset > 0) {
-		$smarty->assign('prev_offset', $offset - $maxRecords);
+		$smarty->assign('prev_offset', $offset - $directory_links_per_page);
 	} else {
 		$smarty->assign('prev_offset', -1);
 	}
