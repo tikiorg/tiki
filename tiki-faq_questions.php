@@ -39,8 +39,8 @@ if($_REQUEST["questionId"]) {
   $info["question"]='';
   $info["answer"]='';
 }
-$smarty->assign('question',$info["question"]);
-$smarty->assign('answer',$info["answer"]);
+// $smarty->assign('question',$info["question"]);  AWC moved this
+// $smarty->assign('answer',$info["answer"]);      AWC moved this
 
 if(isset($_REQUEST["remove"])) {
   $faqlib->remove_faq_question($_REQUEST["remove"]);
@@ -52,16 +52,20 @@ $smarty->assign('filter',$_REQUEST["filter"]);
 if(isset($_REQUEST["useq"])) {
   $quse = $faqlib->get_faq_question($_REQUEST["usequestionId"]);
   $faqlib->replace_faq_question($_REQUEST["faqId"], 0, $quse["question"], $quse["answer"]);
+  $info = $faqlib->get_faq_question($_REQUEST["questionId"]);  // AWC added
 }
 
 if(isset($_REQUEST["save"])) {
    $faqlib->replace_faq_question($_REQUEST["faqId"], $_REQUEST["questionId"], $_REQUEST["question"], $_REQUEST["answer"]);
    $info["question"]='';
    $info["answer"]='';
-   $smarty->assign('question',$info["question"]);
-   $smarty->assign('answer',$info["answer"]);
+   //$smarty->assign('question',$info["question"]);  AWC moved this
+   //$smarty->assign('answer',$info["answer"]);      AWC moved this
    $smarty->assign('questionId',0);
 }
+
+$smarty->assign('question',$info["question"]);  // moved from above
+$smarty->assign('answer',$info["answer"]);      // moved from above
 
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'question_asc'; 
