@@ -1,14 +1,16 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.31 2003-11-21 17:01:31 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.32 2003-11-26 01:04:25 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.31 2003-11-21 17:01:31 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.32 2003-11-26 01:04:25 mose Exp $
 error_reporting (E_ERROR);
 session_start();
+
+include_once("lib/init/initlib.php");
 
 // Define and load Smarty components
 define('SMARTY_DIR', "lib/smarty/");
@@ -49,35 +51,33 @@ function process_sql_file($file,$db_tiki) {
 	$do_exec=true;
 	foreach ($statements as $statement) {
 	  //echo "executing $statement </br>";
+			if (trim($statement)) {
+				switch ($db_tiki) {
+				case "oci8":
+					// we have to preserve the ";" in sqlplus programs (triggers)
+					if (preg_match("/BEGIN/",$statement)) {
+						$prestmt=$statement.";";
+						$do_exec=false;
+					}
+					if (preg_match("/END/",$statement)) {
+						$statement=$prestmt."\n".$statement.";";
+						$do_exec=true;
+					}
+					if($do_exec) $result = $dbTiki->Execute($statement);
+					break;
+				default:
+					$result = $dbTiki->Execute($statement);
+					break;
+			}
 
-	  	switch ($db_tiki) {
-		  case "oci8":
-		    // we have to preserve the ";" in sqlplus programs (triggers)
-		    if (preg_match("/BEGIN/",$statement)) {
-		      $prestmt=$statement.";";
-		      $do_exec=false;
-		    }
-		    if (preg_match("/END/",$statement)) {
-		      $statement=$prestmt."\n".$statement.";";
-		      $do_exec=true;
-		    }
-
-		    if($do_exec) $result = $dbTiki->Execute($statement);
-		    break;
-		  default:
-		    $result = $dbTiki->Execute($statement);
-		    break;
-		}
-
-		if (!$result) {
-			$failedcommands[]=$statement."\n Message: ".$dbTiki->ErrorMsg()."\n\n";
-
-			//trigger_error("DB error:  " . $dbTiki->ErrorMsg(). " in query:<br/><pre>" . $command . "<pre/><br/>", E_USER_WARNING);
-		// Do not die at the moment. Wen need some better error checking here
-		//die;
-		} else {
-			$succcommands[]=$statement;
-
+			if (!$result) {
+				$failedcommands[]= "Command: ".$statement."\nMessage: ".$dbTiki->ErrorMsg()."\n\n";
+				//trigger_error("DB error:  " . $dbTiki->ErrorMsg(). " in query:<br/><pre>" . $command . "<pre/><br/>", E_USER_WARNING);
+				// Do not die at the moment. Wen need some better error checking here
+				//die;
+			} else {
+				$succcommands[]=$statement;
+			}
 		}
 	}
 
@@ -176,49 +176,26 @@ function isWindows() {
 	return $windows;
 }
 
-class Smarty_Sterling extends Smarty {
-	function Smarty_Sterling() {
-		$this->template_dir = "templates/";
+class Smarty_TikiWiki extends Smarty {
 
+	function Smarty_TikiWiki() {
+		$this->template_dir = "templates/";
 		$this->compile_dir = "templates_c/";
 		$this->config_dir = "configs/";
 		$this->cache_dir = "cache/";
 		$this->caching = false;
-		$this->assign('app_name', 'Sterling');
-		$this->plugins_dir = array("lib/smarty/plugins","lib/smarty_tiki");
+		$this->assign('app_name', 'TikiWiki');
+		$this->plugins_dir = array(
+			dirname(SMARTY_DIR)."/smarty_tiki",
+			SMARTY_DIR."plugins"
+		);
 	//$this->debugging = true;
 	//$this->debug_tpl = 'debug.tpl';
 	}
 
-	function _smarty_include($_smarty_include_tpl_file) {
-		global $style;
-
-		global $style_base;
-
-		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/".$params['smarty_include_tpl_file'])) {
-				$params['smarty_include_tpl_file'] = "".$params['smarty_include_tpl_file'];
-			}
-		}
-
-		return parent::_smarty_include($_smarty_include_tpl_file);
-	}
-
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
 		global $language;
-
-		global $style;
-		global $style_base;
-
-		// default language to English
 		$language = 'en';
-
-		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "$_smarty_tpl_file";
-			}
-		}
-
 		$_smarty_cache_id = $language . $_smarty_cache_id;
 		$_smarty_compile_id = $language . $_smarty_compile_id;
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
@@ -243,8 +220,8 @@ if (isset($_REQUEST['kill'])) {
 	die;
 }
 
-$smarty = new Smarty_Sterling();
-$smarty->load_filter('pre', 'tr');
+$smarty = new Smarty_TikiWiki();
+//$smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('style', 'default.css');
 $smarty->assign('mid', 'tiki-install.tpl');
@@ -289,7 +266,7 @@ if (ini_get('session.save_handler') == 'files') {
 	}
 
 	if ($errors) {
-		$save_path = TikiSetup::tempdir();
+		$save_path = TikiInit::tempdir();
 
 		if (is_dir($save_path) && is_writeable($save_path)) {
 			ini_set('session.save_path', $save_path);
@@ -436,24 +413,16 @@ if($can_write) {
 // if local then build dsn and try to connect
 //   then get con or nocon
 
-$current_path = ini_get('include_path');
-
-if (isWindows()) {
-	$separator = ';';
-} else {
-	$separator = ':';
-}
-
-ini_set('include_path', $current_path . $separator . 'lib/pear' . $separator . 'lib/adodb');
-
 //adodb settings
+TikiInit::prependIncludePath('lib/adodb');
+TikiInit::prependIncludePath('lib/pear');
+
 
 define('ADODB_FORCE_NULLS', 1);
 define('ADODB_ASSOC_CASE', 2);
 define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
 include_once ('adodb.inc.php');
 //include_once ('adodb-pear.inc.php'); //really needed?
-
 
 if (!file_exists('db/local.php')) {
 	$dbcon = false;
@@ -655,7 +624,7 @@ if (isset($_REQUEST['login'])) {
 	if (!$result->numRows()) {
 		$logged = 'n';
 	} else {
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 
 		$hash = md5('admin' . $pass . $res['email']);
 		$hash2 = md5($pass);
