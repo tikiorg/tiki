@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.10 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignpermission.php,v 1.11 2003-11-12 06:18:13 chealer Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// This script is used to assign groups to a particular user
-// ASSIGN USER TO GROUPS
+// This script is used to assign permissions to a particular group
+// ASSIGN PERMISSIONS TO GROUPS
 // Initialization
 require_once ('tiki-setup.php');
 
