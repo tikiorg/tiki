@@ -13,11 +13,11 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Authors: Ross Smith <pear@smithii.com>                               |
+// | Authors: Ross Smith                                                  |
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZoneWindows.php,v 1.1 2003-08-07 01:53:07 rossta Exp $
+// $Id: TimeZoneWindows.php,v 1.2 2004-03-17 02:49:58 rossta Exp $
 //
 // Date_TimeZone Class Windows Support File
 //
@@ -26,8 +26,8 @@
  * This class includes Windows time zone data (from zoneinfo) in the form of a global array,
  * $_DATE_TIMEZONE_DATA_WINDOWS.
  *
- * @author Ross Smith <pear@smithii.com>
- * @package Date
+ * @author Ross Smith
+  * @package Date
  * @access public
  * @version 1.0
  */
