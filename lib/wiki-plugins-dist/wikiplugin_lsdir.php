@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_lsdir.php,v 1.1 2004-07-03 02:56:34 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_lsdir.php,v 1.2 2004-07-03 03:21:57 teedog Exp $
  *
  * TikiWiki LSDIR plugin: lists files in a directory
  * 
@@ -17,7 +17,7 @@ function wikiplugin_lsdir_help() {
 
 function wikiplugin_lsdir($data, $params) {
 	global $tikilib;
-	$dir = '.';
+	$dir = '';
 	$urlprefix = NULL;
 	$sort = 'name';
 	$sortmode = 'asc';
@@ -27,6 +27,25 @@ function wikiplugin_lsdir($data, $params) {
 	$ret = '';
 
 	extract ($params);
+	
+	// make sure document_root has no trailing slash
+	if (!empty($_SERVER['DOCUMENT_ROOT'])) {
+		$tail = strlen($_SERVER['DOCUMENT_ROOT']) - 1;
+		if (substr($_SERVER['DOCUMENT_ROOT'], $tail) == '/') {
+			$pathprefix = substr($_SERVER['DOCUMENT_ROOT'], 0, $tail);
+		} else {
+			$pathprefix = $_SERVER['DOCUMENT_ROOT'];
+		}
+	}
+	
+	// make sure dir has starting slash
+	if (!empty($dir)) {
+		if (substr($dir, 0, 1) != '/') {
+			$dir = '/' . $dir;
+		}
+	}
+	
+	$dir = $pathprefix . $dir;
 	
 	// make sure urlprefix has a trailing slash
 	if (!empty($urlprefix)) {
