@@ -1,3 +1,9 @@
+Version 1.7 -Eta Carinae-
+
+* [NEW] The special Smarty plugin {helplink page="PageName"} can be used to create
+  a link that will display a wiki page as a help popup. This allows your site to
+  create an online help system based on Wiki pages. 
+
 Version 1.6 -Tau Ceti-
 
 * [NEW] Install script added, unzip the files and point your browser to
