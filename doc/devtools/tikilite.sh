@@ -14,16 +14,16 @@
 #
 #   1. Check out a new installation of TikiWiki into a directory of your choice.
 #   2. Move to the top of your TikiWiki installation.
-#   3. Modify doc/devtools/tikilight.sh to point to set your defaults.
-#   4. Execute doc/devtools/tikilight.sh - this will remove all non-core files and directories. 
+#   3. Modify doc/devtools/tikilite.sh to point to set your defaults.
+#   4. Execute doc/devtools/tikilite.sh - this will remove all non-core files and directories. 
 #
 #To Update
 #
 #   1. Do a cvs up in your TikiLite directory
-#   2. Execute doc/devtools/tikilight.sh script again 
+#   2. Execute doc/devtools/tikilite.sh script again 
 #
 # ############################################################
-# special operation for a lighter tikiwiki
+# special operation for a liteer tikiwiki
 #
 LANG_DEF="en"
 THEME_DEF="moreneat"
@@ -33,6 +33,7 @@ echo "Removing Thumbs.db ..."
 find -name Thumbs.db -exec rm -f {} \;
 
 echo "Removing DB extras..."
+rm -rf db/oracle
 rm -rf db/pgsql
 
 echo "Removing Avatars..."
@@ -56,10 +57,28 @@ rm -rf lib/pear/SOAP/example
 echo "Remove PDF fonts..."
 find lib/pdflib/fonts -type f -name "*.afm" | grep -v php_Helvetica | grep -v php_Courier | xargs -- rm -f
 
+# or just
+echo "Remove pdflib..."
+rm -rf lib/pdflib
+
+# Couldn't find any reference to these files anywhere?
+echo "Remove popups..."
+rm -rf popups
+
 echo "Remove styles except default..."
-find templates/styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
 find styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
 find styles/ -type f -name "*.css" | grep -v $THEME_DEF | xargs -- rm -f
+find templates/styles/* -type d | grep -v $THEME_DEF | xargs -- rm -rf
+
+echo "Remove Webmail..."
+rm -rf lib/webmail
+rm -rf temp/mail_attachs
+
+echo "Remove tests..."
+rm -rf tests
+
+echo "Remove tikimovies..."
+rm -rf tikimovies
 
 # ############################################################
 
