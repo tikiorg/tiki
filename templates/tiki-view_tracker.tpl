@@ -206,11 +206,11 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {if $items[user].field_values[ix].type eq 'm'}
 <td class="auto">
 {if $items[user].field_values[ix].options_array[0] eq '1'}
-{mailto address=$items[user].field_values[ix].value encode="javascript"}
+{mailto address=$items[user].field_values[ix].value|escape encode="hex"}
 {elseif $items[user].field_values[ix].options_array[0] eq '2'}
-<a href="mailto:{$items[user].field_values[ix].value}">{$items[user].field_values[ix].value|default:"&nbsp;"}</a>
+{mailto address=$items[user].field_values[ix].value|escape encode="none"}
 {else}
-{$items[user].field_values[ix].value|default:"&nbsp;"}
+{$items[user].field_values[ix].value|escape|default:"&nbsp;"}
 {/if}
 </td>
 {elseif $items[user].field_values[ix].type eq 'f' or $items[user].field_values[ix].type eq 'j'}

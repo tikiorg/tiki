@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.90 2004-06-27 03:05:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.91 2004-07-01 00:07:02 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -67,6 +67,12 @@ if (isset($_REQUEST["current_page_id"])) {
 
 function compare_import_versions($a1, $a2) {
   return $a1["version"] - $a2["version"];
+}
+
+if (isset($_REQUEST['cancel_edit'])) {
+    $page = urlencode($page);
+    header("location: tiki-index.php?page=$page");
+    die;
 }
 
 if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
@@ -360,15 +366,17 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
     $_REQUEST['edit'] .= $sdta;
 }
 //
-if(strcasecmp(substr($page,0,8),"UserPage")==0) {
-  $name = substr($page,8);
-  if(strcasecmp($user,$name)!=0) {
-    if($tiki_p_admin != 'y') {
-      $smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
-      $smarty->display("error.tpl");
-      die;
-    }
-  }
+if ($feature_wiki_userpage == 'y') {
+	if(strcasecmp(substr($page,0,strlen($feature_wiki_userpage_prefix)),$feature_wiki_userpage_prefix)==0) {
+		$name = substr($page,strlen($feature_wiki_userpage_prefix));
+		if(strcasecmp($user,$name)!=0) {
+			if($tiki_p_admin != 'y') {
+				$smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
+				$smarty->display("error.tpl");
+				die;
+			}
+		}
+	}
 }
 
 if ($_REQUEST["page"] == 'SandBox' && $feature_sandbox != 'y') {

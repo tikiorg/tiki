@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.30 2004-06-27 03:05:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.31 2004-07-01 00:07:02 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.30 2004-06-27 03:05:41 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.31 2004-07-01 00:07:02 damosoft Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -34,19 +34,17 @@ if (!(isset($_SESSION['loginfrom']))) {
 //		$_SESSION['loginfrom'] = basename($_SERVER['HTTP_REFERER']);
 		$_url = parse_url($_SERVER['HTTP_REFERER']);
 		$_SESSION['loginfrom'] = $_url['path'];
+		if (!empty($_url['query'])) {
+			$_SESSION['loginfrom'] .= '?'.$_url['query'];
+		}
 	} else {
 		//Oh well, back to tikiIndex
 //		$_SESSION['loginfrom'] = basename($tikiIndex);
 		$_url = parse_url($tikiIndex);
 		$_SESSION['loginfrom'] = $_url['path'];
-	}
-}
-
-if (isset($_REQUEST['page'])) {
-	if ($_REQUEST['page'] == 'tikiIndex') {
-		$_SESSION['loginfrom'] = $tikiIndex;
-	} else {
-		$_SESSION['loginfrom'] = $_REQUEST['page'];
+		if (!empty($_url['query'])) {
+			$_SESSION['loginfrom'] .= '?'.$_url['query'];
+		}
 	}
 }
 

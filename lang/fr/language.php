@@ -36,7 +36,7 @@
 // Usefull mode when preparing a translation for distribution.
 
 // http://www.neonchart.com/get_strings.php?nohelp&nosections
-// Prepare all languages for release 
+// Prepare all languages for release
 
 
 $lang=Array(
@@ -268,7 +268,7 @@ $lang=Array(
 "Anonymous editors must input anti-bot code" => "Les editeurs anonymes doivent saisir un code anti-bot",
 "admin HtmlPages template" => "Gabarit de l'administration des Pages HTML",
 "Import/export trackers fields" => "Importer/exporter des champs de formulaires",
-"active permissions" => "permissions activées", 
+"active permissions" => "permissions activées",
 "Community" => "Communauté",
 "You can include the image in a tiki page using one of these lines" => "Vous pouvez insérer l'image dans une page Wiki en utilisant l'une de ces lignes",
 "Anti-Bot verification code" => "Code de vérification anti-bot",
@@ -2599,8 +2599,8 @@ $lang=Array(
 "year" => "année",
 "Hours" => "Heures",
 "Events" => "Événements",
-"Edit Calendar Item" => "Modifier un évènement de calendrier",
-"New Calendar Item" => "Nouveau évènement de calendrier",
+"Edit Calendar Item" => "Modifier un événement de calendrier",
+"New Calendar Item" => "Nouveau événement de calendrier",
 "or create a new category" => "ou créer une nouvelle catégorie",
 "Location" => "Endroit",
 "or create a new location" => "ou créer un nouvel endroit",
@@ -2617,7 +2617,7 @@ $lang=Array(
 "Cancelled" => "Annulé",
 "duplicate" => "dupliquer",
 "to" => "à",
-"Add Calendar Item" => "Ajouter un évènement au calendrier",
+"Add Calendar Item" => "Ajouter un événement au calendrier",
 "Refresh" => "Réactualiser",
 "Group Calendars" => "Calendriers spécifiques",
 "check / uncheck all" => "cocher/décocher tout",
@@ -3402,10 +3402,10 @@ $lang=Array(
 "Mail-in feature" => "Fonctionnalité mail-in",
 "User Calendar Doc" => "Doc calendrier utilisateur",
 "User Calendar Doc tpl" => "Gabarit de la doc du calendrier utilisateur",
-"Upcoming events" => "Évènements à venir",
-"Remove old events" => "Supprimer les vieux évènements",
+"Upcoming events" => "Événements à venir",
+"Remove old events" => "Supprimer les vieux événements",
 "duration" => "durée",
-"Add or edit event" => "Ajouter/modifier un évènement",
+"Add or edit event" => "Ajouter/modifier un événement",
 "Duration" => "Durée",
 "Mini Calendar: Preferences" => "Mini Calendrier : Préférences",
 "User Calendar Preferences Doc tpl" => "Gabarit de la doc préférences du calendrier utilisateur",

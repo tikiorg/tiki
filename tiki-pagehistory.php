@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.15 2004-06-11 20:35:01 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.16 2004-07-01 00:07:02 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,7 +90,7 @@ if (isset($_REQUEST["preview"])) {
 $smarty->assign('diff2', 'n');
 
 if (isset($_REQUEST["diff2"])) {
-	require_once('lib/diff.php');
+	require_once('lib/diff/difflib.php');
 	$diff = $histlib->get_version($page, $_REQUEST["diff2"]);
 
 	$info = $tikilib->get_page_info($page);

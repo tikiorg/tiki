@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.243 2004-06-27 03:05:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.244 2004-07-01 00:07:02 damosoft Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -572,6 +572,11 @@ $feature_sheet = 'n';
 $smarty->assign('feature_sheet', $feature_sheet);
 $feature_multilingual = 'y';
 $smarty->assign('feature_multilingual', $feature_multilingual);
+$feature_wiki_userpage = 'y';
+$smarty->assign('feature_wiki_userpage', $feature_wiki_userpage);
+$feature_wiki_userpage_prefix = 'UserPage';
+$smarty->assign('feature_wiki_userpage_prefix', $feature_wiki_userpage_prefix);
+
 
 $rss_forums = 'y';
 $rss_forum = 'y';
@@ -1613,52 +1618,42 @@ if ($feature_warn_on_edit == 'y') {
 	    } else {
 	    	$chkpage = NULL;
 	    }
-	    //When tiki-index or tiki-editpage is loading, check if page is locked
-        if (!empty($chkpage) && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60)) {
-        	//When tiki-editpage.php is loading, check to see if there is an editing conflict
-        	if ($current_page == 'tiki-editpage' && $tikilib->get_semaphore_user($chkpage) != $user) {
-	            $smarty->assign('editpageconflict', 'y');
-	            $editpageconflict = 'y';
-        	}
-	        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
-	        $smarty->assign('beingEdited', 'y');
-	        $beingedited = 'y';
-        } elseif (!empty($chkpage) && $current_page == 'tiki-editpage' && !isset($_REQUEST['save'])) { // Don't lock page when saving
-			//Lock the page that is being edited
-            $_SESSION["edit_lock_$chkpage"] = $tikilib->semaphore_set($chkpage);
-	        $smarty->assign('beingEdited', 'y');
-	        $beingedited = 'y';
-        } elseif (!empty($chkpage) && $current_page == 'tiki-editpage' && isset($_REQUEST['save'])) {
-        	//Unlock the page when saving
-        	$tikilib->semaphore_unset($chkpage, $_SESSION["edit_lock_$chkpage"]);
-        }
+	    if (!empty($chkpage)) {
+	        if ($current_page == 'tiki-index' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60)) {
+		        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
+		        $smarty->assign('beingEdited', 'y');
+		        $beingedited = 'y';
+	        } elseif ($current_page == 'tiki-editpage' && isset($_REQUEST['cancel_edit'])) {
+	        	//Unlock the page when cancelling
+	        	if (!empty($_SESSION["edit_lock_$chkpage"])) {
+		        	$tikilib->semaphore_unset($chkpage, $_SESSION["edit_lock_$chkpage"]);
+	        	}
+	        } elseif ($current_page == 'tiki-editpage' && !isset($_REQUEST['save'])) {
+	        	//When tiki-editpage.php is loading, check to see if there is an editing conflict
+	        	if ($current_page == 'tiki-editpage' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60) && $tikilib->get_semaphore_user($chkpage) != $user) {
+		            $smarty->assign('editpageconflict', 'y');
+		            $editpageconflict = 'y';
+	        	} else {
+	        		//Lock the page that is being edited
+		            $_SESSION["edit_lock_$chkpage"] = $tikilib->semaphore_set($chkpage);
+	        	}
+		        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
+		        $smarty->assign('beingEdited', 'y');
+		        $beingedited = 'y';
+	        } elseif ($current_page == 'tiki-editpage' && isset($_REQUEST['save'])) {
+	        	//Unlock the page when saving
+	        	if (!empty($_SESSION["edit_lock_$chkpage"])) {
+		        	$tikilib->semaphore_unset($chkpage, $_SESSION["edit_lock_$chkpage"]);
+	        	}
+	        }
+	    }
     }
-
-/* 
-// since modern browsers can open pages in new windows or tabs, it is a bad idea to unlock a page
-// just because a user browsed from tiki-editpage to another page; commenting out this code
-    // Remove pagelock if user just came from tiki-editpage without saving
-    // If the referer is editpage then unset semaphore, taking the pagename from the query
-    if (!empty($_SERVER['HTTP_REFERER'])) {
-        if (strstr($_SERVER['HTTP_REFERER'], 'tiki-editpage')) {
-            $purl = parse_url($_SERVER['HTTP_REFERER']);
-            if (!empty($purl["query"])) {
-	            parse_str($purl["query"], $purlquery);
-	            $chkpage = $purlquery["page"];
-	            if (!empty($chkpage)) {
-		            if (isset($_SESSION["edit_lock_$chkpage"])) {
-		                $tikilib->semaphore_unset($chkpage, $_SESSION["edit_lock_$chkpage"]);
-		            }
-		        }
-            }
-        }
-    }
-*/
 
 } else {
 	$smarty->assign('beingEdited', 'n');
 	$smarty->assign('editpageconflict', 'n');
 }
+
 
 if (isset($_REQUEST["pollVote"])) {
     if ($tiki_p_vote_poll == 'y' && isset($_REQUEST["polls_optionId"])) {

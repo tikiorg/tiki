@@ -24,17 +24,17 @@
 
 {if $feature_tabs eq 'y'}
 
-{cycle name=tabs values="1,2,3" print=false advance=false}
+{cycle values="1,2,3" name=tabs print=false advance=false}
 <div id="page-bar">
  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Personal Information{/tr}</a></span>
  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}General preferences{/tr}</a></span>
  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Other preferences{/tr}</a></span>
 </div>
 
-{cycle name=content values="1,2,3" print=false advance=false}
 
 {/if}
 
+{cycle name=content values="1,2,3" print=false advance=false}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 
   <div class="cbox">
@@ -60,8 +60,9 @@
   <tr><td class="form">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lon" value="{$lon|escape}" /></td></tr> 
   <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
-  {if $feature_wiki eq 'y'}
-  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
+  {if $feature_wiki eq 'y' and $feature_wiki_userpage eq 'y'}
+  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a> 
+	(<a class="link" href="tiki-editpage.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
   {/if}
 	{if $userTracker eq 'y'}
   <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td class="form">

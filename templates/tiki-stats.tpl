@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.15 2004-06-28 16:16:30 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.16 2004-07-01 00:07:07 damosoft Exp $ *}
 
 <a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a><br /><br />
 
@@ -158,7 +158,9 @@
 <br />
 <br />
 <br />
+{*
 <a href="tiki-stats.php?chart=usage" class="link">{tr}Usage chart{/tr}</a><br /><br />
+
 
 {if $usage_chart eq 'y'}
 <br /> 
@@ -181,6 +183,7 @@
 <br />
 {/if}
 <br />
+*}
 
 <br />
 <br />

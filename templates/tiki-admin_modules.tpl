@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.28 2004-06-06 08:39:55 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.29 2004-07-01 00:07:07 damosoft Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 <!-- the help link info -->
@@ -15,12 +15,13 @@
 
 <!-- begin -->
 
-<br /><br />
+<br /><p>
 <a class="linkbut" href="#assign">{tr}assign module{/tr}</a>
 <a class="linkbut" href="#leftmod">{tr}left modules{/tr}</a>
 <a class="linkbut" href="#rightmod">{tr}right modules{/tr}</a>
 <a class="linkbut" href="#editcreate">{tr}edit/create{/tr}</a>
 <a class="linkbut" href="tiki-admin_modules.php?clear_cache=1">{tr}clear cache{/tr}</a>
+</p>
 
 <div class="simplebox">
 {tr}
@@ -32,7 +33,6 @@ have turned off the option 'display modules to all groups always'
 from Admin->General
 {/tr}
 </div>
-<br />
 <br />
 <table class="normal">
 <caption>{tr}User Modules{/tr}</caption>
