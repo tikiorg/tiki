@@ -89,11 +89,12 @@
 <input type="hidden" name="commentId" value="{$commentId|escape}" />
 <table class="normal">
 <tr>
- <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file" />
- {tr}comment{/tr}: <input type="text" name="attach_comment" maxlength="250" />
- <input type="submit" name="attach" value="{tr}attach{/tr}" />
- </td>
-</tr>
+<td class="formcolor">{tr}Upload file{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file" /></td></tr>
+<td class="formcolor">{tr}comment{/tr}</td><td class="formcolor"><input type="text" name="attach_comment" maxlength="250" /></td></tr>
+<td class="formcolor">{tr}version{/tr}</td><td class="formcolor"><input type="text" name="attach_version" size="5" maxlength="10" /></td></tr>
+<td class="formcolor">{tr}description{/tr}</td><td class="formcolor"><textarea name="attach_longdesc" style="width:100%;" rows="10"></textarea></td></tr>
+
+<td class="formcolor"></td><td class="formcolor"><input type="submit" name="attach" value="{tr}attach{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
