@@ -119,6 +119,93 @@ foreach ($accs['data'] as $acc) {
         $aux["sender"]["name"] = $aux["sender"]["email"];
   
       // Now determine account type
+      if ($acc['type'] == 'article') {
+        // This is used to UPDATE wiki pages
+        $title = trim($aux['subject']);
+  
+        $full = $message['full'];
+        $params = array(
+          'input' => $full,
+          'crlf' => "\r\n",
+          'include_bodies' => TRUE,
+          'decode_headers' => TRUE,
+          'decode_bodies' => TRUE
+        );
+  
+        $output = Mail_mimeDecode::decode($params);
+        parse_output($output, $parts, 0);
+  
+        if (isset($parts["text"][0])) {
+          $msgbody = $parts["text"][0];
+        }
+        
+        $heading = $msgbody;
+        $user = $aux['sender']['user'];
+        $authorName = $user;
+        $body = '';
+        $publishDate = date('U');
+        $expireDate = mktime (0,0,0,date("m"),  date("d"),  date("Y")+1);
+        $subId = 0;
+        $type = 'Article';
+        $useImage = 'n';
+        $image_x = '';
+        $image_y = '';
+        $imgname = '';
+        $imgsize = '';
+        $imgtype = '';
+        $imgdata = '';
+       	$topline = '';
+		$subtitle = '';
+		$linkto = '';
+		$image_caption = '';
+		$lang = '';
+		$rating = 7;
+		$isfloat = 'n';
+        
+		$subid = $artlib->replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, 
+											$body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, 
+											$topline, $subtitle, $linkto, $image_caption, $lang, $rating, $isfloat);
+
+		$artlib->approve_submission($subid);
+		$content .= "Article: $title has been created<br />";
+
+      }
+  
+      if ($acc['type'] == 'wiki-append') {
+        // This is used to UPDATE wiki pages
+        $page = trim($aux['subject']);
+  
+        $full = $message["full"];
+        $params = array(
+          'input' => $full,
+          'crlf' => "\r\n",
+          'include_bodies' => TRUE,
+          'decode_headers' => TRUE,
+          'decode_bodies' => TRUE
+        );
+  
+        $output = Mail_mimeDecode::decode($params);
+        parse_output($output, $parts, 0);
+  
+        if (isset($parts["text"][0]))
+          $body = $parts["text"][0];
+  
+        if (isset($body)) {
+          if (!$tikilib->page_exists($page)) {
+            $content .= "Page: $page has been created<br />";
+  
+            $tikilib->create_page($page,
+              0, $body, date('U'), "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+          } else {
+            $info = $tikilib->get_page_info($page);
+  
+            $tikilib->update_page($page, $info['data'] . $body,
+              "Created from " . $acc["account"], $aux["sender"]["user"], '0.0.0.0', '');
+            $content .= "Page: $page has been updated";
+          }
+        }
+      }
+
       if ($acc['type'] == 'wiki-get') {
         // A wiki-get account sends a copy of the page to the sender
         // and also sends the source of the page
