@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.22 2003-10-26 20:35:21 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.23 2003-11-06 15:59:42 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,8 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-require_once ('lib/searchlib.php');
+require_once ('lib/search/searchlib.php'); 
+// note: lib/search/searchlib.php is new. the old one was lib/searchlib.php
 
 $searchlib = &new SearchLib($tikilib->db);
 

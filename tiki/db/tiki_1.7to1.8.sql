@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.56 2003-11-04 14:24:12 zaufi Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.57 2003-11-06 15:59:42 redflo Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -549,3 +549,17 @@ INSERT INTO tiki_integrator_rules VALUES (3,1,3,'<body.*>','-->','y','n','i','En
 INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove </body>');
 INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path');
 INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(#|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
+
+
+DROP TABLE IF EXISTS tiki_searchindex;
+CREATE TABLE tiki_searchindex(
+  searchword varchar(80) NOT NULL default '',
+  location varchar(80) NOT NULL default '',
+  page varchar(255) NOT NULL default '',
+  count int(11) NOT NULL default '1',
+  last_update int(11) NOT NULL default '0',
+  PRIMARY KEY (searchword,location,page),
+  KEY (last_update)
+) TYPE=MyISAM;
+
+
