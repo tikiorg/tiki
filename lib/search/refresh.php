@@ -1,7 +1,6 @@
 <?php
 
 function refresh_search_index() {
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"refresh_search_index()\n");fclose($fpd);
   // first write close the session. refreshing can take a huge amount of time
   session_write_close();
 
@@ -32,17 +31,14 @@ function refresh_search_index() {
 }
 
 function random_refresh_index_forum() {
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"random_refresh_index_forum\n");fclose($fpd);
 
 }
 
 function random_refresh_index_trackers() {
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"random_refresh_index_trackers\n");fclose($fpd);
 
 }
 
 function random_refresh_index_wiki(){
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"random_refresh_index_wiki\n");fclose($fpd);
   //find random wiki page
   global $tikilib;
   $rpages=$tikilib->get_random_pages(1);
@@ -52,7 +48,6 @@ function random_refresh_index_wiki(){
 
 
 function refresh_index_oldest(){
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"refresh_index_oldest()\n");fclose($fpd);
   global $tikilib;
   $min = $tikilib->getOne("select min(`last_update`) from `tiki_searchindex`",array());
   $result = $tikilib->query("select `location`,`page` from `tiki_searchindex` where `last_update`=?",array($min),1);
@@ -71,7 +66,6 @@ function refresh_index_oldest(){
 }
 
 function refresh_index_wiki($page) {
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"refresh_index_wiki($page)\n");fclose($fpd);
   global $tikilib;
   $info = $tikilib->get_page_info($page);
   $pdata=$tikilib->parse_data($info["data"]);
@@ -81,19 +75,15 @@ function refresh_index_wiki($page) {
 }
 
 function refresh_index_forum($page) {
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"refresh_index_forum($page)\n");fclose($fpd);
 
 }
 
 function refresh_index_trackers($page) {
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"refresh_index_trackers($page)\n");fclose($fpd);
 
 }
 
 function &search_index($data) {
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"search_index()\n");fclose($fpd);
   $data=strip_tags($data);
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"parsing data: $data \n");fclose($fpd);
   // split into words
   $sstrings=preg_split("/[\W]+/",$data,-1,PREG_SPLIT_NO_EMPTY);
   // count words
@@ -108,7 +98,6 @@ function &search_index($data) {
 }
 
 function insert_index(&$words,$location,$page) {
-  $fpd=fopen("/tmp/tikidebug",'a');fwrite($fpd,"insert_index(...,$location,$page)\n");fclose($fpd);
   global $tikilib;
   $query="delete from `tiki_searchindex` where `location`=? and `page`=?";
   $tikilib->query($query,array($location,$page),-1,-1,false);
