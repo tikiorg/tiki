@@ -118,8 +118,7 @@
     <form method="post" action="tiki-admin.php?page=wiki">
     <table><tr>
     <td colspan="2" class="form">{tr}Wiki Page Names{/tr}</td></tr><tr><td class="form">
-    <p>{tr}Strict allows page names with only letters, numbers, underscore,
-    dash, period and semicolon (dash, period and semicolon not allowed at the beginning and the end).{tr}<br />
+    <p>{tr}Strict allows page names with only letters, numbers, underscore, dash, period and semicolon (dash, period and semicolon not allowed at the beginning and the end).{/tr}<br />
     {tr}Full adds accented characters.{/tr}<br />
     {tr}Complete allows <em>anything at all</em>.  I (<a
     href="http://tikiwiki.org/tiki-index.php?page=UserPagerlpowell">rlpowell</a>)
