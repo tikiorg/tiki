@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/_smarty/plugins/function.var_dump.php,v 1.1 2003-08-20 23:53:38 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/_smarty/plugins_tiki/function.var_dump.php,v 1.1 2003-09-03 18:22:51 mose Exp $
  *
  * \author zaufi <zaufi@sendmail.ru>
  */
