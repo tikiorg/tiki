@@ -502,6 +502,7 @@ CREATE TABLE tiki_blogs (
   add_date char(1) default NULL,
   add_poster char(1) default NULL,
   allow_comments char(1) default NULL,
+	show_avatar char(1) default NULL,
   PRIMARY KEY  (blogId),
   KEY title (title),
   KEY description (description(255)),
