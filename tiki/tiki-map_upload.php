@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.3 2003-11-12 00:09:05 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.4 2003-11-12 04:36:07 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,6 +118,7 @@ closedir ($h);
 if($dir!=="/data") {
   $dirs[]="..";
 }
+$dirs[]=".";
 
 // if $dirs[] exists, sort it and print all elements in it.
 if(is_array($dirs)){

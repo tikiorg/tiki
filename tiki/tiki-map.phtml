@@ -28,8 +28,50 @@ if (isset($_REQUEST['mapfile']))
 {
   $mapfile = $default_map;
 }
-$map = ms_newMapObj($map_path.$mapfile);
+
+// user defined error handling function to handle errors in loading mapfile
+function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars)
+{
+  global $smarty;
+  global $style_base;
+  global $map_path;
+  global $mapfile;
+  global $tiki_p_map_edit;
+  $msg=tra("An error as occured with the mapfile: ").$mapfile."<br\><br\>".$errmsg."<br/>";
   
+  $pos=strpos($errmsg,"(line");
+  $line=substr($errmsg,$pos+5);
+  $pos=strpos($line,")");
+  $line=substr($line,0,$pos);
+  
+  $fcontents = file($map_path.$mapfile);
+  
+  $msg.="<pre>   ".$fcontents[$line-3];
+  $msg.="   ".$fcontents[$line-2];
+  $msg.="-->".$fcontents[$line-1];
+  $msg.="   ".$fcontents[$line+0];
+  $msg.="   ".$fcontents[$line+1];
+  $msg.="   ".$fcontents[$line+2]."<pre/><br/>";
+  
+  if ($tiki_p_map_edit == 'y')
+  {
+     $msg.='<a class="link" href="tiki-map_edit.php?mapfile='.$mapfile.'&mode=editing">';
+     $msg.='<img src="img/icons/config.gif" border="0"  alt="'.tra("edit").'" title="'.tra("edit").'" />';
+     $msg.='</a>';
+  }
+  
+  $smarty->assign('msg',$msg);
+  $smarty->display("styles/$style_base/error.tpl");
+  die;
+}
+
+$old_error_handler = set_error_handler("userErrorHandler");
+
+$map = ms_newMapObj($map_path.$mapfile);
+
+restore_error_handler();
+  
+ 
 $layerbol=FALSE;
 if (isset($_REQUEST['size']))
 {
