@@ -2924,13 +2924,13 @@ function add_user($user, $pass, $email) {
     if (user_exists($user))
 	return false;
 
-    $query = "insert into `users_users`(login,password,email)
+    $query = "insert into `users_users`(`login`,`password`,`email`)
 	values(?, ?, ?)";
     $result = $this->query($query, array($user,$pass,$email) );
     $action = "user $user added";
     $t = date("U");
-    $query = "insert into `tiki_actionlog`(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','')";
-    $result = $this->query($query);
+    $query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+    $result = $this->query($query,array($action,$wikiHomePage,(int) $t,'admin',$_SERVER["REMOTE_ADDR"],''));
     return true;
 }
 
