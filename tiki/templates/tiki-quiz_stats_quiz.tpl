@@ -94,14 +94,15 @@ Set the names of the table headings to reflect the names of the db
 
 <! -- begin second table  -->
 <h2>{tr}Stats for this quiz Questions {/tr}</h2>
-{section name=ix loop=$questions}
-  Q: {$questions[ix].question}<br />
+{section name=ix loop=$questions} Question:
+<a class="link" href="tiki-edit_quiz_questions.php?quizId={$quizId.questionId}">{$questions[ix].question}<br />
+</a>  
   <table class="normal">
   <tr>
 
    <td  class="heading">{tr}Option{/tr}</td>
 
-{* I'd like to have every table heading sorted for immeidate analysis
+{* I'd like to have every table heading sorted for immediate analysis
 <td class="heading">
 <a class="tableheading" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionText_desc'}optionText_asc{else}optionText_desc{/if}">{tr}Options{/tr}</a>
 </td>
