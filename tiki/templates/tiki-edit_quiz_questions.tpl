@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.13 2004-05-03 04:17:06 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.14 2004-05-03 04:39:20 ggeller Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -34,11 +34,9 @@
 
 <h2>{tr}Import questions from text{/tr}</h2>
 <form enctype="multipart/form-data" method="post" action="tiki-edit_quiz_questions.php?quizId={$quiz_info.quizId}">
-  <input type="hidden" name="quizId" value="{$quizId|escape}" />
   <table class="normal">
     <tr>
-      <td class="formcolor" colspan=2>Instructions: Replace the sample text.  Type your multiple-choice questions. Seperate each question with a blank line.  Start answer choices on subsequent lines.  Indicatate correct answers by starting them an "*".  White space before and after text is ignored. Click on the "Import" button when finished.
-      </td>
+      <td class="formcolor" colspan=2>{tr}Instructions: Type, or paste, your multiple choice questions below.  One line for the question, then start answer choices on subsequent lines.  Seperate additional questions with a blank line.  Indicatate correct answers by starting them a "*" (without the quotes) character.{/tr}</td>
     </tr>
 
     <tr>
@@ -46,24 +44,7 @@
         {tr}Input{/tr}
       </td>
       <td class="formcolor">
-        <textarea class="wikiedit" name="input_data" rows="30" cols="80" id='subheading' wrap="virtual" >
-What is the flight speed of a sparrow?   
-     *African or European?
-About the same as a duck.
-It depends on where he's going.
-    
-What is your favorite colour?
-*Red
-*Green
-    Red. No green.
-    
-What were the first names of the fictional Kramdens?
-   George and Gracie
-*Ralph and Alice
-Alexander and Cleopatra
-Joe and Didi
-   
-  </textarea>
+        <textarea class="wikiedit" name="input_data" rows="30" cols="80" id='subheading' wrap="virtual" ></textarea>
       </td>
     </tr>
   </table>
