@@ -1,28 +1,39 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.2 2003-08-21 00:51:21 redflo Exp $
+# $Id: tikirelease.sh,v 1.3 2003-08-30 20:31:28 mose Exp $
 # TODO
-# - put release number as variable
 # - add a chown / chmod before tarball
 
-VER="1.7"
-RELTAG="REL-1-7"
-#RELTAG="release_eta_carinea_rc1"
+if [ -z $1 ]; then
+	echo "Usage: tikirelease.sh <release-tag>"
+	echo "  separated by dots like in 1.7.1"
+	exit 0
+fi
+
+# ############################################################
+# start of configuration
+# change here what you need to fit your environment
 
 CVSROOT=":ext:mose@cvs.sf.net:/cvsroot/tikiwiki"
 WORKDIR="/home/mose/tikipack"
+MODULE="tikiwiki"
 OLDIR=`pwd`
+
+# end of configuration
+
+VER=$1
+RELTAG="REL-`echo $VER | tr '.' '-'`"
 
 cd $WORKDIR
 mkdir $VER
 cd $VER
-cvs -z3 -q -d $CVSROOT co -d tikiwiki_$VER -r $RELTAG tiki
-find tikiwiki_$VER -name CVS -type d | xargs -- rm -rf
-find tikiwiki_$VER -name .cvsignore -type f -exec rm -f {} \;
-find tikiwiki_$VER -name Thumbs.db -exec rm -f {} \;
-rm -rf tikilight_$VER/tests
+cvs -z3 -q -d $CVSROOT co -d $MODULE-$VER -r $RELTAG $MODULE
+find "$MODULE-$VER" -name CVS -type d | xargs --  rm -rf
+find "$MODULE-$VER" -name .cvsignore -type f -exec rm -f {} \;
+find "$MODULE-$VER" -name Thumbs.db -exec rm -f {} \;
+rm -rf $MODULE-$VER/tests
 
-tar -czf tikiwiki_$VER.tar.gz tikiwiki_$VER
-tar --bzip2 -cf tikiwiki_$VER.tar.bz2 tikiwiki_$VER
+tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
+tar --bzip2 -cf $MODULE-$VER.tar.bz2 $MODULE-$VER
 #cp -rp tikiwiki_$VER tikilight_$VER
 #find tikilight_$VER/img/avatars/ -type f -name '*.gif' | grep -v 000 | xargs -- rm -f
 #rm -rf tikilight_$VER/img/custom
@@ -38,7 +49,7 @@ tar --bzip2 -cf tikiwiki_$VER.tar.bz2 tikiwiki_$VER
 #tar --bzip2 -cf tikiwiki_$VER.light.tar.bz2 tikilight_$VER
 
 #echo "lftp -u anonymous,tiki@mose.com -e 'cd incoming;put tikiwiki_$VER.tar.gz;put tikiwiki_$VER.tar.bz2;put tikiwiki_$VER.light.tar.gz;put tikiwiki_$VER.light.tar.bz2;quit;' upload.sf.net"
-echo "lftp -u anonymous,tiki@mose.com -e 'cd incoming;put tikiwiki_$VER.tar.gz;put tikiwiki_$VER.tar.bz2;quit;' upload.sf.net"
+echo "lftp -u anonymous,tiki@mose.com -e 'cd incoming;put $MODULE-$VER.tar.gz;put $MODULE-$VER.tar.bz2;quit;' upload.sf.net"
 
 cd $OLDIR
 
