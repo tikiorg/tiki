@@ -1086,8 +1086,10 @@ function get_included_groups($group) {
 		$utr["usersTrackerId"] = '';
 		foreach ($utr['groups']  as $gr) {
 			$utrid = $this->get_usertrackerid($gr);
-			if ($utrid > 0) {
-				$utr["usersTrackerId"] = $utrid;
+			if ($utrid['usersTrackerId'] and $utrid['usersFieldId']) {
+				$utrid['group'] = $gr;
+				$utrid['user'] = $utr['login'];
+				$utr = $utrid;
 				break;
 			}
 		}

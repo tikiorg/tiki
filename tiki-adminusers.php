@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.27 2004-03-03 13:36:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.28 2004-03-04 05:13:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -240,50 +240,16 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 		$re = $userlib->get_usertracker($_REQUEST["user"]);
 		if ($re['usersTrackerId']) {
 			include_once('lib/trackers/trackerlib.php');
-			$usersTrackerId = $re["usersTrackerId"];
-			$username = $re['login'];
-			$usermail = $re['email'];
-			$fields = $trklib->list_tracker_fields($usersTrackerId, 0, -1, 'position_asc', '');
-			$info = $trklib->get_item($usersTrackerId,'Login',$username);
-			$useritemId = $info["itemId"];
-			$smarty->assign('useritemId', $useritemId);
-			for ($i = 0; $i < count($fields["data"]); $i++) {
-				if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin) {
-					$name = $fields["data"][$i]["fieldId"];
-					if ($fields["data"][$i]["type"] == 'c') {
-						if (!isset($info["$name"])) { 
-							$info["$name"] = 'n';
-						}
-					} else {
-						if (!isset($info["$name"])) {
-							$info["$name"] = '';
-						}
-					}
-					if ($fields["data"][$i]["type"] == 'e') {
-						include_once('lib/categories/categlib.php');
-						$k = $fields["data"][$i]["options"];
-						$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
-						if (!isset($cat)) {
-							$cat = $categlib->get_object_categories("tracker ".$usertrackerId,$useritemId);
-						}
-						foreach ($cat as $c) {
-							$ins_fields["data"][$i]["value"]["$c"] = 'y';
-						}
-					} elseif  ($fields["data"][$i]["type"] == 'r') {
-						$fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info["$name"]);
-						$fields["data"][$i]["value"] = $info["$name"];
-						$fields["data"][$i]["type"] = 't';
-					} elseif ($fields["data"][$i]["type"] == 'a') {
-						$fields["data"][$i]["value"] = $info["$name"];
-						$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
-					} else {
-						$fields["data"][$i]["value"] = $info["$name"];
-					}
-				} else {
-					unset($fields["data"][$i]);
-				}
+			$userstrackerid = $re["usersTrackerId"];
+			$smarty->assign('userstrackerid',$userstrackerid);
+			$usersFields = $trklib->list_tracker_fields($usersTrackerId, 0, -1, 'position_asc', '');
+			$smarty->assign_by_ref('usersFields', $usersFields['data']);
+			if (isset($re["usersFieldId"]) and $re["usersFieldId"]) {
+				$usersfieldid = $re["usersFieldId"];
+				$smarty->assign('usersfieldid',$usersfieldid);
+				$usersitemid = $trklib->get_item_id($userstrackerid,$usersfieldid,$re["user"]);
+				$smarty->assign('usersitemid',$usersitemid);
 			}
-			$smarty->assign('fields', $fields["data"]);
 		}
 	}
 	setcookie("activeTabs".urlencode(substr($_SERVER["PHP_SELF"],1,80)),"tab2");
@@ -304,7 +270,6 @@ $smarty->assign('userinfo', $userinfo);
 $smarty->assign('userId', $_REQUEST["user"]);
 $smarty->assign('username', $username);
 $smarty->assign('usermail', $usermail);
-$smarty->assign('usersTrackerId', $usersTrackerId);
 
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 

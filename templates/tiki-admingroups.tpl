@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.43 2004-03-04 03:37:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.44 2004-03-04 05:13:13 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -11,7 +11,7 @@
 <a href="tiki-edit_templates.php?template=templates/tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups template{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' />{/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
-<br />
+<br /><br />
 
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
@@ -25,9 +25,6 @@
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}List{/tr}</span>
 {if $groupname}
 <span id="tab{cycle name=tabs}" class="tab">{tr}Edit group{/tr} <i>{$groupname}</i></span>
-{if $fields}
-<span id="tab{cycle name=tabs}" class="tab">{tr}More info{/tr}</span>
-{/if}
 {if $memberslist}
 <span id="tab{cycle name=tabs}" class="tab">{tr}Members{/tr}</span>
 {/if}
@@ -196,8 +193,8 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 <br /><br />
 
 {if $groupTracker eq 'y'}
-{if $grouptrackerid and $groupitemId}
-{tr}Group tracker item : {$groupitemId}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemId}&amp;show=mod" class="linkbut">{tr}Edit item{/tr}</a></span>
+{if $grouptrackerid and $groupitemid}
+{tr}Group tracker item : {$groupitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemid}&amp;show=mod" class="linkbut">{tr}Edit item{/tr}</a></span>
 {elseif $grouptrackerid}
 {if $groupfieldid}
 {tr}Group tracker item not found{/tr} <span class="button2"><a href="tiki-view_tracker.php?trackerId={$grouptrackerid}" class="linkbut">{tr}Create item{/tr}</a></span>
