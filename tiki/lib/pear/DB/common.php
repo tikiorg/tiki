@@ -16,7 +16,7 @@
 // | Author: Stig Bakken <ssb@php.net>                                    |
 // +----------------------------------------------------------------------+
 //
-// $Id: common.php,v 1.3 2003-07-15 20:24:08 rossta Exp $
+// $Id: common.php,v 1.4 2003-08-04 05:19:18 rossta Exp $
 //
 // Base class for DB implementations.
 //
@@ -556,11 +556,11 @@ class DB_common extends PEAR
     */
     function &execute($stmt, $data = false)
     {
-        $realquery = $this->executeEmulateQuery($stmt, $data);
+        $realquery =& $this->executeEmulateQuery($stmt, $data);
         if (DB::isError($realquery)) {
             return $realquery;
         }
-        $result = $this->simpleQuery($realquery);
+        $result =& $this->simpleQuery($realquery);
 
         if (DB::isError($result) || $result === DB_OK) {
             return $result;
@@ -665,7 +665,7 @@ class DB_common extends PEAR
     function executeMultiple( $stmt, &$data )
     {
         for($i = 0; $i < sizeof( $data ); $i++) {
-            $res = $this->execute($stmt, $data[$i]);
+            $res =& $this->execute($stmt, $data[$i]);
             if (DB::isError($res)) {
                 return $res;
             }
@@ -755,11 +755,11 @@ class DB_common extends PEAR
             if (DB::isError($sth)) {
                 return $sth;
             }
-            $ret = $this->execute($sth, $params);
+            $ret =& $this->execute($sth, $params);
             $this->freePrepared($sth);
             return $ret;
         } else {
-            $result = $this->simpleQuery($query);
+            $result =& $this->simpleQuery($query);
             if (DB::isError($result) || $result === DB_OK) {
                 return $result;
             } else {
@@ -785,11 +785,14 @@ class DB_common extends PEAR
     function &limitQuery($query, $from, $count, $params = array())
     {
         $query  = $this->modifyLimitQuery($query, $from, $count);
-        $result = $this->query($query, $params);
+        $result =& $this->query($query, $params);
         if (get_class($result) == 'db_result') {
-            $result->setOption('limit_from', $from);
-            $result->setOption('limit_count', $count);
-        }
+// <rasa patch>        
+# break's it.  Why?  I have no clue!        
+#            $result->setOption('limit_from', $from);
+#            $result->setOption('limit_count', $count);
+// </rasa patch>
+    	}
         return $result;
     }
 
@@ -821,7 +824,7 @@ class DB_common extends PEAR
             $res = $this->execute($sth, $params);
             $this->freePrepared($sth);
         } else {
-            $res = $this->query($query);
+            $res =& $this->query($query);
         }
 
         if (DB::isError($res)) {

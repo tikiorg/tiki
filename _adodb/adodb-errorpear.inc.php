@@ -12,7 +12,7 @@
 */
 include_once('PEAR.php');
 
-define('ADODB_ERROR_HANDLER','ADODB_Error_PEAR');
+@define('ADODB_ERROR_HANDLER','ADODB_Error_PEAR');
 
 /*
 * Enabled the following if you want to terminate scripts when an error occurs

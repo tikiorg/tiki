@@ -112,7 +112,8 @@ class TikiLib {
     if(!$result && $reporterrors) $this->sql_error($query,$values,$result);
     $res=$result->fetchRow();
     if ($res===false) return(NULL);  //simulate pears behaviour
-    return $res[0];
+    list($key, $value) = each($res);
+    return $value;
   }
   
   // Reports SQL error from PEAR::db object.
@@ -167,6 +168,7 @@ class TikiLib {
         break;
       case "mysql3":
       case "mysql":
+      default:
         $sort_mode = str_replace("_","` ",$sort_mode);
         $sort_mode = "`".$sort_mode;
         break;
@@ -2683,31 +2685,32 @@ class TikiLib {
 
   function get_all_preferences()
   {
-    $query = "select `name` ,value from tiki_preferences";
-    $result = $this->query($query);
-    $ret=Array();
-    while($res = $result->fetchRow()) {
-      $ret[$res["name"]] = $res["value"];
-    }
-    return $ret;
+  	static $preferences;
+  	
+  	if (!$preferences) {
+	    $query = "select `name` ,value from tiki_preferences";
+	    $result = $this->query($query);
+	    $preferences = Array();
+	    while($res = $result->fetchRow()) {
+			$preferences[$res["name"]] = $res["value"];
+	    }
+	}
+
+    return $preferences;
   }
 
   function get_preference($name, $default='')
   {
-    static $preferences;
+	static $preferences;
 
-    if (!isset($preferences[$name])) {
-      $query = "select `value` from `tiki_preferences` where `name`=?";
-      $result = $this->query($query,array($name));
-      if($result->numRows()) {
-        $res = $result->fetchRow();
-        $preferences[$name] = $res["value"];
-      } else {
-        $preferences[$name] = $default;
-      }
-    }
+	if (!$preferences) {
+		$preferences = $this->get_all_preferences();
+	}
+	if (!isset($preferences[$name])) {
+		$preferences[$name] = $default;
+	}
 
-    return $preferences[$name];
+	return $preferences[$name];
   }
 
   function set_preference($name, $value)
