@@ -539,7 +539,7 @@ CREATE TABLE "tiki_blog_posts" (
   "postId" number(8) NOT NULL,
   "blogId" number(8) default '0' NOT NULL,
   "data" clob,
-	data_size number(11) NOT NULL unsigned default '0',
+  "data_size" number(11) default '0' NOT NULL,
   "created" number(14) default NULL,
   "user" varchar(200) default NULL,
   "trackbacks_to" clob,
@@ -1338,6 +1338,13 @@ END;
 /
 
 -- --------------------------------------------------------
+CREATE TABLE "tiki_dynamic_variables" (
+  "name" varchar(40) NOT NULL,
+  "DATA" clob,
+  PRIMARY KEY ("name")
+);
+
+
 --
 -- Table structure for table `tiki_eph`
 --
@@ -2605,7 +2612,7 @@ CREATE TABLE "tiki_pages" (
   "cache_timestamp" number(14) default NULL,
   "pageRank" decimal(4,3) default NULL,
   "creator" varchar(200) default NULL,
-  "page_size" number(10) unsigned default 0,
+  "page_size" number(10) default 0,
   PRIMARY KEY ("pageName")
 ) ;
 
@@ -4744,7 +4751,7 @@ END;
 INSERT INTO "users_users" ("email","login","password","realname","hash") VALUES ('','admin','admin','System Administrator','f6fdffe48c908deb0f4c3bd36c032e72');
 
 
-UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin;
+UPDATE "users_users" SET "currentLogin"="lastLogin","registrationDate"="lastLogin";
 
 
 -- --------------------------------------------------------
@@ -5746,9 +5753,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols'
 
 
 -- Dynamic variables
-CREATE  "TABLE" tiki_dynamic_variables( name varchar( 40  ) not null,  "DATA" clob,  PRIMARY  KEY ( name )  );
-
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 
 

@@ -1037,6 +1037,13 @@ CREATE TABLE tiki_dsn (
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
+
+CREATE TABLE tiki_dynamic_variables (
+  name varchar(40) NOT NULL,
+  DATA text,
+  PRIMARY KEY  (name)
+);
+
 #
 # Table structure for table `tiki_eph`
 #
@@ -3869,5 +3876,4 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.m
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols', 'y');
 
 # Dynamic variables
-CREATE  TABLE tiki_dynamic_variables( name varchar( 40  ) not null,  DATA text,  PRIMARY  KEY ( name )  );
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
