@@ -21,7 +21,7 @@
 {/section}
 </table>
 {if $tiki_p_map_create eq 'y'}
-<h3>{tr}Create a new mapfile{tr}</h3>
+<h3>{tr}Create a new mapfile{/tr}</h3>
 <form action="tiki-map_edit.php" method="post">
 <input type="text" name="newmapfile" size="20">
 <input type="submit" name="create" value="{tr}create{/tr}" />
