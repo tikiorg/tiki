@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.36 2004-01-06 11:10:23 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.37 2004-01-20 00:39:13 ggeller Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,7 +65,10 @@ $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
 
 // If the articleId is passed then get the article data
-if (isset($_REQUEST["articleId"])) {
+// GGG - You have to check for the actual value of the articleId because it 
+//  will be 0 when you select preview while creating a new article. You 
+//  really do not want to do $tikilib->get_article if the articleId is 0
+if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$article_data = $tikilib->get_article($_REQUEST["articleId"]);
 
 	$publishDate = $article_data["publishDate"];
