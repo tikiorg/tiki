@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.31 2004-08-26 19:24:14 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.32 2004-08-27 02:23:22 chealer Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 <!-- the help link info -->
@@ -95,7 +95,7 @@ from Admin->General
 <tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
-<select multiple="multiple" name="groups[]">
+<select multiple="multiple" name="groups[]"{if $modallgroups eq 'y'} disabled="disabled"{/if}>
 {section name=ix loop=$groups}
 <option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName}</option>
 {/section}
