@@ -2049,6 +2049,7 @@ class TikiLib {
 
   function add_user($user, $pass, $email)
   {
+		global $wikiHomePage;
     $user = addslashes($user);
     $pass = addslashes($pass);
     $email = addslashes($email);
@@ -2057,7 +2058,7 @@ class TikiLib {
     $result = $this->query($query);
     $action = "user $user added";
     $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
+    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
     $result=$this->query($query);
     return true;
   }

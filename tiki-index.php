@@ -15,8 +15,8 @@ if($feature_wiki != 'y') {
 //print($GLOBALS["HTTP_REFERER"]);
 
 // Create the HomePage if it doesn't exist
-if(!$tikilib->page_exists("HomePage")) {
-  $tikilib->create_page("HomePage",0,'',date("U"),'Tiki initialization'); 
+if(!$tikilib->page_exists($wikiHomePage)) {
+  $tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization'); 
 }
 
 if(!isset($_SESSION["thedate"])) {

@@ -44,7 +44,7 @@ if(isset($_REQUEST["bookmark_mark"])) {
       if(isset($setup_query_data["page"])) {
         $_REQUEST["bookmark_urlname"] = $setup_query_data["page"];	
       } else {
-      	$_REQUEST["bookmark_urlname"] = 'HomePage';
+      	$_REQUEST["bookmark_urlname"] = $wikiHomePage;
       }
     }
     // Check if we are bookmarking an article

@@ -1141,7 +1141,7 @@ if($feature_warn_on_edit == 'y') {
   if(isset($_REQUEST["page"])) {
    $chkpage = $_REQUEST["page"];
   } else {
-   $chkpage = 'HomePage';
+   $chkpage = $wikiHomePage;
   }
   // Notice if a page is being edited or if it was being edited and not anymore
   //print($GLOBALS["HTTP_REFERER"]);
@@ -1155,7 +1155,7 @@ if($feature_warn_on_edit == 'y') {
       }
       parse_str($purl["query"],$purlquery);
       if(!isset($purlquery["page"])) {
-        $purlquery["page"]='HomePage';
+        $purlquery["page"]=$wikiHomePage;
       }
       if(isset($_SESSION["edit_lock"])) {
             $tikilib->semaphore_unset($purlquery["page"],$_SESSION["edit_lock"]);
@@ -1169,7 +1169,7 @@ if($feature_warn_on_edit == 'y') {
     }
     parse_str($purl["query"],$purlquery);
     if(!isset($purlquery["page"])) {
-      $purlquery["page"]='HomePage';
+      $purlquery["page"]=$wikiHomePage;
     }
     $_SESSION["edit_lock"]=$tikilib->semaphore_set($purlquery["page"]);
   } 
