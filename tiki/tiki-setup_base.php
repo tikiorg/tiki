@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.64 2004-04-03 22:12:12 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.65 2004-04-08 06:38:42 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -194,6 +194,8 @@ $vartype['flag'] = 'char';
 $vartype['lang'] = 'char';
 $vartype['page'] = 'string';
 $vartype['edit_mode'] = 'char';
+
+$language = $tikilib->get_preference('language', 'en');// varcheck use tra
 
 function varcheck($array) {
   global $patterns,$vartype;
@@ -525,7 +527,6 @@ $feature_userPreferences = $tikilib->get_preference("feature_userPreferences", '
 $change_language = $tikilib->get_preference("change_language", 'y');
 $change_theme = $tikilib->get_preference("change_theme", 'y');
 
-$language = $tikilib->get_preference('language', 'en');
 
 // Fix IIS servers not setting what they should set (ay ay IIS, ay ay)
 if (!isset($_SERVER['QUERY_STRING']))
