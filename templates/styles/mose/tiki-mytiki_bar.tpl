@@ -1,3 +1,4 @@
+{if $mytikivis eq 'show'}
 <a class="link" href="tiki-my_tiki.php" title="{tr}MyTiki{/tr}">{tr}MyTiki{/tr}</a>
 
 {if $feature_userPreferences eq 'y'}
@@ -29,3 +30,4 @@
 
 {if $feature_minical eq 'y'}
 <a class="link" href="tiki-minical.php" title="{tr}Calendar{/tr}">{tr}Calendar{/tr}</a>{/if}
+{/if}
