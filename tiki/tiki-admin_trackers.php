@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.11 2004-01-21 20:52:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.12 2004-01-22 07:55:52 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,26 +35,29 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	$smarty->assign('individual', 'y');
 }
 
+$info = array();
+$info["name"] = '';
+$info["description"] = '';
+$info["showCreated"] = '';
+$info["showStatus"] = '';
+$info["showStatusAdminOnly"] = '';
+$info["showLastModif"] = '';
+$info["useComments"] = '';
+$info["useAttachments"] = '';
+$info["showComments"] = '';
+$info["showAttachments"] = '';
+$info["orderAttachments"] = 'name,created,filesize,downloads,desc';
+
 if ($_REQUEST["trackerId"]) {
-	$info = $tikilib->get_tracker($_REQUEST["trackerId"]);
-} else {
-	$info = array();
-	$info["name"] = '';
-	$info["description"] = '';
-	$info["showCreated"] = '';
-	$info["showStatus"] = '';
-	$info["showLastModif"] = '';
-	$info["useComments"] = '';
-	$info["useAttachments"] = '';
-	$info["showComments"] = '';
-	$info["showAttachments"] = '';
-	$info["orderAttachments"] = 'name,created,filesize,downloads,desc';
-}
+	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
+	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
+} 
 
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('showCreated', $info["showCreated"]);
 $smarty->assign('showStatus', $info["showStatus"]);
+$smarty->assign('showStatusAdminOnly', $info["showStatusAdminOnly"]);
 $smarty->assign('showLastModif', $info["showLastModif"]);
 $smarty->assign('useComments', $info["useComments"]);
 $smarty->assign('useAttachments', $info["useAttachments"]);
@@ -88,45 +91,35 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-trackers');
 	if (isset($_REQUEST["showCreated"]) && $_REQUEST["showCreated"] == 'on') {
-		$showCreated = 'y';
-	} else {
-		$showCreated = 'n';
+		$tracker_options["showCreated"] = 'y';
 	}
 
 	if (isset($_REQUEST["showStatus"]) && $_REQUEST["showStatus"] == 'on') {
-		$showStatus = 'y';
-	} else {
-		$showStatus = 'n';
+		$tracker_options["showStatus"] = 'y';
+	}
+
+	if (isset($_REQUEST["showStatusAdminOnly"]) && $_REQUEST["showStatusAdminOnly"] == 'on') {
+		$tracker_options["showStatusAdminOnly"] = 'y';
 	}
 
 	if (isset($_REQUEST["useComments"]) && $_REQUEST["useComments"] == 'on') {
-		$useComments = 'y';
-	} else {
-		$useComments = 'n';
+		$tracker_options["useComments"] = 'y';
 	}
 
 	if (isset($_REQUEST["useAttachments"]) && $_REQUEST["useAttachments"] == 'on') {
-		$useAttachments = 'y';
-	} else {
-		$useAttachments = 'n';
+		$tracker_options["useAttachments"] = 'y';
 	}
 
 	if (isset($_REQUEST["showComments"]) && $_REQUEST["showComments"] == 'on') {
-		$showComments = 'y';
-	} else {
-		$showComments = 'n';
+		$tracker_options["showComments"] = 'y';
 	}
 
 	if (isset($_REQUEST["showAttachments"]) && $_REQUEST["showAttachments"] == 'on') {
-		$showAttachments = 'y';
-	} else {
-		$showAttachments = 'n';
+		$tracker_options["showAttachments"] = 'y';
 	}
 
 	if (isset($_REQUEST["showLastModif"]) && $_REQUEST["showLastModif"] == 'on') {
-		$showLastModif = 'y';
-	} else {
-		$showLastModif = 'n';
+		$tracker_options["showLastModif"] = 'y';
 	}
 
 	if (isset($_REQUEST['ui']) and is_array($_REQUEST['ui'])) {
@@ -142,10 +135,10 @@ if (isset($_REQUEST["save"])) {
 		if (count($popupinfo)) {
 			$orderat.= '|'.implode(',',$popupinfo);
 		}
+		$tracker_options[" orderAttachments"] = $orderat;
 	}
 
-	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $showCreated, $showLastModif,
-		$useComments, $useAttachments, $showStatus, $showComments, $showAttachments, $orderat);
+	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $showCreated, $showLastModif, $tracker_options);
 	$smarty->assign('trackerId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');
