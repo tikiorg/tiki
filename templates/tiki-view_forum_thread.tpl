@@ -13,7 +13,7 @@
   <td class="viewthreadl" width="15%">
   {$thread_info.userName|avatarize}<br/>
   <b>{tr}author{/tr}</b>:<br/>
-  {$thread_info.userName}<br/>{$thread_info.userName|countryflag}
+  <a class="link" href="tiki-user_information.php?view_user={$thread_info.userName}">{$thread_info.userName}</a><br/>{$thread_info.userName|countryflag}
   </td>
   <td class="viewthreadr" width="85%">
   <b>{$thread_info.title}</b><br/><br/>
@@ -40,7 +40,7 @@
 </tr>
 </table>
 <br/>
-{if $tiki_p_admin_form eq 'y' or $thread_info.type<>'l'}
+{if $tiki_p_admin_form eq 'y' or $thread_info.type ne 'l'}
 {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_post eq 'y'}
 <div>
 [<a class="forumbutlink" href="javascript:show('{$postclass}');">{tr}Show Post Form{/tr}</a> |
@@ -135,7 +135,7 @@
     </tr>
     <tr>
       <td class="forumform">Comment</td>
-      <td class="forumform"><textarea id='editpost' name="comments_data" rows="6" cols="30">{$comment_data}</textarea></td>
+      <td class="forumform"><textarea id='editpost' name="comments_data" rows="16" cols="80">{$comment_data}</textarea></td>
     </tr>
     </table>
     </form>
@@ -179,7 +179,7 @@
     <td class="forumtoolbar">{tr}Threshold{/tr}
         <select name="comments_threshold">
         <option value="0" {if $comments_threshold eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
-        <option value="0.01" {if $comments_threshold eq 0.01}selected="selected"{/if}>0</option>
+        <option value="0.01" {if $comments_threshold > '0.01'}selected="selected"{/if}>0</option>
         <option value="1" {if $comments_threshold eq 1}selected="selected"{/if}>1</option>
         <option value="2" {if $comments_threshold eq 2}selected="selected"{/if}>2</option>
         <option value="3" {if $comments_threshold eq 3}selected="selected"{/if}>3</option>
@@ -212,7 +212,7 @@
   <td  class="threads{cycle advance=false}l" width="15%">
   <div align="center">
   {$comments_coms[ix].userName|avatarize}<br/>
-  <b>{tr}author{/tr}</b><br/>{$comments_coms[ix].userName}<br/>{$comments_coms[ix].userName|countryflag}
+  <b>{tr}author{/tr}</b><br/><a class="link" href="tiki-user_information.php?view_user={$comments_coms[ix].userName}">{$comments_coms[ix].userName}</a><br/>{$comments_coms[ix].userName|countryflag}
   </div>
   </td>
   <td  class="threads{cycle}r" width="85%">
@@ -225,6 +225,9 @@
   {/if}     
   [<a href="tiki-view_forum_thread.php?comments_parentId={$comments_parentId}&amp;quote={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink">{tr}quote{/tr}</a>]
+  {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
+  [<a class="admlink" href="messu-compose.php?to={$comments_coms[ix].userName}&amp;subject=Re:{$comments_coms[ix].title}">{tr}private message{/tr}</a>]
+  {/if}
   <br/><br/>
   {$comments_coms[ix].parsed}
   <br/><br/>

@@ -1,5 +1,23 @@
 Version 1.6 -TBD-
 
+* [NEW] Permissions interface improved supporting multiple permission settings in one operation (the famous
+  checkboxes are here)
+* [NEW] Permission levels added to the permissions, allowing the admin to classify permissions by level and
+  then assign/remove all the permissions in some level to a group
+* [NEW] Who is online module added displaying a list of registered users currently online
+* [NEW] Tooltips added when text is truncated
+* [NEW] Optional remember-me feature added to the login box. The lifetime of the cookie can be configured.
+* [NEW] Contact-us feature added showing the user an option to send a message to the admin unser (configurable)
+  and an option to send an email to admin.
+* [NEW] Inter-user messaging added, users can read,write messages to other Tiki users.
+* [NEW] User information page added to see information about a user. The user can make his information
+  public/private from his user preferences
+* [NEW] Tiki tags are now allowed in FAQ answers
+* [NEW] Smarty version distributed with Tiki upgraded to 2.4.3
+* [NEW] Caching mechanism for wiki pages. Wiki pages can be cached for a specified time before they have to be
+  parsed again by the wiki engine. This does not affect undos,rollbacks and edits that are inmediately reflected.
+  This option can be turned on/off. For sites using large or complex wiki pages it can show a good performance
+  improvement.
 * [NEW] Directory feature added to Tiki. Links can be organized in categories, users can add links to be validated
   by admin, many options for display and functionality.
 * [NEW] "su" option added to let admin login as any user once logged as admin, in this way he can configure or

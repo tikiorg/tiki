@@ -17,6 +17,9 @@
 {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
   &nbsp;<a href="messu-mailbox.php" class="linkmenu">{tr}messages{/tr}</a><br/>
 {/if}
+{if $feature_contact eq 'y'}
+  &nbsp;<a href="tiki-contact.php" class="linkmenu">{tr}contact us{/tr}</a><br/>
+{/if}
 {/if}
 
 {if $feature_stats eq 'y' and $tiki_p_view_stats eq 'y'}

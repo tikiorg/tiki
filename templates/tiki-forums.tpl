@@ -27,7 +27,7 @@
 {assign var=section_old value=""}
 {section name=user loop=$channels}
 {assign var=section value=$channels[user].section}
-{if $section <> $section_old}
+{if $section ne $section_old}
   {assign var=section_old value=$section}
   <tr><td class="third" colspan="6"><div align="center">{$section}</div></td></tr>
 {/if}

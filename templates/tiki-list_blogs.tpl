@@ -31,7 +31,7 @@
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
-<td class="bloglistname{cycle advance=false}">&nbsp;{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }<a class="blogname" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}">{/if}{$listpages[changes].title|truncate:20:"(...)":true}{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }</a>{/if}&nbsp;</td>
+<td class="bloglistname{cycle advance=false}">&nbsp;{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }<a class="blogname" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].title}">{/if}{$listpages[changes].title|truncate:20:"(...)":true}{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }</a>{/if}&nbsp;</td>
 <td class="bloglistdescription{cycle advance=false}">&nbsp;{$listpages[changes].description}&nbsp;</td>
 <td class="bloglistcreated{cycle advance=false}">&nbsp;{$listpages[changes].created|tiki_date_format:"%b %d"}&nbsp;</td>
 <td class="bloglistlastModif{cycle advance=false}">&nbsp;{$listpages[changes].lastModif|tiki_date_format:"%d of %b [%H:%M]"}&nbsp;</td>

@@ -29,7 +29,7 @@
 {section name=changes loop=$listpages}
 <tr>
 {if $smarty.section.changes.index % 2}
-<td class="odd">&nbsp;{$listpages[changes].title|truncate:20:"(...)":true}
+<td class="odd">&nbsp;<a class="link" title="{$listpages[changes].title}" href="">{$listpages[changes].title|truncate:20:"(...)":true}</a>
 {if $listpages[changes].type eq 'Review'}(r){/if}
 &nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].topicName}&nbsp;</td>
@@ -52,7 +52,7 @@
 {/if}
 </td>
 {else}
-<td class="even">&nbsp;{$listpages[changes].title|truncate:20:"(...)":true}
+<td class="even">&nbsp;<a href="" class="link" title="{$listpages[changes].title}">{$listpages[changes].title|truncate:20:"(...)":true}</a>
 {if $listpages[changes].type eq 'Review'}(r){/if}
 &nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].topicName}&nbsp;</td>

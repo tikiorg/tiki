@@ -10,8 +10,6 @@ if($feature_file_galleries != 'y') {
 */
 
 if(!isset($_REQUEST["fileId"])) {
-  $smarty->assign('msg',tra("No file"));
-  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 $info = $tikilib->get_file($_REQUEST["fileId"]);

@@ -28,7 +28,7 @@
 {section name=changes loop=$listpages}
 <tr>
 {if $smarty.section.changes.index % 2}
-<td class="odd">&nbsp;<a href="tiki-index.php?page={$listpages[changes].pageName}" class="link">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;
+<td class="odd">&nbsp;<a href="tiki-index.php?page={$listpages[changes].pageName}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;
 {if $tiki_p_edit eq 'y'}
 <br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">{tr}edit{/tr}</a>)
 {/if}
@@ -52,7 +52,7 @@
 {/if}
 <td class="odd">&nbsp;{$listpages[changes].len}&nbsp;</td>
 {else}
-<td class="even">&nbsp;<a href="tiki-index.php?page={$listpages[changes].pageName}" class="link">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;
+<td class="even">&nbsp;<a href="tiki-index.php?page={$listpages[changes].pageName}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;
 {if $tiki_p_edit eq 'y'}
 <br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">{tr}edit{/tr}</a>)
 {/if}

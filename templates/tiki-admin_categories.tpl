@@ -93,7 +93,7 @@
       </tr>
       {section name=ix loop=$objects}
       <tr>
-        <td class="even"><a class="link" href="{$objects[ix].href}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
+        <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
         <td class="even">{$objects[ix].type}</td>
         <td class="even">[<a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}">{tr}x{/tr}</a>]</td>
       </tr>

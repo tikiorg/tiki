@@ -11,7 +11,7 @@
 {section name=user loop=$backups}
 {if $smarty.section.user.index % 2}
 <tr>
-<td class="odd"><a class="link" href="backups/{$backups[user].filename}">{$backups[user].filename|truncate:20:"(...)":true}</a></td>
+<td class="odd"><a class="link" href="backups/{$backups[user].filename}" title="{$backups[user].filename}">{$backups[user].filename|truncate:20:"(...)":true}</a></td>
 <td class="odd">{$backups[user].created|tiki_short_datetime}</td>
 <td class="odd">{$backups[user].size|string_format:"%.2f"} Mb</td>
 <td class="odd">
@@ -21,7 +21,7 @@
 </tr>
 {else}
 <tr>
-<td class="even"><a class="link" href="backups/{$backups[user].filename}">{$backups[user].filename|truncate:20:"(...)":true}</a></td>
+<td class="even"><a class="link" href="backups/{$backups[user].filename}" title="{$backups[user].filename}">{$backups[user].filename|truncate:20:"(...)":true}</a></td>
 <td class="even">{$backups[user].created|tiki_short_datetime}</td>
 <td class="even">{$backups[user].size|string_format:"%.2f"} Mb</td>
 <td class="even">

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/messu/messulib.php');
 
 if(isset($_REQUEST['view_user'])) {
   $userwatch = $_REQUEST['view_user'];
@@ -24,6 +25,32 @@ if($tiki_p_admin != 'y') {
   }
 }
 
+$smarty->assign('mid','tiki-user_information.tpl');
+
+if($user) {
+$smarty->assign('sent',0);
+if(isset($_REQUEST['send'])) {
+  $smarty->assign('sent',1);
+  
+  $message = '';
+  
+  // Validation:
+  // must have a subject or body non-empty (or both)
+  if(empty($_REQUEST['subject'])&&empty($_REQUEST['body'])) {
+    $smarty->assign('message','ERROR: Either the subject or body must be non-empty');
+    $smarty->display('tiki.tpl');
+    die;
+  }
+  $message = tra('Message sent to').':'.$userwatch.'<br/>';
+  $messulib->post_message($userwatch,$user,$_REQUEST['to'],'',$_REQUEST['subject'],$_REQUEST['body'],$_REQUEST['priority']);
+  
+  $smarty->assign('message',$message);
+}
+}
+
+$smarty->assign('priority',3);
+$allowMsgs = $tikilib->get_user_preference($userwatch,'allowMsgs','y');
+$smarty->assign('allowMsgs',$allowMsgs);
 $user_style = $tikilib->get_user_preference($userwatch,'theme',$style);
 $language = $tikilib->get_user_preference($userwatch,'language',$language);
 $smarty->assign_by_ref('user_style',$user_style);
@@ -52,7 +79,7 @@ $smarty->assign_by_ref('display_timezone',$display_timezone);
 $userinfo = $userlib->get_user_info($userwatch);
 $smarty->assign_by_ref('userinfo',$userinfo);
 
-$smarty->assign('mid','tiki-user_information.tpl');
+
 $smarty->display("styles/$style_base/tiki.tpl");
 
 ?>

@@ -1,5 +1,7 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+CREATE FULLTEXT INDEX ft ON tiki_directory_sites (name,description);
+
 ### Inter-user messages
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_messages','messu','Can use the messaging system');

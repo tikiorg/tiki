@@ -28,7 +28,7 @@
 <tr>
 {if $smarty.section.changes.index % 2}
 <td class="odd">&nbsp;{$listpages[changes].postId}&nbsp;</td>
-<td class="odd">&nbsp;<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">{$listpages[changes].blogTitle|truncate:10:"(...)":true}</a>&nbsp;</td>
+<td class="odd">&nbsp;<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:10:"(...)":true}</a>&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
@@ -38,7 +38,7 @@
 </td>
 {else}
 <td class="even">&nbsp;{$listpages[changes].postId}&nbsp;</td>
-<td class="even">&nbsp;<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">{$listpages[changes].blogTitle|truncate:10:"(...)":true}</a>&nbsp;</td>
+<td class="even">&nbsp;<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:10:"(...)":true}</a>&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].size}&nbsp;</td>
 <td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>

@@ -1,4 +1,4 @@
-# $Id: fulltext.sql,v 1.1 2002-12-26 03:25:51 rossta Exp $
+# $Id: fulltext.sql,v 1.2 2003-02-22 22:34:27 lrargerich Exp $
 
 ALTER TABLE tiki_pages MODIFY data text;
 CREATE FULLTEXT INDEX ft ON tiki_pages (pageName,data);
@@ -12,3 +12,4 @@ CREATE FULLTEXT INDEX ft ON tiki_blogs (title,description);
 ALTER TABLE tiki_articles MODIFY body text;
 CREATE FULLTEXT INDEX ft ON tiki_articles (title,heading,body);
 CREATE FULLTEXT INDEX ft ON tiki_blog_posts (data);
+CREATE FULLTEXT INDEX ft ON tiki_directory_sites (name,description);
