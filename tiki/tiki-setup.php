@@ -985,6 +985,10 @@ if($feature_stats == 'y') {
 
 $user_preferences=Array();
 
+
+include_once('tiki-handlers.php');
+
+
 if($feature_obzip == 'y') {
   ob_start("ob_gzhandler");
 }
