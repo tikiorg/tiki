@@ -2502,52 +2502,53 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 
 /*shared*/
 function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '') {
-    $sort_mode = str_replace("_", " ", $sort_mode);
 
-    if ($find) {
-	$findesc = $this->qstr('%' . $find . '%');
-
-	$mid = " where (title like $findesc or heading like $findesc or body like $findesc) ";
-    } else {
-	$mid = '';
-    }
-
-    if ($date) {
-	if ($mid) {
-	    $mid .= " and  publishDate<=$date ";
+	if ($find) {
+		$findesc = $this->qstr('%' . $find . '%');
+		$mid = " where (`title` like ? or `heading` like ? or `body` like ?) ";
+		$bindvars = array($findesc,$findesc,$findesc);
 	} else {
-	    $mid = " where `publishDate`<=$date ";
-	}
-    }
-
-    $query = "select * from `tiki_submissions` $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from `tiki_submissions` $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = array();
-
-    while ($res = $result->fetchRow()) {
-	$res["entrating"] = floor($res["rating"]);
-
-	if (empty($res["body"])) {
-	    $res["isEmpty"] = 'y';
-	} else {
-	    $res["isEmpty"] = 'n';
+		$mid = '';
+		$bindvars = array();
 	}
 
-	if (strlen($res["image_data"]) > 0) {
-	    $res["hasImage"] = 'y';
-	} else {
-	    $res["hasImage"] = 'n';
+	if ($date) {
+		if ($mid) {
+			$mid .= " and `publishDate` <= ? ";
+		} else {
+			$mid = " where `publishDate` <= ? ";
+		}
+		$bindvars[] = $date
 	}
 
-	$ret[] = $res;
-    }
+	$query = "select * from `tiki_submissions` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_submissions` $mid";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
+	$ret = array();
 
-    $retval = array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
+	while ($res = $result->fetchRow()) {
+		$res["entrating"] = floor($res["rating"]);
+
+		if (empty($res["body"])) {
+			$res["isEmpty"] = 'y';
+		} else {
+			$res["isEmpty"] = 'n';
+		}
+
+		if (strlen($res["image_data"]) > 0) {
+			$res["hasImage"] = 'y';
+		} else {
+			$res["hasImage"] = 'n';
+		}
+
+		$ret[] = $res;
+	}
+
+	$retval = array();
+	$retval["data"] = $ret;
+	$retval["cant"] = $cant;
+	return $retval;
 }
 
 function get_article($articleId) {
@@ -4269,7 +4270,7 @@ function parse_data($data) {
     // Dynamic variables are similar to dynamic content but they are editable
     // from the page directly, intended for short data, not long text but text
     // will work too
-    if (preg_match_all("/%([^%]+)%/",$data,$dvars)) {
+    if (preg_match_all("/%([^% ]+)%/",$data,$dvars)) {
 	// remove repeated elements
 	$dvars = array_unique($dvars[1]);
 	// Now replace each dynamic variable by a pair composed of the
