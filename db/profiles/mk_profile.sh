@@ -21,8 +21,21 @@ DUMP_FILE=$1
 PROFILE_DUMP=$2.all
 PROFILE_FILE=$2.prf
 
+# get all the relevant insert statements from the dump file
 grep "INSERT INTO tiki_preferences" $DUMP_FILE >$PROFILE_DUMP
 grep "INSERT INTO users_grouppermissions" $DUMP_FILE >>$PROFILE_DUMP
 grep "INSERT INTO users_groups" $DUMP_FILE >>$PROFILE_DUMP
 grep "INSERT INTO users_permissions" $DUMP_FILE >>$PROFILE_DUMP
-sort -u $PROFILE_DUMP|diff default-inserts.sql -|grep ">"|sed -e "s/> INSERT/REPLACE/" >$PROFILE_FILE
+
+# Create the profile
+# The first lime in the profile should be a comment that gives a brief description of the profile.
+# This desc will show in the select box of the installer.
+echo "# $2 profile" >$PROFILE_FILE
+
+# Sort the insert statements, diff with the defaults and change the INSERTs to REPLACEs
+sort -u $PROFILE_DUMP|diff default-inserts.sql -|grep ">"|sed -e "s/> INSERT/REPLACE/" >>$PROFILE_FILE
+
+# cleanup
+rm $PROFILE_DUMP
+
+echo "The $PROFILE_FILE file contains the new profile. Please edit it to remove un-needed lines"

@@ -103,7 +103,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		    <form method="post" action="tiki-install.php">
 		    <table>
 		    <tr><td>
-			Create database with profile :
+			Create database with profile:
+			</td><td>
 			<select name="profile">
 			{section name=ix loop=$profiles}
 			<option value="{$profiles[ix].name|escape}">{$profiles[ix].desc}</option>
@@ -112,7 +113,13 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 			<input type="submit" name="scratch" value="create" />	    
 		    </td></tr>
 		    <tr><td>
+			</td><td>
+			<a href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles" class="link">Descriptions of the available profiles</a>
+			<p>
+		    </td></tr>
+		    <tr><td>
 			Update database using script: 
+			</td><td>
 			<select name="file">
 			{section name=ix loop=$files}
 			<option value="{$files[ix]|escape}">{$files[ix]}</option>
