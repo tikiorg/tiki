@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.37 2004-02-03 02:12:38 musus Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.38 2004-02-16 08:53:44 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -23,15 +23,18 @@ H1 H2 H3 {
 }
 
 H1 {
-	font-size: 20px;
+	font-size: 24px;
+	margin: 6px 0 2px 0;
 }
 
 H2 {
-	font-size: 16px;
+	font-size: 18px;
+	margin: 6px 0 2px 0;
 }
 
 H3 {
 	font-size: 14px;
+	margin: 6px 0 2px 0;
 }
 table {
 padding: 0;
@@ -2731,3 +2734,6 @@ a.removeTab{
 	}
 	
 
+#Tikiring {
+	z-index: 666;
+}
