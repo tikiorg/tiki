@@ -59,10 +59,3 @@ create table tiki_directory_search(
 
 ### DIRECTORIES END
 
-drop table if exists tiki_structures;
-create table tiki_structures(
-  page varchar(240) not null,
-  parent varchar(240) not null,
-  pos integer(4),
-  primary key(page,parent)
-);

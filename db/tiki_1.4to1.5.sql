@@ -1,3 +1,12 @@
+drop table if exists tiki_structures;
+create table tiki_structures(
+  page varchar(240) not null,
+  parent varchar(240) not null,
+  pos integer(4),
+  primary key(page,parent)
+);
+
+
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_upload_picture','wiki','Can upload pictures to wiki pages');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_upload_files','file galleries','Can upload zip files with files');
 
@@ -56,7 +65,7 @@ alter table tiki_history modify pageName varchar(160) NOT NULL;
 alter table tiki_actionlog modify pageName varchar(160) NOT NULL;
 alter table tiki_received_pages modify pageName varchar(160);
 
-# $Id: tiki_1.4to1.5.sql,v 1.15 2003-01-06 18:21:40 lrargerich Exp $
+# $Id: tiki_1.4to1.5.sql,v 1.16 2003-01-13 16:26:04 lrargerich Exp $
 
 alter table users_users add avatarName varchar(80);
 alter table users_users add avatarSize integer(14);
