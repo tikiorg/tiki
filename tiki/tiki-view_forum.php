@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.47 2003-11-23 23:50:31 gongo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.48 2003-11-24 05:52:20 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -779,7 +779,7 @@ if ($tiki_p_admin_forum == 'y') {
     $smarty->assign('reported', $commentslib->get_num_reported($_REQUEST['forumId']));
 }
 
-include_once("textareaSize.php");
+include_once("textareasize.php");
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_forum.tpl');
