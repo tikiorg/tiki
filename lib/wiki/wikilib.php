@@ -114,7 +114,7 @@ class WikiLib extends TikiLib {
   	$query = "update tiki_theme_control_objects set objId='newId',name='$newName' where objId='$oldId'";
     $this->query($query);	  	  	  	
   	
-
+	return true;
   }
   
   function save_notepad($user,$title,$data)

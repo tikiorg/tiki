@@ -3203,7 +3203,7 @@ class TikiLib {
 
   function lock_page($page)
   {
-    
+    global $user;
     $page = addslashes($page);
     $query = "update tiki_pages set flag='L' where pageName='$page'";
     $result = $this->query($query);
