@@ -1,6 +1,5 @@
 #!/bin/sh
-
-# $CVSHeader$
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.19 2003-09-04 12:17:24 mose Exp $
 
 # Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -116,3 +115,6 @@ if [ -n "$AGROUP" ]; then
 fi
 
 chmod -R $RIGHTS $DIRS
+
+exit 0
+
