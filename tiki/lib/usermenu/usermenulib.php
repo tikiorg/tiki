@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
-class UserMenuLib extends TikiDB {
+class UserMenuLib extends TikiLib {
 	function UserMenuLib($db) {
 		# this is probably uneeded now
 		if (!$db) {

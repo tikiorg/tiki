@@ -1,6 +1,6 @@
 <?php
 
-class Lslib extends TikiDB {
+class Lslib extends TikiLib {
 	function Lslib($db) {
 		if (!$db) {
 			die ("Invalid db object passed to Lslib constructor");
