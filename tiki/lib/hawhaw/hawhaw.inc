@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 3. November 2003
+// Last modified: 24. November 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -28,6 +28,9 @@
 // - optimization: inhibit <break> tag for PVX voice browser
 // - bugfix: create voice <break> tags for empty HAW_text objects
 // - optimization: added catch handler for HAW_voicerecorder class
+// - bugfix: consider noinput event handler in decks (do not force exit)
+// - enhanced browser detection: PalmOS ==> PDA
+// - optimization: XHTML-conform img tags
 
 // miscellaneous constants
 define("HAW_VERSION", "HAWHAW V5.3b");
@@ -714,6 +717,7 @@ class HAW_deck
         strstr(strtolower($HTTP_USER_AGENT), "avantgo") ||
         strstr(strtolower($HTTP_USER_AGENT), "reqwirelessweb") ||
         strstr(strtolower($HTTP_USER_AGENT), "pendragonweb") ||
+        strstr(strtolower($HTTP_USER_AGENT), "palmos") ||
         strstr(strtolower($HTTP_USER_AGENT), "windows ce"))
     {
       // PDA browser detected
@@ -2018,8 +2022,14 @@ class HAW_deck
       {
         // there is at least one voice link active
         // wait longest link timeout value until disconnect is forced
-        printf("<field><prompt timeout=\"%ds\"/><noinput><exit/></noinput></field>\n",
-                  $this->voice_timeout);
+
+        printf("<field><prompt timeout=\"%ds\"/>", $this->voice_timeout);
+        
+        // test for user-defined noinput event handler
+        if (!isset($this->voice_noinput) || (count($this->voice_noinput) == 0))
+          echo "<noinput><exit/></noinput>"; // terminate in case of no input
+          
+        echo "</field>\n";
       }
 
       echo "</form>\n";
@@ -2809,7 +2819,7 @@ class HAW_image
       else
         $icon = "";
 
-      $content = sprintf("<img src=\"%s\" alt=\"%s\"%s />\n",
+      $content = sprintf("<img src=\"%s\" alt=\"%s\"%s>\n",
                          $this->src_bmp,
                          HAW_specchar($this->alt, $deck), $icon);
 
