@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.39 2004-06-14 19:58:41 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.40 2004-06-14 20:01:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ if (!isset($_REQUEST["articleId"])) {
 			$smarty->display("error.tpl");
 			die;
 		}
-	} elseif ($feature_categories == 'y') {
+	} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 		$perms_array = $categlib->get_object_categories_perms($user, 'article', $_REQUEST['articleId']);
 	   	if ($perms_array) {
 	   		$is_categorized = TRUE; // this var is used below
@@ -72,7 +72,7 @@ if (!isset($_REQUEST["articleId"])) {
 	   	} else {
 	   		$is_categorized = FALSE; // this var is used below
 	   	}
-		if ($is_categorized && $tiki_p_admin != 'y' && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
 			if (!isset($user)){
 				$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
 				$smarty->assign('errortitle',tra("Please login"));
