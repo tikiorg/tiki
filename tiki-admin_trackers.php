@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.27 2004-03-31 09:57:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.28 2004-04-10 06:51:54 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,22 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+
+function readconf($text) {
+	$file = split("\n",$text);
+  foreach ($file as $line) {
+    $r = $s = '';
+    if (substr($line,0,1) != "#") {
+      if (ereg("^\[([A-Z]+)\]",$line,$r)) {
+        $var = strtolower($r[1]);
+      }
+      if ($var and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
+				$back[$var][trim($s[1])] = trim($s[2]);
+      }
+    }
+  }
+  return $back;
+}
 
 include_once ('lib/trackers/trackerlib.php');
 
@@ -32,6 +48,8 @@ $smarty->assign('individual', 'n');
 if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	$smarty->assign('individual', 'y');
 }
+
+setcookie("tab",1);
 
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
@@ -62,7 +80,7 @@ $info["orderAttachments"] = 'name,created,filesize,downloads,desc';
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
 	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	setcookie("tab",2);
 	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 }
 $dstatus = preg_split('//', $info['defaultStatus'], -1, PREG_SPLIT_NO_EMPTY);
@@ -122,6 +140,12 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["save"])) {
+	if (isset($_REQUEST['import']) and isset($_REQUEST['rawmeat'])) {
+		$raw = readconf($_REQUEST['rawmeat']);
+		foreach ($raw['tracker'] as $it=>$da) {
+			$_REQUEST["$it"] = $da;
+		}
+	}
 	check_ticket('admin-trackers');
 	if (isset($_REQUEST["showCreated"]) && $_REQUEST["showCreated"] == 'on') {
 		$tracker_options["showCreated"] = 'y';
@@ -240,7 +264,6 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');
 	$smarty->assign('ui',array());
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
