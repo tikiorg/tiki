@@ -2079,8 +2079,8 @@ go
 
 
 CREATE TABLE "tiki_group_inclusion" (
-  "groupName" varchar(30) default '' NOT NULL,
-  "includeGroup" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
+  "includeGroup" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("groupName","includeGroup")
 ) 
 go
@@ -2718,7 +2718,7 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Categories','tiki-categories.php',25,'feature_categories','tiki_p_view_categories','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','')
 go
 
 
@@ -3807,7 +3807,7 @@ page_id numeric(14 ,0) identity,
   "points" numeric(8,0) default NULL NULL,
   "votes" numeric(8,0) default NULL NULL,
   "cache" text default '',
-  "wiki_cache" numeric(10,0) default 0,
+  "wiki_cache" numeric(10,0) default NULL NULL,
   "cache_timestamp" numeric(14,0) default NULL NULL,
   "pageRank" decimal(4,3) default NULL NULL,
   "creator" varchar(200) default NULL NULL,
@@ -4802,6 +4802,7 @@ fieldId numeric(12 ,0) identity,
   "type" char(1) default NULL NULL,
   "isMain" char(1) default NULL NULL,
   "isTblVisible" char(1) default NULL NULL,
+  "isSearchable" char(1) default NULL NULL,
   PRIMARY KEY ("fieldId")
 )   
 go
@@ -5588,7 +5589,7 @@ go
 
 
 CREATE TABLE "users_grouppermissions" (
-  "groupName" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
   "permName" varchar(30) default '' NOT NULL,
   "value" char(1) default '',
   PRIMARY KEY ("groupName","permName")
@@ -5612,9 +5613,11 @@ go
 
 
 CREATE TABLE "users_groups" (
-  "groupName" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
   "groupDesc" varchar(255) default NULL NULL,
   "groupHome" varchar(255) default '',
+	usersTrackerId numeric(11,0),
+	groupTrackerId numeric(11,0),
   PRIMARY KEY ("groupName")
 ) 
 go
@@ -5636,7 +5639,7 @@ go
 
 
 CREATE TABLE "users_objectpermissions" (
-  "groupName" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
   "permName" varchar(30) default '' NOT NULL,
   "objectType" varchar(20) default '' NOT NULL,
   "objectId" varchar(32) default '' NOT NULL,
@@ -5883,7 +5886,7 @@ go
 
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'registered', 'user')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'admin', 'user')
 go
 
 
@@ -6439,7 +6442,7 @@ go
 
 CREATE TABLE "users_usergroups" (
   "userId" numeric(8,0) default '0' NOT NULL,
-  "groupName" varchar(30) default '' NOT NULL,
+  "groupName" varchar(255) default '' NOT NULL,
   PRIMARY KEY ("userId","groupName")
 ) 
 go
@@ -6737,12 +6740,12 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('cacheimages','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('cacheimages','n')
 go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('cachepages','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('cachepages','n')
 go
 
 
@@ -7612,11 +7615,6 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('groupTrackerId','0')
-go
-
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('home_file_gallery','')
 go
 
@@ -7947,6 +7945,36 @@ go
 
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_refresh_rate','5')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_min_wordlength','3')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_max_syllwords','100')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_purge_rate','5')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_lru_length','100')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('search_syll_age','48')
+go
+
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('short_date_format','%a %d of %b, %Y')
 go
 
@@ -8042,17 +8070,17 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('userTrackerId','0')
-go
-
-
-
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('useUrlIndex','n')
 go
 
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateUsers','n')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateEmail','n')
 go
 
 
