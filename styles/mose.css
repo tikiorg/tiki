@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.16 2003-10-02 23:07:36 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.17 2003-10-02 23:40:54 mose Exp $
 2003 - created and maintained by mose@feu.org
 */
 
@@ -13,7 +13,6 @@ body {
 }
 
 table {
-width: 100%;
 }
 
 /*
@@ -33,7 +32,7 @@ DIV#tiki-main {
 This is the header 
 */
 #tiki-top {
-	font-size:    10px;
+	font-size: 90%;
 	color:   #7a6a59;
 	background-color:    #DED6C6;
 	width: 100%;
@@ -69,11 +68,12 @@ This is the header
 This is the middle 
 */
 DIV#tiki-mid {
-	background-color:    #EFEFE7;
 	height:   auto;
-	padding-bottom:   0px;
 }
-
+DIV#tiki-mid > table {
+	width:100%;
+	margin: 0;
+}
 /* 
 And this is the footer 
 */
@@ -254,7 +254,7 @@ div.cbox {
 Boxes are divided in title and data, this is the title 
 */
 div.cbox-title {
-	background-color:    #95755C;
+	background-color:    #756555;
 	color:   white;
 	border-bottom:   1px solid black;
 	font-size:   10px;
@@ -265,23 +265,21 @@ div.cbox-title {
 	margin-bottom:   0px;
 }
 
+
 /* 
 When there's a link in a cbox-title 
 */
-.cboxtlink {
-	font-size:    11px;
+.cboxtlink, div.cbox-title a {
 	color:   white;
 	text-decoration:   none;
 }
 
-.cboxtlink:active {
-	font-size:    11px;
+.cboxtlink:active, div.cbox-title a:active {
 	color:   white;
 	text-decoration:   none;
 }
 
-.cboxtlink:hover {
-	font-size:    11px;
+.cboxtlink:hover, div.cbox-title a:hover {
 	color:   #EFEFEF;
 	text-decoration:   underline;
 }
@@ -796,6 +794,9 @@ DIV#page-bar {
 	margin-left: 5px;
 }
 
+table.wikitopline {
+width: 100%;
+}
 /* 
 Wiki action buttons (the buttons displayed at the 
 end of each page to edit/print/remove/etc a page 
@@ -884,6 +885,7 @@ cached version (cache) is displayed using this style
 }
 
 table.wikitable {
+	width: 100%;
 	border: 1px solid black;
 }
 
@@ -1048,6 +1050,7 @@ p.norecords {
 Browsing an image 
 */
 table.imageinfo {
+	width: 100%;
 	border-color:    black;
 	border-style:   solid;
 	border-width:   1px;
@@ -1095,6 +1098,7 @@ td.imageinfo {
 }
 
 table.tableinfo {
+	width: 100%;
 	text-align: center;
 }
 
@@ -1509,6 +1513,7 @@ div.commenttext {
 
 /************************************************************ CHAT *********************************************************/
 table.chatroom {
+	width: 100%;
 	border-color:    #5A4A39;
 	border-style:   solid;
 	border-width:   2px;
@@ -1529,6 +1534,7 @@ td.chatarea {
 }
 
 table.chatform {
+	width: 100%;
 	border-color:    #00639C;
 	border-style:   solid;
 	border-width:   2px;
@@ -1564,6 +1570,7 @@ div.pollresults {
 }
 
 table.pollresults {
+	width: 100%;
 }
 
 td.pollr {
@@ -1582,6 +1589,7 @@ div.forumspagetitle {
 }
 
 table.threads {
+	width: 100%;
 }
 
 td.viewthreadl {
@@ -1689,8 +1697,9 @@ td.forumtoolbar {
 
 /************************************************ CATEGORIES **************************************************************/
 table.tcategpath {
-	margin-bottom:    40px;
-	border-color:   #5A4A39;
+	width: 100%;
+	margin-bottom:    10px;
+	border-color:   #424242;
 	border-style:   solid;
 	border-width:   1px;
 }
@@ -1700,7 +1709,6 @@ td.tdcategpath {
 	color:    white;
 	font-size:   13px;
 	font-weight:   bold;
-	background-color:   #B5A58C;
 	padding-left:   2px;
 	margin:   0px;
 	border-spacing:   0px;
@@ -1709,28 +1717,23 @@ td.tdcategpath {
 
 /* Links to up/top categories */
 .categpath {
-	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   12px;
-	color:   #578308;
+	color:   #424242;
 	text-decoration:   none;
 }
 
 .categpath:active {
-	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   12px;
-	color:   #578308;
+	color:   #424242;
 	text-decoration:   none;
 }
 
 .categpath:hover {
-	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   12px;
-	color:   #578308;
+	color:   #625242;
 	text-decoration:   none;
 }
 
 /* Table with the subcategories */
 table.subcats {
+	width: 100%;
 	padding-top:    20px;
 	padding-bottom:   20px;
 	border-spacing:   0px;
@@ -1768,6 +1771,7 @@ td.tdsubcat {
 }
 
 table.catobjects {
+	width: 100%;
 	border-spacing:    0px;
 	padding-right:   0px;
 	margin-bottom:   10px;
@@ -2602,4 +2606,9 @@ a.tikihelp:hover {
 	padding:   inherit;
 	cursor:   help;
 	text-decoration:   inherit;
+}
+
+div.catlists {
+	margin-top: 15px;
+	border: 1px solid #424242;
 }
