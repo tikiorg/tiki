@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.8 2004-07-30 21:01:24 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.9 2004-07-30 21:41:48 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -58,8 +58,9 @@ class StaticLib extends TikiLib {
 		require_once('lib/userslib.php');
 		global $dbTiki;
 		$userlib = new UsersLib($dbTiki);
-		$static_group = "anonymous";
+		$static_group = "Registered";
 		$user = NULL;
+		$smarty->assign('user', $user);
 		$perms = $userlib->get_group_permissions($static_group);
 		foreach ($perms as $perm) {
 			$smarty->assign("$perm", 'y');
@@ -67,6 +68,7 @@ class StaticLib extends TikiLib {
 		}
 		if (empty($tiki_p_admin)) {
 			$tiki_p_admin = 'n';
+			$smarty->assign('tiki_p_admin', 'n');
 		}
 		if (empty($tiki_p_view_wiki_history)) {
 			$tiki_p_view_wiki_history = 'n';
@@ -96,7 +98,7 @@ class StaticLib extends TikiLib {
 			// Check to see if page is categorized
 			global $categlib;
 			include_once('lib/categories/categlib.php');
-			$perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
+			$perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId, $static_group);
 		   	if (is_array($perms_array)) {
 		   		$is_categorized = TRUE;
 		    	foreach ($perms_array as $perm => $value) {
@@ -177,6 +179,11 @@ class StaticLib extends TikiLib {
 		} else {
 			$smarty->assign('feature_wiki_page_footer', 'n');
 		}
+
+		// update the module information
+		global $user_assigned_modules, $modallgroups, $modseparateanon, $tikidomain, $language;
+		$tikilib = $this;
+		include('tiki-modules.php');
 
 		// Display the Index Template
 		global $wikilib, $feature_wiki_pageid;

@@ -70,8 +70,12 @@ class UsersLib extends TikiLib {
 	return true;
     }
 
-    function object_has_permission($user, $objectId, $objectType, $permName) {
+    function object_has_permission($user, $objectId, $objectType, $permName, $group = NULL) {	// the last parameter $group is optional, used when we specify a group but not a user
+	if (!empty($group)) {
+		$groups = array($group);
+	} else {
 	$groups = $this->get_user_groups($user);
+	}
 
 	$objectId = md5($objectType . strtolower($objectId));
 

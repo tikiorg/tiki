@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.57 2004-07-29 17:38:10 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.58 2004-07-30 21:41:47 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -328,7 +328,7 @@ class CategLib extends TikiLib {
 	}
 	
 	// get the permissions assigned to the parent categories of an object
-	function get_object_categories_perms($user, $type, $objId) {		
+	function get_object_categories_perms($user, $type, $objId, $group = NULL) {	// the last parameter $group is optional, used when we specify a group but not a user
 		$is_categorized = $this->is_categorized("$type",$objId);
 		if ($is_categorized) {
 			global $cachelib;
@@ -352,7 +352,7 @@ class CategLib extends TikiLib {
 				} else {
 					foreach ($parents as $categId) {
 						if ($userlib->object_has_one_permission($categId, 'category')) {
-							if ($userlib->object_has_permission($user, $categId, 'category', $perm)) {
+							if ($userlib->object_has_permission($user, $categId, 'category', $perm, $group)) {
 								$return_perms["$perm"] = 'y';
 							} else {
 								$return_perms["$perm"] = 'n';
@@ -367,7 +367,7 @@ class CategLib extends TikiLib {
 							$arraysize = count($categpath);
 							for ($i=$arraysize-2; $i>=0; $i--) {
 								if ($userlib->object_has_one_permission($categpath[$i]['categId'], 'category')) {
-									if ($userlib->object_has_permission($user, $categpath[$i]['categId'], 'category', $perm)) {
+									if ($userlib->object_has_permission($user, $categpath[$i]['categId'], 'category', $perm, $group)) {
 										$return_perms["$perm"] = 'y';
 								   		break 1;
 									} else {
