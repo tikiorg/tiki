@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.19 2004-01-24 23:10:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.20 2004-01-30 05:21:53 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -53,7 +53,9 @@
 {assign var=categ value=$catree[dx].categId}
 {assign var=parent value=$catree[dx].parentId}
 <a class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;removeCat={$categ}" title="{tr}remove{/tr}"><img  
-style="margin-right:{$space*10+10}px;" border="0" src="img/icons2/delete.gif" align="right" height="8" width="8" hspace="5" vspace="2"/></a>
+style="margin-right:{$space*10+10}px;" border="0" src="img/icons2/delete.gif" align="right" height="12" width="12" hspace="5" vspace="1"/></a>
+<a class="link" href="tiki-admin_categories.php?parentId={$parent}&amp;categId={$categ}" title="{tr}edit{/tr}"><img  
+border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"/></a>
 <a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
 {/section}
 </div>
