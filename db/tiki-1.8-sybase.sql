@@ -646,7 +646,7 @@ CREATE  INDEX "tiki_blog_posts_blogId" ON "tiki_blog_posts"("blogId")
 go
 CREATE  INDEX "tiki_blog_posts_created" ON "tiki_blog_posts"("created")
 go
-CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data")
+CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data" "title")
 go
 
 -- --------------------------------------------------------
@@ -1505,6 +1505,11 @@ go
 
 
 -- --------------------------------------------------------
+
+
+DROP TABLE "if" exists tiki_dynamic_variables
+go
+
 
 
 CREATE TABLE "tiki_dynamic_variables" (
@@ -2964,6 +2969,7 @@ go
 
 
 CREATE TABLE "tiki_pages" (
+page_id numeric(14 ,0) identity,
   "pageName" varchar(160) default '' NOT NULL,
   "hits" numeric(8,0) default NULL NULL,
   "data" text default '',
@@ -2982,11 +2988,12 @@ CREATE TABLE "tiki_pages" (
   "pageRank" decimal(4,3) default NULL NULL,
   "creator" varchar(200) default NULL NULL,
   "page_size" numeric(10,0) default 0,
-  PRIMARY KEY ("pageName")
+  PRIMARY KEY ("page_id")
+  UNIQUE KEY (pageName),
 
 
 
-) 
+)  
 go
 
 
@@ -2994,7 +3001,7 @@ CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data")
 go
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank")
 go
-CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","data")
+CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName" "description" "data")
 go
 
 -- --------------------------------------------------------
@@ -3643,16 +3650,19 @@ go
 
 
 CREATE TABLE "tiki_structures" (
-  "structID" varchar(40) default '' NOT NULL,
-  "page" varchar(240) default '' NOT NULL,
+page_ref_id numeric(14 ,0) identity,
+  "parent_id" numeric(14,0) default NULL NULL,
+  "page_id" numeric(14,0) NOT NULL,
   "page_alias" varchar(240) default '' NOT NULL,
-  "parent" varchar(240) default '' NOT NULL,
   "pos" numeric(4,0) default NULL NULL,
-  PRIMARY KEY ("page","parent")
-) 
+  PRIMARY KEY ("page_ref_id")
+
+)   
 go
 
 
+CREATE  INDEX "tiki_structures_pidpaid" ON "tiki_structures"("page_id","parent_id")
+go
 
 -- --------------------------------------------------------
 
@@ -7392,6 +7402,7 @@ ruleID numeric(11 ,0) identity,
   "type" char(1) default 'n' NOT NULL,
   "casesense" char(1) default 'y' NOT NULL,
   "rxmod" varchar(20) default '' NOT NULL,
+  "enabled" char(1) default 'n' NOT NULL,
   "description" text NOT NULL,
   PRIMARY KEY (ruleID),
 
@@ -7406,32 +7417,31 @@ go
 --
 -- Dumping data for table 'tiki_integrator_rules'
 --
-INSERT INTO tiki_integrator_rules VALUES (1,1,1,'<\\!DOCTYPE','<!-- Commented by Tiki integrator <!DOCTYPE','y','n','i','Start comment from the begining of document')
+INSERT INTO tiki_integrator_rules VALUES (1,1,1,'.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <BODY> tags')
 go
 
 
 
-INSERT INTO tiki_integrator_rules VALUES (2,1,2,'</html>','','y','n','i','Remove </html>')
+INSERT INTO tiki_integrator_rules VALUES (2,1,2,'img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix images path')
 go
 
 
 
-INSERT INTO tiki_integrator_rules VALUES (3,1,3,'<body.*>','-->','y','n','i','End of comment just after <body>')
+INSERT INTO tiki_integrator_rules VALUES (3,1,3,'href=(\"|\')(?!(--|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Relace internal links to integrator. Dont touch an external links.')
 go
 
 
 
-INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove </body>')
+
+--
+-- Integrator permissions
+--
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki')
 go
 
 
 
-INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path')
-go
-
-
-
-INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(--|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki')
 go
 
 
