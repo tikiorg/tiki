@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.2 2003-10-14 05:02:27 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.3 2003-10-14 15:57:31 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -11,7 +11,7 @@ class TikiIntegrator extends TikiLib
 {
     function TikiIntegrator($db)
     {
-        if (!$db) die("Invalid db object passed to FAQLib constructor");
+        if (!$db) die("Invalid db object passed to TikiIntegrator constructor");
         $this->db = $db;
     }
     /// Repository management
@@ -51,9 +51,11 @@ class TikiIntegrator extends TikiLib
         $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
         return $res;
     }
-    /// Remove
+    /// Remove repository and all rules configured for it
     function remove_repository($repID)
     {
+        $query = "delete from tiki_integrator_rules where repID=$repID";
+        $result = $this->query($query);
         $query = "delete from tiki_integrator_repositories where repID=$repID";
         $result = $this->query($query);
     }
@@ -192,15 +194,14 @@ class TikiIntegrator extends TikiLib
      *  d) copy to main rules table
      *
      */
-    function copy_rules($r1, $r2)
+    function copy_rules($srcID, $dstID)
     {
-        $rules1 = $his->list_rules($r1);
+        $rules = $this->list_rules($srcID);
         // 
         foreach ($rules as $rule)
-           $this->add_replace_rule($rule["repID"], $r2, $rule["srch"],
-                                   $rule["repl"], $rule["type"], $rule["casesense"],
-                                   $rule["rxmod"], $rule["description"]);
-        //
+            $this->add_replace_rule($dstID, 0, $rule["srch"], $rule["repl"],
+                                    $rule["type"], $rule["casesense"],
+                                    $rule["rxmod"], $rule["description"]);
     }
 }
 
