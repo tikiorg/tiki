@@ -9,9 +9,9 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 	  Please enter your database connection info<br /><br />
 	  <form action="tiki-install.php" method="post">
 	  <table class="normal">
-	  	<tr>
-	  		<td class="formcolor">Database type:</td>
-	  		<td class="formcolor">
+	  	<tr class="formcolor">
+	  		<td>Database type:</td>
+	  		<td>
 	  			<table><tr><td>
 			    <select name="db">
 			    {section name=dbnames loop=$dbservers}
@@ -24,9 +24,9 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 	  		
 	  		</td>
 	  	</tr>
-	  	<tr>
-	  		<td class="formcolor">Host:</td>
-	  		<td class="formcolor">
+	  	<tr class="formcolor">
+	  		<td>Host:</td>
+	  		<td>
 	  			<table><tr><td>
 	  			<input type="text" name="host" value="localhost" />
 	  			</td><td>
@@ -38,9 +38,9 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 	  		
 	  		</td>
 	  	</tr>
-	  	<tr>
-	  		<td class="formcolor">User:</td>
-	  		<td class="formcolor">
+	  	<tr class="formcolor">
+	  		<td>User:</td>
+	  		<td>
 		  	  <table><tr><td>
 	  		  <input type="text" name="user" />
 	  		  </td><td>
@@ -48,9 +48,9 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 	  		  </td></tr></table>
 	  		</td>
 	  	</tr>
-	  	<tr>
-	  		<td class="formcolor">Password:</td>
-	  		<td class="formcolor">
+	  	<tr class="formcolor">
+	  		<td>Password:</td>
+	  		<td>
 		  	  <table><tr><td>
 	  		  <input type="password" name="pass" />
 	  		  </td><td>
@@ -58,9 +58,9 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 	  		  </td></tr></table>
 	  		</td>
 	  	</tr>
-	  	<tr>
-	  		<td class="formcolor">Database name:</td>
-	  		<td class="formcolor">
+	  	<tr class="formcolor">
+	  		<td>Database name:</td>
+	  		<td>
 	  		<table><tr><td>
 	  		<input type="text" name="name" />
 	  		</td><td>
@@ -73,7 +73,7 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 	  		</td></tr></table>
 	  		</td>
 	  	</tr>
-	  	<tr>
+	  	<tr class="formcolor">
 	  		<td class="formcolor">&nbsp;</td>
 	  		<td class="formcolor"><input type="hidden" name="resetdb" value="{$resetdb}">
 	  		<input type="submit" name="dbinfo" /></td>
