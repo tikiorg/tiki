@@ -13,7 +13,7 @@ Version 1.7 -Eta Carinae-
   a graphical number that the user must enter in the registration form to be registered.
   This feature is optional and can be enabled/disabled from the admin->login menu.
 * [NEW] New theme added: neat based on plone.
-* [NEW] A single wiki-page can be a multi-page page using ...page... to sepparate pages,
+* [NEW] A single wiki-page can be a multi-page page using ...page... to separate pages,
   individual pages can be viewed using navigation links or a slideshow.
 * [NEW] A wiki structure can be created/imported from a text representation of the tree
   where structure levels are depicted by indenting the text with single spaces.
@@ -23,7 +23,7 @@ Version 1.7 -Eta Carinae-
 * [NEW] Blogs: Blog posts now support multi-page posts, the first page will be displayed
   when listing blog posts (can be used as a heading) and the other pages are navigable
   when reading a blog post.
-* [NEW] Articles: Multi-page articles are now supported, use "...page..." to sepparate
+* [NEW] Articles: Multi-page articles are now supported, use "...page..." to separate
   pages in a multi-page article. Navigation links to article pages automatically added.
 * [NEW] Articles: The permission tiki_p_autoapprove_submission was added, groups with
   that permission can submit articles that are automatically approved.
@@ -151,7 +151,7 @@ Version 1.6 -Tau Ceti-
 * [NEW] Themes can redefine ANY template of Tiki, just create the template in
   the templates/styles/name directory and Tiki will use that file. If the file
   is not there it will default to the templates directory. (McKenna)
-* [NEW] Alternative syntax for tables, you can sepparate rows using line
+* [NEW] Alternative syntax for tables, you can separate rows using line
   returns instead of ||. You have to select which syntax to use in the admin
   screen.
 * [NEW] Admin menu submit buttons now get back to the admin section where the
