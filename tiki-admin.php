@@ -258,14 +258,6 @@ if(isset($_REQUEST["prefs"])) {
     $smarty->assign('count_admin_pvs','n');
   }
   
-  if(isset($_REQUEST["feature_bidi"]) && $_REQUEST["feature_bidi"]=="on") {
-    $tikilib->set_preference("feature_bidi",'y'); 
-    $smarty->assign('feature_bidi','y');
-  } else {
-    $tikilib->set_preference("feature_bidi",'n');
-    $smarty->assign('feature_bidi','n');
-  }
-
   if(isset($_REQUEST["popupLinks"]) && $_REQUEST["popupLinks"]=="on") {
     $tikilib->set_preference("popupLinks",'y'); 
   } else {

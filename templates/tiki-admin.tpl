@@ -131,7 +131,6 @@
 <tr><td class="form">{tr}Use cache for external pages{/tr}:</td><td><input type="checkbox" name="cachepages" {if $cachepages eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use cache for external images{/tr}:</td><td><input type="checkbox" name="cacheimages" {if $cacheimages eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Count admin pageviews{/tr}:</td><td><input type="checkbox" name="count_admin_pvs" {if $count_admin_pvs eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Bidi{/tr}:</td><td><input type="checkbox" name="feature_bidi" {if $feature_bidi eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Maximum number of records in listings{/tr}: </td><td><input size="5" type="text" name="maxRecords" value="{$maxRecords}" /></td></tr>
 <tr><td class="form">{tr}Use direct pagination links{/tr}:</td><td><input type="checkbox" name="direct_pagination" {if $direct_pagination eq 'y'}checked="checked"{/if}/></td></tr>
 <!--<tr><td class="form">{tr}Wiki_Tiki_Title{/tr}: </td><td><input type="text" size="5" name="title" value="{$title}" /></td></tr>-->
