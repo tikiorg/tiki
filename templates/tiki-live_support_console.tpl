@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
     {include file="bidi.tpl"}
-    <title>Live support:Console</title>
+    <title>{tr}Live support:Console{/tr}</title>
     {literal}
 	<script type="text/javascript" src="lib/live_support/live-support.js">
 	
@@ -22,7 +22,7 @@
 	<table class="normal" width="100%">
 		<tr>
 			<td class="heading">{tr}Operator{/tr}: {$user}</td>
-			<td class="heading">{tr}Status{/tr}: <b>{$status}</b></td>
+			<td class="heading">{tr}Status{/tr}: <b>{tr}{$status}{/tr}</b></td>
 			<td class="heading" style="text-align:right;">    
 				{if $status eq 'offline'}
     				<a href="tiki-live_support_console.php?status=online" class="tableheading">{tr}be online{/tr}</a>
