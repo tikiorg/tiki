@@ -1046,12 +1046,15 @@ function get_included_groups($group) {
 	}
 
 	function get_grouptrackerid($group) {
-		$ret = $this->getOne("select `groupTrackerId` from `users_groups` where `groupName`=?",array($group));
-		if (!$ret) {
+		$res = $this->query("select `groupTrackerId`,`groupFieldId` from `users_groups` where `groupName`=?",array($group));
+		$ret = $res->fetchRow();
+		if (!$ret['groupTrackerId'] or !$ret['groupFieldId']) {
 			$groups = $this->get_included_groups($group);
 			foreach ($groups as $gr) {
-				$ret = $this->getOne("select `groupTrackerId` from `users_groups` where `groupName`=?",array($gr));
-				if ($ret) {
+				$res = $this->query("select `groupTrackerId`,`groupFieldId` from `users_groups` where `groupName`=?",array($gr));
+				$ret = $res->fetchRow();
+				var_dump($gr);
+				if ($ret['groupTrackerId'] and $ret['groupFieldId']) {
 					return $ret;
 				}
 			}
@@ -1062,17 +1065,17 @@ function get_included_groups($group) {
 	}
 
 	function get_usertrackerid($group) {
-		return $this->getOne("select `usersTrackerId` from `users_groups` where `groupName`=?",array($group));
-		if (!$ret) {
+		$res = $this->query("select `usersTrackerId`,`usersFieldId` from `users_groups` where `groupName`=?",array($group));
+		if (!$res) {
 			$groups = $this->get_included_groups($group);
 			foreach ($groups as $gr) {
-				$ret = $this->getOne("select `userTrackerId` from `users_groups` where `groupName`=?",array($gr));
-				if ($ret) {
-					return $ret;
+				$res = $this->query("select `usersTrackerId`,`usersFieldId` from `users_groups` where `groupName`=?",array($gr));
+				if ($res) {
+					return $res->fetchRow();
 				}
 			}
 		} else {
-			return $ret;
+			return $res->fetchRow();
 		}
 		return false;
 	}
