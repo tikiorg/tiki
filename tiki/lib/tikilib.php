@@ -385,6 +385,29 @@ function convert_binary() {
     }
 }
 
+function sql_cast($var,$type) {
+    global $ADODB_Database;
+    switch ($ADODB_Database) {
+    case "sybase":
+    	switch ($type) {
+		case "int":
+    			return " CONVERT(numeric(14,0),$var) ";
+			break;
+		case "string":
+    			return " CONVERT(varchar(255),$var) ";
+			break;
+		case "float":
+    			return " CONVERT(numeric(10,5),$var) ";
+			break;
+		}
+	break;
+    default:
+        return($var);
+	break;
+    }
+  
+}
+
 /*shared*/
 function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
 	  global $use_proxy,$proxy_host,$proxy_port;
