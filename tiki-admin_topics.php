@@ -1,6 +1,6 @@
 <?php
-
 require_once('tiki-setup.php');
+include_once('lib/articles/artlib.php');
 
 if($feature_articles != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -32,23 +32,23 @@ if(isset($_REQUEST["addtopic"])) {
     die;
   }
   // Store the image
-  $tikilib->add_topic($_REQUEST["name"],$imgname,$imgtype,$imgsize,$data);
+  $artlib->add_topic($_REQUEST["name"],$imgname,$imgtype,$imgsize,$data);
 }
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_topic($_REQUEST["remove"]);
+  $artlib->remove_topic($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["activate"])) {
-  $tikilib->activate_topic($_REQUEST["activate"]);
+  $artlib->activate_topic($_REQUEST["activate"]);
 }
 
 if(isset($_REQUEST["deactivate"])) {
-  $tikilib->deactivate_topic($_REQUEST["deactivate"]);
+  $artlib->deactivate_topic($_REQUEST["deactivate"]);
 }
 
 
-$topics = $tikilib->list_topics();
+$topics = $artlib->list_topics();
 for($i=0;$i<count($topics);$i++) {
   if($userlib->object_has_one_permission($topics[$i]["topicId"],'topic')) {
     $topics[$i]["individual"]='y';

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/articles/artlib.php');
 
 /*
 if($feature_listPages != 'y') {
@@ -32,7 +33,7 @@ if(isset($_REQUEST["remove"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $tikilib->remove_submission($_REQUEST["remove"]);  
+  $artlib->remove_submission($_REQUEST["remove"]);  
 }
 
 if(isset($_REQUEST["approve"])) {
@@ -41,7 +42,7 @@ if(isset($_REQUEST["approve"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $tikilib->approve_submission($_REQUEST["approve"]);  
+  $artlib->approve_submission($_REQUEST["approve"]);  
 }
 
 

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/articles/artlib.php');
 
 /*
 if($feature_listPages != 'y') {
@@ -30,7 +31,7 @@ if(isset($_REQUEST["remove"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $tikilib->remove_article($_REQUEST["remove"]);  
+  $artlib->remove_article($_REQUEST["remove"]);  
 }
 
 

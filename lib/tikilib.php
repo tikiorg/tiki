@@ -1509,7 +1509,7 @@ class TikiLib {
 
 
   // CMS functions -ARTICLES- & -SUBMISSIONS- ////
-  function list_articles($offset = 0,$maxRecords = -1,$sort_mode = 'publishDate_desc', $find='', $date='',$user,$type='',$topicId='')
+  /*shared*/ function list_articles($offset = 0,$maxRecords = -1,$sort_mode = 'publishDate_desc', $find='', $date='',$user,$type='',$topicId='')
   {
     global $userlib;
     $sort_mode = str_replace("_"," ",$sort_mode);
@@ -1572,7 +1572,7 @@ class TikiLib {
     return $retval;
   }
 
-  function list_submissions($offset = 0,$maxRecords = -1,$sort_mode = 'publishDate_desc', $find='', $date='')
+  /*shared*/ function list_submissions($offset = 0,$maxRecords = -1,$sort_mode = 'publishDate_desc', $find='', $date='')
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -1640,45 +1640,6 @@ class TikiLib {
     return $res;
   }
 
-  function approve_submission($subId)
-  {
-    $data = $this->get_submission($subId);
-    if(!$data) return false;
-    if(!$data["image_x"]) $data["image_x"]=0;
-    if(!$data["image_y"]) $data["image_y"]=0;
-    $this->replace_article ($data["title"],$data["authorName"],$data["topicId"],$data["useImage"],$data["image_name"],$data["image_size"],$data["image_type"],$data["image_data"],$data["heading"],$data["body"],$data["publishDate"],$data["author"],0,$data["image_x"],$data["image_y"],$data["type"],$data["rating"]);
-    $this->remove_submission($subId);
-  }
-
-  function add_article_hit($articleId)
-  {
-    $query = "update tiki_articles set reads=reads+1 where articleId=$articleId";
-    $result = $this->query($query);
-
-    return true;
-  }
-
-  function remove_article($articleId)
-  {
-    if($articleId) {
-      $query = "delete from tiki_articles where articleId=$articleId";
-      $result = $this->query($query);
-
-      return true;
-    }
-    $this->remove_object('article',$articleId);
-  }
-
-  function remove_submission($subId)
-  {
-    if($subId) {
-      $query = "delete from tiki_submissions where subId=$subId";
-      $result = $this->query($query);
-
-      return true;
-    }
-  }
-
   function replace_article ($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$heading,$body,$publishDate,$user,$articleId,$image_x,$image_y,$type,$rating=0,$isfloat='n')
   {
     $title = addslashes($title);
@@ -1731,119 +1692,7 @@ class TikiLib {
     return $articleId;
   }
 
-  function replace_submission ($title,$authorName,$topicId,$useImage,$imgname,$imgsize,$imgtype,$imgdata,$heading,$body,$publishDate,$user,$subId,$image_x,$image_y,$type,$rating=0,$isfloat='n')
-  {
-    global $smarty;
-    global $dbTiki;
-    include_once('lib/notifications/notificationlib.php');
-    $title = addslashes($title);
-    $heading = addslashes($heading);
-    $authorName = addslashes($authorName);
-    $imgdata = addslashes($imgdata);
-    $imgname = addslashes($imgname);
-    $body = addslashes($body);
-    $hash = md5($title.$heading.$body);
-    $now = date("U");
-    $query = "select name from tiki_topics where topicId = $topicId";
-    $topicName = $this->getOne($query);
-    $topicName = addslashes($topicName);
-    $size = strlen($body);
-    if($subId) {
-      // Update the article
-      $query = "update tiki_submissions set
-                title = '$title',
-                authorName = '$authorName',
-                topicId = $topicId,
-                topicName = '$topicName',
-                size = $size,
-                useImage = '$useImage',
-                isfloat = '$isfloat',
-                image_name = '$imgname',
-                image_type = '$imgtype',
-                image_size = '$imgsize',
-                image_data = '$imgdata',
-                image_x = $image_x,
-                image_y = $image_y,
-                heading = '$heading',
-                body = '$body',
-                publishDate = $publishDate,
-                created = $now,
-                author = '$user' ,
-                type = '$type',
-                rating = $rating
-                where subId = $subId";
-      $result = $this->query($query);
-
-    } else {
-      // Insert the article
-      $query = "insert into tiki_submissions(title,authorName,topicId,useImage,image_name,image_size,image_type,image_data,publishDate,created,heading,body,hash,author,reads,votes,points,size,topicName,image_x,image_y,type,rating,isfloat)
-                         values('$title','$authorName',$topicId,'$useImage','$imgname','$imgsize','$imgtype','$imgdata',$publishDate,$now,'$heading','$body','$hash','$user',0,0,0,$size,'$topicName',$image_x,$image_y,'$type',$rating,'$isfloat')";
-      $result = $this->query($query);
-
-    }
-    $query = "select max(subId) from tiki_submissions where created = $now and title='$title' and hash='$hash'";
-    $id=$this->getOne($query);
-    $emails = $notificationlib->get_mail_events('article_submitted','*');
-    $foo = parse_url($_SERVER["REQUEST_URI"]);
-    $machine =httpPrefix().$foo["path"];
-    foreach ($emails as $email)
-    {
-      $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-      $smarty->assign('mail_user',$user);
-      $smarty->assign('mail_title',$title);
-      $smarty->assign('mail_heading',$heading);
-      $smarty->assign('mail_body',$body);
-      $smarty->assign('mail_date',date("U"));
-      $smarty->assign('mail_machine',$machine);
-      $smarty->assign('mail_subId',$id);
-      $mail_data=$smarty->fetch('mail/submission_notification.tpl');
-      @mail($email, tra('New article submitted at ').$_SERVER["SERVER_NAME"],$mail_data);
-    }
-    return $id;
-  }
-
-  // CMS functions -TOPICS -////
-  function add_topic($name,$imagename,$imagetype,$imagesize,$imagedata)
-  {
-    $now=date("U");
-    $imagename=addslashes($imagename);
-    $name=addslashes($name);
-    $imagedata=addslashes($imagedata);
-    $query = "insert into tiki_topics(name,image_name,image_type,image_size,image_data,active,created)
-                     values('$name','$imagename','$imagetype',$imagesize,'$imagedata','y',$now)";
-    $result = $this->query($query);
-
-    $query = "select max(topicId) from tiki_topics where created=$now and name='$name'";
-    $topicId = $this->getOne($query);
-    return $topicId;
-  }
-
-  function remove_topic($topicId)
-  {
-    $query = "delete from tiki_topics where topicId=$topicId";
-    $result = $this->query($query);
-
-    $query = "delete from tiki_articles where topicId=$topicId";
-    $result = $this->query($query);
-
-    return true;
-  }
-
-  function activate_topic($topicId)
-  {
-    $query = "update tiki_topics set active='y' where topicId=$topicId";
-    $result = $this->query($query);
-
-  }
-
-  function deactivate_topic($topicId)
-  {
-    $query = "update tiki_topics set active='n' where topicId=$topicId";
-    $result = $this->query($query);
-
-  }
-
-  function get_topic_image($topicId)
+  /*shared*/ function get_topic_image($topicId)
   {
     $query = "select image_name,image_size,image_type,image_data from tiki_topics where topicId=$topicId";
     $result = $this->query($query);
@@ -1852,92 +1701,7 @@ class TikiLib {
     return $res;
   }
 
-  function get_topic($topicId)
-  {
-    $query = "select topicId,name,image_name,image_size,image_type from tiki_topics where topicId=$topicId";
-    $result = $this->query($query);
-
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function list_topics()
-  {
-    $query = "select topicId,name,image_name,image_size,image_type,active from tiki_topics order by name";
-    $result = $this->query($query);
-
-    $ret=Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["subs"]=$this->getOne("select count(*) from tiki_submissions where topicId=".$res["topicId"]);
-      $res["arts"]=$this->getOne("select count(*) from tiki_articles where topicId=".$res["topicId"]);
-      $ret[]=$res;
-    }
-    return $ret;
-  }
-
-  function list_active_topics()
-  {
-    $query = "select * from tiki_topics where active='y'";
-    $result = $this->query($query);
-
-    $ret=Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[]=$res;
-    }
-    return $ret;
-  }
-
-  function add_featured_link($url,$title,$description='',$position=0,$type='f')
-  {
-    $title=addslashes($title);
-    $url=addslashes($url);
-    $description=addslashes($description);
-    $query = "replace tiki_featured_links(url,title,description,position,hits,type) values('$url','$title','$description',$position,0,'$type')";
-    $result = $this->query($query);
-  }
-
-  function remove_featured_link($url)
-  {
-    $query = "delete from tiki_featured_links where url='$url'";
-    $result = $this->query($query);
-  }
-
-  function update_featured_link($url, $title, $description, $position=0,$type='f')
-  {
-    $query = "update tiki_featured_links set title='$title', type='$type', description='$description', position=$position where url='$url'";
-    $result = $this->query($query);
-  }
-
-  function add_featured_link_hit($url)
-  {
-    $query = "update tiki_featured_links set hits = hits + 1 where url = '$url'";
-    $result = $this->query($query);
-  }
-
-  function get_featured_link($url)
-  {
-    $query = "select * from tiki_featured_links where url='$url'";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function generate_featured_links_positions()
-  {
-    $query = "select url from tiki_featured_links order by hits desc";
-    $result = $this->query($query);
-    $position = 1;
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $url = $res["url"];
-      $query2="update tiki_featured_links set position=$position where url='$url'";
-      $result2 = $this->query($query2);
-      $position++;
-    }
-    return true;
-  }
-
-  function get_featured_links($max=10)
+  /*shared*/ function get_featured_links($max=10)
   {
     $query = "select * from tiki_featured_links where position>0 order by position asc limit 0,$max";
     $result = $this->query($query);
@@ -1967,80 +1731,7 @@ class TikiLib {
     return $cant;
   }
 
-  function replace_user_module($name,$title,$data)
-  {
-    $name = addslashes($name);
-    $title = addslashes($title);
-    $data = addslashes($data);
-    if( (!empty($name)) && (!empty($title)) && (!empty($data)) ) {
-      $query = "replace into tiki_user_modules(name,title,data) values('$name','$title','$data')";
-      $result = $this->query($query);
-      return true;
-    }
-  }
-
-  function assign_module($name,$title,$position,$order,$cache_time=0,$rows=10,$groups,$params)
-  {
-    $params=addslashes($params);
-    $name = addslashes($name);
-    $groups = addslashes($groups);
-    $query = "delete from tiki_modules where name='$name'";
-    $result = $this->query($query);
-    //check for valid values
-    $cache_time=is_int($cache_time) ? $cache_time : 0 ;
-    $rows=is_numeric($rows) ? floor($rows) : 10 ;
-    $query = "insert into tiki_modules(name,title,position,ord,cache_time,rows,groups,params) values('$name','$title','$position',$order,$cache_time,$rows,'$groups','$params')";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_assigned_module($name)
-  {
-    $query = "select * from tiki_modules where name='$name'";
-    $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    if($res["groups"]) {
-      $grps = unserialize($res["groups"]);
-      $res["module_groups"]='';
-      foreach($grps as $grp) {
-        $res["module_groups"].=" $grp ";
-      }
-    }
-    return $res;
-  }
-
-  function unassign_module($name)
-  {
-    $query = "delete from tiki_modules where name='$name'";
-    $result = $this->query($query);
-    $query = "delete from tiki_user_assigned_modules where name='$name'";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_rows($name)
-  {
-    $query = "select rows from tiki_modules where name='$name'";
-    $rows = $this->getOne($query);
-    if($rows==0) $rows=10;
-    return $rows;
-  }
-
-  function module_up($name)
-  {
-    $query = "update tiki_modules set ord=ord-1 where name='$name'";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function module_down($name)
-  {
-    $query = "update tiki_modules set ord=ord+1 where name='$name'";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_assigned_modules($position)
+  /*shared*/ function get_assigned_modules($position)
   {
     $query = "select params,name,title,position,ord,cache_time,rows,groups from tiki_modules where position='$position' order by ord asc";
     $result = $this->query($query);
@@ -2060,28 +1751,7 @@ class TikiLib {
     return $ret;
   }
 
-  function get_all_modules()
-  {
-    $user_modules = $this->list_user_modules();
-    $all_modules=Array();
-    foreach($user_modules["data"] as $um) {
-      $all_modules[]=$um["name"];
-    }
-    // Now add all the system modules
-    $h = opendir("templates/modules");
-    while (($file = readdir($h)) !== false) {
-      if(substr($file,0,3)=='mod') {
-        if(!strstr($file,"nocache")){
-          $name = substr($file,4,strlen($file)-8);
-          $all_modules[]=$name;
-        }
-      }
-    }
-    closedir($h);
-    return $all_modules;
-  }
-
-  function is_user_module($name)
+  /*shared*/ function is_user_module($name)
   {
     $name=addslashes($name);
     $query = "select name from tiki_user_modules where name='$name'";
@@ -2089,16 +1759,9 @@ class TikiLib {
     return $result->numRows();
   }
 
-  function remove_user_module($name)
-  {
-    $name=addslashes($name);
-    $this->unassign_module($name);
-    $query = " delete from tiki_user_modules where name='$name'";
-    $result = $this->query($query);
-    return true;
-  }
+  
 
-  function get_user_module($name)
+  /*shared*/ function get_user_module($name)
   {
     $name=addslashes($name);
     $query = "select * from tiki_user_modules where name='$name'";
@@ -2107,21 +1770,7 @@ class TikiLib {
     return $res;
   }
 
-  function list_user_modules()
-  {
-    $query = "select * from tiki_user_modules";
-    $result = $this->query($query);
-    $query_cant = "select count(*) from tiki_user_modules";
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
+  
 
   function cache_links($links)
   {
@@ -2168,6 +1817,7 @@ class TikiLib {
     return $links;
   }
 
+	//cache
   function is_cached($url)
   {
     if(strstr($url,"tiki-index")) {
@@ -2301,78 +1951,9 @@ class TikiLib {
     return $res;
   }
 
-  function tag_exists($tag)
-  {
-    $query = "select distinct tagName from tiki_tags where tagName = '$tag'";
-    $result = $this->query($query);
-    return $result->numRows($result);
-  }
-
-  function remove_tag($tagname)
-  {
-    $query = "delete from tiki_tags where tagName='$tagname'";
-    $result = $this->query($query);
-    $action = "removed tag: $tagname";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_tags()
-  {
-    $query = "select distinct tagName from tiki_tags";
-    $result = $this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res["tagName"];
-    }
-    return $ret;
-  }
-
-  // This function can be used to store the set of actual pages in the "tags"
-  // table preserving the state of the wiki under a tag name.
-  function create_tag($tagname,$comment='')
-  {
-    $tagname = addslashes($tagname);
-    $comment = addslashes($comment);
-    $query = "select * from tiki_pages";
-    $result=$this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query = "replace into tiki_tags(tagName,pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
-                values('$tagname','".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."','".$res["description"]."')";
-      $result2=$this->query($query);
-    }
-    $action = "created tag: $tagname";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
-    $result = $this->query($query);
-    return true;
-  }
-
-  // This funcion recovers the state of the wiki using a tagName from the
-  // tags table
-  function restore_tag($tagname)
-  {
-    $query = "update tiki_pages set cache_timestamp=0";
-    $this->query($query);
-    $query = "select * from tiki_tags where tagName='$tagname'";
-    $result=$this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query = "replace into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
-                values('".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."','".$res["description"]."')";
-      $result2=$this->query($query);
-    }
-    $action = "recovered tag: $tagname";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
-    $result = $this->query($query);
-    return true;
-  }
-
   // This funcion return the $limit most accessed pages
   // it returns pageName and hits for each page
-  function get_top_pages($limit)
+  /*shared*/ function get_top_pages($limit)
   {
     $query = "select pageName, hits from tiki_pages order by hits desc limit 0,$limit";
     $result=$this->query($query);
@@ -2386,7 +1967,7 @@ class TikiLib {
   }
 
   // Returns the name of "n" random pages
-  function get_random_pages($n)
+  /*shared*/ function get_random_pages($n)
   {
     $query = "select count(*) from tiki_pages";
     $cant = $this->getOne($query);
@@ -2410,411 +1991,8 @@ class TikiLib {
     return $ret;
   }
 
-  function wiki_ranking_top_pages($limit)
-  {
-    $query = "select pageName, hits from tiki_pages order by hits desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["pageName"];
-      $aux["hits"] = $res["hits"];
-      $aux["href"] = 'tiki-index.php?page='.$res["pageName"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Wiki top pages");
-    $retval["y"]=tra("Hits");
-    return $retval;
-  }
-
-  function wiki_ranking_top_pagerank($limit)
-  {
-    $this->pageRank();
-    $query = "select pageName, pageRank from tiki_pages order by pageRank desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["pageName"];
-      $aux["hits"] = $res["pageRank"];
-      $aux["href"] = 'tiki-index.php?page='.$res["pageName"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Most relevant pages");
-    $retval["y"]=tra("Relevance");
-    return $retval;
-  }
-
-  function wiki_ranking_last_pages($limit)
-  {
-    $query = "select pageName,lastModif,hits from tiki_pages order by lastModif desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["pageName"];
-      $aux["hits"] = $this->get_long_datetime($res["lastModif"]);
-      $aux["href"] = 'tiki-index.php?page='.$res["pageName"];
-      $ret[] = $aux;
-    }
-    $ret["data"]=$ret;
-    $ret["title"]=tra("Wiki last pages");
-    $ret["y"]=tra("Modified");
-    return $ret;
-  }
-
-  function forums_ranking_last_topics($limit)
-  {
-    $query = "select * from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and parentId=0 order by commentDate desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["name"].': '.$res["title"];
-      $aux["hits"] = $this->get_long_datetime($res["commentDate"]);
-      $aux["href"] = 'tiki-view_forum_thread.php?forumId='.$res["forumId"].'&amp;comments_parentId='.$res["threadId"];
-      $ret[] = $aux;
-    }
-    $ret["data"]=$ret;
-    $ret["title"]=tra("Forums last topics");
-    $ret["y"]=tra("Topic date");
-    return $ret;
-  }
-
-  function forums_ranking_most_read_topics($limit)
-  {
-    $query = "select tc.hits,tc.title,tf.name,tf.forumId,tc.threadId,tc.object from tiki_comments tc,tiki_forums tf where object=md5(concat('forum',forumId)) and parentId=0 order by tc.hits desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-
-      $aux["name"] = $res["name"].': '.$res["title"];
-      $aux["hits"] = $res["hits"];
-      $aux["href"] = 'tiki-view_forum_thread.php?forumId='.$res["forumId"].'&amp;comments_parentId='.$res["threadId"];
-      $ret[] = $aux;
-    }
-    $ret["data"]=$ret;
-    $ret["title"]=tra("Forums most read topics");
-    $ret["y"]=tra("Reads");
-    return $ret;
-  }
-
-  function forums_ranking_top_topics($limit)
-  {
-    $query = "select tc.average,tc.title,tf.name,tf.forumId,tc.threadId,tc.object from tiki_comments tc,tiki_forums tf where object=md5(concat('forum',forumId)) and parentId=0 order by tc.average desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-
-      $aux["name"] = $res["name"].': '.$res["title"];
-      $aux["hits"] = $res["average"];
-      $aux["href"] = 'tiki-view_forum_thread.php?forumId='.$res["forumId"].'&amp;comments_parentId='.$res["threadId"];
-      $ret[] = $aux;
-    }
-    $ret["data"]=$ret;
-    $ret["title"]=tra("Forums best topics");
-    $ret["y"]=tra("Score");
-    return $ret;
-  }
-
-  function forums_ranking_most_visited_forums($limit)
-  {
-    $query = "select * from tiki_forums order by hits desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-
-      $aux["name"] = $res["name"];
-      $aux["hits"] = $res["hits"];
-      $aux["href"] = 'tiki-view_forum.php?forumId='.$res["forumId"];
-      $ret[] = $aux;
-    }
-    $ret["data"]=$ret;
-    $ret["title"]=tra("Forums most visited forums");
-    $ret["y"]=tra("Visits");
-    return $ret;
-  }
-
-  function forums_ranking_most_commented_forum($limit)
-  {
-    $query = "select * from tiki_forums order by comments desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-
-      $aux["name"] = $res["name"];
-      $aux["hits"] = $res["comments"];
-      $aux["href"] = 'tiki-view_forum.php?forumId='.$res["forumId"];
-      $ret[] = $aux;
-    }
-    $ret["data"]=$ret;
-    $ret["title"]=tra("Forums with most posts");
-    $ret["y"]=tra("Posts");
-    return $ret;
-  }
-
-  function gal_ranking_top_galleries($limit)
-  {
-    $query = "select * from tiki_galleries where visible='y' order by hits desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["name"];
-      $aux["hits"] = $res["hits"];
-      $aux["href"] = 'tiki-browse_gallery.php?galleryId='.$res["galleryId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Wiki top galleries");
-    $retval["y"]=tra("Visits");
-    return $retval;
-  }
-
-  function filegal_ranking_top_galleries($limit)
-  {
-    $query = "select * from tiki_file_galleries where visible='y' order by hits desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["name"];
-      $aux["hits"] = $res["hits"];
-      $aux["href"] = 'tiki-list_file_gallery.php?galleryId='.$res["galleryId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Wiki top file galleries");
-    $retval["y"]=tra("Visits");
-    return $retval;
-  }
-
-  function gal_ranking_top_images($limit)
-  {
-    $query = "select imageId,name,hits from tiki_images order by hits desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["name"];
-      $aux["hits"] = $res["hits"];
-      $aux["href"] = 'tiki-browse_image.php?imageId='.$res["imageId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Wiki top images");
-    $retval["y"]=tra("Hits");
-    return $retval;
-  }
-
-  function filegal_ranking_top_files($limit)
-  {
-    $query = "select fileId,filename,downloads from tiki_files order by downloads desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["filename"];
-      $aux["hits"] = $res["downloads"];
-      $aux["href"] = 'tiki-download_file.php?fileId='.$res["fileId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Wiki top files");
-    $retval["y"]=tra("Downloads");
-    return $retval;
-  }
-
-  function gal_ranking_last_images($limit)
-  {
-    $query = "select imageId,name,created from tiki_images order by created desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["name"];
-      $aux["hits"] = $this->get_long_datetime($res["created"]);
-      $aux["href"] = 'tiki-browse_image.php?imageId='.$res["imageId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Wiki last images");
-    $retval["y"]=tra("Upload date");
-    return $retval;
-  }
-
-  function filegal_ranking_last_files($limit)
-  {
-    $query = "select fileId,filename,created from tiki_files order by created desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["filename"];
-      $aux["hits"] = $this->get_long_datetime($res["created"]);
-      $aux["href"] = 'tiki-download_file.php?fileId='.$res["fileId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Wiki last files");
-    $retval["y"]=tra("Upload date");
-    return $retval;
-  }
-
-  function cms_ranking_top_articles($limit)
-  {
-    $query = "select * from tiki_articles order by reads desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["title"];
-      $aux["hits"] = $res["reads"];
-      $aux["href"] = 'tiki-read_article.php?articleId='.$res["articleId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Wiki top articles");
-    $retval["y"]=tra("Reads");
-    return $retval;
-  }
-
-  function blog_ranking_top_blogs($limit)
-  {
-    $query = "select * from tiki_blogs order by hits desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["title"];
-      $aux["hits"] = $res["hits"];
-      $aux["href"] = 'tiki-view_blog.php?blogId='.$res["blogId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Most visited blogs");
-    $retval["y"]=tra("Visits");
-    return $retval;
-  }
-
-  function blog_ranking_top_active_blogs($limit)
-  {
-    $query = "select * from tiki_blogs order by activity desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["name"] = $res["title"];
-      $aux["hits"] = $res["activity"];
-      $aux["href"] = 'tiki-view_blog.php?blogId='.$res["blogId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Most active blogs");
-    $retval["y"]=tra("Activity");
-    return $retval;
-  }
-
-  function blog_ranking_last_posts($limit)
-  {
-    $query = "select * from tiki_blog_posts order by created desc limit 0,$limit";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $q = "select title from tiki_blogs where blogId=".$res["blogId"];
-      $name = $this->getOne($q);
-      $aux["name"] = $name;
-      $aux["hits"] = $this->get_long_datetime($res["created"]);
-      $aux["href"] = 'tiki-view_blog.php?blogId='.$res["blogId"];
-      $ret[] = $aux;
-    }
-    $retval["data"]=$ret;
-    $retval["title"]=tra("Blogs last posts");
-    $retval["y"]=tra("Post date");
-    return $retval;
-  }
-
-  function wiki_ranking_top_authors($limit)
-  {
-    $query = "select distinct user from tiki_pages";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res["user"];
-    }
-    $retu = Array();
-    foreach($ret as $author) {
-      $query = "select count(*) from tiki_pages where user='$author'";
-      $cant = $this->getOne($query);
-      $aux["name"] = $author;
-      $aux["hits"] = $cant;
-      $aux["href"] = '';
-      $retu[] = $aux;
-    }
-    $retval["data"]=$retu;
-    $retval["title"]=tra("Wiki top authors");
-    $retval["y"]=tra("Pages");
-    return $retval;
-  }
-
-  function cms_ranking_top_authors($limit)
-  {
-    $query = "select distinct author from tiki_articles";
-    $result=$this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res["author"];
-    }
-    $retu = Array();
-    foreach($ret as $author) {
-      $query = "select count(*) from tiki_articles where author='$author'";
-      $cant = $this->getOne($query);
-      $aux["name"] = $author;
-      $aux["hits"] = $cant;
-      $aux["href"] = '';
-      $retu[] = $aux;
-    }
-    $retval["data"]=$retu;
-    $retval["title"]=tra("Top article authors");
-    $retval["y"]=tra("Articles");
-    return $retval;
-  }
-
-  // Sets the admin password to $pass
-
-  // Dumps the database to dump/new.tar
-  function dump()
-  {
-    unlink("dump/new.tar");
-    $tar = new tar();
-    $tar->addFile("styles/main.css");
-    // Foreach page
-    $query = "select * from tiki_pages";
-    $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $pageName = $res["pageName"].'.html';
-      $dat = $this->parse_data($res["data"]);
-      // Now change index.php?page=foo to foo.html
-      // and index.php to HomePage.html
-      $dat = preg_replace("/tiki-index.php\?page=([^\'\" ]+)/","$1.html",$dat);
-      $dat = preg_replace("/tiki-editpage.php\?page=([^\'\" ]+)/","",$dat);
-      //preg_match_all("/tiki-index.php\?page=([^ ]+)/",$dat,$cosas);
-      //print_r($cosas);
-      $data = "<html><head><title>".$res["pageName"]."</title><link rel='StyleSheet' href='styles/main.css' type='text/css'></head><body><a class='wiki' href='HomePage.html'>home</a><br/><h1>".$res["pageName"]."</h1><div class='wikitext'>".$dat.'</div></body></html>';
-      $tar->addData($pageName,$data,$res["lastModif"]);
-    }
-    $tar->toTar("dump/new.tar",FALSE);
-    unset($tar);
-    $action = "dump created";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
-    $result=$this->query($query);
-  }
-
-  // Removes a specific version of a page
-  function remove_version($page,$version,$comment='')
-  {
-    $page = addslashes($page);
-    $query="delete from tiki_history where pageName='$page' and version='$version'";
-    $result=$this->query($query);
-    $action="Removed version $version";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
-    $result = $this->query($query);
-    return true;
-  }
-
   // Removes all the versions of a page and the page itself
-  function remove_all_versions($page,$comment='')
+  /*shared*/ function remove_all_versions($page,$comment='')
   {
     $page = addslashes($page);
     $this->invalidate_cache($page);
@@ -2831,72 +2009,7 @@ class TikiLib {
     $this->remove_object('wiki page',$page);
     return true;
   }
-
-  function use_version($page,$version,$comment='')
-  {
-    $page = addslashes($page);
-    $this->invalidate_cache($page);
-    $query = "select * from tiki_history where pageName='$page' and version='$version'";
-    $result=$this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $query = "update tiki_pages set data='".addslashes($res["data"])."',lastModif=".$res["lastModif"].",user='".$res["user"]."',comment='".$res["comment"]."',version=version+1,ip='".$res["ip"]."' where pageName='$page'";
-    $result=$this->query($query);
-    $query = "delete from tiki_links where fromPage = '$page'";
-    $result=$this->query($query);
-    $this->clear_links($page);
-    $pages = $this->get_pages($res["data"]);
-    foreach($pages as $a_page) {
-      $this->replace_link($page,$a_page);
-    }
-    //$query="delete from tiki_history where pageName='$page' and version='$version'";
-    //$result=$this->query($query);
-    //
-    $action="Changed actual version to $version";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
-    $result = $this->query($query);
-    return true;
-  }
-
-  // Removes last version of the page (from pages) if theres some
-  // version in the tiki_history then the last version becomes the actual version
-  function remove_last_version($page,$comment='')
-  {
-    $page = addslashes($page);
-    $this->invalidate_cache($page);
-    $query = "select * from tiki_history where pageName='$page' order by lastModif desc";
-    $result = $this->query($query);
-    if($result->numRows()) {
-      // We have a version
-      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-      $this->use_version($res["pageName"],$res["version"]);
-      $this->remove_version($res["pageName"],$res["version"]);
-    } else {
-      $this->remove_all_versions($page);
-    }
-    $action="Removed last version";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
-    $result = $this->query($query);
-  }
-
-  function get_user_versions($user)
-  {
-    $query = "select pageName,version, lastModif, user, ip, comment from tiki_history where user='$user' order by lastModif desc";
-    $result = $this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["pageName"] = $res["pageName"];
-      $aux["version"] = $res["version"];
-      $aux["lastModif"] = $res["lastModif"];
-      $aux["ip"] = $res["ip"];
-      $aux["comment"] = $res["comment"];
-      $ret[]=$aux;
-    }
-    return $ret;
-  }
+  
 
   function remove_user($user)
   {
@@ -2962,7 +2075,7 @@ class TikiLib {
     return $aux;
   }
 
-  function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find)
+  /*shared*/ function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find)
   {
     // If $user is admin then get ALL galleries, if not only user galleries are shown
     global $tiki_p_admin_galleries;
@@ -3034,7 +2147,7 @@ class TikiLib {
     return $retval;
   }
 
-  function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find)
+  /*shared*/ function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find)
   {
     // If $user is admin then get ALL galleries, if not only user galleries are shown
     $sort_mode = str_replace("_"," ",$sort_mode);
@@ -5024,6 +4137,18 @@ class Debug {
 			return;
 
 		echo "\n<pre>\n",$m,"\n</pre>\n";
+	}
+}
+
+if(!function_exists('file_get_contents')) {
+	function file_get_contents($f) {
+	   ob_start();
+	   $retval = @readfile($f);
+	   if (false !== $retval) { // no readfile error
+	     $retval = ob_get_contents();
+	   }
+	   ob_end_clean();
+	  return $retval;
 	}
 }
 

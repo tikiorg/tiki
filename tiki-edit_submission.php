@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/articles/artlib.php');
 
 if($feature_submissions != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -320,7 +321,7 @@ if(isset($_REQUEST["save"])) {
 }
 
 // Armar un select con los topics
-$topics = $tikilib->list_topics();
+$topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics',$topics);
 
 if($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {

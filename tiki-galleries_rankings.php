@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/rankings/ranklib.php');
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -50,7 +51,7 @@ $smarty->assign_by_ref('limit',$limit);
 // Top Authors
 $rankings=Array();
 
-$rk = $tikilib->$which($limit);
+$rk = $ranklib->$which($limit);
 $rank["data"] = $rk["data"];
 $rank["title"] = $rk["title"];
 $rank["y"]=$rk["y"];

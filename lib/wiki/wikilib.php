@@ -246,8 +246,30 @@ class WikiLib extends TikiLib {
       print("\n");
     }
   }
+  
+  // Removes last version of the page (from pages) if theres some
+  // version in the tiki_history then the last version becomes the actual version
+  function remove_last_version($page,$comment='')
+  {
+    $page = addslashes($page);
+    $this->invalidate_cache($page);
+    $query = "select * from tiki_history where pageName='$page' order by lastModif desc";
+    $result = $this->query($query);
+    if($result->numRows()) {
+      // We have a version
+      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+      $this->use_version($res["pageName"],$res["version"]);
+      $this->remove_version($res["pageName"],$res["version"]);
+    } else {
+      $this->remove_all_versions($page);
+    }
+    $action="Removed last version";
+    $t = date("U");
+    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
+    $result = $this->query($query);
+  }
 
-  // Get a listing of orphan pages
+
   
 }
 

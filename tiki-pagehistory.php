@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/wiki/histlib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -48,7 +49,7 @@ if(!$tikilib->page_exists($page)) {
 
 if(isset($_REQUEST["delete"]) && isset($_REQUEST["hist"])) {
   foreach(array_keys($_REQUEST["hist"]) as $version) {      	
-    $tikilib->remove_version($_REQUEST["page"],$version);
+    $histlib->remove_version($_REQUEST["page"],$version);
   }
 }
 
