@@ -1,10 +1,11 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.12 2003-03-16 21:56:00 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.13 2003-03-21 14:42:44 lrargerich Exp $
 
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
 require_once('lib/userslib.php');
 require_once("lib/xmlrpc.inc");
 require_once("lib/xmlrpcs.inc");
+include_once('lib/blogs/bloglib.php');
 
 
 
@@ -101,7 +102,7 @@ function newPost($params) {
   // User ok and can submit then submit the post
   $now=date("U");
   
-  $id = $tikilib->blog_post($blogid,$content,$username);
+  $id = $bloglib->blog_post($blogid,$content,$username);
    
   return new xmlrpcresp(new xmlrpcval("$id"));
 }
@@ -130,7 +131,7 @@ function editPost($params) {
   }
   
   // Now get the post information
-  $post_data = $tikilib->get_post($postid);
+  $post_data = $bloglib->get_post($postid);
   if(!$post_data) {
     return new xmlrpcresp(0, 101, "Post not found");
   }
@@ -142,7 +143,7 @@ function editPost($params) {
   }
  
   $now=date("U");
-  $id = $tikilib->update_post($postid,$content,$username);
+  $id = $bloglib->update_post($postid,$content,$username);
   return new xmlrpcresp(new xmlrpcval(1,"boolean"));
 }
 
@@ -162,7 +163,7 @@ function deletePost($params) {
  
   
   // Now get the post information
-  $post_data = $tikilib->get_post($postid);
+  $post_data = $bloglib->get_post($postid);
   if(!$post_data) {
     return new xmlrpcresp(0, 101, "Post not found");
   }
@@ -175,7 +176,7 @@ function deletePost($params) {
  
   
   $now=date("U");
-  $id = $tikilib->remove_post($postid);
+  $id = $bloglib->remove_post($postid);
   return new xmlrpcresp(new xmlrpcval(1,"boolean"));
 }
 
@@ -210,7 +211,7 @@ function getPost($params) {
   }
   
   // Now get the post information
-  $post_data = $tikilib->get_post($postid);
+  $post_data = $bloglib->get_post($postid);
   if(!$post_data) {
     return new xmlrpcresp(0, 101, "Post not found");
   }
@@ -253,7 +254,7 @@ function getRecentPosts($params) {
   }
   
   // Now get the post information
-  $posts = $tikilib->list_blog_posts($blogid, 0, $number,'created_desc', '', '');
+  $posts = $bloglib->list_blog_posts($blogid, 0, $number,'created_desc', '', '');
   if(count($posts)==0) {
     return new xmlrpcresp(0, 101, "No posts");
   }

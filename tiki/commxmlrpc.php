@@ -1,10 +1,11 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.6 2003-01-04 19:34:15 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/commxmlrpc.php,v 1.7 2003-03-21 14:42:42 lrargerich Exp $
 
 include_once('db/tiki-db.php');
 include_once('lib/tikilib.php');
 include_once('lib/userslib.php');
 include_once("lib/xmlrpc.inc");
 include_once("lib/xmlrpcs.inc");
+include_once('lib/commcenter/commlib.php');
 
 
 
@@ -47,7 +48,7 @@ function sendPage($params) {
  // Store the page in the tiki_received_pages_table
  $data = base64_decode($data);
  
- $tikilib->receive_page($pageName,$data,$comment,$site,$username,$description);
+ $commlib->receive_page($pageName,$data,$comment,$site,$username,$description);
  /*
  if () {                                 
      return new xmlrpcresp(new xmlrpcval(1,"boolean"));
@@ -98,7 +99,7 @@ function sendArticle($params) {
  $heading = base64_decode($heading);
  $body = base64_decode($body);
   
- $tikilib->receive_article($site,$username,$title,$authorName,$size,$use_image,$image_name,$image_type,$image_size,$image_x,$image_y,$image_data,$publishDate,$created,$heading,$body,$hash,$author,$type,$rating);
+ $commlib->receive_article($site,$username,$title,$authorName,$size,$use_image,$image_name,$image_type,$image_size,$image_x,$image_y,$image_data,$publishDate,$created,$heading,$body,$hash,$author,$type,$rating);
  
  return new xmlrpcresp(new xmlrpcval(1,"boolean"));
 }

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/commcenter/commlib.php');
 
 if($feature_comm != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -24,12 +25,12 @@ $smarty->assign('receivedPageId',$_REQUEST["receivedPageId"]);
 
 if(isset($_REQUEST["accept"])) {
   // CODE TO ACCEPT A PAGE HERE
-  $tikilib->accept_page($_REQUEST["accept"]);
+  $commlib->accept_page($_REQUEST["accept"]);
 }
 
 
 if($_REQUEST["receivedPageId"]) {
-  $info = $tikilib->get_received_page($_REQUEST["receivedPageId"]);
+  $info = $commlib->get_received_page($_REQUEST["receivedPageId"]);
 } else {
   $info = Array();
   $info["pageName"]='';
@@ -38,7 +39,7 @@ if($_REQUEST["receivedPageId"]) {
 }
 $smarty->assign('view','n');
 if(isset($_REQUEST["view"])) {
-   $info = $tikilib->get_received_page($_REQUEST["view"]);
+   $info = $commlib->get_received_page($_REQUEST["view"]);
    $smarty->assign('view','y');
 }
 if(isset($_REQUEST["preview"])) {
@@ -58,11 +59,11 @@ $smarty->assign('parsed',$tikilib->parse_data($info["data"]));
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_received_page($_REQUEST["remove"]);
+  $commlib->remove_received_page($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
-  $tikilib->update_received_page($_REQUEST["receivedPageId"], $_REQUEST["pageName"], $_REQUEST["data"], $_REQUEST["comment"]);
+  $commlib->update_received_page($_REQUEST["receivedPageId"], $_REQUEST["pageName"], $_REQUEST["data"], $_REQUEST["comment"]);
   $smarty->assign('pageName',$_REQUEST["pageName"]);
   $smarty->assign('data',$_REQUEST["data"]);
   $smarty->assign('comment',$_REQUEST["comment"]);

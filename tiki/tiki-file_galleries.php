@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/filegals/filegallib.php');
 
 
 if($feature_file_galleries != 'y') {
@@ -70,7 +71,7 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
   $smarty->assign('edit_mode','y');
   $smarty->assign('edited','y');
   if($_REQUEST["galleryId"]>0) {
-    $info = $tikilib->get_file_gallery_info($_REQUEST["galleryId"]);
+    $info = $filegallib->get_file_gallery_info($_REQUEST["galleryId"]);
     //$smarty->assign_by_ref('theme',$info["theme"]);
     $smarty->assign_by_ref('name',$info["name"]);
     $smarty->assign_by_ref('description',$info["description"]);
@@ -94,7 +95,7 @@ if(isset($_REQUEST["edit"])) {
     }
     // If the user can create a gallery then check if he can edit THIS gallery
     if($_REQUEST["galleryId"]>0) {
-      $info = $tikilib->get_file_gallery_info($_REQUEST["galleryId"]);
+      $info = $filegallib->get_file_gallery_info($_REQUEST["galleryId"]);
       if(!$user || $info["user"]!=$user) {
         $smarty->assign('msg',tra("Permission denied you cannot edit this gallery"));
         $smarty->display("styles/$style_base/error.tpl");
@@ -128,7 +129,7 @@ if(isset($_REQUEST["edit"])) {
   }
   $smarty->assign('public',$public);
   $smarty->assign('visible',$visible);
-  $fgid = $tikilib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public, $visible);
+  $fgid = $filegallib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public, $visible);
   
   $cat_type='file gallery';
   $cat_objid = $fgid;
@@ -143,14 +144,14 @@ if(isset($_REQUEST["edit"])) {
 
 if(isset($_REQUEST["removegal"])) {
   if($tiki_p_admin_file_galleries != 'y') {
-     $info = $tikilib->get_file_gallery_info($_REQUEST["removegal"]);
+     $info = $filegallib->get_file_gallery_info($_REQUEST["removegal"]);
      if(!$user || $info["user"]!=$user) {
        $smarty->assign('msg',tra("Permission denied you cannot remove this gallery"));
        $smarty->display("styles/$style_base/error.tpl");
        die;  
      }
   }
-  $tikilib->remove_file_gallery($_REQUEST["removegal"]);
+  $filegallib->remove_file_gallery($_REQUEST["removegal"]);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -172,7 +173,7 @@ $smarty->assign_by_ref('offset',$offset);
 
 // Get the list of libraries available for this user (or public galleries)
 // GET ALL GALLERIES SINCE ALL GALLERIES ARE BROWSEABLE
-$galleries = $tikilib->list_file_galleries($offset,$maxRecords,$sort_mode, 'admin',$find);
+$galleries = $filegallib->list_file_galleries($offset,$maxRecords,$sort_mode, 'admin',$find);
 // Now traverse the galleries and check if there're individual permissions preventing the
 // user from browsing/editing/removing/listing/uploading to the gallery
 for($i=0;$i<count($galleries["data"]);$i++) {

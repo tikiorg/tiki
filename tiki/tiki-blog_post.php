@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/blogs/bloglib.php');
 
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -38,7 +39,7 @@ if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
   // Check permission
   
    
-  $data = $tikilib->get_post($_REQUEST["postId"]);
+  $data = $bloglib->get_post($_REQUEST["postId"]);
   
   // If the user owns the weblog then he can edit
   $blog_data = $tikilib->get_blog($data["blogId"]);
@@ -113,7 +114,7 @@ if(isset($_REQUEST["save"])) {
   }
   
   if($_REQUEST["postId"]>0) {
-    $data = $tikilib->get_post($_REQUEST["postId"]);
+    $data = $bloglib->get_post($_REQUEST["postId"]);
     $blog_data = $tikilib->get_blog($data["blogId"]);
     if($user && $user==$blog_data["user"]) {
       $data["user"] = $user;
@@ -129,9 +130,9 @@ if(isset($_REQUEST["save"])) {
 
   $_REQUEST["data"] = $tikilib->capture_images($_REQUEST["data"]);
   if($_REQUEST["postId"]>0) {
-    $tikilib->update_post($_REQUEST["postId"],$_REQUEST["data"],$user);
+    $bloglib->update_post($_REQUEST["postId"],$_REQUEST["data"],$user);
   } else {
-    $tikilib->blog_post($_REQUEST["blogId"],$_REQUEST["data"],$user);
+    $bloglib->blog_post($_REQUEST["blogId"],$_REQUEST["data"],$user);
   }
   
   header("location: tiki-view_blog.php?blogId=".$_REQUEST["blogId"]);

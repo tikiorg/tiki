@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/blogs/bloglib.php');
 
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -34,7 +35,7 @@ if($tiki_p_blog_admin != 'y') {
 
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_post($_REQUEST["remove"]);  
+  $bloglib->remove_post($_REQUEST["remove"]);  
 }
 
 // This script can receive the thresold

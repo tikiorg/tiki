@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/commcenter/commlib.php');
 
 if($feature_comm != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -24,7 +25,7 @@ $smarty->assign('receivedArticleId',$_REQUEST["receivedArticleId"]);
 
 
 if($_REQUEST["receivedArticleId"]) {
-  $info = $tikilib->get_received_article($_REQUEST["receivedArticleId"]);
+  $info = $commlib->get_received_article($_REQUEST["receivedArticleId"]);
   $info["topic"]=1;
 } else {
   $info = Array();
@@ -58,7 +59,7 @@ if(isset($_REQUEST["view"])) {
 if(isset($_REQUEST["accept"])) {
   // CODE TO ACCEPT A PAGE HERE
   $publishDate = mktime($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,$_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]);
-  $tikilib->update_received_article(
+  $commlib->update_received_article(
     $_REQUEST["receivedArticleId"], 
     $_REQUEST["title"],
     $_REQUEST["authorName"],
@@ -71,7 +72,7 @@ if(isset($_REQUEST["accept"])) {
     $_REQUEST["type"],
     $_REQUEST["rating"]
   );
-  $tikilib->accept_article($_REQUEST["receivedArticleId"],$_REQUEST["topic"]);
+  $commlib->accept_article($_REQUEST["receivedArticleId"],$_REQUEST["topic"]);
   $smarty->assign('preview','n');
   $smarty->assign('receivedArticleId',0);
 }
@@ -117,12 +118,12 @@ $smarty->assign('parsed_heading',$tikilib->parse_data($info["heading"]));
 $smarty->assign('parsed_body',$tikilib->parse_data($info["body"]));
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_received_article($_REQUEST["remove"]);
+  $commlib->remove_received_article($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
   $publishDate = mktime($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,$_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]);
-  $tikilib->update_received_article(
+  $commlib->update_received_article(
     $_REQUEST["receivedArticleId"], 
     $_REQUEST["title"],
     $_REQUEST["authorName"],
@@ -166,7 +167,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_received_articles($offset,$maxRecords,$sort_mode,$find);
+$channels = $commlib->list_received_articles($offset,$maxRecords,$sort_mode,$find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

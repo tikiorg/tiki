@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/filegals/filegallib.php');
 
 
 if($feature_file_galleries != 'y') {
@@ -164,7 +165,7 @@ if(isset($_REQUEST["upload"])) {
   if(isset($data)) {
       $smarty->assign('upload_name',$name);
       $smarty->assign('upload_size',$size);
-      $fileId = $tikilib->insert_file($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user,$fhash);
+      $fileId = $filegallib->insert_file($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user,$fhash);
       $smarty->assign_by_ref('fileId',$fileId);
       // Now that the image was inserted we can display the image here.
       $smarty->assign('show','y');
@@ -182,7 +183,7 @@ if(isset($_REQUEST["galleryId"])) {
 if($tiki_p_admin_file_galleries != 'y') {
   $galleries = $tikilib->list_visible_file_galleries(0,-1,'lastModif_desc', $user,'');
 } else {
-  $galleries = $tikilib->list_file_galleries(0,-1,'lastModif_desc', $user,'');
+  $galleries = $filegallib->list_file_galleries(0,-1,'lastModif_desc', $user,'');
 }
 for($i=0;$i<count($galleries["data"]);$i++) {
   if($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"],'file gallery')) {

@@ -60,8 +60,8 @@ class TikiLib {
     trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
     die;
   }
-  
-   function replace_task($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage)
+
+  function replace_task($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage)
   {
     $title = addslashes($title);	
     $descrpition = addslashes($description);
@@ -1726,29 +1726,10 @@ class TikiLib {
   // This function moves a page from the received pages to the wiki if the page does not exist if the
   // page already exists then the page must be renamed before being inserted in the wiki and this function
   // returns false
-  function accept_page($receivedPageId)
-  {
-    //create_page($name, $hits, $data, $lastModif, $comment, $user='system', $ip='0.0.0.0')
-    // CODE HERE
-    $info = $this->get_received_page($receivedPageId);
-    if($this->page_exists($info["pageName"])) return false;
-    $now=date("U");
-    $this->create_page($info["pageName"],0,$info["data"],$now,$info["comment"],$info["receivedFromUser"],$info["receivedFromSite"],$info["description"]);
-    $query = "delete from tiki_received_pages where receivedPageId = $receivedPageId";
-    $result = $this->query($query);
-    return true;
-  }
+//cut  
+  
 
-  function accept_article($receivedArticleId,$topic)
-  {
-    $info = $this->get_received_article($receivedArticleId);
-    $this->replace_article ($info["title"],$info["authorName"],$topic,$info["useImage"],$info["image_name"],$info["image_size"],$info["image_type"],$info["image_data"],$info["heading"],$info["body"],$info["publishDate"],$info["author"],0,$info["image_x"],$info["image_y"],$info["type"],$info["rating"]);
-    $query = "delete from tiki_received_articles where receivedArticleId = $receivedArticleId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function list_received_pages($offset,$maxRecords,$sort_mode='pageName_asc',$find)
+  /*shared*/ function list_received_pages($offset,$maxRecords,$sort_mode='pageName_asc',$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -1775,133 +1756,6 @@ class TikiLib {
     return $retval;
   }
 
-  function list_received_articles($offset,$maxRecords,$sort_mode='publishDate_desc',$find)
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (heading like '%".$find."%' or title like '%".$find."%' or body like '%".$find."% ')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_received_articles $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_received_articles $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function remove_received_page($receivedPageId)
-  {
-    $query = "delete from tiki_received_pages where receivedPageId=$receivedPageId";
-    $result = $this->query($query);
-  }
-
-  function remove_received_article($receivedArticleId)
-  {
-    $query = "delete from tiki_received_articles where receivedArticleId=$receivedArticleId";
-    $result = $this->query($query);
-  }
-
-  function rename_received_page($receivedPageId,$name)
-  {
-    $query = "update tiki_received_pages set pageName='$name' where receivedPageId=$receivedPageId";
-    $result = $this->query($query);
-  }
-
-  function get_received_page($receivedPageId)
-  {
-    $query = "select * from tiki_received_pages where receivedPageId=$receivedPageId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function get_received_article($receivedArticleId)
-  {
-    $query = "select * from tiki_received_articles where receivedArticleId=$receivedArticleId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function update_received_article($receivedArticleId,$title,$authorName,$useImage,$image_x,$image_y,$publishDate,$heading,$body,$type,$rating)
-  {
-    $title = addslashes($title);
-    $authorName = addslashes($authorName);
-    $heading = addslashes($heading);
-    $body = addslashes($body);
-    $size = strlen($body);
-    $hash = md5($title.$heading.$body);
-    $query = "update tiki_received_articles set
-      title = '$title',
-      authorName = '$authorName',
-      heading = '$heading',
-      body = '$body',
-      size = $size,
-      hash = '$hash',
-      useImage = '$useImage',
-      image_x = $image_x,
-      image_y = $image_y,
-      publishDate = $publishDate,
-      type = '$type',
-      rating = $rating
-      where receivedArticleId=$receivedArticleId";
-    $result = $this->query($query);
-  }
-
-  function update_received_page($receivedPageId, $pageName, $data, $comment)
-  {
-    $data = addslashes($data);
-    $pageName = addslashes($pageName);
-    $comment = addslashes($comment);
-    $query = "update tiki_received_pages set pageName='$pageName', data='$data', comment='$comment' where receivedPageId=$receivedPageId";
-    $result = $this->query($query);
-  }
-
-  function receive_article($site,$user,$title,$authorName,$size,$use_image,$image_name,$image_type,$image_size,$image_x,$image_y,$image_data,$publishDate,$created,$heading,$body,$hash,$author,$type,$rating)
-  {
-    $title = addslashes($title);
-    $authorName = addslashes($authorName);
-    $image_data = addslashes($image_data);
-    $heading = addslashes($heading);
-    $body = addslashes($body);
-    $now = date("U");
-    $query = "delete from tiki_received_articles where title='$title' and receivedFromsite='$site' and receivedFromUser='$user'";
-    $result = $this->query($query);
-    $query = "insert into tiki_received_articles(receivedDate,receivedFromSite,receivedFromUser,title,authorName,size,useImage,image_name,image_type,image_size,image_x,image_y,image_data,publishDate,created,heading,body,hash,author,type,rating)
-    values($now,'$site','$user','$title','$authorName',$size,'$use_image','$image_name','$image_type',$image_size,$image_x,$image_y,'$image_data',$publishDate,$created,'$heading','$body','$hash','$author','$type',$rating)";
-    $result = $this->query($query);
-
-  }
-
-  function receive_page($pageName,$data,$comment,$site,$user,$description)
-  {
-    $data = addslashes($data);
-    $pageNAme = addslashes($pageName);
-    $comment = addslashes($comment);
-    $description = addslashes($description);
-    $now = date("U");
-    // Remove previous page sent from the same site-user (an update)
-    $query = "delete from tiki_received_pages where pageName='$pageName' and receivedFromsite='$site' and receivedFromUser='$user'";
-    $result = $this->query($query);
-    // Now insert the page
-    $query = "insert into tiki_received_pages(pageName,data,comment,receivedFromSite, receivedFromUser, receivedDate,description)
-              values('$pageName','$data','$comment','$site','$user',$now,'$description')";
-    $result = $this->query($query);
-
-  }
-
-  // Functions for the communication center end ////
 
   // Functions for polls ////
   function list_polls($offset,$maxRecords,$sort_mode,$find)
@@ -2339,31 +2193,16 @@ class TikiLib {
   // rSS modules end ////
 
   // Functions for the menubuilder and polls////
-  function list_menus($offset,$maxRecords,$sort_mode,$find)
+  /*Shared*/ function get_menu($menuId)
   {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (name like '%".$find."%' or description like '%".$find."%')";
-    } else {
-      $mid="";
-    }
-    $query = "select * from tiki_menus $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_menus $mid";
+    $query = "select * from tiki_menus where menuId=$menuId";
     $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query = "select count(*) from tiki_menu_options where menuId=".$res["menuId"];
-      $res["options"]=$this->getOne($query);
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
+    if(!$result->numRows()) return false;
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
   }
 
-  function list_menu_options($menuId,$offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_menu_options($menuId,$offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -2385,81 +2224,6 @@ class TikiLib {
     return $retval;
   }
 
-  function replace_menu($menuId, $name, $description, $type)
-  {
-    $description = addslashes($description);
-    $name = addslashes($name);
-    // Check the name
-
-
-    if($menuId) {
-      $query = "update tiki_menus set name='$name',description='$description',type='$type' where menuId=$menuId";
-    } else {
-      $query = "replace into tiki_menus(name,description,type)
-                values('$name','$description','$type')";
-    }
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_max_option($menuId)
-  {
-    $query = "select max(position) from tiki_menu_options where menuId=$menuId";
-    $max = $this->getOne($query);
-    return $max;
-  }
-
-  function replace_menu_option($menuId,$optionId, $name, $url, $type, $position)
-  {
-
-
-    $name = addslashes($name);
-    // Check the name
-
-    if($optionId) {
-      $query = "update tiki_menu_options set name='$name',url='$url',type='$type',position=$position where optionId=$optionId";
-    } else {
-      $query = "replace into tiki_menu_options(menuId,name,url,type,position)
-                values($menuId,'$name','$url','$type',$position)";
-    }
-
-    $result = $this->query($query);
-    return true;
-  }
-
-  function remove_menu($menuId)
-  {
-    $query = "delete from tiki_menus where menuId=$menuId";
-    $result = $this->query($query);
-    $query = "delete from tiki_menu_options where menuId=$menuId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function remove_menu_option($optionId)
-  {
-    $query = "delete from tiki_menu_options where optionId=$optionId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_menu($menuId)
-  {
-    $query = "select * from tiki_menus where menuId=$menuId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function get_menu_option($optionId)
-  {
-    $query = "select * from tiki_menu_options where optionId=$optionId";
-    $result = $this->query($query);
-    if(!$result->numRows()) return false;
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
 
   // Menubuilder ends ////
 
@@ -2680,7 +2444,7 @@ class TikiLib {
   }
 
   // FILE GALLERIES ////
-  function list_files($offset,$maxRecords,$sort_mode,$find)
+  /*shared*/ function list_files($offset,$maxRecords,$sort_mode,$find)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -2702,7 +2466,7 @@ class TikiLib {
     return $retval;
   }
 
-  function get_file($id)
+  /*shared*/ function get_file($id)
   {
     $query = "select path,galleryId,filename,filetype,data from tiki_files where fileId='$id'";
     $result = $this->query($query);
@@ -2710,7 +2474,7 @@ class TikiLib {
     return $res;
   }
 
-  function get_files($offset,$maxRecords,$sort_mode,$find,$galleryId)
+  /*Shared*/ function get_files($offset,$maxRecords,$sort_mode,$find,$galleryId)
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -2732,50 +2496,23 @@ class TikiLib {
     return $retval;
   }
 
-  function remove_file($id)
-  {
-    global $fgal_use_dir;
-    $path = $this->getOne("select path from tiki_files where fileId=$id");
-    if($path) {
-      unlink($fgal_use_dir.$path);
-    }
-    $query = "delete from tiki_files where fileId=$id";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function add_file_hit($id)
+  /*shared*/ function add_file_hit($id)
   {
     $query = "update tiki_files set downloads=downloads+1 where fileId=$id";
     $result = $this->query($query);
     return true;
   }
 
-  function add_file_gallery_hit($id)
+  /*shared*/function add_file_gallery_hit($id)
   {
     $query = "update tiki_file_galleries set hits=hits+1 where galleryId=$id";
     $result = $this->query($query);
     return true;
   }
 
-  function insert_file($galleryId,$name,$description,$filename,  $data, $size,$type ,$user,$path)
-  {
-    $name = addslashes(strip_tags($name));
-    $path = addslashes($path);
-    $description = addslashes(strip_tags($description));
-    $data = addslashes($data);
-    $now = date("U");
-    $query = "insert into tiki_files(galleryId,name,description,filename,filesize,filetype,data,user,created,downloads,path)
-                          values($galleryId,'$name','$description','$filename',$size,'$type','$data','$user',$now,0,'$path')";
-    $result = $this->query($query);
-    $query = "update tiki_file_galleries set lastModif=$now where galleryId=$galleryId";
-    $result = $this->query($query);
-    $query = "select max(fileId) from tiki_files where created=$now";
-    $fileId = $this->getOne($query);
-    return $fileId;
-  }
+  
 
-  function get_file_gallery($id)
+  /*shared*/ function get_file_gallery($id)
   {
     $query = "select * from tiki_file_galleries where galleryId='$id'";
     $result = $this->query($query);
@@ -2783,76 +2520,9 @@ class TikiLib {
     return $res;
   }
 
-  function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find)
-  {
-    global $tiki_p_admin_file_galleries;
-    // If $user is admin then get ALL galleries, if not only user galleries are shown
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    $old_sort_mode ='';
-    if(in_array($sort_mode,Array('files desc','files asc'))) {
-      $old_offset = $offset;
-      $old_maxRecords = $maxRecords;
-      $old_sort_mode = $sort_mode;
-      $sort_mode ='user desc';
-      $offset = 0;
-      $maxRecords = -1;
-    }
+  
 
-    // If the user is not admin then select it's own galleries or public galleries
-    if (($tiki_p_admin_file_galleries == 'y') or ($user == 'admin')) {
-       $whuser = "";
-    } else {
-      $whuser = "where user='$user' or public='y'";
-    }
-
-    if($find) {
-      if(empty($whuser)) {
-        $whuser = "where name like '%".$find."%' or description like '%".$find.".%'";
-      } else {
-        $whuser .= " and name like '%".$find."%' or description like '%".$find.".%'";
-      }
-    }
-
-    $query = "select * from tiki_file_galleries $whuser order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_file_galleries $whuser";
-    $result = $this->query($query);
-    $result_cant = $this->query($query_cant);
-    $res2 = $result_cant->fetchRow();
-    $cant = $res2[0];
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["name"] = $res["name"];
-      $gid = $res["galleryId"];
-      $aux["id"] = $gid;
-      $aux["visible"] = $res["visible"];
-      $aux["galleryId"] = $res["galleryId"];
-      $aux["description"] = $res["description"];
-      $aux["created"] = $res["created"];
-      $aux["lastModif"] = $res["lastModif"];
-      $aux["user"] = $res["user"];
-      $aux["hits"] = $res["hits"];
-      $aux["public"] = $res["public"];
-      $aux["files"] = $this->getOne("select count(*) from tiki_files where galleryId='$gid'");
-      $ret[] = $aux;
-    }
-    if($old_sort_mode == 'files asc') {
-      usort($ret,'compare_files');
-    }
-    if($old_sort_mode == 'files desc') {
-      usort($ret,'r_compare_files');
-    }
-
-    if(in_array($old_sort_mode,Array('files desc','files asc'))) {
-      $ret = array_slice($ret, $old_offset, $old_maxRecords);
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function list_visible_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find)
+  /*shared*/ function list_visible_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find)
   {
     // If $user is admin then get ALL galleries, if not only user galleries are shown
     $sort_mode = str_replace("_"," ",$sort_mode);
@@ -2918,53 +2588,6 @@ class TikiLib {
     $retval["data"] = $ret;
     $retval["cant"] = $cant;
     return $retval;
-  }
-
-  function remove_file_gallery($id)
-  {
-    global $fgal_use_dir;
-    $query = "select path from tiki_files where galleryId='$id'";
-    $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) { 
-      $path = $res["path"];
-      if($path) {
-        @unlink($fgal_use_dir.$path);
-      }
-    }
-    $query = "delete from tiki_file_galleries where galleryId='$id'";
-    $result = $this->query($query);
-    $query = "delete from tiki_files where galleryId='$id'";
-    $result = $this->query($query);
-    $this->remove_object('file gallery',$id);
-    return true;
-  }
-
-  function get_file_gallery_info($id)
-  {
-    $query = "select * from tiki_file_galleries where galleryId='$id'";
-    $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  function replace_file_gallery($galleryId, $name, $description, $user,$maxRows,$public,$visible='y')
-  {
-    // if the user is admin or the user is the same user and the gallery exists then replace if not then
-    // create the gallary if the name is unused.
-    $name = addslashes(strip_tags($name));
-    $description = addslashes(strip_tags($description));
-    $now = date("U");
-    if($galleryId>0) {
-      $query = "update tiki_file_galleries set name='$name', maxRows=$maxRows, description='$description',lastModif=$now, public='$public', visible='$visible' where galleryId=$galleryId";
-      $result = $this->query($query);
-    } else {
-      // Create a new record
-      $query =  "insert into tiki_file_galleries(name,description,created,user,lastModif,maxRows,public,hits,visible)
-                                    values ('$name','$description',$now,'$user',$now,$maxRows,'$public',0,'$visible')";
-      $result = $this->query($query);
-      $galleryId=$this->getOne("select max(galleryId) from tiki_file_galleries where name='$name' and lastModif=$now");
-    }
-    return $galleryId;
   }
 
   function logui($line) {
@@ -3519,7 +3142,7 @@ class TikiLib {
   }
 
   // BLOG METHODS ////
-  function list_blogs($offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='')
+  /*shared*/ function list_blogs($offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='')
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -3540,34 +3163,8 @@ class TikiLib {
     $retval["cant"] = $cant;
     return $retval;
   }
-
-  function add_blog_hit($blogId)
-  {
-    $query = "update tiki_blogs set hits = hits+1 where blogId=$blogId";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function replace_blog($title,$description,$user,$public,$maxPosts,$blogId)
-  {
-    $title = addslashes($title);
-    $description = addslashes($description);
-    $now = date("U");
-    if($blogId) {
-      $query = "update tiki_blogs set title='$title',description='$description',user='$user',public='$public',lastModif=$now,maxPosts=$maxPosts where blogId=$blogId";
-      $result = $this->query($query);
-    } else {
-      $query = "insert into tiki_blogs(created,lastModif,title,description,user,public,posts,maxPosts,hits)
-                       values($now,$now,'$title','$description','$user','$public',0,$maxPosts,0)";
-      $result = $this->query($query);
-      $query2 = "select max(blogId) from tiki_blogs where lastModif=$now";
-      $blogId=$this->getOne($query2);
-    }
-
-    return $blogId;
-  }
-
-  function get_blog($blogId)
+  
+  /*shared*/ function get_blog($blogId)
   {
     $query = "select * from tiki_blogs where blogId=$blogId";
     $result = $this->query($query);
@@ -3579,84 +3176,8 @@ class TikiLib {
     }
     return $res;
   }
-
-  function list_blog_posts($blogId, $offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='', $date='')
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where blogId=$blogId and (data like '%".$find."%') ";
-    } else {
-      $mid=" where blogId=$blogId ";
-    }
-    if($date) {
-      $mid.=" and  created<=$date ";
-    }
-    $query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_blog_posts $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $hash=md5('post'.$res["postId"]);
-      $cant_com = $this->getOne("select count(*) from tiki_comments where object='$hash'");
-      $res["comments"]=$cant_com;
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function list_all_blog_posts($offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='', $date='')
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where (data like '%".$find."%') ";
-    } else {
-      $mid="";
-    }
-    if($date) {
-      if($mid) {
-      $mid.=" and  created<=$date ";
-      } else {
-      $mid.=" where created<=$date ";
-      }
-    }
-    $query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_blog_posts $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query2 = "select title from tiki_blogs where blogId=".$res["blogId"];
-      $title = $this->getOne($query2);
-      $res["blogtitle"]=$title;
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function blog_post($blogId,$data,$user)
-  {
-    // update tiki_blogs and call activity functions
-    $data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
-    $data=addslashes($data);
-    $now = date("U");
-    $query = "insert into tiki_blog_posts(blogId,data,created,user) values($blogId,'$data',$now,'$user')";
-    $result = $this->query($query);
-    $query = "select max(postId) from tiki_blog_posts where created=$now and user='$user'";
-    $id = $this->getOne($query);
-    $query = "update tiki_blogs set lastModif=$now,posts=posts+1 where blogId=$blogId";
-    $result = $this->query($query);
-    $this->add_blog_activity($blogId);
-    return $id;
-  }
-
-  function list_user_blogs($user,$include_public=false)
+  
+  /*shared*/function list_user_blogs($user,$include_public=false)
   {
     $query = "select * from tiki_blogs where user='$user'";
     if($include_public) {
@@ -3670,51 +3191,7 @@ class TikiLib {
     return $ret;
   }
 
-  function remove_blog($blogId)
-  {
-    $query = "delete from tiki_blogs where blogId=$blogId";
-    $result = $this->query($query);
-    $query = "delete from tiki_blog_posts where blogId=$blogId";
-    $result = $this->query($query);
-    $this->remove_object('blog',$blogId);
-    return true;
-  }
-
-  function remove_post($postId)
-  {
-    $query = "select blogId from tiki_blog_posts where postId=$postId";
-    $blogId = $this->getOne($query);
-    if($blogId) {
-      $query = "delete from tiki_blog_posts where postId=$postId";
-      $result = $this->query($query);
-      $query = "update tiki_blogs set posts=posts-1 where blogId=$blogId";
-      $result = $this->query($query);
-    }
-    return true;
-  }
-
-  function get_post($postId)
-  {
-    $query = "select * from tiki_blog_posts where postId=$postId";
-    $result = $this->query($query);
-
-    if($result->numRows()) {
-      $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    } else {
-      return false;
-    }
-    return $res;
-  }
-
-  function update_post($postId,$data,$user)
-  {
-    $data = addslashes($data);
-    $query = "update tiki_blog_posts set data='$data',user='$user' where postId=$postId";
-    $result = $this->query($query);
-
-  }
-
-  function list_posts($offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='')
+  /*shared*/ function list_posts($offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='')
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
@@ -3743,62 +3220,6 @@ class TikiLib {
     return $retval;
   }
 
-  function list_user_posts($user,$offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='')
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" where user=$user and (data like '%".$find."%') ";
-    } else {
-      $mid=' where user=$user ';
-    }
-    $query = "select * from tiki_blog_posts $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_blog_posts $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
-  function add_blog_activity($blogId)
-  {
-
-    //Caclulate activity, update tiki_blogs and purge activity table
-    $today = mktime(0,0,0,date("m"),date("d"),date("Y"));
-    $day0 = $today - (24*60*60);
-    $day1 = $today - (2*24*60*60);
-    $day2 = $today - (3*24*60*60);
-    // Purge old activity
-    $query="delete from tiki_blog_activity where day<$day2";
-    $result = $this->query($query);
-    // Register new activity
-    $query = "select * from tiki_blog_activity where blogId=$blogId and day=$today";
-    $result = $this->query($query);
-    if($result->numRows()) {
-      $query = "update tiki_blog_activity set posts=posts+1 where blogId=$blogId and day=$today";
-    } else {
-      $query = "insert into tiki_blog_activity(blogId,day,posts) values($blogId,$today,1)";
-    }
-    $result = $this->query($query);
-    // Calculate activity
-    $query = "select posts from tiki_blog_activity where blogId=$blogId and day=$today";
-    $vtoday = $this->getOne($query);
-    $query = "select posts from tiki_blog_activity where blogId=$blogId and day=$day0";
-    $day0 = $this->getOne($query);
-    $query = "select posts from tiki_blog_activity where blogId=$blogId and day=$day1";
-    $day1 = $this->getOne($query);
-    $query = "select posts from tiki_blog_activity where blogId=$blogId and day=$day2";
-    $day2 = $this->getOne($query);
-    $activity = (2 * $vtoday) + ($day0) + (0.5 * $day1) + (0.25 * $day2);
-    // Update tiki_blogs with activity information
-    $query = "update tiki_blogs set activity=$activity where blogId=$blogId";
-    $result = $this->query($query);
-  }
 
   // CMS functions -ARTICLES- & -SUBMISSIONS- ////
   function list_articles($offset = 0,$maxRecords = -1,$sort_mode = 'publishDate_desc', $find='', $date='',$user,$type='',$topicId='')

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/blogs/bloglib.php');
 
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -60,7 +61,7 @@ if(!$blog_data) {
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
-$tikilib->add_blog_hit($_REQUEST["blogId"]);
+$bloglib->add_blog_hit($_REQUEST["blogId"]);
 $smarty->assign('blogId',$_REQUEST["blogId"]);
 $smarty->assign('title',$blog_data["title"]);
 $smarty->assign('description',$blog_data["description"]);
@@ -73,7 +74,7 @@ $smarty->assign('creator',$blog_data["user"]);
 $smarty->assign('activity',$blog_data["activity"]);
 
 if(isset($_REQUEST["remove"])) {
-  $data = $tikilib->get_post($_REQUEST["remove"]);
+  $data = $bloglib->get_post($_REQUEST["remove"]);
   if(!$ownsblog) {
     if(!$user || $data["user"]!=$user) {
       if($tiki_p_blog_admin != 'y') {
@@ -83,7 +84,7 @@ if(isset($_REQUEST["remove"])) {
       }
     } 
   }
-  $tikilib->remove_post($_REQUEST["remove"]);  
+  $bloglib->remove_post($_REQUEST["remove"]);  
 }
 
 
@@ -134,7 +135,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data["maxPosts"], $sort_mode, $find, $pdate);
+$listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data["maxPosts"], $sort_mode, $find, $pdate);
 for($i=0;$i<count($listpages["data"]);$i++) {
   $listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($listpages["data"][$i]["data"]);
   //print(htmlspecialchars($listpages["data"][$i]["parsed_data"]));
