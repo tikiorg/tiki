@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.24 2003-09-28 14:06:05 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.25 2003-11-12 14:58:49 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
