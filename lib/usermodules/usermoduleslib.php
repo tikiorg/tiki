@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.14 2003-08-14 14:13:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.15 2003-08-28 11:08:16 redflo Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -27,46 +27,48 @@ class UserModulesLib extends TikiLib {
 	}
 
 	function unassign_user_module($name, $user) {
-		$query = "delete from `tiki_user_assigned_modules` where `name`='$name' and user='$user'";
+		$query = "delete from `tiki_user_assigned_modules` where `name`=? and `user`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($name, $user));
 	}
 
 	function up_user_module($name, $user) {
-		$query = "update `tiki_user_assigned_modules` set `ord`=ord-1 where `name`='$name' and user='$user'";
+		$query = "update `tiki_user_assigned_modules` set `ord`=`ord`-1 where `name`=? and `user`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($name, $user));
 	}
 
 	function down_user_module($name, $user) {
-		$query = "update `tiki_user_assigned_modules` set `ord`=ord+1 where `name`='$name' and user='$user'";
+		$query = "update `tiki_user_assigned_modules` set `ord`=`ord`+1 where `name`=? and `user`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($name, $user));
 	}
 
 	function set_column_user_module($name, $user, $position) {
-		$query = "update `tiki_user_assigned_modules` set `position`='$position' where `name`='$name' and user='$user'";
-		$result = $this->query($query);
+		$query = "update `tiki_user_assigned_modules` set `position`=? where `name`=? and `user`=?";
+		$result = $this->query($query,array($position,$name, $user));
 	}
 
 	function assign_user_module($module, $position, $order, $user) {
-		$query = "select * from `tiki_modules` where `name`='$module'";
+		$query = "select * from `tiki_modules` where `name`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($module));
 		$res = $result->fetchRow();
+		$query1="delete from `tiki_user_assigned_modules` where `name`=? and `user`=?";
+		$result1=$this->query($query1,array($module,$user),-1,-1,false);
 		$query2 = '
-    	REPLACE INTO
-    		tiki_user_assigned_modules
+    	insert INTO
+    		`tiki_user_assigned_modules`
     	(
-    		user,
-    		name,
-    		position,
-    		ord,
-    		type,
-    		title,
-    		cache_time,
-    		rows,
-    		groups
+    		`user`,
+    		`name`,
+    		`position`,
+    		`ord`,
+    		`type`,
+    		`title`,
+    		`cache_time`,
+    		`rows`,
+    		`groups`
     	) VALUES
     		(?,?,?,?,?,?,?,?,?)
     ';
@@ -86,9 +88,9 @@ class UserModulesLib extends TikiLib {
 	}
 
 	function get_user_assigned_modules($user) {
-		$query = "select * from `tiki_user_assigned_modules` where `user`='$user' order by position asc,ord asc";
+		$query = "select * from `tiki_user_assigned_modules` where `user`=? order by `position` asc,`ord` asc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($user));
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -99,9 +101,9 @@ class UserModulesLib extends TikiLib {
 	}
 
 	function get_user_assigned_modules_pos($user, $pos) {
-		$query = "select * from `tiki_user_assigned_modules` where `user`='$user' and position='$pos' order by ord asc";
+		$query = "select * from `tiki_user_assigned_modules` where `user`=? and `position`=? order by `ord` asc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($user, $pos));
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -112,9 +114,9 @@ class UserModulesLib extends TikiLib {
 	}
 
 	function get_assigned_modules_user($user, $position) {
-		$query = "select * from `tiki_user_assigned_modules` where `user`='$user' and position='$position' order by ord asc";
+		$query = "select * from `tiki_user_assigned_modules` where `user`=? and `position`=? order by `ord` asc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($user, $position));
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -125,20 +127,20 @@ class UserModulesLib extends TikiLib {
 	}
 
 	function user_has_assigned_modules($user) {
-		$query = "select `name` from `tiki_user_assigned_modules` where `user`='$user'";
+		$query = "select `name` from `tiki_user_assigned_modules` where `user`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($user));
 		return $result->numRows();
 	}
 
 	// Creates user assigned modules copying from tiki_modules
 	function create_user_assigned_modules($user) {
-		$query = "delete from `tiki_user_assigned_modules` where `user`='$user'";
+		$query = "delete from `tiki_user_assigned_modules` where `user`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($user));
 		global $modallgroups;
-		$query = "select * from tiki_modules";
-		$result = $this->query($query);
+		$query = "select * from `tiki_modules`";
+		$result = $this->query($query,array());
 		$ret = array();
 		$user_groups = $this->get_user_groups($user);
 
@@ -158,20 +160,23 @@ class UserModulesLib extends TikiLib {
 			}
 
 			if ($mod_ok) {
+				$query1="delete from `tiki_user_assigned_modules` where `name`=? and `user`=?";
+				$result1=$this->query($query1,array($res['name'],$user),-1,-1,false);	
+
 				$query2 = "
-			REPLACE INTO
-				tiki_user_assigned_modules
+			insert INTO
+				`tiki_user_assigned_modules`
 			(
-				user,
-				name,
-				position,
-				ord,
-				type,
-				title,
-				cache_time,
-				rows,
-				groups,
-				params
+				`user`,
+				`name`,
+				`position`,
+				`ord`,
+				`type`,
+				`title`,
+				`cache_time`,
+				`rows`,
+				`groups`,
+				`params`
 			) VALUES (
 				?,?,?,?,?,?,?,?,?,?
 			)
@@ -199,8 +204,8 @@ class UserModulesLib extends TikiLib {
 	function get_user_assignable_modules($user) {
 		global $modallgroups;
 
-		$query = "select * from tiki_modules";
-		$result = $this->query($query);
+		$query = "select * from `tiki_modules`";
+		$result = $this->query($query,array());
 		$ret = array();
 		$user_groups = $this->get_user_groups($user);
 
@@ -209,7 +214,7 @@ class UserModulesLib extends TikiLib {
 
 			// The module must not be assigned
 			$isas = $this->getOne(
-				"select count(*) from `tiki_user_assigned_modules` where `name`='" . $res["name"] . "' and user='" . $user . "'");
+				"select count(*) from `tiki_user_assigned_modules` where `name`=? and `user`=?",array($res["name"],$user));
 
 			if (!$isas) {
 				if ($res["groups"] && $modallgroups != 'y' && $user != 'admin') {
@@ -250,15 +255,15 @@ class UserModulesLib extends TikiLib {
     	$r = $this->query($query, array($name, $user));
         $cur = $r->fetchRow();
         // Get name and order of module to swap with
-	    $query = "select `name`,`ord` from `tiki_user_assigned_modules` where `position`=? and ord".$op."? and user=? order by ord ".($op == '<' ? 'desc' : '');
+	    $query = "select `name`,`ord` from `tiki_user_assigned_modules` where `position`=? and `ord`".$op."? and `user`=? order by `ord` ".($op == '<' ? 'desc' : '');
         $r = $this->query($query, array($cur['position'], $cur['ord'], $user));
         $swap = $r->fetchRow();
         if (!empty($swap))
         {
             // Swap 2 adjacent modules
-            $query = "update `tiki_user_assigned_modules` set `ord`=? where `name`=? and user=?";
+            $query = "update `tiki_user_assigned_modules` set `ord`=? where `name`=? and `user`=?";
   	        $this->query($query, array($swap['ord'], $name, $user));
-            $query = "update `tiki_user_assigned_modules` set `ord`=? where `name`=? and user=?";
+            $query = "update `tiki_user_assigned_modules` set `ord`=? where `name`=? and `user`=?";
   	        $this->query($query, array($cur['ord'], $swap['name'], $user));
         }
  	}
@@ -266,7 +271,7 @@ class UserModulesLib extends TikiLib {
     function move_module($name, $user)
     {
         // Get current position
-	    $query = "select `position` from `tiki_user_assigned_modules` where `name`=? and user=?";
+	    $query = "select `position` from `tiki_user_assigned_modules` where `name`=? and `user`=?";
     	$r = $this->query($query, array($name, $user));
         $res = $r->fetchRow();
         $this->set_column_user_module($name, $user, ($res['position'] == 'r' ? 'l' : 'r'));
@@ -274,15 +279,15 @@ class UserModulesLib extends TikiLib {
 	/// Add a module to all the user who have assigned module and who don't have already this module
 	function add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type) {
 		// for the user who already has this module, update only the type
-		$this->query = "update tiki_user_assigned_modules set type='$type' where name='$name'" ;
+		$this->query("update `tiki_user_assigned_modules` set `type`=? where `name`=?",array($type,$name)) ;
 		// for the user who doesn't have this module
-		$query = "select distinct t1.user from tiki_user_assigned_modules as t1 left join tiki_user_assigned_modules as t2 on t1.user=t2.user and t2.name='$name' where t2.name is null";   
-		$result = $this->query($query);
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		$query = "select distinct t1.`user` from `tiki_user_assigned_modules` as t1 left join `tiki_user_assigned_modules` as t2 on t1.`user`=t2.`user` and t2.`name`=? where t2.`name` is null";   
+		$result = $this->query($query,array($name));
+		while ($res = $result->fetchRow()) {
  			$user = $res["user"];
-			$query = "insert into tiki_user_assigned_modules(user,name,position,ord,type,title,cache_time,rows,groups)
-			values('$user','$name','$position','$order','$type','$title','$cache_time','$rows','$groups')";
- 			$this->query($query);
+			$query = "insert into `tiki_user_assigned_modules`(`user`,`name`,`position`,`ord`,`type`,`title`,`cache_time`,`rows`,`groups`)
+			values(?,?,?,?,?,?,?,?,?)";
+ 			$this->query($query,array($user,$name,$position,$order,$type,$title,$cache_time,$rows,$groups));
 		}
 	} 
 }
