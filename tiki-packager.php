@@ -9,8 +9,8 @@
 */
 
 require_once ('tiki-setup.php');
-require_once ('lib/tikiticketlib.php');
-require_once ('lib/packages/packagerlib.php');
+require_once ('tikiticketlib.php');
+require_once ('packages/packagerlib.php');
 
 if ($user != 'admin') 
 {
