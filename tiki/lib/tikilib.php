@@ -1362,24 +1362,25 @@ function get_user_groups($user) {
 // Functions for FAQs ////
 /*shared*/
 function list_faqs($offset, $maxRecords, $sort_mode, $find) {
-    $sort_mode = str_replace("_", " ", $sort_mode);
 
     if ($find) {
-	$findesc = $this->qstr('%' . $find . '%');
+	$findesc = '%' . $find . '%';
 
-	$mid = " where (`title` like $findesc or `description` like $findesc)";
+	$mid = " where (`title` like ? or `description` like ?)";
+	$bindvars=array($findesc,$findesc);
     } else {
 	$mid = "";
+	$bindvars=array();
     }
 
-    $query = "select * from `tiki_faqs` $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from `tiki_faqs` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_faqs` $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$bindvars);
     $ret = array();
 
     while ($res = $result->fetchRow()) {
-	$res["suggested"] = $this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=" . $res["faqId"]);
+	$res["suggested"] = $this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=?",array((int) $res["faqId"]));
 
 	$ret[] = $res;
     }
@@ -1739,14 +1740,14 @@ function remove_object($type, $id) {
 function uncategorize_object($type, $id) {
     // Fixed query. -rlpowell
     $query = "select `catObjectId`  from `tiki_categorized_objects` where `type`=? and `objId`=?";
-    $catObjectId = $this->getOne($query, array($type,$id));
+    $catObjectId = $this->getOne($query, array((string) $type,(string) $id));
 
     if ($catObjectId) {
-	$query = "delete from `tiki_category_objects` where `catObjectId`=$catObjectId";
+	$query = "delete from `tiki_category_objects` where `catObjectId`=?";
 
-	$result = $this->query($query);
-	$query = "delete from `tiki_categorized_objects` where `catObjectId`=$catObjectId";
-	$result = $this->query($query);
+	$result = $this->query($query,array((int) $catObjectId));
+	$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
+	$result = $this->query($query,array((int) $catObjectId));
     }
 }
 
