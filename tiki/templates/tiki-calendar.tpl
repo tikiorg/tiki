@@ -33,8 +33,8 @@ onclick="document.getElementById('calswitch').click();document.getElementById('c
 {foreach item=k from=$listcals}
 <div class="calcheckbox"
 onclick="document.getElementById('groupcal_{$k}').checked=!document.getElementById('groupcal_{$k}').checked;"
-onmouseout="this.style.backgroundColor='none';" 
-onmouseover="this.style.backgroundColor='#cccccc';"
+onmouseout="this.style.textDecoration='none';" 
+onmouseover="this.style.textDecoration='underline';"
 ><input type="checkbox" name="calIds[]" value="{$k}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if}
 onclick="this.checked=!this.checked;"/>
 {$infocals.$k.name} (id #{$k})
@@ -50,8 +50,8 @@ onclick="document.getElementById('tikiswitch').click();document.getElementById('
 {if $vi.feature eq 'y' and $vi.right eq 'y'}
 <div class="calcheckbox"
 onclick="document.getElementById('tikical_{$ki}').checked=!document.getElementById('tikical_{$ki}').checked;"
-onmouseout="this.style.backgroundColor='#ffffff';"  
-onmouseover="this.style.backgroundColor='#cccccc';" 
+onmouseout="this.style.textDecoration='none';"  
+onmouseover="this.style.textDecoration='underline';" 
 ><input type="checkbox" name="tikicals[]" value="{$ki}" id="tikical_{$ki}" {if $tikical.$ki}checked="checked"{/if} onclick="this.checked=!this.checked;"/>
 <span class="Cal{$ki}"> = {$vi.label}</span></div>
 {/if}
