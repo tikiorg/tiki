@@ -387,7 +387,7 @@ class RankLib extends TikiLib {
 	function wiki_ranking_top_authors($limit) {
 		$query = "select distinct `user` from `tiki_pages`";
 
-		$result = $this->query($query,array());
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -415,7 +415,7 @@ class RankLib extends TikiLib {
 	function cms_ranking_top_authors($limit) {
 		$query = "select distinct `author` from `tiki_articles`";
 
-		$result = $this->query($query,array());
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
