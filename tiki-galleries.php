@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.15 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.16 2003-09-29 06:48:57 traivor Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -132,7 +132,7 @@ if (isset($_REQUEST["edit"])) {
 
 		// If the user can create a gallery then check if he can edit THIS gallery
 		if ($_REQUEST["galleryId"] > 0) {
-			$info = $tikilib->get_gallery_info($_REQUEST["galleryId"]);
+			$info = $imagegallib->get_gallery_info($_REQUEST["galleryId"]);
 
 			if (!$user || $info["user"] != $user) {
 				$smarty->assign('msg', tra("Permission denied you cannot edit this gallery"));
@@ -210,7 +210,7 @@ if (isset($_REQUEST["edit"])) {
 
 if (isset($_REQUEST["removegal"])) {
 	if ($tiki_p_admin_galleries != 'y') {
-		$info = $tikilib->get_gallery_info($_REQUEST["removegal"]);
+		$info = $imagegallib->get_gallery_info($_REQUEST["removegal"]);
 
 		if (!$user || $info["user"] != $user) {
 			$smarty->assign('msg', tra("Permission denied you cannot remove this gallery"));
