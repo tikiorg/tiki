@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.39 2004-04-11 16:58:14 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.40 2004-04-12 14:42:35 lphuberdeau Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -281,3 +281,26 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sheet','n');
 
 # added on 2004-04-11 by mose at dgd request
 ALTER TABLE `tiki_tracker_fields` CHANGE `name` `name` VARCHAR( 255 ) DEFAULT NULL ;
+
+# added on 2004-04-12 by lphuberdeau - TikiSheet base tables
+CREATE TABLE tiki_sheet_values (
+  sheetId int(8) NOT NULL default '0',
+  begin int(10) NOT NULL default '0',
+  end int(10) default NULL,
+  rowIndex int(4) NOT NULL default '0',
+  columnIndex int(4) NOT NULL default '0',
+  value varchar(255) default NULL,
+  calculation varchar(255) default NULL,
+  width int(4) NOT NULL default '1',
+  height int(4) NOT NULL default '1',
+  UNIQUE KEY sheetId (sheetId,begin,rowIndex,columnIndex),
+  KEY sheetId_2 (sheetId,rowIndex,columnIndex)
+) TYPE=MyISAM;
+
+CREATE TABLE tiki_sheets (
+  sheetId int(8) NOT NULL auto_increment,
+  title varchar(200) NOT NULL default '',
+  description text,
+  author varchar(200) NOT NULL default '',
+  PRIMARY KEY  (sheetId)
+) TYPE=MyISAM;
