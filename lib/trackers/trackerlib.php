@@ -7,6 +7,11 @@ class TrackerLib extends TikiLib {
 		parent::TikiLib($db);
 	}
 
+	function array_csort($marray, $column) {
+		foreach ($marray as $key=>$row) { $sortarr[$key] = $row[$column]; }
+		array_multisort($sortarr, $marray); return $marray;
+	}
+
 	/* Tiki tracker construction options */
 	// Return an array with items assigned to the user or a user group
 	function list_tracker_items($trackerId, $offset, $maxRecords, $sort_mode, $fields, $status = '') {
@@ -23,7 +28,11 @@ class TrackerLib extends TikiLib {
 				$filters[$fieldId] = $aux;
 			}
 		}
-
+		$csort_mode = '';
+		if (substr($sort_mode,0,2) == "f_") {
+			list($a,$csort_mode,$corder) = split('_',$sort_mode);
+			$sort_mode = "lastModif_desc";
+		}
 		$mid = " where `trackerId`=? ";
 		$bindvars=array((int) $trackerId);
 
@@ -66,7 +75,13 @@ class TrackerLib extends TikiLib {
 
 				$fields[] = $res2;
 			}
-
+			if ($csort_mode) {
+				if ($corder == "asc") {
+					$this->array_csort($fields,$csort_mode,SORT_ASC);
+				} else {
+					$this->array_csort($fields,$csort_mode,SORT_DESC);
+				}
+			}
 			$res["field_values"] = $fields;
 			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
 
@@ -593,7 +608,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function field_types() {
-		$type['c'] = array('label'=>tra('checkbox'),      'opt'=>false);
+		$type['c'] = array('label'=>tra('checkbox'),      'opt'=>true,  'help'=>tra('Checkbox options: put 1 if you need that next field is on the same row'));
 		$type['t'] = array('label'=>tra('text field'),    'opt'=>false);
 		$type['a'] = array('label'=>tra('textarea'),      'opt'=>false);
 		$type['d'] = array('label'=>tra('drop down'),     'opt'=>true,  'help'=>tra('Dropdown options : list of items separated with commas') );
