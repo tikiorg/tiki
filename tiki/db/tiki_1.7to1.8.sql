@@ -261,6 +261,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_image_gallery','n')
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_wiki','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('sender_email','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('session_db','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('session_lifetime','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_date_format','%a %d of %b, %Y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('short_time_format','%H:%M %Z');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('siteTitle','');

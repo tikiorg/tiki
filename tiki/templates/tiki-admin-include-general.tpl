@@ -189,11 +189,13 @@
             {/if}
         </td>
       </tr><tr>
-        <td class="form">{tr}Store session data in Database{/tr}:</td>
+        <td class="form">{tr}Store session data in database{/tr}:</td>
         <td><input type="checkbox" name="session_db"
               {if $session_db eq 'y'}checked="checked"{/if}/>
         </td>
       </tr><tr>
+        <td class="form">{tr}Session lifetime in minutes{/tr}:</td>
+        <td><input size="5" type="text" name="session_lifetime" value="{$session_lifetime|escape}" /></td>
       </tr><tr>
         <td class="form">{tr}Use proxy{/tr}:</td>
         <td><input type="checkbox" name="use_proxy"
