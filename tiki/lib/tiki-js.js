@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.16 2003-10-02 14:18:07 lrargerich Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.17 2003-10-27 17:06:36 sylvieg Exp $
 
 function toggle_dynamic_var($name) {
 	name1 = 'dyn_'+$name+'_display';
@@ -408,5 +408,14 @@ function targetBlank(url,mode) {
    }
    blankWin = window.open(url,'_blank',features);
 }
-
+/** \brief: modif a textarea dimension
+ * \elementId = textarea idea
+ * \height = nb pixels to add to the height (the number can be negative)
+ * \width = nb pixels to add to the width
+ **/
+function textareaSize(elementId, height, width) {
+	textarea = document.getElementById(elementId);
+	if (textarea.rows + height > 5) textarea.rows += height;
+	if (textarea.cols + width > 10) textarea.cols += width;
+}
 
