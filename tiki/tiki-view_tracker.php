@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.64 2004-04-09 05:11:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.65 2004-04-17 19:02:08 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,12 +47,14 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	}
 }
 
+setcookie("tab","1");
+$defaultvalues = array();
+
 if (isset($_REQUEST['vals']) and is_array($_REQUEST['vals'])) {
 	$defaultvalues = $_REQUEST['vals'];
 	setcookie("tab","2");
-} else {
-	$defaultvalues = array();
-	setcookie("tab","1");
+} elseif (isset($_REQUEST['new'])) {
+	setcookie("tab","2");
 }
 $smarty->assign('defaultvalues', $defaultvalues);
 
