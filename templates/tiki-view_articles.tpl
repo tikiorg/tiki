@@ -34,6 +34,7 @@
 <tr>
 {if $art_view_img eq 'y'}
 <td valign="top">
+<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}">
 {if $listpages[ix].useImage eq 'y'}
 {if $listpages[ix].hasImage eq 'y'}
 <img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="article_image.php?id={$listpages[ix].articleId}" {if $listpages[ix].image_x > 0}width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 }height="{$listpages[ix].image_y}"{/if}/>
@@ -47,6 +48,7 @@
 {/if}
 {/section}
 {/if}
+</a>
 {if $listpages[ix].isfloat eq 'n'}
 </td><td  valign="top">
 {/if}
