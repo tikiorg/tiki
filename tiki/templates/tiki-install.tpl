@@ -183,8 +183,10 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 						<option value="{$pkgs[ix].name|escape}">{$pkgs[ix].desc}</option>
 					{/section}
 				</select>
-			</td><td>
 				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available packages</a>
+			</td></tr>
+			<tr><td>
+				<input type="checkbox" name="runScript" />Run database script (may destroy data)
 			</td></tr>
 			<tr><td>
 				<input type="submit" name="install_pkg" value="install" />	    
