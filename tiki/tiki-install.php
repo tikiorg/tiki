@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.19 2003-10-16 19:03:39 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.20 2003-10-16 20:27:07 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.19 2003-10-16 19:03:39 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.20 2003-10-16 20:27:07 dheltzel Exp $
 session_start();
 
 // Define and load Smarty components
@@ -51,6 +51,7 @@ function process_sql_file($file,$db_tiki) {
 	$smarty->assign('commands', $commands);
 }
 
+/*
 function deldir($dir){
    $current_dir = opendir($dir);
    while($entryname = readdir($current_dir)){
@@ -84,6 +85,7 @@ function setup_help(){
 	print "userid: <b>$uid</b>  groupid: <b>$gid</b><br>If you experience problems with the install, please run the following command as root:<br>";
 	print "<i>./setup.sh $uid $gid 02775</i><br>";
 }
+*/
 
 function create_dirs(){
 	// Create directories as needed
@@ -176,7 +178,7 @@ class Smarty_Sterling extends Smarty {
 }
 
 // Added to clear the Smarty cache before the install
-clean_cache();
+//clean_cache();
 
 if (isset($_REQUEST['kill'])) {
 	@$removed = rename('tiki-install.php', 'tiki-install.done');
@@ -631,11 +633,11 @@ if (isset($_SESSION['install-logged']) && $_SESSION['install-logged'] == 'y') {
 
 $smarty->display("tiki.tpl");
 
-print "<hr>";
-setup_help();
-print "<hr>";
-create_dirs();
+//print "<hr>";
+//setup_help();
+//print "<hr>";
+//create_dirs();
 // Added to clear the Smarty cache after the install
-clean_cache();
+//clean_cache();
 
 ?>
