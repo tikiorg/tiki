@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.131 2004-10-08 09:59:44 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.132 2004-10-15 15:54:42 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,8 +38,7 @@ $use_best_language = false;
 
 if (!isset($_REQUEST["page"])) {
 	if ($useGroupHome == 'y') { 
-		$group = $userlib->get_user_default_group($user);
-		$groupHome = $userlib->get_group_home($group);
+		$groupHome = $userlib->get_user_default_homepage($user);
 		if ($groupHome) {
 			$_REQUEST["page"] = $groupHome;
 		} else {

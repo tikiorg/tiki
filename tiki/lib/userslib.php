@@ -633,6 +633,24 @@ function get_included_groups($group) {
 		}
 		return $ret;
 	}
+	function get_user_default_homepage($user) {
+		$query = "select `default_group` from `users_users` where `login` = ?";
+		$result = $this->getOne($query, array($user));
+		if (!is_null($result)) {
+			$home = $this->get_group_home($result);
+			if ($home != '')
+				return $home;
+		}
+		$query = "select g.`groupHome` from `users_usergroups` as gu, `users_users` as u, `users_groups`as g where gu.`userId`= u.`userId` and u.`login`=? and gu.`groupName`= g.`groupName` and g.`groupHome` != '' and g.`groupHome` is not null";
+		$result = $this->query($query,array($user));
+		$home = '';
+		while ($res = $result->fetchRow()) {
+			if ($home != '')
+				return '';
+			$home = $res["groupHome"];
+		}
+		return $home;
+	}
 
 	function get_group_home($group) {
 		$query = "select `groupHome` from `users_groups` where `groupName`=?";

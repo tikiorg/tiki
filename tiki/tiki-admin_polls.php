@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.13 2004-09-15 03:05:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_polls.php,v 1.14 2004-10-15 15:54:42 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,7 +44,7 @@ if (isset($_REQUEST["activeall"])) {
 }
 
 if ($_REQUEST["pollId"]) {
-	$info = $tikilib->get_poll($_REQUEST["pollId"]);
+	$info = $polllib->get_poll($_REQUEST["pollId"]);
 } else {
 	$info = array();
 

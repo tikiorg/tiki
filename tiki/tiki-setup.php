@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.264 2004-09-28 12:59:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.265 2004-10-15 15:54:43 damosoft Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -377,7 +377,6 @@ $feature_forum_quickjump = 'n';
 $feature_forum_topicd = 'y';
 $feature_lastChanges = 'y';
 $feature_dump = 'y';
-$feature_ranking = 'y';
 $feature_listPages = 'y';
 $feature_history = 'y';
 $feature_backlinks = 'y';
@@ -546,6 +545,8 @@ if (isset($_SESSION["language"]))
 	$saveLanguage = $_SESSION["language"]; // if register_globals is on variable and _SESSION are the same
 $language = 'en';
 $lang_use_db = 'n';
+if (isset($_SESSION['style']))
+	$style = $_SESSION['style'];
 
 $feature_left_column = 'y';
 $feature_right_column = 'y';
@@ -941,7 +942,6 @@ $smarty->assign('feature_stats', $feature_stats);
 $smarty->assign('feature_games', $feature_games);
 $smarty->assign('user_assigned_modules', $user_assigned_modules);
 $smarty->assign('feature_user_bookmarks', $feature_user_bookmarks);
-$smarty->assign('feature_ranking', $feature_ranking);
 $smarty->assign('feature_listPages', $feature_listPages);
 $smarty->assign('feature_history', $feature_history);
 $smarty->assign('feature_backlinks', $feature_backlinks);
@@ -1313,6 +1313,21 @@ foreach ($preferences as $name => $val) {
 	$smarty->assign("$name", $val);
 }
 
+if ($feature_polls == 'y' and isset($_REQUEST["pollVote"])) {
+	if ($tiki_p_vote_poll == 'y' && isset($_REQUEST["polls_optionId"])) {
+		if( $feature_poll_anonymous == 'y' || $user ) {
+			if (!is_object($polllib)) { 
+				include_once('lib/polls/polllib_shared.php'); 
+			}
+			$polllib->poll_vote($user, $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
+			// Poll vote must go first, or the new vote will be seen as the previous one.
+			$tikilib->register_user_vote($user, 'poll' . $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
+		}
+	}
+	$pollId = $_REQUEST["polls_pollId"];
+	header ("location: tiki-poll_results.php?pollId=$pollId");
+}
+
 //after prefs update, must check if mailin_autocheck time is elapsed
 if($feature_mailin == 'y' && $mailin_autocheck == 'y')
 {
@@ -1336,7 +1351,7 @@ $group = '';
 
 $group = $userlib->get_user_default_group($user);
 if($useGroupHome == 'y') {
-    $groupHome = $userlib->get_group_home($group);
+    $groupHome = $userlib->get_user_default_homepage($user);
     if ($groupHome) {
 	if (strpos($groupHome,'http://') === 0) {
 		$tikiIndex = $groupHome;
@@ -1544,21 +1559,6 @@ if ($feature_warn_on_edit == 'y') {
 } else {
 	$smarty->assign('beingEdited', 'n');
 	$smarty->assign('editpageconflict', 'n');
-}
-
-
-if (isset($_REQUEST["pollVote"])) {
-    if ($tiki_p_vote_poll == 'y' && isset($_REQUEST["polls_optionId"])) {
-	if( $feature_poll_anonymous == 'y' || $user )
-	{
-	    $tikilib->poll_vote($user, $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
-	    // Poll vote must go first, or the new vote will be seen as the previous one.
-	    $tikilib->register_user_vote($user, 'poll' . $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
-	}
-    }
-
-    $pollId = $_REQUEST["polls_pollId"];
-    header ("location: tiki-poll_results.php?pollId=$pollId");
 }
 
 $ownurl = httpPrefix(). $_SERVER["REQUEST_URI"];

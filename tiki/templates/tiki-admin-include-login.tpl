@@ -30,6 +30,7 @@
 </select></td></tr>
 <!--<tr><td class="form">{tr}Use WebServer authentication for Tiki{/tr}:</td><td><input type="checkbox" name="webserverauth" {if $webserverauth eq 'y'}checked="checked"{/if}/></td></tr>-->
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}... but need admin validation{/tr}:</td><td><input type="checkbox" name="validateRegistration" {if $validateRegistration eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Create a group for each user <br />(with the same
 name as the user){/tr}:</td><td><input type="checkbox"
 name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td></tr>

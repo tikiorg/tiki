@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.91 2004-10-08 09:59:45 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.92 2004-10-15 15:54:46 damosoft Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -666,7 +666,7 @@ CREATE TABLE `tiki_download` (
   KEY `userId` (`userId`),
   KEY `type` (`type`),
   KEY `date` (`date`)
-) TYPE=MyISAM AUTO_INCREMENT=32;
+) TYPE=MyISAM ;
 
 # added on 2004-09-18 by franck for adding geographic capability to image galleries
 ALTER TABLE `tiki_galleries` ADD `geographic` char(1) default NULL AFTER `visible`;
@@ -680,4 +680,12 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_comments', 'Can view wiki coments', 'basic', 'wiki');
 insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_wiki_view_comments');
 
+# added on 11 10 04 06:28:29 by more for registration validation by admin
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateRegistration','n');
+
+# added on 12 10 04 08:21:46 by mose for wiki_rating system
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_ratings', 'Can view rating of wiki pages', 'basic', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_ratings', 'Can add and change ratings on wiki pages', 'admin', 'wiki');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_ratings','n');
 

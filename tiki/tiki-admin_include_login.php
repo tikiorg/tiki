@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.29 2004-09-28 12:59:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.30 2004-10-15 15:54:42 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -70,6 +70,14 @@ if (isset($_REQUEST["loginprefs"])) {
 
 	$smarty->assign('allowRegister', 'n');
     }
+
+	if (isset($_REQUEST["validateRegistration"]) && $_REQUEST["validateRegistration"] == "on") {
+		$tikilib->set_preference("validateRegistration", 'y');
+		$smarty->assign('validateRegistration', 'y');
+	} else {
+		$tikilib->set_preference("validateRegistration", 'n');
+		$smarty->assign('validateRegistration', 'n');
+	}
 
     if (isset($_REQUEST["webserverauth"]) && $_REQUEST["webserverauth"] == "on") {
 	$tikilib->set_preference("webserverauth", 'y');

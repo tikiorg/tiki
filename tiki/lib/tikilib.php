@@ -30,6 +30,7 @@ class TikiLib extends TikiDB {
     var $usergroups_cache = array();
 
     var $num_queries = 0;
+		var $now;
 
     // Constructor receiving a PEAR::Db database object.
     function TikiLib($db) {
@@ -38,6 +39,7 @@ class TikiLib extends TikiDB {
 	}
 
 	$this->db = $db;
+	$this->now = date('U');
     }
 
 
@@ -1336,7 +1338,10 @@ class TikiLib extends TikiDB {
     }
 
     // Functions for polls ////
-    /*shared*/
+	function get_user_vote($id,$user) {
+		return $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
+	}
+
     function get_poll($pollId) {
 	$query = "select * from `tiki_polls` where `pollId`=?";
 	$result = $this->query($query,array((int)$pollId));
@@ -1347,10 +1352,8 @@ class TikiLib extends TikiDB {
 
     //This should be moved to a poll module (currently in tiki-setup.php
     /*shared*/
-    function poll_vote($user, $pollId, $optionId) 
-    {
-	$query = "select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?";
-	$previous_vote = $this->getOne($query,array( $user, "poll" . $pollId));
+    function poll_vote($user, $pollId, $optionId) {
+	$previous_vote = $this->get_user_vote("poll$pollId",$user);
 
 	// Only need to increase vote numbers if the user hasn't voted before.
 	if( !$previous_vote || $previous_vote == 0 )
@@ -4211,27 +4214,74 @@ class TikiLib extends TikiDB {
 	    }
 
 
-	    // 26-Jun-2003, by zaufi
-	    //
-	    // {maketoc} --> create TOC from '!', '!!', '!!!' in current document
-	    //
-	    preg_match_all("/\{maketoc\}/", $data, $tocs);
-	    $anch = array();
+	// 26-Jun-2003, by zaufi
+	//
+	// {maketoc} --> create TOC from '!', '!!', '!!!' in current document
+	//
+	preg_match_all("/\{maketoc\}/", $data, $tocs);
+	$anch = array();
+	$pageNum = 1;
 
-	    // 08-Jul-2003, by zaufi
-	    // HotWords will be replace only in ordinal text
-	    // It looks __realy__ goofy in Headers or Titles
+	// 08-Jul-2003, by zaufi
+	// HotWords will be replace only in ordinal text
+	// It looks __realy__ goofy in Headers or Titles
 
-	    // Get list of HotWords
-	    $words = $this->get_hotwords();
+	// Get list of HotWords
+	$words = $this->get_hotwords();
 
-	    // Now tokenize the expression and process the tokens
-	    // Use tab and newline as tokenizing characters as well  ////
-	    $lines = explode("\n", $data);
-	    $data = '';
-	    $listbeg = array();
-	    $divdepth = array();
-	    $inTable = 0;
+	// Now tokenize the expression and process the tokens
+	// Use tab and newline as tokenizing characters as well  ////
+	$lines = explode("\n", $data);
+	$data = '';
+	$listbeg = array();
+	$divdepth = array();
+	$inTable = 0;
+
+	// loop: process all lines
+	$in_paragraph = 0;
+	foreach ($lines as $line) {
+	    $line = rtrim($line); // Trim off trailing white space
+	    // Check for titlebars...
+	    // NOTE: that title bar should start at the beginning of the line and
+	    //	   be alone on that line to be autoaligned... otherwise, it is an old 
+	    //	   styled title bar...
+	    if (substr(ltrim($line), 0, 2) == '-=' && substr($line, -2, 2) == '=-') {
+		// Close open paragraph and lists, but not div's
+		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
+		//
+		$align_len = strlen($line) - strlen(ltrim($line));
+
+		// My textarea size is about 120 space chars.
+		//define('TEXTAREA_SZ', 120);
+
+		// NOTE: That strict math formula (split into 3 areas) gives
+		//	   bad visual effects...
+		// $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left"
+		//		: (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
+		//
+		// Going to introduce some heuristic here :)
+		// Visualy (remember that space char is thin) center starts at 25 pos
+		// and 'right' from 60 (HALF of full width!) -- thats all :)
+		//
+		// NOTE: Guess align only if more than 10 spaces before -=title=-
+		if ($align_len > 10) {
+		    $align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
+
+		    $align = ' style="text-align: ' . $align . ';"';
+		} else
+		    $align = '';
+
+		//
+		$line = trim($line);
+		$line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
+		$data .= $line . "\n";
+		// TODO: Case is handled ...  no need to check other conditions
+		//	   (it is apriori known that they are all false, moreover sometimes
+		//	   check procedure need > O(0) of compexity)
+		//	   -- continue to next line...
+		//	   MUST replace all remaining parse blocks to the same logic...
+		continue;
+	    }
 
 	    // loop: process all lines
 	    $in_paragraph = 0;
@@ -4437,7 +4487,8 @@ class TikiLib extends TikiDB {
 			if (count($tocs[0]) > 0) {
 			    // OK. Must insert <a id=...> before HEADER and collect TOC entry
 			    $thisid = 'id' . microtime() * 1000000;
-			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
+			    $pageNumLink = ($pageNum >= 2)? "tiki-index.php?page=$page&pagenum=$pageNum": "";
+			    array_push($anch, str_repeat("*", $hdrlevel). " <a href='$pageNumLink#$thisid' class='link'>" . substr($line, $hdrlevel + $addremove). '</a>');
 			    $anchor = "<a id='$thisid'>";
 			    $aclose = '</a>' . $aclose;
 			}
@@ -4447,6 +4498,7 @@ class TikiLib extends TikiDB {
 			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
 			// Leave line unchanged... tiki-index.php will split wiki here
 			$line = "...page...";
+			$pageNum += 1;
 		    } else {
 			    /** Usual paragraph.  
 			     *

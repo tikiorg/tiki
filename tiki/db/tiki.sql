@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2004-10-08 09:59:45 $
+# $Date: 2004-10-15 15:54:46 $
 # $Author: damosoft $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -3763,6 +3763,7 @@ CREATE TABLE users_groups (
   groupName varchar(255) NOT NULL default '',
   groupDesc varchar(255) default NULL,
   groupHome varchar(255),
+  groupHomeLocalized char(1) default 'n',
   usersTrackerId int(11),
   groupTrackerId int(11),
   usersFieldId int(11),
@@ -3784,7 +3785,7 @@ CREATE TABLE users_objectpermissions (
   permName varchar(30) NOT NULL default '',
   objectType varchar(20) NOT NULL default '',
   objectId varchar(32) NOT NULL default '',
-  PRIMARY KEY  (objectId,groupName(30),permName)
+  PRIMARY KEY  (objectId, objectType, groupName(30),permName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3991,6 +3992,9 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_user_information', 'Can view user info on tiki-user_information.php', 'registered', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_admin_users', 'Can admin users', 'admin', 'user');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_comments', 'Can view wiki coments', 'basic', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_ratings', 'Can view rating of wiki pages', 'basic', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_vote_ratings', 'Can participate to rating of wiki pages', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_ratings', 'Can add and change ratings on wiki pages', 'admin', 'wiki');
 
 # --------------------------------------------------------
 
@@ -4203,7 +4207,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_item_comme
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_submissions','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_polls','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_quizzes','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ranking','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_referer_stats','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_right_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_sandbox','y');
@@ -4247,6 +4250,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_st
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_pdf','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_pictures','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_rankings','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_ratings','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_tables','old');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_templates','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_undo','n');
@@ -4385,6 +4389,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_assigned_modules',
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','score_desc');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateEmail','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateRegistration','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateUsers','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');

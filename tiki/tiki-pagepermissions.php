@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.20 2004-06-23 22:33:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.21 2004-10-15 15:54:43 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -123,7 +123,7 @@ if ($feature_categories == 'y') {
       for ($i=$arraysize-2; $i>=0; $i--) {
         if ($userlib->object_has_one_permission($categpath[$i]['categId'], 'category')) {
           $categ_perms[] = $userlib->get_object_permissions($categpath[$i]['categId'], 'category');
-          $categ_perms[$x][0]['catpath'] = implode($categlib->get_category_name($categpath[$i]['categId']));
+          $categ_perms[$x][0]['catpath'] = $categlib->get_category_name($categpath[$i]['categId']);
           $x++;
           break 1;
         }
