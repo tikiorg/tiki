@@ -1,5 +1,4 @@
 <a name="cms"></a>
-{include file="tiki-admin-include-anchors-empty.tpl"}
 <div class="cbox">
 <div class="cbox-title">{tr}CMS settings{/tr}</div>
 <div class="cbox-data">

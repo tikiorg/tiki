@@ -51,5 +51,3 @@
 {else}
   {include file="tiki-admin-include-list-sections.tpl"}
 {/if}
-
-<br/><br/>

@@ -1,5 +1,4 @@
 <a name="blogs"></a>
-{include file="tiki-admin-include-anchors-empty.tpl"}
 <div class="cbox">
 <div class="cbox-title">{tr}Blog settings{/tr}</div>
 <div class="cbox-data">
