@@ -10,6 +10,19 @@ class ArtLib extends TikiLib {
     $this->db = $db;  
   }
   
+  //Special parsing for multipage articles
+  function get_number_of_pages($data)
+  {
+  	$parts = explode("...page...",$data);
+  	return count($parts);	
+  }
+  
+  function get_page($data,$i)
+  {
+  	$parts = explode("...page...",$data);
+  	return $parts[$i-1];
+  }
+  
   function approve_submission($subId)
   {
     $data = $this->get_submission($subId);

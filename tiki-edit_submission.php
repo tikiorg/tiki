@@ -287,7 +287,7 @@ if(isset($_REQUEST["save"])) {
   }
 
 
-  $tikilib->replace_submission(strip_tags($_REQUEST["title"],'<a><pre><p><img><hr>'),
+  $subid = $artlib->replace_submission(strip_tags($_REQUEST["title"],'<a><pre><p><img><hr>'),
                             $_REQUEST["authorName"],
                             $_REQUEST["topicId"],
                             $useImage,
@@ -315,10 +315,23 @@ if(isset($_REQUEST["save"])) {
   $cachedlinks = array_diff($links, $notcachedlinks);
   $tikilib->cache_links($cachedlinks); 
 */                            
+
+  if($tiki_p_autoapprove_submission == 'y') {
+  	$artlib->approve_submission($subid);  
+  	header("location: tiki-view_articles.php");
+  	die;
+  }
+  
+  
+
                             
   header("location: tiki-list_submissions.php");
   die;
 }
+
+// Set date to today before it's too late
+$_SESSION["thedate"]=date("U");
+
 
 // Armar un select con los topics
 $topics = $artlib->list_topics();

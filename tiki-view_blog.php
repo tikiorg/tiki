@@ -141,7 +141,7 @@ $smarty->assign('find',$find);
 // Get a list of last changes to the Wiki database
 $listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data["maxPosts"], $sort_mode, $find, $pdate);
 for($i=0;$i<count($listpages["data"]);$i++) {
-  $listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($listpages["data"][$i]["data"]);
+  $listpages["data"][$i]["parsed_data"] = $tikilib->parse_data($bloglib->get_page($listpages["data"][$i]["data"],1));
   //print(htmlspecialchars($listpages["data"][$i]["parsed_data"]));
 }
 $maxRecords=$blog_data["maxPosts"];

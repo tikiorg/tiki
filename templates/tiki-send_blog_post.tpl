@@ -47,7 +47,7 @@
 </td><td align="right">
 {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}"><img border='0' src='img/icons/edit.gif' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' /></a>
-<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}"><img border='0' src='img/icons/trash.gif' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' /></a>
+<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}"><img border='0' src='img/icons2/delete.gif' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' /></a>
 {/if}
 </td></tr></table>
 </div>

@@ -91,7 +91,7 @@
 	{/if}
 	{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_blog_create_blog eq 'y' ) }
-			<a class="bloglink" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}"><img border='0' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='img/icons/trash.gif' /></a>
+			<a class="bloglink" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}"><img border='0' title='{tr}remove{/tr}' alt='{tr}remove{/tr}' src='img/icons2/delete.gif' /></a>
 		{/if}
 	{/if}
 	{if $tiki_p_admin eq 'y'}
@@ -125,3 +125,8 @@
 {/if}
 </div>
 </div>
+{if $tiki_p_admin eq 'y'}
+<br/><br/>
+<a href="tiki-admin.php?page=blogs"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+{/if}
+

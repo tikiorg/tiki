@@ -65,6 +65,26 @@ if(isset($_REQUEST["articleId"])) {
     $hasImage='y';
   }
   $smarty->assign('heading',$article_data["heading"]);
+  
+  if(!isset($_REQUEST['page'])) $_REQUEST['page']=1;
+  $pages = $artlib->get_number_of_pages($article_data["body"]);
+  $article_data["body"]=$artlib->get_page($article_data["body"],$_REQUEST['page']);
+  $smarty->assign('pages',$pages);
+  if($pages>$_REQUEST['page']) {
+  	$smarty->assign('next_page',$_REQUEST['page']+1);
+  } else {
+  	$smarty->assign('next_page',$_REQUEST['page']);
+  }
+  if($_REQUEST['page']>1) {
+  	$smarty->assign('prev_page',$_REQUEST['page']-1);
+  } else {
+  	$smarty->assign('prev_page',1);
+  }
+  $smarty->assign('first_page',1);
+  $smarty->assign('last_page',$pages);
+  $smarty->assign('page',$_REQUEST['page']);
+  
+  
   $smarty->assign('body',$article_data["body"]);
   $smarty->assign('publishDate',$article_data["publishDate"]);
   $smarty->assign('edit_data','y');
@@ -83,6 +103,8 @@ if($feature_article_comments == 'y') {
   $comments_object_var='articleId';
   include_once("comments.php");
 }
+
+
 
 $section='cms';
 include_once('tiki-section_options.php');

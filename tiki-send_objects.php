@@ -74,8 +74,7 @@ $msg = '';
 if(isset($_REQUEST["send"])) {
   // Create XMLRPC object
   $client = new xmlrpc_client($_REQUEST["path"], $_REQUEST["site"], 80);
-  $client->setDebug(0);
-  
+  $client->setDebug(0);  
   foreach($sendpages as $page) {
     $page_info = $tikilib->get_page_info($page);
     if($page_info) {

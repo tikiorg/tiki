@@ -35,7 +35,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedPageId_desc'}receivedPageId_asc{else}receivedPageId_desc{/if}">{tr}ID{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}comment{/tr}</a></td>
+<!--<td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}comment{/tr}</a></td>-->
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedDate_desc'}receivedDate_asc{else}receivedDate_desc{/if}">{tr}Date{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromSite_desc'}receivedFromSite_asc{else}receivedFromSite_desc{/if}">{tr}Site{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'receivedFromUser_desc'}receivedFromUser_asc{else}receivedFromUser_desc{/if}">{tr}User{/tr}</a></td>
@@ -50,15 +50,15 @@
 {else}
 <td class="odd">{$channels[user].pageName}</td>
 {/if}
-<td class="odd">{$channels[user].comment}</td>
-<td class="odd">{$channels[user].receivedDate|tiki_short_datetime}</td>
+<!--<td class="odd">{$channels[user].comment}</td>-->
+<td class="odd">{$channels[user].receivedDate|tiki_short_date}</td>
 <td class="odd">{$channels[user].receivedFromSite}</td>
 <td class="odd">{$channels[user].receivedFromUser}</td>
 <td class="odd">
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}">{tr}edit{/tr}</a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}">{tr}view{/tr}</a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}">{tr}accept{/tr}</a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' border='0' title='{tr}edit{/tr}' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}"><img src='img/icons2/icn_view.gif' border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='img/icons2/post.gif' border='0' alt='{tr}accept{/tr}' title='{tr}accept{/tr}' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' /></a>
 </td>
 </tr>
 {else}
@@ -69,15 +69,15 @@
 {else}
 <td class="even">{$channels[user].pageName}</td>
 {/if}
-<td class="even">{$channels[user].comment}</td>
-<td class="even">{$channels[user].receivedDate|tiki_short_datetime}</td>
+<!--<td class="even">{$channels[user].comment}</td>-->
+<td class="even">{$channels[user].receivedDate|tiki_short_date}</td>
 <td class="even">{$channels[user].receivedFromSite}</td>
 <td class="even">{$channels[user].receivedFromUser}</td>
 <td class="even">
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}">{tr}edit{/tr}</a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}">{tr}view{/tr}</a>
-   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}">{tr}accept{/tr}</a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;receivedPageId={$channels[user].receivedPageId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' border='0' title='{tr}edit{/tr}' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].receivedPageId}"><img src='img/icons2/icn_view.gif' border='0' alt='{tr}view{/tr}' title='{tr}view{/tr}' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;accept={$channels[user].receivedPageId}"><img src='img/icons2/post.gif' border='0' alt='{tr}accept{/tr}' title='{tr}accept{/tr}' /></a>
+   <a class="link" href="tiki-received_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].receivedPageId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' border='0' title='{tr}remove{/tr}' /></a>
 </td>
 </tr>
 {/if}

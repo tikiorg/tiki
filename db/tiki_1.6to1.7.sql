@@ -1,3 +1,5 @@
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_autoapprove_submission','cms','Submited articles automatically approved','editor');
+
 
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_forums_report','forums','Can report msgs to moderator','registered');
 ### forum posts can be reported to moderator ###
