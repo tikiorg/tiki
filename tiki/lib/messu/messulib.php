@@ -1,5 +1,8 @@
 <?php
 
+include_once('lib/webmail/htmlMimeMail.php');
+include_once('lib/webmail/encodestring.php');
+
 class Messu extends Tikilib {
 	var $db;
 
@@ -48,8 +51,16 @@ class Messu extends Tikilib {
 			$mail_data = $smarty->fetch('mail/messu_message_notification.tpl');
 			$email = $userlib->get_user_email($user);
 			if ($email) {
-				@mail($email, "=?utf-8?B?".base64_encode(tra("New message arrived from "). $_SERVER["SERVER_NAME"])."?=", $mail_data,
-					"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+				$mailCharset = $this->get_user_preference($user, 'mailCharset', 'utf-8');
+				$mail = new htmlMimeMail();
+				$mail->setFrom($sender_email);
+				// TODO: tra must be done in the user language
+				$mail->setSubject(encodeString(tra("New message arrived from "). $_SERVER["SERVER_NAME"], $mailCharset));
+				$mail->setHeadCharset($mailCharset);
+				$mail->setText(encodeString($mail_data, $mailCharset));
+				$mail->setTextCharset($mailCharset);
+				if (!$mail->send(array($email), 'mail'))
+					return false; //TODO echo $mail->errors;
 			}
 		}
 
