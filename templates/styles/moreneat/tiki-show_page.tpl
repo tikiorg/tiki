@@ -28,7 +28,7 @@
 </td>
 {if $print_page ne 'y'}
 
-<td style="text-align:right;" width ="100%">
+<td style="text-align:right;">
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
 <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img border="0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
