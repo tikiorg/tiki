@@ -25,8 +25,6 @@ if (!isset($_REQUEST['categId'])) {
 	$smarty->assign_by_ref('categId', $_REQUEST['categId']);
 }
 
-include_once ('tiki-categsetup.php');
-
 // Now check permissions to access this page
 if ($tiki_p_admin_categories != 'y') {
 	$smarty->assign('msg', tra('Permission denied; you cannot assign permissions for this category'));
@@ -34,15 +32,6 @@ if ($tiki_p_admin_categories != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
-/*
-if (!$tikilib->page_exists($page)) {
-	$smarty->assign('msg', tra("Page cannot be found"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-*/
 
 // Process the form to assign a new permission to this page
 if (isset($_REQUEST['assign'])) {
