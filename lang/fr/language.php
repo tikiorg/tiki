@@ -1150,6 +1150,7 @@ $lang=Array(
 "user offline" => "utilisateur non connecté",
 "on" => "le",
 "Vote" => "Voter",
+"Withdraw Vote" => "Retirer mon vote",
 "edit" => "modifier",
 "Edit" => "Modifier",
 "reply" => "répondre",
