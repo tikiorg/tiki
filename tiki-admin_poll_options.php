@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
+include_once('lib/polls/polllib.php');
 
 if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -27,7 +28,7 @@ $smarty->assign('optionId',$_REQUEST["optionId"]);
 
 
 if($_REQUEST["optionId"]) {
-  $info = $tikilib->get_poll_option($_REQUEST["optionId"]);
+  $info = $polllib->get_poll_option($_REQUEST["optionId"]);
 } else {
   $info = Array();
   $info["title"]='';
@@ -37,11 +38,11 @@ $smarty->assign('title',$info["title"]);
 $smarty->assign('votes',$info["votes"]);
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_poll_option($_REQUEST["remove"]);
+  $polllib->remove_poll_option($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
-   $tikilib->replace_poll_option($_REQUEST["pollId"], $_REQUEST["optionId"], $_REQUEST["title"]);
+   $polllib->replace_poll_option($_REQUEST["pollId"], $_REQUEST["optionId"], $_REQUEST["title"]);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -65,7 +66,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_poll_options($_REQUEST["pollId"],0,-1,$sort_mode,$find);
+$channels = $polllib->list_poll_options($_REQUEST["pollId"],0,-1,$sort_mode,$find);
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));

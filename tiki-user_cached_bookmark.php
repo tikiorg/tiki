@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/bookmarks/bookmarklib.php');
 
 if(!$user) {
     $smarty->assign('msg',tra("You must log in to use this feature"));
@@ -22,7 +23,7 @@ if(!isset($_REQUEST["urlid"])) {
 } 
 
 // Get a list of last changes to the Wiki database
-$info = $tikilib->get_url($_REQUEST["urlid"]);
+$info = $bookmarklib->get_url($_REQUEST["urlid"]);
 $smarty->assign_by_ref('info',$info);
 $info["refresh"]=$info["lastUpdated"];
 $smarty->assign('mid','tiki-view_cache.tpl');

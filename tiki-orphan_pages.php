@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/stats/statslib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -54,7 +55,7 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_orphan_pages($offset,$maxRecords,$sort_mode,$find);
+$listpages = $statslib->list_orphan_pages($offset,$maxRecords,$sort_mode,$find);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

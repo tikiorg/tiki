@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 include_once('lib/trackers/trackerlib.php');
+include_once('lib/notifications/notificationlib.php');
 
 if($feature_trackers != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -180,18 +181,18 @@ $smarty->assign('email_mon','');
 if($user) {
   if(isset($_REQUEST["monitor"])) {
     $user_email = $tikilib->get_user_email($user);
-    $emails = $tikilib->get_mail_events('tracker_item_modified',$_REQUEST["itemId"]);
+    $emails = $notificationlib->get_mail_events('tracker_item_modified',$_REQUEST["itemId"]);
     if(in_array($user_email,$emails)) {
-      $tikilib->remove_mail_event('tracker_item_modified',$_REQUEST["itemId"],$user_email);
+      $notificationlib->remove_mail_event('tracker_item_modified',$_REQUEST["itemId"],$user_email);
       $mail_msg=tra('Your email address has been removed from the list of addresses monitoring this item');
     } else {
-      $tikilib->add_mail_event('tracker_item_modified',$_REQUEST["itemId"],$user_email);
+      $notificationlib->add_mail_event('tracker_item_modified',$_REQUEST["itemId"],$user_email);
       $mail_msg=tra('Your email address has been added to the list of addresses monitoring this item');
     }
     $smarty->assign('mail_msg',$mail_msg);
   }
   $user_email = $tikilib->get_user_email($user);
-  $emails = $tikilib->get_mail_events('tracker_item_modified',$_REQUEST["itemId"]);
+  $emails = $notificationlib->get_mail_events('tracker_item_modified',$_REQUEST["itemId"]);
   if(in_array($user_email,$emails)) {
     $smarty->assign('email_mon',tra('Cancel monitoring'));
   } else {

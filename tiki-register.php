@@ -3,6 +3,7 @@
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
 include_once('lib/registration/registrationlib.php');
+include_once('lib/notifications/notificationlib.php');
 
 // Permission: needs p_register
 if($allowRegister != 'y') {
@@ -92,7 +93,7 @@ if(isset($_REQUEST["register"])) {
     $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
     $machine =httpPrefix().$foo1;
     $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
-    $emails = $tikilib->get_mail_events('user_registers','*');
+    $emails = $notificationlib->get_mail_events('user_registers','*');
     foreach($emails as $email) {
       $smarty->assign('mail_user',$_REQUEST["name"]);
       $smarty->assign('mail_date',date("U"));

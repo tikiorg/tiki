@@ -1,6 +1,9 @@
 <?php
 require_once('tiki-setup.php');
 include_once('lib/menubuilder/menulib.php');
+include_once('lib/rss/rsslib.php');
+include_once('lib/polls/polllib.php');
+
 // PERMISSIONS: NEEDS p_admin
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
@@ -180,11 +183,11 @@ for($i=0;$i<count($groups["data"]);$i++) {
 $smarty->assign_by_ref("groups",$groups["data"]);
 $galleries = $tikilib->list_galleries(0,-1,'lastModif_desc', $user,'');
 $smarty->assign('galleries',$galleries["data"]);
-$polls = $tikilib->list_active_polls(0,-1,'publishDate_desc','');
+$polls = $polllib->list_active_polls(0,-1,'publishDate_desc','');
 $smarty->assign('polls',$polls["data"]);
 $contents = $tikilib->list_content(0,-1,'contentId_desc','');
 $smarty->assign('contents',$contents["data"]);
-$rsss = $tikilib->list_rss_modules(0,-1,'name_desc','');
+$rsss = $rsslib->list_rss_modules(0,-1,'name_desc','');
 $smarty->assign('rsss',$rsss["data"]);
 $menus = $menulib->list_menus(0,-1,'menuId_desc','');
 $smarty->assign('menus',$menus["data"]);

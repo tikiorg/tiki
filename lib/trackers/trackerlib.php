@@ -1,4 +1,5 @@
 <?php
+include_once('lib/notifications/notificationlib.php');
  
 class TrackerLib extends TikiLib {
     
@@ -135,6 +136,7 @@ class TrackerLib extends TikiLib {
   function replace_item_comment($commentId,$itemId,$title,$data,$user)
   {
     global $smarty;
+    global $notificationlib;
     $title=addslashes(strip_tags($title));
     $data=addslashes(strip_tags($data,"<a>"));
     if($commentId) {
@@ -148,8 +150,8 @@ class TrackerLib extends TikiLib {
     }
     $trackerId=$this->getOne("select trackerId from tiki_tracker_items where itemId=$itemId");
     $trackerName=$this->getOne("select name from tiki_trackers where trackerId=$trackerId");
-    $emails = $this->get_mail_events('tracker_modified',$trackerId);
-    $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
+    $emails = $notificationlib->get_mail_events('tracker_modified',$trackerId);
+    $emails2 = $notificationlib->get_mail_events('tracker_item_modified',$itemId);
     $emails=array_merge($emails,$emails2);
     $smarty->assign('mail_date',date("U"));
     $smarty->assign('mail_user',$user);
@@ -271,6 +273,7 @@ class TrackerLib extends TikiLib {
   {
     global $user;
     global $smarty;
+    global $notificationlib;
     $now = date("U");
     $query="update tiki_trackers set lastModif=$now where trackerId=$trackerId";
     $result = $this->query($query);
@@ -299,8 +302,8 @@ class TrackerLib extends TikiLib {
       }
     }
     $trackerName=$this->getOne("select name from tiki_trackers where trackerId=$trackerId");
-    $emails = $this->get_mail_events('tracker_modified',$trackerId);
-    $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
+    $emails = $notificationlib->get_mail_events('tracker_modified',$trackerId);
+    $emails2 = $notificationlib->get_mail_events('tracker_item_modified',$itemId);
     $emails=array_merge($emails,$emails2);
     $smarty->assign('mail_date',date("U"));
     $smarty->assign('mail_user',$user);
