@@ -29,17 +29,19 @@ class NotepadLib extends TikiLib {
     $name = addslashes($name);	
     $data = addslashes($data);
     $now = date("U");
+    $size = strlen($data);
     if($noteId) {
       $query = "update tiki_user_notes set
       name = '$name',
       data = '$data',
+      size = $size,
       lastModif = $now
       where user='$user' and noteId=$noteId";	
       $this->query($query);
       return $noteId;
     } else {
-      $query = "insert into tiki_user_notes(user,noteId,name,data,created,lastModif)
-      values('$user',$noteId,'$name','$data',$now,$now)";
+      $query = "insert into tiki_user_notes(user,noteId,name,data,created,lastModif,size)
+      values('$user',$noteId,'$name','$data',$now,$now,$size)";
       $this->query($query);
       $noteId = $this->getOne("select max(noteId) from tiki_user_notes where user='$user' and name='$name' and created=$now");
       return $noteId;

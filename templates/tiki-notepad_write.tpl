@@ -12,7 +12,7 @@
   </tr>
   <tr><td class="formcolor">{tr}Data{/tr}</td>
       <td class="formcolor">
-        <textarea rows="40" cols="80" name="data">{$info.data}</textarea>
+        <textarea rows="20" cols="80" name="data">{$info.data}</textarea>
       </td>
   </tr>
   <tr>

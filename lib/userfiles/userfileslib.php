@@ -12,7 +12,9 @@ class UserFilesLib extends TikiLib {
   
   function userfiles_quota($user)
   {
-    return $this->getOne("select sum(filesize) from tiki_userfiles where user='$user'");
+    $part1 = $this->getOne("select sum(filesize) from tiki_userfiles where user='$user'");
+    $part2 = $this->getOne("select sum(size) from tiki_user_notes where user='$user'");
+    return $part1+$part2;
   }
   
   function upload_userfile($user,$name,$filename,$filetype,$filesize,$data,$path)
