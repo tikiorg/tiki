@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.13 2004-01-13 14:50:20 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.14 2004-01-14 01:13:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -115,7 +115,6 @@ if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {
 		$userlib->remove_user($_REQUEST["user"]);
 	}
-
 	if ($_REQUEST["action"] == 'removegroup') {
 		$userlib->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
 	}
@@ -126,18 +125,13 @@ if (!isset($_REQUEST["sort_mode"])) {
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
-
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-// If offset is set use it if not then use offset =0
-// use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
 if (!isset($_REQUEST["numrows"])) {
 	$numrows = $maxRecords;
 } else {
 	$numrows = $_REQUEST["numrows"];
 }
-
 $smarty->assign_by_ref('numrows', $numrows);
 
 if (!isset($_REQUEST["offset"])) {
@@ -145,18 +139,25 @@ if (!isset($_REQUEST["offset"])) {
 } else {
 	$offset = $_REQUEST["offset"];
 }
-
 $smarty->assign_by_ref('offset', $offset);
+
+
+if (isset($_REQUEST["initial"])) {
+	$initial = $_REQUEST["initial"];
+} else {
+	$initial = '';
+}
+$smarty->assign('initial', $initial);
+$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
 	$find = '';
 }
-
 $smarty->assign('find', $find);
 
-$users = $userlib->get_users($offset, $numrows, $sort_mode, $find);
+$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial);
 $cant_pages = ceil($users["cant"] / $numrows);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $numrows));
