@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.44 2004-06-15 05:06:30 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.45 2004-06-22 22:25:46 rlpowell Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -16,6 +16,8 @@
   <input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
   {/section}
   <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />    
+  <input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
+  <input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
   <input type="hidden" name="comments_offset" value="0" />
   <table class="normal">
   <caption> {tr}Posted comments{/tr} </caption>
@@ -134,6 +136,8 @@
 
 
     <form method="post" action="{$comments_father}" id='editpostform'>
+    <input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
+    <input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
     <input type="hidden" name="comments_parentId" value="{$comments_parentId|escape}" />
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
     <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
