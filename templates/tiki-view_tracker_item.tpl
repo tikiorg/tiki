@@ -40,7 +40,7 @@
 <td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td></tr>
 {/if}
 {section name=ix loop=$ins_fields}
-
+{if $ins_fields[ix].isPublic eq 'y' or $tiki_p_admin_trackers eq 'y'}
 {if $ins_fields[ix].type eq 'h'}
 </table>
 <h3>{$ins_fields[ix].name}</h3>
@@ -112,6 +112,7 @@
 {else}
 </td></tr>
 {assign var=stick value="n"}
+{/if}
 {/if}
 {/if}
 {/if}
@@ -239,7 +240,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 </td></tr>
 {/if}
 {section name=ix loop=$ins_fields}
-
+{if $ins_fields[ix].isPublic eq 'y' or $tiki_p_admin_trackers eq 'y'}
 {if $ins_fields[ix].type ne 'x'}
 {if $ins_fields[ix].type eq 'h'}
 </table>
@@ -348,6 +349,7 @@ align       : "bR"
 {assign var=trkact value=$trkact|cat:$smarty.capture.trkaction}
 {/if}
 
+{/if}
 {/section}
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" />
 </td></tr>
