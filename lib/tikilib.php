@@ -4939,6 +4939,9 @@ function parse_data($data) {
       }
       }
 
+			// linebreaks using %%%
+			$data = str_replace("%%%", "<br />", $data);
+			
       // Close BiDi DIVs if any
       for ($i = 0; $i < $bidiCount; $i++) {
       $data .= "</div>";
