@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.20 2004-01-16 23:25:45 mose Exp $
+$Id: trollparty.css,v 1.21 2004-01-20 23:04:06 damosoft Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -539,6 +539,7 @@ table.creategalform,
 TABLE.normal,
 table.gallerylisting,
 table.bloglist,
+table.jukeboxlist,
 table.editblogform,
 table.editfgalform,
 table.listfgal,
@@ -568,6 +569,7 @@ td.listgalheading,
 td.bloglistheading,
 td.listfgalheading,
 td.listfilesheading,
+td.jukeboxlistheading,
 td.listartheading,
 td.forumheading,
 td.thead
@@ -595,6 +597,7 @@ a.tablename,
 a.galname,
 a.imagename,
 a.blogname,
+a.jukeboxname,
 a.fgalname,
 a.artname,
 a.forumname
@@ -609,6 +612,7 @@ a.tablename:active,
 a.galname:active,
 a.imagename:active,
 a.blogname:active,
+a.jukeboxname:active,
 a.fgalname:active,
 a.artname:active,
 a.forumname:active
@@ -762,7 +766,14 @@ td.topicrepliesodd,
 td.topicreadsodd,
 td.topicscoreodd,
 td.topiclastpostodd,
-td.topicauthorodd
+td.topicauthorodd,
+td.jukeboxlistnameodd, 
+td.jukeboxdescriptionodd, 
+td.jukeboxcreatedodd, 
+td.jukeboxlastmodifodd, 
+td.jukeboxlistuserodd, 
+td.jukeboxlisttracksodd, 
+td.jukeboxlistvisitsodd
 {
 background-color: #121212;
 vertical-align: top;
@@ -831,7 +842,14 @@ td.topicreplieseven,
 td.topicreadseven,
 td.topicscoreeven,
 td.topiclastposteven,
-td.topicauthoreven
+td.topicauthoreven,
+td.jukeboxlistnameeven, 
+td.jukeboxdescriptioneven, 
+td.jukeboxcreatedeven, 
+td.jukeboxlastmodifeven, 
+td.jukeboxlistusereven, 
+td.jukeboxlisttrackseven, 
+td.jukeboxlistvisitseven
 {
 background-color: #323232;
 vertical-align: top;
@@ -947,6 +965,7 @@ Links where no special link style apply
 .bloglink,
 .fgallink,
 .trailer,
+.jukeboxlink,
 .opencomlink,
 .commentslink,
 .admlink,
@@ -960,6 +979,7 @@ text-decoration: none;
 .bloglink:hover,
 .fgallink:hover,
 .trailer:hover,
+.jukeboxlink:hover,
 .opencomlink:hover,
 .commentslink:hover,
 .admlink:hover,
@@ -992,13 +1012,15 @@ prev & next buttons in pagination
 .blogprevnext,
 .fgalprevnext,
 .artprevnext,
-.forumprevnext
+.forumprevnext,
+.jukeboxprevnext
 {
 }
 
 .prevnext:hover,
 .galprevnext:hover,
 .blogprevnext:hover,
+.jukeboxprevnext:hover,
 .fgalprevnext:hover,
 .artprevnext:hover,
 .forumprevnext:hover
