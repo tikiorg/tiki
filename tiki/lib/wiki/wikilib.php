@@ -1,4 +1,6 @@
 <?php
+
+define('PLUGINS_DIR','lib/wiki-plugins');
  
 class WikiLib extends TikiLib {
     
@@ -407,6 +409,31 @@ class WikiLib extends TikiLib {
     return $ret;
   }
   
+  function list_plugins()
+  {
+    $files=array();
+    if (is_dir(PLUGINS_DIR)) {
+      if ($dh = opendir(PLUGINS_DIR)) {
+        while (($file = readdir($dh)) !== false) {
+          if (preg_match("/^wikiplugin_.*\.php$/",$file))
+            array_push($files, $file);
+        }
+        closedir($dh);
+      }
+    }
+    return $files;
+  }
+
+  //
+  // Call 'wikiplugin_.*_description()' from given file
+  //
+  function get_plugin_description($file)
+  {
+    global $tikilib;
+    include_once(PLUGINS_DIR.'/'.$file);
+    $func_name=str_replace(".php", "", $file).'_help';
+    return function_exists($func_name) ? $tikilib->parse_data($func_name()) : "";
+  }
 }
 
 global $wikilib;
