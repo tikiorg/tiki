@@ -411,8 +411,11 @@ class Comments extends TikiLib {
 
 	$message_id = '';
 	$threadId = $this->post_new_comment(
-		'forum' . $info['forumId'], $info['parentId'], $info['user'], $info['title'], $info['data'], $info['type'],
-		$info['summary'], $info['topic_smiley'], $message_id);
+		'forum' . $info['forumId'], $info['parentId'], $info['user'], $info['title'], $info['data'], 
+		$message_id, '', //in_reply_to
+		$info['type'],
+		$info['summary'], $info['topic_smiley']
+		);
 	$this->remove_queued($qId);
 
 	if ($threadId) {
