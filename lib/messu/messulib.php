@@ -1,7 +1,5 @@
 <?php
 
-include_once('lib/webmail/tikimaillib.php');
-
 class Messu extends Tikilib {
 	var $db;
 
@@ -42,6 +40,7 @@ class Messu extends Tikilib {
 		if ($this->get_user_preference($user, 'minPrio', 6) <= $priority) {
 			$email = $userlib->get_user_email($user);
 			if ($email) {
+				include_once('lib/webmail/tikimaillib.php');
 				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 				$smarty->assign('mail_machine', $machine);
 				$smarty->assign('mail_date', date("U"));
@@ -50,7 +49,7 @@ class Messu extends Tikilib {
 				$smarty->assign('mail_subject', stripslashes($subject));
 				$smarty->assign('mail_body', stripslashes($body));
 				$mail = new TikiMail($user);
-				$lg = $this->get_user_preference($user, 'language', $language);
+				$lg = $this->get_user_preference($user, 'language', $this->get_preference("language", "en"));
 				$s = $smarty->fetchLang($lg, 'mail/messu_message_notification_subject.tpl');
 				$mail->setSubject(sprintf($s, $_SERVER["SERVER_NAME"]));
 				$mail_data = $smarty->fetchLang($lg, 'mail/messu_message_notification.tpl');

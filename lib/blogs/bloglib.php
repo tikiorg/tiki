@@ -1,5 +1,4 @@
 <?php
-require_once('lib/webmail/tikimaillib.php');
 
 class BlogLib extends TikiLib {
 	function BlogLib($db) {
@@ -369,41 +368,26 @@ class BlogLib extends TikiLib {
 
 		if ($feature_user_watches == 'y') {
 			$nots = $this->get_event_watches('blog_post', $blogId);
-			$isBuild = false;
-
-			foreach ($nots as $not) {
-				if (!$isBuild) {
-					$isBuild = true;
-					$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-					$smarty->assign('mail_title', $title);
-					$smarty->assign('mail_blogid', $blogId);
-					$smarty->assign('mail_postid', $id);
-					$smarty->assign('mail_date', date("U"));
-					$smarty->assign('mail_user', $user);
-					$smarty->assign('mail_data', $data);
-					$smarty->assign('mail_hash', $not['hash']);
-					$foo = parse_url($_SERVER["REQUEST_URI"]);
-					$machine = httpPrefix(). $foo["path"];
-					$smarty->assign('mail_machine', $machine);
-					$parts = explode('/', $foo['path']);
-
-					if (count($parts) > 1)
-						unset ($parts[count($parts) - 1]);
-
-					$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
-					$mail = new TikiMail();
-				}
-				global $language;// TODO: optimise by grouping user by language
-				$languageEmail = $this->get_user_preference($not['user'], "language", $language);
- 				$mail->setUser($not['user']);
-				$mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_blog_post_subject.tpl');
- 				$mail->setSubject(sprintf($mail_data, $title));
-				$mail_data = $smarty->fetchLang($languageEmail, 'mail/user_watch_blog_post.tpl');
-				$mail->setText($mail_data);
-				$mail->buildMessage();
-				$mail->send(array($not['email']));
-				$mail_data = $smarty->fetch('mail/user_watch_blog_post.tpl');
-				//@mail($not['email'], tra('Blog post'). ' ' . $title, $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+			if (count($nots)) {
+				include_once("lib/notifications/notificationemaillib.php");
+				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+				$query = "select `title` from `tiki_blogs` where `blogId`=?";
+				$blogTitle = $this->getOne($query, array((int)$blogId));
+				$smarty->assign('mail_title', $blogTitle);
+				$smarty->assign('mail_blogid', $blogId);
+				$smarty->assign('mail_postid', $id);
+				$smarty->assign('mail_date', date("U"));
+				$smarty->assign('mail_user', $user);
+				$smarty->assign('mail_data', $data);
+				$foo = parse_url($_SERVER["REQUEST_URI"]);
+				$machine = httpPrefix(). $foo["path"];
+				$smarty->assign('mail_machine', $machine);
+				$parts = explode('/', $foo['path']);
+				if (count($parts) > 1)
+					unset ($parts[count($parts) - 1]);
+				$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+				sendEmailNotification($nots, "watch", "user_watch_blog_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_blog_post.tpl");
+				//@mail($not['email'], tra('Blog post'). ' ' . $blogTitle, $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
 			}
 		}
 
