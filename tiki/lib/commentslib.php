@@ -126,6 +126,12 @@ class Comments {
       } else {
         $res["users_per_day"] =0;
       }
+      
+      $query2= "select * from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and commentDate=".$res["lastPost"];
+      $result2 = $this->db->query($query2);
+      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC);
+      $res["lastPostData"]=$res2;
       $ret[] = $res;
     }
     $retval = Array();
@@ -171,12 +177,18 @@ class Comments {
   {
     $now = date("U");
     if(!$parentId) {	 
-      $query = "update tiki_forums set threads=threads+1, comments=comments+1, lastPost=$now where forumId=$forumId";	
+      $query = "update tiki_forums set threads=threads+1, comments=comments+1 where forumId=$forumId";	
     } else {
-      $query = "update tiki_forums set comments=comments+1, lastPost=$now where forumId=$forumId";		
+      $query = "update tiki_forums set comments=comments+1 where forumId=$forumId";		
     }
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
+  
+    $lastPost = $this->db->getOne("select max(commentDate) from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and forumId=$forumId");
+    $query="update tiki_forums set lastPost=$lastPost where forumId=$forumId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    
     $this->forum_prune($forumId);
     return true;
   }
@@ -361,7 +373,6 @@ class Comments {
       $offset = 0;
       $maxRecords = -1;
     }
-   
     
     $query = "select count(*) from tiki_comments where object='$hash' and average<$threshold";
     $below = $this->db->getOne($query);
@@ -422,6 +433,13 @@ class Comments {
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
       $res["lastPost"]=$this->db->getOne($query);
       if(!$res["lastPost"]) $res["lastPost"]=$res["commentDate"];
+      
+      $query2 = "select * from tiki_comments where parentId='$tid' and commentDate=".$res["lastPost"];
+      $result2 = $this->db->query($query2);
+      if(DB::isError($result2)) $this->sql_error($query2, $result2);
+      $res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC);
+      $res["lastPostData"]=$res2;
+      
       // Get the grandfather
       if($res["parentId"]>0) {
         $res["grandFather"]=$this->get_comment_father($res["parentId"]);

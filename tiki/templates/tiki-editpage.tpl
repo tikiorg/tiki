@@ -76,7 +76,7 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
 {/if}
 <input type="hidden" name="page" value="{$page}" />
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /><input type="submit" class="wikiaction" name="cancel" value="{tr}cancel{/tr}" /></td>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <a class="link" href="tiki-index.php?page={$page}">{tr}cancel edit{/tr}</a></td>
 </tr>
 </table>
 </form>

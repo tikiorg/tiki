@@ -31,43 +31,54 @@
 </form>
 </td><td valign="top" class="even">
 <h2>{tr}Some useful URLs{/tr}</h2>
-<a class="link" href="javascript:setMenuCon('{$tikiIndex}','{tr}Home Page{/tr}');">{tr}Home Page{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-view_blog.php?blogId={$home_blog}','{tr}Home Blog{/tr}');">{tr}Home Blog{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-browse_gallery.php?galleryId={$home_gallery}','{tr}Home Image Gal{/tr}');">{tr}Home Image Gallery{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-list_file_gallery?galleryId={$home_file_gallery}','{tr}Home File Gal{/tr}');">{tr}Home File Gallery{/tr}</a>
+[<a class="link" href="javascript:setMenuCon('{$tikiIndex}','{tr}Home Page{/tr}');">{tr}Home Page{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-view_blog.php?blogId={$home_blog}','{tr}Home Blog{/tr}');">{tr}Home Blog{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-browse_gallery.php?galleryId={$home_gallery}','{tr}Home Image Gal{/tr}');">{tr}Home Image Gallery{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-list_file_gallery?galleryId={$home_file_gallery}','{tr}Home File Gal{/tr}');">{tr}Home File Gallery{/tr}</a>]
 <br/>
-<a class="link" href="javascript:setMenuCon('tiki-chat.php','{tr}Chat{/tr}');">{tr}Chat{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-user_preferences.php','{tr}User preferences{/tr}');">{tr}User prefs{/tr}</a>
+[<a class="link" href="javascript:setMenuCon('tiki-chat.php','{tr}Chat{/tr}');">{tr}Chat{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-stats.php','{tr}Stats{/tr}');">{tr}Stats{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-games.php','{tr}Games{/tr}');">{tr}Games{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-browse_categories.php','{tr}Categories{/tr}');">{tr}Categories{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-user_preferences.php','{tr}User preferences{/tr}');">{tr}User prefs{/tr}</a>]
 <br/>
-<a class="link" href="javascript:setMenuCon('tiki-index.php','{tr}Wiki Home{/tr}');">{tr}Wiki Home{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-lastchanges.php','{tr}Last changes{/tr}');">{tr}Last changes{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-wiki_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-listpages.php','{tr}List pages{/tr}');">{tr}List pages{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-index.php?page=SandBox','{tr}Sandbox{/tr}');">{tr}Sandbox{/tr}</a>
+[<a class="link" href="javascript:setMenuCon('tiki-index.php','{tr}Wiki Home{/tr}');">{tr}Wiki Home{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-lastchanges.php','{tr}Last changes{/tr}');">{tr}Last changes{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-wiki_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-listpages.php','{tr}List pages{/tr}');">{tr}List pages{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-index.php?page=SandBox','{tr}Sandbox{/tr}');">{tr}Sandbox{/tr}</a>]
 <br/>
-<a class="link" href="javascript:setMenuCon('tiki-galleries.php','{tr}List galleries{/tr}');">{tr}List image galleries{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-upload_image.php','{tr}Upload image{/tr}');">{tr}Upload image{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-galleries_rankings.php','{tr}Gallery Rankings{/tr}');">{tr}Gallery Rankings{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-browse_gallery.php?galleryId=','');">{tr}Browse a gallery{/tr}</a>
+[<a class="link" href="javascript:setMenuCon('tiki-galleries.php','{tr}List galleries{/tr}');">{tr}List image galleries{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-upload_image.php','{tr}Upload image{/tr}');">{tr}Upload{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-galleries_rankings.php','{tr}Gallery Rankings{/tr}');">{tr}Rankings{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-browse_gallery.php?galleryId=','');">{tr}Browse a gallery{/tr}</a>]
 <br/>
-<a class="link" href="javascript:setMenuCon('tiki-articles_home.php','{tr}Articles{/tr}');">{tr}Articles home{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-list_articles.php','{tr}All articles{/tr}');">{tr}List articles{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-cms_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-edit_submission.php','{tr}Submit{/tr}');">{tr}Submit{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-list_submissions.php','{tr}Submissions{/tr}');">{tr}Submissions{/tr}</a>
+[<a class="link" href="javascript:setMenuCon('tiki-articles_home.php','{tr}Articles{/tr}');">{tr}Articles home{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-list_articles.php','{tr}All articles{/tr}');">{tr}List articles{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-cms_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-edit_submission.php','{tr}Submit{/tr}');">{tr}Submit{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-list_submissions.php','{tr}Submissions{/tr}');">{tr}Submissions{/tr}</a>]
 <br/>
-<a class="link" href="javascript:setMenuCon('tiki-list_blogs.php','{tr}List Blogs{/tr}');">{tr}List Blogs{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-blog_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-edit_blog.php','{tr}Create blog{/tr}');">{tr}Create blog{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-blog_post.php','{tr}Post{/tr}');">{tr}Post{/tr}</a>
+[<a class="link" href="javascript:setMenuCon('tiki-list_blogs.php','{tr}List Blogs{/tr}');">{tr}List Blogs{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-blog_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-edit_blog.php','{tr}Create blog{/tr}');">{tr}Create blog{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-blog_post.php','{tr}Post{/tr}');">{tr}Post{/tr}</a>]
 <br/>
-<a class="link" href="javascript:setMenuCon('tiki-file_galleries.php','{tr}File galleries{/tr}');">{tr}File galleries{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-upload_file.php','{tr}Upload file{/tr}');">{tr}Upload file{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-file_galleries_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
+[<a class="link" href="javascript:setMenuCon('tiki-file_galleries.php','{tr}File galleries{/tr}');">{tr}File galleries{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-upload_file.php','{tr}Upload file{/tr}');">{tr}Upload file{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-file_galleries_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>]
 <br/>
-<a class="link" href="javascript:setMenuCon('tiki-forums.php','{tr}Forums{/tr}');">{tr}Forums{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-view_forum.php?forumId=','');">{tr}View a forum{/tr}</a>
-<a class="link" href="javascript:setMenuCon('tiki-view_forum_thread.php?forumId=&amp;comments_parentId=','');">{tr}View a thread{/tr}</a>
+[<a class="link" href="javascript:setMenuCon('tiki-forums.php','{tr}Forums{/tr}');">{tr}Forums{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-view_forum.php?forumId=','');">{tr}View a forum{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-view_forum_thread.php?forumId=&amp;comments_parentId=','');">{tr}View a thread{/tr}</a>]
+<br/>
+[<a class="link" href="javascript:setMenuCon('tiki-list_faqs.php','{tr}FAQs{/tr}');">{tr}FAQs{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-view_faq.php?faqId=','');">{tr}View a FAQ{/tr}</a>]
+<br/>
+[<a class="link" href="javascript:setMenuCon('tiki-list_quizzes.php','{tr}Quizzes{/tr}');">{tr}Quizzes{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-take_quiz.php?quizId=','');">{tr}Take a quiz{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-quiz_stats.php','{tr}Quiz stats{/tr}');">{tr}Quiz stats{/tr}</a>
+|<a class="link" href="javascript:setMenuCon('tiki-quiz_stats_quiz.php?quizId=','');">{tr}Stats for a Quiz{/tr}</a>]
 </td></tr></table>
 <h2>Menu options</h2>
 <div  align="center">

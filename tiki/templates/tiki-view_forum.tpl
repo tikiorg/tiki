@@ -163,12 +163,19 @@
      class="admlink">edit</a>
   <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink">x</a>
-  {/if}     
+  {/if}
+  <br/>
+  <small>{$comments_coms[ix].data|truncate:240:"...":true}</small>     
   </td>
   <td class="topicrepliesodd">{$comments_coms[ix].replies.numReplies}</td>
   <td class="topicreadsodd">{$comments_coms[ix].hits}</td>
   <td class="topicscoreodd">{$comments_coms[ix].average|string_format:"%.2f"}</td>
-  <td class="topiclastpostodd">{$comments_coms[ix].lastPost|date_format:"%d of %b [%H:%M]"}</td>
+  <td class="topiclastpostodd">{$comments_coms[ix].lastPost|date_format:"%d of %b [%H:%M]"}
+  {if $comments_coms[ix].replies.numReplies}
+  <br/>
+  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>     
+  {/if}
+  </td>
   <td class="topicauthorodd">{$comments_coms[ix].userName}</td>
 </tr>
 {else}
@@ -187,11 +194,18 @@
   <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink">x</a>
   {/if}     
+  <br/>
+  <small>{$comments_coms[ix].data|truncate:240:"...":true}</small>     
   </td>
   <td class="topicreplieseven">{$comments_coms[ix].replies.numReplies}</td>
   <td class="topicreadseven">{$comments_coms[ix].hits}</td>
   <td class="topicscoreeven">{$comments_coms[ix].average|string_format:"%.2f"}</td>
-  <td class="topiclastposteven">{$comments_coms[ix].lastPost|date_format:"%d of %b [%H:%M]"}</td>
+  <td class="topiclastposteven">{$comments_coms[ix].lastPost|date_format:"%d of %b [%H:%M]"}
+  {if $comments_coms[ix].replies.numReplies}
+  <br/>
+  <small><i>{$comments_coms[ix].lastPostData.title}</i> {tr}by{/tr} {$comments_coms[ix].lastPostData.userName}</small>
+  {/if}
+  </td>     
   <td class="topicauthoreven">{$comments_coms[ix].userName}</td>
 {/if}
 </tr>

@@ -7,8 +7,13 @@
 <input type="hidden" name="templateId" value="{$templateId}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="name" value="{$info.name}" /></td></tr>
+{if $feature_cms_templates eq 'y'}
 <tr><td class="formcolor">{tr}use in cms{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_cms" {if $info.section_cms eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+{if $feature_wiki_templates eq 'y'}
 <tr><td class="formcolor">{tr}use in wiki{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_wiki" {if $info.section_wiki eq 'y'}checked="checked"{/if} /></td></tr>
+{/if}
+<tr><td class="formcolor">{tr}use in HTML pages{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}template{/tr}:</td><td class="formcolor"><textarea name="content" rows="25" cols="60">{$info.content}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>

@@ -24,9 +24,11 @@
 <table>
 <tr><td class="form">{tr}Wiki{/tr}:</td><td><input type="checkbox" name="feature_wiki" {if $feature_wiki eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Search{/tr}:</td><td><input type="checkbox" name="feature_search" {if $feature_search eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Search stats{/tr}:</td><td><input type="checkbox" name="feature_search_stats" {if $feature_search_stats eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Image Galleries{/tr}:</td><td><input type="checkbox" name="feature_galleries" {if $feature_galleries eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Featured links{/tr}:</td><td><input type="checkbox" name="feature_featuredLinks" {if $feature_featuredLinks eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Hotwords{/tr}:</td><td><input type="checkbox" name="feature_hotwords" {if $feature_hotwords eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Hotwords in new window{/tr}:</td><td><input type="checkbox" name="feature_hotwords_nw" {if $feature_hotwords_nw eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}User preferences screen{/tr}:</td><td><input type="checkbox" name="feature_userPreferences" {if $feature_userPreferences eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Articles{/tr}:</td><td><input type="checkbox" name="feature_articles" {if $feature_articles eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Submissions{/tr}:</td><td><input type="checkbox" name="feature_submissions" {if $feature_submissions eq 'y'}checked="checked"{/if}/></td></tr>
@@ -50,13 +52,16 @@
 <tr><td class="form">{tr}Quizzes{/tr}:</td><td><input type="checkbox" name="feature_quizzes" {if $feature_quizzes eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Allow smileys{/tr}:</td><td><input type="checkbox" name="feature_smileys" {if $feature_smileys eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Shoutbox{/tr}:</td><td><input type="checkbox" name="feature_shoutbox" {if $feature_shoutbox eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}HTML pages{/tr}:</td><td><input type="checkbox" name="feature_html_pages" {if $feature_html_pages eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Drawings{/tr}:</td><td><input type="checkbox" name="feature_drawings" {if $feature_drawings eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Referer stats{/tr}:</td><td><input type="checkbox" name="feature_referer_stats" {if $feature_referer_stats eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
 </div>
 </td><td valign="top">
 <div class="simplebox">
-{tr}Layout options{/tr}
+{tr}General Layout options{/tr}
 <form action="tiki-admin.php" method="post">
 <table>
 <tr><td class="form">{tr}Left column{/tr}:</td><td><input type="checkbox" name="feature_left_column" {if $feature_left_column eq 'y'}checked="checked"{/if}/></td></tr>
@@ -66,6 +71,13 @@
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="layout" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
+<form action="tiki-admin.php" method="post">
+<table>
+<tr><td class="form">{tr}Layout per section{/tr}:</td><td><input type="checkbox" name="layout_section" {if $layout_section eq 'y'}checked="checked"{/if}/></td>
+<td align="center" class="form" colspan="2"><input type="submit" name="layout_ss" value="{tr}Set{/tr}" /></td></tr>
+</table>
+</form>
+<a href="tiki-admin_layout.php" class="link">{tr}Admin layout per section{/tr}</a>
 </div>
 </td></tr></table>
 </div>
@@ -90,7 +102,7 @@
 <form action="tiki-admin.php" method="post">
 <div class="simplebox">
 <table>
-<tr><td class="form">{tr}Index page{/tr}:</td><td>
+<tr><td class="form">{tr}Home page{/tr}:</td><td>
 <select name="tikiIndex">
 <option value="tiki-index.php" {if $tikiIndex eq 'tiki-index.php'}selected="selected"{/if}>Wiki</option>
 <option value="tiki-view_articles.php" {if $tikiIndex eq 'tiki-view_articles.php'}selected="selected"{/if}>Articles</option>
@@ -103,6 +115,7 @@
 {/if}
 </select>
 </td></tr>
+<tr><td class="form">{tr}Use URI as Home Page{/tr}:</td><td><input type="checkbox" name="useUrlIndex" {if $useUrlIndex eq 'y'}checked="checked"{/if}/><input type="text" name="urlIndex" value="{$urlIndex}"/></td></tr>
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$registerPasscode}"/></td></tr>
 <tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
@@ -111,6 +124,7 @@
 <tr><td class="form">{tr}Display modules to all groups always{/tr}:</td><td><input type="checkbox" name="modallgroups" {if $modallgroups eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use cache for external pages{/tr}:</td><td><input type="checkbox" name="cachepages" {if $cachepages eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use cache for external images{/tr}:</td><td><input type="checkbox" name="cacheimages" {if $cacheimages eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Count admin pageviews{/tr}:</td><td><input type="checkbox" name="count_admin_pvs" {if $count_admin_pvs eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Maximum number of records in listings{/tr}: </td><td><input size="5" type="text" name="maxRecords" value="{$maxRecords}" /></td></tr>
 <!--<tr><td class="form">{tr}Wiki_Tiki_Title{/tr}: </td><td><input type="text" size="5" name="title" value="{$title}" /></td></tr>-->
 <tr><td class="form">{tr}Theme{/tr}:</td><td>
@@ -126,6 +140,8 @@
         {/section}
         </select></td></tr>
 <tr><td class="form">{tr}Browser title{/tr}:</td><td><input type="text" name="siteTitle" value="{$siteTitle}" /></td></tr>
+<tr><td class="form">{tr}Reg users can change theme{/tr}:</td><td><input type="checkbox" name="change_theme" {if $change_theme eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Reg users can change language{/tr}:</td><td><input type="checkbox" name="change_language" {if $change_language eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td>&nbsp;</td><td><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </div>
@@ -225,6 +241,21 @@
     </table>
     </form>
     </div>
+    
+    <div class="simplebox">
+    {tr}Wiki attachments{/tr}
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_wiki_attachments" {if $feature_wiki_attachments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="y" {if $w_use_db eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="w_use_db" value="n" {if $w_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="w_use_dir" value="{$w_use_dir}" /> 
+    <tr><td align="center" colspan="2"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    </table>
+    </form>
+    
+    </div>
+    
+    
     </td>
     
     
@@ -247,7 +278,17 @@
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_wiki_comments" {if $feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Spellchecking{/tr}:</td><td><input type="checkbox" name="wiki_spellcheck" {if $wiki_spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use templates{/tr}:</td><td><input type="checkbox" name="feature_wiki_templates" {if $feature_wiki_templates eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Warn on edit{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Warn on edit{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/>
+    <select name="warn_on_edit_time">
+    <option value="1" {if $warn_on_edit_time eq 1}selected="selected"{/if}>1</option>
+    <option value="2" {if $warn_on_edit_time eq 2}selected="selected"{/if}>2</option>
+    <option value="5" {if $warn_on_edit_time eq 2}selected="selected"{/if}>5</option>
+    <option value="10" {if $warn_on_edit_time eq 2}selected="selected"{/if}>10</option>
+    <option value="15" {if $warn_on_edit_time eq 2}selected="selected"{/if}>15</option>
+    <option value="30" {if $warn_on_edit_time eq 2}selected="selected"{/if}>30</option>
+    </select> mins
+    </td></tr>
+    <tr><td class="form">{tr}Show page title{/tr}:</td><td><input type="checkbox" name="feature_page_title" {if $feature_page_title eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
     </form>
@@ -298,12 +339,19 @@
 </table>
 </form>
 </div>
+
+    
+
 <div class="simplebox">
 {tr}Galleries features{/tr}<br/>
 <form action="tiki-admin.php" method="post">
     <table width="100%">
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_gal_rankings" {if $feature_gal_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_image_galleries_comments" {if $feature_image_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use database to store images{/tr}:</td><td><input type="radio" name="gal_use_db" value="y" {if $gal_use_db eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use a directory to store images{/tr}:</td><td><input type="radio" name="gal_use_db" value="n" {if $gal_use_db eq 'n'}checked="checked"{/if}/> {tr}Directory path{/tr}:<input type="text" name="gal_use_dir" value="{$gal_use_dir}" /> 
+    <tr><td class="form">{tr}Uploaded image names must match regex{/tr}:</td><td><input type="text" name="gal_match_regex" value="{$fgal_match_regex}"/></td></tr>
+    <tr><td class="form">{tr}Uploaded image names cannot match regex{/tr}:</td><td><input type="text" name="gal_nmatch_regex" value="{$fgal_nmatch_regex}"/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
@@ -363,6 +411,8 @@
 </table>
 </form>
 </div>
+
+
 <div class="simplebox">
 {tr}Galleries features{/tr}<br/>
 <form action="tiki-admin.php" method="post">
@@ -371,6 +421,8 @@
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_comments" {if $feature_file_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="fgal_use_db" value="y" {if $fgal_use_db eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="fgal_use_db" value="n" {if $fgal_use_db eq 'n'}checked="checked"{/if}/> {tr}Directory path{/tr}:<input type="text" name="fgal_use_dir" value="{$fgal_use_dir}" /> 
+    <tr><td class="form">{tr}Uploaded filenames must match regex{/tr}:</td><td><input type="text" name="fgal_match_regex" value="{$fgal_match_regex}"/></td></tr>
+    <tr><td class="form">{tr}Uploaded filenames cannot match regex{/tr}:</td><td><input type="text" name="fgal_nmatch_regex" value="{$fgal_nmatch_regex}"/></td></tr>
     <a class="link" {popup sticky="true" trigger="onClick" caption="Storing files in a directory" text="If you decide to store files in a directory you must ensure that the user cannot access directly to the directory. You have two options to accomplish this:<br/><ul><li>Use a directory ourside your document root, make sure your php script can read and write to that directory</li><li>Use a directory inside the document root and use and .htaccess to prevent the user from listing the directory contents</li></ul>To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/"}>please read</a></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="filegalfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
@@ -414,6 +466,9 @@
 <div class="cbox">
 <div class="cbox-title">{tr}CMS settings{/tr}</div>
 <div class="cbox-data">
+
+
+
 <div class="simplebox">
 {tr}CMS features{/tr}<br/>
 <form action="tiki-admin.php" method="post">
@@ -522,6 +577,10 @@
 </table>
 </form>
 </div>
+
+
+
+
 <div class="simplebox">
 {tr}Blog features{/tr}<br/>
 <form action="tiki-admin.php" method="post">
@@ -529,6 +588,17 @@
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_blog_rankings" {if $feature_blog_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_blog_comments" {if $feature_blog_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Spellchecking{/tr}:</td><td><input type="checkbox" name="blog_spellcheck" {if $blog_spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Default ordering for blog listing{/tr}:</td>
+    <td>
+    <select name="blog_list_order">
+    <option value="created_desc" {if $blog_list_order eq 'created_desc'}selected="selected"{/if}>{tr}Creation date (desc){/tr}</option>
+    <option value="lastModif_desc" {if $blog_list_order eq 'lastModif_desc'}selected="selected"{/if}>{tr}Last modification date (desc){/tr}</option>
+    <option value="title_asc" {if $blog_list_order eq 'title_asc'}selected="selected"{/if}>{tr}Blog title (asc){/tr}</option>
+    <option value="posts_desc" {if $blog_list_order eq 'posts_desc'}selected="selected"{/if}>{tr}Number of posts (desc){/tr}</option>
+    <option value="hits_desc" {if $blog_list_order eq 'hits_desc'}selected="selected"{/if}>{tr}Visits (desc){/tr}</option>
+    <option value="activity_desc" {if $blog_list_order eq 'activity_desc'}selected="selected"{/if}>{tr}Activity (desc){/tr}</option>
+    </select>
+    </td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="blogfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
@@ -585,6 +655,9 @@
     </table>
     </form>
     </div>
+    
+    
+    
     <div class="simplebox">
     <form method="post" action="tiki-admin.php">
     <table>
@@ -625,6 +698,9 @@
 <div class="cbox">
 <div class="cbox-title">{tr}FAQs settings{/tr}</div>
 <div class="cbox-data">
+
+
+
 <div class="simplebox">
 {tr}FAQ comments{/tr}<br/>
 <form action="tiki-admin.php" method="post">

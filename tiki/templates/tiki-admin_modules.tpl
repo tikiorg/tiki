@@ -39,8 +39,11 @@
 <br/>
 <a name="assign"></a>
 <h3>Assign module</h3>
-
-<form method="post" action="tiki-admin_modules.php">
+{if $preview eq 'y'}
+{tr}Preview{/tr}<br/>
+{$preview_data}
+{/if}
+<form method="post" action="tiki-admin_modules.php#assign">
 <table class="normal">
 <tr><td class="formcolor">{tr}Module Name{/tr}</td><td class="formcolor">
 <select name="assign_name">
@@ -65,6 +68,7 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Cache Time{/tr}(secs)</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache}" /></td></tr>
 <tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows}" /></td></tr>
+<tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params}" /></td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
 <select multiple="multiple" name="groups[]">
 {section name=ix loop=$groups}
@@ -72,7 +76,7 @@
 {/section}
 </select>
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="assign" value="assign"></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}preview{/tr}"><input type="submit" name="assign" value="{tr}assign{/tr}"></td></tr>
 </table>
 </form>
 <br/>
@@ -252,6 +256,23 @@
     <a class="link" href="javascript:setUserModuleFromCombo('list_rsss');">{tr}use rss module{/tr}</a>
   </td>
 </tr>
+
+<tr>
+  <td class="form">
+    {tr}Menus{/tr}:
+  </td>
+  <td>
+    <select name="menus" id='list_menus'>
+    {section name=ix loop=$menus}
+    <option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].menuId}</option>   
+    {/section}
+    </select>
+  </td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_menus');">{tr}use menu{/tr}</a>
+  </td>
+</tr>
+
 <tr>
   <td class="form">
     {tr}Banner zones{/tr}:

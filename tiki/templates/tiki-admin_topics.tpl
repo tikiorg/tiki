@@ -15,6 +15,7 @@
 <td class="heading">{tr}name{/tr}</td>
 <td class="heading">{tr}Image{/tr}</td>
 <td class="heading">{tr}Active?{/tr}</td>
+<td class="heading">{tr}Articles (subs){/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {section name=user loop=$topics}
@@ -24,6 +25,7 @@
 <td class="odd"><img alt="topic image" border="0" src="topic_image.php?id={$topics[user].topicId}" />
 </td>
 <td class="odd">{$topics[user].active}</td>
+<td class="odd">{$topics[user].arts} ({$topics[user].subs})</td>
 <td class="odd">
 <a class="link" href="tiki-admin_topics.php?remove={$topics[user].topicId}">{tr}Remove{/tr}</a>
 {if $topics[user].active eq 'n'}
@@ -39,6 +41,7 @@
 <td class="even">{$topics[user].name}</td>
 <td class="even"><img alt="topic image" border="0" src="topic_image.php?id={$topics[user].topicId}" /></td>
 <td class="even">{$topics[user].active}</td>
+<td class="even">{$topics[user].arts} o({$topics[user].subs})</td>
 <td class="even">
 <a class="link" href="tiki-admin_topics.php?remove={$topics[user].topicId}">{tr}Remove{/tr}</a>
 {if $topics[user].active eq 'n'}

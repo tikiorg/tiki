@@ -15,17 +15,21 @@
   <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td></tr>
   <tr><td class="form">{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email}" /></td></tr>
+  {if $change_theme eq 'y'}
   <tr><td class="form">{tr}Theme{/tr}:</td><td><select name="style">
         {section name=ix loop=$styles}
         <option value="{$styles[ix]}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
         {/section}
         </select></td></tr>
+  {/if}
+  {if $change_language eq 'y'}      
   <tr><td  class="form">{tr}Language{/tr}:</td><td>
         <select name="language">
         {section name=ix loop=$languages}
         <option value="{$languages[ix]}" {if $language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
         {/section}
         </select></td></tr>
+  {/if}      
   <tr><td class="form">{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName}" /></td></tr>
   <tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td>
   <select name="userbreadCrumb">

@@ -74,8 +74,8 @@
 {/if}
 &nbsp;</td>
 <td class="listfgaldescriptionodd">{$galleries[changes].description}&nbsp;</td>
-<td class="listfgalcreatedodd">{$galleries[changes].created|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
-<td class="listfgallastModifodd">{$galleries[changes].lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="listfgalcreatedodd">{$galleries[changes].created|date_format:"%d of %b [%H:%M]"}&nbsp;</td>
+<td class="listfgallastModifodd">{$galleries[changes].lastModif|date_format:"%d of %b [%H:%M]"}&nbsp;</td>
 <!--<td class="odd">{$galleries[changes].theme}&nbsp;</td>-->
 <td class="listfgaluserodd">{$galleries[changes].user}&nbsp;</td>
 <td class="listfgalfilesodd">{$galleries[changes].files}&nbsp;</td>
@@ -109,8 +109,8 @@
 {/if}
 &nbsp;</td>
 <td class="listfgaldescriptioneven">{$galleries[changes].description}&nbsp;</td>
-<td class="listfgalcreatedeven">{$galleries[changes].created|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
-<td class="listfgallastModifeven">{$galleries[changes].lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}&nbsp;</td>
+<td class="listfgalcreatedeven">{$galleries[changes].created|date_format:"%d of %b [%H:%M]"}&nbsp;</td>
+<td class="listfgallastModifeven">{$galleries[changes].lastModif|date_format:"%d of %b [%H:%M]"}&nbsp;</td>
 <td class="listfgalusereven">{$galleries[changes].user}&nbsp;</td>
 <td class="listfgalfileseven">{$galleries[changes].files}&nbsp;</td>
 <td class="listfgalvisitseven">{$galleries[changes].hits}&nbsp;</td>

@@ -210,6 +210,9 @@
  $tiki_p_admin_dynamic eq 'y' or
  $tiki_p_admin_dynamic eq 'y' or
  $tiki_p_edit_content_templates eq 'y' or
+ $tiki_p_edit_html_pages eq 'y' or
+ $tiki_p_view_referer_stats eq 'y' or
+ $tiki_p_admin_drawings eq 'y' or
  $tiki_p_admin_shoutbox eq 'y'
  }
  
@@ -228,6 +231,7 @@
       &nbsp;<a href="tiki-admin_polls.php" class="linkmenu">{tr}Polls{/tr}</a><br/>
       &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br/>
       &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br/>
+      &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br/>
     {/if}
     {if $tiki_p_admin_chat eq 'y'}
       &nbsp;<a href="tiki-admin_chat.php" class="linkmenu">{tr}Chat{/tr}</a><br/>
@@ -241,6 +245,9 @@
     {if $tiki_p_edit_templates eq 'y'}
       &nbsp;<a href="tiki-edit_templates.php" class="linkmenu">{tr}Edit templates{/tr}</a><br/>
     {/if}
+    {if $tiki_p_admin_drawings eq 'y'}
+      &nbsp;<a href="tiki-admin_drawings.php" class="linkmenu">{tr}Admin drawings{/tr}</a><br/>
+    {/if}
     {if $tiki_p_admin_dynamic eq 'y'}
       &nbsp;<a href="tiki-list_contents.php" class="linkmenu">{tr}Dynamic content{/tr}</a><br/>
     {/if}
@@ -250,8 +257,14 @@
     {if $tiki_p_edit_content_templates eq 'y'}
       &nbsp;<a href="tiki-admin_content_templates.php" class="linkmenu">{tr}Content templates{/tr}</a><br/>
     {/if}
+    {if $tiki_p_edit_html_pages eq 'y'}
+      &nbsp;<a href="tiki-admin_html_pages.php" class="linkmenu">{tr}HTML pages{/tr}</a><br/>
+    {/if}
     {if $tiki_p_admin_shoutbox eq 'y'}
       &nbsp;<a href="tiki-shoutbox.php" class="linkmenu">{tr}Shoutbox{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_view_referer_stats eq 'y'}
+    &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br/>
     {/if}
   </div>
 {/if}
