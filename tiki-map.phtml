@@ -1,5 +1,12 @@
 <?php
 require_once('tiki-setup.php');
+
+if (!function_exists('ms_newMapObj')) {
+	$smarty->assign('msg',tra("You must first setup MapServer"));
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
+}
+
 $smarty->assign('mid','map/tiki-map.tpl');
 
 if(@$feature_maps != 'y') {
