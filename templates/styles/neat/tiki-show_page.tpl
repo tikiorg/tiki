@@ -170,17 +170,15 @@
 	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&amp;comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
 {/if}
 
-{if $feature_wiki_comments eq 'y' and $show_page eq 'y'  && ($tiki_p_read_comments eq 'y' || $tiki_p_admin_wiki eq 'y' || $tiki_p_admin eq 'y')}
-{if $comments_cant > 0 || $tiki_p_post_comments eq 'y'}
-	<span class="tabbut">
-	{if $comments_cant > 0}
-	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
-	{else}
-	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}post comment{/tr}</a>
-	{/if}
-	</span>
+{* don't show comments if feature disabled or not enough rights *}
+{if $feature_wiki_comments == 'y'
+&& (($tiki_p_read_comments  == 'y' && $comments_cant != 0)
+||  $tiki_p_post_comments  == 'y'
+||  $tiki_p_edit_comments  == 'y')}
+  <span class="tabbut">
+  <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink"{if $comments_cant != 0}  style="background: #FFAAAA"{/if}>{if $comments_cant == 0}{tr}add comment{/tr}{elseif $comments_cant == 1}{tr}1 comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
 {/if}
-{/if}
+
 {php} global $atts; global $smarty; $smarty->assign('atts_cnt', count($atts["data"])); {/php}
 {if $feature_wiki_attachments      == 'y'
   && ($tiki_p_wiki_view_attachments  == 'y'
