@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.24 2004-09-24 11:20:14 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.25 2004-09-24 15:54:34 sylvieg Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -144,3 +144,4 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 # added on 2004-9-24 sylvie
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES('tiki_p_admin_users', 'Can admin users', 'admin', 'user');
+UPDATE tiki_menu_options set perm='tiki_p_admin_users' where menuId=42 && name='Users' && perm='tiki_p_admin';
