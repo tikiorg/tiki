@@ -1,9 +1,14 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.9 2003-08-07 22:16:48 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.10 2003-08-11 18:32:11 sylvieg Exp $
  *
  * \brief Manage user assigned modules
- *
+ // useful only if the feature "A user can assign modules has been set" ($user_assigned_modules)
+///
+/// The first time, a user displays the page to assign modules(tiki-user_assigned_modules.php), 
+/// the list of modules are copied from tiki_modules to tiki_user_assigned_modules
+/// This list is rebuilt if the user asks for a "restore default"
+*
  */
 
 class UserModulesLib extends TikiLib {
@@ -251,7 +256,21 @@ class UserModulesLib extends TikiLib {
             $query = "update tiki_user_assigned_modules set ord=".$cur['ord']." where name='".$swap['name']."' and user='$user'";
   	        $r = $this->query($query);
         }
-    }
+ 	}
+	/// Add a module to all the user who have assigned module and who don't have already this module
+	function add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type) {
+		// for the user who already has this module, update only the type
+		$this->query = "update tiki_user_assigned_modules set type='$type' where name='$name'" ;
+		// for the user who doesn't have this module
+		$query = "select distinct t1.user from tiki_user_assigned_modules as t1 left join tiki_user_assigned_modules as t2 on t1.user=t2.user and t2.name='$name' where t2.name is null";   
+		$result = $this->query($query);
+		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+ 			$user = $res["user"];
+			$query = "insert into tiki_user_assigned_modules(user,name,position,ord,type,title,cache_time,rows,groups)
+			values('$user','$name','$position','$order','$type','$title','$cache_time','$rows','$groups')";
+ 			$this->query($query);
+		}
+	} 
 }
 
 $usermoduleslib = new UserModulesLib($dbTiki);
