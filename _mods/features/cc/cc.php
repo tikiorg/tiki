@@ -5,6 +5,12 @@ require_once ('lib/cc/cclib.php');
 if (!isset($_REQUEST['page'])) { $_REQUEST['page'] = ''; }
 $page = $_REQUEST['page'];
 
+if (isset($_REQUEST['all'])) { 
+	$_SESSION['viewallcc'] = 'y'; 
+} elseif (isset($_REQUEST['my']) or isset($_REQUEST['reg'])) { 
+	$_SESSION['viewallcc'] = 'n'; 
+}
+
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'last_tr_date_desc';
 	$_REQUEST["sort_mode"] = $sort_mode;
@@ -97,9 +103,8 @@ if ($user) {
 			$smarty->assign('currency',$currency);
 			$view = 'new';
 			$mid = 'cc/transactions_form.tpl';
-		} elseif (isset($_REQUEST['all']) and $tiki_p_cc_admin == 'y') {
+		} elseif (isset($_SESSION['viewallcc']) and $_SESSION['viewallcc'] == 'y' and $tiki_p_cc_admin == 'y') {
 			$thelist = $cclib->get_transactions();
-			$view = 'all';
 			$smarty->assign('thelist',$thelist['data']);
 			$mid = "cc/transactions.tpl";
 		} else {
@@ -125,9 +130,8 @@ if ($user) {
 					} else {
 						$seq = false;
 					}
-// approval					if (!$cclib->replace_currency($owner,$_REQUEST['cc_id'],$_REQUEST['cc_name'],$_REQUEST['cc_description'],$_REQUEST['requires_approval'],$_REQUEST['listed'],$seq)) {
-					if (!$cclib->replace_currency($owner,$_REQUEST['cc_id'],$_REQUEST['cc_name'],$_REQUEST['cc_description'],'n',$_REQUEST['listed'],$seq)) {
-											$smarty->assign('msg',$cclib->msg);
+					if (!$cclib->replace_currency($owner,$_REQUEST['cc_id'],$_REQUEST['cc_name'],$_REQUEST['cc_description'],$_REQUEST['requires_approval'],$_REQUEST['listed'],$seq)) {
+						$smarty->assign('msg',$cclib->msg);
 					} else {
 						if ($seq) {
 							$smarty->assign('msg',"Currency ". $_REQUEST['cc_id'] ." modified.");
