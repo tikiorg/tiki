@@ -5869,6 +5869,7 @@ function httpScheme() {
 }
 
 function httpPrefix() {
+/*
     if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
 	$rv = 'https://' . $_SERVER['HTTP_HOST'];
 
@@ -5882,6 +5883,12 @@ function httpPrefix() {
     }
 
     return $rv;
+*/
+    /* Warning by zaufi: as far as I saw in my apache 1.3.27
+     * there is no need to add port if it is non default --
+     * $_SERVER['HTTP_HOST'] already contain it ...
+     */
+    $rv = 'http'.((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '').'://'.$_SERVER['HTTP_HOST'];
 }
 
 if (!function_exists('file_get_contents')) {
