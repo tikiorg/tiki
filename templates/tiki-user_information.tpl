@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-user_information.php?view_user={$userwatch}">{tr}User Information{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-user_information.php?view_user={$userwatch}">{tr}User Information{/tr}</a></h1>
 <table >
 <tr>
   <td valign="top">

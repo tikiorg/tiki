@@ -1,20 +1,13 @@
-<a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Communcation+Center" target="tikihelp" class="tikihelp" title="{tr}Communcation Center{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-send_objects.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin send objects tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
-
-
-<br /><br />
 {if $msg}
 <div class="cbox">
 <div class="cbox-title">

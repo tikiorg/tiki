@@ -1,25 +1,27 @@
-<a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a>
+<h1><a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Compose Message{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_article.tpl" target="tikihelp" class="tikihelp">
-<img border="0" src="img/icons/info.gif" alt="{tr}edit template{/tr}" /></a>
-{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+{/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
 <br /><br />
+
 {if $sent}
-{$message}
-{else}
+{$message}<br /><br />
+{/if}
 <form action="messu-compose.php" method="post">
 <table class="normal" >
   <tr>
     <td class="formcolor"><label for="mess-composeto">{tr}To{/tr}:</label></td><td class="formcolor"><input type="text" name="to" id="mess-composeto" value="{$to|escape}" />
+		<input type="hidden" name="replyto_hash" value="{$replyto_hash}" />
 		<input type="submit" name="send" value="{tr}send{/tr}" /></td>
   </tr>
   <tr>
@@ -50,5 +52,4 @@
   </tr>
 </table>
 </form>
-{/if}
-<br /><br />
+<br />

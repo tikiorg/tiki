@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.136 2005-01-22 22:54:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.137 2005-03-12 16:48:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,7 @@ if (isset($_REQUEST["page_id"])) {
 
 $use_best_language = false;
 
-if (!isset($_REQUEST["page"])) {
+if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
 	if ($useGroupHome == 'y') { 
 		$groupHome = $userlib->get_user_default_homepage($user);
 		if ($groupHome) {
@@ -138,6 +138,10 @@ if(empty($info)) {
 
 // Update the pagename with the canonical name
 $page = $info['pageName'];
+
+// Get the contributors for this page
+$contributors = $wikilib->get_contributors($page, $info['user']);
+$smarty->assign('contributors',$contributors);
 
 $creator = $wikilib->get_creator($page);
 $smarty->assign('creator',$creator);
@@ -399,6 +403,7 @@ if($feature_wiki_attachments == 'y') {
 	}
     }
 
+    // If anything below here is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well.
     $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
     $smarty->assign('atts',$atts["data"]);
     $smarty->assign('atts_count',count($atts["data"]));

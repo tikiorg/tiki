@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.71 2005-01-22 22:56:14 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.72 2005-03-12 16:50:02 mose Exp $
 
 MoreNeat theme
 */
@@ -220,9 +220,11 @@ div.separator + div .linkmenu:first-child {
 	margin: 0;
 	margin-right: 10px;
 	padding: 1px;
+	margin-top: 5px;
 	border: 1px solid #dadac9;
 }
 .rssitem {
+	margin-left: 18px;
 	padding: 1px 6px 1px 6px;
 	border-top: 1px dashed #dadac9;
 }
@@ -328,8 +330,8 @@ input[type=submit]:hover {
 /* These styles apply to tables used to display common listings such as the wiki page listing, last changes,
    listings in admin screens, etc. */
 
-/* Cells where nothing is specified */
-TD {color: Black;  font-size: 11px; vertical-align: top;}
+/* Cells where nothing is specified - 2005-03-04 font-size: 11px taken away for preserve font size in SPLIT */
+TD {color: Black;  vertical-align: top;}
 
 /* Cells in forms without background color (inside a div for example) */
 .form
@@ -1055,7 +1057,7 @@ div.tocnav {
   width: 100%;  
 }
 
-.tocnavlink { color:black; text-decoration: underline;
+.tocnavlink, .tocnavlink:link { color:black; text-decoration: underline;
   font-size: 10px; }
 .tocnavlink:hover {
   font-size: 10px; color: black; text-decoration:underline;}

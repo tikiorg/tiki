@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.5 2004-06-23 22:34:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-online_users.tpl,v 1.6 2005-03-12 16:51:00 mose Exp $ *}
 
-{tikimodule title="{tr}Online users{/tr}" name="online_users"}
+{tikimodule title="{tr}Online users{/tr}" name="online_users" flip=$module_params.flip decorations=$module_params.decorations}
 {section name=ix loop=$online_users}
 {if $online_users[ix].user_information eq 'public'}
-<a class="linkmodule" href="tiki-user_information.php?view_user={$online_users[ix].user}">{$online_users[ix].user}</a><br />
+{$online_users[ix].user|userlink}<br />
 {else}
 {$online_users[ix].user}<br />
 {/if}

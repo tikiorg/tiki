@@ -297,17 +297,31 @@ class Comments extends TikiLib {
 	    $message = $pop3->GetMessage( 1 );
 	    $full = $message["full"];
 
+	    // print( "<pre>" );
+	    // print_r( $full );
+	    // print( "</pre>" );
+
 	    $output = mime::decode($full);
 	    //unset ($parts);
 	    //$this->parse_output($output, $parts, 0);
+
+	    // print( "<pre>" );
+	    // print_r( $output );
+	    // print( "</pre>" );
 
 	    if (isset($output["text"][0])) {
 		$body = $output["text"][0];
 	    } elseif (isset($output['parts'][0]["text"][0])) {
 		$body = $output['parts'][0]["text"][0];
+	    } elseif (isset($output['body'])) {
+		$body = $output['body'];
 	    } else {
 		$body = "";
 	    }
+
+	    // print( "<pre>" );
+	    // print_r( $body );
+	    // print( "</pre>" );
 
 	    // Remove 're:' and [forum]. -rlpowell
 	    $title = trim(
@@ -347,6 +361,10 @@ class Comments extends TikiLib {
 		    array($forumId, $title) 
 		    );
 
+	    // print( "<pre>parentid:" );
+	    // print_r( $parentId );
+	    // print( "</pre>" );
+
 	    if (!$parentId)
 	    {
 		// No thread already; create it.
@@ -365,10 +383,6 @@ class Comments extends TikiLib {
 	    $threadid = $this->post_new_comment( 'forum:' . $forumId,
 		    $parentId, $userName, $title, $body,
 		    $message_id, $in_reply_to);
-
-	    /* Force an index refresh of the data */
-	    include_once("lib/search/refresh-functions.php");
-	    refresh_index_comments( $threadid );
 
 	    $pop3->DeleteMessage( 1 );
 
@@ -512,6 +526,7 @@ class Comments extends TikiLib {
 	    $sort_mode = 'commentDate_asc') {
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
+		$sort_mode = 'average_asc';
 	}
 	if ($this->time_control) {
 	    $limit = time() - $this->time_control;
@@ -1449,6 +1464,11 @@ class Comments extends TikiLib {
 	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0)
     {
 	global $userlib;
+
+//	print "<pre>";
+//	print "In get_comments; $objectId, $parentId, $offset, $maxRecords, $sort_mode, $find, $threshold, $style, $reply_threadId.\n";
+//	print "</pre>";
+
 	// Turn maxRecords into maxRecords + offset, so we can increment it without worrying too much.
 	$maxRecords = $offset + $maxRecords;
 
@@ -1514,14 +1534,16 @@ class Comments extends TikiLib {
 		left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
 		$mid 
 		and (tc1.`in_reply_to` = ?
-		or (tc2.`in_reply_to` = \"\" or tc2.`in_reply_to` is null or tc2.message_id is null))
+		or (tc2.`in_reply_to` = \"\" or tc2.`in_reply_to` is null or tc2.message_id is null or tc2.parentid = 0))
 		$time_cond order by tc1.".$this->convert_sortmode($sort_mode).",tc1.`threadId`";
+		$bind_mid_cant = $bind_mid;
 		$bind_mid = array_merge($bind_mid, array($parent_message_id));
 
-		$query_cant = "select count(*) from `tiki_comments` as tc1 $mid and tc1.`in_reply_to` = ? $time_cond";
+		$query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
 	} else {
 	    $query_cant = "select count(*) from `tiki_comments` as tc1 $mid $time_cond";
 	    $query = "select threadId from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
+	    $bind_mid_cant = $bind_mid;
 	}
 
 	$ret = array();
@@ -1530,16 +1552,23 @@ class Comments extends TikiLib {
 
 //	if ($parentId > 0 && $style == 'commentStyle_threaded' && $object[0] != "forum") {
 	if ($reply_threadId > 0 && $style == 'commentStyle_threaded') {
-		$ret[] = $this->get_comments_fathers($reply_threadId, $ret);
+		$ret[] = $this->get_comment($reply_threadId);
 		$cant = 1;
-	}
-	else {
+	} else {
 		$result = $this->query($query,array_merge($bind_mid,$bind_time));
-		$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
+		$cant = $this->getOne($query_cant,array_merge($bind_mid_cant,$bind_time));
 		while ( $row = $result->fetchRow() ) {
 			$ret[] = $this->get_comment( $row['threadId'] );
 		}
 	}
+
+//	print "<pre>query: ";
+//	print_r($query_cant);
+//	print "\n,";
+//	print_r(array_merge($bind_mid,$bind_time));
+//	print "\n,";
+//	print_r($cant);
+//	print "</pre>";
 
 	foreach ( $ret as $key=>$res )
 	{
@@ -1637,6 +1666,8 @@ class Comments extends TikiLib {
 	/* @brief: gets the comments of the thread and of all its fathers (ex cept first one for forum)
  	*/
 	function get_comments_fathers($threadId, $ret = null, $message_id = null) {
+		if (empty($threadId))
+			return null;
 		$com = $this->get_comment($threadId, $message_id);
 		if ($com['objectType'] == 'forum' && $com['parentId'] == 0 ) {// don't want the 1 level
 			return $ret;
@@ -1700,12 +1731,9 @@ class Comments extends TikiLib {
 		    $summary, $smiley, (int) $threadId ) );
     }
 
-    // Added an aption, $getold, to have it return the threadId of
-    // the old comment instead, if it finds one.  The threadId is
-    // returned in the $getold variable iteslf. -Robin
     function post_new_comment($objectId, $parentId, $userName,
 	    $title, $data, &$message_id, $in_reply_to = '', $type = 'n',
-	    $summary = '', $smiley = '', $getold = false
+	    $summary = '', $smiley = ''
 	    )
     {
 	if (!$userName) {
@@ -1785,6 +1813,10 @@ class Comments extends TikiLib {
 	$query = "select `threadId` from `tiki_comments` where `hash`=?";
 	$result = $this->query($query, array( $hash ) );
 
+	// print( "<pre>result:" );
+	// print_r( $result );
+	// print( "</pre>" );
+
 	// Check if we were passed a message-id.
 	if ( ! $message_id )
 	{
@@ -1796,6 +1828,7 @@ class Comments extends TikiLib {
 		"@" . $_SERVER["SERVER_NAME"];
 	}
 
+	// If this post was not already found.
 	if (!$result->numRows())
 	{
 	    $now = (int) date("U");
@@ -1818,17 +1851,17 @@ class Comments extends TikiLib {
 			$summary, $smiley, $_SERVER["REMOTE_ADDR"],
 			$message_id, $in_reply_to)
 		    );
-	} else {
-	    // If we have been asked to get the old page threadId, we don't quit here.
-	    if( ! $getold )
-	    {
-		return false;
-	    }
 	}
 
 	$threadId = $this->getOne("select `threadId` from
 		`tiki_comments` where `hash`=?", array( $hash ) );
+
+	/* Force an index refresh of the data */
+	include_once("lib/search/refresh-functions.php");
+	refresh_index_comments( $threadId );
+
 	return $threadId;
+	//return $return_result;
     }
 
     // Check if a particular topic exists.

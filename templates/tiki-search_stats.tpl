@@ -1,20 +1,13 @@
-<a class="pagetitle" href="tiki-search_stats.php">{tr}Search stats{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-search_stats.php">{tr}Search stats{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}Search Stats{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-search_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}search stats tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
-
-
-<br /><br />
 <a class="linkbut" href="tiki-search_stats.php?clear=1">{tr}clear stats{/tr}</a><br /><br />
 
 <table class="findtable">

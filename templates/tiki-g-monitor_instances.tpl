@@ -6,14 +6,14 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaMonitorInstances" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Instances{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-monitor_instances.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Monitor Instances tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /> {/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
 
@@ -33,23 +33,17 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>
 <tr>
-<td>
-	<small>{tr}find{/tr}</small>
+<td >
+	<small>{tr}Process{/tr}</small>
 </td>
 <td >
-	<small>{tr}proc{/tr}</small>
+	<small>{tr}Name{/tr}</small>
 </td>
 <td >
-	<small>{tr}act{/tr}</small>
+	<small>{tr}Status{/tr}</small>
 </td>
 <td >
-	<small>{tr}status{/tr}</small>
-</td>
-<td >
-	<small>{tr}act status{/tr}</small>
-</td>
-<td >
-	<small>{tr}user{/tr}</small>
+	<small>{tr}Creator{/tr}</small>
 </td>
 <td >
 	&nbsp;
@@ -57,9 +51,6 @@
 </tr>
 
 <tr>
-<td >
-	<input size="8" type="text" name="find" value="{$find|escape}" />
-</td>
 <td >
 	<select name="filter_process">
 	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
@@ -69,11 +60,13 @@
 	</select>
 </td>
 <td >
-	<select name="filter_activity">
-	<option {if '' eq $smarty.request.filter_activity}selected="selected"{/if} value="">{tr}All{/tr}</option>
-    {foreach from=$all_acts item=act}
-	<option {if $act.activityId eq $smarty.request.filter_activity}selected="selected"{/if} value="{$act.activityId|escape}">{$act.name}</option>
-	{/foreach}
+	<select name="filter_instanceName">
+	<option {if '' eq $smarty.request.filter_instanceName}selected="selected"{/if} value="">{tr}All{/tr}</option>
+    {*foreach from=$names item=name*}
+    {section loop=$names name=ix}
+    <option {if $names[ix] eq $smarty.request.filter_instanceName}selected="selected"{/if} value="{$names[ix]|escape}">{$names[ix]}</option>
+    {/section}
+    {*/foreach*}
 	</select>
 </td>
 <td >
@@ -85,15 +78,8 @@
 	</select>
 </td>
 <td >
-	<select name="filter_act_status">
-	<option {if '' eq $smarty.request.filter_act_status}selected="selected"{/if} value="">{tr}All{/tr}</option>
-	<option value="running" {if 'y' eq $smarty.request.filter_act_status}selected="selected"{/if}>{tr}running{/tr}</option>
-	<option value="completed" {if 'n' eq $smarty.request.filter_act_status}selected="selected"{/if}>{tr}completed{/tr}</option>
-	</select>
-</td>
-<td >
-	<select name="filter_user">
-	<option {if '' eq $smarty.request.filter_user}selected="selected"{/if} value="">{tr}All{/tr}</option>
+	<select name="filter_owner">
+	<option {if '' eq $smarty.request.filter_owner}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	{section loop=$users name=ix}
 	<option {if $types[ix] eq $smarty.request.filter_user}selected="selected"{/if} value="{$users[ix]|escape}">{$users[ix]}</option>
 	{/section}
@@ -117,24 +103,35 @@
 <table class="normal">
 <tr>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'instanceId_desc'}{sameurl sort_mode='instanceId_asc'}{else}{sameurl sort_mode='instanceId_desc'}{/if}">{tr}Id{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</a></td>
+{*<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</a></td>*}
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'insName_desc'}{sameurl sort_mode='insName_asc'}{else}{sameurl sort_mode='insName_desc'}{/if}">{tr}Name{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Process{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'started_desc'}{sameurl sort_mode='started_asc'}{else}{sameurl sort_mode='started_desc'}{/if}">{tr}Started{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'status_desc'}{sameurl sort_mode='status_asc'}{else}{sameurl sort_mode='status_desc'}{/if}">{tr}Status{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='user_desc'}{/if}">{tr}User{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'ended_desc'}{sameurl sort_mode='ended_asc'}{else}{sameurl sort_mode='ended_desc'}{/if}">{tr}Ended{/tr}</a></td>
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='owner_desc'}{/if}">{tr}Creator{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {foreach from=$items item=proc}
 <tr>
 	<td class="{cycle advance=false}">
-	  <a class="link" href="tiki-g-admin_instance.php?iid={$proc.instanceId}">{$proc.instanceId}</a>
+	  	<a class="link" href="tiki-g-admin_instance.php?iid={$proc.instanceId}">{$proc.instanceId}</a>
 	</td>
 	<td class="{cycle advance=false}" style="text-align:center;">
-		{$proc.name}
+		<a class="link" href="tiki-g-admin_instance.php?iid={$proc.instanceId}">{$proc.insName}
 	</td>
 	<td class="{cycle advance=false}" style="text-align:center;">
+		{tr}{$proc.name}{/tr}
+	</td>
+	<td class="{cycle advance=false}" style="text-align:center;">
+		{$proc.started|date_format}
+	</td>	<td class="{cycle advance=false}" style="text-align:center;">
 		{$proc.status}
+	</td>	<td class="{cycle advance=false}" style="text-align:center;">
+		{if $proc.ended eq 0} {tr}Not ended{/tr} {else} {$proc.ended|date_format} {/if}
 	</td>
 	<td class="{cycle advance=false}" style="text-align:center;">
-		{$proc.user}
+	{$proc.owner}
 	</td>
 </tr>
 {foreachelse}

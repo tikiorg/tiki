@@ -156,7 +156,7 @@ class ModsLib {
 					$buf.= addslashes($detail['revision'][0]) ."','";
 					$buf.= addslashes(implode(" ",$detail['description'])) ."','";
 					$buf.= addslashes($detail['licence'][0]) ."','";
-					$buf.= addslashes($detail['version'][0]) ."','";
+					if (isset($detail['version'])) $buf.= addslashes($detail['version'][0]) ."','";
 					$md5 = $this->package(dirname($path),$type,$name);
 					$buf.= addslashes($md5) ."'\n";
 					fputs($fp,$buf);

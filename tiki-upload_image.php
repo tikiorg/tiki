@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.36 2005-01-22 22:54:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.37 2005-03-12 16:49:02 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,7 +19,7 @@ if ($feature_galleries != 'y') {
 }
 
 // Now check permissions to access this page
-if ($tiki_p_upload_images != 'y') {
+if ($tiki_p_upload_images != 'y' and !$tikilib->user_has_perm_on_object($user,$_REQUEST["galleryId"],"image gallery","tiki_p_upload_images") ) {
 	$smarty->assign('msg', tra("Permission denied you cannot upload images"));
 
 	$smarty->display("error.tpl");
@@ -33,7 +33,7 @@ $smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
 $smarty->assign('url_show', $tikilib->httpPrefix(). $foo2);
 
 $smarty->assign('show', 'n');
-
+unset($data);
 // Process an upload here
 if (isset($_REQUEST["upload"])) {
 	check_ticket('upload-image');
@@ -120,7 +120,8 @@ if (isset($_REQUEST["upload"])) {
 		}
 	} else {
 		// We process here file uploads
-		if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+		if (isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
+			if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 			if (!empty($gal_match_regex)) {
 				if (!preg_match("/$gal_match_regex/", $_FILES['userfile1']['name'], $reqs)) {
 					$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
@@ -181,6 +182,7 @@ if (isset($_REQUEST["upload"])) {
 		} else {
 			$error_msg = tra("cannot process upload");
 		}
+		}
 	}
 
 	$up_thumb = 0;
@@ -208,10 +210,6 @@ if (isset($_REQUEST["upload"])) {
 		$up_thumb = 1;
 	}
 
-	if (empty($_REQUEST["name"]) && (!isset($_REQUEST["use_filename"]) || $_REQUEST["use_filename"] == 'off')) {
-		$error_msg = tra("You have to provide a name to the image");
-	}
-
 	if ($error_msg) {
 		$smarty->assign('msg', $error_msg);
 
@@ -219,10 +217,12 @@ if (isset($_REQUEST["upload"])) {
 		die;
 	}
 
-	if (isset($_REQUEST["use_filename"]) && $_REQUEST["use_filename"] == 'on') {
+	if (isset($_REQUEST["name"]) && !empty($_REQUEST["name"])) {
+		$name = $_REQUEST["name"];
+	} elseif (isset($filename)) {
 		$name = $filename;
 	} else {
-		$name = $_REQUEST["name"];
+		$name = "";
 	}
 	
 	$lat=NULL;
@@ -338,6 +338,15 @@ if (isset($_REQUEST["upload"])) {
 
 	}
 }
+
+$batchRes = array();
+for ($i = 3; $i <= 8; $i++) {
+	if (isset($_FILES["userfile$i"]) && !empty($_FILES["userfile$i"]['name'])) {
+			$batchRes[] = $imagegallib->get_one_image_from_disk("userfile$i", $_REQUEST['galleryId'], isset($_REQUEST['name'])? $_REQUEST['name']: '', $_REQUEST['description']);
+	}
+}
+if (count($batchRes))
+	$smarty->assign_by_ref('batchRes', $batchRes);
 
 // Get the list of galleries to display the select box in the template
 if (isset($_REQUEST["galleryId"])) {

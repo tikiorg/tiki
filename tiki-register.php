@@ -6,7 +6,7 @@ include_once('lib/registration/registrationlib.php');
 include_once('lib/notifications/notificationlib.php');
 include_once('lib/webmail/tikimaillib.php');
 require_once ('lib/userslib/userslib_admin.php');
-
+include_once('lib/userprefs/userprefslib.php');
 
 // Permission: needs p_register
 if($allowRegister != 'y') {
@@ -156,15 +156,107 @@ if(isset($_REQUEST["register"])) {
   }
 
   if($email_valid != 'no') {
-    $emails = $notificationlib->get_mail_events('user_registers','*');
-    foreach($emails as $email) {
-      $smarty->assign('mail_user',$_REQUEST["name"]);
-      $smarty->assign('mail_date',date("U"));
-      $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-      $mail_data = $smarty->fetch('mail/new_user_notification.tpl');
-      mail($email, tra('New user registration'),$mail_data,"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
-    }
-  }
+		if($validateUsers == 'y') {
+			//$apass = addslashes(substr(md5($tikilib->genPass()),0,25));
+			$apass = addslashes(md5($tikilib->genPass()));
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
+			$machine =$tikilib->httpPrefix().$foo1;
+			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
+			
+			
+			$logslib->add_log('register','created account '.$_REQUEST["name"]);
+			$smarty->assign('mail_machine',$machine);
+			$smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+			$smarty->assign('mail_user',$_REQUEST["name"]);
+			$smarty->assign('mail_apass',$apass);
+			$smarty->assign('mail_email',$_REQUEST['email']);
+			include_once("lib/notifications/notificationemaillib.php");
+			if (isset($validateRegistration) and $validateRegistration == 'y') {
+				$smarty->assign('msg',$smarty->fetch('mail/user_validation_waiting_msg.tpl'));
+				if ($default_sender_email == NULL or !$default_sender_email) {
+					include_once('lib/messu/messulib.php');
+					$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
+					$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
+					$messulib->post_message($contact_user,$contact_user,$contact_user,'',$mail_subject,$mail_data,5);
+				} else {
+					$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
+					$mail = new TikiMail();
+					$mail->setText($mail_data);
+					$mail_data = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
+					$mail->setSubject($mail_data);
+					if (!$mail->send(array($default_sender_email)))
+						$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
+				}
+			} else {
+				$mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
+				$mail = new TikiMail();
+				$mail->setText($mail_data);
+				$mail_data = $smarty->fetch('mail/user_validation_mail_subject.tpl');
+				$mail->setSubject($mail_data);
+				if (!$mail->send(array($_REQUEST["email"])))
+					$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
+				else
+					$smarty->assign('msg',$smarty->fetch('mail/user_validation_msg.tpl'));
+			}
+			$smarty->assign('showmsg','y');
+		} else {
+			$userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
+			$logslib->add_log('register','created account '.$_REQUEST["name"]);
+
+			$smarty->assign('msg',$smarty->fetch('mail/user_welcome_msg.tpl'));
+			$smarty->assign('showmsg','y');
+		}
+
+		// save default user preferences
+		$tikilib->set_user_preference($_REQUEST["name"], 'theme', $style);
+		$tikilib->set_user_preference($_REQUEST["name"], 'userbreadCrumb', 4);
+		$tikilib->set_user_preference($_REQUEST["name"], 'language', $language);
+		$tikilib->set_user_preference($_REQUEST["name"], 'display_timezone', 'Local');
+		$tikilib->set_user_preference($_REQUEST["name"], 'user_information', 'private');
+		$tikilib->set_user_preference($_REQUEST["name"], 'user_dbl', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'diff_versions', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'show_mouseover_user_info', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'email is public', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'mailCharset', 'utf-8');
+		$tikilib->set_user_preference($_REQUEST["name"], 'realName', '');
+		$tikilib->set_user_preference($_REQUEST["name"], 'homePage', '');
+		$tikilib->set_user_preference($_REQUEST["name"], 'lat', floatval(0));
+		$tikilib->set_user_preference($_REQUEST["name"], 'lon', floatval(0));
+		$tikilib->set_user_preference($_REQUEST["name"], 'country', '');
+		$tikilib->set_user_preference($_REQUEST["name"], 'mess_maxRecords', 10);
+		$tikilib->set_user_preference($_REQUEST["name"], 'mess_archiveAfter', 0);
+		$tikilib->set_user_preference($_REQUEST["name"], 'mess_sendReadStatus', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'minPrio', 6);
+		$tikilib->set_user_preference($_REQUEST["name"], 'allowMsgs', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_pages', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_blogs', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_gals', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_msgs', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_tasks', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_items', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'mytiki_workflow', 'n');
+		$tikilib->set_user_preference($_REQUEST["name"], 'tasks_maxRecords', 10);
+
+/* TODO: initial setup of custom fields
+		// Custom fields
+		foreach ($customfields as $custpref=>$prefvalue ) {
+			//print $customfields[$custpref]['prefName'];
+			//print $_REQUEST[$customfields[$custpref]['prefName']];
+			$tikilib->set_user_preference($_REQUEST["name"], $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+		}
+*/
+
+		$emails = $notificationlib->get_mail_events('user_registers','*');
+		if (count($emails)) {
+			include_once("lib/notifications/notificationemaillib.php");
+			$smarty->assign('mail_user',$_REQUEST["name"]);
+			$smarty->assign('mail_date',date("U"));
+			$smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+			sendEmailNotification($emails, "email", "new_user_notification_subject.tpl", null, "new_user_notification.tpl");
+		}
+
+	}
 
 }
 

@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.12 2004-10-01 04:02:36 chealer Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.13 2005-03-12 16:50:42 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-directory_browse.php?parent={$parent}">{tr}Directory{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-directory_browse.php?parent={$parent}">{tr}Directory{/tr}</a></h1>
 {* The navigation bar *}
 {include file=tiki-directory_bar.tpl}
 <br /><br />

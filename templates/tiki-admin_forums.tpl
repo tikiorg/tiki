@@ -1,16 +1,14 @@
-<h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a></h1>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_forums.tpl,v 1.46 2005-03-12 16:50:29 mose Exp $ *}
+<h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
 
-
-  
+ 
       {if $feature_help eq 'y'}
-<a href="{$helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="{$helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
-
-
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin forums template{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
-{/if}
+<a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin forums template{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>
+{/if}</h1>
 
 {if $forumId > 0}
 <a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
@@ -19,7 +17,7 @@
 {/if}
 
 {if $tiki_p_admin eq 'y'}
-<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img src="img/icons/config.gif" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}'></a>
 {/if}
 
 {if $forumId > 0}
@@ -48,10 +46,10 @@
 <tr><td class="formcolor">{tr}Topics per page{/tr}:</td><td class="formcolor"><input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Section{/tr}:</td><td class="formcolor">
 <select name="section">
-<option value="" {if $section eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
+<option value="" {if $forumSection eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
 <option value="__new__"}>{tr}Create new{/tr}</option>
 {section name=ix loop=$sections}
-<option  {if $section eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]|escape}">{$sections[ix]}</option>
+<option  {if $forumSection eq $sections[ix]}selected="selected"{/if} value="{$sections[ix]|escape}">{$sections[ix]}</option>
 {/section}
 </select>
 <input name="new_section" type="text" />
@@ -304,13 +302,13 @@
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 <td class="{cycle advance=false}">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img src="img/icons/config.gif" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}'></a>
    {if $channels[user].individual eq 'y'}
-   	<a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img border="0" alt="{tr}Assign Permissions (Active){/tr}" src="img/icons/key_active.gif" /></a>
+   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key_active.gif' border='0' width="17" height="16" alt='{tr}Assign Permissions (Active){/tr}'></a>
    {else}
-   	<a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /></a>
+   	<a class="link" href="tiki-objectpermissions.php?objectName=Forum+{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img src='img/icons/key.gif' border='0' width="17" height="16" alt='{tr}Assign Permissions{/tr}'></a>
    {/if}
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}Click here to delete this forum{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+   &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" title="{tr}Click here to delete this forum{/tr}"><img src='img/icons2/delete.gif' border='0' width="16" height="16" alt='{tr}Remove{/tr}'></a>
 {/if}
 </td>
 </tr>

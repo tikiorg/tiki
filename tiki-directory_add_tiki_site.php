@@ -78,6 +78,9 @@ while($file=readdir($h)) {
 closedir($h);
 $smarty->assign_by_ref('countries',$countries);
 
+$section = 'directory';
+include_once ('tiki-section_options.php');
+
 $smarty->assign('save','y');
 
 // Display the template

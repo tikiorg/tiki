@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.35 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.36 2005-03-12 16:48:57 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -51,7 +51,6 @@ $features_toggles = array(
 	"feature_integrator",
 	"feature_jscalendar",
 	"feature_jukebox",
-	"feature_left_column",
 	"feature_live_support",
 	"feature_mailin",
 	"feature_maps",
@@ -67,7 +66,6 @@ $features_toggles = array(
 	"feature_projects",
 	"feature_quizzes",
 	"feature_referer_stats",
-	"feature_right_column",
 	"feature_score",
 	"feature_search",
 	"feature_sheet",
@@ -85,6 +83,7 @@ $features_toggles = array(
 	"feature_userPreferences",
 	"feature_user_bookmarks",
 	"feature_user_watches",
+	"feature_user_watches_translations",
 	"feature_userfiles",
 	"feature_usermenu",
 	"feature_view_tpl",
@@ -99,12 +98,23 @@ $features_toggles = array(
 	"contact_anon"
 );
 
+    $pref_byref_values = array(
+	"feature_left_column",
+	"feature_right_column",
+        "user_flip_modules"
+    );
+
+
 // Process Features form(s)
 if (isset($_REQUEST["features"])) {
     check_ticket('admin-inc-features');
-	foreach ($features_toggles as $toggle) {
-		simple_set_toggle ($toggle);
-	}
+    foreach ($features_toggles as $toggle) {
+        simple_set_toggle ($toggle);
+    }
+    foreach ($pref_byref_values as $britem) {
+        byref_set_value ($britem);
+    }
 }
+
 ask_ticket('admin-inc-features');
 ?>

@@ -1,28 +1,23 @@
+<h1>
 {if $blogId > 0}
-<a class="pagetitle" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit Blog{/tr}:</a>
-<a class="pagetitle" href="tiki-view_blog.php?blogId={$blogId}">{$title}</a>
+<a class="pagetitle" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit Blog{/tr}: {$title}</a>
 {else}
 <a class="pagetitle" href="tiki-edit_blog.php">{tr}Create Blog{/tr}</a>
 {/if}
-
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Blogs" target="tikihelp" class="tikihelp" title="{tr}Edit Blog{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_blog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit blog tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
-
-
-
-<br /><br />
+<div class="navbar">
 <a class="linkbut" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
-<br /><br />
-<h3>{tr}Current heading{/tr}</h3>
+<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>
+</div>
+<h2>{tr}Current heading{/tr}</h2>
 {if strlen($heading) > 0}
 {eval var=$heading}
 {/if}

@@ -1,4 +1,4 @@
-<a href="tiki-newsletters.php" class="pagetitle">{tr}Newsletters{/tr}</a><br /><br />
+<h1><a href="tiki-newsletters.php" class="pagetitle">{tr}Newsletters{/tr}</a></h1>
 {if $subscribed eq 'y'}
 {tr}Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.{/tr}<br /><br />
 {/if}
@@ -37,7 +37,7 @@
   <td class="even">{$nl_info.description}</td>
 </tr>
 {if ($nl_info.allowUserSub eq 'y') or ($tiki_p_admin_newsletters eq 'y')}
-{if $tiki_p_subscribe_email eq 'y'}
+{if $tiki_p_subscribe_email eq 'y' and (($nl_info.allowAnySub eq 'y' or $user) || $user)}
 <tr>
   <td class="even">{tr}Email:{/tr}</td>
   <td class="even"><input type="text" name="email" value="{$email|escape}" /></td>
@@ -76,7 +76,7 @@
 {section name=user loop=$channels}
 {if $channels.individual ne 'y' or $channels.individual_tiki_p_subscribe_newsletters eq 'y'}
 <tr class="{cycle}">
-<td><a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1">{$channels[user].name}</a></td>
+<td><a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to newsletter{/tr}">{$channels[user].name}</a></td>
 <td>{$channels[user].description}</td>
 </tr>
 {/if}

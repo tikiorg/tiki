@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_chart_items.php,v 1.10 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_chart_items.php,v 1.11 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,7 +16,7 @@ if ($feature_charts != 'y') {
 	die;
 }
 
-if ($tiki_p_admin_charts != 'y') {
+if ($tiki_p_admin_charts != 'y' and $tiki_p_suggest_chart_item != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
 
 	$smarty->display("error.tpl");

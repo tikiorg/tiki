@@ -13,7 +13,7 @@
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-admin_graph.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Admin Graph tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /> {/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.13 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.14 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,7 @@ if (isset($_REQUEST["galfeatures"])) {
 	check_ticket('admin-inc-gal');
 	simple_set_toggle ("feature_gal_rankings");
 	simple_set_toggle ("feature_image_galleries_comments");
+	simple_set_toggle ("feature_gal_batch");
 
 	// Check for last character being a / or a \
 	if (substr($_REQUEST["gal_use_dir"], -1) != "\\" && substr($_REQUEST["gal_use_dir"], -1) != "/" && $_REQUEST["gal_use_dir"] != "") {
@@ -35,7 +36,8 @@ if (isset($_REQUEST["galfeatures"])) {
 	"gal_use_lib",
 	"gal_use_dir",
 	"gal_match_regex",
-	"gal_nmatch_regex"
+	"gal_nmatch_regex",
+	"gal_batch_dir"
 	);
 
 	foreach ($pref_simple_values as $svitem) {

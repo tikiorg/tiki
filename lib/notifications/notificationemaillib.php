@@ -107,7 +107,7 @@ function testEmailInList($nots, $email) {
   * admin notification addresses + watching users addresses (except editor is configured)
   * \$event: 'wiki_page_created'|'wiki_page_changed'
   */
-function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine) {
+function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment, $oldver, $edit_data, $machine, $diff='') {
 	global $tikilib, $notificationlib, $feature_user_watches, $smarty, $userlib, $wiki_watch_editor;;
 	$nots = array();
 	$defaultLanguage = $tikilib->get_preference("language", "en");
@@ -134,64 +134,67 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 			if ($wiki_watch_editor != "y" && $email == $edit_user)
 				continue;
 			if (!testEmailInList($nots, $email)) {
-				$not['email'] =  $email;
-				if ($not['user'] = $userlib->get_user_by_email($email))
-					$not['language'] = $tikilib->get_user_preference($not['user'], "language", $defaultLanguage);
-				else
-					$not['language'] = $defaultLanguage;
-				$nots[] = $not;
+			    $not['email'] =  $email;
+			    if ($not['user'] = $userlib->get_user_by_email($email))
+				$not['language'] = $tikilib->get_user_preference($not['user'], "language", $defaultLanguage);
+			    else
+				$not['language'] = $defaultLanguage;
+			    $nots[] = $not;
 			}
 		}
 	}
 
 	if (count($nots)) {
-		if (function_exists("html_entity_decode"))
-			$edit_data = html_entity_decode($edit_data);
-		include_once('lib/webmail/tikimaillib.php');
-		$mail = new TikiMail();
-       	$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
-       	$smarty->assign('mail_page', $pageName);
-       	$smarty->assign('mail_date', date("U"));
-       	$smarty->assign('mail_user', $edit_user);
-       	$smarty->assign('mail_comment', $edit_comment);
-       	$smarty->assign('mail_last_version', $version);
-       	$smarty->assign('mail_data', $edit_data);
-       	$foo = parse_url($_SERVER["REQUEST_URI"]);
-       	$machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
-       	$smarty->assign('mail_machine', $machine);
-       	$parts = explode('/', $foo['path']);
-        	if (count($parts) > 1)
-           	unset ($parts[count($parts) - 1]);
-       	$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
-       	$smarty->assign('mail_pagedata', $edit_data);
-		if ($event == 'wiki_page_created')
-			$smarty->assign('new_page', 'y');
+	    if (function_exists("html_entity_decode"))
+		$edit_data = html_entity_decode($edit_data);
+	    include_once('lib/webmail/tikimaillib.php');
+	    $mail = new TikiMail();
+	    $smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
+	    $smarty->assign('mail_page', $pageName);
+	    $smarty->assign('mail_date', date("U"));
+	    $smarty->assign('mail_user', $edit_user);
+	    $smarty->assign('mail_comment', $edit_comment);
+	    $newver = $oldver + 1;
+	    $smarty->assign('mail_oldver', $oldver);
+	    $smarty->assign('mail_newver', $newver);
+	    $smarty->assign('mail_data', $edit_data);
+	    $foo = parse_url($_SERVER["REQUEST_URI"]);
+	    $machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
+	    $smarty->assign('mail_machine', $machine);
+	    $parts = explode('/', $foo['path']);
+	    if (count($parts) > 1)
+		unset ($parts[count($parts) - 1]);
+	    $smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
+	    $smarty->assign_by_ref('mail_pagedata', $edit_data);
+	    $smarty->assign_by_ref('mail_diffdata', $diff);
+	    if ($event == 'wiki_page_created')
+		$smarty->assign('new_page', 'y');
 
-		foreach ($nots as $not) {
-			if (isset($not['hash']))
-	       		$smarty->assign('mail_hash', $not['hash']);
-			$mail->setUser($not['user']);
-			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed_subject.tpl");
-			$mail->setSubject(sprintf($mail_data, $pageName));
-			$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed.tpl");
-			$mail->setText($mail_data);
-			$mail->buildMessage();
-			$mail->send(array($not['email']));
-		}
+	    foreach ($nots as $not) {
+		if (isset($not['hash']))
+		    $smarty->assign('mail_hash', $not['hash']);
+		$mail->setUser($not['user']);
+		$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed_subject.tpl");
+		$mail->setSubject(sprintf($mail_data, $pageName));
+		$mail_data = $smarty->fetchLang($not['language'], "mail/user_watch_wiki_page_changed.tpl");
+		$mail->setText($mail_data);
+		$mail->buildMessage();
+		$mail->send(array($not['email']));
+	    }
 	}
 }
 
 /** \brief Send email notification to a list of emails or a list of (email, user) in a charset+language associated with each email 
-  * \param $list : emails list or (users, email) list
-  * \param $type: type of the list element =  'email'|'watch'
-  * \param $subjectTpl: subject template file or null (ex: "submission_notifcation.tpl")
-  * \param $subjectParam: le param to be inserted in the subject or null
-  * \param $txtTpl : texte template file (ex: "submission_notifcation.tpl")
-  * \ $smarty is supposed to be already built to fit $txtTpl
-  * \return the nb of sent emails
-  */
+ * \param $list : emails list or (users, email) list
+ * \param $type: type of the list element =  'email'|'watch'
+ * \param $subjectTpl: subject template file or null (ex: "submission_notifcation.tpl")
+ * \param $subjectParam: le param to be inserted in the subject or null
+ * \param $txtTpl : texte template file (ex: "submission_notifcation.tpl")
+ * \ $smarty is supposed to be already built to fit $txtTpl
+ * \return the nb of sent emails
+ */
 function sendEmailNotification($list, $type, $subjectTpl, $subjectParam, $txtTpl) {
-	global $smarty, $tikilib, $userlib;
+    global $smarty, $tikilib, $userlib;
 	include_once('lib/webmail/tikimaillib.php');
 	$mail = new TikiMail();
 	$sent = 0;

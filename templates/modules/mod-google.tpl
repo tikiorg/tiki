@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.14 2004-06-08 15:57:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.15 2005-03-12 16:51:00 mose Exp $ *}
 
-{tikimodule title="{tr}Google Search{/tr}" name="google"}
+{tikimodule title="{tr}Google Search{/tr}" name="google" flip=$module_params.flip decorations=$module_params.decorations}
 <form method="get" action="http://www.google.com/search" target="Google" style="margin-bottom:2px;">
   <input type="hidden" name="hl" value="en"/>
   <input type="hidden" name="oe" value="UTF-8"/>

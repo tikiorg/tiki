@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.12 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login_validate.php,v 1.13 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,6 @@ if ($isvalid) {
 	die;
 } else {
 	$smarty->assign('msg', tra("Invalid username or password"));
-
 	$smarty->display("error.tpl");
 }
 

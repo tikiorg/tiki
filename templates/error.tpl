@@ -27,8 +27,22 @@
         {$errortitle|default:"{tr}Error{/tr}"}
         </div>
         <div class="cbox-data">
-        <br />{$msg}
+        <br />
+        {if ($errortype eq "404")}
+          Perhaps you were looking for:
+          <ul>
+          {section name=back loop=$likepages}
+          <li><a  href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>
+          {sectionelse}
+          <li>{tr}There are no wiki pages similar to '{$page}'{/tr}</li>
+          {/section}
+          </ul>
+          <br />
+          {* include file="tiki-include-horizsearch.tpl" *}
+        {else}
+        {$msg}
         <br /><br />
+        {/if}
 	{if $page and !$nocreate and ($tiki_p_admin eq 'y' or $tiki_p_admin_wiki eq 'y')}<a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Click here to create it{/tr}</a><br />{/if}
         <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br />
         <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>

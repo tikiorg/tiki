@@ -1,11 +1,11 @@
 {* $Header:  *}
 
-<h2>{tr}Assign permissions to category{/tr}: &nbsp;<a href="tiki-admin_categories.php?parentId=0">{tr}Top{/tr}</a>
+<h1>{tr}Assign permissions to category{/tr}: &nbsp;<a href="tiki-admin_categories.php?parentId=0">{tr}Top{/tr}</a>
 {section name=x loop=$path}
 ::
 <a href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
-{/section}</h2>
-<h3>{tr}Current permissions for this category{/tr}:</h3>
+{/section}</h1>
+<h2>{tr}Current permissions for this category{/tr}:</h2>
 <table class="normal">
 <tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
 {cycle print=false values="even,odd"}
@@ -21,7 +21,7 @@
 <tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
 {/section}
 </table>
-<h3>{tr}Assign permissions{/tr}</h3>
+<h2>{tr}Assign permissions{/tr}</h2>
 <form method="post" action="tiki-categpermissions.php" class="form">
 {tr}assign{/tr}
 <input type="hidden" name="categId" value="{$categId|escape}" />

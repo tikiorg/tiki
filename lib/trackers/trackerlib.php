@@ -619,6 +619,11 @@ class TrackerLib extends TikiLib {
 					$fopt["trackerId"] = $opts[0];
 				} elseif ($fopt["type"] == 'a') {
 					$fopt["pvalue"] = $this->parse_data(trim($fopt["value"]));
+				} elseif ($fopt["type"] == 's') {
+					$key = 'tracker.'.$trackerId.'.'.$itid;
+					$fopt["numvotes"] = $this->getOne("select count(*) from `tiki_user_votings` where `id`=?",array($key));
+					$voteavg = $fopt["value"]/$fopt["numvotes"];
+					$fopt["voteavg"] = $voteavg;
 				} elseif ($fopt["type"] == 'l') {
 					if (!$optsl) {
 						$optsl = split(',',$fopt['options']);
@@ -642,7 +647,6 @@ class TrackerLib extends TikiLib {
 				$last[$fieldId] = $fopt["value"];
 				$fields[] = $fopt;
 			}
-// var_dump($fields);die();
 			$res["field_values"] = $fields;
 			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
 			if ($kx == "") // ex: if the sort field is non visible, $kx is null
@@ -907,7 +911,11 @@ class TrackerLib extends TikiLib {
 			$query = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
 			$olrate = $this->get_user_vote("tracker.$trackerId.$itemId",$user);
 			if ($olrate === NULL) $olrate = 0;
-			$newval = $val - $olrate + $new_rate;
+			if ($new_rate === NULL) {
+				$newval = $val - $olrate;
+			} else {
+				$newval = $val - $olrate + $new_rate;
+			}
 			//echo "$val - $olrate + $new_rate = $newval";die;
 		}
 		$this->query($query,array((int)$newval,(int)$itemId,(int)$fieldId));

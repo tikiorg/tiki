@@ -1,8 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.63 2004-10-15 15:54:51 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.64 2005-03-12 16:50:54 mose Exp $ *}
 
-<a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
+<h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a></h1>
 
-<br /><br />
 {if $unread > 0}
 	<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br /><br /></a>
 {/if}
@@ -13,9 +12,12 @@
 a moderator approves it.{/tr}</small>
 </div>
 {/if}
+{if $tiki_p_admin_forum}
+<a class="linkbut" title="{tr}Edit Forum{/tr}" href="tiki-admin_forums.php?forumId={$forumId}">{tr}Edit Forum{/tr}</a><br />
+{/if}
 <a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>-&gt;<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
 <div align="right">
-[{if $prev_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
+[{if $prev_topic and $prev_topic ne $comments_parentId}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
 {if $next_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_next_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$next_topic}" class="link">{tr}next topic{/tr}</a>{/if}] 
  </div>
 <br /><br />
@@ -27,7 +29,7 @@ a moderator approves it.{/tr}</small>
 
 <table class="normal">
 <tr>
-  <td rowspan="2" class="odd" >
+  <td rowspan="2" class="odd forumuser">
 	  <div align="center">
 		  {if $forum_info.ui_avatar eq 'y' and $thread_info.userName|avatarize}
 		  {$thread_info.userName|avatarize}<br />
@@ -37,7 +39,7 @@ a moderator approves it.{/tr}</small>
 		  <br />{$thread_info.userName|countryflag}
 		  {/if}
 		  {if $forum_info.ui_posts eq 'y' and $thread_info.user_posts}
-		  <br /><small>posts:{$thread_info.user_posts}</small>
+		  <br /><small>{tr}posts:{/tr}{$thread_info.user_posts}</small>
 		  {/if}
 		  {if $forum_info.ui_level eq 'y' and $thread_info.user_level}
 		  <br /><img src="img/icons/{$thread_info.user_level}stars.gif" alt='{$thread_info.user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
@@ -55,11 +57,11 @@ a moderator approves it.{/tr}</small>
 	  {/if}
 	  {if $tiki_p_admin_forum eq 'y'}
 	  <a href="tiki-view_forum.php?comments_offset={$smarty.request.topics_offset}{$comments_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;comments_remove=1&amp;comments_threadId={$thread_info.threadId}&amp;forumId={$forum_info.forumId}{$comments_maxComments_param}"
-	     class="admlink"><img src='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>
+	     class="admlink">{html_image file='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}'}</a>
 	  {/if}     
 	  
 	  {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;savenotepad={$thread_info.threadId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+		<a title="{tr}Save to notepad{/tr}" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forumId}{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}{$comments_maxComments_param}&amp;savenotepad={$thread_info.threadId}">{html_image file='img/icons/ico_save.gif' border='0' alt='{tr}save{/tr}'}</a>
 	  {/if}
 	
 	  {if $user and $feature_user_watches eq 'y'}
@@ -79,10 +81,10 @@ a moderator approves it.{/tr}</small>
   {if count($thread_info.attachments) > 0}
 	{section name=ix loop=$thread_info.attachments}
 		<a class="link" href="tiki-download_forum_attachment.php?attId={$thread_info.attachments[ix].attId}">
-		<img border='0' src='img/icons/attachment.gif' alt='{tr}attachment{/tr}' />
+		<img src="img/icons/attachment.gif" border="0" width="10" height= "13" alt='{tr}attachment{/tr}'>
 		{$thread_info.attachments[ix].filename} ({$thread_info.attachments[ix].filesize|kbsize})</a>
 		{if $tiki_p_admin_forum eq 'y'}
-			<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&amp;comments_offset={$smarty.request.topics_offset}{$comments_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;forumId={$forum_info.forumId}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$thread_info.attachments[ix].attId}">[{tr}del{/tr}]</a>					
+			<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_find_param}{$topics_threshold_param}&amp;comments_offset={$smarty.request.topics_offset}{$comments_sort_mode_param}&amp;comments_threshold={$smarty.request.topics_threshold}{$comments_find_param}&amp;forumId={$forum_info.forumId}{$comments_maxComments_param}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$thread_info.attachments[ix].attId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' /></a>					
 		{/if}
 		<br />
 	{/section}
@@ -100,9 +102,9 @@ a moderator approves it.{/tr}</small>
 		{/if}
 	    {if $thread_info.userName and $forum_info.ui_online eq 'y'}
 	    	{if $thread_info.user_online eq 'y'}
-	  			<img src='img/icons/online.gif' alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
+	  			<img src="img/icons/online.gif" border="0" width="16" height="16" alt='{tr}user online{/tr}' title='{tr}user online{/tr}'>
 	  		{elseif $thread_info.user_online eq 'n'}
-	  			<img src='img/icons/offline.gif' alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
+	  			<img src="img/icons/offline.gif" border="0" width="16" height="16" alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}'>
 	  		{/if}
 	  	{/if}
   </td>
@@ -135,7 +137,7 @@ a moderator approves it.{/tr}</small>
 <table class="normal" >
 {include file="comments.tpl"}
 
-<small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>
+{if $comments_threshold ne 0}<small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>{/if}
 
 <table >
 <tr>

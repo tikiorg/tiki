@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-breadcrumb.tpl,v 1.9 2004-09-19 19:37:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-breadcrumb.tpl,v 1.10 2005-03-12 16:50:59 mose Exp $ *}
 
-{tikimodule title="{tr}Recently visited pages{/tr}" name="breadcrumb"}
+{tikimodule title="{tr}Recently visited pages{/tr}" name="breadcrumb" flip=$module_params.flip decorations=$module_params.decorations}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$breadCrumb}
       <tr><td class="module">

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.20 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-remind_password.php,v 1.21 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,6 +19,21 @@ if ($forgotPass != 'y') {
 $smarty->assign('showmsg', 'n');
 $smarty->assign('showfrm', 'y');
 
+$isvalid = false;
+if (isset($_REQUEST["user"])) {
+	// this is a 'new password activation':
+	if (isset($_REQUEST["actpass"])) {
+		$isvalid = $userlib->activate_password($_REQUEST["user"], $_REQUEST["actpass"]);
+		if ($isvalid) {
+			header ("location: $tikiIndex");
+			die;
+		}
+		$smarty->assign('msg', tra("Invalid username or activation code"));
+		$smarty->display("error.tpl");
+		die;
+	}
+}	
+
 if (isset($_REQUEST["remind"])) {
 	if ($userlib->user_exists($_REQUEST["username"])) {
 		include_once ('lib/webmail/tikimaillib.php');
@@ -34,17 +49,26 @@ if (isset($_REQUEST["remind"])) {
 
 		if ($feature_clear_passwords == 'y') {
 			$pass = $userlib->get_user_password($_REQUEST["username"]);
+			$smarty->assign('clearpw', 'y');
 		} else {
 			$pass = $userlib->renew_user_password($_REQUEST["username"]);
+			$smarty->assign('clearpw', 'n');
 		}
 
 		$languageEmail = $tikilib->get_user_preference($_REQUEST["username"], "language", $language);
+
+		// Now check if the user should be notified by email
+		$foo = parse_url($_SERVER["REQUEST_URI"]);
+		$machine = $tikilib->httpPrefix(). $foo["path"];
+		$smarty->assign('mail_machine', $machine);
+
 		$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 		$smarty->assign('mail_user', $_REQUEST["username"]);
 		$smarty->assign('mail_same', $feature_clear_passwords);
 		$smarty->assign('mail_pass', $pass);
+		$smarty->assign('mail_apass', md5($pass));
 		$smarty->assign('mail_ip', $_SERVER['REMOTE_ADDR']);
-		$mail_data = $smarty->fetchLang($languageEmail, 'mail/password_reminder_subject.tpl');
+		$mail_data = sprintf($smarty->fetchLang($languageEmail, 'mail/password_reminder_subject.tpl'),$_SERVER["SERVER_NAME"]);
 		$mail = new TikiMail($_REQUEST["username"]);
 		$mail->setSubject(sprintf($mail_data, $_SERVER["SERVER_NAME"]));
 		$mail->setText($smarty->fetchLang($languageEmail, 'mail/password_reminder.tpl'));

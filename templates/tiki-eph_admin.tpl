@@ -1,26 +1,12 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-eph_admin.php">{tr}Admin ephemerides{/tr}</a>
-
-  
+<h1><a class="pagetitle" href="tiki-eph_admin.php">{tr}Admin ephemerides{/tr}</a>
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Ephemerides" target="tikihelp" class="tikihelp" title="{tr}Ephemerides{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-eph_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Ephemerides tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
-
-
-
-
-
-
-
-
-
-<br /><br />
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
 
 <table class="normal">

@@ -1,18 +1,31 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.23 2005-01-22 22:56:24 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.24 2005-03-12 16:50:50 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}" title="{tr}history{/tr}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}" title="{tr}view{/tr}">{$page}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}history{/tr}">{tr}History{/tr}: {$page}</a></h1>
+
+<div class="navbar"><a href="tiki-index.php?page={$page|escape:url}" class="linkbut" title="{tr}view{/tr}">{tr}View page{/tr}</a></div>
+
 {if $preview}
-<h2>{tr}Version{/tr}: {$preview}</h2>
+<h2>{tr}Preview of version{/tr}: {$preview}
+{if $info.version eq $preview}<small><small>{tr}(current){/tr}</small></small>{/if}
+</h2>
+{if $info.version ne $preview and  $tiki_p_rollback eq 'y'}
+<div class="navbar"><a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}rollback{/tr}">{tr}rollback to this version{/tr}</a></div>
+{/if}
 <div  class="wikitext">{$previewd}</div>
 {/if}
 
 {if $source}
-<h2>{tr}Version{/tr}: {$source}</h2>
+<h2>{tr}Source of version{/tr}: {$source}
+{if $info.version eq $source}<small><small>{tr}(current){/tr}</small></small>{/if}
+</h2>
+{if $info.version ne $source and $tiki_p_rollback eq 'y'}
+<div class="navbar"><a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$source}" title="{tr}rollback{/tr}">{tr}rollback to this version{/tr}</a></div>
+{/if}
 <div  class="wikitext">{$sourced}</div>
 {/if}
 
 {if $diff_style}
-<h2><a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;compare&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}" title="{tr}compare{/tr}">{tr}Comparing version {$old.version} with version {$new.version}{/tr}</a></h2>
+<h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>
 <table class="normal diff">
 <tr>
   <th colspan="2"><b>{tr}Version:{/tr} <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$old.version}" title="{tr}view{/tr}">{$old.version}</a>{if $old.version == $info.version} ({tr}current{/tr})</a>{/if}</b></th>
@@ -87,12 +100,13 @@
 {/if}
 <br />
 
+{if (!isset($noHistory))}                                              
 {if $preview || $source || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
 <form action="tiki-pagehistory.php" method="post">
 <input type="hidden" name="page" value="{$page|escape}" />
 <div style="text-align:center;">
 <div class="simplebox"><b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}, {tr}s=source{/tr}{if $default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}</div>
-{if $default_wiki_diff_style ne "old" and $history}
+{if $default_wiki_diff_style ne "old"}
 <div style=" text-align:right;"><select name="diff_style">
 	<option value="minsidediff" {if $diff_style == "minsidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
 	<option value="sidediff" {if $diff_style == "sidediff"}selected="selected"{/if}>{tr}Full side-by-side diff{/tr}</option>
@@ -171,3 +185,4 @@
 </table>
 </div>
 </form>
+{/if}

@@ -27,6 +27,13 @@ class UsersLibAdmin extends UsersLib {
         $result = $this->query($query, array($group));
         $query = "delete from `users_usergroups` where `groupName` = ?";
         $result = $this->query($query, array($group));
+				$query = "delete from `users_objectpermissions` where `groupName` = ?";
+				$result = $this->query($query, array($group));
+				$query = "delete from `tiki_newsletter_groups` where `groupName` = ?";
+				$result = $this->query($query, array($group));
+				$query = "delete from `tiki_newsreader_marks` where `groupName` = ?";
+				$result = $this->query($query, array($group));
+
         $cachelib->invalidate('grouplist');
         return true;
     }
@@ -48,6 +55,9 @@ class UsersLibAdmin extends UsersLib {
                 $result = $this->query($query, array($group, $olgroup));
                 $query = "update `tiki_newsreader_marks` set `groupName`=? where `groupName`=?";
                 $result = $this->query($query, array($group, $olgroup));
+								$query = "update `tiki_newsletter_groups` set `groupName`=? where `groupName`=?";
+								$result = $this->query($query, array($group, $olgroup));
+
 
                 // must unserialize before replacing the groups
                 $query = "select `name`, `groups` from `tiki_modules` where `groups` like ?";
@@ -120,6 +130,12 @@ class UsersLibAdmin extends UsersLib {
         $result = $this->query($query, array( $user ) );
         $query = "delete from `users_usergroups` where `userId`=?";
         $result = $this->query($query, array( $userId ) );
+				$query = "delete from `tiki_user_watches` where `user`=?";
+				$result = $this->query($query, array($user));
+				$query = "delete from `tiki_user_preferences` where `user`=?";
+				$result = $this->query($query, array($user));
+				$query = "delete from `tiki_newsletter_subscriptions` where `email`=? and isUser=?";
+				$result = $this->query($query, array($user, 'y'));
 
         $cachelib->invalidate('userslist');
         return true;

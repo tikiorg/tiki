@@ -45,7 +45,31 @@ Errors:<br />
   {tr}auto routed{/tr}:<input type="checkbox" name="isAutoRouted" {if $info.isAutoRouted eq 'y'}checked="checked"{/if} />
   </td>
 </tr>
-
+<tr>
+  <td class="formcolor">{tr}Expiration Time{/tr} </td>
+  <td class="formcolor">
+  {tr}Years{/tr}:
+  <SELECT name="year" size ="1">
+  	{html_options options=$years selected=$info.year}
+  </SELECT>
+  {tr}Months{/tr}:
+  <SELECT name="month" size="1">
+  	{html_options options=$months selected=$info.month}
+  </SELECT>
+  {tr}Days{/tr}:
+  <SELECT name="day" size="1">
+  	{html_options options=$days selected=$info.day}
+  </SELECT>
+  {tr}Hours{/tr}:
+  <SELECT name="hour" size="1">
+  	{html_options options=$hours selected=$info.hour}
+  </SELECT>
+  {tr}Minutes{/tr}:
+  <SELECT name="minute" size="1">
+  	{html_options options=$minutes selected=$info.minute}
+  </SELECT>
+  </td>
+</tr>
 <tr>
   <td class="formcolor">{tr}Add transitions{/tr}</td>
   <td class="formcolor">

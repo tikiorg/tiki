@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
+<h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Syslog" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}system logs{/tr}">
@@ -6,8 +6,8 @@
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-syslog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system logs tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
-<br /><br />
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
+</h1>
 
 {if $tikifeedback}
 <br />{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
@@ -44,7 +44,7 @@
 <td>{$list[ix].logtype}</td>
 <td><span title="{$list[ix].logtime|tiki_long_datetime}">{$list[ix].logtime|tiki_short_time}</span></td>
 <td>{$list[ix].loguser}</td>
-<td>{$list[ix].logmessage}</td>
+<td title="{$list[ix].logmessage}">{$list[ix].logmessage|truncate:60}</td>
 <td>{$list[ix].logip}</td>
 <td><span title="{$list[ix].logclient}">{$list[ix].logclient|truncate:24:"..."}</span></td>
 </tr>

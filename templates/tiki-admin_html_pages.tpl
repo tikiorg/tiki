@@ -1,31 +1,25 @@
-<a class="pagetitle" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Html+Pages" target="tikihelp" class="tikihelp" title="{tr}admin Html Pages{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_html_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin Html Pages template{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}
+</h1>
 
-
-
-
-
-
-<br />
+{if $pageName ne ''}
+<div class=navbar"><a href="tiki-admin_html_pages.php" class="linkbut">{tr}Create new HTML page{/tr}</a></div>
+{/if}
 {if $preview eq 'y'}
+<h2>{tr}Preview{/tr}</h2>
 <div class="wikitext">{$parsed}</div>
 {/if}
 {if $pageName eq ''}
 <h2>{tr}Create new HTML page{/tr}</h2>
 {else}
 <h2>{tr}Edit this HTML page:{/tr} {$pageName}</h2>
-<a href="tiki-admin_html_pages.php">{tr}Create new HTML page{/tr}</a>
 {/if}
 <form action="tiki-admin_html_pages.php" method="post" id='editpageform'>
 <input type="hidden" name="pageName" value="{$pageName|escape}" />
@@ -83,8 +77,8 @@
 <td class="odd">{$channels[user].created|tiki_short_datetime}</td>
 <td class="odd">
    &nbsp;&nbsp;<a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
-title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>
    <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>
    <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a>
 </td>
@@ -96,8 +90,8 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <td class="even">{$channels[user].created|tiki_short_datetime}</td>
 <td class="even">
    &nbsp;&nbsp;<a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}" 
-title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>
    <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>
    <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a>
 </td>

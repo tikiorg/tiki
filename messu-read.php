@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.16 2005-01-01 00:16:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.17 2005-03-12 16:48:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,7 +64,7 @@ $prev = $messulib->get_prev_message($user, $_REQUEST['msgId'], $_REQUEST['sort_m
 $smarty->assign('next', $next);
 $smarty->assign('prev', $prev);
 
-// Mark the message as read
+// Mark the message as read in the receivers mailbox
 $messulib->flag_message($user, $_REQUEST['msgId'], 'isRead', 'y');
 
 // Get the message and assign its data to template vars
@@ -79,6 +79,11 @@ if ($feature_use_quoteplugin == 'y') {
 	$quote_format = 'simple';
 }
 $smarty->assign('quote_format',$quote_format);
+
+if ($messulib->get_user_preference($user, 'mess_sendReadStatus', 'n') == 'y') {
+	// Mark the message as read in the senders sent box:
+	$messulib->flag_message($msg['user_from'], $_REQUEST['msgId'], 'isRead', 'y', 'sent');
+}
 
 ask_ticket('messu-read');
 $section = 'user_messages';

@@ -1,12 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.4 2005-01-22 22:56:24 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.5 2005-03-12 16:50:53 mose Exp $ *}
 {* Template for TikiWiki site identity header *}
 {if $feature_sitemycode eq 'y' && ($sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$sitemycode}{* here can be custom site admin code *}{/if}
 {if $feature_siteloc eq 'y'}
 <div id="sitelocbar">
-{tr}Location : {/tr}<a href="./" accesskey="1">{$siteTitle}</a>
+{if $feature_sitetitle eq 'n'}{tr}Location : {/tr}{/if}
+		{if $trail}{breadcrumbs type="trail" loc="site" crumbs=$trail}{breadcrumbs type="pagetitle" loc="site" crumbs=$trail} 
+		{else}
+                        <a title="{tr}{$crumbs[0]->description}{/tr}" href="{$crumbs[0]->url}" accesskey="1">{$crumbs[0]->title}</a>
 			{if $structure eq 'y'}
 				{section loop=$structure_path name=ix}
-					/
+					{$site_crumb_seper|escape:"html"}
 					{if $structure_path[ix].pageName ne $page or $structure_path[ix].page_alias ne $page_info.page_alias}
 					<a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
 					{/if}
@@ -20,14 +23,16 @@
 					{/if}
 				{/section}
 			{else}
-				{if $page ne ''}/ {$page}
-				{elseif $title ne ''}/ {$title}
-				{elseif $thread_info.title ne ''}/ {$thread_info.title}
-				{elseif $forum_info.name ne ''}/ {$forum_info.name}
+				{if $page ne ''}{$site_crumb_seper|escape:"html"} {$page}
+				{elseif $title ne ''}{$site_crumb_seper|escape:"html"} {$title}
+				{elseif $thread_info.title ne ''}{$site_crumb_seper|escape:"html"} {$thread_info.title}
+				{elseif $forum_info.name ne ''}{$site_crumb_seper|escape:"html"} {$forum_info.name}
 				{/if}
 			{/if}
+		{/if}
 </div>{* bar with location indicator *}
 {/if}
+{if $trail}{breadcrumbs type="desc" loc="site" crumbs=$trail}{else}{breadcrumbs type="desc" loc="site" crumbs=$crumbs}{/if}
 {if $feature_sitenav eq 'y'}
 <div id="sitenavbar">
 	{eval var=$sitenav_code}
@@ -45,9 +50,14 @@
 </div>
 {* optional ads (banners) *}
 {/if}
-{if $feature_sitesearch eq 'y'}
+{if $feature_sitesearch eq 'y' and $feature_search eq 'y'}
 <div id="sitesearchbar">
-{tr}Search : {/tr}
+{include
+    file="tiki-searchindex.tpl"
+    searchNoResults="false"
+    searchStyle="menu"
+    searchOrientation="horiz"
+}
 </div>
 {* search the site *}
 {/if}

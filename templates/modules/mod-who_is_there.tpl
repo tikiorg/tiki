@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.10 2004-07-08 12:50:39 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-who_is_there.tpl,v 1.11 2005-03-12 16:51:00 mose Exp $ *}
 
-{tikimodule title="{tr}Online users{/tr}" name="who_is_there"}
+{tikimodule title="{tr}Online users{/tr}" name="who_is_there" flip=$module_params.flip decorations=$module_params.decorations}
 <div>
 {$logged_users} 
 {if $logged_users>1}

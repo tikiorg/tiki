@@ -243,21 +243,17 @@ class ProcessMonitor extends Base {
         $mid.= " where ($where) ";
       }
     }
-    $query = "select gp.`pId`, ga.`isInteractive`, gi.`owner`, gp.`name` as `procname`, gp.`version`, ga.`type`,";
-    $query.= " ga.`activityId`, ga.`name`, gi.`instanceId`, gi.`status`, gia.`activityId`, gia.`user`, gi.`started`, gi.`ended`, gia.`status` as actstatus ";
-    $query.=" from `".GALAXIA_TABLE_PREFIX."instances` gi LEFT JOIN `".GALAXIA_TABLE_PREFIX."instance_activities` gia ON gi.`instanceId`=gia.`instanceId` ";
-    $query.= "LEFT JOIN `".GALAXIA_TABLE_PREFIX."activities` ga ON gia.`activityId` = ga.`activityId` ";
-    $query.= "LEFT JOIN `".GALAXIA_TABLE_PREFIX."processes` gp ON gp.`pId`=gi.`pId` $mid order by ".$this->convert_sortmode($sort_mode);
-
-    $query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."instances` gi LEFT JOIN `".GALAXIA_TABLE_PREFIX."instance_activities` gia ON gi.`instanceId`=gia.`instanceId` ";
-    $query_cant.= "LEFT JOIN `".GALAXIA_TABLE_PREFIX."activities` ga ON gia.`activityId` = ga.`activityId` LEFT JOIN `".GALAXIA_TABLE_PREFIX."processes` gp ON gp.`pId`=gi.`pId` $mid";
+	$query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."instances` gi ";
+    $query_cant.= "LEFT JOIN `".GALAXIA_TABLE_PREFIX."processes` gp ON gp.`pId`=gi.`pId` $mid";
+    $query = "select gi.`instanceId`, gi.`started`, gi.`name` as insName, gi.`owner`, gi.`status`, gi.`ended`, gp.`name` ";
+    $query .= "from `".GALAXIA_TABLE_PREFIX."instances` gi LEFT JOIN `".GALAXIA_TABLE_PREFIX."processes` gp on gp.`pId`=gi.`pId` $mid order by ".$this->convert_sortmode($sort_mode);
     $result = $this->query($query,$wherevars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$wherevars);
     $ret = Array();
     while($res = $result->fetchRow()) {
       $iid = $res['instanceId'];
       $res['workitems']=$this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."workitems` where `instanceId`=?",array($iid));
-      $ret[$iid] = $res;
+      $ret[] = $res;
     }
     $retval = Array();
     $retval["data"] = $ret;
@@ -334,7 +330,16 @@ class ProcessMonitor extends Base {
     }
     return $ret;
   }
-
+  
+  function monitor_list_instances_names() {
+  	$query = "select distinct(`name`) from `".GALAXIA_TABLE_PREFIX."instances`";
+  	$result = $this->query($query);
+  	$ret = array();
+    while($res = $result->fetchRow()) {
+      $ret[] = $res['name'];
+    }
+    return $ret;
+  }
 
   function monitor_list_activity_types() {
     $query = "select distinct(`type`) from `".GALAXIA_TABLE_PREFIX."activities`";
@@ -383,7 +388,5 @@ class ProcessMonitor extends Base {
     $retval["cant"] = $cant;
     return $retval;
   }
-
-
 }
 ?>

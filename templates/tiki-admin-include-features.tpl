@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.61 2005-01-22 22:56:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.62 2005-03-12 16:50:10 mose Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -8,10 +8,11 @@
 <form action="tiki-admin.php?page=features" method="post">
   <div class="cbox">
     <div class="cbox-title">
-      {if $feature_help eq 'y'}<a href="{$helpurl}FeatureSettings" target="tikihelp" class="tikihelp" title="{tr}Features{/tr}">{/if}
-			{tr}Features{/tr}
-			{if $feature_help eq 'y'}</a>{/if}
-			<br />
+    {tr}Features{/tr}
+    {if $feature_help eq 'y'}
+      <a href="{$helpurl}{$sectionhelp}" target="tikihelp" class="tikihelp" title="{tr}Features Admin Doc{/tr}">
+      <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
+    {/if}
     </div>
 {* the heading of the  box *}
     <div class="cbox-data">
@@ -694,6 +695,8 @@
 
         </tr><tr>
 
+{* --- User Features --- *}
+
         <td class="heading" colspan="5"
             align="center">{tr}User Features{/tr}</td>
       </tr><tr>
@@ -721,13 +724,18 @@
         <td><input type="checkbox" name="feature_user_bookmarks"
             {if $feature_user_bookmarks eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
+        
         <td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}UserMenu" target="tikihelp" class="tikihelp" title="{tr}User Menu{/tr}">{/if}
-        		{tr}User Menu{/tr}
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}UsersShadeModules" target="tikihelp" class="tikihelp" title="{tr}Users can Shade Modules{/tr}">{/if}
+        		{tr}Users can Shade Modules{/tr}
         		{if $feature_help eq 'y'}</a>{/if}
         		:</td>
-        <td><input type="checkbox" name="feature_usermenu"
-            {if $feature_usermenu eq 'y'}checked="checked"{/if}/></td>
+        <td><select name="user_flip_modules">
+            <option value="y" {if $user_flip_modules eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+            <option value="module" {if $user_flip_modules eq 'module'}selected="selected"{/if}>{tr}module decides{/tr}</option>
+            <option value="n" {if $user_flip_modules eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
+        </select></td>
+            
       </tr><tr>
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="{$helpurl}User+Watches" target="tikihelp" class="tikihelp" title="{tr}User Watches{/tr}">{/if}
@@ -738,13 +746,22 @@
             {if $feature_user_watches eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
         <td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}UserMessages" target="tikihelp" class="tikihelp" title="{tr}User Messages{/tr}">{/if}
-        		{tr}User Messages{/tr}
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}User+Watches+translations" target="tikihelp" class="tikihelp" title="{tr}User Watches Translations{/tr}">{/if}
+        		{tr}User Watches Translations{/tr}
         		{if $feature_help eq 'y'}</a>{/if}
         		:</td>
-        <td><input type="checkbox" name="feature_messages"
-            {if $feature_messages eq 'y'}checked="checked"{/if}/></td>
+        <td><input type="checkbox" name="feature_user_watches_translations"
+            {if $feature_user_watches_translations eq 'y'}checked="checked"{/if}/></td>
+        <td>&nbsp;</td>
       </tr><tr>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}UserMenu" target="tikihelp" class="tikihelp" title="{tr}User Menu{/tr}">{/if}
+        		{tr}User Menu{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_usermenu"
+            {if $feature_usermenu eq 'y'}checked="checked"{/if}/></td>
+        <td>&nbsp;</td>
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="{$helpurl}User+Tasks" target="tikihelp" class="tikihelp" title="{tr}User Tasks{/tr}">{/if}
         		{tr}User Tasks{/tr}
@@ -752,7 +769,23 @@
         		:</td>
         <td><input type="checkbox" name="feature_tasks"
             {if $feature_tasks eq 'y'}checked="checked"{/if}/></td>
+      </tr><tr>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}UserMessages" target="tikihelp" class="tikihelp" title="{tr}User Messages{/tr}">{/if}
+        		{tr}User Messages{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_messages"
+            {if $feature_messages eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}User+Files" target="tikihelp" class="tikihelp" title="{tr}User Files{/tr}">{/if}
+        		{tr}User Files{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_userfiles"
+            {if $feature_userfiles eq 'y'}checked="checked"{/if}/></td>
+      </tr><tr>
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="{$helpurl}UserNotepad" target="tikihelp" class="tikihelp" title="{tr}User Notepad{/tr}">{/if}
         		{tr}User Notepad{/tr}
@@ -761,30 +794,37 @@
         <td><input type="checkbox" name="feature_notepad"
             {if $feature_notepad eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
-        <td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}User+Files" target="tikihelp" class="tikihelp" title="{tr}User Files{/tr}">{/if}
-        		{tr}User Files{/tr}
-        		{if $feature_help eq 'y'}</a>{/if}
-        		:</td>
-        <td><input type="checkbox" name="feature_userfiles"
-            {if $feature_userfiles eq 'y'}checked="checked"{/if}/></td>
-        <td>&nbsp;</td>
-        <td class="form" colspan="2">&nbsp;</td>
-      </tr><tr>
+      
+{* --- General Layout options --- *}
+
         <td class="heading" colspan="5" 
             align="center">{tr}General Layout options{/tr}</td>
       </tr><tr>
-        <td class="form">{tr}Left column{/tr} :</td>
-        <td><input type="checkbox" name="feature_left_column"
-            {if $feature_left_column eq 'y'}checked="checked"{/if}/></td>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}UsersFlipColumns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">{/if}
+        		{tr}Left column{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><select name="feature_left_column">
+            <option value="y" {if $feature_left_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+            <option value="user" {if $feature_left_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
+            <option value="n" {if $feature_left_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
+        </select></td>
         <td>&nbsp;</td>
         <td class="form">{tr}Layout per section{/tr} :</td>
         <td><input type="checkbox" name="layout_section"
             {if $layout_section eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
-        <td class="form">{tr}Right column{/tr} :</td>
-        <td><input type="checkbox" name="feature_right_column"
-            {if $feature_right_column eq 'y'}checked="checked"{/if}/></td>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}UsersFlipColumns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">{/if}
+        		{tr}Right column{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><select name="feature_right_column">
+            <option value="y" {if $feature_right_column eq 'y'}selected="selected"{/if}>{tr}always{/tr}</option>
+            <option value="user" {if $feature_right_column eq 'user'}selected="selected"{/if}>{tr}user decides{/tr}</option>
+            <option value="n" {if $feature_right_column eq 'n'}selected="selected"{/if}>{tr}never{/tr}</option>
+        </select></td>
         <td>&nbsp;</td>
         <td align="center" colspan="2"><a href="tiki-admin_layout.php" 
             class="link">{tr}Admin layout per section{/tr}</a></td>

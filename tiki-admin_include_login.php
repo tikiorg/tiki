@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.32 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.33 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,6 +25,12 @@ if (isset($_REQUEST["loginprefs"])) {
 	$tikilib->set_preference("change_language", 'n');
     }
 
+    if (isset($_REQUEST["change_password"]) && $_REQUEST["change_password"] == "on") {
+	$tikilib->set_preference("change_password", 'y');
+    } else {
+	$tikilib->set_preference("change_password", 'n');
+    }
+
     if (isset($_REQUEST["change_language"]) && isset($_REQUEST["available_languages"])) {
 	$tikilib->set_preference("available_languages", serialize($_REQUEST["available_languages"]));
     } else {
@@ -35,6 +41,30 @@ if (isset($_REQUEST["loginprefs"])) {
 	$tikilib->set_preference("available_styles", serialize($_REQUEST["available_styles"]));
     } else {
 	$tikilib->set_preference("available_styles", serialize(array()));
+    }
+
+    if (isset($_REQUEST["messu_mailbox_size"])) {
+	    $tikilib->set_preference("messu_mailbox_size", $_REQUEST["messu_mailbox_size"]);
+		$smarty->assign('messu_mailbox_size', $_REQUEST["messu_mailbox_size"]);
+    } else {
+	    $tikilib->set_preference("messu_mailbox_size", '0');
+		$smarty->assign('messu_mailbox_size', 0);
+    }
+
+    if (isset($_REQUEST["messu_archive_size"])) {
+	    $tikilib->set_preference("messu_archive_size", $_REQUEST["messu_archive_size"]);
+		$smarty->assign('messu_archive_size', $_REQUEST["messu_archive_size"]);
+    } else {
+	    $tikilib->set_preference("messu_archive_size", '200');
+		$smarty->assign('messu_archive_size', 200);
+    }
+
+    if (isset($_REQUEST["messu_sent_size"])) {
+	    $tikilib->set_preference("messu_sent_size", $_REQUEST["messu_sent_size"]);
+		$smarty->assign('messu_sent_size', $_REQUEST["messu_sent_size"]);
+    } else {
+	    $tikilib->set_preference("messu_sent_size", '200');
+		$smarty->assign('messu_sent_size', 200);
     }
 
     if (isset($_REQUEST["eponymousGroups"]) &&
@@ -604,6 +634,7 @@ $smarty->assign('groups', $groups['data']);
 
 $smarty->assign("change_theme", $tikilib->get_preference("change_theme", "n"));
 $smarty->assign("change_language", $tikilib->get_preference("change_language", "n"));
+$smarty->assign("change_password", $tikilib->get_preference("change_password", "y"));
 $smarty->assign("rememberme", $tikilib->get_preference("rememberme", "disabled"));
 $smarty->assign("remembertime", $tikilib->get_preference("remembertime", 7200));
 $smarty->assign("allowRegister", $tikilib->get_preference("allowRegister", 'n'));

@@ -17,24 +17,29 @@ if ($user && isset($feature_tasks) && $feature_tasks == 'y' && isset($tiki_p_tas
 
 	if (isset($_REQUEST["modTasksDel"])) {
 		foreach (array_keys($_REQUEST["modTasks"])as $task) {
-			$tasklib->remove_task($user, $task);
+			$tasklib->mark_task_as_trash($task, $user);
 		}
 	}
 
 	if (isset($_REQUEST["modTasksCom"])) {
 		foreach (array_keys($_REQUEST["modTasks"])as $task) {
-			$tasklib->complete_task($user, $task);
+			$tasklib->mark_complete_task($task, $user);
 		}
 	}
 
 	if (isset($_REQUEST["modTasksSave"])) {
-		$tasklib->replace_task($user, 0, $_REQUEST['modTasksTitle'], $_REQUEST['modTasksTitle'], date("U"), 'o', 3, 0, 0);
+	
+		$task = $tasklib->get_default_new_task($user);
+		if(strlen($_REQUEST["modTasksTitle"]) > 2) {
+			$tasklib->new_task($user, $user, null, null, date('U'), array('title' => $_REQUEST["modTasksTitle"]));
+		} else {
+			$smarty->assign('msg', tra("The task title must have at least 3 characters"));
+			$smarty->display("error.tpl");
+			die;
+		}
 	}
-
-	$ownurl =/*httpPrefix().*/ $_SERVER["REQUEST_URI"];
-	$smarty->assign('ownurl', $ownurl);
-	$tasks_useDates = $tikilib->get_user_preference($user, 'tasks_useDates');
-	$modTasks = $tasklib->list_tasks($user, 0, 20);
+    $smarty->assign('ownurl', $tikilib->httpPrefix().$_SERVER["SCRIPT_NAME"].urlencode($_SERVER["QUERY_STRING"]));
+	$modTasks = $tasklib->list_tasks($user, 0, -1, null, 'priority_desc', true, false, true, false);
 	$smarty->assign('modTasks', $modTasks['data']);
 }
 

@@ -1,15 +1,13 @@
-<a class="pagetitle" href="tiki-admin_quicktags.php">{tr}Admin Quicktags{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_quicktags.php">{tr}Admin Quicktags{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}QuickTags" target="tikihelp" class="tikihelp" title="{tr}admin QuickTags{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_quicktags.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin quicktags template{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
 
- 
-<br /><br />
 <h2>{tr}Create/Edit QuickTags{/tr}</h2>
 <form action="tiki-admin_quicktags.php" method="post">
 <input type="hidden" name="tagId" value="{$tagId|escape}" />

@@ -12,7 +12,7 @@
 <div class="cbox-title">{tr}User registration and login{/tr}
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserRegistrationSettings" target="tikihelp" class="tikihelp" title="{tr}User registration and login{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
 {if $feature_help eq 'y'}</a>{/if}
 </div>
 <div class="cbox-data">
@@ -41,7 +41,11 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Prevent automatic/robot registration{/tr}{php}if (!function_exists("gd_info")) print(tra(" - Php GD library required")); {/php}:</td><td><input type="checkbox" name="rnd_num_reg" {if $rnd_num_reg eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Validate email address (may not work){/tr}:</td><td><input type="checkbox" name="validateEmail" {if $validateEmail eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Remind passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Remind passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass ne 'n'}checked="checked"{/if}/></td></tr>
+<tr>
+  <td class="form">{tr}Reg users can change password{/tr}:</td>
+  <td><input type="checkbox" name="change_password" {if $change_password eq 'y'}checked="checked"{/if}/></td>
+</tr>
 <tr>
   <td class="form">{tr}Reg users can change theme{/tr}:</td>
   <td>
@@ -90,6 +94,10 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
     </tr></table>
   </td>
 </tr>
+
+<tr><td class="form">{tr}Maximum mailbox size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_mailbox_size" value="{$messu_mailbox_size|escape}" /></td></tr>
+<tr><td class="form">{tr}Maximum mail archive size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_archive_size" value="{$messu_archive_size|escape}" /></td></tr>
+<tr><td class="form">{tr}Maximum sent box size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_sent_size" value="{$messu_sent_size|escape}" /></td></tr>
 
 <tr><td class="form">{tr}Store plaintext passwords{/tr}:</td><td><input type="checkbox" name="feature_clear_passwords" {if $feature_clear_passwords eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use challenge/response authentication{/tr}:</td><td><input type="checkbox" name="feature_challenge" {if $feature_challenge eq 'y'}checked="checked"{/if}/></td></tr>
@@ -152,7 +160,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <div class="cbox-title">{tr}PEAR::Auth{/tr}
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserRegistrationSettings" target="tikihelp" class="tikihelp" title="{tr}LDAP{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
 {if $feature_help eq 'y'}</a>{/if}
 </div>
 <div class="cbox-data">
@@ -162,7 +170,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="auth_create_user_tiki" {if $auth_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Create user if not in Auth?{/tr}</td><td><input type="checkbox" name="auth_create_user_auth" {if $auth_create_user_auth eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_skip_admin" {if $auth_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}LDAP URL<br/>(if set, this will override the Host and Port below){/tr}:</td><td><input type="text" name="auth_ldap_url" value="{$auth_ldap_url|escape}" size="50" /></td></tr>
+<tr><td class="form">{tr}LDAP URL<br />(if set, this will override the Host and Port below){/tr}:</td><td><input type="text" name="auth_ldap_url" value="{$auth_ldap_url|escape}" size="50" /></td></tr>
 <tr><td class="form">{tr}LDAP Host{/tr}:</td><td><input type="text" name="auth_ldap_host" value="{$auth_ldap_host|escape}" size="50" /></td></tr>
 <tr><td class="form">{tr}LDAP Port{/tr}:</td><td><input type="text" name="auth_ldap_port" value="{$auth_ldap_port|escape}" /></td></tr>
 <tr><td class="form">{tr}LDAP Scope{/tr}:</td><td>
@@ -194,7 +202,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <div class="cbox-title">{tr}PAM{/tr}
 {if $feature_help eq 'y'}
 <a href="{$helpurl}AuthPAM" target="tikihelp" class="tikihelp" title="{tr}PAM{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
 {if $feature_help eq 'y'}</a>{/if}
 </div>
 <div class="cbox-data">
@@ -203,7 +211,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <table class="admin">
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="pam_create_user_tiki" {if $pam_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="pam_skip_admin" {if $pam_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}PAM service{/tr} ({tr}Currently unused{/tr})<td><input type="text" name="pam_service" value="{$pam_service|escape}"/></td></tr>
+<tr><td class="form">{tr}PAM service{/tr} ({tr}Currently unused{/tr})</td><td><input type="text" name="pam_service" value="{$pam_service|escape}"/></td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="auth_pam" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </form>
@@ -215,7 +223,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <div class="cbox-title">{tr}CAS (Central Authentication Service){/tr}
 {if $feature_help eq 'y'}
 <a href="{$helpurl}AuthCAS" target="tikihelp" class="tikihelp" title="{tr}CAS (Central Authentication Service){/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
 {if $feature_help eq 'y'}</a>{/if}
 </div>
 <div class="cbox-data">
@@ -227,7 +235,7 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <table class="admin">
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="cas_create_user_tiki" {if $cas_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="cas_skip_admin" {if $cas_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="form">{tr}CAS server version{/tr}:<td>
+<tr><td class="form">{tr}CAS server version{/tr}:</td><td>
 <select name="cas_version">
 <option value="none" {if $cas_version neq "1" && $cas_version neq "2"} selected="selected"{/if}></option>
 <option value="1.0" {if $cas_version eq "1.0"} selected="selected"{/if}>{tr}Version 1.0{/tr}</option>

@@ -1,19 +1,16 @@
-<a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
+
+      {if $feature_help eq 'y'}
+<a href="{$helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}admin polls{/tr}">
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin polls template{/tr}">
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
 
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=polls"><img src='img/icons/config.gif' border='0'  alt="{tr}configure polls{/tr}" title="{tr}configure polls{/tr}" /></a>
 {/if}
-  
-      {if $feature_help eq 'y'}
-<a href="{$helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}admin polls{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
-
-      {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_polls.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin polls template{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
-
 
 
 <br /><br />

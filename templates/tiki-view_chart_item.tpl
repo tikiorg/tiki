@@ -1,5 +1,5 @@
-<a class="pagetitle" href="tiki-view_chart_item.php?itemId={$smarty.request.itemId}">{tr}Item information{/tr}</a>
-<br /><br />
+<h1><a class="pagetitle" href="tiki-view_chart_item.php?itemId={$smarty.request.itemId}">{tr}Item information{/tr}</a>
+</h1>
 {cycle values="odd,even" print=false}
 <table class="normal">
 <tr>
@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td  class="{cycle advance=false}">{tr}Dif{/tr}</td>
-	<td class="{cycle }">{$info.dif}</td>
+	<td class="{cycle }">{if $info.dif eq "new"}{html_image file='img/icons/new.gif' border='0' alt='{tr}new{/tr}'}{else}{$info.dif}{/if}</td>
 </tr>
 <tr>
 	<td  class="{cycle advance=false}">{tr}Best Position{/tr}</td>

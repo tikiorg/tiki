@@ -1,20 +1,13 @@
-<a class="pagetitle" href="tiki-directory_validate_sites.php">{tr}Validate sites{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-directory_validate_sites.php">{tr}Validate sites{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Validate Sites{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-directory_validate_sites.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}directory validate sites tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
-
-
-<br /><br />
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
 <h2>{tr}Sites{/tr}</h2>

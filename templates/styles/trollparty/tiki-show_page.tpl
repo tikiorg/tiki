@@ -5,7 +5,7 @@
 <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page}&amp;refresh=1" class="linkbuttop">{tr}cached{/tr}</a>
 {/if}
 
-{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
+{if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox') and $beingEdited ne 'y'}
 <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page}" class="linkbuttop">{tr}edit{/tr}</a>
 {/if}
 
@@ -51,7 +51,7 @@
 {if $feature_wiki_description eq 'y'}
 <div class="toptitledesc">
 {if $lock}
-<img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+<img src="img/icons/lock_topic.gif" height="19" width="19" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
 {if $feature_page_title eq 'y'}
 <a href="tiki-index.php?page={$page}" class="link" style="font-weight:bold;">{$page}</a> :: 
@@ -116,7 +116,7 @@
 		<a href="tiki-index.php?page={$page}&amp;pagenum={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
 
 
-		<a href="tiki-index.php?page={$page}&amp;pagenum={$last_page}"><img src='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' /></a>
+		<a href="tiki-index.php?page={$page}&amp;pagenum={$last_page}">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}'}</a>
 	</div>
 {/if}
 </div>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-eph.php,v 1.12 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-eph.php,v 1.13 2005-03-12 16:48:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -118,11 +118,8 @@ if ($offset > 0) {
 $smarty->assign_by_ref('channels', $channels["data"]);
 
 // don't seem to be used in .tpl // is it required ?
-if (!isset($tasks_useDates))
-	$tasks_useDates = '';
 ask_ticket('eph');
 
-$smarty->assign('tasks_useDates', $tasks_useDates);
 // end of existential question
 $smarty->assign('mid', 'tiki-eph.tpl');
 $smarty->display("tiki.tpl");

@@ -1,7 +1,6 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<a class="pagetitle" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Message queue for{/tr}: {$forum_info.name}</a>
-<br /><br />
+<h1><a class="pagetitle" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Message queue for{/tr}: {$forum_info.name}</a></h1>
 <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
 {if $smarty.request.qId and $form eq 'y'}
 <h3>{tr}Edit queued message{/tr}</h3>
@@ -153,7 +152,7 @@
 		    <br />
 			{section name=iz loop=$items[ix].attachments}
 				<a class="link" href="tiki-download_forum_attachment.php?attId={$items[ix].attachments[iz].attId}">
-				<img border='0' src='img/icons/attachment.gif' alt='{tr}attachment{/tr}' />
+				<img src="img/icons/attachment.gif" border="0" width="10" height= "13" alt='{tr}attachment{/tr}'>
 				{$items[ix].attachments[iz].filename} ({$items[ix].attachments[iz].filesize|kbsize})</a>
 				<a class="link" href="tiki-forum_queue.php?forumId={$forumId}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_attachment={$items[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
 				<br />

@@ -1,4 +1,4 @@
-<a class="pagetitle" href="messu-read.php?msgId={$msgId}">{tr}Read message{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="messu-read.php?msgId={$msgId}">{tr}Read message{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
 <br />
@@ -40,7 +40,8 @@
     <input type="hidden" name="flagval" value="{$flagval|escape}" />
     <input type="hidden" name="to" value="{$msg.user_from|escape}" />
     <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject}" />
-    <input type="hidden" name="body" value="{$msg.body|quoted:$quote_format:$msg.user_from|escape}" />
+    <input type="hidden" name="body" value="{$msg.body|quoted|escape}" />
+    <input type="hidden" name="replyto_hash" value="{$msg.hash}" />
     <input type="submit" name="reply" value="{tr}reply{/tr}" />
     </form>
   </td>
@@ -56,6 +57,7 @@
     <input type="hidden" name="to" value="{$msg.user_from|escape},{$msg.user_cc},{$msg.user_to}" />
     <input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject}" />
     <input type="hidden" name="body" value="{$msg.body|quoted|escape}" />
+    <input type="hidden" name="replyto_hash" value="{$msg.hash}" />
     <input type="submit" name="replyall" value="{tr}replyall{/tr}" />
   </td></tr>
   </table>

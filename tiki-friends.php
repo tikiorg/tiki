@@ -24,7 +24,7 @@ if (isset($_REQUEST['request_friendship'])) {
 	if (!$tikilib->verify_friendship($friend,$user)) {
 	    $userlib->request_friendship($user,$friend);
 	    $lg = $tikilib->get_user_preference($friend, "language", $language);
-	    $smarty->assign('msg',sprintf(tra("Frienship request sent to %s"), $friend));
+	    $smarty->assign('msg',sprintf(tra("Friendship request sent to %s"), $friend));
 	// About to make this templated - Damian
 	    $messulib->post_message($friend, $user, $friend, '',
 				    tra("You're invited to join my network of friends!", $lg),

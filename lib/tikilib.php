@@ -226,19 +226,109 @@ class TikiLib extends TikiDB {
 
     /*shared*/
     function get_user_event_watches($user, $event, $object) {
-	$query = "select * from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
-	$result = $this->query($query,array($user,$event,$object));
-	if (!$result->numRows()) return false;
-	$res = $result->fetchRow();
+//$this->get_event_watches($event, $object);
+	global $feature_user_watches_translations;
+	$pages = array();
+
+	// This here is to allow users to get mail for every page in a
+	// translation group they are watching, so translators don't get too
+	// out of step.  -Robin Powell, 9 Mar 2005
+	if( $feature_user_watches_translations == 'y' )
+	{
+	    // If $feature_user_watches_translations is turned on, also look for
+	    // pages in a translation group.
+	    if( $event == 'wiki_page_changed' )
+	    {
+		global $dbTiki;
+		global $multilinguallib;
+		include_once("lib/multilingual/multilinguallib.php");
+		$page_info = $this->get_page_info( $object );
+		$pages = $multilinguallib->getTranslations('wiki page', $page_info['page_id'], $object, '' );
+	    }
+	} else {
+	    $page_info = $this->get_page_info( $object );
+
+	    // Make a page listing for the current page.
+	    $pages = array_merge( $pages, array( array(
+			    "objId" => $page_info['page_id'],
+			    "objName" => $object,
+			    )
+			)
+		    );
+	}
+
+	$res = 0;
+
+	foreach( $pages as $page)
+	{
+	    if( $res == 0 )
+	    {
+		$query = "select * from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
+
+		$result = $this->query($query,array($user,$event,$page['objName']));
+		$res = $result->fetchRow();
+	    }
+	}
+
+	if( $res == 0 )
+	{
+	    return false;
+	}
 	return $res;
     }
 
     /*shared*/
     function get_event_watches($event, $object) {
+	global $dbTiki;
+	global $feature_user_watches_translations;
+	
 	$ret = array();
+	$pages = array();
 
-	$query = "select * from `tiki_user_watches` where `event`=? and `object`=?";
-	$result = $this->query($query,array($event,$object));
+	$page_info = $this->get_page_info( $object );
+
+	// If this is a new page, no point looking for watches on it directly,
+	// nor at its (non-existant) translation group.
+	if( $page_info )
+	{
+	    // This here is to allow users to get mail for every page in a
+	    // translation group they are watching, so translators don't get too
+	    // out of step.  -Robin Powell, 9 Mar 2005
+	    if( $feature_user_watches_translations == 'y' )
+	    {
+		// If $feature_user_watches_translations is turned on, also look for
+		// pages in a translation group.
+		if( $event == 'wiki_page_changed' )
+		{
+		    global $dbTiki;
+		    global $multilinguallib;
+		    include_once("lib/multilingual/multilinguallib.php");
+		    $pages = $multilinguallib->getTranslations('wiki page', $page_info['page_id'], $object, '' );
+		}
+	    } else {
+		// Make a page listing for the current page.
+		$pages = array_merge( $pages, array( array(
+				"objId" => $page_info['page_id'],
+				"objName" => $object,
+				)
+			    )
+			);
+	    }
+
+	    print "<pre>";
+	    print_r( $pages );
+	    print "</pre>";
+	    $query = "select * from `tiki_user_watches` where `event`=? and `object` in ( " . join(", ",
+			array_map( create_function( '$a', 'return "?";' ), $pages )
+			) . " )";
+
+	    $result = $this->query($query,array_merge($event,
+			array_map( create_function( '$a', 'return $a["objName"];' ), $pages )
+			)
+		    );
+	} else {
+	    return $ret;
+	}
 
 	if (!$result->numRows())
 	    return $ret;
@@ -920,7 +1010,11 @@ class TikiLib extends TikiDB {
 
     /*shared*/
     function get_user_groups($user) {
-	if (!isset($this->usergroups_cache[$user])) {
+	if (!$user) {
+		$ret = array();
+		$ret[] = "Anonymous";
+		return $ret;
+	} elseif (!isset($this->usergroups_cache[$user])) {
 	    $userid = $this->get_user_id($user);
 	    $query = "select `groupName`  from `users_usergroups` where `userId`=?";
 	    $result=$this->query($query,array((int) $userid));
@@ -930,7 +1024,7 @@ class TikiLib extends TikiDB {
 		$included = $this->get_included_groups($res["groupName"]);
 		$ret = array_merge($ret, $included);
 	    }
-	    $ret[] = "Anonymous";
+	    $ret[] = "Registered";
 	    $ret = array_unique($ret);
 	    $this->usergroups_cache[$user] = $ret;
 	    return $ret;
@@ -1353,6 +1447,7 @@ class TikiLib extends TikiDB {
 		    }
 		}
 		if ($display) {
+		    $usergroups = $this->get_user_groups($user);
 		    if (isset($res['groupname']) and $res['groupname']) {
 			$sections = split(",",$res['groupname']);
 			foreach ($sections as $sec) {
@@ -1733,7 +1828,7 @@ class TikiLib extends TikiDB {
     function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '', $visible_only = 'y') {
 	global $userlib;
 
-	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
+	$mid = " left join `users_users` on `tiki_articles`.`author` = `users_users`.`login` where `tiki_articles`.`type` = `tiki_article_types`.`type` ";
 	$bindvars=array();
 	if ($find) {
 	    $findesc = '%' . $find . '%';
@@ -1748,15 +1843,18 @@ class TikiLib extends TikiDB {
 		$mid = " where `tiki_articles`.`type`=? ";
 	    }
 	}
-
-	if ($topicId) {
+	if (($topicId) || ($topicId=="0")) {
+		$invert="";
+		if (substr($topicId,0,1)=="!") {
+			$topicId=substr($topicId,1);
+			$invert="!";
+		}
 	    $bindvars[] = (int) $topicId;
 	    if ($mid) {
-		$mid .= " and `topicId`=? ";
+		$mid .= " and `tiki_articles`.`topicId`$invert=? ";
 	    } else {
-		$mid = " where `topicId`=? ";
+		$mid = " where `tiki_articles`.`topicId`$invert=? ";
 	    }
-
 	}
 
 
@@ -1790,8 +1888,8 @@ class TikiLib extends TikiDB {
 	`tiki_article_types`.`show_image_caption`,
 	`tiki_article_types`.`show_lang`,
 	`tiki_article_types`.`creator_edit`
-	    from `tiki_articles`, `tiki_article_types`, `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_articles`, `tiki_article_types`, `users_users` $mid";
+	    from `tiki_articles`, `tiki_article_types` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_articles`, `tiki_article_types` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = array();
@@ -2446,7 +2544,7 @@ class TikiLib extends TikiDB {
         //        $mbindvars = $bindvars;
 	// }
 
-	function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
+  function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '', $initial = '', $exact_match = true) {
 
 	    if ($sort_mode == 'size_desc') {
 		$sort_mode = 'page_size_desc';
@@ -2540,16 +2638,51 @@ class TikiLib extends TikiDB {
 		usort($ret, 'r_compare_backlinks');
 	    }
 
-	    if (in_array($old_sort_mode, array(
-			    'versions_desc',
-			    'versions_asc',
-			    'links_asc',
-			    'links_desc',
-			    'backlinks_asc',
-			    'backlinks_desc'
-			    ))) {
-		$ret = array_slice($ret, $old_offset, $old_maxRecords);
+	if ($sort_mode == 'size_asc') {
+	    $sort_mode = 'page_size_asc';
+	}
+
+	$old_sort_mode = '';
+
+	if (in_array($sort_mode, array(
+			'versions_desc',
+			'versions_asc',
+			'links_asc',
+			'links_desc',
+			'backlinks_asc',
+			'backlinks_desc'
+			))) {
+	    $old_offset = $offset;
+	    $old_maxRecords = $maxRecords;
+	    $old_sort_mode = $sort_mode;
+	    $sort_mode = 'user_desc';
+	    $offset = 0;
+	    $maxRecords = -1;
+	}
+
+	if (is_array($find)) { // you can use an array of pages
+	    $mid = " where `pageName` IN (".implode(',',array_fill(0,count($find),'?')).")";
+	    $bindvars = $find;
+	} elseif (is_string($find)) { // or a string
+	    if (!$exact_match && $find) {
+		$find = preg_replace("/(\w+)/","%\\1%",$find);
+		$find = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
+                $mid = " where `pageName` like ".implode(' or `pageName` like ',array_fill(0,count($find),'?'));
+                $bindvars = $find;
+	    } else {
+		$mid = " where `pageName` like ? ";
+		$bindvars = array('%' . $find . '%');
 	    }
+	} else {
+	    $mid = "";
+	    $bindvars = array();
+	}
+        if ($initial) {                                                                                                                                                   
+                $mid = " where `pageName` like ?";                                                                                                                           
+                $mmid = $mid;
+                $bindvars = array($initial.'%');
+                $mbindvars = $bindvars;
+	}
 
 	    $retval = array();
 	    $retval["data"] = $ret;
@@ -2758,7 +2891,7 @@ class TikiLib extends TikiDB {
 	    }
 
 	    // Update the log
-	    if ($name != 'SandBox') {
+	if (strtolower($name) != 'sandbox') {
 		$action = "Created";//get_strings tra("Created");
 
 		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
@@ -3050,7 +3183,7 @@ class TikiLib extends TikiDB {
 	    $plugin_start = $plugins[0];
 
 	    /*
-	       print "<pre>real data: :".htmlspecialchars( $data ) .":</pre>";
+		   print "<pre>real data: :".htmlspecialchars( $data ) .":</pre>";
 
 	       print "<pre>plugins:";
 	       print_r( $plugins );
@@ -3416,6 +3549,56 @@ class TikiLib extends TikiDB {
 	$noparsed = array('data'=>array(),'key'=>array());
 	$this->parse_first($data, $preparsed, $noparsed);
 
+	global $feature_wiki_attachments;
+
+	if( $feature_wiki_attachments == 'y' )
+	{
+	    // Handle wiki file links by turning them into ATTACH module calls.
+	    preg_match_all("/(\{file [^\}]+})/", $data, $pages);
+
+	    foreach (array_unique($pages[1])as $page_parse) {
+		$parts = $this->split_tag( $page_parse);
+
+		$filedata = array();      // pre-set preferences
+		$filedata["name"] = '';
+		$filedata["desc"] = '';
+		$filedata["showdesc"] = '';
+		$filedata["page"] = '';
+		$filedata = $this->split_assoc_array( $parts, $filedata);
+
+		$middle = "";
+
+		if( ! $filedata["name"] )
+		{
+		    continue;
+		}
+
+		$repl = "{ATTACH(file=>".$filedata["name"];
+
+		if ($filedata["desc"])
+		{
+		    $repl .= ",inline=>1";
+		    $middle = $filedata["desc"];
+		}
+
+		if ($filedata["page"])
+		{
+		    $repl .= ",page=>" . $filedata["page"];
+		}
+
+		if ($filedata["showdesc"])
+		{
+		    $repl .= ",showdesc=>1";
+		}
+
+		$repl .= ")}$middle{ATTACH}";
+
+		$data = str_replace($page_parse, $repl, $data);
+	    }
+	}
+
+	$this->parse_first($data, $preparsed, $noparsed);
+
 	// Extract [link] sections (to be re-inserted later)
 	$noparsedlinks = array();
 
@@ -3486,9 +3669,9 @@ class TikiLib extends TikiDB {
 		    if ($tikidomain) {
 			$name = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$name);
 		    }
-		    if (file_exists($name)) {
+		    if (file_exists($name) and (preg_match('/(gif|jpe?g|png)$/i',$name))) {
 			// Replace by the img tag to show the image
-			$repl = "<img src='$name' alt='$name' />";
+			$repl = "<div class='img'><img src='$name' alt='$name' /></div>";
 		    } else {
 			$repl = tra('picture not found')." $name";
 		    }
@@ -3538,9 +3721,6 @@ class TikiLib extends TikiDB {
 			    $name = $tikidomain.'/'.$id . '.gif';
 			} else {
 			    $name = $id . '.gif';
-			}
-			if ($tikidomain) {
-			    $name = $tikidomain.'/'.$name;
 			}
 			if (file_exists("img/wiki/$name")) {
 			    if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
@@ -3905,6 +4085,7 @@ class TikiLib extends TikiDB {
 		$imgdata["desc"] = '';
 		$imgdata["imalign"] = '';
 	  $imgdata["alt"] = '';
+    $imgdata["usemap"] = '';
 		$imgdata = $this->split_assoc_array( $parts, $imgdata);
 
 		if ($tikidomain) {
@@ -3914,6 +4095,9 @@ class TikiLib extends TikiDB {
 
 		if ($imgdata["width"])
 		    $repl .= ' width="' . $imgdata["width"] . '"';
+          if ($imgdata["usemap"]) {
+		$repl .= ' usemap="#'.$imgdata["usemap"].'"';
+          }
 
 		if ($imgdata["height"])
 		    $repl .= ' height="' . $imgdata["height"] . '"';
@@ -3938,7 +4122,9 @@ class TikiLib extends TikiDB {
 		}
 
 		if ($imgdata["align"]) {
-		    $repl = '<div align="' . $imgdata["align"] . '">' . $repl . "</div>";
+		    $repl = '<div class="img" align="' . $imgdata["align"] . '">' . $repl . "</div>";
+    } else {
+        $repl = '<div class="img">' . $repl . "</div>";
 		}
 
 		$data = str_replace($page_parse, $repl, $data);
@@ -3984,29 +4170,15 @@ class TikiLib extends TikiDB {
 	    // enter square brackets in their output; things like [[foo]
 	    // get rendered as [foo]. -rlpowell
 
-	if ($cachepages == 'y' && $this->is_cached($link))
-		{
-		    //use of urlencode for using cached versions of dynamic sites
-		    $cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
-
-		    //$link2 = str_replace("/","\/",$link);
-		    //$link2 = str_replace("?","\?",$link2);
-		    //$link2 = str_replace("&","\&",$link2);
-		    $link2 = str_replace("/", "\/", preg_quote($link));
-		    $pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-		    $data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon", $data);
-		    $pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
-		    $data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon $cosa", $data);
-		    $pattern = "/(?<!\[)\[$link2\]/";
-		    $data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>$ext_icon $cosa", $data);
-		} else {
-		    //$link2 = str_replace("/","\/",$link);
-		    //$link2 = str_replace("?","\?",$link2);
-		    //$link2 = str_replace("&","\&",$link2);
-		    $link2 = str_replace("/", "\/", preg_quote($link));
+	    if ($cachepages == 'y' && $this->is_cached($link))
+	    {
+		//use of urlencode for using cached versions of dynamic sites
+		$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
 
 		    $pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
 		    $data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon", $data);
+		    $pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
+		    $data = preg_replace($pattern, "<a $class $target href='$link'>$1</a>$ext_icon $cosa", $data);
 		    $pattern = "/(?<!\[)\[$link2\]/";
 		    $data = preg_replace($pattern, "<a $class $target href='$link'>$link</a>$ext_icon", $data);
 		}
@@ -4580,8 +4752,10 @@ class TikiLib extends TikiDB {
 	global $wiki_watch_comments;
 	global $sender_email;
 	global $histlib;
+	include_once ("lib/wiki/histlib.php");
 	include_once ("lib/commentslib.php");
 
+	
 	    $this->invalidate_cache($pageName);
 	    // Collect pages before modifying edit_data (see update of links below)
 	    $pages = $this->get_pages($edit_data);
@@ -4595,9 +4769,9 @@ class TikiLib extends TikiDB {
 	    // Use largest version +1 in history table rather than tiki_page because versions used to be bugged
 	    //    $old_version = $info["version"];
 	     global $histlib; include_once ("lib/wiki/histlib.php");
-	    $old_version = $histlib->get_page_latest_version($pageName);
+	    $old_version = $histlib->get_page_latest_version($pageName)+1;
 	   
-	    if (!$minor && $pageName != 'SandBox') {
+	    if (!$minor && strtolower($pageName) != 'sandbox') {
 		// Archive current version
 		$lastModif = $info["lastModif"];
 		$user = $info["user"];
@@ -4620,6 +4794,7 @@ class TikiLib extends TikiDB {
 		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=?, `lang`=? 
 		where `pageName`=?";
 		$result = $this->query($query,array($edit_description,$edit_data,$edit_comment,(int) $t,$version,$edit_user,$edit_ip,(int)strlen($edit_data),$lang,$pageName));
+
 	    } else {
 		$query = "update `tiki_pages` set `description`=?, `data`=?, `comment`=?, `lastModif`=?, `version`=?, `user`=?, `ip`=?, `page_size`=? 
 		where `pageName`=?";
@@ -4633,7 +4808,7 @@ class TikiLib extends TikiDB {
 	    }
 	    
 	    if (!$minor) {
-		if ($pageName != 'SandBox') {
+		if (strtolower($pageName) != 'sandbox') {
 			// Update the log
 			$action = "Updated"; //get_strings tra("Updated")
 
@@ -5085,10 +5260,10 @@ class TikiLib extends TikiDB {
 
 				$h = opendir($path);
 
-				while ($file = readdir($h)) {
-						if (!strpos($file,'.') && $file != 'CVS' && $file != 'index.php' && is_dir("$path/$file") ) {
-					$languages[] = $file;
-				    }
+			    while ($file = readdir($h)) {
+				if (strpos($file,'.') === false && $file != 'CVS' && $file != 'index.php' && is_dir("$path/$file") ) {
+				    $languages[] = $file;
+						}
 				}
 
 				closedir ($h);
@@ -5101,13 +5276,16 @@ class TikiLib extends TikiDB {
 				global $tikidomain;
 
 			    $sty = array();
-			    $h = opendir("styles/");
-			    while ($file = readdir($h)) {
-				if (ereg("\.css$", $file)) {
-				    $sty[$file] = 1;
+				if (is_dir("styles/")) {
+				    $h = opendir("styles/");
+				    while ($file = readdir($h)) {
+						if (ereg("\.css$", $file)) {
+						    $sty[$file] = 1;
+						}
+				    }
+				    closedir($h);
 				}
-			    }
-				closedir($h);
+				}
 
 				/* What is this $tikidomain section?
 				 * Some files that call this method used to list styles without considering
@@ -5123,6 +5301,7 @@ class TikiLib extends TikiDB {
 				 */ 
 
 				if ($tikidomain) {
+				if (is_dir("styles/$tikidomain")) {
 				    $h = opendir("styles/$tikidomain");
 				    while ($file = readdir($h)) {
 					if (strstr($file, ".css") and substr($file,0,1) != '.') {
@@ -5130,6 +5309,7 @@ class TikiLib extends TikiDB {
 					} 
 				    } 
 				    closedir($h);				
+				}
 				}
 
 
@@ -5294,9 +5474,24 @@ class TikiLib extends TikiDB {
 
     // end of class ------------------------------------------------------
 
-    function compare_links($ar1, $ar2) {
-	return $ar1["links"] - $ar2["links"];
-    }
+// function to check if a file or directory is in the path
+// returns FALSE if incorrect
+// returns the canonicalized absolute pathname otherwise
+function inpath($file,$dir) {
+	$realfile=realpath($file);
+	$realdir=realpath($dir);
+	if (!$realfile) return (FALSE);
+	if (!$realdir) return (FALSE);
+	if (substr($realfile,0,strlen($realdir))!= $realdir) {
+		return(FALSE);
+	} else {
+	  return($realfile);
+	}
+}
+
+function compare_links($ar1, $ar2) {
+    return $ar1["links"] - $ar2["links"];
+}
 
     function compare_backlinks($ar1, $ar2) {
 	return $ar1["backlinks"] - $ar2["backlinks"];

@@ -1,6 +1,6 @@
 TikiWiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.165 2005-01-22 22:54:52 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.166 2005-03-12 16:48:55 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionally include an identifer
@@ -198,6 +198,12 @@ Version 1.9
 * [MOD] Parse absolute URI correctly in group home page setting
 * [NEW] plugin ATTACH to list attachements on a wiki page
 * [MOD] Avoid sending user back to registration page on first login 
+
+
+Version 1.8.6 - Polaris -
+<http://tikiwiki.org/ReleaseProcess186>
+* [FIX] user bookmarks using httpRequest rather than fopen
+
 
 Version 1.8.5 - Polaris -
 <http://tikiwiki.org/ReleaseProcess185>

@@ -1,6 +1,6 @@
 <div class="quicktag">
 {literal}
-<script language="javascript">
+<script language="javascript" type="text/javascript">
 <!--
 function taginsert($area_name,$tagid)
 {

@@ -1,9 +1,8 @@
 <div class="cbox">
   <div class="cbox-title">{tr}Search settings{/tr}</div>
   <div class="cbox-data">
-    <div class="simplebox">
-        <table class="admin">
-      <form action="tiki-admin.php?page=search" method="post">
+    <form action="tiki-admin.php?page=search" method="post">
+      <table class="admin">
 	<tr>
           <td class="heading" colspan="2">{tr}Search features{/tr}</td>
         </tr><tr>
@@ -42,6 +41,14 @@
 	{/if}
 
 	</tr><tr>
+          <td class="form">
+        {*if $feature_help eq 'y'}<a href="{$helpurl}PageName" target="tikihelp" class="tikihelp" title="{tr}Referer Search Highlighting{/tr}">{/if*}
+                {tr}Referer Search Highlighting{/tr}
+                {*if $feature_help eq 'y'}</a>{/if*}
+                :</td>
+        <td><input type="checkbox" name="feature_referer_highlight"
+                {if $feature_referer_highlight eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
           <td class="heading" colspan="2">{tr}Performance issues{/tr}</td>
         </tr><tr>
 	<td class="form">
@@ -89,8 +96,8 @@
           <td colspan="2" class="button"><input type="submit" name="searchprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr>
-      </form>
-        </table>
-    </div>
+      </table>
+    </form>
   </div>
 </div>
+

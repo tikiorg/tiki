@@ -14,7 +14,7 @@
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr valign="top">
 
-{if count($left_modules)}
+{if $feature_left_column ne 'n' and count($left_modules)}
 <td id="leftcolumn">
 <table cellpadding="4" cellspacing="0">
 <tr valign="top">
@@ -38,7 +38,7 @@
 </td></tr></table>
 </td>
 
-{if $feature_right_column eq 'y'  and count($right_modules)}
+{if $feature_right_column ne 'n'  and count($right_modules)}
 <td class="vertline"><img src="styles/smarty/spacer.gif" width="2" height="2" border="0" alt="" ></td>
 <td bgcolor="#f0ead8" width="170" >
 <table width="170" cellpadding="4" cellspacing="0">

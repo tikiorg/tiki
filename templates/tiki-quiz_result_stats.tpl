@@ -10,7 +10,7 @@
 
      {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?=tiki-quiz_result_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz stats tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" />
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'>
 </a>
 {/if}
 
@@ -93,6 +93,9 @@ what is this supposed to be doing? isn't it already in the table below?
 <td class="heading">
 <a class="tableheading" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}Points{/tr}</a>
 </td>
+<td class="heading">
+{tr}Upload{/tr}
+</td>
 
 
 
@@ -103,6 +106,11 @@ what is this supposed to be doing? isn't it already in the table below?
     <td class="{cycle advance=false}">{$questions[ix].question}</td>
     <td class="{cycle advance=false}">{$questions[ix].options[0].optionText}</td>
     <td class="{cycle}">{$questions[ix].options[0].points}</td>
+	{if $questions[ix].options[0].filename}
+    <td class="{cycle}">
+	<a href="tiki-quiz_download_answer.php?answerUploadId={$questions[ix].options[0].answerUploadId}">{$questions[ix].options[0].filename}</a>
+	</td>
+	{/if}
   </tr>
 {/section}
 </table><br />

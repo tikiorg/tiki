@@ -1,7 +1,6 @@
 <div class="cbox">
 <div class="cbox-title">{tr}Webmail{/tr}</div>
 <div class="cbox-data">
-<div class="simplebox">
 <form action="tiki-admin.php?page=webmail" method="post">
 <table class="admin">
 <tr><td class="form">{tr}Allow viewing HTML mails?{/tr}</td><td><input type="checkbox" name="webmail_view_html" {if $webmail_view_html eq 'y'}checked="checked"{/if} /></td></tr>
@@ -17,7 +16,6 @@
 <tr><td colspan="2" class="button"><input type="submit" name="webmail" value="{tr}Change preferences{/tr}" /></td></tr>    
 </table>
 </form>
-</div>
 </div>
 </div>
 

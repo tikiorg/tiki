@@ -49,6 +49,16 @@ class Cachelib {
 		return $data;
   }
 	
+  /** gets the timestamp of item insertion in cache,
+   *  returns false if key doesn't exist
+   */
+  function getCachedDate($key) {
+      $key = md5($key);
+      if( is_file($this->folder."/$key") ) {
+          return filemtime($this->folder."/$key");
+      } else return false;
+  }
+		
   function invalidate($key) {
 		$key = md5($key);
 		@unlink($this->folder."/$key");

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.45 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.46 2005-03-12 16:48:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,6 +63,7 @@ function batchImportUsers() {
 		} else {
 			if (!$userlib->user_exists($u['login'])) {
 				$userslibadmin->add_user($u['login'], $u['password'], $u['email']);
+				$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u["login"], $u["email"]));				
 			}
 
 			$userlib->set_user_fields($u);
@@ -73,6 +74,7 @@ function batchImportUsers() {
 				foreach ($grps as $grp) {
 					if ($userlib->group_exists($grp)) {
 						$userlib->assign_user_to_group($u['login'], $grp);
+						$logslib->add_log('perms',sprintf(tra("Assigned %s in group %s"),$u["login"], $grp));
 					}
 				}
 			}
@@ -175,6 +177,9 @@ if (isset($_REQUEST["newuser"])) {
 		$groups = $userlib->get_groups($offset, $numrows, $sort_mode, $find, $initial);
 		$smarty->assign('groups', $groups['data']);
 	}
+	if (isset($tikifeedback[0]['msg'])) {
+		$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
+	}					
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'add') {
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
 		foreach ($_REQUEST['checked'] as $user) {
@@ -184,6 +189,9 @@ if (isset($_REQUEST["newuser"])) {
 			}
 		}
 	}
+	if (isset($tikifeedback[0]['msg'])) {
+		$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
+	}					
 } elseif (!empty($_REQUEST['group_management']) && $_REQUEST['group_management'] == 'remove') {
 	if (!empty($_REQUEST["checked_groups"]) && !empty($_REQUEST["checked"])) {
 		foreach ($_REQUEST['checked'] as $user) {
@@ -193,6 +201,9 @@ if (isset($_REQUEST["newuser"])) {
 			}
 		}
 	}
+	if (isset($tikifeedback[0]['msg'])) {
+		$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
+	}					
 } elseif (!empty($_REQUEST['set_default_groups']) && $_REQUEST['set_default_groups'] == 'y') {
 	if (!empty($_REQUEST["checked_group"]) && !empty($_REQUEST["checked"])) {
 		foreach ($_REQUEST['checked'] as $user) {
@@ -201,6 +212,9 @@ if (isset($_REQUEST["newuser"])) {
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("group <b>%s</b> set as the default group of user <b>%s</b>."),$group,$user));
 		}
 	}
+	if (isset($tikifeedback[0]['msg'])) {
+		$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
+	}					
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -240,7 +254,7 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 
-$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial,$true);
+$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true);
 
 if (!empty($group_management_mode) || !empty($set_default_groups_mode)) {
 	$arraylen = count($users['data']);
@@ -269,7 +283,7 @@ if ($offset > 0) {
 
 list($username,$usermail,$usersTrackerId,$chlogin) = array('','','',false);
 if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
-	if (ereg("^[a-zA-Z]",$_REQUEST["user"])) {
+	if (!is_numeric($_REQUEST["user"])) {
 		$_REQUEST["user"] = $userlib->get_user_id($_REQUEST["user"]);
 	}
 	$userinfo = $userlib->get_userid_info($_REQUEST["user"]);

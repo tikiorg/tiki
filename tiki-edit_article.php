@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.49 2005-01-22 22:54:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.50 2005-03-12 16:48:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -427,6 +427,9 @@ if ($display_timezone == "Local"){
 } else {
 	$smarty->assign('siteTimeZone', $display_timezone);
 }
+
+$section = 'cms';
+include_once ('tiki-section_options.php');
 
 include_once("textareasize.php");
 

@@ -7,16 +7,16 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 if ($user && isset($feature_tasks) && $feature_tasks == 'y' && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {
 
-	$ownurl =/*httpPrefix().*/ $_SERVER["REQUEST_URI"];
-	$smarty->assign('ownurl', $ownurl);
-	$tasks_useDates = $tikilib->get_user_preference($user, 'tasks_useDates');
+    $smarty->assign('ownurl', $tikilib->httpPrefix().$_SERVER["SCRIPT_NAME"].urlencode($_SERVER["QUERY_STRING"]));
 	$user_groups = $tasklib->get_groups_to_user_with_permissions($user,'tiki_p_tasks_receive');
 
 	if (isset($_REQUEST["modTasksSearch"])) {
-          $user_group = $_REQUEST["user_group"];
+		check_ticket('user-prefs');
+        $user_group = $_REQUEST["user_group"];
+		$tikilib->set_user_preference($user, 'tasks_modLastSelectedGroup', $user_group);
 	}
 	else{
-	  $user_group = '';
+	  $user_group = $tikilib->get_user_preference($user, 'tasks_modLastSelectedGroup', /*default*/'');
 	}
 
         $smarty->assign('user_group', $user_group);

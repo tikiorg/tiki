@@ -123,9 +123,9 @@ class mime {
 				}
 				$encoding = isset($content_transfer_encoding) ? $content_transfer_encoding['value'] : '7bit';
 				$back['body'] = mime::decodeBody($body, $encoding);
-				if ($back['ctype_parameters'] and (!isset($back['ctype_parameters']['charset']) or strtolower($back['ctype_parameters']['charset']) == "iso-8859-1")) { 
+				if( array_key_exists('ctype_parameters', $back) and isset($back['ctype_parameters']) and $back['ctype_parameters'] and (!isset($back['ctype_parameters']['charset']) or strtolower($back['ctype_parameters']['charset']) == "iso-8859-1")) { 
 					$back[$type][] = utf8_encode($back['body']);
-				} elseif ($back['ctype_parameters'] and strtolower($back['ctype_parameters']['charset']) != "utf-8" and function_exists('mb_convert_encoding')) {
+				} elseif( array_key_exists('ctype_parameters', $back) and isset($back['ctype_parameters']) and $back['ctype_parameters'] and strtolower($back['ctype_parameters']['charset']) != "utf-8" and function_exists('mb_convert_encoding')) {
 					$back[$type][] = mb_convert_encoding($back['body'],"utf-8", $back['ctype_parameters']['charset']);
 				} else {
 					$back[$type][] = $back['body'];
@@ -190,6 +190,43 @@ class mime {
 		default:
 			return $input;
 		}
+	}
+
+	function get_bodies($output) {
+			$bodies = array();	/* BUG: only one body for the moment */
+			if (isset($output['text'][0]))
+				$body = $output["text"][0];
+			elseif (isset($output['parts'][0]) && isset($output['parts'][0]["text"][0]))
+				$body = $output['parts'][0]["text"][0];
+			elseif (isset($output['parts'][0]) && isset($output['parts'][0]['parts'][0]) && isset($output['parts'][0]['parts'][0]["text"][0]))
+				$body = $output['parts'][0]['parts'][0]["text"][0];
+			else
+				$body = '';
+			$bodies[] = $body;
+			return $bodies;
+	}
+	function get_attachments($output) {
+		$cnt = 0;
+		$attachments = array();
+		if (!isset($output["parts"])) {
+			return $attachments;
+		}
+		$att = array();
+		for ($it = 0; $it < count($output["parts"]); $it++) {
+			if (isset($output["parts"][$it]["d_parameters"]["filename"])) {
+				$attachmentPart = $output["parts"][$it];
+				$att['part'] = $it;
+				$att['name'] = $attachmentPart["d_parameters"]["filename"];
+				if (isset($attachmentPart["ctype_primary"]))
+					$att['type'] = $attachmentPart["ctype_primary"] ."/". $attachmentPart["ctype_secondary"];
+				else
+					$att['type'] = "";
+				$att['data'] = $attachmentPart["body"];
+				$att['size'] = strlen($att['data']);
+				$attachments[] = $att;
+			}
+		}
+		return $attachments;		
 	}
 
 }

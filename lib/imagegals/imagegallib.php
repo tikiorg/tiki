@@ -868,7 +868,7 @@ class ImageGalsLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " and (`name` like ? or `description` like ?)";
+			$mid = " and (i.`name` like ? or i.`description` like ?)";
 			$bindvars=array('o',$findesc,$findesc);
 		} else {
 			$mid = "";

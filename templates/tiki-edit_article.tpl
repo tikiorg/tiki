@@ -5,20 +5,19 @@
 {if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
-<a class="pagetitle" href="tiki-edit_article.php">{tr}Edit{/tr}: {$title}</a>
+<h1>{if $articleId}<a class="pagetitle" href="tiki-edit_article.php?articleId={$articleId}">{tr}Edit{/tr}: {$title}</a>{else}<a class="pagetitle" href="tiki-edit_article.php?articleId={$articleId}">{tr}Edit article{/tr}{/if}
 {assign var=area_name value="body"}
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Edit Article{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
-{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+{/if}</h1>
 
-<br /><br />
 <a class="linkbut" href="tiki-list_articles.php">{tr}list articles{/tr}</a>
 <a class="linkbut" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
 <br /><br />
@@ -101,8 +100,8 @@
 <tr id='show_image_3' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Float text around image{/tr}</td><td>
 <input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}/>
 </td></tr>
-<tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own image size x{/tr}</td><td><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
-<tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own image size y{/tr}</td><td><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
+<tr id='show_image_4' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own image size x{/tr}</td><td><input type="text" name="image_x" value="{$image_x|escape}" />{tr}pixels{/tr}</td></tr>
+<tr id='show_image_5' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own image size y{/tr}</td><td><input type="text" name="image_y" value="{$image_y|escape}" />{tr}pixels{/tr}</td></tr>
 <tr id='show_image_caption' {if $types.$type.show_image_caption eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Image caption{/tr} *</td><td><input type="text" name="image_caption" value="{$image_caption|escape}" size="60" /></td></tr>
 
 {if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
@@ -118,10 +117,10 @@
 
 {include file=categorize.tpl}
 
-<tr class="formcolor"><td>{tr}Heading{/tr}</td><td><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Heading{/tr}<br />{include file=tiki-edit_help_tool.tpl area_name='heading'}</td><td><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
 <tr  id='heading_only' {if $types.$type.heading_only ne 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Body{/tr}
 <br />{include file="textareasize.tpl" area_name='body' formId='editpageform'}
-<br />{include file=tiki-edit_help_tool.tpl area_name='body'}
+<br />{include file=tiki-edit_help_tool.tpl area_name='body' qtnum='2'}
 </td><td>
 <b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br />
 <textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>

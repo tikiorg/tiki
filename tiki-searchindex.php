@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.10 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.11 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,10 +23,6 @@ if ($feature_search != 'y') {
 
 if(!empty($_REQUEST["highlight"])) {
   $_REQUEST["words"]=$_REQUEST["highlight"];
-} else {
-  $smarty->assign('msg', tra("You have to type a searchword"));
-  $smarty->display("error.tpl");
-  die;
 }
 
 if ($feature_search_stats == 'y') {
@@ -217,6 +213,9 @@ $smarty->assign_by_ref('results', $results["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-searchindex.tpl');
+// $smarty->assign('searchNoResults', 'true');       // false is default
+// $smarty->assign('searchStyle', 'menu');           // buttons is default
+// $smarty->assign('searchOrientation', 'horiz');    // vert is default 
 $smarty->display("tiki.tpl");
 
 ?>

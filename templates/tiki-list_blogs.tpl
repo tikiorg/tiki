@@ -1,11 +1,11 @@
-<a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a><br /><br />
-{if $tiki_p_create_blogs eq 'y'}
-<a class="linkbut" href="tiki-edit_blog.php">{tr}create new blog{/tr}</a>
-{/if}
+<h1><a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=blogs"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}
-<br /><br />
+</h1>
+{if $tiki_p_create_blogs eq 'y'}
+<div class="navbar"><a class="linkbut" href="tiki-edit_blog.php">{tr}create new blog{/tr}</a></div>
+{/if}
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

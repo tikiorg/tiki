@@ -12,7 +12,7 @@
   <div id="tiki-mid">
     <table border="0" cellpadding="0" cellspacing="0" >
     <tr>
-      {if $feature_left_column eq 'y'}
+      {if $feature_left_column ne 'n'}
       <td id="leftcolumn">
       {section name=homeix loop=$left_modules}
       {$left_modules[homeix].data}
@@ -26,7 +26,7 @@
       {/if}
       </div>
       </td>
-      {if $feature_right_column eq 'y'}
+      {if $feature_right_column ne 'n'}
       <td id="rightcolumn">
       {section name=homeix loop=$right_modules}
       {$right_modules[homeix].data}

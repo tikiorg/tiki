@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.13 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-run_activity.php,v 1.14 2005-03-12 16:48:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -73,19 +73,18 @@ foreach ($act_role_names as $role) {
 		$$name = 'n';
 	}
 }
-
+if (!isset($_REQUEST['__post'])) {
 $source = 'lib/Galaxia/processes/' . $process->getNormalizedName(). '/compiled/' . $activity->getNormalizedName(). '.php';
 $shared = 'lib/Galaxia/processes/' . $process->getNormalizedName(). '/code/shared.php';
 
 // Existing variables here:
 // $process, $activity, $instance (if not standalone)
-
 // Include the shared code
 include_once ($shared);
 
 // Now do whatever you have to do in the activity
 include_once ($source);
-
+}
 // Process comments
 if (isset($_REQUEST['__removecomment'])) {
 	$__comment = $instance->get_instance_comment($_REQUEST['__removecomment']);
@@ -105,24 +104,36 @@ $smarty->assign_by_ref('__comments', $__comments);
 
 if (!isset($_REQUEST['__cid']))
 	$_REQUEST['__cid'] = 0;
-
 if (isset($_REQUEST['__post'])) {
+	$instance->getInstance($_REQUEST['iid']);
 	$instance->replace_instance_comment($_REQUEST['__cid'], $activity->getActivityId(), $activity->getName(),
 		$user, $_REQUEST['__title'], $_REQUEST['__comment']);
 }
-
-$__comments = $instance->get_instance_comments();
-
+$__comments = $instance->get_instance_comments($activity->getActivityId());
 // This goes to the end part of all activities
 // If this activity is interactive then we have to display the template
-if (!isset($_REQUEST['auto']) && $__activity_completed && $activity->isInteractive()) {
+if (!isset($_REQUEST['auto']) && $__activity_completed && $activity->isInteractive() && !isset($_REQUEST['__post'])) {
 	$smarty->assign('procname', $process->getName());
 
 	$smarty->assign('procversion', $process->getVersion());
 	$smarty->assign('actname', $activity->getName());
+	$smarty->assign('actid',$activity->getActivityId());
+	$smarty->assign('post','n');
+	$smarty->assign('iid',$instance->instanceId);
 	$smarty->assign('mid', 'tiki-g-activity_completed.tpl');
 	$smarty->display("tiki.tpl");
-} else {
+} 
+elseif (!isset($_REQUEST['auto']) && $activity->isInteractive() && isset($_REQUEST['__post'])) {
+	$smarty->assign('procversion', $process->getVersion());
+	$smarty->assign('actname', $activity->getName());
+	$smarty->assign('actid',$activity->getActivityId());
+	$smarty->assign('title',$_REQUEST['__title']);
+	$smarty->assign('comment',$_REQUEST['__comment']);
+	$smarty->assign('post','y');
+	$smarty->assign('mid', 'tiki-g-activity_completed.tpl');
+	$smarty->display("tiki.tpl");
+}
+else {
 	if (!isset($_REQUEST['auto']) && $activity->isInteractive()) {
 		$section = 'workflow';
 
@@ -132,5 +143,4 @@ if (!isset($_REQUEST['auto']) && $__activity_completed && $activity->isInteracti
 		$smarty->display("tiki.tpl");
 	}
 }
-
 ?>

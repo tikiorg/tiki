@@ -1,17 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.29 2005-01-22 22:56:23 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_articles.tpl,v 1.30 2005-03-12 16:50:47 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
+<h1><a class="pagetitle" href="tiki-list_articles.php">{tr}Articles{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}List Articles{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_articles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list articles tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
-{/if}
-<br /><br />
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+{/if}</h1>
+
 {if $tiki_p_edit_article eq 'y'}
   <a class="linkbut" href="tiki-edit_article.php">{tr}edit new article{/tr}</a>
 {/if}
@@ -87,7 +87,7 @@
 {if $art_list_title eq 'y'}
 	<td class="{cycle advance=false}">
 	{if $tiki_p_read_article eq 'y'}
-		<a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">
+		<a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}" title="{$listpages[changes].title|escape}">
 	{/if}
 	{$listpages[changes].title|truncate:20:"...":true}
 	{if $listpages[changes].type eq 'Review'}(r){/if}

@@ -1,20 +1,14 @@
-<a href="tiki-admin_mailin.php" class="pagetitle">{tr}Mail-in accounts{/tr}</a>
-
-  
+<h1><a href="tiki-admin_mailin.php" class="pagetitle">{tr}Mail-in accounts{/tr}</a>
 
 {if $feature_help eq 'y'}
   <a href="{$helpurl}Webmail" target="tikihelp" class="tikihelp" title="{tr}admin Webmail{/tr}">
   <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>
 {/if}
 
-
 {if $feature_view_tpl eq 'y'}
   <a href="tiki-edit_templates.php?template=tiki-admin_mailin.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin mailin template{/tr}">
-  <img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>
-{/if}
-
-
-<br /><br />
+  <img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>
+{/if}</h1>
 
 <table class="normal">
   <tr>

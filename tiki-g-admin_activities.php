@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.12 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_activities.php,v 1.13 2005-03-12 16:48:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,14 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/Galaxia/ProcessManager.php');
+
+$maxExpirationTime = array (
+"years" => 5,
+"months" => 11,
+"days" => 30,
+"hours" => 23,
+"minutes" => 59
+);
 
 // The galaxia activities manager PHP script.
 if ($feature_workflow != 'y') {
@@ -45,6 +53,12 @@ if (!isset($_REQUEST['activityId']))
 
 if ($_REQUEST["activityId"]) {
 	$info = $activityManager->get_activity($_REQUEST['pid'], $_REQUEST["activityId"]);
+	$time = $activityManager->get_expiration_members($info['expirationTime']);
+	$info['year'] = $time['year'];
+	$info['month'] = $time['month'];
+	$info['day'] = $time['day'];
+	$info['hour'] = $time['hour'];
+	$info['minute'] = $time['minute'];
 } else {
 	$info = array(
 		'name' => '',
@@ -52,7 +66,12 @@ if ($_REQUEST["activityId"]) {
 		'activityId' => 0,
 		'isInteractive' => 'y',
 		'isAutoRouted' => 'n',
-		'type' => 'activity'
+		'type' => 'activity',
+		'month'=> 0,
+		'day'=> 0,
+		'hour'=> 0,
+		'minute'=> 0,
+		'expirationTime'=> 0
 	);
 }
 
@@ -85,6 +104,11 @@ if (isset($_REQUEST['addrole'])) {
 		'isInteractive' => $isInteractive,
 		'isAutoRouted' => $isAutoRouted,
 		'type' => $_REQUEST['type'],
+		'month'=> 0,
+		'day'=> 0,
+		'hour'=> 0,
+		'minute'=> 0,
+		'expirationTime'=> 0
 	);
 
 	$vars = array(
@@ -126,6 +150,7 @@ if (isset($_REQUEST['save_act'])) {
 		'isInteractive' => $isInteractive,
 		'isAutoRouted' => $isAutoRouted,
 		'type' => $_REQUEST['type'],
+		'expirationTime' => $_REQUEST['year']*535680+$_REQUEST['month']*44640+$_REQUEST['day']*1440+$_REQUEST['hour']*60+$_REQUEST['minute']
 	);
 
 	if ($activityManager->activity_name_exists($_REQUEST['pid'], $_REQUEST['name']) && $_REQUEST['activityId'] == 0) {
@@ -324,6 +349,30 @@ if (isset($_REQUEST["update_act"])) {
 		}
 	}
 }
+
+
+$arYears = array ();
+$arMonths = array();
+$arDays = array();
+$arHours = array();
+$arminutes = array();
+for ($i=0;$i<=$maxExpirationTime['months'];$i++)
+	$arMonths[$i] = $i;
+for ($i=0;$i<=$maxExpirationTime['years'];$i++)
+	$arYears[$i] = $i;
+for ($i=0;$i<=$maxExpirationTime['days'];$i++)
+	$arDays["$i"] = $i;
+for ($i=0;$i<=$maxExpirationTime['hours'];$i++)
+	$arHours["$i"] = $i;
+for ($i=0;$i<=$maxExpirationTime['minutes'];$i++)
+	$arminutes["$i"] = $i;
+$smarty->assign("years",$arYears);
+$smarty->assign("months",$arMonths);
+$smarty->assign("days",$arDays);
+$smarty->assign("hours",$arHours);
+$smarty->assign("minutes",$arminutes);
+
+
 
 $smarty->assign_by_ref('items', $activities['data']);
 

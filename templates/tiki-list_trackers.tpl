@@ -1,22 +1,14 @@
-<a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-list_trackers.php">{tr}Trackers{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Trackers#id187996" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Trackers{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" />
-</a>
+<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>
 {/if}
-
-
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_trackers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list trackers tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
-<br />
-<br />
-<!-- beginning of find form -->
-
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
+</h1>
 
 <form method="get" action="tiki-list_trackers.php">
 <table class="findtable"><tr>

@@ -1,22 +1,22 @@
-<a class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a>
+<h1><a class="pagetitle" href="messu-broadcast.php">{tr}Broadcast message{/tr}</a>
+
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Message Broadcast{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=messu-broadcast.tpl" target="tikihelp" class="tikihelp">
-<img border="0" src="img/icons/info.gif" alt="{tr}edit template{/tr}" /></a>
-{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+{/if}</h1>
 
-<br /><br />
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
-<br />
+<br /><br />
 
 {if $sent}
-{$message}
-{else}
+{$message}<br /><br />
+{/if}
 <form action="messu-broadcast.php" method="post">
 <table class="normal" >
   <tr>
@@ -27,7 +27,7 @@
     <option value="all" selected="selected">{tr}All users{/tr}</option>
     {/if}
 	{section name=ix loop=$groups}
-	<option value="{$groups[ix]|escape}">{$groups[ix]}</option>
+	{if $groups[ix] ne "Anonymous"}<option value="{$groups[ix]|escape}">{$groups[ix]}</option>{/if}
 	{/section}
     </select>
     </td>
@@ -41,6 +41,7 @@
       <option value="4" {if $priority eq 4}selected="selected"{/if}>4 -{tr}High{/tr}-</option>
       <option value="5" {if $priority eq 5}selected="selected"{/if}>5 -{tr}Very High{/tr}-</option>
     </select>
+		<input type="hidden" name="replyto_hash" value="{$replyto_hash}" />
     <input type="submit" name="send" value="{tr}send{/tr}" />
     </td>
   </tr>
@@ -55,5 +56,4 @@
   </tr>
 </table>
 </form>
-{/if}
-<br /><br />
+<br />

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.94 2005-01-22 22:54:59 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.95 2005-03-12 16:49:06 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -15,6 +15,9 @@
 # You may execute this command as often as you like, 
 # and may safely ignore any error messages that appear.
 
+# added on 2005-02-01 by kyori (new features for Galaxia Workflow)
+ALTER TABLE galaxia_instances ADD name varchar(200) default 'No Name' NOT NULL AFTER started;
+ALTER TABLE galaxia_activities ADD expirationTime int(6) unsigned default 0;
 
 ALTER TABLE tiki_mailin_accounts ADD anonymous char(1) NOT NULL default 'y';
 
@@ -450,6 +453,18 @@ ALTER TABLE `tiki_quizzes` ADD `sEpilogue` text default NULL;
 ALTER TABLE `tiki_quizzes` ADD `passingperct` int(4) default 0;
 
 
+CREATE TABLE `tiki_user_answers_uploads` (
+  `answerUploadId` int(4) NOT NULL auto_increment,
+  `userResultId` int(11) NOT NULL default '0',
+  `questionId` int(11) NOT NULL default '0',
+  `filename` varchar(255) NOT NULL default '',
+  `filetype` varchar(64) NOT NULL default '',
+  `filesize` varchar(255) NOT NULL default '',
+  `filecontent` longblob NOT NULL,
+  PRIMARY KEY  (`answerUploadId`)
+) TYPE=MyISAM;
+
+
 #
 # Improved Quizzes end
 #
@@ -769,6 +784,11 @@ UPDATE tiki_user_modules SET parse='n' WHERE name='menu_application_menu';
 # added damian aka damosoft
 INSERT IGNORE INTO `tiki_user_modules`(name,title,data, parse)  VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
 UPDATE `tiki_modules` set `name`='mnu_application_menu' where `name`='mod-application_menu' or `name`='application_menu';
+
+# added on 2005-02-24 by mdavey
+UPDATE `tiki_modules` set `params`='flip=y' where `name`='application_menu' and (`params` IS NULL or `params`='');
+
+# added damian aka damosoft
 UPDATE `tiki_user_assigned_modules` set `name`='mnu_application_menu' where `name`='mod-application_menu' or `name`='application_menu';
 
 # added on 12 10 04 08:21:46 by mose for wiki_rating system
@@ -844,43 +864,144 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_timezone','n')
 UPDATE tiki_menu_options set `perm`= 'tiki_p_read_article,tiki_p_admin_received_articles', url='tiki-received_articles.php' where `name`='Received articles';
 
 #2005-01-13 sir-b
+#2005-01-25 Hausi
+#2005-01-30 sir-b
+CREATE TABLE tiki_user_tasks_history (
+  belongs_to integer(14) NOT NULL,                   -- the fist task in a history it has the same id as the task id
+  task_version integer(4) NOT NULL DEFAULT 0,        -- version number for the history it starts with 0
+  title varchar(250) NOT NULL,                       -- title
+  description text DEFAULT NULL,                     -- description
+  start integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is not starting date
+  end integer(14) DEFAULT NULL,                      -- date of the end, if it is not set than there is not dealine
+  lasteditor varchar(200) NOT NULL,                  -- lasteditor: username of last editior
+  lastchanges integer(14) NOT NULL,                  -- date of last changes
+  priority integer(2) NOT NULL DEFAULT 3,                     -- priority
+  completed integer(14) DEFAULT NULL,                -- date of the completation if it is null it is not yet completed
+  deleted integer(14) DEFAULT NULL,                  -- date of the deleteation it it is null it is not deleted
+  status char(1) DEFAULT NULL,                       -- null := waiting, 
+                                                     -- o := open / in progress, 
+                                                     -- c := completed -> (percentage = 100) 
+  percentage int(4) DEFAULT NULL,
+  accepted_creator char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
+  accepted_user char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
+  PRIMARY KEY (belongs_to, task_version)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
 UPDATE tiki_user_tasks set title = '-'  where title IS NULL;
+INSERT INTO tiki_user_tasks_history (belongs_to, title, start, description, lasteditor, lastchanges, priority, completed, status, percentage) SELECT  taskId, title, date, description, user, date, priority, completed, status, percentage FROM tiki_user_tasks;
 
-ALTER TABLE tiki_user_tasks MODIFY user varchar(200) NOT NULL;
-ALTER TABLE tiki_user_tasks ADD belongs_to integer(14) NOT NULL  AFTER taskId;
-ALTER TABLE tiki_user_tasks ADD task_version integer(4) NOT NULL AFTER belongs_to;
-ALTER TABLE tiki_user_tasks MODIFY title varchar(250) NOT NULL;
-ALTER TABLE tiki_user_tasks MODIFY description text DEFAULT NULL;
-ALTER TABLE tiki_user_tasks MODIFY  date integer(14) NOT NULL;
-ALTER TABLE tiki_user_tasks ADD start integer(14) DEFAULT NULL AFTER date;
-ALTER TABLE tiki_user_tasks ADD end integer(14) DEFAULT NULL AFTER start;
-ALTER TABLE tiki_user_tasks MODIFY status char(1) DEFAULT NULL;
-ALTER TABLE tiki_user_tasks MODIFY priority integer(2) DEFAULT NULL;
-ALTER TABLE tiki_user_tasks MODIFY completed integer(14) DEFAULT NULL;
-ALTER TABLE tiki_user_tasks MODIFY percentage integer(4)  DEFAULT NULL;
-ALTER TABLE tiki_user_tasks ADD lasteditor varchar(200) NOT NULL AFTER percentage;
-ALTER TABLE tiki_user_tasks ADD changes integer(14) DEFAULT NULL AFTER lasteditor;
-ALTER TABLE tiki_user_tasks ADD deleted integer(14) DEFAULT NULL AFTER changes;
-ALTER TABLE tiki_user_tasks ADD creator varchar(200) NOT NULL AFTER deleted;
-ALTER TABLE tiki_user_tasks ADD accepted_creator char(1) DEFAULT NULL AFTER creator;
-ALTER TABLE tiki_user_tasks ADD accepted_user char(1) DEFAULT NULL AFTER accepted_creator;
-ALTER TABLE tiki_user_tasks ADD public_for_group varchar(30) DEFAULT NULL AFTER accepted_user;
+ALTER TABLE tiki_user_tasks DROP description;
+ALTER TABLE tiki_user_tasks DROP title;
+ALTER TABLE tiki_user_tasks ADD last_version integer(4) NOT NULL DEFAULT 0 AFTER taskId;
+ALTER TABLE tiki_user_tasks MODIFY user varchar(200) NOT NULL AFTER last_version;
+ALTER TABLE tiki_user_tasks ADD creator varchar(200) NOT NULL AFTER user;
+ALTER TABLE tiki_user_tasks ADD public_for_group varchar(30) DEFAULT NULL AFTER creator;
 ALTER TABLE tiki_user_tasks ADD rights_by_creator char(1) DEFAULT NULL AFTER public_for_group;
-ALTER TABLE tiki_user_tasks ADD info text DEFAULT NULL AFTER rights_by_creator;
-ALTER TABLE tiki_user_tasks ADD UNIQUE (belongs_to, task_version);
-
-UPDATE tiki_user_tasks SET belongs_to = taskId,  lasteditor = user,  creator = user, task_version = 0;
-
-#2005-01-13 sir-b
-CREATE TABLE tiki_user_tasks_cc (
-  taskId integer(14) NOT NULL,
-  user varchar(200) NOT NULL,
-  PRIMARY KEY (taskId,user)
-) TYPE=MyISAM AUTO_INCREMENT=1;
-
+ALTER TABLE tiki_user_tasks CHANGE date created integer(14) NOT NULL AFTER rights_by_creator;
 
 
 #2005-01-13 sir-b
 INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_send', 'Can send tasks to other users', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_receive', 'Can receive tasks from other users', 'registered', 'user');
 INSERT INTO users_permissions (permName, permDesc, level,type) VALUES ('tiki_p_tasks_admin', 'Can admin public tasks', 'admin', 'user');
+
+#2005-01-20 sylvieg
+CREATE TABLE tiki_newsletter_groups (
+  nlId int(12) NOT NULL default '0',
+  groupName varchar(255) NOT NULL default '',
+  code varchar(20),
+  PRIMARY KEY  (nlId,groupName)
+) TYPE=MyISAM;
+ALTER TABLE tiki_newsletter_subscriptions ADD isUser char(1) NOT NULL default 'n' AFTER subscribed;
+UPDATE tiki_newsletter_subscriptions set isUser='n' where isUser='' or isUser IS NULL;
+ALTER TABLE tiki_newsletter_subscriptions DROP PRIMARY KEY;
+ALTER TABLE tiki_newsletter_subscriptions ADD PRIMARY KEY  (nlId,email,isUser);
+
+#2005-02-07 sylvieg
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('change_password','y');
+
+#2005-02-11 sylvieg
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('bold', '__text__', 'images/ed_format_bold.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('italic', '\'\'text\'\'', 'images/ed_format_italic.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('underline', '===text===', 'images/ed_format_underline.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('external link', '[http://example.com|text]', 'images/ed_link.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('heading1', '!text', 'images/ed_custom.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('hr', '---', 'images/ed_hr.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('center text', '::text::', 'images/ed_align_center.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text', '~~#FF0000:text~~', 'images/fontfamily.gif', 'newsletters');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image', '{img src= width= height= align= desc= link= }', 'images/ed_image.gif', 'newsletters');
+
+UPDATE tiki_quicktags set taginsert='[http://example.com|text|nocache]' where taginsert='[http://example.com|text]' and tagcategory='newsletters';
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','');
+
+#2005-02-20 adding Directory Batch Load feature
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Directory batch','tiki-batch_upload.php',318,'feature_galleries,feature_gal_batch','tiki_p_batch_upload_image_dir','');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_batch_upload_image_dir', 'Can use Directory Batch Load', 'editors', 'image galleries');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_gal_batch','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_batch_dir','');
+
+#2005-02-23 sylvieg
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_sticky_popup','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('calendar_view_tab','n');
+DELETE FROM `tiki_preferences` WHERE `name`='calendar_timezone';
+
+#2005-02-26 ohertel
+# Table structure for table messu_archive (same structure as messu_messages)
+CREATE TABLE messu_archive (
+  msgId int(14) NOT NULL auto_increment,
+  user varchar(200) NOT NULL default '',
+  user_from varchar(200) NOT NULL default '',
+  user_to text,
+  user_cc text,
+  user_bcc text,
+  subject varchar(255) default NULL,
+  body text,
+  hash varchar(32) default NULL,
+  date int(14) default NULL,
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  priority int(2) default NULL,
+  PRIMARY KEY  (msgId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+# default sizes for mailbox, read box and mail archive
+# in messages per user and box (0=unlimited)
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_mailbox_size','0');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_archive_size','200');
+#2005-02-27 ohertel
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('messu_sent_size','200');
+
+# Table structure for table messu_sent (same structure as messu_messages)
+CREATE TABLE messu_sent (
+  msgId int(14) NOT NULL auto_increment,
+  user varchar(200) NOT NULL default '',
+  user_from varchar(200) NOT NULL default '',
+  user_to text,
+  user_cc text,
+  user_bcc text,
+  subject varchar(255) default NULL,
+  body text,
+  hash varchar(32) default NULL,
+  date int(14) default NULL,
+  isRead char(1) default NULL,
+  isReplied char(1) default NULL,
+  isFlagged char(1) default NULL,
+  priority int(2) default NULL,
+  PRIMARY KEY  (msgId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+# --------------------------------------------------------
+
+ALTER TABLE messu_messages ADD replyto_hash varchar(32) default NULL AFTER hash;
+ALTER TABLE messu_archive ADD replyto_hash varchar(32) default NULL AFTER hash;
+ALTER TABLE messu_sent ADD replyto_hash varchar(32) default NULL AFTER hash;
+
+# Moving topic perm into cms where it can be found more easily!
+UPDATE users_permissions SET type="cms" WHERE permName='tiki_p_topic_read';
+
+#2005-03-02 sylvieg
+UPDATE tiki_menu_options SET name="Admin charts" WHERE url='tiki-admin_charts.php' and name='Charts';
+
+# Added 9 Mar 2005 by Robin Lee Powell; watches also activate on translated versions.
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches_translations','y');

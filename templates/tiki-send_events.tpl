@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-send_events.php">{tr}Send events{/tr}</a><br />
+<h1><a class="pagetitle" href="tiki-send_events.php">{tr}Send events{/tr}</a></h1>
 {if $emited eq 'y'}
 {tr}The event was sent to {$sent} email addresses{/tr}<br /><br />
 {/if}

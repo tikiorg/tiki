@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.38 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.39 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,7 +54,6 @@ elseif (isset($_REQUEST["prefs"])) {
         "feature_server_name",
         "maxRecords",
         "sender_email",
-        "email_encoding",
         "system_os",
         "error_reporting_level",
         "default_mail_charset",
@@ -82,6 +81,7 @@ elseif (isset($_REQUEST["prefs"])) {
         "short_time_format",
         "siteTitle",
         "slide_style",
+        "transition_style",
         "tikiIndex",
 	"https"
     );
@@ -144,6 +144,18 @@ elseif (isset($_REQUEST["newadminpass"])) {
 
 $smarty->assign_by_ref( "styles", $tikilib->list_styles());
 
+// Get list of available transition stylesheets
+$transition_styles = array();
+// add the 'none' style
+$h = opendir("styles/transitions");
+while ($file = readdir($h)) {
+    if (preg_match("/\.css$/", $file)) {
+        $transition_styles[] = $file;
+    }
+}
+closedir ($h);
+$smarty->assign_by_ref("transition_styles", $transition_styles);
+
 // Get list of available slideshow styles
 $slide_styles = array();
 $h = opendir("styles/slideshows");
@@ -182,6 +194,7 @@ $smarty->assign("maxRecords", $tikilib->get_preference("maxRecords", 10));
 $smarty->assign("title", $tikilib->get_preference("title", ""));
 $smarty->assign("popupLinks", $tikilib->get_preference("popupLinks", 'n'));
 $smarty->assign("style_site", $tikilib->get_preference("style", "default.css"));
+$smarty->assign("transition_style", $tikilib->get_preference("transition_style", "none"));
 $smarty->assign("site_closed", $tikilib->get_preference("site_closed", "n"));
 $smarty->assign('site_closed_msg', $tikilib->get_preference('site_closed_msg', 'Site is closed for maintainance; please come back later.'));
 $smarty->assign('use_load_threshold', $tikilib->get_preference('use_load_threshold', 'n'));
@@ -244,10 +257,10 @@ if ($home_file_gallery) {
 }
 
 // Get Date/Time preferences
-$long_date_format = $tikilib->get_preference("long_date_format", "%A %d " . tra("of"). " %B, %Y");
+$long_date_format = $tikilib->get_preference("long_date_format", "%A %d " . tra("DATE-of"). " %B, %Y");
 $smarty->assign_by_ref("long_date_format", $long_date_format);
 
-$short_date_format = $tikilib->get_preference("short_date_format", "%a %d " . tra("of"). " %b, %Y");
+$short_date_format = $tikilib->get_preference("short_date_format", "%a %d " . tra("DATE-of"). " %b, %Y");
 $smarty->assign_by_ref("short_date_format", $short_date_format);
 
 $long_time_format = $tikilib->get_preference("long_time_format", "%H:%M:%S %Z");

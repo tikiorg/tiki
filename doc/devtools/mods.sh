@@ -1,96 +1,70 @@
-#!/bin/bash
+#!/bin/sh
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/mods.sh,v 1.3 2005-03-12 16:49:07 mose Exp $
+# 
+# Copyright (c) 2005, the Tikiwiki Community
+# All Rights Reserved. See copyright.txt for details and a complete list of authors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+#
+# mods.sh
+#
+# shell script for developers to work on mods
+# made and maintained by mose at tikiwiki.org
+# 
+# ---------------------------------
+# configure this to match your environment
 
-# -- conf ----------------------------------------------------------
-PUBLIC=0
-MODS_DIR=mods
-MODS_URL=http://tikiwiki.org/mods
-MODS_URL_ENC=http%3A%2F%2Ftikiwiki.org%2Fmods
-# ------------------------------------------------------------------
-CUT=/usr/bin/cut
-SORT=/usr/bin/sort
-TR=/usr/bin/tr
-GREP=/bin/grep
-WGET=/usr/bin/wget
-AWK=/usr/bin/awk
-BASENAME=/usr/bin/basename
-DU=/usr/bin/du
-# ------------------------------------------------------------------
-OLDIR=`pwd`
-cd $MODS_DIR/Packages
+TIKIROOT="/var/www/tiki19"
+REL="doc/mods"
+MODS="$TIKIROOT/$REL"
 
-function showhelp {
-	echo "Usage: $0 [command] <mod-name>"
+# list of commands used
+
+SH="/bin/sh"
+AWK="/usr/bin/awk"
+GREP="/bin/grep"
+CUT="/usr/bin/cut"
+TR="/usr/bin/tr"
+
+# end of config
+# ---------------------------------
+
+if [ -z $1 ];then
 	echo
-	echo "  list    : lists the existing mods"
-	echo "  info    : display info about a mod"
-	echo "  update  : refreshes local list with remote index"
-	echo "  upgrade : fetch new versions of mods and install them"
-	echo "  rebuild : rebuild the local index using control files"
-	echo "  install : include the mods files in tikiwiki"
-	echo "  remove  : remove the mods files from tikiwiki"
-	echo "  dl      : gets a new mod from remote without installing"
+	echo "Usage: $0 <package_name> [copy|diff|install]"
+	echo
+	echo "  copy : copy tiki files to mods"
+	echo "  diff : diff tiki files with mods"
+	echo "  install : copy mods files to tiki"
+	echo "  without 2nd arg, returns the list of files from package in tiki tree"
+	echo
+	echo "  !!! note that this script only works with installed packages !!! "
+	echo "  !!! (this is work in progress, use is quite limited for now) !!! "
+	echo 
+	echo "  check documentation on http://tikiwiki.org/TikiMods"
 	echo
 	exit 0
-}
+fi
 
-case $1 in
-# ------------------------------------------------------------------
-list)
-	if [ -z $2 ]; then
-		$CUT -d\' -f 2,4 00_list.txt | $TR "'" "-" | $SORT
-	else
-		$CUT -d\' -f 2,4 00_list.txt | $TR "'" "-" | $SORT | $GREP $2
-	fi
-;;
-# ------------------------------------------------------------------
-info)
-	if [ -z $2 ]; then
-		cd ..
-		echo -n "Total Size: "
-		$DU -sh .
-	else
-		echo "not implemented yet"
-	fi
-;;
-# ------------------------------------------------------------------
-update)
-	$WGET -O 00_list.$MODS_URL_ENC.txt  $MODS_URL/Packages/00_list.public.txt
-;;
-# ------------------------------------------------------------------
-upgrade)
-	echo upgrade
-	echo "not implemented yet"
-;;
-# ------------------------------------------------------------------
-rebuild)
-	echo rebuild
-	for i in *.info.txt; do
-		f=`$BASENAME $i`
-	done
-;;
-# ------------------------------------------------------------------
-install)
-	echo install
-	echo "not implemented yet"
-;;
-# ------------------------------------------------------------------
-remove)
-	echo remove
-	echo "not implemented yet"
-;;
-# ------------------------------------------------------------------
-dl)
-	echo dl
-	echo "not implemented yet"
-;;
-# ------------------------------------------------------------------
-*)
-	showhelp
-;;
-esac
-# ------------------------------------------------------------------
+INFOFILE=`$GREP -m1 "'$1'" $MODS/Installed/00_list.txt | $CUT -d',' -f'1,2' | $TR -d "'" | $TR ',' '-'`
+[ -z $INFOFILE ] && echo && echo "Package '$1' not found in list of installed packages." && echo && exit 0
 
-
-cd $OLDIR
+if [ -z $2 ]; then
+	$AWK -v REL=$REL '/^files:/, /^$/ { if ($2) { print $2 } }' $MODS/Packages/$INFOFILE.info.txt
+elif [ $2 = "copy" ];then
+	echo "Copy from tiki to mods"
+	$AWK -v REL=$REL '/^files:/, /^$/ { if ($2) { print "cp " $2 " " REL "/" $1 } }' $MODS/Packages/$INFOFILE.info.txt | $SH
+	echo "Done."
+elif [ $2 = "diff" ];then
+	echo "Diff beetween tiki and mods"
+	$AWK -v REL=$REL '/^files:/, /^$/ { if ($2) { print "diff " $2 " " REL "/" $1 } }' $MODS/Packages/$INFOFILE.info.txt | $SH
+	echo "Done."
+elif [ $2 = "restore" ];then
+	echo "Copy from mods to tiki"
+	$AWK -v REL=$REL '/^files:/, /^$/ { if ($2) { print "cp " REL "/" $1 " " $2 } }' $MODS/Packages/$INFOFILE.info.txt | $SH
+	echo "Done."
+fi
 
 exit 0
+
+# ---------------------------------
+# EOF

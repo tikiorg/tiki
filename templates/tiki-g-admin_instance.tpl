@@ -3,8 +3,9 @@
 <a class="pagetitle" href="tiki-g-admin_instance.php?iid={$iid}">{tr}Admin instance{/tr}</a>
 <br /><br />
 {include file=tiki-g-monitor_bar.tpl}
-<h3>{tr}Instance{/tr}: {$ins_info.instanceId} (Process: {$proc_info.name} {$proc_info.version})</h3>
-<form action="tiki-g-admin_instance.php" method="post">
+<h3>{tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br>
+<form method="POST" action="tiki-g-admin_instance.php?aid={$aid}">
+{tr}Instance{/tr}: <input type="text" name="name" value="{$ins_info.name}"></h3>
 <input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">
 <tr>
@@ -49,41 +50,31 @@
 </tr>
 
 <tr>
-	<td class="formcolor">{tr}Activities{/tr}</td>
-	<td class="formcolor">
+	<td class="formcolor"><h3>{tr}Activities{/tr}</h3></td>
+</tr>
+<tr>
+	<td class="formcolor" colspan="2">
 		{if count($acts)}
 		<table class="normal">
-		<tr>
-			<td class="heading">{tr}Activity{/tr}</td>
-			<td class="heading">{tr}Act status{/tr}</td>
-			<td class="heading">{tr}User{/tr}</td>
-		</tr>
-		
+			<tr>
+				<td class="formcolor">{tr}Name{/tr}</td>
+				<td class="formcolor">{tr}Started{/tr}</td>
+				<td class="formcolor">{tr}Act status{/tr}</td>
+				<td class="formcolor">{tr}Expiration Date{/tr}</td>
+				<td class="formcolor">{tr}Ended{/tr}</td>
+				<td class="formcolor">{tr}User{/tr}</td>
+			</tr>
 		{section name=ix loop=$acts}
-		<tr>
-			<td class="odd">{$acts[ix].name}
-			{if $acts[ix].isInteractive eq 'y'}
-			<a href="tiki-g-run_activity.php?activityId={$acts[ix].activityId}&amp;iid={$iid}"><img src='lib/Galaxia/img/icons/next.gif' border='0' alt='{tr}run{/tr}' title='{tr}run{/tr}' /></a>
-			
-			
-			{/if}
-
-			</td>
-			<td class="odd">{$acts[ix].actstatus}</td>
-			<td class="odd">
-			<select name="acts[{$acts[ix].activityId}]">
-			<option value="*" value="*" {if $acts[ix].user eq '*'}selected='selected'{/if}>*</option>
-			{section name=ix loop=$users}
-			<option value="{$users[ix].user|escape}" {if $users[ix].user eq $acts[ix].user}selected="selected"{/if}>{$users[ix].user}</option>
-			{/section}
-			</select>
-			</td>
-		</tr>
+			<tr>
+				<td class="{cycle values='odd,even' advance=false}"><a href="tiki-g-admin_instance_activity.php?iid={$iid}&aid={$acts[ix].activityId}">{$acts[ix].name}</a></td>
+				<td class="{cycle advance=false}">{$acts[ix].iaStarted|date_format:"%b %e, %Y - %H:%M"|capitalize}</td>
+				<td class="{cycle advance=false}">{$acts[ix].actstatus}</td>
+				<td class="{cycle advance=false}">{if $acts[ix].exptime eq 0 && $acts[ix].type eq 'activity' && $acts[ix].isInteractive eq 'y'}{tr}Not Defined{/tr}{elseif $acts[ix].type != 'activity'}&lt;{$acts[ix].type}&gt;{elseif $acts[ix].isInteractive eq 'n'}{tr}Not Interactive{/tr}{else}{$acts[ix].exptime|date_format:"%b %e, %Y - %H:%M"|capitalize}{/if}</td>
+				<td class="{cycle advance=false}">{if $acts[ix].ended eq 0}{tr}Not Ended{/tr}{else}{$acts[ix].ended|date_format:"%b %e, %Y - %H:%M"|capitalize}{/if}</td>
+				<td class="{cycle values='odd,even'}">{$acts[ix].user}</td>
 		{/section}
-		</table>
-		{else}
-		&nbsp;
 		{/if}
+		</table>
 	</td>
 </tr>	
 <tr>
@@ -92,8 +83,9 @@
 </tr>
 </table>
 </form>
+
 <h3>{tr}Properties{/tr}</h3>
-<form action="tiki-g-admin_instance.php" method="post">
+<form method="POST" action="tiki-g-admin_instance.php?iid={$iid}&aid={$aid}">
 <input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">
 <tr>
@@ -124,7 +116,7 @@
 </table>
 </form>
 <h3>{tr}Add property{/tr}</h3>
-<form action="tiki-g-admin_instance.php" method="post">
+<form method="POST" action="tiki-g-admin_instance.php?iid={$iid}&aid={$aid}">
 <input type="hidden" name="iid" value="{$iid|escape}" />
 <table class="normal">
 <tr>
@@ -143,4 +135,3 @@
 </table>
 </form>
 
-{* include file=tiki-g-instance_comments.tpl *}

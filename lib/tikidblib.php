@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.15 2005-01-22 22:55:37 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.16 2005-03-12 16:49:18 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -239,23 +239,23 @@ function convert_sortmode($sort_mode) {
 	case "mssql":
             // Postgres needs " " around column names
             //preg_replace("#([A-Za-z]+)#","\"\$1\"",$sort_mode);
-            $sort_mode = str_replace("_asc", "\" asc", $sort_mode);
-        $sort_mode = str_replace("_desc", "\" desc", $sort_mode);
+            $sort_mode = preg_replace("/_asc$/", "\" asc", $sort_mode);
+        $sort_mode = preg_replace("/_desc$/", "\" desc", $sort_mode);
         $sort_mode = str_replace(",", "\",\"",$sort_mode);
 
         $sort_mode = "\"" . $sort_mode;
         break;
 
         case "sqlite":
-            $sort_mode = str_replace("_asc", " asc", $sort_mode);
-            $sort_mode = str_replace("_desc", " desc", $sort_mode);
+            $sort_mode = preg_replace("/_asc$/", " asc", $sort_mode);
+            $sort_mode = preg_replace("/_desc$/", " desc", $sort_mode);
             break;
 
         case "mysql3":
             case "mysql":
         default:
-            $sort_mode = str_replace("_asc", "` asc", $sort_mode);
-            $sort_mode = str_replace("_desc", "` desc", $sort_mode);
+            $sort_mode = preg_replace("/_asc$/", "` asc", $sort_mode);
+            $sort_mode = preg_replace("/_desc$/", "` desc", $sort_mode);
             $sort_mode = str_replace(",", "`,`",$sort_mode);
             $sort_mode = "`" . $sort_mode;
             break;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.76 2005-01-22 22:54:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.77 2005-03-12 16:49:03 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,7 @@ if ($feature_trackers != 'y') {
 
 $smarty->assign('special',false);
 
-if ($userTracker == 'y') {
+if (!isset($_REQUEST['trackerId']) && $userTracker == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' user') {
 		$utid = $userlib->get_usertrackerid($group);
 		$_REQUEST['trackerId'] = $utid['usersTrackerId'];
@@ -39,7 +39,7 @@ if ($userTracker == 'y') {
 	}
 }
 
-if ($groupTracker == 'y') {
+if (!isset($_REQUEST['trackerId']) && $groupTracker == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' group') {
 		$gtid = $userlib->get_grouptrackerid($group);
 		$_REQUEST["trackerId"] = $gtid['groupTrackerId'];
@@ -95,10 +95,10 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
 $smarty->assign('tracker_info', $tracker_info);
-if (!isset($tracker_info["writerCanModify"]) or (!isset($utid) or ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
+if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($_REQUEST['trackerId'] != $utid['usersTrackerId']))) {
 	$tracker_info["writerCanModify"] = 'n';
 }
-if (!isset($tracker_info["writerGroupCanModify"]) or (!isset($gtid) or ($_REQUEST['trackerId'] != $gtid['groupTrackerId']))) {
+if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUEST['trackerId'] != $gtid['groupTrackerId']))) {
 	$tracker_info["writerGroupCanModify"] = 'n';
 }
 
@@ -138,7 +138,10 @@ for ($i = 0; $i < $temp_max; $i++) {
 		$mainfield = $xfields["data"][$i]["name"];
 	}
 
-	if ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
+	if ($xfields["data"][$i]['type'] == 's') {
+		//$ins_fields["data"][$i] = $xfields["data"][$i];
+		$fields["data"][$i] = $xfields["data"][$i];
+	} elseif ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
 		$fields["data"][$i] = $xfields["data"][$i];
 
@@ -287,7 +290,7 @@ if (isset($tracker_info["authorgroupfield"])) {
 		$tiki_p_view_trackers = 'y';
 		$smarty->assign("tiki_p_view_trackers","y");
 	}
-} 
+}
 if (isset($tracker_info["authorfield"])) {
 	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"],$_REQUEST["itemId"],$tracker_info["authorfield"]);
 	if ($tracker_info['authorindiv'] == $user) {
@@ -580,6 +583,8 @@ if ($tracker_info["useAttachments"] == 'y') {
 			$trklib->item_attach_file($_REQUEST["itemId"], $name, $type, $size, $data, $_REQUEST["attach_comment"], $user, $fhash,$_REQUEST["attach_version"],$_REQUEST["attach_longdesc"]);
 		}
 	}
+
+	// If anything below here is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well.
 	$attextra = 'n';
 	if (strstr($tracker_info["orderAttachments"],'|')) {
 		$attextra = 'y';

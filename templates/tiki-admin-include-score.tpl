@@ -1,11 +1,10 @@
 {if $feature_help eq "y"}
-<div class="simplebox">{tr}Tip{/tr}: {tr}you can see users rank by score in the module users_rank, for that go to{/tr} "<a class="link" href="tiki-admin_modules.php">{tr}Admin modules{/tr}</a>"</div><br />
+<div class="highlight">{tr}Tip{/tr}: {tr}you can see users rank by score in the module users_rank, for that go to{/tr} "<a class="link" href="tiki-admin_modules.php">{tr}Admin modules{/tr}</a>"</div><br />
 {/if}
 
 <div class="cbox">
   <div class="cbox-title">{tr}Score settings{/tr}</div>
   <div class="cbox-data">
-    <div class="simplebox">
       <form action="tiki-admin.php?page=score" method="post">
 
 <table class="admin">
@@ -43,7 +42,6 @@
 </table>
 
       </form>
-    </div>
   </div>
 </div>
 

@@ -257,7 +257,7 @@ class SearchLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$href = sprintf(urldecode($h['href']), $res['id1'], $res['id2']);
+			$href = sprintf(urldecode($h['href']), urlencode($res['id1']), $res['id2']);
 
 			// taking first 240 chars of text can bring broken html tags, better remove all tags.
 			$res['data'] = preg_replace("/<[^>]+>/","",$res['data']);

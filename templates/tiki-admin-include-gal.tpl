@@ -12,7 +12,7 @@
 {section name=ix loop=$galleries}
 <option value="{$galleries[ix].galleryId|escape}" {if $galleries[ix].galleryId eq $home_gallery}selected="selected"{/if}>{$galleries[ix].name|truncate:20:"...":true}</option>
 {/section}
-</select>
+</select></td>
 <td><input type="submit" name="galset" value="{tr}ok{/tr}" /></td></tr>
 </table>
 </form>
@@ -30,7 +30,11 @@
     <tr class="form"><td></td><td><input type="radio" name="gal_use_lib" value="imagick" {if $gal_use_lib eq 'imagick'}checked="checked"{/if}/>Imagick: {$imagicklib}</td></tr>
     <tr class="form"><td><label>{tr}Uploaded image names must match regex{/tr}:</label></td><td><input type="text" name="gal_match_regex" value="{$gal_match_regex|escape}"/></td></tr>
     <tr class="form"><td><label>{tr}Uploaded image names cannot match regex{/tr}:</label></td><td><input type="text" name="gal_nmatch_regex" value="{$gal_nmatch_regex|escape}"/></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>    
+		<tr><td colspan="2"><b>{tr}Directory Batch Loading{/tr}</b><br />
+		{tr}If you enable Directory Batch Loading, you need to setup a web-readable directory (outside of your web space is better). Then setup a way to upload images in that dir, either by scp, ftp, or other protocols{/tr}</td></tr>
+    <tr class="form"><td><label>{tr}Enable directory batch loading{/tr}:</label></td><td><input type="checkbox" name="feature_gal_batch" {if $feature_gal_batch eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr class="form"><td><label>{tr}Batch loading directory{/tr}:</label></td><td><input type="text" name="gal_batch_dir" value="{$gal_batch_dir|escape}"/></td></tr>
+    <tr><td colspan="2" class="button"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
 </form>
 </div>

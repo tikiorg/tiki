@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-print_pages.php">{tr}Print multiple pages{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-print_pages.php">{tr}Print multiple pages{/tr}</a></h1>
 
 <div class="cbox">
 <div class="cbox-title">

@@ -1,19 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.22 2005-01-22 22:56:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.23 2005-03-12 16:50:34 mose Exp $ *}
 
-<a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
-
+<h1><a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Article Types{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-article_types.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Article Types tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
-
-
-<br />
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
+<div class="wiki-edithelp">
 <b>{tr}Name{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
 <b>{tr}Rate{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />
 <b>{tr}Show before publish date{/tr}</b> - {tr}non-admins can view before the publish date{/tr}<br />
@@ -35,7 +32,8 @@
 <b>{tr}Show Language{/tr}</b> - {tr}Show the language{/tr}<br />
 <b>{tr}Creator can edit{/tr}</b> - {tr}The person who submits an article of this type can edit it{/tr}<br />
 <b>{tr}Delete{/tr}</b> - {tr}Delete this type{/tr}<br />
-<h3>{tr}List of types{/tr}</h3>
+</div>
+<h2>{tr}List of types{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 <table class="normal">
 <tr class="heading">

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_instance.php,v 1.9 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_instance.php,v 1.10 2005-03-12 16:48:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,7 +31,14 @@ if (!isset($_REQUEST['iid'])) {
 	die;
 }
 
+/*if (!isset($_REQUEST['aid'])) {
+	$smarty->assign('msg', tra("No activity indicated"));
+
+	$smarty->display("error.tpl");
+	d*/
+
 $smarty->assign('iid', $_REQUEST['iid']);
+//$smarty->assign('aid', $_REQUEST['aid']);
 
 // Get workitems and list the workitems with an option to edit workitems for
 // this instance
@@ -39,12 +46,8 @@ if (isset($_REQUEST['save'])) {
 	check_ticket('g-admin-instance');
 	//status, owner
 	$instanceManager->set_instance_status($_REQUEST['iid'], $_REQUEST['status']);
-
+	$instanceManager->set_instance_name($_REQUEST['iid'],$_REQUEST['name']);
 	$instanceManager->set_instance_owner($_REQUEST['iid'], $_REQUEST['owner']);
-	//y luego acts[activityId][user] para reasignar users
-	foreach (array_keys($_REQUEST['acts'])as $act) {
-		$instanceManager->set_instance_user($_REQUEST['iid'], $act, $_REQUEST['acts'][$act]);
-	}
 
 	if ($_REQUEST['sendto']) {
 		$instanceManager->set_instance_destination($_REQUEST['iid'], $_REQUEST['sendto']);
@@ -97,7 +100,6 @@ if (isset($_REQUEST['saveprops'])) {
 
 	$instanceManager->set_instance_properties($_REQUEST['iid'], $props);
 }
-
 $acts = $instanceManager->get_instance_activities($_REQUEST['iid']);
 $smarty->assign_by_ref('acts', $acts);
 
@@ -120,10 +122,12 @@ if (!isset($_REQUEST['__cid']))
 
 if (isset($_REQUEST['__post'])) {
 	check_ticket('g-admin-instance');
-	$instance->replace_instance_comment($_REQUEST['__cid'], 0, '', $user, $_REQUEST['__title'], $_REQUEST['__comment']);
+	$instance->replace_instance_comment($_REQUEST['__cid'], $_REQUEST['aid'], '', $user, $_REQUEST['__title'], $_REQUEST['__comment']);
 }
 
-$__comments = $instance->get_instance_comments();
+//$__comments = $instance->get_instance_comments($_REQUEST['aid']);
+$smarty->assign('comments',$__comments);
+
 ask_ticket('g-admin-instance');
 
 $smarty->assign('mid', 'tiki-g-admin_instance.tpl');

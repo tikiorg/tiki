@@ -100,8 +100,12 @@ class CalendarLib extends TikiLib {
 		$this->query($query,array($calendarId));
 	}
 
-	function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find) {
-		global $user, $tikilib, $calendar_timezone;
+	/* tsart ans tstop are in user time - the data base is in server time */
+	function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='') {
+		global $user, $tikilib;
+		$dc = $tikilib->get_date_converter($user);
+		$tstart = $dc->getServerDateFromDisplayDate($tstart);/* user time -> server time */;
+		$tstop = $dc->getServerDateFromDisplayDate($tstop);
 		$where = array();
 		$bindvars=array();
 		$time = new timer;
@@ -124,51 +128,56 @@ class CalendarLib extends TikiLib {
 		$query = "select i.`calitemId` as `calitemId`, i.`name` as `name`, i.`description` as `description`, i.`start` as `start`, i.`end` as `end`, ";
 		$query .= "i.`url` as `url`, i.`status` as `status`, i.`priority`  as `priority`, c.`name` as `calname`, i.`calendarId` as `calendarId`, ";
 		$query .= "i.`locationID` as `locationID`, i.`categoryID` as `categoryID`, i.`evId` as `evId` ";
-		$query .= "from `tiki_calendar_items` as i left join `tiki_calendars` as c on i.`calendarId`=c.`calendarId` where ($cond) ";
+		$query .= "from `tiki_calendar_items` as i left join `tiki_calendars` as c on i.`calendarId`=c.`calendarId` where ($cond)  order by ".$this->convert_sortmode("$sort_mode");
 		$result = $this->query($query,$bindvars);
 		$ret = array();
-		if ($calendar_timezone == 'y')
-			$offset_user = $tikilib->get_display_offset($user);
-		else
-			$offset_user = 0;
 		while ($res = $result->fetchRow()) {
-			$dstart = mktime(0, 0, 0, date("m", $res['start']), date("d", $res['start']), date("Y", $res['start']));
-			$dend = mktime(0, 0, 0, date("m", $res['end']), date("d", $res['end']), date("Y", $res['end']));
-			$res['start'] += $offset_user;
-			$res['end'] += $offset_user;
-			$tstart = date("Hi", $res["start"]);
-			$tend = date("Hi", $res["end"]);
-			for ($i = $dstart; $i <= $dend; $i = ($i + (60 * 60 * 24))) {
-				/* $head is in local time */
+			$ret[]=$this->get_item($res["calitemId"]);
+		}
+		return $ret;
+	}
+
+	function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='') {
+		global $user, $tikilib, $tiki_p_change_events;
+		$ret = array();
+		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find);
+		foreach ($list as $res) {
+			$mloop = date("m", $res['startUser']);
+			$dloop = date("d", $res['startUser']);
+			$yloop = date("Y", $res['startUser']);
+			$dstart = mktime(0, 0, 0, $mloop, $dloop, $yloop);
+			$dend = mktime(0, 0, 0, date("m", $res['endUser']), date("d", $res['endUser']), date("Y", $res['endUser']));
+			$tstart = date("Hi", $res["startUser"]);
+			$tend = date("Hi", $res["endUser"]);
+			for ($i = $dstart; $i <= $dend; $i = mktime(0, 0, 0, $mloop, ++$dloop, $yloop)) {
+				/* $head is in user time */
 				if ($dstart == $dend) {
-					$head = date("H:i", $res["start"]). " - " . date("H:i", $res["end"]);
+					$head = date("H:i", $res["startUser"]). " - " . date("H:i", $res["endUser"]);
 				} elseif ($i == $dstart) {
-					$head = date("H:i", $res["start"]). " ...";
+					$head = date("H:i", $res["startUser"]). " ...";
 				} elseif ($i == $dend) {
-					$head = " ... " . date("H:i", $res["end"]);
+					$head = " ... " . date("H:i", $res["endUser"]);
 				} else {
 					$head = " ... " . tra("continued"). " ... ";
 				}
 
-				$resitem = array();
-				$resitem=$this->get_item($res["calitemId"]);
-
-				/* $i is timestamp unix of midnight of a day */
+				/* $i is timestamp unix of the beginning of a day */
 				$ret["$i"][] = array(
-					"result" => $resitem,
+					"result" => $res,
 					"calitemId" => $res["calitemId"],
 					"calname" => $res["calname"],
-					"time" => $tstart, /* local time */
+					"time" => $tstart, /* user time */
+					"end" => $tend, /* user time */
 					"type" => $res["status"],
 					"web" => $res["url"],
 					"prio" => $res["priority"],
-					"location" => $resitem["locationName"],
-					"category" => $resitem["categoryName"],
+					"location" => $res["locationName"],
+					"category" => $res["categoryName"],
 					"url" => "tiki-calendar.php?todate=$i&amp;editmode=1&amp;calitemId=" . $res["calitemId"],
 					"name" => $res["name"],
 					"evId" => $res["evId"],
-					"extra" => "<div align='right'>... " . tra("click to edit"),
 					"head" => $head,
+					"parsedDescription" => $tikilib->parse_data($res["description"]),
 					"description" => str_replace("\n|\r", "", $res["description"]),
 					"calendarId" => $res['calendarId']
 				);
@@ -178,10 +187,11 @@ class CalendarLib extends TikiLib {
 	}
 
 	function list_tiki_items($tikiobj, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find) {
+		global $tikilib, $user;
 		$ret = array();
 
 		$res = $dstart = '';
-
+		$dc = $tikilib->get_date_converter($user);
 		foreach ($tikiobj as $tik) {
 			switch ($tik) {
 			case "wiki":
@@ -189,14 +199,16 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
-					$dstart = mktime(0, 0, 0, date("m", $res['lastModif']), date("d", $res['lastModif']), date("Y", $res['lastModif']));
-					$tstart = date("Hi", $res["lastModif"]);
+					$res['lastModif'] = $dc->getDisplayDateFromServerDate($res['lastModif']); /* server time -> user time */
+					$dstart2 = mktime(0, 0, 0, date("m", $res['lastModif']), date("d", $res['lastModif']), date("Y", $res['lastModif']));
+					$tstart2 = date("Hi", $res["lastModif"]);
 					$quote = "<i>" . tra("by"). " " . $res["user"] . "</i><br />" . str_replace('"', "'", $res["comment"]);
-					$ret["$dstart"][] = array(
+					$ret["$dstart2"][] = array(
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
-						"time" => $tstart,
+						"time" => $tstart2,
+						"start" => $res['lastModif'],
 						"type" => "wiki",
 						"url" => "tiki-index.php?page=" . $res["pageName"],
 						"name" => $res["pageName"] . " " . tra($res["action"]),
@@ -208,8 +220,8 @@ class CalendarLib extends TikiLib {
 				$query.= "from `tiki_comments` as c where c.`objectType` = ? ";
 				$query.= "and (c.`commentDate`>? and c.`commentDate`<?)";
 				$result = $this->query($query,array('wiki page',$tstart,$tstop));
-
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -217,6 +229,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "wiki page",
 						"url" => "tiki-index.php?page=" . $res["pageName"]. "&amp;comzone=show#comments",
 						"name" => $res["name"],
@@ -234,6 +247,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -241,6 +255,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "gal",
 						"url" => "tiki-browse_image.php?galleryId=" . $res["galid"] . "&amp;imageId=" . $res["imageid"],
 						"name" => $res["name"],
@@ -256,6 +271,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -263,6 +279,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "art",
 						"url" => "tiki-read_article.php?articleId=" . $res["articleId"],
 						"name" => $res["title"],
@@ -278,6 +295,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -285,6 +303,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "blog",
 						"url" => "tiki-view_blog.php?blogId=" . $res["blogid"],
 						"name" => $res["blogname"] . " :: " . $res["postname"],
@@ -305,6 +324,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array('forum',$tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					if ($res["parentId"] == 0) {
@@ -317,6 +337,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "forum",
 						"url" => "tiki-view_forum_thread.php?forumId=" . $res["forumid"]."&amp;comments_parentId=".$res["parentId"].$anchor ,
 						"name" => $res["name"],
@@ -333,6 +354,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -340,6 +362,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "dir",
 						"url" => "tiki-directory_redirect.php?siteId=" . $res["siteId"],
 						"name" => str_replace("'", "", $res["name"]),
@@ -355,6 +378,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -362,6 +386,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "fgal",
 						"url" => "tiki-list_file_gallery.php?galleryId=" . $res["fgalId"],
 						"name" => str_replace("'", "", $res["name"]),
@@ -377,6 +402,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -384,6 +410,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "faq",
 						"url" => "tiki-view_faq.php?faqId=" . $res["faqId"],
 						"name" => str_replace("'", "", $res["title"]),
@@ -399,6 +426,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -406,6 +434,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "quiz",
 						"url" => "tiki-take_quiz.php?quizId=" . $res["quizId"],
 						"name" => str_replace("'", "", $res["name"]),
@@ -421,6 +450,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -428,6 +458,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "track",
 						"url" => "tiki-view_tracker_item.php?trackerId=" . $res["tracker"] . "&amp;offset=0&amp;sort_mode=created_desc&amp;itemId=" . $res["itemId"],
 						"name" => str_replace("'", "", $res["name"]),
@@ -443,6 +474,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -450,6 +482,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "surv",
 						"url" => "tiki-take_survey.php?surveyId=" . $res["surveyId"],
 						"name" => str_replace("'", "", $res["name"]),
@@ -467,6 +500,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['day'] = $dc->getDisplayDateFromServerDate($res['day']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['day']), date("d", $res['day']), date("Y", $res['day']));
 					$tstart = date("Hi", $res["day"]);
 					$ret["$dstart"][] = array(
@@ -474,6 +508,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['day'],
 						"type" => "nl",
 						"url" => "tiki-newsletters.php?nlId=" . $res["nlId"],
 						"name" => str_replace("'", "", $res["name"]),
@@ -489,6 +524,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -496,6 +532,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "eph",
 						"url" => "tiki-eph.php?day=" . date("d", $res["created"]). "&amp;mon=" . date("m", $res['created']). "&amp;year=" . date("Y", $res['created']),
 						"name" => str_replace("'", "", $res["name"]),
@@ -511,6 +548,7 @@ class CalendarLib extends TikiLib {
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
+					$res['created'] = $dc->getDisplayDateFromServerDate($res['created']); /* server time -> user time */
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
 					$ret["$dstart"][] = array(
@@ -518,6 +556,7 @@ class CalendarLib extends TikiLib {
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
+						"start" => $res['created'],
 						"type" => "chart",
 						"url" => "tiki-view_chart.php?chartId=" . $res["chartId"],
 						"name" => str_replace("'", "", $res["name"]),
@@ -528,12 +567,11 @@ class CalendarLib extends TikiLib {
 				break;
 			}
 		}
-
 		return $ret;
 	}
 
 	function get_item($calitemId) {
-		global $user, $tikilib, $calendar_timezone;
+		global $user, $tikilib;
 		$query = "select i.`calitemId` as `calitemId`, i.`calendarId` as `calendarId`, i.`user` as `user`, i.`start` as `start`, i.`end` as `end`, t.`name` as `calname`, ";
 		$query.= "i.`locationId` as `locationId`, l.`name` as `locationName`, i.`categoryId` as `categoryId`, c.`name` as `categoryName`, i.`priority` as `priority`, i.`evId` as `evId`, ";
 		$query.= "i.`status` as `status`, i.`url` as `url`, i.`lang` as `lang`, i.`name` as `name`, i.`description` as `description`, i.`created` as `created`, i.`lastmodif` as `lastModif`, ";
@@ -557,16 +595,17 @@ class CalendarLib extends TikiLib {
 
 		$res["participants"] = implode(',', $ppl);
 		$res["organizers"] = implode(',', $org);
-		if ($calendar_timezone == 'y')
-			$offset_user = $tikilib->get_display_offset($user);
-		else
-			$offset_user = 0;
-		$res["start"] += $offset_user;
-		$res["end"] += $offset_user;
+		$dc = $tikilib->get_date_converter($user);
+		$res["startUser"] = $dc->getDisplayDateFromServerDate($res["start"]); /* user time */
+		$res["endUser"] = $dc->getDisplayDateFromServerDate($res["end"]);
 		return $res;
 	}
 
 	function set_item($user, $calitemId, $data) {
+		global $tikilib, $user;
+		$dc = $tikilib->get_date_converter($user);
+		$data['start'] = $dc->getServerDateFromDisplayDate($data['start']);/* user time -> server time */
+		$data['end'] = $dc->getServerDateFromDisplayDate($data['end']);
 		if (!$data["locationId"] and !$data["newloc"]) {
 			$data["newloc"] = tra("not specified");
 		}
@@ -632,7 +671,7 @@ class CalendarLib extends TikiLib {
 
 		foreach ($roles as $lvl => $ro) {
 			foreach ($ro as $r) {
-				$query = "insert into `tiki_calendar_roles` (`calitemId`,`username`,`role`) values (?,?,?)";
+				$query = "insert into `tiki_calendar_roles` (`calitemId`,`username`,`role`) values (?,?,'?')";
 				$this->query($query,array($calitemId,$r,$lvl));
 			}
 		}
@@ -649,7 +688,7 @@ class CalendarLib extends TikiLib {
 	function list_locations($calendarId) {
 		$res = array();
 		if ($calendarId > 0) {
-			$query = "select `callocId` as `locationId`, `name` from `tiki_calendar_locations` where `calendarId`=?";
+			$query = "select `callocId` as `locationId`, `name` from `tiki_calendar_locations` where `calendarId`=? order by `name`";
 			$result = $this->query($query,array($calendarId));
 			while ($rez = $result->fetchRow()) {
 				$res[] = $rez;
@@ -661,7 +700,7 @@ class CalendarLib extends TikiLib {
 	function list_categories($calendarId) {
 		$res = array();
 		if ($calendarId > 0) {
-			$query = "select `calcatId` as `categoryId`, `name` from `tiki_calendar_categories` where `calendarId`=?";
+			$query = "select `calcatId` as `categoryId`, `name` from `tiki_calendar_categories` where `calendarId`=? order by `name`";
 			$result = $this->query($query,array($calendarId));
 			while ($rez = $result->fetchRow()) {
 				$res[] = $rez;

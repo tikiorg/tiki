@@ -1,5 +1,5 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-eph.php">{tr}Ephemerides{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-eph.php">{tr}Ephemerides{/tr}</a></h1>
 <table class="normal">
 <tr>
 	<td class="formcolor">

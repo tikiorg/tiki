@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-contact.php">{tr}Contact us{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-contact.php">{tr}Contact us{/tr}</a></h1>
 {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if $message}
 {$message}

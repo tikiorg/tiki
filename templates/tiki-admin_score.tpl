@@ -1,13 +1,10 @@
-<span class="pagetitle">{tr}Score{/tr}</span>
+<h1><span class="pagetitle">{tr}Score{/tr}</span>
 
 {if $feature_help eq 'y'}
 <!-- the help link info --->
 <a href="http://tikiwiki.org/tiki-index.php?page=ScoreSystem" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Score System{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}</h1>
 
-
-
-<br /><br />
 <div align="center">
 <form method="post">
 <table class="normal">

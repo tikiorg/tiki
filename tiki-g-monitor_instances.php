@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_instances.php,v 1.10 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-monitor_instances.php,v 1.11 2005-03-12 16:48:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,17 +76,11 @@ if (isset($_REQUEST['sendInstance'])) {
 if (isset($_REQUEST['filter_status']) && $_REQUEST['filter_status'])
 	$wheres[] = "gi.status='" . $_REQUEST['filter_status'] . "'";
 
-if (isset($_REQUEST['filter_act_status']) && $_REQUEST['filter_act_status'])
-	$wheres[] = "actstatus='" . $_REQUEST['filter_act_status'] . "'";
-
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
 	$wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
 
-if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
-	$wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
-
-if (isset($_REQUEST['filter_user']) && $_REQUEST['filter_user'])
-	$wheres[] = "user='" . $_REQUEST['filter_user'] . "'";
+if (isset($_REQUEST['filter_instanceName']) && $_REQUEST['filter_instanceName'])
+	$wheres[] = "gi.name='" . $_REQUEST['filter_instanceName'] . "'";
 
 if (isset($_REQUEST['filter_owner']) && $_REQUEST['filter_owner'])
 	$wheres[] = "owner='" . $_REQUEST['filter_owner'] . "'";
@@ -94,7 +88,7 @@ if (isset($_REQUEST['filter_owner']) && $_REQUEST['filter_owner'])
 $where = implode(' and ', $wheres);
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'name_asc';
+	$sort_mode = 'instanceId_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
@@ -116,7 +110,6 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $smarty->assign('where', $where);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-
 $items = $processMonitor->monitor_list_instances($offset, $maxRecords, $sort_mode, $find, $where);
 $smarty->assign('cant', $items['cant']);
 
@@ -152,6 +145,9 @@ $smarty->assign_by_ref('all_acts', $all_acts["data"]);
 
 $types = $processMonitor->monitor_list_activity_types();
 $smarty->assign_by_ref('types', $types);
+
+$names = $processMonitor->monitor_list_instances_names();
+$smarty->assign_by_ref('names', $names);
 
 $smarty->assign('stats', $processMonitor->monitor_stats());
 

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.2 2005-01-22 22:56:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/modules/mod-change_category.php,v 1.3 2005-03-12 16:50:01 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -36,6 +36,7 @@ if ($feature_categories == 'y' and isset($_REQUEST['page'])) {
 	if (isset($_REQUEST["modcatid"]) and $_REQUEST["modcatid"] == $id) {
 		$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 		$catObjectId = $categlib->is_categorized($cat_type, $_REQUEST['page']);
+		$cs ="";
 		foreach ($cats as $cs) {
 			if (in_array($cs,$categsid)) {
 				$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
@@ -63,7 +64,10 @@ if ($feature_categories == 'y' and isset($_REQUEST['page'])) {
 
 	$smarty->assign('showmodule',$notshy);
 	$smarty->assign('page',$page);
-	$smarty->assign('modname',$changecateg.$id);
+	if (isset($changecateg)) /* big pacth... changecateg is not defined somewhere else */
+		$smarty->assign('modname',$changecateg.$id);
+	else
+		$smarty->assign('modname',"change_category");
 	$smarty->assign('modcattitle',sprintf(tra('move %s in %s'),$page,$cat_parent));
 	$smarty->assign('modcatlist',$modcatlist);
 	$smarty->assign('modcatid',$id);

@@ -136,8 +136,8 @@ class GUI extends Base {
                 INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId
                 INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId
                 INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId
-              where gia.activityId=? and ((gia.user=?) or (gia.user=? and gur.user=?))",
-              array($res['activityId'],$user,'*',$user));
+              where gia.activityId=? and gia.status <> ? and ((gia.user=?) or (gia.user=? and gur.user=?))",
+              array($res['activityId'],'completed',$user,'*',$user));
       $ret[] = $res;
     }
     $retval = Array();
@@ -145,7 +145,6 @@ class GUI extends Base {
     $retval["cant"] = $cant;
     return $retval;
   }
-
 
   function gui_list_user_instances($user,$offset,$maxRecords,$sort_mode,$find,$where='')
   {
@@ -169,10 +168,12 @@ class GUI extends Base {
                      gi.started,
                      gi.owner,
                      gia.user,
+                     gia.started as iastarted,	             
                      gi.status,
                      gia.status as actstatus,
                      ga.name,
                      ga.type,
+	             ga.expirationTime as exptime,
                      gp.name as procname, 
                      ga.isInteractive,
                      ga.isAutoRouted,
@@ -198,8 +199,9 @@ class GUI extends Base {
     $cant = $this->getOne($query_cant,$bindvars);
     $ret = Array();
     while($res = $result->fetchRow()) {
-      // Get instances per activity
-      $ret[] = $res;
+	// Get instances per activity
+	$res['exptime'] = $this->make_ending_date ($res['iastarted'],$res['exptime']); 
+	$ret[] = $res;
     }
     $retval = Array();
     $retval["data"] = $ret;

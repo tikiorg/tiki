@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.20 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.21 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,7 +23,6 @@ $smarty->assign('confirm', 'n');
 //TODO: memorize the charset for each subscription
 if (isset($_REQUEST["confirm_subscription"])) {
 	$conf = $nllib->confirm_subscription($_REQUEST["confirm_subscription"]);
-
 	if ($conf) {
 		$smarty->assign('confirm', 'y');
 
@@ -35,7 +34,7 @@ $smarty->assign('unsub', 'n');
 
 if (isset($_REQUEST["unsubscribe"])) {
 	$conf = $nllib->unsubscribe($_REQUEST["unsubscribe"]);
-
+echo "EEEAAA".$conf;
 	if ($conf) {
 		$smarty->assign('unsub', 'y');
 
@@ -99,14 +98,15 @@ $smarty->assign('email', $user_email);
 if ($tiki_p_subscribe_newsletters == 'y') {
 	if (isset($_REQUEST["subscribe"])) {
 	check_ticket('newsletters');
-		$smarty->assign('subscribed', 'y');
 
 		if ($tiki_p_subscribe_email != 'y') {
 			$_REQUEST["email"] = $userlib->get_user_email($user);
 		}
 
 		// Now subscribe the email address to the newsletter
-		$nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["email"], $tikilib->get_user_preference($user, 'mailCharset', 'utf-8'));
+		if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["email"] ))
+			$smarty->assign('subscribed', 'y'); /* will receive en email */
+
 	}
 }
 
@@ -181,6 +181,9 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('newsletters');
+
+$section='newsletters';
+include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-newsletters.tpl');

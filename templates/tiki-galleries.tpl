@@ -1,28 +1,25 @@
-<a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
+<h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}galleries tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
 
-
-<br /><br />
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=gal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-<br /><br />
-{/if}
+{/if}</h1>
 
 {if $tiki_p_create_galleries eq 'y'}
+{if $edit_mode ne 'y' or $galleryId ne 0}<div class="navbar"><a class="linkbut" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a></div>{/if}
 {if $edit_mode eq 'y'}
 {if $galleryId eq 0}
-<h3>{tr}Create a gallery{/tr}</h3>
+<h2>{tr}Create a gallery{/tr}</h2>
 {else}
-<h3>{tr}Edit this gallery:{/tr} {$name}</h3>
-<a class="linkbut" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>
+<h2>{tr}Edit this gallery:{/tr} {$name}</h2>
 {/if}
 <div align="center">
 {if $individual eq 'y'}
@@ -85,10 +82,10 @@
 {$scaleinfo[scales].scale}x{$scaleinfo[scales].scale} ({tr}Bounding box{/tr}) <input type="radio" name="defaultscale" value="{$scaleinfo[scales].scale}" {if $defaultscale==$scaleinfo[scales].scale}checked="checked"{/if} />{tr}default scale{/tr}<br />
 {sectionelse}
 {tr}No scales available{/tr}
-{/section}
-{tr}Original Image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
+{/section}<br />
+{tr}Original image is default scale{/tr}<input type="radio" name="defaultscale" value="o" {if $defaultscale=='o'}checked="checked"{/if} />
 </td></tr>
-<tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" size=4 /></td></tr>
+<tr><td class="formcolor">{tr}Add scaled images with bounding box of square size{/tr}:</td><td class="formcolor"><input type="text" name="scaleSize" size=4 />{tr}pixels{/tr}</td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Other users can upload images to this gallery{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
@@ -105,10 +102,10 @@
 </div>
 {/if}
 {/if}
-<h2>{tr}Available Galleries{/tr}</h2>
-{if $tiki_p_create_galleries eq 'y'}
-<a class="linkbut" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br /><br />
+{if $tiki_p_create_galleries eq 'y' && $galleryId ne 0}
+<div class="navbar"><a class="linkbut" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a></div>
 {/if}
+<h2>{tr}Available Galleries{/tr}</h2>
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -174,7 +171,7 @@
   <td class="{cycle}" nowrap="nowrap">
   {if $tiki_p_admin_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
   {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_galleries eq 'y' ) }
-    <a class="gallink" title="{tr}edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}"><img src='img/icons/config.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' height="16" width="16" border='0' /></a>
+    <a class="gallink" title="{tr}edit{/tr}" href="tiki-galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}">{html_image file='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' border='0'}</a>
   {/if}
   {/if}
   {if $tiki_p_upload_images eq 'y'}

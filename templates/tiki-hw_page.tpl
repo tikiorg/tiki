@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_page.tpl,v 1.3 2004-03-12 20:58:25 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_page.tpl,v 1.4 2005-03-12 16:50:47 mose Exp $ *}
 <!-- tiki-hw_page.tpl start -->
 <h1>
   <a  href="tiki-hw_student_assignment.php?assignmentId={$assignmentId}" class="pagetitle">
     {$assignmentTitle}
   </a>
   {if $lock}
-    <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+    <img src="img/icons/lock_topic.gif" height="19" width="19" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
   {/if}
 </h1>
 
@@ -17,10 +17,10 @@
     <td style="text-align:right;">
       {* GGG We may want to adapt something like this eventually
         {if !$lock and $tiki_p_edit eq 'y' and $beingEdited ne 'y'}
-          <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img border="0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
+          <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>
         {/if}
         {if $print_page ne 'y'}
-          <a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}"><img border="0" src="img/icons/ico_print.gif" alt='{tr}print{/tr}' /></a>
+          <a title="{tr}print{/tr}" href="tiki-print.php?page={$page|escape:"url"}">{html_image file='img/icons/ico_print.gif' border='0' alt='{tr}print{/tr}'}</a>
         {/if}
       GGG *}
     </td> 

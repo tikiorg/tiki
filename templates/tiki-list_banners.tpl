@@ -1,20 +1,13 @@
-<a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-list_banners.php">{tr}Banners{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Banners" target="tikihelp" class="tikihelp" title="{tr}admin Banners{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_banners.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Banners tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
-
-
-<br /><br />
 <a class="linkbut" href="tiki-edit_banner.php">{tr}Create banner{/tr}</a>
 <br /><br />
 <div align="center">

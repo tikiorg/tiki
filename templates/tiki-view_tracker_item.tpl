@@ -1,5 +1,4 @@
-<a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Editing tracker item{/tr} {$tracker_info.name}</a>
-<br /><br />
+<h1><a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Editing tracker item{/tr} {$tracker_info.name}</a></h1>
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
@@ -34,7 +33,7 @@
 {cycle name=content values="1,2,3,4,5" print=false advance=false}
 {* --- tab with view --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
-<h3>{tr}View item{/tr}</h3>
+<h2>{tr}View item{/tr}</h2>
 <table class="normal">
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
 {assign var=ustatus value=$info.status|default:"p"}
@@ -45,7 +44,7 @@
 {if $ins_fields[ix].isHidden ne 'y' or $tiki_p_admin_trackers eq 'y'}
 {if $ins_fields[ix].type eq 'h'}
 </table>
-<h3>{$ins_fields[ix].name}</h3>
+<h2>{$ins_fields[ix].name}</h2>
 <table class="normal">
 
 {elseif $ins_fields[ix].type ne 'x'}
@@ -130,14 +129,14 @@
 {$ins_fields[ix].value|escape|default:"&nbsp;"}
 {/if}
 
-{elseif $ins_fields[ix].type eq 's' and $ins_fields[ix].name eq "{tr}Rating{/tr}"}
+{elseif $fields[ix].type eq 's' and $fields[ix].name eq "{tr}Rating{/tr}"}
 {$ins_fields[ix].value|default:"<i>{tr}Not rated yet{/tr}</i>"}
 <span class="button2">
-{section name=i loop=$ins_fields[ix].options_array}
-{if $ins_fields[ix].options_array[i] eq $my_rate}
-<b class="linkbut highlight">{$ins_fields[ix].options_array[i]}</b>
+{section name=i loop=$fields[ix].options_array}
+{if $fields[ix].options_array[i] eq $my_rate}
+<b class="linkbut highlight">{$fields[ix].options_array[i]}</b>
 {else}
-<a href="{$smarty.server.REQUEST_URI}&amp;fieldId={$ins_fields[ix].fieldId}&amp;rate={$ins_fields[ix].options_array[i]}" class="linkbut">{$ins_fields[ix].options_array[i]}</a>
+<a href="{$smarty.server.REQUEST_URI}&amp;fieldId={$fields[ix].fieldId}&amp;rate={$fields[ix].options_array[i]}" class="linkbut">{$fields[ix].options_array[i]}</a>
 {/if}
 {/section}
 </span>
@@ -157,7 +156,7 @@
 {if $tracker_info.useComments eq 'y'}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 {if $tiki_p_comment_tracker_items eq 'y'}
-<h3>{tr}Add a comment{/tr}</h3>
+<h2>{tr}Add a comment{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
@@ -169,11 +168,11 @@
 </table>
 </form>
 {/if}
-<h3>{tr}Comments{/tr}</h3>
+<h2>{tr}Comments{/tr}</h2>
 {section name=ix loop=$comments}
 <b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
-  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}" 
-title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;]{/if}
+  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>|&nbsp;&nbsp;<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}" 
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;]{/if}
 <br />
 <small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br />
 {$comments[ix].parsed}
@@ -186,7 +185,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 {if $tracker_info.useAttachments eq 'y'}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};" {/if}>
 {if $tiki_p_attach_trackers eq 'y'}
-<h3>{tr}Attach a file to this item{/tr}</h3>
+<h2>{tr}Attach a file to this item{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
@@ -201,7 +200,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </table>
 </form>
 {/if}
-<h3>{tr}Attachments{/tr}</h3>
+<h2>{tr}Attachments{/tr}</h2>
 <table class="normal">
 <tr> 
 <td class="heading auto">&nbsp;</td>
@@ -250,7 +249,7 @@ src="img/icons2/delete.gif" border="0" alt="{tr}delete{/tr}"  hspace="2" vspace=
 {* --------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_modify_tracker_items eq 'y'}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
-<h3>{tr}Edit item{/tr}</h3>
+<h2>{tr}Edit item{/tr}</h2>
 <form action="tiki-view_tracker_item.php" method="post">
 {if $special}
 <input type="hidden" name="view" value="{$special}" />
@@ -283,7 +282,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $ins_fields[ix].type ne 'x' and $ins_fields[ix].type ne 's'}
 {if $ins_fields[ix].type eq 'h'}
 </table>
-<h3>{$ins_fields[ix].name}</h3>
+<h2>{$ins_fields[ix].name}</h2>
 <table class="normal">
 {else}
 {if ($ins_fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
@@ -435,7 +434,7 @@ align       : "bR"
 </table>
 </form>
 {if $trkact}
-<h3>{tr}Special Operations{/tr}</h3>
+<h2>{tr}Special Operations{/tr}</h2>
 {$trkact}
 {/if}
 </div>

@@ -1,20 +1,13 @@
-<a class="pagetitle" href="tiki-directory_admin_categories.php?parent={$parent}">{tr}Admin directory categories{/tr}</a>
+<h1><a class="pagetitle" href="tiki-directory_admin_categories.php?parent={$parent}">{tr}Admin directory categories{/tr}</a>
 
-
-  
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Categories" target="tikihelp" class="tikihelp" title="{tr}Categories{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-directory_admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin directory categories tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
-
-
-<br /><br />
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
 {* Navigation bar to admin, admin related, etc *}

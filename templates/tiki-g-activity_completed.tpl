@@ -12,5 +12,28 @@
 	<td class="odd">{tr}Activity{/tr}
 	<td class="odd">{$actname}</td>
 </tr>
+<tr>
+	<td></td>
+</tr>
+
+<form method="POST" action="tiki-g-run_activity.php">
+<tr class="normal">
+	<tr>
+		<td class="odd" colspan="2">{tr}Comment{/tr}</td>
+	</tr>
+
+		<td class="odd" colspan="2">{tr}Title{/tr}:<input type="text" name="__title" value="{if $post eq 'y'}{$title}{/if}" {if $post eq 'y'}readonly{/if}/></td>
+	<tr>
+		<td class="odd" colspan="2"><textarea rows="5" cols="60" name="__comment" {if $post eq 'y'}readonly{/if}>{if $post eq 'y'}{$comment}{/if}</textarea></td>
+	</tr>
+	{if $post eq 'n'}
+	<tr>
+		<td class="odd" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td>
+	</tr>
+	{/if}
+</tr>
 </table>
- 
+<INPUT type="hidden" name="iid" value="{$iid}">
+<INPUT type="hidden" name="__post" value="y">
+<INPUT type="hidden" name="activityId" value="{$actid}">
+</form>

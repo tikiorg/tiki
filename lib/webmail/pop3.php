@@ -7,6 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 /************************
 Patch by rlpowel see in the source
+Patch by sylvieg to keep the timestamp
 **************************/
 /*************************************************************************/
 #  Mailbox 0.9.2a   by Sivaprasad R.L (http://netlogger.net)             #
@@ -201,7 +202,7 @@ else :
 	    }
 	    // If you restrict the fgets to something stupid like 100, if a
 	    // line has a . as the 101th byte the retreival will stop there. --rlpowell
-	    $line = fgets($this->connection, 10485760);
+	    $line = fgets($this->connection, 4096);
 	    if (trim($line) == "." OR feof($this->connection)) {
 		break;
 	    }
@@ -261,6 +262,7 @@ else :
 	{
 	    eregi("(.+) (.+) (.+) ([0-9]{1,2})([0-9]{1,2}) (.+):(.+):(.+) .+", $date, $dreg);
 	    $list["date"] = $dreg[1]." ".$dreg[2]." ".$dreg[3];
+	    $list["timestamp"] = strtotime($date); // pacth sylvieg
 	    $from = eregi_replace("<|>|\[|\]|\(|\)|\"|\'|(mailto:)", "", $from);
 	    if (eregi("(.*)? (.+@.+\\..+)", $from))
 	    {

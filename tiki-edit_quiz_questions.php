@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.18 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz_questions.php,v 1.19 2005-03-12 16:48:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -93,8 +93,9 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz-question');
+	
 	$quizlib->replace_quiz_question($_REQUEST["questionId"], $_REQUEST["question"],
-		'o', $_REQUEST["quizId"], $_REQUEST["position"]);
+		$_REQUEST["questionType"], $_REQUEST["quizId"], $_REQUEST["position"]);
 
 	$smarty->assign('question', '');
 	$smarty->assign('questionId', 0);
@@ -186,6 +187,12 @@ for ($i = 1; $i < 100; $i++)
 	$positions[] = $i;
 
 $smarty->assign('positions', $positions);
+
+$questionTypes = array();
+$questionTypes["o"] = "Optional";
+$questionTypes["f"] = "Optional + File";
+
+$smarty->assign('questionTypes', $questionTypes);
 ask_ticket('edit-quiz-question');
 
 // Display the template

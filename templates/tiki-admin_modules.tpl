@@ -1,21 +1,20 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.34 2005-01-22 22:56:20 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.35 2005-03-12 16:50:30 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 {* the help link info *}
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}ModuleDoc" target="tikihelp" class="tikihelp" title="{tr}admin modules{/tr}">
+<a href="{$helpurl}Modules+Admin" target="tikihelp" class="tikihelp" title="{tr}admin modules{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
 {* link to tpl *}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin modules template{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
 
-{* begin *}
 
-<br /><p>
+<p>
 <a class="linkbut" href="#assign">{tr}assign module{/tr}</a>
 <a class="linkbut" href="#leftmod">{tr}left modules{/tr}</a>
 <a class="linkbut" href="#rightmod">{tr}right modules{/tr}</a>
@@ -33,9 +32,8 @@ have turned off the option 'display modules to all groups always'
 from Admin->General
 {/tr}
 </div>
-<br />
+<h2>{tr}User Modules{/tr}</h2>
 <table class="normal">
-<caption>{tr}User Modules{/tr}</caption>
 <tr>
 <td class="heading">{tr}name{/tr}</td>
 <td class="heading">{tr}title{/tr}</td>
@@ -59,9 +57,9 @@ from Admin->General
 <br />
 <a name="assign"></a>
 {if $assign_name eq ''}
-<h3>{tr}Assign new module{/tr}</h3>
+<h2>{tr}Assign new module{/tr}</h2>
 {else}
-<h3>{tr}Edit this assigned module:{/tr} {$assign_name}</h3>
+<h2>{tr}Edit this assigned module:{/tr} {$assign_name}</h2>
 <a href="tiki-admin_modules.php" class="linkbut">{tr}Assign new module{/tr}</a>
 {/if}
 {if $preview eq 'y'}
@@ -115,7 +113,7 @@ from Admin->General
 </table>
 </form>
 <br />
-<h3>{tr}Assigned Modules{/tr}</h3>
+<h2>{tr}Assigned Modules{/tr}</h2>
 <a name="leftmod"></a>
 <table class="normal">
 <caption>{tr}Left Modules{/tr}</caption>
@@ -182,13 +180,12 @@ from Admin->General
 </table>
 <br />
 <a name="editcreate"></a>
-<table class="normal"><tr><td valign="top" class="odd">
 {if $um_name eq ''}
-<h3>{tr}Create new user module{/tr}
+<h2>{tr}Create new user module{/tr}</h2>
 {else}
-<h3>{tr}Edit this user module:{/tr} {$um_name}
+<h2>{tr}Edit this user module:{/tr} {$um_name}</h2>
 {/if}
-</h3>
+<table class="normal"><tr><td valign="top" class="odd">
 	{if $wysiwyg eq 'n'}
 		<a class="linkbut" href="tiki-admin_modules.php?wysiwyg=y#editcreate">{tr}Use wysiwyg editor{/tr}</a>
 	{else}

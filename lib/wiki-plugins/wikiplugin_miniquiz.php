@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.5 2005-01-22 22:55:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.6 2005-03-12 16:50:00 mose Exp $
 /*
 DEV NOTE
 that plugin is not finished !! -- mose
@@ -109,7 +109,7 @@ function wikiplugin_miniquiz($data, $params) {
 		$back.= '.q label:hover { background-color: #efe0d0; cursor: pointer; border: 1px solid black; }</style>';
 	
 		foreach ($info as $id=>$item) {
-			if ($item['valid'] == 'y') {
+			if (isset($item['valid']) and $item['valid'] == 'y') {
 				$back.= '<div class="titlebar">'.$item['question'].'</div>';
 				if ($item['qresult'] == 'y') {
 					$back.= '<div class="wikitext" style="background-color:#ccffcc;">';

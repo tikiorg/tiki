@@ -1,11 +1,11 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-usermenu.php">{tr}User Menu{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-usermenu.php">{tr}User Menu{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 <br />
 {if $feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
 <a title="({tr}May need to refresh twice to see changes{/tr})" class="link" href="tiki-usermenu.php?addbk=1">{tr}Add top level bookmarks to menu{/tr}</a> 
 {/if}
-<br /><br />
+<h2>{tr}Menus{/tr}</h2>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -61,7 +61,7 @@
 </div>
 
 
-<h3>{tr}Add or edit an item{/tr}</h3>
+<h2>{tr}Add or edit an item{/tr}</h2>
 <form action="tiki-usermenu.php" method="post">
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table class="normal">

@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.4 2004-02-23 21:35:06 techtonik Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki.tpl,v 1.5 2005-03-12 16:51:18 mose Exp $ *}
 {* Index we display a wiki page here *}
 
 <div id="tiki-main">
@@ -13,7 +13,7 @@
 
     {* Display left modules if available *}
 
-    {if $feature_left_column eq 'y' and count($left_modules) gt 0}
+    {if $feature_left_column ne 'n' and count($left_modules) gt 0}
       <div id="leftcolumn">
         {section name=homeix loop=$left_modules}
           {$left_modules[homeix].data}
@@ -24,10 +24,10 @@
     {* Calculate size of center div *}
 
     {php} $add_style=''; {/php}
-    {if $feature_left_column eq 'y' and count($left_modules) gt 0}
+    {if $feature_left_column ne 'n' and count($left_modules) gt 0}
 	{php} $add_style.='margin-left: 190px;'; {/php}
     {/if}
-    {if $feature_right_column eq 'y' and count($right_modules) gt 0}
+    {if $feature_right_column ne 'n' and count($right_modules) gt 0}
 	{php} $add_style.='margin-right: 190px;'; {/php}
     {/if}
     {php}
@@ -53,7 +53,7 @@
 
     {* Display right modules if available *}
 
-    {if $feature_right_column eq 'y' and count($right_modules) gt 0}
+    {if $feature_right_column ne 'n' and count($right_modules) gt 0}
       <div id="rightcolumn">
         {section name=homeix loop=$right_modules}
           {$right_modules[homeix].data}

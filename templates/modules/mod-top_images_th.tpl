@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images_th.tpl,v 1.11 2004-01-15 09:56:29 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images_th.tpl,v 1.12 2005-03-12 16:51:00 mose Exp $ *}
 
 {if $feature_galleries eq 'y'}
-  {tikimodule title="{tr}Top Images{/tr}" name="top_images_th"}
+  {tikimodule title="{tr}Top Images{/tr}" name="top_images_th" flip=$module_params.flip decorations=$module_params.decorations}
   {section name=ix loop=$modTopImages}
     {if $smarty.section.ix.index < 5}
        <table  cellpadding="0" cellspacing="0">

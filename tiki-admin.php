@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.104 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.105 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -84,68 +84,150 @@ $smarty->assign('home_gallery', $home_gallery);
 $home_file_gallery = $tikilib->get_preference("home_file_gallery", 0);
 $smarty->assign('home_file_gallery', $home_file_gallery);
 
+$crumbs[] = new Breadcrumb('Administration',
+                              'Sections',
+                              'tiki-admin.php',
+                              'Tiki+Admin',
+                              'Help on Administration Sections');
+
 if (isset($_REQUEST["page"])) {
 	$adminPage = $_REQUEST["page"];
-
+	$helpUrl='';
 	if ($adminPage == "features") {
+		$admintitle = "Features"; //get_strings tra("Features")
+                $description = "Enable/disable Tiki features here, but configure them elsewhere."; //get_strings tra("Features setting") TODO FOR EACH DESCRIPTION
 		include_once ('tiki-admin_include_features.php');
 	} else if ($adminPage == "general") {
+		$admintitle = "General";//get_strings tra("General")
+                $description = "General preferences and settings";
 		include_once ('tiki-admin_include_general.php');
 	} else if ($adminPage == "login") {
+		$admintitle = "Login";//get_strings tra("Login")
+		$description = "User registration, login and authentication";
 		include_once ('tiki-admin_include_login.php');
 	} else if ($adminPage == "wiki") {
+		$admintitle = "Wiki";//get_strings tra("Wiki")
+		$description = "Wiki settings";
 		include_once ('tiki-admin_include_wiki.php');
 	} else if ($adminPage == "wikiatt") {
+		$admintitle = "Wiki Attachments";//get_strings tra("Wiki Attachments")
+		$description = "Wiki attachments";
 		include_once ('tiki-admin_include_wikiatt.php');
 	} else if ($adminPage == "gal") {
+		$admintitle = "Image Galleries";//get_strings tra("Image Galleries")
+		$description = "Image galleries";
 		include_once ('tiki-admin_include_gal.php');
 	} else if ($adminPage == "fgal") {
+		$admintitle = "File Galleries";//get_strings tra("File Galleries")
+		$description = "File galleries";
 		include_once ('tiki-admin_include_fgal.php');
 	} else if ($adminPage == "cms") {
+		$admintitle = "Articles";//get_strings tra("Articles")
+		$helpUrl = "Articles+Admin";
+		$description = "Article/CMS settings";
 		include_once ('tiki-admin_include_cms.php');
 	} else if ($adminPage == "polls") {
+		$admintitle = "Polls";//get_strings tra("Polls")
+		$description = "Poll comments settings";
 		include_once ('tiki-admin_include_polls.php');
 	} else if ($adminPage == "blogs") {
+		$admintitle = "Blogs";//get_strings tra("Blogs")
+		$description = "Blog settings";
 		include_once ('tiki-admin_include_blogs.php');
 	} else if ($adminPage == "forums") {
+		$admintitle = "Forums";//get_strings tra("Forums")
+		$description = "Forums settings";
 		include_once ('tiki-admin_include_forums.php');
 	} else if ($adminPage == "faqs") {
+		$admintitle = "FAQs";//get_strings tra("FAQs")
+		$description = "FAQs settings";
 		include_once ('tiki-admin_include_faqs.php');
 	} else if ($adminPage == "trackers") {
+		$admintitle = "Trackers";//get_strings tra("Trackers")
+		$description = "Trackers settings";
 		include_once ('tiki-admin_include_trackers.php');
 	} else if ($adminPage == "webmail") {
+		$admintitle = "Webmail";//get_strings tra("Webmail")
+		$description = "Webmail";
 		include_once ('tiki-admin_include_webmail.php');
 	} else if ($adminPage == "rss") {
+                $admintitle = "RSS feeds";//get_strings tra("RSS feeds")
+                $description = "RSS settings";
 		include_once ('tiki-admin_include_rss.php');
 	} else if ($adminPage == "directory") {
+		$admintitle = "Directory";//get_strings tra("Directory")
+		$description = "Directory settings";
 		include_once ('tiki-admin_include_directory.php');
 	} else if ($adminPage == "userfiles") {
+		$admintitle = "User Files";//get_strings tra("User files")
+		$description = "User files";
 		include_once ('tiki-admin_include_userfiles.php');
 	} else if ($adminPage == "maps") {
+		$admintitle = "Maps";//get_strings tra("Maps")
+		$description = "Maps configuration";
 		include_once ('tiki-admin_include_maps.php');
 	} else if ($adminPage == "metatags") {
+		$admintitle = "Meta Tags";//get_strings tra("Meta Tags")
+		$description = "Meta Tags settings";
                 include_once ('tiki-admin_include_metatags.php');
 	} else if ($adminPage == "search") {
+		$admintitle = "Search";//get_strings tra("Search")
+		$description = "Search settings";
 		include_once ('tiki-admin_include_search.php');
 	} else if ($adminPage == "jukebox") {
+		$admintitle = "Jukebox";//get_strings tra("Jukebox")
+		$description = "Jukebox preferencies";
 		include_once ('tiki-admin_include_jukebox.php');
 	} else if ($adminPage == "score") {
+		$admintitle = "Score";//get_strings tra("Score")
+		$description = "Score settings";
 		include_once ('tiki-admin_include_score.php');
 	} else if ($adminPage == "projects") {
+		$admintitle = "Projects";//get_strings tra("Projects")
+		$description = "Projects configuration";
 		include_once ('tiki-admin_include_projects.php');
 	} else if ($adminPage == "community") {
+		$admintitle = "Community";//get_strings tra("Community")
+		$description = "Community settings";
 		include_once ('tiki-admin_include_community.php');
 	} else if ($adminPage == "siteid") {
+		$admintitle = "Site Identity";//get_strings tra("Site Identity")
+		$description = "Site Identity features";
 		include_once ('tiki-admin_include_siteid.php');
 	} else if ($adminPage == "calendar") {
+		$admintitle = "Calendar";//get_strings tra("Calendar")
+		$description = "Calendar settings";
 		include_once ('tiki-admin_include_calendar.php');
 	}
+	$url = 'tiki-admin.php'.'?page='.$adminPage;
+	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Admin";}
+	$helpDescription = "Help on $admintitle Admin";
+} else {
+  $smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
+  $smarty->assign('description', $crumbs[0]->description);
+}
+
+if(isset($admintitle)) {
+  $admintitle = tra($admintitle);
+  $crumbs[] = new Breadcrumb($admintitle,
+                              $description,
+                              $url,
+                              $helpUrl,
+                              $helpDescription);
+
+  $smarty->assign_by_ref('admintitle', $admintitle);
+  $headtitle = breadcrumb_buildHeadTitle($crumbs);
+  $smarty->assign_by_ref('headtitle', $headtitle);
 }
 
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin.tpl');
+if(isset($helpUrl)) $smarty->assign_by_ref('sectionhelp', $helpUrl);
+if(isset($description)) $smarty->assign('description', $description);
+$smarty->assign('trail', $crumbs);
+$smarty->assign('crumb', count($crumbs)-1);
 $smarty->display("tiki.tpl");
 
 ?>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_events.tpl,v 1.2 2004-07-11 10:27:49 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modif_events.tpl,v 1.3 2005-03-12 16:51:00 mose Exp $ *}
 
 {if $feature_calendar eq 'y'}
 {if $nonums eq 'y'}
@@ -6,7 +6,7 @@
 {else}
 {eval var="{tr}Last modifed events{/tr}" assign="tpl_module_title"}
 {/if}
-{tikimodule title=$tpl_module_title name="last_modif_events"}
+{tikimodule title=$tpl_module_title name="last_modif_events" flip=$module_params.flip decorations=$module_params.decorations}
    <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastEvents}
      <tr>

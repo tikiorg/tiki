@@ -1,6 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_lang.tpl,v 1.4 2003-11-23 22:34:22 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-switch_lang.tpl,v 1.5 2005-03-12 16:51:00 mose Exp $ *}
 
-{tikimodule title="{tr}Language: {/tr}`$language`" name="switch_lang"}
+{tikimodule title="{tr}Language: {/tr}`$language`" name="switch_lang" flip=$module_params.flip decorations=$module_params.decorations}
+{if $change_language ne 'n' or $user eq ''}
 <form method="get" action="tiki-switch_lang.php" target="_self">
        <select name="language" size="1" onchange="this.form.submit();">
         {section name=ix loop=$languages}
@@ -11,4 +12,7 @@
         {/section}
         </select>
 </form>
+{else}
+{tr}Permission denied{/tr}
+{/if}
 {/tikimodule}

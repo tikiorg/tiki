@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.65 2005-01-22 22:54:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.66 2005-03-12 16:49:02 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -231,6 +231,13 @@ if (isset($_REQUEST['chgadmin'])) {
 if (isset($_REQUEST['messprefs'])) {
 	check_ticket('user-prefs');
 	$tikilib->set_user_preference($userwatch, 'mess_maxRecords', $_REQUEST['mess_maxRecords']);
+	$tikilib->set_user_preference($userwatch, 'mess_archiveAfter', $_REQUEST['mess_archiveAfter']);
+
+	if (isset($_REQUEST['mess_sendReadStatus']) && $_REQUEST['mess_sendReadStatus'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mess_sendReadStatus', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mess_sendReadStatus', 'n');
+	}
 
 	$tikilib->set_user_preference($userwatch, 'minPrio', $_REQUEST['minPrio']);
 
@@ -306,12 +313,17 @@ if (isset($_REQUEST['tasksprefs'])) {
 }
 
 $tasks_maxRecords = $tikilib->get_user_preference($userwatch, 'tasks_maxRecords');
-$tasks_useDates = $tikilib->get_user_preference($userwatch, 'tasks_useDates');
 $smarty->assign('tasks_maxRecords', $tasks_maxRecords);
-$smarty->assign('tasks_useDates', $tasks_useDates);
 
 $mess_maxRecords = $tikilib->get_user_preference($userwatch, 'mess_maxRecords', 20);
 $smarty->assign('mess_maxRecords', $mess_maxRecords);
+
+$mess_archiveAfter = $tikilib->get_user_preference($userwatch, 'mess_archiveAfter', 0);
+$smarty->assign('mess_archiveAfter', $mess_archiveAfter);
+
+$mess_sendReadStatus = $tikilib->get_user_preference($userwatch, 'mess_sendReadStatus', 0);
+$smarty->assign('mess_sendReadStatus', $mess_sendReadStatus);
+
 $allowMsgs = $tikilib->get_user_preference($userwatch, 'allowMsgs', 'y');
 $smarty->assign('allowMsgs', $allowMsgs);
 $minPrio = $tikilib->get_user_preference($userwatch, 'minPrio', 6);
@@ -393,12 +405,12 @@ $smarty->assign('diff_versions', $diff_versions);
 $usertrackerId = false;
 $useritemId= false;
 if ($userTracker == 'y') {
-	$re = $userlib->get_usertracker($userwatch);
+	$re = $userlib->get_usertracker($userinfo["userId"]);
 	if (isset($re['usersTrackerId']) and $re['usersTrackerId']) {
 		include_once('lib/trackers/trackerlib.php');
-		$info = $trklib->get_item_id($re['usersTrackerId'],'Login',$userwatch);
+		$info = $trklib->get_item_id($re['usersTrackerId'],$trklib->get_field_id($re['usersTrackerId'],'Login'),$userwatch);
 		$usertrackerId = $re['usersTrackerId'];
-		$useritemId = $info['itemId'];
+		$useritemId = $info;
 	}
 }
 $smarty->assign('usertrackerId', $usertrackerId);
@@ -431,6 +443,8 @@ $smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
 
 setcookie('tab',$cookietab);
 $smarty->assign_by_ref('cookietab',$cookietab);
+$section = 'mytiki';
+include_once ('tiki-section_options.php');
 
 ask_ticket('user-prefs');
 

@@ -6,14 +6,14 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaAdminProcesses" target="tikihelp" class="tikihelp" title="{tr}Galaxia Admin Processes{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-admin_processes.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Admin Processes tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /> {/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
 
@@ -75,7 +75,12 @@
 <form enctype="multipart/form-data" action="tiki-g-admin_processes.php" method="post">
 <table class="normal">
 <tr>
-  <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" /></td>
+  <td class="formcolor">{tr}Upload file{/tr}:</td>
+  <td class="formcolor">
+      <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" />
+      <input size="16" name="userfile1" type="file" />
+      <input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" />
+  </td>
 </tr>
 </table>
 </form>

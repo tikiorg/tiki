@@ -1,15 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.65 2004-09-19 19:37:11 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.66 2005-03-12 16:50:33 mose Exp $ *}
 
-<a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
+<h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}UserAdministrationScreen" target="tikihelp" class="tikihelp" title="{tr}admin users{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin users template{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
-<br /><br />
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}
+</h1>
 
 <span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
 <span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
@@ -85,21 +85,21 @@ class="prevnext">{tr}All{/tr}</a>
 <tr class="{cycle}">
 <td class="thin"><input type="checkbox" name="checked[]" value="{$users[user].user}" {if $users[user].checked eq 'y'}checked="checked" {/if}/></td>
 <td class="thin"><a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Change user preferences{/tr}: {$users[user].user}"><img border="0" alt="{tr}Change user preferences{/tr}: {$users[user].user}" src="img/icons/config.gif" /></a></td>
-<td class="thin"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}"  
+<td class="thin"><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}"  
 title="{tr}edit account settings{/tr}: {$users[user].user}"><img border="0" alt="{tr}edit account settings{/tr}: {$users[user].user}" src="img/icons/edit.gif" /></a></td>
-<td><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}">{$users[user].user}</a></td>
+<td><a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}" title="{tr}edit account settings{/tr}">{$users[user].user}</a></td>
 <td>{$users[user].email}</td>
 <td>{if $users[user].currentLogin eq ''}{tr}Never{/tr} <i>({$users[user].age|duration_short})</i>{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
 <td class="thin"><a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a></td>
 <td>
-{foreach from=$users[user].groups item=grs}
+{foreach from=$users[user].groups key=grs item=what}
 {if $grs != "Anonymous"}
-<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}">{$grs}</a>
+{if $what eq 'included'}<i>{/if}<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}">{$grs}</a>{if $what eq 'included'}</i>{/if}
 (<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs|escape:"url"}">x</a>)<br />
 {/if}
 {/foreach}
 <td  class="thin">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}"
-title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>{/if}
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>{/if}
 </td>
 </tr>
 {/section}
@@ -171,10 +171,11 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </div>
 
 {* ---------------------- tab with form -------------------- *}
+<a name="2" />
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $userinfo.userId}
 <h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
-(<a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login}">{tr}assign to groups{/tr}: {$userinfo.login}</a>)
+<a class="linkbut" href="tiki-assignuser.php?assign_user={$userinfo.login}">{tr}assign to groups{/tr}: {$userinfo.login}</a>
 {else}
 <h2>{tr}Add a new user{/tr}</h2>
 {/if}

@@ -1,14 +1,14 @@
-<a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
+<h1><a href="tiki-webmail.php" class="pagetitle">{tr}Webmail{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}WebmailDoc" target="tikihelp" class="tikihelp" title="{tr}Webmail Doc{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-webmail.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Webmail Doc template{/tr}">
 <img border="0" src="img/icons/info.gif" alt="{tr}edit{/tr}" /></a>
-{/if}
+{/if}</h1>
 
 
 
@@ -18,22 +18,22 @@
 <table>
 <tr>
   <td>
-    <a class="link" href="tiki-webmail.php?section=settings" title="{tr}settings{/tr}">
+    <a class="link" href="tiki-webmail.php?locSection=settings" title="{tr}settings{/tr}">
     <img border="0" src="img/webmail/settings.gif" alt="{tr}Settings{/tr}" /><br />
     {tr}settings{/tr}</a>
   </td>
   <td>
-    <a class="link" href="tiki-webmail.php?section=mailbox" title="{tr}mailbox{/tr}">
+    <a class="link" href="tiki-webmail.php?locSection=mailbox" title="{tr}mailbox{/tr}">
     <img border="0" src="img/webmail/mailbox.gif" alt="{tr}Mailbox{/tr}" /><br />
     {tr}mailbox{/tr}</a>
   </td>
   <td>
-    <a class="link" href="tiki-webmail.php?section=compose" title="{tr}compose{/tr}">
+    <a class="link" href="tiki-webmail.php?locSection=compose" title="{tr}compose{/tr}">
     <img border="0" src="img/webmail/compose.gif" alt="{tr}Compose{/tr}" /><br />
     {tr}compose{/tr}</a>
   </td>
   <td>
-    <a class="link" href="tiki-webmail.php?section=contacts" title="{tr}contacts{/tr}">
+    <a class="link" href="tiki-webmail.php?locSection=contacts" title="{tr}contacts{/tr}">
     <img border="0" src="img/webmail/contact.gif" alt="{tr}Contacts{/tr}" /><br />
     {tr}contacts{/tr}</a>
   </td>
@@ -41,11 +41,16 @@
 </table>
 <hr/>
 
-{if $section eq 'settings'}
-<h3>{tr}Add new mail account{/tr}</h3>
+{if $locSection eq 'settings'}
+{if $accountId}
+<h2>{tr}Edit mail account{/tr}</h2>
+<a href="tiki-webmail.php?locSection=settings" class="linkbut">{tr}Add new mail account{/tr}</a><br /><br />
+{else}
+<h2>{tr}Add new mail account{/tr}</h2>
+{/if}
 <form action="tiki-webmail.php" method="post">
 <input type="hidden" name="accountId" value="{$accountId|escape}" />
-<input type="hidden" name="section" value="settings" />
+<input type="hidden" name="locSection" value="settings" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Account name{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="account" value="{$info.account|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}POP server{/tr}</td><td class="formcolor"><input type="text" name="pop" value="{$info.pop|escape}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="port" size="7" value="{$info.port}" /></td></tr>
@@ -57,43 +62,46 @@
 <tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>
-<h3>{tr}User accounts{/tr}</h3>
+<h2>{tr}User accounts{/tr}</h2>
 <table class="normal">
 <tr>
 <td class="heading">{tr}account{/tr}</td>
+<td class="heading">{tr}active{/tr}</td>
 <td class="heading">{tr}pop{/tr}</td>
 <td class="heading">{tr}user{/tr}</td>
+<td class="heading">{tr}action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
-<td class="{cycle advance=false}"><a href="tiki-webmail.php?section=settings&amp;current={$accounts[ix].accountId}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
-[&nbsp;&nbsp;<a href="tiki-webmail.php?section=settings&amp;remove={$accounts[ix].accountId}" class="link" 
-title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;|<a href="tiki-webmail.php?section=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>]
+<td class="{cycle advance=false}"><a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}">{$accounts[ix].account}</a>
 </td>
+<td class="{cycle advance=false}">{if $accounts[ix].current eq 'y'}{tr}yes{/tr}{else}{tr}no{/tr}{/if}</td>
 <td class="{cycle advance=false}">{$accounts[ix].pop} ({$accounts[ix].port})</td>
-<td class="{cycle}">{$accounts[ix].user}</td>
-</tr>
+<td class="{cycle advance=false}">{$accounts[ix].username}</td>
+<td class="{cycle}"><a href="tiki-webmail.php?locSection=settings&amp;remove={$accounts[ix].accountId}" class="link" 
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>
+<a href="tiki-webmail.php?locSection=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a></td></tr>
 {/section}
 </table>
 {/if}
 
-{if $section eq 'mailbox'}
+{if $locSection eq 'mailbox'}
 <table >
 <tr>
 <td>
-<a class="link" href="tiki-webmail.php?section=mailbox">{tr}View All{/tr}</a> | <a class="link" href="tiki-webmail.php?section=mailbox&amp;filter=unread">{tr}Unread{/tr}</a> | <a class="link" href="tiki-webmail.php?section=mailbox&amp;filter=flagged">{tr}Flagged{/tr}</a>
+<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}View All{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=unread">{tr}Unread{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=flagged">{tr}Flagged{/tr}</a>
 </td>
 <td align="right">
 {tr}Msg{/tr} {$showstart}-{$showend} {tr}of{/tr} {$total} 
-{if $first}| <a class="link" href="tiki-webmail.php?section=mailbox&amp;start={$first}{if $filter}&amp;filter={$filter}{/if}">{tr}First{/tr}</a>{/if} 
-{if $prevstart}| <a class="link" href="tiki-webmail.php?section=mailbox&amp;start={$prevstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Prev{/tr}</a>{/if} 
-{if $nextstart}| <a class="link" href="tiki-webmail.php?section=mailbox&start={$nextstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Next{/tr}</a>{/if} 
-{if $last}| <a class="link" href="tiki-webmail.php?section=mailbox&amp;start={$last}{if $filter}&amp;filter={$filter}{/if}">{tr}Last{/tr}</a>{/if}
+{if $first}| <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;start={$first}{if $filter}&amp;filter={$filter}{/if}">{tr}First{/tr}</a>{/if} 
+{if $prevstart}| <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;start={$prevstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Prev{/tr}</a>{/if} 
+{if $nextstart}| <a class="link" href="tiki-webmail.php?locSection=mailbox&start={$nextstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Next{/tr}</a>{/if} 
+{if $last}| <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;start={$last}{if $filter}&amp;filter={$filter}{/if}">{tr}Last{/tr}</a>{/if}
 </td>
 </tr>
 </table><br />
 <form action="tiki-webmail.php" method="post">
-<input type="hidden" name="section" value="mailbox" />
+<input type="hidden" name="locSection" value="mailbox" />
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 <input type="hidden" name="start" value="{$start|escape}" />
 <select name="action">
@@ -102,7 +110,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <option value="read">{tr}Mark as read{/tr}</option>
 <option value="unread">{tr}Mark as unread{/tr}</option>
 </select>
-<input type="submit" name="operate" value="{tr}ok{/tr}" />
+<input type="submit" name="operate" value="{tr}mark{/tr}" />
 <br /><br />
 <table class="normal">
 <tr>
@@ -133,8 +141,8 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 {/if}
 </td>
 <td style="background:{$class};">{$list[ix].sender.name}</td>
-<td style="background:{$class};"><a class="link" href="tiki-webmail.php?section=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a>{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt='{tr}clip{/tr}'/>{/if}</td>
-<td style="background:{$class};">{$list[ix].date}</td>
+<td style="background:{$class};"><a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a>{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" alt='{tr}clip{/tr}'/>{/if}</td>
+<td style="background:{$class};">{$list[ix].timestamp|tiki_short_datetime}</td>
 <td align="right" style="background:{$class};">{$list[ix].size|kbsize}</td>
 </tr>
 {/section}
@@ -142,14 +150,14 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </form>
 {/if}
 
-{if $section eq 'read'}
-{if $prev}<a class="link" href="tiki-webmail.php?section=read&amp;msgid={$prev}">{tr}Prev{/tr}</a> |{/if}
-{if $next}<a class="link" href="tiki-webmail.php?section=read&amp;msgid={$next}">{tr}Next{/tr}</a> |{/if}
- <a class="link" href="tiki-webmail.php?section=mailbox">{tr}back to mailbox{/tr}</a> |
+{if $locSection eq 'read'}
+{if $prev}<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$prev}">{tr}Prev{/tr}</a> |{/if}
+{if $next}<a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$next}">{tr}Next{/tr}</a> |{/if}
+ <a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}back to mailbox{/tr}</a> |
 {if $fullheaders eq 'n'} 
- <a class="link" href="tiki-webmail.php?section=read&amp;msgid={$msgid}&amp;fullheaders=1">{tr}full headers{/tr}</a>
+ <a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$msgid}&amp;fullheaders=1">{tr}full headers{/tr}</a>
 {else}
- <a class="link" href="tiki-webmail.php?section=read&amp;msgid={$msgid}">{tr}normal headers{/tr}</a>
+ <a class="link" href="tiki-webmail.php?locSection=read&amp;msgid={$msgid}">{tr}normal headers{/tr}</a>
 {/if} 
 <table>
 <tr>
@@ -157,17 +165,17 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
     <form method="post" action="tiki-webmail.php">
     <input type="submit" name="delete_one" value="{tr}delete{/tr}" />
     {if $next}
-    <input type="hidden" name="section" value="read" />
+    <input type="hidden" name="locSection" value="read" />
     <input type="hidden" name="msgid" value="{$next|escape}" />
     {else}
-    <input type="hidden" name="section" value="mailbox" />
+    <input type="hidden" name="locSection" value="mailbox" />
     {/if}
     <input type="hidden" name="msgdel" value="{$msgid|escape}" />
     </form>
   </td>
   <td>
     <form method="post" action="tiki-webmail.php">
-    <input type="hidden" name="section" value="compose" />
+    <input type="hidden" name="locSection" value="compose" />
     <input type="submit" name="reply" value="{tr}reply{/tr}" />
     <input type="hidden" name="realmsgid" value="{$realmsgid|escape}" />
     <input type="hidden" name="to" value="{$headers.replyto|escape}" />
@@ -177,7 +185,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
   </td>
   <td>
     <form method="post" action="tiki-webmail.php">
-    <input type="hidden" name="section" value="compose" />
+    <input type="hidden" name="locSection" value="compose" />
     <input type="submit" name="replyall" value="{tr}reply all{/tr}" />
     <input type="hidden" name="to" value="{$headers.replyto|escape}" />
     <input type="hidden" name="realmsgid" value="{$realmsgid|escape}" />
@@ -189,7 +197,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
   <td>
     <form method="post" action="tiki-webmail.php">
     <input type="submit" name="reply" value="{tr}forward{/tr}" />
-    <input type="hidden" name="section" value="compose" />
+    <input type="hidden" name="locSection" value="compose" />
     <input type="hidden" name="to" value="" />
     <input type="hidden" name="cc" value="" />
     <input type="hidden" name="subject" value="Fw:{$headers.subject}" />
@@ -207,7 +215,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <tr class="formcolor"><td>{tr}Cc{/tr}</td><td>{$headers.cc}</td></tr>
 {/if}
 <tr class="formcolor"><td>{tr}Subject{/tr}</td><td>{$headers.subject}</td></tr>
-<tr class="formcolor"><td>{tr}Date{/tr}</td><td>{$headers.date}</td></tr>
+<tr class="formcolor"><td>{tr}Date{/tr}</td><td>{$headers.timestamp|tiki_short_datetime}</td></tr>
 {/if}
 {if $fullheaders eq 'y'}
 {foreach key=key item=item from=$headers}
@@ -229,15 +237,15 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </div>
 {section name=ix loop=$attachs}
 <div class="simplebox">
-<a class="link" href="tiki-webmail_download_attachment.php?section=read&amp;msgid={$msgid}&amp;getpart={$attachs[ix].part}">{$attachs[ix].name|iconify}{$attachs[ix].name}</a>
+<a class="link" href="tiki-webmail_download_attachment.php?locSection=read&amp;msgid={$msgid}&amp;getpart={$attachs[ix].part}">{$attachs[ix].name|iconify}{$attachs[ix].name}</a>
 </div>
 {/section}
 {/if}
 
-{if $section eq 'contacts'}
+{if $locSection eq 'contacts'}
 <h2>{tr}Create/edit contacts{/tr}</h2>
 <form action="tiki-webmail.php" method="post">
-<input type="hidden" name="section" value="contacts" />
+<input type="hidden" name="locSection" value="contacts" />
 <input type="hidden" name="contactId" value="{$contactId|escape}" />
 <table class="normal">
 <tr class="formcolor"><td>{tr}First Name{/tr}:</td><td><input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName|escape}" /></td></tr>
@@ -256,30 +264,30 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="section" value="contacts" />
+     <input type="hidden" name="locSection" value="contacts" />
    </form>
    </td>
 </tr>
 </table>
-<a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{tr}all{/tr}</a>
+<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{tr}all{/tr}</a>
 {section name=ix loop=$letters}
-<a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;letter={$letters[ix]}">{$letters[ix]}</a>
+<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;letter={$letters[ix]}">{$letters[ix]}</a>
 {/section}
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">{$channels[user].firstName}</td>
 <td class="{cycle advance=false}">{$channels[user].lastName}</td>
-<td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email}</a>
-[&nbsp;&nbsp;<a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
-title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;]
+<td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email}</a>
+[&nbsp;&nbsp;<a class="link" href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" 
+title="{tr}delete{/tr}"><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;]
 </td>
 <td class="{cycle advance=false}">{$channels[user].nickname}</td>
 </tr>
@@ -287,17 +295,17 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </table>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-webmail.php?section=contacts&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-webmail.php?section=contacts&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-webmail.php?section=contacts&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+<a class="prevnext" href="tiki-webmail.php?locSection=contacts&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
@@ -305,11 +313,11 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </div>
 {/if}
 
-{if $section eq 'compose'}
+{if $locSection eq 'compose'}
 {if $attaching eq 'n'}
   {if $sent eq 'n'}
     <form action="tiki-webmail.php" method="post">
-    <input type="hidden" name="section" value="compose" />
+    <input type="hidden" name="locSection" value="compose" />
     <input type="hidden" name="attach1" value="{$attach1|escape}" />
     <input type="hidden" name="attach2" value="{$attach2|escape}" />
     <input type="hidden" name="attach3" value="{$attach3|escape}" />
@@ -372,7 +380,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
   {/if}
 {else}
   <form enctype="multipart/form-data" action="tiki-webmail.php" method="post">
-    <input type="hidden" name="section" value="compose" />
+    <input type="hidden" name="locSection" value="compose" />
     <input type="hidden" name="to" value="{$to|escape}" />
     <input type="hidden" name="cc" value="{$cc|escape}" />
     <input type="hidden" name="bcc" value="{$bcc|escape}" />

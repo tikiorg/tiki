@@ -31,7 +31,7 @@ class HistLib extends TikiLib {
 		$this->invalidate_cache($page);
 		
 		// Store the current page in tiki_history before rolling back
-		if ($page != 'SandBox') {
+		if (strtolower($page) != 'sandbox') {
 			$info = $this->get_page_info($page);
 			$old_version = $this->get_page_latest_version($page);
 		    $lastModif = $info["lastModif"];

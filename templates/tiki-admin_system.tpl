@@ -1,11 +1,10 @@
-<a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_system.php">{tr}System Admin{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}SystemAdmin" target="tikihelp" class="tikihelp" title="{tr}system admin{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_system.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system admin tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
-<br /><br />
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
 <table class="normal">
 <tr><td colspan="3" class="heading">{tr}Exterminator{/tr}</td></tr>

@@ -186,14 +186,14 @@ class SurveyLib extends TikiLib {
 
 			while ($res2 = $result2->fetchRow()) {
 				if ($total_votes) {
-					$average = $res2["votes"] / $total_votes;
+					$average = ($res2["votes"] / $total_votes)*100;
 				} else {
 					$average = 0;
 				}
 
 				$votes += $res2["votes"];
 				$res2["average"] = $average;
-				$res2["width"] = $average * 200;
+				$res2["width"] = $average * 2;
 				$ret2[] = $res2;
 			}
 

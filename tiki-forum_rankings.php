@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_rankings.php,v 1.10 2005-01-22 22:54:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forum_rankings.php,v 1.11 2005-03-12 16:48:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -89,6 +89,8 @@ $rankings[] = $rank;
 
 $smarty->assign_by_ref('rankings', $rankings);
 $smarty->assign('rpage', 'tiki-forum_rankings.php');
+$section = 'forums';
+include_once ('tiki-section_options.php');
 ask_ticket('forum-rankings');
 
 // Display the template

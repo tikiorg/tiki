@@ -44,7 +44,7 @@
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock and $print_page ne 'y'}
-<img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+<img src="img/icons/lock_topic.gif" height="19" width="19" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
 </h1>{/if}
 {if $feature_wiki_pageid eq 'y'}
@@ -70,7 +70,7 @@
 <div class="tabt2">
 {if $print_page ne 'y'}
 {if !$lock}
-	{if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
+	{if $tiki_p_edit eq 'y' or $page|lower eq 'sandbox'}
 		{if $beingEdited eq 'y'}
 			<span class="tabbut"><a title="{$semUser}" class="highlight" href="tiki-editpage.php?page={$page|escape:"url"}" class="tablink">{tr}edit{/tr}</a></span>
 		{else}
@@ -80,7 +80,7 @@
 {/if}
 {/if}
 {if $print_page ne 'y'}
-{if $page ne 'SandBox'}
+{if $page|lower ne 'sandbox'}
 	{if $tiki_p_remove eq 'y'}
 		<span class="tabbut"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="tablink">{tr}remove{/tr}</a></span>
 	{/if}
@@ -91,7 +91,7 @@
 {/if}
 
 {if $print_page ne 'y'}
-{if $page ne 'SandBox'}
+{if $page|lower ne 'sandbox'}
 
 	{if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
 			<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="tablink">{tr}unlock{/tr}</a></span>
@@ -107,7 +107,7 @@
 {/if}
 
 {if $print_page ne 'y'}
-{if $page ne 'SandBox'}
+{if $page|lower ne 'sandbox'}
 	{if $feature_history eq 'y' && ($tiki_p_admin_wiki eq 'y' || $tiki_p_view_wiki_history eq 'y')}
 		<span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
 	{/if}
@@ -239,7 +239,7 @@
 		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
 
 
-		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$last_page}"><img src='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' /></a>
+		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$last_page}">{html_image file='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}'}</a>
 	</div>
 {/if}
 </div>

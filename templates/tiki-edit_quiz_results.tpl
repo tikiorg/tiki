@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-edit_quiz_results.php?quizId={$quizId}">Edit quiz results</a><br /><br />
+<h1><a class="pagetitle" href="tiki-edit_quiz_results.php?quizId={$quizId}">Edit quiz results</a></h1>
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>

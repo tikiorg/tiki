@@ -1,22 +1,21 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.54 2005-01-22 22:56:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.55 2005-03-12 16:50:34 mose Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
-<a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
+<h1><a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 {if $feature_help eq 'y'}
 <a href="{$helpurl}PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Edit Article{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-assignpermission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
-{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+{/if}</h1>
 
-<br /><br />
 <a href="tiki-admingroups.php" class="linkbut">{tr}Back to groups{/tr}</a><br />
 
-<h3>{tr}Group Information{/tr}</h3>
+<h2>{tr}Group Information{/tr}</h2>
 <table class="normal">
 <tr><td class="even">{tr}Name{/tr}:</td><td class="odd">{$group_info.groupName}</td></tr>
 <tr><td class="even">{tr}Desc{/tr}:</td><td class="odd">{$group_info.groupDesc}</td></tr>
@@ -27,7 +26,7 @@
 </td></tr>
 </table>
 <br />
-<hr>
+<h2>{tr}Create level{/tr}</h2>
 <form method="post" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group|escape}" />
 <input type="hidden" name="type" value="{$type|escape}" />
@@ -48,8 +47,8 @@
 </select>
 <input type="submit" name="allper" value="{tr}update{/tr}" />
 </form>
-<hr>
-<br /><br />
+<br />
+<h2>{tr}Assign Permissions{/tr}</h2>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
 <td class="findtable">
@@ -98,8 +97,8 @@
 <td class="even"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
 <td class="even">{$perms[user].permName}</td>
 <td class="even"><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
-<td class="even">{$perms[user].type}</td>
-<td class="even">{$perms[user].permDesc}</td>
+<td class="even">{tr}{$perms[user].type}{/tr}</td>
+<td class="even">{tr}{$perms[user].permDesc}{/tr}</td>
 </tr>
 {/if}
 {/section}

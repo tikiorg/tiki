@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.20 2004-09-08 19:52:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.21 2005-03-12 16:49:43 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -769,6 +769,9 @@ function update_assignment($pageName, $edit_data, $edit_comment, $edit_user, $ed
 // 		$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
 // 		$smarty->assign('mail_pagedata', $edit_data);
 // 		$mail_data = $smarty->fetch('mail/user_watch_wiki_page_changed.tpl');
+// Just for the record, the above file has been removed.
+// You probably want ./templates/mail/wiki_change_notification.tpl
+// if you ever uncomment this stuff.  -Robin Powell
 // 		@mail($not['email'], tra('Wiki page'). ' ' . $pageName . ' ' . tra('changed'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
 // 	    }
 // 	}

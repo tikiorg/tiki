@@ -9,7 +9,7 @@
         <tr><td class="form">{tr}Meta Keywords{/tr}:</td><td><input type="text" name="metatag_keywords" value="{$metatag_keywords}" size="50" /></td></tr>
         <tr><td class="form">{tr}Meta Description{/tr}:</td><td><input type="text" name="metatag_description" value="{$metatag_description}" size="50" /></td></tr>
         <tr><td class="form">{tr}Meta Author{/tr}:</td><td><input type="text" name="metatag_author" value="{$metatag_author}" size="50" /></td></tr>
-        <tr><td class="form" colspan="3">&nbsp;</td></tr>
+        <tr><td class="form" colspan="3">&nbsp;<a target="_blank" href="http://www.geourl.info/">More info on Geourl</a></td></tr>
         <tr><td class="form">{tr}geo.position{/tr}:</td><td><input type="text" name="metatag_geoposition" value="{$metatag_geoposition}" size="50" /></td></tr>
         <tr><td class="form">{tr}geo.region{/tr}:</td><td><input type="text" name="metatag_georegion" value="{$metatag_georegion}" size="50" /></td></tr>
         <tr><td class="form">{tr}geo.placename{/tr}:</td><td><input type="text" name="metatag_geoplacename" value="{$metatag_geoplacename}" size="50" /></td></tr>

@@ -1,5 +1,5 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-userfiles.php">{tr}User Files{/tr}</a>
+<h1><a class="pagetitle" href="tiki-userfiles.php">{tr}User Files{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Files" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit user files{/tr}">
@@ -7,15 +7,13 @@
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-userfiles.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz stats tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" />
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'>
 </a>
-{/if}
+{/if}</h1>
 
-
-<br /><br />
 <!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
 {include file=tiki-mytiki_bar.tpl}
-<h3>{tr}User Files{/tr}</h3>
+<h2>{tr}User Files{/tr}</h2>
 
 <div align="center">
 <table border='0' cellpadding='0' cellspacing='0'>
@@ -84,7 +82,7 @@
 </div>
 
 
-<h3>{tr}Upload file{/tr}</h3>
+<h2>{tr}Upload file{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-userfiles.php" method="post">
 <table class="normal">
 <!--

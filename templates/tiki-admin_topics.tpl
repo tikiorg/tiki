@@ -1,20 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.23 2005-01-22 22:56:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.24 2005-03-12 16:50:32 mose Exp $ *}
 
-<a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
-
+<h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_topics.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin topics template{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
 
 
-<br /><br />
-<h3>{tr}Create a new topic{/tr}</h3>
+<h2>{tr}Create a new topic{/tr}</h2>
 
 <form enctype="multipart/form-data" action="tiki-admin_topics.php" method="post">
  <table class="normal">
@@ -25,7 +22,7 @@
 </table>
 </form>
 
-<h3>{tr}List of topics{/tr}</h3>
+<h2>{tr}List of topics{/tr}</h2>
 <table class="normal">
 <tr>
 <td class="heading">{tr}name{/tr}</td>

@@ -33,9 +33,11 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <script type="text/javascript" src="lib/tiki-js.js"></script>
 {include file="bidi.tpl"}
 <title>
+{if $trail}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
+{else}
 {$siteTitle}
-{if $page ne ''} : {$page|escape} {* add $description|escape if you want to put the description *}
-{elseif $headtitle} : {$headtitle}
+{if $headtitle} : {$headtitle}
+{elseif $page ne ''} : {$page|escape} {* add $description|escape if you want to put the description *}
 {elseif $arttitle ne ''} : {$arttitle}
 {elseif $title ne ''} : {$title}
 {elseif $thread_info.title ne ''} : {$thread_info.title}
@@ -44,8 +46,12 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {elseif $categ_info.name ne ''} : {$categ_info.name}
 {elseif $userinfo.login ne ''} : {$userinfo.login}
 {/if}
+{/if}
 </title>
 
+{if $transition_style ne '' and $transition_style ne 'none' }
+<link rel="StyleSheet"  href="styles/transitions/{$transition_style}" type="text/css" />
+{/if}
 <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
 {if $favicon}<link rel="icon" href="{$favicon}" />{/if}
 {* --- jscalendar block --- *}
@@ -71,7 +77,9 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
 // --></script>
 <script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
+{*
 <script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>
+*}
 <script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
 {/if}
 

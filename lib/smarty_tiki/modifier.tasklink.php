@@ -54,7 +54,7 @@ include_once('lib/tasks/tasklib.php');
 		
 		$mouseover = " onmouseover=\"return overlib('<table><tr><td>".$fillin."</td></tr></table>',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>&nbsp; ".tra("Task").":&nbsp;&nbsp;".htmlspecialchars($info[title])."</div>');\" onmouseout=\"nd()\""; 
 	}
-	$content = "<a class='".$class_name."'".$mouseover." href='tiki-user_tasks.php?taskId=".$taskId."&amp;offset=".$offset."&amp;sort_mode=".$sort_mode."' ";
+	$content = "<a class='".$class_name."'".$mouseover." href='tiki-user_tasks.php?taskId=".$taskId."&amp;tiki_view_mode=view&amp;offset=".$offset."&amp;sort_mode=".$sort_mode."' ";
  	if ($info[status] == 'c'){
 		$content .= "style=\"text-decoration:line-through;\"";
 	}

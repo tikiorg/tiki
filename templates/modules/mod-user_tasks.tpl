@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.12 2005-01-22 22:56:27 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.13 2005-03-12 16:51:00 mose Exp $ *}
 {if $feature_tasks eq 'y' and $user}
-{tikimodule title="<a class='cboxtlink' href='tiki-user_tasks.php'>{tr}User tasks{/tr}</a>" name="user_tasks"}
+{tikimodule title="<a class='cboxtlink' href='tiki-user_tasks.php'>{tr}User tasks{/tr}</a>" name="user_tasks" flip=$module_params.flip decorations=$module_params.decorations}
 <table  border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr><td width="100%">
 <form action="{$ownurl}" method="post">
@@ -10,7 +10,8 @@
 </td></tr>
 </table>
 <form action="{$ownurl}" method="post">
-<table  border="0" cellpadding="0" cellspacing="0" width="100%">
+<table  class="normal">
+{* <table  border="0" cellpadding="0" cellspacing="0" width="100%"> *}
 {section name=ix loop=$modTasks}
 <tr><td width="100%" class="prio{$modTasks[ix].priority}">
 {if $modTasks[ix].creator ne $user } 

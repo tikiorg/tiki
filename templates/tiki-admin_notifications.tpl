@@ -1,20 +1,13 @@
-<a class="pagetitle" href="tiki-admin_notifications.php">{tr}EMail notifications{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_notifications.php">{tr}EMail notifications{/tr}</a>
 
-{* the help link info *}
-  
       {if $feature_help eq 'y'}
 <a href="{$helpurl}EmailNotificationsAdmin" target="tikihelp" class="tikihelp" title="{tr}admin Email Notifications{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-{* link to tpl *}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin notifications template{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}</h1>
 
-{* begin *}
-
-<br /><br />
 <h2>{tr}Add notification{/tr}</h2>
 <table class="normal">
 <form action="tiki-admin_notifications.php" method="post">
@@ -42,8 +35,8 @@
 </tr>    
 </form>
 </table>
-<br /><br />
 
+<h2>{tr}EMail notifications{/tr}</h2>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">

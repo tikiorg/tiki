@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.25 2005-01-22 22:55:56 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.26 2005-03-12 16:50:00 mose Exp $
 Displays a module inlined in page
 
 Parameters
@@ -7,6 +7,8 @@ module name : module=>lambda
 align : align=>(left|center|right)
 max : max=>20
 np : np=>(0|1) # (for non-parsed content)
+flip : flip=>(n|y)
+decorations : decorations=>(y|n)
 module args : arg=>value (depends on module)
 
 Example:
@@ -40,9 +42,11 @@ function wikiplugin_module($data, $params) {
 		$align = 'nofloat';
 	}
 
-	if (!isset($max)) {
-		$max = '10';
-	}
+    if (!isset($max)) {
+        if (!isset($rows)) {
+            $max = 10; // default value
+        } else $max=$rows; // rows=> used instead of max=> ?
+    }
 
 	if (!isset($np)) {
 		$np = '1';
@@ -78,16 +82,18 @@ function wikiplugin_module($data, $params) {
 		$template = 'modules/mod-' . $module . '.tpl';
 		$nocache = 'templates/modules/mod-' . $module . '.tpl.nocache';
 
+		$module_rows = $max;
+		$module_params = $params;
+		$smarty->assign_by_ref('module_rows',$module_rows);
+		$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
+
 //		if ((!file_exists($cachefile)) || (file_exists($nocache)) || ((time() - filemtime($cachefile)) > $cache_time)) {
 			if (file_exists($phpfile)) {
-				$module_rows = $max;
-
-				$module_params = $params;
 				include ($phpfile);
 			}
 
 			$template_file = 'templates/' . $template;
-            $smarty->assign('no_module_controls', 'y');
+			$smarty->assign('no_module_controls', 'y');
 			if (file_exists($template_file)) {
 				$out = $smarty->fetch($template);
 			} else {
@@ -99,6 +105,7 @@ function wikiplugin_module($data, $params) {
 					$out = $smarty->fetch('modules/user_module.tpl');
 				}
 			}
+		$smarty->clear_assign('module_params'); // ensure params not available outside current module
             	$smarty->clear_assign('no_module_controls');
 			if (!file_exists($nocache)) {
 				$fp = fopen($cachefile, "w+");

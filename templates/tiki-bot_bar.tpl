@@ -6,6 +6,9 @@
 		<a href="http://www.php.net"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} PHP" src="img/php.png" /></a>
 		<a href="http://smarty.php.net/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} smarty" src="img/smarty.gif"  /></a>
 		<a href="http://www.w3.org/RDF/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} RDF" src="img/rdf.gif"  /></a>
+		{if $feature_phplayers eq 'y'}
+		<a href="http://phplayersmenu.sourceforge.net/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} The PHP Layers Menu System" src="lib/phplayers/LOGOS/powered_by_phplm.png"  /></a>		
+		{/if}
 	</div>
 
 	<div id="rss" style="text-align: center">

@@ -1,21 +1,15 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-theme_control_sections.php">{tr}Theme Control Center: sections{/tr}</a>
+<h1><a class="pagetitle" href="tiki-theme_control_sections.php">{tr}Theme Control Center: sections{/tr}</a>
 
-
-  
       {if $feature_help eq 'y'}
 <a href="{$helpurl}ThemeControl" target="tikihelp" class="tikihelp" title="{tr}Theme Control{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-theme_control_sections.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}theme control sections tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
+</h1>
 
-
-
-<br /><br />
 <div class="simplebox">
 <b>{tr}Theme is selected as follows{/tr}:</b><br />
 1. {tr}If a theme is assigned to the individual object that theme is used.{/tr}<br />

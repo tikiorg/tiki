@@ -1,5 +1,6 @@
-<div class="simplebox">
-{tr}Wiki attachments{/tr}
+<div class="cbox">
+  <div class="cbox-title">{tr}Wiki attachments preferences{/tr}</div>
+  <div class="cbox-data">
 <form method="post" action="tiki-admin.php?page=wikiatt">
 <table class="admin">
 <tr><td class="form">{tr}Wiki attachments{/tr}:</td><td><input type="checkbox" name="feature_wiki_attachments" {if $feature_wiki_attachments eq 'y'}checked="checked"{/if}/></td></tr>
@@ -9,10 +10,13 @@
 </table>
 </form>
 </div>
+</div>
 
 <br />
+<div class="cbox">
+  <div class="cbox-title">{tr}Attachments{/tr}</div>
+  <div class="cbox-data">
 <div class="admin">
-{tr}Attachments{/tr}
 <form action="tiki-admin.php?page=wikiatt" method="post">
 <input type="text" name="find" value="{$find|escape}">
 <input type="submit" name="action" value="{tr}find{/tr}">
@@ -57,4 +61,5 @@
 <input type="submit" name="action" value="{tr}Change all to file{/tr}">
 </form>
 </td></tr></table>
-
+</div>
+</div>

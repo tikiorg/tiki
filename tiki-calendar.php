@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.44 2005-01-22 22:54:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.45 2005-03-12 16:48:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 
@@ -199,17 +199,14 @@ foreach ($_SESSION['CalendarViewTikiCals'] as $calt) {
 
 $trunc = "12"; // put in a pref, number of chars displayed in cal cells
 $smarty->assign('tikical', $tikical);
-if (isset($calendar_timezone) && $calendar_timezone == 'y')
-	$offset_user = $tikilib->get_display_offset($user);
-else
-	$offset_user = 0;
+$dc = $tikilib->get_date_converter($user);
 
 if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
 	$_SESSION['CalendarFocusDate'] = $_REQUEST['todate'];
 } elseif (isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 } else {
-	$focusdate = mktime(date('G'),date('i'),date('s'), date('m'), date('d'), date('Y')) + $offset_user;
+	$focusdate = $dc->getDisplayDateFromServerDate(mktime(date('G'),date('i'),date('s'), date('m'), date('d'), date('Y'))); /* user date */
 	$_SESSION['CalendarFocusDate'] = $focusdate;
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 }
@@ -221,8 +218,8 @@ list($focus_day, $focus_month, $focus_year) = array(
 	date("Y", $focusdate)
 );
 
-$focuscell = mktime(0,0,0,$focus_month,$focus_day,$focus_year);
-$focusdate = mktime(date('G'),date('i'),date('s'),$focus_month,$focus_day,$focus_year) + $offset_user;
+$focuscell = mktime(0,0,0,$focus_month,$focus_day,$focus_year); /* server date */
+$focusdate = mktime(date('G'),date('i'),date('s'),$focus_month,$focus_day,$focus_year); /* server date */
 
 if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
 	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
@@ -233,13 +230,19 @@ if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
 }
 $smarty->assign_by_ref('viewmode', $_SESSION['CalendarViewMode']);
 
+if (isset($_REQUEST["viewlist"])) {
+	$viewlist = $_REQUEST["viewlist"];
+	$_SESSION['CalendarViewList'] = $viewlist;
+} else
+	$viewlist = "";
+$smarty->assign_by_ref('viewlist', $_SESSION['CalendarViewList']);
+
 if (isset($_REQUEST["delete"])and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"])) {
   $area = 'delcalevent';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$calendarlib->drop_item($user, $_REQUEST["calitemId"]);
 		$_REQUEST["calitemId"] = 0;
-		$cookietab = 1;
   } else {
     key_get($area);
   }
@@ -282,8 +285,10 @@ if (isset($_REQUEST["copy"])and ($_REQUEST["copy"])) {
 	check_ticket('calendar');
 	$_REQUEST["calitemId"] = 0;
 	$_REQUEST["save"] = true;
+	$_REQUEST["calendarId"] = $_REQUEST["calendarId2"];
 }
 
+$error = "n";
 if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
 	check_ticket('calendar');
 	if (!isset($_REQUEST["name"])or !(trim($_REQUEST["name"]))) {
@@ -293,7 +298,11 @@ if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
 		$event_start = $_REQUEST["start_date_input"];
 	} else {
 		if (isset($_REQUEST["start_freeform"])and $_REQUEST["start_freeform"]) {
-			$event_start = strtotime($_REQUEST["start_freeform"]);
+			if (($event_start = strtotime($_REQUEST["start_freeform"])) == -1) {
+				$error = "y";
+				$smarty->assign('start_freeform', $_REQUEST["start_freeform"]);
+				$smarty->assign('start_freeform_error', "y");
+			}
 		}
 		if (!isset($event_start)) {
 			$event_start = mktime($_REQUEST["starth_Hour"], $_REQUEST["starth_Minute"],
@@ -305,40 +314,94 @@ if (isset($_REQUEST["save"])and ($_REQUEST["save"])) {
 		$event_end = $_REQUEST["end_date_input"];
 	} else {
 		if (isset($_REQUEST["end_freeform"])and $_REQUEST["end_freeform"]) {
-			$event_end = strtotime($_REQUEST["end_freeform"]);
+			if (($event_end = strtotime($_REQUEST["end_freeform"])) == -1) {
+				$error = "y";
+				$smarty->assign('end_freeform', $_REQUEST["end_freeform"]);
+				$smarty->assign('end_freeform_error', "y");
+			}
 		}
 		if (!isset($event_end)) {
 			$event_end = mktime($_REQUEST["endh_Hour"], $_REQUEST["endh_Minute"],
 					0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]);
 		}
 	}
-	$event_start -= $offset_user;
-	$event_end -= $offset_user;
-	$_REQUEST["calitemId"] = $calendarlib->set_item($user, $_REQUEST["calitemId"], array(
-		"user" => $user,
-		"organizers" => $_REQUEST["organizers"],
-		"participants" => $_REQUEST["participants"],
-		"calendarId" => $_REQUEST["calendarId"],
-		"start" => $event_start,
-		"end" => $event_end,
-		"locationId" => $_REQUEST["locationId"],
-		"newloc" => $_REQUEST["newloc"],
-		"categoryId" => $_REQUEST["categoryId"],
-		"newcat" => $_REQUEST["newcat"],
-		"priority" => $_REQUEST["priority"],
-		"status" => $_REQUEST["status"],
-		"url" => $_REQUEST["url"],
-		"evId" => $_REQUEST["evId"],
-		"lang" => $_REQUEST["lang"],
-		"name" => $_REQUEST["name"],
-		"description" => $_REQUEST["description"]
-	));
-	$_SESSION["defaultAddCal"] = $_REQUEST["categoryId"];
+	if (isset($_REQUEST["endChoice"]) && $_REQUEST["endChoice"] == "duration") {
+		if (!isset($_REQUEST["duration_hours"])) $_REQUEST["duration_hours"] = 0;
+		if (!isset($_REQUEST["duration_minutes"])) $_REQUEST["duration_minutes"] = 0;
+		$event_end = $event_start + $_REQUEST["duration_hours"] * 60 *60 + $_REQUEST["duration_minutes"]*60;
+	}
+	if ($event_start > $event_end) {
+		$error = "y";
+		$smarty->assign('end_error', "y");
+	}
+	if ($error == "n") {
+		$_REQUEST["calitemId"] = $calendarlib->set_item($user, $_REQUEST["calitemId"], array(
+			"user" => $user,
+			"organizers" => $_REQUEST["organizers"],
+			"participants" => $_REQUEST["participants"],
+			"calendarId" => $_REQUEST["calendarId"],
+			"start" => $event_start,
+			"end" => $event_end,
+			"locationId" => $_REQUEST["locationId"],
+			"newloc" => $_REQUEST["newloc"],
+			"categoryId" => $_REQUEST["categoryId"],
+			"newcat" => $_REQUEST["newcat"],
+			"priority" => $_REQUEST["priority"],
+			"status" => $_REQUEST["status"],
+			"url" => $_REQUEST["url"],
+			"evId" => $_REQUEST["evId"],
+			"lang" => $_REQUEST["lang"],
+			"name" => $_REQUEST["name"],
+			"description" => $_REQUEST["description"]
+		));
+		$_REQUEST["editmode"] = '';
+	}
+	$_SESSION["defaultAddCal"] = $_REQUEST["calendarId"];
 	//$_REQUEST["calitemId"] = 0;
 }
 
-if ($_REQUEST["calitemId"]) {
+if ($_REQUEST["calitemId"] && !isset($_REQUEST["preview"])) {
 	$info = $calendarlib->get_item($_REQUEST["calitemId"]);
+} elseif ($error  == "y" || isset($_REQUEST["preview"])) {
+	if (isset($_REQUEST["preview"])) {
+		$info["parsedDescription"] = $tikilib->parse_data($_REQUEST["description"]);
+		$smarty->assign('preview', 'y');
+	}
+	$info["calitemId"] = $_REQUEST["calitemId"];
+	$info["calendarId"] = $_REQUEST["calendarId"];
+	$info["user"] = $user;
+	$info["calname"] = isset($_REQUEST["calname"])? $_REQUEST["calname"]: "";
+	$info["organizers"] = $_REQUEST["organizers"];
+	$info["participants"] = $_REQUEST["participants"];
+	if (isset($_REQUEST["start_date_input"]) and $_REQUEST["start_date_input"]) {
+		$info["start"] = $_REQUEST["start_date_input"];
+	} elseif (!isset($event_start)) {
+		$info["start"] = mktime($_REQUEST["starth_Hour"], $_REQUEST["starth_Minute"],
+					0, $_REQUEST["start_Month"], $_REQUEST["start_Day"], $_REQUEST["start_Year"]);
+	} else {
+		$info["start"] = $event_start;
+	}
+	if (isset($_REQUEST["end_date_input"]) and $_REQUEST["end_date_input"]) {
+		$info["end"] = $_REQUEST["end_date_input"];
+	} elseif (!isset($event_end)) {
+		$info["end"] = mktime($_REQUEST["endh_Hour"], $_REQUEST["endh_Minute"],
+					0, $_REQUEST["end_Month"], $_REQUEST["end_Day"], $_REQUEST["end_Year"]);
+	} else {
+		$info["end"] = $event_end;
+	}
+	$info["locationId"] = $_REQUEST["locationId"];
+	$info["locationName"] = $_REQUEST["newloc"];
+	$info["categoryId"] = $_REQUEST["categoryId"];
+	$info["categoryName"] = $_REQUEST["newcat"];
+	$info["priority"] = $_REQUEST["priority"];
+	$info["url"] = $_REQUEST["url"];
+	$info["evId"] = $_REQUEST["evId"];
+	$info["lang"] = $_REQUEST["lang"];
+	$info["name"] = $_REQUEST["name"];
+	$info["description"] = $_REQUEST["description"];
+	$info["created"] = isset($_REQUEST["created"]) ? $_REQUEST["created"]: time();
+	$info["lastModif"] = isset($_REQUEST["lastModif"])? $_REQUEST["lastModif"]: time();
+	$info["status"] = $_REQUEST["status"];
 } else {
 	$info = array();
 
@@ -358,8 +421,8 @@ if ($_REQUEST["calitemId"]) {
 	$info["url"] = '';
 	$info["evId"] = 0;
 	$info["lang"] = $tikilib->get_user_preference($user, "language");
-	$info["name"] = '';
-	$info["description"] = '';
+	$info["name"] = isset($_REQUEST["name"])? $_REQUEST["name"]: '';
+	$info["description"] = isset($_REQUEST["description"])? $_REQUEST["description"]: '';
 	$info["created"] = time();
 	$info["lastModif"] = time();
 	$info["status"] = '0';
@@ -370,6 +433,8 @@ if ($_REQUEST["calitemId"]) {
 	$info["customparticipants"] = 'n';
 	$info["customevents"] = 'n';
 }
+$info["duration_hours"] = intval(($info["end"] - $info["start"]) / (60*60));
+$info["duration_minutes"] = intval(($info["end"] - $info["start"]) - ($info["duration_hours"] *60*60))/60;
 
 if (!isset($_REQUEST["calendarId"])or !$_REQUEST["calendarId"]) {
 	$_REQUEST["calendarId"] = $info["calendarId"];
@@ -379,8 +444,8 @@ $smarty->assign('calitemId', $info["calitemId"]);
 $smarty->assign('organizers', $info["organizers"]);
 $smarty->assign('participants', $info["participants"]);
 $smarty->assign('calname', $info["calname"]);
-$smarty->assign('start', $info["start"]);
-$smarty->assign('end', $info["end"]);
+$smarty->assign('start', $dc->getDisplayDateFromServerDate($info["start"])); /* user time */
+$smarty->assign('end', $dc->getDisplayDateFromServerDate($info["end"]));
 $smarty->assign('locationId', $info["locationId"]);
 $smarty->assign('locationName', $info["locationName"]);
 $smarty->assign('categoryId', $info["categoryId"]);
@@ -391,15 +456,33 @@ $smarty->assign('evId', $info["evId"]);
 $smarty->assign('lang', $info["lang"]);
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
+$smarty->assign('parsedDescription', $tikilib->parse_data($info["description"]));
 $smarty->assign('created', $info["created"]);
 $smarty->assign('lastModif', $info["lastModif"]);
 $smarty->assign('lastUser', $info["user"]);
 $smarty->assign('status', $info["status"]);
+$smarty->assign('duration_hours', $info["duration_hours"]);
+$smarty->assign('duration_minutes', $info["duration_minutes"]);
 
-if (!isset($_REQUEST["editmode"])) $_REQUEST["editmode"] = 0;
+if ((isset($_REQUEST["editmode"]) && $_REQUEST["editmode"]) || $error == "y"){ /* 1 for edit item - add for new item - details for view item*/
+	$cookietab = 3;
+	$smarty->assign("editmode", $_REQUEST["editmode"]);
+}
 
-if ($_REQUEST["editmode"]) {
-	$thatcal = $calendarlib->get_calendar($_REQUEST["calendarId"]);
+if (isset($_REQUEST["calendarId"]) && $_REQUEST["calendarId"] !='')
+	$defaultAddCal = $_REQUEST["calendarId"];
+elseif (count($checkedCals) == 1)
+	$defaultAddCal = $checkedCals[0];
+elseif (isset($_SESSION["calendar"]))
+	$defaultAddCal = $_SESSION["calendar"];
+elseif (isset($_SESSION["defaultAddCal"]))
+	$defaultAddCal = $_SESSION["defaultAddCal"];
+else
+	$defaultAddCal = "";
+$smarty->assign('defaultAddCal', $defaultAddCal);
+
+if ($defaultAddCal) {
+	$thatcal = $calendarlib->get_calendar($defaultAddCal);
 
 	$info["customlocations"] = $thatcal["customlocations"];
 	$info["customcategories"] = $thatcal["customcategories"];
@@ -413,11 +496,11 @@ if ($_REQUEST["editmode"]) {
 	$languages = array();
 
 	if ($thatcal["customcategories"] == 'y') {
-		$listcat = $calendarlib->list_categories($_REQUEST["calendarId"]);
+		$listcat = $calendarlib->list_categories($defaultAddCal);
 	}
 
 	if ($thatcal["customlocations"] == 'y') {
-		$listloc = $calendarlib->list_locations($_REQUEST["calendarId"]);
+		$listloc = $calendarlib->list_locations($defaultAddCal);
 	}
 
 	if ($thatcal["customlanguages"] == 'y') {
@@ -427,7 +510,6 @@ if ($_REQUEST["editmode"]) {
 	$smarty->assign('listcat', $listcat);
 	$smarty->assign('listloc', $listloc);
 	$smarty->assign_by_ref('languages', $languages);
-	$cookietab = 3;
 }
 
 $smarty->assign('calendarId', $_REQUEST["calendarId"]);
@@ -459,11 +541,26 @@ if (isset($_REQUEST['drop'])) {
 
 $z = date("z");
 
-if (($str = tra("First day of week: Sunday (its ID is 0) - translators you need to localize this string!")) != "")
-	$firstDayofWeek = ereg_replace("[^0-9]", "",$str);
-else
-	$firstDayofWeek = 0;
+if (($firstDayofWeek = $tikilib->get_user_preference($user, "")) == "") { /* 0 for Sundays, 1 for Mondays */
+	$strRef = "First day of week: Sunday (its ID is 0) - translators you need to localize this string!";
+	if (($str = tra($strRef)) != $strRef) {
+		$firstDayofWeek = ereg_replace("[^0-9]", "",$str);
+		if ($firstDayofWeek < 0 || $firstDayofWeek > 9)
+			$firstDayofWeek = 0;
+	} else
+		$firstDayofWeek = 0;
+}
 $smarty->assign('firstDayofWeek', $firstDayofWeek);
+
+$strRef = tra("%H:%M %Z");
+if (strstr($strRef, "%h") || strstr($strRef, "%g"))
+	$timeFormat12_24 = "12";
+else
+	$timeFormat12_24 = "24";
+$smarty->assign('timeFormat12_24', $timeFormat12_24);
+
+$short_format_day = tra("%m/%d");
+$smarty->assign('short_format_day', $short_format_day);
 
 // Windows requires clean dates!
 $focus_prevday = mktime(0, 0, 0, $focus_month, $focus_day - 1, $focus_year);
@@ -482,7 +579,10 @@ $smarty->assign('monthafter', $focus_nextmonth);
 $smarty->assign('focusmonth', $focus_month);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
-$smarty->assign('now', mktime(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')));
+$now = mktime(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')); /* server date */
+$smarty->assign('now', $now); /* server date */
+$smarty->assign('nowUser', $dc->getDisplayDateFromServerDate($now)); /* user time */
+
 
 $weekdays = range(0, 6);
 $hours = range(0, 23);
@@ -494,30 +594,48 @@ $wd = date('w', $focusdate);
 #if ($wd == 0) $w = 7;
 #$wd--;
 //prepare for select first day of week (Hausi)
-//   if($language == "de"){
-//	$wd--;
-//	if($wd == -1){
-//		$wd=6;
-//	}
-//  }
+   if($firstDayofWeek == 1){
+	$wd--;
+	if($wd == -1){
+		$wd=6;
+	}
+  }
 
-
+if (isset($_REQUEST['mon']) && !empty($_REQUEST['mon'])) {
+	$focus_month = $_REQUEST['mon'];
+}
+if (isset($_REQUEST['day']) && !empty($_REQUEST['day'])) {
+	$focus_day = $_REQUEST['day'];
+}
+if (isset($_REQUEST['year']) && !empty($_REQUEST['year'])) {
+	$focus_year = $_REQUEST['year'];
+}
+$smarty->assign('viewmonth', $focus_month);
+$smarty->assign('viewday', $focus_day);
+$smarty->assign('viewyear', $focus_year);
 
 // calculate timespan for sql query
+if ($_SESSION['CalendarViewMode'] == 'month' || $_SESSION['CalendarViewMode'] == 'quarter' || $_SESSION['CalendarViewMode'] == 'semester') {
+	$daystart = mktime(0,0,0, $focus_month, 1, $focus_year);
+} elseif ($_SESSION['CalendarViewMode'] == 'year') {
+	$daystart = mktime(0,0,0, 1, 1, $focus_year);
+} else {
+	$daystart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
+}
+$viewstart = $daystart; // viewstart is the beginning of the display, daystart is the beginning of the selected period
+	
 if ($_SESSION['CalendarViewMode'] == 'month' ||
 	 $_SESSION['CalendarViewMode'] == 'quarter' ||
 	 $_SESSION['CalendarViewMode'] == 'semester' ||
 	 $_SESSION['CalendarViewMode'] == 'year'	) {
-   $viewstart = mktime(0,0,0,$focus_month, 1, $focus_year);
-   $daystart=$viewstart;
    $TmpWeekday = date("w",$viewstart);
 //prepare for select first day of week (Hausi)
-//   if($language == "de"){
-//	$TmpWeekday--;
-//	if($TmpWeekday == -1) {
-//		$TmpWeekday=6;
-//	}
-//   }
+   if($firstDayofWeek == 1){
+	$TmpWeekday--;
+	if($TmpWeekday == -1) {
+		$TmpWeekday=6;
+	}
+   }
 
    // move viewstart back to Sunday....
    $viewstart -= $TmpWeekday * $d;
@@ -529,7 +647,7 @@ if ($_SESSION['CalendarViewMode'] == 'month' ||
    } elseif ($_SESSION['CalendarViewMode'] == 'semester') {
      $viewend = mktime(0,0,0,$focus_month + 6, 1, $focus_year);
    } elseif ($_SESSION['CalendarViewMode'] == 'year') {
-     $viewend = mktime(0,0,0,$focus_month + 12, 1, $focus_year);
+     $viewend = mktime(0,0,0,1, 1, $focus_year+1);
    } else {
      $viewend = mktime(0,0,0,$focus_month + 1, 0, $focus_year);
    }
@@ -553,8 +671,6 @@ if ($_SESSION['CalendarViewMode'] == 'month' ||
 } elseif ($_SESSION['CalendarViewMode'] == 'week') {
    $firstweek = $currentweek;
    $lastweek = $currentweek;
-   // start by putting $viewstart at midnight starting focusdate
-   $viewstart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
    // then back up to the preceding Sunday;
    $viewstart -= $wd * $d;
    $daystart=$viewstart;
@@ -565,8 +681,6 @@ if ($_SESSION['CalendarViewMode'] == 'month' ||
 } else {
    $firstweek = $currentweek;
    $lastweek = $currentweek;
-   $viewstart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
-   $daystart = $viewstart;
    $viewend = $viewstart + ($d - 1);
    $dayend = $daystart;
    $weekdays = array(date('w',$focusdate));
@@ -594,9 +708,13 @@ function m_weeks($y, $m){
 $smarty->assign('viewstart', $viewstart);
 $smarty->assign('viewend', $viewend);
 $smarty->assign('numberofweeks', $numberofweeks);
+$smarty->assign('daystart', $daystart);
+$smarty->assign('dayend', $dayend);
 
-$daysnames = array(
-	tra("Sunday"),
+$daysnames = array();
+if ($firstDayofWeek == 0)
+	$daysnames[] = tra("Sunday");
+array_push($daysnames, 
 	tra("Monday"),
 	tra("Tuesday"),
 	tra("Wednesday"),
@@ -604,18 +722,31 @@ $daysnames = array(
 	tra("Friday"),
 	tra("Saturday")
 );
+if ($firstDayofWeek != 0)
+	$daysnames[] = tra("Sunday");
 
 $weeks = array();
 $cell = array();
 
 if ($_SESSION['CalendarViewGroups']) {
-	$listevents = $calendarlib->list_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, 50, 'name_desc', '');
+	if ($_SESSION['CalendarViewList'] == "list") {
+		if (isset($_REQUEST["sort_mode"])) {
+			$sort_mode = $_REQUEST["sort_mode"];
+			$smarty->assign_by_ref('sort_mode', $sort_mode);
+		} else
+			$sort_mode = "start_asc";
+		$listevents = $calendarlib->list_raw_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, 50, $sort_mode);
+	} else {
+		$listevents = $calendarlib->list_items($_SESSION['CalendarViewGroups'], $user, $viewstart, $viewend, 0, 50);
+	}
+	$smarty->assign_by_ref('listevents', $listevents);
 } else {
 	$listevents = array();
 }
 
 if ($_SESSION['CalendarViewTikiCals']) {
 	$listtikievents = $calendarlib->list_tiki_items($_SESSION['CalendarViewTikiCals'], $user, $viewstart, $viewend, 0, 50, 'name_desc', '');
+	$smarty->assign_by_ref('listtikievents', $listtikievents);
 } else {
 	$listtikievents = array();
 }
@@ -638,6 +769,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 		If ($_SESSION['CalendarViewMode'] == 'day') {
 			$dday = $daystart;
 		} else {
+			//$dday = $startOfWeek + $d * $w;
 			$dday = mktime(0,0,0, $mloop, $dloop++, $yloop);
 		}
 		$cell[$i][$w]['day'] = $dday;
@@ -647,21 +779,21 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 		} else {
 		  $cell[$i][$w]['focus'] = false;
 		}
-		
 		if (isset($listevents["$dday"])) {
 			$e = 0;
 
 			foreach ($listevents["$dday"] as $le) {
 				$leday["{$le['time']}$e"] = $le;
 
-				$smarty->assign_by_ref('cellextra', $le["extra"]);
 				$smarty->assign_by_ref('cellhead', $le["head"]);
 				$smarty->assign_by_ref('cellprio', $le["prio"]);
 				$smarty->assign_by_ref('cellcalname', $le["calname"]);
 				$smarty->assign_by_ref('celllocation', $le["location"]);
 				$smarty->assign_by_ref('cellcategory', $le["category"]);
 				$smarty->assign_by_ref('cellname', $le["name"]);
-				$smarty->assign_by_ref('celldescription', $le["description"]);
+				$smarty->assign_by_ref('cellurl', $le["url"]);
+				$smarty->assign_by_ref('cellid', $le["calitemId"]);
+				$smarty->assign_by_ref('celldescription', $tikilib->parse_data($le["description"]));
 				$leday["{$le['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
 				$e++;
 			}
@@ -673,13 +805,13 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 			foreach ($listtikievents["$dday"] as $lte) {
 				$leday["{$lte['time']}$e"] = $lte;
 
-				$smarty->assign('cellextra', "");
 				$smarty->assign_by_ref('cellhead', $lte["head"]);
 				$smarty->assign_by_ref('cellprio', $lte["prio"]);
 				$smarty->assign_by_ref('cellcalname', $lte["calname"]);
 				$smarty->assign('celllocation', "");
 				$smarty->assign('cellcategory', "");
 				$smarty->assign_by_ref('cellname', $lte["name"]);
+				$smarty->assign('cellid', "");
 				$smarty->assign_by_ref('celldescription', $lte["description"]);
 				$leday["{$lte['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
 				$e++;
@@ -698,13 +830,14 @@ $hours = array();
 if ($_SESSION['CalendarViewMode'] == 'day') {
 	$hours = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
 	foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
-		$rawhour = substr($dayitems['time'],0,2);
+		$rawhour = intval(substr($dayitems['time'],0,2));
 		$dayitems['mins'] = substr($dayitems['time'],2);
 		$hrows["$rawhour"][] = $dayitems;
 	}
 }
 $smarty->assign('hrows', $hrows); 
 $smarty->assign('hours', $hours); 
+$smarty->assign('mrows', array(0=>"00", 5=>"05", 10=>"10", 15=>"15", 20=>"20", 25=>"25", 30=>"30", 35=>"35", 40=>"40", 45=>"45", 50=>"50", 55=>"55"));
 
 $smarty->assign('trunc', $trunc); 
 $smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
@@ -718,21 +851,16 @@ $smarty->assign('daysnames', $daysnames);
 $smarty->assign('cell', $cell);
 $smarty->assign('var', '');
 
-if ($_REQUEST["calendarId"])
-	$defaultAddCal = $_REQUEST["calendarId"];
-elseif (count($checkedCals) == 1)
-	$defaultAddCal = $checkedCals[0];
-elseif (isset($_SESSION["calendar"]))
-	$defaultAddCal = $_SESSION["calendar"];
-else
-	$defaultAddCal = "";
-$smarty->assign('defaultAddCal', $defaultAddCal);
-
 $section = 'calendar';
 include_once ('tiki-section_options.php');
 
 setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);
+
+include_once ('lib/quicktags/quicktagslib.php');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+include_once("textareasize.php");
 
 ask_ticket('calendar');
 
@@ -740,6 +868,4 @@ include_once('tiki-jscalendar.php');
 $smarty->assign('uses_tabs', 'y');
 $smarty->assign('mid', 'tiki-calendar.tpl');
 $smarty->display("tiki.tpl");
-
-// echo "<pre>";print_r($language);echo "</pre>";
 ?>

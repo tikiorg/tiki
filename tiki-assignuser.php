@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.16 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.17 2005-03-12 16:48:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,11 +53,13 @@ if (isset($_REQUEST["action"])) {
 			die;
 		} 
 		$userlib->assign_user_to_group($_REQUEST["assign_user"], $_REQUEST["group"]);
+		$logslib->add_log('perms',sprintf(tra("Assigned %s in group %s"),$_REQUEST["assign_user"], $_REQUEST["group"]));				
 	} elseif ($_REQUEST["action"] == 'removegroup') {
 		$area = 'deluserfromgroup';
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userslibadmin->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
+			$logslib->add_log('perms',sprintf(tra("Removed %s from group %s"),$_REQUEST["assign_user"], $_REQUEST["group"]));
 		} else {
 			key_get($area);
 		}
@@ -98,7 +100,7 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
-$users = $userlib->get_groups($offset, $maxRecords, $sort_mode, $find);
+$users = $userlib->get_groups($offset, $maxRecords, $sort_mode, $find,'','y');
 $cant_pages = ceil($users["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.19 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.20 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,6 +38,7 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('admin-calendars');
 	$customflags["customlanguages"] = $_REQUEST["customlanguages"];
 	$customflags["customlocations"] = $_REQUEST["customlocations"];
+	$customflags["customparticipants"] = $_REQUEST["customparticipants"];
 	$customflags["customcategories"] = $_REQUEST["customcategories"];
 	$customflags["custompriorities"] = $_REQUEST["custompriorities"];
 	$customflags["customevents"] = $_REQUEST["customevents"];
@@ -59,6 +60,7 @@ if ($_REQUEST["calendarId"]) {
 	$info["description"] = '';
 	$info["customlanguages"] = 'n';
 	$info["customlocations"] = 'n';
+	$info["customparticipants"] = 'n';
 	$info["customcategories"] = 'n';
 	$info["custompriorities"] = 'n';
 	$info["customevents"] = 'n';
@@ -71,6 +73,7 @@ $smarty->assign('description', $info["description"]);
 $smarty->assign('user', $info["user"]);
 $smarty->assign('customlanguages', $info["customlanguages"]);
 $smarty->assign('customlocations', $info["customlocations"]);
+$smarty->assign('customparticipants', $info["customparticipants"]);
 $smarty->assign('customcategories', $info["customcategories"]);
 $smarty->assign('custompriorities', $info["custompriorities"]);
 $smarty->assign('customevents', $info["customevents"]);
@@ -128,6 +131,8 @@ $smarty->assign_by_ref('calendars', $calendars["data"]);
 // $cat_type = 'calendar';
 // $cat_objid = $_REQUEST["calendarId"];
 // include_once ("categorize_list.php");
+$section = 'calendar';
+include_once ('tiki-section_options.php');
 
 ask_ticket('admin-calendars');
 

@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-directory_ranking.php?sort_mode={$sort_mode}">{tr}Directory ranking{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-directory_ranking.php?sort_mode={$sort_mode}">{tr}Directory ranking{/tr}</a></h1>
 {* Display the title using parent *}
 {include file=tiki-directory_bar.tpl}<br /><br />
 {* Navigation bar to admin, admin related, etc *}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.85 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.86 2005-03-12 16:49:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,6 +49,7 @@ $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
 
+require_once("lib/breadcrumblib.php");
 
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
@@ -249,7 +250,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 
 // --------------------------------------------------------------
 
-if (isset($_REQUEST['highlight'])) {
+if (isset($_REQUEST['highlight']) || (isset($feature_referer_highlight) && $feature_referer_highlight == 'y') ) {
   $smarty->load_filter('output','highlight');
 }
 
@@ -557,7 +558,7 @@ if (!isset($_SERVER['QUERY_STRING']))
     $_SERVER['QUERY_STRING'] = '';
 
 if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
-    $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '/' . $_SERVER['QUERY_STRING'];
+    $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 }
 
 $smarty->assign("tikidomain", $tikidomain);

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.2 2004-06-27 03:05:54 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/damian/module.tpl,v 1.3 2005-03-12 16:51:15 mose Exp $ *}
 {* Module layout with controls *}
 
 <div class="box{if $module_side eq "right_modules"}_right{/if} "><div class="box-title">
@@ -23,7 +23,7 @@
       <a href="{$current_location|escape}{$mpchar}mc_move={$module_name|escape}"><img src="img/icons2/admin_move.gif" border="0" /></a>
     </td>
     <td width="16">
-      <a href="{$current_location|escape}{$mpchar}mc_unassign={$module_name|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to remove this module?{/tr}')"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+      <a href="{$current_location|escape}{$mpchar}mc_unassign={$module_name|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to remove this module?{/tr}')"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}'></a>
     </td>
   </tr>
 </table>
