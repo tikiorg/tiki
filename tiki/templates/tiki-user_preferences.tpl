@@ -16,37 +16,34 @@
 <tr>
   <!--The line below was <td valign="top" > for no real reason-->
   <td valign="top">
-  <div class="cbox">
-  <div class="cbox-title">{tr}User Information{/tr}</div>
-  <div class="cbox-data">
-  <div class="simplebox">
+
+{if $feature_tabs eq 'y'}
+
+{cycle name=tabs values="1,2,3,4,5,6,7" print=false advance=false}
+<div id="page-bar">
+  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}Personal information{/tr}</a></span>
+  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}Administrative info{/tr}</a></span>
+  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}General preferences{/tr}</a></span>
+{if $feature_messages eq 'y'}
+  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}User Messsages{/tr}</a></span>
+{/if}
+{if $feature_tasks eq 'y'}
+  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}User Tasks{/tr}</a></span>
+{/if}
+  <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},7);">{tr}My Tiki{/tr}</a></span>
+</div>
+
+{cycle name=content values="1,2,3,4,5,6,7" print=false advance=false}
+
+{/if}
+
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <input type="hidden" name="user" value="{$userwatch|escape}" /> 
   <table>
   <tr><td class="form">{tr}Name{/tr}:</td><td class="form">{$userinfo.login}</td></tr>
-  <tr><td class="form">{tr}Last login{/tr}:</td><td class="form">{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
-  <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td class="form">
-{if $userinfo.email}
-  <select name="email_isPublic">
-   {section name=ix loop=$scramblingMethods}
-      <option value="{$scramblingMethods[ix]|escape}" {if $email_isPublic eq $scramblingMethods[ix]}selected="selected"{/if}>{$scramblingEmails[ix]}</option>
-   {/section}
-  </select>
-{else}
-  {tr}Unavailable - please set your e-mail below{/tr}
-{/if}
-  </td></tr>
-  </td></tr>
-  <tr><td class="form">{tr}Does your mail reader need a special charset{/tr}</td>
-  <td class="form">
-  <select name="mailCharset">
-   {section name=ix loop=$mailCharsets}
-      <option value="{$mailCharsets[ix]|escape}" {if $mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>{$mailCharsets[ix]}</option>
-   {/section}
-  </select>
-  </td></tr>
-  </td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td class="form">
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   <select name="country">
@@ -59,6 +56,95 @@
   </td></tr>
   <tr><td class="form">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   <tr><td class="form">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lon" value="{$lon|escape}" /></td></tr> 
+  <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
+  <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
+  <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
+  {if $feature_wiki eq 'y'}
+  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
+  {/if}
+	{if $userTracker eq 'y'}
+  <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td class="form">
+	{if $useritemId}
+	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}">{tr}Edit informations{/tr}</a>
+	{else}
+	<a class="link" href="tiki-view_tracker.php?trackerId={$usertrackerId}&amp;vals[Login]={$userwatch|escape:"url"}&amp;view=mod">{tr}Add informations{/tr}</a>
+	{/if}
+	{/if}
+
+  {* Custom fields *}
+  {section name=ir loop=$customfields}
+    <tr><td class="form">{$customfields[ir].prefName}:</td>
+        <td class="form"><input type="text" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" /></td>
+    </tr>
+  {/section}
+
+  <tr><td colspan="2" class="button"><input type="submit" name="info" value="{tr}Change information{/tr}" /></td></tr>
+  </table>
+  </form>
+
+</div>
+
+
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+
+  {tr}Change your email{/tr}<br />
+  <form action="tiki-user_preferences.php" method="post">
+  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
+  <table class="admin">
+  <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
+  {if $auth_method neq 'cas'}
+    <tr><td class="form">{tr}Password{/tr}:</td class="form"><td class="form"><input type="password" name="pass" /></td></tr>
+  {/if}
+  <tr><td colspan="2" class="button"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
+  </table>
+  </form>
+
+{if $auth_method neq 'cas'}
+
+  {tr}Change your password{/tr}<br />
+  <form action="tiki-user_preferences.php" method="post">
+  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
+  <table class="admin">
+  {if $tiki_p_admin ne 'y' or $userwatch eq $user}
+   <tr><td class="form">{tr}Old password{/tr}:</td><td class="form"><input type="password" name="old" /></td></tr>
+  {/if}
+  <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
+  <tr><td class="form">{tr}Again please{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
+  <tr><td colspan="2" class="button"><input type="submit" name="chgpswd" value="{tr}change password{/tr}"></td></tr>
+  </table>
+  </form>
+
+{/if}
+
+</div>
+
+
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+
+  <form action="tiki-user_preferences.php" method="post">
+  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
+  <input type="hidden" name="user" value="{$userwatch|escape}" /> 
+  <table>
+  <tr><td class="form">{tr}Last login{/tr}:</td><td class="form">{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
+  <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td class="form">
+{if $userinfo.email}
+  <select name="email_isPublic">
+   {section name=ix loop=$scramblingMethods}
+      <option value="{$scramblingMethods[ix]|escape}" {if $email_isPublic eq $scramblingMethods[ix]}selected="selected"{/if}>{$scramblingEmails[ix]}</option>
+   {/section}
+  </select>
+{else}
+  {tr}Unavailable - please set your e-mail at "Administrative info"{/tr}
+{/if}
+  </td></tr>
+  <tr><td class="form">{tr}Does your mail reader need a special charset{/tr}</td>
+  <td class="form">
+  <select name="mailCharset">
+   {section name=ix loop=$mailCharsets}
+      <option value="{$mailCharsets[ix]|escape}" {if $mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>{$mailCharsets[ix]}</option>
+   {/section}
+  </select>
+  </td></tr>
   {if $change_theme eq 'y'}
   <tr><td class="form">{tr}Theme{/tr}:</td><td class="form"><select name="mystyle">
     {section name=ix loop=$styles}
@@ -85,8 +171,6 @@
     {/section}
         </select></td></tr>
   {/if}      
-  <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
-  <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td class="form">
   <select name="userbreadCrumb">
   <option value="1" {if $userbreadCrumb eq 1}selected="selected"{/if}>1</option>
@@ -97,18 +181,6 @@
   <option value="10" {if $userbreadCrumb eq 10}selected="selected"{/if}>10</option>
   </select>
   </td></tr>
-  <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
-  {if $feature_wiki eq 'y'}
-  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
-  {/if}
-	{if $userTracker eq 'y'}
-  <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td class="form">
-	{if $useritemId}
-	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}">{tr}Edit informations{/tr}</a>
-	{else}
-	<a class="link" href="tiki-view_tracker.php?trackerId={$usertrackerId}&amp;vals[Login]={$userwatch|escape:"url"}&amp;view=mod">{tr}Add informations{/tr}</a>
-	{/if}
-	{/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td>
   <td class="form">
   <input type="radio" name="display_timezone" value="UTC" {if $display_timezone eq 'UTC'}checked="checked"{/if}/> {tr}UTC{/tr}
@@ -129,70 +201,18 @@
   </tr>
   {/if}
 
-  {* Custom fields *}
-  {section name=ir loop=$customfields}
-    <tr><td class="form">{$customfields[ir].prefName}:</td>
-        <td class="form"><input type="text" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" /></td>
-    </tr>
-  {/section}
-
   <tr><td colspan="2" class="button"><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
   </table>
   </form>
-  </div>
-  
-  <div class="simplebox">
-  {tr}Change your email{/tr}<br />
-  <form action="tiki-user_preferences.php" method="post">
-  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <table class="admin">
-  <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
-  {if $auth_method neq 'cas'}
-    <tr><td class="form">{tr}Password{/tr}:</td class="form"><td class="form"><input type="password" name="pass" /></td></tr>
-  {/if}
-  <tr><td colspan="2" class="button"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
-  </table>
-  </form>
-  </div>
 
-{if $auth_method neq 'cas'}
-  <div class="simplebox">
-  {tr}Change your password{/tr}<br />
-  <form action="tiki-user_preferences.php" method="post">
-  <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <table class="admin">
-  {if $tiki_p_admin ne 'y' or $userwatch eq $user}
-   <tr><td class="form">{tr}Old password{/tr}:</td><td class="form"><input type="password" name="old" /></td></tr>
-  {/if}
-  <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
-  <tr><td class="form">{tr}Again please{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
-  <tr><td colspan="2" class="button"><input type="submit" name="chgpswd" value="{tr}change password{/tr}"></td></tr>
-  </table>
-  </form>
-  </div>
-{/if}
-  </div>
-  </td>
-  <!--The line below was <td valign="top" > for no real reason-->
-  <td valign="top">
-  <!--
-  <div class="cbox">
-  <div class="cbox-title">{tr}Configure this page{/tr}</div>
-  <div class="cbox-data">
-  <div class="simplebox">
- 
-  </div>
-  </div>
-  -->
-  </td>
-</tr>
-</table>
+</div>
+
+
 
 {if $feature_messages eq 'y'}
-    <div class="cbox">
-      <div class="cbox-title">{tr}User Messages{/tr}</div>
-      <div class="cbox-data">
-        <div class="simplebox">
+
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">
 <tr>
@@ -232,22 +252,17 @@
 </table>
 </form>
 
-        </div>
-      </div>
-    </div>
-  
+</div>
+
   {/if}
 
   
 
-<br />
-
 
 {if $feature_tasks eq 'y'}
-    <div class="cbox">
-      <div class="cbox-title">{tr}User Tasks{/tr}</div>
-      <div class="cbox-data">
-        <div class="simplebox">
+
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">
 <tr>
@@ -277,18 +292,15 @@
 </table>
 </form>
 
-        </div>
-      </div>
-    </div>
-  
+</div>
+
   {/if}
 
-<br />
 
-    <div class="cbox">
-      <div class="cbox-title">{tr}My Tiki{/tr}</div>
-      <div class="cbox-data">
-        <div class="simplebox">
+
+
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+
         <form action="tiki-user_preferences.php" method="post">
 <table class="admin">
 <tr><td class="form">{tr}My pages{/tr}</td><td class="form"><input type="checkbox" name="mytiki_pages" {if $mytiki_pages eq 'y'}checked="checked"{/if} /></td></tr>
@@ -307,6 +319,7 @@
 </tr>
 </table>
 </form>
-      </div>
-    </div>
- </div>
+
+</div>
+
+
