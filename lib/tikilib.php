@@ -1829,10 +1829,10 @@ class TikiLib {
   function is_cacheable($url) {
     // simple implementation: future versions should analyse
     // if this is a link to the local machine
-    if(strstr($url,"tiki-index")) {
+    if(strstr($url,'tiki-')) {
       return false;
     }
-    if(strstr($url,"tiki-edit")) {
+    if(strstr($url,'messu-')) {
       return false;
     }
     return true;
@@ -1840,12 +1840,6 @@ class TikiLib {
 
   function is_cached($url)
   {
-    if(strstr($url,"tiki-index")) {
-      return false;
-    }
-    if(strstr($url,"tiki-edit")) {
-      return false;
-    }
     $url=addslashes($url);
     $query = "select cacheId from tiki_link_cache where url='$url'";
     $result = $this->query($query);
@@ -1875,44 +1869,6 @@ class TikiLib {
     return $retval;
   }
 
-  function ($url)
-  {
-    $url=addslashes($url);
-    // This function stores a cached representation of a page in the cache
-    // Check if the URL is not already cached
-    //if($this->is_cached($url)) return false;
-    if( !$this->is_cacheable($url) ) return false;
-    @$fp = fopen($url,"r");
-    if(!$fp) return false;
-    $data = '';
-    while(!feof($fp)) {
-      $data .= fread($fp,4096);
-    }
-    fclose($fp);
-    // Check for META tags with equiv
-    if(0){
-    print("Len: ".strlen($data)."<br/>");
-    preg_match_all("/\<meta([^\>\<\n\t]+)/i",$data,$reqs);
-    foreach($reqs[1] as $meta)
-    {
-      print("Un meta: $meta<br/>");
-      if(stristr($meta,'refresh')) {
-        print("Es refresh<br/>");
-        preg_match("/url=([^ \"\'\n\t]+)/i",$meta,$urls);
-        if(strlen($urls[1])) {
-          $urli=$urls[1];
-          print("URL: $urli<br/>");
-        }
-      }
-    }
-    print("pepe");
-    }
-    $data = addslashes($data);
-    $refresh = date("U");
-    $query = "insert into tiki_link_cache(url,data,refresh) values('$url','$data',$refresh)";
-    $result = $this->query($query);
-    return true;
-  }
 
   function refresh_cache($cacheId)
   {
@@ -2237,13 +2193,6 @@ class TikiLib {
     $retval["title"]=tra("Wiki top galleries");
     $retval["y"]=tra("Visits");
     return $retval;
-=======
-    $url=addslashes($url);
-    $query = "select cacheId from tiki_link_cache where url='$url'";
-    $result = $this->query($query);
-    $cant = $result->numRows();
-    return $cant;
->>>>>>> 1.165
   }
 
   function list_cache($offset,$maxRecords,$sort_mode,$find)
@@ -2270,6 +2219,10 @@ class TikiLib {
 
   function cache_url($url)
   {
+	// Avoid caching internal references...
+	if(strstr($url,'tiki-') || strstr($url,'messu-')) {
+		return false;
+	}
     $url=addslashes($url);
     // This function stores a cached representation of a page in the cache
     // Check if the URL is not already cached
@@ -2281,24 +2234,6 @@ class TikiLib {
       $data .= fread($fp,4096);
     }
     fclose($fp);
-    // Check for META tags with equiv
-    if(0){
-    print("Len: ".strlen($data)."<br/>");
-    preg_match_all("/\<meta([^\>\<\n\t]+)/i",$data,$reqs);
-    foreach($reqs[1] as $meta)
-    {
-      print("Un meta: $meta<br/>");
-      if(stristr($meta,'refresh')) {
-        print("Es refresh<br/>");
-        preg_match("/url=([^ \"\'\n\t]+)/i",$meta,$urls);
-        if(strlen($urls[1])) {
-          $urli=$urls[1];
-          print("URL: $urli<br/>");
-        }
-      }
-    }
-    print("pepe");
-    }
     $data = addslashes($data);
     $refresh = date("U");
     $query = "insert into tiki_link_cache(url,data,refresh) values('$url','$data',$refresh)";
@@ -2659,7 +2594,7 @@ class TikiLib {
     // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
     // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-    $query = "select pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from tiki_pages $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select creator,pageName, hits, length(data) as len ,lastModif, user, ip, comment, version, flag from tiki_pages $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from tiki_pages $mid";
     $result = $this->query($query);
     $result_cant = $this->query($query_cant);
@@ -2677,6 +2612,7 @@ class TikiLib {
       $aux["ip"] = $res["ip"];
       $aux["len"] = $res["len"];
       $aux["comment"] = $res["comment"];
+      $aux["creator"] = $res["creator"];
       $aux["version"] = $res["version"];
       $aux["flag"] = $res["flag"] == 'L' ? tra('locked') : tra('unlocked');
       $aux["versions"] = $this->getOne("select count(*) from tiki_history where pageName='$page_as'");
