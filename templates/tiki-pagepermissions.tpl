@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.9 2003-09-21 18:12:31 lueders Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.10 2003-11-24 00:35:19 gongo Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: {$page}</h2>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
@@ -10,8 +10,8 @@
   <td class="{cycle advance=false}">{$page_perms[pg].groupName}</td>
   <td class="{cycle advance=false}">{$page_perms[pg].permName}</td>
   <td class="{cycle}">
-    (<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&perm={$page_perms[pg].permName}&group={$page_perms[pg].groupName}">{tr}remove from this page{/tr}</a>)
-    (<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=removestructure&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&perm={$page_perms[pg].permName}&group={$page_perms[pg].groupName}">{tr}remove from this structure{/tr}</a>)
+    (<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this page{/tr}</a>)
+    (<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=removestructure&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this structure{/tr}</a>)
   </td></tr>
 {sectionelse}
 <tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>

@@ -86,9 +86,9 @@
 {/if}
 
 {if $view eq 'weekly'}
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&year={$prev_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$prev_week_start|date_format:"%d"}&amp;mon={$prev_week_start|date_format:"%m"}&amp;year={$prev_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='img' /></a>
 <b>{$week_start|date_format:"%b"} {$week_start|date_format:"%d"}-{$week_end|date_format:"%b"} {$week_end|date_format:"%d"}</b>
-<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&year={$next_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
+<a class="link" href="tiki-minical.php?view={$view}&amp;day={$next_week_start|date_format:"%d"}&amp;mon={$next_week_start|date_format:"%m"}&amp;year={$next_week_start|date_format:"%Y"}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='img' /></a>
 <table class="normal"  >
 {section name=ix loop=$slots}
 <tr>
@@ -96,7 +96,7 @@
 	    <table >
 	    <tr>
 	    <td >
-    	<a class="link" href="tiki-minical.php?view=daily&amp;day={$slots[ix].start|date_format:"%d"}&amp;mon={$slots[ix].start|date_format:"%m"}&year={$slots[ix].start|date_format:"%Y"}">{$slots[ix].start|date_format:"%a"}<br />
+    	<a class="link" href="tiki-minical.php?view=daily&amp;day={$slots[ix].start|date_format:"%d"}&amp;mon={$slots[ix].start|date_format:"%m"}&amp;year={$slots[ix].start|date_format:"%Y"}">{$slots[ix].start|date_format:"%a"}<br />
     	{$slots[ix].start|date_format:"%d"}</a>
     	</td>
     	<td>
