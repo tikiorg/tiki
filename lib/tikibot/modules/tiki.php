@@ -25,10 +25,11 @@
 class tiki extends Wollabot_Module {
 	
 	function tiki() {
-		$this->bind_prefix('tiki_do','!T');
+		$this->bind_prefix('tiki_do','!T ');
 	}
 
 	function tiki_do($params) {
+		global $tikilib;
 
 		if (substr($params['channel'],0,1) == '#') {
 			$target = $params['channel'];
@@ -42,49 +43,30 @@ class tiki extends Wollabot_Module {
 		$arg = array_shift($params["message_exploded"]);
 		$args = $params["message_exploded"];
 		
-		require_once("/usr/local/tikiwiki/db/local.php");
-		// require_once("/usr/local/tikiwiki/lib/tikilib.php");
-		
-		$conn = mysql_connect($host_tiki, $user_tiki, $pass_tiki);
-		mysql_select_db($dbs_tiki,$conn);
-		
-		// $T = new TikiLib($conn);
-		
 		switch ($command) {
-			
-			case 'stats':
-				if (!$arg or $arg > 250) $arg = 1;
-				$since = time() - ($arg*60*60);
-				$query = "select count(*) as c from tiki_history where lastModif > $since";
-				$res = @mysql_query($query,$conn);
-				if ($res) {
-					$hits = mysql_result($res,0,'c');
-				}
-				if ($hits < 1) $hits = 'no';
-				$this->send_privmsg($target, $who."$hits wiki pages changed in the last $arg hours on tw.o");
+			case 'rpage':
+				list($page) = $tikilib->get_random_pages("1");
+				$this->send_privmsg($target, $who."Want a page . try that one : http://tikiwiki.org/tiki-index.php?page=$page");
 				break;
 			
-		case 'who':	
-			$query = "select `user` from `tiki_sessions` where `user`<>''";
-			$res = @mysql_query($query,$conn);
-			$here = array();
-			if ($res) {
-				for($i=0; $row = mysql_fetch_array($res); $i++) {
-					$here[] = $row['user'];
+			case 'who':
+				$users = $tikilib->get_online_users();
+				foreach ($users as $u) {
+					$all[] = $u['user'];
 				}
-			}
-			if (count($here)) {
-				$this->send_privmsg($target, $who."$i are there : ".implode(', ',$here)." on tw.o");
-			} else {
-				$this->send_privmsg($target, $who."There is nobody on tw.o !");
-			}
-			break;
-			
+				$this->send_privmsg($target, $who."There is ".count($users)." users online right now on tw.o (".implode(', ',$all).")");
+				break;
+
+			case 'stats':
+				global $statslib;
+				$i = $statslib->site_stats();
+				$this->send_privmsg($target, $who."Since ".date("Y-m-d",$i["started"])." we got ".$i["pageviews"]." page viewed on tw.o.");
+				break;
+
 			default :
-				$this->send_privmsg($target, $who."use a command like 'stat', or 'who'");
+				$this->send_privmsg($target, $who."use a command like 'who', 'stats' or 'rpage'");
 		}
 		
-		mysql_close($conn);
 	}
 }
 
