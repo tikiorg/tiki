@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-II-tc.css,v 1.3 2003-08-14 00:46:56 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-II-tc.css,v 1.4 2003-08-14 14:24:50 zaufi Exp $
  *
  */
 
@@ -40,7 +40,7 @@ div#tiki-center {
     left: 50px;
     right: 50px;
 	padding: 2px 20px 10px 20px;
-    border: 2px outset WindowFrame;
+    border: 3px outset WindowFrame;
     z-index: 2;
 }
 
