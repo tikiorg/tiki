@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.2 2003-11-14 16:56:48 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_new.tpl,v 1.3 2003-11-18 01:16:30 redflo Exp $ *}
 
 {if $feature_search eq 'y'}
 <div class="box">
@@ -7,7 +7,7 @@
 </div>
 <div class="box-data">
     <form class="forms" method="get" action="tiki-searchindex.php">
-    <input id="fuser" name="words" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br/>
+    <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br/>
     <select name="where">
     <option value="pages">{tr}Entire Site{/tr}</option>
     {if $feature_wiki eq 'y'}
