@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.15 2003-09-24 00:30:30 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.16 2003-10-01 14:10:18 lrargerich Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,6 +104,7 @@ if ($_REQUEST["forumId"]) {
 	$info["topics_list_lastpost"] = 'y';
 	$info["topics_list_author"] = 'y';
 	$info["vote_threads"] = 'y';
+	$info["forum_last_n"] = 0;
 	$info["pruneUnrepliedAge"] = 60 * 60 * 24 * 30;
 	$info["usePruneOld"] = 'n';
 	$info["pruneMaxAge"] = 60 * 60 * 24 * 30;
@@ -151,6 +152,7 @@ $smarty->assign('topics_list_pts', $info['topics_list_pts']);
 $smarty->assign('topics_list_lastpost', $info['topics_list_lastpost']);
 $smarty->assign('topics_list_author', $info['topics_list_author']);
 $smarty->assign('vote_threads', $info['vote_threads']);
+$smarty->assign('forum_last_n', $info['forum_last_n']);
 $smarty->assign('usePruneUnreplied', $info["usePruneUnreplied"]);
 $smarty->assign('pruneUnrepliedAge', $info["pruneUnrepliedAge"]);
 $smarty->assign('usePruneOld', $info["usePruneOld"]);
@@ -222,7 +224,7 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST['topic_smileys'], $_REQUEST['topic_summary'], $_REQUEST['ui_avatar'], $_REQUEST['ui_flag'], $_REQUEST['ui_posts'],
 		$_REQUEST['ui_level'], $_REQUEST['ui_email'], $_REQUEST['ui_online'], $_REQUEST['approval_type'],
 		$_REQUEST['moderator_group'], $_REQUEST['forum_password'], $_REQUEST['forum_use_password'], $_REQUEST['att'],
-		$_REQUEST['att_store'], $_REQUEST['att_store_dir'], $_REQUEST['att_max_size']);
+		$_REQUEST['att_store'], $_REQUEST['att_store_dir'], $_REQUEST['att_max_size'],$_REQUEST['forum_last_n']);
 
 	$cat_type = 'forum';
 	$cat_objid = $fid;
@@ -277,6 +279,7 @@ if (isset($_REQUEST["save"])) {
 	$info["topics_list_lastpost"] = 'y';
 	$info["topics_list_author"] = 'y';
 	$info["vote_threads"] = 'y';
+	$info["forum_last_n"] = 0;
 	$smarty->assign('forumId', $info["forumId"]);
 	$smarty->assign('name', $info["name"]);
 	$smarty->assign('description', $info["description"]);
@@ -293,6 +296,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('topics_list_lastpost', $info['topics_list_lastpost']);
 	$smarty->assign('topics_list_author', $info['topics_list_author']);
 	$smarty->assign('vote_threads', $info['vote_threads']);
+	$smarty->assign('forum_last_n', $info['forum_last_n']);
 	$smarty->assign('usePruneUnreplied', $info["usePruneUnreplied"]);
 	$smarty->assign('pruneUnrepliedAge', $info["pruneUnrepliedAge"]);
 	$smarty->assign('usePruneOld', $info["usePruneOld"]);

@@ -397,7 +397,6 @@ a moderator approves it.{/tr}</small>
 {/section}
 </table>
 </form>
-<br/>
   <div align="center">
   <div class="mini">
   {if $comments_prev_offset >= 0}
@@ -418,6 +417,29 @@ a moderator approves it.{/tr}</small>
   </div>
   <br/>
   </div>
+
+{if $forum_info.forum_last_n > 0}
+	<!-- Last n titles -->
+	{cycle values="odd,even" print=false}
+	<table class="normal">
+	<tr>
+	 	<td class="heading">{tr}Last{/tr} {$forum_info.forum_last_n} {tr}topics in this forum{/tr}</td>
+	 	{section name=ix loop=$last_comments}
+	 	<tr>
+	 		<td class="{cycle}">
+	 		{if $last_comments[ix].parentId eq 0}
+	 		 	{assign var="idt" value=$last_comments[ix].threadId}
+	 		{else}
+	 			{assign var="idt" value=$last_comments[ix].parentId}
+	 		{/if}
+	 		<a {if $last_comments[ix].is_marked}class="forumnameread"{else}class="forumname"{/if}  href="tiki-view_forum_thread.php?comments_parentId={$idt}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$comments_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$last_comments[ix].title}</a>
+	 		</td>
+	 	</tr>
+	 	{/section}
+	</tr>
+	</table>
+	<br/>
+{/if}
 
 <table >  
 <tr>

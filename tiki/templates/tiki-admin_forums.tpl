@@ -156,6 +156,17 @@
 	<td class="formcolor"><input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if} /></td>
 </tr>
 <tr>
+	<td class="formcolor">{tr}Display last post titles{/tr}</td>
+	<td class="formcolor">
+		<select name="forum_last_n">
+			<option value="0" {if $forum_last_n eq 0}selected="selected"{/if}>{tr}no display{/tr}</option>
+			<option value="5" {if $forum_last_n eq 5}selected="selected"{/if}>5</option>
+			<option value="10" {if $forum_last_n eq 10}selected="selected"{/if}>10</option>
+			<option value="20" {if $forum_last_n eq 20}selected="selected"{/if}>20</option>
+		</select>
+	</td>
+</tr>
+<tr>
 	<td class="formcolor">{tr}Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address{/tr}</td>
 	<td class="formcolor"><input type="text" name="outbound_address" size=30 value="{$outbound_address|escape}" /></td>
 </tr>
