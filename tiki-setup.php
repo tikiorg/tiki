@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.175 2003-12-14 03:49:07 wolff_borg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.176 2003-12-15 18:19:23 bburgaud Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -402,6 +402,12 @@ $smarty->assign('wiki_list_versions','y');
 $smarty->assign('wiki_list_links','y');
 $smarty->assign('wiki_list_backlinks','y');
 $smarty->assign('wiki_list_size','y');
+
+//default wiki mailin feature values
+$feature_mailin = 'n';
+$mailin_autocheck = 'n';
+$mailin_autocheckFreq = '0';
+$mailin_autocheckLast = 0;
 
 $feature_wiki_comments = 'n';
 $wiki_comments_default_ordering = 'points_desc';
@@ -1116,6 +1122,15 @@ $prefs = $tikilib->get_all_preferences();
 foreach ($prefs as $name => $val) {
 	$$name = $val;
 	$smarty->assign("$name", $val);
+}
+
+//after prefs update, must check if mailin_autocheck time is elapsed
+if($feature_mailin == 'y' && $mailin_autocheck == 'y')
+{
+  if((time() - $mailin_autocheckLast)/60 > $mailin_autocheckFreq){
+    $tikilib->set_preference("mailin_autocheckLast", time());
+    include_once("tiki-mailin-code.php");
+  }
 }
 
 $useGroupHome = $tikilib->get_preference("useGroupHome",'n');
