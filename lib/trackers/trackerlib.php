@@ -286,12 +286,14 @@ class TrackerLib extends TikiLib {
 
 	/* experimental shared */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='',$numsort=false) {
-		
+		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed;
 		$mid = " where tti.`trackerId`=? ";
 		$bindvars = array((int) $trackerId);
 
 		if ($status) {
 			if (sizeof($status > 1)) {
+				if ($tiki_p_view_trackers_pending != 'y') $status = str_replace('p','',$status);
+				if ($tiki_p_view_trackers_closed != 'y') $status = str_replace('c','',$status);
 				$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
 				$mid.= " and (".implode('=? or ',array_fill(0,count($sts),'`status`'))."=?) ";
 				$bindvars = array_merge($bindvars,$sts);
