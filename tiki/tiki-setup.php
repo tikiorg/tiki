@@ -459,6 +459,9 @@ $smarty->assign('cacheimages',$cacheimages);
 $smarty->assign('wiki_extras','n');
 
 $feature_server_name=$tikilib->get_preference('feature_server_name',$_SERVER["SERVER_NAME"]);
+
+//print($_SERVER["REQUEST_URI"]);
+
 $smarty->assign('feature_server_name',$feature_server_name);
 $_SERVER["SERVER_NAME"] = $feature_server_name;
 
@@ -734,6 +737,7 @@ if($feature_warn_on_edit == 'y') {
     $_SESSION["edit_lock"]=$tikilib->semaphore_set($purlquery["page"]);
     
   } 
+  
   
   if($tikilib->semaphore_is_set($chkpage,$warn_on_edit_time*60)) {
     $smarty->assign('beingEdited','y');

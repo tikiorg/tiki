@@ -19,7 +19,7 @@
 <a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
 {/if}
 {$channels[user].name}</a>
-{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')} (<a class="link" href="tiki-admin_survey.php?surveyId={$channels[user].surveyId}"><small>adm</small></a>){/if}
+{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')} (<a class="link" href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}"><small>adm</small></a>){/if}
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')} (<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}"><small>stats</small></a>){/if}
 </td>
 <td class="{cycle advance=false}">{$channels[user].description}</td>

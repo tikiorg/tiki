@@ -5543,7 +5543,8 @@ class TikiLib {
   function get_links($data)
   {
     $links = Array();
-    if(preg_match_all("/\[([^\[\|\]]+)\]/",$data,$r1)) {
+    if(preg_match_all("/\[([^\[\|\]]+)(\||\])/",$data,$r1)) {
+      
       $res = $r1[1];
       $links = array_unique($res);
     }
@@ -7712,7 +7713,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     // Replace colors ~~color:text~~
     $data = preg_replace("/\~\~([^\:]+):([^\~]+)\~\~/","<span style='color:$1;'>$2</span>",$data);
     // Underlined text
-    $data = preg_replace("/===([^\-]+)===/","<span style='text-decoration:underline;'>$1</span>",$data);
+    $data = preg_replace("/===([^\=]+)===/","<span style='text-decoration:underline;'>$1</span>",$data);
     // Center text
     $data = preg_replace("/::([^\:]+)::/","<div align='center'>$1</div>",$data);
     // Links to internal pages
@@ -7720,7 +7721,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     // Prevent ))PageName(( from being expanded    \"\'
 
     //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
-    preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
+    // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
+    preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
     //print_r($pages);
     foreach(array_unique($pages[2]) as $page) {
       if($desc = $this->page_exists_desc($page)) {

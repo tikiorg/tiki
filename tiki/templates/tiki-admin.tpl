@@ -419,10 +419,10 @@
     <select name="warn_on_edit_time">
     <option value="1" {if $warn_on_edit_time eq 1}selected="selected"{/if}>1</option>
     <option value="2" {if $warn_on_edit_time eq 2}selected="selected"{/if}>2</option>
-    <option value="5" {if $warn_on_edit_time eq 2}selected="selected"{/if}>5</option>
-    <option value="10" {if $warn_on_edit_time eq 2}selected="selected"{/if}>10</option>
-    <option value="15" {if $warn_on_edit_time eq 2}selected="selected"{/if}>15</option>
-    <option value="30" {if $warn_on_edit_time eq 2}selected="selected"{/if}>30</option>
+    <option value="5" {if $warn_on_edit_time eq 5}selected="selected"{/if}>5</option>
+    <option value="10" {if $warn_on_edit_time eq 10}selected="selected"{/if}>10</option>
+    <option value="15" {if $warn_on_edit_time eq 15}selected="selected"{/if}>15</option>
+    <option value="30" {if $warn_on_edit_time eq 30}selected="selected"{/if}>30</option>
     </select> {tr}mins{/tr}
     </td></tr>
     <tr><td class="form">{tr}Pictures{/tr}:</td><td><input type="checkbox" name="feature_wiki_pictures" {if $feature_wiki_pictures eq 'y'}checked="checked"{/if}/></td></tr>

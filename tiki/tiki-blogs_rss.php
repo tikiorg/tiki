@@ -10,7 +10,7 @@ header("content-type: text/xml");
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-blogs_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-blogs_rss.php","img/tiki.jpg",$foo["path"]);
-$foo3=str_replace("tiki-blogs_rss","tiki-view_blog.php",$foo["path"]);
+$foo3=str_replace("tiki-blogs_rss","tiki-view_blog",$foo["path"]);
 $home = httpPrefix().$foo1;
 $img = httpPrefix().$foo2;
 $read = httpPrefix().$foo3;
