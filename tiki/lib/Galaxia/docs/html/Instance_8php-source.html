@@ -8,131 +8,544 @@
 <a class="qindex" href="index.html">Main Page</a> &nbsp; <a class="qindex" href="namespaces.html">Namespace List</a> &nbsp; <a class="qindex" href="hierarchy.html">Class Hierarchy</a> &nbsp; <a class="qindex" href="classes.html">Alphabetical List</a> &nbsp; <a class="qindex" href="annotated.html">Compound List</a> &nbsp; <a class="qindex" href="files.html">File List</a> &nbsp; <a class="qindex" href="functions.html">Compound Members</a> &nbsp; <a class="qindex" href="pages.html">Related Pages</a> &nbsp; </center>
 <hr><h1>Instance.php</h1><div class="fragment"><pre>00001 &lt;?php
 00004 
-00007 <span class="keyword">class </span>Instance <span class="keyword">extends</span> Base {
-00008   var $properties = Array();
-00009   var $user = '';
-00010   var $status = '';
-00011   var $activities = Array();
-00012   var $process;
-00013   var $instanceId = 0;
-00014   
-00019   function getInstance($instanceId)
-00020   {
-00021     <span class="comment">// Get the instance data</span>
-00022     $query = <span class="stringliteral">"select * from galaxia_instances where instanceId=$instanceId"</span>;
-00023     $result = $this-&gt;query($query);
-00024     <span class="keywordflow">if</span>(!$result-&gt;numRows()) <span class="keywordflow">return</span> <span class="keyword">false</span>;
-00025     $res = $result-&gt;fetchRow(DB_FETCHMODE_ASSOC);
-00026 
-00027         <span class="comment">//Populate </span>
-00028         $this-&gt;properties = unserialize($res['properties']);
-00029         $this-&gt;user = $res['user'];
-00030         $this-&gt;status = $res['status'];
-00031         $this-&gt;process = $res['process'];
-00032         $this-&gt;instanceId = $res['instanceId'];
-00033     
-00034     <span class="comment">// Get the activities where the instance is</span>
-00035     
-00036   }
-00037   
-00039   function set($name,$value)
-00040   {
-00041     $this-&gt;properties[$name] = $value;
-00042     <span class="comment">//Save to the database</span>
-00043   }
-00044   
-00046   function get($name)
-00047   {
-00048     <span class="keywordflow">if</span>(isset($this-&gt;properties[$name])) {
-00049       <span class="keywordflow">return</span> $this-&gt;properties[$name];
-00050     } <span class="keywordflow">else</span> {
-00051       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-00052     }
-00053   }
-00054   
-00056   function getActivities()
-00057   {
-00058     <span class="keywordflow">return</span> $this-&gt;activities;
-00059   }
-00060   
-00062   function getStatus()
-00063   {
-00064     <span class="keywordflow">return</span> $this-&gt;status;
-00065   }
-00066   
-00068   function setStatus($status)
-00069   {
-00070     $this-&gt;status = $status; 
-00071     <span class="comment">// and update the database</span>
-00072   }
-00073   
-00075   function getProcess()
-00076   {
-00077         <span class="keywordflow">return</span> $this-&gt;process;
-00078   }
-00079   
-00081   function getUser()
-00082   {
-00083     <span class="keywordflow">return</span> $this-&gt;user;
-00084   }
-00085   
-00087   function setUser($user)
-00088   {
-00089     $this-&gt;user = $user;
-00090     <span class="comment">// save database</span>
+<a name="l00010"></a><a class="code" href="classInstance.html">00010</a> <span class="keyword">class </span><a class="code" href="classInstance.html">Instance</a> <span class="keyword">extends</span> Base {
+00011   var $properties = Array();
+00012   var $owner = '';
+00013   var $status = '';
+00014   var $started;
+00015   var $nextActivity;
+00016   var $nextUser;
+00017   var $ended;
+<a name="l00019"></a><a class="code" href="classInstance.html#m7">00019</a>   var $<a class="code" href="classInstance.html#m7">activities</a> = Array();
+00020   var $pId;
+00021   var $instanceId = 0;
+<a name="l00023"></a><a class="code" href="classInstance.html#m10">00023</a>   var $<a class="code" href="classInstance.html#m10">workitems</a> = Array(); 
+00024   
+00025   function <a class="code" href="classInstance.html">Instance</a>($db)
+00026   {
+00027     $this-&gt;db = $db;
+00028   }
+00029   
+<a name="l00033"></a><a class="code" href="classInstance.html#a1">00033</a>   function <a class="code" href="classInstance.html#a1">getInstance</a>($instanceId)
+00034   {
+00035     <span class="comment">// Get the instance data</span>
+00036     $query = <span class="stringliteral">"select * from galaxia_instances where instanceId=$instanceId"</span>;
+00037     $result = $this-&gt;query($query);
+00038     <span class="keywordflow">if</span>(!$result-&gt;numRows()) <span class="keywordflow">return</span> <span class="keyword">false</span>;
+00039     $res = $result-&gt;fetchRow(DB_FETCHMODE_ASSOC);
+00040 
+00041         <span class="comment">//Populate </span>
+00042         $this-&gt;properties = unserialize($res['properties']);
+00043         $this-&gt;status = $res['status'];
+00044         $this-&gt;pId = $res['pId'];
+00045         $this-&gt;instanceId = $res['instanceId'];
+00046         $this-&gt;owner = $res['owner'];
+00047         $this-&gt;started = $res['started'];
+00048         $this-&gt;ended = $res['ended'];
+00049         $this-&gt;nextActivity = $res['nextActivity'];
+00050         $this-&gt;nextUser = $res['nextUser'];
+00051     <span class="comment">// Get the activities where the instance is (ids only is ok)</span>
+00052     $query = <span class="stringliteral">"select * from galaxia_instance_activities where  instanceId=$instanceId"</span>;
+00053         $result = $this-&gt;query($query);    
+00054         <span class="keywordflow">while</span>($res = $result-&gt;fetchRow(DB_FETCHMODE_ASSOC))
+00055         {
+00056           $this-&gt;activities[]=$res;
+00057         }    
+00058   }
+00059   
+<a name="l00066"></a><a class="code" href="classInstance.html#a2">00066</a>   function <a class="code" href="classInstance.html#a2">setNextActivity</a>($actname)
+00067   {
+00068     $pId = $this-&gt;pId;
+00069     $aid = $this-&gt;getOne(<span class="stringliteral">"select activityId from galaxia_activities where pId=$pId and name='$actname'"</span>);
+00070       
+00071     <span class="keywordflow">if</span>(!$this-&gt;getOne(<span class="stringliteral">"select count(*) from galaxia_activities where activityId=$aid and pId="</span>.$this-&gt;pId)) {
+00072         trigger_error(tra('Fatal error: setting next activity to an unexisting activity'),E_USER_WARNING);
+00073     }
+00074     $this-&gt;nextActivity=$aid;
+00075     $query = <span class="stringliteral">"update galaxia_instances set nextActivity=$aid where instanceId="</span>.$this-&gt;instanceId;
+00076     $this-&gt;query($query);
+00077   }
+00078 
+<a name="l00084"></a><a class="code" href="classInstance.html#a3">00084</a>   function <a class="code" href="classInstance.html#a3">setNextUser</a>($user)
+00085   {
+00086     $pId = $this-&gt;pId;
+00087         $user = addslashes($user);   
+00088     $this-&gt;nextUser=$user;
+00089     $query = <span class="stringliteral">"update galaxia_instances set nextUser='$user' where instanceId="</span>.$this-&gt;instanceId;
+00090     $this-&gt;query($query);
 00091   }
-00092   
-00093   
-00099   function complete($activityId)
-00100   {
-00101   
-00102   }
-00103   
-00108   function terminate()
-00109   {
-00110   
-00111   }
-00112   
-00113   function sendTo($activities)
-00114   {
-00115     <span class="comment">//1: if we are in a join check</span>
-00116     <span class="comment">//if this instance is also in</span>
-00117     <span class="comment">//other activities if so do</span>
-00118     <span class="comment">//nothing</span>
+00092  
+00093 
+00094     
+00101   function _createNewInstance($activityId,$user)
+00102   {
+00103         <span class="comment">// Creates a new instance setting up started,ended,user</span>
+00104         <span class="comment">// and status</span>
+00105         $pid = $this-&gt;getOne(<span class="stringliteral">"select pId from galaxia_activities where activityId=$activityId"</span>);
+00106         $this-&gt;status = 'active';
+00107         $this-&gt;nextActivity = 0;
+00108         $this-&gt;<a class="code" href="classInstance.html#a3">setNextUser</a>('');
+00109         $this-&gt;pId = $pid;
+00110         $now = date(<span class="stringliteral">"U"</span>);
+00111         $this-&gt;started=$now;
+00112         $this-&gt;owner = $user;
+00113         $props=addslashes(serialize($this-&gt;properties));
+00114         $query = <span class="stringliteral">"insert into galaxia_instances(started,ended,status,pId,owner,properties)</span>
+00115 <span class="stringliteral">        values($now,0,'active',$pid,'$user','$props')"</span>;
+00116         $this-&gt;query($query);
+00117         $this-&gt;instanceId = $this-&gt;getOne(<span class="stringliteral">"select max(instanceId) from galaxia_instances where started=$now and owner='$user'"</span>);
+00118         $iid=$this-&gt;instanceId;
 00119         
-00120     <span class="comment">//1: if activity is not start then</span>
-00121     <span class="comment">//check if there a transition from</span>
-00122     <span class="comment">//one of the instance activities to</span>
-00123     <span class="comment">//the destination (or all the</span>
-00124     <span class="comment">//destinations if we are splitting</span>
-00125     
-00126     <span class="comment">//update the instance_activities table</span>
-00127     
-00128     <span class="comment">//we are now in a new activity</span>
-00129     
-00130     <span class="comment">//get roles and maps and determine user</span>
-00131     <span class="comment">//or user is *, use keepUser to check</span>
-00132     <span class="comment">//if we have to mantain the user or not</span>
-00133     <span class="comment">//foreach activity update the user</span>
-00134     
-00135     <span class="comment">//set the user for the instance</span>
-00136     
-00137         <span class="comment">//if the activity is not interactive then</span>
-00138         <span class="comment">//execute the code for the activity and</span>
-00139         <span class="comment">//mark the activity as completed adding</span>
-00140         <span class="comment">//a workitem</span>
-00141         
-00142                 <span class="comment">//if this activity is autorouted then</span>
-00143                 <span class="comment">//determine the next activities or</span>
-00144                 <span class="comment">//activities (if splitting) and</span>
-00145                 <span class="comment">//send the instance there</span>
-00146     
-00147   }
-00148   
-00149   
-00150 }
-00151 ?&gt;
-</pre></div><hr><address style="align: right;"><small>Generated on Mon Apr 14 11:51:59 2003 for Galaxia by
+00120         <span class="comment">// Now update the properties!</span>
+00121     $props = addslashes(serialize($this-&gt;properties));
+00122     $query = <span class="stringliteral">"update galaxia_instances set properties='$props' where instanceId=$iid"</span>;
+00123     $this-&gt;query($query);
+00124 
+00125         
+00126         <span class="comment">// Then add in galaxia_instance_activities an entry for the</span>
+00127         <span class="comment">// activity the user and status running and started now</span>
+00128         $query = <span class="stringliteral">"insert into galaxia_instance_activities(instanceId,activityId,user,started,status)</span>
+00129 <span class="stringliteral">        values($iid,$activityId,'$user',$now,'running')"</span>;
+00130         $this-&gt;query($query);
+00131         
+00132   }
+00133   
+00134   
+<a name="l00139"></a><a class="code" href="classInstance.html#a4">00139</a>   function <a class="code" href="classInstance.html#a4">set</a>($name,$value)
+00140   {
+00141     $this-&gt;properties[$name] = $value;
+00142     $props = addslashes(serialize($this-&gt;properties));
+00143     $query = <span class="stringliteral">"update galaxia_instances set properties='$props' where instanceId="</span>.$this-&gt;instanceId;
+00144     $this-&gt;query($query);
+00145   }
+00146   
+<a name="l00150"></a><a class="code" href="classInstance.html#a5">00150</a>   function <a class="code" href="classInstance.html#a5">get</a>($name)
+00151   {
+00152     <span class="keywordflow">if</span>(isset($this-&gt;properties[$name])) {
+00153       <span class="keywordflow">return</span> $this-&gt;properties[$name];
+00154     } <span class="keywordflow">else</span> {
+00155       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+00156     }
+00157   }
+00158   
+<a name="l00163"></a><a class="code" href="classInstance.html#a6">00163</a>   function <a class="code" href="classInstance.html#a6">getActivities</a>()
+00164   {
+00165     <span class="keywordflow">return</span> $this-&gt;activities;
+00166   }
+00167   
+<a name="l00172"></a><a class="code" href="classInstance.html#a7">00172</a>   function <a class="code" href="classInstance.html#a7">getStatus</a>()
+00173   {
+00174     <span class="keywordflow">return</span> $this-&gt;status;
+00175   }
+00176   
+<a name="l00181"></a><a class="code" href="classInstance.html#a8">00181</a>   function <a class="code" href="classInstance.html#a8">setStatus</a>($status)
+00182   {
+00183     $this-&gt;status = $status; 
+00184     <span class="comment">// and update the database</span>
+00185     $query = <span class="stringliteral">"update galaxia_instances set status='$status' where instanceId="</span>.$this-&gt;instanceId;
+00186     $this-&gt;query($query);  
+00187   }
+00188   
+00189   
+<a name="l00193"></a><a class="code" href="classInstance.html#a9">00193</a>   function <a class="code" href="classInstance.html#a9">getInstanceId</a>()
+00194   {
+00195     <span class="keywordflow">return</span> $this-&gt;instanceId;
+00196   }
+00197   
+<a name="l00201"></a><a class="code" href="classInstance.html#a10">00201</a>   function <a class="code" href="classInstance.html#a10">getProcessId</a>()
+00202   {
+00203         <span class="keywordflow">return</span> $this-&gt;pId;
+00204   }
+00205   
+<a name="l00209"></a><a class="code" href="classInstance.html#a11">00209</a>   function <a class="code" href="classInstance.html#a11">getOwner</a>()
+00210   {
+00211     <span class="keywordflow">return</span> $this-&gt;owner;
+00212   }
+00213   
+<a name="l00217"></a><a class="code" href="classInstance.html#a12">00217</a>   function <a class="code" href="classInstance.html#a12">setOwner</a>($user)
+00218   {
+00219     $this-&gt;owner = $user;
+00220     <span class="comment">// save database</span>
+00221     $query = <span class="stringliteral">"update galaxia_instances set owner='$owner' where instanceId="</span>.$this-&gt;instanceId;
+00222     $this-&gt;query($query);  
+00223   }
+00224   
+00225   
+<a name="l00231"></a><a class="code" href="classInstance.html#a13">00231</a>   function <a class="code" href="classInstance.html#a13">setActivityUser</a>($activityId,$theuser)
+00232   {
+00233     <span class="keywordflow">if</span>(empty($theuser)) $theuser=<span class="charliteral">'*'</span>;
+00234         <span class="keywordflow">for</span>($i=0;$i&lt;count($this-&gt;activities);$i++) {
+00235           <span class="keywordflow">if</span>($this-&gt;activities[$i]['activityId']==$activityId) {
+00236             $this-&gt;activities[$i]['user']=$theuser;
+00237             $query = <span class="stringliteral">"update galaxia_instance_activities set user='$theuser' where activityId=$activityId and instanceId="</span>.$this-&gt;instanceId;
+00238 
+00239             $this-&gt;query($query);
+00240           }
+00241         }  
+00242   }
+00243   
+<a name="l00248"></a><a class="code" href="classInstance.html#a14">00248</a>   function <a class="code" href="classInstance.html#a14">getActivityUser</a>($activityId)
+00249   {
+00250         <span class="keywordflow">for</span>($i=0;$i&lt;count($this-&gt;activities);$i++) {
+00251           <span class="keywordflow">if</span>($this-&gt;activities[$i]['activityId']==$activityId) {
+00252             <span class="keywordflow">return</span> $this-&gt;activities[$i]['user'];
+00253           }
+00254         }  
+00255         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+00256   }
+00257 
+<a name="l00262"></a><a class="code" href="classInstance.html#a15">00262</a>   function <a class="code" href="classInstance.html#a15">setActivityStatus</a>($activityId,$status)
+00263   {
+00264         <span class="keywordflow">for</span>($i=0;$i&lt;count($this-&gt;activities);$i++) {
+00265           <span class="keywordflow">if</span>($this-&gt;activities[$i]['activityId']==$activityId) {
+00266             $this-&gt;activities[$i]['status']=$status;
+00267             $query = <span class="stringliteral">"update galaxia_instance_activities set status='$status' where activityId=$activityId and instanceId="</span>.$this-&gt;instanceId;
+00268             $this-&gt;query($query);
+00269           }
+00270         }  
+00271   }
+00272   
+00273   
+<a name="l00278"></a><a class="code" href="classInstance.html#a16">00278</a>   function <a class="code" href="classInstance.html#a16">getActivityStatus</a>($activityId)
+00279   {
+00280         <span class="keywordflow">for</span>($i=0;$i&lt;count($this-&gt;activities);$i++) {
+00281           <span class="keywordflow">if</span>($this-&gt;activities[$i]['activityId']==$activityId) {
+00282             <span class="keywordflow">return</span> $this-&gt;activities[$i]['status'];
+00283           }
+00284         }  
+00285         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+00286   }
+00287   
+<a name="l00291"></a><a class="code" href="classInstance.html#a17">00291</a>   function <a class="code" href="classInstance.html#a17">setActivityStarted</a>($activityId)
+00292   {
+00293         $now = date(<span class="stringliteral">"U"</span>);
+00294         <span class="keywordflow">for</span>($i=0;$i&lt;count($this-&gt;activities);$i++) {
+00295           <span class="keywordflow">if</span>($this-&gt;activities[$i]['activityId']==$activityId) {
+00296             $this-&gt;activities[$i]['started']=$now;
+00297             $query = <span class="stringliteral">"update galaxia_instance_activities set started=$now where activityId=$activityId and instanceId="</span>.$this-&gt;instanceId;
+00298             $this-&gt;query($query);
+00299           }
+00300         }  
+00301   }
+00302   
+<a name="l00306"></a><a class="code" href="classInstance.html#a18">00306</a>   function <a class="code" href="classInstance.html#a18">getActivityStarted</a>($activityId)
+00307   {
+00308         <span class="keywordflow">for</span>($i=0;$i&lt;count($this-&gt;activities);$i++) {
+00309           <span class="keywordflow">if</span>($this-&gt;activities[$i]['activityId']==$activityId) {
+00310             <span class="keywordflow">return</span> $this-&gt;activities[$i]['started'];
+00311           }
+00312         }  
+00313         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+00314   }
+00315   
+00320   function _get_instance_activity($activityId)
+00321   {
+00322         <span class="keywordflow">for</span>($i=0;$i&lt;count($this-&gt;activities);$i++) {
+00323           <span class="keywordflow">if</span>($this-&gt;activities[$i]['activityId']==$activityId) {
+00324             <span class="keywordflow">return</span> $this-&gt;activities[$i];
+00325           }
+00326         }  
+00327         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+00328   }
+00329 
+<a name="l00333"></a><a class="code" href="classInstance.html#a19">00333</a>   function <a class="code" href="classInstance.html#a19">setStarted</a>($time)
+00334   {
+00335     $this-&gt;started=$time;
+00336     $query = <span class="stringliteral">"update galaxia_instances set started=$time where instanceId="</span>.$this-&gt;instanceId;
+00337     $this-&gt;query($query);    
+00338   }
+00339   
+<a name="l00343"></a><a class="code" href="classInstance.html#a20">00343</a>   function <a class="code" href="classInstance.html#a20">getStarted</a>()
+00344   {
+00345     <span class="keywordflow">return</span> $this-&gt;started;
+00346   }
+00347   
+<a name="l00351"></a><a class="code" href="classInstance.html#a21">00351</a>   function <a class="code" href="classInstance.html#a21">setEnded</a>($time)
+00352   {
+00353         $this-&gt;ended=$time;
+00354     $query = <span class="stringliteral">"update galaxia_instances set ended=$time where instanceId="</span>.$this-&gt;instanceId;
+00355     $this-&gt;query($query);    
+00356   }
+00357   
+<a name="l00361"></a><a class="code" href="classInstance.html#a22">00361</a>   function <a class="code" href="classInstance.html#a22">getEnded</a>()
+00362   {
+00363     <span class="keywordflow">return</span> $this-&gt;ended;
+00364   }
+00365   
+00366 
+00367   
+<a name="l00384"></a><a class="code" href="classInstance.html#a23">00384</a>   function <a class="code" href="classInstance.html#a23">complete</a>($activityId=0,$force=<span class="keyword">false</span>,$addworkitem=<span class="keyword">true</span>)
+00385   {
+00386         global $user;
+00387         global $__activity_completed;
+00388         
+00389         $__activity_completed = <span class="keyword">true</span>;
+00390         
+00391         <span class="keywordflow">if</span>(empty($user)) {$theuser=<span class="charliteral">'*'</span>;} <span class="keywordflow">else</span> {$theuser=$user;}
+00392         
+00393         <span class="keywordflow">if</span>($activityId==0) {
+00394           $activityId=$_REQUEST['activityId'];
+00395         }       
+00396         
+00397         <span class="comment">// If we are completing a start activity then the instance must </span>
+00398         <span class="comment">// be created first!</span>
+00399         $type = $this-&gt;getOne(<span class="stringliteral">"select type from galaxia_activities where activityId=$activityId"</span>);      
+00400         <span class="keywordflow">if</span>($type=='start') {
+00401           $this-&gt;_createNewInstance($activityId,$theuser);
+00402         }
+00403                 
+00404         <span class="comment">// Now set ended</span>
+00405         $now = date(<span class="stringliteral">"U"</span>);
+00406         $query = <span class="stringliteral">"update galaxia_instance_activities set ended=$now where activityId=$activityId and instanceId="</span>.$this-&gt;instanceId;
+00407         $this-&gt;query($query);
+00408         
+00409         <span class="comment">//Add a workitem to the instance </span>
+00410         $iid = $this-&gt;instanceId;
+00411         <span class="keywordflow">if</span>($addworkitem) {
+00412                 $max = $this-&gt;getOne(<span class="stringliteral">"select max(orderId) from galaxia_workitems where instanceId=$iid"</span>);
+00413                 <span class="keywordflow">if</span>(!$max) {
+00414                         $max=1;         
+00415                 } <span class="keywordflow">else</span> {
+00416                         $max++;
+00417                 }
+00418                 $act = $this-&gt;_get_instance_activity($activityId);
+00419                 <span class="keywordflow">if</span>(!$act) {
+00420                   <span class="comment">//Then this is a start activity ending</span>
+00421                   $started = $this-&gt;<a class="code" href="classInstance.html#a20">getStarted</a>();
+00422                   $putuser = $this-&gt;<a class="code" href="classInstance.html#a11">getOwner</a>();
+00423                 } <span class="keywordflow">else</span> {
+00424           $started=$act['started'];
+00425                   $putuser = $act['user'];
+00426                 }
+00427                 $ended = date(<span class="stringliteral">"U"</span>);
+00428                 $properties = addslashes(serialize($this-&gt;properties));
+00429                 $query=<span class="stringliteral">"insert into galaxia_workitems(instanceId, orderId, activityId, started, ended, properties, user)</span>
+00430 <span class="stringliteral">                values($iid,$max,$activityId,$started,$ended,'$properties','$putuser')"</span>;                
+00431                 $this-&gt;query($query);
+00432                 
+00433         }
+00434         
+00435         <span class="comment">//Set the status for the instance-activity to completed</span>
+00436         $this-&gt;<a class="code" href="classInstance.html#a15">setActivityStatus</a>($activityId,'completed');
+00437         
+00438         <span class="comment">//If this and end actt then terminate the instance</span>
+00439         <span class="keywordflow">if</span>($type=='end') {
+00440           $this-&gt;<a class="code" href="classInstance.html#a24">terminate</a>();
+00441           <span class="keywordflow">return</span>;
+00442         }
+00443         
+00444         <span class="comment">//If the activity ending is autorouted then send to the</span>
+00445         <span class="comment">//activity</span>
+00446         <span class="keywordflow">if</span>($type!='end') {
+00447                 <span class="keywordflow">if</span>( ($force)||($this-&gt;getOne(<span class="stringliteral">"select isAutoRouted from galaxia_activities where activityId=$activityId"</span>)==<span class="charliteral">'y'</span>))         {
+00448                         <span class="comment">// Now determine where to send the instance</span>
+00449                         $query = <span class="stringliteral">"select actToId from galaxia_transitions where actFromId=$activityId"</span>;
+00450                         $result = $this-&gt;query($query);    
+00451                         $candidates = Array();
+00452                         <span class="keywordflow">while</span>($res = $result-&gt;fetchRow(DB_FETCHMODE_ASSOC))
+00453                         {
+00454                                 $candidates[]=$res['actToId'];
+00455                         }  
+00456                         <span class="keywordflow">if</span>($type=='split') {
+00457                           $first = <span class="keyword">true</span>;
+00458                           foreach($candidates as $cand) {
+00459                             $this-&gt;<a class="code" href="classInstance.html#a25">sendTo</a>($activityId,$cand,$first);
+00460                                 $first = <span class="keyword">false</span>;
+00461                           }
+00462                         } elseif($type=='<span class="keywordflow">switch</span>') {
+00463                                 <span class="keywordflow">if</span>(in_array($this-&gt;nextActivity,$candidates)) {
+00464                                         $this-&gt;<a class="code" href="classInstance.html#a25">sendTo</a>($activityId,$this-&gt;nextActivity);
+00465                                 } <span class="keywordflow">else</span> {
+00466                                         trigger_error(tra('Fatal error: nextActivity doesn match any candidate in autoruting <span class="keywordflow">switch</span> activity'),E_USER_WARNING);
+00467                                 }
+00468                         } <span class="keywordflow">else</span> {
+00469                           <span class="keywordflow">if</span>(count($candidates)&gt;1) {
+00470                             trigger_error(tra('Fatal error: non-deterministic decision <span class="keywordflow">for</span> autorouting activity'),E_USER_WARNING);
+00471                           } <span class="keywordflow">else</span> {
+00472                             $this-&gt;<a class="code" href="classInstance.html#a25">sendTo</a>($activityId,$candidates[0]);
+00473                           }
+00474                         }
+00475                         
+00476                 }
+00477         }
+00478   }
+00479   
+<a name="l00486"></a><a class="code" href="classInstance.html#a24">00486</a>   function <a class="code" href="classInstance.html#a24">terminate</a>()
+00487   {
+00488         <span class="comment">//Set the status of the instance to completed</span>
+00489         $now = date(<span class="stringliteral">"U"</span>);
+00490         $query = <span class="stringliteral">"update galaxia_instances set status='completed', ended=$now where instanceId="</span>.$this-&gt;instanceId;
+00491         $this-&gt;query($query);
+00492         $query = <span class="stringliteral">"delete from galaxia_instance_activities where instanceId="</span>.$this-&gt;instanceId;
+00493         $this-&gt;query($query);
+00494         $this-&gt;status = 'completed';
+00495         $this-&gt;activities = Array();
+00496   }
+00497   
+00498   
+<a name="l00504"></a><a class="code" href="classInstance.html#a25">00504</a>   function <a class="code" href="classInstance.html#a25">sendTo</a>($from,$activityId,$split=<span class="keyword">false</span>)
+00505   {
+00506     <span class="comment">//1: if we are in a join check</span>
+00507     <span class="comment">//if this instance is also in</span>
+00508     <span class="comment">//other activity if so do</span>
+00509     <span class="comment">//nothing</span>
+00510         $type = $this-&gt;getOne(<span class="stringliteral">"select type from galaxia_activities where activityId=$activityId"</span>);
+00511         
+00512         <span class="comment">// Verify the existance of a transition</span>
+00513         <span class="keywordflow">if</span>(!$this-&gt;getOne(<span class="stringliteral">"select count(*) from galaxia_transitions where actFromId=$from and actToId=$activityId"</span>)) {
+00514           trigger_error(tra('Fatal error: trying to send an instance to an activity but no transition found'),E_USER_WARNING);
+00515         }
+00516         
+00517     
+00518     <span class="comment">//try to determine the user or *</span>
+00519     <span class="comment">//Use the nextUser</span>
+00520     <span class="keywordflow">if</span>($this-&gt;nextUser) {
+00521         $putuser = $this-&gt;nextUser;
+00522     } <span class="keywordflow">else</span> {
+00523             $candidates = Array();
+00524             $query = <span class="stringliteral">"select roleId from galaxia_activity_roles where activityId=$activityId"</span>;
+00525                 $result = $this-&gt;query($query);    
+00526                 <span class="keywordflow">while</span>($res = $result-&gt;fetchRow(DB_FETCHMODE_ASSOC)) {
+00527                   $roleId=$res['roleId'];
+00528                   $query2 = <span class="stringliteral">"select user from galaxia_user_roles where roleId=$roleId"</span>;
+00529                   $result2 = $this-&gt;query($query2);               
+00530                   <span class="keywordflow">while</span>($res2 = $result2-&gt;fetchRow(DB_FETCHMODE_ASSOC)) {
+00531                     $candidates[]=$res2['user'];
+00532                   }
+00533                 }
+00534                 <span class="keywordflow">if</span>(count($candidates)==1) {
+00535                   $putuser = $candidates[0];
+00536                 } <span class="keywordflow">else</span> {
+00537                   $putuser = <span class="charliteral">'*'</span>;
+00538                 }
+00539         }        
+00540     <span class="comment">//update the instance_activities table</span>
+00541     <span class="comment">//if not splitting delete first</span>
+00542     <span class="comment">//please update started,status,user</span>
+00543     <span class="keywordflow">if</span>(!$split) {
+00544       $query = <span class="stringliteral">"delete from galaxia_instance_activities where instanceId="</span>.$this-&gt;instanceId.<span class="stringliteral">" and activityId=$from"</span>;
+00545       $this-&gt;query($query);
+00546         }
+00547     $now = date(<span class="stringliteral">"U"</span>);
+00548     $iid = $this-&gt;instanceId;
+00549     $query=<span class="stringliteral">"replace into galaxia_instance_activities(instanceId,activityId,user,status,started)</span>
+00550 <span class="stringliteral">    values($iid,$activityId,'$putuser','running',$now)"</span>;
+00551     $this-&gt;query($query);
+00552     
+00553     <span class="comment">//we are now in a new activity</span>
+00554     $this-&gt;activities=Array();
+00555     $query = <span class="stringliteral">"select * from galaxia_instance_activities where  instanceId=$iid"</span>;
+00556         $result = $this-&gt;query($query);    
+00557         <span class="keywordflow">while</span>($res = $result-&gt;fetchRow(DB_FETCHMODE_ASSOC))
+00558         {
+00559           $this-&gt;activities[]=$res;
+00560         }    
+00561         
+00562         <span class="keywordflow">if</span>($type=='join') {
+00563           <span class="keywordflow">if</span>(count($this-&gt;activities)&gt;1) {
+00564             <span class="comment">// This instance will have to wait!</span>
+00565             <span class="keywordflow">return</span>;
+00566           }
+00567         }    
+00568 
+00569      
+00570     <span class="comment">//if the activity is not interactive then</span>
+00571         <span class="comment">//execute the code for the activity and</span>
+00572         <span class="comment">//complete the activity</span>
+00573     $isInteractive = $this-&gt;getOne(<span class="stringliteral">"select isInteractive from galaxia_activities where activityId=$activityId"</span>);
+00574     <span class="keywordflow">if</span>($isInteractive==<span class="charliteral">'n'</span>) {
+00575       <span class="comment">// Now execute the code for the activity but we are in a method!</span>
+00576       <span class="comment">// so just use an fopen with http mode</span>
+00577       $parsed=parse_url($_SERVER[<span class="stringliteral">"REQUEST_URI"</span>]);
+00578           $URI=httpPrefix().$parsed[<span class="stringliteral">"path"</span>];
+00579           $parts=explode(<span class="charliteral">'/'</span>,$URI);
+00580           $parts[count($parts)-1]=<span class="stringliteral">"tiki-g-run_activity.php?activityId=$activityId&amp;iid=$iid"</span>;
+00581           $URI=implode(<span class="charliteral">'/'</span>,$parts);
+00582       $fp = fopen($URI,<span class="stringliteral">"r"</span>);
+00583       $data = '';
+00584       <span class="keywordflow">if</span>(!$fp) {
+00585         trigger_error(tra(<span class="stringliteral">"Fatal error: cannot execute automatic activity $activityId"</span>),E_USER_WARNING);
+00586         die;
+00587       }
+00588       <span class="keywordflow">while</span>(!feof($fp)) {
+00589         $data.=fread($fp,8192);
+00590       }
+00591 
+00592       <span class="comment">/*</span>
+00593 <span class="comment">      if(!empty($data)) {</span>
+00594 <span class="comment">                trigger_error(tra("Fatal error: automatic activity produced some output:$data"),E_USER_WARNING);      </span>
+00595 <span class="comment">      }</span>
+00596 <span class="comment">      */</span>
+00597       fclose($fp);
+00598       
+00599       <span class="comment">// Reload in case the activity did some change</span>
+00600       $this-&gt;<a class="code" href="classInstance.html#a1">getInstance</a>($this-&gt;instanceId);
+00601       
+00602       $this-&gt;<a class="code" href="classInstance.html#a23">complete</a>($activityId);
+00603     }
+00604    
+00605   }
+00606   
+<a name="l00610"></a><a class="code" href="classInstance.html#a26">00610</a>   function <a class="code" href="classInstance.html#a26">get_instance_comment</a>($cId)
+00611   {
+00612     $iid = $this-&gt;instanceId;
+00613     $query = <span class="stringliteral">"select * from galaxia_instance_comments where instanceId=$iid and cId=$cId"</span>;
+00614     $result = $this-&gt;query($query);
+00615         $res = $result-&gt;fetchRow(DB_FETCHMODE_ASSOC);
+00616         <span class="keywordflow">return</span> $res;
+00617               
+00618   }
+00619   
+<a name="l00623"></a><a class="code" href="classInstance.html#a27">00623</a>   function <a class="code" href="classInstance.html#a27">replace_instance_comment</a>($cId, $activityId, $activity, $user, $title, $comment)
+00624   {
+00625     <span class="keywordflow">if</span>(!$user) $user='<span class="stringliteral">"Anonymous"</span>';
+00626     $title=addslashes($title);
+00627     $comment=addslashes($comment);
+00628     $activity=addslashes($activity);
+00629         $iid= $this-&gt;instanceId;
+00630         <span class="keywordflow">if</span>($cId) {
+00631                 $query = <span class="stringliteral">"update galaxia_instance_comments set</span>
+00632 <span class="stringliteral">                title = '$title',</span>
+00633 <span class="stringliteral">                comment = '$comment'</span>
+00634 <span class="stringliteral">                where</span>
+00635 <span class="stringliteral">                iid=$iid and cId=$cId"</span>;
+00636                 $this-&gt;query($query);                   
+00637         } <span class="keywordflow">else</span> {
+00638                 $hash = md5($title.$comment);
+00639                 <span class="keywordflow">if</span>($this-&gt;getOne(<span class="stringliteral">"select count(*) from galaxia_instance_comments where instanceId=$iid and hash='$hash'"</span>)) <span class="keywordflow">return</span> <span class="keyword">false</span>;
+00640             $now = date(<span class="stringliteral">"U"</span>);
+00641                 $query =<span class="stringliteral">"insert into galaxia_instance_comments</span>
+00642 <span class="stringliteral">                (instanceId, user, activityId, activity, title, comment, timestamp, hash)</span>
+00643 <span class="stringliteral">                values</span>
+00644 <span class="stringliteral">                ($iid, '$user', $activityId, '$activity', '$title', '$comment', $now, '$hash')"</span>;
+00645                 $this-&gt;query($query);           
+00646         }  
+00647   }
+00648   
+<a name="l00652"></a><a class="code" href="classInstance.html#a28">00652</a>   function <a class="code" href="classInstance.html#a28">remove_instance_comment</a>($cId)
+00653   {
+00654     $iid = $this-&gt;instanceId;
+00655     $query = <span class="stringliteral">"delete from galaxia_instance_comments where cId=$cId and instanceId=$iid"</span>;
+00656     $this-&gt;query($query);
+00657   }
+00658  
+<a name="l00662"></a><a class="code" href="classInstance.html#a29">00662</a>   function <a class="code" href="classInstance.html#a29">get_instance_comments</a>()
+00663   {
+00664     $iid = $this-&gt;instanceId;
+00665     $query = <span class="stringliteral">"select * from galaxia_instance_comments where instanceId=$iid order by timestamp desc"</span>;
+00666         $result = $this-&gt;query($query);    
+00667         $ret = Array();
+00668         <span class="keywordflow">while</span>($res = $result-&gt;fetchRow(DB_FETCHMODE_ASSOC)) {    
+00669                 $ret[] = $res;
+00670         }
+00671         <span class="keywordflow">return</span> $ret;
+00672   }  
+00673   
+00674 
+00675   
+00676 }
+00677 ?&gt;
+</pre></div><hr><address style="align: right;"><small>Generated on Mon Apr 21 11:15:31 2003 for Galaxia by
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border=0 
 width=110 height=53></a>1.3-rc3 </small></address>
