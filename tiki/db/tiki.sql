@@ -1048,6 +1048,7 @@ CREATE TABLE tiki_dsn (
 # --------------------------------------------------------
 
 
+DROP TABLE if exists tiki_dynamic_variables;
 CREATE TABLE tiki_dynamic_variables (
   name varchar(40) NOT NULL,
   DATA text,
@@ -2528,7 +2529,7 @@ CREATE TABLE tiki_structures (
   page_alias varchar(240) NOT NULL default '',
   pos int(4) default NULL,
   PRIMARY KEY  (page_ref_id),
-  INDEX KEY (page_id, parent_id)
+  KEY pidpaid (page_id,parent_id)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -3904,8 +3905,6 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.m
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols', 'y');
 
 # Dynamic variables
-DROP TABLE if exists tiki_dynamic_variables;
-CREATE  TABLE tiki_dynamic_variables( name varchar( 40  ) not null,  DATA text,  PRIMARY  KEY ( name )  );
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 
 #

@@ -568,7 +568,7 @@ END;
 CREATE  INDEX "tiki_blog_posts_data" ON "tiki_blog_posts"("data");
 CREATE  INDEX "tiki_blog_posts_blogId" ON "tiki_blog_posts"("blogId");
 CREATE  INDEX "tiki_blog_posts_created" ON "tiki_blog_posts"("created");
-CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data");
+CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data" "title");
 
 -- --------------------------------------------------------
 --
@@ -1350,6 +1350,9 @@ END;
 /
 
 -- --------------------------------------------------------
+DROP TABLE "if" exists tiki_dynamic_variables;
+
+
 CREATE TABLE "tiki_dynamic_variables" (
   "name" varchar(40) NOT NULL,
   "DATA" clob,
@@ -2605,8 +2608,10 @@ CREATE TABLE "tiki_page_footnotes" (
 --
 DROP TABLE "tiki_pages";
 
+CREATE SEQUENCE "tiki_pages_sequ" INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE "tiki_pages" (
+  "page_id" number(14) NOT NULL,
   "pageName" varchar(160) default '' NOT NULL,
   "hits" number(8) default NULL,
   "data" clob,
@@ -2625,12 +2630,18 @@ CREATE TABLE "tiki_pages" (
   "pageRank" decimal(4,3) default NULL,
   "creator" varchar(200) default NULL,
   "page_size" number(10) default 0,
-  PRIMARY KEY ("pageName")
-) ;
+  PRIMARY KEY ("page_id")
+  UNIQUE KEY (pageName),
+)  ;
 
+CREATE TRIGGER "tiki_pages_trig" BEFORE INSERT ON "tiki_pages" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_pages_sequ".nextval into :NEW."page_id" FROM DUAL;
+END;
+/
 CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data");
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank");
-CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","data");
+CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName" "description" "data");
 
 -- --------------------------------------------------------
 --
@@ -3204,16 +3215,23 @@ END;
 --
 DROP TABLE "tiki_structures";
 
+CREATE SEQUENCE "tiki_structures_sequ" INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE "tiki_structures" (
-  "structID" varchar(40) default '' NOT NULL,
-  "page" varchar(240) default '' NOT NULL,
+  "page_ref_id" number(14) NOT NULL,
+  "parent_id" number(14) default NULL,
+  "page_id" number(14) NOT NULL,
   "page_alias" varchar(240) default '' NOT NULL,
-  "parent" varchar(240) default '' NOT NULL,
   "pos" number(4) default NULL,
-  PRIMARY KEY ("page","parent")
-) ;
+  PRIMARY KEY ("page_ref_id")
+)   ;
 
+CREATE TRIGGER "tiki_structures_trig" BEFORE INSERT ON "tiki_structures" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_structures_sequ".nextval into :NEW."page_ref_id" FROM DUAL;
+END;
+/
+CREATE  INDEX "tiki_structures_pidpaid" ON "tiki_structures"("page_id","parent_id");
 
 -- --------------------------------------------------------
 --
@@ -5836,6 +5854,7 @@ CREATE TABLE "tiki_integrator_rules" (
   "type" char(1) default 'n' NOT NULL,
   "casesense" char(1) default 'y' NOT NULL,
   "rxmod" varchar(20) default '' NOT NULL,
+  "enabled" char(1) default 'n' NOT NULL,
   "description" clob NOT NULL,
   PRIMARY KEY (ruleID),
 ) ;
@@ -5850,22 +5869,22 @@ CREATE  INDEX "tiki_integrator_rules_repID" ON "tiki_integrator_rules"("repID");
 --
 -- Dumping data for table 'tiki_integrator_rules'
 --
-INSERT INTO tiki_integrator_rules VALUES (1,1,1,'<\\!DOCTYPE','<!-- Commented by Tiki integrator <!DOCTYPE','y','n','i','Start comment from the begining of document');
+INSERT INTO tiki_integrator_rules VALUES (1,1,1,'.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <BODY> tags');
 
 
-INSERT INTO tiki_integrator_rules VALUES (2,1,2,'</html>','','y','n','i','Remove </html>');
+INSERT INTO tiki_integrator_rules VALUES (2,1,2,'img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix images path');
 
 
-INSERT INTO tiki_integrator_rules VALUES (3,1,3,'<body.*>','-->','y','n','i','End of comment just after <body>');
+INSERT INTO tiki_integrator_rules VALUES (3,1,3,'href=(\"|\')(?!(--|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Relace internal links to integrator. Dont touch an external links.');
 
 
-INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove </body>');
+--
+-- Integrator permissions
+--
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
 
 
-INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path');
-
-
-INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(--|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
 
 
 ;

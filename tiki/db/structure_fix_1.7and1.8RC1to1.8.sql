@@ -67,7 +67,7 @@ where ts.page=tp1.pageName AND ts.parent=tp2.pageName;
 #create a temporary table to hold parent/page relationship
 CREATE TABLE temp_parents (
   parent_id int(14) NOT NULL,
-  page_id int(14) NOT NULL,
+  page_id int(14) NOT NULL
 ) TYPE=MyISAM;
 
 # Populate the table. 

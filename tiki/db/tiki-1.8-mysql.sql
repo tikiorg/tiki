@@ -448,7 +448,7 @@ CREATE TABLE tiki_blog_posts (
   KEY data (data(255)),
   KEY blogId (blogId),
   KEY created (created),
-  FULLTEXT KEY ft (data)
+  FULLTEXT KEY ft (data, title)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -1048,6 +1048,7 @@ CREATE TABLE tiki_dsn (
 # --------------------------------------------------------
 
 
+DROP TABLE if exists tiki_dynamic_variables;
 CREATE TABLE tiki_dynamic_variables (
   name varchar(40) NOT NULL,
   DATA text,
@@ -2049,6 +2050,7 @@ CREATE TABLE tiki_page_footnotes (
 
 DROP TABLE IF EXISTS tiki_pages;
 CREATE TABLE tiki_pages (
+  page_id int(14) NOT NULL auto_increment,
   pageName varchar(160) NOT NULL default '',
   hits int(8) default NULL,
   data text,
@@ -2067,11 +2069,12 @@ CREATE TABLE tiki_pages (
   pageRank decimal(4,3) default NULL,
   creator varchar(200) default NULL,
   page_size int(10) unsigned default 0,
-  PRIMARY KEY  (pageName),
+  PRIMARY KEY  (page_id),
+  UNIQUE KEY (pageName),
   KEY data (data(255)),
   KEY pageRank (pageRank),
-  FULLTEXT KEY ft (pageName,data)
-) TYPE=MyISAM;
+  FULLTEXT KEY ft (pageName, description, data)
+) TYPE=MyISAM AUTO_INCREMENT=1;
 # --------------------------------------------------------
 
 #
@@ -2520,13 +2523,14 @@ CREATE TABLE tiki_shoutbox (
 
 DROP TABLE IF EXISTS tiki_structures;
 CREATE TABLE tiki_structures (
-  structID varchar(40) NOT NULL default '',
-  page varchar(240) NOT NULL default '',
+  page_ref_id int(14) NOT NULL auto_increment,
+  parent_id int(14) default NULL,
+  page_id int(14) NOT NULL,
   page_alias varchar(240) NOT NULL default '',
-  parent varchar(240) NOT NULL default '',
   pos int(4) default NULL,
-  PRIMARY KEY  (page,parent)
-) TYPE=MyISAM;
+  PRIMARY KEY  (page_ref_id),
+  KEY pidpaid (page_id,parent_id)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
 #
@@ -3937,6 +3941,7 @@ CREATE TABLE tiki_integrator_rules (
   type char(1) NOT NULL default 'n',
   casesense char(1) NOT NULL default 'y',
   rxmod varchar(20) NOT NULL default '',
+  enabled char(1) NOT NULL default 'n',
   description text NOT NULL,
   PRIMARY KEY (ruleID),
   KEY repID (repID)
@@ -3945,10 +3950,13 @@ CREATE TABLE tiki_integrator_rules (
 #
 # Dumping data for table 'tiki_integrator_rules'
 #
-INSERT INTO tiki_integrator_rules VALUES (1,1,1,'<\\!DOCTYPE','<!-- Commented by Tiki integrator <!DOCTYPE','y','n','i','Start comment from the begining of document');
-INSERT INTO tiki_integrator_rules VALUES (2,1,2,'</html>','','y','n','i','Remove </html>');
-INSERT INTO tiki_integrator_rules VALUES (3,1,3,'<body.*>','-->','y','n','i','End of comment just after <body>');
-INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove </body>');
-INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path');
-INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(#|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
+INSERT INTO tiki_integrator_rules VALUES (1,1,1,'.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <BODY> tags');
+INSERT INTO tiki_integrator_rules VALUES (2,1,2,'img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix images path');
+INSERT INTO tiki_integrator_rules VALUES (3,1,3,'href=(\"|\')(?!(#|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Relace internal links to integrator. Dont touch an external links.');
+
+#
+# Integrator permissions
+#
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
 
