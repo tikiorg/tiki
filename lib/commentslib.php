@@ -1321,9 +1321,11 @@ class Comments extends TikiLib {
 	
 	if ($feature_forum_parse != 'y') {
 		$data = $this->parse_quote($data);
+	} else {
+		$data = nl2br($data);
 	}
 	
-	return nl2br($data);
+	return $data;
     }
     
     function parse_quote(&$data) {

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.58 2004-07-01 16:43:16 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.59 2004-07-01 16:54:31 teedog Exp $
 
 MoreNeat theme
 */
@@ -1916,6 +1916,7 @@ border-width: 1px 1px 0px 1px;
 border-style: solid;
 border-color: #A9B8C2;
 color: black;
+font-weight: bold;
 background-color: #A9B8C2;
 font-size: 8pt;
 }
@@ -1926,7 +1927,5 @@ border-color: #A9B8C2;
 border-width: 0px 1px 1px 1px;
 border-style: solid;
 color: black;
-font-weight: normal;
-font-size: 8pt;
 background-color: #edeeef;
 }
