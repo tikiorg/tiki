@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.177 2003-12-18 01:13:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.178 2003-12-19 00:26:13 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -533,6 +533,15 @@ $max_rss_file_gallery = 10;
 $max_rss_blog = 10;
 $max_rss_mapfiles = 10;
 
+$metatag_keywords = '';
+$metatag_description = '';
+$metatag_author = '';
+$metatag_geoposition = '';
+$metatag_georegion = '';
+$metatag_geoplacename = '';
+$metatag_robots = '';
+$metatag_revisitafter = '';
+
 $keep_versions = 1;
 
 $feature_custom_home = 'n';
@@ -716,6 +725,15 @@ $smarty->assign('max_rss_wiki', $max_rss_wiki);
 $smarty->assign('max_rss_image_gallery', $max_rss_image_gallery);
 $smarty->assign('max_rss_file_gallery', $max_rss_file_gallery);
 $smarty->assign('max_rss_blog', $max_rss_blog);
+
+$smarty->assign('metatag_keywords', $metatag_keywords);
+$smarty->assign('metatag_description', $metatag_description);
+$smarty->assign('metatag_author', $metatag_author);
+$smarty->assign('metatag_geoposition', $metatag_geoposition);
+$smarty->assign('metatag_georegion', $metatag_georegion);
+$smarty->assign('metatag_geoplacename', $metatag_geoplacename);
+$smarty->assign('metatag_robots', $metatag_robots);
+$smarty->assign('metatag_revisitafter', $metatag_revisitafter);
 
 $smarty->assign("rssfeed_default_version", $tikilib->get_preference("rssfeed_default_version","2"));
 $smarty->assign("rssfeed_language", $tikilib->get_preference("rssfeed_language","en-us"));

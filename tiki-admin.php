@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.94 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.95 2003-12-19 00:23:23 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -107,7 +107,9 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_userfiles.php');
 	} else if ($adminPage == "maps") {
 		include_once ('tiki-admin_include_maps.php');
-	}
+	} else if ($adminPage == "metatags") {
+                include_once ('tiki-admin_include_metatags.php');
+        }
 }
 
 // Display the template
