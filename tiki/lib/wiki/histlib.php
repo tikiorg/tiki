@@ -12,33 +12,29 @@ class HistLib extends TikiLib {
 
 	// Removes a specific version of a page
 	function remove_version($page, $version, $comment = '') {
-		$page = addslashes($page);
-
-		$query = "delete from tiki_history where pageName='$page' and version='$version'";
-		$result = $this->query($query);
+		$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
+		$result = $this->query($query,array($page,$version));
 		$action = "Removed version $version";
 		$t = date("U");
-		$query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','$comment')";
-		$result = $this->query($query);
+		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+		$result = $this->query($query,array($action,$page,$t,"admin",$_SERVER["REMOTE_ADDR"],$comment));
 		return true;
 	}
 
 	function use_version($page, $version, $comment = '') {
-		$page = addslashes($page);
-
 		$this->invalidate_cache($page);
-		$query = "select * from tiki_history where pageName='$page' and version='$version'";
-		$result = $this->query($query);
+		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
+		$result = $this->query($query,array($page,$version));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		$query
-			= "update tiki_pages set data='" . addslashes($res["data"]). "',lastModif=" . $res["lastModif"] . ",user='" . $res["user"] . "',comment='" . $res["comment"] . "',version=version+1,ip='" . $res["ip"] . "' where pageName='$page'";
-		$result = $this->query($query);
-		$query = "delete from tiki_links where fromPage = '$page'";
-		$result = $this->query($query);
+			= "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=? where `pageName`=?";
+		$result = $this->query($query,array($res["data"],$res["lastModif"],$res["user"],$res["comment"],$res["ip"],$page));
+		$query = "delete from `tiki_links` where `fromPage` = ?";
+		$result = $this->query($query,array($page));
 		$this->clear_links($page);
 		$pages = $this->get_pages($res["data"]);
 
@@ -46,24 +42,24 @@ class HistLib extends TikiLib {
 			$this->replace_link($page, $a_page);
 		}
 
-		//$query="delete from tiki_history where pageName='$page' and version='$version'";
+		//$query="delete from `tiki_history` where `pageName`='$page' and version='$version'";
 		//$result=$this->query($query);
 		//
 		$action = "Changed actual version to $version";
 		$t = date("U");
-		$query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$page',$t,'admin','" . $_SERVER["REMOTE_ADDR"] . "','$comment')";
-		$result = $this->query($query);
+		$query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
+		$result = $this->query($query,array($action,$page,$t,'admin',$_SERVER["REMOTE_ADDR"],$comment));
 		return true;
 	}
 
 	function get_user_versions($user) {
 		$query
-			= "select pageName,version, lastModif, user, ip, comment from tiki_history where user='$user' order by lastModif desc";
+			= "select `pageName`,`version`, `lastModif`, `user`, `ip`, `comment` from `tiki_history` where `user`=? order by `lastModif` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($user));
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux = array();
 
 			$aux["pageName"] = $res["pageName"];
@@ -79,24 +75,22 @@ class HistLib extends TikiLib {
 
 	// Returns information about a specific version of a page
 	function get_version($page, $version) {
-		$page = addslashes($page);
 
-		$query = "select * from tiki_history where pageName='$page' and version=$version";
-		$result = $this->query($query);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
+		$result = $this->query($query,array($page,$version));
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	// Returns all the versions for this page
 	// without the data itself
 	function get_page_history($page) {
-		$page = addslashes($page);
 
-		$query = "select pageName, description, version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
-		$result = $this->query($query);
+		$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? order by `version` desc";
+		$result = $this->query($query,array($page));
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux = array();
 
 			$aux["version"] = $res["version"];
@@ -115,10 +109,9 @@ class HistLib extends TikiLib {
 	}
 
 	function version_exists($pageName, $version) {
-		$pageName = addslashes($pageName);
 
-		$query = "select pageName from tiki_history where pageName = '$pageName' and version='$version'";
-		$result = $this->query($query);
+		$query = "select `pageName` from `tiki_history` where `pageName` = ? and `version`=?";
+		$result = $this->query($query,array($pageName,$version));
 		return $result->numRows();
 	}
 
@@ -126,30 +119,38 @@ class HistLib extends TikiLib {
 	// if days is 0 this gets all the registers
 	// function parameters modified by ramiro_v on 11/03/2002
 	function get_last_changes($days, $offset = 0, $limit = -1, $sort_mode = 'lastModif_desc', $findwhat = '') {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		// section added by ramiro_v on 11/03/2002 begins here
 		if ($findwhat == '') {
-			$where = " where 1";
+			$bindvars=array();
 		} else {
-			$where = " where pageName like '%" . $findwhat . "%' or user like '%" . $findwhat . "%' or comment like '%" . $findwhat . "%'";
+			$findstr='%" . $findwhat . "%';
+			$where = " where `pageName` like ? or `user` like ? or `comment` like ? ";
+			$bindvars=array($findstr,$findstr,$findstr);
 		}
 		// section added by ramiro_v on 11/03/2002 ends here
 		if ($days) {
 			$toTime = mktime(23, 59, 59, date("m"), date("d"), date("Y"));
 
 			$fromTime = $toTime - (24 * 60 * 60 * $days);
-			$where = $where . " and lastModif>=$fromTime and lastModif<=$toTime";
+			if (!isset($where)) {
+				$where="where ";
+			} else {
+				$where.="and ";
+			}
+			$where .= " `lastModif`>=? and `lastModif`<=? ";
+			$bindvars[]=$fromTime;
+			$bindvars[]=$toTime;
 		}
 
-		$query = "select action, lastModif, user, ip, pageName,comment from tiki_actionlog " . $where . " order by $sort_mode limit $offset,$limit";
-		$query_cant = "select count(*) from tiki_actionlog " . $where;
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select `action`, `lastModif`, `user`, `ip`, `pageName`,`comment` from `tiki_actionlog` " . $where . " order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_actionlog` " . $where;
+		$result = $this->query($query,$bindvars,$limit,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 		$r = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$r["action"] = $res["action"];
 
 			$r["lastModif"] = $res["lastModif"];

@@ -11,12 +11,12 @@ class RankLib extends TikiLib {
 	}
 
 	function wiki_ranking_top_pages($limit) {
-		$query = "select pageName, hits from tiki_pages order by hits desc limit 0,$limit";
+		$query = "select `pageName`, `hits` from `tiki_pages` order by `hits` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["pageName"];
 
 			$aux["hits"] = $res["hits"];
@@ -33,11 +33,11 @@ class RankLib extends TikiLib {
 	function wiki_ranking_top_pagerank($limit) {
 		$this->pageRank();
 
-		$query = "select pageName, pageRank from tiki_pages order by pageRank desc limit 0,$limit";
-		$result = $this->query($query);
+		$query = "select `pageName`, `pageRank` from `tiki_pages` order by `pageRank` desc";
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["pageName"];
 
 			$aux["hits"] = $res["pageRank"];
@@ -52,12 +52,12 @@ class RankLib extends TikiLib {
 	}
 
 	function wiki_ranking_last_pages($limit) {
-		$query = "select pageName,lastModif,hits from tiki_pages order by lastModif desc limit 0,$limit";
+		$query = "select `pageName`,`lastModif`,`hits` from `tiki_pages` order by `lastModif` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["pageName"];
 
 			$aux["hits"] = $this->get_long_datetime($res["lastModif"]);
@@ -72,12 +72,12 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_last_topics($limit) {
-		$query = "select * from tiki_comments,tiki_forums where object=md5(concat('forum',forumId)) and parentId=0 order by commentDate desc limit 0,$limit";
+		$query = "select * from `tiki_comments`,`tiki_forums` where `object`=md5(concat('forum',`forumId`)) and `parentId`=0 order by `commentDate` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"] . ': ' . $res["title"];
 
 			$aux["hits"] = $this->get_long_datetime($res["commentDate"]);
@@ -92,12 +92,12 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_most_read_topics($limit) {
-		$query = "select tc.hits,tc.title,tf.name,tf.forumId,tc.threadId,tc.object from tiki_comments tc,tiki_forums tf where object=md5(concat('forum',forumId)) and parentId=0 order by tc.hits desc limit 0,$limit";
+		$query = "select tc.`hits`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object` from `tiki_comments` tc,`tiki_forums` tf where `object`=md5(concat('forum',`forumId`)) and `parentId`=0 order by tc.`hits` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"] . ': ' . $res["title"];
 
 			$aux["hits"] = $res["hits"];
@@ -112,12 +112,12 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_top_topics($limit) {
-		$query = "select tc.average,tc.title,tf.name,tf.forumId,tc.threadId,tc.object from tiki_comments tc,tiki_forums tf where object=md5(concat('forum',forumId)) and parentId=0 order by tc.average desc limit 0,$limit";
+		$query = "select tc.`average`,tc.`title`,tf.`name`,tf.`forumId`,tc.`threadId`,tc.`object` from `tiki_comments` tc,`tiki_forums` tf where `object`=md5(concat('forum',`forumId`)) and `parentId`=0 order by tc.`average` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"] . ': ' . $res["title"];
 
 			$aux["hits"] = $res["average"];
@@ -132,12 +132,12 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_most_visited_forums($limit) {
-		$query = "select * from tiki_forums order by hits desc limit 0,$limit";
+		$query = "select * from `tiki_forums` order by `hits` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"];
 
 			$aux["hits"] = $res["hits"];
@@ -152,12 +152,12 @@ class RankLib extends TikiLib {
 	}
 
 	function forums_ranking_most_commented_forum($limit) {
-		$query = "select * from tiki_forums order by comments desc limit 0,$limit";
+		$query = "select * from `tiki_forums` order by `comments` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"];
 
 			$aux["hits"] = $res["comments"];
@@ -172,12 +172,12 @@ class RankLib extends TikiLib {
 	}
 
 	function gal_ranking_top_galleries($limit) {
-		$query = "select * from tiki_galleries where visible='y' order by hits desc limit 0,$limit";
+		$query = "select * from `tiki_galleries` where `visible`=? order by `hits` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array('y'),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"];
 
 			$aux["hits"] = $res["hits"];
@@ -192,12 +192,12 @@ class RankLib extends TikiLib {
 	}
 
 	function filegal_ranking_top_galleries($limit) {
-		$query = "select * from tiki_file_galleries where visible='y' order by hits desc limit 0,$limit";
+		$query = "select * from `tiki_file_galleries` where `visible`=? order by `hits` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array('y'),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"];
 
 			$aux["hits"] = $res["hits"];
@@ -212,12 +212,12 @@ class RankLib extends TikiLib {
 	}
 
 	function gal_ranking_top_images($limit) {
-		$query = "select imageId,name,hits from tiki_images order by hits desc limit 0,$limit";
+		$query = "select `imageId`,`name`,`hits` from `tiki_images` order by `hits` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"];
 
 			$aux["hits"] = $res["hits"];
@@ -232,12 +232,12 @@ class RankLib extends TikiLib {
 	}
 
 	function filegal_ranking_top_files($limit) {
-		$query = "select fileId,filename,downloads from tiki_files order by downloads desc limit 0,$limit";
+		$query = "select `fileId`,`filename`,`downloads` from `tiki_files` order by `downloads` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["filename"];
 
 			$aux["hits"] = $res["downloads"];
@@ -252,12 +252,12 @@ class RankLib extends TikiLib {
 	}
 
 	function gal_ranking_last_images($limit) {
-		$query = "select imageId,name,created from tiki_images order by created desc limit 0,$limit";
+		$query = "select `imageId`,`name`,`created` from `tiki_images` order by `created` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["name"];
 
 			$aux["hits"] = $this->get_long_datetime($res["created"]);
@@ -272,12 +272,12 @@ class RankLib extends TikiLib {
 	}
 
 	function filegal_ranking_last_files($limit) {
-		$query = "select fileId,filename,created from tiki_files order by created desc limit 0,$limit";
+		$query = "select `fileId`,`filename`,`created` from `tiki_files` order by `created` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["filename"];
 
 			$aux["hits"] = $this->get_long_datetime($res["created"]);
@@ -292,12 +292,12 @@ class RankLib extends TikiLib {
 	}
 
 	function cms_ranking_top_articles($limit) {
-		$query = "select * from tiki_articles order by reads desc limit 0,$limit";
+		$query = "select * from `tiki_articles` order by `reads` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["title"];
 
 			$aux["hits"] = $res["reads"];
@@ -312,12 +312,12 @@ class RankLib extends TikiLib {
 	}
 
 	function blog_ranking_top_blogs($limit) {
-		$query = "select * from tiki_blogs order by hits desc limit 0,$limit";
+		$query = "select * from `tiki_blogs` order by `hits` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["title"];
 
 			$aux["hits"] = $res["hits"];
@@ -332,12 +332,12 @@ class RankLib extends TikiLib {
 	}
 
 	function blog_ranking_top_active_blogs($limit) {
-		$query = "select * from tiki_blogs order by activity desc limit 0,$limit";
+		$query = "select * from `tiki_blogs` order by `activity` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$aux["name"] = $res["title"];
 
 			$aux["hits"] = $res["activity"];
@@ -352,15 +352,15 @@ class RankLib extends TikiLib {
 	}
 
 	function blog_ranking_last_posts($limit) {
-		$query = "select * from tiki_blog_posts order by created desc limit 0,$limit";
+		$query = "select * from `tiki_blog_posts` order by `created` desc";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$q = "select title from tiki_blogs where blogId=" . $res["blogId"];
+		while ($res = $result->fetchRow()) {
+			$q = "select `title` from `tiki_blogs` where `blogId`=?";
 
-			$name = $this->getOne($q);
+			$name = $this->getOne($q,array($res["blogId"]));
 			$aux["name"] = $name;
 			$aux["hits"] = $this->get_long_datetime($res["created"]);
 			$aux["href"] = 'tiki-view_blog.php?blogId=' . $res["blogId"];
@@ -374,21 +374,21 @@ class RankLib extends TikiLib {
 	}
 
 	function wiki_ranking_top_authors($limit) {
-		$query = "select distinct user from tiki_pages";
+		$query = "select distinct `user` from `tiki_pages`";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array());
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res["user"];
 		}
 
 		$retu = array();
 
 		foreach ($ret as $author) {
-			$query = "select count(*) from tiki_pages where user='$author'";
+			$query = "select count(*) from `tiki_pages` where `user`=?";
 
-			$cant = $this->getOne($query);
+			$cant = $this->getOne($query,array($author));
 			$aux["name"] = $author;
 			$aux["hits"] = $cant;
 			$aux["href"] = '';
@@ -402,21 +402,21 @@ class RankLib extends TikiLib {
 	}
 
 	function cms_ranking_top_authors($limit) {
-		$query = "select distinct author from tiki_articles";
+		$query = "select distinct `author` from `tiki_articles`";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array());
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res["author"];
 		}
 
 		$retu = array();
 
 		foreach ($ret as $author) {
-			$query = "select count(*) from tiki_articles where author='$author'";
+			$query = "select count(*) from `tiki_articles` where `author`=?";
 
-			$cant = $this->getOne($query);
+			$cant = $this->getOne($query,array($author));
 			$aux["name"] = $author;
 			$aux["hits"] = $cant;
 			$aux["href"] = '';
