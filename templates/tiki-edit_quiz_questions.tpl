@@ -8,9 +8,18 @@
 <form action="tiki-edit_quiz_questions.php" method="post">
 <input type="hidden" name="quizId" value="{$quizId|escape}" />
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
+
 <table class="normal">
-<tr><td class="formcolor">{tr}Question{/tr}:</td><td class="formcolor"><textarea name="question" rows="5" cols="40">{$question|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Position{/tr}:</td><td class="formcolor"><select name="position">{html_options values=$positions output=$positions selected=$position}</select></td></tr>
+<tr>
+<td class="formcolor">{tr}Question{/tr}:</td>
+{* change the size of the text field here * }
+<td class="formcolor">
+<textarea name="question" rows="5" cols="80">{$question|escape}</textarea>
+</td>
+</tr>
+<tr><td class="formcolor">{tr}Position{/tr}:</td><td class="formcolor"><select name="position">{html_options values=$positions output=$positions selected=$position}</select>
+</td>
+</tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -22,7 +31,8 @@
 <td class="formcolor">
 <select name="usequestionid">
 {section name=ix loop=$questions}
-<option value="{$questions[ix].questionId|escape}">{$questions[ix].question}</option>
+{* adding the juicy truncation bits here |truncate:110:"":true * }
+<option value="{$questions[ix].questionId|escape}">{$questions[ix].question|truncate:110:"":true}</option>
 {/section}
 </select>
 </td></tr>
