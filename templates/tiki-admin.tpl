@@ -5,57 +5,15 @@
 border='0' src='img/icons/help.gif' alt='help' /></a>
 {/if}
 </h2>
-{if $smarty.get.page == "features"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-features.tpl"}
-{elseif $smarty.get.page == "general"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-general.tpl"}
-{elseif $smarty.get.page == "login"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-login.tpl"}
-{elseif $smarty.get.page == "wiki"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-wiki.tpl"}
-{elseif $smarty.get.page == "gal"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-gal.tpl"}
-{elseif $smarty.get.page == "fgal"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-fgal.tpl"}
-{elseif $smarty.get.page == "cms"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-cms.tpl"}
-{elseif $smarty.get.page == "polls"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-polls.tpl"}
-{elseif $smarty.get.page == "blogs"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-blogs.tpl"}
-{elseif $smarty.get.page == "forums"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-forums.tpl"}
-{elseif $smarty.get.page == "faqs"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-faqs.tpl"}
-{elseif $smarty.get.page == "trackers"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-trackers.tpl"}
-{elseif $smarty.get.page == "webmail"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-webmail.tpl"}
-{elseif $smarty.get.page == "rss"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-rss.tpl"}
-{elseif $smarty.get.page == "directory"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-directory.tpl"}
-{elseif $smarty.get.page == "userfiles"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-userfiles.tpl"}
-{elseif $smarty.get.page == "maps"}
-  {include file="tiki-admin-include-anchors.tpl"}
-  {include file="tiki-admin-include-maps.tpl"}
+{* The rest determines which page to include using "page" GET parameter. Default : list-sections
+Add a value in first check when you create a new admin page. *}
+{if in_array($smarty.get.page, array("features", "general", "login", "wiki", "gal", "fgal", "cms", 
+"polls", "polls", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps"))}
+  {assign var="include" value=$smarty.get.page}
 {else}
-  {include file="tiki-admin-include-list-sections.tpl"}
+  {assign var="include" value="list-sections"}
 {/if}
+{if $include != "list-sections"}
+  {include file="tiki-admin-include-anchors.tpl"}
+{/if}
+{include file="tiki-admin-include-$include.tpl"}
