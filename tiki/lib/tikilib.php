@@ -1872,11 +1872,14 @@ function get_categoryobjects($catids) {
 	$objectcat = $categlib->list_category_objects($id, $offset, $maxRecords, $sort, $find);
 
 	foreach ($objectcat["data"] as $obj) {
-	    $type = $obj["type"];
-
-	    if (!($this->in_multi_array($obj['name'], $listcat)) and $typetitles["$type"]) {
-		$listcat["{$typetitles["$type"]}"][] = $obj;
-	    }
+	  $type = $obj["type"];
+	  if (!($this->in_multi_array($obj['name'], $listcat))) {
+			if (isset($typetitles["$type"])) {
+      	$listcat["{$typetitles["$type"]}"][] = $obj;
+			} elseif (isset($type)) {
+				$listcat["$type"][] = $obj;
+			}
+	  }
 	}
 
 	// split mode: appending onto $out each time
