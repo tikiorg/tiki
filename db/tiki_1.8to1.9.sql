@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.49 2004-04-28 21:34:07 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.50 2004-04-30 01:43:37 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -378,19 +378,6 @@ CREATE TABLE hw_assignments (
   deleted tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (assignmentId),
   KEY dueDate (dueDate)
-) TYPE=MyISAM;
-
-CREATE TABLE hw_grading_queue (
-  id int(14) NOT NULL auto_increment,
-  status int(4) default NULL,
-  submissionDate int(14) default NULL,
-  userLogin varchar(40) NOT NULL default '',
-  userIp varchar(15) default NULL,
-  pageId int(14) default NULL,
-  pageDate int(14) default NULL,
-  pageVersion int(14) default NULL,
-  assignmentId int(14) default NULL,
-  PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
 CREATE TABLE hw_grading_queue (
