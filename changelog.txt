@@ -1,18 +1,18 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.155 2004-05-01 01:06:19 damosoft Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.156 2004-05-08 20:06:42 troworld Exp $
 
-All developers are invited to add relevant changes in that file as they
-apply them to the CVS source. You can optionnaly indicate an identifer
-for the origin of the change (author, submitter, anyone involved) but
-it's not so useful as the cvs log knows who adds what when.
+All developers are invited to add relevant changes to this file as they
+apply them to the CVS source. You can optionally indicate an identifier
+for the origin of the change (author, submitter, anyone involved), but
+it's not very useful as the CVS log knows who adds what and when.
 
 Use the following tags to distinguish changes :
-* [NEW] apply to something new added in tikiwiki
-* [MOD] is an enhancement, not really new but make things come easier
+* [NEW] apply if something new was added in tikiwiki
+* [MOD] is an enhancement; not really new but makes things work better
 * [FIX] can be used for bug fixes of any sort
 
-Please wrap your lines to 80 characters and indent them with spaces only.
+Please wrap your lines at 80 characters and indent them with spaces only.
 ------------------
 
 Version 1.9 
