@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.24 2004-06-14 05:44:31 lfagundes Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.25 2004-06-17 19:11:50 teedog Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -377,6 +377,8 @@ articleId numeric(8 ,0) identity,
   "publishDate" numeric(14,0) default NULL NULL,
   "expireDate" numeric(14,0) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
+  "bibliographical_references" text default NULL NULL,
+  "resume" text default NULL NULL,
   "heading" text default '',
   "body" text default '',
   "hash" varchar(32) default NULL NULL,
@@ -2481,7 +2483,7 @@ go
 -- Table structure for table `tiki_mailin_accounts`
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
+-- Last update: Jun 17, 2004 at 03:06 PM EST
 --
 
 -- DROP TABLE "tiki_mailin_accounts"
@@ -2503,6 +2505,8 @@ accountId numeric(12 ,0) identity,
   "smtpPort" numeric(4,0) default NULL NULL,
   "anonymous" char(1) default 'y' NOT NULL,
   "attachments" char(1) default 'n' NOT NULL,
+  "article_topicId" numeric(4,0) default NULL NULL,
+  "article_type" varchar(50) default NULL NULL,
   PRIMARY KEY ("accountId")
 )   
 go
@@ -2673,6 +2677,19 @@ go
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','User instances','tiki-g-user_instances.php',185,'feature_workflow','tiki_p_use_workflow','')
+go
+
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Community','tiki-list_users.php','187','feature_friends','tiki_p_list_users','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Member list','tiki-list_users.php','188','feature_friends','tiki_p_list_users','')
+go
+
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Friendship Network','tiki-friends.php','189','feature_friends','','')
 go
 
 
@@ -4326,6 +4343,8 @@ subId numeric(8 ,0) identity,
   "publishDate" numeric(14,0) default NULL NULL,
   "expireDate" numeric(14,0) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
+  "bibliographical_references" text default NULL NULL,
+  "resume" text default NULL NULL,
   "heading" text default '',
   "body" text default '',
   "hash" varchar(32) default NULL NULL,
