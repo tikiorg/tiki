@@ -1399,7 +1399,7 @@ class Comments extends TikiLib {
 	    $query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
 	}
 
-	//print("$query<br/>");
+	//print("$query<br />");
 	$query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
 	$result = $this->query($query,array_merge($bind_mid,$bind_time));
 	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
@@ -1774,8 +1774,8 @@ class Comments extends TikiLib {
 	}
 
 	$vote_weight = ($vote * $user_weight) / 5;
-	//print("User weight: $user_weight<br/>");
-	//print("Vote: $vote vote_weight: $vote_weight<br/>");
+	//print("User weight: $user_weight<br />");
+	//print("Vote: $vote vote_weight: $vote_weight<br />");
 
 	// Get the user that posted the comment being voted
 	$query = "select `userName` from `tiki_comments` where `threadId`=?";
@@ -1786,7 +1786,7 @@ class Comments extends TikiLib {
 	    return false;
 	}
 
-	//print("Comment user: $comment_user<br/>");
+	//print("Comment user: $comment_user<br />");
 	if ($comment_user) {
 	    // Update the user points adding this new vote
 	    $query = "select `user` from `tiki_userpoints` where `user`=?";

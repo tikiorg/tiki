@@ -64,11 +64,10 @@ class WikiLib extends TikiLib {
 
 	// Get slides
 	$parts = explode("...page...", $data);
+	$ret = $parts[$i - 1];
 
-	if (substr($parts[$i - 1], 1, 5) == "<br/>")
-	    $ret = substr($parts[$i - 1], 6);
-	else
-	    $ret = $parts[$i - 1];
+	if (substr($parts[$i - 1], 1, 5) == "<br/>") $ret = substr($parts[$i - 1], 6);
+	if (substr($parts[$i - 1], 1, 6) == "<br />") $ret = substr($parts[$i - 1], 7);
 
 	return $ret;
     }
@@ -101,7 +100,7 @@ class WikiLib extends TikiLib {
 		    'height' => (isset($garg['node']['height']))?$garg['node']['height']:'.25'
 		    ));
 
-	//print("add node $page<br/>");
+	//print("add node $page<br />");
 	foreach ($str['pages'] as $neig) {
 	    $this->wiki_page_graph($neig, $graph, $garg);
 
@@ -109,7 +108,7 @@ class WikiLib extends TikiLib {
 			'color' => '#998877',
 			'style' => 'solid'
 			));
-	    //print("add edge $page to ".$neig['name']."<br/>");
+	    //print("add edge $page to ".$neig['name']."<br />");
 	}
     }
 

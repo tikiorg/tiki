@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.28 2004-06-16 01:32:04 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.29 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,9 +68,13 @@ if (isset($_REQUEST["save"])) {
 	check_ticket('admin-forums');
 
 	$_REQUEST['useMail'] = isset($_REQUEST['useMail']) ? 'y' : 'n';
+	$useMail = $_REQUEST['useMail'];
 	$_REQUEST['usePruneUnreplied'] = isset($_REQUEST['usePruneUnreplied']) ? 'y' : 'n';
+	$usePruneUnreplied = $_REQUEST['usePruneUnreplied'];
 	$_REQUEST['controlFlood'] = isset($_REQUEST['controlFlood']) ? 'y' : 'n';
+	$controlFlood = $_REQUEST['controlFlood'];
 	$_REQUEST['usePruneOld'] = isset($_REQUEST['usePruneOld']) ? 'y' : 'n';
+	$usePruneOld = $_REQUEST['usePruneOld'];
 	$_REQUEST['vote_threads'] = isset($_REQUEST['vote_threads']) ? 'y' : 'n';
 	$_REQUEST['topics_list_reads'] = isset($_REQUEST['topics_list_reads']) ? 'y' : 'n';
 	$_REQUEST['topics_list_replies'] = isset($_REQUEST['topics_list_replies']) ? 'y' : 'n';

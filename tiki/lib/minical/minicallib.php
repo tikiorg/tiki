@@ -31,7 +31,7 @@ class MiniCalLib extends TikiLib {
 			$end_p = $start + $interval;
 			$aux['end'] = $end_p;
 			$query = "select * from `tiki_minical_events` where `user`=? and `start`>=? and `start`<? order by ".$this->convert_sortmode("start_asc");
-			//print($query);print("<br/>");
+			//print($query);print("<br />");
 			$result = $this->query($query,array($user,(int)$start,(int)$end_p));
 			$events = array();
 

@@ -695,9 +695,9 @@ class UsersLib extends TikiLib {
 	    if (!isset($_SESSION["challenge"]))
 		return false;
 
-	    //print("pass: $pass user: $user hash: $hash <br/>");
-	    //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br/>");
-	    //print("response : $response<br/>");
+	    //print("pass: $pass user: $user hash: $hash <br />");
+	    //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br />");
+	    //print("response : $response<br />");
 	    if ($response == md5($user . $hash . $_SESSION["challenge"])) {
 		$t = date("U");
 

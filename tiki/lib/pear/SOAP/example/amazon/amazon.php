@@ -67,7 +67,7 @@ class Amazon {
         $searchwords = isset($info['search_words'])?htmlentities(stripslashes($info['search_words']),ENT_QUOTES):'';
 echo <<< EOF
         <table border='1'><tr><td>
-        Amazon Search<br/>
+        Amazon Search<br />
         <form action='{$_SERVER["PHP_SELF"]}' method='post'>
         <select name='search_class'>
         $classlist
@@ -115,7 +115,7 @@ EOF;
                             $searchObj);
             
             if (PEAR::isError($ProductInfo)) {
-                $errmsg = $ProductInfo->getMessage()."<br/>\n".$ProductInfo->getUserInfo()."<br/>\n";
+                $errmsg = $ProductInfo->getMessage()."<br />\n".$ProductInfo->getUserInfo()."<br />\n";
                 print $errmsg;
                 print $this->_client->client->wire;
                 return false;
@@ -132,7 +132,7 @@ EOF;
                 foreach($pl as $link) {
                     echo $link.' &nbsp; ';
                 }
-                echo "<br/>\n";
+                echo "<br />\n";
                 return true;
             }
         } else {

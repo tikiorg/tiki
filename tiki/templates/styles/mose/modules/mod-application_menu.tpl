@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.26 2004-06-21 13:46:39 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.27 2004-06-23 22:34:31 mose Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -35,10 +35,13 @@
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('mymenu');"><img src="styles/mose/fo.gif" width="16" height="12" alt="[+]" border="0" name="mymenuicn" class="fldicn" />&nbsp;</a>
   {else}<a class="separator" href="javascript:toggle('mymenu');">[-]</a>{/if} 
-  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki (click!){/tr}</a>
+  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('mymenu');">[+]</a>{/if} 
   </div>
   <div id="mymenu" style="{$mnu_mymenu}">
+	{if $feature_userPreferences eq 'y'}
+			&nbsp;<a href="tiki-my_tiki.php" class="linkmenu">{tr}MyTiki home{/tr}</a><br />
+	{/if}
   {if $feature_userPreferences eq 'y'}
       &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a><br />  
   {/if}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.241 2004-06-21 13:46:42 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.242 2004-06-23 22:33:53 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1078,10 +1078,12 @@ $smarty->assign('useRegisterPasscode', $useRegisterPasscode);
 $feature_siteidentity='n';
 $smarty->assign('feature_siteidentity', $feature_siteidentity);
 $feature_sitelogo='y';
+$sitelogo_bgcolor='#ffffff';
 $sitelogo_title='TikiWiki powered site';
 $sitelogo_src='styles/default/sitelogo.png';
 $sitelogo_alt='Site Logo';
 $smarty->assign('feature_sitelogo', $feature_sitelogo);
+$smarty->assign('sitelogo_bgcolor', $sitelogo_bgcolor);
 $smarty->assign('sitelogo_title', $sitelogo_title);
 $smarty->assign('sitelogo_src', $sitelogo_src);
 $smarty->assign('sitelogo_alt', $sitelogo_alt);
@@ -1297,9 +1299,9 @@ $smarty->assign('tikiIndex',$tikiIndex);
 
 $user_dbl = 'y';
 
+$user_style = $site_style = $tikilib->get_preference("style", 'moreneat.css');
 if ($feature_userPreferences == 'y') {
     // Check for FEATURES for the user
-    $user_style = $site_style = $tikilib->get_preference("style", 'moreneat.css');
 
     if ($user) {
         $user_dbl = $tikilib->get_user_preference($user, 'user_dbl', 'y');

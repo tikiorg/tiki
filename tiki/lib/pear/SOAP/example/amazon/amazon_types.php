@@ -65,22 +65,22 @@ class Details {
         $end = '';
         switch($type) {
         case 'heavy':
-            $end = "Manufacturer: $this->Manufacturer<br/>\n";
-            $end .= "Isbn: $this->Isbn<br/>\n";
+            $end = "Manufacturer: $this->Manufacturer<br />\n";
+            $end .= "Isbn: $this->Isbn<br />\n";
             if (count($this->Reviews->CustomerReviews)) {
                 foreach($this->Reviews->CustomerReviews as $review) {
                     $end .= $review->display();
                 }
             }
         default:
-            $html= "<a href='$this->Url'><img src='$this->ImageUrlSmall' border='0' align='left'/>$this->ProductName</a><br/>\n";
+            $html= "<a href='$this->Url'><img src='$this->ImageUrlSmall' border='0' align='left'/>$this->ProductName</a><br />\n";
             if (is_array($this->Authors)) {
                 $authors = join($this->Authors, ", ");
-                $html.= "by $authors<br/>\n";
+                $html.= "by $authors<br />\n";
             }
             $html.= "Price: $this->OurPrice";
             if (isset($this->Reviews->AvgCustomerRating)) $html .= " Rating: {$this->Reviews->AvgCustomerRating}";
-            $html .= "<br/>\n";
+            $html .= "<br />\n";
             return $html.$end;
         break;
         }
@@ -119,8 +119,8 @@ class CustomerReview {
     
     function display()
     {
-        $text = "Rating: $this->Rating<br/>\n";
-        $text .= "Summary: $this->Summary<br/>\n";
+        $text = "Rating: $this->Rating<br />\n";
+        $text .= "Summary: $this->Summary<br />\n";
         $text .= "<p>$this->Comment</p>\n";
         return $text;
     }

@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
-/* $Id: taillib.php,v 1.5 2004-06-20 15:58:18 mose Exp $*/
+/* $Id: taillib.php,v 1.6 2004-06-23 22:34:26 mose Exp $*/
 function tail_filter_irc(&$item, $key) {
 	# here is a sample line
 	# [06-24-03/05:13] <mose> how is everyone ?
@@ -26,7 +26,7 @@ function tail_filter_apache_errorlog(&$item, $key) {
 	$search[] = "/\/home\/mose\/var\/tikicvs/";
 	$replace[] = "";
 	$search[] = "/^\[([^\]]*)\] \[[^\]]*\] \[[^\]]*\] (.*): (.*)$/";
-	$replace[] = "<div href=\"#\" onmouseover='return overlib(\"<b>\\2</b><br/>\\1\");' onmouseout='return nd();' class=\"linkmenu\">\\3</div>";
+	$replace[] = "<div href=\"#\" onmouseover='return overlib(\"<b>\\2</b><br />\\1\");' onmouseout='return nd();' class=\"linkmenu\">\\3</div>";
 	$search[] = "/\[|\]/";
 	$replace[] = "";
 	$item = preg_replace($search, $replace, $item);
@@ -34,7 +34,7 @@ function tail_filter_apache_errorlog(&$item, $key) {
 
 function tail_filter_mask(&$item,$key) {
 	$search[] = "/^\[([^\]]*)\] \[[^\]]*\] \[[^\]]*\] (.*): (.*)$/";
-	$replace[] = "<div href=\"#\" onmouseover='return overlib(\"<b>\\2</b><br/>\\1\");' onmouseout='return nd();' class=\"linkmenu\">\\3</div>";
+	$replace[] = "<div href=\"#\" onmouseover='return overlib(\"<b>\\2</b><br />\\1\");' onmouseout='return nd();' class=\"linkmenu\">\\3</div>";
 
 	$search[] = "~on line ([0-9]*)~";
 	$replace[] = "on line <b'>\\1</b>";

@@ -1716,14 +1716,14 @@ ingen nyhetsbrev kommer til å sendes før du bekrefter abonnementet.",//perhaps n
 "
 <b>Note 1</b>: if you allow your users to configure modules then assigned
 modules won't be reflected in the screen until you configure them
-from MyTiki->modules.<br/>
+from MyTiki->modules.<br />
 <b>Note 2</b>: If you assign modules to groups make sure that you
 have turned off the option 'display modules to all groups always'
 from Admin->General
 " => "
 <b>Merknad 1</b>: hvis du tillater brukere å konfigurere moduler så vil ikke
 tildelte moduler vises på skjermen før du konfigurerer dem i
-MinTiki->moduler.<br/>
+MinTiki->moduler.<br />
 <b>Merknad 2</b>: hvis du tildeler moduler til grupper må du forsikre deg
 om at du har skrudd av 'vis alltid moduler til alle grupper'-opsjonen i
 Admin->Generelt

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.25 2004-06-21 13:46:41 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.26 2004-06-23 22:34:33 mose Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -36,12 +36,15 @@
   <a class="separator" href="javascript:icntoggle('mymenu');"><img src="img/icons/fo.gif" style="border: 0" name="mymenuicn" class="fldicn" alt="{tr}MyMenu{/tr}"/></a>&nbsp;
   {else}<a class="separator" href="javascript:toggle('mymenu');">.:</a>{/if}
   {if $feature_userPreferences eq 'y'}
-  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki (click!){/tr}</a>
+  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki{/tr}</a>
   {else}
   <span class="separator">{tr}MyTiki{/tr}</span>
   {/if}
   </div>
   <div id="mymenu" style="{$mnu_mymenu}">
+	{if $feature_userPreferences eq 'y'}
+			<div class="separated"><a href="tiki-my_tiki.php" class="linkmenu">{tr}MyTiki home{/tr}</a></div>
+	{/if}
   {if $feature_userPreferences eq 'y'}
       <div class="separated"><a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a></div>
   {/if}

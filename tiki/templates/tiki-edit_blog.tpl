@@ -1,4 +1,9 @@
-<a class="pagetitle" href="tiki-edit_blog.php">{tr}Edit Blog{/tr}: {$title}</a>
+{if $blogId > 0}
+<a class="pagetitle" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit Blog{/tr}:</a>
+<a class="pagetitle" href="tiki-view_blog.php?blogId={$blogId}">{$title}</a>
+{else}
+<a class="pagetitle" href="tiki-edit_blog.php">{tr}Create Blog{/tr}</a>
+{/if}
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}

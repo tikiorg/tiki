@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.35 2004-06-06 08:39:54 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.36 2004-06-23 22:34:28 mose Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -322,32 +322,42 @@
           <input type="submit" name="prefs" value="{tr}Change preferences{/tr}" />
         </td>
       </tr></table>
-      <!-- Obsolete from 1.7 timezone changes
-      <table class="admin"><tr>
-        <td class="heading" colspan="2"
-            align="center">{tr}Time Zone{/tr}</td>
-      </tr><tr>
-        <td class="form"  style="vertical-align:middle;">
-          {tr}Server time zone{/tr}:</td>
-        <td >
-          <div class="simplebox">{$timezone_server}</div></td>
-      </tr><tr>
-        <td class="form"><label for="general-displayed_zone">{tr}Displayed time zone{/tr}:</label></td>
-        <td><select name='display_timezone' id="general-displayed_zone">
-            {html_options options=$timezone_options selected=$display_timezone}
-            </select>
-        </td>
-      </tr><tr>
-        <td colspan="2" align="center">
-          <a class="link" target="wtz" href="http://www.worldtimezone.com/">
-            {tr}Time Zone Map{/tr}</a></td>
-      </tr>
-      </table>
-      -->
     </form>
   </div>
 </div>
 <br />
+<div class="cbox">
+	<div class="cbox-title">
+		{tr}Site Identity Settings{/tr}
+	</div>
+	<div class="cbox-data">
+		<form method="post" action="tiki-admin.php?page=general">
+			<table class="admin">
+				<tr>
+					<td class="form"><label for="sitelogo">{tr}Site logo{/tr}:</label></td>
+					<td><input type="text" name="sitelogo_src" id="sitelogo" value="{$sitelogo_src}" size="60" style="width: 90%" /></td>
+				</tr>
+				<tr>
+					<td class="form"><label for="sitelogo_bgcolor">{tr}Site logo background color{/tr}:</label></td>
+					<td><input type="text" name="sitelogo_bgcolor" id="sitelogo_bgcolor" value="{$sitelogo_bgcolor}" size="15" maxlength="15" /></td>
+				</tr>
+				<tr>
+					<td class="form"><label for="sitelogo_title">{tr}Site logo title (on mouse over){/tr}:</label></td>
+					<td><input type="text" name="sitelogo_title" id="sitelogo_title" value="{$sitelogo_title}" size="50" maxlength="50" /></td>
+				</tr>
+				<tr>
+					<td class="form"><label for="sitelogo_alt">{tr}Alt. description (e.g. for text browsers){/tr}:</label></td>
+					<td><input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$sitelogo_alt}" size="50" maxlength="50" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="button">
+						<input type="submit" name="siteidentityset" value="{tr}Change settings{/tr}" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
 <div class="cbox">
   <div class="cbox-title">
     {tr}Register this site at tikiwiki.org{/tr}

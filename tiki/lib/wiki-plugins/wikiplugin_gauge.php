@@ -27,7 +27,7 @@ function wikiplugin_gauge($data, $params) {
 	}
 
 	if (!isset($value)) {
-		return ("<b>missing value parameter for plugin</b><br/>");
+		return ("<b>missing value parameter for plugin</b><br />");
 	}
 
 	if (!isset($size)) {

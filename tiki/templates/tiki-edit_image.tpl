@@ -27,7 +27,7 @@
 <tr>
    	<td class="even">
 	<small>
-	{tr}You can view this image in your browser using{/tr}: <a class="gallink" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br/>
+	{tr}You can view this image in your browser using{/tr}: <a class="gallink" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br />
 	</small>
 	</td>
 </tr>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.4 2004-06-12 13:10:43 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.5 2004-06-23 22:34:32 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -176,7 +176,7 @@
     {tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page{$page|escape:"url"}
   </p></div>
 {/if}
-<br/>
+<br />
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
   {$display_catobjects}
 {/if}

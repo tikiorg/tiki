@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.16 2004-06-20 09:33:39 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.17 2004-06-23 22:34:28 mose Exp $ *}
 
 <a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br /><br />
 <a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a>
-<br/>
+<br />
 <h3>{tr}User Information{/tr}</h3>
 <table class="normal">
 <tr><td class="even">{tr}Login{/tr}:</td><td class="odd">{$user_info.login}</td></tr>
@@ -44,6 +44,7 @@
 </tr>
 </table>
 
+<div align="left"><h2>{tr}Available groups{/tr}</h2></div>
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-assignuser.php?assign_user={$assign_user}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}name{/tr}</a></td>
@@ -53,11 +54,12 @@
 {cycle values="even,odd" print=false}
 {section name=user loop=$users}
 <tr>
-<td class="{cycle advance=false}">{$users[user].groupName}</td>
+<td class="{cycle advance=false}">{$users[user].groupName}
+(<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}">{tr}assign perms to this group{/tr}</a>)</td>
 <td class="{cycle advance=false}">{$users[user].groupDesc}</td>
 <td class="{cycle}">
 {if $users[user].groupName != 'Anonymous'}
-<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName}&amp;assign_user={$assign_user}">{tr}assign{/tr}</a></td>
+<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;group={$users[user].groupName}&amp;assign_user={$assign_user}">{tr}assign{/tr} {$user_info.login} {tr}to{/tr} "{$users[user].groupName}"</a></td>
 {/if}
 </tr>
 {/section}

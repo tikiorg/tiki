@@ -15,19 +15,19 @@
 {if $tiki_p_create_users eq 'y'}
 <a class="userlink" href="tiki-edit_user.php">{tr}create new user{/tr}</a>
 {/if}
-<br/><br/>
+<br /><br />
 
 {if $request_friendship}
 <center>{tr}FriendshipRequestSent{/tr}</center>
-<br/><br/>
+<br /><br />
 {/if}
 {if $friendship_accepted}
 <center>{$friendship_accepted}</center>
-<br/><br/>
+<br /><br />
 {/if}
 {if $friendship_refused}
 <center>{$friendship_refused}</center>
-<br/><br/>
+<br /><br />
 {/if}
 
 <div align="center">
@@ -99,7 +99,7 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="userprevnext" href="tiki-friends.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -109,7 +109,7 @@
 &nbsp;[<a class="userprevnext" href="tiki-friends.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-friends.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

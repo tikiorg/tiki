@@ -13,7 +13,7 @@ function wikiplugin_bloglist($data, $params) {
 	extract ($params);
 
 	if (!isset($Id)) {
-		return ("<b>missing blog ID for plugin BLOGLIST</b><br/>");
+		return ("<b>missing blog ID for plugin BLOGLIST</b><br />");
 	}
 	if (!isset($Field)) {
 		$Field = 'heading';

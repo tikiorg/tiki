@@ -1,3 +1,4 @@
+<div class="simplebox">{tr}Tip{/tr}: {tr}to configure your directory, find "Admin directory" under "Directory" on the left menu, or{/tr} <a class="link" href="tiki-directory_admin.php">{tr}click here{/tr}</a>.</div><br />
 <div class="cbox">
   <div class="cbox-title">{tr}Directory{/tr}</div>
   <div class="cbox-data">

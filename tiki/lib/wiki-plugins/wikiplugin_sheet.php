@@ -23,7 +23,7 @@ function wikiplugin_sheet($data, $params) {
 	$tikilib = &new TikiLib( $dbTiki );
 
 	if (!isset($id)) {
-		return ("<b>missing face parameter for plugin</b><br/>");
+		return ("<b>missing face parameter for plugin</b><br />");
 	}
 
 	if( !class_exists( 'TikiSheet' ) )

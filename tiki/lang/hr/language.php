@@ -10,7 +10,7 @@ $lang=Array(
 " not sent" => " nije poslano",
 " successfully sent" => " uspješno poslano",
 " unread private messages" => " nepročitanih privatnih poruka",
-"\n<b>Note 1</b>: if you allow your users to configure modules then assigned\nmodules won't be reflected in the screen until you configure them\nfrom MyTiki->modules.<br/>\n<b>Note 2</b>: If you assign modules to groups make sure that you\nhave turned off the option 'display modules to all groups always'\nfrom Admin->General\n" => "\n<b>Napomena 1</b>: ako dozvolite korisnicima da podešavaju module onda dodijeljeni moduli neće raditi dok ih ne podesite iz MyTiki->moduli.<br/>\n<b>Napomena 2</b>: Ako dodijelite module grupe, budite sigurni da ste isključili opciju 'prikaži sve module svim grupama' iz Admin->Općenito\n",
+"\n<b>Note 1</b>: if you allow your users to configure modules then assigned\nmodules won't be reflected in the screen until you configure them\nfrom MyTiki->modules.<br />\n<b>Note 2</b>: If you assign modules to groups make sure that you\nhave turned off the option 'display modules to all groups always'\nfrom Admin->General\n" => "\n<b>Napomena 1</b>: ako dozvolite korisnicima da podešavaju module onda dodijeljeni moduli neće raditi dok ih ne podesite iz MyTiki->moduli.<br />\n<b>Napomena 2</b>: Ako dodijelite module grupe, budite sigurni da ste isključili opciju 'prikaži sve module svim grupama' iz Admin->Općenito\n",
 "Admin newsletter subscriptions" => "Administriraj prijave za novine",
 "|| for rows" => "|| za redove",
 "<b>enable/disable</b>" => "<b>uključi/isključi</b>",
@@ -1364,7 +1364,8 @@ $lang=Array(
 "Restore the wiki" => "Vrati wiki u prošlo stanje",
 "Restoring a backup" => "Povrat backupa",
 "Restoring a backup destoys all the data in your Tiki database. All your tables will be replaced with the information in the backup." => "Povrat backupa uništava sve podatke u vašoj Tiki bazi podataka. Sve vaše tablice će biti zamijenjene informacijama u backupu.",
-"Restoring a backup destoys all the data in your Tiki database.\n\nAll your tables will be replaced with the information in the backup." => "Povrat backupa uništava sve podatke u vašoj tiki bazi podataka.",//perhaps not used
+"Restoring a backup destoys all the data in your Tiki database.
+\n\nAll your tables will be replaced with the information in the backup." => "Povrat backupa uništava sve podatke u vašoj tiki bazi podataka.",//perhaps not used
 "result" => "rezultat",
 "Result" => "Rezultati",
 "Results" => "Rezultati",
@@ -1591,7 +1592,8 @@ $lang=Array(
 "textarea" => "tekstualno polje",
 "TextFormattingRules" => "PravilaFormatiranjaTeksta",//perhaps not used
 "Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed." => "Hvala vam na vašem upisivanju. Uskoro će te primiti e-mail za potvrdu vašeg pristupa. Nijedne novine vam neće biti poslane dok se vaše upisivanje ne potvrdi.",
-"Thanks for your subscription. You will receive an email soon to confirm your subscription.\n\nNo newsletters will be sent to you until the subscription is confirmed." => "Hvala vam na vašem upisivanju. Uskoro će te primiti e-mail za potvrdu vašeg pristupa.",//perhaps not used
+"Thanks for your subscription. You will receive an email soon to confirm your subscription.
+\n\nNo newsletters will be sent to you until the subscription is confirmed." => "Hvala vam na vašem upisivanju. Uskoro će te primiti e-mail za potvrdu vašeg pristupa.",//perhaps not used
 "The following addresses are not in your address book" => "Slijedeće adrese se ne nalaze u vašem adresaru",
 "The following file was succesfully uploaded" => "Odabrana datoteka je uspješno poslana na poslužitelj",//perhaps not used
 "The following image was succesfully edited" => "Slijedeća slika je uspješno izmijenjena",//perhaps not used
@@ -1601,7 +1603,8 @@ $lang=Array(
 "The passwords didn't match" => "Šifre se ne podudaraju",
 "The passwords dont match" => "Šifre nisu iste",
 "The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appeareance of the page, no versions are stored for this page." => "Igraonica je stranica na kojoj možete vježbate vještinu izrade stranica, koristite pregled da bi vidjeli krajnji izgled stranice, ništa neće biti pohranjeno.",
-"The SandBox is a page where you can practice your editing skills, use the preview feature\n\nto preview the appeareance of the page, no versions are stored for this page." => "Igraonica je stranica na kojoj možete vježbati vještinu izrade stranica, koristite pregled da biste vidjeli krajnji izgled stranice, ništa neće biti pohranjeno.",//perhaps not used
+"The SandBox is a page where you can practice your editing skills, use the preview feature
+\n\nto preview the appeareance of the page, no versions are stored for this page." => "Igraonica je stranica na kojoj možete vježbati vještinu izrade stranica, koristite pregled da biste vidjeli krajnji izgled stranice, ništa neće biti pohranjeno.",//perhaps not used
 "The SandBox is disabled" => "Igraonica je isključena",
 "The thumbnail name must be" => "Naziv smanjene slike mora biti",
 "The user has choosen to make his information private" => "Korisnik je sakrio svoje informacije",

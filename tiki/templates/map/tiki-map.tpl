@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.15 2004-04-15 05:49:45 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.16 2004-06-23 22:34:29 mose Exp $ *}
 
 <script src="lib/map/map.js" />
 
@@ -66,7 +66,7 @@
 		  <select name="size" size="1">
 		  {html_options values=$possiblesizes selected=$size output=$displaysizes}
 		  </select>
-		  <br/>
+		  <br />
 		  <small>{tr}select zoom/pan/query and image size{/tr}</small>
 		</td></tr>
 		<tr><td align="center">
@@ -79,7 +79,7 @@
      {/if}
      &nbsp;
      <input type="image" name="maponly" value="yes" src="img/icn/png.gif" border="0" />
-     <br/>
+     <br />
 		  <small>{tr}Click on the map or click redraw{/tr}</small>
 		  <input type="hidden" name="minx" value="{$minx}" />
 		  <input type="hidden" name="miny" value="{$miny}" />

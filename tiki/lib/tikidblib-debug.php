@@ -89,7 +89,7 @@ function qstr($str) {
     {
     $this->convert_query($query);
 
-    //echo "query: $query <br/>";
+    //echo "query: $query <br />";
     //echo "<pre>";
     //print_r($values);
     //echo "\n";
@@ -180,7 +180,7 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 function sql_error($query, $values, $result) {
     global $ADODB_LASTDB;
 
-    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
+    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
     // only for debugging.
     echo "Values: <br>";
     print_r($values);

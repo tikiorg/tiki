@@ -22,6 +22,7 @@
 <a href="tiki-admin_forums.php" class="linkbut">{tr}Create new forum{/tr}</a>
 {else}
 <h2>{tr}Create New Forum{/tr}</h2>
+(<a href="#editforums">Edit existing forums</a>)
 {/if}
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName=forum%20{$name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$forumId}">{tr}There are individual permissions set for this forum{/tr}</a>
@@ -262,7 +263,7 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<h2>{tr}Forums{/tr}</h2>
+<a name="editforums" id="editforums"></a><h2>{tr}Edit Existing Forums{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

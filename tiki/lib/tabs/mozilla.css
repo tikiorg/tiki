@@ -1,0 +1,74 @@
+
+/* TABS */
+
+div.tabs {
+	font-size: 11px;
+	white-space: nowrap;
+	font-family: Verdana, Arial, sans-serif;
+	cursor: default !important;
+	font-weight: 700 !important;
+	z-index: 100;
+	}
+
+.content {
+	position: relative;
+	font-family: Veranda, Arial, sans-serif;
+	border: 1px solid #666;
+	width: 96%;
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 25px;
+	z-index: 80;
+	background-color: #f3f6f9;
+	-moz-border-radius: 0px 4px 4px 4px;
+	}
+	
+.tab {
+	border: 1px solid #347;
+	padding: 2px 5px 1px 5px;
+	background-color: #bcd;
+	color: #303036;
+	z-index: 100;
+	border-bottom-width: 0;
+	-moz-border-radius: 4px 4px 0px 0px;
+	}
+
+.tabHover {
+	background-color: #46596f;
+	color:#fff;
+	z-index: 90;
+	border-bottom-width: 0;
+	cursor: pointer;
+	}
+
+.tabActive { 
+	padding: 3px 5px 2px 5px;
+	color: #060610 ;
+	background-color: #f3f6f9;
+	z-index: 100;
+	}
+      
+div.tabsClone .tab, div.tabsClone .tabActive {
+	border-top-width: 0 !important;
+	border-bottom-width: 1px !important;
+	}
+
+div.tabsClone .tabActive{
+	top: -2px;
+	}
+
+a.removeTab{
+	font-size: smaller;
+	text-decoration: none;
+	}
+
+
+/* ASSORTED  */
+
+#clear {
+	clear:both;
+	}
+	
+

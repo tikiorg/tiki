@@ -22,7 +22,7 @@
 {/section}
 </table>
 <h3>{tr}Assign permissions{/tr}</h3>
-<form method="post" action="tiki-categpermissions.php">
+<form method="post" action="tiki-categpermissions.php" class="form">
 {tr}assign{/tr}
 <input type="hidden" name="categId" value="{$categId|escape}" />
 <select name="perm">
@@ -38,7 +38,7 @@
 </select>
 {tr}for{/tr}
 <input type="submit" name="assign_all" value="{tr}this category &amp; all its children{/tr}" />
-or
+{tr}or{/tr}
 <input type="submit" name="assign" value="{tr}this category only{/tr}" />
 </form>
-<div class="simplebox highlight">Assigning permissions for <b>all children</b> is recommended for best performance.</div>
+<div class="simplebox highlight">{tr}Assigning permissions for <b>all children</b> is recommended for best performance.{/tr}</div>

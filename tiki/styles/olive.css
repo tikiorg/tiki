@@ -6,6 +6,9 @@ body {
 	margin-left: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
+	color: black;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
 }
 
 /* GENERAL LAYOUT EXPLANATION
@@ -471,7 +474,7 @@ input {
  */
 
 /* Cells in forms without background color (inside a div for example) */
-.form td {
+.form {
 	color: black;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -810,7 +813,6 @@ DIV#page-bar {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: black;
-  border: 1px solid #84aa00;
 	padding-left: 2px;
 	padding-right: 2px;
 	background-color: white;
@@ -822,7 +824,6 @@ DIV#page-bar {
 	font-size: 11px;
 	background-color: white;
 	color: black;
-  border: 1px solid #84aa00;
 	padding-left: 2px;
 	padding-right: 2px;
 	text-decoration: none;
@@ -832,7 +833,6 @@ DIV#page-bar {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: black;
-  border: 1px solid #84aa00;
 	padding-left: 2px;
 	padding-right: 2px;
 	background-color: #CCCCCC;

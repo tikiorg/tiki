@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.27 2004-05-01 01:06:29 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.28 2004-06-23 22:34:23 mose Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -102,10 +102,6 @@ function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cache
     function add_replace_rule($repID, $ruleID, $ord, $srch, $repl, $type, $case, $rxmod, $en, $descr)
     {
         global $tikilib;
-        $srch  = addslashes($srch);
-        $repl  = addslashes($repl);
-        $rxmod = addslashes($rxmod);
-        $descr = addslashes($descr);
 
         if ($ord == 0)
         {

@@ -1,7 +1,8 @@
 # Command to build: rpmbuild -ba --target noarch tikiwiki.spec
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikiwiki.spec,v 1.6 2004-06-23 22:33:55 mose Exp $
 
 %define name tikiwiki
-%define version 1.8.3
+%define version 1.9.RC1
 %define release 1
 
 Summary: A PHP-based CMS/Groupware web application with a full Wiki environment
@@ -10,7 +11,7 @@ Version: %{version}
 Release: %{release}
 Copyright: LGPL
 URL: http://www.tikiwiki.org
-Packager: Peter Popovich <tiki-rpm@popovich.net>
+Packager: Damian Parker <damian@damosoft.co.uk>
 AutoReqProv: no
 Requires: php 
 Group: Applications/Internet
@@ -31,9 +32,9 @@ TikiWiki is an open source CMS/Groupware web application which provides a full W
 mkdir -p $RPM_BUILD_ROOT/var/www/html
 cd $RPM_BUILD_ROOT/var/www/html
 tar xvzf $RPM_SOURCE_DIR/%{name}-%{version}.tar.gz
-mv %{name}-%{version} tiki-1.8
+mv %{name}-%{version} tiki-1.9.RC1
 # Change file and directory permissions
-cd tiki-1.8
+cd tiki-1.9.RC1
 find . -name "*.php" -exec chmod 644 {} \;
 find . -name "*.sql" -exec chmod 644 {} \;
 ./setup.sh apache apache
@@ -53,8 +54,8 @@ rm -f /var/www/html/modules/cache/*.cache
 
 %files
 %defattr(-,apache,apache)
-%config /var/www/html/tiki-1.8/db/tiki-db.php
-#%doc /var/www/html/tiki-1.8/README
-/var/www/html/tiki-1.8
+%config /var/www/html/tiki-1.9.RC1/db/tiki-db.php
+#%doc /var/www/html/tiki-1.9.RC1/README
+/var/www/html/tiki-1.9.RC1
 
 %changelog

@@ -21,7 +21,7 @@ function wikiplugin_countdown($data, $params) {
 	extract ($params);
 
 	if (!isset($enddate)) {
-		return ("<b>COUNTDOWN: Missing 'enddate' parameter for plugin</b><br/>");
+		return ("<b>COUNTDOWN: Missing 'enddate' parameter for plugin</b><br />");
 	}
 
 	if (isset($localtime) && $localtime == 'on')

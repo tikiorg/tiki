@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.4 2004-05-12 13:15:30 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.5 2004-06-23 22:33:55 mose Exp $
 #
 # That script is done for fast merging fixes that are done on branch
 # refer to http://tikiwiki.org/tiki-index.php?page=CvsBranch18
@@ -30,14 +30,23 @@ FILES=$*
 echo "# Start of block you can just copy-paste"
 echo "# or adapt (especially comment of commit)"
 
-echo "cvs -q update -dP -r BRANCH-1-8 $FILES"
+echo "cvs -q up -dP -r BRANCH-1-8 $FILES"
 echo "cvs -q tag -r BRANCH-1-8 -F BRANCH-1-8-HEAD $FILES"
+echo "cvs -q up -dP -r BRANCH-1-9 $FILES"
+for i in $FILES; do
+	echo "cvs -q up -dkk -j MERGE-BRANCH-1-8-to-1-9 -j BRANCH-1-8-HEAD $i"
+done
+echo "grep -r '<<<<<' $FILES"
+echo "cvs ci -m'Instant-Auto-Merge from BRANCH-1-8 to BRANCH-1-9' $FILES"
+echo "cvs -q tag -r BRANCH-1-8-HEAD -F MERGE-BRANCH-1-8-to-1-9 $FILES"
+echo "cvs -q tag -r BRANCH-1-9 -F BRANCH-1-9-HEAD $FILES"
 echo "cvs -q up -AdP $FILES"
 for i in $FILES; do
-	echo "cvs -q up -dkk -j MERGE-BRANCH-1-8-to-HEAD -j BRANCH-1-8-HEAD $i"
+	echo "cvs -q up -dkk -j MERGE-BRANCH-1-9-to-HEAD -j BRANCH-1-9-HEAD $i"
 done
-echo "cvs ci -m'Instant-Auto-Merge from BRANCH to HEAD' $FILES"
-echo "cvs -q tag -r BRANCH-1-8-HEAD -F MERGE-BRANCH-1-8-to-HEAD $FILES"
+echo "grep -r '<<<<<' $FILES"
+echo "cvs ci -m'Instant-Auto-Merge from BRANCH-1-9 to HEAD' $FILES"
+echo "cvs -q tag -r BRANCH-1-9-HEAD -F MERGE-BRANCH-1-9-to-HEAD $FILES"
 echo "cvs -q up -r BRANCH-1-8 -dP $FILES"
 
 echo "# Done."

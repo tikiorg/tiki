@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.5 2004-03-15 21:27:44 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.6 2004-06-23 22:34:32 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a><br /><br />
 {include file=tiki-mytiki_bar.tpl}
-<br/><br/>
+<br /><br />
 
 
 {if $mytiki_pages eq 'y'}

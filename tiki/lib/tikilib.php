@@ -1496,12 +1496,12 @@ class TikiLib extends TikiDB {
 
 			    // If you want to use the commented out line below, please remove the \ in <\/script>; it was breaking vim highlighting.  -rlpowell
 			    // $repl.="<script language='Javascript' type='text/javascript'>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");<\/script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br />";
-			    $repl .= "<a href=\\\"javascript:param=doo_${word}_$i();replaceLimon(param);\\\">$sug</a><br />";
+			    $repl .= "<a href=\'javascript:param=doo_${word}_$i();replaceLimon(param);\'>".addslashes($sug)."</a><br />";
 			    $trl .= "<script language='Javascript' type='text/javascript'>function doo_${word}_$i(){ aux = new Array(\"$element\",\"$word\",\"$sug\"); return aux;}</script>";
 			}
 
 			//$popup_text = " <a title=\"".$sug."\" style=\"text-decoration:none; color:red;\" onClick='"."return overlib(".'"'.$repl.'"'.",STICKY,CAPTION,".'"'."SpellChecker suggestions".'"'.");'>".$word.'</a> ';
-			$popup_text = " <a title='$sug' style='text-decoration:none; color:red;' onClick='return overlib(\"" . $repl . "\",STICKY,CAPTION,\"Spellchecker suggestions\");'>$word</a> ";
+			$popup_text = " <a title=\"Click for a list of spelling suggestions\" style=\"text-decoration: none; color:red;\" onClick=\"return overlib('$repl',STICKY,CAPTION,'Spellchecker suggestions');\">$word</a> ";
 		    }
 
 		    //print("popup: <pre>".htmlentities($popup_text)."</pre><br />");
