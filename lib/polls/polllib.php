@@ -230,8 +230,6 @@ class PollLib extends TikiLib {
 	}
 
 	function replace_poll_option($pollId, $optionId, $title) {
-		$title = addslashes($title);
-
 		// Check the name
 		if ($optionId) {
 			$query = "update `tiki_poll_options` set `title`=? where `optionId`=?";
