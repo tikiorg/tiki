@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.46 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.47 2004-05-06 04:47:12 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,8 +62,8 @@ if (isset($_REQUEST["prefs"])) {
 	// setting preferences
 	//  if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
 	if ($change_theme == 'y') {
-		if (isset($_REQUEST["style"]))
-			$tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["style"]);
+		if (isset($_REQUEST["mystyle"]))
+			$tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["mystyle"]);
 	}
 
 	if (isset($_REQUEST["realName"]))
@@ -84,8 +84,11 @@ if (isset($_REQUEST["prefs"])) {
 		}
 	}
 
-	if (isset($_REQUEST["style"]))
-		$smarty->assign('style', $_REQUEST["style"]);
+	if (isset($_REQUEST["mystyle"])) {
+		$style = $_REQUEST["mystyle"];
+		if ($tikidomain and is_file("$tikidomain/$style")) { $style = "$tikidomain/$style"; }
+		$smarty->assign('style', $style);
+	}
 
 	if (isset($_REQUEST["language"]))
 		$smarty->assign('language', $_REQUEST["language"]);
@@ -269,14 +272,22 @@ $smarty->assign_by_ref('userinfo', $userinfo);
 
 $styles = array();
 $h = opendir("styles/");
-
 while ($file = readdir($h)) {
 	if (strstr($file, ".css") and substr($file,0,1) != '.') {
-		$styles[] = $file;
+		$sty[$file] = 1;
 	}
 }
-
 closedir($h);
+if ($tikidomain) {
+	$h = opendir("styles/");
+	while ($file = readdir($h)) {
+  	if (strstr($file, ".css") and substr($file,0,1) != '.') {
+	    $sty["$file"] = 1;
+		} 
+	} 
+	closedir($h);				
+}
+$styles = array_keys($sty);
 sort($styles);
 $smarty->assign_by_ref('styles',$styles);
 
@@ -312,8 +323,8 @@ sort ($flags);
 $smarty->assign('flags', $flags);
 
 // Get preferences
-$style = $tikilib->get_user_preference($userwatch, 'theme', $style);
-$language = $tikilib->get_user_preference($userwatch, 'language', $language);
+//$style = $tikilib->get_user_preference($userwatch, 'theme', $style);
+//$language = $tikilib->get_user_preference($userwatch, 'language', $language);
 $smarty->assign_by_ref('style', $style);
 $realName = $tikilib->get_user_preference($userwatch, 'realName', '');
 $country = $tikilib->get_user_preference($userwatch, 'country', 'Other');
