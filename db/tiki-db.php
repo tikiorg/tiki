@@ -145,4 +145,56 @@ unset ($user_tiki);
 unset ($pass_tiki);
 unset ($dbs_tiki);
 
+// DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
+
+// deal with register_globals
+if ( ini_get('register_globals') ) {
+	foreach ( array_merge($_ENV, $_REQUEST, $SERVER) as $key=>$val ) {
+		if ( $GLOBALS[$key]==$val ) { // if global has been set some other way that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
+			unset($GLOBALS[$key]);
+		}
+	}
+}
+
+// deal with get_magic_quotes_gpc
+/* Don't do this here because Tiki must already be doing it somewhere else
+if ( get_magic_quotes_gpc() ) { // don't do this here because Tiki must already be doing it somewhere
+	foreach ( $_GET as $key=>$val ) {
+		$_GET[$key] = stripslashes($val);
+	}
+	foreach ( $_POST as $key=>$val ) {
+		$_POST[$key] = stripslashes($val);
+	}
+	foreach ( $_COOKIE as $key=>$val ) {
+		$_COOKIE[$key] = stripslashes($val);
+	}
+}
+*/
+
+// deal with attempted <script> attacks and any other trash in URI
+// note that embedded tags in post and cookie must be handled specifically by code
+// as they might be valid!
+foreach ( $_GET as $key=>$val ) {
+	$_GET[$key] = htmlspecialchars($val);
+}
+
+// rebuild in a safe order
+$_REQUEST = array_merge($_COOKIE, $_POST, $_GET, $_ENV, $_SERVER);
+
+// deal with old request globals
+// Tiki uses them (admin for instance) so compatibility is required
+if ( false ) { // if pre-PHP 4.1 compatibility is not required
+	unset($GLOBALS['HTTP_GET_VARS']);
+	unset($GLOBALS['HTTP_POST_VARS']);
+	unset($GLOBALS['HTTP_COOKIE_VARS']);
+	unset($GLOBALS['HTTP_ENV_VARS']);
+	unset($GLOBALS['HTTP_SERVER_VARS']);
+	unset($GLOBALS['HTTP_SESSION_VARS']);
+	unset($GLOBALS['HTTP_POST_FILES']);
+} else {
+	$GLOBALS['HTTP_GET_VARS'] =& $_GET;
+	$GLOBALS['HTTP_POST_VARS'] =& $_POST;
+	$GLOBALS['HTTP_COOKIE_VARS'] =& $_COOKIE;
+}
+
 ?>

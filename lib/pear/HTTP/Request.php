@@ -1,6 +1,6 @@
 <?php
 // +-----------------------------------------------------------------------+
-// | Copyright (c) 2002-2003, Richard Heyes                                     |
+// | Copyright (c) 2002-2004, Richard Heyes                                     |
 // | All rights reserved.                                                  |
 // |                                                                       |
 // | Redistribution and use in source and binary forms, with or without    |
@@ -32,7 +32,7 @@
 // | Author: Richard Heyes <richard@phpguru.org>                           |
 // +-----------------------------------------------------------------------+
 //
-// $Id: Request.php,v 1.22 2003/01/30 14:23:13 richard Exp $
+// $Id$
 //
 // HTTP_Request Class
 //
