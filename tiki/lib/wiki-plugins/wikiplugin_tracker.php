@@ -1,15 +1,16 @@
 <?php
-
-// Includes an article field
+// Includes a tracker field
 // Usage:
-// {ARTICLE(Id=>articleId, Field=>FieldName)}{ARTICLE}
-// FieldName can be any field in the tiki_articles table, but title,heading, or body are probably the most useful.
+// {TRACKER()}{TRACKER}
+
 function wikiplugin_tracker_help() {
-	return tra("Displays an input form for tracker submit").":<br />~np~{TRACKER(trackerId=>1,fields=>login:email:-optionalfield)}Notice{TRACKER}~/np~";
+	$help = tra("Displays an input form for tracker submit").":\n";
+	$help.= "~np~{TRACKER(trackerId=>1,fields=>login:email:-optionalfield,action=>Name of submit button)}Notice{TRACKER}~/np~";
+	return $help;
 }
 function wikiplugin_tracker($data, $params) {
 	global $tikilib, $dbTiki;
-	
+	//var_dump($_REQUEST);
 	extract ($params);
 
 	if (!isset($trackerId)) {
@@ -22,12 +23,12 @@ function wikiplugin_tracker($data, $params) {
 	if ($tracker) {
 		include "lib/trackers/trackerlib.php";
 
-		if (isset($_REQUEST['trackit'])) {
+		if (isset($_REQUEST['trackit']) and $_REQUEST['trackit']) {
 			foreach ($_REQUEST['track'] as $fld=>$val) {
 				$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val);
 			}
-			//$trklib->replace_item($trackerId,0,$ins_fields);
-			return "<div>Done!</div>";
+			$trklib->replace_item($trackerId,0,$ins_fields);
+			return "<div>Done!</div><pre>".print_r($ins_fields)."</pre>";
 		}
 		$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
 		$optionnal = array();
@@ -43,8 +44,6 @@ function wikiplugin_tracker($data, $params) {
 				$outf[] = $l;
 			}
 		}
-		
-	
 		$back = '~np~<form><input type="hidden" name="trackit" value="1" />';
 		$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 		$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
@@ -73,14 +72,12 @@ function wikiplugin_tracker($data, $params) {
 				$back.= "</td></tr>";
 			}
 		}
-		
 		$back.= "<tr><td></td><td><input type='submit' name='action' value='".$action."'></td></tr>";
 		$back.= "</table>";
 		$back.= "</form>~/np~";
 	} else {
 		$back = "No such id in trackers.";
 	}
-
 	return $back;
 }
 
