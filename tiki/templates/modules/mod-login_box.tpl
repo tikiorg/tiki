@@ -1,6 +1,8 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.16 2003-08-07 20:56:53 zaufi Exp $ *}
+
 <div class="box">
 <div class="box-title">
-{tr}Login{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Login{/tr}" module_name="login_box"}
 </div>
 <div class="box-data">
     {if $user}

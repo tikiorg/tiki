@@ -1,7 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-quick_edit.tpl,v 1.3 2003-08-07 20:56:53 zaufi Exp $ *}
+
 {if $tiki_p_edit eq 'y'}
 <div class="box">
 <div class="box-title">
-{tr}Quick edit a Wiki page{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Quick edit a Wiki page{/tr}" module_name="quick_edit"}
 </div>
 <div class="box-data">
 <form method="get" action="tiki-editpage.php">

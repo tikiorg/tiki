@@ -1,6 +1,8 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-google.tpl,v 1.8 2003-08-07 20:56:53 zaufi Exp $ *}
+
 <div class="box">
 <div class="box-title">
-{tr}Google Search{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Google Search{/tr}" module_name="google"}
 </div>
 <div class="box-data">
 <form method="get" action="http://www.google.com/search" target="Google" style="margin-bottom:2px;">

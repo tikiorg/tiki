@@ -1,7 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images.tpl,v 1.4 2003-08-07 20:56:53 zaufi Exp $ *}
+
 {if $feature_galleries eq 'y'}
 <div class="box">
 <div class="box-title">
-{tr}Top Images{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Top Images{/tr}" module_name="top_images"}
 </div>
 <div class="box-data">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">

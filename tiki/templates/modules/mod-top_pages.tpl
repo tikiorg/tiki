@@ -1,7 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_pages.tpl,v 1.5 2003-08-07 20:56:53 zaufi Exp $ *}
+
 {if $feature_wiki eq 'y'}
 <div class="box">
 <div class="box-title">
-{tr}Top Pages{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Top Pages{/tr}" module_name="top_pages"}
 </div>
 <div class="box-data">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">

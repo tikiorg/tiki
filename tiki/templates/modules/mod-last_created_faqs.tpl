@@ -1,7 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_created_faqs.tpl,v 1.2 2003-08-07 20:56:53 zaufi Exp $ *}
+
 {if $feature_faqs eq 'y'}
 <div class="box">
 <div class="box-title">
-{tr}Last Created FAQs{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Last Created FAQs{/tr}" module_name="last_created_faqs"}
 </div>
 <div class="box-data">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">

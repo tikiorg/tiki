@@ -1,7 +1,9 @@
-{if $feature_galleries eq 'y'}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images_th.tpl,v 1.5 2003-08-07 20:56:53 zaufi Exp $ *}
+
+leries eq 'y'}
 <div class="box">
 <div class="box-title">
-{tr}Top Images{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Top Images{/tr}" module_name="top_images_th"}
 </div>
 <div class="box-data">
 {section name=ix loop=$modTopImages}

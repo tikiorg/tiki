@@ -1,7 +1,9 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-comm_received_objects.tpl,v 1.2 2003-08-07 20:56:53 zaufi Exp $ *}
+
 {if $feature_comm eq 'y'}
 <div class="box">
 <div class="box-title">
-{tr}Received objects{/tr}
+{include file="modules/module-title.tpl" module_title="{tr}Received objects{/tr}" module_name="comm_received_objects"}
 </div>
 <div class="box-data">
 <table width="100%" border="0" cellpadding="0" cellspacing="0">
