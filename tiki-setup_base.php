@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.66 2004-04-08 07:07:54 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.67 2004-04-08 16:18:38 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -216,9 +216,6 @@ function varcheck($array) {
   }
 }
 varcheck($_REQUEST);
-varcheck($_POST);
-varcheck($_GET);
-varcheck($_COOKIE);
 
 // --------------------------------------------------------------
 
