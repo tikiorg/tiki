@@ -34,6 +34,7 @@ if ($feature_shoutbox == 'y' && $tiki_p_view_shoutbox == 'y') {
 		$shout_father .= '?';
 	}
 
+	global $smarty;
 	$smarty->assign('shout_ownurl', $shout_father);
 
 	if ($tiki_p_admin_shoutbox == 'y') {
