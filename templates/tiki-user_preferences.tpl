@@ -31,7 +31,13 @@
   <table>
   <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
-  <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td><input type="checkbox" name="email_isPublic" {if $email_isPublic eq 'y'}checked="checked"{/if} /></td></tr>
+  <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td>
+  <select name="email_isPublic">
+   {section name=ix loop=$scramblingMethods}
+      <option value="{$scramblingMethods[ix]|escape}" {if $email_isPublic eq $scramblingMethods[ix]}selected="selected"{/if}>{$scramblingEmails[ix]}</option>
+   {/section}
+  </select>
+  </td></tr>
   </td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td>
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
@@ -208,7 +214,7 @@
       <div class="cbox-data">
         <div class="simplebox">
         <form action="tiki-user_preferences.php" method="post">
-<table class="normal">
+<table>
 <tr>
   <td class="form">{tr}Tasks per page{/tr}</td>
   <td class="form">
@@ -250,7 +256,7 @@
       <div class="cbox-data">
         <div class="simplebox">
         <form action="tiki-user_preferences.php" method="post">
-<table class="normal">
+<table>
 <tr><td class="form">{tr}My pages{/tr}</td><td class="form"><input type="checkbox" name="mytiki_pages" {if $mytiki_pages eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}My blogs{/tr}</td><td class="form"><input type="checkbox" name="mytiki_blogs" {if $mytiki_blogs eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}My galleries{/tr}</td><td class="form"><input type="checkbox" name="mytiki_gals" {if $mytiki_gals eq 'y'}checked="checked"{/if} /></td></tr>
