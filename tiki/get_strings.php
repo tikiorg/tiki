@@ -63,7 +63,8 @@ closedir($handle);
 
 
 foreach($languages as $sel) {
-include_once("lang/$sel/language.php");
+unset($lang);
+require("lang/$sel/language.php");
 $fw = fopen("lang/$sel/new_language.php",'w+');
 print("&lt;?php\n<br/>\$lang=Array(\n<br/>");
 fwrite($fw,"<?php\n\$lang=Array(\n");
