@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/error.tpl,v 1.5 2003-08-01 10:31:17 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/error.tpl,v 1.6 2003-11-28 14:46:20 mose Exp $ *}
 {* Index we display a wiki page here *}
 
 {include file="header.tpl"}
@@ -45,6 +45,7 @@
         </div>
         <div class="cbox-data" id="error-data">
           {$msg}<br /><br />
+					{if $page and ($tiki_p_admin eq 'y' or  $tiki_p_admin_wiki eq 'y')}<a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Create this page{/tr}</a><br /><br />{/if}
           <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
         </div>
       </div>
