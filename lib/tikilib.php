@@ -872,26 +872,26 @@ class TikiLib {
     foreach ($ret as $page) {
       $val = 1/count($ret);
       $pages[$page] = $val;
-      $query = "update tiki_pages set pageRank=$val where pageName='$page'";
+      $query = "update tiki_pages set pageRank=$val where pageName='".addslashes($page)."'";
       $result = $this->query($query);
     }
     for($i=0;$i<$loops;$i++) {
       foreach($pages as $pagename => $rank) {
         // Get all the pages linking to this one
-        $query = "select fromPage from tiki_links where toPage = '$pagename'";
+        $query = "select fromPage from tiki_links where toPage = '".addslashes($pagename)."'";
         $result = $this->query($query);
 
         $sum = 0;
         while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
           $linking = $res["fromPage"];
-          $q2 = "select count(*) from tiki_links where fromPage='$linking'";
+          $q2 = "select count(*) from tiki_links where fromPage='".addslashes($linking)."'";
           $cant = $this->getOne($q2);
           if($cant==0) $cant=1;
           $sum += $pages[$linking] / $cant;
         }
          $val = (1-0.85)+0.85 * $sum;
          $pages[$pagename] = $val;
-         $query = "update tiki_pages set pageRank=$val where pageName='$pagename'";
+         $query = "update tiki_pages set pageRank=$val where pageName='".addslashes($pagename)."'";
          $result = $this->query($query);
 
         // Update
