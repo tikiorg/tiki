@@ -16,7 +16,7 @@
 // | Authors: Jan Wagner <wagner@netsols.de>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: LDAP.php,v 1.2 2003-04-09 14:14:45 damienmckenna Exp $
+// $Id: LDAP.php,v 1.3 2003-07-12 09:36:39 mose Exp $
 //
 
 require_once "Auth/Container.php";
@@ -86,7 +86,7 @@ require_once "PEAR.php";
  *
  * @author   Jan Wagner <wagner@netsols.de>
  * @package  Auth
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  */
 class Auth_Container_LDAP extends Auth_Container
 {
@@ -263,7 +263,9 @@ class Auth_Container_LDAP extends Auth_Container
             $msg = "User: $username\nPwd: $password\n";
             foreach($this->options as $key=>$val)
               $msg .= "$key: $val\n";
-            mail("damien@mc-kenna.com", "test in auth_ldap", $msg);
+						// why that hardcoded value in auth ?
+						// I feel like it's a very very nasty thing !!!
+            // mail("damien@mc-kenna.com", "test in auth_ldap", $msg);
             $msg = "";
         }
 
@@ -485,7 +487,8 @@ class Auth_Container_LDAP extends Auth_Container
             $msg .="$var: $key\n";
           foreach($this->options as $var=>$key)
             $msg .="$var: $key\n";
-          mail("damien@mc-kenna.com", "test 1 in ldap/adduser", $msg);
+						// unwanted doubt
+          // mail("damien@mc-kenna.com", "test 1 in ldap/adduser", $msg);
         }
 
         // flow:
@@ -536,21 +539,26 @@ class Auth_Container_LDAP extends Auth_Container
             // create user
             if (ldap_add($this->conn_id, $user, $useropts))
             {
-                mail("damien@mc-kenna.com", "worked", $msg);
+							
+								// unwanted doubt
+								// here, we are not in a debug.
+                // mail("damien@mc-kenna.com", "worked", $msg);
                 // if ok return true
                 $status = true;
             }
             // else
             else
             {
-                mail("damien@mc-kenna.com", "failed", $msg);
+								// unwanted doubt
+                // mail("damien@mc-kenna.com", "failed", $msg);
                 // return a nice error message
                 $status = "Failed to add user!";
             }
         }
         else
         {
-            mail("damien@mc-kenna.com", "connection failed", "");
+						// unwanted doubt
+            // mail("damien@mc-kenna.com", "connection failed", "");
             $status = "Admin user could not login.";
         }
 
