@@ -1,11 +1,13 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/tests/core/extensions.php,v 1.1 2003-08-22 19:04:40 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tests/core/extensions.php,v 1.2 2003-08-25 22:57:43 zaufi Exp $
  *
  * \brief Extensions Management
  *
  */
+
+define('TIKI_EXT_BASE_DIR', dirname(__FILE__) . '/ext');
 
 /**
  * \brief Extensions Management Core Subsystem
@@ -24,12 +26,13 @@ class TikiCoreExtensions
      * \brief List of enabled extensions
      * List available for user extensions
      */
-    function enabled_extensions($user)
+    function enabled_extensions($objid, $objtype)
     {
     }
     /**
      * \brief Rescan extensions dir
      * ... and update DB table.
+     *
      */
     function search_extensions()
     {
@@ -53,6 +56,9 @@ class TikiCoreExtensions
      *
      * It is not enough to copy extension files to corresponding dir
      * it should be installed...
+     *
+     * \param $extension string extension name to check
+     * \return true if installed, else false
      */
     function is_installed($extension)
     {
@@ -61,9 +67,39 @@ class TikiCoreExtensions
      * \brief Return true if extension installed and enabled for current user
      *
      */
-    function is_enabled($extension, $user)
+    function is_enabled($extension, $objid, $objtype)
     {
     }
+
+    /*
+     * API for extension installators
+     */
+
+    /**
+     * \brief
+     */
+    function register_extension()
+    {
+    }
+    /**
+     * \brief
+     */
+    function unregister_extension()
+    {
+    }
+    /**
+     * \brief
+     */
+    function register_page()
+    {
+    }
+    /**
+     * \brief
+     */
+    function unregister_page()
+    {
+    }
+
 }
 
 ?>
