@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.94 2003-12-19 04:37:55 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.95 2003-12-19 04:44:37 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -852,4 +852,6 @@ ALTER TABLE `tiki_trackers` ADD `orderAttachments` VARCHAR( 255 ) DEFAULT 'filen
 
 # added on 2003-12-19 by mose (because wolff forgot)
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mantis', 'Can admin Mantis configuration', 'admin', 'mantis');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_mantis', 'Can view Mantis bugs', 'registered', 'mantis');
+INSERT INTO tiki_preferences(name,value) VALUES ('feature_mantis','n');
 
