@@ -14,7 +14,7 @@
       </td>
       <td id="centercolumn"><div id="tiki-center">
       <br/>
-	<h2>Error! <a href="index.php" class="wiki">(return to home page)</a></h2>
+	<h2>Error! <a href="{$tikiIndex}" class="wiki">(return to home page)</a></h2>
 	<div class="wikitext">{$msg}</div>
       </div></td>
       <td id="rightcolumn">

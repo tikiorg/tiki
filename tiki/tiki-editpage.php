@@ -162,6 +162,7 @@ if(isset($_REQUEST["save"])) {
   if(!$tikilib->page_exists($_REQUEST["page"])) {
     // Extract links and update the page
     $links = $tikilib->get_links($_REQUEST["edit"]);
+    
     $tikilib->cache_links($links);
     $t = date("U");
     $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"]);  

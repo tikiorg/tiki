@@ -1,3 +1,58 @@
+Version 1.0 -Ras Algheti-
+
+* [NEW FEATURE] Dynamic content system: create, edit or program dynamic blocks, dynamic blocks can be
+  included in any template or in a user module using a very simple syntax via a smarty plugin, this
+  can be used for news, programmed announcements, results of sports, important news, quotes, messaging
+  and many other features.
+* [CHANGE] User modules are now parsed by smarty allowing the user to create user modules to display
+  dynamic content (using the dynamic content system), banners, lists loops, etc.
+* [NEW FEATURE] Edit templates: templates can now be edited with appropiate permission, this allows the admin
+  to change any layout or presentation aspect of the site dynamically. (Use it carefully)
+* [NEW FEATURE] Banners and text adds: edit and admin banners, banners can be placed in any template and
+  distributed in zones. Many configuration and control settings for banners, HTML banners, Image banners
+  and text adds supported. Banner stats page accesible by normal users if they are the banner client.
+* [NEW FEATURE] Added an option to remove images in the system gallery not being used in actual Wiki pages,
+  articles, submissions or blog_posts (this can be used to clean up the images gallery table from time to 
+  time since users may have removed pages, blog_posts or articles and the cached version of images used in
+  those pages will still be present)
+* [NEW FEATURE] Added a mechanism to prevent caching some images 
+* [NEW FEATURE] Added a nocache option to external links to prevent displaying the cache link for some links
+* [NEW FEATURE] Topics, edit topics, associate an image with a topic. (Topics are used by articles)
+* [NEW FEATURE] Articles, edit articles, program articles to be published, visit a home where the last
+  "n" articles are displayed.
+* [NEW FEATURE] Submissions, send submissions, edit submissions, approve/remove submissions.  
+* [NEW FEATURE] Blogs, create a weblog, post to weblogs, list weblogs, view a weblog.
+* [NEW FEATURE] The home page of the application can be now the Wiki HomePage, the Articles HomePage,
+  any weblog or any Image gallery
+* [NEW FEATURE] Articles rankings: top articles, last articles, top authors
+* [NEW FEATURE] Wiki rankings: top pages, top authors
+* [NEW FEATURE] Image galleries rankings: top images, top galleries, last modified galleries
+* [NEW FEATURE] Blog ranklings: top visited weblogs, most active weblogs, last changed weblogs.
+* [NEW MODULES] Last articles, old articles, top articles, las submissions, number of submissions waiting
+* [NEW MODULES] Last modified weblogs, top visited weblogs, most active weblogs
+* [NEW FEATURE] Enable/disable rankings for articles, wiki, galleries and Blogs
+* [NEW FEATURE] RSS feed for articles
+* [NEW FEATURE] RSS feed for weblogs
+* [NEW FEATURE] The ALT-s key can be used to access the searchbox
+* [CHANGED] New search engine that can search in Wikipages, galleries, images, blogs and articles
+* [CHANGED] Added pagination and tabs to search other features to the search results page
+* [NEW FEATURE] The Wiki can be enabled/disabled
+* [NEW FEATURE] Articles can be enabled/disabled
+* [NEW FEATURE] Submissions can be enabled/disabled
+* [NEW FEATURE] Blogs can be enabled/disabled
+* [CHANGED] The application menu now is divided into expandable/collapsable sections
+* [NEW FEATURE] Implemented the Blogger XMLRPC api, now you can use desktop applications compatible with
+  blogger to edit Tiki weblogs
+* [NEW FEATURE] The XMLRPC API can be enabled/disabled
+* [CHANGES] Documentation updated and enhanced
+* [FIX] Fixed a bug that returned users with admin permission to tiki-index if the login name was not 'admin'
+* [FIX] Fixed a bug that prevented recognition of wiki pages if the name had a number
+* [FIX] User preferences is not shown if the user is not logged
+* [FIX] Fixed wrong link to show the image in an HTML page when browsing an image
+* [FIX] Fixed a very Nasty bug that was breaking pages where a link to an internal wiki page was used
+  and breaking links to URLS that contained names that may have been matched as wikipages.
+
+
 Version 0.95 -Shaula-
 
 * [NEW FEATURE] User personal page in the Wiki with a page editable only by the user
@@ -25,7 +80,7 @@ Version 0.95 -Shaula-
 * [FIX] Fixed a bug when uploading images without entering any data
 * [FIX] Fixed a bug with thumbnails
 * [FIX] Fixed errors with unescaped characters in Wiki pages 
-
+* [FIX] fixed  a bug that prevented hits from being counted for images
 
 Version 0.9 -Spica-
 

@@ -15,6 +15,9 @@
 <tr><td class="text">{tr}Submissions{/tr}:</td><td><input type="checkbox" name="feature_submissions" {if $feature_submissions eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="text">{tr}Blogs{/tr}:</td><td><input type="checkbox" name="feature_blogs" {if $feature_blogs eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="text">{tr}XMLRPC API{/tr}:</td><td><input type="checkbox" name="feature_xmlrpc" {if $feature_xmlrpc eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="text">{tr}Banners{/tr}:</td><td><input type="checkbox" name="feature_banners" {if $feature_banners eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="text">{tr}Edit templates{/tr}:</td><td><input type="checkbox" name="feature_edit_templates" {if $feature_edit_templates eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="text">{tr}Dynamic content system{/tr}:</td><td><input type="checkbox" name="feature_dynamic_content" {if $feature_dynamic_content eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="text" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
@@ -171,6 +174,9 @@
     <tr><td align="center" class="text" colspan="2"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
+</div>
+<div class="simplebox">
+<a class="link" href="tiki-admin.php?rmvorphimg=1">{tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}</a>
 </div>
 </div>
 </div>

@@ -10,7 +10,7 @@ if($feature_userPreferences != 'y') {
    die;
 }
 
-if(empty($user)) {
+if(!$user) {
    $smarty->assign('msg',tra("You are not logged in"));
    $smarty->display('error.tpl');
    die;

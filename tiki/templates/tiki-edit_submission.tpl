@@ -38,7 +38,7 @@
 <tr><td>{tr}Heading{/tr}</td><td><textarea class="wikiedit" name="heading" rows="5" cols="80" wrap="virtual">{$heading}</textarea></td></tr>
 <tr><td>{tr}Body{/tr}</td><td><textarea class="wikiedit" name="body" rows="25" cols="80" wrap="virtual">{$body}</textarea></td></tr>
 <tr><td>{tr}Publish Date{/tr}</td><td>
-{html_select_date time=$publishDate} at {html_select_time time=$publishDate display_seconds=false}
+{html_select_date time=$publishDate end_year="+1"} at {html_select_time time=$publishDate display_seconds=false}
 </td></tr>
 </table>
 {if $tiki_p_use_HTML eq 'y'}

@@ -9,6 +9,7 @@ if($feature_wiki != 'y') {
 }
 
 
+
 // Create the HomePage if it doesn't exist
 if(!$tikilib->page_exists("HomePage")) {
   $tikilib->create_page("HomePage",0,'',date("U"),'Tiki initialization'); 
@@ -87,4 +88,5 @@ $smarty->assign_by_ref('lastUser',$info["user"]);
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
 $smarty->display('tiki.tpl');
+
 ?>

@@ -20,8 +20,8 @@
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where}
 <br/><br/>
 {section  name=search loop=$results}
-<a href="{$results[search].href}" class="wiki">{$results[search].pageName}</a> ({$results[search].hits})<br/>
-<div class="text">{$results[search].data}</div>
+<a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> ({$results[search].hits})<br/>
+<div class="text">{$results[search].data|strip_tags}</div>
 <div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</div><br/>
 {sectionelse}
 {tr}No pages matched the search criteria{/tr}
