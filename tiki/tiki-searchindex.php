@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.7 2004-06-20 15:44:43 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchindex.php,v 1.8 2004-07-14 21:22:27 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,7 +21,7 @@ if ($feature_search != 'y') {
 	die;
 }
 
-if(isset($_REQUEST["highlight"]) && !empty($_REQUEST["highlight"])) {
+if(!empty($_REQUEST["highlight"])) {
   $_REQUEST["words"]=$_REQUEST["highlight"];
 } else {
   $smarty->assign('msg', tra("You have to type a searchword"));
