@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.5 2004-04-30 23:53:01 lphuberdeau Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-sheets.php,v 1.6 2004-05-08 18:01:00 lphuberdeau Exp $
 
 // Based on tiki-galleries.php
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -86,14 +86,20 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 	if ($_REQUEST["sheetId"] > 0) {
 		$info = $sheetlib->get_sheet_info($_REQUEST["sheetId"]);
 
-		$smarty->assign_by_ref('title', $info["title"]);
-		$smarty->assign_by_ref('description', $info["description"]);
+		$smarty->assign('title', $info["title"]);
+		$smarty->assign('description', $info["description"]);
 
 		$info = $sheetlib->get_sheet_layout($_REQUEST["sheetId"]);
 
-		$smarty->assign_by_ref('className', $info["className"]);
-		$smarty->assign_by_ref('headerRow', $info["headerRow"]);
-		$smarty->assign_by_ref('footerRow', $info["footerRow"]);
+		$smarty->assign('className', $info["className"]);
+		$smarty->assign('headerRow', $info["headerRow"]);
+		$smarty->assign('footerRow', $info["footerRow"]);
+	}
+	else
+	{
+		$smarty->assign('className', 'default');
+		$smarty->assign('headerRow', '0');
+		$smarty->assign('footerRow', '0');
 	}
 }
 

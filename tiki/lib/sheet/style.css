@@ -25,3 +25,17 @@ form#Grid	table	input.selected
 }
 
 /* }}}1 */
+
+/* Default Style {{{1 */
+table.default	thead	td,	table.default	tfoot	td
+{
+	font-weight:		bold;
+	text-align:			center;
+}
+
+table.default	td
+{
+	border-style:		solid;
+	border-width:		1px;
+}
+/* }}}1 */
