@@ -299,6 +299,7 @@ class DirLib extends TikiLib {
   
   function dir_replace_site($siteId,$name,$description,$url,$country,$isValid)
   {
+    global $cachepages;
     $name = addslashes($name);
     $description = addslashes($description);
     $now=date("U");
@@ -318,10 +319,17 @@ class DirLib extends TikiLib {
       values('$name','$description','$url','$country','$isValid',0,$now,$now)";
       $this->query($query);        
       $siteId=$this->db->getOne("select max(siteId) from tiki_directory_sites where created=$now and name='$name'");
+      if($cachepages == 'y') {
+        $this->cache_url($url);
+      }
       return $siteId;
     }
-    
+    // Now try to cache the site
+
   }
+  
+  
+  
     
   // Replace
   function dir_replace_category($parent, $categId, $name, $description, $childrenType, $viewableChildren, $allowSites, $showCount, $editorGroup)

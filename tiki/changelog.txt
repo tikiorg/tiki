@@ -1,5 +1,8 @@
-Version 1.6 -TBD-
+Version 1.6 -Tau Ceti-
 
+* [NEW] Changed translation routines to a Smarty prefilter, the first time the screen is
+  generated it will be slower but then all the pages will be rendered very fast. Performance
+  improvement.
 * [NEW] Permissions interface improved supporting multiple permission settings in one operation (the famous
   checkboxes are here)
 * [NEW] Permission levels added to the permissions, allowing the admin to classify permissions by level and
