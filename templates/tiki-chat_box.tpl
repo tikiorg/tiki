@@ -1,4 +1,4 @@
-<!--<form onSubmit="javascript:top.document.frames[0].document.write('<span style=\'color:blue;\'>{$nickname}'+':'+getElementById('chatedit').value+'</span><br />');">-->
+<!--<form onsubmit="javascript:top.document.frames[0].document.write('<span style=\'color:blue;\'>{$nickname}'+':'+getElementById('chatedit').value+'</span><br />');">-->
 <form>
 <input type="hidden" name="channelId" value="{$channelId|escape}" />
 <input type="hidden" name="nickname" value="{$nickname|escape}" />

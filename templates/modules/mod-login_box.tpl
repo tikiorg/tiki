@@ -1,8 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.19 2003-09-24 06:17:30 rlpowell Exp $ *}
-
 <div class="box">
 <div class="box-title">
-{include file="modules/module-title.tpl" module_title="{tr}Login{/tr}" module_name="login_box"}
+{tr}Login{/tr}
 </div>
 <div class="box-data">
     {if $user}
@@ -12,15 +10,13 @@
         <form action="{$login_url}" method="post">
         {tr}user{/tr}:
         <input type="text" name="username" size="8" />
-	<!'' IE doesn't pass values from submit, apparently. -->
-        <input type="hidden" name="su" value="{tr}set{/tr}" />
-        <input type="submit" value="{tr}su{/tr}" />
+        <input type="submit" name="su" value="{tr}set{/tr}" />
         </form>
       {/if}
     {else}
-     <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onSubmit="doChallengeResponse()"{/if}> 
+     <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}
-     <script language="javascript" src="lib/md5.js"></script>   
+     <script language="javascript" type='text/javascript' src="lib/md5.js"></script>   
      {literal}
      <script language='Javascript' type='text/javascript'>
      <!--
