@@ -6,7 +6,7 @@
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-DIRS="backups db dump img/wiki img/wiki_up modules/cache temp templates_c var var/log var/log/ircbot"
+DIRS="backups db dump img/wiki img/wiki_up modules/cache temp templates_c var var/log var/log/irc"
 USER=yourlogin
 GROUP=nobody
 
