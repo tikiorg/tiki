@@ -1,40 +1,46 @@
 <a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br /><br />
-<a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a>
-<a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a>
-<table><tr><td valign="top">
-<h2>{tr}Preview menu{/tr}</h2>
-<div class="box">
-<div class="box-title">[{$menu_info.name}]</div>
-<div class="box-data">
-{include file=tiki-user_menu.tpl channels=$allchannels}
-</div>
+<span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span>
+<br /><br />
+
+<table><tr>
+<td valign="top">
+<table class="normal"><tr><td valign="top" class="odd" colspan="2">
+<h2>{tr}Edit menu options{/tr}</h2>
+<div style="text-align: right;">
+<a href="#" onclick="toggle('weburls');toggle('urltop');hide('show');show('hide');" id="show" style="display:block;">ShowUrls</a>
+<a href="#" onclick="toggle('weburls');toggle('urltop');hide('hide');show('show');" id="hide" style="display:none;">Hide Urls</a>
 </div>
 </td>
-<td valign="top">
-<table class="normal"><tr><td valign="top" class="odd">
-<h2>{tr}Edit menu options{/tr}</h2>
+<td valign="top" class="even" id="urltop" style="display:none;">
+<h2>{tr}Some useful URLs{/tr}</h2>
+<hr />
+</td>
+</tr>
+<tr><td valign="top" class="odd" colspan="2">
 <form action="tiki-admin_menu_options.php" method="post">
 <input type="hidden" name="optionId" value="{$optionId|escape}" />
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table>
-<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input id="menu_name" type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}URL{/tr}:</td><td><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
-<tr class="formcolor"><td>{tr}Sections{/tr}:</td><td><input id="menu_section" type="text" name="section" value="{$section|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Groups{/tr}:</td><td><input id="menu_groupname" type="text" name="groupname" value="{$groupname|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Name{/tr}:</td><td colspan="3"><input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" /></td></tr>
+<tr class="formcolor"><td>{tr}URL{/tr}:</td><td colspan="3"><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
+<tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /></td></tr>
+<tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /></td></tr>
+<tr class="formcolor"><td>{tr}Groups{/tr}:</td><td colspan="3"><input id="menu_groupname" type="text" name="groupname" value="{$groupname|escape}" size="34" /></td></tr>
 <tr class="formcolor"><td>{tr}Type{/tr}:</td><td>
 <select name="type">
 <option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section{/tr}</option>
 <option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
 <option value="-" {if $type eq '-'}selected="selected"{/if}>{tr}separator{/tr}</option>
 </select>
-</td></tr>
-<tr class="formcolor"><td>{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" /></td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+</td>
+<td>{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" size="6" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-</td><td valign="top" class="even">
-<h2>{tr}Some useful URLs{/tr}</h2>
+</td>
+
+<td valign="top" class="even" id="weburls" style="display:none;">
 <table>
 <tr><td>{tr}Home{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 <option value=",,,">{tr}Choose{/tr} ...</option>
@@ -107,7 +113,17 @@
 </select>
 </td></tr></table>
 </td></tr></table>
+</td>
+<td valign="top">
+<h2>{tr}Preview menu{/tr}</h2>
+<div class="box">
+<div class="box-title">{$menu_info.name}</div>
+<div class="box-data">
+{include file=tiki-user_menu.tpl channels=$allchannels}
+</div>
+</div>
 </td></tr></table>
+
 <h2>{tr}Menu options{/tr}</h2>
 <div align="center">
 <table class="findtable">
@@ -125,6 +141,7 @@
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionId_desc'}optionId_asc{else}optionId_desc{/if}">{tr}ID{/tr}</a></td>
+<td class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}position{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}url{/tr}</a></td>
@@ -132,15 +149,17 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'section_desc'}section_asc{else}section_desc{/if}">{tr}sections{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'perm_desc'}perm_asc{else}perm_desc{/if}">{tr}permissions{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupnam_desc'}groupname_asc{else}groupname_desc{/if}">{tr}group{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<td class="heading">&nbsp;</td>
 </tr>
 {section name=user loop=$channels}
 {if $channels[user].type eq 's'}
 <tr class="odd">
-<td>{$channels[user].menuId}</td>
+<td>{$channels[user].optionId}</td>
+<td><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" 
+title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a></td>
 <td>{$channels[user].position}</td>
 <td>{$channels[user].name}</td>
-<td>{$channels[user].url}</td>
+<td><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url}</a></td>
 <td>{$channels[user].type}</td>
 <td>{$channels[user].section}</td>
 <td>{$channels[user].perm}</td>
@@ -148,15 +167,16 @@
 <td>
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}"
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>
-	<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
 <tr class="even">
-<td>{$channels[user].menuId}</td>
+<td>{$channels[user].optionId}</td>
+<td><a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" 
+title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a></td>
 <td>{$channels[user].position}</td>
 <td>{$channels[user].name}</td>
-<td>{$channels[user].url}</td>
+<td><a href="{$channels[user].url|escape}" class="link" target="_new">{$channels[user].url}</a></td>
 <td>{$channels[user].type}</td>
 <td>{$channels[user].section}</td>
 <td>{$channels[user].perm}</td>
@@ -164,7 +184,6 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <td>
 &nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].optionId}" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>
-&nbsp;&nbsp;<a class="link" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;optionId={$channels[user].optionId}" title="{tr}edit{/tr}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}
@@ -189,3 +208,10 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 {/if}
 </div>
 </div>
+
+{*
+<form action="tiki-admin_menu_options.php" method="post">
+<textarea name="menudump" cols="70" rows="42">{$menudump}</textarea><br />
+<input type="submit" name="action" value="{tr}Save{/tr}" />
+</form>
+*}
