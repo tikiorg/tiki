@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.34 2003-12-05 19:49:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.35 2003-12-07 17:40:51 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-calendar.php?view={$view}">{tr}Calendar{/tr}</a>
@@ -59,7 +59,7 @@ onclick="this.checked=!this.checked;"/>
 <div class="caltitle">{tr}Tools Calendars{/tr}</div>
 <div class="caltoggle"
 onclick="document.getElementById('tikiswitch').click();document.getElementById('tikiswitch').checked=!document.getElementById('tikiswitch').checked;document.getElementById('tikiswitch').click();"
-><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'tikicals[]','tikiswitch');this.checked=!this.checked;"> {tr}check / uncheck all{/tr}</a></div>
+><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form.name,'tikicals[]','tikiswitch');this.checked=!this.checked;" /> {tr}check / uncheck all{/tr}</div>
 {foreach from=$tikiItems key=ki item=vi}
 {if $vi.feature eq 'y' and $vi.right eq 'y'}
 <div class="calcheckbox"
@@ -273,7 +273,7 @@ align       : "bR"
 <h2>{tr}Add Calendar Item{/tr}</h2>
 
 <ul>
-{foreach name=licals item=k from=$modifiable}
+{foreach name=licals item=k from=$listcals}
 {if $infocals.$k.tiki_p_add_events eq 'y'}
 <li>{tr}in{/tr} <a href="tiki-calendar.php?todate={$focusdate}&amp;calendarId={$k}&amp;editmode=add" class="link">{$infocals.$k.name}</a></li>
 {/if}
@@ -375,8 +375,8 @@ href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}
 <div class="calcontent">
 {section name=items loop=$cell[w][d].items}
 {assign var=over value=$cell[w][d].items[items].over}
-<div class="Cal{$cell[w][d].items[items].type}" id="cal{$cell[w][d].items[items].type}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
-<span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text="$over"} 
+<div class="Cal{$cell[w][d].items[items].type}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
+<span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text=$over|escape:"javascript"|escape:"htmlall"} 
 class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..."}</a></span>
 {if $cell[w][d].items[items].web}
 <a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}">w</a>
@@ -384,11 +384,11 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 <br />
 </div>
 {/section}
+</div>
 </td>
 {/section}
 </tr>
 {/section}
-</div>
 {/if}
 </table>
 
