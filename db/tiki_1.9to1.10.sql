@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.7 2004-07-16 20:56:22 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.9to1.10.sql,v 1.8 2004-07-17 00:36:47 giottomx Exp $
                                                                                                
 # The following script will update a tiki database from verion 1.9 to 1.10
 #
@@ -31,7 +31,7 @@ PRIMARY KEY ( id )
 CREATE TABLE tiki_opnet_formtype (
 id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 name VARCHAR( 30 ) NOT NULL ,
-timestamp DATE NOT NULL,
+timestamp INT( 14 ) NOT NULL,
 PRIMARY KEY ( id ) 
 );
 
@@ -48,7 +48,7 @@ id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 who INT( 10 ) NOT NULL ,
 about_who INT( 10 ) NOT NULL ,
 which_form INT( 10 ) NOT NULL ,
-timestamp DATE NOT NULL,
+timestamp INT( 14 ) NOT NULL,
 PRIMARY KEY ( id ) 
 );
 

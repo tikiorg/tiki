@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2004-07-16 20:51:00 $
+# $Date: 2004-07-17 00:36:47 $
 # $Author: giottomx $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -4708,7 +4708,7 @@ DROP TABLE IF EXISTS tiki_opnet_formtype;
 CREATE TABLE tiki_opnet_formtype (
 id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 name VARCHAR( 30 ) NOT NULL ,
-timestamp DATE NOT NULL,
+timestamp INT( 14 ) NOT NULL,
 PRIMARY KEY ( id ) 
 );
 
@@ -4727,7 +4727,7 @@ id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 who INT( 10 ) NOT NULL ,
 about_who INT( 10 ) NOT NULL ,
 which_form INT( 10 ) NOT NULL ,
-timestamp DATE NOT NULL,
+timestamp INT( 14 ) NOT NULL,
 PRIMARY KEY ( id ) 
 );
 
