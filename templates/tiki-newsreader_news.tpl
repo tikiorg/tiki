@@ -2,7 +2,8 @@
 <a class="pagetitle" href="tiki-newsreader_news.php?server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}">{tr}Newss from{/tr}:{$group}</a><br/><br/>
 {include file=tiki-mytiki_bar.tpl}
 <br/><br/>
-<a class="link" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Back to groups{/tr}</a>
+[<a class="link" href="tiki-newsreader_servers.php">{tr}Back to servers{/tr}</a>
+| <a class="link" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Back to groups{/tr}</a>]
 <br/><br/>
 <table class="normal">
 {cycle values="odd,even" print=false}
