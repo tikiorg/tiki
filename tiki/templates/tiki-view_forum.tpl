@@ -145,7 +145,7 @@ a moderator approves it.{/tr}</small>
     </tr>
     {/if}
 {if $feature_forum_parse eq 'y'}    
-    <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+    <tr><td class="forumform">{tr}Quicklinks{/tr}</td><td class="forumform">
 {assign var=area_name value="editpost"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
