@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$resultId}&amp;userResultId={$userResultId}">{tr}Quiz result stats{/tr}:</a>
 
 <! -- the help link info -->
-  
+
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id960083" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
@@ -35,8 +35,11 @@
   <td class="even">{$quiz_info.name}</td>
 </tr>
 <tr> 
-  <td class="even">{tr}User{/tr}</td>
-  <td class="even">{$ur_info.user}</td>
+  <td class="even">{tr}User{/tr} </td>
+  <td class="even">{$ur_info.user|userlink}</td>
+{* RFE
+add userlink/ next step is to grab quiz results and include it in messaging so that all stakeholders will receive results
+*}
 </tr>
 <tr> 
   <td class="even">{tr}Date{/tr}</td>
@@ -52,7 +55,7 @@
 </tr>
 </table>
 
-<! -- I'm not sure why this is here -->
+<!-- I'm not sure why this is here -->
 
 </br> 
 Answer: </br> 
