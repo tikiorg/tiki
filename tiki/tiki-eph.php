@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-eph.php,v 1.6 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-eph.php,v 1.7 2003-10-22 12:09:19 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,6 +16,13 @@ if ($feature_eph != 'y') {
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
 }
+
+if($tiki_p_view_eph != 'y') {
+        $smarty->assign('msg',tra("You dont have permission to use this feature"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;
+}
+
 
 /*
 Modified by Wells Wang to solve eph wrong date problem
