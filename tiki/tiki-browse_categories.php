@@ -18,8 +18,8 @@ $smarty->assign('parentId',$_REQUEST["parentId"]);
 
 // If the parent category is not zero get the category path
 if($_REQUEST["parentId"]) {
-  $path = $tikilib->get_category_path_browse($_REQUEST["parentId"]);
-  $p_info = $tikilib->get_category($_REQUEST["parentId"]);
+  $path = $categlib->get_category_path_browse($_REQUEST["parentId"]);
+  $p_info = $categlib->get_category($_REQUEST["parentId"]);
   $father = $p_info["parentId"];
 } else {
   $path = tra("TOP");
@@ -28,7 +28,7 @@ if($_REQUEST["parentId"]) {
 $smarty->assign('path',$path);
 $smarty->assign('father',$father);
 
-$children = $tikilib->get_child_categories($_REQUEST["parentId"]);
+$children = $categlib->get_child_categories($_REQUEST["parentId"]);
 $smarty->assign_by_ref('children',$children);
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -52,10 +52,10 @@ $smarty->assign('find',$find);
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
 if(isset($_REQUEST["deep"])&&$_REQUEST["deep"]=='on') {
-  $objects = $tikilib->list_category_objects_deep($_REQUEST["parentId"],$offset,$maxRecords,$sort_mode,$find);
+  $objects = $categlib->list_category_objects_deep($_REQUEST["parentId"],$offset,$maxRecords,$sort_mode,$find);
   $smarty->assign('deep','on');
 } else {
-  $objects = $tikilib->list_category_objects($_REQUEST["parentId"],$offset,$maxRecords,$sort_mode,$find);
+  $objects = $categlib->list_category_objects($_REQUEST["parentId"],$offset,$maxRecords,$sort_mode,$find);
   $smarty->assign('deep','off');
 }
 $smarty->assign_by_ref('objects',$objects["data"]);

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/categories/categlib.php');
 
 if($feature_categories != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -23,45 +24,45 @@ $smarty->assign('parentId',$_REQUEST["parentId"]);
 
 if(isset($_REQUEST["addpage"])) {
   // Here we categorize a page
-  $tikilib->categorize_page($_REQUEST["pageName"],$_REQUEST["parentId"]);
+  $categlib->categorize_page($_REQUEST["pageName"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addpoll"])) {
   // Here we categorize a page
-  $tikilib->categorize_poll($_REQUEST["pollId"],$_REQUEST["parentId"]);
+  $categlib->categorize_poll($_REQUEST["pollId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addfaq"])) {
   // Here we categorize a page
-  $tikilib->categorize_faq($_REQUEST["faqId"],$_REQUEST["parentId"]);
+  $categlib->categorize_faq($_REQUEST["faqId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addquiz"])) {
   // Here we categorize a page
-  $tikilib->categorize_quiz($_REQUEST["quizId"],$_REQUEST["parentId"]);
+  $categlib->categorize_quiz($_REQUEST["quizId"],$_REQUEST["parentId"]);
 }
 
 if(isset($_REQUEST["addforum"])) {
   // Here we categorize a page
-  $tikilib->categorize_forum($_REQUEST["forumId"],$_REQUEST["parentId"]);
+  $categlib->categorize_forum($_REQUEST["forumId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addgallery"])) {
   // Here we categorize a page
-  $tikilib->categorize_gallery($_REQUEST["galleryId"],$_REQUEST["parentId"]);
+  $categlib->categorize_gallery($_REQUEST["galleryId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addfilegallery"])) {
   // Here we categorize a page
-  $tikilib->categorize_file_gallery($_REQUEST["file_galleryId"],$_REQUEST["parentId"]);
+  $categlib->categorize_file_gallery($_REQUEST["file_galleryId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addarticle"])) {
   // Here we categorize a page
-  $tikilib->categorize_article($_REQUEST["articleId"],$_REQUEST["parentId"]);
+  $categlib->categorize_article($_REQUEST["articleId"],$_REQUEST["parentId"]);
 }
 if(isset($_REQUEST["addblog"])) {
   // Here we categorize a page
-  $tikilib->categorize_blog($_REQUEST["blogId"],$_REQUEST["parentId"]);
+  $categlib->categorize_blog($_REQUEST["blogId"],$_REQUEST["parentId"]);
 }
 
 
 if(isset($_REQUEST["categId"])) {
-  $info = $tikilib->get_category($_REQUEST["categId"]);
+  $info = $categlib->get_category($_REQUEST["categId"]);
 } else {
   $_REQUEST["categId"] = 0;
   $info["name"] = '';
@@ -69,19 +70,19 @@ if(isset($_REQUEST["categId"])) {
 }
 
 if(isset($_REQUEST["removeObject"])) {
-  $tikilib->remove_object_from_category($_REQUEST["removeObject"],$_REQUEST["parentId"]);
+  $categlib->remove_object_from_category($_REQUEST["removeObject"],$_REQUEST["parentId"]);
 }
 
 if(isset($_REQUEST["removeCat"])) {
-  $tikilib->remove_category($_REQUEST["removeCat"]);
+  $categlib->remove_category($_REQUEST["removeCat"]);
 }
 
 if(isset($_REQUEST["save"])) {
   // Save
   if($_REQUEST["categId"]) {
-    $tikilib->update_category($_REQUEST["categId"],$_REQUEST["name"],$_REQUEST["description"]);
+    $categlib->update_category($_REQUEST["categId"],$_REQUEST["name"],$_REQUEST["description"]);
   } else {
-    $tikilib->add_category($_REQUEST["parentId"],$_REQUEST["name"],$_REQUEST["description"]);
+    $categlib->add_category($_REQUEST["parentId"],$_REQUEST["name"],$_REQUEST["description"]);
   }
   $info["name"]='';
   $info["description"]='';
@@ -94,8 +95,8 @@ $smarty->assign('description',$info["description"]);
 
 // If the parent category is not zero get the category path
 if($_REQUEST["parentId"]) {
-  $path = $tikilib->get_category_path_Admin($_REQUEST["parentId"]);
-  $p_info = $tikilib->get_category($_REQUEST["parentId"]);
+  $path = $categlib->get_category_path_admin($_REQUEST["parentId"]);
+  $p_info = $categlib->get_category($_REQUEST["parentId"]);
   $father = $p_info["parentId"];
 } else {
   $path = tra("TOP");
@@ -104,7 +105,7 @@ if($_REQUEST["parentId"]) {
 $smarty->assign('path',$path);
 $smarty->assign('father',$father);
 
-$children = $tikilib->get_child_categories($_REQUEST["parentId"]);
+$children = $categlib->get_child_categories($_REQUEST["parentId"]);
 $smarty->assign_by_ref('children',$children);
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -135,7 +136,7 @@ $smarty->assign('find_objects',$find_objects);
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 $smarty->assign_by_ref('find',$find);
-$objects = $tikilib->list_category_objects($_REQUEST["parentId"],$offset,$maxRecords,$sort_mode,$find);
+$objects = $categlib->list_category_objects($_REQUEST["parentId"],$offset,$maxRecords,$sort_mode,$find);
 $smarty->assign_by_ref('objects',$objects["data"]);
 
 $cant_pages = ceil($objects["cant"] / $maxRecords);
