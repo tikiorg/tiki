@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.230 2004-06-03 15:45:44 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.231 2004-06-06 08:42:45 damosoft Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -49,12 +49,16 @@ class TikiSetup extends TikiInit {
 
         if (ini_get('session.save_handler') == 'files') {
             $save_path = ini_get('session.save_path');
-
-            if (!is_dir($save_path)) {
-                $errors .= "The directory '$save_path' does not exist or PHP is not allowed to access it (check open_basedir entry in php.ini).\n";
-            } else if (!is_writeable($save_path)) {
-                $errors .= "The directory '$save_path' is not writeable.\n";
-            }
+            // check if we can check it. The session.save_path can be outside
+	    // the open_basedir paths.
+	    $open_basedir=ini_get('open_basedir');
+	    if (empty($open_basedir)) {
+                if (!is_dir($save_path)) {
+                    $errors .= "The directory '$save_path' does not exist or PHP is not allowed to access it (check open_basedir entry in php.ini).\n";
+                } else if (!is_writeable($save_path)) {
+                    $errors .= "The directory '$save_path' is not writeable.\n";
+                }
+	    }
 
             if ($errors) {
                 $save_path = TikiSetup::tempdir();
@@ -396,6 +400,10 @@ $smarty->assign('feature_ticketlib',$feature_ticketlib);
 $feature_ticketlib2 = 'y';
 $smarty->assign('feature_ticketlib2',$feature_ticketlib2);
 
+/* by default we don't show the comments zone */
+$show_comzone = 'n';
+$smarty->assign('show_comzone',$show_comzone);
+
 $wiki_uses_slides = 'n';
 $smarty->assign('wiki_uses_slides', $wiki_uses_slides);
 
@@ -404,6 +412,9 @@ $smarty->assign('feature_wiki_allowhtml ', $feature_wiki_allowhtml );
 
 $feature_help = 'y';
 $smarty->assign('feature_help', $feature_help);
+
+$helpurl = "http://tikiwiki.org/tiki-index.php?page=";
+$smarty->assign('helpurl', $helpurl);
 
 $wiki_feature_copyrights = 'n';
 $wiki_creator_admin = 'n';
@@ -1291,6 +1302,7 @@ if ($feature_userPreferences == 'y') {
             }
         }
     }
+
     $smarty->assign('language', $language);
 }
 if (!(isset($user) && $user)  && isset($saveLanguage) ) { // users not logged that change the preference
@@ -1300,6 +1312,16 @@ if (!(isset($user) && $user)  && isset($saveLanguage) ) { // users not logged th
 
 $stlstl = split("-|\.", $style);
 $style_base = $stlstl[0];
+
+if (!(isset($user) && $user) && isset($saveLanguage) ) { // anonymous that change the preference
+	$language = $saveLanguage;
+	$smarty->assign('language', $language);
+}
+
+if ($lang_use_db != 'y') {
+    // check if needed!!!
+    global $lang;
+}
 
 if ($tikidomain and is_file("styles/$tikidomain/$style")) {
 	$style = "$tikidomain/$style";
@@ -1719,7 +1741,7 @@ if(isset($tiki_p_edit_dynvar) && $tiki_p_edit_dynvar == 'y') {
 // Stats
 if ($feature_stats == 'y') {
     if ($count_admin_pvs == 'y' || $user != 'admin') {
-        if (!strstr($_SERVER["REQUEST_URI"], 'chat')) {
+				if (!isset($section) or ($section != 'chat' and $section != 'livesupport')) { 
             $tikilib->add_pageview();
         }
     }
@@ -1787,4 +1809,11 @@ if ($feature_search == 'y') {
   register_shutdown_function("refresh_search_index");
 }
 
+/*
+ * Whether to show comments zone on page load by default
+ */
+if (isset($_REQUEST['comzone'])) {
+		$show_comzone=$_REQUEST['comzone'];
+		if ($show_comzone=='show') $smarty->assign('show_comzone', 'y');
+}
 ?>

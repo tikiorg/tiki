@@ -6,7 +6,7 @@
 {assign var=area_name value="body"}
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Article{/tr}">
+<a href="{$helpurl}ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Edit Article{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 

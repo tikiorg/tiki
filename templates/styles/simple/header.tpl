@@ -67,7 +67,7 @@
 
 {$trl}
 </head>
-<body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}>
+<body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}{if $feature_article_comments eq 'y' and $show_comzone eq 'y'}onload="javascript:flip('comzone');"{/if}>
   {if $minical_reminders>100}
     <iframe style="width: 0; height: 0; border: 0" src="tiki-minical_reminders.php"></iframe>
   {/if}

@@ -1025,6 +1025,18 @@ class TikiLib extends TikiDB {
 	return $ret;
     }
 
+function add_pageview() {
+    $dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+    $cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
+                                                                                                                                                                                                      
+    if ($cant) {
+        $query = "update `tiki_pageviews` set `pageviews`=`pageviews`+1 where `day`=?";
+    } else {
+        $query = "insert into `tiki_pageviews`(`day`,`pageviews`) values(?,1)";
+    }
+    $result = $this->query($query,array((int)$dayzero),-1,-1,false);
+}
+
     function get_usage_chart_data() {
 	$this->compute_quiz_stats();
 	$data[] = array( "wiki",   $this->getOne("select sum(`hits`) from `tiki_pages`",array()));
@@ -2178,9 +2190,9 @@ class TikiLib extends TikiDB {
 	return $topicId;
     }
 
-    /*shared*/
-    function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '', $visible_only = '') {
-	global $userlib;
+/*shared*/
+    function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '', $visible_only = 'y') {
+        global $userlib;
 
 	$mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
 	$bindvars=array();
@@ -2208,17 +2220,17 @@ class TikiLib extends TikiDB {
 
 	}
 
-	if ($visible_only) {
-	    $now = date('U');
-	    $bindvars[]=(int) $now;
-	    $bindvars[]=(int) $now;
-	    if ($mid) {
-		$mid .= " and (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
-	    } else {
-		$mid .= " where (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
-	    }
-	}
 
+    if (($visible_only) && ($visible_only <> 'n')) {
+	$now = date('U');
+	$bindvars[]=(int) $now;
+	$bindvars[]=(int) $now;
+	if ($mid) {
+	    $mid .= " and (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+	} else {
+	    $mid .= " where (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+	}
+    }
 	$query = "select `tiki_articles`.*,
 	`users_users`.`avatarLibName`,
 	`tiki_article_types`.`use_ratings`,

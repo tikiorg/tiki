@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.26 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.27 2004-06-06 08:42:46 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -92,7 +92,14 @@ if (isset($_REQUEST["upload"])) {
 
 	for ($i = 1; $i <= 6; $i++) {
 		// We process here file uploads
-		if (isset($_FILES["userfile$i"]) && is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
+		if (isset($_FILES["userfile$i"]) && !empty($_FILES["userfile$i"]['name'])) {
+			// Were there any problems with the upload?  If so, report here.
+			if (!is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
+				$errors[] = tra('Upload was not successful').': '.FileGalLib::convert_error_to_string($_FILES["userfile$i"]['error']);
+				continue;
+			}
+				
+
 			// Check the name
 			if (!empty($fgal_match_regex)) {
 				if (!preg_match("/$fgal_match_regex/", $_FILES["userfile$i"]['name'], $reqs)) {
@@ -148,7 +155,7 @@ if (isset($_REQUEST["upload"])) {
 				@$fw = fopen($fgal_use_dir . $fhash, "wb");
 
 				if (!$fw) {
-					$errors[] = tra('Cannot write to this file:'). $fhash;
+					$errors[] = tra('Cannot write to this file:').$fgal_use_dir.$fhash;
 				}
 			}
 
@@ -194,6 +201,10 @@ if (isset($_REQUEST["upload"])) {
 
 				if (!$fileId) {
 					$errors[] = tra('Upload was not successful (maybe a duplicate file)'). ': ' . $name;
+					if ($fgal_use_db == 'n') {
+						@unlink($fgal_use_dir . $fhash);
+					}
+					
 				}
 
 				if (count($errors) == 0) {

@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZone.php,v 1.1 2003-08-07 01:53:07 rossta Exp $
+// $Id: TimeZone.php,v 1.2 2004-06-06 08:42:50 damosoft Exp $
 //
 // Date_TimeZone Class
 //
@@ -253,9 +253,20 @@ class Date_TimeZone
         if(getenv("TZ")) {
             $env_tz = getenv("TZ");
         }
-        putenv("TZ=".$this->id);
+	$protected_vars=explode(',',ini_get('safe_mode_protected_env_vars'));
+	$changeable_vars=explode(',',ini_get('safe_mode_allowed_env_vars'));
+	$changeable=true;
+	if (ini_get('safe_mode') && (in_array('TZ',$protected_vars) || 
+	    (!in_array('T',$changeable_vars) || !in_array('TZ',$changeable_vars)))) {
+                 $changeable=false;
+	}
+	if($changeable){
+            putenv("TZ=".$this->id);
+	}
         $ltime = localtime($date->getTime(), true);
-        putenv("TZ=".$env_tz);
+	if($changeable){
+            putenv("TZ=".$env_tz);
+	}
         return $ltime['tm_isdst'];
     }
 

@@ -2,7 +2,7 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=BanningSystem" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Banning{/tr}">
+<a href="{$helpurl}BanningSystem" target="tikihelp" class="tikihelp" title="{tr}Banning{/tr}">
 <img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
 <!-- link to tpl -->

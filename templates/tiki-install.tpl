@@ -134,7 +134,7 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 		    </td></tr>
 		    <tr><td>
 			</td><td>
-			<a target="_new" href="http://tikiwiki.org/tiki-index.php?page=TikiProfiles" class="link">Descriptions of the available profiles</a>
+			<a target="_new" href="{$helpurl}TikiProfiles" class="link">Descriptions of the available profiles</a>
 			<p>
 		    </td></tr>
 		    <tr><td>
@@ -203,7 +203,31 @@ border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a></h1>
 	  {else}
 	    <a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
 	  {/if}
-	  {if $pkg_available eq 'y'}<a href="tiki-install.php?packages=yes" class="link">Configure Tiki Packages</a><br />{/if}
 	  <a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
+	{if $pkg_available eq 'y'}
+		<p><p>
+		<form method="post" action="tiki-install.php">
+		<h1>Tiki packages</h1>
+		<table>
+			<tr><td>
+				<select name="pkgs">
+					{section name=ix loop=$pkgs}
+						<option value="{$pkgs[ix].name|escape}">{$pkgs[ix].desc}</option>
+					{/section}
+				</select>
+				<a href="{$helpurl}TikiApps" class="link">Descriptions of the available packages</a>
+			</td></tr>
+			<tr><td>
+				<input type="checkbox" name="runScript" />Run database script (may destroy data)
+			</td></tr>
+			<tr><td>
+				<input type="submit" name="install_pkg" value="install" />	    
+				<input type="submit" name="remove_pkg" value="remove" />	    
+			</td></tr>
+			<tr><td>
+				<p>
+			</td></tr>
+		</table>
+		</form><br/>
 	{/if}
 </div>

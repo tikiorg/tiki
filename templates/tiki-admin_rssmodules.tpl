@@ -2,8 +2,8 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=RSSModules" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin RSS modules{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+<a href="{$helpurl}RSSModules" target="tikihelp" class="tikihelp" title="{tr}admin RSS modules{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
 <!-- link to tpl -->

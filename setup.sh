@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.26 2004-05-04 22:20:21 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.27 2004-06-06 08:42:45 damosoft Exp $
 
 # Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,6 +57,12 @@ Or, if you can't become root, but are a member of the group apache runs under
 (for example: $AGROUP), you can type:
 
   $0 $USER $AGROUP
+
+Be aware, that you probably have to do a 
+
+  chown -R $USER *
+
+if your tiki runs in a PHP-safe-mode environment.
 
 If you can't become root, and are not a member of the apache group, then type:
 

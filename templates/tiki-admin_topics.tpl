@@ -1,11 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.18 2004-02-05 20:00:09 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_topics.tpl,v 1.19 2004-06-06 08:39:55 damosoft Exp $ *}
 
 <a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
 <!-- the help link info -->
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Topics{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
+<a href="{$helpurl}ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 {if $feature_view_tpl eq 'y'}

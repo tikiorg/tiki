@@ -1,12 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-chatroom.php,v 1.10 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-chatroom.php,v 1.11 2004-06-06 08:42:45 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'chat';
 require_once ('tiki-setup.php');
 
 include_once ('lib/chat/chatlib.php');
@@ -71,7 +72,6 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $chatusers = $chatlib->get_chat_users($channelId);
 $smarty->assign_by_ref('chatusers', $chatusers);
 
-$section = 'chat';
 include_once ('tiki-section_options.php');
 ask_ticket('chat');
 

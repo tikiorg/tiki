@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.16 2004-01-30 08:49:22 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-received_articles.tpl,v 1.17 2004-06-06 08:39:56 damosoft Exp $ *}
 <a class="pagetitle" href="tiki-received_articles.php">{tr}Received articles{/tr}</a><br /><br />
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Article" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Received Articles{/tr}">
+<a href="{$helpurl}Article" target="tikihelp" class="tikihelp" title="{tr}Received Articles{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 

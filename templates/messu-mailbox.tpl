@@ -2,7 +2,7 @@
 <a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserMessagesDoc" target="tikihelp" class="tikihelp"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}

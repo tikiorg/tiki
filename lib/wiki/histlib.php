@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
-class HistLib extends TikiLib {
+class HistLib extends TikiDB {
 	function HistLib($db) {
 		# this is probably uneeded now
 		if (!$db) {
@@ -27,7 +27,8 @@ class HistLib extends TikiLib {
 	}
 
 	function use_version($page, $version, $comment = '') {
-		$this->invalidate_cache($page);
+		global $tikilib;
+		$tikilib->invalidate_cache($page);
 		$query = "select * from `tiki_history` where `pageName`=? and `version`=?";
 		$result = $this->query($query,array($page,$version));
 
@@ -40,11 +41,11 @@ class HistLib extends TikiLib {
 		$result = $this->query($query,array($res["data"],$res["lastModif"],$res["user"],$res["comment"],$res["ip"],$page));
 		$query = "delete from `tiki_links` where `fromPage` = ?";
 		$result = $this->query($query,array($page));
-		$this->clear_links($page);
-		$pages = $this->get_pages($res["data"]);
+		$tikilib->clear_links($page);
+		$pages = $tikilib->get_pages($res["data"]);
 
 		foreach ($pages as $a_page) {
-			$this->replace_link($page, $a_page);
+			$tikilib->replace_link($page, $a_page);
 		}
 
 		//$query="delete from `tiki_history` where `pageName`='$page' and version='$version'";

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.26 2004-04-25 20:15:25 chealer Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.27 2004-06-06 08:42:52 damosoft Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -20,7 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * This list is rebuilt if the user asks for a "restore default"
  *
  */
-class UserModulesLib extends TikiLib {
+class UserModulesLib extends TikiDB{
 	function UserModulesLib($db) {
 		# this is probably uneeded now
 		if (!$db) {
@@ -125,7 +125,8 @@ class UserModulesLib extends TikiLib {
 		$query = "select * from `tiki_modules`";
 		$result = $this->query($query,array());
 		$ret = array();
-		$user_groups = $this->get_user_groups($user);
+		global $userlib;
+		$user_groups = $userlib->get_user_groups($user);
 
 		while ($res = $result->fetchRow()) {
 			$mod_ok = 0;
@@ -157,11 +158,12 @@ class UserModulesLib extends TikiLib {
 	// Return the list of modules that can be assigned by the user
 	function get_user_assignable_modules($user) {
 		global $modallgroups;
+		global $userlib;
 
 		$query = "select * from `tiki_modules`";
 		$result = $this->query($query,array());
 		$ret = array();
-		$user_groups = $this->get_user_groups($user);
+		$user_groups = $userlib->get_user_groups($user);
 
 		while ($res = $result->fetchRow()) {
 			$mod_ok = 0;

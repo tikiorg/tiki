@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-admin_menus.php">{tr}Admin Menus{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=MenuBuilderAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin menu builder{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="{$helpurl}MenuBuilderAdmin" target="tikihelp" class="tikihelp" title="{tr}admin menu builder{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}

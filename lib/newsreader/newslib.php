@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once "lib/pear/NNTP.php";
 
-class Newslib extends Tikilib {
+class Newslib extends TikiLib {
 	var $db;
 
 	var $nntp;

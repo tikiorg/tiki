@@ -16,7 +16,7 @@
 
 <div id="tiki-top-menu">
 {if $feature_userPreferences eq 'y'}&nbsp;<a class="tikitopmenu" href="tiki-user_preferences.php">{tr}Preferences{/tr}</a>{/if}
-::&nbsp;<a class="tikitopmenu" href="tiki-my_tiki.php">{tr}MyTiki{/tr}</a>
+{if $feature_userPreferences eq 'y'}::&nbsp;<a class="tikitopmenu" href="tiki-my_tiki.php">{tr}MyTiki{/tr}</a>{/if}
 {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}::&nbsp;<a class="tikitopmenu" href="messu-mailbox.php">{tr}Messages{/tr}</a>{/if}
 {if $feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}::&nbsp;<a class="tikitopmenu" href="tiki-userfiles.php">{tr}User files{/tr}</a>{/if}
 {if $feature_minical eq 'y'}::&nbsp;<a class="tikitopmenu" href="tiki-minical.php">{tr}Calendar{/tr}</a>{/if}

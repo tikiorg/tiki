@@ -12,10 +12,10 @@ $ranking = $ranklib->forums_ranking_last_posts($module_rows);
 $replyprefix = tra("Re:");
 
 if ($ranking) {
-	for ($i = 0; $i < count($ranking["data"]); $i++) {
-	    $name = $ranking["data"][$i]["name"];
+	for ($flp = 0; $flp < count($ranking["data"]); $flp++) {
+	    $name = $ranking["data"][$flp]["name"];
 	    $name = str_replace($replyprefix, "", $name);
-	    $ranking["data"][$i]["name"] = $name;
+	    $ranking["data"][$flp]["name"] = $name;
 	}
 }
 $smarty->assign('modForumsLastPosts', $ranking["data"]);

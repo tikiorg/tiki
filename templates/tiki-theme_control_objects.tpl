@@ -4,7 +4,7 @@
 <!-- the help link info -->
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=ThemeControl" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ThemeControl Objects{/tr}">
+<a href="{$helpurl}ThemeControl" target="tikihelp" class="tikihelp" title="{tr}ThemeControl Objects{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
 
 <!-- link to tpl -->

@@ -77,7 +77,7 @@ if (!function_exists('galaxia_execute_activity')) {
       $parsed = parse_url($_SERVER["REQUEST_URI"]);
       $URI = httpPrefix().$parsed["path"];
       $parts = explode('/',$URI);
-      $parts[count($parts)-1] = "tiki-g-run_activity.php?activityId=$activityId&amp;iid=$iid&amp;auto=$auto";
+      $parts[count($parts)-1] = "tiki-g-run_activity.php?activityId=$activityId&amp;iid=$iid&auto=$auto";
       $URI = implode('/',$parts);
       $fp = fopen($URI,"r");
       $data = '';

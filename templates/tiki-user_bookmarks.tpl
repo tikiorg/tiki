@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-user_bookmarks.php">{tr}User Bookmarks{/tr}</a>
  <!-- help links -->
 {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=UserBookmarks" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}User Bookmarks{/tr}">
+<a href="{$helpurl}UserBookmarks" target="tikihelp" class="tikihelp" title="{tr}User Bookmarks{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
  <!-- link to tpl for editing -->

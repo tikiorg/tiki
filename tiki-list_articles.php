@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.17 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_articles.php,v 1.18 2004-06-06 08:42:45 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -108,8 +108,11 @@ if (!isset($_REQUEST["topic"])) {
 $smarty->assign('find_topic', $_REQUEST["topic"]);
 $smarty->assign('find_type', $_REQUEST["type"]);
 
+$visible_only='y';
+if( ($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y') ) { $visible_only="n"; }
+
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, $pdate, $user, $_REQUEST["type"], $_REQUEST["topic"]);
+$listpages = $tikilib->list_articles($offset, $maxRecords, $sort_mode, $find, $pdate, $user, $_REQUEST["type"], $_REQUEST["topic"], $visible_only);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);

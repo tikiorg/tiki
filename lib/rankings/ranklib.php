@@ -112,7 +112,9 @@ class RankLib extends TikiLib {
 			$aux["name"] = $res["name"] . ': ' . $res["title"];
 
 			$aux["hits"] = $this->get_long_datetime($res["commentDate"]);
-			$aux["href"] = 'tiki-view_forum_thread.php?forumId=' . $res["forumId"] . '&amp;comments_parentId=' . $res["threadId"];
+			$tmp = $res["parentId"];
+			if ($tmp == 0) $tmp = $res["threadId"];
+			$aux["href"] = 'tiki-view_forum_thread.php?forumId=' . $res["forumId"] . '&amp;comments_parentId=' . $tmp;
 			$ret[] = $aux;
 		}
 
