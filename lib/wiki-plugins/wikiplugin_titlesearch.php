@@ -6,6 +6,18 @@
     function wikiplugin_titlesearch_help() {
         return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits+user,exclude=>HomePage+SandBox,noheader=>0,)}{TITLESEARCH}~/np~";
     }
+    /**
+    * Search the titles of all pages in this wiki
+    * @param string not used
+    * @param array       // info (allows multiple columns, joined by '+') |
+    *                       info=hits,lastModif,user,ip,len,comment, creator, version,
+    *                       flag, versions,links,backlinks
+    *                    // exclude (allows multiple pagenames)|exclude=HomePage+RecentChanges
+    *                    // noheader = by default, false
+    *                    // search = required
+    * @return string
+    */
+
     function wikiplugin_titlesearch($data, $params) {
         global $wikilib;
         $aInfoPresetNames = array(
