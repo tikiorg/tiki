@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_article.tpl,v 1.9 2004-01-30 08:49:22 damosoft Exp $ *}
+{include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_article.tpl,v 1.10 2004-02-23 21:35:01 techtonik Exp $ *}
 {* Index we display a wiki page here *}
 
-{include file="header.tpl"}
 <div id="tiki-main">
   <div class="articletitle">
     <span class="titlea">{$title}</span><br />

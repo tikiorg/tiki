@@ -1,5 +1,5 @@
-{* Index we display a wiki page here *}
 {include file="header.tpl"}
+{* Index we display a wiki page here *}
 
 {if $feature_bidi eq 'y'}<table dir="rtl" ><tr><td>{/if}
 <div id="tiki-main">

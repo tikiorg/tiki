@@ -1,5 +1,5 @@
-{* Main index template. Please leave the order of the columns as is.  They should appear from top to bottom as left, right, then center. *}
 {include file="header.tpl"}
+{* Main index template. Please leave the order of the columns as is.  They should appear from top to bottom as left, right, then center. *}
 	{if $feature_bidi eq 'y'}<div dir="rtl">{/if}
 {* top *}	{if $feature_top_bar eq 'y'}
 			<div id="top"><div class="column-in">

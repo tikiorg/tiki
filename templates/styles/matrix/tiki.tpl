@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/tiki.tpl,v 1.4 2003-08-01 10:31:17 redflo Exp $ *}
+{include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/matrix/tiki.tpl,v 1.5 2004-02-23 21:35:06 techtonik Exp $ *}
 {* Index we display a wiki page here *}
 
-{include file="header.tpl"}
 <div id="tiki-main">
   {if $feature_top_bar eq 'y'}
   <div id="tiki-top">

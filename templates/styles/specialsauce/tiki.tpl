@@ -1,5 +1,5 @@
+{include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
 {* Main index template. Please leave the order of the columns as is.  They should appear from top to bottom as left, right, then center. *}
-{include file="header.tpl"}
 	{if $feature_bidi eq 'y'}<div dir="rtl">{/if}
 {* top *}	{if $feature_top_bar eq 'y'}
 			<div id="top"><div class="column-in">

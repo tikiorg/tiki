@@ -1,5 +1,5 @@
-{* Index we display a wiki page here *}
 {include file="header.tpl"}
+{* Index we display a wiki page here *}
 <div id="tiki-main">
   <div id="tiki-mid">
     <table border="0" cellpadding="0" cellspacing="0" >

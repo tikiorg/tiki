@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.5 2003-12-21 17:47:35 mose Exp $ *}
+{include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.6 2004-02-23 21:35:10 techtonik Exp $ *}
 {* Main template for TikiWiki layout *}
-{include file="header.tpl"}
 <div id="main">
   {if $feature_top_bar eq 'y'}
   <div id="top">

@@ -1,5 +1,5 @@
-{* Index we display a wiki page here *}
 {include file="header.tpl"}
+{* Index we display a wiki page here *}
 <div id="tiki-clean">
   <div  id="tiki-mid">
     {include file=$mid}
