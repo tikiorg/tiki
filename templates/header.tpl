@@ -22,7 +22,7 @@
 </title>
 
 {* --- jscalendar block --- *}
-{if $feature_jscalendar eq 'y'}
+{if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
 <link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
 <script language="JavaScript" type="text/javascript"><!--
 {php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
