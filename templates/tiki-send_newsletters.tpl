@@ -35,7 +35,7 @@
 <select name="templateId" onChange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
-<option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
+<option value="{$templates[ix].templateId|escape}">{$templates[ix].name}</option>
 {/section}
 </select>
 </td></tr>
