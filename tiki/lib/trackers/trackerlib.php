@@ -314,20 +314,40 @@ class TrackerLib extends TikiLib {
 		return $retval;
 	}
 
-	function get_tracker_item($itemId) {
-		$query = "select * from `tiki_tracker_items` where `itemId`=?";
+	function get_tracker_item($itemid) {
+		$query = "select * from `tiki_tracker_items` where `itemid`=?";
 
-		$result = $this->query($query,array((int) $itemId));
+		$result = $this->query($query,array((int) $itemid));
 
-		if (!$result->numRows())
+		if (!$result->numrows())
 			return false;
 
-		$res = $result->fetchRow();
-		$query = "select * from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.`fieldId`=ttf.`fieldId` and `itemId`=?";
-		$result = $this->query($query,array((int) $itemId));
+		$res = $result->fetchrow();
+		$query = "select * from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.`fieldid`=ttf.`fieldid` and `itemid`=?";
+		$result = $this->query($query,array((int) $itemid));
 		$fields = array();
 
-		while ($res2 = $result->fetchRow()) {
+		while ($res2 = $result->fetchrow()) {
+			$name = ereg_replace("[^a-zA-Z0-9]","",$res2["name"]);
+			$res["$name"] = $res2["value"];
+		}
+
+		return $res;
+	}
+
+	function get_item($trackerId,$field) {
+		$query = "select * from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf where tti.`trackerId`=ttf.`trackerId` and ttf.`trackerId`=? and ttf.`name`=?";
+		$result = $this->query($query,array((int) $trackerId,$field));
+
+		if (!$result->numrows())
+			return false;
+
+		$res = $result->fetchrow();
+		$query = "select * from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf where ttif.`fieldid`=ttf.`fieldid` and `itemid`=?";
+		$result = $this->query($query,array((int) $itemid));
+		$fields = array();
+
+		while ($res2 = $result->fetchrow()) {
 			$name = ereg_replace("[^a-zA-Z0-9]","",$res2["name"]);
 			$res["$name"] = $res2["value"];
 		}
