@@ -5237,7 +5237,10 @@ class TikiLib extends TikiDB {
 	    // Get this page information
 	    $info = $this->get_page_info($pageName);
 	    // Store the old version of this page in the history table
-	    $version = $info["version"];
+	// Use largest version +1 in history table rather than tiki_page because versions used to be bugged
+	include_once ("lib/wiki/histlib.php");
+	//    $old_version = $info["version"];
+	$old_version = $histlib->get_page_latest_version($pageName) + 1;
 	    $lastModif = $info["lastModif"];
 	    $user = $info["user"];
 	    $ip = $info["ip"];
@@ -5255,7 +5258,7 @@ class TikiLib extends TikiDB {
 		    $query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
 			values(?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-		$result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+		$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
 		/* the following doesn't work because tiki dies if the above query fails
 		if (!$result) {
 			$query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";
