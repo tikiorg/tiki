@@ -73,6 +73,7 @@ for($i=$info['last']-$offset;$count<$maxRecords&&$i>=$info['first'];$i--) {
   $count++;
   $art=$newslib->news_split_headers($i);
   $art['loopid']=$i;
+  //$art['timestamp']=$tikilib->get_iso8601_datetime($art["Date"]);
   $articles[]=$art;
   
 }
