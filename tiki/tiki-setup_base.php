@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.35 2003-09-15 13:28:16 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.36 2003-09-17 15:35:46 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -125,34 +125,38 @@ function tra($content) {
  * All further bytes in a multibyte sequence are in the range 0x80 to 0xBF.
  */
 if (function_exists('mb_substr')) {
-	mb_internal_encoding("UTF-8");
+    mb_internal_encoding("UTF-8");
 }
 else {
-	function mb_substr($str, $start, $len = '', $encoding="UTF-8"){
-		$limit = strlen($str);
-		for ($s = 0; $start > 0;--$start) {// found the real start
-			if ($s >= $limit)
-				break;
-			if ($str[$s] <= "\x7F")
-				++$s;
-			else
-				while ($str[$s] > "\x7F")
-					++$s;
-		}
-		if ($len == '')
-			return substr($str, $s);
-		else
-			for ($e = $s; $len > 0; --$len) {//found the real end
-				if ($e >= $limit)
-					break;
-				if ($str[$e] <= "\x7F")
-					++$e;
-				else
-					while ($str[$e] > "\x7F")
-						++$e;
-			}
-		return substr($str, $s, $e - $s);
-	}
+    function mb_substr($str, $start, $len = '', $encoding="UTF-8"){
+        $limit = strlen($str);
+        for ($s = 0; $start > 0;--$start) {// found the real start
+            if ($s >= $limit)
+                break;
+            if ($str[$s] <= "\x7F")
+                ++$s;
+            else {
+                ++$s; // skip length
+                while ($str[$s] >= "\x80" && $str[$s] <= "\xBF")
+                    ++$s;
+            }
+        }
+        if ($len == '')
+            return substr($str, $s);
+        else
+            for ($e = $s; $len > 0; --$len) {//found the real end
+                if ($e >= $limit)
+                    break;
+                if ($str[$e] <= "\x7F")
+                    ++$e;
+                else {
+                    ++$e;//skip length
+                    while ($str[$e] >= "\x80" && $str[$e] <= "\xBF" && $e < $limit)
+                        ++$e;
+                       }
+            }
+        return substr($str, $s, $e - $s);
+    }
 }
 
 
