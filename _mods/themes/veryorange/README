@@ -1,0 +1,12 @@
+$Header: /cvsroot/tikiwiki/_mods/themes/veryorange/README,v 1.1 2004-05-09 21:33:57 damosoft Exp $
+
+veryorange
+----------
+
+Very Orange style by Damian
+
+Really this a variation of moreneat, but uses the default templates
+
+Should work with all tiki versions, but was tested on 1.8 and 1.9 CVS
+
+Maintained by Damian http://tikiwiki.org/Damian
