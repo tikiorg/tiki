@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.7 2003-08-02 20:39:17 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.8 2003-08-02 21:52:15 zaufi Exp $
  *
  * General HTML redefinitions
  * There is no Tiki related things -- just pure HTML redefinitions
@@ -33,19 +33,21 @@ body
   font-size: 11px;
 }
 
+a, a:visited,
 a.link, a.link:visited,
  :link,  :link:visited
 {
   color: #00E000;
   text-decoration: none;
 }
+a:visited:hover, a:hover,
 a.link:visited:hover, a.link:hover,
  :link:visited:hover,  :link:hover
 {
   color: #00F000;
   text-decoration: underline;
 }
-a.link:active, :link:active
+a.link:active, a:active, :link:active
 {
   color: #00E000;
   text-decoration: none;
