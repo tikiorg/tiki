@@ -151,6 +151,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_menu_options.php?menuId={$menuId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupnam_desc'}groupname_asc{else}groupname_desc{/if}">{tr}group{/tr}</a></td>
 <td class="heading">&nbsp;</td>
 </tr>
+
 {section name=user loop=$channels}
 {if $channels[user].type eq 's'}
 <tr class="odd">

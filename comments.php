@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.30 2004-06-15 05:06:27 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.31 2004-06-15 21:57:05 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,6 +16,7 @@
 // Traverse each _REQUEST data adn put them in an array
 
 //this script may only be included - so its better to die if called directly.
+
 if (strpos($_SERVER["SCRIPT_NAME"],"comments.php")!=FALSE) {
     //smarty is not there - we need setup
     require_once('tiki-setup.php');
@@ -47,15 +48,19 @@ $comments_first = 1;
 foreach ($comments_vars as $c_name) {
     $comments_avar["name"] = $c_name;
 
-    $comments_avar["value"] = $_REQUEST["$c_name"];
-    $comments_aux[] = $comments_avar;
+    if (isset($_REQUEST[$c_name])) {
+	$comments_avar["value"] = $_REQUEST[$c_name];
+	$comments_aux[] = $comments_avar;
+    }
 
-    if ($comments_first) {
-	$comments_first = 0;
-
-	$comments_t_query .= "?$c_name=" . $_REQUEST["$c_name"];
-    } else {
-	$comments_t_query .= "&amp;$c_name=" . $_REQUEST["$c_name"];
+    if (isset($_REQUEST[$c_name])) {
+	if ($comments_first) {
+	    $comments_first = 0;
+	    
+	    $comments_t_query .= "?$c_name=" . $_REQUEST["$c_name"];
+	} else {
+	    $comments_t_query .= "&amp;$c_name=" . $_REQUEST["$c_name"];
+	}
     }
 }
 

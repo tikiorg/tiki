@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.21 2004-05-21 09:18:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.22 2004-06-15 21:57:06 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -237,7 +237,6 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
-
 $images = $imagegallib->get_images($offset, $maxImages, $sort_mode, $find, $_REQUEST["galleryId"]);
 $cant_pages = ceil($images["cant"] / $maxImages);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
