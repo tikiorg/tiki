@@ -369,7 +369,7 @@ class StructLib extends TikiLib {
 	// Return an array of subpages
 	function get_pages($page) {
 		$ret = array();
-		$query = "select `page` from `tiki_structures` where `parent`=? order by ".$tiki->convert_sortmode("pos_asc");
+		$query = "select `page` from `tiki_structures` where `parent`=? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($page));
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["page"];
