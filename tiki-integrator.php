@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.6 2003-10-19 21:50:53 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.7 2003-10-29 23:51:58 zaufi Exp $
  *
  * Integrated files viewer (wrapper)
  *
@@ -43,8 +43,9 @@ if ((substr($file, 0, 7) != 'http://')
 }
 
 // Get file content to string
+//$php_errormsg = '';
 $data = @file_get_contents($file);
-if (strlen($php_errormsg))
+if (isset($php_errormsg))
     $data .= "ERROR: ".$php_errormsg;
 else
 {

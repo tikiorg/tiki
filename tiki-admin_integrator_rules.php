@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.10 2003-10-19 21:50:53 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.11 2003-10-29 23:51:58 zaufi Exp $
  *
  * Admin interface for rules management
  *
@@ -103,7 +103,7 @@ if (isset($_REQUEST["preview"]))
         }
         // Get file content to string
         $data = @file_get_contents($f);
-        if (strlen($php_errormsg)) $data .= "ERROR: ".$php_errormsg;
+        if (isset($php_errormsg)) $data .= "ERROR: ".$php_errormsg;
         else
         {
             // Should we apply all configured rules or only current one?
