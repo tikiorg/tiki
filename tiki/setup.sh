@@ -23,7 +23,7 @@ Usage $0 user [group]
 For example, if apache is running as user $USER, type:
 
   su -c '$0 $GROUP'
-
+ 
 Alternatively, you may wish to set both the user and group:
   
   su -c '$0 $USER $GROUP'
