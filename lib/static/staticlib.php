@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.9 2004-07-30 21:41:48 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.10 2004-07-30 21:59:30 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,6 +42,7 @@ class StaticLib extends TikiLib {
 			$this->update_page($backlink['fromPage']);
 		}
 		$this->update_page($pagename);
+		return TRUE;
 		
 	}
 
@@ -183,6 +184,7 @@ class StaticLib extends TikiLib {
 		// update the module information
 		global $user_assigned_modules, $modallgroups, $modseparateanon, $tikidomain, $language;
 		$tikilib = $this;
+		$static_mode = 'y';
 		include('tiki-modules.php');
 
 		// Display the Index Template
@@ -223,7 +225,8 @@ class StaticLib extends TikiLib {
 		if(!file_exists($style_path)) {
 			copy("styles/$style", $style_path);
 		}
-
+		return TRUE;
+		
 	}
 	
 	function rename_page($oldpagename, $newpagename) {
@@ -237,6 +240,7 @@ class StaticLib extends TikiLib {
 		
 		// update new page
 		$this->update_page($newpagename);
+		return TRUE;
 		
 	}
 	
@@ -254,6 +258,7 @@ class StaticLib extends TikiLib {
 		foreach ($backlinks as $backlink) {
 			$this->update_page($backlink['fromPage']);
 		}
+		return TRUE;
 
 	}
 	
@@ -263,6 +268,7 @@ class StaticLib extends TikiLib {
 		foreach ($pages['data'] as $page) {
 			$this->update_page($page['pageName']);
 		}
+		return TRUE;
 		
 	}
 	
@@ -293,6 +299,7 @@ class StaticLib extends TikiLib {
 				@unlink($filename);
 			}
 		}
+		return TRUE;
 		
 	}
 
