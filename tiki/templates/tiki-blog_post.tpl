@@ -31,7 +31,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 {assign var=area_name value="blogedit"}
 {if $feature_smileys eq 'y'}
 <tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">
-   {include file="tiki-smileys.tpl"}
+   {include file="tiki-smileys.tpl" area_name='blogedit'}
 </td></tr>
 {/if}
 <tr><td class="editblogform">{tr}Quicklinks{/tr}</td><td class="editblogform">
@@ -43,7 +43,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 <input type="text" size="80" name="title" value="{$title|escape}" />
 </td></tr>
 {/if}
-<tr><td class="editblogform">{tr}Data{/tr}{if $wysiwyg eq 'n'}<br/><br />{include file="textareaSize.tpl"}{/if}</td><td class="editblogform">
+<tr><td class="editblogform">{tr}Data{/tr}{if $wysiwyg eq 'n'}<br/><br />{include file="textareaSize.tpl" area_name='blogedit' formId='editpageform'}{/if}</td><td class="editblogform">
 <b>{tr}Use ...page... to separate pages in a multi-page post{/tr}</b><br />
 <textarea id='blogedit' class="wikiedit" name="data" rows="{$rows}" cols="{$cols}" wrap="virtual">{$data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>

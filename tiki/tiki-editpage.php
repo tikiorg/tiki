@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.59 2003-11-19 05:08:19 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.60 2003-11-23 23:30:55 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -689,9 +689,7 @@ if (isset($_REQUEST['cat_categorize'])) {
 		$smarty->assign('categ_checked', 'y');
 	}
 }
-
-$smarty->assign('rows', isset($_REQUEST['rows'])? $_REQUEST['rows']: '22');
-$smarty->assign('cols', isset($_REQUEST['cols'])? $_REQUEST['cols']: '80');
+include_once("textareaSize.php");
 
 include_once ('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
