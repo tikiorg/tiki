@@ -233,18 +233,18 @@ class BlogLib extends TikiLib {
 	}
 
 	function replace_blog($title, $description, $user, $public, $maxPosts, $blogId, $heading, $use_title, $use_find,
-		$allow_comments) {
+		$allow_comments, $show_avatar) {
 		$now = date("U");
 
 		if ($blogId) {
-			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_find`=?,`allow_comments`=? where `blogId`=?";
+			$query = "update `tiki_blogs` set `title`=? ,`description`=?,`user`=?,`public`=?,`lastModif`=?,`maxPosts`=?,`heading`=?,`use_title`=?,`use_find`=?,`allow_comments`=?,`show_avatar`=? where `blogId`=?";
 
-			$result = $this->query($query,array($title,$description,$user,$public,$now,$maxPosts,$heading,$use_title,$use_find,$allow_comments,$blogId));
+			$result = $this->query($query,array($title,$description,$user,$public,$now,$maxPosts,$heading,$use_title,$use_find,$allow_comments,$show_avatar,$blogId));
 		} else {
-			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_find`,`allow_comments`)
-                       values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_blogs`(`created`,`lastModif`,`title`,`description`,`user`,`public`,`posts`,`maxPosts`,`hits`,`heading`,`use_title`,`use_find`,`allow_comments`,`show_avatar`)
+                       values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int) $now,(int) $now,$title,$description,$user,$public,0,(int) $maxPosts,0,$heading,$use_title,$use_find,$allow_comments));
+			$result = $this->query($query,array((int) $now,(int) $now,$title,$description,$user,$public,0,(int) $maxPosts,0,$heading,$use_title,$use_find,$allow_comments,$show_avatar));
 			$query2 = "select max(`blogId`) from `tiki_blogs` where `lastModif`=?";
 			$blogId = $this->getOne($query2,array((int) $now));
 		}
@@ -293,6 +293,7 @@ class BlogLib extends TikiLib {
 				$res['trackbacks_to'] = unserialize($res['trackbacks_to']);
 			$res['trackbacks_to_count'] = count($res['trackbacks_to']);
 			$res['pages'] = $this->get_number_of_pages($res['data']);
+	        $res['avatar'] = $this->get_user_avatar($res['user']);		
 			$ret[] = $res;
 		}
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.19 2004-01-30 08:30:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.20 2004-01-30 22:47:47 swillie Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,6 +64,7 @@ $smarty->assign('public', 'n');
 $smarty->assign('use_find', 'y');
 $smarty->assign('use_title', 'y');
 $smarty->assign('allow_comments', 'y');
+$smarty->assign('show_avatar', 'n');
 $smarty->assign('maxPosts', 10);
 
 
@@ -121,6 +122,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('public', $data["public"]);
 	$smarty->assign('use_title', $data["use_title"]);
 	$smarty->assign('allow_comments', $data["allow_comments"]);
+	$smarty->assign('show_avatar',$data["show_avatar"]);
 	$smarty->assign('use_find', $data["use_find"]);
 	$smarty->assign('maxPosts', $data["maxPosts"]);
 	$smarty->assign('heading', $data["heading"]);
@@ -148,6 +150,7 @@ if (isset($_REQUEST["save"])) {
 
 	$use_title = isset($_REQUEST['use_title']) ? 'y' : 'n';
 	$allow_comments = isset($_REQUEST['allow_comments']) ? 'y' : 'n';
+    $show_avatar = isset($_REQUEST['show_avatar']) ? 'y' : 'n';	
 	$use_find = isset($_REQUEST['use_find']) ? 'y' : 'n';
 
 	// 'heading' was assumed set. -rlpowell
@@ -157,7 +160,7 @@ if (isset($_REQUEST["save"])) {
 	    $_REQUEST["description"], $user, $public,
 	    $_REQUEST["maxPosts"], $_REQUEST["blogId"],
 	    $heading, $use_title, $use_find,
-	    $allow_comments);
+	    $allow_comments, $show_avatar);
 
 	$cat_type = 'blog';
 	$cat_objid = $bid;
