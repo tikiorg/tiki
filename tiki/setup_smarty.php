@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.17 2004-03-18 17:02:13 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.18 2004-03-24 11:56:26 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,15 +74,25 @@ class Smarty_TikiWiki extends Smarty {
 	}
 	/* fetch in a specific language  without theme consideration */
 	function fetchLang($lg, $_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false)  {
-		global $language, $style, $style_base;
+		global $language;
+		global $lang;
 
-		$lgSave = $language;
-		$language = $lg; // the global var needs to be changed in case the tpl needs to be compiled
-
-		$_smarty_cache_id = $language . $_smarty_cache_id;
-		$_smarty_compile_id = $language . $_smarty_compile_id;
+		$_smarty_cache_id = $lg . $_smarty_cache_id;
+		$_smarty_compile_id = $lg . $_smarty_compile_id;
+		$isCompiled = $this->_is_compiled($_smarty_tpl_file, $this->_get_compile_path($_smarty_tpl_file));
+		if (!$isCompiled) {
+			$lgSave = $language;
+			$language = $lg;
+			include("lang/$language/language.php");
+				// the language file needs to be included again:
+				// the file could have been included before: prefilter.tr using include_once will not reload the file
+				// but the $lang can be from another language
+		}
 		$res = parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
-		$language = $lgSave;
+		if (!$isCompiled) {
+			$language = $lgSave;
+			include ("lang/$language/language.php");
+		}
 		return ereg_replace("^[ \t]*", "", $res);
 	}
 }
