@@ -1,4 +1,4 @@
-{* $Hader: $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-listpages.tpl,v 1.4 2004-01-29 03:36:41 musus Exp $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}
@@ -35,41 +35,40 @@
   <th>&nbsp;</th>
 {/if}
 {if $wiki_list_name eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></th>
 {/if}
 {if $wiki_list_hits eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></th>
 {/if}
 {if $wiki_list_lastmodif eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last mod{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last mod{/tr}</a></th>
 {/if}
 {if $wiki_list_creator eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'creator_desc'}creator_asc{else}creator_desc{/if}">{tr}Creator{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'creator_desc'}creator_asc{else}creator_desc{/if}">{tr}Creator{/tr}</a></th>
 {/if}
-
 {if $wiki_list_user eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Last author{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Last author{/tr}</a></th>
 {/if}
 {if $wiki_list_lastver eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}">{tr}Last ver{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}">{tr}Last version{/tr}</a></th>
 {/if}
 {if $wiki_list_comment eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}Com{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}Com{/tr}</a></th>
 {/if}
 {if $wiki_list_status eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'flag_desc'}flag_asc{else}flag_desc{/if}">{tr}Status{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'flag_desc'}flag_asc{else}flag_desc{/if}">{tr}Status{/tr}</a></th>
 {/if}
 {if $wiki_list_versions eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'versions_desc'}versions_asc{else}versions_desc{/if}">{tr}Vers{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'versions_desc'}versions_asc{else}versions_desc{/if}">{tr}Version{/tr}</a></th>
 {/if}
 {if $wiki_list_links eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'links_desc'}links_asc{else}links_desc{/if}">{tr}Links{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'links_desc'}links_asc{else}links_desc{/if}">{tr}Links{/tr}</a></th>
 {/if}
 {if $wiki_list_backlinks eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'backlinks_desc'}backlinks_asc{else}backlinks_desc{/if}">{tr}Backlinks{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'backlinks_desc'}backlinks_asc{else}backlinks_desc{/if}">{tr}Backlinks{/tr}</a></th>
 {/if}
 {if $wiki_list_size eq 'y'}
-	<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></th>
+<th><a href="tiki-listpages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></th>
 {/if}
 </tr>
 {cycle values="even,odd" print=false}
@@ -79,39 +78,38 @@
 <td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/></td>
 {/if}
 {if $wiki_list_name eq 'y'}
-	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
-	{if $tiki_p_edit eq 'y'}
-	<br />(<a href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
-	{/if}
-	</td>
+<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
+{if $tiki_p_edit eq 'y'}
+<br />(<a href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{tr}edit{/tr}</a>)
+{/if}
+</td>
 {/if}
 {if $wiki_list_hits eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].hits}</td>
+<td class="{cycle advance=false}">{$listpages[changes].hits}</td>
 {/if}
 {if $wiki_list_lastmodif eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].lastModif|tiki_short_datetime}</td>
+<td class="{cycle advance=false}">{$listpages[changes].lastModif|tiki_short_datetime}</td>
 {/if}
 {if $wiki_list_creator eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].creator|userlink}</td>
+<td class="{cycle advance=false}">{$listpages[changes].creator|userlink}</td>
 {/if}
-
 {if $wiki_list_user eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].user|userlink}</td>
+<td class="{cycle advance=false}">{$listpages[changes].user|userlink}</td>
 {/if}
 {if $wiki_list_lastver eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].version}</td>
+<td class="{cycle advance=false}">{$listpages[changes].version}</td>
 {/if}
 {if $wiki_list_comment eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].comment}</td>
+<td class="{cycle advance=false}">{$listpages[changes].comment}</td>
 {/if}
 {if $wiki_list_status eq 'y'}
-	<td class="{cycle advance=false}">
+<td class="{cycle advance=false}">
 	{if $listpages[changes].flag eq 'locked'}
 		<img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" />
 	{else}
 		<img src="img/icons/unlock_topic.gif" alt="{tr}unlocked{/tr}" />
 	{/if}
-	</td>
+</td>
 {/if}
 {if $wiki_list_versions eq 'y'}
 	{if $feature_history eq 'y'}
@@ -136,9 +134,7 @@
        {cycle print=false}
 </tr>
 {sectionelse}
-<tr><td colspan="16">
-<b>{tr}No records found{/tr}</b>
-</td></tr>
+<tr><td colspan="16"><b>{tr}No records found{/tr}</b></td></tr>
 {/section}
 {if $checkboxes_on eq 'y'}
   <script language="Javascript" type="text/javascript">
@@ -148,7 +144,7 @@
   // for now those people just have to check every single box
   document.write("<tr><td><input name=\"switcher\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form.name,'checked[]','switcher')\"/></td>");
   document.write("<td colspan=\"15\">{tr}all{/tr}</td></tr>");
-  //-->                     
+  //-->
   </script>
 {/if}
 </table>
@@ -160,10 +156,10 @@
       <option value="remove_pages" >{tr}remove{/tr}</option>
     {/if}
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
-  </select>                
+  </select>
   <script language="Javascript" type="text/javascript">
   <!--
-  // Fake js to allow the use of the <noscript> tag (so non-js-users kenn still submit)
+  // Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)
   //-->
   </script>
   <noscript>
