@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.27 2003-12-08 01:36:15 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.28 2003-12-18 14:36:49 mose Exp $
 2003 - created and maintained by mose@feu.org
 */
 
@@ -306,21 +306,9 @@ div.cbox-data {
 }
 
 /* 
-Some boxes are identified by an ID, for example the  
-boxes in the main application menu, we set display to
-none to make the menu appear collapsed initially, 
-change this to 'block' if you want it to be extended fully 
-*/
-
-/* 
 Menus
 */
-
-/* 
-Separators are used to separate menu areas in the application 
-menu and user created menus
-*/
-div.separator {
+div.separator, div.separatorline {
 	background:    #dadac9;
 	color:   #003163;
 	font-size:   11px;
@@ -330,9 +318,6 @@ div.separator {
 div.separator:hover {
 	background: #dada89;
 }
-/* 
-Links in menus 
-*/
 .linkmenu, .rsslink {
 	font-size:    11px;
 	color:   black;
@@ -351,6 +336,12 @@ Links in menus
 	text-decoration:   underline;
 	background:   #EFEFEF;
 }
+.separatorline, .optionline {
+  border-top: 1px solid #dedede;
+  margin-top: 3px;
+  padding-top: 3px;
+} 
+
 
 /* 
 Links to extend/collapse menus 
@@ -369,7 +360,6 @@ Links to extend/collapse menus
 	color:   black;
 	text-decoration:   none;
 }
-
 /* 
 Links to collapse menus for example the main menu 
 can be completely collapsed
@@ -2141,7 +2131,7 @@ a.caltab {
 	font-weight:   bold;
 	font-size:   11px;
 	background-color:   #dedede;
-	color:   #000000;
+	color:   #666666;
 }
 
 a.caltab:hover {
@@ -2543,7 +2533,7 @@ td.middle {
 	vertical-align: middle; 
 }
 .daterow {
-	margin-left: 10px;
+padding-right: 20px;
 }
 .mininotes {
 	font-size: 80%;
@@ -2666,3 +2656,16 @@ div.catlists {
 div#rules-copy-panel {
     display: none;
 }
+
+/*
+** JsCalendar wrapper
+*/
+#datrigger {
+	border: 2px outset #666666;
+	padding: 1px 3px 1px 5px;
+	margin: 2px;
+	cursor: pointer;
+	font-weight:bold;
+}
+
+
