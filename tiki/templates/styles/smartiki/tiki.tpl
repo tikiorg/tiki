@@ -9,6 +9,8 @@
 
 <table cellpadding="4" cellspacing="0">
 <tr valign="top">
+
+{if count($left_modules)}
 <td class="sidebar">
 {section name=homeix loop=$left_modules}
 {$left_modules[homeix].data}
@@ -16,12 +18,11 @@
 </td></tr></table>
 </td>
 
-<td id="vertline">
-<img src="/styles/smarty/spacer.gif" width="2" height="2" border="0" alt="" >
-</td>
+<td class="vertline"><img src="styles/smarty/spacer.gif" width="2" height="2" border="0" alt="" ></td>
+{/if}
 
 <td>
-<table width="600" cellpadding="10" cellspacing="0">
+<table cellpadding="10" cellspacing="0">
 <tr><td valign="top">
 {include file=$mid}
 {if $show_page_bar eq 'y'}
@@ -32,8 +33,7 @@
 </td>
 
 {if count($right_modules)}
-<td bgcolor="#f0ead8" background="/styles/smarty/checkerboard-orange.gif" width="2">
-<img src="/styles/smarty/spacer.gif" width="2" height="2" border="0" alt="" ><br></td>
+<td class="vertline"><img src="styles/smarty/spacer.gif" width="2" height="2" border="0" alt="" ></td>
 
 <td bgcolor="#f0ead8" width="170" >
 
