@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.6 2004-02-21 05:07:25 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.7 2004-02-22 17:22:37 ggeller Exp $
 
 // 20040207 - added function hw_assignment_fetch
 
@@ -667,9 +667,12 @@ class HomeworkLib extends TikiLib {
 	//   tiki-hw_teacher_assignments.php
 	// Data:
 	//   hw_assignments table - read only
-	// Returns
-	//   Array with count of results and a data vector
-	// Test with a lot of rows in the table and different values of offset and maxRecords
+	// Arguments:
+	//   offset     - read only - starting point in the vector
+  //   maxRecords - read only - maximum number of records to return
+	// Returns:
+	//   Array with count of results and a data vector, sorted by the due date
+	// TODO: Test with a lot of rows in the table and different values of offset and maxRecords
   function hw_assignments_list($offset = 0, $maxRecords = -1) {
     $bindvars=array();
 		$cant = "select count(*) from `hw_assignments`";
@@ -1043,6 +1046,18 @@ function get_assignment($articleId) {
    }
    
    return $articleId;
+ }
+
+ // Remove the assignment and all the students' work associated with it.
+ function hw_assignment_remove($id){
+	 global $ggg_tracer;
+	 $ggg_tracer->outln(__FILE__." line: ".__LINE__." in hw_assignment_remove");
+	 $ggg_tracer->outln(__FILE__." line: ".__LINE__." $id = ".$id);
+	 $ggg_tracer->outln(" TODO: delete all the students work for this assignment.");
+	 $query = "delete from `hw_assignments` where `articleId`=?";
+	 $result = $this->query($query,array($id));
+	 // $this->hw_pages_remove_all($id);
+	 return true;
  }
 
 } //end of class HomeworkLib
