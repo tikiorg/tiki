@@ -88,8 +88,8 @@
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=dsn">{tr}DSN{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=directory">{tr}Directory{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=workflow">{tr}Workflow{/tr}</a>|
-   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=charts">{tr}Charts{/tr}</a>   
-   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=extwiki">{tr}ExtWikis{/tr}</a>
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=charts">{tr}Charts{/tr}</a>|  
+   <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=extwiki">{tr}ExtWikis{/tr}</a>|
    <a class="link" href="tiki-assignpermission.php?sort_mode={$sort_mode}&amp;group={$group}&amp;type=support">{tr}Live support{/tr}</a>
    ]
  </td>
@@ -111,8 +111,8 @@
 <td class="odd">{$perms[user].permName}</td>
 <td class="odd"><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
 <!--<td class="odd">{$perms[user].hasPerm}</td>-->
-<td class="odd">{$perms[user].type}</td>
-<td class="odd">{$perms[user].permDesc}</td>
+<td class="odd">{tr}{$perms[user].type}{/tr}</td>
+<td class="odd">{tr}{$perms[user].permDesc}{/tr}</td>
 <!--
 <td class="odd">
 {if $perms[user].hasPerm eq 'n'}
