@@ -14,7 +14,7 @@ if(isset($_GET['language'])) {
 	}
 	else
 		$_SESSION["language"] = $language;
-	include("lang/$language/language.php");
+		//include("lang/$language/language.php"); $langauge will be read again in the location
 	}
 
 header("location: $orig_url");
