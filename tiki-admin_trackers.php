@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.21 2004-02-17 06:29:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.22 2004-02-18 21:21:36 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -52,7 +52,7 @@ $info["showAttachments"] = '';
 $info["defaultOrderKey"] = '';
 $info["defaultOrderDir"] = 'asc';
 $info["newItemStatus"] = 'o';
-$info["modItemStatus"] = 'o';
+$info["modItemStatus"] = '';
 $info["writerCanModify"] = '';
 $info["writerGroupCanModify"] = '';
 $info["defaultStatus"] = 'o';
@@ -165,7 +165,7 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["newItemStatus"] = $_REQUEST["newItemStatus"];
 	}
 
-	if (isset($_REQUEST["modItemStatus"]) && $_REQUEST["modItemStatus"]) {
+	if (isset($_REQUEST["modItemStatus"])) {
 		$tracker_options["modItemStatus"] = $_REQUEST["modItemStatus"];
 	}
 
