@@ -8,14 +8,14 @@
     * - add the lines
     * <code>
     * include "pluginslib.php";
-    * $plugin = new BackLinks();
+    * 
     * function wikiplugin_backlinks($data, $params) {
-    *    global $plugin;
+    *    $plugin = new BackLinks();
     *    return $plugin->run($data, $params);
     * }
     * function wikiplugin_backlinks_help() {
-    *     global $plugin;
-    *    return $plugin->description();
+    *    $plugin = new BackLinks();
+    *    return $plugin->getDescription();
     * }    * </code>
     *
     * @author Claudio Bustos
@@ -25,6 +25,9 @@
         var $_errors;
         var $_data;
         var $_params;
+        /**
+        * Array of params to be expanded as arrays. Explode the string with {@link $this->separator}
+        */
         var $expanded_params = array();
         var $separator = "|";
         var $aInfoPresetNames = array(
@@ -60,12 +63,15 @@
         function getVersion() {
             return tra("No version indicated");
             //return preg_replace("/[Revision: $]/", '',
-            //                    "\$Revision: 1.1 $");
+            //                    "\$Revision: 1.2 $");
         }
         function getDefaultArguments() {
             return array('description' => $this->getDescription());
         }
         function run ($data, $params) {
+            /**
+            * UGLY ERROR!.
+            */
             trigger_error("PluginsLib::run: pure virtual function",
                 E_USER_ERROR);
         }
