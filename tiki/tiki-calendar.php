@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.24 2003-12-05 19:46:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.25 2003-12-18 01:13:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -588,6 +588,9 @@ $smarty->assign('var', '');
 $section = 'calendar';
 include_once ('tiki-section_options.php');
 
+if ($feature_jscalendar == 'y') {
+	$smarty->assign('uses_jscalendar', 'y');
+}
 $smarty->assign('mid', 'tiki-calendar.tpl');
 $smarty->display("tiki.tpl");
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.176 2003-12-15 18:19:23 bburgaud Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.177 2003-12-18 01:13:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1585,6 +1585,7 @@ if($feature_phpopentracker == 'y') {
 }
 */
 $smarty->assign('uses_tabs', 'n');
+$smarty->assign('uses_jscalendar', 'n');
 
 $user_preferences = array();
 
