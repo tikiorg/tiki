@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_sections.php,v 1.6 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_sections.php,v 1.7 2004-05-30 05:10:57 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -26,17 +26,7 @@ if ($tiki_p_admin != 'y') {
 	die;
 }
 
-$styles = array();
-$h = opendir("styles/");
-
-while ($file = readdir($h)) {
-	if (strstr($file, "css")) {
-		$styles[] = $file;
-	}
-}
-
-closedir ($h);
-$smarty->assign_by_ref('styles', $styles);
+$smarty->assign_by_ref('styles', $tikilib->list_styles());
 
 if (isset($_REQUEST['assign'])) {
 	check_ticket('tc-sections');

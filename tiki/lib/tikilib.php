@@ -5622,6 +5622,20 @@ class TikiLib extends TikiDB {
 				}
 			    }
 			    closedir($h);
+
+			    /* What is this $tikidomain section?
+			     * Some files that call this method used to list styles without considering
+			     * $tikidomain, now they do. They're listed below:
+                             *  
+                             *  tiki-theme_control.php
+                             *  tiki-theme_control_objects.php
+                             *  tiki-theme_control_sections.php
+                             *  tiki-my_tiki.php
+                             *  modules/mod-switch_theme.php
+                             *
+                             *  lfagundes
+			     */ 
+			    
 			    if ($tikidomain) {
 				$h = opendir("styles/$tikidomain");
 				while ($file = readdir($h)) {
@@ -5631,6 +5645,8 @@ class TikiLib extends TikiDB {
 				} 
 				closedir($h);				
 			    }
+
+
 			    $styles = array_keys($sty);
 			    sort($styles);
 			    return $styles;
