@@ -67,7 +67,7 @@
 
 {if $feature_userfiles eq 'y'}
 <td valign="top"><a class="link" href="tiki-userfiles.php">
-<img  width="48" height="48" border="0" src="img/mytiki/files.gif" alt="{tr}MyFiles{/tr}" /><br/>
+<img  width="48" height="48" border="0" src="img/mytiki/myfiles.gif" alt="{tr}MyFiles{/tr}" /><br/>
 <div align="center"><small>{tr}MyFiles{/tr}</small></div>
 </a></td>
 {/if}
