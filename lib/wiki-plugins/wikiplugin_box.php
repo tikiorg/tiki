@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.9 2004-03-07 23:12:09 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.10 2004-06-17 21:47:14 ohertel Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -17,7 +17,7 @@ function wikiplugin_box_help() {
 
 function wikiplugin_box($data, $params) {
 	/* set default values for some args */
-	$title = "Message box";
+	$title = tra("Message box");
 	
 	// Remove first <ENTER> if exists...
 	if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
