@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.93 2004-07-17 12:49:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.94 2004-07-20 18:40:12 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,13 +21,14 @@ if ($feature_wiki != 'y') {
   die;
 }
 
-/* Should not check for global tiki_p_view here... see permission check farther downs
+/* Should not check for global tiki_p_view here... see permission check farther down
 if ($tiki_p_view != 'y') {
   $smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
   $smarty->display("error.tpl");
   die;
 }
+*/
 
 // Anti-bot feature: if enabled, anon user must type in a code displayed in an image
 if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_antibot == 'y') {
@@ -37,7 +38,6 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_ant
 		die;
 	}
 }
-*/
 
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
