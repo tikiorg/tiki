@@ -1,16 +1,30 @@
 {if $tiki_p_admin eq 'y'}
 <div class="box">
 <div class="box-title">
-{tr}Admin{/tr}
+<a class='flip' href="javascript:flip('adminmenu');">{tr}Admin{/tr}</a>
 </div>
-<div class="box-data">
-  <div class="button">&nbsp;<a href="tiki-admin.php" class="linkbut">{tr}admin{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-adminusers.php" class="linkbut">{tr}users{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-admingroups.php" class="linkbut">{tr}groups{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-list_cache.php" class="linkbut">{tr}cache{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-admin_modules.php" class="linkbut">{tr}modules{/tr}</a></div>
-  <div class="button">&nbsp;<a href="tiki-admin_links.php" class="linkbut">{tr}links{/tr}</a></div>
-    <div class="button">&nbsp;<a href="tiki-list_gallery.php?galleryId=0" class="linkbut">{tr}system gallery{/tr}</a></div>
+<div id='adminmenu' class="box-data">
+  <div class="button">&nbsp;<a href="tiki-admin.php" class="linkbut">{tr}Admin{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-adminusers.php" class="linkbut">{tr}Users{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-admingroups.php" class="linkbut">{tr}Groups{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-list_cache.php" class="linkbut">{tr}Cache{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-admin_modules.php" class="linkbut">{tr}Modules{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-admin_links.php" class="linkbut">{tr}Links{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-admin_hotwords.php" class="linkbut">{tr}Hotwords{/tr}</a></div>
+  <div class="separator">Galleries</div>
+  <div class="button">&nbsp;<a href="tiki-galleries.php" class="linkbut">{tr}Galleries{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-list_gallery.php?galleryId=0" class="linkbut">{tr}System gallery{/tr}</a></div>
+  <div class="separator">Wiki</div>
+  <div class="button">&nbsp;<a href="tiki-listpages.php" class="linkbut">{tr}Pages{/tr}</a></div>
+  <div class="separator">CMS</div>
+  <div class="button">&nbsp;<a href="tiki-admin_topics.php" class="linkbut">{tr}Topics{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-list_articles.php" class="linkbut">{tr}Articles{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-edit_article.php" class="linkbut">{tr}Edit article{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-list_submissions.php" class="linkbut">{tr}Submissions{/tr}</a></div>
+  <div class="separator">Blogs</div>
+  <div class="button">&nbsp;<a href="tiki-list_blogs.php" class="linkbut">{tr}Blogs{/tr}</a></div>
+  <div class="button">&nbsp;<a href="tiki-list_posts.php" class="linkbut">{tr}Posts{/tr}</a></div>
 </div>
 </div>
 {/if}
+

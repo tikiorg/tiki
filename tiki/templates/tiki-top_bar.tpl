@@ -1,1 +1,1 @@
-This is Tiki v0.95 -Shaula- (c) 2002 by Fwazonga Industries.
+This is Tiki v1.0 -Ras Algheti- (c) 2002 by Fwazonga Industries.

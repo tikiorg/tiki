@@ -19,7 +19,9 @@
         </select></td></tr>
   <tr><td>{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName}" /></td></tr>
   <tr><td>{tr}HomePage{/tr}:</td><td><input type="text" name="homePage" value="{$homePage}" /></td></tr>
+  {if $feature_wiki eq 'y'}
   <tr><td>{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$user}">UserPage{$user}</a>({tr}<a class="link" href="tiki-editpage.php?page=UserPage{$user}">{tr}edit{/tr}</a>{/tr})</td></tr>
+  {/if}
   <tr><td align="center" colspan="2"><input type="submit" name="prefs" value="{tr}set{/tr}" /></td></tr>
   </table>
   </form>
@@ -66,7 +68,7 @@
   </div>
   </div>
   
-<!--  
+
   <div class="cbox">
   <div class="cbox-title">{tr}User Blogs{/tr}</div>
   <table width="100%">
@@ -79,7 +81,7 @@
   {/section}
   </table>
   </div>
--->  
+
   
 
   <div class="cbox">
