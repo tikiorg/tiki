@@ -1,8 +1,8 @@
 <?php
-//!! 
-//! 
+//!! Workitem.php
+//! A class representing workitems
 /*!
-
+Not yet implemented
 */
 class Workitem extends Base {
   var $instance;

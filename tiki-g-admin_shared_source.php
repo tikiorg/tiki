@@ -17,13 +17,14 @@ if($tiki_p_admin_workflow != 'y') {
   die;  
 }
 
-
 if(!isset($_REQUEST['pid'])) {
   $smarty->assign('msg',tra("No process indicated"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 $smarty->assign('pid',$_REQUEST['pid']);
+
+if(isset($_REQUEST['code'])) {unset($_REQUEST['template']); $_REQUEST['save']='y';}
 
 $proc_info = $processManager->get_process($_REQUEST['pid']);
 $proc_info['graph']="lib/Galaxia/Processes/".$proc_info['normalized_name']."/graph/".$proc_info['normalized_name'].".png";

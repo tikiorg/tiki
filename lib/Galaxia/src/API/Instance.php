@@ -5,7 +5,7 @@
 This class represents a process instance, it is used when any activity is
 executed. The $instance object is created representing the instance of a
 process being executed in the activity or even a to-be-created instance
-if the activity is a start activity. 
+if the activity is a start activity.
 */
 class Instance extends Base {
   var $properties = Array();
@@ -66,8 +66,8 @@ class Instance extends Base {
   function setNextActivity($actname)
   {
     $pId = $this->pId;
+    $actname=trim($actname);
     $aid = $this->getOne("select activityId from galaxia_activities where pId=$pId and name='$actname'");
-      
     if(!$this->getOne("select count(*) from galaxia_activities where activityId=$aid and pId=".$this->pId)) {
     	trigger_error(tra('Fatal error: setting next activity to an unexisting activity'),E_USER_WARNING);
     }
@@ -576,8 +576,9 @@ class Instance extends Base {
       // so just use an fopen with http mode
       $parsed=parse_url($_SERVER["REQUEST_URI"]);
 	  $URI=httpPrefix().$parsed["path"];
+
 	  $parts=explode('/',$URI);
-	  $parts[count($parts)-1]="tiki-g-run_activity.php?activityId=$activityId&iid=$iid";
+	  $parts[count($parts)-1]="tiki-g-run_activity.php?activityId=$activityId&iid=$iid&auto=1";
 	  $URI=implode('/',$parts);
       $fp = fopen($URI,"r");
       $data = '';
@@ -588,7 +589,7 @@ class Instance extends Base {
       while(!feof($fp)) {
         $data.=fread($fp,8192);
       }
-
+	  
       /*
       if(!empty($data)) {
 		trigger_error(tra("Fatal error: automatic activity produced some output:$data"),E_USER_WARNING);      
@@ -598,7 +599,6 @@ class Instance extends Base {
       
       // Reload in case the activity did some change
       $this->getInstance($this->instanceId);
-      
       $this->complete($activityId);
     }
    
