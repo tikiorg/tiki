@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.14 2003-08-28 19:43:05 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-upload_image.tpl,v 1.15 2003-11-09 13:30:18 mose Exp $ *}
 <a href="tiki-upload_image.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload Image{/tr}</a><br /><br />
 
 {if $feature_help eq 'y'}
@@ -58,7 +58,7 @@
 		alt='{tr}Image ID thumb{/tr}'/><br /><br />
 	<div class="wikitext">
 	{tr}You can view this image in your browser using{/tr}: <a class="link" href="{$url_browse}?imageId={$imageId}">{$url_browse}?imageId={$imageId}</a><br /><br />
-	{tr}You can include the image in an HTML/Tiki page using{/tr}:  <textarea rows="2" cols="60">&lt;img src="{$url_show}?id={$imageId}" /&gt;</textarea>
+	{tr}You can include the image in an Wiki page using{/tr}:  <textarea rows="3" cols="60">{literal}{{/literal}img src="{$url_show}?id={$imageId}"{literal}}{/literal}</textarea>
 	</div>
 	</div>
 	{/if}
