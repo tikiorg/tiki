@@ -1,3 +1,10 @@
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki3d/Navigator.java,v 1.4 2004-04-24 23:32:22 damosoft Exp $
+ *
+ * Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
+
 /*
  * Created on Apr 19, 2004
  * 
