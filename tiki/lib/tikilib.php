@@ -3219,22 +3219,45 @@ class TikiLib {
           if ($litype=='*'||$litype=='#') {
             $listlevel=$this->how_many_at_start($line,$litype);
             $liclose='</li>';
+            $addremove=0;
             if ($listlevel<count($listbeg)) {
               while($listlevel!=count($listbeg)) $data.=array_shift($listbeg);
               if(substr(current($listbeg),0,5)!='</li>') $liclose='';
             } elseif($listlevel>count($listbeg)) {
+              $listyle='';
               while ($listlevel!=count($listbeg)) {
-                $data.=($litype=='*'?'<ul>':'<ol>');
                 array_unshift($listbeg,($litype=='*'?'</ul>':'</ol>'));
+                if ($listlevel==count($listbeg)) {
+                  $listate=substr($line,$listlevel,1);
+                  if(($listate=='+'||$listate=='-')
+                   &&!($litype=='*'&&!strstr(current($listbeg),'</ul>')
+                    || $litype=='#'&&!strstr(current($listbeg),'</ol>'))) {
+                    $thisid='id'.microtime()*1000000;
+                    $data.='<br><a id="flipper'.$thisid.'" class="link" href="javascript:flipWithSign(\''.$thisid.'\')">['.($listate=='-'?'+':'-').']</a>';
+                    $listyle=' id="'.$thisid.'" style="display:'.($listate=='+'?'block':'none').';"';
+                    $addremove=1;
+                  }
+                }
+                $data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
               }
               $liclose='';
             }
             if ($litype=='*'&&!strstr(current($listbeg),'</ul>')
              || $litype=='#'&&!strstr(current($listbeg),'</ol>')) {
-              $data.=array_shift($listbeg).($litype=='*'?'<ul>':'<ol>');
+              $data.=array_shift($listbeg);
+              $listyle='';
+              $listate=substr($line,$listlevel,1);
+              if(($listate=='+'||$listate=='-')) {
+                $thisid='id'.microtime()*1000000;
+                $data.='<br><a id="flipper'.$thisid.'" class="link" href="javascript:flipWithSign(\''.$thisid.'\')">['.($listate=='-'?'+':'-').']</a>';
+                $listyle=' id="'.$thisid.'" style="display:'.($listate=='+'?'block':'none').';"';
+                $addremove=1;
+              }
+              $data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
               $liclose='';
+              array_unshift($listbeg, ($litype=='*'?'</li></ul>':'</li></ol>'));
             }
-            $line=$liclose.'<li>'.substr($line,$listlevel);
+            $line=$liclose.'<li>'.substr($line,$listlevel+$addremove);
             if(substr(current($listbeg),0,5)!='</li>')
               array_unshift($listbeg,'</li>'.array_shift($listbeg));
 	  } elseif($litype=='+') {
