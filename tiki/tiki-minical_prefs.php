@@ -75,6 +75,22 @@ if(isset($_REQUEST['removetopic'])) {
   $minicallib->minical_remove_topic($user,$_REQUEST['removetopic']);
 }
 
+if(isset($_REQUEST['import'])) {
+  if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+    $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+    $heading = fgetcsv ($fp, 1000, ",");
+    while ($data = fgetcsv ($fp, 1000, ",")) {
+      $subject = $data[array_search('Subject',$heading)];
+      $description = $data[array_search('Description',$heading)];
+      $start = strtotime ($data[array_search('Start Date',$heading)]);
+      $start = strtotime ($data[array_search('Start Time',$heading)],$start);
+      $end = strtotime ($data[array_search('End Date',$heading)]);
+      $end = strtotime ($data[array_search('End Time',$heading)],$start);
+      $minicallib->minical_replace_event($user,0,$subject,$description,$start,$end-$start,0);
+    }
+  }
+}
+
 // Process upload here
 if(isset($_REQUEST['addtopic'])) {
 	if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {

@@ -1,5 +1,6 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Wiki pages can be renamed.
 * [CHG] Comment and link to diff are now informed when notifying that a page
   has changed
 * [NEW] Option to allow users to lock a page and only the user who locked the
