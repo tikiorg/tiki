@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.7 2003-12-19 11:55:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_system.php,v 1.8 2003-12-19 12:18:34 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,14 +61,18 @@ function cache_templates($path,$newlang) {
 			$ext=strtolower(end($a));
 			if (substr($file,0,1) == "." or $file == 'CVS') continue;
 			if (is_dir($path."/".$file)) {
+				$language=$oldlang;
 				cache_templates($path."/".$file,$newlang);
+				$language=$newlang;
 			} else {
 				if ($ext=="tpl") {
-					if (strpos($path,"/styles/")!=FALSE) {
-						$file=substr($path."/".$file,10);
+					$file=substr($path."/".$file,10);
+					$comppath=$smarty->_get_compile_path($file);
+					//rewrite the language thing, see setup_smarty.php
+					$comppath=preg_replace("#/".$oldlang."/#","/".$newlang."/",$comppath,1);
+					if(!$smarty->_is_compiled($file,$comppath)) {
+						$smarty->_compile_resource($file,$comppath);
 					}
-					//todo: check if template is compiled already
-					$smarty->fetch($file);
 				}
 			}
 		}
