@@ -3802,6 +3802,9 @@ class TikiLib extends TikiDB {
 		    	$create_page_link = '';
 		    }
 		}
+		
+		$page_parse_pq = preg_quote($page_parse, "/");
+		$data = preg_replace("/\(\($page_parse_pq\)\)/", "$repl", $data);
 	    }
 	}
 
