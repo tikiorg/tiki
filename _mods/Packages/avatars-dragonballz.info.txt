@@ -1,0 +1,72 @@
+# 
+# DragnBall Z avatar collection
+#
+
+author:
+unknown
+
+contributor:
+$Author: mose $
+
+revision: 
+$Rev: 1.1$
+
+lastmodif:
+$Date: 2004-09-29 19:16:01 $
+
+files: 
+avatars/tikiavatars/exploded/295.gif img/avatars/295.gif
+avatars/tikiavatars/exploded/296.gif img/avatars/296.gif
+avatars/tikiavatars/exploded/297.gif img/avatars/297.gif
+avatars/tikiavatars/exploded/298.gif img/avatars/298.gif
+avatars/tikiavatars/exploded/299.gif img/avatars/299.gif
+avatars/tikiavatars/exploded/301.gif img/avatars/301.gif
+avatars/tikiavatars/exploded/302.gif img/avatars/302.gif
+avatars/tikiavatars/exploded/303.gif img/avatars/303.gif
+avatars/tikiavatars/exploded/304.gif img/avatars/304.gif
+avatars/tikiavatars/exploded/305.gif img/avatars/305.gif
+avatars/tikiavatars/exploded/306.gif img/avatars/306.gif
+avatars/tikiavatars/exploded/307.gif img/avatars/307.gif
+avatars/tikiavatars/exploded/308.gif img/avatars/308.gif
+avatars/tikiavatars/exploded/309.gif img/avatars/309.gif
+avatars/tikiavatars/exploded/310.gif img/avatars/310.gif
+avatars/tikiavatars/exploded/311.gif img/avatars/311.gif
+avatars/tikiavatars/exploded/312.gif img/avatars/312.gif
+avatars/tikiavatars/exploded/313.gif img/avatars/313.gif
+avatars/tikiavatars/exploded/314.gif img/avatars/314.gif
+avatars/tikiavatars/exploded/315.gif img/avatars/315.gif
+avatars/tikiavatars/exploded/316.gif img/avatars/316.gif
+avatars/tikiavatars/exploded/317.gif img/avatars/317.gif
+avatars/tikiavatars/exploded/318.gif img/avatars/318.gif
+avatars/tikiavatars/exploded/319.gif img/avatars/319.gif
+avatars/tikiavatars/exploded/320.gif img/avatars/320.gif
+avatars/tikiavatars/exploded/321.gif img/avatars/321.gif
+avatars/tikiavatars/exploded/322.gif img/avatars/322.gif
+avatars/tikiavatars/exploded/323.gif img/avatars/323.gif
+avatars/tikiavatars/exploded/324.gif img/avatars/324.gif
+avatars/tikiavatars/exploded/325.gif img/avatars/325.gif
+avatars/tikiavatars/exploded/326.gif img/avatars/326.gif
+
+Description: 
+Collection of 31 avatars from the Dragon Ball Z (tm) serie.
+
+Licence:
+unkown
+
+Version:
+1.7
+1.8
+1.9
+1.10
+
+sql-install:
+
+sql-remove:
+
+configuration:
+
+php-install:
+
+php-remove:
+
+

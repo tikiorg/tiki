@@ -1,0 +1,32 @@
+files: 
+themes/zaksworld/styles/zaksworld.css styles/zaksworld.css
+themes/zaksworld/styles/zaksworld/rattle.gif styles/zaksworld/rattle.gif
+themes/zaksworld/templates/styles/zaksworld/tiki-bot_bar.tpl templates/styles/zaksworld/tiki-bot_bar.tpl
+themes/zaksworld/templates/styles/zaksworld/tiki-top_bar.tpl templates/styles/zaksworld/tiki-top_bar.tpl
+
+author:
+damosoft
+
+licence:
+GNU/LGPL
+
+contributor:
+$Author: mose $
+
+revision: 
+$Rev$
+
+lastmodif:
+$Date: 2004-09-29 19:16:01 $
+
+url:
+http://zak.parkersworld.org
+
+Description: 
+This is the theme in action at Zaks site
+
+Copyright: 
+2004 damian parker
+
+Changelog:
+1 initial package

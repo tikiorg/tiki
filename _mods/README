@@ -1,4 +1,4 @@
-$Header: /cvsroot/tikiwiki/_mods/README,v 1.4 2004-06-30 21:45:36 damosoft Exp $
+$Header: /cvsroot/tikiwiki/_mods/README,v 1.5 2004-09-29 19:16:00 mose Exp $
 
 TikiWiki mods Collection
 -------------------------
@@ -7,22 +7,78 @@ These packages are bundled separately because they may contain various
 licences. Each mod may have its own, refer to them specifically before 
 using them.
 
-Please create a subfolder underneath the correct section for your mod.
-Remember to include a README in there with suitable contact details and 
-what license the mod is under.
+A package is a file 
 
-If no license is showing, we shall asume its the same as TikiWiki. LGPL.
+* <type-packagename>.info.txt
+	
+	It holds meta-information about the package, following simple rules :
+	
+	- Each meta-information is separated by a double linefeed 
+		(2 or more, actually).
+	
+	- Each meta-information uses its first line to state the label, 
+		stripping the final column if there is one
+	
+	- further lines after first one are the value of the label, 
+		using one or more lines
+	
+	- any line beginning with a # will be silently ignored.
 
-The web front to this CVS module is the http://mods.tikiwiki.org site.
+	- label order don't matter
+	
+	- label values will be trimed off extra whitespaces
+	
+	- you can add arbitrary optional labels if you need
+	
+	- mandatory labels are :
+		
+		- revision : incremental revision number
+		
+		- description : a single sentence stating what is that package for.
+		
+		- licence : the exact licence, or 'unknown'
+	
+	
+	- optional labels are :
+		
+		- files : one line per file, separated with destination with a space
+			that list will be used to install the files and to remove them
+		
+		- help : a verbose explaination of what that package is supposed to perform
+		
+		- urls : one or more urls (one per line, separated by space, followed by optional label)
+		
+		- changelog : list of modification, one line per revision, 
+			revision number being the first word on each line. 
+			Multiple lines with same revision number is fine.
+		
+		- version : the tiki version required for use of the package
+		
+		- sql-install : each line will be executed in sql at install
+		
+		- sql-remove : each line will be executed at removal
+		
+		- configuration : each line is a defined variable necessary in the install script
+		
+		- php-install : name of the php scripts to call before install
+		
+		- php-remove : name of the scripts to call after remove
 
-INDEX
-------
 
-/themes/ - User contributed themes, please see the README there for details.
-/javascript/
-/avatars/
-/patches/
-/smilies/
-/features/
-/templates/
-/wiki-plugins/
+* a set of files in arbitrary locations, as listed in the <type-packagename>.info.txt file
+
+
+Revisions numbers :
+
+Each time something relevant is changed in any package file, the revision 
+number has to be incremented. The use of the changelog field is good for that.
+
+
+Note about licence :
+
+If no license is showing, we shall asume it's possibly proprietary, stated 
+under 'unknown'. You should only use those package for test or private use.
+If you run a public service, we advise you don't use those packages except 
+if you manage the licence agreement with the proper copyrighter.
+
+

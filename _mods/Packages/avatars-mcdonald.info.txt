@@ -1,0 +1,44 @@
+Name:
+avatar-mcdonald
+
+files: 
+avatars/tikiavatars/exploded/276.gif img/avatars/276.gif
+avatars/tikiavatars/exploded/277.gif img/avatars/277.gif
+avatars/tikiavatars/exploded/278.gif img/avatars/278.gif
+avatars/tikiavatars/exploded/279.gif img/avatars/279.gif
+avatars/tikiavatars/exploded/280.gif img/avatars/280.gif
+avatars/tikiavatars/exploded/281.gif img/avatars/281.gif
+avatars/tikiavatars/exploded/282.gif img/avatars/282.gif
+avatars/tikiavatars/exploded/283.gif img/avatars/283.gif
+avatars/tikiavatars/exploded/284.gif img/avatars/284.gif
+avatars/tikiavatars/exploded/285.gif img/avatars/285.gif
+avatars/tikiavatars/exploded/286.gif img/avatars/286.gif
+avatars/tikiavatars/exploded/287.gif img/avatars/287.gif
+avatars/tikiavatars/exploded/288.gif img/avatars/288.gif
+avatars/tikiavatars/exploded/289.gif img/avatars/289.gif
+avatars/tikiavatars/exploded/290.gif img/avatars/290.gif
+avatars/tikiavatars/exploded/291.gif img/avatars/291.gif
+avatars/tikiavatars/exploded/292.gif img/avatars/292.gif
+avatars/tikiavatars/exploded/293.gif img/avatars/293.gif
+avatars/tikiavatars/exploded/294.gif img/avatars/294.gif
+
+licence:
+unknown
+
+author:
+
+contributor:
+lrargerich
+
+revision: 
+1
+
+Description: 
+Collection of 19 avatars from McDonald (tm).
+
+Dependancies: 
+none
+
+Copyright: 
+unknown
+
