@@ -10,6 +10,7 @@ $langmapping = array(
     'da' => array(  'Dansk',        tra("Danish")       ),
     'de' => array(  'Deutsch',      tra("German")       ),
     'en' => array(  'English',      tra("English")      ),
+    'en-uk' => array(  'English-UK',   tra("English UK")    ),
     'es' => array(  'Español',     tra("Spanish")      ),
     'el' => array(  'Greek',        tra("Greek")        ),
     'fr' => array(  'Français',    tra("French")       ),
