@@ -71,7 +71,7 @@ Testing Tiki
 <ol>
 <li>May be you want to start reading the tiki <a href="tiki-view_faq.php?faqId=1" class="link">FAQ</a></li>
 <li>Test the wiki following this <a href="tiki-index.php" class="link">link</a></li>
-<li>Visit the <a href="tiki-forums.php" class="link">forums</a>, write a topic or reply an existing topic if you want</li>
+<li>Visit the <a href="tiki-forums.php" class="link">forums</a>, write a topic or reply to an existing topic if you want</li>
 <li>At the <a href="tiki-galleries.php" class="link">images galleries</a> section you can see some images try <a href="tiki-upload_image.php?galleryId=2" class="link">uploading images</a> to our public gallery</li>
 <li>You can download some tiki-add-ons from the <a href="tiki-list_file_gallery.php?galleryId=1" class="link">tiki-add-ons file gallery</a></li>
 <li>Visit the <a href="tiki-browse_categories.php" class="link">category browser</a> to test the tiki categorizing system</li>
