@@ -237,11 +237,12 @@ class AdminLib extends TikiLib {
   
   function remove_tag($tagname)
   {
+		global $wikiHomePage;
     $query = "delete from tiki_tags where tagName='$tagname'";
     $result = $this->query($query);
     $action = "removed tag: $tagname";
     $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
+    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
     $result = $this->query($query);
     return true;
   }
@@ -261,6 +262,7 @@ class AdminLib extends TikiLib {
   // table preserving the state of the wiki under a tag name.
   function create_tag($tagname,$comment='')
   {
+		global $wikiHomePage;
     $tagname = addslashes($tagname);
     $comment = addslashes($comment);
     $query = "select * from tiki_pages";
@@ -272,7 +274,7 @@ class AdminLib extends TikiLib {
     }
     $action = "created tag: $tagname";
     $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
+    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
     $result = $this->query($query);
     return true;
   }
@@ -281,6 +283,7 @@ class AdminLib extends TikiLib {
   // tags table
   function restore_tag($tagname)
   {
+		global $wikiHomePage;
     $query = "update tiki_pages set cache_timestamp=0";
     $this->query($query);
     $query = "select * from tiki_tags where tagName='$tagname'";
@@ -292,7 +295,7 @@ class AdminLib extends TikiLib {
     }
     $action = "recovered tag: $tagname";
     $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
+    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
     $result = $this->query($query);
     return true;
   }  
@@ -301,7 +304,7 @@ class AdminLib extends TikiLib {
 	// changed for virtualhost support
   function dump()
   {
-		global $tikidomain;
+		global $tikidomain, $wikiHomePage;
     @unlink("dump/".$tikidomain."new.tar");
     $tar = new tar();
     $tar->addFile("styles/main.css");
@@ -317,14 +320,14 @@ class AdminLib extends TikiLib {
       $dat = preg_replace("/tiki-editpage.php\?page=([^\'\"\$]+)/","",$dat);
       //preg_match_all("/tiki-index.php\?page=([^ ]+)/",$dat,$cosas);
       //print_r($cosas);
-      $data = "<html><head><title>".$res["pageName"]."</title><link rel='StyleSheet' href='styles/main.css' type='text/css'></head><body><a class='wiki' href='HomePage.html'>home</a><br/><h1>".$res["pageName"]."</h1><div class='wikitext'>".$dat.'</div></body></html>';
+      $data = "<html><head><title>".$res["pageName"]."</title><link rel='StyleSheet' href='styles/main.css' type='text/css'></head><body><a class='wiki' href='$wikiHomePage.html'>home</a><br/><h1>".$res["pageName"]."</h1><div class='wikitext'>".$dat.'</div></body></html>';
       $tar->addData($pageName,$data,$res["lastModif"]);
     }
     $tar->toTar("dump/".$tikidomain."new.tar",FALSE);
     unset($tar);
     $action = "dump created";
     $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
+    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','$wikiHomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
     $result=$this->query($query);
   }
   
