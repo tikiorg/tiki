@@ -1145,7 +1145,10 @@ class Comments extends TikiLib {
 		$result = $this->query($query);
 	}
 
-	function post_new_comment($objectId, $parentId, $userName, $title, $data, $type = 'n', $summary = '', $smiley = '') {
+	// Added an aption, $getold, to have it return the threadId of
+	// the old comment instead, if it finds one.  The threadId is
+	// returned in the $getold variable iteslf. -Robin
+	function post_new_comment($objectId, $parentId, $userName, $title, $data, $type = 'n', $summary = '', $smiley = '', $getold = false) {
 		$summary = addslashes($summary);
 
 		if (!$userName) {
@@ -1225,7 +1228,11 @@ class Comments extends TikiLib {
 
 			$result = $this->query($query);
 		} else {
+		    // If we have been asked to get the old page threadId, we don't quit here.
+		    if( ! $getold )
+		    {
 			return false;
+		    }
 		}
 
 		$threadId = $this->getOne("select `threadId` from `tiki_comments` where `hash`='$hash'");
