@@ -1137,7 +1137,6 @@ function get_included_groups($group) {
 			foreach ($groups as $gr) {
 				$res = $this->query("select `groupTrackerId`,`groupFieldId` from `users_groups` where `groupName`=?",array($gr));
 				$ret = $res->fetchRow();
-				var_dump($gr);
 				if ($ret['groupTrackerId'] and $ret['groupFieldId']) {
 					return $ret;
 				}
