@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.86 2004-01-07 10:15:46 gravesweeper Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.87 2004-01-18 19:05:35 damosoft Exp $ *}
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
@@ -449,6 +449,20 @@
   </div>
 {/if}
 
+{if $feature_jukebox eq 'y'}
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class="separator" href="javascript:icntoggle('jukeboxmenu');"><img src="img/icons/fo.gif" style="border: 0" name="jukeboxmenuicn" alt="{tr}Jukebox Menu{/tr}" /></a>&nbsp;
+  {else}<a class="separator" href="javascript:toggle('jukeboxmenu');">[-]</a>{/if}
+  <a href="tiki-jukebox_albums.php" class="separator">{tr}Jukebox{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('jukeboxmenu');">[+]</a>{/if}
+  </div>
+  <div id="jukeboxmenu" style="{$mnu_jukeboxmenu}">
+  {if $tiki_p_jukebox_admin eq 'y'}
+  &nbsp;<a href="tiki-jukebox_admin.php" class="linkmenu">{tr}Admin{/tr}</a><br />
+  {/if}
+  </div>
+{/if}
 
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or
