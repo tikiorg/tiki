@@ -8,11 +8,11 @@ $searchlib =& new SearchLib($tikilib->db);
 if($feature_search != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 
 if($feature_search_stats == 'y') {
-  $searchlib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');
+  $tikilib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');
 }
 
 if(!isset($_REQUEST["where"])) {
@@ -27,38 +27,38 @@ $smarty->assign('where2',tra($where));
 if($where=='pages' and $feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 if($where=='faqs' and $feature_faqs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 
 if($where=='forums' and $feature_forums != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 if($where=='files' and $feature_file_galleries !='y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 if($where=='articles' and $feature_articles != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 if(($where=='galleries' || $where=='images') and $feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 if(($where=='blogs' || $where=='posts') and $feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 // Already assigned above! $smarty->assign('where',$where);
 
@@ -66,7 +66,7 @@ if(($where=='blogs' || $where=='posts') and $feature_blogs != 'y') {
 if(!isset($_REQUEST["offset"])) {
   $offset = 0;
 } else {
-  $offset = $_REQUEST["offset"]; 
+  $offset = $_REQUEST["offset"];
 }
 $smarty->assign_by_ref('offset',$offset);
 
@@ -81,6 +81,20 @@ if( (!isset($_REQUEST["words"])) || (empty($_REQUEST["words"])) ) {
   $smarty->assign('words',$_REQUEST["words"]);
 }
 
+if ($fulltext == 'y') {
+  $CurrentIndex = -1;
+  $CurrentData = NULL;
+
+  foreach($results["data"] as $current) {
+    if($current["relevance"] > 0) {
+      $CurrentData[++$CurrentIndex] = $current;
+      }
+    }
+
+  $results['data'] = $CurrentData;
+  $results['cant'] = $CurrentIndex;
+  }
+
 $cant_pages = ceil($results["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_results',$results["cant"]);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
@@ -88,13 +102,13 @@ $smarty->assign('actual_page',1+($offset/$maxRecords));
 if($results["cant"] > ($offset+$maxRecords)) {
   $smarty->assign('next_offset',$offset + $maxRecords);
 } else {
-  $smarty->assign('next_offset',-1); 
+  $smarty->assign('next_offset',-1);
 }
 // If offset is > 0 then prev_offset
 if($offset>0) {
-  $smarty->assign('prev_offset',$offset - $maxRecords);  
+  $smarty->assign('prev_offset',$offset - $maxRecords);
 } else {
-  $smarty->assign('prev_offset',-1); 
+  $smarty->assign('prev_offset',-1);
 }
 
 

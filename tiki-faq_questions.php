@@ -56,6 +56,11 @@ if(isset($_REQUEST["useq"])) {
 
 if(isset($_REQUEST["save"])) {
    $faqlib->replace_faq_question($_REQUEST["faqId"], $_REQUEST["questionId"], $_REQUEST["question"], $_REQUEST["answer"]);
+   $info["question"]='';
+   $info["answer"]='';
+   $smarty->assign('question',$info["question"]);
+   $smarty->assign('answer',$info["answer"]);
+   $smarty->assign('questionId',0);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {

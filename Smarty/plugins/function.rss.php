@@ -20,7 +20,7 @@ function smarty_function_rss($params, &$smarty)
     $items = $rsslib->parse_rss_data($data);
     //print('<ul class="rss">');
     for($i=0;$i<count($items) && $i<$max;$i++) {
-      print('<li><a target="_blank" href="'.$items[$i]["link"].'" class="linkmenu">'.$items[$i]["title"].'</a></li>');
+       print('<li><a target="_blank" href="'.$items[$i]["link"].'" class="linkmenu">'.htmlentities($items[$i]["title"]).'</a></li>');
     }
     //print('</ul>');
 }
