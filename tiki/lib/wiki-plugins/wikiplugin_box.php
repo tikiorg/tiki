@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.5 2003-09-08 14:52:23 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.6 2003-10-19 09:57:59 redflo Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -24,6 +24,7 @@ function wikiplugin_box($data, $params) {
 	$back = (isset($bg)) ? " style='background:$bg'" : "";
 	$begin = "<table$w><tr><td><div class=cbox$back><div class=cbox-title>$title</div><div class=cbox-data$back>";
 	$end = "</div></div></td></tr></table>";
+	$data=preg_replace("/([\r\n])/","<br />",$data);
 
 	return $begin . $data . $end;
 }

@@ -23,7 +23,7 @@ function wikiplugin_split($data, $params) {
 
 		if (substr($sections[$i], 0, 1) == "\n")
 			$sections[$i] = substr($sections[$i], 1);
-
+		$sections[$i] = preg_replace("/([\r\n])/","<br />",$sections[$i]);
 		$result .= $sections[$i];
 		$result .= "\n</td>";
 	}
