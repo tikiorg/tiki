@@ -3,7 +3,7 @@
   <div class="cbox-data">
     <div class="simplebox">
       <form action="tiki-admin.php?page=directory" method="post">
-        <table ><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Number of columns per page when listing categories{/tr}</td>
           <td><select name="directory_columns">
               <option value="1" {if $directory_columns eq 1}selected="selected"{/if}>1</option>
@@ -29,7 +29,7 @@
               <option value="f" {if $directory_open_links eq 'f'}selected="selected"{/if}>{tr}inline frame{/tr}</option>
               </select></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="directory"
+          <td colspan="2" class="button"><input type="submit" name="directory"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>

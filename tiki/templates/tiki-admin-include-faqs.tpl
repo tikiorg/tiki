@@ -4,7 +4,7 @@
     <div class="simplebox">
       {tr}FAQ comments{/tr}<br />
       <form action="tiki-admin.php?page=faqs" method="post">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Comments{/tr}:</td>
           <td><input type="checkbox" name="feature_faq_comments"
               {if $feature_faq_comments eq 'y'}checked="checked"{/if}/></td>
@@ -20,7 +20,7 @@
               <option value="points_desc" {if $faq_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
               </select></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="faqcomprefs"
+          <td colspan="2" class="button"><input type="submit" name="faqcomprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>

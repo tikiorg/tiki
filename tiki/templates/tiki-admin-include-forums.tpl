@@ -4,23 +4,22 @@
     {tr}Forums settings{/tr}
     <div class="simplebox">
       <form method="post" action="tiki-admin.php?page=forums">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Home Forum (main forum){/tr}</td>
           <td><select name="homeForum">
               {section name=ix loop=$forums}
                 <option value="{$forums[ix].forumId|escape}" {if $forums[ix].forumId eq $home_forum}selected="selected"{/if}>{$forums[ix].name|truncate:20:"...":true}</option>
               {/section}
               </select></td>
-        </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="homeforumprefs"
-              value="{tr}Set home forum{/tr}" /></td>
+          <td><input type="submit" name="homeforumprefs"
+              value="{tr}ok{/tr}" /></td>
         </tr></table>
       </form>
     </div>
     
     <div class="simplebox">
       <form method="post" action="tiki-admin.php?page=forums">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Rankings{/tr}:</td>
           <td><input type="checkbox" name="feature_forum_rankings"
               {if $feature_forum_rankings eq 'y'}checked="checked"{/if}/></td>
@@ -44,7 +43,7 @@
               <option value="name_asc" {if $forums_ordering eq 'name_asc'}selected="selected"{/if}>{tr}Name (asc){/tr}</option>
               </select></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="forumprefs"
+          <td colspan="2" class="button"><input type="submit" name="forumprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -53,7 +52,7 @@
     <div class="simplebox">
       {tr}Forum listing configuration{/tr}
       <form method="post" action="tiki-admin.php?page=forums">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Topics{/tr}</td>
           <td class="form"><input type="checkbox" name="forum_list_topics"
               {if $forum_list_topics eq 'y'}checked="checked"{/if} /></td>
@@ -78,7 +77,7 @@
           <td class="form"><input type="checkbox" name="forum_list_desc"
               {if $forum_list_desc eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="forumlistprefs"
+          <td colspan="2" class="button"><input type="submit" name="forumlistprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>

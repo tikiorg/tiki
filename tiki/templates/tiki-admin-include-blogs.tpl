@@ -3,16 +3,15 @@
   <div class="cbox-data">
     <div class="simplebox">
       <form action="tiki-admin.php?page=blogs" method="post">
-        <table ><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Home Blog (main blog){/tr}</td>
           <td><select name="homeBlog">
               {section name=ix loop=$blogs}
                 <option value="{$blogs[ix].blogId|escape}" {if $blogs[ix].blogId eq $home_blog}selected="selected"{/if}>{$blogs[ix].title|truncate:20:"...":true}</option>
               {/section}
               </select></td>
-        </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="blogset"
-              value="{tr}Set prefs{/tr}" /></td>
+          <td><input type="submit" name="blogset"
+              value="{tr}ok{/tr}" /></td>
         </tr></table>
       </form>
     </div>
@@ -20,7 +19,7 @@
     <div class="simplebox">
       {tr}Blog features{/tr}<br />
       <form action="tiki-admin.php?page=blogs" method="post">
-        <table ><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Rankings{/tr}:</td>
           <td><input type="checkbox" name="feature_blog_rankings"
               {if $feature_blog_rankings eq 'y'}checked="checked"{/if}/></td>
@@ -54,8 +53,8 @@
               <option value="avatar" {if $blog_list_user eq 'avatar'}selected="selected"{/if}>{tr}User avatar{/tr}</option>
               </select></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="blogfeatures"
-              value="{tr}Set features{/tr}" /></td>
+          <td colspan="2" class="button"><input type="submit" name="blogfeatures"
+              value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
     </div>
@@ -63,7 +62,7 @@
     <div class="simplebox">
       {tr}Blog listing configuration (when listing available blogs){/tr}
       <form method="post" action="tiki-admin.php?page=blogs">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}title{/tr}</td>
           <td class="form"><input type="checkbox" name="blog_list_title"
               {if $blog_list_title eq 'y'}checked="checked"{/if}></td>
@@ -96,7 +95,7 @@
           <td class="form"><input type="checkbox" name="blog_list_activity"
               {if $blog_list_activity eq 'y'}checked="checked"{/if}></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="bloglistconf"
+          <td colspan="2" class="button"><input type="submit" name="bloglistconf"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -105,7 +104,7 @@
     <div class="simplebox">
       {tr}Blog comments settings{/tr}
       <form method="post" action="tiki-admin.php?page=blogs">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Default number of comments per page{/tr}: </td>
           <td><input size="5" type="text" name="blog_comments_per_page"
                value="{$blog_comments_per_page|escape}" /></td>
@@ -117,7 +116,7 @@
               <option value="points_desc" {if $blog_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
               </select></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="blogcomprefs"
+          <td colspan="2" class="button"><input type="submit" name="blogcomprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>

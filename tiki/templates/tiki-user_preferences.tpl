@@ -12,7 +12,7 @@
 
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
-<table >
+<table class="admin">
 <tr>
   <!--The line below was <td valign="top" > for no real reason-->
   <td valign="top">
@@ -110,7 +110,7 @@
     </tr>
   {/section}
 
-  <tr><td align="center" colspan="2"><input type="submit" name="prefs" value="{tr}set{/tr}" /></td></tr>
+  <tr><td colspan="2" class="button"><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
   </table>
   </form>
   </div>
@@ -119,23 +119,23 @@
   {tr}Change your email{/tr}<br />
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <table>
+  <table class="admin">
   <tr><td class="form">{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
   <tr><td>{tr}Password{/tr}:</td><td><input type="password" name="pass" /></td></tr>
-  <tr><td align="center" colspan="2"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
+  <tr><td colspan="2" class="button"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
   </table>
   </form>
   </div>
-    
+
   <div class="simplebox">
   {tr}Change your password{/tr}<br />
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <table>
+  <table class="admin">
   <tr><td>{tr}Old password{/tr}:</td><td><input type="password" name="old" /></td></tr>
   <tr><td>{tr}New password{/tr}:</td><td><input type="password" name="pass1" /></td></tr>
   <tr><td>{tr}Again please{/tr}:</td><td><input type="password" name="pass2" /></td></tr>
-  <tr><td align="center" colspan="2"><input type="submit" name="chgpswd" value="{tr}change password{/tr}"></td></tr>
+  <tr><td colspan="2" class="button"><input type="submit" name="chgpswd" value="{tr}change password{/tr}"></td></tr>
   </table>
   </form>
   </div>
@@ -162,7 +162,7 @@
       <div class="cbox-data">
         <div class="simplebox">
         <form action="tiki-user_preferences.php" method="post">
-<table class="normal">
+<table class="admin">
 <tr>
   <td class="form">{tr}Messages per page{/tr}</td>
   <td class="form">
@@ -195,8 +195,7 @@
   </td>
 </tr>
 <tr>
-  <td class="form">&nbsp;</td>
-  <td class="form"><input type="submit" name="messprefs" value="{tr}set{/tr}" /></td>
+  <td colspan="2" class="button"><input type="submit" name="messprefs" value="{tr}Change preferences{/tr}" /></td>
 </tr>
 </table>
 </form>
@@ -218,7 +217,7 @@
       <div class="cbox-data">
         <div class="simplebox">
         <form action="tiki-user_preferences.php" method="post">
-<table>
+<table class="admin">
 <tr>
   <td class="form">{tr}Tasks per page{/tr}</td>
   <td class="form">
@@ -241,8 +240,7 @@
 
 
 <tr>
-  <td class="form">&nbsp;</td>
-  <td class="form"><input type="submit" name="tasksprefs" value="{tr}set{/tr}" /></td>
+  <td colspan="2" class="button"><input type="submit" name="tasksprefs" value="{tr}Change preferences{/tr}" /></td>
 </tr>
 </table>
 </form>
@@ -260,7 +258,7 @@
       <div class="cbox-data">
         <div class="simplebox">
         <form action="tiki-user_preferences.php" method="post">
-<table>
+<table class="admin">
 <tr><td class="form">{tr}My pages{/tr}</td><td class="form"><input type="checkbox" name="mytiki_pages" {if $mytiki_pages eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}My blogs{/tr}</td><td class="form"><input type="checkbox" name="mytiki_blogs" {if $mytiki_blogs eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}My galleries{/tr}</td><td class="form"><input type="checkbox" name="mytiki_gals" {if $mytiki_gals eq 'y'}checked="checked"{/if} /></td></tr>
@@ -268,8 +266,7 @@
 <tr><td class="form">{tr}My tasks{/tr}</td><td class="form"><input type="checkbox" name="mytiki_tasks" {if $mytiki_tasks eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}My items{/tr}</td><td class="form"><input type="checkbox" name="mytiki_items" {if $mytiki_items eq 'y'}checked="checked"{/if} /></td></tr>
 <tr>
-  <td class="form">&nbsp;</td>
-  <td class="form"><input type="submit" name="mytikiprefs" value="{tr}set{/tr}" /></td>
+  <td colspan="2" class="button"><input type="submit" name="mytikiprefs" value="{tr}Change preferences{/tr}" /></td>
 </tr>
 </table>
 </form>

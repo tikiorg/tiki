@@ -4,7 +4,7 @@
     <div class="simplebox">
       {tr}CMS features{/tr}<br />
       <form action="tiki-admin.php?page=cms" method="post">
-        <table ><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Rankings{/tr}:</td>
           <td><input type="checkbox" name="feature_cms_rankings"
               {if $feature_cms_rankings eq 'y'}checked="checked"{/if}/></td>
@@ -21,20 +21,20 @@
           <td><input type="checkbox" name="feature_cms_templates"
               {if $feature_cms_templates eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="cmsfeatures"
-              value="{tr}Set features{/tr}" /></td>
+          <td colspan="2" class="button"><input type="submit" name="cmsfeatures"
+              value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
     </div>
 
     <div class="simplebox">
       <form method="post" action="tiki-admin.php?page=cms">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Maximum number of articles in home{/tr}: </td>
           <td><input size="5" type="text" name="maxArticles"
                value="{$maxArticles|escape}" /></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit" name="cmsprefs"
+          <td colspan="2" class="button"><input type="submit" name="cmsprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -43,7 +43,7 @@
     <div class="simplebox">
       {tr}Article comments settings{/tr}
       <form method="post" action="tiki-admin.php?page=cms">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Default number of comments per page{/tr}: </td>
           <td><input size="5" type="text" name="article_comments_per_page"
                value="{$article_comments_per_page|escape}" /></td>
@@ -55,16 +55,16 @@
               <option value="points_desc" {if $article_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
               </select></td>
         </tr><tr>
-          <td align="center" colspan="2"><input type="submit"
+          <td colspan="2" class="button"><input type="submit"
               name="articlecomprefs" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
     </div>
     
     <div class="simplebox">
-      {tr}Fields to display on {/tr}<a href="tiki-list_articles.php" class="link">{tr}List articles{/tr}</a> page:<br />
+      {tr}Fields to display on page{/tr} <a href="tiki-list_articles.php" class="link">{tr}List articles{/tr}</a> :<br />
       <form method="post" action="tiki-admin.php?page=cms">
-        <table><tr>
+        <table class="admin"><tr>
           <td class="form">{tr}Title{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_title"
               {if $art_list_title eq 'y'}checked="checked"{/if} /></td>
@@ -77,11 +77,11 @@
           <td class="form"><input type="checkbox" name="art_list_topic"
               {if $art_list_topic eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td class="form">{tr}Publish date{/tr}</td>
+          <td class="form">{tr}Publish Date{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_date"
               {if $art_list_date eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td class="form">{tr}Expire date{/tr}</td>
+          <td class="form">{tr}Expire Date{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_expire"
               {if $art_list_expire eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
@@ -105,8 +105,7 @@
           <td class="form"><input type="checkbox" name="art_list_img"
               {if $art_list_img eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td class="form">&nbsp;</td>
-          <td class="form"><input type="submit" name="artlist" 
+          <td colspan="2" class="button"><input type="submit" name="artlist" 
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>    
