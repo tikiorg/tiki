@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.29 2004-05-24 20:53:06 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.30 2004-05-26 20:52:37 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -729,6 +729,7 @@ class HW_QuizQuestionYesNo extends HW_QuizQuestion {
 
 class Quiz {
 	var $id;
+	var $author;            // id of the author (index into the users_users table)
 	var $version;
 	var $timestamp;
 	var $online;
@@ -756,14 +757,18 @@ class Quiz {
 	var $data;
 
 	function Quiz(){
+		global $user;
+		global $userlib;
 		$this->id = 0;
+		$this->author = $userlib->get_user_id($user);
+		$this->authorLogin = $user;
 		$this->version = 1;
 		$this->timestamp = date('U');
 		$this->online = 'n';
 		$this->studentAttempts = 0;
 		$this->name = "";
 		$this->description = "";
-		$this->datePub = mktime(0, 0, 0, 1, 1,  date("Y"));
+		$this->datePub = date("U");
 		$this->dateExp = mktime(0, 0, 0, 1, 1,  date("Y")+10);
 		$this->shuffleQuestions = "y";
 		$this->shuffleAnswers = "y";
@@ -786,8 +791,11 @@ class Quiz {
 
   function show_html(){
     // dump as html text
+		global $userlib;
 		$lines = array();
 		$lines[] = "id = ".$this->id."<br />";
+		$authorInfo = $userlib->get_userid_info($this->author);
+		$lines[] = "author id = ".$this->author."; author login = ".$authorInfo["login"]."<br />";
 		$lines[] = "version = ".$this->version."<br />";
 		$lines[] = "timestamp = ".date("r",$this->timestamp)."<br />";
 		$lines[] = "online = ".$this->online."<br />";
