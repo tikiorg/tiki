@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.30 2003-11-28 02:45:04 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.31 2003-12-21 17:47:30 mose Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -132,7 +132,7 @@
   			|<a class="commentslink" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].grandFather}#threadId{$comments_coms[com].parentId}">{tr}parent{/tr}</a>
   		{/if}
   		]
-  		{if $comments_coms[com].replies.numReplies > 0}
+  		{if $comments_coms[com].replies > 0}
   			<br />
   			<ul>
 			{assign var="lastlevel" value="0"}

@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.22 2003-12-15 00:08:04 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.23 2003-12-21 17:47:25 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -42,16 +42,29 @@ class CategLib extends TikiLib {
 			} else {
 				$res["incat"] = 'n';
 			}
-
-			$ret[] = $res;
+      
+      $categpath = $this->get_category_path($res["categId"]);
+			$res["categpath"] = $categpath;
+			$ret["$categpath"] = $res;
 		}
-
+		ksort($ret);
 		$retval = array();
-		$retval["data"] = $ret;
+    $retval["data"] = array_values($ret);
 		$retval["cant"] = $cant;
 		return $retval;
 	}
-
+	
+  function get_category_path($categId) {
+		$back = '';
+		$info = $this->get_category($categId);
+		$back = $info["name"];
+		while ($info["parentId"] != 0) {
+			$info = $this->get_category($info["parentId"]);
+			$back = $info["name"]."::$back";
+		}
+		return $back;
+	}
+  
 	function get_category_path_admin($categId) {
 
 		$info = $this->get_category($categId);
@@ -531,12 +544,14 @@ class CategLib extends TikiLib {
 		$parsed=parse_url($link);
 		$parsed["path"]=end(split("/",$parsed["path"]));
 		if(!isset($parsed["query"])) return($ret);
+		/* not yet used. will be used to get the "base href" of a page
 		$params=array();
 		$a = explode('&', $parsed["query"]);
 		for ($i=0; $i < count($a);$i++) {
 			$b = split('=', $a[$i]);
 			$params[htmlspecialchars(urldecode($b[0]))]=htmlspecialchars(urldecode($b[1]));
 		}
+		*/
 		$query="select distinct co.`categId` from `tiki_categorized_objects` cdo, `tiki_category_objects` co  where cdo.`href`=? and cdo.`catObjectId`=co.`catObjectId`";
 		$result=$this->query($query,array($parsed["path"]."?".$parsed["query"]));
 		while ($res = $result->fetchRow()) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.23 2003-12-10 23:08:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.24 2003-12-21 17:47:30 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 <!-- the help link info -->
@@ -307,6 +307,24 @@ from Admin->General
   </td>
 </tr>
 
+{if $feature_phplayers eq "y"}
+<tr>
+  <td class="form">
+    {tr}phpLayersMenus{/tr}:
+  </td>
+  <td>
+    <select name="phpmenus" id='list_phpmenus'>
+    {section name=ix loop=$menus}
+    <option value="{literal}{{/literal}phplayers id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name}</option>
+    {/section}
+    </select>
+  </td>
+  <td class="form">
+    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');">{tr}use phplayermenu{/tr}</a>
+  </td>
+</tr>
+                                                                                                                                                                           
+{/if}
 <tr>
   <td class="form">
     {tr}Banner zones{/tr}:

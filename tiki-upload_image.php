@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.25 2003-12-10 23:08:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.26 2003-12-21 17:47:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -238,9 +238,9 @@ if (isset($_REQUEST["upload"])) {
 				$t_data = fread($fp, filesize($tmpfname));
 				fclose ($fp);
 				unlink ($tmpfname);
-				$t_pinfo = pathinfo($tmpfname);
-				$t_type = $t_pinfo["extension"];
-				$t_type = 'image/' . $t_type;
+				//$t_pinfo = pathinfo($tmpfname);
+				//$t_type = $t_pinfo["extension"];
+				$t_type = 'image/jpg'; // . $t_type;
 
 				$imageId
 					= $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data,

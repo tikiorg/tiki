@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.7 2003-11-14 23:34:23 ohertel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.8 2003-12-21 17:47:29 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -74,12 +74,24 @@ form {
 .hidden {
  display: none;
 }
+/*
+ ** This can be floated left or right **
+ */
+.float-wrapper {
+ /*float: left; *//*width: 80%;*/
+ }
+/*  This gets margined the same direction as #maincontent gets floated */
 .left {
- float: left;
+ /*margin-right: 75%;*/
+ /*float: left;*/
 }
+/* This gets margined the same direction as .float-wrapper gets floated */
 .right {
- float: right;
-}
+ /*margin-left: 80%;*/
+ /*float: right;*/
+}     
+
+
 /* we use this e.g. for <br /> to clear all instead of <br clear="all" /> */
 .clear {
  clear: both;
@@ -161,11 +173,20 @@ div.box-title table {
 /*
  ***** Here we define IDs *****
  */
+/*** This can be floated left or right ***/
+#maincontent {
+ /*float: right;*/
+ /*width: 75%;*/
+ /*position: relative;
+ margin: auto;*/
+ /*position: absolute;
+ top: 2em;*/
+}
 #modules1 {
- width: 24%;
+ /*width: 24%;*/
 }
 #modules2 {
- width: 24%;
+ /*width: 24%;*/
 }
 /* hide comments and the form */
 #comzone {

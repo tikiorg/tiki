@@ -4,13 +4,13 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=FeaturedLinksAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin featured links{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_links.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin featured links tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+<img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
 
 <!-- begin -->
 
@@ -38,8 +38,8 @@
 <td class="{cycle advance=false}">{$links[user].position}</td>
 <td class="{cycle advance=false}">{$links[user].type}</td>
 <td class="{cycle}">
- <a class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}">{tr}delete{/tr}</a>
- <a class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}">{tr}edit{/tr}</a>
+ <a class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+ <a class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {sectionelse}

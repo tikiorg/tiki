@@ -574,12 +574,12 @@ class ImageGalsLib extends TikiLib {
 			where
 			imageId=? and type=? and
 			xsize=? and ysize=?";
-			$bindvars=array($this->filetype,$this->filename,$data,(int)$size,(int)$this->xsize,(int)$this->ysize,(int)$this->imageId,$this->type,(int)$this->oldxsize,(int)$this->oldysize);
+			$bindvars=array($this->filetype,$this->filename,$this->image,(int)$size,(int)$this->xsize,(int)$this->ysize,(int)$this->imageId,$this->type,(int)$this->oldxsize,(int)$this->oldysize);
 		} else {
 			$query = "insert into `tiki_images_data`(imageId,xsize,ysize,
                                 type,filesize,filetype,filename,data)
                         values (?,?,?,?,?,?,?,?)";
-			$bindvars=array((int)$this->imageId,(int)$this->xsize,(int)$this->ysize,$this->type,(int)$size,$this->filetype,$this->filename,$data);
+			$bindvars=array((int)$this->imageId,(int)$this->xsize,(int)$this->ysize,$this->type,(int)$size,$this->filetype,$this->filename,$this->image);
 		}
 
 		$result = $this->query($query,$bindvars);
@@ -600,7 +600,7 @@ class ImageGalsLib extends TikiLib {
 			$hasscale = false;
 
 			while (list($num, $sci) = each($scaleinfo)) {
-				if ($sci["xsize"] == $xsize && $sci["ysize"] == $ysize) {
+				if ($sci["xsize"] == $xsize || $sci["ysize"] == $ysize) {
 					$hasscale = true;
 
 					$newx = $sci["xsize"];
@@ -1023,11 +1023,19 @@ class ImageGalsLib extends TikiLib {
 			$mid .= "and d.`ysize`=? ";
 			$bindvars=array((int)$id,$itype,(int)$ysize);
 		} 
-		if ($xsize != 0 && $ysize == $xsize) {
-			// we don't know yet.
-			$mid = "and greatest(d.`xsize`,d.`ysize`) = greatest(?,?) ";
-			$bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
+		if ($xsize != 0 && $ysize != 0) {
+			if ($ysize == $xsize) {
+				// we don't know yet.
+				$mid = "and greatest(d.`xsize`,d.`ysize`) = greatest(?,?) ";
+				$bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
+			} else {
+				//exact match
+				$mid = "and d.`xsize`=? and d.`ysize`=? ";
+				$bindvars=array((int)$id,$itype,(int)$xsize,(int)$ysize);
+			}
 		}
+
+		
 		
 		if(!@is_array($bindvars)) {
 			$bindvars=array((int)$id,$itype);
@@ -1042,6 +1050,7 @@ class ImageGalsLib extends TikiLib {
                      i.`imageId`=? and d.`imageId`=i.`imageId`
                      and d.`type`=?
                      $mid";
+
 
 		$result = $this->query($query,$bindvars);
 		$res = $result->fetchRow();
@@ -1348,7 +1357,6 @@ class ImageGalsLib extends TikiLib {
 				} // if $fp
 			}
 		} // foreach
-
 		return $page_data;
 	}
 }

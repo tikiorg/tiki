@@ -1,5 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.18 2003-12-10 23:08:33 mose Exp $ *}
-<a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a><br /><br />
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.19 2003-12-21 17:47:30 mose Exp $ *}
+<a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
@@ -9,7 +9,7 @@
 <a href="tiki-edit_templates.php?template=templates/tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' />{/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
-
+<br />
 <br />
 {if $groupname eq ''}
 <h3>{tr}Add New Group{/tr}</h3>
@@ -19,19 +19,19 @@
 {/if}
 <form action="tiki-admingroups.php" method="post">
 <table class="normal">
-<tr><td class="formcolor">{tr}Group{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$groupname|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Desc{/tr}:</td><td class="formcolor"><textarea rows="5" cols="20" name="desc">{$groupdesc}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Include{/tr}:</td><td class="formcolor">
-<select name="include_groups[]" multiple="multiple" size="4">
+<tr><td class="formcolor"><label id="groups_group">{tr}Group{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="groups_group" value="{$groupname|escape}" /></td></tr>
+<tr><td class="formcolor"><label id="groups_desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea rows="5" cols="20" name="desc" id="groups_desc">{$groupdesc}</textarea></td></tr>
+<tr><td class="formcolor"><label id="groups_inc">{tr}Include{/tr}:</label></td><td class="formcolor">
+<select name="include_groups[]" id="groups_inc" multiple="multiple" size="4">
 {section name=ix loop=$users}
 {assign var=inced value=$users[ix].groupName}
 <option value="{$inced|escape}" {if $inc.$inced eq 'y'} selected="selected"{/if}>{$inced}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Home page{/tr}</td><td class="formcolor"><input type="text" name="home" value="{$grouphome|escape}" />
+<tr><td class="formcolor"><label id="groups_home">{tr}Home page{/tr}</label></td><td class="formcolor"><input type="text" name="home" id="groups_home" value="{$grouphome|escape}" />
 {if $group ne ''}
-<tr><td  class="formcolor">&nbsp;
+<tr><td  class="formcolor"> 
 <input type="hidden" name="olgroup" value="{$group|escape}">
 </td><td  class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 {else}
@@ -41,12 +41,12 @@
 </form>
 <br /><br />
 <h3>{tr}List of existing groups{/tr}</h3>
-<div  align="center">
+<div align="center">
 <table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
+<tr><td class="findtable"><label id="groups_find">{tr}Find{/tr}</label></td>
    <td class="findtable">
    <form method="get" action="tiki-admingroups.php">
-     <input type="text" name="find" value="{$find|escape}" />
+     <input type="text" name="find" id="groups_find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
    </form>
@@ -75,34 +75,33 @@
 {section name=grs loop=$users[user].perms}
 {$users[user].perms[grs]}(<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)<br />
 {/section}
-</td>                                 
+</td>
 <td class="{cycle}">
 {if $users[user].groupName !== 'Anonymous'}
-<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName}">{tr}delete{/tr}</a>
+<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;group={$users[user].groupName}" title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
 {/if}
-<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}">{tr}assign_perms{/tr}</a>
-<a class="link" href="tiki-admingroups.php?group={$users[user].groupName}">{tr}edit{/tr}</a></td>
+<a class="link" href="tiki-assignpermission.php?group={$users[user].groupName}" title="Click here to assign permissions to this group"><img border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /></a>
+<a class="link" href="tiki-admingroups.php?group={$users[user].groupName}" title="Click here to edit this group"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+</td>
 </tr>
 {/section}
 </table>
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admingroups.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-admingroups.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>] 
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admingroups.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+ [<a class="prevnext" href="tiki-admingroups.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admingroups.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
+{$smarty.section.foo.index_next}</a> 
 {/section}
 {/if}
-
 </div>
-
 </div>

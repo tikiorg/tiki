@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.5 2003-12-15 18:19:23 bburgaud Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.6 2003-12-21 17:47:21 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,11 +18,12 @@ if($feature_mailin != 'y') {
   die;  
 }
 //check permissions
-if ($tiki_p_admin_mailin != 'y') {
+if ($tiki_p_admin_mailin != 'y' and $tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
-}
+}	
+			
 
 // Add a new mail account for the user here  
 if (!isset($_REQUEST["accountId"]))
