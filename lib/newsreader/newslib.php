@@ -11,98 +11,71 @@ class Newslib extends Tikilib {
 		if (!$db) {
 			die ("Invalid db object passed to NewsLib constructor");
 		}
-
 		$this->nntp = new Net_NNTP;
 		$this->db = $db;
 	}
 
 	function get_server($user, $serverId) {
-		$query = "select * from tiki_newsreader_servers where user='$user' and serverId='$serverId'";
-
-		$result = $this->query($query);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select * from `tiki_newsreader_servers` where `user`=? and `serverId`=?";
+		$result = $this->query($query, array($user,(int)$serverId));
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function news_mark($user, $serverId, $groupName) {
-		$groupName = addslashes($groupName);
-
 		$now = date("U");
-
-		if ($this->getOne(
-			"select count(*) from tiki_newsreader_marks where user='$user' and serverId=$serverId and groupName='$groupName'")) {
-			$query = "update tiki_newsreader_marks set timestamp=$now where user='$user' and serverId=$serverId and groupName='$groupName'";
-
-			$this->query($query);
+		if ($this->getOne( "select count(*) from `tiki_newsreader_marks` where `user`=? and `serverId`=? and `groupName`=?",array($user,(int)$serverId,$groupName))) {
+			$query = "update `tiki_newsreader_marks` set `timestamp`=? where `user`=? and `serverId`=? and `groupName`=?";
+			$this->query($query,array(array((int)$now,$user,(int)$serverId,$groupName));
 		} else {
-			$query = "insert into tiki_newsreader_marks(user,serverId,groupName,timestamp) values('$user',$serverId,'$groupName',$now)";
-
-			$this->query($query);
+			$query = "insert into `tiki_newsreader_marks`(`user`,`serverId`,`groupName`,`timestamp`) values(?,?,?,?)";
+			$this->query($query,array($user,(int)$serverId,$groupName,(int)$now));
 		}
 	}
 
 	function news_get_mark($user, $serverId, $groupName) {
-		if ($this->getOne(
-			"select count(*) from tiki_newsreader_marks where user='$user' and serverId=$serverId and groupName='$groupName'")) {
-			return
-				$this->getOne("select timestamp from tiki_newsreader_marks where user='$user' and serverId=$serverId and groupName='$groupName'");
+		if ($this->getOne( "select count(*) from `tiki_newsreader_marks` where `user`=? and `serverId`=? and `groupName`=?",array($user,(int)$serverId,$groupName))) {
+			return $this->getOne("select `timestamp` from `tiki_newsreader_marks` where `user`='$user' and `serverId`=? and `groupName`=?",array($user,(int)$serverId,$groupName));
 		} else {
 			return 0;
 		}
 	}
 
 	function replace_server($user, $serverId, $server, $port, $username, $password) {
-		$server = addslashes($server);
-
-		$username = addslashes($username);
-		$password = addslashes($password);
-
-		if ($serverId) {
-			$query = "update tiki_newsreader_servers set
-      server = '$server',
-      port = $port,
-      username = '$username',
-      password = '$password'
-      where user='$user' and serverId=$serverId";
-
-			$this->query($query);
+		if ($serverId) { $query = "update `tiki_newsreader_servers` set `server`=?, `port`=?, `username`=?, `password`=? where `user`=? and `serverId`=?";
+			$this->query($query,array($server,(int)$port,$username,$password,$user,(int)$serverId));
 			return $serverId;
 		} else {
-			$query = "insert into tiki_newsreader_servers(user,serverId,server,port,username,password)
-      values('$user',$serverId,'$server',$port,'$username','$password')";
-
-			$this->query($query);
-			$serverId = $this->getOne("select max(serverId) from tiki_newsreader_servers where user='$user' and server='$server'");
+			$query = "insert into `tiki_newsreader_servers`(`user`,`serverId`,`server`,`port`,`username`,`password`) values(?,?,?,?,?,?)";
+			$this->query($query,array($user,(int)$serverId,$server,(int)$port,$username,$password));
+			$serverId = $this->getOne("select max(`serverId`) from `tiki_newsreader_servers` where `user`=? and `server`=?",array($user,$server));
 			return $serverId;
 		}
 	}
 
 	function remove_server($user, $serverId) {
-		$query = "delete from tiki_newsreader_servers where user='$user' and serverId=$serverId";
-
-		$this->query($query);
+		$query = "delete from `tiki_newsreader_servers` where `user`=? and `serverId`=?";
+		$this->query($query,array($user,(int)$serverId));
 	}
 
 	function list_servers($user, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_desc", " desc", $sort_mode);
-
-		$sort_mode = str_replace("_asc", " asc", $sort_mode);
-
+		$bindvars = array($user);
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " and (title like $findesc or description like $findesc)";
+			$findesc = '%' . $find . '%';
+			$mid = " and (`title` like ? or `description` like ?)";
+			$bindvars[] = $findesc;
+			$bindvars[] = $findesc;
 		} else {
 			$mid = "";
 		}
 
-		$query = "select * from tiki_newsreader_servers where user='$user' $mid order by $sort_mode,serverId desc limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_newsreader_servers where user='$user' $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_newsreader_servers` where `user`=? $mid order by ".$this->convert_sortmode("$sort_mode").",".$this->convert_sortmode("serverId_desc");
+		$query_cant = "select count(*) from `tiki_newsreader_servers` where `user`=? $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
