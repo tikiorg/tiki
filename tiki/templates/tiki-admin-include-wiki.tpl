@@ -6,7 +6,7 @@
     <tr><td width="60%" valign="top">
     <div class="simplebox">
     {tr}Dumps{/tr}:<br/>
-    <a class="link" href="tiki-admin.php#wiki?dump=1">{tr}Generate dump{/tr}</a><br/>
+    <a class="link" href="tiki-admin.php?page=wiki&dump=1">{tr}Generate dump{/tr}</a><br/>
     <a class="link" href="dump/new.tar">{tr}Download last dump{/tr}</a>
     </div>
     

@@ -753,12 +753,19 @@ class TikiLib {
   function get_pv_chart_data($days)
   {
     $now = mktime(0,0,0,date("m"),date("d"),date("Y"));
-    $dfrom = $now-(7*24*60*60);
+    $dfrom =0;
+    if($days!=0) $dfrom = $now-($days*24*60*60);
     $query = "select pageviews from tiki_pageviews where day<=$now and day>=$dfrom";
     $result = $this->query($query);
     $ret = Array();
+    $n=ceil($result->numRows()/10);
+    $i=0;
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $data=Array("",$res["pageviews"]);
+      if($i%$n==0) {
+        $data=Array(date("j M",$res["day"]),$res["pageviews"]);
+      } else {
+        $data=Array("",$res["pageviews"]);
+      $i++;
       $ret[]=$data;
     }
 

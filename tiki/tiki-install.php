@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.3 2003-05-01 18:06:50 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.4 2003-05-23 00:22:47 redflo Exp $
 
 session_start();
 // Define and load Smarty components
@@ -99,6 +99,7 @@ $can_write = is_writable('db/') &&
 			 is_writable('backups') &&
 			 is_writable('img/wiki') &&
 			 is_writable('img/wiki_up') &&
+			 is_writable('dump') &&
 			 is_writable('modules/cache');
 if($can_write) {
   $smarty->assign('can_write','y');
