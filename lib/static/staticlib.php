@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.5 2004-07-30 18:18:38 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.6 2004-07-30 19:19:19 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,27 +51,38 @@ class StaticLib extends TikiLib {
 		global $smarty, $wiki_realtime_static_path, $wikiHomePage, $style, $tiki_p_edit;
 		$filename = $wiki_realtime_static_path . $pagename . '.html';
 		
+		// find the base_href for the static pages
+		$static_http_path = str_replace($_SERVER['DOCUMENT_ROOT'], '', $wiki_realtime_static_path);
+		$static_base_href = 'http://' . $_REQUEST['HTTP_HOST'] . $static_http_path;
+		
 		$tiki_p_edit = 'n';
 		$pageobject = $this->get_page_info($pagename);
 		$pagedata = $this->parse_data($pageobject["data"]);
-		$pagedata = preg_replace("/tiki-index.php\?page=([^\'\"\$]+)/", "$1.html", $pagedata);
+		$pagedata = preg_replace("/tiki-index.php\?page=([^\'\"\$]+)/", "$static_base_href$1.html", $pagedata);
 		
 		$smarty->assign_by_ref('parsed',$pagedata);
 
 		// Display the Index Template
-		global $wikilib, $feature_wiki_pageid;
+		global $wikilib, $feature_wiki_pageid, $feature_categorypath, $feature_categoryobjects;
 		require_once('lib/wiki/wikilib.php');
 		$smarty->assign('page', $pagename);
 		$creator = $wikilib->get_creator($pagename);
 		$smarty->assign('creator', $creator);
 		$smarty->assign('lastUser',$pageobject["user"]);
 		$smarty->assign('description',$pageobject["description"]);
-		$smarty->assign('print_page','y');
 		$smarty->assign('feature_wiki_pageid', $feature_wiki_pageid);
 		$smarty->assign('page_id',$pageobject['page_id']);
 		$smarty->assign('mid', 'tiki-show_page.tpl');
-		$smarty->assign('show_page_bar', 'n');
-		$smarty->assign('print_page', 'y');
+		$smarty->assign('show_page_bar', 'y');
+		$smarty->assign('print_page', 'n');
+		$smarty->assign('categorypath',$feature_categorypath);
+		$smarty->assign('categoryobjects',$feature_categoryobjects);
+		
+		// find the base_href for the dynamic tiki pages
+		$path_parts = pathinfo($_SERVER['HTTP_REFERER']);
+		$base_href = $path_parts['dirname'] . '/';
+		$smarty->assign('base_href', $base_href);
+		$smarty->assign('static_mode', 'y');
 		
 		$smarty_result = $smarty->fetch('tiki-static.tpl');
 		

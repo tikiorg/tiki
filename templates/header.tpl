@@ -4,6 +4,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
+{if $static_mode eq 'y'}<base href="{$base_href}" />{/if}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {if $metatag_keywords ne ''}<meta name="keywords" content="{$metatag_keywords}" />
 {/if}
