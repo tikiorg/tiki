@@ -125,7 +125,7 @@
 {section name=ix loop=$items}
 <tr>
 	<td class="{cycle advance=false}">
-	  <a class="link" href="tiki-g-admin_instance.php?instanceId={$items[ix].instanceId}">{$items[ix].instanceId}</a>
+	  <a class="link" href="tiki-g-admin_instance.php?iid={$items[ix].instanceId}">{$items[ix].instanceId}</a>
 	</td>
   
 
