@@ -77,7 +77,7 @@ if(isset($_REQUEST["copyrightpage"])) {
 }
 
 //If not currently viewing a structure 
-if (!isset($page_ref_id) && $feature_wiki_showstructs == 'y') {
+if (!isset($page_ref_id)) {
 	//Get the structures this page is a member of
 	$structs = $structlib->get_page_structures($_REQUEST["page"]);
 	$smarty->assign('showstructs', $structs);

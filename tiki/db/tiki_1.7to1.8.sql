@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.83 2003-11-25 11:40:01 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.84 2003-11-26 11:13:12 chris_holman Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -182,7 +182,6 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_de
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_discuss', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_footnotes', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_monosp', 'y');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_showstructs','y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_multiprint', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_notepad', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_pdf', 'n');

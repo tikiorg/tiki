@@ -284,7 +284,6 @@
     </select>
     </td></tr>
     <tr><td class="form">{tr}Automonospaced text{/tr}:</td><td><input type="checkbox" name="feature_wiki_monosp" {if $feature_wiki_monosp eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Show structures during page edit{/tr}:</td><td><input type="checkbox" name="feature_wiki_showstructs" {if $feature_wiki_showstructs eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
