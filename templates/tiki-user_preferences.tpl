@@ -34,7 +34,7 @@
    {/section}
   </select>
 {else}
-  Unavailable - please set your e-mail below
+  {tr}Unavailable - please set your e-mail below{/tr}
 {/if}
   </td></tr>
   </td></tr>
