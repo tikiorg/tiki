@@ -105,6 +105,37 @@ class JukeboxLib extends TikiLib {
                 return $res;
         }
 
+/* List all tracks */
+        function list_tracks($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
+
+                if ($find) {
+                        $findesc = '%' . $find . '%';
+
+                        $mid = " where ((`artist` like ?) Or (`title` like ?)) ";
+                        $bindvars = array($findesc, $findesc);
+                } else {
+                        $mid = "";
+                        $bindvars = array();
+                }
+
+                $query = "select * from `tiki_jukebox_tracks` $mid order by ".$this->convert_sortmode($sort_mode);
+                $query_cant = "select count(*) from `tiki_jukebox_tracks` $mid";
+                $result = $this->query($query,$bindvars,$maxRecords,$offset);
+                $cant = $this->getOne($query_cant, $bindvars);
+                $ret = array();
+
+                while ($res = $result->fetchRow()) {
+                        $ret[] = $res;
+                }
+
+                $retval = array();
+                $retval["data"] = $ret;
+                $retval["cant"] = $cant;
+
+                return $retval;
+        }
+
+
 }
 
 $jukeboxlib = new JukeboxLib($dbTiki);
