@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.21 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.22 2003-10-31 18:40:24 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,7 +99,10 @@ if (isset($_REQUEST["upload"])) {
 		$fp = @fopen($_REQUEST["url"], "r");
 
 		if ($fp) {
-			$data = fread($fp, 1000000);
+			$data = '';
+			while(!feof($fp)) {
+				$data .= fread($fp,4096);
+			}
 
 			fclose ($fp);
 			$url_info = parse_url($_REQUEST["url"]);
