@@ -104,7 +104,7 @@
 
 	<tr>
 		<td class="formcolor">&nbsp;</td>
-		<td class="formcolor"><input type="submit" name="save" value="{if $pid > 0}{tr}update{/tr}{else}{tr}create{/tr}{/if}" /></td>
+		<td class="formcolor"><input type="submit" name="save" value="{if $chartId > 0}{tr}update{/tr}{else}{tr}create{/tr}{/if}" /></td>
 	</tr>
 </table>
 </form>
@@ -134,6 +134,7 @@
 	</td>
 	<td class="{cycle advance=false}">
 		<a class="link" href="{sameurl chartId=$items[ix].chartId}">{$items[ix].title}</a>
+		[<a class="link" href="tiki-admin_chart_items.php?chartId={$items[ix].chartId}">{tr}items{/tr}</a>]
 	</td>
 </tr>
 {sectionelse}

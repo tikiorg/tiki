@@ -6,6 +6,7 @@ function smarty_function_sameurl($params, &$smarty)
     $data = $_SERVER['SCRIPT_NAME'];
     $first=true;
     $sets=Array();
+    if(isset($_REQUEST['save'])) unset($_REQUEST['save']);
     foreach($params as $name=>$val) {
     	if(isset($_REQUEST[$name])) {
     	  $_REQUEST[$name]=$val;

@@ -166,6 +166,11 @@ if(isset($_REQUEST["upload"])) {
       $smarty->assign('upload_name',$name);
       $smarty->assign('upload_size',$size);
       $fileId = $filegallib->insert_file($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $data, $size, $type, $user,$fhash);
+      if(!$fileId) {
+	     $smarty->assign('msg',tra('Upload was not successful (maybe a duplicate file)'));
+    	 $smarty->display("styles/$style_base/error.tpl");
+     	die;  
+      }
       $smarty->assign_by_ref('fileId',$fileId);
       // Now that the image was inserted we can display the image here.
       $smarty->assign('show','y');

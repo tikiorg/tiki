@@ -25,12 +25,15 @@ class FileGalLib extends TikiLib {
   function insert_file($galleryId,$name,$description,$filename,  $data, $size,$type ,$user,$path)
   {
     $name = addslashes(strip_tags($name));
+    $checksum=md5($data);
     $path = addslashes($path);
     $description = addslashes(strip_tags($description));
     $data = addslashes($data);
     $now = date("U");
-    $query = "insert into tiki_files(galleryId,name,description,filename,filesize,filetype,data,user,created,downloads,path)
-                          values($galleryId,'$name','$description','$filename',$size,'$type','$data','$user',$now,0,'$path')";
+    if($this->getOne("select count(*) from tiki_files where hash='$checksum'")) return false;
+    
+    $query = "insert into tiki_files(galleryId,name,description,filename,filesize,filetype,data,user,created,downloads,path,hash)
+                          values($galleryId,'$name','$description','$filename',$size,'$type','$data','$user',$now,0,'$path','$checksum')";
     $result = $this->query($query);
     $query = "update tiki_file_galleries set lastModif=$now where galleryId=$galleryId";
     $result = $this->query($query);
