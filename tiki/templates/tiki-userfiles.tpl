@@ -81,11 +81,11 @@
 -->
 <tr>
   <td class="formcolor">{tr}Upload file{/tr}:</td><td class="formcolor">
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile1" type="file"><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile2" type="file"><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile3" type="file"><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile4" type="file"><br />
-  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000"><input size="16" name="userfile5" type="file"><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile1" type="file" /><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile2" type="file" /><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile3" type="file" /><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile4" type="file" /><br />
+  <input type="hidden" name="MAX_FILE_SIZE" value="10000000000000" /><input size="16" name="userfile5" type="file" /><br />
   <input style="font-size:9px;" type="submit" name="upload" value="{tr}upload{/tr}" />
   </td>
 </tr>

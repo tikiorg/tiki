@@ -8,8 +8,8 @@
 <form enctype="multipart/form-data" action="tiki-list_games.php" method="post">
 <table class="normal">
 <tr><td class="formcolor">{tr}Flash binary (.sqf or .dcr){/tr}:</td><td class="formcolor">
-<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-<input name="userfile1" type="file"></td></tr>
+<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+<input name="userfile1" type="file" /></td></tr>
 <tr><td class="formcolor">{tr}Thumbnail (if the game is foo.swf the thumbnail must be named foo.swf.gif or foo.swf.png or foo.swf.jpg){/tr}:</td><td class="formcolor">
 <input name="userfile2" type="file"></td></tr>
 <tr><td class="formcolor">{tr}description{/tr}:</td>

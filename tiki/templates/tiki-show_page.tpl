@@ -64,9 +64,9 @@
 
 	{if $user and $feature_user_watches eq 'y'}
 		{if $user_watching_page eq 'n'}
-			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&watch_object={$page|escape:"url"}&watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
+			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add"><img border='0' alt='{tr}monitor this page{/tr}' title='{tr}monitor this page{/tr}' src='img/icons/icon_watch.png' /></a>
 		{else}
-			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&watch_object={$page|escape:"url"}&watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
+			<a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
 		{/if}
 	{/if}
 	</td>
@@ -110,7 +110,7 @@
 <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}click here{/tr}</a>.</p>
 {/if}
 {else}
-<p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
+<p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$wikiLicensePage}</a>.</p>
 {/if}
 {/if}
 {/if}

@@ -18,15 +18,15 @@
 	<tr><td class="formcolor">URL:</td><td><input size="50" type="text" name="url" /></td></tr>-->
 	<tr><td class="formcolor">	{tr}Upload from disk:{/tr}</td>
 	<td class="formcolor">
-		<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-		<input name="userfile1" type="file">
-		<input name="userfile2" type="file">
+		<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
+		<input name="userfile1" type="file" />
+		<input name="userfile2" type="file" />
 		<br />
-		<input name="userfile3" type="file">
-		<input name="userfile4" type="file">
+		<input name="userfile3" type="file" />
+		<input name="userfile4" type="file" />
 		<br />
-		<input name="userfile5" type="file">
-		<input name="userfile6" type="file">
+		<input name="userfile5" type="file" />
+		<input name="userfile6" type="file" />
 	</td></tr>
 	<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
 	<input type="checkbox" name="isbatch" /></td></tr>
