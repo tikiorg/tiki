@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.166 2003-11-20 14:35:11 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.167 2003-11-21 01:50:04 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -297,6 +297,10 @@ $tiki_timer->start();
 if (!function_exists('array_fill')) {
   require_once('lib/compat/array_fill.func.php');
 }
+
+//num queries has to be global
+global $num_queries;
+$num_queries=0;
 
 include_once ("tiki-setup_base.php");
 //print("tiki-setup: before rest of tiki-setup:".$tiki_timer->elapsed()."<br />");
@@ -1679,7 +1683,7 @@ if ($feature_debug_console == 'y') {
 }
 //print("tiki-setup: after include debugger.php:".$tiki_timer->elapsed()."<br />");
 
-$smarty->assign_by_ref('num_queries',$tikilib->num_queries);
+$smarty->assign_by_ref('num_queries',$num_queries);
 
 /*
  * Check location for Tiki Integrator script and setup aux CSS file if needed by repository
