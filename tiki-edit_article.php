@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.43 2004-06-11 00:11:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.44 2004-06-16 10:54:34 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -352,6 +352,15 @@ if (isset($_REQUEST["save"])) {
 	if (!isset($_REQUEST["linkto"])) $_REQUEST['linkto'] = '';
 	if (!isset($_REQUEST["image_caption"])) $_REQUEST['image_caption'] = '';
 	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
+	if ($feature_multilingual == 'y' && $_REQUEST['lang'] && $article_data['lang'] != $_REQUEST["lang"]) {
+		include_once("lib/multilingual/multilinguallib.php");
+		if ($multilinguallib->updatePageLang('article', $article_data['articleId'], $_REQUEST["lang"], true)) {
+			$_REQUEST['lang'] = $article_data['lang'];
+			$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
+			$smarty->display("error.tpl");
+			die;
+		}
+	}
 
 	// If page exists
 	$artid = $artlib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), $_REQUEST["authorName"],
