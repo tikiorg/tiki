@@ -2,9 +2,11 @@
 <table>
 <tr>
 
+{if $feature_mytiki eq 'y'}
 <td valign="top"><a class="link" href="tiki-my_tiki.php" title="{tr}MyTiki{/tr}">
 <img  border="0" src="img/mytiki/mytiki.gif" alt="{tr}MyTiki{/tr}" />
 </a></td>
+{/if}
 
 {if $feature_userPreferences eq 'y'}
 <td valign="top"><a class="link" href="tiki-user_preferences.php" title="{tr}Preferences{/tr}">
