@@ -77,7 +77,7 @@ class MenuLib extends TikiLib {
 			$bindvars=array($menuId,$name,$url,$type,$position);
 		}
 
-		$result = $this->query($query);
+		$result = $this->query($query, $bindvars);
 		return true;
 	}
 
