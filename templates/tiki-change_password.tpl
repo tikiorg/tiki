@@ -1,5 +1,5 @@
 <h1>{tr}Change password enforced{/tr}</h1>
-<form method="post" action="tiki-change_password.php" />
+<form method="post" action="tiki-change_password.php" >
 <table class="normal">
 <tr>
   <td class="formcolor">{tr}User{/tr}:</td>
