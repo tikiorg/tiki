@@ -1,6 +1,6 @@
 <?php 
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.8 2004-01-29 11:22:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.9 2004-02-20 19:22:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,8 +34,16 @@ if ($feature_categories == 'y') {
 	} else {
 		$categlib->uncategorize_object($cat_type, $cat_objid);
 	}
-
-	$categories = $categlib->list_all_categories(0, -1, 'name_asc', '', $cat_type, $cat_objid);
+	
+	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
+	$categories = $categlib->list_categs();
+	for ($i = 0; $i < count($categories); $i++) {
+		if (in_array($categories[$i]["categId"], $cats)) {
+			$categories[$i]["incat"] = 'y';
+		} else {
+			$categories[$i]["incat"] = 'n';
+		}
+	}
 	$smarty->assign_by_ref('categories', $categories["data"]);
 }
 
