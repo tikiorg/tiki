@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.8 2005-02-25 00:20:57 michael_davey Exp $
+$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.9 2005-03-03 14:31:42 michael_davey Exp $
 
 Heavy theme for tiki
 
@@ -54,7 +54,7 @@ DIV#tiki-top
 }
 
 /* the end colors for hr3, hr41 and the colour of the plain horizontal rule */
-hr, DIV#tiki-bot, TD#flash, DIV#page-titlebar, TD#hr2, TD#hr4 {
+hr, DIV#tiki-bot, DIV#tiki-top, DIV#page-titlebar, TD#hr2, TD#hr4 {
   background-color: #CBCBCB; 
 }
 
@@ -314,6 +314,12 @@ DIV#tiki-top a {
         font-weight: bold;
 }
 
+TD#site-centrecolumn {
+  width: 50%;
+  vertical-align: middle;
+  text-align: center;
+}
+
 DIV#sitelogo {               
   margin: 0px;
   padding: 0px
@@ -343,30 +349,43 @@ DIV#sitelogo a:hover {
   background-color: transparent;
 }
 
-DIV#flashl {
-  position: absolute;
+SPAN#sitemod-left {
+  float: left;
   text-align: left;
-  vertical-align: bottom;
+  vertical-align: top;
   padding-top: 0px;
   padding-left: 0px;
   padding-right: 0px;
   padding-bottom: 2px;
   font-size: 10px;
   height: 140px;
+  background-color: transparent;
 }
 
-DIV#flashr {
+TD#site-leftcolumn {
+  vertical-align: top;
+  text-align: left;
+  width: 25%;
+}
+
+SPAN#sitemod-right {
   visibility: hidden;
-  position: relative;
-  right: 0px;
-  top: 0px;
+  float: right;
   text-align: right;     
+  vertical-align: top;
   padding-top: 2px;
   padding-left: 0px;
   padding-right: 0px;
   padding-bottom: 0px;
   font-size: 10px;
   height: 140px;
+  background: transparent;
+}
+
+TD#site-rightcolumn {
+  vertical-align: top;
+  text-align: right;
+  width: 25%;
 }
 
 DIV#hr1r {
@@ -550,7 +569,7 @@ TD#page36 { background-image: url(kuroBK/topleft); }
 TD#page37 { background-image: url(kuroBK/topbg); }
 TD#page38 { background-image: url(kuroBK/topright); }
 
-TD#flash { background-image: url(kuroBK/hr3); width: 728px; height: 142px; background-repeat: repeat-y; background-position: center; }
+DIV#tiki-top { background-image: url(kuroBK/hr3); background-repeat: repeat-y; background-position: center; }
 TD#flashr { width: 100pc; }
 TD#butbg { background-image: url(kuroBK/butbg); }
 TD#hr0 { background-image: url(kuroBK/hr2); width: 728px; height: 5px; }
