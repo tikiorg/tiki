@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.11 2004-06-17 18:56:48 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.12 2004-06-17 20:00:23 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -60,7 +60,7 @@ if ($_REQUEST["accountId"]) {
 	$info["useAuth"] = 'n';
 	$info["port"] = 110;
 	$info["smtpPort"] = 25;
-	$info["type"] = '	';
+	$info["type"] = 'article-put';
 	$info["active"] = 'y';
 	$info["anonymous"] = 'y';
 	$info["anonymous"] = 'y';

@@ -82,7 +82,7 @@
     <tr class="formcolor">
       <td>{tr}Type{/tr}</td>
       <td colspan="3">
-        <select name="type">
+        <select name="type" id='mailin_type' onchange='javascript:chgMailinType();'>
           <option value="article-put" {if $info.type eq 'article-put'}selected="selected"{/if}>{tr}article-put{/tr}</option>
           <option value="wiki-get" {if $info.type eq 'wiki-get'}selected="selected"{/if}>{tr}wiki-get{/tr}</option>
           <option value="wiki-put" {if $info.type eq 'wiki-put'}selected="selected"{/if}>{tr}wiki-put{/tr}</option>
@@ -92,7 +92,7 @@
       </td>
     </tr>
 
-<tr class="formcolor"><td>{tr}Article Topic{/tr}</td><td>
+<tr id='article_topic' class="formcolor" {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Topic{/tr}</td><td>
 <select name="article_topicId">
 {section name=t loop=$topics}
 <option value="{$topics[t].topicId|escape}" {if $info.article_topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
@@ -101,8 +101,8 @@
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin topics{/tr}</a>{/if}
 </td><td></td><td></td></tr>
-<tr class="formcolor"><td>{tr}Article Type{/tr}</td><td>
-<select id='articletype' name='article_type' onchange='javascript:chgArtType();'>
+<tr id='article_type' class="formcolor" {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Type{/tr}</td><td>
+<select id='articletype' name='article_type'>
 <option value="">-</option>
 {section name=t loop=$types}
 <option value="{$types[t].type|escape}" {if $info.article_type eq $types[t].type}selected="selected"{/if}>{tr}{$types[t].type}{/tr}</option>
