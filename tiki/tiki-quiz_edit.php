@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.12 2004-05-28 14:03:14 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.13 2004-06-01 03:41:45 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -16,8 +16,14 @@
 		takes the quiz, the system must issue a warning to the student about the expire date
 		if the date is less the the session timeout time away.)
 	(Quiz results for students are always stored; quiz results for teachers 
-   (defined here as anyone with tiki_p_admin_quizzes) are never stored.)
+    (defined here as anyone with tiki_p_admin_quizzes) are never stored.)
 
+  The data field is supposed to be xml representing things like the prolog, questions and 
+    epilog for this quiz.  At present if you put
+    <?questions nQuestions=10 ?>
+    It is supposed to use 10 questions for this quiz from the tiki_quiz_questions table.
+    If you leave the data field blank, the default is to use all the questions from the table.
+    You can also set the same option under the Generl Options section.
 */
 
 error_reporting(E_ALL);
@@ -122,7 +128,8 @@ function quiz_data_load(){
     $quiz_data["expire_Minute"], 0, $quiz_data["expire_Month"], $quiz_data["expire_Day"], 
     $quiz_data["expire_Year"]));
  
-	$fields = array('shuffleAnswers',
+	$fields = array('nQuestion',
+									'shuffleAnswers',
 									'shuffleQuestions',
 									'multiSession',
 									'additionalQuestions',
@@ -148,12 +155,14 @@ if (isset($_REQUEST["save"])) {
 // 			echo $key." = ".$val."<br />";
 // 		}
 // 	}
+// 	die;
 
 	$quiz_data = quiz_data_load();
 
 // 	foreach($quiz_data as $key => $val){
 // 		echo $key." = ".$val."<br />";
 // 	}
+// 	die;
 
 	$quizNew = new Quiz;
 	$quizNew->data_load($quiz_data);
@@ -187,33 +196,6 @@ if (isset($_REQUEST["save"])) {
 
 
 	die;
-
-
-	// See tiki-edit_quiz_questions.php for how to get import the quiz questions.
-// if (isset($_REQUEST["import"])) {
-// 	check_ticket('edit-quiz-question');
-
-// 	$questions = TextToQuestions($_REQUEST["input_data"]);
-
-// 	foreach ($questions as $question){
-// 		$question_text = $question->getQuestion();
-// 		$id = $quizlib->replace_quiz_question(0, $question_text, 'o', $_REQUEST["quizId"], 0);
-// 		for ($i = 0; $i < $question->getChoiceCount(); $i++){
-// 			$a = $question->GetChoice($i);
-// 			$b = $question->GetCorrect($i);
-// 			$quizlib->replace_question_option(0, $a, $b, $id);
-// 		}
-// 	}
-
-// 	$smarty->assign('question', '');
-// 	$smarty->assign('questionId', 0);
-// }
-
-	// Have to parse the data and bail out if there is an error.
-	//
-	// Store the new or revised information
-	// If everything works, preview the quiz.
-	// 
 }
 
 // Scaffolding
@@ -233,7 +215,7 @@ $smarty->assign('quiz', $quiz);
 // die;
 
 function setup_options(&$tpl){
-	global $smarty;
+	//	global $smarty;
 	global $tikilib;
 	global $user;
 
@@ -244,14 +226,12 @@ function setup_options(&$tpl){
 	$optionsGrading[] = "peer review";
 	$optionsGrading[] = "teacher";
 	$tpl['optionsGrading'] = $optionsGrading;
-// 	$smarty->assign('optionsGrading', $optionsGrading);
 
 	$optionsShowScore = array();
 	$optionsShowScore[] = "immediately";
 	$optionsShowScore[] = "after expire date";
 	$optionsShowScore[] = "never";
 	$tpl['optionsShowScore'] = $optionsShowScore;
-// 	$smarty->assign('optionsShowScore', $optionsShowScore);
 	
 	// FIXME - This needs to be limited to the session timeout in php.ini
 	$mins = array();
@@ -259,7 +239,6 @@ function setup_options(&$tpl){
 		$mins[] = $i;
 	}
 	$tpl['mins'] = $mins;
-	//	$smarty->assign('mins', $mins);
 	
 	$repetitions = array();
 	$qpp = array();
@@ -271,19 +250,14 @@ function setup_options(&$tpl){
 	$repetitions[] = "unlimited";
 	$qpp[] = "unlimited";
 	$tpl['repetitions'] = $repetitions;
-	//	$smarty->assign('repetitions', $repetitions);
+
 	$tpl['qpp'] = $qpp;
-	//	$smarty->assign('qpp', $qpp);
-	
-	// $tpl['questionsPerPage'] = "Unlimited";
-	//	$smarty->assign('questionsPerPage', "Unlimited");
 	
 	// Additional data for smarty
 	$tzName = $tikilib->get_display_timezone($user);
 	if ($tzName == "Local"){
 		$tzName = "";
 	}
-	// $smarty->assign('siteTimeZone', $tzName);
 	$tpl['siteTimeZone'] = $tzName;
 }
 
@@ -298,28 +272,5 @@ $smarty->assign('mid', 'tiki-quiz_edit.tpl');
 
 // $smarty->display("tiki.tpl");
 $smarty->display("ggg-tiki.tpl");
-
-// Scraps
-// if ($_REQUEST["quizId"] == 0) { // When the quiz id is not indicated, create a new quiz
-// 	$quiz = new Quiz;
-
-// 	// scaffolding
-// // 	echo "line ".__LINE__."<br>";
-// // 	$lines = $quiz->show_html();
-// // 	foreach ($lines as $line){
-// // 		echo $line;
-// // 	}
-// // 	die;
-// } else {
-// 	$quiz = $quizlib->get_quiz($_REQUEST["quizId"]);
-// 	echo "line ".__LINE__."<br>";
-// 	foreach ($quiz as $key => $val){
-// 		echo $key." = ".$val."<br>";
-// 	}
-// 	echo "publishDate = ".date("r",$quiz['publishDate'])."<br>";
-// 	echo "expireDate = ".date("r",$quiz['expireDate'])."<br>";
-// 	die;
-// 	$quiz = $quizlib->quiz_fetch($_REQUEST["quizId"]);
-// }
 
 ?>

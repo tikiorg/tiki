@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.13 2004-05-28 14:04:18 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.14 2004-06-01 03:41:45 ggeller Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -79,6 +79,10 @@
 							<td>
 								{html_select_date prefix="quiz_expire_" time=$quiz->dateExp start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="quiz_expire_" time=$quiz->dateExp display_seconds=false} HRS&nbsp;{$tpl.siteTimeZone}
 							</td>
+						</tr>
+						<tr class="formcolor">
+							<td>{tr}Questions{/tr}</td>
+  						<td class="formcolor"><input type="checkbox" name=quiz.nQuestion id="nQuestion" {if $quiz->nQuestion eq 'y'}checked="checked"{/if} /><label for="nQuestions">{tr}Use {/tr}</label><select name=quiz.nQuestions id="nQuestions">{html_options values=$tpl.mins selected=$quiz->nQuestions output=$tpl.mins}</select> {tr}randomly selected questions.{/tr}</td>
 						</tr>
 					</table>
 			  </div>
@@ -161,18 +165,23 @@
 			  </div>
 			</td>
 		</tr>
-
     {include file=categorize.tpl}
-
   </table>
 	<table class="normal">
-
     <tr>
       <td class="formcolor">
-        {tr}Edit:{/tr}
+        {tr}Prologue:{/tr}
       </td>
       <td class="formcolor">
-        <textarea class="wikiedit" name="quiz.data" rows="10" {* rows="20" *} cols="80" id='subheading' wrap="virtual" >{$quiz->data}</textarea>
+        <textarea class="wikiedit" name="quiz.prologue" rows="8" {* rows="20" *} cols="80" id='subheading' wrap="virtual" >{$quiz->prologue}</textarea>
+      </td>
+    </tr>
+    <tr>
+      <td class="formcolor">
+        {tr}Epilogue:{/tr}
+      </td>
+      <td class="formcolor">
+        <textarea class="wikiedit" name="quiz.epilogue" rows="8" {* rows="20" *} cols="80" id='subheading' wrap="virtual" >{$quiz->epilogue}</textarea>
       </td>
     </tr>
 
