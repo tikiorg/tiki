@@ -1,14 +1,11 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.11 2003-08-22 06:48:33 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.12 2003-11-02 12:07:35 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-include_once ("lib/imagegals/imagegallib.php");
 
-include_once ("lib/commentslib.php");
-$commentslib = new Comments($dbTiki);
 
 // Handle Update
 if (isset($_REQUEST["prefs"])) {
@@ -193,6 +190,7 @@ if ($home_blog) {
 }
 
 if ($home_gallery) {
+	include_once ("lib/imagegals/imagegallib.php");
 	$hgalinfo = $imagegallib->get_gallery($home_gallery);
 
 	$smarty->assign("home_gal_name", substr($hgalinfo["name"], 0, 20));
@@ -201,6 +199,8 @@ if ($home_gallery) {
 }
 
 if ($home_forum) {
+	include_once ("lib/commentslib.php");
+	$commentslib = new Comments($dbTiki);
 	$hforuminfo = $commentslib->get_forum($home_forum);
 
 	$smarty->assign("home_forum_name", substr($hforuminfo["name"], 0, 20));
@@ -209,6 +209,7 @@ if ($home_forum) {
 }
 
 if ($home_file_gallery) {
+	include_once ("lib/imagegals/imagegallib.php");
 	$hgalinfo = $imagegallib->get_gallery($home_file_gallery);
 
 	$smarty->assign("home_fil_name", substr($hgalinfo["name"], 0, 20));
