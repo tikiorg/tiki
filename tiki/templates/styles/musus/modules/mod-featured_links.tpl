@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-featured_links.tpl,v 1.1 2004-01-07 04:31:24 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-featured_links.tpl,v 1.2 2004-01-09 15:29:32 musus Exp $ *}
 
 {if $feature_featuredLinks eq 'y'}
   {tikimodule title="{tr}Featured links{/tr}" name="featured_links"}
-   <table  border="0" cellpadding="0" cellspacing="0">
+   <table>
     {section name=ix loop=$featuredLinks}
      {if $featuredLinks[ix].type eq 'f'}
       <tr>

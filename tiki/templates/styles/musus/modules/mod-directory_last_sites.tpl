@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-directory_last_sites.tpl,v 1.1 2004-01-07 04:31:24 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-directory_last_sites.tpl,v 1.2 2004-01-09 15:29:32 musus Exp $ *}
 
 {if $feature_directory eq 'y'}
 {if $nonums eq 'y'}
@@ -7,7 +7,7 @@
 {eval var="{tr}Last Sites{/tr}" assign="tpl_module_title"}
 {/if}
 {tikimodule title=$tpl_module_title name="directory_last_sites"}
-  <table  border="0" cellpadding="0" cellspacing="0">
+  <table>
   {section name=ix loop=$modLastdirSites}
     <tr>
       {if $nonums != 'y'}<td valign="top" class="module">{$smarty.section.ix.index_next})</td>{/if}

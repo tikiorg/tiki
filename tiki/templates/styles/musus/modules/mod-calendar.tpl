@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-calendar.tpl,v 1.1 2004-01-07 04:31:24 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-calendar.tpl,v 1.2 2004-01-09 15:29:32 musus Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -68,26 +68,26 @@ if (!strstr($father,"?")) {
 {/php}
 
 {tikimodule title="{tr}Calendar{/tr}-{tr}Filter{/tr}" name="calendar"}
-    <table  border="0" cellspacing="0" cellpadding="0">
+    <table>
     <!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
     <tr>
-      <td align="center">
+      <td align="center" class="nav">
 {php}
         $mong=$mon-1;
         $url="$father"."day=$day&amp;mon=$mong&amp;year=$year";
-        print( "<a class=\"nav\" href=\"".$url."\"> &lt; </a>" );
+        print( "<a href=\"".$url."\"> &lt; </a>" );
         print( $v );
         $mong=$mon+1;
         $url="$father"."day=$day&amp;mon=$mong&amp;year=$year";
-        print( "<a class=\"nav\" href=\"".$url."\"> &gt; </a>" );
+        print( "<a href=\"".$url."\"> &gt; </a>" );
         print( "&nbsp;" );
         $mong=$year-1;
         $url="$father"."day=$day&amp;mon=$mon&amp;year=$mong";
-        print( "<a class=\"nav\" href=\"".$url."\"> &lt; </a>" );
+        print( "<a href=\"".$url."\"> &lt; </a>" );
         print( $year );
         $mong=$year+1;
         $url="$father"."day=$day&amp;mon=$mon&amp;year=$mong";
-        print( "<a class=\"nav\" href=\"".$url."\"> &gt; </a>" );
+        print( "<a href=\"".$url."\"> &gt; </a>" );
 {/php}         
       </td>
     </tr>
@@ -97,7 +97,7 @@ if (!strstr($father,"?")) {
 {/php}
     <tr>
       <td align="center">
-        <table  border="0" cellspacing="0" cellpadding="0">
+        <table>
         <!-- DAYS OF THE WEEK -->
         <tr>
 {php}
