@@ -18,15 +18,17 @@ if(!$user) {
 
 
 if(isset($_REQUEST["view_user"])) {
-  if($tiki_p_admin == 'y') {
-    $userwatch = $_REQUEST["view_user"];
+  if($_REQUEST["view_user"]<>$user) {
+    if($tiki_p_admin == 'y') {
+      $userwatch = $_REQUEST["view_user"];
+    } else {
+      $smarty->assign('msg',tra("You dont have permission to view other users data"));
+      $smarty->display('error.tpl');
+      die;
+    }
   } else {
-    $smarty->assign('msg',tra("You dont have permission to view other users data"));
-    $smarty->display('error.tpl');
-    die;
+    $userwatch = $user;
   }
-} else {
-  $userwatch = $user;
 }
 $smarty->assign('userwatch',$userwatch);
 
