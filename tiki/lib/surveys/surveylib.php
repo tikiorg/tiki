@@ -7,91 +7,66 @@ class SurveyLib extends TikiLib {
 
 	function add_survey_hit($surveyId) {
 		global $count_admin_pvs;
-
 		global $user;
 
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
 			$now = date("U");
-
-			$query = "update tiki_surveys set taken=taken+1, lastTaken=$now where surveyId=$surveyId";
-			$result = $this->query($query);
+			$query = "update `tiki_surveys` set `taken`=`taken`+1, `lastTaken`=? where `surveyId`=?";
+			$result = $this->query($query,array((int)$now,(int)$surveyId));
 		}
 	}
 
 	function register_survey_text_option_vote($questionId, $value) {
-		$value = addslashes($value);
-
-		$cant = $this->getOne("select count(*) from tiki_survey_question_options where qoption='$value'");
-
+		$cant = $this->getOne("select count(*) from `tiki_survey_question_options` where `qoption`=?",array($value));
 		if ($cant) {
-			$query = "update tiki_survey_question_options set votes=votes+1 where questionId=$questionId and	qoption='$value'";
+			$query = "update `tiki_survey_question_options` set `votes`=`votes`+1 where `questionId`=? and `qoption`=?";
 		} else {
-			$query = "insert into tiki_survey_question_options(questionId,qoption,votes)
-                values($questionId,'$value',1)";
+			$query = "insert into `tiki_survey_question_options`(`questionId`,`qoption`,`votes`) values(?,?,1)";
 		}
-
-		$result = $this->query($query);
+		$result = $this->query($query, array((int)$questionId,$value));
 	}
 
 	function register_survey_rate_vote($questionId, $rate) {
-		$query = "update tiki_survey_questions set votes=votes+1, value=value+$rate where questionId=$questionId";
-
-		$result = $this->query($query);
-		$query = "update tiki_survey_questions set average=value/votes where questionId=$questionId";
-		$result = $this->query($query);
+		$query = "update `tiki_survey_questions` set `votes`=`votes`+1, `value`=`value` + ? where questionId`=?";
+		$result = $this->query($query, array((int)$rate,(int)$questionId));
+		$query = "update `tiki_survey_questions` set `average`=`value`/`votes` where `questionId`=?";
+		$result = $this->query($query, array((int)$questionId));
 	}
 
 	function register_survey_option_vote($questionId, $optionId) {
-		$query = "update tiki_survey_question_options set votes=votes+1 where questionId=$questionId and optionId=$optionId";
-
-		$result = $this->query($query);
+		$query = "update `tiki_survey_question_options` set `votes`=`votes`+1 where `questionId`=? and `optionId`=?";
+		$result = $this->query($query, array((int)$questionId,(int)$optionId));
 	}
 
 	function clear_survey_stats($surveyId) {
-		$query = "update tiki_surveys set taken=0 where surveyId=$surveyId";
-
-		$result = $this->query($query);
-		$query = "select * from tiki_survey_questions where surveyId=$surveyId";
-		$result = $this->query($query);
+		$query = "update `tiki_surveys` set `taken`=0 where `surveyId`=?";
+		$result = $this->query($query, array((int)$surveyId));
+		$query = "select * from `tiki_survey_questions` where `surveyId`=?";
+		$result = $this->query($query, array((int)$surveyId));
 
 		// Remove all the options for each question
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$questionId = $res["questionId"];
-
-			$query2 = "update tiki_survey_question_options set votes=0 where questionId=$questionId";
-			$result2 = $this->query($query2);
+			$query2 = "update `tiki_survey_question_options` set `votes`=0 where `questionId`=?";
+			$result2 = $this->query($query2, array((int)$questionId));
 		}
 
-		$query = "update tiki_survey_questions set average=0,value=0,votes=0 where surveyId=$surveyId";
-		$result = $this->query($query);
+		$query = "update `tiki_survey_questions` set `average`=0, `value`=0, `votes`=0 where `surveyId`=?";
+		$result = $this->query($query, array((int)$surveyId));
 	}
 
 	function replace_survey($surveyId, $name, $description, $status) {
-		$name = addslashes($name);
-
-		$description = addslashes($description);
-
 		if ($surveyId) {
-			// update an existing quiz
-			$query = "update tiki_surveys set 
-      name = '$name',
-      description = '$description',
-      status = '$status'
-      where surveyId = $surveyId";
-
-			$result = $this->query($query);
+			$query = "update `tiki_surveys` set `name`=?, `description`=?, `status`=? where `surveyId`=?";
+			$result = $this->query($query,array($name,$description,$status,(int)$surveyId));
 		} else {
-			// insert a new quiz
 			$now = date("U");
+			$query = "insert into `tiki_surveys`(`name`,`description`,`status`,`created`,`taken`,`lastTaken`) values(?,?,?,?,0,?)";
+			$result = $this->query($query,array($name,$description,$status,(int)$now,(int)$now));
 
-			$query = "insert into tiki_surveys(name,description,status,created,taken,lastTaken)
-      values('$name','$description','$status',$now,0,$now)";
-			$result = $this->query($query);
-
-			$queryid = "select max(surveyId) from tiki_surveys where created=$now";
-			$surveyId = $this->getOne($queryid);
+			$queryid = "select max(`surveyId`) from `tiki_surveys` where `created`=?";
+			$surveyId = $this->getOne($queryid,array((int)$now));
 		}
-
 		return $surveyId;
 	}
 
@@ -101,90 +76,67 @@ class SurveyLib extends TikiLib {
 		$options = addslashes($options);
 
 		if ($questionId) {
-			// update an existing quiz
-			$query = "update tiki_survey_questions set 
-      type='$type',
-      position = $position,
-      question = '$question',
-      options = '$options'
-      where questionId = $questionId and surveyId=$surveyId";
+			$query = "update `tiki_survey_questions` set `type`=?, `position`=?, `question`=?, `options`=? where `questionId`=? and `surveyId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query, array($type,(int) $position,$question,$options,(int)$questionId,(int)$surveyId));
 		} else {
-			// insert a new question
 			$now = date("U");
 
-			$query = "insert into tiki_survey_questions(question,type,surveyId,position,votes,value,options)
-      values('$question','$type',$surveyId,$position,0,0,'$options')";
-			$result = $this->query($query);
+			$query = "insert into `tiki_survey_questions`(`question`,`type`,`surveyId`,`position`,`votes`,`value`,`options`) values(?,?,?,?,0,0,?)";
+			$result = $this->query($query,array($question,$type,(int)$surveyId,(int) $position,$options));
 
-			$queryid = "select max(questionId) from tiki_survey_questions where question='$question' and type='$type'";
-			$questionId = $this->getOne($queryid);
+			$queryid = "select max(`questionId`) from `tiki_survey_questions` where `question`=? and `type`=?";
+			$questionId = $this->getOne($queryid,array($question,$type));
 		}
 
-		// Now process the question options
 		if (!empty($options)) {
 			$options = split(',', $options);
 		} else {
 			$options = array();
 		}
 
-		$query = "select optionId,qoption from tiki_survey_question_options where questionId=$questionId";
-		$result = $this->query($query);
+		$query = "select `optionId`,`qoption` from `tiki_survey_question_options` where `questionId`=?";
+		$result = $this->query($query,array((int)$questionId));
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			if (!in_array($res["qoption"], $options)) {
-				$query2 = "delete from tiki_survey_question_options where questionId=$questionId and optionId='" . $res["optionId"] . "'";
-
-				$result2 = $this->query($query2);
+				$query2 = "delete from `tiki_survey_question_options` where `questionId`=? and `optionId`=?";
+				$result2 = $this->query($query2, array((int)$questionId,(int)$res["optionId"]));
 			} else {
-				// Since it is in the array removeit from the array
 				$idx = array_search($res["qoption"], $options);
-
 				unset ($options[$idx]);
 			}
 		}
 
 		foreach ($options as $option) {
-			$query = "insert into tiki_survey_question_options (questionId,qoption,votes)
-      values($questionId,'$option',0)";
-
-			$result = $this->query($query);
+			$query = "insert into `tiki_survey_question_options` (`questionId`,`qoption`,`votes`) values(?,?,0)";
+			$result = $this->query($query,array((int)$questionId,$option));
 		}
-
 		return $questionId;
 	}
 
 	function get_survey($surveyId) {
-		$query = "select * from tiki_surveys where surveyId=$surveyId";
-
-		$result = $this->query($query);
-
-		if (!$result->numRows())
-			return false;
-
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select * from `tiki_surveys` where `surveyId`=?";
+		$result = $this->query($query,array((int)$surveyId));
+		if (!$result->numRows()) return false;
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function get_survey_question($questionId) {
-		$query = "select * from tiki_survey_questions where questionId=$questionId";
+		$query = "select * from `tiki_survey_questions` where `questionId`=?";
+		$result = $this->query($query,array((int)$questionId));
+		if (!$result->numRows()) return false;
 
-		$result = $this->query($query);
-
-		if (!$result->numRows())
-			return false;
-
-		$res2 = $result->fetchRow(DB_FETCHMODE_ASSOC);
-		$query = "select * from tiki_survey_question_options where questionId=$questionId";
-		$result = $this->query($query);
+		$res2 = $result->fetchRow();
+		$query = "select * from `tiki_survey_question_options` where `questionId`=?";
+		$result = $this->query($query,array((int)$questionId));
 		$ret = array();
 		$votes = 0;
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
-
 			$votes += $res["votes"];
 		}
 
@@ -194,42 +146,39 @@ class SurveyLib extends TikiLib {
 	}
 
 	function list_survey_questions($surveyId, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array((int) $surveyId);
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where surveyId=$surveyId and (question like $findesc";
+			$findesc = '%' . $find . '%';
+			$mid = " where `surveyId`=? and (`question` like ?)";
+			$bindvars[] = $findesc;
 		} else {
-			$mid = " where surveyId=$surveyId ";
+			$mid = " where `surveyId`=?";
 		}
 
-		$query = "select * from tiki_survey_questions $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_survey_questions $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_survey_questions` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_survey_questions` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$questionId = $res["questionId"];
 
-			$res["options"]
-				= $this->getOne("select count(*) from tiki_survey_question_options where questionId=" . $res["questionId"]);
-			$query2 = "select * from tiki_survey_question_options where questionId=$questionId";
+			$res["options"] = $this->getOne("select count(*) from `tiki_survey_question_options` where `questionId`=?",array((int)$res["questionId"]));
+			$query2 = "select * from `tiki_survey_question_options` where `questionId`=?";
 
 			if ($res["type"] == 'r') {
 				$maxwidth = 5;
 			} else {
 				$maxwidth = 10;
 			}
-
 			$res["width"] = $res["average"] * 200 / $maxwidth;
-			$result2 = $this->query($query2);
+			$result2 = $this->query($query2,array((int)$questionId));
 			$ret2 = array();
 			$votes = 0;
-			$total_votes = $this->getOne("select sum(votes) from tiki_survey_question_options where questionId=$questionId");
+			$total_votes = $this->getOne("select sum(`votes`) from `tiki_survey_question_options` where `questionId`=?",array((int)$questionId));
 
-			while ($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
+			while ($res2 = $result2->fetchRow()) {
 				if ($total_votes) {
 					$average = $res2["votes"] / $total_votes;
 				} else {
@@ -254,26 +203,22 @@ class SurveyLib extends TikiLib {
 	}
 
 	function list_all_questions($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where (question like $findesc";
+			$mid = " where `question` like ?";
+			$bindvars[] = '%' . $find . '%';
 		} else {
 			$mid = " ";
 		}
 
-		$query = "select * from tiki_survey_questions $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_survey_questions $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_survey_questions` $mid order by ".$this->convert_sortmode("$sort_mode");
+		$query_cant = "select count(*) from `tiki_survey_questions` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$res["options"]
-				= $this->getOne("select count(*) from tiki_survey_question_options where questionId=" . $res["questionId"]);
-
+		while ($res = $result->fetchRow()) {
+			$res["options"] = $this->getOne("select count(*) from `tiki_survey_question_options` where `questionId`=?",array((int)$res["questionId"]));
 			$ret[] = $res;
 		}
 
@@ -284,37 +229,30 @@ class SurveyLib extends TikiLib {
 	}
 
 	function remove_survey_question($questionId) {
-		$query = "delete from tiki_survey_questions where questionId=$questionId";
-
-		$result = $this->query($query);
-		// Remove all the options for the question
-		$query = "delete from tiki_survey_question_options where questionId=$questionId";
-		$result = $this->query($query);
+		$query = "delete from `tiki_survey_questions` where `questionId`=?";
+		$result = $this->query($query,array((int)$questionId));
+		$query = "delete from `tiki_survey_question_options` where `questionId`=?";
+		$result = $this->query($query,array((int)$questionId));
 		return true;
 	}
 
 	function remove_survey($surveyId) {
-		$query = "delete from tiki_surveys where surveyId=$surveyId";
+		$query = "delete from `tiki_surveys` where `surveyId`=?";
+		$result = $this->query($query,array((int)$surveyId));
+		$query = "select * from `tiki_survey_questions` where `surveyId`=?";
+		$result = $this->query($query,array((int)$surveyId));
 
-		$result = $this->query($query);
-		$query = "select * from tiki_survey_questions where surveyId=$surveyId";
-		$result = $this->query($query);
-
-		// Remove all the options for each question
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$questionId = $res["questionId"];
-
-			$query2 = "delete from tiki_survey_question_options where questionId=$questionId";
-			$result2 = $this->query($query2);
+			$query2 = "delete from `tiki_survey_question_options` where `questionId`=?";
+			$result2 = $this->query($query2,array((int)$questionId));
 		}
-
-		// Remove all the questions
-		$query = "delete from tiki_survey_questions where surveyId=$surveyId";
-		$result = $this->query($query);
+		$query = "delete from `tiki_survey_questions` where `surveyId`=?";
+		$result = $this->query($query,array((int)$surveyId));
 		$this->remove_object('survey', $surveyId);
 		return true;
 	}
-} # class SurveyLib
+}
 
 $srvlib = new SurveyLib($dbTiki);
 
