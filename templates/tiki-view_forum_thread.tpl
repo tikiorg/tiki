@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.47 2004-01-30 08:49:22 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.48 2004-02-01 19:25:46 musus Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -189,50 +189,50 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
     <table class="normal">
-    <tr>
-      <td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
+    <tr class="formcolor">
+      <td>{tr}Title{/tr}</td>
+      <td><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
     </tr>
     {if $forum_info.forum_use_password eq 'a'}
-    <tr>
-    	<td class='forumform'>{tr}Password{/tr}</td>
-    	<td class='forumform'>
+    <tr class="forumform">
+    	<td>{tr}Password{/tr}</td>
+    	<td>
     		<input type="password" name="password" />
     	</td>
     </tr>
     {/if}
     
 {if $feature_forum_parse eq 'y'}        
-    <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+    <tr class="formcolor"><td>{tr}Quicklinks{/tr}</td><td>
 {assign var=area_name value="editpost"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
 </tr>
 {/if}
     {if $feature_smileys eq 'y'}
-    <tr>
-      <td class="formcolor">{tr}Smileys{/tr}</td>
-      <td class="formcolor">{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl" area_name='editpost'}</td>
+    <tr class="formcolor">
+      <td>{tr}Smileys{/tr}</td>
+      <td>{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl" area_name='editpost'}</td>
      </tr>
     {/if}
-    <tr>
-      <td class="formcolor">{tr}Comment{/tr}<br /><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
-      <td class="formcolor"><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
+    <tr class="formcolor">
+      <td>{tr}Comment{/tr}<br /><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
+      <td><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td>
     </tr>
     {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
-    <tr>
-	  <td class="formcolor">{tr}Attach file{/tr}</td>
-	  <td class="formcolor">
+    <tr class="formcolor">
+	  <td>{tr}Attach file{/tr}</td>
+	  <td>
 	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />
 	  </td>   
     </tr>
     {/if}
-    <tr>
-      <td class="formcolor">{tr}Post{/tr}</td>
-      <td class="formcolor">
+    <tr class="formcolor">
+      <td>{tr}Post{/tr}</td>
+      <td>
       <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
       <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
       <input type="button" name="comments_postComment" value="{tr}cancel{/tr}" onclick="hide('{$postclass}');"/></td>
@@ -372,7 +372,7 @@ a moderator approves it.{/tr}</small>
   <br /><small>posts:{$comments_coms[ix].user_posts}</small>
   {/if}
   {if $comments_coms[ix].userName and $forum_info.ui_level eq 'y'}
-  <br /><img src="img/icons/{$comments_coms[ix].user_level}stars.gif" alt='{$comments_coms[ix].user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
+  <br /><img src="img/icons/{$comments_coms[ix].user_level}stars.gif" alt='{$comments_coms[ix].user_level} {tr}stars{/tr}' />
   {/if}
 
   </div>
