@@ -3855,6 +3855,7 @@ Debug::d('get_site_date()');
 
     $original_tz = date('T', $timestamp);
 
+	$format = '%b %e, %Y';
     $rv = strftime($format, $timestamp);
     $rv .= " =timestamp\n";
     $rv .= strftime('%Z', $timestamp);
