@@ -1,26 +1,36 @@
 #!/bin/sh
 
 DIRS="backups dump img/wiki img/wiki_up modules/cache temp templates_c"
+USER=yourlogin
+GROUP=nobody
+
+UNAME=`uname | cut -c 1-6`
+
+if [ "$UNAME" = "CYGWIN" ];
+then
+	USER=SYSTEM
+	GROUP=SYSTEM
+fi
 
 if [ -z "$1" ];
 then
 	cat <<EOF
 Usage $0 user [group]
 
-For example, if apache is running as user nobody, type:
+For example, if apache is running as user $USER, type:
 
-  su -c '$0 nobody'
+  su -c '$0 $GROUP'
 
 Alternatively, you may wish to set both the user and group:
   
-  su -c '$0 yourlogin nobody'
+  su -c '$0 $USER $GROUP'
 
 This will allow you to delete certain files/directories without becoming root.
   
 Or, if you can't become root, but are a member of the group apache runs under
-(for example: nobody), you can type:
+(for example: $GROUP), you can type:
 
-  $0 yourlogin nobody
+  $0 $USER $GROUP
   
 EOF
 exit 1
