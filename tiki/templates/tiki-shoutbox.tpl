@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki ShoutBox{/tr}!</a><br/>
+<a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a><br/>
 {if $tiki_p_post_shoutbox eq 'y'}
 <h2>{tr}Post or edit a message{/tr}</h2>
 <form action="tiki-shoutbox.php" method="post">

@@ -1,7 +1,7 @@
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 <div class="box">
 <div class="box-title">
-{tr}ShoutBox{/tr}
+{tr}Shoutbox{/tr}
 </div>
 <div class="box-data">
 {if $tiki_p_post_shoutbox eq 'y'}
