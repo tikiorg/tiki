@@ -1,7 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-include('lib/live_support/lslib.php');
+include_once('lib/live_support/lslib.php');
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified
 header("Cache-Control: no-store, no-cache, must-revalidate");  // HTTP/1.1
@@ -12,6 +12,12 @@ if($feature_live_support != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
+}
+
+if($tiki_p_live_support_admin != 'y' && !$lsadminlib->user_is_operator($user)) {
+    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;
 }
 
 

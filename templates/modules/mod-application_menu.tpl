@@ -14,6 +14,7 @@
   &nbsp;<a href="tiki-contact.php" class="linkmenu">{tr}contact us{/tr}</a><br/>
 {/if}
 
+
 {if $feature_stats eq 'y' and $tiki_p_view_stats eq 'y'}
   &nbsp;<a href="tiki-stats.php" class="linkmenu">{tr}stats{/tr}</a><br/>
 {/if}
@@ -352,11 +353,16 @@
  $tiki_p_edit_html_pages eq 'y' or
  $tiki_p_view_referer_stats eq 'y' or
  $tiki_p_admin_drawings eq 'y' or
- $tiki_p_admin_shoutbox eq 'y'
+ $tiki_p_admin_shoutbox eq 'y' or
+ $tiki_p_admin_live_support eq 'y' or
+ $user_is_operator eq 'y'
  }
  
   <div class="separator"><a class='separator' href="javascript:setCookie('admmnu','c');hide('admmnu');">[-]</a>{if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if} <a class='separator' href="javascript:setCookie('admmnu','o');show('admmnu');">[+]</a></div>
   <div id='admmnu' style="{$mnu_admmnu}">
+	{if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
+  		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br/>
+	{/if}
 
     {if $tiki_p_admin eq 'y'}
       &nbsp;<a href="tiki-adminusers.php" class="linkmenu">{tr}Users{/tr}</a><br/>

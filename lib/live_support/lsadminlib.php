@@ -41,6 +41,53 @@ class LsAdminlib extends Tikilib{
     }
     return $ret;
   }
+  
+  function post_support_message($username,$user,$user_email,$title,$data,$priority,$module,$resolution,$assigned_to='')
+  {
+  	die("MISSING CODE");
+  }
+  
+  function list_support_messages($offset,$maxRecords,$sort_mode,$find,$where)
+  {
+    
+    $sort_mode = str_replace("_desc"," desc",$sort_mode);
+    $sort_mode = str_replace("_asc"," asc",$sort_mode);
+    if($find) {
+      $mid=" where (data like '%".$find."%' or username like '%".$find."%')";  
+    } else {
+      $mid=""; 
+    }
+    if($where) {
+    	if($mid) {
+    		$mid = ' and '.$where;
+    	} else {
+    		$mid = ' where '.$where;
+    	}
+    }
+    $query = "select * from tiki_live_support_messages $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_user_notes $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function get_modules()
+  {
+  	$query = "select * from tiki_live_support_modules";
+  	$result = $this->query($query);	
+  	$ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    return $ret;
+  }
 
 }
 

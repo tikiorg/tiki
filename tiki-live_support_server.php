@@ -11,8 +11,8 @@
 // Long includes and heavy operations should be avoided to maximize the
 // response time of this script which is critical.
 
-include('db/tiki-db.php');
-include('lib/live_support/lslib.php');
+include_once('db/tiki-db.php');
+include_once('lib/live_support/lslib.php');
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified
 header("Cache-Control: no-store, no-cache, must-revalidate");  // HTTP/1.1
@@ -39,10 +39,10 @@ if(isset($_REQUEST['set_operator_status'])) {
 if(isset($_REQUEST['operators_online'])) {
 	if($lslib->operators_online()) {
 		header("Content-type: image/gif");
-		readfile('img/icons/support_on.gif');
+		readfile('img/icons/live-support-on.png');
 	} else {
 		header("Content-type: image/gif");
-		readfile('img/icons/support_off.gif');
+		readfile('img/icons/live-support-off.png');
 	}
 }
 
