@@ -2,7 +2,9 @@
 <h1>Tiki installer v{$tiki_version} <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 <a href="tiki-install.php?restart=1" class="link">reload</a><br/><br/>
+
 	{if $dbcon eq 'n' or $resetdb eq 'y'}
+	{* we do not have a valid db connection or db reset is requested *}
 	  <b>Tiki cannot find a database connection</b><br/>
 	  Please enter your database connection info<br/><br/>
 	  <form action="tiki-install.php" method="post">
@@ -80,8 +82,40 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 	  </table>
 	  </form>
 	{else}
-	  {* we do have a database connection *}
-	  {if $dbdone eq 'n'}
+	{* we do have a database connection *}
+	  {if $packages eq 'y'}
+	  {* db is completed and packages are available *}
+	    <form method="post" action="tiki-install.php">
+	    <h1>Tiki packages</h1>
+	    {if $pkg_available eq 'y'}
+		<table>
+			<tr><td>
+				<select name="pkgs">
+					{section name=ix loop=$pkgs}
+						<option value="{$pkgs[ix].name|escape}">{$pkgs[ix].desc}</option>
+					{/section}
+				</select>
+				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available packages</a>
+			</td></tr>
+			<tr><td>
+				<input type="checkbox" name="runScript" />Run database script (may destroy data)
+			</td></tr>
+			<tr><td>
+				<input type="submit" name="install_pkg" value="{tr}Install{/tr}" />	    
+				<input type="submit" name="remove_pkg" value="{tr}Remove{/tr}" />	    
+			</td></tr>
+			<tr><td>
+				<p>
+			</td></tr>
+		</table>
+		</form><br/>
+	    {else}
+    		You do not have any packages installed.<br/>
+    		Please visit <a href="http://sourceforge.net/projects/tikiwiki">
+		http://sourceforge.net/projects/tikiwiki</a> for a list of packages available
+    		for download.<br/><br/>
+	    {/if}
+	  {elseif $dbdone eq 'n'}
 		  {if $logged eq 'y'}
 		    {* we are logged if no admin account is found or if he user logged in*}
 		    <b>Welcome to the installation script!</b><br/>
@@ -115,39 +149,22 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		    </td></tr>
 		    </table>
 		    </form><br/>
-			<a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
-			<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
 		  {else}
 			{* we are not logged then no admin account found and user not logged*}
 			<b>This site has an admin account configured</b><br/>
 		    Please enter your admin password to continue<br/><br/>
 
-     <form name="loginbox" action="tiki-install.php" method="post"> 
-          <table>
-          <tr><td class="module">{tr}user{/tr}:</td></tr>
-          <tr><td>admin</td></tr>
-          <tr><td class="module">{tr}pass{/tr}:</td></tr>
-          <tr><td><input type="password" name="pass" size="20" /></td></tr>
-          <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
-          </table>
-      </form>
-
-{*
-		  	<form action="tiki-install.php" method="post">
-		  	<table class="normal">
-		  		<tr>
-		  			<td class="formcolor">Admin password</td>
-		  			<td class="formcolor"><input type="password" name="pass" /></td>
-		  		</tr>
-		  		<tr>
-		  			<td class="formcolor">&nbsp;</td>
-		  			<td class="formcolor"><input type="submit" name="login" value="login" /></td>
-		  		</tr>
-		    </table>
-		    </form>
-*}
+		     <form name="loginbox" action="tiki-install.php" method="post"> 
+		          <table>
+		          <tr><td class="module">{tr}user{/tr}:</td></tr>
+		          <tr><td>admin</td></tr>
+		          <tr><td class="module">{tr}pass{/tr}:</td></tr>
+		          <tr><td><input type="password" name="pass" size="20" /></td></tr>
+		          <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
+		          </table>
+		      </form>
 		  {/if}
-    	{else}
+    	  {else}
     		<b>Print operations executed successfully</b><br/>
     		<textarea rows="15" cols="80">
     		{section loop=$succcommands name=ix}
@@ -167,35 +184,16 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
     		Note: This install script may be potentially harmful so we strongly
     		recommend you to remove the script and then proceed into Tiki. If
     		you decide to remove the script it will be renamed to tiki-install.done<br/><br/>
-    		<a href="tiki-install.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br/>
-    		<a href="tiki-index.php" class="link">Click here to proceed into tiki without removing the script</a><br />
-    		<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
-    	{/if}
+    	  {/if}
 	{/if}
-	{if $pkg_available eq 'y'}
-		<p><p>
-		<form method="post" action="tiki-install.php">
-		<h1>Tiki packages</h1>
-		<table>
-			<tr><td>
-				<select name="pkgs">
-					{section name=ix loop=$pkgs}
-						<option value="{$pkgs[ix].name|escape}">{$pkgs[ix].desc}</option>
-					{/section}
-				</select>
-				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available packages</a>
-			</td></tr>
-			<tr><td>
-				<input type="checkbox" name="runScript" />Run database script (may destroy data)
-			</td></tr>
-			<tr><td>
-				<input type="submit" name="install_pkg" value="install" />	    
-				<input type="submit" name="remove_pkg" value="remove" />	    
-			</td></tr>
-			<tr><td>
-				<p>
-			</td></tr>
-		</table>
-		</form><br/>
+    	{if $dbcon eq 'y'}
+	  {if $dbdone eq 'y'} 
+	    <a href="tiki-install.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br/>
+    	    <a href="tiki-index.php" class="link">Click here to proceed into tiki without removing the script</a><br />
+	  {else}
+	    <a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
+	  {/if}
+	  {if $pkg_available eq 'y'}<a href="tiki-install.php?packages=yes" class="link">Configure Tiki Packages</a><br />{/if}
+	  <a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
 	{/if}
 </div>

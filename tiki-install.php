@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.44 2004-01-01 15:12:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.45 2004-01-02 04:17:55 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.44 2004-01-01 15:12:17 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.45 2004-01-02 04:17:55 wolff_borg Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -510,6 +510,9 @@ if ($noadmin) {
 include ('db/local.php');
 include_once ('lib/pclzip.lib.php');
 
+if (isset($_REQUEST['packages']))
+	$smarty->assign('packages', 'y');
+
 // This is the directory where it looks for the package files. If no .zip files are in this dir, the Installer will be disabled.
 $package_dir = "packages/";
 // This is the suffix it uses to look for an install SQL script
@@ -534,6 +537,7 @@ if (isset($_REQUEST['install_pkg'])) {
 		}
 		print "The application in <b>".$_REQUEST['pkgs']."</b> was installed successfully";
 	}
+	$smarty->assign('packages', 'y');
 }
 
 // This is used to remove files that were installed into the Tiki file structure by the install_pkg prcess
@@ -559,6 +563,7 @@ if (isset($_REQUEST['remove_pkg'])) {
 	else {
 		print "Nothing to remove for ".$_REQUEST['pkgs']."<br>";
 	}
+	$smarty->assign('packages', 'y');
 }
 
 //Load Profiles
