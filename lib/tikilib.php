@@ -8685,6 +8685,21 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $hotw_nw = '';
     }
     
+    //Extract noparse sections before anything
+    $noparsed=Array();
+    preg_match_all("/\~np\~([^\~]*)\~\/np\~/",$data,$noparse);
+    foreach(array_unique($noparse[1]) as $np) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$np;
+      $noparsed[]=$aux;
+      
+      $data=str_replace("~np~$np~/np~",$key,$data);
+    }
+    
+    
+    
+    
     $data = stripslashes($data);
     if($feature_hotwords == 'y') {
       $words = $this->get_hotwords();
@@ -9092,6 +9107,11 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       } 
       $data.=$line;
     }
+    
+    foreach($noparsed as $np) {
+      $data = str_replace($np["key"],$np["data"],$data);
+    }
+    
     return $data;  
   }   
 
