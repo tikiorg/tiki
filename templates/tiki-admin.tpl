@@ -183,7 +183,7 @@
 <tr><td class="form">{tr}Server name (for absolute URIs){/tr}:</td><td><input type="text" name="feature_server_name" value="{$feature_server_name}" /></td></tr>        
 <tr><td class="form">{tr}Browser title{/tr}:</td><td><input type="text" name="siteTitle" value="{$siteTitle}" /></td></tr>
 <tr><td class="form">{tr}Temporary directory{/tr}:</td><td><input type="text" name="tmpDir" value="{$tmpDir}" /></td></tr>
-<tr><td class="form">{tr}Server time zone{/tr}:</td><td>{$timezone_server}
+<tr><td class="form">{tr}Server time zone{/tr}:</td><td class="form">{$timezone_server}
 &nbsp;<a class="link" target="http://www.worldtimezone.com/" href="http://www.worldtimezone.com/">{tr}Map{/tr}</a>
 </td></tr>
 
@@ -340,9 +340,9 @@
 <div class="simplebox">
 <form action="tiki-admin.php" method="post">
 <table width="100%">
-<tr><td>{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="auth_create_user_tiki" {if $auth_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td>{tr}Create user if not in Auth?{/tr}</td><td><input type="checkbox" name="auth_create_user_auth" {if $auth_create_user_auth eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td>{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_skip_admin" {if $auth_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="auth_create_user_tiki" {if $auth_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Create user if not in Auth?{/tr}</td><td><input type="checkbox" name="auth_create_user_auth" {if $auth_create_user_auth eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_skip_admin" {if $auth_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}LDAP Host{/tr}:</td><td><input type="text" name="auth_ldap_host" value="{$auth_ldap_host}" /></td></tr>
 <tr><td class="form">{tr}LDAP Port{/tr}:</td><td><input type="text" name="auth_ldap_port" value="{$auth_ldap_port}" /></td></tr>
 <tr><td class="form">{tr}LDAP Scope{/tr}:</td><td><input type="text" name="auth_ldap_scope" value="{$auth_ldap_scope}" /></td></tr>
@@ -621,7 +621,7 @@
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_gal_rankings" {if $feature_gal_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_image_galleries_comments" {if $feature_image_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use database to store images{/tr}:</td><td><input type="radio" name="gal_use_db" value="y" {if $gal_use_db eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Use a directory to store images{/tr}:</td><td><input type="radio" name="gal_use_db" value="n" {if $gal_use_db eq 'n'}checked="checked"{/if}/> {tr}Directory path{/tr}:<input type="text" name="gal_use_dir" value="{$gal_use_dir}" /> </tr>
+    <tr><td class="form">{tr}Use a directory to store images{/tr}:</td><td class="form"><input type="radio" name="gal_use_db" value="n" {if $gal_use_db eq 'n'}checked="checked"{/if}/> {tr}Directory path{/tr}:<input type="text" name="gal_use_dir" value="{$gal_use_dir}" /> </tr>
     <tr><td class="form">{tr}Uploaded image names must match regex{/tr}:</td><td><input type="text" name="gal_match_regex" value="{$gal_match_regex}"/></td></tr>
     <tr><td class="form">{tr}Uploaded image names cannot match regex{/tr}:</td><td><input type="text" name="gal_nmatch_regex" value="{$gal_nmatch_regex}"/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>    
@@ -697,10 +697,10 @@
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_rankings" {if $feature_file_galleries_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_comments" {if $feature_file_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="fgal_use_db" value="y" {if $fgal_use_db eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="fgal_use_db" value="n" {if $fgal_use_db eq 'n'}checked="checked"{/if}/> {tr}Directory path{/tr}:<input type="text" name="fgal_use_dir" value="{$fgal_use_dir}" /> </tr>
+    <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td class="form"><input type="radio" name="fgal_use_db" value="n" {if $fgal_use_db eq 'n'}checked="checked"{/if}/> {tr}Directory path{/tr}:<input type="text" name="fgal_use_dir" value="{$fgal_use_dir}" /> </tr>
     <tr><td class="form">{tr}Uploaded filenames must match regex{/tr}:</td><td><input type="text" name="fgal_match_regex" value="{$fgal_match_regex}"/></td></tr>
     <tr><td class="form">{tr}Uploaded filenames cannot match regex{/tr}:</td><td><input type="text" name="fgal_nmatch_regex" value="{$fgal_nmatch_regex}"/>
-    <a class="link" {popup sticky="true" trigger="onClick" caption="Storing files in a directory" text="If you decide to store files in a directory you must ensure that the user cannot access directly to the directory. You have two options to accomplish this:<br/><ul><li>Use a directory ourside your document root, make sure your php script can read and write to that directory</li><li>Use a directory inside the document root and use and .htaccess to prevent the user from listing the directory contents</li></ul>To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/"}>please read</a></td></tr>
+    <a class="link" {popup sticky="true" trigger="onClick" caption="Storing files in a directory" text="If you decide to store files in a directory you must ensure that the user cannot access directly to the directory. You have two options to accomplish this:<br/><ul><li>Use a directory ourside your document root, make sure your php script can read and write to that directory</li><li>Use a directory inside the document root and use and .htaccess to prevent the user from listing the directory contents</li></ul>To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/"}>{tr}please read{/tr}</a></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="filegalfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
@@ -1086,12 +1086,12 @@
 <table width="100%">
 <tr><td class="form">{tr}Allow viewing HTML mails{/tr}?</td><td><input type="checkbox" name="webmail_view_html" {if $webmail_view_html eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Maximum size for each attachment{/tr}:</td><td><select name="webmail_max_attachment">
-<option value="500000" {if $webmail_max_attachment eq 500000}selected="selected"{/if}>500Kb</option>
-<option value="1000000" {if $webmail_max_attachment eq 1000000}selected="selected"{/if}>1Mb</option>
-<option value="1500000" {if $webmail_max_attachment eq 1500000}selected="selected"{/if}>1.5Mb</option>
-<option value="2000000" {if $webmail_max_attachment eq 2000000}selected="selected"{/if}>2Mb</option>
-<option value="2500000" {if $webmail_max_attachment eq 2500000}selected="selected"{/if}>2.5Mb</option>
-<option value="3000000" {if $webmail_max_attachment eq 3000000}selected="selected"{/if}>3Mb</option>
+<option value="500000" {if $webmail_max_attachment eq 500000}selected="selected"{/if}>500{tr}Kb{/tr}</option>
+<option value="1000000" {if $webmail_max_attachment eq 1000000}selected="selected"{/if}>1{tr}Mb{/tr}</option>
+<option value="1500000" {if $webmail_max_attachment eq 1500000}selected="selected"{/if}>1.5{tr}Mb{/tr}</option>
+<option value="2000000" {if $webmail_max_attachment eq 2000000}selected="selected"{/if}>2{tr}Mb{/tr}</option>
+<option value="2500000" {if $webmail_max_attachment eq 2500000}selected="selected"{/if}>2.5{tr}Mb{/tr}</option>
+<option value="3000000" {if $webmail_max_attachment eq 3000000}selected="selected"{/if}>3{tr}Mb{/tr}</option>
 <option value="100000000" {if $webmail_max_attachment eq 100000000}selected="selected"{/if}>{tr}Unlimited{/tr}</option>
 </select></tr>
 <tr><td align="center" colspan="2"><input type="submit" name="webmail" value="{tr}Set prefs{/tr}" /></td></tr>    
@@ -1125,7 +1125,7 @@
 <div class="simplebox">
 <form action="tiki-admin.php#directory" method="post">
 <table width="100%">
-<tr><td>{tr}Number of columns per page when listing categories{/tr}</td><td>
+<tr><td class="form">{tr}Number of columns per page when listing categories{/tr}</td><td>
     <select name="directory_columns">
     <option value="1" {if $directory_columns eq 1}selected="selected"{/if}>1</option>
     <option value="2" {if $directory_columns eq 2}selected="selected"{/if}>2</option>
@@ -1135,17 +1135,17 @@
     <option value="6" {if $directory_columns eq 6}selected="selected"{/if}>6</option>
     </select>
     </td></tr>
-<tr><td>{tr}Links per page{/tr}</td><td><input type="text" name="directory_links_per_page" value="{$directory_links_per_page}" />
-<tr><td>{tr}Validate URLs{/tr}</td><td><input type="checkbox" name="directory_validate_urls" {if $directory_validate_urls eq 'y'}checked="checked"{/if}></td></tr>
+<tr><td class="form">{tr}Links per page{/tr}</td><td><input type="text" name="directory_links_per_page" value="{$directory_links_per_page}" />
+<tr><td class="form">{tr}Validate URLs{/tr}</td><td><input type="checkbox" name="directory_validate_urls" {if $directory_validate_urls eq 'y'}checked="checked"{/if}></td></tr>
 </td></tr>    
-<tr><td>{tr}Method to open directory links{/tr}</td><td>
+<tr><td class="form">{tr}Method to open directory links{/tr}</td><td>
 <select name="directory_open_links">
 <option value="r" {if $directory_open_links eq 'r'}selected="selected"{/if}>{tr}replace current window{/tr}</option>
 <option value="n" {if $directory_open_links eq 'n'}selected="selected"{/if}>{tr}new window{/tr}</option>
 <option value="f" {if $directory_open_links eq 'f'}selected="selected"{/if}>{tr}inline frame{/tr}</option>
 </select>
 </td></tr>
-<tr><td align="center" colspan="2"><input type="submit" name="directory" value="{tr}Set prefs{/tr}" /></td></tr>    
+<tr><td align="center" colspan="2"><input type="submit" name="directory" value="{tr}Set prefs{/tr}" /></td></tr>
 </table>
 </form>
 </div>
