@@ -1,16 +1,16 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.18 2003-10-16 18:23:05 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.19 2003-10-16 19:03:39 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.18 2003-10-16 18:23:05 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.19 2003-10-16 19:03:39 redflo Exp $
 session_start();
 
 // Define and load Smarty components
-define('SMARTY_DIR', "Smarty/");
+define('SMARTY_DIR', "lib/smarty/");
 require_once (SMARTY_DIR . 'Smarty.class.php');
 
 $commands = array();
@@ -135,22 +135,23 @@ class Smarty_Sterling extends Smarty {
 		$this->cache_dir = "cache/";
 		$this->caching = false;
 		$this->assign('app_name', 'Sterling');
+		$this->plugins_dir = array("lib/smarty/plugins","lib/smarty_tiki");
 	//$this->debugging = true;
 	//$this->debug_tpl = 'debug.tpl';
 	}
 
-	function _smarty_include($_smarty_include_tpl_file, $_smarty_include_vars) {
+	function _smarty_include($_smarty_include_tpl_file) {
 		global $style;
 
 		global $style_base;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/styles/$style_base/$_smarty_include_tpl_file")) {
-				$_smarty_include_tpl_file = "styles/$style_base/$_smarty_include_tpl_file";
+			if (file_exists("templates/styles/$style_base/".$params['smarty_include_tpl_file'])) {
+				$params['smarty_include_tpl_file'] = "styles/$style_base/".$params['smarty_include_tpl_file'];
 			}
 		}
 
-		return parent::_smarty_include($_smarty_include_tpl_file, $smarty_include_vars);
+		return parent::_smarty_include($_smarty_include_tpl_file);
 	}
 
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
