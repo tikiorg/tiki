@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.28 2004-04-10 06:51:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.29 2004-04-10 07:24:26 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,22 +8,6 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
-function readconf($text) {
-	$file = split("\n",$text);
-  foreach ($file as $line) {
-    $r = $s = '';
-    if (substr($line,0,1) != "#") {
-      if (ereg("^\[([A-Z]+)\]",$line,$r)) {
-        $var = strtolower($r[1]);
-      }
-      if ($var and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
-				$back[$var][trim($s[1])] = trim($s[2]);
-      }
-    }
-  }
-  return $back;
-}
 
 include_once ('lib/trackers/trackerlib.php');
 
@@ -140,110 +124,147 @@ if (isset($_REQUEST["remove"])) {
 }
 
 if (isset($_REQUEST["save"])) {
+
 	if (isset($_REQUEST['import']) and isset($_REQUEST['rawmeat'])) {
-		$raw = readconf($_REQUEST['rawmeat']);
+		$raw = $tikilib->read_raw($_REQUEST['rawmeat']);
 		foreach ($raw['tracker'] as $it=>$da) {
 			$_REQUEST["$it"] = $da;
 		}
 	}
+
 	check_ticket('admin-trackers');
-	if (isset($_REQUEST["showCreated"]) && $_REQUEST["showCreated"] == 'on') {
+	if (isset($_REQUEST["showCreated"]) 
+		&& ($_REQUEST["showCreated"] == 'on' 
+			or $_REQUEST["showCreated"] == 'y')) {
 		$tracker_options["showCreated"] = 'y';
 	} else {
 		$tracker_options["showCreated"] = 'n';
 	}
 
-	if (isset($_REQUEST["showStatus"]) && $_REQUEST["showStatus"] == 'on') {
+	if (isset($_REQUEST["showStatus"]) 
+		&& ($_REQUEST["showStatus"] == 'on' 
+			or $_REQUEST["showStatus"] == 'y')) {
 		$tracker_options["showStatus"] = 'y';
 	} else {
 		$tracker_options["showStatus"] = 'n';
 	}
 
-	if (isset($_REQUEST["showStatusAdminOnly"]) && $_REQUEST["showStatusAdminOnly"] == 'on') {
+	if (isset($_REQUEST["showStatusAdminOnly"]) 
+		&& ($_REQUEST["showStatusAdminOnly"] == 'on' 
+			or $_REQUEST["showStatusAdminOnly"] == 'y')) {
 		$tracker_options["showStatusAdminOnly"] = 'y';
 	} else {
 		$tracker_options["showStatusAdminOnly"] = 'n';
 	}
 	
-	if (isset($_REQUEST["newItemStatus"]) && $_REQUEST["newItemStatus"] == 'on') {
+	if (isset($_REQUEST["newItemStatus"]) 
+		&& ($_REQUEST["newItemStatus"] == 'on'
+			or $_REQUEST["newItemStatus"] == 'y')) {
 		$tracker_options["newItemStatus"] = 'y';
 	} else {
 		$tracker_options["newItemStatus"] = 'n';
 	}
 
-	if (isset($_REQUEST["useComments"]) && $_REQUEST["useComments"] == 'on') {
+	if (isset($_REQUEST["useComments"]) 
+		&& ($_REQUEST["useComments"] == 'on'
+			or $_REQUEST["useComments"] == 'y')) {
 		$tracker_options["useComments"] = 'y';
 	} else {
 		$tracker_options["useComments"] = 'n';
 	}
 
-	if (isset($_REQUEST["useAttachments"]) && $_REQUEST["useAttachments"] == 'on') {
+	if (isset($_REQUEST["useAttachments"]) 
+		&& ($_REQUEST["useAttachments"] == 'on'
+			or $_REQUEST["useAttachments"] == 'y')) {
 		$tracker_options["useAttachments"] = 'y';
 	} else {
 		$tracker_options["useAttachments"] = 'n';
 	}
 
-	if (isset($_REQUEST["showComments"]) && $_REQUEST["showComments"] == 'on') {
+	if (isset($_REQUEST["showComments"]) 
+		&& ($_REQUEST["showComments"] == 'on'
+			or $_REQUEST["showComments"] == 'y')) {
 		$tracker_options["showComments"] = 'y';
 	} else {
 		$tracker_options["showComments"] = 'n';
 	}
 
-	if (isset($_REQUEST["showAttachments"]) && $_REQUEST["showAttachments"] == 'on') {
+	if (isset($_REQUEST["showAttachments"]) 
+		&& ($_REQUEST["showAttachments"] == 'on'
+			or $_REQUEST["showAttachments"] == 'y')) {
 		$tracker_options["showAttachments"] = 'y';
 	} else {
 		$tracker_options["showAttachments"] = 'n';
 	}
 
-	if (isset($_REQUEST["showLastModif"]) && $_REQUEST["showLastModif"] == 'on') {
+	if (isset($_REQUEST["showLastModif"]) 
+		&& ($_REQUEST["showLastModif"] == 'on'
+			or $_REQUEST["showLastModif"] == 'y')) {
 		$tracker_options["showLastModif"] = 'y';
 	} else {
 		$tracker_options["showLastModif"] = 'n';
 	}
 
-	if (isset($_REQUEST["defaultOrderKey"]) && $_REQUEST["defaultOrderKey"]) {
+	if (isset($_REQUEST["defaultOrderKey"]) 
+		&& $_REQUEST["defaultOrderKey"]) {
 		$tracker_options["defaultOrderKey"] = $_REQUEST["defaultOrderKey"];
 	} else {
 		$tracker_options["defaultOrderKey"] = '';
 	}
 
-	if (isset($_REQUEST["defaultOrderDir"]) && ($_REQUEST["defaultOrderDir"] == 'asc' or $_REQUEST["defaultOrderDir"] == 'desc')) {
+	if (isset($_REQUEST["defaultOrderDir"])
+		&& ($_REQUEST["defaultOrderDir"] == 'asc' 
+			or $_REQUEST["defaultOrderDir"] == 'desc')) {
 		$tracker_options["defaultOrderDir"] = $_REQUEST["defaultOrderDir"];
 	} else {
 		$tracker_options["defaultOrderDir"] = 'asc';
 	}
 
-	if (isset($_REQUEST["newItemStatus"]) && $_REQUEST["newItemStatus"]) {
+	if (isset($_REQUEST["newItemStatus"]) 
+		&& $_REQUEST["newItemStatus"]) {
 		$tracker_options["newItemStatus"] = $_REQUEST["newItemStatus"];
 	} else {
 		$tracker_options["newItemStatus"] = 'o';
 	}
 
-	if (isset($_REQUEST["modItemStatus"]) && $_REQUEST["modItemStatus"]) {
+	if (isset($_REQUEST["modItemStatus"]) 
+		&& $_REQUEST["modItemStatus"]) {
 		$tracker_options["modItemStatus"] = $_REQUEST["modItemStatus"];
 	} else {
 		$tracker_options["modItemStatus"] = 'o';
 	}
 
-	if (isset($_REQUEST["writerCanModify"]) && $_REQUEST["writerCanModify"] == 'on') {
+	if (isset($_REQUEST["writerCanModify"]) 
+		&& ($_REQUEST["writerCanModify"] == 'on'
+			or $_REQUEST["writerCanModify"] == 'y')) {
 		$tracker_options["writerCanModify"] = 'y';
 	} else {
 		$tracker_options["writerCanModify"] = 'n';
 	}
 
-	if (isset($_REQUEST["writerGroupCanModify"]) && $_REQUEST["writerGroupCanModify"] == 'on') {
+	if (isset($_REQUEST["writerGroupCanModify"]) 
+		&& ($_REQUEST["writerGroupCanModify"] == 'on'
+			or $_REQUEST["writerGroupCanModify"] == 'y')) {
 		$tracker_options["writerGroupCanModify"] = 'y';
 	} else {
 		$tracker_options["writerGroupCanModify"] = 'n';
 	}
 
-	if (isset($_REQUEST["defaultStatus"]) && $_REQUEST["defaultStatus"] && is_array($_REQUEST["defaultStatus"])) {
-		$tracker_options["defaultStatus"] = implode('',$_REQUEST["defaultStatus"]);
+	if (isset($_REQUEST["defaultStatus"]) 
+		&& $_REQUEST["defaultStatus"]) { 
+		if (is_array($_REQUEST["defaultStatus"])) {
+			$tracker_options["defaultStatus"] = implode('',$_REQUEST["defaultStatus"]);
+		} else {
+			$tracker_options["defaultStatus"] = $_REQUEST["defaultStatus"];
+		}
 	} else {
 		$tracker_options["defaultStatus"] = 'o';
 	}
 
-	if (isset($_REQUEST['ui']) and is_array($_REQUEST['ui'])) {
+	if (isset($_REQUEST['ui'])) {
+		if (!is_array($_REQUEST['ui'])) {
+			$_REQUEST['ui'] = split(',',$_REQUEST['ui']);
+		}
 		$showlist = array();
 		$popupinfo = array();
 		foreach ($_REQUEST['ui'] as $kk=>$vv) {

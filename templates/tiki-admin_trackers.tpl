@@ -194,7 +194,7 @@ src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{if $channel
 trackerId = {$trackerId}
 name = {$name}
 description = {$description}
-showStatu = {$showStatus}
+showStatus = {$showStatus}
 defaultStatus = {foreach key=st item=stdata from=$status_types}{if $defaultStatusList.$st}{$st}{/if}{/foreach} 
 showStatusAdminOnly = {$showStatusAdminOnly}
 newItemStatus = {$newItemStatus}
