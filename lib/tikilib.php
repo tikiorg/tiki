@@ -3596,7 +3596,12 @@ class TikiLib extends TikiDB {
 				// there is no page description
 				$linktext = $pages[1][$i];
 			}
+		    global $feature_wiki_jstooltips;
+			if (!empty($feature_wiki_jstooltips) && $feature_wiki_jstooltips == 'y') {
+			$repl = '<a href="'.$uri_ref.'" class="wiki" onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $linktext . '</a>';
+			} else {
 			$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki">' . $linktext . '</a>';
+			}
 
 			// Check is timeout expired?
 			if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
@@ -3637,7 +3642,12 @@ class TikiLib extends TikiDB {
 		if ($repl2) {
 		    if ($desc = $this->page_exists_desc($page_parse)) {
 			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+		    global $feature_wiki_jstooltips;
+			if (!empty($feature_wiki_jstooltips) && $feature_wiki_jstooltips == 'y') {
+				$repl = '<a href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki"  onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $page_parse. '</a>';
+			} else {
 			$repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse). "' class='wiki'>$page_parse</a>";
+			}
 		    } else {
 		  $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
 		    }
