@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.5 2003-11-17 11:45:28 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_browse.php,v 1.6 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,14 +14,14 @@ include_once('lib/directory/dirlib.php');
 if ($feature_directory != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_view_directory != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -147,6 +147,6 @@ $stats = $dirlib->dir_stats();
 $smarty->assign_by_ref('stats', $stats);
 
 $smarty->assign('mid', 'tiki-directory_browse.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

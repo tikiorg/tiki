@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.7 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.8 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,14 +14,14 @@ include_once ('lib/surveys/surveylib.php');
 if ($feature_surveys != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_surveys");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["surveyId"])) {
 	$smarty->assign('msg', tra("No survey indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -55,7 +55,7 @@ $survey_info = $srvlib->get_survey($_REQUEST["surveyId"]);
 if ($tiki_p_take_survey != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -64,7 +64,7 @@ if ($tiki_p_admin != 'y') {
 	if ($tikilib->user_has_voted($user, 'survey' . $_REQUEST["surveyId"])) {
 		$smarty->assign('msg', tra("You cannot take this survey twice"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -116,6 +116,6 @@ include_once ('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-take_survey.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

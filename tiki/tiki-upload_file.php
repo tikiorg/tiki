@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.22 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.23 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once ('lib/filegals/filegallib.php');
 if ($feature_file_galleries != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -22,7 +22,7 @@ if ($feature_file_galleries != 'y') {
 if ($tiki_p_upload_files != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot upload files"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -70,7 +70,7 @@ if (isset($_REQUEST["upload"])) {
 	if ($tiki_p_upload_files != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot upload files"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -80,7 +80,7 @@ if (isset($_REQUEST["upload"])) {
 	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info["user"]) && $gal_info["public"] != 'y') {
 		$smarty->assign('msg', tra("Permission denied you can upload files but not to this file gallery"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -116,7 +116,7 @@ if (isset($_REQUEST["upload"])) {
 				} else {
 					$smarty->assign('msg', tra('No permission to upload zipped file packages'));
 
-					$smarty->display("styles/$style_base/error.tpl");
+					$smarty->display("error.tpl");
 					die;
 				}
 			}
@@ -263,6 +263,6 @@ include_once ('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-upload_file.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

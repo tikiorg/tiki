@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.35 2003-10-30 17:22:06 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.36 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,14 +16,14 @@ include_once ('lib/userprefs/userprefslib.php');
 if ($feature_userPreferences != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -41,7 +41,7 @@ if (isset($_REQUEST["view_user"])) {
 		} else {
 			$smarty->assign('msg', tra("You dont have permission to view other users data"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	} else {
@@ -127,7 +127,7 @@ if (isset($_REQUEST['chgemail'])) {
 	if (!$userlib->validate_user($userwatch, $_REQUEST['pass'], '', '')) {
 		$smarty->assign('msg', tra("Invalid password.  You current password is required to change your email address."));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -138,14 +138,14 @@ if (isset($_REQUEST["chgpswd"])) {
 	if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
 		$smarty->assign('msg', tra("The passwords didn't match"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
 	if (!$userlib->validate_user($userwatch, $_REQUEST["old"], '', '')) {
 		$smarty->assign('msg', tra("Invalid old password"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -153,7 +153,7 @@ if (isset($_REQUEST["chgpswd"])) {
 	if (strlen($_REQUEST["pass1"]) < $min_pass_length) {
 		$smarty->assign('msg', tra("Password should be at least"). ' ' . $min_pass_length . ' ' . tra("characters long"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -162,7 +162,7 @@ if (isset($_REQUEST["chgpswd"])) {
 		if (!preg_match_all("/[0-9]+/", $_REQUEST["pass1"], $foo) || !preg_match_all("/[A-Za-z]+/", $_REQUEST["pass1"], $foo)) {
 			$smarty->assign('msg', tra("Password must contain both letters and numbers"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	}
@@ -343,6 +343,6 @@ if ($display_timezone != "UTC")
 $smarty->assign_by_ref('display_timezone', $display_timezone);
 
 $smarty->assign('mid', 'tiki-user_preferences.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.29 2003-11-11 23:04:19 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.30 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once ('lib/articles/artlib.php');
 if ($feature_articles != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -122,7 +122,7 @@ if (isset($_REQUEST["articleId"])) {
 if ($tiki_p_edit_article != 'y' and ($article_data["author"] != $user or $article_data["creator_edit"] != 'y')) {
 	$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -361,6 +361,6 @@ $smarty->assign('cols', isset($_REQUEST['cols'])? $_REQUEST['cols']: '80');
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_article.tpl');
 $smarty->assign('show_page_bar', 'n');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

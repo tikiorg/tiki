@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.4 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_css.php,v 1.5 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// $Id: tiki-edit_css.php,v 1.4 2003-08-07 04:33:57 rossta Exp $
+// $Id: tiki-edit_css.php,v 1.5 2003-11-17 15:44:28 mose Exp $
 include_once ("tiki-setup.php");
 
 include_once ("lib/csslib.php");
@@ -51,14 +51,14 @@ if (!isset($tiki_p_create_css))
 if ($feature_editcss != 'y') {
 	$smarty->assign('msg', tra("Feature disabled"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_create_css != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -90,7 +90,7 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 	if (!$fp) {
 		$smarty->assign('msg', tra("You dont have permission to write the style sheet"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -126,6 +126,6 @@ $list = $csslib->list_css($styledir);
 $smarty->assign('list', $list);
 
 $smarty->assign('mid', 'tiki-edit_css.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

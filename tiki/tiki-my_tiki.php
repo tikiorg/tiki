@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.7 2003-10-14 09:46:08 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.8 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,14 +16,14 @@ include_once ('lib/tasks/tasklib.php');
 if ($feature_userPreferences != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -36,7 +36,7 @@ if (isset($_REQUEST["view_user"])) {
 		} else {
 			$smarty->assign('msg', tra("You dont have permission to view other users data"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	} else {
@@ -97,20 +97,20 @@ if(isset($_REQUEST["prefs"])) {
 if(isset($_REQUEST["chgpswd"])) {
   if($_REQUEST["pass1"]!=$_REQUEST["pass2"]) {
 	$smarty->assign('msg',tra("The passwords didn't match"));
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
   }
   
   if(!$userlib->validate_user($userwatch,$_REQUEST["old"],'','')) {
 	$smarty->assign('msg',tra("Invalid old password"));
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
   }
   
   //Validate password here
   if(strlen($_REQUEST["pass1"])<$min_pass_length) {
 	$smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die; 	
   }
   
@@ -118,7 +118,7 @@ if(isset($_REQUEST["chgpswd"])) {
   if($pass_chr_num == 'y') {
 	if(!preg_match_all("[0-9]+",$_REQUEST["pass1"],$foo) || !preg_match_all("[A-Za-z]+",$_REQUEST["pass1"],$foo)) {
 	  $smarty->assign('msg',tra("Password must contain both letters and numbers"));
-	  $smarty->display("styles/$style_base/error.tpl");
+	  $smarty->display("error.tpl");
 	  die; 	
 	}
   }
@@ -275,6 +275,6 @@ include_once ('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
 $smarty->assign('mid', 'tiki-my_tiki.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

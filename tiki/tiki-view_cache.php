@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_cache.php,v 1.7 2003-08-17 19:29:39 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_cache.php,v 1.8 2003-11-17 15:44:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 /*
 if($feature_listPages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;  
 }
 */
@@ -22,7 +22,7 @@ if (isset($_REQUEST['url'])) {
 	if (!$id) {
 		$smarty->assign('msg', tra("No cache information available"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -32,7 +32,7 @@ if (isset($_REQUEST['url'])) {
 if (!isset($_REQUEST["cacheId"])) {
 	$smarty->assign('msg', tra("No page indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 

@@ -4,7 +4,7 @@ require_once('tiki-setup_base.php');
 /*
 if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 */
@@ -45,7 +45,7 @@ if($tiki_p_admin_file_galleries == 'y') {
 
 if($tiki_p_download_files != 'y') {
   $smarty->assign('msg',tra("You can not download files"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 

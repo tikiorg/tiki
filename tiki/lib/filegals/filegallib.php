@@ -250,7 +250,7 @@ class FileGalLib extends TikiLib {
 					if (!$fw) {
 						$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 
-						$smarty->display("styles/$style_base/error.tpl");
+						$smarty->display("error.tpl");
 						die;
 					}
 				}

@@ -15,14 +15,14 @@ include_once ('lib/live_support/lslib.php');
 if ($feature_live_support != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_live_support");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_live_support_admin != 'y' && !$lsadminlib->user_is_operator($user)) {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -80,6 +80,6 @@ $smarty->assign_by_ref('users', $ok_users);
 
 // Display the template
 $smarty->assign('mid', 'tiki-live_support_admin.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.10 2003-10-24 15:39:25 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.11 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
 		$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -28,7 +28,7 @@ if (isset($_REQUEST["newgroup"])) {
 	if ($userlib->group_exists($_REQUEST["name"])) {
 		$smarty->assign('msg', tra("Group already exists"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	} else {
 		$userlib->add_group(addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]),$ag_home);
@@ -163,6 +163,6 @@ if ($offset > 0) {
 $smarty->assign_by_ref('users', $users["data"]);
 // Display the template for group administration
 $smarty->assign('mid', 'tiki-admingroups.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.31 2003-11-11 22:12:00 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.32 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once ('lib/articles/artlib.php');
 if ($feature_submissions != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_submissions");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -22,7 +22,7 @@ if ($feature_submissions != 'y') {
 if ($tiki_p_submit_article != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot send submissions"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -131,7 +131,7 @@ if (isset($_REQUEST["subId"])) {
 		if ($tiki_p_edit_submission != 'y' and $article_data["author"] != $user) {
 			$smarty->assign('msg', tra("Permission denied you cannot edit submissions"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	}
@@ -318,7 +318,7 @@ if (isset($_REQUEST["save"])) {
 	if (!isset($_REQUEST["topicId"])) {
 		$smarty->assign('msg', tra("You have to create a topic first"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -380,6 +380,6 @@ $smarty->assign('siteTimeZone', $dc->getTzName());
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_submission.tpl');
 $smarty->assign('show_page_bar', 'n');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

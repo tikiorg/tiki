@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rankings.php,v 1.9 2003-10-08 04:11:54 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rankings.php,v 1.10 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,21 +14,21 @@ include_once ('lib/rankings/ranklib.php');
 if ($feature_blogs != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($feature_blog_rankings != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blog_rankings");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_read_blog != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -82,6 +82,6 @@ $smarty->assign_by_ref('rankings', $rankings);
 $smarty->assign('rpage', 'tiki-blog_rankings.php');
 // Display the template
 $smarty->assign('mid', 'tiki-ranking.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

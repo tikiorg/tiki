@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.5 2003-08-07 19:42:24 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.6 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
 		$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -23,7 +23,7 @@ if ($user != 'admin') {
 if (!isset($_REQUEST["assign_user"])) {
 	$smarty->assign('msg', tra("Unknown user"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -33,7 +33,7 @@ $smarty->assign_by_ref('assign_user', $assign_user);
 if (!$userlib->user_exists($assign_user)) {
 	$smarty->assign('msg', tra("User doesnt exist"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -104,6 +104,6 @@ $smarty->assign_by_ref('users', $users["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-assignuser.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.8 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.9 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,14 +14,14 @@ include_once ('lib/quizzes/quizlib.php');
 if ($feature_quizzes != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["quizId"])) {
 	$smarty->assign('msg', tra("No quiz indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -55,7 +55,7 @@ $quiz_info = $quizlib->get_quiz($_REQUEST["quizId"]);
 if ($tiki_p_take_quiz != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -66,7 +66,7 @@ if ($user) {
 		if ($quizlib->user_has_taken_quiz($user, $_REQUEST["quizId"])) {
 			$smarty->assign('msg', tra("You cannot take this quiz twice"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	}
@@ -87,7 +87,7 @@ if (isset($_REQUEST["timeleft"])) {
 			if ($quizlib->user_has_taken_quiz($user, $_REQUEST["quizId"])) {
 				$smarty->assign('msg', tra("You cannot take this quiz twice"));
 
-				$smarty->display("styles/$style_base/error.tpl");
+				$smarty->display("error.tpl");
 				die;
 			} else {
 				$quizlib->user_takes_quiz($user, $_REQUEST["quizId"]);
@@ -101,7 +101,7 @@ if (isset($_REQUEST["timeleft"])) {
 		if ($elapsed > $quiz_info["timeLimit"] * 60) {
 			$smarty->assign('msg', tra("Quiz time limit excedeed quiz cannot be computed"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	}
@@ -172,6 +172,6 @@ if ($feature_theme_control == 'y') {
 
 // Display the template
 $smarty->assign('mid', 'tiki-take_quiz.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

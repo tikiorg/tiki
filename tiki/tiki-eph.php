@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-eph.php,v 1.7 2003-10-22 12:09:19 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-eph.php,v 1.8 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,13 +13,13 @@ include_once ("lib/class_calendar.php");
 if ($feature_eph != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_eph");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if($tiki_p_view_eph != 'y') {
         $smarty->assign('msg',tra("You dont have permission to use this feature"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;
 }
 
@@ -124,6 +124,6 @@ if (!isset($tasks_useDates))
 $smarty->assign('tasks_useDates', $tasks_useDates);
 // end of existential question
 $smarty->assign('mid', 'tiki-eph.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

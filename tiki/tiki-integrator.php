@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.14 2003-11-12 01:00:57 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.15 2003-11-17 15:44:29 mose Exp $
  *
  * Integrated files viewer (wrapper)
  *
@@ -13,13 +13,13 @@ require_once('lib/integrator/integrator.php');
 if ($feature_integrator != 'y')
 {
     $smarty->assign('msg', tra("This feature is disabled").": feature_integrator");
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 if (($tiki_p_view_integrator != 'y') && ($tiki_p_admin_integrator != 'y') && ($tiki_p_admin != 'y'))
 {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 
@@ -28,7 +28,7 @@ $repID = (isset($_REQUEST["repID"]) && strlen($_REQUEST["repID"]) > 0) ? $_REQUE
 if (!isset($_REQUEST["repID"]) && ($repID <= 0))
 {
     $smarty->assign('msg',tra("No repository given"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 // Create instance of integrator
@@ -46,7 +46,7 @@ if ((substr($file, 0, 7) != 'http://')
       $smarty->assign('msg',tra("File not found ").$file);
     else
       $smarty->assign('msg',tra("File not found ").$_REQUEST["file"]);
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 // Needs to clear cached version of this file...
@@ -62,6 +62,6 @@ if (isset($_REQUEST["file"])) $smarty->assign('file', $_REQUEST["file"]);
 
 // Display the template
 $smarty->assign('mid','tiki-integrator.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -64,7 +64,7 @@ if (!function_exists('galaxia_show_error')) {
     {
         global $smarty, $style_base;
         $smarty->assign('msg',tra($msg));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
     }
 }
 

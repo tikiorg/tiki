@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_links.php,v 1.9 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_links.php,v 1.10 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ include_once ('lib/featured_links/flinkslib.php');
 if ($feature_featuredLinks != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_featuredLinks");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -21,7 +21,7 @@ if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
 		$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -44,7 +44,7 @@ if ($_REQUEST["editurl"] != 'n') {
 	if (!$info) {
 		$smarty->assign('msg', tra("Unexistant link"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -73,6 +73,6 @@ $links = $tikilib->get_featured_links(999999);
 $smarty->assign_by_ref('links', $links);
 
 $smarty->assign('mid', 'tiki-admin_links.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

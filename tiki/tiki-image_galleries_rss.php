@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-image_galleries_rss.php,v 1.18 2003-10-14 22:12:05 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-image_galleries_rss.php,v 1.19 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,13 +11,13 @@ require_once ('lib/imagegals/imagegallib.php');
 
 if ($rss_image_galleries != 'y') {
 	$smarty -> assign('msg', tra("This feature is disabled"));
-	$smarty -> display("styles/$style_base/error.tpl");
+	$smarty -> display("error.tpl");
 	die; // TODO: output of rss file with message: rss disabled
 }
 
 if ($tiki_p_view_image_gallery != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view this section"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die; // TODO: output of rss file with message: permission denied
 }
 

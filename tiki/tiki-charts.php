@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-charts.php,v 1.5 2003-10-22 12:09:19 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-charts.php,v 1.6 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,13 +12,13 @@ include_once ('lib/charts/chartlib.php');
 if ($feature_charts != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_charts");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if($tiki_p_view_chart != 'y') {
         $smarty->assign('msg',tra("You dont have permission to use this feature"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;
 }
 
@@ -82,6 +82,6 @@ $sameurl_elements = array(
 );
 
 $smarty->assign('mid', 'tiki-charts.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

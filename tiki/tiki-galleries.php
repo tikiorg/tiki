@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.17 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.18 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,14 +15,14 @@ include_once ("lib/imagegals/imagegallib.php");
 /*
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view pages like this page"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;  
 }
 */
 if ($feature_galleries != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -44,7 +44,7 @@ $smarty->assign('galleryId', $_REQUEST["galleryId"]);
 if ($tiki_p_view_image_gallery != 'y') {
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -126,7 +126,7 @@ if (isset($_REQUEST["edit"])) {
 			// If you can't create a gallery then you can't edit a gallery because you can't have a gallery
 			$smarty->assign('msg', tra("Permission denied you cannot create galleries and so you cant edit them"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 
@@ -137,7 +137,7 @@ if (isset($_REQUEST["edit"])) {
 			if (!$user || $info["user"] != $user) {
 				$smarty->assign('msg', tra("Permission denied you cannot edit this gallery"));
 
-				$smarty->display("styles/$style_base/error.tpl");
+				$smarty->display("error.tpl");
 				die;
 			}
 		}
@@ -215,7 +215,7 @@ if (isset($_REQUEST["removegal"])) {
 		if (!$user || $info["user"] != $user) {
 			$smarty->assign('msg', tra("Permission denied you cannot remove this gallery"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	}
@@ -311,6 +311,6 @@ include_once ('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-galleries.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

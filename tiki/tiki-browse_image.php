@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.20 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.21 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,14 +14,14 @@ include_once("lib/imagegals/imagegallib.php");
 if ($feature_galleries != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["imageId"])) {
 	$smarty->assign('msg', tra("No image indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -133,7 +133,7 @@ if ($tiki_p_admin_galleries == 'y') {
 if ($tiki_p_view_image_gallery != 'y') {
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -193,7 +193,7 @@ if (isset($_REQUEST["move_image"])) {
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot move images from this gallery"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -263,6 +263,6 @@ if (isset($_REQUEST['popup'])and ($_REQUEST['popup'])) {
 
 // Display the template
 $smarty->assign('mid', 'tiki-browse_image.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_question_options.php,v 1.6 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_question_options.php,v 1.7 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,14 +14,14 @@ include_once ('lib/quizzes/quizlib.php');
 if ($feature_quizzes != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["questionId"])) {
 	$smarty->assign('msg', tra("No question indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -58,7 +58,7 @@ if ($userlib->object_has_one_permission($_REQUEST["quizId"], 'quiz')) {
 if ($tiki_p_admin_quizzes != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -137,6 +137,6 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_question_options.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

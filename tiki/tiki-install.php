@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.29 2003-11-10 15:35:27 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.30 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.29 2003-11-10 15:35:27 chris_holman Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.30 2003-11-17 15:44:29 mose Exp $
 session_start();
 
 // Define and load Smarty components
@@ -193,8 +193,8 @@ class Smarty_Sterling extends Smarty {
 		global $style_base;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/styles/$style_base/".$params['smarty_include_tpl_file'])) {
-				$params['smarty_include_tpl_file'] = "styles/$style_base/".$params['smarty_include_tpl_file'];
+			if (file_exists("templates/".$params['smarty_include_tpl_file'])) {
+				$params['smarty_include_tpl_file'] = "".$params['smarty_include_tpl_file'];
 			}
 		}
 
@@ -211,8 +211,8 @@ class Smarty_Sterling extends Smarty {
 		$language = 'en';
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
-				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
+			if (file_exists("templates/$_smarty_tpl_file")) {
+				$_smarty_tpl_file = "$_smarty_tpl_file";
 			}
 		}
 

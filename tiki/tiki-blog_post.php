@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.23 2003-11-12 17:24:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.24 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once ('lib/blogs/bloglib.php');
 if ($feature_blogs != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -22,7 +22,7 @@ if ($feature_blogs != 'y') {
 if ($tiki_p_blog_post != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot post"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -74,7 +74,7 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 		if ($tiki_p_blog_admin != 'y') {
 			$smarty->assign('msg', tra("Permission denied you cannot edit this post"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	}
@@ -178,7 +178,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 	if ($tiki_p_blog_post != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot post"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -195,7 +195,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 			if ($tiki_p_blog_admin != 'y') {
 				$smarty->assign('msg', tra("Permission denied you cannot edit this post"));
 
-				$smarty->display("styles/$style_base/error.tpl");
+				$smarty->display("error.tpl");
 				die;
 			}
 		}
@@ -241,7 +241,7 @@ if ($tiki_p_blog_admin == 'y') {
 if (count($blogs) == 0) {
 	$smarty->assign('msg', tra("You can't post in any blog maybe you have to create a blog first"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -262,6 +262,6 @@ $smarty->assign('cols', isset($_REQUEST['cols'])? $_REQUEST['cols']: '80');
 // Display the Index Template
 $smarty->assign('mid', 'tiki-blog_post.tpl');
 $smarty->assign('show_page_bar', 'n');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

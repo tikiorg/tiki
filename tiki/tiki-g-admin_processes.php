@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.7 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.8 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,14 +15,14 @@ $smarty->assign('is_active_help', tra('indicates if the process is active. Inval
 if ($feature_workflow != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_workflow");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_admin_workflow != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -70,7 +70,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	if ($processManager->process_name_exists($process_data['name'], $process_data['version'])) {
 		$smarty->assign('msg', tra("The process name already exists"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	} else {
 		$processManager->import_process($process_data);
@@ -102,7 +102,7 @@ if (isset($_REQUEST['save'])) {
 	if ($processManager->process_name_exists($_REQUEST['name'], $_REQUEST['version']) && $_REQUEST['pid'] == 0) {
 		$smarty->assign('msg', tra("Process already exists"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -220,6 +220,6 @@ $all_procs = $items = $processManager->list_processes(0, -1, 'name_desc', '', ''
 $smarty->assign_by_ref('all_procs', $all_procs['data']);
 
 $smarty->assign('mid', 'tiki-g-admin_processes.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

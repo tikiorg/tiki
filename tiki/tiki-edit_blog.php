@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.16 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.17 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once ('lib/blogs/bloglib.php');
 if ($feature_blogs != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -22,7 +22,7 @@ if ($feature_blogs != 'y') {
 if ($tiki_p_create_blogs != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot create or edit blogs"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -111,7 +111,7 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 		if ($tiki_p_blog_admin != 'y') {
 			$smarty->assign('msg', tra("Permission denied you cannot edit this blog"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	}
@@ -176,6 +176,6 @@ include_once ("categorize_list.php");
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_blog.tpl');
 $smarty->assign('show_page_bar', 'n');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

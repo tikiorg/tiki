@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.6 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-removepage.php,v 1.7 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ include_once ('lib/wiki/wikilib.php');
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -23,7 +23,7 @@ if ($feature_wiki != 'y') {
 if (!isset($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("No page indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 } else {
 	$page = $_REQUEST["page"];
@@ -37,7 +37,7 @@ include_once ("tiki-pagesetup.php");
 if ($tiki_p_remove != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot remove versions from this page"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -55,7 +55,7 @@ if ($_REQUEST["version"] <> "last") {
 if (!$tikilib->page_exists($page)) {
 	$smarty->assign('msg', tra("Page cannot be found"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -79,6 +79,6 @@ if (isset($_REQUEST["remove"])) {
 
 $smarty->assign('mid', 'tiki-removepage.tpl');
 $smarty->assign('show_page_bar', 'y');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

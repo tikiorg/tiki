@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.9 2003-11-12 20:42:53 gillesm Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.10 2003-11-17 15:44:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ include_once('lib/notifications/notificationlib.php');
 if ($feature_trackers != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -25,7 +25,7 @@ $smarty->assign('itemId', $_REQUEST["itemId"]);
 if (!isset($_REQUEST["trackerId"])) {
 	$smarty->assign('msg', tra("No tracker indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -58,7 +58,7 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 if ($tiki_p_view_trackers != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -95,7 +95,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	        if (!empty($gal_match_regex)) {
 		  	 if (!preg_match("/$gal_match_regex/", $_FILES[$userfile1]['name'], $reqs)) {
 					$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-					$smarty->display("styles/$style_base/error.tpl");
+					$smarty->display("error.tpl");
 					die;
 				}
 			}
@@ -103,7 +103,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			if (!empty($gal_nmatch_regex)) {
 				if (preg_match("/$gal_nmatch_regex/", $_FILES[$userfile]['name'], $reqs)) {
 					$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-					$smarty->display("styles/$style_base/error.tpl");
+					$smarty->display("error.tpl");
 					die;
 				}
 			}
@@ -272,6 +272,6 @@ include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

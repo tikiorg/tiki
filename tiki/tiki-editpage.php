@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.57 2003-11-16 00:04:35 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.58 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,21 +16,21 @@ include_once ('lib/structures/structlib.php');
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_view != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
   $smarty->assign('msg',tra("No page indicated"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 } else {
 	$page = $_REQUEST["page"];
@@ -260,7 +260,7 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
     if (isset($php_errormsg) && strlen($php_errormsg))
     {
         $smarty->assign('msg', tra("Can't import remote HTML page"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;
     }
     // Need to parse HTML?
@@ -271,7 +271,7 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
         if (!$fp = @fopen($grammarfile,'r'))
         {
             $smarty->assign('msg', tra("Can't parse remote HTML page"));
-            $smarty->display("styles/$style_base/error.tpl");
+            $smarty->display("error.tpl");
             die;
         }
         $grammar = unserialize(fread($fp, filesize($grammarfile)));
@@ -311,7 +311,7 @@ if(strcasecmp(substr($page,0,8),"UserPage")==0) {
 	if(strcasecmp($user,$name)!=0) {
 		if($tiki_p_admin != 'y') {
  			$smarty->assign('msg',tra("You cannot edit this page because it is a user personal page"));
- 			$smarty->display("styles/$style_base/error.tpl");
+ 			$smarty->display("error.tpl");
  			die;
  		}
  	}
@@ -320,7 +320,7 @@ if(strcasecmp(substr($page,0,8),"UserPage")==0) {
 if ($_REQUEST["page"] == 'SandBox' && $feature_sandbox != 'y') {
 	$smarty->assign('msg', tra("The SandBox is disabled"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -331,7 +331,7 @@ if (!isset($_REQUEST["comment"])) {
 /*
 if(!page_exists($page)) {
   $smarty->assign('msg',tra("Page cannot be found"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 */
@@ -342,7 +342,7 @@ if ($page != 'SandBox') {
 	if ($tiki_p_edit != 'y') {
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -357,7 +357,7 @@ if(isset($info['wiki_cache']) && $info['wiki_cache']!=0) {
 if ($info["flag"] == 'L') {
 	$smarty->assign('msg', tra("Cannot edit page because it is locked"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -370,14 +370,14 @@ if ($page != 'SandBox') {
 			if (!$userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_edit')) {
 				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 
-				$smarty->display("styles/$style_base/error.tpl");
+				$smarty->display("error.tpl");
 				die;
 			}
 		} else {
 			if ($tiki_p_edit != 'y') {
 				$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 
-				$smarty->display("styles/$style_base/error.tpl");
+				$smarty->display("error.tpl");
 				die;
 			}
 		}
@@ -398,7 +398,7 @@ if(!$user && $anonCanEdit<>'y') {
   header("location: tiki-index.php");
   die;
   //$smarty->assign('msg',tra("Anonymous users cannot edit pages"));
-  //$smarty->display("styles/$style_base/error.tpl");
+  //$smarty->display("error.tpl");
   //die;
 }
 */
@@ -696,6 +696,6 @@ $smarty->assign('cols', isset($_REQUEST['cols'])? $_REQUEST['cols']: '80');
 // Display the Index Template
 $smarty->assign('mid', 'tiki-editpage.tpl');
 $smarty->assign('show_page_bar', 'y');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>
