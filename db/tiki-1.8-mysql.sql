@@ -3868,6 +3868,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_hotwords','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_html_pages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_image_galleries_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_integrator','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_jscalendar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_lastChanges','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_left_column','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_likePages','y');

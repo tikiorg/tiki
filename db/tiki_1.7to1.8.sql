@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.85 2003-11-26 16:39:17 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.86 2003-12-01 12:24:19 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -828,4 +828,6 @@ ALTER TABLE `tiki_charts` DROP `hist`;
 # added on 2003-11-25 by mose (phplayers pref)
 INSERT INTO tiki_preferences (name, value) VALUES ('feature_phplayers', 'n');
 
+# added on 2003-12-01 by mose (jscalendar pref)
+INSERT INTO tiki_preferences (name, value) VALUES ('feature_jscalendar', 'n');
 
