@@ -175,6 +175,12 @@ user='$user' and eventId='$eventId'";
     $this->query($query);
   }
   
+  function minical_event_reminded($user,$eventId)
+  {
+    $query = "update tiki_minical_events set reminded='y' where user='$user' and eventId=$eventId";
+    $this->query($query);
+  }
+  
   
   function minical_replace_event($user,$eventId,$title,$description,$start,$duration,$topicId)
   {
@@ -183,14 +189,14 @@ user='$user' and eventId='$eventId'";
     $now = date("U");
     if($eventId) {
       $query = "update tiki_minical_events set
-      topicId=$topicId,end=$start+$duration,title='$title', description='$description',start=$start,duration=$duration
+      topicId=$topicId,end=$start+$duration,title='$title', description='$description',start=$start,duration=$duration,reminded='n'
       where user='$user' and 
       eventId=$eventId";	
       $this->query($query);
       return $eventId;
     } else {
-      $query = "insert into tiki_minical_events(user,title,description,start,duration,end,topicId)
-      values('$user','$title','$description',$start,$duration,$start+$duration,$topicId)";
+      $query = "insert into tiki_minical_events(user,title,description,start,duration,end,topicId,reminded)
+      values('$user','$title','$description',$start,$duration,$start+$duration,$topicId,'n')";
       $this->query($query);
       $Id = $this->getOne("select max(eventId) from 
 tiki_minical_events where user='$user' and start=$start");
@@ -204,6 +210,22 @@ tiki_minical_events where user='$user' and start=$start");
     and eventId=$eventId";
     $this->query($query);  	
   }	
+  
+  function minical_get_events_to_remind($user,$rem)
+  {
+    // Search for events that are not reminded and will start
+    // in less than $rem
+    $limit = date("U")+$rem;
+    $now = date("U");
+    $query = "select * from tiki_minical_events where user='$user' and reminded<>'y' and start<=$limit and start>$now";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[]=$res;
+    }
+    return $ret;
+  }
+  
   
   function minical_remove_old($user,$pdate)
   {

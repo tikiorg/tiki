@@ -4141,6 +4141,8 @@ class TikiLib {
       $smarty->assign('mail_page',$pageName);
       $smarty->assign('mail_date',date("U"));
       $smarty->assign('mail_user',$edit_user);
+      $smarty->assign('mail_comment',$edit_comment);
+      $smarty->assign('mail_last_version',$version);
       $smarty->assign('mail_data',$edit_data);
       $smarty->assign('mail_machine',$_SERVER["REQUEST_URI"]);
       $smarty->assign('mail_pagedata',$edit_data);

@@ -349,6 +349,11 @@ $feature_wiki_usrlock = 'n';
 $smarty->assign('feature_wiki_usrlock',$feature_wiki_usrlock);
 
 
+$minical_reminders = $tikilib->get_user_preference($user,'minical_reminders',0);
+$smarty->assign('minical_reminders',$minical_reminders);
+
+
+
 $feature_contact = 'n';
 $smarty->assign('feature_contact',$feature_contact);
 $contact_user = $tikilib->get_preference('contact_user','admin');
