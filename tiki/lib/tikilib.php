@@ -1433,7 +1433,7 @@ function add_pageview() {
 
     /*shared*/
     function remove_object($type, $id) {
-    	global $categlib;
+    	global $categlib, $dbTiki;
 
 		if (!is_object($categlib)) {
 		    require_once ("lib/categories/categlib.php");
