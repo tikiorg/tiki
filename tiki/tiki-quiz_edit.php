@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.5 2004-05-14 17:05:36 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.6 2004-05-17 16:05:36 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -156,6 +156,15 @@ $quiz['name'] = "Test Chapter 01";
 $quiz['description'] = "Quiz on Chapter 01 of Tom Sawyer";
 
 $quiz['online'] = "n";
+
+$quiz['taken'] = 'y';
+$quiz['version'] = 'x';
+
+$quiz['history'] = array();
+$quiz['history'][] = "Version 1 was taken by 1 student(s).";
+$quiz['history'][] = "Version 2 was taken by 2 student(s).";
+$quiz['history'][] = "Version 3 was taken by 3 student(s).";
+$quiz['history'][] = "and so on...";
 
 // The default publish date to be Jan 1, of this year at midnight.
 $quiz['publishDate'] = mktime(0, 0, 0, 1, 1,  date("Y"));
