@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.23 2003-12-05 19:42:05 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.24 2003-12-05 19:46:24 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -25,7 +25,8 @@ if ($tiki_p_view_calendar != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
+$bufid = array();
+$bufdata = array();
 $modifiable = array();
 $rawcals = $calendarlib->list_calendars();
 
