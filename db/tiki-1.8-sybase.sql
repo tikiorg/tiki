@@ -1218,7 +1218,7 @@ threadId numeric(14 ,0) identity,
   "smiley" varchar(80) default NULL NULL,
   "message_id" varchar(250) default NULL NULL,
   "in_reply_to" varchar(250) default NULL NULL,
-  "comment_rating" tinynumeric(2,0) default NULL NULL,  
+  "comment_rating" numeric(2,0) default NULL NULL,  
   PRIMARY KEY ("threadId")
 
 
