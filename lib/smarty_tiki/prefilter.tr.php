@@ -13,7 +13,7 @@ function _translate_lang($key) {
   global $lang;
   global $lang_use_db;
   if ($lang_use_db!='y') {
-    include_once(TIKI_LANG_PATH."/$language/language.php");
+    include_once("lang/$language/language.php");
     if(isset($lang[$key[2]])) {
         if ($key[1] == "{tr}") {
           return $lang[$key[2]];// no more possible translation in block.tr.php
