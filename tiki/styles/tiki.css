@@ -19,10 +19,8 @@ a,a:visited,a:active {
 	text-decoration: none;
 }
 a:hover {
-  color: #000000;
-	background-color: #f5f5e6;
-	margin: -1px;
-	border: 1px solid #887766;
+  color: #226822;
+	background-color: #f5f5b6;
 	text-decoration: none;
 }	
 /* GENERAL LAYOUT EXPLANATION
@@ -161,7 +159,6 @@ voice-family: "\"}\"";
 voice-family: inherit;
 margin-left: 190px;
 margin-right: 190px;
-width: 100%;
 }
 html>body #centercolumn {
 margin-left: 190px;
