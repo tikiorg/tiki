@@ -481,6 +481,10 @@ class TrackerLib extends TikiLib {
 				$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
 				$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
 				$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
 			}
 		}
 		include_once('lib/notifications/notificationlib.php');	
@@ -656,6 +660,10 @@ class TrackerLib extends TikiLib {
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));
 		$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
+		$cachelib->invalidate(md5('trackerfield'.$fieldId.'op'));
+		$cachelib->invalidate(md5('trackerfield'.$fieldId.'oc'));
+		$cachelib->invalidate(md5('trackerfield'.$fieldId.'pc'));
+		$cachelib->invalidate(md5('trackerfield'.$fieldId.'opc'));
 		return true;
 	}
 
