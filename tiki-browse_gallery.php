@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.27 2004-08-24 13:21:27 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.28 2004-08-26 22:13:51 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -129,6 +129,7 @@ if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
 	$gal_info['showxysize'] ='y';
 	$gal_info['showfilesize'] ='n';
 	$gal_info['showfilename'] ='n';
+	$gal_info['defaultscale'] ='o';
 
 }
 
@@ -144,6 +145,7 @@ $smarty->assign_by_ref('showhits', $gal_info['showhits']);
 $smarty->assign_by_ref('showxysize', $gal_info['showxysize']);
 $smarty->assign_by_ref('showfilesize', $gal_info['showfilesize']);
 $smarty->assign_by_ref('showfilename', $gal_info['showfilename']);
+$smarty->assign_by_ref('defaultscale', $gal_info['defaultscale']);
 
 $imagegallib->add_gallery_hit($_REQUEST["galleryId"]);
 
@@ -232,10 +234,10 @@ if (!isset($info["maxRows"]))
 if (!isset($info["rowImages"]))
 	$info["rowImages"] = 5;
 
-if (!isset($nextscaleinfo["xsize"])) {
-	$nextscaleinfo["xsize"] = 0;
+if (!isset($nextscaleinfo['scale'])) {
+	$nextscaleinfo['scale'] = 0;
 
-	$nextscaleinfo["ysize"] = 0;
+	$nextscaleinfo['scale'] = 0;
 }
 
 if ($info["maxRows"] == 0)
@@ -252,8 +254,7 @@ $smarty->assign_by_ref('thx', $info["thumbSizeX"]);
 $smarty->assign_by_ref('thy', $info["thumbSizeY"]);
 $smarty->assign_by_ref('name', $info["name"]);
 $smarty->assign_by_ref('description', $info["description"]);
-$smarty->assign_by_ref('nextx', $nextscaleinfo["xsize"]);
-$smarty->assign_by_ref('nexty', $nextscaleinfo["ysize"]);
+$smarty->assign_by_ref('nextscale', $nextscaleinfo['scale']);
 
 // Can we rotate images
 if ($imagegallib->canrotate) {

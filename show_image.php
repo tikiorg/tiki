@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.23 2004-08-16 02:26:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.24 2004-08-26 22:13:51 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.23 2004-08-16 02:26:40 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.24 2004-08-26 22:13:51 redflo Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -38,21 +38,17 @@ if($feature_galleries != 'y') {
 $gal_use_db = $tikilib->get_preference('gal_use_db', 'y');
 $gal_use_dir = $tikilib->get_preference('gal_use_dir', '');
 
-$sxsize = 0;
-$sysize = 0;
+$scalesize = 0;
 
 if (isset($_REQUEST["thumb"])) {
 	$itype = 't';
 } elseif (isset($_REQUEST["scaled"])) {
 	$itype = 's';
 
-	if (isset($_REQUEST["xsize"]) && is_numeric($_REQUEST["xsize"])) {
-		$sxsize = $_REQUEST["xsize"];
+	if (isset($_REQUEST["scalesize"]) && is_numeric($_REQUEST["scalesize"])) {
+		$scalesize = $_REQUEST["scalesize"];
 	}
 
-	if (isset($_REQUEST["ysize"]) && is_numeric($_REQUEST["ysize"])) {
-		$sysize = $_REQUEST["ysize"];
-	}
 } else {
 	$itype = 'o';
 }
@@ -63,7 +59,7 @@ if (isset($_REQUEST["name"])) {
 	$id=$_REQUEST["id"];
 }
 
-$imagegallib->get_image($id, $itype, $sxsize, $sysize);
+$imagegallib->get_image($id, $itype, $scalesize);
 	
 if (!isset($imagegallib->image)) {
 	// cannot scale image. Get original
