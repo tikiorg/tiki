@@ -773,7 +773,7 @@ CREATE TABLE "tiki_categories" (
 --
 
 DROP TABLE "tiki_categorized_objects";
-
+DROP SEQUENCE "tiki_categorize_catObjectId_seq";
 
 CREATE TABLE "tiki_categorized_objects" (
   "catObjectId" bigserial,
@@ -4573,7 +4573,7 @@ INSERT INTO users_groups(groupName,groupDesc) VALUES('Registered','Users logged 
 --
 
 DROP TABLE "users_users";
-
+DROP SEQUENCE "users_users_userId_seq";
 
 CREATE TABLE "users_users" (
   "userId" serial,
