@@ -2617,24 +2617,6 @@ CREATE TABLE tiki_searchindex(
   KEY last_update (last_update)
 ) TYPE=MyISAM;
 
-# LRU (last recently used) list for searching parts of words
-DROP TABLE IF EXISTS tiki_searchsyllable;
-CREATE TABLE tiki_searchsyllable(
-  syllable varchar(80) NOT NULL default '',
-  lastUsed int(11) NOT NULL default '0',
-  lastUpdated int(11) NOT NULL default '0',
-  PRIMARY KEY  (syllable),
-  KEY lastUsed (lastUsed)
-) TYPE=MyISAM;
-
-# searchword caching table for search syllables
-DROP TABLE IF EXISTS tiki_searchwords;
-CREATE TABLE tiki_searchwords(
-  syllable varchar(80) NOT NULL default '',
-  searchword varchar(80) NOT NULL default '',
-  PRIMARY KEY  (syllable,searchword)
-) TYPE=MyISAM;
-
 
 #
 # Table structure for table `tiki_search_stats`
@@ -3776,7 +3758,7 @@ CREATE TABLE users_users (
 ### Administrator account
 INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md5('adminadmin'));
 UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin;
-INSERT INTO tiki_user_preferences(user,prefName,value) VALUES ('admin','realName','System Administrator');
+INSERT INTO tiki_user_preferences(user,prefName,value) VALUES ('admin','realName','System Administrator'); 
 # --------------------------------------------------------
 
 # Inserts of all default values for preferences
@@ -3998,6 +3980,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_nmatch_regex','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('gal_use_lib','gd');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('groupTracker','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('groupTrackerId','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('home_file_gallery','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('http_domain','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('http_port','80');
@@ -4082,6 +4066,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('use_proxy','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_assigned_modules','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useRegisterPasscode','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTracker','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userTrackerId','0');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useUrlIndex','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateUsers','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('eponymousGroups','n');
