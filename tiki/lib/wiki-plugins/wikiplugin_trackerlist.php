@@ -9,7 +9,7 @@ function wikiplugin_trackerlist_help() {
 	return $help;
 }
 function wikiplugin_trackerlist($data, $params) {
-	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers;
+	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $maxRecords, $_REQUEST, $tiki_p_view_trackers, $user;
 
 	extract ($params);
 
@@ -17,27 +17,6 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign('msg', tra("missing tracker ID for plugin TRACKER"));
 		return $smarty->fetch("error_simple.tpl");
 	} else {
-
-		if ($userlib->object_has_one_permission($trackerId, 'tracker')) {
-			$smarty->assign('individual', 'y');
-			if ($tiki_p_admin != 'y') {
-				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
-				foreach ($perms["data"] as $perm) {
-					$permName = $perm["permName"];
-					if ($userlib->object_has_permission($user, $trackerId, 'tracker', $permName)) {
-						$$permName = 'y';
-						$smarty->assign("$permName", 'y');
-					} else {
-						$$permName = 'n';
-						$smarty->assign("$permName", 'n');
-					}
-				}
-			}
-		}
-		if ($tiki_p_view_trackers != 'y') {
-			$smarty->assign('msg', tra("You dont have permission to use this feature"));
-			return $smarty->fetch("error_simple.tpl");
-		}
 
 		include "lib/trackers/trackerlib.php";
 		if (!isset($fields)) {
