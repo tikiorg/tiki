@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_pagehistory.tpl,v 1.3 2004-02-22 17:15:00 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_pagehistory.tpl,v 1.4 2004-06-23 22:34:28 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-hw_pagehistory.php?id={$pageId|escape:"url"}">
   {tr}History{/tr}
@@ -33,7 +33,7 @@
   <h3>{tr}Diff to version{/tr}: {$version}</h3>
   {$diffdata}
 {/if}
-<br/>
+<br />
 <form action="tiki-hw_pagehistory.php?id={$pageId}" method="post">
   {* <input type="hidden" name="page" value="{$page|escape}" /> *}
   <div align="center">

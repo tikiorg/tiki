@@ -4,11 +4,11 @@
 <a href="{$helpurl}MemberList" target="tikihelp" class="tikihelp" title="{tr}Member List{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
-<br/><br/>
+<br /><br />
 {if $tiki_p_create_users eq 'y'}
 <a class="userlink" href="tiki-edit_user.php">{tr}create new user{/tr}</a>
 {/if} 
-<br/><br/>
+<br /><br />
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -44,7 +44,7 @@
 </td></tr>
 {/section}
 </table>
-<br/>
+<br />
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="userprevnext" href="tiki-list_users.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
@@ -54,7 +54,7 @@
 &nbsp;[<a class="userprevnext" href="tiki-list_users.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-list_users.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">

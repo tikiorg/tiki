@@ -263,7 +263,6 @@
     {tr}Wiki Features{/tr}:<br />
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
-    <tr><td class="form">{tr}Mail-in{/tr}:</td><td><input type="checkbox" name="feature_mailin" {if $feature_mailin eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Anonymous editors must input anti-bot code{/tr}:</td><td><input type="checkbox" name="feature_antibot" {if $feature_antibot eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
@@ -280,7 +279,8 @@
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_wiki_comments" {if $feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Spellchecking{/tr}:</td><td>{if $lib_spellcheck eq 'y'}<input type="checkbox" name="wiki_spellcheck" {if $wiki_spellcheck eq 'y'}checked="checked"{/if}/>{else}{tr}Not Installed{/tr}{/if}</td></tr>
     <tr><td class="form">{tr}Use templates{/tr}:</td><td><input type="checkbox" name="feature_wiki_templates" {if $feature_wiki_templates eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Warn on edit{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/>
+    <tr><td class="form">{tr}Warn on edit conflict{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Edit idle timeout{/tr}:</td><td>
     <select name="warn_on_edit_time">
     <option value="1" {if $warn_on_edit_time eq 1}selected="selected"{/if}>1</option>
     <option value="2" {if $warn_on_edit_time eq 2}selected="selected"{/if}>2</option>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.33 2004-06-23 16:59:05 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.34 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,16 +103,16 @@ $comments_complete_father = $comments_father;
  */
 $comments_complete_father = $comments_father . $comments_t_query;
 
-//print("Complete Father: $comments_complete_father<br/>");
-//print("Father: $comments_father<br/>");
+//print("Complete Father: $comments_complete_father<br />");
+//print("Father: $comments_father<br />");
 if (strstr($comments_complete_father, "?")) {
     $comments_complete_father .= '&amp;';
 } else {
     $comments_complete_father .= '?';
 }
 
-//print("Father: $comments_father<br/>");
-//print("Com: $comments_complete_father<br/>");
+//print("Father: $comments_father<br />");
+//print("Com: $comments_complete_father<br />");
 $smarty->assign('comments_father', $comments_father);
 $smarty->assign('comments_complete_father', $comments_complete_father);
 
@@ -340,7 +340,7 @@ $smarty->assign('comments_style', $_REQUEST["comments_style"]);
 $smarty->assign('comments_commentFind', $_REQUEST["comments_commentFind"]);
 $smarty->assign('comments_show', $comments_show);
 
-//print("Show: $comments_show<br/>");
+//print("Show: $comments_show<br />");
 // Offset setting for the list of comments
 if (!isset($_REQUEST["comments_offset"])) {
     $comments_offset = 0;

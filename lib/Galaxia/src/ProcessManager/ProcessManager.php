@@ -184,7 +184,7 @@ class ProcessManager extends BaseManager {
                 }                
               } else {
                 $aux[$name]=$value;
-                //print("$name:$value<br/>");
+                //print("$name:$value<br />");
               }
             }
             $aux['roles']=$roles;
@@ -209,7 +209,7 @@ class ProcessManager extends BaseManager {
         }
       } else {
         $value = trim($this->tree[$z]['data']);
-        //print("$name is $value<br/>");
+        //print("$name is $value<br />");
         $process[$name]=$value;
       }
     }

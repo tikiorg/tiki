@@ -1,3 +1,4 @@
+<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove blogs, go to "Create/Edit blog" under "Blogs" on the left menu, or{/tr} <a class="link" href="tiki-edit_blog.php">{tr}click here{/tr}</a>.</div><br />
 <div class="cbox">
   <div class="cbox-title">{tr}Blog settings{/tr}</div>
   <div class="cbox-data">

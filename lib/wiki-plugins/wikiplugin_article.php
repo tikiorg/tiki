@@ -13,7 +13,7 @@ function wikiplugin_article($data, $params) {
 	extract ($params);
 
 	if (!isset($Id)) {
-		return ("<b>missing article ID for plugin ARTICLE</b><br/>");
+		return ("<b>missing article ID for plugin ARTICLE</b><br />");
 	}
 	if (!isset($Field)) {
 		$Field = 'heading';

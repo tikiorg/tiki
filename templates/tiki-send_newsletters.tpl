@@ -43,7 +43,7 @@
 </td></tr>
 {/if}
 {if $nlId}
-<tr><td class="formcolor">{tr}Data{/tr}:<br/><br/>{include file="textareasize.tpl" area_name='editnl' formId='editpageform'}</td>
+<tr><td class="formcolor">{tr}Data{/tr}:<br /><br />{include file="textareasize.tpl" area_name='editnl' formId='editpageform'}</td>
 <td class="formcolor"><textarea id='editnl' name="data" rows="{$rows}" cols="{$cols}">{$info.data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>

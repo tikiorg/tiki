@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.104 2004-06-21 13:46:38 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.105 2004-06-23 22:34:29 mose Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -177,14 +177,14 @@
   </div>
   {if $tiki_p_hw_teacher eq 'y'}
     <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
-      &nbsp;<a href="tiki-hw_teacher_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br/>
-      {* &nbsp;<a href="tiki-hw_teacher_grading_queue.php" class="linkmenu">{tr}Grading Queue{/tr}</a><br/> *}
-      &nbsp;<a href="tiki-hw_teacher_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br/>
+      &nbsp;<a href="tiki-hw_teacher_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br />
+      {* &nbsp;<a href="tiki-hw_teacher_grading_queue.php" class="linkmenu">{tr}Grading Queue{/tr}</a><br /> *}
+      &nbsp;<a href="tiki-hw_teacher_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br />
     </div>
   {elseif $tiki_p_hw_student eq 'y'}
     <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
-      &nbsp;<a href="tiki-hw_student_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br/>
-      &nbsp;<a href="tiki-hw_student_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br/>
+      &nbsp;<a href="tiki-hw_student_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br />
+      &nbsp;<a href="tiki-hw_student_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br />
     </div>
   {/if}
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_console_tab.tpl,v 1.2 2003-08-01 10:31:13 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_console_tab.tpl,v 1.3 2004-06-23 22:34:28 mose Exp $ *}
 {* Debug console tab -- to display result of command *}
 
 
@@ -11,7 +11,7 @@
 
     {* Show text in PRE section *}
     <pre>{strip}
-      {$command_result|escape:"html"|wordwrap:90:"\n":true|replace:"\n":"<br/>"}
+      {$command_result|escape:"html"|wordwrap:90:"\n":true|replace:"\n":"<br />"}
     {/strip}</pre>
 
   {elseif $result_type == HTML_RESULT }
@@ -26,5 +26,5 @@
 
   {/if}{* Check result type *}
 
-<br/>
+<br />
 {/if}{* We have smth to show as result *}

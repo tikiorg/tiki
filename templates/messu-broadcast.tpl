@@ -12,7 +12,7 @@
 <br /><br />
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
-</br>
+<br />
 
 {if $sent}
 {$message}

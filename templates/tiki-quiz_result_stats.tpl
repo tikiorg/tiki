@@ -57,8 +57,8 @@ add userlink/ next step is to grab quiz results and include it in messaging so t
 
 <!-- I'm not sure why this is here -->
 
-</br> 
-Answer: </br> 
+<br /> 
+Answer: <br /> 
 {*
 what is this supposed to be doing? isn't it already in the table below?
 *}

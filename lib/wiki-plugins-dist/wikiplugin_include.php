@@ -31,7 +31,7 @@
  *
  * @package TikiWiki
  * @subpackage TikiPlugins
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 function wikiplugin_include_help() {
@@ -44,7 +44,7 @@ function wikiplugin_include($data, $params) {
 	$max_times = 5;
     extract ($params);
 	if (!isset($page)) {
-		return ("<b>missing page for plugin INCLUDE</b><br/>");
+		return ("<b>missing page for plugin INCLUDE</b><br />");
 	}
     if ( isset($included_pages[$page]) ) {
         if ( $included_pages[$page]>=$max_times ) {
@@ -68,7 +68,7 @@ function wikiplugin_include($data, $params) {
         if ($canbeseen=="n") {
             $included_pages[$page] = $max_times;
     //		I think is safer to show nothing instead of a message saying that a page can't be accessed
-    //		$text="<b>User $user has no permission to access $page</b><br/>";
+    //		$text="<b>User $user has no permission to access $page</b><br />";
             $text="";
             return($text);
         }

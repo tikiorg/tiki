@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.113 2004-06-20 18:29:56 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.114 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -148,7 +148,7 @@ $info = $tikilib->get_page_info($page);
 
 // If the page doesn't exist then display an error
 if(empty($info)) {
-    $smarty->assign('msg',tra("Page cannot be found"));
+    $smarty->assign('msg',tra("Sorry, wikipage \"$page\" doesn't exist (yet)."));
     $smarty->display("error.tpl");
     die;
 } else {

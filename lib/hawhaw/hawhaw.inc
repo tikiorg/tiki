@@ -2636,7 +2636,7 @@ class HAW_text
       elseif ($deck->ml == HAW_WML)
       {
         // break instruction in WML
-        $br_command = "<br/>\n";
+        $br_command = "<br />\n";
       }
       for ($i=0; $i < $this->br; $i++)
         echo $br_command;
@@ -2883,7 +2883,7 @@ class HAW_image
                   HAW_specchar($this->alt, $deck), $localsrc);
 
         // break instruction in WML
-        $br_command = "<br/>\n";
+        $br_command = "<br />\n";
       }
 
       // create required amount of carriage return's
@@ -3051,7 +3051,7 @@ class HAW_table
     elseif ($deck->ml == HAW_WML)
     {
       // make new line in WML
-      echo "</table><br/>\n";
+      echo "</table><br />\n";
     }
   }
 };
@@ -4590,7 +4590,7 @@ class HAW_submit
           else
             printf("<go href=\"%s?%s\"/>\n", $url, $query_string);
 
-          echo "</anchor><br/>\n";
+          echo "</anchor><br />\n";
         }
         else
         {
@@ -4852,7 +4852,7 @@ class HAW_link
         // create required amount of carriage return's
         $br = "";
         for ($i=0; $i < $this->br; $i++)
-          $br .= "<br/>";
+          $br .= "<br />";
   
         printf("<a%s href=\"%s\">%s</a>%s\n",
                $title_option, HAW_specchar($this->url, $deck),
@@ -5012,7 +5012,7 @@ class HAW_phone
         $title_option = sprintf(" title=\"%s\"",
                                  HAW_specchar($this->title, $deck));
 
-      printf("<a%s href=\"wtai://wp/mc;%s\">%s</a><br/>\n", $title_option,
+      printf("<a%s href=\"wtai://wp/mc;%s\">%s</a><br />\n", $title_option,
               ereg_replace("[+]", "%2B", $this->number), HAW_specchar($this->label, $deck));
     }
     elseif ($deck->ml == HAW_HDML)
@@ -5529,7 +5529,7 @@ class HAW_rule
       else
         // WAP device does not understand <hr> tags
         // ==> draw some number of hyphens to create a rule
-        echo "----------<br/>\n";
+        echo "----------<br />\n";
     }
     elseif ($deck->ml == HAW_HDML)
     {

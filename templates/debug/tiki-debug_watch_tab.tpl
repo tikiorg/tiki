@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_watch_tab.tpl,v 1.3 2003-09-25 01:05:22 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/debug/tiki-debug_watch_tab.tpl,v 1.4 2004-06-23 22:34:28 mose Exp $ *}
 
 <table  id="watchlist">
   <caption> {tr}Watchlist{/tr} </caption>
@@ -13,7 +13,7 @@
         <code>{$watchlist[i].var}</code>
       </td>
       <td class="{cycle}"{if $smarty.section.i.index == 0} id="firstrow"{/if}>
-        <pre>{$watchlist[i].value|escape:"html"|wordwrap:60:"\n":true|replace:"\n":"<br/>"}</pre>
+        <pre>{$watchlist[i].value|escape:"html"|wordwrap:60:"\n":true|replace:"\n":"<br />"}</pre>
       </td>
     </tr>
   {/section}

@@ -1674,13 +1674,13 @@ $lang=Array(
 "
 \n<b>Note 1</b>: if you allow your users to configure modules then assigned
 \nmodules won't be reflected in the screen until you configure them
-\nfrom MyTiki->modules.<br/>
+\nfrom MyTiki->modules.<br />
 \n<b>Note 2</b>: If you assign modules to groups make sure that you
 \nhave turned off the option 'display modules to all groups always'
 \nfrom Admin->General
 \n" => "
 \n<b>注意事項 1</b>: 如果你允許使用者自行調整模組的設定, 設定的模組
-\n將不會反應到畫面上, 必須到 我的Tiki->模組 中設定.<br/>
+\n將不會反應到畫面上, 必須到 我的Tiki->模組 中設定.<br />
 \n<b>注意事項 2</b>: 如果你指定模組至群組中, 請確定你有到 管理->一般選項 中把
 \n「所有的模組都顯示群組」選項給關閉",//perhaps not used
 "left" => "左",
@@ -3032,7 +3032,7 @@ $lang=Array(
 "Edit this Menu:" => "編輯此選單:",
 "Create new Menu" => "建立新選單",
 "dynamic collapsed" => "動態展開",
-"\n<b>Note 1</b>: if you allow your users to configure modules then assigned\nmodules won't be reflected in the screen until you configure them\nfrom MyTiki->modules.<br/>\n<b>Note 2</b>: If you assign modules to groups make sure that you\nhave turned off the option 'display modules to all groups always'\nfrom Admin->General\n" => "\n<b>注意事項 1</b>: 如果你允許使用者自行調整模組的設定, 設定的模組\n將不會反應到畫面上, 必須到 我的Tiki->模組 中設定.<br/>\n<b>注意事項 2</b>: 如果你指定模組至群組中, 請確定你有到 管理->一般選項 中把\n「所有的模組都顯示群組」選項給關閉",//perhaps not used
+"\n<b>Note 1</b>: if you allow your users to configure modules then assigned\nmodules won't be reflected in the screen until you configure them\nfrom MyTiki->modules.<br />\n<b>Note 2</b>: If you assign modules to groups make sure that you\nhave turned off the option 'display modules to all groups always'\nfrom Admin->General\n" => "\n<b>注意事項 1</b>: 如果你允許使用者自行調整模組的設定, 設定的模組\n將不會反應到畫面上, 必須到 我的Tiki->模組 中設定.<br />\n<b>注意事項 2</b>: 如果你指定模組至群組中, 請確定你有到 管理->一般選項 中把\n「所有的模組都顯示群組」選項給關閉",//perhaps not used
 "Edit this assigned module:" => "編輯指定的模組:",
 "Assign new module" => "指定新模組",
 "Edit this user module:" => "編輯此使用者模組:",

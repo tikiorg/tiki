@@ -93,7 +93,7 @@
 </div>
 {/if}{$parsed}
 {if $pages > 1}
-	<br/>
+	<br />
 	<div align="center">
 		<a href="tiki-index.php?page={$page}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
 
@@ -127,7 +127,7 @@
 {/if}
 {/if}
 {if $wiki_extras eq 'y'}
-<br/>
+<br />
 {if $feature_wiki_attachments eq 'y'}
 {if $tiki_p_wiki_view_attachments eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
 <div id="attzone">

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.19 2004-06-21 13:46:41 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.20 2004-06-23 22:34:33 mose Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -40,7 +40,7 @@
   {else}
     <a class="separator" href="javascript:toggle('mymenu');">[-]</a>
   {/if}
-    <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki (click!){/tr}</a>
+    <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}
     <a class="separator" href="javascript:toggle('mymenu');">[+]</a>
   {/if}
@@ -48,6 +48,9 @@
 
   <div id="mymenu" style="{$mnu_mymenu}">
   {if $feature_userPreferences eq 'y'}
+		<a href="tiki-my_tiki.php" class="linkmenu">{tr}MyTiki home{/tr}</a><br />
+	{/if}
+	{if $feature_userPreferences eq 'y'}
     <a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a><br />
   {/if}
   {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}

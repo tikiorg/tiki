@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.72 2004-06-16 19:33:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.73 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,13 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+
+if ($feature_categories == 'y') {
+	global $categlib;
+	if (!is_object($categlib)) {
+		include_once('lib/categories/categlib.php');
+	}
+}
 
 if ($feature_forums != 'y') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_forums");
@@ -59,6 +66,26 @@ if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
 	    }
 	}
     }
+} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	$perms_array = $categlib->get_object_categories_perms($user, 'forum', $_REQUEST['forumId']);
+   	if ($perms_array) {
+   		$is_categorized = TRUE;
+    	foreach ($perms_array as $perm => $value) {
+    		$$perm = $value;
+    	}
+   	} else {
+   		$is_categorized = FALSE;
+   	}
+	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		if (!isset($user)){
+			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+			$smarty->assign('errortitle',tra("Please login"));
+		} else {
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+    	}
+	    $smarty->display("error.tpl");
+		die;
+	}
 }
 
 if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
@@ -146,6 +173,9 @@ if ($tiki_p_admin_forum == 'y') {
 		$obj = 'forum:' . $_REQUEST['moveto'];
 
 		$commentslib->set_comment_object($topic, $obj);
+		// update the stats for the source and destination forums
+		$commentslib->forum_prune($_REQUEST['forumId']);
+		$commentslib->forum_prune($_REQUEST['moveto']);
 	    }
 	}
     }
@@ -632,7 +662,7 @@ $smarty->assign('comments_maxComments', $_REQUEST["comments_maxComments"]);
 $smarty->assign('comments_sort_mode', $_REQUEST["comments_sort_mode"]);
 $smarty->assign('comments_commentFind', $_REQUEST["comments_commentFind"]);
 
-//print("Show: $comments_show<br/>");
+//print("Show: $comments_show<br />");
 // Offset setting for the list of comments
 if (!isset($_REQUEST["comments_offset"])) {
     $comments_offset = 0;

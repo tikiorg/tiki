@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment.tpl,v 1.3 2004-06-19 15:19:04 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment.tpl,v 1.4 2004-06-23 22:34:28 mose Exp $ *}
 {* Copyright 2004 George G. Geller *}
 
 <!-- templates/tiki-hw_teacher_assignment.tpl start -->
@@ -8,7 +8,7 @@
   <span class="titleb">
     <span style="color: rgb(0, 0, 255);">
       {tr}Due Date{/tr}: {$dueDate|tiki_long_datetime}
-    </span><br/ >
+    </span><br />
   </span>
 </div>
 

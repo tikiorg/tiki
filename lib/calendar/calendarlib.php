@@ -173,7 +173,7 @@ class CalendarLib extends TikiLib {
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['lastModif']), date("d", $res['lastModif']), date("Y", $res['lastModif']));
 					$tstart = date("Hi", $res["lastModif"]);
-					$quote = "<i>" . tra("by"). " " . $res["user"] . "</i><br/>" . str_replace('"', "'", $res["comment"]);
+					$quote = "<i>" . tra("by"). " " . $res["user"] . "</i><br />" . str_replace('"', "'", $res["comment"]);
 					$ret["$dstart"][] = array(
 						"calitemId" => "",
 						"calname" => "",
@@ -228,7 +228,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-read_article.php?articleId=" . $res["articleId"],
 						"name" => $res["title"],
 						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["topicName"]). "</b>",
-						"description" => "<i>" . tra("by"). " " . $res["authorName"] . "</i><br/>" . addslashes(str_replace('"', "'", $res["heading"]))
+						"description" => "<i>" . tra("by"). " " . $res["authorName"] . "</i><br />" . addslashes(str_replace('"', "'", $res["heading"]))
 					);
 				}
 				break;
@@ -296,7 +296,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-directory_redirect.php?siteId=" . $res["siteId"],
 						"name" => str_replace("'", "", $res["name"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
-						"description" => addslashes($res["url"]). "<br/>" . addslashes(str_replace('"', "'", $res["description"]))
+						"description" => addslashes($res["url"]). "<br />" . addslashes(str_replace('"', "'", $res["description"]))
 					);
 				}
 				break;
@@ -318,7 +318,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-list_file_gallery.php?galleryId=" . $res["fgalId"],
 						"name" => str_replace("'", "", $res["name"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["fgalname"]). "</b>",
-						"description" => "<i>" . tra("uploaded by"). " " . addslashes($res["user"]). "</i><br/>" . addslashes(str_replace('"', "'", $res["description"]))
+						"description" => "<i>" . tra("uploaded by"). " " . addslashes($res["user"]). "</i><br />" . addslashes(str_replace('"', "'", $res["description"]))
 					);
 				}
 				break;

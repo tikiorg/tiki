@@ -1,3 +1,4 @@
+<div class="simplebox">{tr}Tip{/tr}: {tr}to configure your trackers, look for "Admin trackers" under "Trackers" on the left menu, or{/tr} <a class="link" href="tiki-admin_trackers.php">{tr}click here{/tr}</a>.</div><br />
 <div class="cbox">
 <div class="cbox-title">{tr}Trackers{/tr}</div>
 <div class="cbox-data">

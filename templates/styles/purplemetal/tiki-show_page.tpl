@@ -213,7 +213,7 @@
 </div>
 {/if}{$parsed}
 {if $pages > 1}
-	<br/>
+	<br />
 	<div align="center">
 		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
 		<a href="tiki-index.php?page={$page|escape:"url"}&amp;pagenum={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
@@ -232,7 +232,7 @@
 
 <p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
 {if $wiki_extras eq 'y'}
-<br/>
+<br />
 {include file=attachments.tpl}
 
 {if $feature_wiki_comments eq 'y'}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.29 2004-06-14 01:13:01 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.30 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -109,7 +109,20 @@ if (isset($_REQUEST["prefs"])) {
     //$smarty->assign('pagetop_msg', tra("Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release."));
     $smarty->assign('pagetop_msg', "");
 }
+// Site Identity Settings
+elseif (isset($_REQUEST["siteidentityset"])) {
+ check_ticket('admin-inc-general');
+ 	$pref_byref_values = array(
+  			"sitelogo_src",
+				"sitelogo_bgcolor",
+				"sitelogo_title",
+				"sitelogo_alt"
+    );
 
+    foreach ($pref_byref_values as $britem) {
+        byref_set_value ($britem);
+    } 
+}
 // Handle Password Change Request
 elseif (isset($_REQUEST["newadminpass"])) {
 	check_ticket('admin-inc-general');

@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.4 2003-09-08 14:52:23 sylvieg Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_catpath.php,v 1.5 2004-06-23 22:34:27 mose Exp $
  *
  * TikiWiki CATPATH plugin.
  * 
@@ -71,7 +71,7 @@ function wikiplugin_catpath($data, $params) {
 			$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a> ' . $divider . ' ' . $path;
 		}
 
-		$catpath .= $path . '</span><br/>';
+		$catpath .= $path . '</span><br />';
 	}
 
 	return $catpath;

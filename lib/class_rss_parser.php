@@ -193,7 +193,7 @@ function my_statement_handler(
 
 function my_warning_handler($warning )
 {
-    printf( "**** WARNING **** : %s<br/>", $warning );
+    printf( "**** WARNING **** : %s<br />", $warning );
 }
 
 ?>

@@ -13,7 +13,7 @@
 <br />{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
 {/if}
 
-<br/><br/>
+<br /><br />
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

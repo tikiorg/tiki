@@ -1,3 +1,4 @@
+<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove forums, look for "Admin forums" under "Forums" on the left menu, or{/tr} <a class="link" href="tiki-admin_forums.php">{tr}click here{/tr}</a>.</div><br />
 <div class="cbox">
   <div class="cbox-title">{tr}Forums{/tr}</div>
   <div class="cbox-data">

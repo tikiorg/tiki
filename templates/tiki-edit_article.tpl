@@ -30,7 +30,7 @@
 <tr class="formcolor"><td>{tr}Topline{/tr}</td><td><input type="text" name="topline" value="{$topline|escape}" size="60" /></td></tr>
 <tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" maxlength="80" size="80" /></td></tr>
 <tr class="formcolor"><td>{tr}Subtitle{/tr}</td><td><input type="text" name="subtitle" value="{$subtitle|escape}" size="60" /></td></tr>
-<tr class="formcolor"><td>{tr}Link to{/tr}</td><td><input type="text" name="linkto" value="{$linkto|escape}" size="60" /></td></tr>
+<tr class="formcolor"><td>{tr}Source{/tr} ({tr}URL{/tr})</td><td><input type="text" name="linkto" value="{$linkto|escape}" size="60" /></td></tr>
 {if $feature_multilingual eq 'y'}
 <tr class="formcolor"><td>{tr}Language{/tr}</td><td><select name="lang">
 <option value="">{tr}All{/tr}</option>

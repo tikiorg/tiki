@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.1 2004-05-31 23:03:43 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-site_header.tpl,v 1.2 2004-06-23 22:34:28 mose Exp $ *}
 {* Template for TikiWiki site identity header *}
 {if $feature_sitenavbar eq 'y'}
 <!-- site navigation bar -->
 {/if}
 {if $feature_sitelogo eq 'y'}
-<div id="sitelogo">
+<div id="sitelogo"{if $sitelogo_bgcolor ne ''} style="background-color: {$sitelogo_bgcolor}"{/if}>
 	<a href="./" title="{$sitelogo_title}"><img src="{$sitelogo_src}" alt="{$sitelogo_alt}" style="border: none" /></a>
 </div><!-- site logo -->
 {/if}

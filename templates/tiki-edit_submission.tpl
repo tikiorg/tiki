@@ -25,11 +25,12 @@
 <input type="hidden" name="image_type" value="{$image_type|escape}" />
 <input type="hidden" name="image_name" value="{$image_name|escape}" />
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
+<div class="simplebox">{tr}<b>*</b>=optional, <b>Topline</b>=small line above Title, <b>Subtitle</b>=small line below Title, <b>Source</b>=URL to article source{/tr}</div><br />
 <table class="normal">
-<tr class="formcolor"><td>{tr}Topline{/tr}</td><td><input type="text" name="topline" value="{$topline|escape}" size="60" /></td></tr>
+<tr class="formcolor"><td>{tr}Topline{/tr} *</td><td><input type="text" name="topline" value="{$topline|escape}" size="60" /></td></tr>
 <tr class="formcolor"><td>{tr}Title{/tr}</td><td><input type="text" name="title" value="{$title|escape}" maxlength="80" size="80" /></td></tr>
-<tr class="formcolor"><td>{tr}Subtitle{/tr}</td><td><input type="text" name="subtitle" value="{$subtitle|escape}" size="60" /></td></tr>
-<tr class="formcolor"><td>{tr}Link to{/tr}</td><td><input type="text" name="linkto" value="{$linkto|escape}" size="60" /></td></tr>
+<tr class="formcolor"><td>{tr}Subtitle{/tr} *</td><td><input type="text" name="subtitle" value="{$subtitle|escape}" size="60" /></td></tr>
+<tr class="formcolor"><td>{tr}Source{/tr} ({tr}URL{/tr}) *</td><td><input type="text" name="linkto" value="{$linkto|escape}" size="60" /></td></tr>
 {if $feature_multilingual eq 'y'}
 <tr class="formcolor"><td>{tr}Language{/tr}</td><td><select name="lang">
 <option value="">{tr}All{/tr}</option>
@@ -81,7 +82,7 @@
 <option value="0.5" {if $rating eq "0.5"}selected="selected"{/if}>0.5</option>
 </select>
 </td></tr>
-<tr class="formcolor"><td>{tr}Own Image{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<tr class="formcolor"><td>{tr}Own Image{/tr} *</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
 {if $hasImage eq 'y'}
   <tr class="formcolor"><td>{tr}Own Image{/tr}</td><td>{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
@@ -91,18 +92,18 @@
     </td></tr>
   {/if}
 {/if}
-<tr class="formcolor"><td>{tr}Use own image{/tr}</td><td>
+<tr class="formcolor"><td>{tr}Use own image{/tr} *</td><td>
 <input type="checkbox" name="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
 </td></tr>
-<tr class="formcolor"><td>{tr}Float text around image{/tr}</td><td>
+<tr class="formcolor"><td>{tr}Float text around image{/tr} *</td><td>
 <input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}/>
 </td></tr>
-<tr class="formcolor"><td>{tr}Own image size x{/tr}</td><td><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Own image size y{/tr}</td><td><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
-<tr class="formcolor"><td>{tr}Image caption{/tr}</td><td><input type="text" name="image_caption" value="{$image_caption|escape}" size="60" /></td></tr>
+<tr class="formcolor"><td>{tr}Own image size x{/tr} *</td><td><input type="text" name="image_x" value="{$image_x|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Own image size y{/tr} *</td><td><input type="text" name="image_y" value="{$image_y|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Image caption{/tr} *</td><td><input type="text" name="image_caption" value="{$image_caption|escape}" size="60" /></td></tr>
 
 {if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
-<tr class="formcolor"><td>{tr}Apply template{/tr}</td><td>
+<tr class="formcolor"><td>{tr}Apply template{/tr} *</td><td>
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}

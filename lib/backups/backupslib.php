@@ -27,7 +27,7 @@ class BackupLib extends TikiLib {
 		preg_match_all("/DROP ([^;]+);/i", $data, $reqs);
 
 		foreach ($reqs[0] as $query) {
-			//print("q: $query<br/>");
+			//print("q: $query<br />");
 			$result = $this->query($query);
 		}
 
@@ -35,7 +35,7 @@ class BackupLib extends TikiLib {
 		preg_match_all("/create table ([^;]+);/i", $data, $reqs);
 
 		foreach ($reqs[0] as $query) {
-			//print("q: $query<br/>");
+			//print("q: $query<br />");
 			$result = $this->query($query);
 		}
 
@@ -51,11 +51,11 @@ class BackupLib extends TikiLib {
 
 			$len = unpack("L", $rlen);
 			$len = array_pop($len);
-			//print("leer: $len bytes<br/>");
+			//print("leer: $len bytes<br />");
 			$line = fread($fp, $len);
 			$line = $this->RC4($pwd, $line);
 			// EXECUTE SQL SENTENCE HERE
-			//print("q: $line <br/>");
+			//print("q: $line <br />");
 			$result = $this->query($line,array());
 		}
 

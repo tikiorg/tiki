@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.78 2004-06-20 09:33:25 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.79 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -360,7 +360,7 @@ foreach ($allperms as $vperm) {
 // Get group permissions here
 $perms = $userlib->get_user_permissions($user);
 foreach ($perms as $perm) {
-    //print("Asignando permiso global : $perm<br/>");
+    //print("Asignando permiso global : $perm<br />");
     $smarty->assign("$perm", 'y');
 
     $$perm = 'y';

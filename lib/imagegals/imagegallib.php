@@ -1308,7 +1308,7 @@ class ImageGalsLib extends TikiLib {
 		foreach ($merge as $img) {
 			// This prevents caching images
 			if (!strstr($img, "show_image.php") && !strstr($img, "nocache") && @getimagesize($img)) {
-				//print("Procesando: $img<br/>");
+				//print("Procesando: $img<br />");
 				@$fp = fopen($img, "r");
 
 				if ($fp) {
@@ -1318,7 +1318,7 @@ class ImageGalsLib extends TikiLib {
 						$data .= fread($fp, 4096);
 					}
 
-					//print("Imagen leida:".strlen($data)." bytes<br/>");
+					//print("Imagen leida:".strlen($data)." bytes<br />");
 					fclose ($fp);
 
 					if (strlen($data) > 0) {
@@ -1372,11 +1372,11 @@ class ImageGalsLib extends TikiLib {
 							$t_type = 'image/' . $t_type;
 
 							$imageId = $this->insert_image(0, '', '', $name, $type, $data, $size, $size_x, $size_y, 'admin', $t_data, $t_type);
-						//print("Imagen generada en $imageId<br/>");
+						//print("Imagen generada en $imageId<br />");
 						} else {
-							//print("No GD detected generating image without thumbnail<br/>");
+							//print("No GD detected generating image without thumbnail<br />");
 							$imageId = $this->insert_image(0, '', '', $name, $type, $data, $size, 100, 100, 'admin', '', '');
-						//print("Imagen en $imageId<br/>");
+						//print("Imagen en $imageId<br />");
 						}
 
 						// Now change it!

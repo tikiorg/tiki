@@ -16,7 +16,7 @@
 // | Authors: Martin Jansen <mj@php.net>                                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: Auth.php,v 1.1 2003-04-09 14:05:56 damienmckenna Exp $
+// $Id: Auth.php,v 1.2 2004-06-23 22:34:24 mose Exp $
 //
 
 require_once "PEAR.php";
@@ -133,7 +133,7 @@ require_once "PEAR.php";
  *
  * @author  Martin Jansen <mj@php.net>
  * @package Auth
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 define("AUTH_LOGIN_OK",          2);
@@ -691,7 +691,7 @@ class Auth
                 echo "<i>Wrong login data!</i>\n";
             }
 
-            PEAR::raiseError("You are using the built-in login screen of PEAR::Auth.<br/>See the <a href=\"http://pear.php.net/manual/\">manual</a> for details on how to create your own login function.", null, PEAR_ERROR_PRINT);
+            PEAR::raiseError("You are using the built-in login screen of PEAR::Auth.<br />See the <a href=\"http://pear.php.net/manual/\">manual</a> for details on how to create your own login function.", null, PEAR_ERROR_PRINT);
                     
             echo "<form method=\"post\" action=\"" . $server['PHP_SELF'] . "\">\n";
             echo "<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\">\n";

@@ -19,7 +19,7 @@ function wikiplugin_tracker($data, $params) {
 		$showdesc = "n";
 	}
 	if (!isset($trackerId)) {
-		return ("<b>missing tracker ID for plugin TRACKER</b><br/>");
+		return ("<b>missing tracker ID for plugin TRACKER</b><br />");
 	}
 	if (!isset($action)) {
 		$action = tra("Save");

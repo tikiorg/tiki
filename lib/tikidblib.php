@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.11 2004-06-16 19:55:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.12 2004-06-23 22:34:04 mose Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -65,7 +65,7 @@ function query($query, $values = null, $numrows = -1,
     $offset = intval($offset);
     $this->convert_query($query);
 
-    //echo "query: $query <br/>";
+    //echo "query: $query <br />";
     //echo "<pre>";
     //print_r($values);
     //echo "\n";
@@ -128,10 +128,10 @@ function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
 // Reports SQL error from PEAR::db object.
 function sql_error($query, $values, $result) {
-    global $ADODB_LASTDB;
+    global $ADODB_LASTDB, $smarty;
 
-    trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br/>" . $query . "<br/>", E_USER_WARNING);
     // only for debugging.
+    //trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
     $outp = "<div class='simplebox'><b>".tra("An error occured in a database query!")."</b></div>";
     $outp.= "<br /><table class='form'>";
     $outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";

@@ -1691,12 +1691,12 @@ No newsletters will be sent to you until the subscription is confirmed." => "感
 "
 <b>Note 1</b>: if you allow your users to configure modules then assigned
 modules won't be reflected in the screen until you configure them
-from MyTiki->modules.<br/>
+from MyTiki->modules.<br />
 <b>Note 2</b>: If you assign modules to groups make sure that you
 have turned off the option 'display modules to all groups always'
 from Admin->General
 " => "
-<b>注 1</b>: 如果您�?许用户�?置模组，那么�?�有在MyTiki->模组中�?置过�?�，所指定的模组�?会有�??应。<br/>
+<b>注 1</b>: 如果您�?许用户�?置模组，那么�?�有在MyTiki->模组中�?置过�?�，所指定的模组�?会有�??应。<br />
 <b>注 2</b>: 如果您将一些模组指定给�?些群组，那么请确认您在 管�?�员->一般 中关闭了'永远在所有群组中显示模组'这个选项
 ",//perhaps not used
 "left" => "左",

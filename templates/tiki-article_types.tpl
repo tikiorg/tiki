@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.18 2004-06-20 12:27:07 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.19 2004-06-23 22:34:28 mose Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -30,7 +30,7 @@
 <b>{tr}Show size{/tr}</b> - {tr}Show the size of the article{/tr}<br />
 <b>{tr}Show topline{/tr}</b> - {tr}Show a small title over the title{/tr}<br />
 <b>{tr}Show subtitle{/tr}</b> - {tr}Show the subtitle{/tr}<br />
-<b>{tr}Show linkto{/tr}</b> - {tr}Show a link field{/tr}<br />
+<b>{tr}Show source{/tr}</b> - {tr}Show link to source after article body{/tr}<br />
 <b>{tr}Show Image Caption{/tr}</b> - {tr}Show a legend under the image{/tr}<br />
 <b>{tr}Show Language{/tr}</b> - {tr}Show the language{/tr}<br />
 <b>{tr}Creator can edit{/tr}</b> - {tr}The person who submits an article of this type can edit it{/tr}<br />
@@ -55,7 +55,7 @@
 <td>{tr}Show size{/tr}</td>
 <td>{tr}Show topline{/tr}</td>
 <td>{tr}Show subtitle{/tr}</td>
-<td>{tr}Show linkto{/tr}</td>
+<td>{tr}Show source{/tr}</td>
 <td>{tr}Show Image Caption{/tr}</td>
 <td>{tr}Show lang{/tr}</td>
 <td>{tr}Creator can edit{/tr}</td>

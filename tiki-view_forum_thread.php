@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.65 2004-06-22 22:25:46 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.66 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,6 +74,9 @@ if( isset( $_REQUEST["comments_grandParentId"] ) )
 if( isset( $_REQUEST["comments_reply_threadId"] ) )
 {
     $smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
+} else {
+	$_REQUEST["comments_reply_threadId"] = $_REQUEST["comments_parentId"];
+	$smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
 }
 
 $smarty->assign('forumId', $_REQUEST["forumId"]);

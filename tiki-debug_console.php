@@ -1,15 +1,16 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.5 2004-06-11 22:20:41 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.6 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.5 2004-06-11 22:20:41 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-debug_console.php,v 1.6 2004-06-23 22:33:53 mose Exp $
 //
 
+global $feature_debug_console;
 if ($feature_debug_console == 'y') {
 global $debugger;
 

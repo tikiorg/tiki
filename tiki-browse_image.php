@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.24 2004-05-21 09:18:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.25 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -87,7 +87,6 @@ $smarty->assign_by_ref('prevt', $prevt);
 
 $info = $imagegallib->get_image_info($_REQUEST["imageId"], $itype, $sxsize, $sysize);
 $gal_info = $imagegallib->get_gallery($info["galleryId"]);
-$_REQUEST["galleryId"] = $info["galleryId"];
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$_REQUEST["sort_mode"] = "created_desc";

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.54 2004-06-22 05:11:04 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.55 2004-06-23 22:34:28 mose Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -30,7 +30,7 @@ a moderator approves it.{/tr}</small>
   <td class="odd" >
   <div align="center">
   {if $forum_info.ui_avatar eq 'y' and $thread_info.userName|avatarize}
-  {$thread_info.userName|avatarize}<br/>
+  {$thread_info.userName|avatarize}<br />
   {/if}
   {$thread_info.userName|userlink}
   {if $forum_info.ui_flag eq 'y' and $thread_info.userName|countryflag}

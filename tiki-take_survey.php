@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.11 2004-06-04 02:50:44 dgdaniels Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_survey.php,v 1.12 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,13 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/surveys/surveylib.php');
+
+if ($feature_categories == 'y') {
+	global $categlib;
+	if (!is_object($categlib)) {
+		include_once('lib/categories/categlib.php');
+	}
+}
 
 if ($feature_surveys != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_surveys");
@@ -47,6 +54,26 @@ if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
 			}
 		}
 	}
+} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	$perms_array = $categlib->get_object_categories_perms($user, 'survey', $_REQUEST['surveyId']);
+   	if ($perms_array) {
+   		$is_categorized = TRUE;
+    	foreach ($perms_array as $perm => $value) {
+    		$$perm = $value;
+    	}
+   	} else {
+   		$is_categorized = FALSE;
+   	}
+	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+		if (!isset($user)){
+			$smarty->assign('msg',$smarty->fetch('modules/mod-login_box.tpl'));
+			$smarty->assign('errortitle',tra("Please login"));
+		} else {
+			$smarty->assign('msg',tra("Permission denied you cannot view this page"));
+    	}
+	    $smarty->display("error.tpl");
+		die;
+	}
 }
 
 $smarty->assign('surveyId', $_REQUEST["surveyId"]);
@@ -81,7 +108,7 @@ if (isset($_REQUEST["ans"])) {
 	foreach ($questions["data"] as $question) {
 		$questionId = $question["questionId"];
 
-		//print("question: $questionId<br/>");
+		//print("question: $questionId<br />");
 		if (isset($_REQUEST["question_" . $questionId])) {
 			if ($question["type"] == 'm') {
 				// If we have a multiple question
@@ -95,7 +122,7 @@ if (isset($_REQUEST["ans"])) {
 			} else {
 				$value = $_REQUEST["question_" . $questionId];
 
-				//print("value: $value<br/>");
+				//print("value: $value<br />");
 				if ($question["type"] == 'r' || $question["type"] == 's') {
 					$srvlib->register_survey_rate_vote($questionId, $value);
 				} elseif ($question["type"] == 't') {

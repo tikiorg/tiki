@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.54 2004-06-20 09:33:39 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.55 2004-06-23 22:34:28 mose Exp $ *}
 
 {* this is the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -350,13 +350,13 @@
       </tr>
             <tr>
         
-        <td class="form">
-	        	{if $feature_help eq 'y'}<a href="{$helpurl}AutoLinks" target="tikihelp" class="tikihelp" title="{tr}AutoLinks{/tr}">{/if}
-        		{tr}AutoLinks{/tr}
-        		{if $feature_help eq 'y'}</a>{/if}
-        		:</td>
-        <td><input type="checkbox" name="feature_autolinks"
-            {if $feature_autolinks eq 'y'}checked="checked"{/if}/></td>
+		<td class="form">
+				{if $feature_help eq 'y'}<a href="{$helpurl}Mailin" target="tikihelp" class="tikihelp" title="{tr}Mail-in{/tr}">{/if}
+				{tr}Mail-in{/tr}
+				{if $feature_help eq 'y'}</a>{/if}
+				:</td>
+		<td><input type="checkbox" name="feature_mailin"
+				{if $feature_mailin eq 'y'}checked="checked"{/if}/></td>
 
         <td>&nbsp;</td>
         <td class="form">
@@ -571,6 +571,14 @@
 		        :</td>
         <td><input type="checkbox" name="feature_smileys"
             {if $feature_smileys eq 'y'}checked="checked"{/if}/></td>
+      </tr><tr>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="{$helpurl}AutoLinks" target="tikihelp" class="tikihelp" title="{tr}AutoLinks{/tr}">{/if}
+        		{tr}AutoLinks{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_autolinks"
+            {if $feature_autolinks eq 'y'}checked="checked"{/if}/></td><td></td><td></td><td></td><td></td>
       </tr><tr>
 
         <td class="heading" colspan="5" 

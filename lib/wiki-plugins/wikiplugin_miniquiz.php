@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.2 2004-04-19 07:31:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.3 2004-06-23 22:34:27 mose Exp $
 /*
 DEV NOTE
 that plugin is not finished !! -- mose
@@ -32,7 +32,7 @@ function wikiplugin_miniquiz($data, $params) {
 	extract ($params);
 
 	if (!isset($trackerId)) {
-		return ("<b>missing tracker ID for plugin TRACKER</b><br/>");
+		return ("<b>missing tracker ID for plugin TRACKER</b><br />");
 	}
 	$tracker = $tikilib->get_tracker($trackerId);
 	$items = $tikilib->list_tracker_items($trackerId,0,-1,'lastModif_desc','','o');

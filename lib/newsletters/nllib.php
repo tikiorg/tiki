@@ -314,7 +314,7 @@ class NlLib extends TikiLib {
 		$code = $this->getOne("select `code` from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=?",array((int)$nlId,$email));
 		$url_unsub = $url_subscribe . '?unsubscribe=' . $code;
 		$msg = $smarty->fetchLang($lang, 'mail/newsletter_unsubscribe.tpl');
-		$msg = '<br/><br/>' . $msg . ": <a href='$url_unsub'>$url_unsub</a>";
+		$msg = '<br /><br />' . $msg . ": <a href='$url_unsub'>$url_unsub</a>";
 		return $msg;
 	}
 

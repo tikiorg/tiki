@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.7 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_item_attachment.php,v 1.8 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,7 +31,7 @@ $type = &$info["filetype"];
 $file = &$info["filename"];
 $content = &$info["data"];
 
-//print("File:$file<br/>");
+//print("File:$file<br />");
 //die;
 header ("Content-type: $type");
 //header( "Content-Disposition: attachment; filename=$file" );

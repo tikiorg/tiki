@@ -5,11 +5,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
 
-class bablotron {
+class bablotron extends TikiLib {
 	var $words;
 
 	var $lan;
 	var $db;
+  var $tbl;
 
 	function bablotron($db, $lan) {
 		if (!$db) {
@@ -18,10 +19,7 @@ class bablotron {
 
 		$this->db = $db;
 		$this->lan = $lan;
-	}
-
-	function sql_error($query, $result) {
-		return;
+    $this->tbl = 'babl_words_' . $this->lan;
 	}
 
 	function spellcheck_text($text, $threshold = 5) {
@@ -65,14 +63,10 @@ class bablotron {
 	function find_similar_words($word, $threshold) {
 		$similar = array();
 
-		$tbl = 'babl_words_' . $this->lan;
 		$word = addslashes(trim($word));
 		$sndx = substr($word, 0, 2);
-		$query = "select `word` from `$tbl` where `di`=?";
-		@$result = $this->db->query($query, array($sndx));
-
-		if (DB::isError($result))
-			return array();
+		$query = "select `word` from `{$this->tbl}` where `di`=?";
+		@$result = $this->query($query, array($sndx));
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$tword = $res["word"];
@@ -103,14 +97,9 @@ class bablotron {
 	}
 
 	function word_exists($word) {
-		$tbl = 'babl_words_' . $this->lan;
-
 		$word = addslashes(trim($word));
-		$query = "select `word` from `$tbl` where `word`=?";
-		@$result = $this->db->query($query,array($word));
-
-		if (DB::isError($result))
-			return true;
+		$query = "select `word` from `{$this->tbl}` where `word`=?";
+		@$result = $this->query($query,array($word));
 
 		return $result->numRows();
 	}
@@ -118,22 +107,5 @@ class bablotron {
 	function find_similar($word, $threshold) {
 	}
 }
-/*
-require_once('DB.php');
-$host_tiki   = 'localhost';
-$user_tiki   = 'root';
-$pass_tiki   = '';
-$dbs_tiki    = 'tiki';
-$dsn = "mysql://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";    
-//$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
-$dbTiki = DB::connect($dsn);
-if (DB::isError($dbTiki)) {        
-  die ($dbTiki->getMessage());
-} 
-
-$b = new bablotron($dbTiki,'en');
-$b->spellcheck_text("this is atest of some interestng text that may be ok or not but doesn't matter
-now we can writ more text an some inforation that can be usefl for our purposes");
-*/
 
 ?>

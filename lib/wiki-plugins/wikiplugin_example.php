@@ -21,11 +21,11 @@ function wikiplugin_example($data, $params) {
 	extract ($params);
 
 	if (!isset($face)) {
-		return ("<b>missing face parameter for plugin</b><br/>");
+		return ("<b>missing face parameter for plugin</b><br />");
 	}
 
 	if (!isset($size)) {
-		return ("<b>missing size parameter for plugin</b><br/>");
+		return ("<b>missing size parameter for plugin</b><br />");
 	}
 
 	$ret = "<span style='font-face: $face; font-size: $size'>$data</span>";

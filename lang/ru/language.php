@@ -1718,14 +1718,14 @@ No newsletters will be sent to you until the subscription is confirmed." => "С�
 "
 <b>Note 1</b>: if you allow your users to configure modules then assigned
 modules won't be reflected in the screen until you configure them
-from MyTiki->modules.<br/>
+from MyTiki->modules.<br />
 <b>Note 2</b>: If you assign modules to groups make sure that you
 have turned off the option 'display modules to all groups always'
 from Admin->General
 " => "
 <b>Примечание 1</b>: если Вы позволяете пользователям настраивать модули то
 назначенные модули не будут отображены на экране, пока Вы не настроите их
-из меню MyTiki->Модули.<br/>
+из меню MyTiki->Модули.<br />
 <b>Примечание 2</b>: Если Вы назначаете модули для групп, убедитесь, что Вы выключили опцию 'показывать модули для всех групп всегда' в меню
 Админ->Общие",//perhaps not used
 "left" => "слева",

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.14 2004-06-11 02:55:15 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.15 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,7 +46,7 @@ if ($user == '' and $contact_anon == 'y') {
 		}
 		$messulib->post_message($contact_user, $user, $_REQUEST['to'],
 			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
-		$message = tra('Message sent to'). ':' . $contact_user . '<br/>';
+		$message = tra('Message sent to'). ':' . $contact_user . '<br />';
 		$smarty->assign('message', $message);
 	}
 }

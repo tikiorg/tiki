@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.33 2004-06-21 01:13:42 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.34 2004-06-23 22:34:28 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -97,7 +97,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
 				</td></tr>
         <tr><td class="form">{tr}Name{/tr}:</td><td class="form"><input type="text" name="name" value="{$name|escape}" /></td></tr>
         <tr><td class="form">{tr}Description{/tr}:</td><td class="form"><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td></tr>
-        {if $categId <= 0}<tr><td class="form"><label for="assign_perms" title="{tr}Perms inherited from closest parent if possible or from global perms{/tr}">{tr}Assign permissions automatically{/tr}:<br /><i>(recommended for best performance)</i></label></td>
+        {if $categId <= 0}<tr><td class="form"><label for="assign_perms" title="{tr}Perms inherited from closest parent if possible or from global perms{/tr}">{tr}Assign permissions automatically{/tr}:<br /><i>({tr}recommended for best performance{/tr})</i></label></td>
         <td class="form"><input type="checkbox" name="assign_perms" id="assign_perms" checked="{$assign_perms}" /></td></tr>
         {else}<tr><td class="form" colspan="2"><a href="tiki-categpermissions.php?categId={$categId}">Edit permissions for this category</a></td></tr>
         {/if}

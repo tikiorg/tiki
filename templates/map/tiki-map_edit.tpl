@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.9 2004-04-16 05:53:36 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_edit.tpl,v 1.10 2004-06-23 22:34:29 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-map_edit.php?mode=listing">{tr}Mapfiles{/tr}</a><br /><br />
 {if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
 {if $mode eq 'listing'}
 <h3>{tr}Available mapfiles{/tr}:</h3>
@@ -63,14 +63,14 @@
 {/if}
 {/if}
 {if $mode eq 'editing'}
-<a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br/><br/>
+<a class="link" href="tiki-map_edit.php">{tr}Mapfile listing{/tr}</a><br /><br />
 <form enctype="multipart/form-data" action="tiki-map_edit.php" method="post" id='editpageform'>
 {assign var=area_name value="mapdata"}
 <table class="normal">
 <tr class="formcolor">
 <td>
 {include file="textareasize.tpl" area_name='mapdata' formId='editpageform'}<br /><br />
-{include file=tiki-edit_help_tool.tpl}<br/><br/>
+{include file=tiki-edit_help_tool.tpl}<br /><br />
 </td><td>
 <textarea id='mapdata' class="wikiedit" name="pagedata" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
@@ -85,12 +85,12 @@
 &nbsp&nbsp&nbsp
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
 {/if}
-  <br/>
+  <br />
   <table class="normal">
   <tr>
   	<td class="even">
   	<small>
-    {tr}You can view this map in your browser using{/tr}: <a class="maplink" href="{$url_browse}?mapfile={$mapfile}">{$url_browse}?mapfile={$mapfile}</a><br/>
+    {tr}You can view this map in your browser using{/tr}: <a class="maplink" href="{$url_browse}?mapfile={$mapfile}">{$url_browse}?mapfile={$mapfile}</a><br />
     </small>
     </td>
   </tr>

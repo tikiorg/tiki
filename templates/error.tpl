@@ -27,9 +27,10 @@
         {$errortitle|default:"{tr}Error{/tr}"}
         </div>
         <div class="cbox-data">
-        {$msg}<br /><br />
-        {if $page and !$nocreate and ($tiki_p_admin eq 'y' or  $tiki_p_admin_wiki eq 'y')}<a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Create this page{/tr}</a><br /><br />{/if}
-        <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
+        <br />{$msg}
+        {if $page and !$nocreate and ($tiki_p_admin eq 'y' or  $tiki_p_admin_wiki eq 'y')}<b><a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Click here to create it{/tr}!</a></b>{/if}
+        <br /><br />
+        <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br />
         <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
         </div>
         </div>

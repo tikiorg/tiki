@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.63 2004-06-21 13:36:25 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.64 2004-06-23 22:33:53 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,6 +113,7 @@ function write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$db
 }
 
 function create_dirs($domain=''){
+	global $docroot;
 	$dirs=array(
 		'backups',
 		'db',
@@ -262,7 +263,8 @@ function get_webserver_uid() {
 }
 
 function error_and_exit() {
-	global $errors;
+	global $errors, $docroot, $wwwgroup, $wwwuser;
+	
         $PHP_CONFIG_FILE_PATH = PHP_CONFIG_FILE_PATH;
 
         ob_start();
@@ -278,7 +280,7 @@ function error_and_exit() {
         print "<html><body>\n<h2><font color='red'>Tiki Installer cannot proceed:</font></h2>\n<pre>\n$errors";
 
         if (!isWindows()) {
-                print "You may either create missing directories and chmod directories manually to 777, or run one of the sets of commands below.
+                print "<br />You may either create missing directories and chmod directories manually to 777, or run one of the sets of commands below.
 <b><a href='tiki-install.php'>Execute the Tiki installer again</a></b> after you run the commands below.
 
 If you cannot become root, and are NOT part of the group $wwwgroup:
@@ -410,7 +412,7 @@ function check_password() {
 		$hash = md5('admin' . $pass . $res['email']);
 		$hash2 = md5('admin' . $pass);
 		$hash3 = md5($pass);
-		// next verify the password with 2 hashes methods, the old one (pass�)) and the new one (login.pass;email)
+		// next verify the password with 2 hashes methods, the old one (pass???)) and the new one (login.pass;email)
 		$query = "select login from users_users where lower(login) = 'admin' and (hash='$hash' or hash='$hash2' or hash='$hash3')";
 		$result = $dbTiki->Execute($query);
 
