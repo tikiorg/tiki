@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.4 2003-05-23 00:22:47 redflo Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.5 2003-05-23 09:35:49 redflo Exp $
 
 session_start();
 // Define and load Smarty components
@@ -13,7 +13,7 @@ function process_sql_file($file) {
   global $smarty;
   $command = '';
   $fp = fopen("db/$file","r");
-  while($line = fgets($fp)) {
+  while($line = fgets($fp,1024)) {
     if(substr($line,0,1)!='#') {
       $command.=$line;
     }
