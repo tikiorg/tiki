@@ -17,6 +17,8 @@ if($tiki_p_edit_templates != 'y') {
 
 if(!isset($_REQUEST["mode"])) {
   $mode = 'listing';
+} else {
+  $mode=$_REQUEST['mode'];
 }
 
 // Validate to prevent editing any file
