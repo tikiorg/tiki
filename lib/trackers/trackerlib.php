@@ -459,17 +459,18 @@ class TrackerLib extends TikiLib {
 				
 			} elseif (isset($ins_fields["data"][$i]["fieldId"])) {
 				$fieldId = $ins_fields["data"][$i]["fieldId"];
-				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'f') {
-					$value = date('r',$ins_fields["data"][$i]["value"]);
-				} else {
-					$value = $ins_fields["data"][$i]["value"];
-				}
 				if (isset($ins_fields["data"][$i]["name"])) {
 					$name = $ins_fields["data"][$i]["name"];
 				} else {
 					$name = $this->getOne("select `name` from `tiki_tracker_fields` where `fieldId`=?",array((int)$fieldId));
 				}
-				$the_data .= "  $name = $value\n";
+				$value = $ins_fields["data"][$i]["value"];
+				if (isset($ins_fields["data"][$i]["type"]) and ($ins_fields["data"][$i]["type"] == 'f' or $ins_fields["data"][$i]["type"] == 'j')) {
+					$human_value = date('r',$ins_fields["data"][$i]["value"]);
+					$the_data .= "  $name = $human_value\n";
+				} else {
+					$the_data .= "  $name = $value\n";
+				}
 
 				if ($itemId) {
 					if ($this->getOne('select count(*) from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?',array((int) $itemId,(int) $fieldId)) > 0) {
