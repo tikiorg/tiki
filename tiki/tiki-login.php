@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.22 2004-01-09 19:47:45 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.23 2004-01-31 14:10:43 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.22 2004-01-09 19:47:45 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.23 2004-01-31 14:10:43 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -19,6 +19,15 @@ if (!isset($_REQUEST["login"])) {
 }
 */
 
+// Alert user if cookies are switched off
+if (ini_get('session.use_cookies') == 1) {
+	if(!isset($_COOKIE['PHPSESSID'])) {
+		$url = 'tiki-error.php?error=' . urlencode(tra('You have to enable cookies to be able to login to this site'));
+		header("location: $url");
+		die;
+	}
+}
+	
 //Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
 if (!(isset($_SESSION['loginfrom']))) {
 	if (isset($_SERVER['HTTP_REFERER'])) {

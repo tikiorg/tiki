@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.10 2003-11-15 06:52:19 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.11 2004-01-31 14:10:45 mose Exp $
  *
  */
 
@@ -65,13 +65,6 @@ td.button {
     vertical-align: middle;
 }
 
-/* Links to view an object from a table listing objects can be generalized to this link */
-.tablename {
-}
-
-a.tablename:hover {
-}
-
 /* Links in table headings */
 .tableheading, .tableheading:active, .tableheading:hover {
     text-decoration: none;
@@ -91,9 +84,6 @@ table.findtable {
     margin-bottom: 20px;
 }
 
-td.findtitle {
-}
-
 /* Tables odd rows */
 td.odd {
     color: lightgreen;
@@ -103,9 +93,6 @@ td.odd {
 td.even {
     color: lightgreen;
     border: 1px outset #00A000;
-}
-/* currently unused as `grep` shows */
-td.third {
 }
 
 /*
@@ -119,4 +106,13 @@ caption {
     font-weight: bold;
     text-align: right;
     vertical-align: middle;
+}
+
+table.wikitopline {
+    width: 100%;
+}
+
+/* Input fields inside forms */
+table.normal input[type="text"] {
+    width: 100%;
 }

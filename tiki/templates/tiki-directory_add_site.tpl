@@ -49,7 +49,7 @@
   <tr>
     <td class="formcolor">{tr}Categories:{/tr}</td>
     <td class="formcolor">
-    <select name="siteCats[]" multiple="multiple" size="4" />
+    <select name="siteCats[]" multiple="multiple" size="4">
     {section name=ix loop=$categs}
       <option value="{$categs[ix].categId|escape}" {if $categs[ix].belongs eq 'y'}selected="selected"{/if}>{$categs[ix].path}</option>
     {/section}

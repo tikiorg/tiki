@@ -416,7 +416,6 @@ FORM {
 
 /* General form elements */
 input, textarea, select {
-	color:    #000000;
 	font:   normal 11px Verdana, Arial, Helvetica, sans-serif;
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.8 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-config_pdf.php,v 1.9 2004-01-31 14:10:43 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,10 +69,14 @@ if (!isset($_REQUEST["convertpages"])) {
 	$convertpages = array();
 
 	if (isset($_REQUEST["page_ref_id"]) ) {
-		$struct = $structlib->s_get_structure_pages($_REQUEST["page_ref_id"]);
-    foreach($struct as $struct_page) {
-      $convertpages[] = $struct_page["pageName"];
-    }
+		$struct = $structlib->get_subtree($_REQUEST["page_ref_id"]);
+		foreach($struct as $struct_page) {
+			// Handle dummy last entry
+			if ($struct_page["pos"] != '' && $struct_page["last"] == 1) continue;
+			$convertpages[] = $struct_page["pageName"];
+		}
+	}elseif (isset($_REQUEST["page"]) && $tikilib->page_exists($_REQUEST["page"])) {
+		$convertpages[] = $_REQUEST["page"];
 	}
 } else {
 	$convertpages = unserialize(urldecode($_REQUEST['convertpages']));
@@ -107,7 +111,8 @@ if (isset($_REQUEST["addpage"])) {
 //remove pages
 if (isset($_REQUEST["rempage"])) {
 	foreach (array_keys($_REQUEST["rempageName"])as $item) {
-		if ($key = array_search($_REQUEST["rempageName"]["$item"], $convertpages)) {
+		$key = array_search($_REQUEST["rempageName"]["$item"], $convertpages);
+		if ($key !== NULL) {
 			unset ($convertpages[$key]);
 		}
 	}

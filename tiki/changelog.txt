@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.145 2004-01-01 15:12:17 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.146 2004-01-31 14:10:43 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -24,6 +24,34 @@ Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
 * [FIX] fixed a bug where the lastLogin wasn't updated when using
   Pear::Auth (LDAP) and no passwords are in Tiki DB
+* [FIX] fixed installer: structures upgrade
+* [FIX] fixed installer: tiki_1.7to1.8.sql don't have to be run after comments
+  fix
+* [FIX] fixed installer: security problems where unauthorized users could
+  break database settings and even could empty all tables.
+* [FIX] structures creation fixed (mose)
+* [FIX] fixed Forums - queued and reported messages broken (OneOfMany)
+* [FIX] fixed tiki-user_bookmarks was missing a semicolon (jpf)
+* [FIX] color in linkbut on tceti theme changed so its readable (dgd)
+* [FIX] changed potentially dangerous defaults (link caching)
+* [MOD] added option whether mail address should be checked at registration
+  (may not work on windows or may not work at all, so default is off). This
+  option was before hidden in the "system_os" setting.
+* [FIX] fixed missing end quotes backported from 1.9 (Damian)
+* [FIX] Error messages in RSS feeds are now readable in RSS readers
+* [FIX] fixed the jspop issue in Image Galleries - identified by bnuz, commit
+  by damian
+* [FIX] fixed the calendar to show the right weekdays applying the
+  CalendarBug2004 fix by rpg - gmuslera
+* [NEW] added the tikiticket anti-CSRF system mose + Damian - more details on
+  TikiSecurity
+* [NEW] added tiki-admin_system page for cache and compile operations (mose,
+  flo)
+* [MOD] enabled fulltext search in search_new(flo)
+* [MOD] added error_ticket templates for the metal themes and fixed error.tpls
+  Damian + Colorado
+* [NEW] added check if cookies are switched on on browsers (if session is
+  handled via cookies) at logon time (flo)
 - (rc3) ------------------------------------------------------------
 * [FIX] fixed thumbnail generation in image galleries
 * [FIX] structures moving items now works

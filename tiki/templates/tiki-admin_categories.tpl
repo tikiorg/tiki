@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.20 2004-01-30 05:21:53 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.21 2004-01-31 14:10:46 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -133,7 +133,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
         <td class="even">{$objects[ix].type}</td>
         <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}Delete item from category?{/tr}">
 <!--onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this category?{/tr}')"-->
-<img alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" /></a></td>
+<img alt="{tr}Remove{/tr}" src="img/icons2/delete2.gif" border="0" /></a></td>
       </tr>
       {/section}
       </table>
