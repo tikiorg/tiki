@@ -21,8 +21,10 @@ function refresh_search_index() {
     global $feature_articles;
     if ($feature_articles == 'y') $locs[]="random_refresh_index_articles";
     global $feature_blogs;
-    if ($feature_blogs== 'y') $locs[]="random_refresh_index_blogs";
-    if ($feature_blogs== 'y') $locs[]="random_refresh_index_blog_posts";
+    if ($feature_blogs== 'y') {
+      $locs[]="random_refresh_index_blogs";
+      $locs[]="random_refresh_index_blog_posts";
+      }
     // comments can be everywhere?
     $locs[]="random_refresh_index_comments";
     // some refreshes to enhance the refreshing stats
@@ -92,7 +94,15 @@ function random_refresh_index_articles() {
 
 function random_refresh_index_forum() {
   global $tikilib;
-  
+  // get random forum
+  $cant=$tikilib->getOne("select count(*) from `tiki_forums`",array());
+  if($cant>0) {
+    $query="select * from `tiki_forums`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["name"]." ".$res["description"]." ".$res["moderator"]);
+    insert_index($words,'forum',$res["forumId"]);
+  }
 }
 
 function random_refresh_index_trackers() {

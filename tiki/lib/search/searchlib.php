@@ -42,7 +42,7 @@ class SearchLib extends TikiLib {
 	      return $this->find_exact_wiki($words,$offset, $maxRecords);
 	      break;
 	    case "forums":
-	      return $this->find_exact_forumcomments($words,$offset, $maxRecords);
+	      return $this->find_exact_forums($words,$offset, $maxRecords);
 	      break;
 	    case "articles":
 	      return $this->find_exact_articles($words,$offset, $maxRecords);
@@ -63,7 +63,7 @@ class SearchLib extends TikiLib {
 	function &find_exact_all($words,$offset, $maxRecords) {
 	  $wikiresults=$this->find_exact_wiki($words,$offset, $maxRecords);
 	  $artresults=$this->find_exact_articles($words,$offset, $maxRecords);
-	  $fcommresults=$this->find_exact_forumcomments($words,$offset, $maxRecords);
+	  $forumresults=$this->find_exact_forums($words,$offset, $maxRecords);
 	  $blogresults=$this->find_exact_blogs($words,$offset, $maxRecords);
 	  $blogpostsresults=$this->find_exact_blog_posts($words,$offset, $maxRecords);
 
@@ -71,11 +71,11 @@ class SearchLib extends TikiLib {
 	  //merge the results
 	  $res=array();
 	  $res["data"]=array_merge($wikiresults["data"],$artresults["data"],
-	  		$fcommresults["data"],$blogresults["data"],
-			$blogpostsresults["data"]);
+	  		$blogresults["data"],
+			$blogpostsresults["data"],$forumresults["data"]);
 	  $res["cant"]=$wikiresults["cant"]+$artresults["cant"]+
-	  		$fcommresults["cant"]+$blogresults["cant"]+
-			$blogpostsresults["cant"];
+	  		$blogresults["cant"]+
+			$blogpostsresults["cant"]+$forumresults["cant"];
 	  return ($res);
 	}
 
@@ -219,6 +219,41 @@ class SearchLib extends TikiLib {
 	  } else {
 	  return array('data' => array(),'cant' => 0);
 	  }
+        }
+
+        function &find_exact_forums($words,$offset, $maxRecords) {
+          global $feature_forums;
+          if ($feature_forums== 'y') {
+            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+                f.`description`,f.`hits`,f.`lastPost`,f.`name` from
+                `tiki_searchindex` s, `tiki_forums` f where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='forum' and
+                s.`page`=f.`forumId`";
+            $result=$this->query($query,$words,$maxRecords,$offset);
+            $querycant="select count(*) from `tiki_searchindex` s, `tiki_forums` f where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='forum' and
+                s.`page`=f.`forumId`";
+            $cant=$this->getOne($querycant,$words);
+            $ret=array();
+            while ($res = $result->fetchRow()) {
+              $href = "tiki-view_forum.php?forumId=".urlencode($res["page"]);
+              $ret[] = array(
+                'pageName' => $res["name"],
+                'location' => $res["location"],
+                'data' => substr($res["description"],0,250),
+                'hits' => $res["hits"],
+                'lastModif' => $res["lastPost"],
+                'href' => $href,
+                'relevance' => $res["hits"]
+              );
+            }
+            $fcommres=$this->find_exact_forumcomments($words,$offset, $maxRecords);
+            return array('data' => array_merge($ret,$fcommres["data"]),'cant' => $cant+$fcommres["cant"]);
+          } else {
+            return array('data' => array(),'cant' => 0);
+          }
         }
 
 	function &find_exact_forumcomments($words,$offset, $maxRecords) {
