@@ -37,7 +37,7 @@ if(isset($_REQUEST["change"])) {
   
   // Check this code
   if($pass_chr_num == 'y') {
-    if(!preg_match_all("[0-9]+",$_REQUEST["pass"],$foo) || !preg_match_all("[A-Za-z]+",$_REQUEST["pass"],$foo)) {
+    if(!preg_match_all("/[0-9]+/",$_REQUEST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_REQUEST["pass"],$foo)) {
       $smarty->assign('msg',tra("Password must contain both letters and numbers"));
       $smarty->display("styles/$style_base/error.tpl");
       die; 	

@@ -4792,7 +4792,7 @@ class TikiLib {
       $blogId=$res["blogId"];
       $query = "select title from tiki_blogs where blogId=$blogId";
       $hash=md5('postId'.$res["postId"]);
-      $cant_com = $this->getOne("select count(*) from tiki_comments where objectId='$hash'");
+      $cant_com = $this->getOne("select count(*) from tiki_comments where object='$hash'");
       $res["comments"]=$cant_com;
       $res["blogTitle"]=$this->getOne($query);
       $res["size"]=strlen($res["data"]);
