@@ -10,14 +10,14 @@
 
 <table class="normal">
 <tr><td colspan="3" class="heading">{tr}Exterminator{/tr}</td></tr>
-<tr>
-<td class="formcolor"><b>TEMPLATES_C/</b></td>
-<td class="formcolor"><a href="tiki-admin_system.php?do=templates_c" class="link">{tr}Empty{/tr}</a></td>
-<td class="formcolor">({$templates_c.cant} {tr}files{/tr} / {$templates_c.total|kbsize})</td>
+<tr class="formcolor">
+<td class="form"><b>./templates_c/</b></td>
+<td class="form"><a href="tiki-admin_system.php?do=templates_c" class="link">{tr}Empty{/tr}</a></td>
+<td class="form">({$templates_c.cant} {tr}files{/tr} / {$templates_c.total|kbsize})</td>
 </tr>
-<tr>
-<td class="formcolor"><b>MODULES/</b></td>
-<td class="formcolor"><a href="tiki-admin_system.php?do=modules_cache" class="link">{tr}Empty{/tr}</a></td>
-<td class="formcolor">({$modules.cant} {tr}files{/tr} / {$modules.total|kbsize})</td>
+<tr class="formcolor">
+<td class="form"><b>./modules/cache/</b></td>
+<td class="form"><a href="tiki-admin_system.php?do=modules_cache" class="link">{tr}Empty{/tr}</a></td>
+<td class="form">({$modules.cant} {tr}files{/tr} / {$modules.total|kbsize})</td>
 </tr>
 </table>
