@@ -221,15 +221,20 @@ align       : "bR"
 <form action="{$ins_fields[ix].options_array[2]}" method="get" target="_blank">
 {/if}
 <table class="normal">
-{section name=tl loop=$ins_fields[ix].options_array}
+{section name=tl loop=$ins_fields[ix].options_array start=3}
 {assign var=valvar value=$ins_fields[ix].options_array[tl]|regex_replace:"/^[^:]*:/":""|escape}
+{if $item_info.$valvar eq ''}
+{assign var=valvar value=$ins_fields[ix].options_array[tl]|regex_replace:"/^[^\=]*\=/":""|escape}
+<input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/\=.*$/":""|escape}" value="{$valvar|escape}" />
+{else}
 <input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$item_info.$valvar|escape}" />
+{/if}
 {/section}
 <tr class="formcolor"><td>{$ins_fields[ix].name}</td><td><input type="submit" class="submit" name="trck_act" value="{$ins_fields[ix].options_array[0]|escape}" /></td><tr>
 </table>
 </form>
 {/capture}
-
+{assign var=trkact value=$trkact|cat:$smarty.capture.trkaction}
 {/if}
 
 {/section}
@@ -237,9 +242,9 @@ align       : "bR"
 </td></tr>
 </table>
 </form>
-{if $smarty.capture.trkaction ne ''}
+{if $trkact}
 <h3>{tr}Special Operations{/tr}</h3>
-{$smarty.capture.trkaction}
+{$trkact}
 {/if}
 </div>
 {/if}

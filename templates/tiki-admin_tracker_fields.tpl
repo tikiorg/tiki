@@ -17,9 +17,9 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Type{/tr}:
-<span  id='trkflddropdown' {if $type eq 'd'}style="display:inline;"{else}style="display:none;"{/if}>{tr}(Dropdown options : list of items separated with commas){/tr}:</span>
-<span  id='trkfldimage' {if $type eq 'i'}style="display:inline;"{else}style="display:none;"{/if}>{tr}(Image options : xSize,ySize indicated in pixels){/tr}:</span>
-<span  id='trkfldaction' {if $type eq 'x'}style="display:inline;"{else}style="display:none;"{/if}>{tr}(Action options : indicate an url with $vars){/tr}:</span>
+<span  id='trkflddropdown' {if $type eq 'd'}style="display:inline;"{else}style="display:none;"{/if}><br />{tr}(Dropdown options : list of items separated with commas){/tr}:</span>
+<span  id='trkfldimage' {if $type eq 'i'}style="display:inline;"{else}style="display:none;"{/if}><br />{tr}(Image options : xSize,ySize indicated in pixels){/tr}:</span>
+<span  id='trkfldaction' {if $type eq 'x'}style="display:inline;"{else}style="display:none;"{/if}><br />{tr}(Action options : Label,post,tiki-index.php,page:fieldname,highlight=test){/tr}:</span>
 </td><td class="formcolor">
 <select name="type" id='trkfldtype' onchange="javascript:chgTrkFld();">
 <option value="c" {if $type eq 'c'}selected="selected"{/if}>{tr}checkbox{/tr}</option>
@@ -33,7 +33,7 @@
 <option value="i" {if $type eq 'i'}selected="selected"{/if}>{tr}image{/tr}</option>
 <option value="x" {if $type eq 'x'}selected="selected"{/if}>{tr}action{/tr}</option>
 </select>
-<span  id='trkfldoptions' {if $type eq 'd' or $type eq 'i' or $type eq 'x'}style="display:inline;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" size="30" /></span>
+<span  id='trkfldoptions' {if $type eq 'd' or $type eq 'i' or $type eq 'x'}style="display:inline;"{else}style="display:none;"{/if}><br /><input type="text" name="options" value="{$options|escape}" size="50" /></span>
 </td></tr>
 <tr><td class="formcolor">{tr}Is column visible when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column links to edit/view item?{/tr}</td><td class="formcolor"><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
