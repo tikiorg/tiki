@@ -16,6 +16,7 @@ if($feature_history != 'y') {
 }
 
 
+
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["page"])) {
   $smarty->assign('msg',tra("No page indicated"));
@@ -26,6 +27,8 @@ if(!isset($_REQUEST["page"])) {
   $page = $_REQUEST["page"];
   $smarty->assign_by_ref('page',$_REQUEST["page"]); 
 }
+
+
 
 include_once("tiki-pagesetup.php");
 // Now check permissions to access this page
@@ -41,6 +44,20 @@ if(!$tikilib->page_exists($page)) {
   $smarty->assign('msg',tra("Page cannot be found"));
   $smarty->display("styles/$style_base/error.tpl");
   die;
+}
+
+if(isset($_REQUEST["delete"])) {
+  foreach(array_keys($_REQUEST["hist"]) as $version) {      	
+    $tikilib->remove_version($_REQUEST["page"],$version);
+  }
+}
+
+
+$smarty->assign('source',0);
+if(isset($_REQUEST['source'])) {
+  $smarty->assign('source',$_REQUEST['source']);
+  $version = $tikilib->get_version($page,$_REQUEST["source"]);
+  $smarty->assign('sourcev',nl2br(htmlentities($version["data"])));  
 }
 
 // If we have to include a preview please show it

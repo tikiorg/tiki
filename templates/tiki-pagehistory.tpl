@@ -4,6 +4,9 @@
 <div  class="wikitext">{$preview.data}</div>
 <br/> 
 {/if}
+{if $source}
+<div  class="wikitext">{$sourcev}</div>
+{/if}
 {if $diff}
 <h3>{tr}Comparing versions{/tr}</h3>
 <table class="normalnoborder">
@@ -22,9 +25,12 @@
 {$diffdata}
 {/if}
 <br/>
+<form action="tiki-pagehistory.php" action="post">
+<input type="hidden" name="page" value="{$page}" />
 <div align="center">
 <table border="1" cellpadding="0" cellspacing="0">
 <tr>
+<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
 <td class="heading">{tr}Date{/tr}</td>
 <td class="heading">{tr}Version{/tr}</td>
 <td class="heading">{tr}User{/tr}</td>
@@ -33,6 +39,7 @@
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 <tr>
+<td class="odd">&nbsp;</td>
 <td class="odd">&nbsp;{$info.lastModif|tiki_short_datetime}&nbsp;</td>
 <td class="odd">&nbsp;{$info.version}&nbsp;</td>
 <td class="odd">&nbsp;{$info.user}&nbsp;</td>
@@ -40,42 +47,31 @@
 <td class="odd">&nbsp;{$info.comment}&nbsp;</td>
 <td class="odd">&nbsp;[{tr}current_version{/tr}]&nbsp;</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=hist loop=$history}
 <tr>
-{if $smarty.section.hist.index % 2}
-<td class="odd">&nbsp;{$history[hist].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="odd">&nbsp;{$history[hist].version}&nbsp;</td>
-<td class="odd">&nbsp;{$history[hist].user}&nbsp;</td>
-<td class="odd">&nbsp;{$history[hist].ip}&nbsp;</td>
-<td class="odd">&nbsp;{$history[hist].comment}&nbsp;</td>
-<td class="odd">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page}&amp;preview={$history[hist].version}">{tr}view{/tr}</a>&nbsp;
 {if $tiki_p_remove eq 'y'}
-<a class="link" href="tiki-removepage.php?page={$page}&amp;version={$history[hist].version}">{tr}remove{/tr}</a>&nbsp;
-{/if}
-{if $tiki_p_rollback eq 'y'}
-<a class="link" href="tiki-rollback.php?page={$page}&amp;version={$history[hist].version}">{tr}rollback{/tr}</a>&nbsp;
-{/if}
-<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff={$history[hist].version}">{tr}compare{/tr}</a>&nbsp;
-<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff2={$history[hist].version}">{tr}diff{/tr}</a>&nbsp;
-</td>
+<td class="{cycle advance=false}"><input type="checkbox" name="hist[{$history[hist].version}]" /></td>
 {else}
-<td class="even">&nbsp;{$history[hist].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="even">&nbsp;{$history[hist].version}&nbsp;</td>
-<td class="even">&nbsp;{$history[hist].user}&nbsp;</td>
-<td class="even">&nbsp;{$history[hist].ip}&nbsp;</td>
-<td class="even">&nbsp;{$history[hist].comment}&nbsp;</td>
-<td class="even">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page}&amp;preview={$history[hist].version}">{tr}view{/tr}</a>&nbsp;
-{if $tiki_p_remove eq 'y'}
+<td class="{cycle advance=false}">&nbsp;</td>
+{/if}
+<td class="{cycle advance=false}">&nbsp;{$history[hist].lastModif|tiki_short_datetime}&nbsp;</td>
+<td class="{cycle advance=false}">&nbsp;{$history[hist].version}&nbsp;</td>
+<td class="{cycle advance=false}">&nbsp;{$history[hist].user}&nbsp;</td>
+<td class="{cycle advance=false}">&nbsp;{$history[hist].ip}&nbsp;</td>
+<td class="{cycle advance=false}">&nbsp;{$history[hist].comment}&nbsp;</td>
+<td class="{cycle advance=false}">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page}&amp;preview={$history[hist].version}">{tr}view{/tr}</a>&nbsp;
+<!--{if $tiki_p_remove eq 'y'}
 <a class="link" href="tiki-removepage.php?page={$page}&amp;version={$history[hist].version}">{tr}remove{/tr}</a>&nbsp;
 {/if}
+-->
 {if $tiki_p_rollback eq 'y'}
 <a class="link" href="tiki-rollback.php?page={$page}&amp;version={$history[hist].version}">{tr}rollback{/tr}</a>&nbsp;
 {/if}
 <a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff={$history[hist].version}">{tr}compare{/tr}</a>&nbsp;
 <a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff2={$history[hist].version}">{tr}diff{/tr}</a>&nbsp;
+<a class="link" href="tiki-pagehistory.php?page={$page}&amp;source={$history[hist].version}">{tr}source{/tr}</a>&nbsp;
 </td>
-{/if}
-</tr>
 {sectionelse}
 <tr><td colspan="6">
 <b>{tr}No records found{/tr}</b>
@@ -83,3 +79,4 @@
 {/section}
 </table>
 </div>
+</form>
