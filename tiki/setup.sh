@@ -10,6 +10,7 @@ DIRS="backups db dump img/wiki img/wiki_up modules/cache temp templates_c var va
 AUSER=nobody
 AGROUP=nobody
 RIGHTS=02775
+VIRTUALS=""
 
 UNAME=`uname | cut -c 1-6`
 
@@ -26,7 +27,7 @@ This script assigns necessary permissions for the directories that the
 webserver writes files to. It also creates the (initially empty) cache 
 directories.
 
-Usage $0 user [group] [rights]
+Usage $0 user [group] [rights] [list of virtual host domains]
 
 For example, if apache is running as user $AUSER, type:
 
@@ -53,28 +54,48 @@ NOTE: If you do this, you will not be able to delete certain files created by
 apache, and will need to ask your system administrator to delete them for you
 if needed.
 
+To use Tiki's multi-site capability (virtual hosts from a single doc root) add a list of domains
+to the command to create all the needed directories, for example:
+
+  su -c '$0 $USER $GROUP 02777 domain1 domain2 domain3'
+
 EOF
 exit 1
 fi
 
+AUSER=$1;shift
+AGROUP=$1;shift
+RIGHTS=$1;shift
+VIRTUALS=$@
+
+# Create directories as needed
 for dir in $DIRS
 do
 	if [ ! -d $dir ]
 	then
 		mkdir -p $dir
 	fi
+        for vdir in $VIRTUALS; do
+                if [ ! -d "$dir/$vdir" ]; then
+                        mkdir -p "$dir/$vdir"
+                        echo "$dir/$vdir missing ... created."
+                else
+                        echo "$dir/$vdir ok"
+                fi
+        done
 done
 
-chown -R $1 $DIRS
+# Set ownerships of the directories
+chown -R $AUSER $DIRS
 
-if [ -n "$2" ];
+if [ -n "$AGROUP" ];
 then
-	chgrp -R $2 $DIRS
+	chgrp -R $AGROUP $DIRS
 fi
 
-if [ -n "$3" ];
+if [ -n "$RIGHTS" ];
 then
-	RIGHTS=$3
+	RIGHTS=$RIGHTS
 fi
 
 chmod -R $RIGHTS $DIRS
