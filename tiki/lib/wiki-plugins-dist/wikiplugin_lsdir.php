@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lsdir.php,v 1.3 2004-07-02 19:08:26 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins-dist/wikiplugin_lsdir.php,v 1.1 2004-07-03 02:56:34 teedog Exp $
  *
  * TikiWiki LSDIR plugin: lists files in a directory
  * 
