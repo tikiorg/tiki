@@ -1766,7 +1766,7 @@ $lang=Array(
 "Display last post titles" => "Afficher les titres des dernières publications",
 "no display" => "pas affiché",
 "Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address" => "Faire suivre les messages de ce forum à cette adresse électronique, dans un format pouvant être renvoyé au forum",
-"Originating e-mail address for mails from this forum" => "Adresse électronique d'origine pour les messages de ce forum",
+"Originating e-mail address for mails from this forum" => "Adresse électronique de l'envoyeur des messages du forum",
 "Add messages from this email to the forum" => "Ajouter les messages venant de cette adresse électronique au forum",
 "POP3 server" => "Serveur POP3",
 "Password" => "Mot de passe",
@@ -4101,5 +4101,7 @@ $lang=Array(
 "Does your mail reader need a special charset" => "Votre lecteur de messages a-t-il besoin d'un jeu de caractères particulier",
 "New blog post: %s" => "Nouvel article dans le blogue : %s",
 "Your Tiki account information for %s" =>  "Les informations de votre compte Tiki sur %s",
+"New topic:" => "Nouveau sujet :",
+"Topic:" => "Sujet :",
 "###end###"=>"###end###");
 ?>
