@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.94 2004-03-07 23:12:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.95 2004-04-23 18:26:54 sylvieg Exp $ *}
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 <div id="mainmenu" style="display: block">
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
@@ -143,6 +143,32 @@
   {/if}
   </div>
 {/if}
+
+{if $feature_homework eq 'y' and $tiki_p_hw_student eq 'y'}
+  <div class="separator">
+    {if $feature_menusfolderstyle eq 'y'}
+    <a class='separator' href="javascript:toggle('homeworkmenu');"><img src="img/icons/fo.gif" style="border: 0" name="homeworkmenuicn" alt="{tr}HomeworkMenu{/tr}"/></a>&nbsp;
+  {else}<a class="separator" href="javascript:toggle('homeworkmenu');">[-]</a>{/if}
+    {if $tiki_p_hw_teacher eq 'y'}
+      <a class='separator' href='tiki-hw_teacher_assignments.php'>{tr}Homework{/tr}</a>
+    {elseif $tiki_p_hw_student eq 'y'}
+      <a class='separator' href='tiki-hw_student_assignments.php'>{tr}Homework{/tr}</a>
+    {/if}
+  </div>
+  {if $tiki_p_hw_teacher eq 'y'}
+    <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
+      &nbsp;<a href="tiki-hw_teacher_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br/>
+      {* &nbsp;<a href="tiki-hw_teacher_grading_queue.php" class="linkmenu">{tr}Grading Queue{/tr}</a><br/> *}
+      &nbsp;<a href="tiki-hw_teacher_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br/>
+    </div>
+  {elseif $tiki_p_hw_student eq 'y'}
+    <div id="homeworkmenu" style="{$mnu_homeworkmenu}">
+      &nbsp;<a href="tiki-hw_student_assignments.php" class="linkmenu">{tr}Assignments{/tr}</a><br/>
+      &nbsp;<a href="tiki-hw_student_last_changes.php" class="linkmenu">{tr}Last Changes{/tr}</a><br/>
+    </div>
+  {/if}
+{/if}
+
 {if $feature_galleries eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
