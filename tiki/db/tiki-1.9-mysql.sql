@@ -4203,3 +4203,46 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('colored text'
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('dynamic variable','%text%','images/book.gif');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif');
 
+#
+# Table structure for table `hw_assignments`
+#
+# Author: ggeller 20040120 Jan 20 2004
+#
+
+DROP TABLE IF EXISTS hw_assignments;
+CREATE TABLE `hw_assignments` (
+  `articleId` int(8) NOT NULL auto_increment,
+  `title` varchar(80) default NULL,
+  `state` char(1) default 's',
+  `authorName` varchar(60) default NULL,
+  `topicId` int(14) default NULL,
+  `topicName` varchar(40) default NULL,
+  `size` int(12) default NULL,
+  `useImage` char(1) default NULL,
+  `image_name` varchar(80) default NULL,
+  `image_type` varchar(80) default NULL,
+  `image_size` int(14) default NULL,
+  `image_x` int(4) default NULL,
+  `image_y` int(4) default NULL,
+  `image_data` longblob,
+  `publishDate` int(14) default NULL,
+  `expireDate` int(14) default NULL,
+  `created` int(14) default NULL,
+  `heading` text,
+  `body` text,
+  `hash` varchar(32) default NULL,
+  `author` varchar(200) default NULL,
+  `reads` int(14) default NULL,
+  `votes` int(8) default NULL,
+  `points` int(14) default NULL,
+  `type` varchar(50) default NULL,
+  `rating` decimal(3,2) default NULL,
+  `isfloat` char(1) default NULL,
+  PRIMARY KEY  (`articleId`),
+  KEY `title` (`title`),
+  KEY `heading` (`heading`(255)),
+  KEY `body` (`body`(255)),
+  KEY `reads` (`reads`),
+  FULLTEXT KEY `ft` (`title`,`heading`,`body`)
+) TYPE=MyISAM;
+# --------------------------------------------------------
