@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.9 2003-11-03 23:59:27 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.10 2003-11-04 22:40:47 zaufi Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit this Repository:{/tr} {$name}</h2>
@@ -13,6 +13,11 @@
     <td><div class="button2">
       <a href="tiki-admin_integrator.php" class="linkbut">{tr}new repository{/tr}</a>
     </div></td>
+    {if isset($repID) and $repID ne '0'}
+    <td><div class="button2">
+      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view repository{/tr}</a>
+    </div></td>
+    {/if}
   </tr></table>
 </div>
 <br />
