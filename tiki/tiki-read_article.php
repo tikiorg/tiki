@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.36 2004-06-13 04:53:17 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.37 2004-06-13 21:15:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -179,7 +179,7 @@ if ($feature_article_comments == 'y') {
 	include_once ("comments.php");
 }
 
-//$objId = $_REQUEST['articleId'];
+$objId = $_REQUEST['articleId'];
 //$is_categorized = $categlib->is_categorized('article',$objId);
 // $is_categorized should have been set above
 

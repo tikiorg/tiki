@@ -2162,7 +2162,36 @@ function add_pageview() {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
+
+	    $add = TRUE;
+	    global $feature_categories;
+	    global $userlib;
+	    global $user;
+	    global $tiki_p_admin;
+
+	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['blogId'], 'blog')) {
+	    // blog permissions override category permissions
+			if (!$userlib->object_has_permission($user, $res['blogId'], 'blog', 'tiki_p_blog_read')) {
+			    $add = FALSE;
+			}
+	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	    	// no blog permissions so now we check category permissions
+	    	global $categlib;
+	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+	    	$perms_array = $categlib->get_object_categories_perms($user, 'blog', $res['blogId']);
+	    	if ($perms_array) {
+		    	foreach ($perms_array as $perm => $value) {
+		    		$$perm = $value;
+		    	}
+	    	}
+
+	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    		$add = FALSE;
+	    	}
+	    }
+		if ($add) {
+	    	$ret[] = $res;
+	    }
 	}
 	$retval = array();
 	$retval["data"] = $ret;
@@ -2318,13 +2347,14 @@ function add_pageview() {
 
 	    $add = TRUE;
 	    global $feature_categories;
+	    global $tiki_p_admin;
 
-	    if ($userlib->object_has_one_permission($res["topicId"], 'topic')) {
+	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res["topicId"], 'topic')) {
 	    // topic permissions override category permissions
 			if (!$userlib->object_has_permission($user, $res["topicId"], 'topic', 'tiki_p_topic_read')) {
 			    $add = FALSE;
 			}
-	    } elseif (!$userlib->user_has_permission($user, 'tiki_p_admin')  && $feature_categories == 'y') {
+	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
 	    	// no topic permissions so now we check category permissions
 	    	global $categlib;
 	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
