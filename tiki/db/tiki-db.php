@@ -13,7 +13,7 @@ if (strstr($current_path, ';')) {
 if ($separator == '')
 	$separator = ':'; // guess
 
-ini_set('include_path', dirname(dirname(__FILE__)). '/lib/pear' . $separator . $current_path);
+ini_set('include_path', dirname(dirname(__FILE__)). '/lib/pear' . $separator . '/lib/adodb' . $separator . $current_path);
 
 //$api_tiki        = 'pear';
 $api_tiki       = 'adodb';
