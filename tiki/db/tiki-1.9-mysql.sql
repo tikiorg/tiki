@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.23 2004-05-05 13:55:07 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.24 2004-05-29 21:32:22 lfagundes Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4145,6 +4145,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_tables','o
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_templates','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_undo','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_usrlock','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_structure','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wikiwords','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_workflow','n');
