@@ -289,7 +289,7 @@ class NlLib extends TikiLib {
 	}
 
 	function remove_edition($editionId) {
-		$query = "delete from `tiki_sent_newsletters` where `editionId`=$editionId";
+		$query = "delete from `tiki_sent_newsletters` where `editionId`=?";
 		$result = $this->query($query,array((int)$editionId));
 	}
 
