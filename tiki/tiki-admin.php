@@ -2091,6 +2091,14 @@ if(isset($_REQUEST["newadminpass"])) {
      $smarty->display("styles/$style_base/error.tpl");
      die;    
   }
+  
+  //Validate password here
+  if(strlen($_REQUEST["adminpass"])<$min_pass_length) {
+    $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die; 	
+  }
+
   $userlib->change_user_password('admin',$_REQUEST["adminpass"]);
 }
 
