@@ -38,7 +38,7 @@
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   <select name="country">
   {section name=ix loop=$flags}
-  <option name="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>{$flags[ix]}</option>
+  <option value="{$flags[ix]|escape}" {if $country eq $flags[ix]}selected="selected"{/if}>{tr}{$flags[ix]}{/tr}</option>
   {/section}
   </select>
   </td></tr>
