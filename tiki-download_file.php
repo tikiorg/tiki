@@ -80,7 +80,7 @@ if( $info["path"] )
 }
 else
 {
-	header("Content-Length: ". &info[ "filesize" ];
+	header("Content-Length: ". $info[ "filesize" ] );
 }
 
 ////////////////////////////////////////////////////////////////////////////
