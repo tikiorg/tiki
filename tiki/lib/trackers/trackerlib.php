@@ -737,7 +737,7 @@ class TrackerLib extends TikiLib {
 		$type['e'] = array('label'=>tra('category'),      'opt'=>true, 'help'=>tra('Category options: parentId') );
 		$type['r'] = array('label'=>tra('item link'),     'opt'=>true, 'help'=>tra('Item Link options: trackerId,fieldId links to item from trackerId which fieldId matches the content of that field.') );
 		$type['l'] = array('label'=>tra('items list'),    'opt'=>true, 'help'=>tra('Items list options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere.') );
-		$type['m'] = array('label'=>tra('e-mail'),	  'opt'=>true, 'help'=>tra('E-Mail address options: MakeLink (0 or 1), 0 does nothing. 1 Does an obfuscated mailto: link when viewing item') );
+		$type['m'] = array('label'=>tra('e-mail'),	  'opt'=>true, 'help'=>tra('E-Mail address options: MakeLink (0,1 or 2), 0 shows the address as a normal text field. 1 Does an obfuscated mailto: link when viewing item. 2 Does a normal href mailto: when viewing items.') );
 		return $type;
 	}
 	
