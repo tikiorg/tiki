@@ -1,10 +1,9 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.12 2003-08-13 23:59:59 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.13 2003-08-14 00:33:22 zaufi Exp $
  *
  * \brief Manage user assigned modules
  */
-include_once ('lib/debug/debugger.php');
 
 /**
  * \brief Class to manage user assigned modules
@@ -246,17 +245,14 @@ class UserModulesLib extends TikiLib {
     /// Function to swap (up/down) two adjacent modules
     function swap_adjacent($name, $user, $op)
     {
-        global $debugger;
         // Get position and order of module to swap
 	    $query = "select `ord`,`position` from `tiki_user_assigned_modules` where `name`=? and user=?";
     	$r = $this->query($query, array($name, $user));
         $cur = $r->fetchRow();
-        $debugger->msg('Source: '.$name.', '.print_r($cur, true));
         // Get name and order of module to swap with
 	    $query = "select `name`,`ord` from `tiki_user_assigned_modules` where `position`=? and ord".$op."? and user=? order by ord ".($op == '<' ? 'desc' : '');
         $r = $this->query($query, array($cur['position'], $cur['ord'], $user));
         $swap = $r->fetchRow();
-        $debugger->msg(print_r($swap, true));
         if (!empty($swap))
         {
             // Swap 2 adjacent modules
@@ -265,8 +261,6 @@ class UserModulesLib extends TikiLib {
             $query = "update `tiki_user_assigned_modules` set `ord`=? where `name`=? and user=?";
   	        $r = $this->query($query, array($cur['ord'], $swap['name'], $user));
         }
-        else
-            $debugger->msg("No adjacent module to swap with...");
  	}
 	/// Add a module to all the user who have assigned module and who don't have already this module
 	function add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type) {
