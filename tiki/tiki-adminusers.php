@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.12 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.13 2004-01-13 14:50:20 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,10 +8,20 @@
 
 // Initialization
 require_once ('tiki-setup.php');
+include_once('lib/modules/modlib.php');
+include_once ('lib/userprefs/scrambleEmail.php');
+include_once ('lib/userprefs/userprefslib.php');
+
+if ($user != 'admin') {
+	if ($tiki_p_admin != 'y') {
+		$smarty->assign('msg', tra("You dont have permission to use this feature"));
+		$smarty->display("error.tpl");
+		die;
+	}
+}
 
 function discardUser($u, $reason) {
 	$u['reason'] = $reason;
-
 	return $u;
 }
 
@@ -20,42 +30,26 @@ function batchImportUsers() {
 
 	$fname = $_FILES['csvlist']['tmp_name'];
 	$fhandle = fopen($fname, "r");
-
-	//Get the field names
 	$fields = fgetcsv($fhandle, 1000);
-
-	//any?
 	if (!$fields[0]) {
 		$smarty->assign('msg', tra("The file is not a CSV file or has not a correct syntax"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
-
-	//now load the users in a table
 	while (!feof($fhandle)) {
 		$data = fgetcsv($fhandle, 1000);
-
 		for ($i = 0; $i < count($fields); $i++) {
 			@$ar[$fields[$i]] = $data[$i];
 		}
-
 		$userrecs[] = $ar;
 	}
-
 	fclose ($fhandle);
-
-	// any?
 	if (!is_array($userrecs)) {
 		$smarty->assign('msg', tra("No records were found. Check the file please!"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
-
-	// Process user array
 	$added = 0;
-
 	foreach ($userrecs as $u) {
 		if (empty($u['login'])) {
 			$discarded[] = discardUser($u, tra("User login is required"));
@@ -81,27 +75,14 @@ function batchImportUsers() {
 					}
 				}
 			}
-
 			$added++;
 		}
 	}
-
 	$smarty->assign('added', $added);
-
 	if (@is_array($discarded)) {
 		$smarty->assign('discarded', count($discarded));
 	}
-
 	@$smarty->assign('discardlist', $discarded);
-}
-
-if ($user != 'admin') {
-	if ($tiki_p_admin != 'y') {
-		$smarty->assign('msg', tra("You dont have permission to use this feature"));
-
-		$smarty->display("error.tpl");
-		die;
-	}
 }
 
 // Process the form to add a user here
@@ -114,13 +95,11 @@ if (isset($_REQUEST["newuser"])) {
 		// Check if the user already exists
 		if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
 			$smarty->assign('msg', tra("The passwords dont match"));
-
 			$smarty->display("error.tpl");
 			die;
 		} else {
 			if ($userlib->user_exists($_REQUEST["name"])) {
 				$smarty->assign('msg', tra("User already exists"));
-
 				$smarty->display("error.tpl");
 				die;
 			} else {
@@ -130,8 +109,7 @@ if (isset($_REQUEST["newuser"])) {
 	}
 }
 
-// Process actions here
-// Remove user or remove user from group
+
 if (isset($_REQUEST["action"])) {
 	check_ticket('admin-users');
 	if ($_REQUEST["action"] == 'delete') {
@@ -188,20 +166,17 @@ if ($users["cant"] > ($offset + $numrows)) {
 } else {
 	$smarty->assign('next_offset', -1);
 }
-
-// If offset is > 0 then prev_offset
 if ($offset > 0) {
 	$smarty->assign('prev_offset', $offset - $numrows);
 } else {
 	$smarty->assign('prev_offset', -1);
 }
 
-// Get users (list of users)
 $smarty->assign_by_ref('users', $users["data"]);
 ask_ticket('admin-users');
 
-// Display the template
+$smarty->assign('uses_tabs', 'y');
+
 $smarty->assign('mid', 'tiki-adminusers.tpl');
 $smarty->display("tiki.tpl");
-
 ?>
