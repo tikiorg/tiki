@@ -3389,15 +3389,12 @@ class TikiLib {
 	foreach($this->pre_handlers as $handler) {
 	  $data = $handler($data);
 	}
-
-    if($feature_hotwords_nw == 'y') {
-      $hotw_nw = "target='_blank'";
-    } else {
-      $hotw_nw = '';
-    }
-
-    //Extract preparse sections before anything
+	
+	
+	
     $preparsed=Array();
+    
+    
     preg_match_all("/\~pp\~((.|\n)*?)\~\/pp\~/",$data,$preparse);
     foreach(array_unique($preparse[1]) as $pp) {
       $key=md5($this->genPass());
@@ -3405,10 +3402,11 @@ class TikiLib {
       $aux["data"]=$pp;
       $preparsed[]=$aux;
       $data=str_replace("~pp~$pp~/pp~",$key,$data);
-    }
-
+    } 
+    
     //Extract noparse sections almost before anything
     $noparsed=Array();
+    /*
     preg_match_all("/\~np\~((.|\n)*?)\~\/np\~/",$data,$noparse);
     foreach(array_unique($noparse[1]) as $np) {
       $key=md5($this->genPass());
@@ -3417,6 +3415,54 @@ class TikiLib {
       $noparsed[]=$aux;
       $data=str_replace("~np~$np~/np~",$key,$data);
     }
+    */
+
+    
+    /* NEW WAY */
+    $new_data = '';
+    $nopa = '';
+    $state = true;
+    $skip = false;
+    for($i=0;$i<strlen($data);$i++) {
+      $tag5 = substr($data,$i,5);
+      $tag4 = substr($tag5,0,4);
+      $tag1 = substr($tag4,0,1);
+      if($state && $tag4 == '~np~') {
+        $i+=3;
+        $state = false;
+        $skip=true;
+      }
+      if(!$state && ($tag5 == '~/np~')) {
+        $state = true;
+        $i+=4;
+        $skip=true;
+        $key = md5($this->genPass());
+        $new_data.=$key;
+        $aux["key"]=$key;
+        $aux["data"]=$nopa;
+        $noparsed[]=$aux;
+        $nopa='';
+      }
+      if(!$skip) {
+        if($state) {
+          $new_data .= $tag1;  
+        } else {
+          $nopa .= $tag1;
+        }
+      } else {
+        $skip = false;
+      }
+    }
+    $data = $new_data;
+
+    if($feature_hotwords_nw == 'y') {
+      $hotw_nw = "target='_blank'";
+    } else {
+      $hotw_nw = '';
+    }
+
+    
+
 
     // Now replace a TOC
     preg_match_all("/\{toc\}/",$data,$tocs);
