@@ -103,8 +103,8 @@
 			{/section}
 			</form>
 			</td>
-		{else}
-		<td style="text-align:right;">{$trads[0].langName}</td>
+		{elseif $trads[0].langName}
+			<td style="text-align:right;">{$trads[0].langName}</td>
 		{/if}
 		</td>
 	{/if}
@@ -189,7 +189,7 @@
 {/if}
 {/if}
 
-{if $feature_multilingual eq 'y'}
+{if $feature_multilingual eq 'y'and $tiki_p_edit eq 'y'}
      <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
 {/if}
 

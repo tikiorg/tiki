@@ -1,4 +1,12 @@
-<h1>{tr}Edit Translation: {/tr}<a href="tiki-index.php?page={$page|escape:url}">{$page}</a></h1>
+<h1>{tr}Edit Translation:{/tr}&nbsp;
+{if $type == "wiki page"}
+	<a href="tiki-index.php?page={$name|escape:url}">{$name}</a>
+	{assign var="title" value="{tr}Pages{/tr}"}
+{else}
+	<a href="tiki-read_article.php?articleId={$id}">{$name}</a>
+	{assign var="title" value="{tr}Articles{/tr}"}
+{/if}
+</h1>
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=TranslationDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit translations{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
 {/if}
@@ -9,22 +17,23 @@
 {if $error}
 	<div class="error">
 	{if $error == "traLang"}
-		{tr}You must specify the page language{/tr}
+		{tr}You must specify the object language{/tr}
 	{elseif $error == "srcExists"}
-		{tr}The page doesn't exist{/tr}
+		{tr}The object doesn't exist{/tr}
 	{elseif $error == "srcLang"}
-		{tr}The page doesn't have a language{/tr}
+		{tr}The object doesn't have a language{/tr}
 	{elseif $error == "alreadyTrad"}
-		{tr}The page has already a translation for this language{/tr}
+		{tr}The object has already a translation for this language{/tr}
 	{elseif $error == "alreadySet"}
-		{tr}The page is already in the set of translations{/tr}
+		{tr}The object is already in the set of translations{/tr}
 	{/if}
 	</div>
 	<br />
 {/if}
 
 <form action="tiki-edit_translation.php" method="post">
-<input type="hidden" name="page" value="{$page|escape}" />
+<input type="hidden" name="id" value="{$id}" />
+<input type="hidden" name="type" value="{$type|escape}" />
 
 <h2>{tr}Language{/tr}</h2>
 <table>
@@ -46,21 +55,37 @@
 </table>
 <br />
 
+<h2>{tr}Set of Translations{/tr}</h2>
+
 {if count($trads) > 1}
-	<h2>{tr}Set of Translations{/tr}</h2>
 	<table class="normal">
-	<tr><td class="heading">{tr}Language{/tr}</td><td class="heading">{tr}Pages{/tr}</td><td class="heading">Actions</td></tr>
+	<tr><td class="heading">{tr}Language{/tr}</td><td class="heading">{$title}</td><td class="heading">Actions</td></tr>
 	{cycle values="odd,even" print=false}
 	{section name=i loop=$trads}
-	<tr class="{cycle}"><td>{$trads[i].langName}</td><td><a href="tiki-index.php?page={$trads[i].page|escape:url}">{$trads[i].page}</a></td>
-	<td><input type="submit" name="detach" value="{tr}detach{/tr}" /><br /></td></tr>
+	<tr class="{cycle}">
+		<td>{$trads[i].langName}</td>
+		<td>{if $type == 'wiki page'}<a href="tiki-index.php?page={$trads[i].objName|escape:url}">{else}<a href="tiki-read_article.php?articleId={$trads[i].objId|escape:url}">{/if}{$trads[i].objName}</a></td>
+		<td><a class="link" href="tiki-edit_translation.php?detach&amp;id={$id|escape:url}&amp;srcId={$trads[i].objId|escape:url}&amp;type={$type|escape:url}"><img src='img/icons2/delete.gif' border='0' alt='{tr}detach{/tr}' title='{tr}detach{/tr}' /></a>
+	</td></tr>
 	{/section}
 	</table>
 	<table><tr><td>
-	<input name="srcName" size="60" type="text" value="{$srcName}" /> <input type="submit" class="wikiaction"  value="{tr}add the page to the set{/tr}"/></td></tr></table>
-{else}
-	{tr}Translation of the page:{/tr} <input name="srcName" size="60" type="text" value="{$srcName}" />
-	<br />
-	<input type="submit" class="wikiaction"  value="{tr}go{/tr}"/> 
+
+	{if $articles}
+		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}" {if $articles[ix].articleId == $srcId}chacked="checked"{/if}>{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select>
+	{else}
+		<input name="srcName" size="60" type="text" value="{$srcName}" />
+	{/if}
+	&nbsp;<input type="submit" class="wikiaction"  value="{tr}add to the set{/tr}"/>
+	</td></tr></table>
+
+{else} {* first translation *}
+	{tr}Translation of:{/tr}&nbsp;
+	{if $articles}
+		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select>
+	{else}
+		<input name="srcName" size="60" type="text" value="{$srcName}" />
+	{/if}
+	&nbsp;<input type="submit" class="wikiaction"  value="{tr}go{/tr}"/>
 {/if}
 </form>

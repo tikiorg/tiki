@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.30 2004-06-07 17:08:26 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.31 2004-06-10 09:46:48 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -192,6 +192,12 @@ if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'mobile') {
 	include_once ("lib/hawhaw/hawtikilib.php");
 
 	HAWTIKI_read_article($article_data, $pages);
+}
+
+if ($feature_multilingual == 'y' && $article_data['lang']) {
+	include_once("lib/multilingual/multilinguallib.php");
+	$trads = $multilinguallib->getTranslations('article', $article_data['articleId'], $article_data["title"], $article_data['lang']);
+	$smarty->assign('trads', $trads);
 }
 
 ask_ticket('article-read');

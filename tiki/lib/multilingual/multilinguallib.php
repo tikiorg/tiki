@@ -67,13 +67,13 @@ class MultilingualLib extends TikiLib {
 	/** @brief get the translation in a language of an object if exists
 	 * @return array(objId, traId)
 	 */
-	function getTranslation($type, $srcId) {
+	function getTranslation($type, $srcId, $objLang) {
 		$query = "select t2.`objId`, t2.`traId` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t1.`type`=? and  t1.`objId`=? and t2.`lang`=?";
 		return $this->getOne($query, array($type, $srcId, $objLang));
 	}
 
 	function getTrads($type, $objId) {
-		$query = "select t2.`traId`, t2.`objId`, t2.`lang` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t2.`objId`!= t1.`objId` and t1.`type`=? and  t1.`objId`=?";
+		$query = "select t2.`traId`, t2.`objId`, t2.`lang` from `tiki_translated_objects` as t1, `tiki_translated_objects` as t2 where t1.`traId`=t2.`traId` and t1.`type`=? and  t1.`objId`=?";
 		$result = $this->query($query, array($type, $objId));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -94,17 +94,22 @@ class MultilingualLib extends TikiLib {
 		$ret = array();
 		if ($long) {
 			$l = $this->format_language_list(array($objLang));
-			$ret0 = array('objId'=>$objId, 'page'=>$objName, 'lang'=> $objLang, 'langName'=>$l[0]['name']);
+			$ret0 = array('objId'=>$objId, 'objName'=>$objName, 'lang'=> $objLang, 'langName'=>$l[0]['name']);
 			while ($res = $result->fetchRow()) {
 				$l = $this->format_language_list(array($res['lang']));
 				$res['langName'] = $l[0]['name'];
-				$res['page'] = $this->get_page_name_from_id($res['objId']);
+				if ($type == 'wiki page')
+					$res['objName'] = $this->get_page_name_from_id($res['objId']);
+				else {
+					$info = $this->get_article($res['objId']);
+					$res['objName'] = $info['title'];
+				}
 				$ret[] = $res;
 			}
 		}
 		else {
 			$l = $this->format_language_list(array($objLang), 'y');
-			$ret0 = array('objId'=>$objId, 'page'=>$objName, 'lang'=> $objLang, 'langName'=>$l[0]['name']);
+			$ret0 = array('objId'=>$objId, 'objName'=>$objName, 'lang'=> $objLang, 'langName'=>$l[0]['name']);
 			while ($res = $result->fetchRow()) {
 				$l = $this->format_language_list(array($res['lang']), 'y');
 				$res['langName'] = $l[0]['name'];
@@ -124,11 +129,14 @@ class MultilingualLib extends TikiLib {
 
 	/* @brief: update lang in all tiki pages
 	 */
-	function updatePageLang($objId, $lang) {
+	function updatePageLang($type, $objId, $lang) {
+		if ($this->getTranslation($type, $objId, $lang))
+			return 'alreadyTrad';
 		$query = "update `tiki_pages` set `lang`=? where `page_id`=?";
 		$this->query($query,array($lang, $objId));
 		$query = "update `tiki_translated_objects` set `lang`=? where `objId`=?";
 		$this->query($query,array($lang, $objId));
+		return null;
 	}
 
 	/* @brief: detach one translation
