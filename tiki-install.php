@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.27 2003-11-02 00:27:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.28 2003-11-02 00:31:16 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.27 2003-11-02 00:27:36 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.28 2003-11-02 00:31:16 mose Exp $
 session_start();
 
 // Define and load Smarty components
@@ -431,18 +431,14 @@ if($can_write) {
 // if no local.php => no con
 // if local then build dsn and try to connect
 //   then get con or nocon
-$separator = '';
+
 $current_path = ini_get('include_path');
 
-# if (strstr($current_path, ';')) {
 if (isWindows()) {
 	$separator = ';';
 } else {
 	$separator = ':';
 }
-
-if ($separator == '')
-	$separator = ':'; // guess
 
 ini_set('include_path', $current_path . $separator . 'lib/pear' . $separator . 'lib/adodb');
 
