@@ -1,5 +1,13 @@
 {*Smarty template*}
 <a class="pagetitle" href="tiki-theme_control_objects.php">{tr}Theme Control Center: Objects{/tr}</a><br/><br/>
+<div class="simplebox">
+<b>{tr}Theme is selected as follows{tr}:</b><br/>
+1. {tr}If a theme is assigned to the individual object that theme is used.{/tr}<br/>
+2. {tr}If not then if a theme is assigned to the object's category that theme is used{/tr}<br/>
+3. {tr}If not then a theme for the section is used{/tr}<br/>
+4. {tr}If none of the above was selected the user theme is used{/tr}<br/>
+5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}<br/>
+</div>
 <br/><br/>
 [<a class="link" href="tiki-theme_control.php">{tr}Control by category{/tr}</a>
  | <a class="link" href="tiki-theme_control_sections.php">{tr}Control by Sections{/tr}</a>]

@@ -4,6 +4,18 @@
 <a class="link" href="#rightmod">{tr}right modules{/tr}</a>|
 <a class="link" href="#editcreate">{tr}edit/create{/tr}</a>|
 <a class="link" href="tiki-admin_modules.php?clear_cache=1">{tr}clear cache{/tr}</a>]
+
+<div class="simplebox">
+{tr}
+<b>Note 1</b>: if you allow your users to configure modules then assigned
+modules won't be reflected in the screen until you configure them
+from MyTiki->modules.<br/>
+<b>Note 2</b>: If you assign modules to groups make sure that you
+have turned off the option 'display modules to all groups always'
+from Admin->General
+{/tr}
+</div>
+
 <h3>{tr}User Modules{/tr}</h3>
 
 <table class="normal">

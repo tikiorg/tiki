@@ -25,7 +25,7 @@ body {
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {  
-  background-color: #CCCCFF;  
+  background-color: white;  
   height: 100%;  
   margin-top: 0px; 
   margin-bottom: 0px; 
@@ -35,9 +35,9 @@ DIV#tiki-main {
 
 /* This is the header */
 DIV#tiki-top {  
-  font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;  
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  
   font-size: 10px;   
-  background-color: Teal; 
+  background-color: #003366; 
   color: white; 
   padding-right: 0px;
   padding-left: 4px;
@@ -54,7 +54,7 @@ DIV#tiki-mid {
 DIV#tiki-bot {  
   padding-top: 10px;  
   margin-top: 0px;  
-  background-color: #ccccff;   
+  background-color: white;   
   padding-bottom: 15px; 
 }
 
@@ -63,18 +63,18 @@ TD#leftcolumn {
   padding-left: 2px; 
   padding-right: 2px; 
   vertical-align: top;  
-  background-color: #6699CC;  
+  background-color: white;  
   width: 180px;
 }
 TD#rightcolumn {  
   padding-left: 2px; 
   vertical-align: top;  
-  background-color: #6699CC;  
+  background-color: white;  
   width: 180px;
 }
 TD#centercolumn { 
   padding-right: 14px;
-  background-color: #ccccff;
+  background-color: white;
   vertical-align: top; 
 }
 
