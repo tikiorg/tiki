@@ -54,7 +54,7 @@
   </select>
   </td></tr>
   {if $change_theme eq 'y'}
-  <tr><td class="form">{tr}Theme{/tr}:</td><td class="form"><select name="style">
+  <tr><td class="form">{tr}Theme{/tr}:</td><td class="form"><select name="mystyle">
         {section name=ix loop=$styles}
         <option value="{$styles[ix]|escape}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
         {/section}
