@@ -72,10 +72,18 @@ function wikiplugin_tracker($data, $params) {
 				if ($f['type'] == 't') {
 					$back.= "<tr><td>".$f['name']."</td><td>";
 					$back.= '<input type="text" size="30" name="track['.$f["fieldId"].']" value=""/>';
+				} elseif ($f['type'] == 'r') {
+					$list = $trklib->get_all_items($f['options_array'][0],$f['options_array'][1],'o');
+					$back.= "<tr><td>".$f['name']."</td><td>";
+					$back.= '<select name="track['.$f["fieldId"].']">';
+					foreach ($list as $key=>$item) {
+						$back.= '<option value="'.$key.'">'.$item.'</option>';
+					}
+					$back.= "</select>";
 				} elseif ($f['type'] == 'a') {
 					$back.= "<tr><td>".$f['name']."</td><td>";
 					$back.= '<textarea cols="29" rows="7" name="track['.$f["fieldId"].']" wrap="soft"></textarea>';
-				} elseif ($f['type'] == 'd' or $f['type'] == 'u' or $f['type'] == 'g') {
+				} elseif ($f['type'] == 'd' or $f['type'] == 'u' or $f['type'] == 'g' or $f['type'] == 'r') {
 					if ($f['type'] == 'd') {
 						$list = split(',',$f['options']);
 					} elseif ($f['type'] == 'u') {
