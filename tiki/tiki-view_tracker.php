@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.54 2004-02-20 16:42:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.55 2004-03-01 10:17:12 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -248,6 +248,8 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 		if ($fields["data"][$i]["type"] == 'a' and $fields["data"][$i]["options_array"][0])	{
 			$textarea_options = true;
+		} elseif ($fields["data"][$i]["type"] == 'r')	{
+			$fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1]);
 		} elseif ($fields["data"][$i]["type"] == 'i')	{
 			if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
 				if (!empty($gal_match_regex)) {

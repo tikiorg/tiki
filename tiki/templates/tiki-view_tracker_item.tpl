@@ -95,7 +95,7 @@
 {assign var=stick value="n"}
 {/if}
 
-{elseif $ins_fields[ix].type eq 't' or $ins_fields[ix].type eq 'n'}
+{elseif $ins_fields[ix].type eq 't' or $ins_fields[ix].type eq 'r' or$ins_fields[ix].type eq 'n'}
 {if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]|escape}&nbsp;</span>{/if}
 {if $ins_fields[ix].linkId}
 <a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value|default:"&nbsp;"}</a>
@@ -320,6 +320,13 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 
 {elseif $ins_fields[ix].type eq 'f'}
 {html_select_date prefix=$ins_fields[ix].id time=$ins_fields[ix].value end_year="+1"} {html_select_time prefix=$ins_fields[ix].id time=$ins_fields[ix].value display_seconds=false}
+
+{elseif $ins_fields[ix].type eq 'r'}
+<select name="ins_{$ins_fields[ix].id}">
+{foreach key=id item=label from=$ins_fields[ix].list}
+<option value="{$label|escape}" {if $ins_fields[ix].value eq $label}selected="selected"{/if}>{$label}</option>
+{/foreach}
+</select>
 
 {elseif $ins_fields[ix].type eq 'd'}
 <select name="ins_{$ins_fields[ix].id}">

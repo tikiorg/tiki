@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.54 2004-03-01 09:34:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.55 2004-03-01 10:17:12 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -353,7 +353,7 @@ if ($_REQUEST["itemId"]) {
 				} elseif  ($fields["data"][$i]["type"] == 'r') {
 					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info[$fid]);
 					$ins_fields["data"][$i]["value"] = $info[$fid];
-					$ins_fields["data"][$i]["type"] = 't';
+					$ins_fields["data"][$i]["list"] = $trklib->get_all_items($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1]);
 				} elseif ($fields["data"][$i]["type"] == 'u') {
 					if ($fields["data"][$i]['options'] == 2 and !$info["$fid"]) {
 						$ins_fields["data"][$i]["defvalue"] = $user;
