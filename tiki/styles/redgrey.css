@@ -473,6 +473,17 @@ TD.heading, td.jukeboxlistheading, td.gallistheading, td.listgalheading, td.blog
 	padding-right:   5px;
 }
 
+th, th.jukeboxlistheading, th.gallistheading, th.listgalheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
+	th.forumheading, th.viewthread {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color: #848484 ;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #e0e0e0;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
 TD.button {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	color:   #848484;
