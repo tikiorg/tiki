@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.3 2003-07-13 00:09:14 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.4 2003-07-13 05:35:21 zaufi Exp $
  *
  */
 
@@ -30,8 +30,6 @@ div#tiki-center h1 > a.pagetitle
   display: block;
   width: 100%;
   padding: 10px;
-  background-image: url(module.data.png);
-  background-repeat: repeat;
   border: 1px solid green;
 }
 */
@@ -40,8 +38,6 @@ div#tiki-center h1 > a.pagetitle
 div.wikitext
 {
   color: #001000;
-  background-image: url(wiki-page.png);
-  background-repeat: repeat;
   border: 3px ridge #00B000;
   padding: 1px;
   padding-bottom: 10px;
@@ -52,8 +48,6 @@ div.wikitext
 /* -= Wiki title bar =- */
 div.titlebar
 {
-  background-image: url(wiki-page.png);
-  background-repeat: repeat;
   font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
   font-variant: small-caps;
   font-size: 18px;
@@ -143,9 +137,6 @@ td.wikicell
 {
   border: 1px solid lightgreen;
   border-style: outset;
-  background-image: url(wiki-page.png);
-  background-repeat: repeat;
-
 }
 
 
@@ -165,7 +156,6 @@ p.editdate
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp
 {
-    background: url(wiki-page.png);
     border: 1px outset #00A000;
     font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-size: smaller;
@@ -178,7 +168,6 @@ div.tocnav
 {
   font-family: "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  background: url(module.data.png) repeat;
   border: 2px ridge #00A000;
   padding-bottom: 5px;
   padding-top: 5px;
@@ -218,7 +207,6 @@ div.commentspost
 TD.comform
 {
   color: #001000;
-  background: url(wiki-page.png) repeat;
   border: 1px outset #00A000;
   font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
@@ -230,7 +218,6 @@ TD.comform
 div.commentsedithelp
 {
   color: #001000;
-  background: url(wiki-page.png) repeat;
   border: 1px outset #00A000;
   font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: smaller;
@@ -242,7 +229,6 @@ div.commentsedithelp
 /* The toolbar where the ordering number of comments and find box are found */
 div.commentstoolbar
 {
-  background: url(wiki-page.png) repeat;
   border: 1px outset #00A000;
   font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: smaller;
@@ -273,7 +259,6 @@ div.commentheader
 }
 div.commentscomment > div.commentheader
 {
-  background: url(wiki-page.png) repeat;
   border: 1px outset #00A000;
 }
 
@@ -281,7 +266,6 @@ div.commentscomment > div.commentheader
 div.commenttext
 {
 
-  background: url(module.data.png) repeat;
   border: 1px outset #00A000;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
@@ -310,7 +294,6 @@ div.commenttext
 div.codelisting
 {
   color: black;
-  background: url(wiki-page.png) repeat;
   border: 2px ridge #00A000;
   margin: 4px;
   padding-left: 20px;
@@ -319,14 +302,12 @@ div.codelisting
 /* My UserStory wiki pluin styles */
 td.userstoryid, td.userstorystatus
 {
-  background: url(wiki-page.png) repeat;
   text-align: center;
   width: 12%;
   border: 1px outset #00A000;
 }
 td.userstorytitle
 {
-  background: url(wiki-page.png) repeat;
   font-weight: bold;
   text-align: left;
   padding-left: 1em;
@@ -336,7 +317,6 @@ td.userstorytitle
 td.userstoryidwarn
 {
   color: red;
-  background: url(error-page.png) repeat;
   border: 1px outset #A00000;
 }
 td.userstorydata

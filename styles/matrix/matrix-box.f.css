@@ -1,0 +1,36 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.f.css,v 1.2 2003-07-13 05:35:21 zaufi Exp $
+ *
+ * Backgrounds for full featured 'Matrix' theme
+ *
+ */
+
+/* Get styles w/o backgrounds */
+@import "matrix-box.css";
+
+/*
+ * Define backgrounds (the only difference between two themes)
+ */
+
+div.cbox,
+div.separator:hover,
+div#tiki-center > div.simplebox
+{
+  background: url(img/wiki-page.png) repeat;
+}
+
+div.box, div.separator
+{
+  background: url(img/module.data.png) repeat;
+}
+
+div.cbox#error-box
+{
+  background-image: url(img/error-page.png);
+  background-repeat: repeat;
+}
+
+.linkmenu:hover
+{
+  background: #70B080;
+}
