@@ -172,23 +172,23 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
     		<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
     	{/if}
 	{/if}
-	{if $app_available eq 'y'}
+	{if $pkg_available eq 'y'}
 		<p><p>
 		<form method="post" action="tiki-install.php">
-		<h1>Tiki applications</h1>
+		<h1>Tiki packages</h1>
 		<table>
 			<tr><td>
-				<select name="apps">
-					{section name=ix loop=$apps}
-						<option value="{$apps[ix].name|escape}">{$apps[ix].desc}</option>
+				<select name="pkgs">
+					{section name=ix loop=$pkgs}
+						<option value="{$pkgs[ix].name|escape}">{$pkgs[ix].desc}</option>
 					{/section}
 				</select>
 			</td><td>
-				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available applications</a>
+				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available packages</a>
 			</td></tr>
 			<tr><td>
-				<input type="submit" name="install_app" value="install" />	    
-				<input type="submit" name="remove_app" value="remove" />	    
+				<input type="submit" name="install_pkg" value="install" />	    
+				<input type="submit" name="remove_pkg" value="remove" />	    
 			</td></tr>
 			<tr><td>
 				<p>

@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.38 2003-12-05 19:27:28 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.39 2003-12-05 22:35:26 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.38 2003-12-05 19:27:28 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.39 2003-12-05 22:35:26 dheltzel Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -503,43 +503,43 @@ if ($noadmin) {
 	$smarty->assign('noadmin', 'n');
 }
 
-// Tiki Applications feature
+// Tiki Package feature
 // Written by dheltzel 12/4/2003 - status: experimental
 include ('db/local.php');
 include_once ('lib/pclzip.lib.php');
 
-// This is the directory where it looks for the application files. If no .zip files are in this dir, the Installer will be disabled.
-$app_repository = "app_repos/";
+// This is the directory where it looks for the package files. If no .zip files are in this dir, the Installer will be disabled.
+$package_dir = "packages/";
 // This is the suffix it uses to look for an install SQL script
-$app_sql_install_suf = "_install.sql";
+$pkg_sql_install_suf = "_install.sql";
 // This is the suffix it uses to look for a remove SQL script
-$app_sql_remove_suf = "_remove.sql";
+$pkg_sql_remove_suf = "_remove.sql";
 
 // This is used to install files into the Tiki file structure from a zip file
-if (isset($_REQUEST['install_app'])) {
-	$archive = new PclZip($app_repository.$_REQUEST['apps']);
+if (isset($_REQUEST['install_pkg'])) {
+	$archive = new PclZip($package_dir.$_REQUEST['pkgs']);
 
 	if ($archive->extract() == 0) {
 		die("Error : ".$archive->errorInfo(true));
 	}
 	else {
-		$app_sql_install_file = basename($_REQUEST['apps'],".zip").$app_sql_install_suf;
-		if (is_file("db/".$app_sql_install_file)) {
-			print "Running ".$app_sql_install_file."<br>";
-			process_sql_file ($app_sql_install_file,$db_tiki);
+		$pkg_sql_install_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_install_suf;
+		if (is_file("db/".$pkg_sql_install_file)) {
+			print "Running ".$pkg_sql_install_file."<br>";
+			process_sql_file ($pkg_sql_install_file,$db_tiki);
 
 		}
-		print "The application in <b>".$_REQUEST['apps']."</b> was installed successfully";
+		print "The application in <b>".$_REQUEST['pkgs']."</b> was installed successfully";
 	}
 }
 
-// This is used to remove files that were installed into the Tiki file structure by the install_app prcess
-if (isset($_REQUEST['remove_app'])) {
-	$archive = new PclZip($app_repository.$_REQUEST['apps']);
-	$app_sql_remove_file = basename($_REQUEST['apps'],".zip").$app_sql_remove_suf;
-	if (is_file("db/".$app_sql_remove_file)) {
-		print "Running ".$app_sql_remove_file."<br>";
-		process_sql_file ($app_sql_remove_file,$db_tiki);
+// This is used to remove files that were installed into the Tiki file structure by the install_pkg prcess
+if (isset($_REQUEST['remove_pkg'])) {
+	$archive = new PclZip($package_dir.$_REQUEST['pkgs']);
+	$pkg_sql_remove_file = basename($_REQUEST['pkgs'],".zip").$pkg_sql_remove_suf;
+	if (is_file("db/".$pkg_sql_remove_file)) {
+		print "Running ".$pkg_sql_remove_file."<br>";
+		process_sql_file ($pkg_sql_remove_file,$db_tiki);
 	}
 
 	// Read Archive contents
@@ -552,7 +552,7 @@ if (isset($_REQUEST['remove_app'])) {
 		}
 	}
 	else {
-		print "Nothing to remove for ".$_REQUEST['apps']."<br>";
+		print "Nothing to remove for ".$_REQUEST['pkgs']."<br>";
 	}
 }
 
@@ -599,28 +599,28 @@ while ($file = readdir($h)) {
 closedir ($h);
 $smarty->assign('files', $files);
 
-//Load applications
-// the applications are only mysql-safe at this time, also they only show up if a zip file exists in $app_repository
-$smarty->assign('app_available', 'n');
+//Load packages
+// the packages are only mysql-safe at this time, also they only show up if a zip file exists in $package_dir
+$smarty->assign('pkg_available', 'n');
 if ($db_tiki == "mysql") {
-	$apps = array();
-	$h = opendir($app_repository);
+	$pkgs = array();
+	$h = opendir($package_dir);
 
 	while ($file = readdir($h)) {
 		if (strstr($file, '.zip')) {
-			// Assign the filename of the apps to the name field
-			$app1 = array("name" => $file);
-			$app1["desc"] = basename($file,".zip");
-			// Assign the record to the apps array
-			$apps[] = $app1;
-			$smarty->assign('app_available', 'y');
+			// Assign the filename of the pkgs to the name field
+			$pkg1 = array("name" => $file);
+			$pkg1["desc"] = basename($file,".zip");
+			// Assign the record to the pkgs array
+			$pkgs[] = $pkg1;
+			$smarty->assign('pkg_available', 'y');
 		}
 	}
 
 	closedir ($h);
-	sort($apps);
+	sort($pkgs);
 }
-$smarty->assign('apps', $apps);
+$smarty->assign('pkgs', $pkgs);
 
 // If no admin account then allow the creation of an admin account
 if (!$noadmin && $admin_acc == 'n' && isset($_REQUEST['createadmin'])) {
