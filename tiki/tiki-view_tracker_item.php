@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.46 2004-02-10 10:57:38 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.47 2004-02-10 16:03:44 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,8 +56,10 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
 $smarty->assign('tracker_info', $tracker_info);
+if (!isset($tracker_info["writerCanModify"])) $tracker_info["writerCanModify"] = 'n';
+if (!isset($tracker_info["writerGroupCanModify"])) $tracker_info["writerGroupCanModify"] = 'n';
 
-if ($tiki_p_view_trackers != 'y' and ($tracker_info["writerCanModify"] != 'y') and ($tracker_info["writerGroupCanModify"] != 'y')) {
+if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
