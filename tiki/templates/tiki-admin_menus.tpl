@@ -13,7 +13,7 @@
 <br />
 {if $menuId > 0}
 <h2>{tr}Edit this Menu:{/tr} {$name}</h2>
-<a href="tiki-admin_menus.php">{tr}Create new Menu{/tr}</a>
+<a href="tiki-admin_menus.php" class="linkbut">{tr}Create new Menu{/tr}</a>
 {else}
 <h2>{tr}Create new Menu{/tr}</h2>
 {/if}

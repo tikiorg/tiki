@@ -6,10 +6,10 @@
   <table ><tr><td>
   <table >
   <tr>
-     <td class="form">{tr}URL to link the banner{/tr}</td><td><input type="text" name="url" value="{$url|escape}" /></td>
+     <td class="form">{tr}URL to link the banner{/tr}</td><td class="form"><input type="text" name="url" value="{$url|escape}" /></td>
    </tr>
   <tr><td class="form">{tr}Client{/tr}:</td>
-      <td>
+      <td class="form">
         <select name="client">
         {section name=ix loop=$clients}
         <option value="{$clients[ix].user|escape}" {if $client eq $clients[ix].user}selected="selected"{/if}>{$clients[ix].user}</option>
@@ -18,10 +18,10 @@
       </td>
    </tr>
    <tr><td class="form">{tr}Max impressions{/tr}:</td>
-       <td><input type="text" name="maxImpressions" value="{$maxImpressions|escape}" size="7" /></td>
+       <td class="form"><input type="text" name="maxImpressions" value="{$maxImpressions|escape}" size="7" /></td>
    </tr>
-   <tr><td  class="form" valign="top">{tr}Zone{/tr}:</td>
-       <td><select name="zone">
+   <tr><td  class="form">{tr}Zone{/tr}:</td>
+       <td class="form"><select name="zone">
            {section name=ix loop=$zones}
            <option value="{$zones[ix].zone|escape}" {if $zone eq $zones[ix].zone}selected="selected"{/if}>{$zones[ix].zone}</option>
            {/section}
@@ -45,9 +45,9 @@
 <div class="simplebox">
 <table >
 <tr><td colspan="2" class="form">{tr}Show the banner only between these dates{/tr}:</td></tr>
-<tr><td class="form">{tr}From date{/tr}:</td><td>{html_select_date time=$fromDate prefix="fromDate_" end_year="+2"}</td></tr>
-<tr><td class="form">{tr}To date{/tr}:</td><td>{html_select_date time=$toDate prefix="toDate_" end_year="+2"}</td></tr>
-<tr><td class="form">{tr}Use dates{/tr}</td><td><input type="checkbox" name="useDates" {if $useDates eq 'y'}checked='checked'{/if}/></td></tr>
+<tr><td class="form">{tr}From date{/tr}:</td><td class="form">{html_select_date time=$fromDate prefix="fromDate_" end_year="+2"}</td></tr>
+<tr><td class="form">{tr}To date{/tr}:</td><td class="form">{html_select_date time=$toDate prefix="toDate_" end_year="+2"}</td></tr>
+<tr><td class="form">{tr}Use dates{/tr}</td><td class="form"><input type="checkbox" name="useDates" {if $useDates eq 'y'}checked='checked'{/if}/></td></tr>
 </table>
 </div>
 
@@ -55,8 +55,8 @@
 <div class="simplebox">
 <table with="100%">
 <tr><td colspan="2" class="form">{tr}Show the banner only in this hours{/tr}:</td></tr>
-<tr><td class="form">{tr}from{/tr}:</td><td>{html_select_time time=$fromTime display_seconds=false prefix=fromTime}</td></tr>
-<tr><td class="form">{tr}to{/tr}:</td><td>{html_select_time time=$toTime display_seconds=false prefix=toTime}</td></tr>
+<tr><td class="form">{tr}from{/tr}:</td><td class="form">{html_select_time time=$fromTime display_seconds=false prefix=fromTime}</td></tr>
+<tr><td class="form">{tr}to{/tr}:</td><td class="form">{html_select_time time=$toTime display_seconds=false prefix=toTime}</td></tr>
 </table>
 </div>
 

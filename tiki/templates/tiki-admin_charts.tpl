@@ -6,25 +6,19 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Charts" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Charts{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin charts tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!--- beginning of next bit --->
 
-
-
-
-
 <br/><br/>
-<h3>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}new{/tr}</a>
-</h3>
+<h2>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}new{/tr}</a>
+</h2>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="chartId" value="{$info.chartId|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
@@ -137,11 +131,11 @@
 </form>
 
 
-<h3>{tr}Charts{/tr}</h3>
+<h2>{tr}Charts{/tr}</h2>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find|escape}" />
+<table class="findtable"><tr><td class="findtable">{tr}Find{/tr}</td><td class="findtable"<input type="text" name="find" value="{$find|escape}" /><input type="submit" value="{tr}find{/tr}" name="search" /></td></tr></table>
 </form>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />

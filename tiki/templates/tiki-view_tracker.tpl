@@ -1,13 +1,13 @@
 <a class="pagetitle" href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}Tracker{/tr}: {$tracker_info.name}</a><br/><br/>
-[<a href="tiki-list_trackers.php" class="link">{tr}List trackers{/tr}</a>
+<a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a>
 {if $tiki_p_admin_trackers eq 'y'}
-|<a href="tiki-admin_trackers.php" class="link">{tr}Admin trackers{/tr}</a>
-|<a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="link">{tr}Edit this tracker{/tr}</a>
+<a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a>
+<a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a>
 {if $user}
-|<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;monitor=1" class="link">{tr}{$email_mon}{/tr}</a>
+<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;monitor=1" class="linkbut">{tr}{$email_mon}{/tr}</a>
 {/if}
 {/if}
-]<br/><br/>
+<br/><br/>
 <div class="simplebox">{$tracker_info.description}</div>
 {if $mail_msg}
 <br/><br/>
