@@ -252,6 +252,7 @@ class TrackerLib extends TikiLib {
 		global $notificationlib;
 		global $sender_email;
 		$now = date("U");
+
 		if ($itemId) {
 			$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
 			$result = $this->query($query,array($status,(int) $now,(int) $itemId));
@@ -263,8 +264,8 @@ class TrackerLib extends TikiLib {
 		$the_data = '';
 
 		for ($i = 0; $i < count($ins_fields["data"]); $i++) {
-			if ($ins_fields["data"][$i]["type"] == 'e') {
-			} else {
+			if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'e') {
+			} elseif (isset($ins_fields["data"][$i]["fieldId"])) {
 				$fieldId = $ins_fields["data"][$i]["fieldId"];
 				$value = $ins_fields["data"][$i]["value"];
 				if (isset($ins_fields["data"][$i]["name"])) {
