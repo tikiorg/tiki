@@ -493,11 +493,12 @@ div.wikitext {
 .wiki:hover {color: black; background-color: #EFEFEF;}
 
 /* Date displayed for last modification date of pages */
-p.editdate { color: black; font-size: smaller; margin-bottom: -1ex; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
+p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp { background: #E4E7EA; border: 1px solid black;  font-size: smaller; padding: 6pt;}
 
+.wikitopline { width: 100%; }
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
@@ -872,7 +873,7 @@ td.forumtoolbar { font-family: Verdana, Arial, Helvetica, sans-serif; color: bla
 
 /************************************************ CATEGORIES **************************************************************/
 
-table.tcategpath { margin-bottom: 40px; border-color: #5A4A39;  border-style: solid;  border-width: 1px;  width: 97%;}
+table.tcategpath { margin-bottom: 40px; border-color: #000000;  border-style: solid;  border-width: 1px;  width: 97%;}
 
 /* Table containing the category path */
 td.tdcategpath { 
@@ -885,20 +886,20 @@ td.tdcategpath {
   padding-right: 5px;}
 
 /* Links to up/top categories */
-.categpath {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
-.categpath:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
-.categpath:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : #578308;  text-decoration: none;}
+.categpath {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : black;  text-decoration: none;}
+.categpath:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : black;  text-decoration: none;}
+.categpath:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 12px;  color : blue;  text-decoration: none;}
 
 /* Table with the subcategories */
-table.subcats { padding-top: 20px; padding-bottom: 20px; width: 97%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 1px;}
+table.subcats { padding-top: 20px; padding-bottom: 20px; width: 100%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 1px;}
 td.tdsubcat {width: 25%;}
 
 /* Links to subcategories */
 .categlink {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: none; font-weight: bold;}
 .categlink:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: none;font-weight: bold;}
-.categlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: underline;font-weight: bold;}
+.categlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : blue; text-decoration: none;font-weight: bold;}
 
-table.catobjects { width: 97%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 0px;}
+table.catobjects { width: 100%; border-spacing: 0px;  padding-right: 0px;  margin-bottom: 10px; border-color: black; border-style: solid; border-width: 0px;}
 td.categobjectsnameeven,td.categobjectsnameodd {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
