@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.26 2004-03-10 07:11:05 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.27 2004-05-07 14:52:28 sylvieg Exp $ *}
 
 {tikimodule title="{tr}Login{/tr}" name="login_box"}
 
@@ -62,13 +62,13 @@
           {/if}
           <tr>
           {if $forgotPass eq 'y' and $allowRegister eq 'y'}
-            <td valign="bottom">[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</td>
+            <td  class="module" valign="bottom">[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</td>
           {/if}
           {if $forgotPass eq 'y' and $allowRegister ne 'y'}
-            <td valign="bottom"><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a></td>
+            <td  class="module" valign="bottom"><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a></td>
           {/if}
           {if $forgotPass ne 'y' and $allowRegister eq 'y'}
-            <td valign="bottom"><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a></td>
+            <td  class="module" valign="bottom"><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a></td>
           {/if}
           {if $forgotPass ne 'y' and $allowRegister ne 'y'}
           <td valign="bottom">&nbsp;</td>
@@ -76,7 +76,7 @@
           </tr>
           {if $http_login_url ne '' or $https_login_url ne ''}
           <tr>
-          <td valign="bottom">
+          <td  class="module" valign="bottom">
             <a class="linkmodule" href="{$http_login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}standard{/tr}</a> |
             <a class="linkmodule" href="{$https_login_url}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}secure{/tr}</a>
           </td>
@@ -84,7 +84,7 @@
           {/if}
           {if $show_stay_in_ssl_mode eq 'y'}
             <tr>
-              <td>
+              <td class="module">
                 <label for="login-stayssl">{tr}stay in ssl mode{/tr}:</label> 
                 <input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} />
               </td>
