@@ -28,7 +28,7 @@ class RegistrationLib extends TikiLib {
         if ($Debug) echo "Error : {$Email} is E-Mail form that is not right.<br>";
         return $Return;
     }
-    else if ($Debug) echo "Confirmation : {$Email} is E-Mail form that is not right.<br>";
+    else if ($Debug) echo "Confirmation : {$Email} is E-Mail form that is right.<br>";
 
     // E-Mail @ by 2 by standard divide. if it is $Email this "lsm@ebeecomm.com"..
     // $Username : lsm
