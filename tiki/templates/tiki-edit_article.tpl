@@ -10,7 +10,10 @@
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 
-{if $feature_view_tpl eq 'y'}
+{* GGG 20040116 {if $feature_view_tpl eq 'y'} 
+ Only show edit template button when the edit template feature is enabled
+ and the user has edit template permission. *}
+{if $feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'} {* GGG *}
 <a href="tiki-edit_templates.php?template=templates/tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit article tpl{/tr}">
 <img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
 {/if}
