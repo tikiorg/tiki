@@ -1,10 +1,14 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup.php,v 1.24 2003-09-18 19:09:08 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup.php,v 1.25 2003-10-20 06:25:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+if (isset($_SERVER["REQUEST_URI"])) {
+  ini_set('session.cookie_path',dirname($_SERVER["REQUEST_URI"]));
+}
 
 require_once ("db/tiki-db.php");
 
