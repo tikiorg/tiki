@@ -1,5 +1,10 @@
 Version 1.5 -TBA-
 
+* [NEW] Added a phpinfo link to check your php installation in the admin menu.
+* [NEW] Now you can make batch uploads of zip files for file galleries. If you have the right permission just
+  upload a zip file and all the files will be added to the gallery.
+* [NEW] Now you can use comments for inividual blog posts.
+* [FIX] Tikilib code reduced splitting it into smaller libraries reducing memory consumption. (stage1)
 * [NEW] Added a description field for Wiki pages (optional) when this feature is disabled the description is
   displayed below the page name and as the title of a link to the page (form other pages).
 * [NEW] Added direct link to pages in paginations (optional) if enabled you can jump to any page of a multi

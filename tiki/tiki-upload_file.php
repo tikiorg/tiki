@@ -21,6 +21,7 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-upload_file","tiki-download_file",$foo["path"]);
 $smarty->assign('url_browse',httpPrefix().$foo1);
 
+if(!isset($_REQUEST["description"])) $_REQUEST["description"]='';
 
 
 $smarty->assign('show','n');
@@ -100,6 +101,18 @@ if(isset($_REQUEST["upload"])) {
            die;  	
          }
        }
+       $name = $_FILES['userfile1']['name'];
+       if(substr($name,strlen($name)-3)=='zip') {
+        if($tiki_p_batch_upload_files == 'y') {
+        $tikilib->process_batch_file_upload($_REQUEST["galleryId"],$_FILES['userfile1']['tmp_name'],$user,$_REQUEST["description"]);
+        header("location: tiki-list_file_gallery.php?galleryId=".$_REQUEST["galleryId"]);
+        } else {
+           $smarty->assign('msg',tra('No permission to upload zipped image packages'));
+           $smarty->display("styles/$style_base/error.tpl");
+           die;  	
+        }
+      }
+       
        $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
        $data = '';
        $fhash='';
@@ -133,7 +146,7 @@ if(isset($_REQUEST["upload"])) {
     }
   /*}*/
   if(empty($_REQUEST["name"])) {
-    $error_msg=tra("You have to provide a name to the image");
+    $error_msg=tra("You have to provide a name to the file");
   }
   if($error_msg) {
     $smarty->assign('msg',$error_msg);

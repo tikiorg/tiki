@@ -63,7 +63,8 @@
     {if $tiki_p_view_referer_stats eq 'y'}
     &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br/>
     {/if}
-    &nbsp;<a href="tiki-import_phpwiki.php" class="linkmenu">{tr}PHPWiki Import{/tr}</a><br/>
+    &nbsp;<a href="tiki-import_phpwiki.php" class="linkmenu">{tr}Wiki Import dump{/tr}</a><br/>
+    &nbsp;<a href="tiki-phpinfo.php" class="linkmenu">{tr}phpinfo{/tr}</a><br/>
   </div>
 {/if}
 
