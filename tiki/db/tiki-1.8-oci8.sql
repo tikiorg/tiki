@@ -5227,6 +5227,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_userVersions','
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_user_watches','n');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_view_tpl','y');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_warn_on_edit','n');
 
 
@@ -5754,6 +5757,85 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols'
 
 -- Dynamic variables
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
+
+
+--
+-- Table structure for table 'tiki_integrator_reps'
+--
+DROP TABLE "tiki_integrator_reps";
+
+CREATE SEQUENCE "tiki_integrator_reps_sequ" INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE "tiki_integrator_reps" (
+  "repID" number(11) NOT NULL,
+  "name" varchar(255) default '' NOT NULL,
+  "path" varchar(255) default '' NOT NULL,
+  "start_page" varchar(255) default '' NOT NULL,
+  "css_file" varchar(255) default '' NOT NULL,
+  "visibility" char(1) default 'y' NOT NULL,
+  "cacheable" char(1) default 'y' NOT NULL,
+  "description" clob NOT NULL,
+  PRIMARY KEY ("repID")
+) ;
+
+CREATE TRIGGER "tiki_integrator_reps_trig" BEFORE INSERT ON "tiki_integrator_reps" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_integrator_reps_sequ".nextval into :NEW."repID" FROM DUAL;
+END;
+/
+
+--
+-- Dumping data for table 'tiki_integrator_reps'
+--
+INSERT INTO tiki_integrator_reps VALUES (1,'Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
+
+
+--
+-- Table structure for table 'tiki_integrator_rules'
+--
+DROP TABLE "tiki_integrator_rules";
+
+CREATE SEQUENCE "tiki_integrator_rules_sequ" INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE "tiki_integrator_rules" (
+  "ruleID" number(11) NOT NULL,
+  "repID" number(11) default '0' NOT NULL,
+  "ord" number(2) default '0' NOT NULL,
+  "srch" blob NOT NULL,
+  "repl" blob NOT NULL,
+  "type" char(1) default 'n' NOT NULL,
+  "casesense" char(1) default 'y' NOT NULL,
+  "rxmod" varchar(20) default '' NOT NULL,
+  "description" clob NOT NULL,
+  PRIMARY KEY (ruleID),
+) ;
+
+CREATE TRIGGER "tiki_integrator_rules_trig" BEFORE INSERT ON "tiki_integrator_rules" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_integrator_rules_sequ".nextval into :NEW."ruleID" FROM DUAL;
+END;
+/
+CREATE  INDEX "tiki_integrator_rules_repID" ON "tiki_integrator_rules"("repID");
+
+--
+-- Dumping data for table 'tiki_integrator_rules'
+--
+INSERT INTO tiki_integrator_rules VALUES (1,1,1,'<\\!DOCTYPE','<!-- Commented by Tiki integrator <!DOCTYPE','y','n','i','Start comment from the begining of document');
+
+
+INSERT INTO tiki_integrator_rules VALUES (2,1,2,'</html>','','y','n','i','Remove </html>');
+
+
+INSERT INTO tiki_integrator_rules VALUES (3,1,3,'<body.*>','-->','y','n','i','End of comment just after <body>');
+
+
+INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove </body>');
+
+
+INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"/{path}/','y','n','i','Fix images path');
+
+
+INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(http|ftp)://)','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
 
 
 ;
