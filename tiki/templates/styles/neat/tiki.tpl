@@ -20,7 +20,7 @@
 		  	&nbsp;&nbsp;<img src='styles/neat/linkOpaque.gif' /><a class="tikitopmenu" href="tiki-minical.php">{tr}Calendar{/tr}</a>
 		  {/if}
 		  {if $feature_usermenu eq 'y'}
-		  	&nbsp;&nbsp;<img src='styles/neat/linkOpaque.gif' /><a class="tikitopmenu" href="tiki-usermenu.php">{tr}User menu{/tr}</a>
+		  	&nbsp;&nbsp;<img src='styles/neat/linkOpaque.gif' /><a class="tikitopmenu" href="tiki-usermenu.php">{tr}Favorites{/tr}</a>
 		  {/if}
  	      {if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 		  	&nbsp;&nbsp;<img src='styles/neat/linkOpaque.gif' /><a class="tikitopmenu" href="tiki-user_tasks.php">{tr}Tasks{/tr}</a>
@@ -49,9 +49,11 @@
   
   {if $feature_usermenu eq 'y'}	
 	  <div id="usermenu">
+	  	&nbsp;&nbsp;<a href="tiki-usermenu.php?url={$smarty.server.REQUEST_URI}"><img src='img/icons/add.gif' border='0' alt='{tr}add{/tr}' title='{tr}add{/tr}' /></a>
 	  	{section name=ix loop=$usr_user_menus}
-  			&nbsp;&nbsp;<img style="vertical-align:bottom;" src="styles/neat/addFavorite.gif" /><a {if $usr_user_menus[ix].mode eq 'n'}target='_new'{/if} href="{$usr_user_menus[ix].url}" class="tikitopmenu2">{$usr_user_menus[ix].name}</a>
+  			&nbsp;&nbsp;<img style="vertical-align:bottom;" src="styles/neat/logoIcon.gif" /><a {if $usr_user_menus[ix].mode eq 'n'}target='_new'{/if} href="{$usr_user_menus[ix].url}" class="tikitopmenu2">{$usr_user_menus[ix].name}</a>
   		{/section}
+  		
 	  </div>
   {/if}
  

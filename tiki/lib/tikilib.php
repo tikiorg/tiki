@@ -757,7 +757,7 @@ class TikiLib {
     $now = mktime(0,0,0,date("m"),date("d"),date("Y"));
     $dfrom =0;
     if($days!=0) $dfrom = $now-($days*24*60*60);
-    $query = "select pageviews from tiki_pageviews where day<=$now and day>=$dfrom";
+    $query = "select day,pageviews from tiki_pageviews where day<=$now and day>=$dfrom";
     $result = $this->query($query);
     $ret = Array();
     $n=ceil($result->numRows()/10);

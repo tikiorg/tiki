@@ -20,7 +20,7 @@
 <form action="tiki-usermenu.php" method="post">
 <table class="normal">
 <tr>
-<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td width="2%" class="heading"><input type="submit" name="delete" value="x " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'position_desc'}position_asc{else}position_desc{/if}">{tr}Pos{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-usermenu.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></td>
@@ -29,13 +29,13 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle advance=false}">
+<td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="menu[{$channels[user].menuId}]" />
 </td>
 <td class="{cycle advance=false}">{$channels[user].position}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-usermenu.php?menuId={$channels[user].menuId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a></td>
 <td class="{cycle advance=false}">{$channels[user].url|truncate:40:"...":true}</td>
-<td class="{cycle advance=false}">{$channels[user].mode}</td>
+<td style="text-align:center;" class="{cycle advance=false}">{$channels[user].mode}</td>
 </tr>
 {/section}
 </table>

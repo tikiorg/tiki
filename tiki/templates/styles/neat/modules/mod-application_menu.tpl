@@ -409,18 +409,7 @@
   </div>
   
 {/if}
-{if $feature_usermenu eq 'y'}
-  <div class="separator">
-  <a class='separator' href="javascript:toggle('usrmenu');"><img src="styles/neat/linkOpaque.gif" border="0">&nbsp;</a>
-  <a href="tiki-usermenu.php" class="separator">{tr}User Menu{/tr}</a>
-  </div>
-  <div id='usrmenu' style="{$mnu_usrmenu}">
-  {section name=ix loop=$usr_user_menus}
-  &nbsp;<a {if $usr_user_menus[ix].mode eq 'n'}target='_new'{/if} href="{$usr_user_menus[ix].url}" class="linkmenu">{$usr_user_menus[ix].name}</a><br/>
-  {/section}
-  </div>
-{/if}
-
+ 
 
 </div>
 </div>

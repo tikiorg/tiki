@@ -42,7 +42,8 @@ if($_REQUEST["menuId"]) {
 } else {
   $info=Array();
   $info['name']='';
-  $info['url']='';
+  $info['url']=isset($_REQUEST['url'])?$_REQUEST['url']:'';
+  $info['status']='w';
   $info['position']=$usermenulib->get_max_position($user)+1;
 }
 

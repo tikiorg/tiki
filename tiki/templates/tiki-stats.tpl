@@ -22,7 +22,7 @@
 <br/>
 <form action="tiki-stats.php" method="post">
 {tr}Show chart for the last {/tr}
-<input type="text" name="days" size="10" value="7" /> {tr}days (0=all){/tr}
+<input type="text" name="days" size="10" value="{$days}" /> {tr}days (0=all){/tr}
 <input type="submit" name="pv_chart" value="{tr}display{/tr}" />
 </form>
 <!-- Site stats --> 
