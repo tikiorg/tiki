@@ -102,7 +102,8 @@ class RSSLib extends TikiLib {
     xml_set_element_handler($this->parser,"startElementHandler","endElementHandler");
     xml_set_character_data_handler($this->parser,"characterDataHandler");
     if (!xml_parse($this->parser, $data, 1)) {
-                    return $news;
+                     print("Xml error: ".xml_error_string(xml_get_error_code($this->parser))."<br />");
+                     return $news;
     }
     xml_parser_free($this->parser);
     preg_match_all("/<title>(.*)<\/title>/",$this->buffer,$titles);
