@@ -546,20 +546,23 @@ class StructLib extends TikiLib {
 		return $ret;
 	}
 
+    /** Get a list of all structures this page is a member of
+	*/
 	function get_page_structures($pageName) {
 		$ret = array();
-		$pages_added = array();
+		$structures_added = array();
 		$query = "select `page_ref_id` ";
-    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
-    $query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
+		$query .= "from `tiki_structures` ts, `tiki_pages` tp ";
+		$query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
 		$result = $this->query($query,array($pageName));
 		while ($res = $result->fetchRow()) {
-      $next_page = $this->s_get_structure_info($res["page_ref_id"]);
-      //Add each structure head only once
-      if (!in_array($next_page["page_ref_id"], $pages_added)) {
-        $pages_added[] = $next_page["page_ref_id"];
-			  $ret[] = $next_page;
-      }
+			$next_page = $this->s_get_structure_info($res["page_ref_id"]);
+			//Add each structure head only once
+			if (!in_array($next_page["page_ref_id"], $structures_added)) {
+				$structures_added[] = $next_page["page_ref_id"];
+				$next_page["req_page_ref_id"] = $res["page_ref_id"];
+				$ret[] = $next_page;
+			}
 		}
 		return $ret;
 	}
