@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.7 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.8 2003-12-10 03:51:45 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,14 +13,12 @@ include_once ('lib/trackers/trackerlib.php');
 
 if ($feature_trackers != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_admin_trackers != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -41,7 +39,6 @@ if ($_REQUEST["trackerId"]) {
 	$info = $trklib->get_tracker($_REQUEST["trackerId"]);
 } else {
 	$info = array();
-
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["showCreated"] = '';
@@ -49,6 +46,8 @@ if ($_REQUEST["trackerId"]) {
 	$info["showLastModif"] = '';
 	$info["useComments"] = '';
 	$info["useAttachments"] = '';
+	$info["showComments"] = '';
+	$info["showAttachments"] = '';
 }
 
 $smarty->assign('name', $info["name"]);
@@ -58,6 +57,8 @@ $smarty->assign('showStatus', $info["showStatus"]);
 $smarty->assign('showLastModif', $info["showLastModif"]);
 $smarty->assign('useComments', $info["useComments"]);
 $smarty->assign('useAttachments', $info["useAttachments"]);
+$smarty->assign('showComments', $info["showComments"]);
+$smarty->assign('showAttachments', $info["showAttachments"]);
 
 if (isset($_REQUEST["remove"])) {
 	$trklib->remove_tracker($_REQUEST["remove"]);
@@ -88,6 +89,18 @@ if (isset($_REQUEST["save"])) {
 		$useAttachments = 'n';
 	}
 
+	if (isset($_REQUEST["showComments"]) && $_REQUEST["showComments"] == 'on') {
+		$showComments = 'y';
+	} else {
+		$showComments = 'n';
+	}
+
+	if (isset($_REQUEST["showAttachments"]) && $_REQUEST["showAttachments"] == 'on') {
+		$showAttachments = 'y';
+	} else {
+		$showAttachments = 'n';
+	}
+
 	if (isset($_REQUEST["showLastModif"]) && $_REQUEST["showLastModif"] == 'on') {
 		$showLastModif = 'y';
 	} else {
@@ -95,7 +108,7 @@ if (isset($_REQUEST["save"])) {
 	}
 
 	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $showCreated, $showLastModif,
-		$useComments, $useAttachments, $showStatus);
+		$useComments, $useAttachments, $showStatus, $showComments, $showAttachments);
 	$smarty->assign('trackerId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');

@@ -42,7 +42,7 @@
 </table>
 </div>
 
-{* --- tab with comments *}
+{* --- tab with comments --- *}
 {if $tracker_info.useComments eq 'y'}
 <div id="content{cycle name=content}" class="content">
 {if $tiki_p_comment_tracker_items eq 'y'}
@@ -70,7 +70,7 @@
 </div>
 {/if}
 
-{* --- tab with attachements *}
+{* --- tab with attachements --- *}
 {if $tracker_info.useAttachments eq 'y'}
 <div id="content{cycle name=content}" class="content">
 {if $tiki_p_attach_trackers eq 'y'}

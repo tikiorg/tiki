@@ -52,8 +52,11 @@
 {if $tracker_info.showLastModif eq 'y'}
 <td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></td>
 {/if}
-{if $tracker_info.useComments eq 'y'}
-<td class="heading">{tr}coms{/tr}</td>
+{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
+<td class="heading" width="5%">{tr}coms{/tr}</td>
+{/if}
+{if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
+<td class="heading" width="5%">{tr}atts{/tr}</td>
 {/if}
 </tr>
 {cycle values="odd,even" print=false}
@@ -101,8 +104,13 @@
 {if $tracker_info.showLastModif eq 'y'}
 <td class="{cycle advance=false}">{$items[user].lastModif|tiki_short_datetime}</td>
 {/if}
-{if $tracker_info.useComments eq 'y'}
-<td  style="text-align:right;" class="{cycle advance=false}">{$items[user].comments}</td>
+{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
+<td  style="text-align:center;" class="{cycle advance=false}">{$items[user].comments}</td>
+{/if}
+{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
+<td  style="text-align:center;" class="{cycle advance=false}"><a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if
+$fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}&amp;show=att" link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
+/></a>{$items[user].attachments}</td>
 {/if}
 </tr>
 {cycle print=false}

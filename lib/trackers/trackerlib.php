@@ -453,14 +453,14 @@ class TrackerLib extends TikiLib {
 	}
 
 				// Inserts or updates a tracker  
-	function replace_tracker($trackerId, $name, $description, $showCreated, $showLastModif, $useComments, $useAttachments, $showStatus) {
+	function replace_tracker($trackerId, $name, $description, $showCreated, $showLastModif, $useComments, $useAttachments, $showStatus, $showComments, $showAttachments) {
 
 		if ($trackerId) {
-			$query = "update `tiki_trackers` set `name`=?,`description`=?, `useAttachments`=?,
-				`useComments`=?, `showCreated`=?,`showLastModif`=?,`showStatus`=? 
+			$query = "update `tiki_trackers` set `name`=?,`description`=?, `useAttachments`=?,`showAttachments`=?,
+				`useComments`=?, `showComments`=?,`showCreated`=?,`showLastModif`=?,`showStatus`=? 
 				where `trackerId`=?";
 
-			$bindvars=array($name,$description,$useAttachments,$useComments,$showCreated,
+			$bindvars=array($name,$description,$useAttachments,$showAttachments,$useComments,$showComments,$showCreated,
 				$showLastModif,$showStatus,(int) $trackerId);
 
 			$result = $this->query($query,$bindvars);
@@ -469,10 +469,10 @@ class TrackerLib extends TikiLib {
 			
 			$this->getOne("delete from `tiki_trackers` where `name`=?",array($name),false);
 			$query = "insert into `tiki_trackers`(`name`,`description`,`created`,`lastModif`,
-				`items`,`showCreated`,`showLastModif`,`useComments`,`useAttachments`,`showStatus`)
-                		values(?,?,?,?,?,?,?,?,?,?)";
+				`items`,`showCreated`,`showLastModif`,`useComments`,`showComments``useAttachments`,`showAttachments``showStatus`)
+                		values(?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,(int) $now,(int) $now,0,$showCreated,$showLastModif,
-				$useComments,$useAttachments,$showStatus);
+				$useComments,$showComments,$useAttachments,$showAttachments,$showStatus);
 			$result = $this->query($query,$bindvars);
 			$trackerId = $this->getOne("select max(`trackerId`) from `tiki_trackers` where `name`=? and `created`=?",array($name,(int) $now));
 		}
