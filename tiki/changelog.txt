@@ -1,5 +1,7 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Option to allow users to lock a page and only the user who locked the
+  page can unlock it. 
 * [NEW] Handlers can be defined to change how wiki pages and other objects 
   are parsed, you can define pre-handlers and pos-handlers. See the file
   tiki-handlers.php

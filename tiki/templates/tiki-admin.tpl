@@ -495,6 +495,7 @@
     {if $feature_notepad eq 'y'}
     <tr><td class="form">{tr}Users can save pages to notepad{/tr}:</td><td><input type="checkbox" name="feature_wiki_notepad" {if $feature_wiki_notepad eq 'y'}checked="checked"{/if}/></td></tr>    
     {/if}
+    <tr><td class="form">{tr}Users can lock pages (if perm){/tr}:</td><td><input type="checkbox" name="feature_wiki_usrlock" {if $feature_wiki_usrlock eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Tables syntax{/tr}:</td><td>
     <select name="feature_wiki_tables">
     <option value="old" {if $feature_wiki_tables eq 'old'}selected="selected"{/if}>{tr}|| for rows{/tr}</option>
