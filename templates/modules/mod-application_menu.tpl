@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.67 2003-10-13 04:12:23 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.68 2003-10-22 11:57:04 redflo Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -22,7 +22,7 @@
   &nbsp;<a href="tiki-stats.php" class="linkmenu">{tr}Stats{/tr}</a><br />
 {/if}
 
-{if $feature_categories eq 'y'}
+{if $feature_categories eq 'y' and $tiki_p_view_categories eq 'y'}
   &nbsp;<a href="tiki-browse_categories.php" class="linkmenu">{tr}Categories{/tr}</a><br />
 {/if}
 

@@ -374,6 +374,7 @@ articleId numeric(8 ,0) identity,
   "image_y" numeric(4,0) default NULL NULL,
   "image_data" image default '',
   "publishDate" numeric(14,0) default NULL NULL,
+  "expireDate" numeric(14,0) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   "heading" text default '',
   "body" text default '',
@@ -407,6 +408,52 @@ CREATE  INDEX "tiki_articles_ft" ON "tiki_articles"("title","heading","body")
 go
 
 -- --------------------------------------------------------
+
+-- DROP TABLE "tiki_article_types"
+go
+
+
+
+CREATE TABLE "tiki_article_types" (
+  "type" varchar(50) NOT NULL,
+  "use_ratings" varchar(1) default NULL NULL,
+  "show_pre_publ" varchar(1) default NULL NULL,
+  "show_post_expire" varchar(1) default 'y',
+  "heading_only" varchar(1) default NULL NULL,
+  "allow_comments" varchar(1) default 'y',
+  "show_image" varchar(1) default 'y',
+  "show_avatar" varchar(1) default NULL NULL,
+  "show_author" varchar(1) default 'y',
+  "show_pubdate" varchar(1) default 'y',
+  "show_expdate" varchar(1) default NULL NULL,
+  "show_reads" varchar(1) default 'y',
+  PRIMARY KEY ("type")
+)  
+go
+
+
+
+
+INSERT INTO "tiki_article_types" ("type") VALUES ('Article')
+go
+
+
+
+INSERT INTO "tiki_article_types" ("type","use_ratings") VALUES ('Review','y')
+go
+
+
+
+INSERT INTO "tiki_article_types" ("type","show_post_expire") VALUES ('Event','n')
+go
+
+
+
+INSERT INTO "tiki_article_types" ("type","show_post_expire","heading_only","allow_comments") VALUES ('Classified','n','y','n')
+go
+
+
+
 
 --
 -- Table structure for table `tiki_banners`
@@ -3391,7 +3438,7 @@ go
 CREATE TABLE "tiki_rss_feeds" (
   "name" varchar(30) default '' NOT NULL,
   "rssVer" char(1) default '1' NOT NULL,
-  "refresh" numeric(8,0) default NULL NULL,
+  "refresh" numeric(8,0) default '300',
   "lastUpdated" numeric(14,0) default NULL NULL,
   "cache" image default '',
   PRIMARY KEY ("name"," rssVer")
@@ -5455,6 +5502,11 @@ go
 
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_categories', 'Can browse categories', 'registered', 'tiki')
+go
+
+
+
 
 -- --------------------------------------------------------
 
@@ -5603,17 +5655,17 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_type','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_type','y')
 go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_expire','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_expire','y')
 go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_visible','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('art_list_visible','y')
 go
 
 
@@ -5863,12 +5915,12 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_autolinks','y');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_autolinks','y')
 go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_maps','n');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_maps','n')
 go
 
 
