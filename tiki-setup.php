@@ -273,7 +273,11 @@ $feature_dynamic_content = 'n';
 $feature_chat = 'n';
 $feature_polls = 'n';
 $feature_menusfolderstyle = 'n';
+$feature_calendar = 'n';
+$feature_editcss = 'n';
+$feature_wiki_monosp = 'y';
 
+$wiki_feature_copyrights = 'n';
 $wiki_creator_admin = 'n';
 $smarty->assign('wiki_creator_admin',$wiki_creator_admin);
 
@@ -657,6 +661,10 @@ $smarty->assign('feature_gal_rankings',$feature_gal_rankings);
 $smarty->assign('feature_wiki_rankings',$feature_wiki_rankings);
 $smarty->assign('feature_wiki_undo',$feature_wiki_undo);
 $smarty->assign('feature_menusfolderstyle',$feature_menusfolderstyle);
+$smarty->assign('feature_calendar',$feature_calendar);
+$smarty->assign('feature_editcss',$feature_editcss);
+$smarty->assign('feature_wiki_monosp',$feature_wiki_monosp);
+$smarty->assign('wiki_feature_copyrights',$wiki_feature_copyrights);
 
 $smarty->assign('feature_wiki_templates',$feature_wiki_templates);
 $smarty->assign('feature_cms_templates',$feature_cms_templates);
