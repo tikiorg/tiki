@@ -1,4 +1,4 @@
-$Header: /cvsroot/tikiwiki/_mods/README,v 1.3 2004-05-09 18:29:30 damosoft Exp $
+$Header: /cvsroot/tikiwiki/_mods/README,v 1.4 2004-06-30 21:45:36 damosoft Exp $
 
 TikiWiki mods Collection
 -------------------------
@@ -13,6 +13,8 @@ what license the mod is under.
 
 If no license is showing, we shall asume its the same as TikiWiki. LGPL.
 
+The web front to this CVS module is the http://mods.tikiwiki.org site.
+
 INDEX
 ------
 
@@ -21,5 +23,6 @@ INDEX
 /avatars/
 /patches/
 /smilies/
+/features/
 /templates/
 /wiki-plugins/
