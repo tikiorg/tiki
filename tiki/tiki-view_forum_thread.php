@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.36 2003-10-13 00:25:42 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.37 2003-10-13 10:30:28 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -620,7 +620,7 @@ if (isset($_REQUEST["comments_previewComment"])) {
 
 if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"]))
 {
-    if ($tiki_p_admin_forum == 'y'
+    if ($tiki_p_admin_forum == 'y')
     {
 	$comments_show = 'y';
 
