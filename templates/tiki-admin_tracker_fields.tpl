@@ -32,11 +32,13 @@
 <option value="j" {if $type eq 'j'}selected="selected"{/if}>{tr}jscalendar{/tr}</option>
 <option value="i" {if $type eq 'i'}selected="selected"{/if}>{tr}image{/tr}</option>
 <option value="x" {if $type eq 'x'}selected="selected"{/if}>{tr}action{/tr}</option>
+<option value="h" {if $type eq 'h'}selected="selected"{/if}>{tr}header{/tr}</option>
 </select>
 <span  id='trkfldoptions' {if $type eq 'd' or $type eq 'i' or $type eq 'x'}style="display:inline;"{else}style="display:none;"{/if}><br /><input type="text" name="options" value="{$options|escape}" size="50" /></span>
 </td></tr>
 <tr><td class="formcolor">{tr}Is column visible when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column links to edit/view item?{/tr}</td><td class="formcolor"><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Column is searchable?{/tr}</td><td class="formcolor"><input type="checkbox" name="isSearchable" {if $isSearchable eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor">
 <select name="position">
 {section name=ix loop=$orders}

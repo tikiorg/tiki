@@ -480,21 +480,21 @@ class TrackerLib extends TikiLib {
 	}
 
 	// Adds a new field to a tracker or modifies an existing field for a tracker
-	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isTblVisible, $position, $options) {
+	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $position, $options) {
 		// Check the name
 		if ($fieldId) {
-			$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,
+			$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
 				`isTblVisible`=?,`position`=?,`options`=? where `fieldId`=?";
-			$bindvars=array($name,$type,$isMain,$isTblVisible,(int)$position,$options,(int) $fieldId);
+			$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,(int)$position,$options,(int) $fieldId);
 
 			$result = $this->query($query, $bindvars);
 		} else {
 			$this->getOne("delete from `tiki_tracker_fields` where `trackerId`=? and `name`=?",
 				array((int) $trackerId,$name),false);
-			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isTblVisible`,`position`,`options`)
-                values(?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`position`,`options`)
+                values(?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isTblVisible,$position,$options));
+			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$position,$options));
 			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 			// Now add the field to all the existing items
 			$query = "select `itemId` from `tiki_tracker_items` where `trackerId`=?";

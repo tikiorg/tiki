@@ -19,7 +19,7 @@
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false}
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></span>
-{if $tiki_p_filter_tracker_items eq 'y'}
+{if $show_filters eq 'y'}
 <span id="tab{cycle name=tabs}" class="tab">{tr}Filters{/tr}</span>
 {/if}
 {if $tiki_p_create_tracker_items eq 'y'}
@@ -42,7 +42,7 @@
 </td>
 {/if}
 {section name=ix loop=$fields}
-{if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x'}
+{if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
 <td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if $fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq $fields[x].name|escape:'url'|cat:'_desc'}{$fields[x].name|escape:"url"}_asc{else}{$fields[x].name|escape:"url"}_desc{/if}">{$fields[ix].name}</a></td>
 {/if}
 {/section}
@@ -94,7 +94,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 <td class="{cycle advance=false}">
 {$items[user].field_values[ix].value|tiki_short_datetime}
 </td>
-{elseif $items[user].field_values[ix].type ne 'x'}
+{elseif $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 <td class="{cycle advance=false}">
 {$items[user].field_values[ix].value}
 </td>
@@ -143,7 +143,7 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 </div>
 
 {* --- tab with filters --- *}
-{if $tiki_p_filter_tracker_items eq 'y'}
+{if $show_filters eq 'y'}
 <div id="content{cycle name=content}" class="content">
 <h3>{tr}Tracker Items{/tr}</h3>
 <form action="tiki-view_tracker.php" method="post">
@@ -228,8 +228,8 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 <table class="normal">
 {section name=ix loop=$ins_fields}
 {if $ins_fields[ix].type ne 'x'}
-<tr><td class="formcolor">{$ins_fields[ix].name}</td>
-<td class="formcolor">
+<tr class="formcolor"><td>{$ins_fields[ix].name}</td>
+<td>
 {/if}
 {if $ins_fields[ix].type eq 'u'}
 <select name="ins_{$ins_fields[ix].name}">
@@ -299,7 +299,7 @@ align       : "bR"
 </td></tr>
 {/if}
 {/section}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
 </div>

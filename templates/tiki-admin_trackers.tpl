@@ -25,38 +25,38 @@
 <form action="tiki-admin_trackers.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 {include file=categorize.tpl}
-<tr><td class="formcolor">{tr}Show status when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show creation date when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Show lastModif date when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Tracker items allow comments?{/tr}</td><td class="formcolor"><input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} />
+<tr class="formcolor"><td>{tr}Show status when listing tracker items?{/tr}</td><td><input type="checkbox" name="showStatus" {if $showStatus eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td>{tr}Show creation date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td>{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
+<tr class="formcolor"><td>{tr}Tracker items allow comments?{/tr}</td><td><input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} />
 {tr}and display comments in listing?{/tr} <input type="checkbox" name="showComments" {if $showComments eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Tracker items allow attachments?{/tr}</td><td class="formcolor"><input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} />
+<tr class="formcolor"><td>{tr}Tracker items allow attachments?{/tr}</td><td><input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} />
 {tr}and display attachments in listing?{/tr} <input type="checkbox" name="showAttachments" {if $showAttachments eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Attachement display options{/tr}<br />{tr}(Use numbers to order items, 0 will not be displayed,<br /> and negative values will be displayed in a popup){/tr}</td><td class="formcolor">
+<tr class="formcolor"><td>{tr}Attachement display options{/tr}<br />{tr}(Use numbers to order items, 0 will not be displayed,<br /> and negative values will be displayed in a popup){/tr}</td><td>
 <table width="100%"><tr>
-<td class="formcolor">{tr}name{/tr}</td>
-<td class="formcolor">{tr}date{/tr}</td>
-<td class="formcolor">{tr}dls{/tr}</td>
-<td class="formcolor">{tr}desc{/tr}</td>
-<td class="formcolor">{tr}size{/tr}</td>
-<td class="formcolor">{tr}version{/tr}</td>
-<td class="formcolor">{tr}type{/tr}</td>
-<td class="formcolor">{tr}long desc{/tr}</td></tr>
+<td>{tr}name{/tr}</td>
+<td>{tr}date{/tr}</td>
+<td>{tr}dls{/tr}</td>
+<td>{tr}desc{/tr}</td>
+<td>{tr}size{/tr}</td>
+<td>{tr}version{/tr}</td>
+<td>{tr}type{/tr}</td>
+<td>{tr}long desc{/tr}</td></tr>
 <tr>
-<td class="formcolor"><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
-<td class="formcolor"><input type="text" size="2" name="ui[created]" value="{$ui.created}" /></td>
-<td class="formcolor"><input type="text" size="2" name="ui[downloads]" value="{$ui.downloads}" /></td>
-<td class="formcolor"><input type="text" size="2" name="ui[comment]" value="{$ui.comment}" /></td>
-<td class="formcolor"><input type="text" size="2" name="ui[filesize]" value="{$ui.filesize}" /></td>
-<td class="formcolor"><input type="text" size="2" name="ui[version]" value="{$ui.version}" /></td>
-<td class="formcolor"><input type="text" size="2" name="ui[filetype]" value="{$ui.filetype}" /></td>
-<td class="formcolor"><input type="text" size="2" name="ui[longdesc]" value="{$ui.longdesc}" /></td>
+<td><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
+<td><input type="text" size="2" name="ui[created]" value="{$ui.created}" /></td>
+<td><input type="text" size="2" name="ui[downloads]" value="{$ui.downloads}" /></td>
+<td><input type="text" size="2" name="ui[comment]" value="{$ui.comment}" /></td>
+<td><input type="text" size="2" name="ui[filesize]" value="{$ui.filesize}" /></td>
+<td><input type="text" size="2" name="ui[version]" value="{$ui.version}" /></td>
+<td><input type="text" size="2" name="ui[filetype]" value="{$ui.filetype}" /></td>
+<td><input type="text" size="2" name="ui[longdesc]" value="{$ui.longdesc}" /></td>
 </tr></table>
 </td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}trackers{/tr}</h2>

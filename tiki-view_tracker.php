@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.19 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.20 2004-01-04 08:30:26 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -255,7 +255,13 @@ $smarty->assign('uses_tabs', 'y');
 if ($feature_jscalendar) {
 	$smarty->assign('uses_jscalendar', 'y');
 }
-$smarty->assign('tiki_p_filter_tracker_items', 'n');
+$smarty->assign('show_filters', 'n');
+foreach ($fields['data'] as $it) {
+	if ($it['isSearchable'] == 'y'){
+		$smarty->assign('show_filters', 'y');
+		break;
+	}
+}
 
 $smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 
 
