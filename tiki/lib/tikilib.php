@@ -4469,7 +4469,7 @@ function add_pageview() {
 		} else {
 		    $uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
 
-		    $repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" class="wiki">?</a>';
+		    $repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" class="wiki wikinew">?</a>';
 		}
 
 		$data = preg_replace($pattern, "$repl", $data);
@@ -4545,10 +4545,10 @@ function add_pageview() {
 			    // $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
 			    $repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
 			} else {
-			    $repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
+			    $repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki wikinew'>?</a>";
 			}
 		    } else {
-			$repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
+			$repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki wikinew'>?</a>";
 		    }
 
 		    $data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);

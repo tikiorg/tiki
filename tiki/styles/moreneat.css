@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.49 2004-05-03 15:34:35 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.50 2004-06-13 02:06:57 teedog Exp $
 
 MoreNeat theme
 */
@@ -581,6 +581,18 @@ div.wikitext {
 /* Links to wiki pages */
 .wiki { color:#436976; text-decoration:underline;}
 .wiki:hover {color: #436976;text-decoration:underline;}
+
+/* Links to create new wiki pages that don't exist yet, this modifies the "?"*/
+.wikinew {
+ color:#CC0000;
+ text-decoration:underline;
+ font-weight: bold;
+}
+.wikinew:hover {
+ color: #CC0000;
+ text-decoration:underline;
+ font-weight: bold;
+}
 
 /* Date displayed for last modification date of pages */
 p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
