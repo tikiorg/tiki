@@ -27,11 +27,15 @@
   <tr><td class="form">{tr}Name{/tr}:</td><td class="form">{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Last login{/tr}:</td><td class="form">{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
   <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td class="form">
+{if $userinfo.email}
   <select name="email_isPublic">
    {section name=ix loop=$scramblingMethods}
       <option value="{$scramblingMethods[ix]|escape}" {if $email_isPublic eq $scramblingMethods[ix]}selected="selected"{/if}>{$scramblingEmails[ix]}</option>
    {/section}
   </select>
+{else}
+  Unavailable - please set your e-mail below
+{/if}
   </td></tr>
   </td></tr>
   <tr><td class="form">{tr}Does your mail reader need a special charset{/tr}</td>
