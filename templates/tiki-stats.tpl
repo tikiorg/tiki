@@ -1,5 +1,5 @@
 <a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a><br/><br/>
-<a href="tiki-stats?chart=usage" class="link">{tr}Usage chart{/tr}</a><br/><br/>
+<a href="tiki-stats.php?chart=usage" class="link">{tr}Usage chart{/tr}</a><br/><br/>
 {if $usage_chart eq 'y'}
 <br/> 
 <div align="center">
