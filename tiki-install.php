@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.69 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.70 2005-04-02 16:52:02 michael_davey Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,6 +8,8 @@
 
 // To re-enable this script comment the following two lines with two / and stopinstall: making sure there are no spaces inbetween // and stopinstall:
 
+//stopinstall: header ("Status: 410 Gone"); /* PHP3 */
+//stopinstall: header ("HTTP/1.0 410 Gone"); /* PHP4 */
 //stopinstall: header ('location: index.php');
 //stopinstall: die('gone');
 
