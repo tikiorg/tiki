@@ -68,7 +68,7 @@
 </table>
 </div>
 <div class="articletrailer">
-<table >
+<table>
 <tr>
 {if ($listpages[ix].size > 0) or (($feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
   {if ($listpages[ix].heading_only ne 'y')}
@@ -88,8 +88,8 @@
     {if $listpages[ix].comments_cant eq 0}{tr}no comments{/tr}
     {elseif $listpages[ix].comments_cant eq 1}{tr}1 comment{/tr}
     {else}{$listpages[ix].comments_cant} {tr}comments{/tr}
-    </td%>
     {/if}
+    </td>
   {/if}
 {/if}
 <td style="text-align:right;">
