@@ -980,20 +980,6 @@ class TikiLib extends TikiDB {
 	    return "";
     }
 
-    // Stats ////
-    /*shared*/
-    function add_pageview() {
-	$dayzero = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
-	$cant = $this->getOne("select count(*) from `tiki_pageviews` where `day`=?",array((int)$dayzero));
-
-	if ($cant) {
-	    $query = "update `tiki_pageviews` set `pageviews`=`pageviews`+1 where `day`=?";
-	} else {
-	    $query = "insert into `tiki_pageviews`(`day`,`pageviews`) values(?,1)";
-	}
-	$result = $this->query($query,array((int)$dayzero));
-    }
-
     function get_pv_chart_data($days) {
 	$now = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
 	$dfrom = 0;
