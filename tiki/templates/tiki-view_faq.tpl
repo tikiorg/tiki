@@ -35,13 +35,9 @@
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
 <a href="javascript:flip('faqsugg');" class="linkbut">
 {if $suggested_cant == 0}
-{tr}add suggestion{/tr}
-{elseif $suggested_cant == 1}
-<span class="highlight">{tr}1 suggestion{/tr}</span>
-{else}
-<span class="highlight">{$suggested_cant} {tr}suggestions{/tr}</span>
-{/if}
-</a>
+{tr}add suggestion{/tr}{elseif $suggested_cant == 1}
+<span class="highlight">{tr}1 suggestion{/tr}</span>{else}
+<span class="highlight">{$suggested_cant} {tr}suggestions{/tr}</span>{/if}</a>
 {/if}
 {if $feature_faq_comments == 'y'
 && (($tiki_p_read_comments  == 'y'
