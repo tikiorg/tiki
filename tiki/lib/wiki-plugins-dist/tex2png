@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cd temp
+latex $1 
+dvips -E $1.dvi
+convert -density 110 $1.ps $1.png
