@@ -32,7 +32,7 @@ if (!$_SESSION['CalendarViewGroups'] and !$_SESSION['CalendarViewTikiCals']) {
 if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
 	$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
 }
-if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) $_SESSION['CalendarViewMode'] = 'week';
+if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) $_SESSION['CalendarViewMode'] = '';
 
 $smarty->assign('viewmode',$_SESSION['CalendarViewMode']);
 
@@ -192,19 +192,32 @@ $smarty->assign('year',$focus_year);
 $smarty->assign('focusdate',$focus_date);
 $smarty->assign('now',time());
 
-
-$firstweek = date("W",mktime(0,0,0,$focus_month,-5,$focus_year));
-$firstday = mktime(0,0,0,1,(7*$firstweek)-2,$focus_year);
-$lastweek = date("W",mktime(0,0,0,$focus_month+1,-7,$focus_year));
-$lastday = mktime(0,0,0,1,(7*$lastweek)+4,$focus_year);
-$firstweekday = mktime(0,0,0,0,7*$firstweek,0,$focus_year);
+$currentweek = date("W",mktime(0,0,1,$focus_month,$focus_day,$focus_year));
 $weekdays = array(0,1,2,3,4,5,6);
+
+// calculate timespan for sql query
+if ($_SESSION['CalendarViewMode'] == 'month') {
+	$firstweek = date("W",mktime(0,0,0,$focus_month,-5,$focus_year));
+	$lastweek = date("W",mktime(0,0,0,$focus_month+1,-7,$focus_year));
+	$viewstart = mktime(0,0,0,1,(7*$firstweek)-2,$focus_year);
+	$viewend = mktime(0,0,0,1,(7*$lastweek)+4,$focus_year);
+} elseif ($_SESSION['CalendarViewMode'] == 'week') { 
+	$viewstart = mktime(0,0,0,1,(7*$currentweek)-2,$focus_year);
+	$viewend = mktime(0,0,0,1,(7*$currentweek)+4,$focus_year);
+} else {
+	$viewstart = mktime(0,0,0,$focus_month,$focus_day,$focus_year);
+	$viewend = mktime(0,0,0,$focus_month,$focus_day+1,$focus_year);
+	$weekdays = array(date('w',$focus_date));
+}
+
+$firstweekday = mktime(0,0,0,0,7*$firstweek,0,$focus_year);
+
 $daysnames = array("Sunday","Monday","Thursday","Wednesday","Tuesday","Friday","Saturday");
 $weeks = array();
 $cell = array();
 
-$listevents = $calendarlib->list_items($_SESSION['CalendarViewGroups'],$user,$firstday,$lastday,0,50,'name_desc','');
-$listtikievents = $calendarlib->list_tiki_items($_SESSION['CalendarViewTikiCals'],$user,$firstday,$lastday,0,50,'name_desc','');
+$listevents = $calendarlib->list_items($_SESSION['CalendarViewGroups'],$user,$viewstart,$viewend,0,50,'name_desc','');
+$listtikievents = $calendarlib->list_tiki_items($_SESSION['CalendarViewTikiCals'],$user,$viewstart,$viewend,0,50,'name_desc','');
 for ($i=0;$i<=$lastweek-$firstweek;$i++) {
 	$wee = $firstweek + $i;
 	$weeks[] = $wee;
@@ -231,14 +244,12 @@ for ($i=0;$i<=$lastweek-$firstweek;$i++) {
 	}
 }
 
-$smarty->assign('firstweek',$firstweek);
-$smarty->assign('lastweek',$lastweek);
-$smarty->assign('firstday',$firstday);
-$smarty->assign('lastday',$lastday);
+$smarty->assign('currentweek',$currentweek);
 $smarty->assign('weekdays',$weekdays);
 $smarty->assign('weeks',$weeks);
 $smarty->assign('daysnames',$daysnames);
 $smarty->assign('cell',$cell);
+$smarty->assign('cellweek',$cell[0]);
 
 
 

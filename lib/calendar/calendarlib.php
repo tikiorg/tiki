@@ -142,7 +142,7 @@ class CalendarLib extends TikiLib {
 							"url" => "tiki-index.php?page=".$res["pageName"],
 							"name" => $res["pageName"]." ".tra($res["action"]),
 							"descriptionhead" => date("H:i",$res["lastModif"])."-".$res["pageName"]." <i>".$res["action"]."</i>",
-							"descriptionbody" => tra("by")." ".$res["user"]." (".$res["ip"].")<br>".addslashes($res["comment"])
+							"descriptionbody" => tra("by")." ".$res["user"]."<br/>".addslashes(str_replace('"',"'",$res["comment"]))
 						);
 					}
 					break;
@@ -181,7 +181,7 @@ class CalendarLib extends TikiLib {
 							"url" => "tiki-read_article.php?atricleId=".$res["articleId"],
 							"name" => $res["title"],
 							"descriptionhead" => date("H:i",$res["created"])." - ".addslashes($res["title"])." ".tra("by")." ".$res["authorName"],
-							"descriptionbody" => addslashes($res["heading"])
+							"descriptionbody" => addslashes(str_replace('"',"'",$res["heading"]))
 						);
 					}
 					break;
@@ -238,7 +238,7 @@ class CalendarLib extends TikiLib {
 							"url" => "tiki-directory_redirect.php?siteId=".$res["siteId"],
 							"name" => str_replace("'","",$res["name"]),
 							"descriptionhead" => date("H:i",$res["created"])." - ".addslashes($res["name"]),
-							"descriptionbody" => addslashes($res["url"])."<br/>".addslashes($res["description"])
+							"descriptionbody" => addslashes($res["url"])."<br/>".addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
@@ -257,7 +257,7 @@ class CalendarLib extends TikiLib {
 							"url" => "tiki-list_file_gallery.php?galleryId=".$res["fgalId"],
 							"name" => str_replace("'","",$res["name"]),
 							"descriptionhead" => date("H:i",$res["created"])." - ".addslashes($res["name"]),
-							"descriptionbody" => tra("ul by")." ".addslashes($res["user"])."<br/>".addslashes($res["description"])
+							"descriptionbody" => tra("ul by")." ".addslashes($res["user"])."<br/>".addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
@@ -276,7 +276,7 @@ class CalendarLib extends TikiLib {
 							"url" => "tiki-view_faq.php?faqId=".$res["faqId"],
 							"name" => str_replace("'","",$res["title"]),
 							"descriptionhead" => date("H:i",$res["created"])." - ".addslashes($res["title"]),
-							"descriptionbody" => addslashes($res["description"])
+							"descriptionbody" => addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
@@ -295,7 +295,7 @@ class CalendarLib extends TikiLib {
 							"url" => "tiki-take_quiz.php?quizId=".$res["quizId"],
 							"name" => str_replace("'","",$res["name"]),
 							"descriptionhead" => date("H:i",$res["created"])." - ".addslashes($res["name"]),
-							"descriptionbody" => addslashes($res["description"])
+							"descriptionbody" => addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
@@ -333,7 +333,64 @@ class CalendarLib extends TikiLib {
 							"url" => "tiki-take_survey.php?surveyId=".$res["surveyId"],
 							"name" => str_replace("'","",$res["name"]),
 							"descriptionhead" => date("H:i",$res["created"])." - ".addslashes($res["name"]),
-							"descriptionbody" => addslashes($res["description"])
+							"descriptionbody" => addslashes(str_replace('"',"'",$res["description"]))
+						);
+					}
+					break;
+
+				case "nl":
+					$query = "select count(s.email) as count, FROM_UNIXTIME(s.subscribed,'%d') as d, max(s.subscribed) as day, s.nlId as nlId, n.name as name from tiki_newsletter_subscriptions as s ";
+					$query.= "left join tiki_newsletters as n on n.nlId=s.nlId  where (subscribed>$tstart and subscribed<$tstop) group by s.nlId, d";
+					$result = $this->query($query);
+					while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+						$dstart = mktime(0,0,0,date("m",$res['day']),date("d",$res['day']),date("Y",$res['day']));
+						$tstart = date("Hi",$res["day"]);
+						$ret["$dstart"][] = array(
+							"calitemId" => "",
+							"time" => $tstart,
+							"type" => "nl",
+							"url" => "tiki-newsletters.php?nlId=".$res["nlId"],
+							"name" => str_replace("'","",$res["name"]),
+							"descriptionhead" => $res["count"]." ".tra("new subscriptions"),
+							"descriptionbody" => ''
+						);
+					}
+					break;
+
+				case "eph":
+					$query = "select publish as created, title as name, textdata as description ";
+					$query.= "from tiki_eph where (publish>$tstart and publish<$tstop)";
+					$result = $this->query($query);
+					while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+						$dstart = mktime(0,0,0,date("m",$res['created']),date("d",$res['created']),date("Y",$res['created']));
+						$tstart = date("Hi",$res["created"]);
+						$ret["$dstart"][] = array(
+							"calitemId" => "",
+							"time" => $tstart,
+							"type" => "eph",
+							"url" => "tiki-eph.php?day=".date("d",$res["created"])."&mon=".date("m",$res['created'])."&year=".date("Y",$res['created']),
+							"name" => str_replace("'","",$res["name"]),
+							"descriptionhead" => date("H:i",$res["created"])." - ".addslashes($res["name"]),
+							"descriptionbody" => addslashes(str_replace('"',"'",$res["description"]))
+						);
+					}
+					break;
+
+				case "chart":
+					$query = "select chartId, created, title as name, description ";
+					$query.= "from tiki_charts where (created>$tstart and created<$tstop)";
+					$result = $this->query($query);
+					while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+						$dstart = mktime(0,0,0,date("m",$res['created']),date("d",$res['created']),date("Y",$res['created']));
+						$tstart = date("Hi",$res["created"]);
+						$ret["$dstart"][] = array(
+							"calitemId" => "",
+							"time" => $tstart,
+							"type" => "chart",
+							"url" => "tiki-view_chart.php?chartId=".$res["chartId"],
+							"name" => str_replace("'","",$res["name"]),
+							"descriptionhead" => date("H:i",$res["created"])." - ".addslashes($res["name"]),
+							"descriptionbody" => addslashes(str_replace('"',"'",$res["description"]))
 						);
 					}
 					break;
