@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.24 2004-02-19 17:34:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.25 2004-02-24 00:28:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,7 +120,7 @@ if (isset($_REQUEST["action"])) {
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
-	$sort_mode = 'login_desc';
+	$sort_mode = 'login_asc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
