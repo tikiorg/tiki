@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.40 2004-04-08 22:55:09 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.41 2004-04-12 03:05:28 lfagundes Exp $
 
 function getElementById(id) {
     if (document.all) {
@@ -562,3 +562,4 @@ function insertImg(elementId, fileId, oldfileId) {
     str = "{img src=\"img/wiki_up/" + filename + "\" }";
     insertAt(elementId, str);
 }
+
