@@ -7031,7 +7031,7 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('tmpDir','/tmp')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('tmpDir','temp')
 go
 
 

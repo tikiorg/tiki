@@ -3825,7 +3825,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('slide_style','slidestyl
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('style','moreneat.css');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('system_os','unix');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tikiIndex','tiki-index.php');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tmpDir','/tmp');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tmpDir','temp');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('t_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('t_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('uf_use_db','y');

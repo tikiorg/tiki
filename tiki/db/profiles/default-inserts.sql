@@ -284,7 +284,7 @@ INSERT INTO tiki_preferences VALUES ('slide_style','slidestyle.css');
 INSERT INTO tiki_preferences VALUES ('style','moreneat.css');
 INSERT INTO tiki_preferences VALUES ('system_os','unix');
 INSERT INTO tiki_preferences VALUES ('tikiIndex','tiki-index.php');
-INSERT INTO tiki_preferences VALUES ('tmpDir','/tmp');
+INSERT INTO tiki_preferences VALUES ('tmpDir','temp');
 INSERT INTO tiki_preferences VALUES ('t_use_db','y');
 INSERT INTO tiki_preferences VALUES ('t_use_dir','');
 INSERT INTO tiki_preferences VALUES ('uf_use_db','y');
