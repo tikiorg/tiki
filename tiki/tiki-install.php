@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.64 2004-06-23 22:33:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.65 2004-07-18 19:54:05 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -491,6 +491,11 @@ $logged = false;
 
 // changed to path_translated 28/4/04 by damian
 // for IIS compatibilty
+if (empty($_SERVER['PATH_TRANSLATED'])) {
+	// in PHP5, $_SERVER['PATH_TRANSLATED'] is no longer set
+	// the following is hopefully a good workaround
+	$_SERVER['PATH_TRANSLATED'] = array_shift(get_included_files());
+}
 $docroot = dirname($_SERVER['PATH_TRANSLATED']);
 
 check_session_save_path();
