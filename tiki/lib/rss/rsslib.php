@@ -146,12 +146,15 @@ class RSSLib extends TikiLib {
 	function refresh_rss_module($rssId) {
 		$info = $this->get_rss_module($rssId);
 
-		$data = $this->httprequest($info['url']);
-
-		$now = date("U");
-		$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
-		$result = $this->query($query,array($data,(int) $now,$rssId));
-		return $data;
+		if ($info) {
+			$data = $this->httpRequest($info['url']);
+			$now = date("U");
+			$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
+			$result = $this->query($query,array($data,(int) $now, (int) $rssId));
+			return $data;
+		} else {
+			return false;
+		}
 	}
 
 	function rss_module_name_exists($name) {
