@@ -1,11 +1,11 @@
 <a class="pagetitle" href="tiki-send_newsletters.php">{tr}Send newsletters{/tr}</a><br/>
 {if $emited eq 'y'}
-The newsletter was sent to {$sent} email addresses<br/><br/>
+{tr}The newsletter was sent to {$sent} email addresses{/tr}<br/><br/>
 {/if}
 {if $presend eq 'y'}
 <div class="wikitext">{$subject}</div>
 <div class="wikitext">{$data}</div>
-This newsletter will be sent to {$subscribers} email addresses.
+{tr}This newsletter will be sent to {$subscribers} email addresses.{/tr}
 <form method="post" action="tiki-send_newsletters.php">
 <input type="hidden" name="nlId" value="{$nlId}" />
 <input type="hidden" name="subject" value="{$subject}" />
