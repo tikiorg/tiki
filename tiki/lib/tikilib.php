@@ -79,12 +79,12 @@ function get_dsn_by_name($name) {
 function iso_8601 ($timestamp) { 
 	$main_date = date("Y-m-d\TH:i:s", $timestamp); 
 	
-	$tz = date("O", $timestamp); 
+	$tz = date("O", $timestamp);
 	$tz = substr_replace ($tz, ':', 3, 0); 
 	
 	$return = $main_date . $tz; 
 	
-	return $return; 
+	return $return;
 }
 
 /*shared*/
@@ -3894,7 +3894,7 @@ function parse_data($data) {
 	// remove repeated elements
 	$dvars = array_unique($dvars[1]);
 	// Now replace each dynamic variable by a pair composed of the
-	// variable value and a text field to edit the variable. Each 
+	// variable value and a text field to edit the variable. Each
 	foreach($dvars as $dvar) {
 		$query = "select `data` from `tiki_dynamic_variables` where `name`=?";
 		$result = $this->query($query,Array($dvar));
@@ -3913,14 +3913,14 @@ function parse_data($data) {
 		$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' /></span>";
 	    } else {
 		$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
-		$span2 = '';							
+		$span2 = '';
 	    }
 	    $html = $span1.$span2;
 	    //It's important to replace only once
 	    $dvar_preg = preg_quote( $dvar );
 	    $data = preg_replace("+%$dvar_preg%+",$html,$data,1);
 	    //Further replacements only with the value
-	    $data = str_replace("%$dvar%",$value,$data);			
+	    $data = str_replace("%$dvar%",$value,$data);
 
 	}
 	//At the end put an update button
@@ -4143,7 +4143,12 @@ function parse_data($data) {
 	$repl .= ' />';
 
 	if ($imgdata["link"]) {
-	    $repl = '<a href="' . $imgdata["link"] . '">' . $repl . '</a>';
+		$imgtarget= '';
+		if ($this->get_preference('popupLinks', 'n') == 'y')
+		{
+			$imgtarget = ' target="_blank"';
+		}
+	    $repl = '<a href="' . $imgdata["link"] .'"' . $imgtarget . '>' . $repl . '</a>';
 	}
 
 	if ($imgdata["desc"]) {
