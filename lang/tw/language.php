@@ -2080,5 +2080,6 @@ from Admin->General
 "File is too big" => "檔案太大了",
 "No note indicated" => "未指定備忘錄",
 "picture not found" => "picture not found",
+"Menu options" => "Menu options",
 "##end###" => "###end###");
 ?>

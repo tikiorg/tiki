@@ -837,6 +837,7 @@ $lang=Array(
 "maxScore" => "maxPunktzahl",
 "May" => "Mai",
 "Menu" => "Men&uuml;",
+"Menu options" => "Men&uuml;optionen",
 "Menus" => "Men&uuml;s",
 "Mesgs" => "Nachrichten",
 "message" => "Nachricht",

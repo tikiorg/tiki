@@ -2105,5 +2105,6 @@ from Admin->General
 "LDAP Admin Pwd" => "LDAP Admin Pwd",
 "picture not found" => "picture not found",
 "No more messages" => "No more messages",
+"Menu options" => "Menu options",
 "##end###" => "###end###");
 ?>

@@ -2083,5 +2083,6 @@ from Admin->General
 "File is too big" => "File is too big",
 "No note indicated" => "No note indicated",
 "picture not found" => "picture not found",
+"Menu options" => "Menu options",
 "##end###" => "###end###");
 ?>

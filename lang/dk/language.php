@@ -2035,5 +2035,6 @@ under Admin->Generelt
 "\n for rows" => "\n for rækker",
 "picture not found" => "picture not found",
 "URL (use \$page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=)" => "URL (brug \$page som erstattes af sidens navn i URL'en, f.eks.: http://www.eksempel.dk/tiki-index.php?page=\$page)",
+"Menu options" => "Menu options",
 "##end###" => "###end###");
 ?>
