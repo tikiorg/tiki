@@ -1,22 +1,21 @@
 body {
-	background-color:    white;
-	margin-top:   0px;
-	margin-left:   0px;
-	margin-bottom:   0px;
-	margin-right:   0px;
+	background-color: #FFFFFF;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
 }
 
-/* This is the header */
+/* header */
 #top {
-	background-color: #EFEFEF;
+	background-color: #FFCC00;
 	color: black;
 	width: 100%;
 	text-decoration: none;
 	clear: both;
-
 }
 
-/* And this is the footer */
+/* footer */
 #tiki-bot {
 	padding-top: 10px;
 	margin-top: 0px;
@@ -24,43 +23,43 @@ body {
 	padding-bottom: 15px;
 }
 
-/* The three columns */
-	#left {
+/* The three columns please do NOT change the order.  Left, Right, and then Middle MUST be kept that way for the theme to function correctly.  Thanks. :) */
+#left {
 	width: 180px;
 	float: left;
 	background-color: #FFFFFF;
-	}
+}
 
-	#right {
+#right {
 	background-color: white;
 	margin: 0px;
 	padding: 0px;
 	float: right;
 	width: 180px;
-	}
+}
 
-	#middle {
+#middle {
 	background-color: white;
 	margin-right: 180px;
 	margin-left: 180px;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	}
+}
 	
-	.column-in {
-		margin: 0;
-		padding: 0.5em 1em;
-	}
+.column-in {
+	margin: 0;
+	padding: 0.5em 1em;
+}
 	
-	.cleaner {
-		clear: both;
-		height: 1px;
-		font-size: 1px;
-		border: none;
-		margin: 0;
-		padding: 0;
-		background-color: transparent;
-	}
+.cleaner {
+	clear: both;
+	height: 1px;
+	font-size: 1px;
+	border: none;
+	margin: 0;
+	padding: 0;
+	background-color: transparent;
+}
 
 #debugger {
 	position: absolute;
@@ -87,31 +86,31 @@ body {
 
 /* Modules (modules are those boxes in the left/right columns) */
 div.box {
-	margin-left:    4px;
-	margin-right:   4px;
-	margin-top:   4px;
-	margin-bottom:   10px;
-	background-color:   #045D95;
-	color:   white;
-	border:   1px solid black;
-	padding-bottom:   10px;
-	overflow:   hidden;
-	width:   170px;
+	margin-left: 4px;
+	margin-right: 4px;
+	margin-top: 4px;
+	margin-bottom: 10px;
+	background-color: #333333;
+	color: white;
+	border: 1px solid #FFDD11;
+	padding-bottom: 10px;
+	overflow: hidden;
+	width: 170px;
 }
 
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
-	background-color:    #044873;
-	border-bottom:   1px solid black;
-	color:   white;
-	font-family:   Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
-	overflow:   hidden;
-	text-align:   center;
-	padding-left:   0px;
-	padding-right:   0px;
-	margin-bottom:   1px;
-	width:   170px;
+	background-color: #222222;
+	border-bottom: 1px solid black;
+	color: #F4F800;
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	overflow: hidden;
+	text-align: center;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-bottom: 1px;
+	width: 170px;
 }
 
 div.box-title table {
@@ -120,19 +119,19 @@ div.box-title table {
 
 /* And this is the data */
 div.box-data {
-	overflow:    hidden;
-	color:   white;
-	margin-left:   5px;
-	margin-right:   5px;
-	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
-	width:   170px;
+	overflow: hidden;
+	color: white;
+	margin-left: 5px;
+	margin-right: 5px;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	width: 170px;
 }
 
 /* When modules display a list of items each item is enclosed in a cell with the following style */
-TD.module {
+.module {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
+	font-size: 10px;
 	color:   white;
 	text-align:   left;
 }
@@ -156,19 +155,22 @@ TD.module {
   font-style: italic;
 }
 
+img {
+	border: 0px;
+}
 
 /* Links in modules */
 .separator, .bannertext, .linkmenu, .linkmodule {
-	font-family:    Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
-	color:   #F5F5F5;
-	text-decoration:   none;
+	font-family: Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #F5F5F5;
+	text-decoration: none;
 }
 
 .separator:hover, .bannertext:hover, .linkmenu:hover, .linkmodule:hover {
 	font-family:    Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
-	color:   white;
+	font-size: 10px;
+	color: #F4F800;
 	text-decoration:   none;
 }
 
@@ -176,7 +178,7 @@ TD.module {
 div.cbox {
 	margin-top:    4px;
 	margin-bottom:   0px;
-	border:   1px solid black;
+	border:   1px solid #FFDD11;
 	background-color:   white;
 	padding-bottom:   10px;
 	overflow:   hidden;
@@ -185,9 +187,9 @@ div.cbox {
 
 /* Boxes are divided in title and data, this is the title */
 div.cbox-title {
-	background-color:    #044873;
+	background-color: #000000;
 	color:   white;
-	border-bottom:   1px solid black;
+	border-bottom:   1px solid #FFDD11;
 	font-family:   Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
 	overflow:   hidden;
@@ -202,7 +204,7 @@ div.cbox-title {
 .flip, .cboxtlink {
 	font-family:    Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
-	color:   black;
+	color:   yellow;
 	text-decoration:   none;
 }
 
@@ -226,13 +228,9 @@ div.cbox-data {
 	width:   100%;
 }
 
-/* Some boxes are identified by an ID, for example the  boxes in the main application menu, we set display to
-   none to make the menu appear collapsed initially, change this to 'block' if you want it to be extended fully */
-
 /* Menus */
 /* Separators are used to separate menu areas in the application menu and user created menus*/
 div.separator {
-	/*color: black; font-family: Tahoma,Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;*/
 	margin-left:    2px;
 	margin-right:   2px;
 	margin-top:   6px;
@@ -240,7 +238,7 @@ div.separator {
 	width:   90%;
 }
 
-/* Some boxes uses thumbnails this is the image style */
+/* Some boxes use thumbnails */
 div.imagerank {
 	margin-left:    5px;
 	margin-right:   5px;
@@ -266,7 +264,7 @@ div.fgaldesc, div.galdesc, div.simplebox {
 }
 
 /* Prevent forms from generating unwanted padding or margins */
-FORM {
+form {
 	margin:    0px 0px 0px 0px;
 	padding-bottom:   0px;
 	padding-left:   0px;
@@ -276,21 +274,22 @@ FORM {
 }
 
 /* General form elements */
-file, input, textarea, select {
+file, textarea, select {
 	color:    #000000;
 	font:   normal 10px Verdana, Arial, Helvetica, sans-serif;
 }
 
 input {
 	text-indent: 2px;
+	color:    #000000;
+	font:   normal 10px Verdana, Arial, Helvetica, sans-serif;
 }
 
 /* General tables */
-/* These styles apply to tables used to display common listings such as the wiki page listing, last changes,
-   listings in admin screens, etc. */
+
 
 /* Cells where nothing is specified */
-TD {
+td {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
@@ -298,28 +297,26 @@ TD {
 }
 
 /* Cells in forms without background color (inside a div for example) */
-TD.form {
+.form {
 	color:    Black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
-	vertical-align:   top;
+	vertical-align: middle;
 	text-align:   left;
 }
 /* Cells in forms using a background color */
-td.imageinfo, TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
+.imageinfo, .formcolor, .galform, .editblogform, .editfgalform, .comform, .forumform {
 	color:    black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background-color:   Silver;
-	font-size:   10px;
-	vertical-align:   top;
-	text-align:   left;
+	background-color: white;
+	font-size: 10px;
+	vertical-align: middle;
+	text-align: left;
 	border:   0.5px solid black;
 }
 
 /* The table */
-table.imageinfo, table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.bloglist, table.editblogform,
-	table.editfgalform, table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable,
-	table.viewthread, table.jukeboxlist {
+table.imageinfo, table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.bloglist, table.editblogform, table.editfgalform, table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread, table.jukeboxlist {
 	border-color:    black;
 	border-collapse:   collapse;
 	border-style:   solid;
@@ -332,32 +329,30 @@ TABLE.normalnoborder {
 }
 
 /* Table headings */
-TD.heading, td.gallistheading, td.listgalheading, td.jukeboxlistheading, td.bloglistheading, td.listfgalheading, td.listfilesheading, td.listartheading,
-	td.forumheading, td.viewthread {
+TD.heading, td.gallistheading, td.listgalheading, td.jukeboxlistheading, td.bloglistheading, td.listfgalheading, td.listfilesheading, td.listartheading, td.forumheading, td.viewthread {
 	font-family:    Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	border:   0.5px solid black;
+	border:   0.5px solid #FFDD11;
 	color:   white;
 	font-size:   11px;
-	background-color:   #044873;
+	background-color:   black;
 	padding-left:   2px;
 }
 
-th, th.gallistheading, th.listgalheading, th.jukeboxlistheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
-	th.forumheading, th.viewthread {
-	font-family:    Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	border:   0.5px solid black;
-	color:   white;
-	font-size:   11px;
-	background-color:   #044873;
-	padding-left:   2px;
+th, th.gallistheading, th.listgalheading, th.jukeboxlistheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading, th.forumheading, th.viewthread {
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	border: 0.5px solid #FFDD11;
+	color: white;
+	font-size: 11px;
+	background-color: black;
+	padding-left: 2px;
 }
 
-TD.button {
+.button {
 	font-family:    Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	border:   0.5px solid black;
+	border:   0.5px solid #FFDD11;
 	color:   white;
 	font-size:   11px;
-	background-color:   #044873;
+	background-color:   #333333;
 	padding-left:   2px;
 	text-align:   center;
 	vertical-align:   middle;
@@ -373,7 +368,7 @@ a.tablename, a.galname, a.imagename, a.jukeboxname, a.blogname, a.fgalname, a.ar
 
 a.tablename:hover, a.galname:hover, a.jukeboxname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover {
 	text-decoration:    none;
-	color:   #4E4E4E;
+	color: #FFDD11;
 }
 
 a.forumnameread {
@@ -396,9 +391,7 @@ a.forumnameread:hover {
 	text-decoration:   none;
 }
 
-.tableheading:hover,
-	gallistheading:hover, .listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover, .llistfileslink:hover, .
-	llistart:hover, .lforumheading:hover {
+.tableheading:hover, .gallistheading:hover, .listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover, .llistfileslink:hover, .llistart:hover, .lforumheading:hover {
 	font-family:    Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	color:   #336699;
 	font-size:   10px;
@@ -419,7 +412,7 @@ td.findtable {
 }
 
 /* Odd rows in several listings */
-tr.odd {
+.odd {
 	margin:    0px 0px 0px 0px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
@@ -430,10 +423,10 @@ tr.odd {
 	padding-left:   2px;
 	border:   0.5px solid black;
 }
-tr.odd:hover {
+.odd:hover {
 background-color: #FFF7E6;
 }
-tr.even {
+.even {
 	border-color:    black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
@@ -445,54 +438,10 @@ tr.even {
 	padding-left:   2px;
 	margin:   0px 0px 0px 0px;
 }
-tr.even:hover {
+.even:hover {
 background-color: #FFF7E6;
 }
-TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd,
-	td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
-	td.listgalhitsodd, td.listgaluserodd, td.listgalfilesizeodd, td.bloglistnameodd, td.bloglistdescriptionodd,
-	td.bloglistcreatedodd, td.bloglistlastModifodd, td.bloglistuserodd, td.bloglistpublicodd, td.bloglistpostsodd,
-	td.bloglistvisitsodd, td.bloglistactivityodd, td.bloglistactionsodd, td.listfgalnameodd, td.listfgaldescriptionodd,
-	td.listfgalcreatedodd, td.listfgallastModifodd, td.listfgaluserodd, td.listfgalfilesodd, td.listfgalvisitsodd,
-	td.listfgalactionsodd, td.listfilesnameodd, td.listfilesdescriptionodd, td.listfilesidodd, td.listfilesfilenameodd,
-	td.listfilesfilesizeodd, td.listfilescreatedodd, td.listfilesdlsodd, td.listfilesnameodd, td.listfilesuserodd,
-	td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd,
-	td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
-	td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd,
-	td.topicauthorodd, td.jukeboxlistnameodd, td.jukeboxdescriptionodd, td.jukeboxcreatedodd, td.jukeboxlastmodifodd, 
-	td.jukeboxlistuserodd, td.jukeboxlisttracksodd, td.jukeboxlistvisitsodd {
-	margin:    0px 0px 0px 0px;
-	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
-	color:   Black;
-	background-color:   #C7C7C7;
-	vertical-align:   top;
-	text-align:   left;
-	padding-left:   2px;
-	border:   0.5px solid black;
-}
-
-/* Even rows in several listings */
-TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, td.gallistlastModifeven, td.gallistusereven,
-	td.gallistimageseven, td.gallisthitseven, td.gallistactionseven, td.listgalideven, td.listgalnameeven, td.listgalcreatedeven,
-	td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven,
-	td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven,
-	td.bloglistvisitseven, td.bloglistactivityeven, td.bloglistactionseven, td.listfgalnameeven, td.listfgaldescriptioneven, td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven, td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven, td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven, td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven, td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven, td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven, td.topiclastposteven, td.topicauthoreven,
-	td.jukeboxlistnameeven, td.jukeboxdescriptioneven, td.jukeboxcreatedeven, td.jukeboxlastmodifeven, td.jukeboxlistusereven, 
-	td.jukeboxlisttrackseven, td.jukeboxlistvisitseven {
-	border-color:    black;
-	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   10px;
-	background-color:   white;
-	border:   0.5px solid black;
-	color:   Black;
-	vertical-align:   top;
-	text-align:   left;
-	padding-left:   2px;
-	margin:   0px 0px 0px 0px;
-}
-
-TD.third {
+.third {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
 	color:   Black;
@@ -505,7 +454,7 @@ TD.third {
 
 /* Titles */
 /* When the page title is a link this is the style */
-div.forumspagetitle, div.imagetitle, div.gallerytitle, .pagetitle, .forumspagetitle {
+.forumspagetitle, .imagetitle, .gallerytitle, .pagetitle, .forumspagetitle {
 	font-weight:    bold;
 	font-size:   26px;
 	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
@@ -547,22 +496,21 @@ H3 {
 .link, .gallink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink, .admlink, .forumbutlink {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
-	color:   black;
+	color:   #FFDD11;
 	text-decoration:   underline;
 }
 
 .link:hover, .gallink:hover, .bloglink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover, .commentslink:hover, .admlink:hover, .forumbutlink:hover {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
-	color:   #044873;
+	color:   white;
 	text-decoration:   underline;
 }
 
 /* Search results display a date using the following style*/
-div.searchdate {
+.searchdate {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
-	color:   #1E1E1E;
 }
 
 /* Pagination for listings */
