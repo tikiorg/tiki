@@ -60,9 +60,9 @@
 <h3>{tr}User accounts{/tr}</h3>
 <table class="normal">
 <tr>
-<th>{tr}account{/tr}</th>
-<th>{tr}pop{/tr}</th>
-<th>{tr}user{/tr}</th>
+<td class="heading">{tr}account{/tr}</td>
+<td class="heading">{tr}pop{/tr}</td>
+<td class="heading">{tr}user{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
@@ -107,12 +107,12 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <br /><br />
 <table class="normal">
 <tr>
-  <th>&nbsp;</th>
-  <th>&nbsp;</th>
-  <th>{tr}sender{/tr}</th>
-  <th>{tr}subject{/tr}</th>
-  <th>{tr}date{/tr}</th>
-  <th>{tr}size{/tr}</th>
+  <td class="heading">&nbsp;</td>
+  <td class="heading">&nbsp;</td>
+  <td class="heading">{tr}sender{/tr}</td>
+  <td class="heading">{tr}subject{/tr}</td>
+  <td class="heading">{tr}date{/tr}</td>
+  <td class="heading">{tr}size{/tr}</td>
 </tr>
 {section name=ix loop=$list}
 {if $list[ix].isRead eq 'y'}
@@ -268,10 +268,10 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 {/section}
 <table class="normal">
 <tr>
-<th><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a></th>
-<th><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></th>
-<th><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></th>
-<th><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></th>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -353,11 +353,11 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
       <form action="tiki-webmail.php" method="post">
       <table class="normal">
       <tr>
-        <th>&nbsp;</th>
-        <th>{tr}Email{/tr}</th>
-        <th>{tr}First Name{/tr}</th>
-        <th>{tr}Last Name{/tr}</th>
-        <th>{tr}Nickname{/tr}</th>
+        <td class="heading">&nbsp;</td>
+        <td class="heading">{tr}Email{/tr}</td>
+        <td class="heading">{tr}First Name{/tr}</td>
+        <td class="heading">{tr}Last Name{/tr}</td>
+        <td class="heading">{tr}Nickname{/tr}</td>
       </tr>
       {section name=ix loop=$not_contacts}
       <tr><td><input type="checkbox" name="add[{$smarty.section.ix.index}]" /><input type="hidden" name="addemail[{$smarty.section.ix.index}]" value="{$not_contacts[ix]|escape}" /></td>
