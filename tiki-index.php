@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.100 2004-06-07 20:58:32 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.101 2004-06-07 21:51:37 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,7 +96,7 @@ require_once('tiki-pagesetup.php');
 $objId = urldecode($page);
 $is_categorized = $categlib->is_categorized('wiki page',$objId);
 $categId = $is_categorized;
-
+/* category permissions work in progress; don't delete :)
 if ($is_categorized) {
 	require_once('tiki-categsetup.php');
 	// Only consider parent category permissions if child object has no permissions
@@ -111,7 +111,7 @@ if ($is_categorized) {
 	    die;  
 	}
 }
-
+*/
 $creator = $wikilib->get_creator($page);
 $smarty->assign('creator',$creator);
 
