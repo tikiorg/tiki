@@ -141,7 +141,7 @@ class CalendarLib extends TikiLib {
 					"name" => $res["name"],
 					"extra" => "<div align='right'>... " . tra("click to edit"),
 					"head" => $head,
-					"description" => str_replace("\n|\r", "", $res["description"])
+					"description" => str_replace("\n|\r", "", addslashes($res["description"]))
 				);
 			}
 		}
@@ -162,7 +162,7 @@ class CalendarLib extends TikiLib {
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['lastModif']), date("d", $res['lastModif']), date("Y", $res['lastModif']));
 					$tstart = date("Hi", $res["lastModif"]);
-					$quote = "<i>" . tra("by"). " " . $res["user"] . "</i><br/>" . addslashes(str_replace('"', "'", $res["comment"]));
+					$quote = "<i>" . tra("by"). " " . $res["user"] . "</i><br/>" . str_replace('"', "'", $res["comment"]);
 					$ret["$dstart"][] = array(
 						"calitemId" => "",
 						"calname" => "",
@@ -171,7 +171,7 @@ class CalendarLib extends TikiLib {
 						"type" => "wiki",
 						"url" => "tiki-index.php?page=" . $res["pageName"],
 						"name" => $res["pageName"] . " " . tra($res["action"]),
-						"head" => "<b>" . date("H:i", $res["lastModif"]). "</b> " . tra("in"). " <b>$tik</b>",
+						"head" => "<b>" . date("H:i", $res["lastModif"]). "</b> " . tra("in"). " <b>".str_replace("\n|\r", "", addslashes($tik))."</b>",
 						"description" => str_replace("\n|\r", "", $quote)
 					);
 				}
@@ -195,7 +195,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-browse_image.php?galleryId=" . $res["galid"] . "&amp;imageId=" . $res["imageid"],
 						"name" => $res["name"],
 						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["galname"]). "</b>",
-						"description" => tra("new image uploaded by"). " " . $res["user"]
+						"description" => addslashes(tra("new image uploaded by"). " " . $res["user"])
 					);
 				}
 				break;
