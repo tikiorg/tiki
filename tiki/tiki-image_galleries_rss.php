@@ -2,6 +2,7 @@
 
 require_once('tiki-setup.php');
 require_once('lib/tikilib.php'); # httpScheme()
+require_once('lib/imagegals/imagegallib.php');
 
 if($rss_image_galleries != 'y') {
  die;
@@ -16,7 +17,7 @@ $img = httpPrefix().$foo2;
 $read = httpPrefix().$foo3;
 $title = $tikilib->get_preference("title","Tiki RSS feed for image galleries");
 $now = date("U");
-$changes = $tikilib->list_images(0,$max_rss_image_galleries,'created_desc', '');
+$changes = $imagegallib->list_images(0,$max_rss_image_galleries,'created_desc', '');
 
 //print_r($changes);die;
 print('<');
