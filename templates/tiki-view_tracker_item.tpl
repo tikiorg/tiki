@@ -106,11 +106,14 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$atts}
-
 <tr>
 {foreach key=k item=x from=$attfields}
 <td class="{cycle advance=false}">
+{if $x eq 'created'}
+{$atts[ix].$x|tiki_short_datetime}
+{else}
 {$atts[ix].$x}
+{/if}
 </td>
 {/foreach}
 <td class="{cycle}" align="right" nowrap="nowrap">
@@ -191,11 +194,11 @@
 <input type="checkbox" name="ins_{$ins_fields[ix].name}" {if $ins_fields[ix].value eq 'y'}checked="checked"{/if}/>
 {/if}
 {if $ins_fields[ix].type eq 'j'}
-<input type="hidden" name="ins_{$ins_fields[ix].name}" value="{$end}" id="ins_{$ins_fields[ix].name}" />
+<input type="hidden" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|default:$smarty.now}" id="ins_{$ins_fields[ix].name}" />
 <span id="disp_{$ins_fields[ix].name}" class="daterow">{$ins_fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
-date        : "{$ins_fields[ix].value|default:$now|date_format:"%B %e, %Y %H:%M"}",      // initial date
+date        : "{$ins_fields[ix].value|default:$smarty.now|date_format:"%B %e, %Y %H:%M"}",      // initial date
 inputField  : "ins_{$ins_fields[ix].name}",      // ID of the input field
 ifFormat    : "%s",    // the date format
 displayArea : "disp_{$ins_fields[ix].name}",       // ID of the span where the date is to be shown
