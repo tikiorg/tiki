@@ -109,7 +109,8 @@
 {/foreach}
 <td class="{cycle}" align="right" nowrap="nowrap">
 {if $attextra eq 'y'}
-<a class="tablename" href="#" onclick="javascript:window.open('tiki-view_tracker_more_info.php?attId={$atts[ix].attId}','_blank','menubar=no,toolbar=no,location=no,directories=no,fullscreen=no,titlebar=no,hotkeys=no,status=no,scrollbars=yes,resizable=yes,width=350,height=500');">more</a>
+{assign var=link value='tiki-view_tracker_more_info.php?attId='|cat:$atts[ix].attId}
+<a class="tablename" href="#" onClick="window.open('http://{$http_domain}{$http_prefix}{$link|escape:"javascript"}','newin','menubar=no,toolbar=no,location=no,directories=no,status=no,scrollbars=yes,resizable=yes,width=450,height=600');return true;">more</a>
 {/if}
 <a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename|iconify}</a>
 {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
