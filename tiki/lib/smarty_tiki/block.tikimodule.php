@@ -1,12 +1,12 @@
 <?php
-
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.2 2003-12-07 14:54:51 mose Exp $
 /**
- * \brief Smaty {tikimodule}{/tikimodule} block handler
+ * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
  * To make a module it is enough to place smth like following
  * into corresponding mod-name.tpl file:
  * \code
- *  {tikimodule name="mandatoty_module_name" title="Module title"}
+ *  {tikimodule name="module_name" title="Module title"}
  *    <!-- module Smarty/HTML code here -->
  *  {/tikimodule}
  * \endcode
@@ -15,18 +15,20 @@
  *  1) module.tpl = usual template to generate module look-n-feel
  *  2) module-error.tpl = to generate diagnostic error message about
  *     incorrect {tikimodule} parameters
- */
-function smarty_block_tikimodule($params, $content, &$smarty)
-{
-    extract($params);
-    $tpl = 'module.tpl';
-    
-    // Check args
-    if (isset($title)) $smarty->assign('module_title', $title);
-    if (isset($name)) $smarty->assign('module_name', $name);
-    else $tpl = 'module-error.tpl';
-    $smarty->assign_by_ref('module_content', $content);
 
-    return $smarty->fetch($tpl);
+\Note
+error was used only in case the name was not there.
+I fixed that error case. -- mose
+ 
+ */
+function smarty_block_tikimodule($params, $content, &$smarty) {
+	extract($params);
+	if (!isset($content))   return "";
+	if (!isset($title))     $title = substr($content,0,12)."...";
+	if (!isset($name))      $name  = ereg_replace("[^-_a-zA-Z0-9]","",$title);
+	$smarty->assign('module_title', $title);
+	$smarty->assign('module_name', $name);
+	$smarty->assign_by_ref('module_content', $content);
+	return $smarty->fetch('module.tpl');
 }
 ?>
