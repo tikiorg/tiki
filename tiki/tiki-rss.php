@@ -118,7 +118,11 @@ if ($output == "")
 
   // LOOP collecting last changes to image galleries
   foreach ($changes["data"] as $chg) {
-		$date = htmlspecialchars($tikilib->iso_8601($chg["$dateId"]));
+
+    $date = htmlspecialchars(gmdate('D, d M Y H:i:s T', date("U")));
+	  if ($rss_version < 2) {
+			$date = htmlspecialchars($tikilib->iso_8601($chg["$dateId"]));
+	  }
   	$about = $read.$chg["$id"];
   	// blogs have posts, add those to the url:
   	if ($id == "blogId") { $about .= "&postId=".$chg["postId"]; }		
