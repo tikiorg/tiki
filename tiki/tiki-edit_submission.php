@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.37 2004-04-10 04:46:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.38 2004-04-29 18:19:13 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -363,7 +363,7 @@ if (isset($_REQUEST["save"])) {
 	$subid = $artlib->replace_submission(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), 
 	$_REQUEST["authorName"], $_REQUEST["topicId"], $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, 
 	$body, $publishDate, $expireDate, $user, $subId, $_REQUEST["image_x"], $_REQUEST["image_y"], $_REQUEST["type"], 
-	$_REQUEST["rating"], $isfloat, $_REQUEST["topline"], $_REQUEST["subtitle"], $_REQUEST["linkto"], $_REQUEST["image_caption"], $_REQUEST["lang"]);
+	$_REQUEST["topline"], $_REQUEST["subtitle"], $_REQUEST["linkto"], $_REQUEST["image_caption"], $_REQUEST["lang"], $_REQUEST["rating"], $isfloat);
 
 	/*
   $links = $tikilib->get_links($body);
