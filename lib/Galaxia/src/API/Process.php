@@ -12,18 +12,16 @@ class Process extends Base {
 	var $version;
 	var $normalizedName;
 	
-	function Process($db) 
-	{
+	function Process($db) {
 		$this->db=$db;
 	}
 	
 	/*!
 	Loads a process form the database
 	*/
-	function getProcess($pId)
-	{
-		$query = "select * from galaxia_processes where pId=$pId";
-		$result = $this->query($query);
+	function getProcess($pId) {
+		$query = "select * from `galaxia_processes` where `pId`=?";
+		$result = $this->query($query,array($pId));
 	    if(!$result->numRows()) return false;
     	$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     	$this->name = $res['name'];
@@ -35,24 +33,21 @@ class Process extends Base {
 	/*!
 	Gets the normalized name of the process
 	*/
-	function getNormalizedName()
-	{
+	function getNormalizedName() {
 	  	return $this->normalizedName;
 	}
 	
 	/*!
 	Gets the process name
 	*/
-	function getName()
-	{
+	function getName() {
 		return $this->name;
 	}
 	
 	/*!
 	Gets the process version
 	*/
-	function getVersion()
-	{
+	function getVersion() {
 		return $this->version;
 	}
 }
