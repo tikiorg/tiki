@@ -43,7 +43,7 @@ class ShoutboxLib extends TikiLib {
       
       // we split all plain text strings longer than 25 chars using empty span tag to prevent breaking the whole layout in some browsers (e.g. Konqueror)
       $wrap_at = 25;
-      $res["message"] = preg_replace('%(\s*)([^>]{'.$wrap_at.',})(<|$)%e', "'\\1'.wordwrap('\\2', '".$wrap_at."', '<span></span>', 1).'\\3'", $res["message"]);
+      $res["message"] = preg_replace('/(\s*)([^>\s]{'.$wrap_at.',})(<|$)/e', "'\\1'.wordwrap('\\2', '".$wrap_at."', '<span></span>', 1).'\\3'", $res["message"]);
       
 			$ret[] = $res;
 		}
