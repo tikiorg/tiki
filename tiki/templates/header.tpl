@@ -66,7 +66,6 @@
     
 {* --- tabs block (for myTiki, calendar, and more to come) --- *}
 {if $uses_tabs eq 'y'}
-<link rel="stylesheet" href="lib/tabs/mozilla.css" type="text/css" />
 <script src="lib/tabs/utils.js" type="text/javascript"></script>
 <script src="lib/tabs/viewport.js" type="text/javascript"></script>
 <script src="lib/tabs/global.js" type="text/javascript"></script>
