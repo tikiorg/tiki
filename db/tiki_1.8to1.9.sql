@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.40 2004-04-12 14:42:35 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.41 2004-04-13 09:43:48 sylvieg Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -304,3 +304,10 @@ CREATE TABLE tiki_sheets (
   author varchar(200) NOT NULL default '',
   PRIMARY KEY  (sheetId)
 ) TYPE=MyISAM;
+
+#added on 2004-4-13 sylvie
+ALTER TABLE `tiki_language` CHANGE `lang` `lang` char(16) NOT NULL default '';
+ALTER TABLE `tiki_languages` CHANGE `lang` `lang` char(16) NOT NULL default '';
+ALTER TABLE `tiki_calendar_items` CHANGE `lang` `lang` char(16) NOT NULL default 'en';
+ALTER TABLE `tiki_menu_languages` CHANGE `language` `language` char(16) NOT NULL default '';
+ALTER TABLE `tiki_untranslated` CHANGE `lang` `lang` char(16) NOT NULL default '';

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.181 2004-04-12 14:42:34 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.182 2004-04-13 09:43:48 sylvieg Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -557,7 +557,7 @@ CREATE TABLE tiki_calendar_items (
   priority enum('1','2','3','4','5','6','7','8','9') NOT NULL default '1',
   status enum('0','1','2') NOT NULL default '0',
   url varchar(255) default NULL,
-  lang char(2) NOT NULL default 'en',
+  lang char(16) NOT NULL default 'en',
   name varchar(255) NOT NULL default '',
   description blob,
   user varchar(40) default NULL,
@@ -1608,7 +1608,7 @@ CREATE TABLE tiki_images_data (
 DROP TABLE IF EXISTS tiki_language;
 CREATE TABLE tiki_language (
   source tinyblob NOT NULL,
-  lang char(2) NOT NULL default '',
+  lang char(16) NOT NULL default '',
   tran tinyblob,
   PRIMARY KEY  (source(255),lang)
 ) TYPE=MyISAM;
@@ -1623,7 +1623,7 @@ CREATE TABLE tiki_language (
 
 DROP TABLE IF EXISTS tiki_languages;
 CREATE TABLE tiki_languages (
-  lang char(2) NOT NULL default '',
+  lang char(16) NOT NULL default '',
   language varchar(255) default NULL,
   PRIMARY KEY  (lang)
 ) TYPE=MyISAM;
@@ -1873,7 +1873,7 @@ CREATE TABLE tiki_mailin_accounts (
 DROP TABLE IF EXISTS tiki_menu_languages;
 CREATE TABLE tiki_menu_languages (
   menuId int(8) NOT NULL auto_increment,
-  language char(2) NOT NULL default '',
+  language char(16) NOT NULL default '',
   PRIMARY KEY  (menuId,language)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3169,7 +3169,7 @@ DROP TABLE IF EXISTS tiki_untranslated;
 CREATE TABLE tiki_untranslated (
   id int(14) NOT NULL auto_increment,
   source tinyblob NOT NULL,
-  lang char(2) NOT NULL default '',
+  lang char(16) NOT NULL default '',
   PRIMARY KEY  (source(255),lang),
   UNIQUE KEY id (id),
   KEY id_2 (id)
