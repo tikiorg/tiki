@@ -123,7 +123,7 @@ class ArtLib extends TikiLib {
 
 	function remove_submission($subId) {
 		if ($subId) {
-			$query = "delete from `tiki_submissions` where `subId`=$subId";
+			$query = "delete from `tiki_submissions` where `subId`=?";
 
 			$result = $this->query($query,array($subId));
 
