@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.12 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.13 2004-03-16 09:02:00 chealer Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,6 +66,7 @@ if (isset($_REQUEST["sugg"])) {
 
 $suggested = $faqlib->list_suggested_questions(0, -1, 'created_desc', '');
 $smarty->assign_by_ref('suggested', $suggested["data"]);
+$smarty->assign('suggested_cant', count($suggested["data"]));
 
 if ($feature_faq_comments == 'y') {
 	$comments_per_page = $faq_comments_per_page;
