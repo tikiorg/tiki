@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.20 2003-10-12 12:21:10 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.21 2003-10-12 12:37:29 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,7 +9,6 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 include_once ('lib/blogs/bloglib.php');
 
-// object specific things:
 if ($rss_blogs != 'y') {
 	$smarty -> assign('msg', tra("This feature is disabled"));
 	$smarty -> display("styles/$style_base/error.tpl");
