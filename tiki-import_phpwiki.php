@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.11 2003-09-22 00:13:12 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-import_phpwiki.php,v 1.12 2003-09-22 20:21:33 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -102,12 +102,15 @@ if (isset($_REQUEST["import"])) {
 		}
 
 		if (isset($part["pagename"])) {
-		    // PHPWiki footnotes.  -rlpowell
-		    $part["body"] = preg_replace("/\[\[([^\]]+)\]/", "(Was Footnote: $1)", $part["body"]);
+		    // PHPWiki footnotes get handled by refusing to
+		    // convert [[...] at all; the latest tikilib.php
+		    // will render [[foo] as [foo], no link.  So the
+		    // (?<!\[) scattered here is to handle [[...] stuff.
+		    // -rlpowell
 
 		    // Fixing [description|URL] format of PHPWiki.
 		    // -rlpowell
-		    $part["body"] = preg_replace("/\[([^\[\|\]]+)\|(http:[^\]\|\]]+)\]/",
+		    $part["body"] = preg_replace("/(?<!\[)\[([^\[\|\]]+)\|(http:[^\]\|\]]+)\]/",
 			"[$2|$1]", $part["body"]);
 
 		    // Parse the body replacing links to Tiki links
@@ -122,9 +125,8 @@ if (isset($_REQUEST["import"])) {
 		    // The (?!http:) below should really include other URL
 		    // forms, but that would get complicated very quickly.
 		    // -rlpowell
-		    $part["body"] = preg_replace("/\[((?!http:)[^\|\]]+)\]/", "(($1))", $part["body"]);
-		    //$part["body"]=preg_replace("/\[([^\|]+)\|([^\]]+)\]/","(($1|$2))",$part["body"]);
-		    $part["body"] = preg_replace("/\[((?!http:)[^\|]+)\|([^\]]+)\]/", "(($2|$1))", $part["body"]);
+		    $part["body"] = preg_replace("/(?<!\[)\[((?!http:|\[)[^\|\]]+)\]/", "(($1))", $part["body"]);
+		    $part["body"] = preg_replace("/(?<!\[)\[((?!http:|\[)[^\|]+)\|([^\]]+)\]/", "(($2|$1))", $part["body"]);
 
 		    // %%% makes a linebreak in PHPWiki. -rlpowell
 		    $part["body"] = str_replace("%%%", "", $part["body"]);

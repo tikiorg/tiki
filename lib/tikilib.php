@@ -4299,47 +4299,60 @@ class TikiLib {
 	$this->cache_links($cachedlinks);
 
 	// Note that there're links that are replaced
-	foreach ($links as $link) {
+	foreach ($links as $link)
+	{
 	    $target = '';
 
-	    if ($this->get_preference('popupLinks', 'n') == 'y') {
+	    if ($this->get_preference('popupLinks', 'n') == 'y')
+	    {
 		$target = 'target="_blank"';
 	    }
 
-	    if (strstr($link, $_SERVER["SERVER_NAME"])) {
+	    if (strstr($link, $_SERVER["SERVER_NAME"]))
+	    {
 		$target = '';
 	    }
 
-	    if (!strstr($link, '//')) {
+	    if (!strstr($link, '//'))
+	    {
 		$target = '';
+	    }
+
+	    // The (?<!\[) stuff below is to give users an easy way to
+	    // enter square brackets in their output; things like [[foo]
+	    // get rendered as [foo]. -rlpowell
+
+	    if ($this->is_cached($link) && $cachepages == 'y')
+	    {
+		//use of urlencode for using cached versions of dynamic sites
+		$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
+
+		//$link2 = str_replace("/","\/",$link);
+		//$link2 = str_replace("?","\?",$link2);
+		//$link2 = str_replace("&","\&",$link2);
+		$link2 = str_replace("/", "\/", preg_quote($link));
+		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$1</a>", $data);
+		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
+		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$1</a> $cosa", $data);
+		$pattern = "/(?<!\[)\[$link2\]/";
+		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$link</a> $cosa", $data);
+	    } else {
+		//$link2 = str_replace("/","\/",$link);
+		//$link2 = str_replace("?","\?",$link2);
+		//$link2 = str_replace("&","\&",$link2);
+		$link2 = str_replace("/", "\/", preg_quote($link));
+
+		$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
+		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$1</a>", $data);
+		$pattern = "/(?<!\[)\[$link2\]/";
+		$data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$link</a>", $data);
+	    }
+
 	}
 
-	if ($this->is_cached($link) && $cachepages == 'y') {
-	    //use of urlencode for using cached versions of dynamic sites
-	    $cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
-
-	    //$link2 = str_replace("/","\/",$link);
-	    //$link2 = str_replace("?","\?",$link2);
-	    //$link2 = str_replace("&","\&",$link2);
-	    $link2 = str_replace("/", "\/", preg_quote($link));
-	    $pattern = "/\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-	    $data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$1</a>", $data);
-	    $pattern = "/\[$link2\|([^\]\|]+)\]/";
-	    $data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$1</a> $cosa", $data);
-	    $pattern = "/\[$link2\]/";
-	    $data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$link</a> $cosa", $data);
-	} else {
-	    //$link2 = str_replace("/","\/",$link);
-	    //$link2 = str_replace("?","\?",$link2);
-	    //$link2 = str_replace("&","\&",$link2);
-	    $link2 = str_replace("/", "\/", preg_quote($link));
-
-	    $pattern = "/\[$link2\|([^\]\|]+)([^\]])*\]/";
-	    $data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$1</a>", $data);
-	    $pattern = "/\[$link2\]/";
-	    $data = preg_replace($pattern, "<a class='wiki' $target href='$link'>$link</a>", $data);
-	}
-	}
+	// Handle double square brackets.  -rlpowell
+	$data = str_replace( "[[", "[", $data );
 
 	if ($feature_wiki_tables != 'new') {
 	    // New syntax for tables
