@@ -31,7 +31,8 @@ class ShoutboxLib extends TikiLib {
 			}
       // convert ampersands and other stuff to xhtml compliant entities
       $res["message"] = htmlspecialchars($res["message"]);
-			if ($shoutbox_autolink == 'y') {				
+      
+      if ($shoutbox_autolink == 'y') {				
 				// we replace urls starting with http(s)|ftp(s) to active links
 				$res["message"] = preg_replace("/((http|ftp)+(s)?:\/\/[^<>\s]+)/i", "<a href=\"\\0\">\\0</a>", $res["message"]);
 				// we replace also urls starting with www. only to active links
@@ -39,6 +40,11 @@ class ShoutboxLib extends TikiLib {
 				// we replace also urls longer than 30 chars with translantable string as link description instead the URL itself to prevent breaking the layout
 				$res["message"] = preg_replace("/(<a href=\")((http|ftp)+(s)?:\/\/[^\"]+)(\">)([^<]){30,}<\/a>/i", "<a href=\"\\2\">[".tra('Link')."]</a>", $res["message"]);
       }
+      
+      // we split all plain text strings longer than 25 chars using empty span tag to prevent breaking the whole layout in some browsers (e.g. Konqueror)
+      $wrap_at = 25;
+      $res["message"] = preg_replace('%(\s*)([^>]{'.$wrap_at.',})(<|$)%e', "'\\1'.wordwrap('\\2', '".$wrap_at."', '<span></span>', 1).'\\3'", $res["message"]);
+      
 			$ret[] = $res;
 		}
 		$retval = array();
