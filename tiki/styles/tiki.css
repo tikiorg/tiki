@@ -589,7 +589,7 @@ DIV#page-bar table,DIV#page-bar td,DIV#page-bar tr {
 }
 
 /* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
-div.button2 {
+.button2 {
 	margin: 0;
 	margin-right: 2px;
 	margin-bottom: -1px;

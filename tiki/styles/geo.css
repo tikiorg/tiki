@@ -787,7 +787,7 @@ DIV#page-bar {
 Wiki action buttons (the buttons displayed at the 
 end of each page to edit/print/remove/etc a page 
 */
-div.button2 {
+.button2 {
 	border-top:    1px dashed #777750;
 	font-size:   10px;
 	margin:   0;
@@ -814,7 +814,7 @@ Links in buttons
 	background-color:   #f1f1c9;
 }
 
-div.button2top {
+.button2top {
 	border-bottom:    1px dashed #777750;
 	display:   inline;
 	font-size:   10px;
