@@ -305,7 +305,7 @@ rows="{if $fields[ix].options_array[2] gt 1}{$fields[ix].options_array[2]}{else}
 {html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
 
 {elseif $fields[ix].type eq 'd'}
-<select name="{$fields[ix].name}">
+<select name="{$fields[ix].ins_id}">
 {section name=jx loop=$fields[ix].options_array}
 <option value="{$fields[ix].options_array[jx]|escape}" {if $defaultvalues.$fid eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
 {/section}
