@@ -29,6 +29,12 @@
 {else}
 <img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
 {/if}
+{else}
+{section name=it loop=$topics}
+{if ($topics[it].topicId eq $listpages[ix].topicId) and ($topics[it].image_size > 0)}
+<img {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$listpages[ix].topicName}" border="0" src="topic_image.php?id={$listpages[ix].topicId}" />
+{/if}
+{/section}
 {/if}
 {if $listpages[ix].isfloat eq 'n'}
 </td><td  valign="top">

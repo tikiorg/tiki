@@ -26,6 +26,12 @@
   {else}
     <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
   {/if}
+{else}
+{section name=it loop=$topics}
+{if ($topics[it].topicId eq $topicId) and ($topics[it].image_size > 0)}
+<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} alt="{$topicName}" border="0" src="topic_image.php?id={$topicId}" />
+{/if}
+{/section}
 {/if}
 {if $isfloat eq 'n'}
 </td><td  valign="top">
