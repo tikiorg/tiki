@@ -5462,15 +5462,15 @@ function format_language_list($languages) {
     // translated names.
     $mapping = array(
 	    'cs' => array(
-		'Czech',
+		'Český',
 		tra("Czech")
 		),
 	    'da' => array(
-		'Danish',
+		'Dansk',
 		tra("Danish")
 		),
 	    'de' => array(
-		'German',
+		'Deutsch',
 		tra("German")
 		),
 	    'en' => array(
@@ -5478,7 +5478,7 @@ function format_language_list($languages) {
 		tra("English")
 		),
 	    'es' => array(
-		'Spanish',
+		'Español',
 		tra("Spanish")
 		),
 	    'el' => array(
@@ -5486,11 +5486,11 @@ function format_language_list($languages) {
 		tra("Greek")
 		),
 	    'fr' => array(
-		    'French',
+		    'Français',
 		    tra("French")
 		    ),
 	    'it' => array(
-		    'Italian',
+		    'Italiano',
 		    tra("Italian")
 		    ),
 	    'ja' => array(
@@ -5512,10 +5512,6 @@ function format_language_list($languages) {
 	    'ru' => array(
 		    'Russian',
 		    tra("Russian")
-		    ),
-	    'es' => array(
-		    'Spanish',
-		    tra("Spanish")
 		    ),
 	    'sv' => array(
 		    'Swedish',
