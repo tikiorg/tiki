@@ -8963,6 +8963,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         }
         $sql2 .= ')';
       }
+    } else {
+    	$sql .= ', -1 AS relevance';
     }
 
     $cant = $this->db->GetOne('SELECT COUNT(*)' . $sql2);
