@@ -418,6 +418,27 @@ if($feature_theme_control == 'y') {
 $section='wiki';
 include_once('tiki-section_options.php');
 
+// 27-Jun-2003, by zaufi
+// Get plugins with descriptions
+global $wikilib;
+$plugin_files=$wikilib->list_plugins();
+$plugins=Array();
+// Request help string from each plugin module
+foreach($plugin_files as $pfile)
+{
+    $pinfo["file"]=$pfile;
+    $pinfo["help"]=$wikilib->get_plugin_description($pfile);
+    $pinfo["name"]=strtoupper(str_replace(".php","",str_replace("wikiplugin_","",$pfile)));
+    $plugins[] = $pinfo;
+}
+$smarty->assign_by_ref('plugins',$plugins);
+
+// Flag for 'page bar' that currently 'Edit' mode active
+// so no need to show comments & attachments, but need
+// to show 'wiki quick help'
+$smarty->assign('edit_page','y');
+
+
 // Display the Index Template
 $smarty->assign('mid','tiki-editpage.tpl');
 $smarty->assign('show_page_bar','y');
