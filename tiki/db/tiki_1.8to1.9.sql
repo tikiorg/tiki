@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.13 2004-01-18 18:36:21 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.14 2004-01-21 23:49:39 damosoft Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -84,4 +84,49 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox');
 
+#
+# Tiki Jukebox tables
+#
+
+DROP TABLE IF EXISTS tiki_jukebox_genres;
+CREATE TABLE tiki_jukebox_genres (
+        genreId int(14) unsigned NOT NULL auto_increment,
+        genreName varchar(80),
+        genreDescription text,
+        PRIMARY KEY (genreId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS tiki_jukebox_albums;
+CREATE TABLE tiki_jukebox_albums (
+        albumId int(14) unsigned NOT NULL auto_increment,
+        title varchar(80) default NULL,
+        description text,
+        created int(14),
+        lastModif int(14),
+        user varchar(200),
+        visits int(14),
+        public char(1),
+        genreId int(14),
+        PRIMARY KEY(albumId)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS tiki_jukebox_tracks;
+CREATE TABLE tiki_jukebox_tracks (
+        trackId int(14) unsigned NOT NULL auto_increment,
+        albumId int(14),
+        artist varchar(200),
+        title varchar(200),
+        created int(14),
+        url varchar(255),
+        filename varchar(80),
+        filesize int(14),
+        filetype varchar(250),
+        genreId int(14),
+        plays int(14),
+        PRIMARY KEY(trackId)
+) TYPE=MyISAM AUTO_INCREMENT=1;
+
+#
+# End of tiki jukebox tables
+#
 
