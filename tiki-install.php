@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.24 2003-10-22 19:58:48 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.25 2003-10-28 14:20:45 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.24 2003-10-22 19:58:48 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.25 2003-10-28 14:20:45 redflo Exp $
 session_start();
 
 // Define and load Smarty components
@@ -227,7 +227,7 @@ $dbservers = array(
 	"Oracle 9i" => "oci9"
 );
 */
-$dbservers = array('MySQL 3.x', 'MySQL 4.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i', 'Sybase/MSSQL');
+$dbservers = array('MySQL 3.x', 'MySQL 4.x', 'PostgeSQL 7.2+', 'Oracle 8i', 'Oracle 9i', 'Sybase/MSSQL','SQLLite');
 
 $dbtodsn = array(
 	"MySQL 3.x" => "mysql",
@@ -235,7 +235,8 @@ $dbtodsn = array(
 	"PostgeSQL 7.2+" => "pgsql",
 	"Oracle 8i" => "oci8",
 	"Oracle 9i" => "oci8",
-	"Sybase/MSSQL" => "sybase"
+	"Sybase/MSSQL" => "sybase",
+	"SQLLite" => "sqlite"
 );
 
 $smarty->assign_by_ref('dbservers', $dbservers);
@@ -433,7 +434,7 @@ if (!file_exists('db/local.php')) {
 	        // avoid database change messages
 		ini_set('sybct.min_server_severity', '11');
 	}
-
+	
 	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 	
 	$dbTiki = &ADONewConnection($db_tiki);
