@@ -24,9 +24,9 @@ class StructLib extends TikiLib {
 		$pages = $this->s_get_structure_pages($page_info["page_ref_id"]);
 
 		foreach ($pages as $page) {
-			$data = $exportlib->export_wiki_page($page, 0);
+			$data = $exportlib->export_wiki_page($page["pageName"], 0);
 
-			$tar->addData($page, $data, date("U"));
+			$tar->addData($page["pageName"], $data, date("U"));
 		}
 
 		$tar->toTar("dump/$tikidomain" . $page_name . ".tar", FALSE);
@@ -60,26 +60,33 @@ class StructLib extends TikiLib {
 		return $ret;
 	}
 
-	function s_export_structure_tree($structure, $level = 0) {
+	function s_export_structure_tree($structure_id, $level = 0) {
+		$structure_tree = $this->get_subtree($structure_id);
 
-		$query = "select `page` from `tiki_structures` where `parent`=? order by ".$this->convert_sortmode("pos_asc");
-		$result = $this->query($query,array($structure));
-
-		if ($level == 0) {
-			print ($structure);
-
-			print ("\n");
-			$this->s_export_structure_tree($structure, $level + 1);
-		} else {
-			while ($res = $result->fetchRow()) {
+        $level = 0;
+		$first = true;
+        foreach ( $structure_tree as $node ) {
+			//This special case indicates head of structure
+			if ($node["first"] and $node["last"]) {
+				print ("Use this tree to copy the structure: " . $node['pageName'] . "\n\n");
+			}
+			elseif ($node["first"] or !$node["last"]) {
+				if ($node["first"] and !$first) {
+			        $level++;
+				}
+				$first = false;
 				for ($i = 0; $i < $level; $i++) {
 					print (" ");
 				}
-
-				$page = $res['page'];
-				print ($page);
-				print ("\n");
-				$this->s_export_structure_tree($page, $level + 1);
+				print ($node['pageName']);
+				if (!empty($node['page_alias'])) {
+					print("->" . $node['page_alias']);
+				}
+				print("\n");
+			}
+			//node is a place holder for last in level
+			else {
+				$level--;
 			}
 		}
 	}

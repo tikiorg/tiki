@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.12 2003-11-14 09:02:45 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.13 2003-11-15 10:07:03 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -65,7 +65,9 @@ if (isset($_REQUEST["create"])) {
     $parents[0] = $structure_id;
 	$last_pages[0] = null;
 	$tree_lines = explode("\n", $_REQUEST["tree"]);
-	foreach ($tree_lines as $line) {
+	foreach ($tree_lines as $full_line) {
+		$names = explode("->", $full_line);
+		$line = $names[0];
 		$line = rtrim($line);
 		// count the depth level (leading spaces indicate it)
 		$tabs = strlen($line) - strlen(ltrim($line));
@@ -80,59 +82,15 @@ if (isset($_REQUEST["create"])) {
 				$last_page = null;
 			}
 
-			$new_page_ref_id = $structlib->s_create_page($parent_id, $last_page, trim($line), '');
+            $alias = '';
+            if (!empty($names[1])) {
+				$alias = $names[1];
+		    }
+			$new_page_ref_id = $structlib->s_create_page($parent_id, $last_page, trim($line), trim($alias));
 			if (isset($new_page_ref_id)) {
 			    $parents[$tabs + 1] = $new_page_ref_id;
 			    $last_pages[$tabs] = $new_page_ref_id;
 		    }
-		}
-	}
-}
-
-//
-// Thu 03 Jul 2003 10:06:01 PM MSD, by zaufi
-// TODO: Even after my fixes for invalid page names
-//       this code still too buggy... Try to add 
-//       " NewStruct" as tree... with leading space
-//       or line with 3 leading spaces followed by 
-//       line with one leading space... 
-//       I.e. level depth parser too stupid... :()
-//
-if (isset($_REQUEST["create_from_tree"])) {
-	if ((empty($_REQUEST['name']))) {
-		$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
-	}
-	//Cannot create a new structure if page already exists with that name
-    if (!isset($structure_id)) {
-		$smarty->assign('msg', $_REQUEST['name'] . " " . tra("page not added (Exists)"));
-		$smarty->display("styles/$style_base/error.tpl");
-		die;
-	}
-
-	$parents = array();
-	$level = 1;
-	$current_parent[$level] = $structure_id; 
-	$last_page[$level] = $structure_id;
-	$tree_lines = explode("\n", $_REQUEST["tree"]);
-	foreach ($tree_lines as $line) {
-		$line = rtrim($line);
-		// count the depth level (leading spaces indicate it)
-		$tabs = strlen($line) - strlen(ltrim($line));
-		// Is there smth else 'cept spaces?
-		if (strlen($line = trim($line))) {
-
-			$current_parent[$tabs + 2] = $line;
-			$parent = $parents[$tabs];
-
-			if (isset($previous[$tabs]))
-				$prev = $previous[$tabs];
-			else
-				$prev = '';
-
-			$structlib->s_create_page($parent, $prev, trim($line), '');
-			$previous[$tabs] = $line;
 		}
 	}
 }

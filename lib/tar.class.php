@@ -486,9 +486,7 @@ class tar {
 		// Make sure there are no other files in the archive that have this same filename
 		if($this->containsFile($filename))
 			return false;
-                if(!$time) $time=date("U");
-		// Get file information
-		//$file_information = stat($filename);
+		if(!$time) $time=date("U");
 
 		// Read in the file's contents
 		$file_contents = $data;
@@ -497,7 +495,7 @@ class tar {
 		$this->numFiles++;
 		$activeFile			= &$this->files[];
 		$activeFile["name"]		= $filename;
-		$activeFile["mode"]		= "";
+		$activeFile["mode"]		= octdec("666");
 		$activeFile["user_id"]		= "";
 		$activeFile["group_id"]		= "";
 		$activeFile["size"]		= strlen($data);
