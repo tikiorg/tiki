@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/testrpc.php,v 1.2 2003-01-04 19:34:16 rossta Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/testrpc.php,v 1.3 2003-03-28 17:53:37 lrargerich Exp $
 
 include_once("lib/xmlrpc.inc");
 include_once("lib/xmlrpcs.inc");
@@ -6,7 +6,7 @@ include_once("lib/xmlrpcs.inc");
 // EDIT FROM THIS LINE
 $server_port=80;
 $server_uri="localhost";
-$server_path="/orion/tiki/xmlrpc.php";
+$server_path="/tcvs/tiki/xmlrpc.php";
 // DON'T EDIT BELOW THIS LINE
 $client = new xmlrpc_client("$server_path", "$server_uri", $server_port);
 $client->setDebug(1);
