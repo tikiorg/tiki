@@ -280,17 +280,12 @@ class Comments extends TikiLib {
 		$in_reply_to = '';
 	    }
 
-	    // post_new_comment does md5()
 	    $object = 'forum' . $forumId;
-	    //   But that doesn't matter because first we're
-	    //   going to do a select to see if it already
-	    //   exists. -rlpowell
-	    $object_md5 = md5('forum' . $forumId);
 
 	    // Determine if this is a topic or a thread
 	    $parentId = $this->getOne(
 		    "select `threadId` from `tiki_comments` where `object`=? and `parentId`=0 and locate(`title`,?)",
-		    array($object_md5,$title)); //todo: replace mysql locate() 
+		    array($object,$title)); //todo: replace mysql locate() 
 
 		    if (!$parentId)
 			$parentId = 0;
@@ -318,11 +313,11 @@ class Comments extends TikiLib {
     function replace_queue($qId, $forumId, $object, $parentId, $user, $title, $data, $type = 'n', $topic_smiley = '', $summary = '',
 	    $topic_title = '') {
 	// timestamp
-	$hash = md5($object);
 
 	$hash2 = md5($title . $data);
 
-	if ($qId == 0 && $this->getOne("select count(*) from `tiki_forums_queue` where `hash`=?'",array($hash2)))
+	if ($qId == 0 && $this->getOne("select count(*) from
+	`tiki_forums_queue` where `title`=?' and `data`=",array($hash2)))
 	    return false;
 
 	$now = date("U");
@@ -344,23 +339,29 @@ class Comments extends TikiLib {
 		where `qId`=?
 		";
 
-	    $this->query($query,array($hash,$parentId,$user,$title,$data,$forumId,$type,$hash2,$topic_title,$topic_smiley,$summary,$now,$qId));
+	    $this->query($query,array($object,$parentId,$user,$title,$data,$forumId,$type,$hash2,$topic_title,$topic_smiley,$summary,$now,$qId));
 	    return $qId;
 	} else {
-	    $query = "insert into `tiki_forums_queue`(`object`,`parentId`,`user`,`title`,`data`,`type`,`topic_smiley`,`summary`,`timestamp`,`topic_title`,`hash`,`forumId`)
+	    $query = "insert into
+	    `tiki_forums_queue`(`object`, `parentId`, `user`,
+	    `title`, `data`, `type`, `topic_smiley`, `summary`,
+	    `timestamp`, `topic_title`, `hash`, `forumId`)
 		values(?,?,?,?,?,?,?,?,?,?,?,?)";
 
-	    $this->query($query,array($hash,$parentId,$user,$title,$data,$type,$topic_smiley,$summary,$now,$topic_title,$hash2,$forumId));
-	    $qId = $this->getOne("select max(`qId`) from `tiki_forums_queue` where `hash`=? and `timestamp`=?",array($hash2,$now));
+	    $this->query($query, array($object, $parentId, $user,
+	    $title, $data, $type, $topic_smiley, $summary, $now,
+	    $topic_title, $hash2, $forumId));
+	    $qId = $this->getOne("select max(`qId`) from
+	    `tiki_forums_queue` where `hash`=? and
+	    `timestamp`=?",array($hash2,$now));
 	}
 
 	return $qId;
     }
 
     function get_num_queued($object) {
-	$hash = md5($object);
-
-	return $this->getOne("select count(*) from `tiki_forums_queue` where `object`=?",array($hash));
+	return $this->getOne("select count(*) from
+	`tiki_forums_queue` where `object`=?",array($object));
     }
 
     function list_forum_queue($object, $offset, $maxRecords, $sort_mode, $find) {
@@ -374,11 +375,11 @@ class Comments extends TikiLib {
 	    $mid = "";
 	}
 
-	$hash = md5($object);
-	$query = "select * from `tiki_forums_queue` where `object`='$hash' $mid order by $sort_mode limit $offset,$maxRecords";
-	$query_cant = "select count(*) from `tiki_forums_queue` where `object`='$hash' $mid";
-	$result = $this->query($query);
-	$cant = $this->getOne($query_cant);
+	$query = "select * from `tiki_forums_queue` where `object`=? $mid order by $sort_mode limit $offset,$maxRecords";
+	$query_cant = "select count(*) from `tiki_forums_queue` where `object`=? $mid";
+
+	$result = $this->query($query, array($object) );
+	$cant = $this->getOne($query_cant, array($object) );
 	$now = date("U");
 	$ret = array();
 
@@ -435,10 +436,10 @@ class Comments extends TikiLib {
     }
 
     function get_forum_topics($forumId) {
-	$hash = md5('forum' . $forumId);
+	$object = 'forum' . $forumId;
 
 	$query = "select * from `tiki_comments` where `object`=? and `parentId`=0";
-	$result = $this->query($query,array($hash));
+	$result = $this->query($query,array($object));
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
@@ -624,7 +625,9 @@ class Comments extends TikiLib {
 
 	$result = $this->query($query, array( $forumId ) );
 	// Now remove all the messages for the forum
-	$objectId = md5('forum' . $forumId);
+
+	$objectId = 'forum' . $forumId;
+
 	$query = "delete from `tiki_comments` where `object`=?";
 	$result = $this->query($query, array( $objectId ) );
 	$query = "delete from `tiki_forum_attachments` where `forumId`=?";
@@ -663,7 +666,7 @@ class Comments extends TikiLib {
 	    }
 
 	    // Now select users
-	    $objectId = md5('forum' . $res["forumId"]);
+	    $objectId = 'forum' . $res["forumId"];
 	    $query = "select distinct `userName` from `tiki_comments` where `object`=?";
 	    $result2 = $this->query($query,array($objectId));
 	    $res["users"] = $result2->numRows();
@@ -675,7 +678,9 @@ class Comments extends TikiLib {
 	    }
 
 
-	    $query2 = "select * from `tiki_comments`,`tiki_forums` where `object`=md5(concat('forum',`forumId`)) and `commentDate`=" . $res["lastPost"];
+	    $query2 = "select * from `tiki_comments`,`tiki_forums`
+	    where `object`=concat('forum',`forumId`) and
+	    `commentDate`=" . $res["lastPost"];
 	    $result2 = $this->query($query2);
 	    $res2 = $result2->fetchRow();
 	    $res["lastPostData"] = $res2;
@@ -718,7 +723,7 @@ class Comments extends TikiLib {
 	    }
 
 	    // Now select users
-	    $objectId = md5('forum' . $res["forumId"]);
+	    $objectId = 'forum' . $res["forumId"];
 	    $query = "select distinct(username) from `tiki_comments` where `object`='$objectId'";
 	    $result2 = $this->query($query);
 	    $res["users"] = $result2->numRows();
@@ -729,7 +734,9 @@ class Comments extends TikiLib {
 		$res["users_per_day"] = 0;
 	    }
 
-	    $query2 = "select * from tiki_comments,tiki_forums where `object`=md5(concat('forum',forumId)) and commentDate=" . $res["lastPost"];
+	    $query2 = "select * from tiki_comments,tiki_forums where
+	    `object`=concat('forum',forumId) and commentDate="
+	    . $res["lastPost"];
 	    $result2 = $this->query($query2);
 	    $res2 = $result2->fetchRow();
 	    $res["lastPostData"] = $res2;
@@ -763,7 +770,7 @@ class Comments extends TikiLib {
 	    return true;
 
 	if ($user) {
-	    $objectId = md5('forum' . $forumId);
+	    $objectId = 'forum' . $forumId;
 
 	    $query = "select max(commentDate) from `tiki_comments` where `object`='$objectId' and userName='$user'";
 	    $maxDate = $this->getOne($query);
@@ -806,7 +813,10 @@ class Comments extends TikiLib {
 
 	$result = $this->query($query);
 
-	$lastPost = $this->getOne("select max(commentDate) from tiki_comments,tiki_forums where `object`=md5(concat('forum',forumId)) and forumId=$forumId");
+	$lastPost = $this->getOne("select max(commentDate) from
+	tiki_comments,tiki_forums where
+	`object`=concat('forum',forumId) and
+	forumId=$forumId");
 	$query = "update `tiki_forums` set `lastPost`=$lastPost where `forumId`=$forumId";
 	$result = $this->query($query);
 
@@ -851,7 +861,7 @@ class Comments extends TikiLib {
     function forum_prune($forumId) {
 	$forum = $this->get_forum($forumId);
 
-	$objectId = md5('forum' . $forumId);
+	$objectId = 'forum' . $forumId;
 
 	if ($forum["usePruneUnreplied"] == 'y') {
 	    $age = $forum["pruneUnrepliedAge"];
@@ -945,10 +955,8 @@ class Comments extends TikiLib {
     }
 
     function count_comments($objectId) {
-	$hash = md5($objectId);
-
-	$query = "select count(*) from `tiki_comments` where `object`='$hash'";
-	$cant = $this->getOne($query);
+	$query = "select count(*) from `tiki_comments` where `object`=?";
+	$cant = $this->getOne($query, array( $objectId ) );
 	return $cant;
     }
 
@@ -1030,8 +1038,6 @@ class Comments extends TikiLib {
 	    = -1, $sort_mode = 'commentDate_asc', $find = '', $threshold =
 	    0, $id = 0)
     {
-	$hash = md5($objectId);
-
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
 	}
@@ -1072,19 +1078,21 @@ class Comments extends TikiLib {
 	}
 
 	$query = "select count(*) from `tiki_comments` where `object`=? and `average`<? $time_cond";
-	$below = $this->getOne($query,array_merge(array($hash,$threshold),$bind_time));
+	$below = $this->getOne($query,array_merge(array($objectId,$threshold),$bind_time));
 
 	if ($find) {
 	    $findesc = '%' . $find . '%';
 
 	    $mid = " where `object`=? and `parentId`=? and `type`=? and `average`>=? and (`title` like ? or `data` like ?) ";
-	    $bind_mid=array($hash,$parentId,'s',$threshold,$findesc,$findesc);
+	    $bind_mid=array($objectId,$parentId,'s',$threshold,$findesc,$findesc);
 	} else {
 	    $mid = " where `object`=? and `parentId`=? and `type`=? and `average`>=? ";
-	    $bind_mid=array($hash,$parentId,'s',$threshold);
+	    $bind_mid=array($objectId,$parentId,'s',$threshold);
 	}
 
-	$query = "select * from `tiki_comments` $mid $extra $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
+	$query = "select * from `tiki_comments` $mid $extra
+	    $time_cond order by
+	    ".$this->convert_sortmode($sort_mode).",`threadId`";
 	//print("$query<br/>");
 	$query_cant = "select count(*) from `tiki_comments` $mid $extra $time_cond";
 	$result = $this->query($query,array_merge($bind_mid,$bind_extra,$bind_time),$maxRecords,$offset);
@@ -1250,11 +1258,9 @@ class Comments extends TikiLib {
     }
 
     function set_comment_object($threadId, $object) {
-	$hash = md5($object);
-
 	$query = "update `tiki_comments`
 	    set `object`=? where `threadId`=$threadId or parentId=$threadId";
-	$this->query($query, array( $hash, $threadId, $threadId ) );
+	$this->query($query, array( $object, $threadId, $threadId ) );
     }
 
     function set_parent($threadId, $parentId) {
@@ -1379,7 +1385,6 @@ class Comments extends TikiLib {
 	if (!$result->numRows()) {
 	    $now = date("U");
 
-	    $object = md5($objectId);
 	    $query = "insert into
 		`tiki_comments`(`object`, `commentDate`, `userName`, `title`, `data`,
 			`votes`, `points`, `hash`, `parentId`, `average`, `hits`, `type`, `summary`,
@@ -1389,7 +1394,7 @@ class Comments extends TikiLib {
 			?, ?, ?, ?)";
 
 	    $result = $this->query($query, 
-		    array( $object, $now, $userName, $title, $data,
+		    array( $objectId, $now, $userName, $title, $data,
 			$hash, $parentId, $type, $summary,
 			$smiley, $_SERVER["REMOTE_ADDR"], $message_id,
 			$in_reply_to )
