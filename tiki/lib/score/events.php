@@ -7,14 +7,14 @@
 
 // Each element of $events is an array with (dependent features, category, event name, translated description, default score, default expiration)
 $events = array(
-//array("","General","login",tra("Login"),1,0),
+array("","General","login",tra("Login"),2,0),
 //array("","General","login_remain",tra("Stay logged"),2,60),
 //array("","General","profile_fill",tra("Fill each profile field"),10,0),
-//array("","General","profile_see",tra("See other user's profile"),2,0),
-//array("","General","profile_is_seen",tra("Have your profile seen"),1,0),
+array("","General","profile_see",tra("See other user's profile"),2,0),
+array("","General","profile_is_seen",tra("Have your profile seen"),1,0),
 array("feature_friends","General","friend_new",tra("Make friends"),10,0),
-//array("","General","message_receive",tra("Receive message"),1,0),
-//array("","General","message_send",tra("Send message"),2,0),
+array("feature_messages","General","message_receive",tra("Receive message"),1,0),
+array("feature_messages","General","message_send",tra("Send message"),2,0),
 //array("feature_articles","Articles","article_read",tra("Read an article"),2,0),
 //array("feature_articles","Articles","article_comment",tra("Comment an article"),5,0),
 //array("feature_articles","Articles","article_new",tra("Publish an article"),20,0),

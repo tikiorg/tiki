@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.126 2004-08-16 02:26:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.127 2004-08-26 19:23:08 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -290,11 +290,12 @@ if($user
 }
 
 // Verify lock status
-if($info["flag"] == 'L') {
+if($wikilib->is_locked($page, $info)) {
     $smarty->assign('lock',true);  
 } else {
     $smarty->assign('lock',false);
 }
+$smarty->assign('editable', $wikilib->is_editable($page, $user, $info));
 
 // If not locked and last version is user version then can undo
 $smarty->assign('canundo','n');	

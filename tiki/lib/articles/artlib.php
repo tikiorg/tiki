@@ -3,6 +3,7 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 class ArtLib extends TikiLib {
@@ -89,9 +90,9 @@ class ArtLib extends TikiLib {
 	$imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, 
 	$topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n') {
 		global $smarty;
-
 		global $dbTiki;
 		global $sender_email;
+
       if ($expireDate < $publishDate) {
          $expireDate = $publishDate;
       }
@@ -125,6 +126,7 @@ class ArtLib extends TikiLib {
                 `heading` = ?,
                 `body` = ?,
                 `publishDate` = ?,
+                `expireDate` = ?,
                 `created` = ?,
                 `author` = ? ,
                 `type` = ?,
@@ -134,16 +136,16 @@ class ArtLib extends TikiLib {
 
 			$result = $this->query($query,array($title,$authorName,(int) $topicId,$topicName,(int) $size,
 			$useImage,$isfloat,$imgname,$imgtype,(int) $imgsize,$imgdata,(int) $image_x,(int) $image_y,
-			$heading,$body,(int) $publishDate,(int) $now,$user,$type,(float) $rating,$topline, $subtitle, $linkto, $image_caption, $lang, (int) $subId));
+			$heading,$body,(int) $publishDate,(int) $expireDate,(int) $now,$user,$type,(float) $rating,$topline, $subtitle, $linkto, $image_caption, $lang, (int) $subId));
 		} else {
 			// Insert the article
 			$query = "insert into `tiki_submissions`(`title`,`authorName`,`topicId`,`useImage`,`image_name`,`image_size`,
-	`image_type`,`image_data`,`publishDate`,`created`,`heading`,`body`,`hash`,`author`,`reads`,`votes`,`points`,
+	`image_type`,`image_data`,`publishDate`,`expireDate`,`created`,`heading`,`body`,`hash`,`author`,`reads`,`votes`,`points`,
 	`size`,`topicName`,`image_x`,`image_y`,`type`,`rating`,`isfloat`,`topline`, `subtitle`, `linkto`,`image_caption`, `lang`)
-                         values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                         values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$result = $this->query($query,array($title,$authorName,(int) $topicId,$useImage,$imgname,(int) $imgsize,$imgtype,
-	$imgdata,(int) $publishDate,(int) $now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,
+	$imgdata,(int) $publishDate,(int) $expireDate, (int) $now,$heading,$body,$hash,$user,0,0,0,(int) $size,$topicName,(int) $image_x,
 	(int) $image_y,$type,(float) $rating,$isfloat,$topline, $subtitle, $linkto, $image_caption, $lang));
 		}
 

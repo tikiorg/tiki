@@ -1,9 +1,10 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.32 2004-07-22 13:08:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.33 2004-08-26 19:23:08 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -92,6 +93,7 @@ $features_toggles = array(
 	"layout_section",
 	"user_assigned_modules",
 	"feature_multilingual",
+	"feature_best_language",
 	"contact_anon"
 );
 

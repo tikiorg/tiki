@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.108 2004-08-12 22:31:58 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.109 2004-08-26 19:24:18 mose Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -213,7 +213,7 @@
   </div>
 {/if}
 
-{if $feature_articles eq 'y' or $feature_submissions eq 'y'}
+{if $feature_articles eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('cmsmenu');"><img src="img/icons/{$icn_cmsmenu}fo.gif" style="border: 0" name="cmsmenuicn" alt=""/></a>&nbsp;

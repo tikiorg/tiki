@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.11 2004-07-15 21:28:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.12 2004-08-26 19:23:08 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,7 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 
@@ -74,12 +75,12 @@ if (isset($_REQUEST["imagegalcomprefs"])) {
 if($imagegallib->havegd) {
 	$gdlib=tra('Detected, Version:').' '.$imagegallib->gdversion;
 } else {
-	$gdlib=tra('Not detected. Use at own risk!');
+	$gdlib=tra('Not detected.');
 }
 if($imagegallib->haveimagick) {
 	$imagicklib=tra('Detected, Version:').' '.tra('Unknown');
 } else {
-	$imagicklib=tra('Not detected. Use at own risk!').' Imagick '.tra('can be downloaded from:').' <a href=\'http://pecl.php.net/\'>http://pecl.php.net/</a>';
+	$imagicklib=tra('Not detected.');
 }
 
 $smarty->assign('gdlib',$gdlib);

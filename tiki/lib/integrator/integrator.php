@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.28 2004-06-23 22:34:23 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.29 2004-08-26 19:23:53 mose Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -9,6 +9,7 @@
 //this script may only be included - so its better to die if called directly.
 if (basename($_SERVER["SCRIPT_NAME"]) == basename(__FILE__)) {
   header("location: index.php");
+  exit;
 }
 
 include_once ('lib/tikilib.php');

@@ -3,6 +3,7 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 include_once ('lib/notifications/notificationlib.php');
@@ -476,7 +477,7 @@ class TrackerLib extends TikiLib {
 
 	/* experimental shared */
 	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='',$numsort=false) {
-		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed;
+		global $tiki_p_view_trackers_pending,$tiki_p_view_trackers_closed,$tiki_p_admin_trackers;
 		$mid = " where tti.`trackerId`=? ";
 		$bindvars = array((int) $trackerId);
 
@@ -545,9 +546,16 @@ class TrackerLib extends TikiLib {
 			$fields = array();
 			$opts = array();
 			$itid = $res["itemId"];
+			if ($tiki_p_admin_trackers == 'y') {
+				$mid = "";
+				$bindvars = array((int) $res["itemId"]);
+			} else {
+				$mid = "`isPublic`=? and ";
+				$bindvars = array('y',(int) $res["itemId"]);
+			}
 			$query2 = "select ttf.`fieldId`, `value`,`isPublic` from `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf 
-				where ttif.`fieldId`=ttf.`fieldId` and `isPublic`=? and `itemId`=? order by `position` asc";
-			$result2 = $this->query($query2,array('y',(int) $res["itemId"]));
+				where ttif.`fieldId`=ttf.`fieldId` and $mid `itemId`=? order by `position` asc";
+			$result2 = $this->query($query2,$bindvars);				
 			$last = array();
 			$res2 = array();
 			$fil = array();

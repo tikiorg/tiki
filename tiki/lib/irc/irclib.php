@@ -1,8 +1,9 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/lib/irc/irclib.php,v 1.7 2004-03-29 21:26:35 mose Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/lib/irc/irclib.php,v 1.8 2004-08-26 19:23:53 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 # Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.

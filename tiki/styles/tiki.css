@@ -204,7 +204,9 @@ div.box {
   border-top: 1px solid #8CACBB;
 	width: 190px;
 }
-
+.wikitext div.box {
+	width : auto;
+}
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
   background-image: url(/styles/tiki/mozilla-menubar.png);
@@ -816,16 +818,17 @@ background: #C7D0D9;
 border: 1px solid #46596f;
 padding: 0px 20px 3px 20px;
 margin: 3px 0 6px 0;
-font-size: 1.3em;
+font-size: 1.2em;
 font-weight: bold;
+	display : inline;
 }
 
 /* The author, date and number of reads */
 span.titleb {  
-float: right;
-margin-top: -1.3em;
+float: left;
 font-size: .9em;
 color: #666666;
+margin : 5px 20px;
 }
 
 /* The article heading */

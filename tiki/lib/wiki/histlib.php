@@ -3,6 +3,7 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 class HistLib extends TikiLib {
@@ -191,6 +192,11 @@ class HistLib extends TikiLib {
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
+	}
+	function get_nb_history($page) {
+		$query_cant = "select count(*) from `tiki_history` where `pageName` = ?";
+		$cant = $this->getOne($query_cant, array($page));
+		return $cant;
 	}
 }
 

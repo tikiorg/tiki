@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.59 2004-08-16 02:27:03 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.60 2004-08-26 19:24:16 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -173,13 +173,17 @@
 <tr class="formcolor"><td>{tr}Important{/tr}:</td><td><b>{tr}{$wikiSubmitNotice}{/tr}</b></td>
 {/if}
 {/if}
+{if $page neq 'SandBox' or $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td>&nbsp;</td><td>
-{if $page neq 'SandBox'}
-{if $tiki_p_minor eq 'y'}
+{if $tiki_p_minor eq 'y' && $page neq 'SandBox'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp; {/if}<input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" /></td>
-</tr>
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp;
+{if $page neq 'SandBox'}
+<input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" />
+{/if}
+{/if}
+</td></tr>
 </table>
 </form>
 <br />

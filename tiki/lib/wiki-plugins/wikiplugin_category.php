@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.6 2004-06-27 03:05:53 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.7 2004-08-26 19:24:10 mose Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -209,7 +209,7 @@ function wikiplugin_category($data, $params) {
 		$out = $smarty->fetch("tiki-simple_plugin.tpl");
 	}
 
-	return '~np~'.$out.'~/np~';
+	return $out;
 }
 
 ?>

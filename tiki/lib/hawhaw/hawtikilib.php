@@ -3,9 +3,10 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.11 2004-03-29 21:26:34 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/hawhaw/hawtikilib.php,v 1.12 2004-08-26 19:23:51 mose Exp $
 
 // HAWHAW function library for TikiWiki
 // Last modified: 13. December 2003

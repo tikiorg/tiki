@@ -21,6 +21,7 @@ require_once ('PEAR.php');
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 /**
@@ -53,7 +54,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 *    perhaps even message/partial.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.9 $
+* @version $Revision: 1.10 $
 * @package Mail
 */
 class Mail_mimeDecode extends PEAR {

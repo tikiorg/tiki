@@ -3,6 +3,7 @@
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 class CalendarLib extends TikiLib {
@@ -153,7 +154,7 @@ class CalendarLib extends TikiLib {
 					"name" => $res["name"],
 					"extra" => "<div align='right'>... " . tra("click to edit"),
 					"head" => $head,
-					"description" => str_replace("\n|\r", "", addslashes($res["description"]))
+					"description" => str_replace("\n|\r", "", $res["description"])
 				);
 			}
 		}
@@ -187,6 +188,27 @@ class CalendarLib extends TikiLib {
 						"description" => str_replace("\n|\r", "", $quote)
 					);
 				}
+				$query = "select c.`commentDate` as created, c.`threadId` as threadId, c.`userName` as user, c.`title` as name, c.`object` as pageName ";
+				$query.= "from `tiki_comments` as c where c.`objectType` = ? ";
+				$query.= "and (c.`commentDate`>? and c.`commentDate`<?)";
+				$result = $this->query($query,array('wiki page',$tstart,$tstop));
+
+				while ($res = $result->fetchRow()) {
+					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
+					$tstart = date("Hi", $res["created"]);
+					$ret["$dstart"][] = array(
+						"calitemId" => "",
+						"calname" => "",
+						"prio" => "",
+						"time" => $tstart,
+						"type" => "wiki page",
+						"url" => "tiki-index.php?page=" . $res["pageName"]. "&amp;comzone=show#comments",
+						"name" => $res["name"],
+						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["pageName"]. "</b>",
+						"description" => "<i>" . tra("by"). " " . $res["user"] . "</i>"
+					);
+						
+				}
 				break;
 
 			case "gal":
@@ -206,8 +228,8 @@ class CalendarLib extends TikiLib {
 						"type" => "gal",
 						"url" => "tiki-browse_image.php?galleryId=" . $res["galid"] . "&amp;imageId=" . $res["imageid"],
 						"name" => $res["name"],
-						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["galname"]). "</b>",
-						"description" => addslashes(tra("new image uploaded by"). " " . $res["user"])
+						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["galname"]. "</b>",
+						"description" => tra("new image uploaded by"). " " . $res["user"]
 					);
 				}
 				break;
@@ -228,8 +250,8 @@ class CalendarLib extends TikiLib {
 						"type" => "art",
 						"url" => "tiki-read_article.php?articleId=" . $res["articleId"],
 						"name" => $res["title"],
-						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["topicName"]). "</b>",
-						"description" => "<i>" . tra("by"). " " . $res["authorName"] . "</i><br />" . addslashes(str_replace('"', "'", $res["heading"]))
+						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["topicName"]. "</b>",
+						"description" => "<i>" . tra("by"). " " . $res["authorName"] . "</i><br />" . str_replace('"', "'", $res["heading"])
 					);
 				}
 				break;
@@ -249,34 +271,40 @@ class CalendarLib extends TikiLib {
 						"time" => $tstart,
 						"type" => "blog",
 						"url" => "tiki-view_blog.php?blogId=" . $res["blogid"],
-						"name" => $res["blogname"] . " :: " . addslashes($res["postname"]),
-						"head" => "<b>" . date( "H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["blogname"]). "</b>",
+						"name" => $res["blogname"] . " :: " . $res["postname"],
+						"head" => "<b>" . date( "H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["blogname"]. "</b>",
 						"description" => "<i>" . tra("by"). " " . $res["user"] . "</i>"
 					);
 				}
 				break;
 
 			case "forum":
-				// have to fix that query. tehre is distinction to do between comments and forum item ?
-				$query = "select c.`commentDate` as created, c.`threadId` as threadId, c.`userName` as user, c.`title` as name, f.`name` as forum, f.`forumId` as forumid ";
-				$query.= "from `tiki_comments` as c left join `tiki_forums` as f on c.`object`=f.`forumId` and c.`objectType` = ?  ";
-				$query.= "where (c.`commentDate`>? and c.`commentDate`<?)";
+				// the left join brings back wiki comments
+				//$query = "select c.`commentDate` as created, c.`threadId` as threadId, c.`userName` as user, c.`title` as name, f.`name` as forum, f.`forumId` as forumid, c.`parentId` as parentId ";
+				//$query.= "from `tiki_comments` as c left join `tiki_forums` as f on c.`object`=f.`forumId` and c.`objectType` = ? ";
+				//$query.= "where (c.`commentDate`>? and c.`commentDate`<?)";
+				$query = "select c.`commentDate` as created, c.`threadId` as threadId, c.`userName` as user, c.`title` as name, f.`name` as forum, f.`forumId` as forumid, c.`parentId` as parentId ";
+				$query.= "from `tiki_comments` as c, `tiki_forums` as f where c.`object`=f.`forumId`and c.`objectType` = ? ";
+				$query.= "and (c.`commentDate`>? and c.`commentDate`<?)";
 				$result = $this->query($query,array('forum',$tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
+					if ($res["parentId"] == 0)
+						$res["parentId"] = $res["threadId"];
 					$ret["$dstart"][] = array(
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
 						"type" => "forum",
-						"url" => "tiki-view_forum.php?forumId=" . $res["forumid"],
+						"url" => "tiki-view_forum_thread.php?forumId=" . $res["forumid"]."&amp;comments_parentId=".$res["parentId"] ,
 						"name" => $res["name"],
-						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["forum"]). "</b>",
+						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["forum"]. "</b>",
 						"description" => "<i>" . tra("by"). " " . $res["user"] . "</i>"
 					);
+						
 				}
 				break;
 
@@ -297,7 +325,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-directory_redirect.php?siteId=" . $res["siteId"],
 						"name" => str_replace("'", "", $res["name"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
-						"description" => addslashes($res["url"]). "<br />" . addslashes(str_replace('"', "'", $res["description"]))
+						"description" => addslashes($res["url"]). "<br />" . str_replace('"', "'", $res["description"])
 					);
 				}
 				break;
@@ -318,8 +346,8 @@ class CalendarLib extends TikiLib {
 						"type" => "fgal",
 						"url" => "tiki-list_file_gallery.php?galleryId=" . $res["fgalId"],
 						"name" => str_replace("'", "", $res["name"]),
-						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["fgalname"]). "</b>",
-						"description" => "<i>" . tra("uploaded by"). " " . addslashes($res["user"]). "</i><br />" . addslashes(str_replace('"', "'", $res["description"]))
+						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["fgalname"]. "</b>",
+						"description" => "<i>" . tra("uploaded by"). " " . addslashes($res["user"]). "</i><br />" . str_replace('"', "'", $res["description"])
 					);
 				}
 				break;
@@ -341,7 +369,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-view_faq.php?faqId=" . $res["faqId"],
 						"name" => str_replace("'", "", $res["title"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
-						"description" => addslashes(str_replace('"', "'", $res["description"]))
+						"description" => str_replace('"', "'", $res["description"])
 					);
 				}
 				break;
@@ -363,7 +391,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-take_quiz.php?quizId=" . $res["quizId"],
 						"name" => str_replace("'", "", $res["name"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
-						"description" => addslashes(str_replace('"', "'", $res["description"]))
+						"description" => str_replace('"', "'", $res["description"])
 					);
 				}
 				break;
@@ -407,7 +435,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-take_survey.php?surveyId=" . $res["surveyId"],
 						"name" => str_replace("'", "", $res["name"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
-						"description" => addslashes(str_replace('"', "'", $res["description"]))
+						"description" => str_replace('"', "'", $res["description"])
 					);
 				}
 
@@ -453,7 +481,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-eph.php?day=" . date("d", $res["created"]). "&amp;mon=" . date("m", $res['created']). "&amp;year=" . date("Y", $res['created']),
 						"name" => str_replace("'", "", $res["name"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
-						"description" => addslashes(str_replace('"', "'", $res["description"]))
+						"description" => str_replace('"', "'", $res["description"])
 					);
 				}
 				break;
@@ -475,7 +503,7 @@ class CalendarLib extends TikiLib {
 						"url" => "tiki-view_chart.php?chartId=" . $res["chartId"],
 						"name" => str_replace("'", "", $res["name"]),
 						"head" => "<b>" . date("H:i", $res["created"]). "</b>",
-						"description" => addslashes(str_replace('"', "'", $res["description"]))
+						"description" => str_replace('"', "'", $res["description"])
 					);
 				}
 				break;

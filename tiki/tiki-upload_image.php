@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.31 2004-06-16 19:33:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_image.php,v 1.32 2004-08-26 19:23:09 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -167,7 +167,7 @@ if (isset($_REQUEST["upload"])) {
 
 			$file_name = $_FILES['userfile1']['name'];	
 			$file_tmp_name = $_FILES['userfile1']['tmp_name'];
-			$tmp_dest = $tmpDir . "/" . $file_name;
+			$tmp_dest = $tmpDir . '/' . $file_name.'.tmp'; // add .tmp to not overwrite existing files (like index.php)
 			if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 				$smarty->assign('msg', tra('Errors detected'));
 				$smarty->display("error.tpl");
@@ -177,6 +177,7 @@ if (isset($_REQUEST["upload"])) {
 			$fp = fopen($tmp_dest, "rb");
 			$data = fread($fp, filesize($tmp_dest));
 			fclose ($fp);
+			unlink($tmp_dest);
 		} else {
 			$error_msg = tra("cannot process upload");
 		}
@@ -188,7 +189,7 @@ if (isset($_REQUEST["upload"])) {
 	if (isset($_FILES['userfile2']) && is_uploaded_file($_FILES['userfile2']['tmp_name'])) {
 		$file_name = $_FILES['userfile2']['name'];	
 		$file_tmp_name = $_FILES['userfile2']['tmp_name'];
-		$tmp_dest = $tmpDir . "/" . $file_name;
+		$tmp_dest = $tmpDir . '/' . $file_name.'.tmp';;
 		if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 				$smarty->assign('msg', tra('Errors detected'));
 				$smarty->display("error.tpl");
@@ -200,6 +201,7 @@ if (isset($_REQUEST["upload"])) {
 
 		$thumb_data = fread($fp, filesize($tmp_dest));
 		fclose ($fp);
+		unlink ($tmp_dest);
 		$thumb_type = $_FILES['userfile2']['type'];
 		$thumb_size = $_FILES['userfile2']['size'];
 		$thumb_name = $_FILES['userfile2']['name'];
@@ -226,7 +228,8 @@ if (isset($_REQUEST["upload"])) {
 	if (isset($data)) {
 		if (!$up_thumb) {
 			if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
-				$img = imagecreatefromstring($data);
+
+				if($img = @imagecreatefromstring($data)) {
 
 				$size_x = imagesx($img);
 				$size_y = imagesy($img);
@@ -265,6 +268,11 @@ if (isset($_REQUEST["upload"])) {
 				$imageId
 					= $imagegallib->insert_image($_REQUEST["galleryId"], $name, $_REQUEST["description"], $filename, $type, $data,
 					$size, $size_x, $size_y, $user, $t_data, $t_type);
+				} else { // Not in Image format
+				   $smarty->assign('msg',tra('The uploaded file ist not recognized as a image'));
+				   $smarty->display('error.tpl');
+				   die;
+			        }
 			} else {
 				$tmpfname = '';
 
@@ -274,10 +282,16 @@ if (isset($_REQUEST["upload"])) {
 			}
 		} else {
 			if (function_exists("ImageCreateFromString") && (!strstr($type, "gif"))) {
-				$img = imagecreatefromstring($data);
+				if($img = @imagecreatefromstring($data)) {
 
 				$size_x = imagesx($img);
 				$size_y = imagesy($img);
+			       } else {
+				       // Not in Image format
+				       $smarty->assign('msg',tra('The uploaded file ist not recognized as a image'));
+				       $smarty->display('error.tpl');
+				       die;
+			       }
 			} else {
 				$size_x = 0;
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.16 2004-08-13 19:16:52 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.17 2004-08-26 19:23:09 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,8 +208,8 @@ $smarty->assign('last_page', $pages);
 $smarty->assign('pagenum', $_REQUEST['pagenum']);
 
 // Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
-$tikilib->replace_pp_np( $info["data"], $preparsed, $noparsed );
-$tikilib->replace_pp_np( $pdata, $preparsed, $noparsed );
+$tikilib->replace_preparse( $info["data"], $preparsed, $noparsed );
+$tikilib->replace_preparse( $pdata, $preparsed, $noparsed );
 
 $smarty->assign_by_ref('parsed', $pdata);
 

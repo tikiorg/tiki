@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_flash.php,v 1.2 2004-05-01 01:06:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_flash.php,v 1.3 2004-08-26 19:24:10 mose Exp $
 
 // Wiki plugin to display a SWF file
 // damian aka damosoft 30 March 2004
 
 function wikiplugin_flash_help() {
-        return tra("Displays a SWF on the wiki page").":<br :>~np~{FLASH(movie=url_to_flash,width=>xx,height=>xx,quality=>high)}{FLASH}~/np~";
+        return tra("Displays a SWF on the wiki page").":<br />~np~{FLASH(movie=url_to_flash,width=>xx,height=>xx,quality=>high)}{FLASH}~/np~";
 }
 
 function wikiplugin_flash($data, $params) {

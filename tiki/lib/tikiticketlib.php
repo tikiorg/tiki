@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.12 2004-07-29 17:38:08 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/lib/tikiticketlib.php,v 1.13 2004-08-26 19:23:20 mose Exp $
 
 Tikiwiki CSRF protection.
 also called Sea-Surfing
@@ -11,6 +11,7 @@ if you find a better way to handle sea surfing nastiness
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
+  exit;
 }
 
 // obsolete: will be removed soon

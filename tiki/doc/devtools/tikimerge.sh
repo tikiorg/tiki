@@ -1,5 +1,7 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.6 2004-08-16 02:26:42 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/tikimerge.sh,v 1.7 2004-08-26 19:23:11 mose Exp $
+#
+# NOTE: Please start the merge process from BRANCH-1-8; don't start with 1-9
 #
 # NOTE: Please start the merge process from BRANCH-1-8; don't start with 1-9
 #

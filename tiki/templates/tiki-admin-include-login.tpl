@@ -1,5 +1,20 @@
 <div class="cbox">
-<div class="cbox-title">{tr}User registration and login{/tr}</div>
+<div class="cbox-title">{tr}Users & groups{/tr}</div>
+<div class="cbox-data">
+<div class="simplebox">
+<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
+<span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
+</div>
+</div>
+</div>
+
+<div class="cbox">
+<div class="cbox-title">{tr}User registration and login{/tr}
+{if $feature_help eq 'y'}
+<a href="{$helpurl}UserRegistrationSettings" target="tikihelp" class="tikihelp" title="{tr}User registration and login{/tr}">
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+{if $feature_help eq 'y'}</a>{/if}
+</div>
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php?page=login" method="post" name="login">
@@ -125,7 +140,12 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </div>
 
 <div class="cbox">
-<div class="cbox-title">{tr}PEAR::Auth{/tr}</div>
+<div class="cbox-title">{tr}PEAR::Auth{/tr}
+{if $feature_help eq 'y'}
+<a href="{$helpurl}UserRegistrationSettings" target="tikihelp" class="tikihelp" title="{tr}LDAP{/tr}">
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+{if $feature_help eq 'y'}</a>{/if}
+</div>
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php?page=login" method="post">
@@ -161,7 +181,12 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </div>
 
 <div class="cbox">
-<div class="cbox-title">{tr}PAM{/tr}</div>
+<div class="cbox-title">{tr}PAM{/tr}
+{if $feature_help eq 'y'}
+<a href="{$helpurl}AuthPAM" target="tikihelp" class="tikihelp" title="{tr}PAM{/tr}">
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+{if $feature_help eq 'y'}</a>{/if}
+</div>
 <div class="cbox-data">
 <div class="simplebox">
 <form action="tiki-admin.php?page=login" method="post">
@@ -177,9 +202,17 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 </div>
 
 <div class="cbox">
-<div class="cbox-title">{tr}CAS (Central Authentication Service){/tr}</div>
+<div class="cbox-title">{tr}CAS (Central Authentication Service){/tr}
+{if $feature_help eq 'y'}
+<a href="{$helpurl}AuthCAS" target="tikihelp" class="tikihelp" title="{tr}CAS (Central Authentication Service){/tr}">
+<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />{/if}
+{if $feature_help eq 'y'}</a>{/if}
+</div>
 <div class="cbox-data">
 <div class="simplebox">
+
+
+
 <form action="tiki-admin.php?page=login" method="post">
 <table class="admin">
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="cas_create_user_tiki" {if $cas_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
