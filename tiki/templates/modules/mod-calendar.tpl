@@ -133,7 +133,7 @@ if (!strstr($father,"?")) {
     <tr>
       <td align="center">
 {php}
-         print( "<a class=\"today\" href=\"".$todaylink."\">Today</a>" );
+         print( "<a class=\"today\" href=\"".$todaylink."\">".tra("Today")."</a>" );
 {/php}
       </td>
     </tr>
