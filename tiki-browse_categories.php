@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.17 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.18 2004-06-18 19:52:35 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.17 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_categories.php,v 1.18 2004-06-18 19:52:35 teedog Exp $
 //
 
 // Initialization
@@ -34,6 +34,8 @@ if (!isset($_REQUEST["parentId"])) {
 	$_REQUEST["parentId"] = 0;
 }
 
+
+
 $smarty->assign('parentId', $_REQUEST["parentId"]);
 
 // If the parent category is not zero get the category path
@@ -51,7 +53,8 @@ if ($_REQUEST["parentId"]) {
 $smarty->assign('path', $path);
 $smarty->assign('father', $father);
 
-$ctall = $categlib->get_all_categories();
+//$ctall = $categlib->get_all_categories();
+$ctall = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 
 if ($feature_phplayers == 'y') {
 	function mktree($ind,$indent="",$back) {
