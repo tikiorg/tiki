@@ -538,49 +538,41 @@ function get_struct_ref_id($pageName) {
 		return $res;
 	}
 
-	/** Return all the pages belonging to the structure
-  \return An array of page_info arrays
-  */
-  function s_get_structure_pages($page_ref_id) {
-    $ret = array();
-    // Add the structure page as well
-    $ret[] = $this->s_get_page_info($page_ref_id);
-    $ret2  = $this->_s_get_structure_pages($page_ref_id);
-		return array_merge($ret, $ret2);
-  }
   
-	/** Return a unique list of pages belonging to the structure
+/** Return a unique list of pages belonging to the structure
   \return An array of page_info arrays
-  */
-	function s_get_structure_pages_unique($page_ref_id) {
-    $ret = array();
-    // Add the structure page as well
-    $ret[] = $this->s_get_page_info($page_ref_id);
-    $ret2  = $this->_s_get_structure_pages($page_ref_id);
-		return array_unique(array_merge($ret, $ret2));
-  }
+*/
+function s_get_structure_pages_unique($page_ref_id) {
+	$ret = array();
+	// Add the structure page as well
+	$ret[] = $this->s_get_page_info($page_ref_id);
+	$ret2  = $this->s_get_structure_pages($page_ref_id);
+	return array_unique(array_merge($ret, $ret2));
+}
   
-	/** Return all the pages belonging to a structure
-  \scope private
-  \return An array of page_info arrays
-  */
-	function _s_get_structure_pages($page_ref_id) {
-    $ret = array();
-	  $query =  "select `pos`, `page_ref_id`, `parent_id`, ts.`page_id`, `pageName`, `page_alias` ";
-    $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
-    $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? ";
+
+/** Return all the pages belonging to a structure
+ \param  Page reference ID in struct table 
+ \return An array of page_info arrays
+*/
+function s_get_structure_pages($page_ref_id) {
+	$ret = array();
+	if ($page_ref_id) {
+	        $ret[0] = $this->s_get_page_info($page_ref_id);
+ 		$query =  "select `pos`, `page_ref_id`, `parent_id`, ts.`page_id`, `pageName`, `page_alias` ";
+		$query .= "from `tiki_structures` ts, `tiki_pages` tp ";
+    		$query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=? ";
 		$query .= "order by ".$this->convert_sortmode("pos_asc");
  	  
- 	  $result = $this->query($query,array((int)$page_ref_id));
+   		$result = $this->query($query,array((int)$page_ref_id));
 		while ($res = $result->fetchRow()) {
-			//$ret[] = $this->populate_page_info($res);
-			$ret2 = $this->_s_get_structure_pages($res["page_ref_id"]);
-			$ret = array_merge($res, $ret2);
+			$ret = array_merge($ret,$this->s_get_structure_pages($res["page_ref_id"]));
 		}
-		return $ret;
 	}
+	return $ret;
+}
 
-	function list_structures($offset, $maxRecords, $sort_mode, $find) {
+function list_structures($offset, $maxRecords, $sort_mode, $find) {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';

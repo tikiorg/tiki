@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.15 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.16 2004-01-25 02:23:16 lueders Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,30 +76,27 @@ if (!$tikilib->page_exists($page)) {
 if (isset($_REQUEST["assign"])) {
 	$userlib->assign_object_permission($_REQUEST["group"], $page, 'wiki page', $_REQUEST["perm"]);
 }
-/* TODO: CURRENTLY CANNOT ADD PERMISSIONS TO NEW STYLE STRUCTURES
 // Process the form to assign a new permission to this structure
 if(isset($_REQUEST["assignstructure"])) {
-	$userlib->assign_object_permission($_REQUEST["group"],$page,'wiki page',$_REQUEST["perm"]);
-	$pages=$structlib->get_structure_pages($page);
-	foreach($pages as $subpage) {
-		$userlib->assign_object_permission($_REQUEST["group"],$subpage,'wiki page',$_REQUEST["perm"]);
-	}
+        $pageInfoTree=array();
+	$pageInfoTree=$structlib->s_get_structure_pages($structlib->get_struct_ref_id($page));
+	foreach($pageInfoTree as $subPage) {
+	  $userlib->assign_object_permission($_REQUEST["group"],$subPage["pageName"],'wiki page',$_REQUEST["perm"]);
+        }
 }
-*/
 // Process the form to remove a permission from the page
 if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'remove') {
 		$userlib->remove_object_permission($_REQUEST["group"], $page, 'wiki page', $_REQUEST["perm"]);
 	}
-/* TODO: CURRENTLY CANNOT ADD PERMISSIONS TO NEW STYLE STRUCTURES
+// Process the form to remove a permission from the structure
 	if($_REQUEST["action"] == 'removestructure') {
-		$userlib->remove_object_permission($_REQUEST["group"],$page,'wiki page',$_REQUEST["perm"]);
-		$pages=$structlib->get_structure_pages($page);
-		foreach($pages as $subpage) {
-			$userlib->remove_object_permission($_REQUEST["group"],$subpage,'wiki page',$_REQUEST["perm"]);
+        	$pageInfoTree=array();
+		$pageInfoTree=$structlib->s_get_structure_pages($structlib->get_struct_ref_id($page));
+		foreach($pageInfoTree as $subPage) {
+			$userlib->remove_object_permission($_REQUEST["group"],$subPage["pageName"],'wiki page',$_REQUEST["perm"]);
 		}
 	}
-*/
 }
 
 // Now we have to get the individual page permissions if any
