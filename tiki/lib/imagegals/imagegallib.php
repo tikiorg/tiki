@@ -1313,7 +1313,8 @@ class ImageGalsLib extends TikiLib {
 
 							// CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
 							//$tmpfname = 'temp.jpg';
-							$tmpfname = tempnam("/tmp", "FOO"). '.jpg';
+							//$tmpfname = tempnam("/tmp", "img");
+							$tmpfname = tempnam($tmpDir, "img");
 							imagejpeg($t, $tmpfname);
 							// Now read the information
 							$fp = fopen($tmpfname, "rb");
