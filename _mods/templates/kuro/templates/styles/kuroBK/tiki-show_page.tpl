@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/templates/kuro/templates/styles/kuroBK/tiki-show_page.tpl,v 1.1 2005-01-31 16:46:15 michael_davey Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/templates/kuro/templates/styles/kuroBK/tiki-show_page.tpl,v 1.2 2005-02-10 10:10:07 michael_davey Exp $ *}
 
 <div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">
@@ -69,7 +69,10 @@
 </div>
 {/if}
 
-<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
+<p class="editdate">
+{tr}Contributors to this page{/tr}: {$lastUser|userlink}{section name=author loop=$contributors}{if !$smarty.section.author.last}, {else} {tr}and{/tr} {/if}{$contributors[author]|userlink}{/section}.<br />
+{tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}.
+</p>   
 {if $wiki_extras eq 'y'}
 <br/>
 {include file=attachments.tpl}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/templates/kuro/templates/styles/kuroBK/tiki-show_page_header.tpl,v 1.1 2005-01-31 16:46:15 michael_davey Exp $ *}
+{* $Header: /cvsroot/tikiwiki/_mods/templates/kuro/templates/styles/kuroBK/tiki-show_page_header.tpl,v 1.2 2005-02-10 10:10:07 michael_davey Exp $ *}
 <table width="100%">
 <tr>
 <td width="50%" class="pagedescription">
@@ -7,13 +7,7 @@
 <tr>
 <td>
 
-{if $feature_page_title eq 'y'}Breadcrumbs: <a href="tiki-index.php?page={$page|escape:"url"}" class="pagedescription">
-{if $structure eq 'y' and $page_info.page_alias ne ''}
-{$page_info.page_alias}
-{else}
-{$page}
-{/if}</a>
-{/if}
+{include file="tiki-site_header.tpl"}
 
 </td></tr></table>
 </td><td width="50%" class="wikibar">

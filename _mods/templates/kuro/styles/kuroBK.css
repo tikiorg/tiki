@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.1 2005-01-31 16:46:15 michael_davey Exp $
+$Header: /cvsroot/tikiwiki/_mods/templates/kuro/styles/kuroBK.css,v 1.2 2005-02-10 10:08:00 michael_davey Exp $
 
 Heavy theme for tiki
 
@@ -59,7 +59,7 @@ hr, DIV#tiki-bot, TD#flash, DIV#page-titlebar, TD#hr2, TD#hr4 {
 }
 
 /* light gray text over black, white, midbg and the highlight colour of the plain horizontal rule */
-hr, DIV#flash, DIV#flashl, DIV#flashr, DIV#tiki-foot, DIV#hr1r, DIV#tiki-foot a:hover {
+hr, DIV#flashl, DIV#flashr, DIV#tiki-foot, DIV#hr1r, DIV#tiki-foot a:hover {
   color: #CBCBCB; / * will make this CCCCCC after alpha * /
 }
 
@@ -144,7 +144,11 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif;
 }
 
-h1 { font-size: 26px; }
+h1 {
+  font-size: 26px;
+  margin: 0;
+  margin-bottom: 3px;
+}
 h2 { font-size: 22px; }
 h3 { font-size: 20px; }
 
@@ -261,18 +265,31 @@ DIV#tiki-top a {
         font-weight: bold;
 }
 
-DIV#flash {               
-  text-align: left;
+DIV#sitelogo {               
+  margin: 0px;
+  padding: 0px
   padding-left: 2px;
   padding-right: 2px;
-  font-size: 10px;
-  height: 142px; /* +padding */
+  //height: 142px; /* +padding */
+  text-align: center;
+  vertical-align: middle;
 }
 
-DIV#flash a {                
-  padding-left: 0px;       
-  padding-right: 0px;       
-  font-size: 10px;
+DIV#sitelogo a {                
+  margin: 0px;
+  padding: 0px;       
+  height: 142px;
+  vertical-align: middle;
+}
+
+DIV#sitelogo a img {
+  border: none;
+  vertical-align: middle;
+}
+
+DIV#sitelogo a:hover {
+  color: transparent;
+  background-color: transparent;
 }
 
 DIV#flashl {
