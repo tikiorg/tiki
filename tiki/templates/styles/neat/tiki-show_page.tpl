@@ -126,14 +126,16 @@
 	<span class="tabbut"><a href="tiki-slideshow2.php?page={$page|escape:"url"}" class="tablink">{tr}slides{/tr}</a></span>
 {/if}
 
-<span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
+{if $tiki_p_admin_wiki eq 'y'}
+        <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
+{/if}
 
 {if $feature_wiki_discuss eq 'y'}
 	<span class="tabbut"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&comments_postComment=post&comments_title={$page|escape:"url"}&comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page}{"|"}{$page}{"] page."|escape:"url"}&comment_topictype=n" class="tablink">{tr}discuss{/tr}</a></span>
 {/if}
 
-{if $show_page eq 'y'}
-<span class="tabbut"><a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
+{if $feature_wiki_comments eq 'y' and $show_page eq 'y'}
+        <span class="tabbut"><a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
 {/if}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
 <span class="tabbut"><a href="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>

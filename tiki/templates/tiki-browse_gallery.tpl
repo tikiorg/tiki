@@ -3,18 +3,23 @@
 </a>
 <br /><br />
 
-[{if $system eq 'n'}
-	{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-    	<a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> |
-      	<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> 
-  	{/if}
-  	{if $tiki_p_upload_images eq 'y'}
-    	{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'} |
-        	<a href="tiki-upload_image.php?galleryId={$galleryId}" class="gallink">{tr}upload image{/tr}</a>
-    	{/if}
-  	{/if}
+[
+{if $system eq 'n'}
+  {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+    <a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> |
+    <a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> |
+  {/if}
+  {if $tiki_p_upload_images eq 'y'}
+    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
+      <a href="tiki-upload_image.php?galleryId={$galleryId}" class="gallink">{tr}upload image{/tr}</a> |
+    {/if}
+  {/if}
 {/if}
-  | <a href="tiki-list_gallery.php?galleryId={$galleryId}" class="gallink">{tr}list gallery{/tr}</a> {if $rss_image_gallery eq 'y'}| <a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="gallink">RSS</a>{/if}]  
+<a href="tiki-list_gallery.php?galleryId={$galleryId}" class="gallink">{tr}list gallery{/tr}</a>
+{if $rss_image_gallery eq 'y'}
+  | <a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="gallink">RSS</a>
+{/if}
+]  
 
 {if strlen($description) > 0}
 	<div class="imgaldescr">
@@ -25,11 +30,11 @@
 
 
 	<span class="sorttitle">{tr}Sort Images by{/tr}</span>
-    [<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
-    |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a></span>
-    |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></span>
-    |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></span>
-    |<span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span>]
+    [ <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
+    | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a></span>
+    | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></span>
+    | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></span>
+    | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span> ]
 
 
   <div class="thumbnails">

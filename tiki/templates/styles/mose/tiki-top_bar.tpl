@@ -10,7 +10,7 @@
 {include file="tiki-mytiki_bar.tpl"}
 {else}
 &nbsp;
-{tr}Please{/tr} <a href="tiki-login_scr.php" class="linkmenu">{tr}log in{/tr}</a> {tr}to access full functionnalities{/tr}
+{tr}Please{/tr} <a href="tiki-login_scr.php" class="linkmenu">{tr}log in{/tr}</a> {tr}to access full functionalities{/tr}
 {/if}
 &nbsp;
 </td>

@@ -36,7 +36,7 @@
 </tr>
 </table>	
 </div>
-<div class="blogdesc">{tr}Description:{/tr}{$description}</div>
+<div class="blogdesc">{tr}Description:{/tr} {$description}</div>
 {/if}
 {if $use_find eq 'y'}
 <div class="blogtools">
@@ -44,7 +44,7 @@
 <form action="tiki-view_blog.php" method="get">
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <input type="hidden" name="blogId" value="{$blogId|escape}" />
-{tr}Find:{/tr}<input type="text" name="find" /><input type="submit" name="search" value="{tr}find{/tr}" />
+{tr}Find:{/tr} <input type="text" name="find" /> <input type="submit" name="search" value="{tr}find{/tr}" />
 </form>
 </td><td>
 <!--

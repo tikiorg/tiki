@@ -695,6 +695,13 @@ INSERT INTO tiki_preferences(name,value) VALUES ('feature_debugger_console','n')
 # last minute changes, rather minor
 UPDATE tiki_preferences set name='Can post messages in shoutbox' where name='Can pot messages in shoutbox';
 
+# The following translations have moved to directories matching their
+# ISO 639 language codes: Danish is 'da' and Swedish is 'sv'.
+UPDATE tiki_preferences SET value='da' WHERE name='language' AND value='dk';
+UPDATE tiki_user_preferences SET value='da' WHERE prefName='language' AND value='dk';
+UPDATE tiki_preferences SET value='sv' WHERE name='language' AND value='sw';
+UPDATE tiki_user_preferences SET value='sv' WHERE prefName='language' AND value='sw';
+
 # change of charlength for some fields
 ALTER TABLE `tiki_dsn` CHANGE `name` `name` VARCHAR( 200 ) NOT NULL;
 ALTER TABLE `tiki_extwiki` CHANGE `name` `name` VARCHAR( 200 ) NOT NULL;

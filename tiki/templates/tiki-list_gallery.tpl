@@ -1,20 +1,23 @@
 <a href="tiki-list_gallery.php?galleryId={$galleryId}" class="pagetitle">{tr}Browsing Gallery{/tr}: {$name}</a><br /><br />
 
-[{if $system eq 'n'}
-   {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-   <a  href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> |
-   <a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> 
+[
+{if $system eq 'n'}
+  {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+    <a  href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="gallink">{tr}edit gallery{/tr}</a> |
+    <a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}" class="gallink">{tr}rebuild thumbnails{/tr}</a> |
   {/if}
   {if $tiki_p_upload_images eq 'y'}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-        | <a href="tiki-upload_image.php?galleryId={$galleryId}" class="gallink">{tr}upload image{/tr}</a>
+        <a href="tiki-upload_image.php?galleryId={$galleryId}" class="gallink">{tr}upload image{/tr}</a> |
     {/if}
   {/if}
 {/if}
-  | <a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="gallink">{tr}browse gallery{/tr}</a> ]<br /><br /> 
-  <div class="galdesc">
-    {$description}
-  </div>
+<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="gallink">{tr}browse gallery{/tr}</a>
+]
+<br /><br /> 
+<div class="galdesc">
+  {$description}
+</div>
 
   <h3>{tr}Gallery Images{/tr}</h3>
 <div align="center">

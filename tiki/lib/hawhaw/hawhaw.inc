@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 15. July 2003
+// Last modified: 10. August 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -20,16 +20,9 @@
 //
 // For further information about this library and its license terms please visit:
 // http://www.hawhaw.de/
-//
-// changes against V5.0:
-// - bugfix: HAW_linkset: dtmf attribute in VoiceXML option tag 1-9 only
-// - new text format attribute: HAW_TEXTFORMAT_BOXED
-// - bugfix: VoiceXML <enumerate>'s require breaks to be understandable
-// - bugfix: VoiceXML <option> element does not allow some special characters
-// - bugfix: WML (UP): restrict "select option onpick" to pure menu decks only
 
 // miscellaneous constants
-define("HAW_VERSION", "HAWHAW V5.1b");
+define("HAW_VERSION", "HAWHAW V5.1");
 define("HAW_COPYRIGHT", "(C) Norbert Huffschmid");
 
 // constants for markup languages
@@ -66,7 +59,8 @@ define("HAW_HIDDEN", 14);
 define("HAW_SUBMIT", 15);
 define("HAW_RAW", 16);
 define("HAW_RULE", 17);
-define("HAW_USERDEFINED", 18);
+define("HAW_VOICERECORDER", 18);
+define("HAW_USERDEFINED", 19);
 
 // constants for page setup
 define("HAW_ALIGN_LEFT", 1);
@@ -653,9 +647,10 @@ class HAW_deck
     elseif (($this->output == HAW_OUTPUT_HDML) ||                  // forced HDML output
             (strstr(strtolower($HTTP_ACCEPT), "hdml;version=3."))) // HDML 3.0 and 3.1 
       $this->ml = HAW_HDML; // create HDML
-    elseif (($this->output == HAW_OUTPUT_VOICEXML) ||   // forced VoiceXML output
-            strstr(strtolower($HTTP_ACCEPT), "vxml") || // VoiceXML signalled in accept header
-            strstr($HTTP_USER_AGENT, "Tellme"))         // Tellme studio voice browser
+    elseif (($this->output == HAW_OUTPUT_VOICEXML) ||       // forced VoiceXML output
+            strstr(strtolower($HTTP_ACCEPT), "vxml") ||     // VoiceXML signalled in accept header
+            strstr(strtolower($HTTP_ACCEPT), "voicexml") || // alternative accept header
+            strstr($HTTP_USER_AGENT, "Tellme"))             // Tellme studio voice browser
       $this->ml = HAW_VXML; // create VoiceXML
     else
     {
@@ -958,6 +953,22 @@ class HAW_deck
       die("invalid argument in add_rule()");
 
     $this->element[$this->number_of_elements] = $rule;
+
+    $this->number_of_elements++;
+  }
+
+
+  /**
+    Adds a HAW_voicerecorder object to HAW_deck.
+    @param voicerecorder Some HAW_voicerecorder object.
+    @see HAW_voicerecorder
+  */
+  function add_voicerecorder($voicerecorder)
+  {
+    if (!is_object($voicerecorder))
+      die("invalid argument in add_voicerecorder()");
+
+    $this->element[$this->number_of_elements] = $voicerecorder;
 
     $this->number_of_elements++;
   }
@@ -1755,6 +1766,7 @@ class HAW_deck
         case HAW_RAW:
         case HAW_USERDEFINED:
         case HAW_RULE:
+        case HAW_VOICERECORDER:
         {
           $element = $this->element[$i];
           $element->create($this);
@@ -3384,13 +3396,16 @@ class HAW_input
 
 
 /**
-  This class provides a input textarea in a HAW_form object.
+  This class provides a input textarea in a HAW_form object.<br>
+  Note: Creates no output for VoiceXML. Voice applications can use class
+  HAW_voicerecorder instead.
   <p><b>Examples:</b><p>
   $myArea1 = new HAW_textarea("fb", "", "Feedback");<br>
   <br>
   $myArea2 = new HAW_textarea("msg", "Enter message here ...", "Message", 40 , 5);<br>
   $myArea2->set_br(2);<br>
   @see HAW_form
+  @see HAW_voicerecorder
 */
 class HAW_textarea
 {
@@ -3401,14 +3416,6 @@ class HAW_textarea
   var $cols;
   var $mode;
   var $br;
-  var $voice_text;
-  var $voice_audio_src;
-  var $voice_noinput;
-  var $voice_rec_url;
-  var $voice_rec_beep;
-  var $voice_rec_maxtime;
-  var $voice_rec_finalsilence;
-  var $voice_rec_type;
 
   /**
     Constructor
@@ -3427,14 +3434,6 @@ class HAW_textarea
     $this->cols   = $cols;
     $this->mode   = HAW_INPUT_ALPHABET;
     $this->br     = 1;
-    $this->voice_text             = $label;
-    $this->voice_audio_src        = "";
-    $this->voice_noinput          = array();
-    $this->voice_rec_url          = "";
-    $this->voice_rec_beep         = true;
-    $this->voice_rec_maxtime      = "";
-    $this->voice_rec_finalsilence = "";
-    $this->voice_rec_type         = "";
   }
 
 
@@ -3462,85 +3461,6 @@ class HAW_textarea
       die("invalid argument in set_br()");
 
     $this->br = $br;
-  }
-
-  /**
-    Sets text to be spoken by voice browsers. <br>
-    Note: Applies only if voice recording has been activated.
-    @param text Some alternative text that replaces &lt;label&gt;.
-    @param audio_src Some audio file (e.g. *.wav file) to play (optional).
-  */
-  function set_voice_text($text, $audio_src="")
-  {
-    if (!is_string($text))
-      die("invalid argument in set_voice_text()");
-
-    $this->voice_text = $text;
-    $this->voice_audio_src = $audio_src;
-  }
-
-  /**
-    Sets noinput text for voice browsers. <br>
-    Note: Applies only if voice recording has been activated.
-    @param text Some text to inform the user that no input has been received.
-    @param audio_src Some audio file (e.g. *.wav file) to play (optional).
-    @param url Some other voice deck to go to (optional).
-  */
-  function set_voice_noinput($text, $audio_src="", $url="")
-  {
-    if (!is_string($text))
-      die("invalid argument in set_voice_noinput()");
-
-    $arr["text"] = $text;
-    $arr["src"]  = $audio_src;
-    $arr["url"]  = $url;
-
-    $this->voice_noinput[] = $arr;
-  }
-
-  /**
-    Activates voice recording. <br><br>
-    Note: <i>HAW_textarea</i> objects normally are used for quite voluminous text input.
-    Automated speech recognition for such input is quite impossible. To come around
-    this problem you can use the VoiceXML voice recording feature. Voice users will be
-    asked for some voice input and the result will be sent encrypted as multipart/form-data
-    to some other url, which normally will be another PHP/HAWHAW script. Here you can
-    store the received data as .wav file on your server, play it to the user, or do whatever
-    you want. Saving of the received voice data is similar to normal PHP file upload handling.
-    <br><br>
-    Voice recording is a very powerful feature which offers many oportunities to
-    create high-sophisticated voice applications. Nevertheless, the form handling for
-    <i>HAW_form</i> objects with recording-enabled <i>HAW_textarea</i> objects is different
-    in comparison to other <i>HAW_form</i>s:<br><br>
-    Your <i>HAW_form</i> object should consist of one <i>HAW_textarea</i> object and one
-    <i>HAW_submit</i> object only! The evaluating script defined in the <i>url</i>
-    parameter will receive the voice recording, and no other form elements which have been
-    defined additionally in your form! The <i>url</i> you have defined in the constructor
-    of your <i>HAW_form</i> object becomes meaningless in case of voice input!
-    @param url URL of the receiving script.
-    @param beep (Optional) Make beep before recording start: true (default) or false.
-  */
-  function set_voice_recording($url, $beep=true)
-  {
-    if (!is_string($url) || !is_bool($beep))
-      die("invalid argument in set_voice_recording()");
-
-    $this->voice_rec_url  = $url;
-    $this->voice_rec_beep = $beep;
-  }
-
-  /**
-    Sets some additional attributes for voice recording. <br>
-    Note: Per default platformdependent settings will apply. <br>
-    @param maxtime Maximum duration to record in seconds
-    @param finalsilence (optional) Interval of silence that indicates end of speech (in seconds)
-    @param type (optional) Media format of the resulting recording, e.g. "audio/x-wav"
-  */
-  function set_voice_record_attributes($maxtime, $finalsilence="", $type="")
-  {
-    $this->voice_rec_maxtime      = $maxtime;
-    $this->voice_rec_finalsilence = $finalsilence;
-    $this->voice_rec_type         = $type;
   }
 
   function get_name()
@@ -3598,7 +3518,6 @@ class HAW_textarea
       for ($i=0; $i < $this->br; $i++)
         echo "<br>\n";
     }
-    // --- from here on the output is derived from HAW_input ---
     elseif ($deck->ml == HAW_WML)
     {
       // create WML input
@@ -3625,53 +3544,7 @@ class HAW_textarea
     }
     elseif ($deck->ml == HAW_VXML)
     {
-      // VoiceXML
-
-      if ($this->voice_rec_url)
-      {
-        // voice recording has been activated 
-
-        if ($this->voice_rec_maxtime)
-          $maxtime = sprintf(" maxtime=\"%ds\"", $this->voice_rec_maxtime);
-        else
-          $maxtime = "";
-  
-        if ($this->voice_rec_finalsilence)
-          $finalsilence = sprintf(" finalsilence=\"%ds\"", $this->voice_rec_finalsilence);
-        else
-          $finalsilence = "";
-  
-        if ($this->voice_rec_type)
-          $type = sprintf(" type=\"%s\"", $this->voice_rec_type);
-        else
-          $type = "";
-  
-        if ($this->voice_rec_beep)
-          $beep = "true";
-        else
-          $beep = "false";
-  
-        printf("<record name=\"%s\" beep=\"%s\"%s%s%s>\n",
-               $this->name, $beep, $maxtime, $finalsilence, $type);
-  
-        if ($this->voice_text || $this->voice_audio_src)
-        {
-          echo "<prompt>";
-  
-          HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
-                          $this->voice_audio_src, 0);
-  
-          echo "</prompt>\n";
-        }
-
-        printf("<filled><submit next=\"%s\" enctype=\"multipart/form-data\" method=\"post\" namelist=\"%s\"/></filled>\n",
-                $this->voice_rec_url, $this->name);
-
-        // create event handler for noinput
-        HAW_voice_eventhandler("noinput", $this->voice_noinput, $deck);
-    
-        echo "</record>\n";
-      }
+      // no output for VoiceXML possible
     }
   }
 };
@@ -3910,15 +3783,15 @@ class HAW_select
 
       if ($this->voice_text || $this->voice_audio_src)
       {
-        echo "<prompt>";
-
         if ($this->voice_text != HAW_VOICE_ENUMERATE)
+        {
+          echo "<prompt>";
+
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                           $this->voice_audio_src, 0);
-        else
-          echo "<enumerate><value expr=\"_prompt\"/><break time=\"300ms\"/></enumerate>";
 
-        echo "</prompt>\n";
+          echo "</prompt>\n";
+        }
       }
 
       while (list($key, $val) = each($this->options))
@@ -3927,6 +3800,9 @@ class HAW_select
           $dtmf = sprintf(" dtmf=\"%d\"", $key+1);
         else
           $dtmf = "";
+
+        printf("<prompt>%s<break time=\"%dms\"/></prompt>\n",
+               HAW_specchar($val["label"], $deck), HAW_VOICE_PAUSE);
 
         printf("<option%s value=\"%s\">%s</option>\n", $dtmf, $val["value"],
                ereg_replace("[\?!]"," ",strtolower(HAW_specchar($val["label"], $deck))));
@@ -4151,15 +4027,15 @@ class HAW_radio
 
       if ($this->voice_text || $this->voice_audio_src)
       {
-        echo "<prompt>";
-
         if ($this->voice_text != HAW_VOICE_ENUMERATE)
+        {
+          echo "<prompt>";
+
           HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                           $this->voice_audio_src, 0);
-        else
-          echo "<enumerate><value expr=\"_prompt\"/><break time=\"300ms\"/></enumerate>";
 
-        echo "</prompt>\n";
+          echo "</prompt>\n";
+        }
       }
 
       while (list($key, $val) = each($this->buttons))
@@ -4168,6 +4044,9 @@ class HAW_radio
           $dtmf = sprintf(" dtmf=\"%d\"", $key+1);
         else
           $dtmf = "";
+
+        printf("<prompt>%s<break time=\"%dms\"/></prompt>\n",
+               HAW_specchar($val["label"], $deck), HAW_VOICE_PAUSE);
 
         printf("<option%s value=\"%s\">%s</option>\n", $dtmf, $val["value"],
                 ereg_replace("[\?!]"," ",strtolower(HAW_specchar($val["label"], $deck))));
@@ -5196,15 +5075,15 @@ class HAW_linkset
   
         if ($this->voice_text || $this->voice_audio_src)
         {
-          echo "<prompt>";
-  
           if ($this->voice_text != HAW_VOICE_ENUMERATE)
+          {
+            echo "<prompt>";
+  
             HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
                             $this->voice_audio_src, 0);
-          else
-            echo "<enumerate><value expr=\"_prompt\"/><break time=\"300ms\"/></enumerate>";
   
-          echo "</prompt>\n";
+            echo "</prompt>\n";
+          }
         }
 
         while (list($key, $val) = each($this->element))
@@ -5213,6 +5092,9 @@ class HAW_linkset
             $dtmf = sprintf(" dtmf=\"%d\"", $val->get_accesskey());
           else
             $dtmf = "";
+
+          printf("<prompt>%s<break time=\"%dms\"/></prompt>\n",
+                 HAW_specchar($val->get_label(), $deck), HAW_VOICE_PAUSE);
 
           printf("<option%s value=\"%s\">%s</option>\n",
                  $dtmf, HAW_specchar($val->get_url(), $deck),
@@ -5445,6 +5327,188 @@ class HAW_rule
     {
       // make a longer speech pause
       printf("<block><break time=\"%dms\"/></block>\n", 3 * HAW_VOICE_PAUSE);
+    }
+  }
+};
+
+
+
+
+
+
+/**
+  This class provides a voice recorder in a HAW_deck object.<br><br>
+  Voice recording is feature for voice browsers only (VoiceXML). 
+  The recorded voice input will be sent encrypted as multipart/form-data
+  to some other url, which normally will be another PHP/HAWHAW script. Here you can
+  store the received data as .wav file on your server, play it to the user, or do whatever
+  you want. Saving of the received voice data is similar to normal PHP file upload handling.
+  <br><br>
+  Voice recording is a very powerful feature which offers many oportunities to
+  create high-sophisticated voice applications.<br><br>
+  <p><b>Examples:</b><p>
+  $myRecorder = new HAW_voicerecorder("http://www.foo.com/script.php", "Please speak after the tone");<br>
+  <br>
+  $myRecorder = new HAW_voicerecorder("http://www.foo.com/script.php", "You have 2 minutes from now");<br>
+  $myRecorder->make_beep(false);<br>
+  $myRecorder->set_maxtime(120);<br><br>
+  // ... and in http://www.foo.com/script.php we store the received wav file like this:<br>
+  move_uploaded_file($_FILES['haw_recording']['tmp_name'], "/voice/message.wav");
+  @see HAW_deck
+*/
+class HAW_voicerecorder
+{
+  var $url;
+  var $label;
+  var $beep;
+  var $maxtime;
+  var $finalsilence;
+  var $type;
+  var $voice_text;
+  var $voice_audio_src;
+  var $voice_noinput;
+
+  /**
+    Constructor
+    @param url Address where the recorded file is sent to.
+    @param label Some introducing words before the recording starts.
+  */
+  function HAW_voicerecorder($url, $label)
+  {
+    $this->url             = $url;
+    $this->label           = $label;
+    $this->beep            = true;
+    $this->maxtime         = "";
+    $this->finalsilence    = "";
+    $this->type            = "";
+    $this->voice_text      = $label;
+    $this->voice_audio_src = "";
+    $this->voice_noinput   = array();
+  }
+
+  /**
+    Sets text to be spoken by voice browsers.
+    @param text Some alternative text that replaces &lt;label&gt;.
+    @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+  */
+  function set_voice_text($text, $audio_src="")
+  {
+    if (!is_string($text))
+      die("invalid argument in set_voice_text()");
+
+    $this->voice_text = $text;
+    $this->voice_audio_src = $audio_src;
+  }
+
+  /**
+    Sets noinput text for voice browsers. <br>
+    @param text Some text to inform the user that no input has been received.
+    @param audio_src Some audio file (e.g. *.wav file) to play (optional).
+    @param url Some other voice deck to go to (optional).
+  */
+  function set_voice_noinput($text, $audio_src="", $url="")
+  {
+    if (!is_string($text))
+      die("invalid argument in set_voice_noinput()");
+
+    $arr["text"] = $text;
+    $arr["src"]  = $audio_src;
+    $arr["url"]  = $url;
+
+    $this->voice_noinput[] = $arr;
+  }
+
+  /**
+    Activates/deactivates beep before recording starts.
+    @param beep_indicator: true (default) or false.
+  */
+  function make_beep($beep_indicator)
+  {
+    if ($beep_indicator == false)
+      $this->beep = false;
+  }
+
+  /**
+    Sets maximum duration of recording.
+    @param maxtime Duration of record in seconds
+  */
+  function set_maxtime($maxtime)
+  {
+    $this->maxtime = $maxtime;
+  }
+
+  /**
+    Sets interval of silence that indicates end of speech.
+    @param finalsilence Silence duration (in seconds)
+  */
+  function set_finalsilence($finalsilence)
+  {
+    $this->finalsilence = $finalsilence;
+  }
+
+  /**
+    Sets media format of recording.
+    @param type e.g. "audio/x-wav"
+  */
+  function set_type($type)
+  {
+    $this->type = $type;
+  }
+
+  function get_elementtype()
+  {
+    return HAW_VOICERECORDER;
+  }
+
+  function create(&$deck)
+  {
+    if ($deck->ml == HAW_VXML)
+    {
+      // VoiceXML (no output for non-voice browsers)
+
+      if ($this->maxtime)
+        $maxtime = sprintf(" maxtime=\"%ds\"", $this->maxtime);
+      else
+        $maxtime = "";
+  
+      if ($this->finalsilence)
+        $finalsilence = sprintf(" finalsilence=\"%ds\"", $this->finalsilence);
+      else
+        $finalsilence = "";
+  
+      if ($this->type)
+        $type = sprintf(" type=\"%s\"", $this->type);
+      else
+        $type = "";
+  
+      if ($this->beep)
+        $beep = "true";
+      else
+        $beep = "false";
+  
+      printf("<record name=\"haw_recording\" beep=\"%s\"%s%s%s>\n",
+             $beep, $maxtime, $finalsilence, $type);
+  
+      if ($this->voice_text || $this->voice_audio_src)
+      {
+        echo "<prompt>";
+  
+        HAW_voice_audio(HAW_specchar($this->voice_text, $deck),
+                        $this->voice_audio_src, 0);
+  
+        echo "</prompt>\n";
+      }
+
+      // replace '&' character in URL with '&amp;'
+      $this->url = ereg_replace("&", "&amp;", $this->url);
+
+      printf("<filled><submit next=\"%s\" enctype=\"multipart/form-data\" method=\"post\" namelist=\"haw_recording\"/></filled>\n",
+              $this->url);
+
+      // create event handler for noinput
+      HAW_voice_eventhandler("noinput", $this->voice_noinput, $deck);
+    
+      echo "</record>\n";
     }
   }
 };

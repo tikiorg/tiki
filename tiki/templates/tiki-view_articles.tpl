@@ -1,16 +1,16 @@
 {section name=ix loop=$listpages}
 <div class="articletitle">
 <span class="titlea">{$listpages[ix].title}</span><br />
-<span class="titleb">{tr}By:{/tr}{$listpages[ix].authorName} {tr}on:{/tr}{$listpages[ix].publishDate|tiki_short_datetime} ({$listpages[ix].reads} {tr}reads{/tr})</span><br />
+<span class="titleb">{tr}By:{/tr} {$listpages[ix].authorName} {tr}on:{/tr} {$listpages[ix].publishDate|tiki_short_datetime} ({$listpages[ix].reads} {tr}reads{/tr})</span><br />
 </div>
 {if $listpages[ix].type eq 'Review'}
 <div class="articleheading">
 {tr}Rating{/tr}: 
 {repeat count=$listpages[ix].rating}
-<img src="img/icons/blue.gif" />
+<img src="img/icons/blue.gif" alt=''/>
 {/repeat}
 {if $listpages[ix].rating > $listpages[ix].entrating}
-<img src="img/icons/bluehalf.gif" />
+<img src="img/icons/bluehalf.gif" alt=''/>
 {/if}
 ({$listpages[ix].rating}/10)
 </div>

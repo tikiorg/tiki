@@ -3,7 +3,7 @@
 {if $usage_chart eq 'y'}
 <br /> 
 <div align="center">
-<img src="tiki-usage_chart.php" />
+<img src="tiki-usage_chart.php" alt='{tr}Usage chart image{/tr}'/>
 </div>
 <br /><br />
 {/if}
@@ -30,7 +30,7 @@
 {if $pv_chart eq 'y'} 
 <br /> 
 <div align="center">
-<img src="tiki-pv_chart.php?days={$days}" />
+<img src="tiki-pv_chart.php?days={$days}" alt=''/>
 </div>
 <br />
 {/if}

@@ -102,7 +102,7 @@
   </tr>
   {if $hasImage eq 'y'}
   <tr><td class="form">{tr}Current Image{/tr}</td><td>
-  {$imageName}: <img border="0" src="{$tempimg}" />
+  {$imageName}: <img border="0" src="{$tempimg}" alt='{tr}Current Image{/tr}'/>
   </td></tr>   
   {/if}
   </table>

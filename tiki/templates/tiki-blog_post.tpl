@@ -104,7 +104,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 				<textarea rows="1" cols="40">{$post_images[ix].absolute|escape}</textarea>
 			</td>
 			<td>
-				<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img border='0' src='img/icons/trash.gif' /></a>
+				<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img border='0' src='img/icons/trash.gif' alt='{tr}Trash{/tr}'/></a>
 			</td>
 		</tr>
 		{/section}

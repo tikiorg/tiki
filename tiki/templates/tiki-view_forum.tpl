@@ -333,7 +333,7 @@ a moderator approves it.{/tr}</small>
   {if $forum_info.topic_smileys eq 'y'}
   <td style="text-align:center;" class="topictitle{cycle advance=false}">
   	{if strlen($comments_coms[ix].smiley) > 0}
-  		<img src='img/smiles/{$comments_coms[ix].smiley}' />
+  		<img src='img/smiles/{$comments_coms[ix].smiley}' alt=''/>
   	{else}
   	&nbsp;{$comments_coms[ix].smiley}
   	{/if}

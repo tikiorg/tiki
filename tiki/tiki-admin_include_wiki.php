@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.4 2003-08-14 07:52:51 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.5 2003-08-15 20:58:57 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -523,6 +523,32 @@ if (isset($_REQUEST["wikisetcopyright"])) {
 
 		$smarty->assign('wikiSubmitNotice', $_REQUEST["wikiSubmitNotice"]);
 	}
+}
+
+if(isset($_REQUEST["wikisetwatch"])) {
+  if(isset($_REQUEST["wiki_watch_author"]) && $_REQUEST["wiki_watch_author"]=="on") {
+    $tikilib->set_preference("wiki_watch_author",'y'); 
+    $smarty->assign("wiki_watch_author",'y');
+  } else {
+    $tikilib->set_preference("wiki_watch_author",'n');
+    $smarty->assign("wiki_watch_author",'n');
+  }
+
+  if(isset($_REQUEST["wiki_watch_comments"]) && $_REQUEST["wiki_watch_comments"]=="on") {
+    $tikilib->set_preference("wiki_watch_comments",'y'); 
+    $smarty->assign("wiki_watch_comments",'y');
+  } else {
+    $tikilib->set_preference("wiki_watch_comments",'n');
+    $smarty->assign("wiki_watch_comments",'n');
+  }
+
+  if(isset($_REQUEST["wiki_watch_editor"]) && $_REQUEST["wiki_watch_editor"]=="on") {
+    $tikilib->set_preference("wiki_watch_editor",'y'); 
+    $smarty->assign("wiki_watch_editor",'y');
+  } else {
+    $tikilib->set_preference("wiki_watch_editor",'n');
+    $smarty->assign("wiki_watch_editor",'n');
+  }
 }
 
 $tags = $adminlib->get_tags();

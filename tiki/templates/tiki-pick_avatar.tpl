@@ -14,7 +14,7 @@
 <h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}items{/tr}</h2>
 <div class="normal">
 {section name=im loop=$avatars}
-<a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}"></a>
+<a href="tiki-pick_avatar.php?showall=n&amp;avatar={$avatars[im]|escape:"url"}&amp;uselib=use"><img src="{$avatars[im]}" alt=''/></a>
 {/section}
 </div>
 {else} 
@@ -57,7 +57,7 @@ function subavt() {
  <td class="formcolor">
  <div align="center">
 <a class="link" href="javascript:subavt();">{tr}prev{/tr}</a>
-<img id='avtimg' src="{$yours}" />
+<img id='avtimg' src="{$yours}" alt='{tr}Avatar Image{/tr}'/>
 <a class="link" href="javascript:addavt();">{tr}next{/tr}</a>
 </div>
  </td>

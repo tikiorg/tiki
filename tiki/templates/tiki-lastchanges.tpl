@@ -1,12 +1,13 @@
 <a href="tiki-lastchanges.php?days={$days}" class="pagetitle">{tr}Last Changes{/tr}</a><br/><br/>
-[<a  class="link" href="tiki-lastchanges.php?days=1">{tr}Today{/tr}</a>|
-<a class="link" href="tiki-lastchanges.php?days=2">{tr}Last{/tr} 2 {tr}days{/tr}</a>|
-<a class="link" href="tiki-lastchanges.php?days=3">{tr}Last{/tr} 3 {tr}days{/tr}</a>|
-<a class="link" href="tiki-lastchanges.php?days=5">{tr}Last{/tr} 5 {tr}Days{/tr}</a>|
-<a class="link" href="tiki-lastchanges.php?days=7">{tr}Last{/tr} {tr}Week{/tr}</a>|
-<a class="link" href="tiki-lastchanges.php?days=14">{tr}Last{/tr} 2 {tr}Weeks{/tr}</a>|
-<a class="link" href="tiki-lastchanges.php?days=31">{tr}Last{/tr} {tr}Month{/tr}</a>|
-<a class="link" href="tiki-lastchanges.php?days=0">{tr}All{/tr}</a>]
+[ <a class="link" href="tiki-lastchanges.php?days=1">{tr}Today{/tr}</a>
+| <a class="link" href="tiki-lastchanges.php?days=2">{tr}Last{/tr} 2 {tr}days{/tr}</a>
+| <a class="link" href="tiki-lastchanges.php?days=3">{tr}Last{/tr} 3 {tr}days{/tr}</a>
+| <a class="link" href="tiki-lastchanges.php?days=5">{tr}Last{/tr} 5 {tr}days{/tr}</a>
+| <a class="link" href="tiki-lastchanges.php?days=7">{tr}Last{/tr} {tr}week{/tr}</a>
+| <a class="link" href="tiki-lastchanges.php?days=14">{tr}Last{/tr} 2 {tr}Weeks{/tr}</a>
+| <a class="link" href="tiki-lastchanges.php?days=31">{tr}Last{/tr} {tr}month{/tr}</a>
+| <a class="link" href="tiki-lastchanges.php?days=0">{tr}All{/tr}</a>
+]
 <br/><br/>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
