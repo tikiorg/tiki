@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki project team
-// Last modified: 15. May 2003
+// Last modified: 16. May 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -78,6 +78,10 @@ define("HAWIKI_TOKEN_SMILEY",     17);
 define("HAWIKI_DEBUG_NONE",   0);
 define("HAWIKI_DEBUG_PARSER", 1);
 
+// definitions for wiki navigation
+define("HAWIKI_NAVLINK_TOP",    1); // create link at top of wiki
+define("HAWIKI_NAVLINK_BOTTOM", 2); // create link at bottom of wiki
+
 
 function HAWIKI_error($error_msg)
 {
@@ -97,8 +101,7 @@ class HAWIKI_wiki
   var $deck;          // HAW_deck object
   var $wiki_string;   // input in wiki syntax
   var $wiki_base;     // URL for WikiName links
-  var $home_url;      // URL of home link
-  var $home_label;    // label of home link
+  var $navlink;       // array with navigation links (home, menue etc.)  
   var $smiley_dir;    // where smiley gif's are stored
   var $yytext;        // parser output
   var $firstColumn;   // flag to determine parser position
@@ -110,6 +113,7 @@ class HAWIKI_wiki
     $this->wiki_string = $input;
     $this->wiki_base = $wiki_base;
     $this->smiley_dir = "";       // has to be set later by function call
+    $this->navlink = array();
     $this->firstColumn = true;
     $this->debugflags = HAWIKI_DEBUG_NONE;
 
@@ -131,13 +135,24 @@ class HAWIKI_wiki
   {
     // convert wiki text into HAWHAW object structure and create appropriate markup
 
-    if ($this->home_url && $this->home_label)
+    $link_counter = 0;
+    foreach ($this->navlink as $value)
     {
-      // create home link at top of deck
- 
-      $homelink_top = new HAW_link($this->home_label, $this->home_url);
-      $homelink_top->set_br(2);
-      $this->deck->add_link($homelink_top);
+      // create navigation link(s) at top of wiki page
+
+      if ($value["pos"] & HAWIKI_NAVLINK_TOP)
+      {
+        $link = new HAW_link($value["label"], $value["url"]);
+        $this->deck->add_link($link);
+        $link_counter++;
+      }
+    }
+
+    if ($link_counter > 0)
+    {
+      // create empty line between link(s) and wiki content
+      $emptyline = new HAW_text("");
+      $this->deck->add_text($emptyline);
     }
 
     $input = $this->wiki_string;
@@ -423,15 +438,24 @@ class HAWIKI_wiki
       HAWIKI_error(HAWIKI_ERROR_INVWIKISYNTAX); // script end
     }
 
-    if ($this->home_url && $this->home_label)
+    $link_counter = 0;
+    foreach ($this->navlink as $value)
     {
-      // create home link at bottom of deck
+      // create navigation link(s) at bottom of wiki page
 
-      $emptyline = new HAW_text("");
-      $this->deck->add_text($emptyline);
-       
-      $homelink_bottom = new HAW_link($this->home_label, $this->home_url);
-      $this->deck->add_link($homelink_bottom);
+      if ($value["pos"] & HAWIKI_NAVLINK_BOTTOM)
+      {
+        if ($link_counter == 0)
+        {
+          // create empty line between wiki content and 1st link
+          $emptyline = new HAW_text("");
+          $this->deck->add_text($emptyline);
+        }
+
+        $link = new HAW_link($value["label"], $value["url"]);
+        $this->deck->add_link($link);
+        $link_counter++;
+      }
     }
 
     // output appropriate markup language
@@ -439,10 +463,20 @@ class HAWIKI_wiki
   }
 
 
-  function set_homelink($label, $url)
+  function set_navlink($label, $url, $pos)
   {
-    $this->home_label = $label;
-    $this->home_url = $url;
+    // define navigation link on top and/or bottom of wiki page
+    // label: link text
+    // url:   link url
+    // pos:   HAWIKI_NAVLINK_TOP    (link is created at top of wiki page)
+    //        HAWIKI_NAVLINK_BOTTOM (link is created at bottom of wiki page)
+    //        HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM (top AND bottom)
+   
+    $arr["label"] = $label;
+    $arr["url"]   = $url;
+    $arr["pos"]   = $pos;
+
+    $this->navlink[] = $arr; // enhance array with navigation links
   }
 
 

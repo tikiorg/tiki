@@ -322,8 +322,11 @@ if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
 	require_once("lib/hawhaw/hawiki.inc");
 	error_reporting(E_WARNING);
 	$myWiki = new HAWIKI_wiki($info["data"],"tiki-index.php?mode=wap&page=");
+	
+	$myWiki->set_navlink("Home", "tiki-index.php?mode=wap", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
+	$myWiki->set_navlink("Menu", "tiki-wap.php", HAWIKI_NAVLINK_TOP | HAWIKI_NAVLINK_BOTTOM);
 	$myWiki->set_smiley_dir("img/smiles");
-	$myWiki->set_homelink("Home", "tiki-index.php?mode=wap");
+
 	$myWiki->display();
 	die;
 }

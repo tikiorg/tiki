@@ -1,5 +1,6 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] File galleries: Up to 6 files can be uploaded at once. 
 * [NEW] Forums control to view posts from the last X hours/days only.
 * [NEW] File galleries dupes are now prevented.
 * [NEW] File galleries improved, listings are configurable, files can be moved and
