@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.43 2004-06-15 15:49:52 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.44 2004-06-18 19:52:31 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -620,6 +620,56 @@ class CategLib extends TikiLib {
 		} else {
 			$ret = unserialize($cachelib->getCached("allcategs"));
 		}
+		return $ret;
+	}
+
+	function get_all_categories_respect_perms($user, $perm) {
+		global $cachelib;
+		global $userlib;
+		global $tiki_p_admin;
+		
+//		if (!$cachelib->isCached("allcategs")) {
+			$ret = array();
+			$query = "select * from `tiki_categories` order by `name`";
+			$result = $this->query($query,array());
+			while ($res = $result->fetchRow()) {
+
+				$add = TRUE;
+				if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['categId'], 'category')) {
+					if (!$userlib->object_has_permission($user, $res['categId'], 'category', $perm)) {
+						$add = FALSE;
+					}
+				} elseif ($tiki_p_admin != 'y') {
+					$categpath = $this->get_category_path($res['categId']);
+					$arraysize = count($categpath);
+					for ($i=$arraysize-2; $i>=0; $i--) {
+						if ($userlib->object_has_one_permission($categpath[$i]['categId'], 'category')) {
+							if ($userlib->object_has_permission($user, $categpath[$i]['categId'], 'category', $perm)) {
+								$add = TRUE;
+								break 1;
+								// break out of one FOR loop
+							} else {
+								$add = FALSE;
+								break 1;
+								// break out of one FOR loop
+							}
+						}
+					}
+				}
+				
+				if ($add) {
+					$id = $res["categId"];
+					$query = "select count(*) from `tiki_categories` where `parentId`=?";
+					$res["children"] = $this->getOne($query,array($id));
+					$query = "select count(*) from `tiki_category_objects` where `categId`=?";
+					$res["objects"] = $this->getOne($query,array($id));
+					$ret[] = $res;
+				}
+			}
+//			$cachelib->cacheItem("allcategs.$user.$perm",serialize($ret));
+//		} else {
+//			$ret = unserialize($cachelib->getCached("allcategs.$user.$perm"));
+//		}
 		return $ret;
 	}
 
