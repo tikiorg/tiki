@@ -1,8 +1,18 @@
 <?php
 
 require_once( "PEAR.php" );
-require_once( "lib/sheet/Excel/OLE.php" );
+require_once( "lib/sheet/Excel/reader_ole.php" );
 require_once( "lib/sheet/Excel/reader.php" );
+require_once( "lib/sheet/Excel/Writer/Format.php" );
+require_once( "lib/sheet/Excel/Writer/BIFFwriter.php" );
+require_once( "lib/sheet/Excel/Writer/Worksheet.php" );
+require_once( "lib/sheet/Excel/Writer/Workbook.php" );
+require_once( "lib/sheet/Excel/Writer/Parser.php" );
+require_once( "lib/sheet/OLE/PPS.php" );
+require_once( "lib/sheet/OLE/PPS/Root.php" );
+require_once( "lib/sheet/OLE/PPS/File.php" );
+require_once( "lib/sheet/OLE.php" );
+require_once( "lib/sheet/Excel/Writer.php" );
 
 // Constants {{{1
 
@@ -759,6 +769,40 @@ class TikiSheetCSVHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
+		$total = array();
+
+		foreach( $sheet->dataGrid as $row )
+			if( is_array( $row ) )
+				$total[] = implode( ",", $row );
+
+		if( is_array( $total ) )
+			$total = implode( "\n", $total );
+
+		if( $this->file == "php://stdout" )
+		{
+			header("Content-type: text/comma-separated-values");
+			header("Content-Disposition: attachment; filename=export.csv");
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+			header("Pragma: public");
+			
+			echo $total;
+
+			return true;
+		}
+		else
+		{
+			if( $file = @fopen( $this->file, "w" ) )
+			{
+				if( !@fwrite( $file, $total ) )
+					return false;
+
+				@fclose( $file );
+				return true;
+			}
+			else
+				return false;
+		}
 	}
 
 	// name {{{2
@@ -980,6 +1024,41 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 	// _save {{{2
 	function _save( &$sheet )
 	{
+		$book = &new Spreadsheet_Excel_Writer;
+
+        header("Content-type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=export.xls");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        header("Pragma: public");
+
+		$out = &$book->addWorksheet( "TikiSheet Export" );
+
+		foreach( $sheet->dataGrid as $row=>$cols )
+		{
+			if( is_array( $cols ) )
+				foreach( $cols as $col=>$value )
+				{
+					if( isset( $sheet->calcGrid[$row][$col] ) )
+					{
+						$formula = "=" . $sheet->calcGrid[$row][$col];
+						$out->writeFormula( $row, $col, $formula );
+					}
+					else
+						$out->write( $row, $col, $value );
+
+					$width = $height = 1;
+					if( is_array( $sheet->mergeInfo[$row][$col] ) )
+						extract( $sheet->mergeInfo[$row][$col] );
+
+					if( $width != 1 || $height != 1 )
+					{
+						$out->mergeCells( $row, $col, $row + $height - 1, $col + $width - 1 );
+					}
+				}
+		}
+
+		$book->close();
 	}
 
 	// name {{{2
@@ -991,7 +1070,7 @@ class TikiSheetExcelHandler extends TikiSheetDataHandler
 	// supports {{{2
 	function supports( $type )
 	{
-		return ( ( TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CELL ) & $type ) > 0;
+		return ( ( TIKISHEET_LOAD_DATA | TIKISHEET_LOAD_CELL | TIKI_SAVE_CALC | TIKI_SAVE_DATA ) & $type ) > 0;
 	}
 
 	// version {{{2
