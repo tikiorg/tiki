@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_faqs.php,v 1.11 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_faqs.php,v 1.12 2004-07-15 22:21:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,7 +32,7 @@ if (!isset($_REQUEST["faqId"])) {
 $smarty->assign('faqId', $_REQUEST["faqId"]);
 
 if ($_REQUEST["faqId"]) {
-	$info = $tikilib->get_faq($_REQUEST["faqId"]);
+	$info = $faqlib->get_faq($_REQUEST["faqId"]);
 } else {
 	$info = array();
 
@@ -113,7 +113,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $tikilib->list_faqs($offset, $maxRecords, $sort_mode, $find);
+$channels = $faqlib->list_faqs($offset, $maxRecords, $sort_mode, $find);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);

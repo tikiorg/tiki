@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.28 2004-07-15 21:28:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.29 2004-07-15 22:21:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.28 2004-07-15 21:28:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.29 2004-07-15 22:21:21 teedog Exp $
 //
 
 // Initialization
@@ -332,7 +332,11 @@ $smarty->assign_by_ref('blogs', $blogs["data"]);
 $pages = $tikilib->list_pages(0, -1, 'pageName_asc', $find_objects);
 $smarty->assign_by_ref('pages', $pages["data"]);
 
-$faqs = $tikilib->list_faqs(0, -1, 'title_asc', $find_objects);
+global $faqlib;
+if (!is_object($faqlib)) {
+	include_once('lib/faqs/faqlib.php');
+}
+$faqs = $faqlib->list_faqs(0, -1, 'title_asc', $find_objects);
 $smarty->assign_by_ref('faqs', $faqs["data"]);
 
 $quizzes = $tikilib->list_quizzes(0, -1, 'name_asc', $find_objects);

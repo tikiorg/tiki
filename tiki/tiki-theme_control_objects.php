@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.11 2004-07-15 21:28:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.12 2004-07-15 22:21:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -117,7 +117,11 @@ case 'html page':
 	break;
 
 case 'faq':
-	$objects = $tikilib->list_faqs(0, -1, 'title_asc', $find_objects);
+	global $faqlib;
+	if (!is_object($faqlib)) {
+		include_once('lib/faqs/faqlib.php');
+	}
+	$objects = $faqlib->list_faqs(0, -1, 'title_asc', $find_objects);
 
 	$smarty->assign_by_ref('objects', $objects["data"]);
 	$objects = $objects['data'];
