@@ -8,7 +8,7 @@ if($feature_featuredLinks != 'y') {
   die;  
 }
 
-
+$tikilib->add_featured_link_hit($_REQUEST["url"]);
 // Get the page from the request var or default it to HomePage
 if(!isset($_REQUEST["url"])) {
   $smarty->assign('msg',tra("No page indicated"));

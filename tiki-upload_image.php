@@ -9,7 +9,6 @@ if($feature_galleries != 'y') {
 }
 
 // Now check permissions to access this page
-
 if($tiki_p_upload_images != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot upload images"));
   $smarty->display('error.tpl');
@@ -32,7 +31,7 @@ if(isset($_REQUEST["upload"])) {
   if($gal_info["thumbSizeX"]==0) $gal_info["thumbSizeX"]=80;
   if($gal_info["thumbSizeY"]==0) $gal_info["thumbSizeY"]=80;  
   // Check the user to be admin or owner or the gallery is public
-  if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
+  if($tiki_p_admin_galleries!='y' && (!$user || $user!=$gal_info["user"]) && $gal_info["public"]!='y') {
     $smarty->assign('msg',tra("Permission denied you can upload images but not to this gallery"));
     $smarty->display('error.tpl');
     die;  

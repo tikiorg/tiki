@@ -104,7 +104,7 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('reads','0');
   $smarty->assign('preview',1); 
   $smarty->assign('edit_data','y');
-  $smarty->assign('title',strip_tags($_REQUEST["title"]));
+  $smarty->assign('title',strip_tags($_REQUEST["title"],'<a><pre><p><img><hr><b><i>'));
   $smarty->assign('authorName',$_REQUEST["authorName"]);
   $smarty->assign('topicId',$_REQUEST["topicId"]);
   if(isset($_REQUEST["useImage"])&&$_REQUEST["useImage"]=='on') {
@@ -164,8 +164,8 @@ if(isset($_REQUEST["preview"])) {
     $body = $_REQUEST["body"];  
     $heading = $_REQUEST["heading"];
   } else {
-    $body = strip_tags($_REQUEST["body"]);
-    $heading = strip_tags($_REQUEST["heading"]);
+    $body = strip_tags($_REQUEST["body"],'<a><pre><p><img><hr><b><i>');
+    $heading = strip_tags($_REQUEST["heading"],'<a><pre><p><img><hr><b><i>');
   }
   $smarty->assign('size',strlen($body));
   $smarty->assign('body',$body);
@@ -180,8 +180,8 @@ if(isset($_REQUEST["save"])) {
     $body = $_REQUEST["body"];  
     $heading  = $_REQUEST["heading"];
   } else {
-    $body = strip_tags($_REQUEST["body"]);
-    $heading = strip_tags($_REQUEST["heading"]);
+    $body = strip_tags($_REQUEST["body"],'<a><pre><p><img><hr><b><i>');
+    $heading = strip_tags($_REQUEST["heading"],'<a><pre><p><img><hr><b><i>');
   }
   if(isset($_REQUEST["useImage"])&&$_REQUEST["useImage"]=='on') {
     $useImage = 'y';
@@ -214,7 +214,7 @@ if(isset($_REQUEST["save"])) {
   $body = $tikilib->capture_images($body);
   $heading = $tikilib->capture_images($heading);
   // If page exists
-  $tikilib->replace_article(strip_tags($_REQUEST["title"]),
+  $tikilib->replace_article(strip_tags($_REQUEST["title"],'<a><pre><p><img><hr><b><i>'),
                             $_REQUEST["authorName"],
                             $_REQUEST["topicId"],
                             $useImage,

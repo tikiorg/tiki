@@ -35,7 +35,7 @@ $smarty->assign('activity',$blog_data["activity"]);
 
 if(isset($_REQUEST["remove"])) {
   $data = $tikilib->get_post($_REQUEST["remove"]);
-  if($data["user"]!=$user) {
+  if(!$user || $data["user"]!=$user) {
     if($tiki_p_blog_admin != 'y') {
       $smarty->assign('msg',tra("Permission denied you cannot remove the post"));
       $smarty->display('error.tpl');

@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 
 
 
-if(count($_FILES)==0) {
 // Remove automatic quotes added to POST/COOKIE by PHP
 if (get_magic_quotes_gpc ()) {
   foreach($_REQUEST as $k=>$v) {
@@ -14,7 +13,7 @@ if (get_magic_quotes_gpc ()) {
     } 
   }
 }
-}
+
 
 // Define and load Smarty components
 define('SMARTY_DIR',"Smarty/");

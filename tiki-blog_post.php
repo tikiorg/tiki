@@ -36,7 +36,7 @@ $smarty->assign('created',date("U"));
 if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
   // Check permission
   $data = $tikilib->get_post($_REQUEST["postId"]);
-  if($data["user"]!=$user) {
+  if($data["user"]!=$user || !$user) {
     if($tiki_p_admin_blogs != 'y') {
       $smarty->assign('msg',tra("Permission denied you cannot edit this post"));
       $smarty->display('error.tpl');

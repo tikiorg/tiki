@@ -1,3 +1,24 @@
+Version 1.1 -Capella-
+
+* [NEW FEATURE] The edit button now shows on red if someone may be editing the page, this helps preventing
+  two users from editing the same page. This feature can be enabled/disabled from the admin menu.
+* [CHANGE] Now HTML tags are filtered out from weblog posts except normal tags such as a,p,img,br,table,i,b,etc
+* [CHANGE] Link added to edit the page from the wiki pagelist
+* [NEW FEATURE] Page generation time was added below the footer
+* [CHANGE] The featured links admin screen has been revamped, now featured links can be enabled/disabled
+  and ordered as you want, an automatic ordering feature by link-hits was also added. Hits are now counted
+  and displayed for featured links.
+* [CHANGE] The titlebars in wikipages are now brown instead of the terrible blue ones.
+* [NEW FEATURE] File galleries, create galleries, add files to galleries, download files. Permissions configurable,
+  rankings for file galleries and modules available.
+* [CHANGE] Module names are now sorted in the admin modules screen
+* [CHANGE] Now you can see permissions according to categories when assigning permissions to groups, the
+  assign permissions was revamped
+* [NEW FEATURE] Wiki page comments, now you can activate/deactivate comments for wiki pages, comments can be
+  voted and replied, configurable permissions and karma system for comment points(!)
+* [FIX] Fixed minor layout problems and xhtml glitches
+* [FIXES] Several bugfixes and minor improvements on the code.
+
 Version 1.0 -Ras Algheti-
 
 * [NEW FEATURE] Dynamic content system: create, edit or program dynamic blocks, dynamic blocks can be

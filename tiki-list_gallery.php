@@ -8,7 +8,7 @@ if($feature_galleries != 'y') {
   die;  
 }
 
-if($_REQUEST["galleryId"]==0 && $tiki_p_admin != 'y') {
+if($_REQUEST["galleryId"]==0 && $tiki_p_admin_galleries != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot access this gallery"));
   $smarty->display('error.tpl');
   die;  
@@ -56,7 +56,7 @@ $tikilib->add_gallery_hit($_REQUEST["galleryId"]);
 
 if(isset($_REQUEST["remove"])) {
   // To remove an image the user must be the owner or admin
-  if($user!='admin' && $user!=$gal_info["user"]) {
+  if($tiki_p_admin_galleries !='y' && (!$user || $user!=$gal_info["user"])) {
     $smarty->assign('msg',tra("Permission denied you cannot remove images from this gallery"));
     $smarty->display('error.tpl');
     die;  
@@ -66,7 +66,7 @@ if(isset($_REQUEST["remove"])) {
 
 if(isset($_REQUEST["rebuild"])) {
  // To remove an image the user must be the owner or admin
-  if($user!='admin' && $user!=$gal_info["user"]) {
+  if($tiki_p_admin_galleries!='y' && (!$user || $user!=$gal_info["user"])) {
     $smarty->assign('msg',tra("Permission denied you cannot remove images from this gallery"));
     $smarty->display('error.tpl');
     die;  

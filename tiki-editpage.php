@@ -19,6 +19,7 @@ if(!isset($_REQUEST["page"])) {
   $smarty->assign_by_ref('page',$_REQUEST["page"]); 
 }
 
+
 if(substr($page,0,8)=="UserPage") {
   $name = substr($page,8);
   if($user != $name) {

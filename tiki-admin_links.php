@@ -17,9 +17,36 @@ if($user != 'admin') {
   }
 }
 
+$smarty->assign('title','');
+$smarty->assign('position',1);
+
+if(isset($_REQUEST["generate"])) {
+ $tikilib->generate_featured_links_positions();
+}
+
+if(!isset($_REQUEST["editurl"])) {
+  $_REQUEST["editurl"]='n';
+}
+if($_REQUEST["editurl"]!='n') {
+  $info = $tikilib->get_featured_link($_REQUEST["editurl"]);
+  if(!$info) {
+    $smarty->assign('msg',tra("Unexistant link"));
+    $smarty->display('error.tpl');
+    die;
+  }
+  $smarty->assign('title',$info["title"]);
+  $smarty->assign('position',$info["position"]);
+  
+}
+$smarty->assign('editurl',$_REQUEST["editurl"]);
+
 if(isset($_REQUEST["add"])) {
   if(!empty($_REQUEST["url"]) && !empty($_REQUEST["url"])) {
-    $tikilib->add_featured_link($_REQUEST["url"],$_REQUEST["title"]);
+    if($_REQUEST["editurl"]==0) {
+      $tikilib->add_featured_link($_REQUEST["url"],$_REQUEST["title"],'',$_REQUEST["position"]);
+    } else {
+      $tikilib->update_featured_link($_REQUEST["url"], $_REQUEST["$title"], '', $_REQUEST["position"]);
+    }
   }
 }
 

@@ -2,6 +2,12 @@
 // Initialization
 require_once('tiki-setup.php');
 
+if($tiki_p_admin != 'y') {
+    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->display('error.tpl');
+    die;
+}
+
 if(isset($_REQUEST["rmvorphimg"])) {
   $tikilib->remove_orphan_images();
 }
@@ -76,8 +82,21 @@ if(isset($_REQUEST["prefs"])) {
 if(isset($_REQUEST["cmsprefs"])) {
   if(isset($_REQUEST["maxArticles"])) {
     $tikilib->set_preference("maxArticles",$_REQUEST["maxArticles"]);
+    $smarty->assign('maxArticles',$_REQUEST["maxArticles"]);
   }
 }
+
+if(isset($_REQUEST["wikiprefs"])) {
+  if(isset($_REQUEST["wiki_comments_per_page"])) {
+    $tikilib->set_preference("wiki_comments_per_page",$_REQUEST["wiki_comments_per_page"]);
+    $smarty->assign('wiki_comments_per_page',$_REQUEST["wiki_comments_per_page"]);
+  }
+  if(isset($_REQUEST["wiki_comments_default_ordering"])) {
+    $tikilib->set_preference("wiki_comments_default_ordering",$_REQUEST["wiki_comments_default_ordering"]);
+    $smarty->assign('wiki_comments_default_ordering',$_REQUEST["wiki_comments_default_ordering"]);
+  }
+}
+
 
 if(isset($_REQUEST["wikifeatures"])) {
   if(isset($_REQUEST["feature_lastChanges"]) && $_REQUEST["feature_lastChanges"]=="on") {
@@ -86,6 +105,22 @@ if(isset($_REQUEST["wikifeatures"])) {
   } else {
     $tikilib->set_preference("feature_lastChanges",'n');
     $smarty->assign("feature_lastChanges",'n');
+  }
+
+  if(isset($_REQUEST["feature_wiki_comments"]) && $_REQUEST["feature_wiki_comments"]=="on") {
+    $tikilib->set_preference("feature_wiki_comments",'y'); 
+    $smarty->assign("feature_wiki_comments",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_comments",'n');
+    $smarty->assign("feature_wiki_comments",'n');
+  }
+
+  if(isset($_REQUEST["feature_warn_on_edit"]) && $_REQUEST["feature_warn_on_edit"]=="on") {
+    $tikilib->set_preference("feature_warn_on_edit",'y'); 
+    $smarty->assign("feature_warn_on_edit",'y');
+  } else {
+    $tikilib->set_preference("feature_warn_on_edit",'n');
+    $smarty->assign("feature_warn_on_edit",'n');
   }
   
   if(isset($_REQUEST["feature_dump"]) && $_REQUEST["feature_dump"]=="on") {
@@ -174,6 +209,18 @@ if(isset($_REQUEST["galfeatures"])) {
   }
 }
 
+if(isset($_REQUEST["filegalfeatures"])) {
+      
+  if(isset($_REQUEST["feature_file_galleries_rankings"]) && $_REQUEST["feature_file_galleries_rankings"]=="on") {
+    $tikilib->set_preference("feature_file_galleries_rankings",'y'); 
+    $smarty->assign("feature_file_galleries_rankings",'y');
+  } else {
+    $tikilib->set_preference("feature_file_galleries_rankings",'n');
+    $smarty->assign("feature_file_galleries_rankings",'n');
+  }
+}
+
+
 if(isset($_REQUEST["cmsfeatures"])) {
       
   if(isset($_REQUEST["feature_cms_rankings"]) && $_REQUEST["feature_cms_rankings"]=="on") {
@@ -197,10 +244,17 @@ if(isset($_REQUEST["blogfeatures"])) {
 
 if(isset($_REQUEST["blogset"])) {
   $tikilib->set_preference("home_blog",$_REQUEST["homeBlog"]);
+  $smarty->assign('home_blog',$_REQUEST["homeBlog"]);
 }
 
 if(isset($_REQUEST["galset"])) {
   $tikilib->set_preference("home_gallery",$_REQUEST["homeGallery"]);
+  $smarty->assign('home_gallery',$_REQUEST["homeGallery"]);
+}
+
+if(isset($_REQUEST["filegalset"])) {
+  $tikilib->set_preference("home_file_gallery",$_REQUEST["homeFileGallery"]);
+  $smarty->assign('home_file_gallery',$_REQUEST["homeFileGallery"]);
 }
 
 
@@ -212,6 +266,15 @@ if(isset($_REQUEST["features"])) {
     $tikilib->set_preference("feature_wiki",'n');
     $smarty->assign("feature_wiki",'n');
   }
+  
+  if(isset($_REQUEST["feature_file_galleries"]) && $_REQUEST["feature_file_galleries"]=="on") {
+    $tikilib->set_preference("feature_file_galleries",'y'); 
+    $smarty->assign("feature_file_galleries",'y');
+  } else {
+    $tikilib->set_preference("feature_file_galleries",'n');
+    $smarty->assign("feature_file_galleries",'n');
+  }
+  
   if(isset($_REQUEST["feature_banners"]) && $_REQUEST["feature_banners"]=="on") {
     $tikilib->set_preference("feature_banners",'y'); 
     $smarty->assign("feature_banners",'y');
@@ -381,7 +444,9 @@ $smarty->assign_by_ref('languages',$languages);
 $blogs=$tikilib->list_blogs(0,-1,'created_desc','');
 $smarty->assign_by_ref('blogs',$blogs["data"]);
 $galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin','');
+$file_galleries = $tikilib->list_file_galleries(0, -1, 'name_desc', 'admin','');
 $smarty->assign_by_ref('galleries',$galleries["data"]);
+$smarty->assign_by_ref('file_galleries',$file_galleries["data"]);
 
 $tags = $tikilib->get_tags();
 $smarty->assign_by_ref("tags",$tags);

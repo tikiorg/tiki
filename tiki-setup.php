@@ -1,4 +1,20 @@
 <?php
+
+class timer
+        {
+        function parseMicro($micro)
+                {list($micro,$sec)=explode(' ',microtime()); return $sec+$micro;}
+        function start($timer='default')
+                {$this->timer[$timer]=$this->parseMicro(microtime());}
+        function stop($timer='default')
+                {return $this->current($timer);}
+        function elapsed($timer='default')
+                {return $this->parseMicro(microtime()) - $this->timer[$timer];}
+        }
+
+$tiki_timer = new timer();
+$tiki_timer->start();
+
 require_once("setup.php");
 require_once("lib/tikilib.php");
 require_once("lib/userslib.php");
@@ -10,7 +26,13 @@ if(isset($_SESSION["user"])) {
   $user = false;
 }
 
-$allperms = $userlib->get_permissions(0,-1,'permName_desc','','tiki');
+// The votes array stores the votes the user has made
+if(!isset($_SESSION["votes"])) {
+  $votes=Array();
+  session_register("votes");
+}
+
+$allperms = $userlib->get_permissions(0,-1,'permName_desc','','');
 $allperms = $allperms["data"];
 foreach($allperms as $vperm) {
   $perm=$vperm["permName"];
@@ -51,12 +73,9 @@ if(isset($GLOBALS["PHPSESSID"])) {
   $tikilib->update_session($GLOBALS["PHPSESSID"]);
 }
 
-
-
-
-
 $home_blog = 0;
 $home_gallery = 0;
+$home_file_gallery = 0;
 $feature_xmlrpc = 'n';
 $feature_blog_rankings = 'y';
 $feature_cms_rankings = 'y';
@@ -85,10 +104,19 @@ $feature_blogs = 'n';
 $feature_xmlrpc = 'n';
 $feature_edit_templates = 'n';
 $feature_dynamic_content = 'n';
+$feature_wiki_comments = 'n';
+$wiki_comments_default_ordering = 'points_desc';
+$wiki_comments_per_page = 10;
+$feature_warn_on_edit ='n';
+$feature_file_galleries = 'n';
+$feature_file_galleries_rankings = 'n';
 $language = 'en';
+$smarty->assign('feature_file_galleries',$feature_file_galleries);
+$smarty->assign('feature_file_galleries_rankings',$feature_file_galleries_rankings);
 $smarty->assign('language',$language);
 $smarty->assign('home_blog',$home_blog);
 $smarty->assign('home_gallery',$home_gallery);
+$smarty->assign('home_file_gallery',$home_file_gallery);
 $smarty->assign('feature_dynamic_content',$feature_dynamic_content);
 $smarty->assign('feature_edit_templates',$feature_edit_templates);
 $smarty->assign('feature_top_banner',$feature_top_banner);
@@ -117,6 +145,11 @@ $smarty->assign('feature_articles',$feature_articles);
 $smarty->assign('feature_submissions',$feature_submissions);
 $smarty->assign('feature_blogs',$feature_blogs);
 $smarty->assign('feature_xmlrpc',$feature_xmlrpc);
+$smarty->assign('feature_wiki_comments',$feature_wiki_comments);
+$smarty->assign('wiki_comments_default_ordering',$wiki_comments_default_ordering);
+$smarty->assign('wiki_comments_per_page',$wiki_comments_per_page);
+$smarty->assign('feature_warn_on_edit',$feature_warn_on_edit);
+
 // Other preferences
 $popupLinks = $tikilib->get_preference("popupLinks",'n');
 $anonCanEdit = $tikilib->get_preference("anonCanEdit",'n');
@@ -177,6 +210,52 @@ $smarty->assign('lock',false);
 $smarty->assign('title',$title);
 $smarty->assign('maxRecords',$maxRecords);
 include_once("tiki-modules.php");
+$smarty->assign('beingEdited','n');
 
+if($feature_warn_on_edit == 'y') {
+// Check if the page is being edited
+if(isset($_REQUEST["page"])) {
+ $chkpage = $_REQUEST["page"];
+} else {
+ $chkpage = 'HomePage';
+}
+// Notice if a page is being edited or if it was being edited and not anymore
+//print($GLOBALS["HTTP_REFERER"]);
+// IF isset the referer and if the referer is editpage then unset taking the pagename from the
+// query or homepage if not query
+
+if(isset($GLOBALS["HTTP_REFERER"])) {
+  if(strstr($GLOBALS["HTTP_REFERER"],'tiki-editpage')) {
+    $purl = parse_url($GLOBALS["HTTP_REFERER"]);
+    if(!isset($purl["query"])) {
+      $purl["query"]='';
+    }
+    parse_str($purl["query"],$purlquery);
+    if(!isset($purlquery["page"])) {
+      $purlquery["page"]='HomePage';
+    }
+    $tikilib->semaphore_unset($purlquery["page"]);
+  }
+}
+if(strstr($_SERVER["REQUEST_URI"],'tiki-editpage')) {
+  $purl = parse_url($_SERVER["REQUEST_URI"]);
+  if(!isset($purl["query"])) {
+    $purl["query"]='';
+  }
+  parse_str($purl["query"],$purlquery);
+  if(!isset($purlquery["page"])) {
+    $purlquery["page"]='HomePage';
+  }
+  $tikilib->semaphore_set($purlquery["page"]);
+}
+if($tikilib->semaphore_is_set($chkpage)) {
+  $smarty->assign('beingEdited','y');
+  $beingedited='y';
+} else {
+  $smarty->assign('beingEdited','n');
+  $beingedited='n';
+}
+
+}
 
 ?>
