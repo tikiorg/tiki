@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.13 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.14 2004-02-10 14:09:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -79,7 +79,7 @@ if (isset($_REQUEST["export"])) {
 	$data = "<?php\n\$lang=Array(\n";
 
 	while ($res = $result->fetchRow()) {
-		$data = $data . "\"" . $res["0"] . "\" => \"" . $res["1"] . "\",\n";
+		$data = $data . "\"" . $res["source"] . "\" => \"" . $res["tran"] . "\",\n";
 	}
 
 	$data = $data . ");\n?>";
