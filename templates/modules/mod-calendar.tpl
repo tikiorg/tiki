@@ -61,7 +61,7 @@ if(!strstr($father,"?")) {
 ?>
 <div class="box">
 <div class="box-title" style="margin:0px;">
-Calendar
+{tr}Calendar{/tr}
 </div>
 <div class="box-data" style="margin:0px;padding-right:4px;">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -74,7 +74,7 @@ Calendar
        	    <table width="100%" cellspacing="0" cellpadding="0" border="0">
               <tr class="changedate" bgcolor="#FFFFFF"> <!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
                 <td align="left"><a class="nav" href="<?$mong=$year-1;print("$father"."day=$day&amp;mon=$mon&amp;year=$mong");?>">&lt;</a><span class="nav"><?=$year?></span><a class="nav" href="<?$mong=$year+1;print("$father?day=$day&amp;mon=$mon&amp;year=$mong");?>">&gt;</a></td>
-                <td align="center"><a class="today" href="<?=$todaylink?>">Today</a></td>
+                <td align="center"><a class="today" href="<?=$todaylink?>">{tr}Today{/tr}</a></td>
                 <td align="right"><a class="nav" href="<?$mong=$mon-1;print("$father"."day=$day&amp;mon=$mong&amp;year=$year");?>">&lt;</a><span class="nav"><?=$v?></span><a class="nav" href="<?$mong=$mon+1;print("$father?day=$day&amp;mon=$mong&amp;year=$year");?>">&gt;</a></td>
               </tr> <!-- ROW WITH YEAR AND MONTH ENDS -->
             </table>

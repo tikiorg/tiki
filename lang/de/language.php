@@ -1597,6 +1597,8 @@ Vor einer Best&auml;tigung Ihres Abonnements wird Ihnen kein Newsletter zugesand
 "Temporary directory" => "Tempor&auml;rverzeichnis",
 "Use database for translation" => "Bei &Uuml;bersetzung Datenbank nutzen",
 "OS" => "Betriebssystem",
+"Calendar" => "Kalender",
+"User tasks" => "Benutzer-Aufgaben",
 "b" => "b",
 "i" => "i",
 "ul" => "ul",
