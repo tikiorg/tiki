@@ -5492,7 +5492,8 @@ function formatted_language_compare($a, $b) {
 function format_language_list($languages) {
     // The list of available languages so far with both English and
     // translated names.
-          include_once("lang/langmapping.php");
+       global $langmapping;
+       include_once("lang/langmapping.php");
       $formatted = array();
 
       // run through all the language codes:
