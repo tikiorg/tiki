@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.7 2004-04-25 17:26:41 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.8 2004-04-28 03:58:00 ggeller Exp $
 
 # Copyright (c) 2004 George G. Geller
 # All Rights Reserved. See copyright.txt for details and a complete list of au\thors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for de\tails.
 
-# invoke as sudo ./clikitiki.py <mysql-root-password> <new-tiki-url>
 
 # NOTICE:
 # 1. This script is intended to be run as root.
@@ -15,6 +14,9 @@
 #     http://tikiwiki.org/tiki-index.php?page=RecipeMultiTiki
 #     http://tikiwiki.org/tiki-index.php?page=RecipeMultiTiki2
 # 3. You must edit this script before it can run (see below).
+
+# invoke as       ./add1tiki2multi.py <mysql-root-password> <new-tiki-url>
+# something like: ./add1tiki2multi.py password new.wikiplanet.com
 
 import os
 import sys
@@ -26,7 +28,6 @@ import re
 # YOU MUST COMMENT OUT THE FOLLOWING LINE FOR THIS SCRIPT TO FUNCTION!!!!
 sys.exit(0)
 
-# Invoke as something like: ./add1tiki2multi.py.py password new.wikiplanet.com
 
 def usage():
     print sys.argv[0], "[-p <mysql-root-password>] <new-tiki-domainname>"
