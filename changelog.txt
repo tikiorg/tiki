@@ -1,5 +1,14 @@
 Version 1.5 -TBA-
 
+* [NEW] Admin can choose if passwords are stored in plaintext or not. If not a hash will be used to authenticate
+  users and the remind-password feature will generate a new password and send it by email. The new password will
+  be inmediately due so the user will be forced to change it.
+* [NEW] All the Javascript code has been packed into a library
+* [NEW] Tiki can now be run on any WebServer port.
+* [NEW] HTTPS supported. Tiki can run on HTTPS connections.
+* [NEW] BiDi support. Added support for BiDi languages. 
+* [NEW] Added ~ns~ ~/ns~ syntax to the Wiki to make page sections unparsed. Can be used to put HTML code or
+  anything that you want as-is without wiki syntax being parsed.
 * [NEW] Fulltext searching added (optional) using this feature results can be sotred bu relevance upon the user
   query imporving a lot results from the search engine.
 * [NEW] PHPWikiImport feature. You can export pages from a PHPWiki dump into tiki even versions will be created.
