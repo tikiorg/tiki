@@ -385,27 +385,18 @@ class RankLib extends TikiLib {
 	}
 
 	function wiki_ranking_top_authors($limit) {
-		$query = "select distinct `user` from `tiki_pages`";
+		$query = "select distinct `user`, count(*) as `numb` from `tiki_pages` group by `user` order by ".$this->convert_sortmode("numb_desc");
 
 		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res["user"];
-		}
-
 		$retu = array();
 
-		foreach ($ret as $author) {
-			$query = "select count(*) from `tiki_pages` where `user`=?";
-
-			$cant = $this->getOne($query,array($author));
-			$aux["name"] = $author;
-			$aux["hits"] = $cant;
-			$aux["href"] = '';
-			$retu[] = $aux;
+		while ($res = $result->fetchRow()) {
+			$ret["name"] = $res["user"];
+			$ret["hits"] = $res["numb"];
+			$ret["href"] = "tiki-user_information.php?view_user=".urlencode($res["user"]);
+			$retu[] = $ret;
 		}
-
 		$retval["data"] = $retu;
 		$retval["title"] = tra("Wiki top authors");
 		$retval["y"] = tra("Pages");
@@ -413,27 +404,18 @@ class RankLib extends TikiLib {
 	}
 
 	function cms_ranking_top_authors($limit) {
-		$query = "select distinct `author` from `tiki_articles`";
+		$query = "select distinct `author`, count(*) as `numb` from `tiki_articles` group by `author` order by ".$this->convert_sortmode("numb_desc");
 
 		$result = $this->query($query,array(),$limit,0);
 		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res["author"];
-		}
-
 		$retu = array();
 
-		foreach ($ret as $author) {
-			$query = "select count(*) from `tiki_articles` where `author`=?";
-
-			$cant = $this->getOne($query,array($author));
-			$aux["name"] = $author;
-			$aux["hits"] = $cant;
-			$aux["href"] = '';
-			$retu[] = $aux;
+		while ($res = $result->fetchRow()) {
+			$ret["name"] = $res["author"];
+			$ret["hits"] = $res["numb"];
+			$ret["href"] = "tiki-user_information.php?view_user=".urlencode($res["author"]);
+			$retu[] = $ret;
 		}
-
 		$retval["data"] = $retu;
 		$retval["title"] = tra("Top article authors");
 		$retval["y"] = tra("Articles");
