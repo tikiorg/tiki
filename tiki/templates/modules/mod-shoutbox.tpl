@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.11 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.12 2003-09-04 17:07:46 mose Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
   <div class="box">
@@ -31,10 +31,11 @@
         {/strip}{/capture}
 
 	{* Show user message in style according to 'tooltip' module parameter *}
+	{assign var=cdate value=$smarty.capture.date}
 	{if $tooltip == 1}
-          <b>{strip}{$userlink|replace:" class=":" title='$smarty.capture.date' class="}{/strip}</b>:
+          <b>{strip}{$userlink|replace:" class=":" title='cdate' class="}{/strip}</b>:
         {else}
-          <b>{strip}{$userlink}{/strip}</b>, {$smarty.capture.date}:
+          <b>{strip}{$userlink}{/strip}</b>, {$cdate}:
         {/if}
         {$shout_msgs[ix].message}
         {if $tiki_p_admin_shoutbox eq 'y'}
