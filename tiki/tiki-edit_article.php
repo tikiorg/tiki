@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.25 2003-10-28 22:35:37 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.26 2003-11-03 03:34:25 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -105,13 +105,10 @@ if (isset($_REQUEST["articleId"])) {
 	$imgname = $article_data["image_name"];
 
 	if ($hasImage == 'y') {
-		$tmpfname = tempnam($tmpDir, "TMPIMG"). $imgname;
-
+		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["articleId"];
 		$fp = fopen($tmpfname, "wb");
-
 		if ($fp) {
 			fwrite($fp, $data);
-
 			fclose ($fp);
 			$smarty->assign('tempimg', $tmpfname);
 		} else {
@@ -199,13 +196,10 @@ if (isset($_REQUEST["preview"])) {
 	}
 
 	if ($hasImage == 'y') {
-		$tmpfname = tempnam($tmpDir, "TMPIMG"). $imgname;
-
-		$fp = fopen($tmpfname, "w");
-
+		$tmpfname = $tmpDir . "/articleimage" . "." . $_REQUEST["articleId"];
+		$fp = fopen($tmpfname, "wb");
 		if ($fp) {
 			fwrite($fp, $data);
-
 			fclose ($fp);
 			$smarty->assign('tempimg', $tmpfname);
 		} else {
