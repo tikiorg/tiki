@@ -549,14 +549,14 @@ DIV#page-bar {	margin-left: 5px;}
   font-weight : bold;
   background: #E4E7EA;
   border: 1px solid black;
-  padding-left: 0.1em;  padding-right: 0.1em; padding-top: 0.1em;  padding-bottom: 0.1em;
+  padding: 0.1em;
   margin: 0.0ex 0px;
 }
 .button3 { -moz-border-radius : 5px 5px 0 0;  }
 .button3 .linkbut { -moz-border-radius : 5px 5px 0 0; padding-bottom : 2px; border-bottom : 0; }
 
 /* Links in buttons */
-.linkbut { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; color : black;  background: white; text-decoration:none;}
+.linkbut { font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px; color : black;  background: white; text-decoration:none; padding: 0.1em;}
 .linkbut:active {font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; font-size: 11px; background: white; color : black;text-decoration:none;}
 .linkbut:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black;  background: #CCCCCC;text-decoration: underline;}
 
