@@ -22,10 +22,27 @@ if(isset($_REQUEST["newgroup"])) {
     $userlib->add_group(addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]));
     if (isset($_REQUEST["include_groups"])) {
       foreach($_REQUEST["include_groups"] as $include) {
-        $userlib->group_inclusion(addslashes($_REQUEST["name"]),$include);
-      }
+				if ($_REQUEST["name"] != $include) {
+					$userlib->group_inclusion(addslashes($_REQUEST["name"]),$include);
+				}
+			}
     }
   }
+	$_REQUEST["group"] = $_REQUEST["name"];
+}
+
+// modification
+if(isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"])) {
+	$userlib->change_group(addslashes($_REQUEST["olgroup"]),addslashes($_REQUEST["name"]),addslashes($_REQUEST["desc"]));
+	$userlib->remove_all_inclusions($_REQUEST["name"]);
+	if (isset($_REQUEST["include_groups"])) {
+		foreach($_REQUEST["include_groups"] as $include) {
+			if ($_REQUEST["name"] != $include) {
+				$userlib->group_inclusion(addslashes($_REQUEST["name"]),$include);
+			}
+		}
+	}
+	$_REQUEST["group"] = $_REQUEST["name"];
 }
 
 // Process a form to remove a group
@@ -37,7 +54,6 @@ if(isset($_REQUEST["action"])) {
     $userlib->remove_permission_from_group($_REQUEST["permission"],$_REQUEST["group"]); 
   }
 }
-
 
 
 // Sort options and pagination for the group list
@@ -66,6 +82,32 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 $users = $userlib->get_groups($offset,$maxRecords,$sort_mode,$find);
+
+$inc = array();
+list($groupname,$groupdesc,$groupperms) = array('','','');
+if (isset($_REQUEST["group"]) and $_REQUEST["group"]) {
+	$re = $userlib->get_group_info($_REQUEST["group"]);
+	$groupname = $re["groupName"];
+	$groupdesc = $re["groupDesc"];
+	$groupperms = $re["perms"];
+	$rs = $userlib->get_included_groups($_REQUEST["group"]);
+	foreach ($users["data"] as $r) {
+		$rr = $r["groupName"];
+		$inc["$rr"] = "n";
+		if (in_array($rr,$rs)) {
+			$inc["$rr"] = "y";
+		}
+	}
+} else {
+	$_REQUEST["group"] = 0;
+}
+$smarty->assign('inc',$inc);
+$smarty->assign('group',$_REQUEST["group"]);
+$smarty->assign('groupname',$groupname);
+$smarty->assign('groupdesc',$groupdesc);
+$smarty->assign('groupperms',$groupperms);
+
+
 $cant_pages = ceil($users["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
 $smarty->assign('actual_page',1+($offset/$maxRecords));
