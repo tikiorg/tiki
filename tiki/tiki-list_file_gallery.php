@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.13 2003-10-03 22:10:49 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.14 2003-10-08 03:53:08 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/filegals/filegallib.php');
 
 if ($feature_file_galleries != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.6 2003-09-29 23:09:23 mikespub Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_processes.php,v 1.7 2003-10-08 03:53:08 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,7 @@ $smarty->assign('is_active_help', tra('indicates if the process is active. Inval
 
 // The galaxia process manager PHP script.
 if ($feature_workflow != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_workflow");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

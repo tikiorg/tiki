@@ -4,7 +4,7 @@
 	include_once('lib/filegals/filegallib.php');
 	
 	if($feature_file_galleries != 'y') {
-	  $smarty->assign('msg',tra("This feature is disabled"));
+	  $smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 	  $smarty->display("styles/$style_base/error.tpl");
 	  die;  
 	}

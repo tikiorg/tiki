@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.9 2003-10-03 22:10:49 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_faq.php,v 1.10 2003-10-08 03:53:09 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/faqs/faqlib.php');
 
 if ($feature_faqs != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_faqs");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

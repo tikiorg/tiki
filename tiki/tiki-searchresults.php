@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.19 2003-09-28 16:00:02 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.20 2003-10-08 03:53:08 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ require_once ('lib/searchlib.php');
 $searchlib = &new SearchLib($tikilib->db);
 
 if ($feature_search != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_search");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
@@ -36,7 +36,7 @@ $smarty->assign('where2',tra($where));
 
 if($where=='wikis') {
   if ($feature_wiki != 'y') {
-    $smarty->assign('msg',tra("This feature is disabled"));
+    $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
     $smarty->display("styles/$style_base/error.tpl");
     die;
   }
@@ -49,7 +49,7 @@ if($where=='wikis') {
 
 if($where=='directory') {
 	if ($feature_directory != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->assign('msg', tra("This feature is disabled").": feature_directory");
   $smarty->display("styles/$style_base/error.tpl");
   die;
 	}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.16 2003-09-29 06:48:57 traivor Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.17 2003-10-08 03:53:08 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,7 @@ if($tiki_p_view != 'y') {
 }
 */
 if ($feature_galleries != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-eph_admin.php,v 1.4 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-eph_admin.php,v 1.5 2003-10-08 03:53:08 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,7 +11,7 @@ include_once ('lib/ephemerides/ephlib.php');
 include_once ("lib/class_calendar.php");
 
 if ($feature_eph != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_eph");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.4 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_watches.php,v 1.5 2003-10-08 03:53:09 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ if (!$user) {
 }
 
 if ($feature_user_watches != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled"));
+	$smarty->assign('msg', tra("This feature is disabled").": feature_user_watches");
 
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
