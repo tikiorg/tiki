@@ -756,6 +756,7 @@ class ImageGalsLib extends TikiLib {
 		$query = "select max(`imageId`) from `tiki_images` where `created`=?";
 		$imageId = $this->getOne($query,array($now));
 		// insert data
+		$this->blob_encode($data);
 		$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`,
                                 `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";
@@ -763,6 +764,7 @@ class ImageGalsLib extends TikiLib {
 
 		// insert thumb
 		if (sizeof($t_data) > 1) {
+			$this->blob_encode($t_data);
 			$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`,
                                 `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";
