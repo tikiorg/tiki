@@ -120,8 +120,8 @@ Your tiki is not properly set up:
 $errors
 ";
 
-		if (!TikiSetup::isWindows()) {
-			print "
+                        if (!TikiSetup::isWindows()) {
+                          print "
 To set up your tiki, log in to the system running tiki,
 and type the following commands:
 
@@ -142,8 +142,8 @@ If you have problems accessing a directory, check open_basedir entry in php.ini 
 Once you have executed these commands, this message will disappear!
 
 	";
-		}
-		
+                        }
+                        exit;
 		}
 	}
 }
