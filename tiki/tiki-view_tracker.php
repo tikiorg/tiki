@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.53 2004-02-20 06:14:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.54 2004-02-20 16:42:34 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -188,7 +188,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		$ins_fields["data"][$i]["value"] = '';
 
 	} elseif ($fields["data"][$i]["type"] == 'u') {
-		if (isset($_REQUEST["$ins_id"])) {
+		if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]["options"] or $tiki_p_admin_trackers == 'y')) {
 			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
 			if ($fields["data"][$i]["options"] == 1 and $user) {
@@ -199,8 +199,6 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 		if ($fields["data"][$i]["options"] == 1 and !$writerfield) {
 			$writerfield = $fid;
-			//$listfields[$fid]['name'] = $fields["data"][$i]["name"];
-			//$listfields[$fid]['type'] = 'u';
 		} elseif (isset($_REQUEST["$filter_id"])) {
 			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
 		} else {
@@ -208,15 +206,17 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 
 	} elseif ($fields["data"][$i]["type"] == 'g') {
-		if ( $fields["data"][$i]["options"] == 1 and $group) {
-			$ins_fields["data"][$i]["value"] = $group;
+		if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]["options"] or $tiki_p_admin_trackers == 'y')) {
+			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
-			$ins_fields["data"][$i]["value"] = '';
+			if ( $fields["data"][$i]["options"] == 1 and $group) {
+				$ins_fields["data"][$i]["value"] = $group;
+			} else {
+				$ins_fields["data"][$i]["value"] = '';
+			}
 		}
 		if ($fields["data"][$i]["options"] == 1 and !$writergroupfield) {
 			$writergroupfield = $fid;
-			//$listfields[$fid]['name'] = $fields["data"][$i]["name"];
-			//$listfields[$fid]['type'] = 'g';
 		} elseif (isset($_REQUEST["$filter_id"])) {
 			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
 		} else {
