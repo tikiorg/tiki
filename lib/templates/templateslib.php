@@ -11,32 +11,27 @@ class TemplatesLib extends TikiLib {
 	}
 
 	function list_all_templates($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where (content like $findesc)";
+			$bindvars[] = '%' . $find . '%';
+			$mid = " where (`content` like ?)";
 		} else {
 			$mid = "";
 		}
 
-		$query = "select name,created,templateId from tiki_content_templates $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_content_templates $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select `name`,`created`,`templateId` from `tiki_content_templates` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_content_templates` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$query2 = "select section from tiki_content_templates_sections where templateId=" . $res["templateId"];
-
-			$result2 = $this->query($query2);
+		while ($res = $result->fetchRow()) {
+			$query2 = "select `section` from `tiki_content_templates_sections` where `templateId`=?";
+			$result2 = $this->query($query2,array((int)$res["templateId"]));
 			$sections = array();
-
-			while ($res2 = $result2->fetchRow(DB_FETCHMODE_ASSOC)) {
+			while ($res2 = $result2->fetchRow()) {
 				$sections[] = $res2["section"];
 			}
-
 			$res["sections"] = $sections;
 			$ret[] = $res;
 		}
@@ -48,51 +43,42 @@ class TemplatesLib extends TikiLib {
 	}
 
 	function replace_template($templateId, $name, $content) {
-		$name = addslashes($name);
-
-		$content = addslashes($content);
-		// Check the name
 		$now = date("U");
-
+		$bindvars = array($content,$name,(int)$now);
 		if ($templateId) {
-			$query
-				= "update tiki_content_templates set content='$content', name='$name', created=$now where templateId=$templateId";
+			$query = "update `tiki_content_templates` set `content`=?, `name`=?, `created`=? where `templateId`=?";
+			$bindvars[] = (int) $templateId;
 		} else {
-			$query = "replace into tiki_content_templates(content,name,created)
-                values('$content','$name',$now)";
+			$query = "delete from `tiki_content_templates` where `content`=? and `name`=?";
+			$this->query($query,array($content,$name),-1,-1,false);
+			$query = "insert into `tiki_content_templates`(`content`,`name`,`created`) values(?,?,?)";
 		}
 
-		$result = $this->query($query);
-		$id = $this->getOne("select max(templateId) from tiki_content_templates where created=$now and name='$name'");
+		$result = $this->query($query,$bindvars);
+		$id = $this->getOne("select max(`templateId`) from `tiki_content_templates` where `created`=? and `name`=?",array((int)$now,$name));
 		return $id;
-		return true;
 	}
 
 	function add_template_to_section($templateId, $section) {
-		$query = "replace into tiki_content_templates_sections(templateId,section) values($templateId,'$section')";
-
-		$result = $this->query($query);
+		$this->query("delete from `tiki_content_templates_sections` where `templateId`=? and `section`=?",array((int)$templateId,$section),-1,-1,false);
+		$query = "insert into `tiki_content_templates_sections`(`templateId`,`section`) values(?,?)";
+		$result = $this->query($query,array((int)$templateId,$section));
 	}
 
 	function remove_template_from_section($templateId, $section) {
-		$query = "delete from tiki_content_templates_sections where templateId=$templateId and section='$section'";
-
-		$result = $this->query($query);
+		$result = $this->query("delete from `tiki_content_templates_sections` where `templateId`=? and `section`=?",array((int)$templateId,$section));
 	}
 
 	function template_is_in_section($templateId, $section) {
-		$cant = $this->getOne(
-			"select count(*) from tiki_content_templates_sections where templateId=$templateId and section='$section'");
-
+		$cant = $this->getOne("select count(*) from `tiki_content_templates_sections` where `templateId`=? and `section`=?",array((int)$templateId,$section));
 		return $cant;
 	}
 
 	function remove_template($templateId) {
-		$query = "delete from tiki_content_templates where templateId=$templateId";
-
-		$result = $this->query($query);
-		$query = "delete from tiki_content_templates_sections where templateId=$templateId";
-		$result = $this->query($query);
+		$query = "delete from `tiki_content_templates` where `templateId`=?";
+		$result = $this->query($query,array((int)$templateId));
+		$query = "delete from `tiki_content_templates_sections` where `templateId`=?";
+		$result = $this->query($query,array((int)$templateId));
 		return true;
 	}
 }
