@@ -1,5 +1,5 @@
 <a class="pagetitle" href="tiki-list_contents.php">{tr}Dynamic content system{/tr}</a><br/><br/>
-<h3>Create or edit content block</h3><a class="link" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
+<h3>{tr}Create or edit content block{/tr}</h3><a class="link" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
 <form action="tiki-list_contents.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId}" />
 <table class="normal">
@@ -14,7 +14,7 @@
 </form>
 <h3>{tr}Available content blocks{/tr}</h3>
 <table class="findtable">
-<tr><td class="findtable">Find</td>
+<tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-list_contents.php">
      <input type="text" name="find" value="{$find}" />

@@ -21,7 +21,7 @@
 <tr><td class="formcolor">{tr}Active{/tr}</td><td colspan="3" class="formcolor">
 {tr}Yes{/tr}<input type="radio" name="active" {if $info.active eq 'y'}checked="checked"{/if} value="y" /> <input type="radio" {if $info.active eq 'n'}checked="checked"{/if} name="active" value="n" />{tr}No{/tr}
 </td></tr>
-<tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="add" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>
 <h3>{tr}User accounts{/tr}</h3>
