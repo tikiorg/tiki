@@ -2907,7 +2907,7 @@ class TikiLib extends TikiDB {
 		//  Deal with mail notifications.
 		include_once('lib/notifications/notificationemaillib.php');
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$machine = httpPrefix(). dirname( $foo["path"] );
+		$machine = $this->httpPrefix(). dirname( $foo["path"] );
 		sendWikiEmailNotification('wiki_page_created', $name, $user, $comment, 1, $data, $machine);
 	    }
 
@@ -4834,7 +4834,7 @@ class TikiLib extends TikiDB {
 			global $smarty, $feature_wiki_email_diff_style;
 			include_once('lib/notifications/notificationemaillib.php');
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
-			$machine = httpPrefix(). dirname( $foo["path"] );
+			$machine = $this->httpPrefix(). dirname( $foo["path"] );
 			$feature_wiki_email_diff_style = $this->get_preference("feature_wiki_email_diff_style", "source");
 			if ($feature_wiki_email_diff_style == "unidiff") {
 				require_once('lib/diff/difflib.php');
