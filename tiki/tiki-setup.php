@@ -56,7 +56,7 @@ class TikiSetup {
 			$save_path = ini_get('session.save_path');
 
 			if (!is_dir($save_path)) {
-				$errors .= "The directory '$save_path' does not exist.\n";
+				$errors .= "The directory '$save_path' does not exist or PHP is not allowed to access it (check open_basedir entry in php.ini).\n";
 			} else 
 			if (!is_writeable($save_path)) {
 				$errors .= "The directory '$save_path' is not writeable.\n";
@@ -136,6 +136,8 @@ or if you can't become root, but are a member of the group $wwwgroup:
 \$ cd $docroot
 \$ chmod +x setup.sh
 \$ ./setup.sh mylogin $wwwgroup
+
+If you have problems accessing a directory, check open_basedir entry in php.ini or apache.conf.
 
 Once you have executed these commands, this message will disappear!
 
