@@ -106,7 +106,7 @@
 {include file=tiki-edit_help_tool.tpl}
 </td>
 </tr>
-<tr><td class="formcolor">{tr}Body{/tr}<br/><br />{include file="textareaSize.tpl"}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Body{/tr}<br/><br />{include file="textareaSize.tpl" area_name='body' formId='editpageform'}</td><td class="formcolor">
 <b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br />
 <textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>

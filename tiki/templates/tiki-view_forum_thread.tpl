@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.41 2003-11-15 06:34:24 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.42 2003-11-20 17:51:06 sylvieg Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -176,7 +176,7 @@ a moderator approves it.{/tr}</small>
   {if $comments_threadId > 0}
     {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$smarty.request.comments_parentId}&amp;forumId={$forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
     {/if}
-    <form enctype="multipart/form-data" method="post" action="tiki-view_forum_thread.php">
+    <form enctype="multipart/form-data" method="post" action="tiki-view_forum_thread.php" id="editpageform">
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
     <input type="hidden" name="quote" value="{$quote|escape}" />
     <input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
@@ -212,11 +212,11 @@ a moderator approves it.{/tr}</small>
     {if $feature_smileys eq 'y'}
     <tr>
       <td class="formcolor">{tr}Smileys{/tr}</td>
-      <td class="formcolor">{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl"}</td>
+      <td class="formcolor">{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl" area_name='editpost'}</td>
      </tr>
     {/if}
     <tr>
-      <td class="formcolor">Comment</td>
+      <td class="formcolor">{tr}Comment{/tr}<br/><br />{include file="textareaSize.tpl" area_name='editpost' formId='editpageform'}</td>
       <td class="formcolor"><textarea id='editpost' name="comments_data" rows="8" cols="80">{$comment_data|escape}</textarea></td>
     </tr>
     {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}

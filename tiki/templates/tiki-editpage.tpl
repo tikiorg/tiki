@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.35 2003-11-11 20:39:15 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.36 2003-11-20 17:51:07 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -46,7 +46,7 @@
 {/if}
 {if $feature_smileys eq 'y'}
 <tr><td class="formcolor">{tr}Smileys{/tr}:</td><td class="formcolor">
-{include file="tiki-smileys.tpl"}
+{include file="tiki-smileys.tpl" area_name='editwiki'}
 </td>
 </tr>
 {/if}
@@ -54,7 +54,7 @@
 {if $feature_wiki_description eq 'y'}
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
-<tr><td class="formcolor">{tr}Edit{/tr}:<br/><br />{include file="textareaSize.tpl"}</td>
+<tr><td class="formcolor">{tr}Edit{/tr}:<br/><br />{include file="textareaSize.tpl" area_name='editwiki' formId='editpageform'}</td>
 <td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
