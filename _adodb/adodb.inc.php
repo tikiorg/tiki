@@ -559,9 +559,9 @@
 	/**
 	* PEAR DB Compat - do not use internally
 	*/
-	function &LimitQuery($sql, $offset, $count)
+	function &LimitQuery($sql, $offset, $count, $params = array())
 	{
-		$rs = &$this->SelectLimit($sql, $count, $offset); // swap 
+		$rs = &$this->SelectLimit($sql, $count, $offset, $params); // swap 
 		if (!$rs && defined('ADODB_PEAR')) return ADODB_PEAR_Error();
 		return $rs;
 	}
