@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.12 2003-11-21 00:56:06 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.13 2003-12-02 07:42:31 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -340,6 +340,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 $section = 'trackers';
 include_once ('tiki-section_options.php');
 
+$smarty->assign('uses_tabs', 'y');
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
 $smarty->display("tiki.tpl");

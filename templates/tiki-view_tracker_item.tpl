@@ -1,23 +1,138 @@
 <a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Editing tracker item{/tr}</a><br/><br/>
-<a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a>
+<table>
+<tr>
+<td class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></td>
 {if $tiki_p_admin_trackers eq 'y'}
-<a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a>
-<a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a>
+<td class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></td>
+<td class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></td>
 {if $user}
-<a href="tiki-view_tracker_item.php?itemId={$itemId}&amp;trackerId={$trackerId}&amp;monitor=1" class="linkbut">{tr}{$email_mon}{/tr}</a>
+<td class="button2"><a href="tiki-view_tracker_item.php?itemId={$itemId}&amp;trackerId={$trackerId}&amp;monitor=1" class="linkbut">{tr}{$email_mon}{/tr}</a></td>
 {/if}
 {/if}
-<a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a>
+<td class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></td>
+</tr></table>
 <br/><br/>
+
+
+{cycle name=tabs values="1,2,3,4,5" print=false advance=false}
+<div class="tabs">
+<span id="tab{cycle name=tabs}" class="tab tabActive">{tr}View{/tr}</span>
+{if $tracker_info.useComments eq 'y'}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Comments{/tr}</span>
+{/if}
+{if $tracker_info.useAttachments eq 'y'}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Attachements{/tr}</span>
+{/if}
+{if $tiki_p_modify_tracker_items eq 'y'}
+<span id="tab{cycle name=tabs}" class="tab">{tr}Edit{/tr}</span>
+{/if}
+</div>
+
+{cycle name=content values="1,2,3,4,5" print=false advance=false}
+{* --- tab with view --- *}
+<div id="content{cycle name=content}" class="content">
+<h3>{tr}View item{/tr}</h3>
+<table class="normal">
+{section name=ix loop=$ins_fields}
+<tr><td class="formcolor">{$ins_fields[ix].name}</td>
+<td class="formcolor">
+{$ins_fields[ix].value}
+</td>
+</tr>
+{/section}
+</table>
+</div>
+
+{* --- tab with comments *}
+{if $tracker_info.useComments eq 'y'}
+<div id="content{cycle name=content}" class="content">
+{if $tiki_p_comment_tracker_items eq 'y'}
+<h3>{tr}Add a comment{/tr}</h3>
+<form action="tiki-view_tracker_item.php" method="post">
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+<input type="hidden" name="itemId" value="{$itemId|escape}" />
+<input type="hidden" name="commentId" value="{$commentId|escape}" />
+<table class="normal">
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="comment_title" value="{$comment_title|escape}"/></td></tr>
+<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><textarea rows="4" cols="50" name="comment_data">{$comment_data|escape}</textarea></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save_comment" value="{tr}save{/tr}" /></td></tr>
+</table>
+</form>
+{/if}
+<h3>{tr}Comments{/tr}</h3>
+{section name=ix loop=$comments}
+<b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
+  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}">edit</a>|<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}">remove</a>]{/if}
+<br/>
+<small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br/>
+{$comments[ix].parsed}
+<hr/>
+{/section}
+</div>
+{/if}
+
+{* --- tab with attachements *}
+{if $tracker_info.useAttachments eq 'y'}
+<div id="content{cycle name=content}" class="content">
+{if $tiki_p_attach_trackers eq 'y'}
+<h3>{tr}Attach a file to this item{/tr}</h3>
+<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
+<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+<input type="hidden" name="itemId" value="{$itemId|escape}" />
+<input type="hidden" name="commentId" value="{$commentId|escape}" />
+<table class="normal">
+<tr>
+ <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file" />
+ {tr}comment{/tr}: <input type="text" name="attach_comment" maxlength="250" />
+ <input type="submit" name="attach" value="{tr}attach{/tr}" />
+ </td>
+</tr>
+</table>
+</form>
+{/if}
+<h3>{tr}Attachments{/tr}</h3>
+<table class="normal">
+<tr> 
+  <td  class="heading">{tr}name{/tr}</td>
+  <td  class="heading">{tr}uploaded{/tr}</td>
+  <td  class="heading">{tr}size{/tr}</td>
+  <td  class="heading">{tr}dls{/tr}</td>
+  <td  class="heading">{tr}desc{/tr}</td>
+</tr> 
+{cycle values="odd,even" print=false}
+{section name=ix loop=$atts}
+<tr>
+ <td class="{cycle advance=false}">
+ {$atts[ix].filename|iconify}
+ <a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
+ {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
+ <a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
+ {/if}
+ </td>
+ <td class="{cycle advance=false}">{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</td>
+ <td class="{cycle advance=false}">{$atts[ix].filesize}</td>
+ <td class="{cycle advance=false}">{$atts[ix].downloads}</td>
+ <td class="{cycle}">{$atts[ix].comment}</td>
+</tr>
+{sectionelse}
+<tr>
+ <td colspan="5">{tr}No attachments for this item{/tr}</td>
+</tr>
+{/section}
+</table>
+</div>
+{/if}
+
+{* --- tab with edit --- *}
+{if $tiki_p_modify_tracker_items eq 'y'}
+<div id="content{cycle name=content}" class="content">
+<h3>{tr}Edit item{/tr}</h3>
 <form action="tiki-view_tracker_item.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="itemId" value="{$itemId|escape}" />
 {section name=ix loop=$fields}
 <input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
 {/section}
-
-{if $tiki_p_modify_tracker_items eq 'y'}
-<h3>{tr}Edit item{/tr}</h3>
 <table class="normal">
 <tr><td class="formcolor">{tr}Status{/tr}</td>
 <td class="formcolor">
@@ -70,94 +185,8 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
-{else}
-<h3>{tr}View item{/tr}</h3>
-<table class="normal">
-{section name=ix loop=$ins_fields}
-<tr><td class="formcolor">{$ins_fields[ix].name}</td>
-<td class="formcolor">
-{$ins_fields[ix].value}
-</td>
-</tr>
-{/section}
-</table>
-</form>
+</div>
 {/if}
-
-{if $tracker_info.useComments eq 'y'}
-{if $tiki_p_comment_tracker_items eq 'y'}
-<h3>{tr}Add a comment{/tr}</h3>
-<form action="tiki-view_tracker_item.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<input type="hidden" name="itemId" value="{$itemId|escape}" />
-<input type="hidden" name="commentId" value="{$commentId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="comment_title" value="{$comment_title|escape}"/></td></tr>
-<tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><textarea rows="4" cols="50" name="comment_data">{$comment_data|escape}</textarea></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save_comment" value="{tr}save{/tr}" /></td></tr>
-</table>
-</form>
-{/if}
-<h3>{tr}Comments{/tr}</h3>
-{section name=ix loop=$comments}
-<b>{$comments[ix].title}</b> {if $comments[ix].user}{tr}by{/tr} {$comments[ix].user}{/if}
-  {if $tiki_p_admin_trackers eq 'y'}[<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;commentId={$comments[ix].commentId}">edit</a>|<a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;remove_comment={$comments[ix].commentId}">remove</a>]{/if}
-<br/>
-<small>{tr}posted on{/tr}: {$comments[ix].posted|tiki_short_datetime}</small><br/>
-{$comments[ix].parsed}
-<hr/>
-{/section}
-{/if}
-
-{if $tracker_info.useAttachments eq 'y'}
-{if $tiki_p_attach_trackers eq 'y'}
-<h3>{tr}Attach a file to this item{/tr}</h3>
-<form enctype="multipart/form-data" action="tiki-view_tracker_item.php" method="post">
-<input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<input type="hidden" name="itemId" value="{$itemId|escape}" />
-<input type="hidden" name="commentId" value="{$commentId|escape}" />
-<table class="normal">
-<tr>
- <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" /><input name="userfile1" type="file" />
- {tr}comment{/tr}: <input type="text" name="attach_comment" maxlength="250" />
- <input type="submit" name="attach" value="{tr}attach{/tr}" />
- </td>
-</tr>
-</table>
-</form>
-{/if}
-<h3>{tr}Attachments{/tr}</h3>
-<table class="normal">
-<tr> 
-  <td  class="heading">{tr}name{/tr}</td>
-  <td  class="heading">{tr}uploaded{/tr}</td>
-  <td  class="heading">{tr}size{/tr}</td>
-  <td  class="heading">{tr}dls{/tr}</td>
-  <td  class="heading">{tr}desc{/tr}</td>
-</tr> 
-{cycle values="odd,even" print=false}
-{section name=ix loop=$atts}
-<tr>
- <td class="{cycle advance=false}">
- {$atts[ix].filename|iconify}
- <a class="tablename" href="tiki-download_item_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
- {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
- <a class="link" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
- {/if}
- </td>
- <td class="{cycle advance=false}">{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</td>
- <td class="{cycle advance=false}">{$atts[ix].filesize}</td>
- <td class="{cycle advance=false}">{$atts[ix].downloads}</td>
- <td class="{cycle}">{$atts[ix].comment}</td>
-</tr>
-{sectionelse}
-<tr>
- <td colspan="5">{tr}No attachments for this item{/tr}</td>
-</tr>
-{/section}
-</table>
-{/if}
-
 
 <br/><br/>
 
