@@ -112,3 +112,5 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
+
+</div>
