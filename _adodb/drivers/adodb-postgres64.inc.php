@@ -1,6 +1,6 @@
 <?php
 /*
- V3.60 16 June 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+ V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -34,7 +34,8 @@ class ADODB_postgres64 extends ADOConnection{
 	var $_resultid = false;
   	var $concat_operator='||';
 	var $metaDatabasesSQL = "select datname from pg_database where datname not in ('template0','template1') order by 1";
-	var $metaTablesSQL = "select tablename from pg_tables where tablename not like 'pg\_%' order by 1";
+    var $metaTablesSQL = "select tablename,'T' from pg_tables where tablename not like 'pg\_%' union 
+        select viewname,'V' from pg_views where viewname not like 'pg\_%'";
 	//"select tablename from pg_tables where tablename not like 'pg_%' order by 1";
 	var $isoDates = true; // accepts dates in ISO format
 	var $sysDate = "CURRENT_DATE";
@@ -51,7 +52,8 @@ SELECT tablename FROM pg_tables WHERE tablename NOT LIKE 'pg_%' ORDER BY 1"
 */
 	var $metaColumnsSQL = "SELECT a.attname,t.typname,a.attlen,a.atttypmod,a.attnotnull,a.atthasdef,a.attnum 
 		FROM pg_class c, pg_attribute a,pg_type t 
-		WHERE relkind = 'r' AND c.relname='%s' AND a.attnum > 0 AND a.atttypid = t.oid AND a.attrelid = c.oid ORDER BY a.attnum";
+		WHERE relkind = 'r' AND (c.relname='%s' or c.relname = lower('%s'))
+AND a.attnum > 0 AND a.atttypid = t.oid AND a.attrelid = c.oid ORDER BY a.attnum";
 	// get primary key etc -- from Freek Dijkstra
 	var $metaKeySQL = "SELECT ic.relname AS index_name, a.attname AS column_name,i.indisunique AS unique_key, i.indisprimary AS primary_key FROM pg_class bc, pg_class ic, pg_index i, pg_attribute a WHERE bc.oid = i.indrelid AND ic.oid = i.indexrelid AND (i.indkey[0] = a.attnum OR i.indkey[1] = a.attnum OR i.indkey[2] = a.attnum OR i.indkey[3] = a.attnum OR i.indkey[4] = a.attnum OR i.indkey[5] = a.attnum OR i.indkey[6] = a.attnum OR i.indkey[7] = a.attnum) AND a.attrelid = bc.oid AND bc.relname = '%s'";
 	
@@ -88,6 +90,24 @@ SELECT tablename FROM pg_tables WHERE tablename NOT LIKE 'pg_%' ORDER BY 1"
 		$arr['description'] = $this->GetOne("select version()");
 		$arr['version'] = ADOConnection::_findvers($arr['description']);
 		return $arr;
+	}
+	
+		// format and return date string in database date format
+	function DBDate($d)
+	{
+		if (empty($d) && $d !== 0) return 'null';
+		
+		if (is_string($d)) $d = ADORecordSet::UnixDate($d);
+		return "TO_DATE(".adodb_date($this->fmtDate,$d).",'YYYY-MM-DD')";
+	}
+
+	
+	// format and return date string in database timestamp format
+	function DBTimeStamp($ts)
+	{
+		if (empty($ts) && $ts !== 0) return 'null';
+		if (is_string($ts)) $ts = ADORecordSet::UnixTimeStamp($ts);
+		return 'TO_DATE('.adodb_date($this->fmtTimeStamp,$ts).",'YYYY-MM-DD, HH24:MI:SS')";
 	}
 	
 	// get the last id - never tested
@@ -282,15 +302,15 @@ a different OID if a database must be reloaded. */
 	{ 
 		if (strlen($blob) > 24) return $blob;
 		
-		@pg_exec("begin"); 
-		$fd = @pg_lo_open($blob,"r");
+		@pg_exec($this->_connectionID,"begin"); 
+		$fd = @pg_lo_open($this->_connectionID,$blob,"r");
 		if ($fd === false) {
-			@pg_exec("commit");
+			@pg_exec($this->_connectionID,"commit");
 			return $blob;
 		}
 		$realblob = @pg_loreadall($fd); 
 		@pg_loclose($fd); 
-		@pg_exec("commit"); 
+		@pg_exec($this->_connectionID,"commit"); 
 		return $realblob;
 	} 
 	
@@ -329,13 +349,13 @@ a different OID if a database must be reloaded. */
 	{
 	global $ADODB_FETCH_MODE;
 	
-		if (strncmp(PHP_OS,"WIN",3) === 0) $table = strtolower($table);
+		if (strncmp(PHP_OS,'WIN',3) === 0) $table = strtolower($table);
 	
 		if (!empty($this->metaColumnsSQL)) { 
 			$save = $ADODB_FETCH_MODE;
 			$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
 			if ($this->fetchMode !== false) $savem = $this->SetFetchMode(false);
-			$rs = $this->Execute(sprintf($this->metaColumnsSQL,($table)));
+			$rs = $this->Execute(sprintf($this->metaColumnsSQL,$table,$table));
 			if (isset($savem)) $this->SetFetchMode($savem);
 			$ADODB_FETCH_MODE = $save;
 			
@@ -417,7 +437,8 @@ a different OID if a database must be reloaded. */
 					}
 				}
 				
-				$retarr[strtoupper($fld->name)] = $fld;	
+				if ($ADODB_FETCH_MODE == ADODB_FETCH_NUM) $retarr[] = $fld;	
+				else $retarr[strtoupper($fld->name)] = $fld;
 				
 				$rs->MoveNext();
 			}

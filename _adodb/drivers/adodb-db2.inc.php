@@ -1,6 +1,6 @@
 <?php
 /* 
-V3.60 16 June 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -77,12 +77,15 @@ class ADODB_DB2 extends ADODB_odbc {
 	var $concat_operator = '||';
 	var $sysDate = 'CURRENT_DATE';
 	var $sysTimeStamp = 'CURRENT TIMESTAMP';
+	// The complete string representation of a timestamp has the form 
+	// yyyy-mm-dd-hh.mm.ss.nnnnnn.
+	var $fmtTimeStamp = "'Y-m-d-H.i.s'";
 	var $ansiOuter = true;
 	var $identitySQL = 'values IDENTITY_VAL_LOCAL()';
 	
 	function ADODB_DB2()
 	{
-		if (strpos(PHP_OS,'WIN') !== false) $this->curmode = SQL_CUR_USE_ODBC;
+		if (strncmp(PHP_OS,'WIN',3) === 0) $this->curmode = SQL_CUR_USE_ODBC;
 		$this->ADODB_odbc();
 	}
 	
@@ -104,7 +107,7 @@ class ADODB_DB2 extends ADODB_odbc {
 		if ($this->_autocommit) $this->BeginTrans();
 		return $this->GetOne("select 1 as ignore from $tables where $where for update");
 	}
-	
+	/*
 	function &MetaTables($showSchema=false)
 	{
 	global $ADODB_FETCH_MODE;
@@ -130,6 +133,48 @@ class ADODB_DB2 extends ADODB_odbc {
 			if ($row[2] && strncmp($row[1],'SYS',3) != 0)
 				 if ($showSchema) $arr2[] = $row[1].'.'.$row[2];
 				 else $arr2[] = $row[2];
+		}
+		return $arr2;
+	}*/
+	
+	function &MetaTables($ttype=false,$showSchema=false)
+	{
+	global $ADODB_FETCH_MODE;
+	
+		$savem = $ADODB_FETCH_MODE;
+		$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+		$qid = odbc_tables($this->_connectionID);
+		
+		$rs = new ADORecordSet_odbc($qid);
+		
+		$ADODB_FETCH_MODE = $savem;
+		if (!$rs) return false;
+		
+		$rs->_has_stupid_odbc_fetch_api_change = $this->_has_stupid_odbc_fetch_api_change;
+		
+		$arr =& $rs->GetArray();
+		//print_r($arr);
+		
+		$rs->Close();
+		$arr2 = array();
+		
+		if ($ttype) {
+			$isview = strncmp($ttype,'V',1) === 0;
+		}
+		for ($i=0; $i < sizeof($arr); $i++) {
+		
+			if (!$arr[$i][2]) continue;
+			if (strncmp($arr[$i][1],'SYS',3) === 0) continue;
+			
+			$type = $arr[$i][3];
+			
+			if ($showSchema) $arr[$i][2] = $arr[$i][1].'.'.$arr[$i][2];
+			
+			if ($ttype) { 
+				if ($isview) {
+					if (strncmp($type,'V',1) === 0) $arr2[] = $arr[$i][2];
+				} else if (strncmp($type,'T',1) === 0) $arr2[] = $arr[$i][2];
+			} else if (strncmp($type,'S',1) !== 0) $arr2[] = $arr[$i][2];
 		}
 		return $arr2;
 	}
@@ -219,6 +264,12 @@ class  ADORecordSet_db2 extends ADORecordSet_odbc {
 
 	function MetaType($t,$len=-1,$fieldobj=false)
 	{
+		if (is_object($t)) {
+			$fieldobj = $t;
+			$t = $fieldobj->type;
+			$len = $fieldobj->max_length;
+		}
+		
 		switch (strtoupper($t)) {
 		case 'VARCHAR':
 		case 'CHAR':

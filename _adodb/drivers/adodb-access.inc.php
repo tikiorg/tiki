@@ -1,6 +1,6 @@
 <?php
 /* 
-V3.60 16 June 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. See License.txt. 
@@ -35,7 +35,7 @@ class  ADODB_access extends ADODB_odbc {
 	}
 	
 	function BeginTrans() { return false;}
-	
+/*
 	function &MetaTables()
 	{
 	global $ADODB_FETCH_MODE;
@@ -57,7 +57,7 @@ class  ADODB_access extends ADODB_odbc {
 				$arr2[] = $arr[$i][2];
 		}
 		return $arr2;
-	}
+	}*/
 }
 
  

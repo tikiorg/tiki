@@ -104,6 +104,7 @@ m - month; i.e. "01" to "12"
 M - month, textual, 3 letters; e.g. "Jan" 
 n - month without leading zeros; i.e. "1" to "12" 
 O - Difference to Greenwich time in hours; e.g. "+0200" 
+Q - Quarter, as in 1, 2, 3, 4 
 r - RFC 822 formatted date; e.g. "Thu, 21 Dec 2000 16:01:07 +0200" 
 s - seconds; i.e. "00" to "59" 
 S - English ordinal suffix for the day of the month, 2 characters; 
@@ -128,6 +129,10 @@ W - ISO-8601 week number of year, weeks starting on Monday
 
 </pre>
 
+FUNCTION adodb_date2($fmt, $isoDateString = false)
+Same as adodb_date, but 2nd parameter accepts iso date, eg.
+
+  adodb_date2('d-M-Y H:i','2003-12-25 13:01:34');
 
 FUNCTION adodb_gmdate($fmt, $timestamp = false)
 
@@ -169,6 +174,10 @@ c. Implement daylight savings, which looks awfully complicated, see
 
 
 CHANGELOG
+- 1 July 2003 0.09
+Added support for Q (Quarter).
+Added adodb_date2(), which accepts ISO date in 2nd param
+
 - 3 March 2003 0.08
 Added support for 'S' adodb_date() format char. Added constant ADODB_ALLOW_NEGATIVE_TS
 if you want PHP to handle negative timestamps between 1901 to 1969.
@@ -217,7 +226,7 @@ First implementation.
 /*
 	Version Number
 */
-define('ADODB_DATE_VERSION',0.08);
+define('ADODB_DATE_VERSION',0.09);
 
 /*
 	We check for Windows as only +ve ints are accepted as dates on Windows.
@@ -633,6 +642,22 @@ function adodb_gmdate($fmt,$d=false)
 	return adodb_date($fmt,$d,true);
 }
 
+function adodb_date2($fmt, $d=false, $is_gmt=false)
+{
+	if ($d !== false) {
+		if (!preg_match( 
+			"|^([0-9]{4})[-/\.]?([0-9]{1,2})[-/\.]?([0-9]{1,2})[ -]?(([0-9]{1,2}):?([0-9]{1,2}):?([0-9\.]{1,4}))?|", 
+			($d), $rr)) return adodb_date($fmt,false,$is_gmt);
+
+		if ($rr[1] <= 100 && $rr[2]<= 1) return adodb_date($fmt,false,$is_gmt);
+	
+		// h-m-s-MM-DD-YY
+		if (!isset($rr[5])) $d = adodb_mktime(0,0,0,$rr[2],$rr[3],$rr[1]);
+		else $d = @adodb_mktime($rr[5],$rr[6],$rr[7],$rr[2],$rr[3],$rr[1]);
+	}
+	
+	return adodb_date($fmt,$d,$is_gmt);
+}
 
 /**
 	Return formatted date based on timestamp $d
@@ -686,6 +711,7 @@ function adodb_date($fmt,$d=false,$is_gmt=false)
 		case 'y': $dates .= substr($year,strlen($year)-2,2); break;
 		// MONTH
 		case 'm': if ($month<10) $dates .= '0'.$month; else $dates .= $month; break;
+		case 'Q': $dates .= ($month+3)>>2; break;
 		case 'n': $dates .= $month; break;
 		case 'M': $dates .= date('M',mktime(0,0,0,$month,2,1971)); break;
 		case 'F': $dates .= date('F',mktime(0,0,0,$month,2,1971)); break;

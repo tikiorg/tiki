@@ -1,6 +1,6 @@
 <?php
 /*
-V3.60 16 June 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.  
+V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.  
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -35,7 +35,7 @@ class ADODB_ibase extends ADOConnection {
 	var $_transactionID;
 	var $metaTablesSQL = "select rdb\$relation_name from rdb\$relations where rdb\$relation_name not like 'RDB\$%'";
 	var $metaColumnsSQL = "select a.rdb\$field_name,b.rdb\$field_type,b.rdb\$field_length from rdb\$relation_fields a join rdb\$fields b on a.rdb\$field_source=b.rdb\$field_name where rdb\$relation_name ='%s'";
-	var $ibasetrans = IBASE_DEFAULT;
+	var $ibasetrans;
 	var $hasGenID = true;
 	var $_bindInputArray = true;
 	var $buffers = 0;
@@ -49,6 +49,7 @@ class ADODB_ibase extends ADOConnection {
 	
 	function ADODB_ibase() 
 	{
+		 if (defined('IBASE_DEFAULT')) $this->ibasetrans = IBASE_DEFAULT;
   	}
 	
 	function MetaPrimaryKeys($table,$owner_notused=false,$internalKey=false)
@@ -283,7 +284,7 @@ class ADODB_ibase extends ADOConnection {
 			
 			if (is_array($iarr)) {	
 				if (ADODB_PHPVER >= 0x4050) { // actually 4.0.4
-					$fnarr = array_merge( array($sql) , $iarr);
+					$fnarr =& array_merge( array($sql) , $iarr);
 					$ret = call_user_func_array($fn,$fnarr);
 				} else {
 					switch(sizeof($iarr)) {
@@ -304,7 +305,7 @@ class ADODB_ibase extends ADOConnection {
 		
 			if (is_array($iarr)) {	
 				if (ADODB_PHPVER >= 0x4050) { // actually 4.0.4
-					$fnarr = array_merge( array($conn,$sql) , $iarr);
+					$fnarr =& array_merge( array($conn,$sql) , $iarr);
 					$ret = call_user_func_array($fn,$fnarr);
 				} else {
 					switch(sizeof($iarr)) {
@@ -374,7 +375,9 @@ class ADODB_ibase extends ADOConnection {
 				}
 				$fld->type = $tt;
 				$fld->max_length = $rs->fields[2];
-				$retarr[strtoupper($fld->name)] = $fld;	
+				
+				if ($ADODB_FETCH_MODE == ADODB_FETCH_NUM) $retarr[] = $fld;	
+				else $retarr[strtoupper($fld->name)] = $fld;
 				
 				$rs->MoveNext();
 			}
@@ -588,7 +591,7 @@ class ADORecordset_ibase extends ADORecordSet
 		for ($i=0, $max = $this->_numOfFields; $i < $max; $i++) { 
 			if ($this->_cacheType[$i]=="BLOB") { 
 				if (isset($f[$i])) { 
-					$f[$i] = ADODB_ibase::_BlobDecode($f[$i]); 
+					$f[$i] = $this->_BlobDecode($f[$i]); 
 				} else { 
 					$f[$i] = null; 
 				} 
@@ -601,8 +604,10 @@ class ADORecordset_ibase extends ADORecordSet
 		// OPN stuff end 
 		
 		$this->fields = $f;
-		if ($this->fetchMode & ADODB_FETCH_ASSOC) {
-			$this->fields = $this->GetRowAssoc(ADODB_ASSOC_CASE);
+		if ($this->fetchMode == ADODB_FETCH_ASSOC) {
+			$this->fields = &$this->GetRowAssoc(ADODB_ASSOC_CASE);
+		} else if ($this->fetchMode == ADODB_FETCH_BOTH) {
+			$this->fields =& array_merge($this->fields,$this->GetRowAssoc(ADODB_ASSOC_CASE));
 		}
 		return true;
 	}

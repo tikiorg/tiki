@@ -1,7 +1,7 @@
 <?php
 /*
 
-  version V3.60 16 June 2003 (c) 2000-2003 John Lim. All rights reserved.
+  version V3.70 29 July 2003 (c) 2000-2003 John Lim. All rights reserved.
 
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
@@ -45,7 +45,7 @@ class ADODB_oci8 extends ADOConnection {
 	var $_stmt;
 	var $_commit = OCI_COMMIT_ON_SUCCESS;
 	var $_initdate = true; // init date to YYYY-MM-DD
-	var $metaTablesSQL = "select table_name from cat where table_type in ('TABLE','VIEW')";
+	var $metaTablesSQL = "select table_name,table_type from cat where table_type in ('TABLE','VIEW')";
 	var $metaColumnsSQL = "select cname,coltype,width, SCALE, PRECISION, NULLS, DEFAULTVAL from col where tname='%s' order by colno"; //changed by smondino@users.sourceforge. net
 	var $_bindInputArray = true;
 	var $hasGenID = true;
@@ -98,11 +98,13 @@ class ADODB_oci8 extends ADOConnection {
 			if ($rs->fields[1] == 'NUMBER' && $rs->fields[3] == 0) {
 				$fld->type ='INT';
 	     		$fld->max_length = $rs->fields[4];
-	    	}
-	   	
-			$fld->not_null = $rs->fields[5];
+	    	}	
+		   	$fld->not_null = (strncmp($rs->fields[5], 'NOT',3) === 0);
+			$fld->binary = (strpos($fld->type,'BLOB') !== false);
 			$fld->default_value = $rs->fields[6];
-			$retarr[strtoupper($fld->name)] = $fld; 
+			
+			if ($ADODB_FETCH_MODE == ADODB_FETCH_NUM) $retarr[] = $fld;	
+			else $retarr[strtoupper($fld->name)] = $fld;
 			$rs->MoveNext();
 		}
 		$rs->Close();
@@ -801,13 +803,52 @@ SELECT /*+ RULE */ distinct b.column_name
 			$arr =& $rs->GetArray();
 			$a = array();
 			foreach($arr as $v) {
-				$a[] = $v[0];
+				$a[] = reset($v);
 			}
 			return $a;
 		}
 		else return false;
 	}
 	
+	// http://gis.mit.edu/classes/11.521/sqlnotes/referential_integrity.html
+	function MetaForeignKeys($table, $owner=false)
+	{
+	global $ADODB_FETCH_MODE;
+	
+		$save = $ADODB_FETCH_MODE;
+		$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+		$table = $this->qstr(strtoupper($table));
+		if (!$owner) {
+			$owner = $this->user;
+			$tabp = 'user_';
+		} else
+			$tabp = 'all_';
+			
+		$owner = ' and owner='.$this->qstr(strtoupper($owner));
+		
+		$sql = 
+"select constraint_name,r_owner,r_constraint_name 
+	from {$tabp}constraints
+	where constraint_type = 'R' and table_name = $table $owner";
+		
+		$constraints =& $this->GetArray($sql);
+		$arr = false;
+		foreach($constraints as $constr) {
+			$cons = $this->qstr($constr[0]);
+			$rowner = $this->qstr($constr[1]);
+			$rcons = $this->qstr($constr[2]);
+			$cols = $this->GetArray("select column_name from {$tabp}cons_columns where constraint_name=$cons $owner order by position");
+			$tabcol = $this->GetArray("select table_name,column_name from {$tabp}cons_columns where owner=$rowner and constraint_name=$rcons order by position");
+			
+			if ($cols && $tabcol) 
+				for ($i=0, $max=sizeof($cols); $i < $max; $i++) {
+					$arr[$tabcol[$i][0]] = $cols[$i][0].'='.$tabcol[$i][1];
+				}
+		}
+		$ADODB_FETCH_MODE = $save;
+		
+		return $arr;
+	}
 
 	
 	function CharMax()
@@ -896,6 +937,14 @@ class ADORecordset_oci8 extends ADORecordSet {
 			$this->_currentRow = 0;
 			@$this->_initrs();
 			$this->EOF = !$this->_fetch(); 	
+			
+			/*
+			// based on idea by Gaetano Giunta to detect unusual oracle errors
+			// see http://phplens.com/lens/lensforum/msgs.php?id=6771
+			$err = OCIError($this->_queryID);
+			if ($err && $this->connection->debug) ADOConnection::outp($err);
+			*/
+			
 			if (!is_array($this->fields)) {
 				$this->_numOfRows = 0;
 				$this->fields = array();
@@ -932,9 +981,10 @@ class ADORecordset_oci8 extends ADORecordSet {
 		$fld->type = OCIcolumntype($this->_queryID, $fieldOffset);
 		$fld->max_length = OCIcolumnsize($this->_queryID, $fieldOffset);
 	 	if ($fld->type == 'NUMBER') {
-	 		//$p = OCIColumnPrecision($this->_queryID, $fieldOffset);
+	 		$p = OCIColumnPrecision($this->_queryID, $fieldOffset);
 			$sc = OCIColumnScale($this->_queryID, $fieldOffset);
-			if ($sc == 0) $fld->type = 'INT';
+			if ($p != 0 && $sc == 0) $fld->type = 'INT';
+			//echo " $this->name ($p.$sc) ";
 	 	}
 		return $fld;
 	}

@@ -1,6 +1,6 @@
 <?php
 /* 
-V3.60 16 June 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -237,7 +237,9 @@ class ADODB_odbc extends ADOConnection {
 		return $arr2;
 	}
 	
-	function &MetaTables()
+	
+	
+	function &MetaTables($ttype=false)
 	{
 	global $ADODB_FETCH_MODE;
 	
@@ -252,13 +254,23 @@ class ADODB_odbc extends ADOConnection {
 		
 		$rs->_has_stupid_odbc_fetch_api_change = $this->_has_stupid_odbc_fetch_api_change;
 		
-		//print_r($rs);
 		$arr =& $rs->GetArray();
+		//print_r($arr);
 		
 		$rs->Close();
 		$arr2 = array();
+		
+		if ($ttype) {
+			$isview = strncmp($ttype,'V',1) === 0;
+		}
 		for ($i=0; $i < sizeof($arr); $i++) {
-			if ($arr[$i][2]) $arr2[] = $arr[$i][2];
+			if (!$arr[$i][2]) continue;
+			$type = $arr[$i][3];
+			if ($ttype) { 
+				if ($isview) {
+					if (strncmp($type,'V',1) === 0) $arr2[] = $arr[$i][2];
+				} else if (strncmp($type,'SYS',3) !== 0) $arr2[] = $arr[$i][2];
+			} else if (strncmp($type,'SYS',3) !== 0) $arr2[] = $arr[$i][2];
 		}
 		return $arr2;
 	}
@@ -452,11 +464,12 @@ class ADODB_odbc extends ADOConnection {
 					return false;
 				}
 			}
+			
 			if (! odbc_execute($stmtid,$inputarr)) {
 				//@odbc_free_result($stmtid);
 				return false;
 			}
-			
+		
 		} else if (is_array($sql)) {
 			$stmtid = $sql[1];
 			if (!odbc_execute($stmtid)) {
@@ -597,7 +610,7 @@ class ADORecordSet_odbc extends ADORecordSet {
 		$this->fetchMode = $savem;
 		
 		if ($this->fetchMode & ADODB_FETCH_ASSOC) {
-			$this->fields = $this->GetRowAssoc(ADODB_ASSOC_CASE);
+			$this->fields =& $this->GetRowAssoc(ADODB_ASSOC_CASE);
 		}
 		
 		$results = array();
@@ -622,7 +635,7 @@ class ADORecordSet_odbc extends ADORecordSet {
 				$rez = @odbc_fetch_into($this->_queryID,$row,$this->fields);
 			if ($rez) {
 				if ($this->fetchMode & ADODB_FETCH_ASSOC) {
-					$this->fields = $this->GetRowAssoc(ADODB_ASSOC_CASE);
+					$this->fields =& $this->GetRowAssoc(ADODB_ASSOC_CASE);
 				}
 				return true;
 			}
@@ -642,7 +655,7 @@ class ADORecordSet_odbc extends ADORecordSet {
 		
 		if ($rez) {
 			if ($this->fetchMode & ADODB_FETCH_ASSOC) {
-				$this->fields = $this->GetRowAssoc(ADODB_ASSOC_CASE);
+				$this->fields =& $this->GetRowAssoc(ADODB_ASSOC_CASE);
 			}
 			return true;
 		}

@@ -1,6 +1,6 @@
 <?php
 /*
-V3.60 16 June 2003  (c) 2000-2003 John Lim. All rights reserved.
+V3.70 29 July 2003  (c) 2000-2003 John Lim. All rights reserved.
   Released under both BSD license and Lesser GPL library license.
   Whenever there is any discrepancy between the two licenses,
   the BSD license will take precedence.
@@ -23,7 +23,12 @@ class ADODB_informix72 extends ADOConnection {
 	var $hasInsertID = true;
 	var $hasAffectedRows = true;
 	var $metaTablesSQL="select tabname from systables";
-	var $metaColumnsSQL = "select colname, coltype, collength from syscolumns c, systables t where c.tabid=t.tabid and tabname='%s'";
+	var $metaColumnsSQL = 
+"select c.colname, c.coltype, c.collength, d.default 
+	from syscolumns c, systables t,sysdefaults d 
+	where c.tabid=t.tabid and d.tabid=t.tabid and d.colno=c.colno and tabname='%s'";
+
+//	var $metaColumnsSQL = "select colname, coltype, collength from syscolumns c, systables t where c.tabid=t.tabid and tabname='%s'";
 	var $concat_operator = '||';
 
 	var $lastQuery = false;
@@ -36,12 +41,17 @@ class ADODB_informix72 extends ADOConnection {
    
 	function ADODB_informix72()
 	{
-
 		// alternatively, use older method:
 		//putenv("DBDATE=Y4MD-");
 
 		// force ISO date format
 		putenv('GL_DATE=%Y-%m-%d');
+		
+		if (function_exists('ifx_byteasvarchar')) {
+			ifx_byteasvarchar(1); // Mode "0" will return a blob id, and mode "1" will return a varchar with text content. 
+        	ifx_textasvarchar(1); // Mode "0" will return a blob id, and mode "1" will return a varchar with text content. 
+        	ifx_blobinfile_mode(0); // Mode "0" means save Byte-Blobs in memory, and mode "1" means save Byte-Blobs in a file.
+		}
 	}
 
 	function _insertid()
@@ -95,7 +105,8 @@ class ADODB_informix72 extends ADOConnection {
 	/*	Returns: the last error message from previous database operation
 		Note: This function is NOT available for Microsoft SQL Server.	*/
 
-	function ErrorMsg() {
+	function ErrorMsg() 
+	{
 		$this->_errorMsg = ifx_errormsg();
 		return $this->_errorMsg;
 	}
@@ -105,7 +116,45 @@ class ADODB_informix72 extends ADOConnection {
 	  return ifx_error();
    }
 
-   function &MetaColumns($table)
+   
+    function &MetaColumns($table)
+	{
+	global $ADODB_FETCH_MODE;
+	
+		if (!empty($this->metaColumnsSQL)) {
+			$save = $ADODB_FETCH_MODE;
+			$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+			if ($this->fetchMode !== false) $savem = $this->SetFetchMode(false);
+          		$rs = $this->Execute(sprintf($this->metaColumnsSQL,$table));
+			if (isset($savem)) $this->SetFetchMode($savem);
+			$ADODB_FETCH_MODE = $save;
+			if ($rs === false) return false;
+
+			$retarr = array();
+			while (!$rs->EOF) { //print_r($rs->fields);
+				$fld = new ADOFieldObject();
+				$fld->name = $rs->fields[0];
+				$fld->type = $rs->fields[1];
+				$fld->max_length = $rs->fields[2];
+				if (trim($rs->fields[3]) != "AAAAAA 0") {
+	                    		$fld->has_default = 1;
+	                    		$fld->default_value = $rs->fields[3];
+				} else {
+					$fld->has_default = 0;
+				}
+
+                $retarr[strtolower($fld->name)] = $fld;	
+				$rs->MoveNext();
+			}
+
+			$rs->Close();
+			return $retarr;	
+		}
+
+		return false;
+	}
+	
+   function &xMetaColumns($table)
    {
 		return ADOConnection::MetaColumns($table,false);
    }

@@ -1,6 +1,6 @@
 <?php
 /* 
-V3.60 16 June 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -93,7 +93,7 @@ GLOBAL $ADODB_vers,$ADODB_CACHE_DIR,$ADODB_FETCH_MODE, $HTTP_GET_VARS,$ADODB_COU
 	if (defined('ADODB_EXTENSION')) $ext = ' &nbsp; Extension '.ADODB_EXTENSION.' installed';
 	else $ext = '';
 	print "<h3>ADODB Version: $ADODB_vers Host: <i>$db->host</i> &nbsp; Database: <i>$db->database</i> &nbsp; PHP: $phpv $ext</h3>";
-	
+	flush();
 	$arr = $db->ServerInfo();
 	print_r($arr);
 	echo "<br>";
@@ -145,7 +145,6 @@ GLOBAL $ADODB_vers,$ADODB_CACHE_DIR,$ADODB_FETCH_MODE, $HTTP_GET_VARS,$ADODB_COU
 		}
 	}
 	$rs = &$db->Execute("delete from ADOXYZ"); // some ODBC drivers will fail the drop so we delete
-	
 	if ($rs) {
 		if(! $rs->EOF) print "<b>Error: </b>RecordSet returned by Execute('delete...') should show EOF</p>";
 		$rs->Close();
@@ -210,10 +209,27 @@ GLOBAL $ADODB_vers,$ADODB_CACHE_DIR,$ADODB_FETCH_MODE, $HTTP_GET_VARS,$ADODB_COU
 		$a = $db->MetaTables();
 		if ($a===false) print "<b>MetaTables not supported</b></p>";
 		else {
+			print "Array of tables and views: "; 
+			foreach($a as $v) print " ($v) ";
+			print '</p>';
+		}
+		
+		$a = $db->MetaTables('VIEW');
+		if ($a===false) print "<b>MetaTables not supported</b></p>";
+		else {
+			print "Array of views: "; 
+			foreach($a as $v) print " ($v) ";
+			print '</p>';
+		}
+		
+		$a = $db->MetaTables('TABLE');
+		if ($a===false) print "<b>MetaTables not supported</b></p>";
+		else {
 			print "Array of tables: "; 
 			foreach($a as $v) print " ($v) ";
 			print '</p>';
 		}
+		
 		$db->debug=1;
 		$a = $db->MetaColumns('ADOXYZ');
 		if ($a===false) print "<b>MetaColumns not supported</b></p>";
@@ -239,7 +255,18 @@ GLOBAL $ADODB_vers,$ADODB_CACHE_DIR,$ADODB_FETCH_MODE, $HTTP_GET_VARS,$ADODB_COU
 		print "<p>Encode=".$db->BlobEncode("abc\0d\"'
 ef")."</p>";//'
 		break;
+	
+	case 'odbc_mssql':
+	case 'mssqlpo':
+		print "<p>Testing Foreign Keys</p>";
+		$arr = $db->MetaForeignKeys('Orders',false,true);
+		print_r($arr);
+		if (!$arr) Err("Bad MetaForeignKeys");
+		break;
+	
 	case 'mssql': 
+	
+		
 /*
 ASSUME Northwind available...
 
@@ -318,6 +345,10 @@ GO
 		$saved = $db->debug;
 		$db->debug=true;
 		
+		print "<h4>Testing Foreign Keys</h4>";
+		$arr = $db->MetaForeignKeys('emp');
+		print_r($arr);
+		if (!$arr) Err("Bad MetaForeignKeys");
 		print "<h4>Testing Cursor Variables</h4>";
 /*
 -- TEST PACKAGE
@@ -602,9 +633,9 @@ END adodb;
 	$A=0;
 	if ($rs && !$rs->EOF) {
 		if (empty($rs->connection)) print "<b>Connection object missing from recordset</b></br>";
-		if (trim($rs->fields[1]) != 'Wai Hun') Err("Error 1");
+		if (trim($rs->fields[1]) != 'Wai Hun') Err("Error 1 ".$rs->fields[1]);
 		$rs->MoveNext();
-		if (trim($rs->fields[1]) != 'Steven') Err("Error 2");
+		if (trim($rs->fields[1]) != 'Steven') Err("Error 2 ".$rs->fields[1]);
 		$rs->MoveNext();
 		if (! $rs->EOF) {
 			Err("Error EOF");
@@ -752,6 +783,29 @@ END adodb;
 	}
 	
 	$db->debug = false;
+	
+	// phplens
+	
+	$sql = 'select * from ADOXYZ where 0=1';
+	echo "<p>**Testing '$sql' (phplens compat 1)</p>";
+	$rs = &$db->Execute($sql);
+	if (!$rs) err( "<b>No recordset returned for '$sql'</b>");
+	if (!$rs->FieldCount()) err( "<b>No fields returned for $sql</b>");
+	if (!$rs->FetchField(1)) err( "<b>FetchField failed for $sql</b>");
+	
+	$sql = 'select * from ADOXYZ order by 1';
+	echo "<p>**Testing '$sql' (phplens compat 2)</p>";
+	$rs = &$db->Execute($sql);
+	if (!$rs) err( "<b>No recordset returned for '$sql'<br>".$db->ErrorMsg()."</b>");
+	
+	
+	$sql = 'select * from ADOXYZ order by 1,1';
+	echo "<p>**Testing '$sql' (phplens compat 3)</p>";
+	$rs = &$db->Execute($sql);
+	if (!$rs) err( "<b>No recordset returned for '$sql'<br>".$db->ErrorMsg()."</b>");
+	
+	
+	// Move
 	$rs1 = &$db->Execute("select id from ADOXYZ where id <= 2 order by 1");
 	$rs2 = &$db->Execute("select id from ADOXYZ where id = 3 or id = 4 order by 1");
 
@@ -883,7 +937,18 @@ END adodb;
 	print "<p>Test SQLDate: ".htmlspecialchars($sql)."</p>";
 	$rs = $db->SelectLimit($sql,1);
 	$d = date('d-m-M-Y-').'Q'.(ceil(date('m')/3.0)).date(' h:i:s A');
-	if ($d != $rs->fields[0]) Err("SQLDate failed expected: <br>act:$d <br>sql:".$rs->fields[0]);
+	if (!$rs) Err("SQLDate query returned no recordset");
+	else if ($d != $rs->fields[0]) Err("SQLDate 1 failed expected: <br>act:$d <br>sql:".$rs->fields[0]);
+	
+	$date = $db->SQLDate('d-m-M-Y-\QQ h:i:s A',$db->DBDate("1974-02-25"));
+	$sql = "SELECT $date from ADOXYZ";
+	print "<p>Test SQLDate: ".htmlspecialchars($sql)."</p>";
+	$rs = $db->SelectLimit($sql,1);
+	$ts = ADOConnection::UnixDate('1974-02-25');
+	$d = date('d-m-M-Y-',$ts).'Q'.(ceil(date('m',$ts)/3.0)).date(' h:i:s A',$ts);
+	if (!$rs) Err("SQLDate query returned no recordset");
+	else if ($d != $rs->fields[0]) Err("SQLDate 2 failed expected: <br>act:$d <br>sql:".$rs->fields[0]);
+	
 	
 	print "<p>Test Filter</p>";
 	$db->debug = 1;
@@ -1140,8 +1205,6 @@ global $TESTERRS,$ERRNO;
 //--------------------------------------------------------------------------------------
 
 
-error_reporting(E_ALL);
-
 set_time_limit(240); // increase timeout
 
 include("../tohtml.inc.php");
@@ -1149,7 +1212,7 @@ include("../adodb.inc.php");
 include("../rsfilter.inc.php");
 
 /* White Space Check */
-if (@$HTTP_SERVER_VARS['COMPUTERNAME'] == 'JAGUAR') {
+if (@$HTTP_SERVER_VARS['COMPUTERNAME'] == 'TIGRESS') {
 	CheckWS('mysqlt');
 	CheckWS('postgres');
 	CheckWS('oci8po');
@@ -1175,12 +1238,14 @@ if (sizeof($HTTP_GET_VARS) == 0) $testmysql = true;
 
 
 foreach($HTTP_GET_VARS as $k=>$v)  {
-	global $$k;
-		
+	//global $$k;
 	$$k = $v;
 }	
-
-
+if (strpos(PHP_VERSION,'5') === 0) {
+	//$testaccess=1;
+	//$testmssql = 1;
+	//$testsqlite=1;
+}
 ?>
 <html>
 <title>ADODB Testing</title>
@@ -1197,6 +1262,7 @@ For the latest version of ADODB, visit <a href=http://php.weblogs.com/ADODB>php.
 <input type=checkbox name="testmssql" value=1 <?php echo !empty($testmssql) ? 'checked' : '' ?>> <b>MSSQL</b><br>
  <input type=checkbox name="testmysql" value=1 <?php echo !empty($testmysql) ? 'checked' : '' ?>> <b>MySQL</b><br>
 <input type=checkbox name="testmysqlodbc" value=1 <?php echo !empty($testmysqlodbc) ? 'checked' : '' ?>> <b>MySQL ODBC</b><br>
+<input type=checkbox name="testsqlite" value=1 <?php echo !empty($testsqlite) ? 'checked' : '' ?>> <b>SQLite</b><br>
 <input type=checkbox name="testproxy" value=1 <?php echo !empty($testproxy) ? 'checked' : '' ?>> <b>MySQL Proxy</b><br>
 <input type=checkbox name="testoracle" value=1 <?php echo !empty($testoracle) ? 'checked' : '' ?>> <b>Oracle (oci8)</b> <br>
 <input type=checkbox name="testpostgres" value=1 <?php echo !empty($testpostgres) ? 'checked' : '' ?>> <b>PostgreSQL</b><br>
