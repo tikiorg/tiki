@@ -95,7 +95,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 						<option value="{$pkgs[ix].name|escape}">{$pkgs[ix].desc}</option>
 					{/section}
 				</select>
-				<a href="http://tikiwiki.org/tiki-index.php?page=TikiApps" class="link">Descriptions of the available packages</a>
+				<a href="http://tikiwiki.org/tiki-index.php?page=TikiPackages" class="link">Descriptions of the available packages</a>
 			</td></tr>
 			<tr><td>
 				<input type="checkbox" name="runScript" />Run database script (may destroy data)
@@ -164,7 +164,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		          </table>
 		      </form>
 		  {/if}
-    	  {else}
+    	  {/if}
+    	  {if $dbdone eq 'y' or $install_pkg eq 'y'}
     		<b>Print operations executed successfully</b><br/>
     		<textarea rows="15" cols="80">
     		{section loop=$succcommands name=ix}
@@ -177,6 +178,8 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
     		{$failedcommands[ix]}
     		{/section}
     		</textarea><br/><br/>
+	  {/if}
+    	  {if $dbdone eq 'y' and $install_pkg ne 'y'}
     		Your database has been configured and Tiki is ready to run, if
     		this is your first install your admin password is 'admin'. You can
     		now log in into Tiki as 'admin' - 'admin' and start configuring
