@@ -8,7 +8,9 @@
 <body bgcolor=white>
 <table width=100% border=0><tr><td><h2>Tips on Writing Portable SQL &nbsp;</h2></td><td>
  <div align=right><img src="cute_icons_for_site/adodb.gif"></div></td></tr></table>
- 
+  <p>Updated 18 Sep 2003. Added Portable Native SQL section.
+<p>
+
  If you are writing an application that is used in multiple environments and 
   operating systems, you need to plan to support multiple databases. This article 
   is based on my experiences with multiple database systems, stretching from 4th 
@@ -158,6 +160,78 @@ SELECT col1, col2, null FROM t1 <br>	   WHERE t1.col not in (select distinct col
 <p>ADOdb supports portable Prepare/Execute with:</p>
 <pre>$stmt = $db-&gt;Prepare('select * from customers where custid=? and state=?');
 $rs = $db-&gt;Execute($stmt, array($id,'New York'));</pre>
+<p>Oracle uses named bind placeholders, not "?", so to support portable binding, we have Param() that generates 
+the correct placeholder (available since ADOdb 3.92):
+<pre><font color="#000000">$sql = <font color="#993300">'insert into table (col1,col2) values ('</font>.$DB-&gt;Param('a').<font color="#993300">','</font>.$DB-&gt;Param('b').<font color="#993300">')'</font>;
+<font color="#006600"># generates 'insert into table (col1,col2) values (?,?)'
+# or        'insert into table (col1,col2) values (:a,:b)</font>'
+$stmt = $DB-&gt;Prepare($sql);
+$stmt = $DB-&gt;Execute($stmt,array('one','two'));
+</font></pre>
+<a name="native"></a>
+<h2>Portable Native SQL</h2>
+<p>ADOdb provides the following functions for portably generating SQL functions 
+  as strings to be merged into your SQL statements (some are only available since 
+  ADOdb 3.92): </p>
+<table width="75%" border="1" align=center>
+  <tr> 
+    <td width=30%><b>Function</b></td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr> 
+    <td>DBDate($date)</td>
+    <td>Pass in a UNIX timestamp or ISO date and it will convert it to a date 
+      string formatted for INSERT/UPDATE</td>
+  </tr>
+  <tr> 
+    <td>DBTimeStamp($date)</td>
+    <td>Pass in a UNIX timestamp or ISO date and it will convert it to a timestamp 
+      string formatted for INSERT/UPDATE</td>
+  </tr>
+  <tr> 
+    <td>SQLDate($date, $fmt)</td>
+    <td>Portably generate a date formatted using $fmt mask, for use in SELECT 
+      statements.</td>
+  </tr>
+  <tr> 
+    <td>OffsetDate($date, $ndays)</td>
+    <td>Portably generate a $date offset by $ndays.</td>
+  </tr>
+  <tr> 
+    <td>Concat($s1, $s2, ...)</td>
+    <td>Portably concatenate strings. Alternatively, for mssql use mssqlpo driver, 
+      which allows || operator.</td>
+  </tr>
+  <tr> 
+    <td>IfNull($fld, $replaceNull)</td>
+    <td>Returns a string that is the equivalent of MySQL IFNULL or Oracle NVL.</td>
+  </tr>
+  <tr>
+    <td>Param($name)</td>
+    <td>Generates bind placeholders, using ? or named conventions as appropriate.</td>
+  </tr>
+  <tr><td>$db->sysDate</td><td>Property that holds the SQL function that returns today's date</td>
+</tr>
+<tr><td>$db->sysTimeStamp</td><td>Property that holds the SQL function that returns the current
+timestamp (date+time).
+</td>
+</tr>
+<tr>
+<td>$db->concat_operator</td><td>Property that holds the concatenation operator
+</td>
+</tr>
+<tr><td>$db->length</td><td>Property that holds the name of the SQL strlen function.
+</td></tr>
+
+<tr><td>$db->upperCase</td><td>Property that holds the name of the SQL strtoupper function.
+</td></tr>
+<tr><td>$db->random</td><td>Property that holds the SQL to generate a random number between 0.00 and 1.00.
+</td>
+</tr>
+<tr><td>$db->substr</td><td>Property that holds the name of the SQL substring function.
+</td></tr>
+</table>
+<p>&nbsp; </p>
 <h2>DDL and Tuning</h2>
 There are database design tools such as ERWin or Dezign that allow you to generate data definition language commands such as ALTER TABLE or CREATE INDEX from Entity-Relationship diagrams. 
 <p>
@@ -218,6 +292,9 @@ $conn->UpdateBlob('blobtable','blobcol',$blobvalue,'id=1');
   ambiguities when you use the ANY and EXISTS operators. However if your database 
   has significant amounts of missing or unknown data, using nulls might be a good 
   idea. 
+  <p>
+  ADOdb also supports a portable <a href=http://phplens.com/adodb/reference.functions.concat.html#ifnull>IfNull</a> function, so you can define what to display
+  if the field contains a null.
 <h3><b>Stored Procedures</b></h3>
 <p>Stored procedures are another problem area. Some databases allow recordsets 
   to be returned in a stored procedure (Microsoft SQL Server and Sybase), and 
@@ -279,7 +356,7 @@ your data carefully. Understand how joins and indexes work and how they are used
   <a href="http://php.weblogs.com/sql_tutorial">http://php.weblogs.com/sql_tutorial</a>. 
   Also read this article on <a href=http://phplens.com/lens/php-book/optimizing-debugging-php.php>Optimizing PHP</a>.
 <p>
-<font size=1>(c) 2002 John Lim.</font>
+<font size=1>(c) 2002-2003 John Lim.</font>
 
 </body>
 </html>
