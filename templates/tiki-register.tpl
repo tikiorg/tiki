@@ -16,7 +16,7 @@
 {/if}
 {if $rnd_num_reg eq 'y'}
 <tr><td class="formcolor">{tr}Registration code{/tr}:</td>
-<td class="formcolor"><input  type="text" maxlength="5" size="5" name="regcode" /></td></tr>
+<td class="formcolor"><input  type="text" maxlength="8" size="8" name="regcode" /></td></tr>
 {/if}
 <tr><td class="formcolor">{tr}Password{/tr}:</td><td class="formcolor"><input id='pass1' type="password" name="pass" /></td></tr>
 <tr><td class="formcolor">{tr}Repeat password{/tr}:</td><td class="formcolor"><input id='pass2' type="password" name="pass2" /></td></tr>
