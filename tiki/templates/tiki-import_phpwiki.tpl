@@ -1,4 +1,25 @@
-<a class="pagetitle" href="tiki-import_phpwiki.php">{tr}Import pages from a PHPWiki Dump{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-import_phpwiki.php">{tr}Import pages from a PHPWiki Dump{/tr}</a>
+
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=ImportingPagesAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ImportingPagesPhpWikiPageAdmin{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-import_phpwiki.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}tiki-import_phpwiki tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+<br/><br/>
 
 <form method="post" action="tiki-import_phpwiki.php">
 <table class="normal">
