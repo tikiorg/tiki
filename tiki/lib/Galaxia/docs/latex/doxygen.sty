@@ -3,8 +3,6 @@
 \RequirePackage{calc}
 \RequirePackage{array}
 \pagestyle{fancyplain}
-\addtolength{\headwidth}{\marginparsep}
-\addtolength{\headwidth}{\marginparwidth}
 \newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
@@ -12,8 +10,8 @@
         {\fancyplain{}{\bfseries\rightmark}}
 \rhead[\fancyplain{}{\bfseries\leftmark}]
         {\fancyplain{}{\bfseries\thepage}}
-\rfoot[\fancyplain{}{\bfseries\scriptsize Generated on Fri Apr 25 16:07:18 2003 for Galaxia by Doxygen }]{}
-\lfoot[]{\fancyplain{}{\bfseries\scriptsize Generated on Fri Apr 25 16:07:18 2003 for Galaxia by Doxygen }}
+\rfoot[\fancyplain{}{\bfseries\scriptsize Generated on Tue Sep 30 01:24:48 2003 for Galaxia by Doxygen }]{}
+\lfoot[]{\fancyplain{}{\bfseries\scriptsize Generated on Tue Sep 30 01:24:48 2003 for Galaxia by Doxygen }}
 \cfoot{}
 \newenvironment{CompactList}
 {\begin{list}{}{
@@ -63,3 +61,4 @@
 \setlength{\parskip}{0.2cm}
 \addtocounter{secnumdepth}{1}
 \sloppy
+\usepackage[T1]{fontenc}

@@ -1,13 +1,11 @@
 <?php
+include_once(GALAXIA_LIBRARY.'/src/ProcessManager/BaseManager.php');
 //!! ProcessManager
 //! A class to maniplate processes.
 /*!
   This class is used to add,remove,modify and list
   processes.
 */
-
-
-
 class ProcessManager extends BaseManager {
   var $parser;
   var $tree;
@@ -32,7 +30,7 @@ class ProcessManager extends BaseManager {
   */
   function activate_process($pId)
   {
-  	$query = "update galaxia_processes set isActive='y' where pId=$pId";
+  	$query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive='y' where pId=$pId";
     $this->query($query);  
     $msg = sprintf(tra('Process %d has been activated'),$pId);
     $this->notify_all(3,$msg);
@@ -43,7 +41,7 @@ class ProcessManager extends BaseManager {
   */
   function deactivate_process($pId)
   {
-    $query = "update galaxia_processes set isActive='n' where pId=$pId";
+    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isActive='n' where pId=$pId";
     $this->query($query);  
     $msg = sprintf(tra('Process %d has been deactivated'),$pId);
     $this->notify_all(3,$msg);
@@ -65,7 +63,7 @@ class ProcessManager extends BaseManager {
 	$out.='   <description>'.htmlspecialchars($proc_info['description']).'</description>'."\n";
     $out.= '  <lastModif>'.date("d/m/Y [h:i:s]",$proc_info['lastModif']).'</lastModif>'."\n";
 	$out.= '  <sharedCode><![CDATA[';
-	$fp=fopen("lib/Galaxia/processes/$procname/code/shared.php","r");
+	$fp=fopen(GALAXIA_PROCESSES."/$procname/code/shared.php","r");
 	while(!feof($fp)) {
 	  $line=fread($fp,8192);
 	  $out.=$line;
@@ -73,7 +71,7 @@ class ProcessManager extends BaseManager {
 	fclose($fp);
 	$out.= '  ]]></sharedCode>'."\n";
 	// Now loop over activities
-	$query = "select * from galaxia_activities where pId=$pId";
+	$query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId";
 	$result = $this->query($query);
 	$out.='  <activities>'."\n";
 	$am = new ActivityManager($this->db);
@@ -94,7 +92,7 @@ class ProcessManager extends BaseManager {
 		}	
 		$out.='      </roles>'."\n";
 		$out.='      <code><![CDATA[';
-		$fp=fopen("lib/Galaxia/processes/$procname/code/activities/$name.php","r");
+		$fp=fopen(GALAXIA_PROCESSES."/$procname/code/activities/$name.php","r");
 		while(!feof($fp)) {
 	  		$line=fread($fp,8192);
 	  		$out.=$line;
@@ -103,7 +101,7 @@ class ProcessManager extends BaseManager {
 		$out.='      ]]></code>';
 		if($res['isInteractive']=='y') {
 			$out.='      <template><![CDATA[';
-			$fp=fopen("lib/Galaxia/processes/$procname/code/templates/$name.tpl","r");
+			$fp=fopen(GALAXIA_PROCESSES."/$procname/code/templates/$name.tpl","r");
 			while(!feof($fp)) {
 		  		$line=fread($fp,8192);
 		  		$out.=$line;
@@ -124,7 +122,7 @@ class ProcessManager extends BaseManager {
 	}   	
    	$out.='  </transitions>'."\n";
     $out.= '</process>'."\n";
-    //$fp = fopen("lib/Galaxia/processes/$procname/$procname.xml","w");
+    //$fp = fopen(GALAXIA_PROCESSES."/$procname/$procname.xml","w");
     //fwrite($fp,$out);
     //fclose($fp);
     return $out;
@@ -248,7 +246,7 @@ class ProcessManager extends BaseManager {
 	//Put the shared code 
 	$proc_info = $this->get_process($pid);
 	$procname = $proc_info['normalized_name'];
-	$fp = fopen("lib/Galaxia/processes/$procname/code/shared.php","w");
+	$fp = fopen(GALAXIA_PROCESSES."/$procname/code/shared.php","w");
 	fwrite($fp,$data['sharedCode']);
 	fclose($fp);
 	$actids = Array();
@@ -265,11 +263,11 @@ class ProcessManager extends BaseManager {
    	  $actname=$am->_normalize_name($activity['name']);
       
       $actid = $am->replace_activity($pid,0,$vars);
-      $fp = fopen("lib/Galaxia/processes/$procname/code/activities/$actname".'.php',"w");
+      $fp = fopen(GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php',"w");
       fwrite($fp,$activity['code']);
       fclose($fp);
       if($activity['isInteractive']=='y') {
-      	$fp = fopen("lib/Galaxia/processes/$procname/code/templates/$actname".'.tpl',"w");
+      	$fp = fopen(GALAXIA_PROCESSES."/$procname/code/templates/$actname".'.tpl',"w");
       	fwrite($fp,$activity['template']);
       	fclose($fp);
       }
@@ -297,6 +295,10 @@ class ProcessManager extends BaseManager {
   	foreach($data['transitions'] as $tran) {
   		$am->add_transition($pid,$actids[$tran['from']],$actids[$tran['to']]);  
   	}
+	// FIXME: recompile activities seems to be needed here
+	foreach ($actids as $name => $actid) {
+		$am->compile_activity($pid,$actid);
+	}
   	unset($am);
   	unset($rm);
   	$msg = sprintf(tra('Process %s %s imported'),$proc_info['name'],$proc_info['version']);
@@ -321,7 +323,7 @@ class ProcessManager extends BaseManager {
     if(!$proc_info) return false;
     // Now update the version
     $version = $this->_new_version($proc_info['version'],$minor);
-    while($this->getOne("select count(*) from galaxia_processes where name='$name' and version='$version'")) {
+    while($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where name='$name' and version='$version'")) {
     	$version = $this->_new_version($version,$minor);
     }
     // Make new versions unactive
@@ -330,12 +332,12 @@ class ProcessManager extends BaseManager {
     $pid = $this->replace_process(/*new proc!*/ 0, $proc_info);
     // And here copy all the activities & so
     $aM = new ActivityManager($this->db);
-    $query = "select * from galaxia_activities where pId=$oldpid";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$oldpid";
 	$result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
       $aM->replace_activity($pid,0,$res);
     }
-    $query = "select * from galaxia_transitions where pId=$oldpid";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."transitions where pId=$oldpid";
 	$result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {    
       $aM->add_transition($pid,$res['actFromId'],$res['actToId']);
@@ -345,7 +347,7 @@ class ProcessManager extends BaseManager {
     //the old directory structure to the new directory
     $oldname = $proc_info['normalized_name'];
     $newname = $this->_get_normalized_name($pid);
-	$this->_rec_copy("lib/Galaxia/processes/$oldname","lib/Galaxia/processes/$newname");
+	$this->_rec_copy(GALAXIA_PROCESSES."/$oldname",GALAXIA_PROCESSES."/$newname");
     return $pid;
   }
   
@@ -358,7 +360,7 @@ class ProcessManager extends BaseManager {
   function process_name_exists($name,$version)
   {
     $name = addslashes($this->_normalize_name($name,$version));
-    return $this->getOne("select count(*) from galaxia_processes where normalized_name='$name'");
+    return $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."processes where normalized_name='$name'");
   }
   
   
@@ -367,7 +369,7 @@ class ProcessManager extends BaseManager {
   */
   function get_process($pId)
   {
-  	$query = "select * from galaxia_processes where pId=$pId";
+  	$query = "select * from ".GALAXIA_TABLE_PREFIX."processes where pId=$pId";
 	$result = $this->query($query);
 	if(!$result->numRows()) return false;
 	$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
@@ -393,8 +395,8 @@ class ProcessManager extends BaseManager {
         $mid.= " where ($where) ";
       }
     }
-    $query = "select * from galaxia_processes $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from galaxia_processes $mid";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."processes $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."processes $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
@@ -412,7 +414,7 @@ class ProcessManager extends BaseManager {
   */
   function invalidate_process($pid)
   {
-    $query = "update galaxia_processes set isValid='n' where pId=$pid";
+    $query = "update ".GALAXIA_TABLE_PREFIX."processes set isValid='n' where pId=$pid";
     $this->query($query);
   }
   
@@ -425,23 +427,27 @@ class ProcessManager extends BaseManager {
     $name = $this->_get_normalized_name($pId);
 	$aM = new ActivityManager($this->db);
     // Remove process activities
-	$query = "select activityId from galaxia_activities where pId=$pId";
+	$query = "select activityId from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId";
 	$result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$aM->remove_activity($pId,$res['activityId']);
     }
 
     // Remove process roles
-    $query = "delete from galaxia_roles where pId=$pId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."roles where pId=$pId";
     $this->query($query);
-    $query = "delete from galaxia_user_roles where pId=$pId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."user_roles where pId=$pId";
     $this->query($query);
     
     // Remove the directory structure
-    $this->_remove_directory("lib/Galaxia/processes/$name",true);
-	$this->_remove_directory("templates/$name",true);
-	// And finally remove the proc
-    $query = "delete from galaxia_processes where pId=$pId";
+    if (is_dir(GALAXIA_PROCESSES."/$name")) {
+      $this->_remove_directory(GALAXIA_PROCESSES."/$name",true);
+    }
+    if (GALAXIA_TEMPLATES && is_dir(GALAXIA_TEMPLATES."/$name")) {
+      $this->_remove_directory(GALAXIA_TEMPLATES."/$name",true);
+    }
+    // And finally remove the proc
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."processes where pId=$pId";
     $this->query($query);
     $msg = sprintf(tra('Process %s removed'),$name);
 	$this->notify_all(5,$msg);
@@ -456,7 +462,7 @@ class ProcessManager extends BaseManager {
   */
   function replace_process($pId, $vars, $create = true)
   {
-    $TABLE_NAME = 'galaxia_processes';
+    $TABLE_NAME = '".GALAXIA_TABLE_PREFIX."processes';
     $now = date("U");
     $vars['lastModif']=$now;
     $vars['normalized_name'] = $this->_normalize_name($vars['name'],$vars['version']);        
@@ -482,7 +488,9 @@ class ProcessManager extends BaseManager {
       // the directory has to be renamed!
       $oldname = $old_proc['normalized_name'];
       $newname = $vars['normalized_name'];
-      rename("lib/Galaxia/processes/$oldname","lib/Galaxia/processes/$newname");
+      if ($newname != $oldname) {
+          rename(GALAXIA_PROCESSES."/$oldname",GALAXIA_PROCESSES."/$newname");
+      }
       $msg = sprintf(tra('Process %s has been updated'),$vars['name']);     
       $this->notify_all(3,$msg);
     } else {
@@ -580,19 +588,20 @@ class ProcessManager extends BaseManager {
    */
    function _create_directory_structure($name)
    {
-    
      // Create in processes a directory with this name
-     mkdir("lib/Galaxia/processes/$name",0770);
-	 mkdir("lib/Galaxia/processes/$name/graph",0770);
-	 mkdir("lib/Galaxia/processes/$name/code",0770);
-	 mkdir("lib/Galaxia/processes/$name/compiled",0770);
-	 mkdir("lib/Galaxia/processes/$name/code/activities",0770);
-     mkdir("lib/Galaxia/processes/$name/code/templates",0770);
-     mkdir("templates/$name",0770);
-	 // Create shared file
-	 $fp = fopen("lib/Galaxia/processes/$name/code/shared.php","w");
-	 fwrite($fp,'<'.'?'.'php'."\n".'?'.'>');
-	 fclose($fp);
+     mkdir(GALAXIA_PROCESSES."/$name",0770);
+     mkdir(GALAXIA_PROCESSES."/$name/graph",0770);
+     mkdir(GALAXIA_PROCESSES."/$name/code",0770);
+     mkdir(GALAXIA_PROCESSES."/$name/compiled",0770);
+     mkdir(GALAXIA_PROCESSES."/$name/code/activities",0770);
+     mkdir(GALAXIA_PROCESSES."/$name/code/templates",0770);
+     if (GALAXIA_TEMPLATES) {
+       mkdir(GALAXIA_TEMPLATES."/$name",0770);
+     }
+     // Create shared file
+     $fp = fopen(GALAXIA_PROCESSES."/$name/code/shared.php","w");
+     fwrite($fp,'<'.'?'.'php'."\n".'?'.'>');
+     fclose($fp);
    }
    
    /*!

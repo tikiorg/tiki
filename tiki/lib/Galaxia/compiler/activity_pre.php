@@ -5,8 +5,8 @@
 if(isset($_REQUEST['iid'])) {
   $instance->getInstance($_REQUEST['iid']);
 } else {
-  $smarty->assign('msg',tra("No instance indicated"));
-  $smarty->display("styles/$style_base/error.tpl");
+  // defined in lib/Galaxia/config.php
+  galaxia_show_error("No instance indicated");
   die;  
 }
 if(isset($_REQUEST['iid'])&&isset($_REQUEST['activityId'])) {

@@ -15,12 +15,10 @@ Collaboration diagram for Base\-Activity:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{CompactItemize}
 \item 
-\index{setDb@{setDb}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!setDb@{setDb}}
 {\bf set\-Db} (\$db)\label{classBaseActivity_a0}
 
 \item 
-\index{Base@{Base}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!Base@{Base}}
-{\bf Base} (\$db)\label{classBaseActivity_a1}
+{\bf Base\-Activity} (\$db)\label{classBaseActivity_a1}
 
 \item 
 {\bf get\-Activity} (\$activity\-Id)
@@ -64,44 +62,34 @@ Collaboration diagram for Base\-Activity:\begin{figure}[H]
 \subsection*{Public Attributes}
 \begin{CompactItemize}
 \item 
-\index{name@{name}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!name@{name}}
-{\bf name}\label{classBaseActivity_m0}
+{\bf \$name}\label{classBaseActivity_o0}
 
 \item 
-\index{normalizedName@{normalizedName}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!normalizedName@{normalizedName}}
-{\bf normalized\-Name}\label{classBaseActivity_m1}
+{\bf \$normalized\-Name}\label{classBaseActivity_o1}
 
 \item 
-\index{description@{description}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!description@{description}}
-{\bf description}\label{classBaseActivity_m2}
+{\bf \$description}\label{classBaseActivity_o2}
 
 \item 
-\index{isInteractive@{isInteractive}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!isInteractive@{isInteractive}}
-{\bf is\-Interactive}\label{classBaseActivity_m3}
+{\bf \$is\-Interactive}\label{classBaseActivity_o3}
 
 \item 
-\index{isAutoRouted@{isAutoRouted}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!isAutoRouted@{isAutoRouted}}
-{\bf is\-Auto\-Routed}\label{classBaseActivity_m4}
+{\bf \$is\-Auto\-Routed}\label{classBaseActivity_o4}
 
 \item 
-\index{roles@{roles}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!roles@{roles}}
-{\bf roles} = Array()\label{classBaseActivity_m5}
+{\bf \$roles} = Array()\label{classBaseActivity_o5}
 
 \item 
-\index{outbound@{outbound}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!outbound@{outbound}}
-{\bf outbound} = Array()\label{classBaseActivity_m6}
+{\bf \$outbound} = Array()\label{classBaseActivity_o6}
 
 \item 
-\index{inbound@{inbound}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!inbound@{inbound}}
-{\bf inbound} = Array()\label{classBaseActivity_m7}
+{\bf \$inbound} = Array()\label{classBaseActivity_o7}
 
 \item 
-\index{pId@{pId}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!pId@{pId}}
-{\bf p\-Id}\label{classBaseActivity_m8}
+{\bf \$p\-Id}\label{classBaseActivity_o8}
 
 \item 
-\index{activityId@{activityId}!BaseActivity@{BaseActivity}}\index{BaseActivity@{BaseActivity}!activityId@{activityId}}
-{\bf activity\-Id}\label{classBaseActivity_m9}
+{\bf \$activity\-Id}\label{classBaseActivity_o9}
 
 \end{CompactItemize}
 
@@ -111,7 +99,7 @@ This class represents activities, and must be derived for each activity type sup
 
 
 
-Definition at line 10 of file Base\-Activity.php.
+Definition at line 11 of file Base\-Activity.php.
 
 \subsection{Member Function Documentation}
 \index{BaseActivity@{Base\-Activity}!getActivity@{getActivity}}
@@ -121,14 +109,16 @@ Definition at line 10 of file Base\-Activity.php.
 
 Factory method returning an activity of the desired type loading the information from the database. 
 
-Definition at line 37 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getActivityId@{getActivityId}}
+Definition at line 38 of file Base\-Activity.php.
+
+References is\-Auto\-Routed(), and is\-Interactive().\index{BaseActivity@{Base\-Activity}!getActivityId@{getActivityId}}
 \index{getActivityId@{getActivityId}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::get\-Activity\-Id ()}\label{classBaseActivity_a17}
 
 
 Gets the activity\-Id 
 
-Definition at line 190 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getActivityRoleNames@{getActivityRoleNames}}
+Definition at line 177 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getActivityRoleNames@{getActivityRoleNames}}
 \index{getActivityRoleNames@{getActivityRoleNames}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::get\-Activity\-Role\-Names ()}\label{classBaseActivity_a4}
 
@@ -142,112 +132,116 @@ Definition at line 105 of file Base\-Activity.php.\index{BaseActivity@{Base\-Act
 
 Gets the activity description 
 
-Definition at line 148 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getName@{getName}}
+Definition at line 142 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getName@{getName}}
 \index{getName@{getName}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::get\-Name ()}\label{classBaseActivity_a8}
 
 
 Gets the activity name 
 
-Definition at line 136 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getNormalizedName@{getNormalizedName}}
+Definition at line 132 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getNormalizedName@{getNormalizedName}}
 \index{getNormalizedName@{getNormalizedName}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::get\-Normalized\-Name ()}\label{classBaseActivity_a5}
 
 
 Returns the normalized name for the activity 
 
-Definition at line 118 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getProcessId@{getProcessId}}
+Definition at line 117 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getProcessId@{getProcessId}}
 \index{getProcessId@{getProcessId}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::get\-Process\-Id ()}\label{classBaseActivity_a16}
 
 
 Gets the process\-Id for this activity 
 
-Definition at line 184 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getRoles@{getRoles}}
+Definition at line 172 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getRoles@{getRoles}}
 \index{getRoles@{getRoles}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::get\-Roles ()}\label{classBaseActivity_a19}
 
 
 Gets array with role\-Ids asociated to this activity 
 
-Definition at line 202 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getUserRoles@{getUserRoles}}
+Definition at line 187 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!getUserRoles@{getUserRoles}}
 \index{getUserRoles@{getUserRoles}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::get\-User\-Roles (\$ {\em user})}\label{classBaseActivity_a3}
 
 
 Returns an Array of role\-Ids for the given user 
 
-Definition at line 92 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!isAutoRouted@{isAutoRouted}}
+Definition at line 93 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!isAutoRouted@{isAutoRouted}}
 \index{isAutoRouted@{isAutoRouted}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::is\-Auto\-Routed ()}\label{classBaseActivity_a14}
 
 
 Gets if the activity is auto routed 
 
-Definition at line 172 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!isInteractive@{isInteractive}}
+Definition at line 162 of file Base\-Activity.php.
+
+Referenced by get\-Activity().\index{BaseActivity@{Base\-Activity}!isInteractive@{isInteractive}}
 \index{isInteractive@{isInteractive}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::is\-Interactive ()}\label{classBaseActivity_a12}
 
 
 Returns if the activity is interactive 
 
-Definition at line 160 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setActivityId@{setActivityId}}
+Definition at line 152 of file Base\-Activity.php.
+
+Referenced by get\-Activity().\index{BaseActivity@{Base\-Activity}!setActivityId@{setActivityId}}
 \index{setActivityId@{setActivityId}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::set\-Activity\-Id (\$ {\em id})}\label{classBaseActivity_a18}
 
 
 Sets the activity\-Id 
 
-Definition at line 196 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setDescription@{setDescription}}
+Definition at line 182 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setDescription@{setDescription}}
 \index{setDescription@{setDescription}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::set\-Description (\$ {\em desc})}\label{classBaseActivity_a9}
 
 
 Sets the activity description 
 
-Definition at line 142 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setIsAutoRouted@{setIsAutoRouted}}
+Definition at line 137 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setIsAutoRouted@{setIsAutoRouted}}
 \index{setIsAutoRouted@{setIsAutoRouted}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::set\-Is\-Auto\-Routed (\$ {\em is})}\label{classBaseActivity_a13}
 
 
 Sets if the activity is auto-routed 
 
-Definition at line 166 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setIsInteractive@{setIsInteractive}}
+Definition at line 157 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setIsInteractive@{setIsInteractive}}
 \index{setIsInteractive@{setIsInteractive}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::set\-Is\-Interactive (\$ {\em is})}\label{classBaseActivity_a11}
 
 
 Sets if the activity is interactive 
 
-Definition at line 154 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setName@{setName}}
+Definition at line 147 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setName@{setName}}
 \index{setName@{setName}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::set\-Name (\$ {\em name})}\label{classBaseActivity_a7}
 
 
 Sets the name for the activity 
 
-Definition at line 130 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setNormalizedName@{setNormalizedName}}
+Definition at line 127 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setNormalizedName@{setNormalizedName}}
 \index{setNormalizedName@{setNormalizedName}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::set\-Normalized\-Name (\$ {\em name})}\label{classBaseActivity_a6}
 
 
 Sets normalized name for the activity 
 
-Definition at line 124 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setProcessId@{setProcessId}}
+Definition at line 122 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setProcessId@{setProcessId}}
 \index{setProcessId@{setProcessId}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::set\-Process\-Id (\$ {\em pid})}\label{classBaseActivity_a15}
 
 
 Sets the process\-Id for this activity 
 
-Definition at line 178 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setRoles@{setRoles}}
+Definition at line 167 of file Base\-Activity.php.\index{BaseActivity@{Base\-Activity}!setRoles@{setRoles}}
 \index{setRoles@{setRoles}!BaseActivity@{Base\-Activity}}
 \subsubsection{\setlength{\rightskip}{0pt plus 5cm}Base\-Activity::set\-Roles (\$ {\em roles})}\label{classBaseActivity_a20}
 
 
 Sets roles for this activities, shoule receive an array of role\-Ids 
 
-Definition at line 209 of file Base\-Activity.php.
+Definition at line 193 of file Base\-Activity.php.
 
 The documentation for this class was generated from the following file:\begin{CompactItemize}
 \item 

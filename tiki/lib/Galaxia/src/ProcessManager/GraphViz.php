@@ -13,7 +13,7 @@
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
 //
-// $Id: GraphViz.php,v 1.3 2003-08-15 21:03:32 redflo Exp $
+// $Id: GraphViz.php,v 1.4 2003-09-29 23:43:42 mikespub Exp $
 //
 
 /**
@@ -88,6 +88,10 @@ class Process_GraphViz {
     function Process_GraphViz($directed = true, $attributes = array()) {
         $this->setDirected($directed);
         $this->setAttributes($attributes);
+        if (defined('GRAPHVIZ_BIN_DIR') && GRAPHVIZ_BIN_DIR) {
+            $this->dotCommand = GRAPHVIZ_BIN_DIR.'/'.$this->dotCommand;
+            $this->neatoCommand = GRAPHVIZ_BIN_DIR.'/'.$this->neatoCommand;
+        }
     }
     
     function set_pid($pid) 
@@ -108,7 +112,7 @@ class Process_GraphViz {
             $outputfile2 = $file . '.' . 'map';
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
             $command .= " -T$format -o$outputfile $file";
- 
+
             @`$command`;
             $command = $this->dotCommand;
             $command.= " -Tcmap -o$outputfile2 $file";
@@ -154,11 +158,11 @@ class Process_GraphViz {
             $outputfile2 = $file . '.' . 'map';
             if(!isset($this->graph['directed'])) $this->graph['directed']=true;
             $command  = $this->graph['directed'] ? $this->dotCommand : $this->neatoCommand;
-            $command .= " -T$format -o$outputfile $file";
- 
+            $command .= " -T$format -o $outputfile $file";
             @`$command`;
+
             $command = $this->dotCommand;
-            $command.= " -Tcmap -o$outputfile2 $file";
+            $command.= " -Tcmap -o $outputfile2 $file";
             @`$command`;
             @unlink($file);
             return true;
@@ -446,7 +450,7 @@ class Process_GraphViz {
         $parsedGraph = $this->parse();
         if (!empty($parsedGraph)) {
 
-                $file = 'lib/Galaxia/processes/'.$this->pid.'/graph/'.$this->pid;
+                $file = GALAXIA_PROCESSES.'/'.$this->pid.'/graph/'.$this->pid;
             if ($fp = @fopen($file, 'w')) {
                 @fputs($fp, $parsedGraph);
                 @fclose($fp);

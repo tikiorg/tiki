@@ -1,4 +1,5 @@
 <?php
+include_once (GALAXIA_LIBRARY.'/src/common/Base.php');
 //!! Process.php
 //! A class representing a process
 /*!
@@ -20,7 +21,7 @@ class Process extends Base {
 	Loads a process form the database
 	*/
 	function getProcess($pId) {
-		$query = "select * from `galaxia_processes` where `pId`=?";
+		$query = "select * from `".GALAXIA_TABLE_PREFIX."processes` where `pId`=?";
 		$result = $this->query($query,array($pId));
 	    if(!$result->numRows()) return false;
     	$res = $result->fetchRow(DB_FETCHMODE_ASSOC);

@@ -36,4 +36,4 @@ refman_2on1.pdf: refman_2on1.ps
 	gswin32c -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=refman_2on1.pdf -c save pop -f refman_2on1.ps
 
 clean:
-	rm -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out
+	rm -f *.ps *.dvi *.aux *.toc *.idx *.ind *.ilg *.log *.out *.pdf
