@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.2 2004-07-01 15:45:57 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.3 2004-07-01 16:09:43 teedog Exp $
  *
  * TikiWiki QUOTE plugin.
  * 
@@ -28,11 +28,11 @@ function wikiplugin_quote($data, $params) {
 	$bg   = (isset($bg))    ? " background:$bg;" : "";
     $al   = (isset($align) && ($align == 'right' || $align == 'center')) ? " align=\"$align\"" : "";
     
-	$begin  = "<table$al$w><tr><td$w><div class='cbox'".(strlen($bg) > 0 ? " style='$bg'" : "").">";
-    $begin .= "<div class='cbox-title'>$title</div><div class='cbox-data'".(strlen($bg) > 0 ? " style=\"$bg\"" : "").">";
-	$end = "</div></div></td></tr></table>";
+	$begin  = "<table$al$w><tr><td$w><div class='quote'".(strlen($bg) > 0 ? " style='$bg'" : "").">";
+    $begin .= "$title";
+	$end = "</div></td></tr></table>";
 		// Prepend any newline char with br
-		$data = preg_replace("/\\n/", "<br />\n", $data);
+		$data = preg_replace("/\\n/", "<br />", $data);
     // Insert "\n" at data begin if absent (so start-of-line-sensitive syntaxes will be parsed OK)
     if (substr($data, 0, 1) != "\n") $data = "\n".$data;
 	return $begin . $data . $end;
