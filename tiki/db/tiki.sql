@@ -3927,6 +3927,6 @@ INSERT INTO tiki_integrator_rules VALUES (1,1,1,'<\\!DOCTYPE','<!-- Commented by
 INSERT INTO tiki_integrator_rules VALUES (2,1,2,'</html>','','y','n','i','Remove </html>');
 INSERT INTO tiki_integrator_rules VALUES (3,1,3,'<body.*>','-->','y','n','i','End of comment just after <body>');
 INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove </body>');
-INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"/{path}/','y','n','i','Fix images path');
+INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path');
 INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(http|ftp)://)','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
 
