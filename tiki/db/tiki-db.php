@@ -46,6 +46,8 @@ EOF
 read comments in local_multi.php
 
 */
+// change next value to true if you use multi-domain
+$tikidomain_multi = false;
 
 $file_local_php = dirname(__FILE__). '/local.php';
 $file_local_php_multi = dirname(__FILE__). '/local_multi.php';

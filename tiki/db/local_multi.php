@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/db/local_multi.php,v 1.1 2004-04-26 20:46:14 mose Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/db/local_multi.php,v 1.2 2004-04-26 21:40:55 mose Exp $
 
 	-----------------------------------------------------------
   -> Multi-tiki trick for virtualhosting
@@ -29,18 +29,18 @@
 
 */
 
+if (isset($tikidomain_multi) and $tikidomain_multi) {
+	if (isset($_SERVER['SERVER_NAME'])) {
+		$tikidomain = $_SERVER['SERVER_NAME'];
+	} elseif (isset($_SERVER['HTTP_HOST'])) {
+		$tikidomain = $_SERVER['HTTP_HOST'];
+	} else {
+		die("No possible action.");
+	}
 
-if (isset($_SERVER['SERVER_NAME'])) {
-	$tikidomain = $_SERVER['SERVER_NAME'];
-} elseif (isset($_SERVER['HTTP_HOST'])) {
-	$tikidomain = $_SERVER['HTTP_HOST'];
-} else {
-	die("No possible action.");
-}
-
-
-$file_multi = dirname(__FILE__). "/$tikidomain/local.php";
-if (file_exists($file_multi)) {
-	$file_local_php = $file_multi;
+	$file_multi = dirname(__FILE__). "/$tikidomain/local.php";
+	if (file_exists($file_multi)) {
+		$file_local_php = $file_multi;
+	}
 }
 ?>
