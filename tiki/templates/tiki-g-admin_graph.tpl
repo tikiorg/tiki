@@ -61,7 +61,7 @@
       </tr>
     </table>
   {else}
-    No process graph is available. Either the process still contains errors, the graph is not generated yet, or <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a> is not properly installed.
+    {tr}No process graph is available. Either the process still contains errors, the graph is not generated yet, or <a href="http://www.research.att.com/sw/tools/graphviz/">GraphViz</a> is not properly installed.{/tr}
   {/if}
   <br/><br/>
 <h3>{tr}List of processes{/tr} ({$cant})</h3>
