@@ -267,7 +267,7 @@ loop included in lib/mail/mimlib.php
 	    $message = $pop3->GetMessage($i);
 	    $full = $message["full"];
 
-	    $output = mime::dedecode($full);
+	    $output = mime::decode($full);
 	    //unset ($parts);
 	    //$this->parse_output($output, $parts, 0);
 
