@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.67 2004-01-18 00:03:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.68 2004-02-01 20:57:29 ggeller Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -168,7 +168,7 @@ function walk_and_parse(&$c, &$src, &$p)
                 switch ($c[$i]["data"]["name"])
                 {
                 case "br": $src .= "\n"; break;
-                case "title"; $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
+                case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
                 case "p": $src .= "\n"; $p['stack'][] = array('tag' => 'p', 'string' => "\n"); break;
                 case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
                 case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
