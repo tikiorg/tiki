@@ -7665,13 +7665,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   function _find($h, $words = '', $offset = 0, $maxRecords = -1) {
     $words = trim($words);
 
-    $sql = sprintf('SELECT
-        %s            AS name, 
-        LEFT(%s, 240)	AS data,
-        %s				    AS hits,
-        %s		        AS lastModif,
-        %s		  	    AS pageName
-    ', $h['name'], $h['data'], $h['hits'], $h['lastModif'], $h['pageName']);
+    $sql = sprintf('SELECT %s AS name, LEFT(%s, 240) AS data, %s AS hits, %s AS lastModif, %s	AS pageName',
+      $h['name'], $h['data'], $h['hits'], $h['lastModif'], $h['pageName']);
 
     $id = $h['id'];
     for ($i = 0; $i < count($id); ++$i)
@@ -7703,7 +7698,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $result = $this->db->query($sql);
     if (DB::isError($result))
       $this->sql_error($sql, $result);
-    
+
     $ret = Array();
     while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $href = sprintf($h['href'], $res['id1'], $res['id2']);
@@ -7718,26 +7713,23 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return array('data' => $ret, 'cant' => $cant);
   }
 
-  function find_pages($words='',$offset=0,$maxRecords=-1) 
+  function find_wikis($words='',$offset=0,$maxRecords=-1) 
   {
-    static $search_pages = array(
+    static $search_wikis = array(
       'from'      => 'tiki_pages',
       'name'      => 'pageName',
       'data'      => 'data',
       'hits'      => 'pageRank',
       'lastModif'	=> 'lastModif',
-      'href'      => 'tiki-index.php?page=%d',
+      'href'      => 'tiki-index.php?page=%s',
       'id'        => array('pageName'),
       'pageName'	=> 'pageName',
       'search'    => array(),
     );
 
     $this->pageRank();
-    return $this->_find($search_pages, $words, $offset, $maxRecords);
+    return $this->_find($search_wikis, $words, $offset, $maxRecords);
   }
-
-
-
 
   function find_galleries($words='',$offset=0,$maxRecords=-1) 
   {
@@ -7769,10 +7761,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'pageName'  => 'CONCAT(f.title, ": ", q.question)',
       'search'    => array('q.question', 'q.answer'),
     );
- 
+
     return $this->_find($search_faqs, $words, $offset, $maxRecords);
   }
-
 
   function find_images($words='',$offset=0,$maxRecords=-1) 
   {
@@ -7804,11 +7795,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       'pageName'  => 'CONCAT(name, ": ", title)',
       'search'    => array(),
     );
+
     return $this->_find($search_forums, $words, $offset, $maxRecords);
   }
-
-
-
 
   function find_files($words='',$offset=0,$maxRecords=-1) 
   {
@@ -7879,9 +7868,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $this->_find($search_posts, $words, $offset, $maxRecords);
   }
 
-  function find_all($words='',$offset=0,$maxRecords=-1) 
+  function find_pages($words='',$offset=0,$maxRecords=-1) 
   {
-    $rv = $this->find_pages($words,     $offset, $maxRecords);
+    $rv = $this->find_wikis($words,     $offset, $maxRecords);
     $data = $rv['data'];
     $cant = $rv['cant'];
     $rv = $this->find_galleries($words, $offset, $maxRecords);
@@ -7889,39 +7878,38 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       array_push($data, $a);
     $cant += $rv['cant'];
     $rv = $this->find_faqs($words,      $offset, $maxRecords);
-    foreach($rv['data'] as $a)  # array_merge() didn't work here
+    foreach($rv['data'] as $a)
       array_push($data, $a);
     $cant += $rv['cant'];
     $rv = $this->find_images($words,    $offset, $maxRecords);
-    foreach($rv['data'] as $a)  # array_merge() didn't work here
+    foreach($rv['data'] as $a)
       array_push($data, $a);
     $cant += $rv['cant'];
     $rv = $this->find_forums($words,    $offset, $maxRecords);
-    foreach($rv['data'] as $a)  # array_merge() didn't work here
+    foreach($rv['data'] as $a)
       array_push($data, $a);
     $cant += $rv['cant'];
     $rv = $this->find_files($words,     $offset, $maxRecords);
-    foreach($rv['data'] as $a)  # array_merge() didn't work here
+    foreach($rv['data'] as $a)
       array_push($data, $a);
     $cant += $rv['cant'];
     $rv = $this->find_blogs($words,     $offset, $maxRecords);
-    foreach($rv['data'] as $a)  # array_merge() didn't work here
+    foreach($rv['data'] as $a)
       array_push($data, $a);
     $cant += $rv['cant'];
     $rv = $this->find_articles($words,  $offset, $maxRecords);
-    foreach($rv['data'] as $a)  # array_merge() didn't work here
+    foreach($rv['data'] as $a)
       array_push($data, $a);
     $cant += $rv['cant'];
     $rv = $this->find_posts($words,     $offset, $maxRecords);
-    foreach($rv['data'] as $a)  # array_merge() didn't work here
+    foreach($rv['data'] as $a)
       array_push($data, $a);
     $cant += $rv['cant'];
     return array(
       'data' => $data,
       'cant' => $cant,
     );
-   }
-
+  }
 
   // tikilib.php a Library to access the Tiki's Data Model
   // This implements all the functions needed to use Tiki
