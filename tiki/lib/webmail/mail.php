@@ -1,3 +1,4 @@
+<<<<<<< mail.php
 <?php
 /* TikiMail class
  *
@@ -78,6 +79,7 @@ class TikiMail {
 			return false;
 		}
 		imap_close($this->connection);
+		// TODO: Error checking.
 		$this->connection=0;
 		return true;
 	}
@@ -154,9 +156,24 @@ class TikiMail {
 	/*
 	* mailbox_get_info()
 	*  Mainly it retrieves headers of mailbox messages... ALL
+	*  It returns al 'objects' collected in an array, the object spec can be
+	*  seen at: http://es2.php.net/manual/en/function.imap-headerinfo.php
 	*/
 	function mailbox_get_info() {
-		
+		if($this->connection == 0) {
+			return false;
+		}
+		$total = $this->mailbox_get_total();
+
+		$headers = array();
+		$count=0;	//my array domination is clear here... again
+
+		for($i = 0; $i <= $total; $i++) {
+			$thismsg = imap_headerinfo($this->connection, $i);
+			// TODO: Error checking.
+			$headers[$i] = $thismsg;
+		}
+		return $headers;
 	}
 	
 	/*
@@ -165,7 +182,13 @@ class TikiMail {
 	*/
 	
 	function mailbox_get_total() {
+		if($this->connection == 0) {
+			return false;
+		}
+		$count = imap_num_msg($this->connection);
+		// TODO: Error checking...
 		
+		return $count;
 	}
 	
 	/*
@@ -236,9 +259,16 @@ class TikiMail {
 	/* 
 	* message_get_headers()
 	*  Get the headers of a specifyc message
+	*  Look at mailbox_get_info() about data returned.
 	*/
-	function message_get_headers() {
+	function message_get_headers($msgno) {
+		if($this->connection) {
+			return false;
+		}
+		$headers = imap_headerinfo($this->connection, $msgno);
+		// TODO: Error checking.
 		
+		return $headers;
 	}
 	
 	/*
@@ -246,7 +276,7 @@ class TikiMail {
 	*  fetch the contents of a message, say: the body
 	*/
 	function message_get_body() {
-		
+		//this is hard... what to do with attachments? also what to do when plain/text body and html body?	
 	}
 	
 	/*
@@ -254,8 +284,25 @@ class TikiMail {
 	*  Delete a message
 	*/
 	function message_delete() {
-		
+		if($this->connection == 0) {
+			return false;
+		}
+		imap_delete($this->connection, $msgno);
+		// TODO: Error checking.
+		return true;		
+	}
+
+	/*
+	* message_undelete()
+	*  UnDelete a message
+	*/
+	function message_undelete($msgno) {
+		if($this->connection == 0) {
+			return false;
+		}
+		imap_undelete($this->connection, $msgno);
+		// TODO: Error checking.
+		return true;
 	}
 }
 ?>
-
