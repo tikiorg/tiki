@@ -130,7 +130,7 @@
 {foreach from=$items item=act}
 <tr>
 	<td class="{cycle advance=false}" style="text-align:center;">
-		{$act.type|act_icon:"$act.isInteractive"}
+		{$act.type|act_icon:$act.isInteractive}
 	</td>
 
 
