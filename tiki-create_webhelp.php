@@ -70,6 +70,14 @@ if(isset($_REQUEST['create'])) {
   $output.="TikiHelp WebHelp generation engine<br/>";
   $output.="Generating WebHelp using <b>$name</b> as index. Directory: $name<br/>";
   $base = "whelp/$dir";
+  
+  // added 2003-12-19 Checking the permission to write. epolidor
+  if (!is_writeable("whelp")) {
+    $smarty->assign('msg', tra("You need to change chmod 'whelp' manually to 777"));
+    $smarty->display("error.tpl");
+    die;
+  }
+  
   if(!is_dir("whelp/$dir")) { 
     $output.="Creating directory structure in $base<br/>";
     mkdir("whelp/$dir");
