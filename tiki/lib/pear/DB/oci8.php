@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -16,7 +16,7 @@
 // | Author: James L. Pine <jlp@valinux.com>                              |
 // +----------------------------------------------------------------------+
 //
-// $Id: oci8.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
+// $Id: oci8.php,v 1.3 2003-07-15 20:24:09 rossta Exp $
 //
 // Database independent query interface definition for PHP's Oracle 8
 // call-interface extension.
@@ -179,34 +179,6 @@ class DB_oci8 extends DB_common
     }
 
     // }}}
-    // {{{ fetchRow()
-
-    /**
-     * Fetch a row and return as array.
-     *
-     * @param $result oci8 result identifier
-     * @param $fetchmode how the resulting array should be indexed
-     *
-     * @return int an array on success, a DB error code on failure, NULL
-     *             if there is no more data
-     */
-    function &fetchRow($result, $fetchmode = DB_FETCHMODE_DEFAULT)
-    {
-        if ($fetchmode == DB_FETCHMODE_DEFAULT) {
-            $fetchmode = $this->fetchmode;
-        }
-        if ($fetchmode & DB_FETCHMODE_ASSOC) {
-            $moredata = @OCIFetchInto($result, $row, OCI_ASSOC + OCI_RETURN_NULLS + OCI_RETURN_LOBS);
-        } else {
-            $moredata = @OCIFetchInto($result, $row, OCI_RETURN_NULLS + OCI_RETURN_LOBS);
-        }
-        if (!$moredata) {
-            return NULL;
-        }
-        return $row;
-    }
-
-    // }}}
     // {{{ fetchInto()
 
     /**
@@ -262,6 +234,25 @@ class DB_oci8 extends DB_common
         return true;
     }
 
+    /**
+     * Free the internal resources associated with a prepared query.
+     *
+     * @param $stmt oci8 statement identifier
+     *
+     * @return bool TRUE on success, FALSE if $result is invalid
+     */
+    function freePrepared($stmt)
+    {
+        if (!is_resource($stmt)) {
+            return false;
+        }
+        ocifreestatement($stmt);
+        unset($this->prepare_tokens[(int)$stmt]);
+        unset($this->prepare_types[(int)$stmt]);
+        unset($this->manip_query[(int)$stmt]);
+        return true;
+    }
+
     // }}}
     // {{{ numRows()
 
@@ -270,9 +261,7 @@ class DB_oci8 extends DB_common
         // emulate numRows for Oracle.  yuck.
         if ($this->options['optimize'] == 'portability' &&
             $result === $this->last_stmt) {
-            $countquery = preg_replace('/^\s*SELECT\s+(.*?)\s+FROM\s+/is',
-                                       'SELECT COUNT(*) FROM ',
-                                       $this->last_query);
+            $countquery = "SELECT COUNT(*) FROM (".$this->last_query.")";
             $save_query = $this->last_query;
             $save_stmt = $this->last_stmt;
             $count = $this->query($countquery);
@@ -346,7 +335,8 @@ class DB_oci8 extends DB_common
         $tokens = split('[\&\?]', $query);
         $token = 0;
         $types = array();
-        for ($i = 0; $i < strlen($query); $i++) {
+        $qlen = strlen($query);
+        for ($i = 0; $i < $qlen; $i++) {
             switch ($query[$i]) {
                 case '?':
                     $types[$token++] = DB_PARAM_SCALAR;
@@ -383,7 +373,7 @@ class DB_oci8 extends DB_common
      * SELECT queries, DB_OK for other successful queries.  A DB error
      * code is returned on failure.
      */
-    function execute($stmt, $data = false)
+    function &execute($stmt, $data = false)
     {
         $types=&$this->prepare_types[$stmt];
         if (($size = sizeof($types)) != sizeof($data)) {
@@ -403,6 +393,7 @@ class DB_oci8 extends DB_common
                     while (($buf = fread($fp, 4096)) != false) {
                         $pdata[$i] .= $buf;
                     }
+                    fclose($fp);
                 }
             }
             if (!@OCIBindByName($stmt, ":bind" . $i, $pdata[$i], -1)) {
@@ -411,8 +402,7 @@ class DB_oci8 extends DB_common
         }
         if ($this->autoCommit) {
             $success = @OCIExecute($stmt, OCI_COMMIT_ON_SUCCESS);
-        }
-        else {
+        } else {
             $success = @OCIExecute($stmt, OCI_DEFAULT);
         }
         if (!$success) {
@@ -652,6 +642,122 @@ class DB_oci8 extends DB_common
                 return null;
         }
         return $sql;
+    }
+
+    // }}}
+    // {{{ tableInfo()
+
+    function tableInfo($result, $mode = null)
+    {
+        $count = 0;
+        $res   = array();
+        /*
+         * depending on $mode, metadata returns the following values:
+         *
+         * - mode is false (default):
+         * $res[]:
+         *   [0]["table"]       table name
+         *   [0]["name"]        field name
+         *   [0]["type"]        field type
+         *   [0]["len"]         field length
+         *   [0]["nullable"]    field can be null (boolean)
+         *   [0]["format"]      field precision if NUMBER
+         *   [0]["default"]     field default value
+         *
+         * - mode is DB_TABLEINFO_ORDER
+         * $res[]:
+         *   ["num_fields"]     number of fields
+         *   [0]["table"]       table name
+         *   [0]["name"]        field name
+         *   [0]["type"]        field type
+         *   [0]["len"]         field length
+         *   [0]["nullable"]    field can be null (boolean)
+         *   [0]["format"]      field precision if NUMBER
+         *   [0]["default"]     field default value
+         *   ['order'][field name] index of field named "field name"
+         *   The last one is used, if you have a field name, but no index.
+         *   Test:  if (isset($result['order']['myfield'])) { ...
+         *
+         * - mode is DB_TABLEINFO_ORDERTABLE
+         *    the same as above. but additionally
+         *   ["ordertable"][table name][field name] index of field
+         *      named "field name"
+         *
+         *      this is, because if you have fields from different
+         *      tables with the same field name * they override each
+         *      other with DB_TABLEINFO_ORDER
+         *
+         *      you can combine DB_TABLEINFO_ORDER and
+         *      DB_TABLEINFO_ORDERTABLE with DB_TABLEINFO_ORDER |
+         *      DB_TABLEINFO_ORDERTABLE * or with DB_TABLEINFO_FULL
+         */
+
+        // if $result is a string, we collect info for a table only
+        if (is_string($result)) {
+            $result = strtoupper($result);
+            $q_fields = "select column_name, data_type, data_length, data_precision,
+                         nullable, data_default from user_tab_columns
+                         where table_name='$result' order by column_id";
+            if (!$stmt = OCIParse($this->connection, $q_fields)) {
+                return $this->oci8RaiseError();
+            }
+            if (!OCIExecute($stmt, OCI_DEFAULT)) {
+                return $this->oci8RaiseError($stmt);
+            }
+            while (OCIFetch($stmt)) {
+                $res[$count]['table']       = $result;
+                $res[$count]['name']        = @OCIResult($stmt, 1);
+                $res[$count]['type']        = @OCIResult($stmt, 2);
+                $res[$count]['len']         = @OCIResult($stmt, 3);
+                $res[$count]['format']      = @OCIResult($stmt, 4);
+                $res[$count]['nullable']    = (@OCIResult($stmt, 5) == 'Y') ? true : false;
+                $res[$count]['default']     = @OCIResult($stmt, 6);
+                if ($mode & DB_TABLEINFO_ORDER) {
+                    $res['order'][$res[$count]['name']] = $count;
+                }
+                if ($mode & DB_TABLEINFO_ORDERTABLE) {
+                    $res['ordertable'][$res[$count]['table']][$res[$count]['name']] = $count;
+                }
+                $count++;
+            }
+            $res['num_fields'] = $count;
+            @OCIFreeStatement($stmt);
+        } else { // else we want information about a resultset
+            if ($result === $this->last_stmt) {
+                $count = @OCINumCols($result);
+                for ($i=0; $i<$count; $i++) {
+                    $res[$i]['name']  = @OCIColumnName($result, $i+1);
+                    $res[$i]['type']  = @OCIColumnType($result, $i+1);
+                    $res[$i]['len']   = @OCIColumnSize($result, $i+1);
+
+                    $q_fields = "select table_name, data_precision, nullable, data_default from user_tab_columns where column_name='".$res[$i]['name']."'";
+                    if (!$stmt = OCIParse($this->connection, $q_fields)) {
+                        return $this->oci8RaiseError();
+                    }
+                    if (!OCIExecute($stmt, OCI_DEFAULT)) {
+                        return $this->oci8RaiseError($stmt);
+                    }
+                    OCIFetch($stmt);
+                    $res[$i]['table']       = OCIResult($stmt, 1);
+                    $res[$i]['format']      = OCIResult($stmt, 2);
+                    $res[$i]['nullable']    = (OCIResult($stmt, 3) == 'Y') ? true : false;
+                    $res[$i]['default']     = OCIResult($stmt, 4);
+                    OCIFreeStatement($stmt);
+
+                    if ($mode & DB_TABLEINFO_ORDER) {
+                        $res['order'][$res[$i]['name']] = $i;
+                    }
+                    if ($mode & DB_TABLEINFO_ORDERTABLE) {
+                        $res['ordertable'][$res[$i]['table']][$res[$i]['name']] = $i;
+                    }
+                }
+                $res['num_fields'] = $count;
+
+            } else {
+                return $this->raiseError(DB_ERROR_NOT_CAPABLE);
+            }
+        }
+        return $res;
     }
 
     // }}}

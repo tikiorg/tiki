@@ -13,25 +13,18 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Author: Stig Bakken <ssb@php.net>                                    |
+// | Author: Chaillan Nicolas <nicos@php.net>                             |
+// | Based on mysql.php by Stig Bakken <ssb@php.net>                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: mysql.php,v 1.3 2003-07-15 20:24:09 rossta Exp $
-//
-// Database independent query interface definition for PHP's MySQL
-// extension.
-//
 
-//
-// XXX legend:
-//
-// XXX ERRORMSG: The error message from the mysql function should
-//               be registered here.
-//
+/* Warning this can't work for now until the PHP extension for MySQL 4 is done! */
 
-require_once "DB/common.php";
+// Database independent query interface definition for PHP's MySQL 4
+// We're still waiting for the new MySQL4 protocol for the PHP extension.
+// Note that pconnect is GONE.
 
-class DB_mysql extends DB_common
+class DB_mysql4 extends DB_common
 {
     // {{{ properties
 
@@ -54,14 +47,14 @@ class DB_mysql extends DB_common
      * @access public
      */
 
-    function DB_mysql()
+    function DB_mysql4()
     {
         $this->DB_common();
-        $this->phptype = 'mysql';
-        $this->dbsyntax = 'mysql';
+        $this->phptype = 'mysql4';
+        $this->dbsyntax = 'mysql4';
         $this->features = array(
             'prepare' => false,
-            'pconnect' => true,
+            'ssl' => true,
             'transactions' => true,
             'limit' => 'alter'
         );
@@ -92,13 +85,13 @@ class DB_mysql extends DB_common
      * Connect to a database and log in as the specified user.
      *
      * @param $dsn the data source name (see DB::parseDSN for syntax)
-     * @param $persistent (optional) whether the connection should
-     *        be persistent
+     * @param $ssl (optional) whether the connection should
+     *        use the ssl method or not
      * @access public
      * @return int DB_OK on success, a DB error on failure
      */
 
-    function connect($dsninfo, $persistent = false)
+    function connect($dsninfo, $ssl = false)
     {
         if (!DB::assertExtension('mysql')) {
             return $this->raiseError(DB_ERROR_EXTENSION_NOT_FOUND);
@@ -116,17 +109,23 @@ class DB_mysql extends DB_common
         $user = $dsninfo['username'];
         $pw = $dsninfo['password'];
 
-        $connect_function = $persistent ? 'mysql_pconnect' : 'mysql_connect';
+        $ssl_mode = $ssl ? 'CLIENT_SSL' : NULL;
+
+        @ini_set('track_errors', true);
 
         if ($dbhost && $user && $pw) {
-            $conn = @$connect_function($dbhost, $user, $pw);
+            // Need to verify if arguments are okay
+            $conn = @mysql_connect($dbhost, $user, $pw, $ssl_mode);
         } elseif ($dbhost && $user) {
-            $conn = @$connect_function($dbhost, $user);
+            $conn = @mysql_connect($dbhost, $user, NULL, $ssl_mode);
         } elseif ($dbhost) {
-            $conn = @$connect_function($dbhost);
+            $conn = @mysql_connect($dbhost, NULL, NULL, $ssl_mode);
         } else {
             $conn = false;
         }
+
+        @ini_restore('track_errors');
+
         if (empty($conn)) {
             if (($err = @mysql_error()) != '') {
                 return $this->raiseError(DB_ERROR_CONNECT_FAILED, null, null,
@@ -278,16 +277,11 @@ class DB_mysql extends DB_common
             $arr = @mysql_fetch_row($result);
         }
         if (!$arr) {
-            // See: http://bugs.php.net/bug.php?id=22328
-            // for why we can't check errors on fetching
-            return null;
-            /*
             $errno = @mysql_errno($this->connection);
             if (!$errno) {
                 return NULL;
             }
             return $this->mysqlRaiseError($errno);
-            */
         }
         return DB_OK;
     }
@@ -314,9 +308,6 @@ class DB_mysql extends DB_common
         if (!isset($this->prepare_tokens[$result])) {
             return false;
         }
-
-
-		// I fixed the unset thing.
 
         $this->prepare_types = array();
         $this->prepare_tokens = array();
@@ -494,7 +485,7 @@ class DB_mysql extends DB_common
             $this->popErrorHandling();
             if ($result == DB_OK) {
                 /** COMMON CASE **/
-                $id = mysql_insert_id($this->connection);
+                $id = @mysql_insert_id($this->connection);
                 if ($id != 0) {
                     return $id;
                 }
@@ -529,10 +520,13 @@ class DB_mysql extends DB_common
                 $result->getCode() == DB_ERROR_NOSUCHTABLE)
             {
                 $result = $this->createSequence($seq_name);
+                // Since createSequence initializes the ID to be 1,
+                // we do not need to retrieve the ID again (or we will get 2)
                 if (DB::isError($result)) {
                     return $this->raiseError($result);
                 } else {
-                    $repeat = 1;
+                    // First ID of a newly created sequence is 1
+                    return 1;
                 }
 
             /** BACKWARDS COMPAT **/
@@ -564,12 +558,7 @@ class DB_mysql extends DB_common
             return $res;
         }
         // insert yields value 1, nextId call will generate ID 2
-        $res = $this->query("INSERT INTO ${seqname} VALUES(0)");
-        if (DB::isError($res)) {
-            return $res;
-        }
-        // so reset to zero
-        return $this->query("UPDATE ${seqname} SET id = 0;");
+        return $this->query("INSERT INTO ${seqname} VALUES(0)");
     }
 
     // }}}
@@ -582,8 +571,8 @@ class DB_mysql extends DB_common
     }
 
     // }}}
-    // {{{ _BCsequence()
 
+    // {{{ _BCsequence()
     /**
     * Backwards compatibility with old sequence emulation implementation
     * (clean up the dupes)
@@ -627,8 +616,8 @@ class DB_mysql extends DB_common
         }
         return true;
     }
-
     // }}}
+
     // {{{ quote()
 
     /**
@@ -834,11 +823,7 @@ class DB_mysql extends DB_common
         return $sql;
     }
 
-    // }}}
+   // }}}
 
-    // TODO/wishlist:
-    // longReadlen
-    // binmode
 }
-
 ?>

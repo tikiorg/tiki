@@ -1,9 +1,9 @@
 <?php
-//
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2002 The PHP Group                                |
+// | Copyright (c) 1997-2003 The PHP Group                                |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -16,7 +16,7 @@
 // | Author: Sterling Hughes <sterling@php.net>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: mssql.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $
+// $Id: mssql.php,v 1.3 2003-07-15 20:24:09 rossta Exp $
 //
 // Database independent query interface definition for PHP's Microsoft SQL Server
 // extension.
@@ -26,12 +26,18 @@ require_once 'DB/common.php';
 
 class DB_mssql extends DB_common
 {
+    // {{{ properties
+
     var $connection;
     var $phptype, $dbsyntax;
     var $prepare_tokens = array();
     var $prepare_types = array();
     var $transaction_opcount = 0;
     var $autocommit = true;
+    var $_db = null;
+
+    // }}}
+    // {{{ constructor
 
     function DB_mssql()
     {
@@ -46,9 +52,18 @@ class DB_mssql extends DB_common
         );
         // XXX Add here error codes ie: 'S100E' => DB_ERROR_SYNTAX
         $this->errorcode_map = array(
-
+            170   => DB_ERROR_SYNTAX,
+            207   => DB_ERROR_NOSUCHFIELD,
+            208   => DB_ERROR_NOSUCHTABLE,
+            245   => DB_ERROR_INVALID_NUMBER,
+            547   => DB_ERROR_CONSTRAINT,
+            2714  => DB_ERROR_ALREADY_EXISTS,
+            3701  => DB_ERROR_NOSUCHTABLE
         );
     }
+
+    // }}}
+    // {{{ connect()
 
     function connect($dsninfo, $persistent = false)
     {
@@ -61,6 +76,8 @@ class DB_mssql extends DB_common
         $user = $dsninfo['username'];
         $pw = $dsninfo['password'];
         $dbhost = $dsninfo['hostspec'] ? $dsninfo['hostspec'] : 'localhost';
+        $port   = $dsninfo['port'] ? ':' . $dsninfo['port'] : '';
+        $dbhost .= $port;
 
         $connect_function = $persistent ? 'mssql_pconnect' : 'mssql_connect';
 
@@ -80,10 +97,14 @@ class DB_mssql extends DB_common
                 return $this->raiseError(DB_ERROR_NODBSELECTED, null, null,
                                          null, mssql_get_last_message());
             }
+            $this->_db = $dsninfo['database'];
         }
         $this->connection = $conn;
         return DB_OK;
     }
+
+    // }}}
+    // {{{ disconnect()
 
     function disconnect()
     {
@@ -92,10 +113,16 @@ class DB_mssql extends DB_common
         return $ret;
     }
 
+    // }}}
+    // {{{ simpleQuery()
+
     function simpleQuery($query)
     {
         $ismanip = DB::isManip($query);
         $this->last_query = $query;
+        if (!@mssql_select_db($this->_db, $this->connection)) {
+            return $this->mssqlRaiseError(DB_ERROR_NODBSELECTED);
+        }
         $query = $this->modifyQuery($query);
         if (!$this->autocommit && $ismanip) {
             if ($this->transaction_opcount == 0) {
@@ -115,6 +142,8 @@ class DB_mssql extends DB_common
         return $ismanip ? DB_OK : $result;
     }
 
+    // }}}
+
     // {{{ nextResult()
 
     /**
@@ -132,18 +161,7 @@ class DB_mssql extends DB_common
     }
 
     // }}}
-
-    function &fetchRow($result, $fetchmode = DB_FETCHMODE_DEFAULT, $rownum=null)
-    {
-        if ($fetchmode == DB_FETCHMODE_DEFAULT) {
-            $fetchmode = $this->fetchmode;
-        }
-        $res = $this->fetchInto ($result, $arr, $fetchmode, $rownum);
-        if ($res !== DB_OK) {
-            return $res;
-        }
-        return $arr;
-    }
+    // {{{ fetchInto()
 
     function fetchInto($result, &$ar, $fetchmode, $rownum=null)
     {
@@ -153,7 +171,7 @@ class DB_mssql extends DB_common
             }
         }
         if ($fetchmode & DB_FETCHMODE_ASSOC) {
-            $ar = @mssql_fetch_array($result);
+            $ar = @mssql_fetch_array($result, MSSQL_ASSOC);
         } else {
             $ar = @mssql_fetch_row($result);
         }
@@ -169,6 +187,9 @@ class DB_mssql extends DB_common
         return DB_OK;
     }
 
+    // }}}
+    // {{{ freeResult()
+
     function freeResult($result)
     {
         if (is_resource($result)) {
@@ -182,6 +203,9 @@ class DB_mssql extends DB_common
         return true;
     }
 
+    // }}}
+    // {{{ numCols()
+
     function numCols($result)
     {
         $cols = @mssql_num_fields($result);
@@ -191,6 +215,9 @@ class DB_mssql extends DB_common
         return $cols;
     }
 
+    // }}}
+    // {{{ numRows()
+
     function numRows($result)
     {
         $rows = @mssql_num_rows($result);
@@ -199,6 +226,9 @@ class DB_mssql extends DB_common
         }
         return $rows;
     }
+
+    // }}}
+    // {{{ autoCommit()
 
     /**
      * Enable/disable automatic commits
@@ -220,6 +250,9 @@ class DB_mssql extends DB_common
     function commit()
     {
         if ($this->transaction_opcount > 0) {
+            if (!@mssql_select_db($this->_db, $this->connection)) {
+                return $this->mssqlRaiseError(DB_ERROR_NODBSELECTED);
+            }
             $result = @mssql_query('COMMIT TRAN', $this->connection);
             $this->transaction_opcount = 0;
             if (!$result) {
@@ -238,6 +271,9 @@ class DB_mssql extends DB_common
     function rollback()
     {
         if ($this->transaction_opcount > 0) {
+            if (!@mssql_select_db($this->_db, $this->connection)) {
+                return $this->mssqlRaiseError(DB_ERROR_NODBSELECTED);
+            }
             $result = @mssql_query('ROLLBACK TRAN', $this->connection);
             $this->transaction_opcount = 0;
             if (!$result) {
@@ -275,6 +311,8 @@ class DB_mssql extends DB_common
         }
         return $result;
     }
+
+    // }}}
     // {{{ nextId()
 
     /**
@@ -293,6 +331,9 @@ class DB_mssql extends DB_common
     function nextId($seq_name, $ondemand = true)
     {
         $seqname = $this->getSequenceName($seq_name);
+        if (!@mssql_select_db($this->_db, $this->connection)) {
+            return $this->mssqlRaiseError(DB_ERROR_NODBSELECTED);
+        }
         $repeat = 0;
         do {
             $this->pushErrorHandling(PEAR_ERROR_RETURN);
@@ -304,11 +345,13 @@ class DB_mssql extends DB_common
                 $repeat = 1;
                 $result = $this->createSequence($seq_name);
                 if (DB::isError($result)) {
-                    return $result;
+                    return $this->raiseError($result);
                 }
-            } else {
+            } elseif (!DB::isError($result)) {
                 $result = $this->query("SELECT @@IDENTITY FROM $seqname");
                 $repeat = 0;
+            } else {
+                $repeat = false;
             }
         } while ($repeat);
         if (DB::isError($result)) {
@@ -337,30 +380,37 @@ class DB_mssql extends DB_common
         return $this->query("DROP TABLE $seqname");
     }
     // }}}
+    // {{{ errorCode()
 
     function errorCode()
     {
-        $this->pushErrorHandling(PEAR_ERROR_RETURN);
-        $error_code = $this->getOne('select @@ERROR as ErrorCode');
-        $this->popErrorHandling();
-        // XXX Debug
-        if (!isset($this->errorcode_map[$error_code])) {
-            return DB_ERROR;
-        }
-        return $error_code;
+       $res = mssql_query('select @@ERROR as ErrorCode', $this->connection);
+       if (!$res) {
+           return DB_ERROR;
+       }
+       $row = mssql_fetch_row($res);
+       return $row[0];
     }
+
+    // }}}
+    // {{{ mssqlRaiseError()
 
     function mssqlRaiseError($code = null)
     {
-        if ($code !== null) {
-            $code = $this->errorCode();
-            if (DB::isError($code)) {
-                return $this->raiseError($code);
+        $native_msg = mssql_get_last_message();
+        $native_code = $this->errorCode();
+        if ($code === null) {
+            if (isset($this->errorcode_map[$native_code])) {
+                $code = $this->errorcode_map[$native_code];
+            } else {
+                $code = DB_ERROR;
             }
         }
-        return $this->raiseError($code, null, null, null,
-                        mssql_get_last_message());
+        return $this->raiseError($code, null, null, null, $native_code . ' - ' . $native_msg);
     }
+
+    // }}}
+    // {{{ tableInfo()
 
   /**
 
@@ -423,6 +473,9 @@ class DB_mssql extends DB_common
         // table without a resultset
 
         if (is_string($result)) {
+            if (!@mssql_select_db($this->_db, $this->connection)) {
+                return $this->mssqlRaiseError(DB_ERROR_NODBSELECTED);
+            }
             $id = mssql_query("SELECT * FROM $result", $this->connection);
             if (empty($id)) {
                 return $this->mssqlRaiseError();
@@ -472,6 +525,7 @@ class DB_mssql extends DB_common
         return $res;
     }
 
+    // }}}
     // {{{ getSpecialQuery()
 
     /**
