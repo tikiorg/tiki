@@ -5,6 +5,7 @@
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 error_reporting(E_ALL);
+set_time_limit(60);
 
 require_once('irclib.php');
 
@@ -13,7 +14,7 @@ $channel = isset($argv[1]) ? $argv[1] : 'tikiwiki';
 # \TODO get domain from mySQL
 
 $options = array(
-    'server'    => 'orwell.freenode.org',
+    'server'    => 'sterling.freenode.net',
     'port'      => 6667,
     'nick'      => 'tikibot',
     'realname'  => 'http://wiki.netebb.com/irc',
