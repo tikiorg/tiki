@@ -214,7 +214,7 @@ class SearchLib extends TikiLib {
 	function find_forums($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
 		static $search_forums = array(
 			'from' => 'tiki_comments c LEFT JOIN
-			tiki_forums f ON objectType = "forum", f.forumId=c.object',
+			tiki_forums f ON objectType = "forum" AND f.forumId=c.object',
 			'name' => 'c.title',
 			'data' => 'c.data',
 			'hits' => 'c.hits',
