@@ -156,7 +156,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-index.php?page=%s',
 			'id' => array('pageName'),
 			'pageName' => 'pageName',
-			'search' => array('pageName', 'data'),
+			'search' => array('pageName', 'description', 'data'),
 		);
 
 		// that pagerank re-calculation was speed handicap (timex30)

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.7 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.8 2004-01-09 19:47:45 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -87,6 +87,17 @@ if (isset($_REQUEST["loginprefs"])) {
 
 	$smarty->assign('validateUsers', 'n');
     }
+
+    if (isset($_REQUEST["validateEmail"]) && $_REQUEST["validateEmail"] == "on") {
+        $tikilib->set_preference("validateEmail", 'y');
+
+        $smarty->assign('validateEmail', 'y');
+    } else {
+        $tikilib->set_preference("validateEmail", 'n');
+
+        $smarty->assign('validateEmail', 'n');
+    }
+
 
     if (isset($_REQUEST["rnd_num_reg"]) && $_REQUEST["rnd_num_reg"] == "on") {
 	$tikilib->set_preference("rnd_num_reg", 'y');
@@ -327,6 +338,7 @@ $smarty->assign("eponymousGroups", $tikilib->get_preference("eponymousGroups", '
 $smarty->assign("useRegisterPasscode", $tikilib->get_preference("useRegisterPasscode", 'n'));
 $smarty->assign("registerPasscode", $tikilib->get_preference("registerPasscode", ''));
 $smarty->assign("validateUsers", $tikilib->get_preference("validateUsers", 'n'));
+$smarty->assign("validateEmail", $tikilib->get_preference("validateEmail", 'n'));
 $smarty->assign("forgotPass", $tikilib->get_preference("forgotPass", 'n'));
 ask_ticket('admin-inc-login');
 ?>

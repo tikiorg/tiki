@@ -153,7 +153,7 @@ class QuizLib extends TikiLib {
 
 	function register_user_quiz_answer($userResultId, $quizId, $questionId, $optionId) {
 		$query = "insert into `tiki_user_answers`(`userResultId`,`quizId`,`questionId`,`optionId`) values(?,?,?,?)";
-		$result = $this->query($queryi,array((int)$userResultId,(int)$quizId,(int)$questionId,(int)$optionId));
+		$result = $this->query($query,array((int)$userResultId,(int)$quizId,(int)$questionId,(int)$optionId));
 	}
 
 	function register_quiz_stats($quizId, $user, $timeTaken, $points, $maxPoints, $resultId) {

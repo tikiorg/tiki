@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.53 2004-01-01 15:12:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.54 2004-01-09 19:47:45 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -348,7 +348,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				// exists, go straight to it.
 				$url = 'tiki-view_forum_thread.php?comments_parentId=' 
 				    . urlencode( $getold )
-				    . '&amp;topics_threshold=0&amp;topics_offset=1&amp;topics_sort_mode=commentDate_desc&amp;topics_find=&amp;forumId='
+				    . '&topics_threshold=0&topics_offset=1&topics_sort_mode=commentDate_desc&topics_find=&forumId='
 				    . urlencode( $_REQUEST["forumId"]);
 				header('location: ' . $url);
 				exit;

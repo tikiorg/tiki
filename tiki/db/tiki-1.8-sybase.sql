@@ -4338,6 +4338,42 @@ CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update"
 go
 
 
+-- LRU (last recently used) list for searching parts of words
+-- DROP TABLE "tiki_searchsyllable"
+go
+
+
+
+CREATE TABLE "tiki_searchsyllable"(
+  "syllable" varchar(80) default '' NOT NULL,
+  "lastUsed" numeric(11,0) default '0' NOT NULL,
+  "lastUpdated" numeric(11,0) default '0' NOT NULL,
+  PRIMARY KEY ("syllable")
+
+) 
+go
+
+
+CREATE  INDEX "tiki_searchsyllable_lastUsed" ON "tiki_searchsyllable"("lastUsed")
+go
+
+
+-- searchword caching table for search syllables
+-- DROP TABLE "tiki_searchwords"
+go
+
+
+
+CREATE TABLE "tiki_searchwords"(
+  "syllable" varchar(80) default '' NOT NULL,
+  "searchword" varchar(80) default '' NOT NULL,
+  PRIMARY KEY ("syllable","searchword")
+) 
+go
+
+
+
+
 
 --
 -- Table structure for table `tiki_search_stats`
@@ -5883,11 +5919,6 @@ go
 
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'registered', 'user')
-go
-
-
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_change_events', 'Can change events in the calendar', 'registered', 'calendar')
 go
 
@@ -5949,6 +5980,11 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_article', 'Can edit articles', 'editors', 'cms')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_cache_bookmarks', 'Can cache user bookmarks', 'admin', 'user')
 go
 
 
@@ -6738,12 +6774,12 @@ go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('cacheimages','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('cacheimages','n')
 go
 
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('cachepages','y')
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('cachepages','n')
 go
 
 
@@ -8034,6 +8070,11 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateUsers','n')
+go
+
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateEmail','n')
 go
 
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.40 2004-01-07 16:42:53 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.41 2004-01-09 19:47:48 redflo Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -6,7 +6,7 @@
 {if $editpageconflict == 'y'}
 <script language='Javascript' type='text/javascript'>
 <!-- Hide Script
-	alert('{tr}This page is being edited by{/tr} {$semUser}. {tr}Proceed at your own peril{/tr}.')
+	alert("{tr}This page is being edited by{/tr} {$semUser}. {tr}Proceed at your own peril{/tr}.")
 //End Hide Script-->
 </script>
 {/if}

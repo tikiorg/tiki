@@ -13,7 +13,7 @@ class RegistrationLib extends TikiLib {
     // Validate emails...
   function SnowCheckMail($Email,$sender_email,$novalidation,$Debug=false)
   {
-	global $system_os;
+	global $validateEmail;
     $HTTP_HOST=$_SERVER['SERVER_NAME']; 
     $Return =array();
     // $Debug = true;
@@ -40,7 +40,7 @@ class RegistrationLib extends TikiLib {
     // split function reference : http://www.php.net/manual/en/function.split.php
     list ( $Username, $Domain ) = split ("@",$Email);
 	
-	if($system_os == 'windows') {
+	if($validateEmail == 'n') {
 		$Return[0]=true;
 		$Return[1]="The email appears to be correct."; 
 		Return $Return;

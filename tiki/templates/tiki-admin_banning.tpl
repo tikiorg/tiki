@@ -117,9 +117,9 @@
 <tr>
 <td  class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
 <td class="heading">{tr}Title{/tr}</td>
-<td width="" class="heading">{tr}User/IP{/tr}</a></td>
-<td width="" class="heading">{tr}Sections{/tr}</a></td>
-<td  class="heading">{tr}Action{/tr}</a></td>
+<td class="heading">{tr}User/IP{/tr}</a></td>
+<td class="heading">{tr}Sections{/tr}</a></td>
+<td class="heading">{tr}Action{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
@@ -144,9 +144,9 @@
 {/section}
 </td>
 <td class="{cycle}">
-<a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
+&nbsp;&nbsp;<a href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this rule?{/tr}')" 
-title="Click here to delete this rule"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" ></a>
+title="Click here to delete this rule"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 </td>
 </tr>
 {sectionelse}

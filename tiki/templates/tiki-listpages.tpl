@@ -1,4 +1,4 @@
-{* $Hader: $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.18 2004-01-09 19:47:48 redflo Exp $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}

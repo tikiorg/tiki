@@ -20,7 +20,7 @@
 <span id="tab{cycle name=tabs}" class="tab">{tr}Comments{/tr}</span>
 {/if}
 {if $tracker_info.useAttachments eq 'y'}
-<span id="tab{cycle name=tabs}" class="tab">{tr}Attachements{/tr}</span>
+<span id="tab{cycle name=tabs}" class="tab">{tr}Attachments{/tr}</span>
 {/if}
 {if $tiki_p_modify_tracker_items eq 'y'}
 <span id="tab{cycle name=tabs}" class="tab">{tr}Edit{/tr}</span>

@@ -85,7 +85,7 @@ title="{tr}Click here to delete this channel{/tr}"><img border="0" alt="{tr}Remo
    &nbsp;&nbsp;<a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].channelId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this channel?{/tr}')" 
 title="{tr}Click here to delete this channel{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_chat.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;channelId={$channels[user].channelId}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}
