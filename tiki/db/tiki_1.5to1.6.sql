@@ -1,5 +1,22 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+### User-tasks
+drop table if exists tiki_user_tasks;
+create table tiki_user_tasks(
+  user varchar(200),
+  taskId integer(14) not null auto_increment,
+  title varchar(250),
+  description text,
+  date integer(14),
+  status char(1),
+  priority integer(2),
+  completed integer(14),
+  percentage integer(4),
+  primary key(taskId)
+);
+
+
+
 ### Inter-user messages
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_messages','messu','Can use the messaging system');
