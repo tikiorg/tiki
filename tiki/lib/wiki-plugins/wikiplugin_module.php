@@ -12,7 +12,7 @@
 
 
 function wikiplugin_module_help() {
-  return "Displays a module inlined in page";
+  return tra("Displays a module inlined in page");
 }
 
 function wikiplugin_module($data,$params) {

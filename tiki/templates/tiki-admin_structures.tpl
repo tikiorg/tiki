@@ -41,7 +41,7 @@
 </table>
 
 <h3>{tr}Create structure from tree{/tr}</h3>
-<small>{tr}Use  single spaces to indent structure levels{/tr}</small>
+<small>{tr}Use single spaces to indent structure levels{/tr}</small>
 <form action="tiki-admin_structures.php" method="post">
 <table class="normal">
 <tr>

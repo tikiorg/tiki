@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.6 2003-06-30 03:43:51 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.7 2003-07-05 17:33:10 ohertel Exp $
 // Displays a snippet of code
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -10,7 +10,7 @@
 
 function wikiplugin_code_help()
 {
-  return "Displays a snippet of code.\nSet optional paramater -+ln+- to 1 if you need line numbering feature.";
+  return tra("Displays a snippet of code.\nSet optional paramater -+ln+- to 1 if you need line numbering feature.");
 }
 
 function wikiplugin_code($data,$params)

@@ -18,7 +18,7 @@
 
 
 function wikiplugin_gauge_help() {
-  return "Displays a graphical GAUGE";
+  return tra("Displays a graphical GAUGE");
 }
 
 function wikiplugin_gauge($data,$params) {

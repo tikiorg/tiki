@@ -7,7 +7,7 @@
 // {CENTER}
 
 function wikiplugin_center_help() {
-  return "Centers the plugin content in the wiki page";
+  return tra("Centers the plugin content in the wiki page");
 }
 
 function wikiplugin_center($data,$params) {
