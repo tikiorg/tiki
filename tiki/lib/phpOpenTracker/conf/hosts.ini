@@ -1,0 +1,134 @@
+#\.dip\.t-dialin\.net$#
+T-Online (Dialins)
+
+#^cw[0-9]*\.([a-zA-Z]*).*?\.srv\.t-online\.de$#
+T-Online (%s)
+
+#([^.]*)\.t-dialin\.net$#
+T-Online (%s)
+
+#\.t-ipconnect\.de$#
+T-Online (t-ipconnect.de)
+
+#([^.]*)\.t-online\.de$#
+%s.T-Online
+
+#([^0-9.][^.]*)\.((?:[^.]*-)?(?:uni|unibw|lrz|tfh|tu|mfh|hu)-[^.]*)\.de$#
+%s.%s.de
+
+#\.win-ip\.dfn\.de$#
+win-ip.dfn.de
+
+#\.([^.]*?)[0-9]*\.uunet\.de$#
+uunet.de + MSN (%s)
+
+#\.(?:cvx-)?([^.]*?)\.ipdial\.viaginterkom\.de$#
+Viag Interkom (%s)
+
+#([^.]*)\.dial\.surf-callino\.de$#
+Surf-Callino (%s)
+
+#([^.]*)\.telepassport\.de$#
+telepassport.de (%s)
+
+#^([^.]*)-.*\.pool\.mediaways\.net$#
+mediaways.net (%s)
+
+#(.*[^0-9])\.gigabell\.net$#
+gigabell.net (%s)
+
+#([^.]*)\.tli\.de$#
+Talkline (%s)
+
+#([^.]*)\.nikoma\.de$#
+nikoma.de (%s)
+
+#^(?:cache|proxy|cf).*?([a-z]*)(?:pub|vpn)\.arcor-ip\.(de|net)$#
+Arcor Proxy %s
+
+#^cf.*?([a-z]*)pub\.arcor-ip\.(de|net)$#
+Arcor Proxy %s
+
+#^dsl.*\.arcor-ip\.(de|net)$#
+Arcor DSL
+
+#\.arcor-ip\.(de|net)$#
+Arcor
+
+#^([a-z])-dialin-.*\.addcom\.de$#
+Addcom (%s)
+
+#([^.]*)\.cityline\.net$#
+cityline.net (%s)
+
+#([^.]*)\.germanynet\.de$#
+GermanyNet (%s)
+
+#^([a-z].*?)[0-9]*-.*\.mcbone\.net$#
+Mobilcom (%s)
+
+#([^.]*)\.highway\.telekom\.at$#
+%s.highway.telekom.at
+
+#\.at\.kpnqwest\.net$#
+at.kpnqwest.net
+
+#\.cosy\.sbg\.ac\.at$#
+cosy.sbg.ac.at
+
+#\.digimedia\.co\.at$#
+digimedia.co.at
+
+#([^.]*)\.surfer\.at$#
+%s.surfer.at
+
+#([^.]*)\.ginko\.net$#
+%s.ginko.net
+
+#\.(.*?)\.aol\.com$#
+%s.aol.com
+
+#\.bos\.lycos\.com$#
+bos.lycos.com
+
+#\.(.*).dec.com$#
+%s.dec.com
+
+#\.([^.]*)\.wave\.home\.com$#
+%s.wave.home.com
+
+#\.([^.]*)\.([^.]*)\.edu$#
+%s.%s.edu
+
+#\.(.*)\.nl\.home\.com$#
+%s.nl.home.com
+
+#\.be\.ibm\.net$#
+be.ibm.net
+
+#\.([^.]*)\.([^.]*)\.jp$#
+%s.%s.jp
+
+#\.tnt[0-9]*\.(?:dial\.)?(.*uu\.net)$#
+%s
+
+#\.fast-?search\.net$#
+fastsearch.net
+
+#\.([^.]*)\.(com|net|org|ac|edu|co|sch)\.([a-zA-Z]*)$#
+%s.%s.%s
+
+#^[^.]*\.([^.]*\.[a-zA-Z]*)$#
+%s
+
+#^[^1-9].*?\.([^.]*\.[a-zA-Z]*)$#
+%s
+
+#^[^1-9].*?\.(.*\.[a-zA-Z]*)$#
+%s
+
+#^[1-9\.\-]*?\.([^0-9].*[a-zA-Z]*)$#
+%s (partially resolved)
+
+#^([1-9]*)\.([0-9]*)\.([0-9]*)\.$#
+%s.%s.%s.*
