@@ -207,6 +207,7 @@ if(isset($_REQUEST['refresh'])) {
 //   if using cache then update the cache
 // assign_by_ref
 $smarty->assign('cached_page','n');
+if($info['wiki_cache']>0) {$wiki_cache=$info['wiki_cache'];}
 if($wiki_cache>0) {
  $cache_info = $wikilib->get_cache_info($page);
  $now = date('U');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.5 2003-08-15 20:58:57 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.6 2003-09-24 18:16:26 lrargerich Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -376,6 +376,17 @@ if (isset($_REQUEST["wikifeatures"])) {
 
 		$smarty->assign("feature_wiki_undo", 'n');
 	}
+	
+	if (isset($_REQUEST["feature_wiki_icache"]) && $_REQUEST["feature_wiki_icache"] == "on") {
+		$tikilib->set_preference("feature_wiki_icache", 'y');
+
+		$smarty->assign("feature_wiki_icache", 'y');
+	} else {
+		$tikilib->set_preference("feature_wiki_icache", 'n');
+
+		$smarty->assign("feature_wiki_icache", 'n');
+	}
+
 
 	if (isset($_REQUEST["wiki_creator_admin"]) && $_REQUEST["wiki_creator_admin"] == "on") {
 		$tikilib->set_preference("wiki_creator_admin", 'y');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.43 2003-09-02 12:05:51 luciash Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.44 2003-09-24 18:16:26 lrargerich Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -172,6 +172,10 @@ if ($page != 'SandBox') {
 
 // Get page data
 $info = $tikilib->get_page_info($page);
+if($info['wiki_cache']!=0) {
+  $wiki_cache = $info['wiki_cache'];
+  $smarty->assign('wiki_cache',$wiki_cache);
+}
 
 if ($info["flag"] == 'L') {
 	$smarty->assign('msg', tra("Cannot edit page because it is locked"));
@@ -374,6 +378,9 @@ function parse_output(&$obj, &$parts,$i) {
 // Pro
 // Check if the page has changed
 if (isset($_REQUEST["save"])) {
+  if(isset($_REQUEST['wiki_cache'])) {
+    $wikilib->set_page_cache($_REQUEST['page'],$_REQUEST['wiki_cache']);
+  }
   include_once("lib/imagegals/imagegallib.php");
   $cat_type='wiki page';
   $cat_objid = $_REQUEST["page"];

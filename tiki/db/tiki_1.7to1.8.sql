@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.17 2003-09-24 00:30:31 rlpowell Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.18 2003-09-24 18:16:25 lrargerich Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -376,3 +376,5 @@ CREATE TABLE /* IF NOT EXISTS */ tiki_download (
   KEY type (type),
   KEY date (date)
 );  
+
+ALTER TABLE `tiki_pages` ADD `wiki_cache` int(10) default 0 AFTER `cache` ;
