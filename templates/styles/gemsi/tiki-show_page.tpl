@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.9 2004-07-23 18:28:21 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-show_page.tpl,v 1.10 2004-09-16 07:48:17 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}
 <h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
@@ -59,10 +59,12 @@
 {tr}last modification{/tr}:
 {tr}by{/tr}: {$lastUser|userlink} - 
 {$lastModif|tiki_long_datetime} 
-</p>
 {else}
-<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}</p>
+<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
 {/if}
+{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+</p>
+
 
 {if $wiki_feature_copyrights  eq 'y' and $wikiLicensePage}
   {if $wikiLicensePage == $page}

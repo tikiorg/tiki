@@ -249,14 +249,22 @@
 {/if}
 
 {if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
-<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
+<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
+{else}
+<p class="editdate">{tr}last modification{/tr}: {$lastModif|tiki_long_datetime} 
 {/if}
-{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y'}
+{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+</p>
+
+{if $wiki_extras eq 'y'}
+<br />
+{if $feature_wiki_attachments eq 'y'}
 {include file=attachments.tpl}
 {/if}
 
 {if $feature_wiki_comments eq 'y'}
 {include file=comments.tpl}
+{/if}
 {/if}
 
 {if $print_page eq 'y'}

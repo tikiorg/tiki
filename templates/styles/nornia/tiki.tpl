@@ -5,7 +5,6 @@
 {/if}
 
 <div id="tiki-main">
-  <div id="tiki-mid">
     <table border="0" cellpadding="0" cellspacing="0" >
     <tr>
       {if $feature_left_column eq 'y'}
@@ -34,7 +33,6 @@
       {/if}
     </tr>
     </table>
-  </div>
   {if $feature_top_bar eq 'y'}<div align="center"><div id="tiki-top">{include file="tiki-top_bar.tpl"}</div></div>{/if}
   {if $feature_bot_bar eq 'y'}<div align="center"><div id="tiki-bot">{include file="tiki-bot_bar.tpl"}</div></div>{/if}
 </div>

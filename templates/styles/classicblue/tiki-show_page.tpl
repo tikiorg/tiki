@@ -273,10 +273,12 @@
 {/if}
 
 {if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
-<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
+<p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
 {else}
-<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}</p>
+<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}
 {/if}
+{if $feature_wiki_page_footer eq 'y'}<br />{$wiki_page_footer_content}{/if}
+</p>
 
 {if $wiki_extras eq 'y'}
 <br/>
