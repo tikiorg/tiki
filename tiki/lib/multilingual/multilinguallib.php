@@ -136,9 +136,10 @@ class MultilingualLib extends TikiLib {
 			if ($type == 'wiki page')
 				$query = "update `tiki_pages` set `lang`=? where `page_id`=?";
 			else
-				$query = "update `tiki_articles` set `lang`=? where `page_id`=?";
+				$query = "update `tiki_articles` set `lang`=? where `articleId`=?";
 			$this->query($query,array($lang, $objId));
 		}
+
 		$query = "update `tiki_translated_objects` set `lang`=? where `objId`=?";
 		$this->query($query,array($lang, $objId));
 		return null;
