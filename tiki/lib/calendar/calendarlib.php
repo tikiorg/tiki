@@ -82,7 +82,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	function get_calendar($calendarId) {
-		$res = $this->query("select * from `tiki_calendars` where `calendarId`=?",array($calendarId));
+		$res = $this->query("select * from `tiki_calendars` where `calendarId`=?",array((int)$calendarId));
 		return $res->fetchRow();
 	}
 
