@@ -297,7 +297,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 	            
 	            
 	            if($forum_info["outbound_address"]) {
-				  @mail($forum_info["outbound_address"], '['.$forum_info['name'].']'.'re:'.$thread_info['title'],$_REQUEST["comments_title"]."\n".$_REQUEST["comments_data"]); 	          	
+				  @mail($forum_info["outbound_address"], '['.$forum_info['name'].']'.'re:'.$thread_info['title'],$_REQUEST["comments_title"]."\n".$_REQUEST["comments_data"], "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n"); 	          	
  	            }
 	            if($feature_user_watches == 'y') {
 				    $nots = $commentslib->get_event_watches('forum_post_thread',$_REQUEST['comments_parentId']);
@@ -309,7 +309,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 		              $smarty->assign('mail_author',$user);
 		              $smarty->assign('mail_topic',tra('topic:').$thread_info['title']);
 		              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-		              @mail($not['email'], tra('Tiki email notification'),$mail_data);
+		              @mail($not['email'], tra('Tiki email notification'),$mail_data,"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n" );
 		            }
 			    }
 	            
@@ -322,7 +322,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 	              $smarty->assign('mail_author',$user);
 	              
 	              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
-	              @mail($forum_info["mail"], tra('Tiki email notification'),$mail_data);
+	              @mail($forum_info["mail"], tra('Tiki email notification'),$mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
 	              
 	              
 	            }
