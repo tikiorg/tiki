@@ -609,8 +609,7 @@ CREATE TABLE tiki_calendars (
   user varchar(40) NOT NULL default '',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
-  PRIMARY KEY  (calendarId),
-  KEY groupname (groupname)
+  PRIMARY KEY  (calendarId)
 );
 
 DROP TABLE IF EXISTS tiki_calendar_roles;
