@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.40 2004-06-14 20:01:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-read_article.php,v 1.41 2004-06-14 22:32:48 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,6 +103,7 @@ if (!isset($_REQUEST["articleId"])) {
 	$smarty->assign('lang', $article_data["lang"]);
 	$smarty->assign('show_lang', $article_data["show_lang"]);
 	$smarty->assign('authorName', $article_data["authorName"]);
+	$smarty->assign('show_author', $article_data["show_author"]);
 	$smarty->assign('topicId', $article_data["topicId"]);
 	$smarty->assign('type', $article_data["type"]);
 	$smarty->assign('rating', $article_data["rating"]);
@@ -116,7 +117,9 @@ if (!isset($_REQUEST["articleId"])) {
 	$smarty->assign('image_y', $article_data["image_y"]);
 	$smarty->assign('image_data', urlencode($article_data["image_data"]));
 	$smarty->assign('reads', $article_data["reads"]);
+	$smarty->assign('show_reads', $article_data["show_reads"]);
 	$smarty->assign('size', $article_data["size"]);
+	$smarty->assign('show_size', $article_data["show_size"]);
 
 	if (strlen($article_data["image_data"]) > 0) {
 		$smarty->assign('hasImage', 'y');
@@ -159,6 +162,8 @@ if (!isset($_REQUEST["articleId"])) {
 
 	$smarty->assign('body', $article_data["body"]);
 	$smarty->assign('publishDate', $article_data["publishDate"]);
+	$smarty->assign('show_pubdate', $article_data["show_pubdate"]);
+
 	$smarty->assign('edit_data', 'y');
 
 	$body = $article_data["body"];
