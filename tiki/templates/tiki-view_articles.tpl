@@ -48,16 +48,15 @@
 <tr>
 <td>
 {if ($listpages[ix].size > 0) or (($feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y'))}
-(<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">
+( <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a>
 {if $listpages[ix].size > 0}
-{tr}Read More{/tr} {$listpages[ix].size} {tr}bytes{/tr} - 
+- {$listpages[ix].size} {tr}bytes{/tr}
 {/if}
-{if ($feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y')}
-{if $listpages[ix].comments_cant eq 1}{tr}1 Comment{/tr}
+{if ($feature_article_comments eq 'y') and ($tiki_p_read_comments eq 'y')} - 
+{if $listpages[ix].comments_cant eq 1}{tr}1 comment{/tr}
 {else}{$listpages[ix].comments_cant} {tr}comments{/tr}
 {/if}
-{/if}
-</a>)
+{/if} )
 {/if}
 </td>
 <td style="text-align:right;">
