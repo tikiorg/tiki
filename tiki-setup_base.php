@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.43 2003-10-28 19:52:34 traivor Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.44 2003-11-25 20:24:00 lrargerich Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,6 +13,7 @@ require_once("setup_smarty.php"); // smarty 2.6.0rc1
 
 //print("tiki-setup_base 2: before include tikilib.php: ".$tiki_timer->elapsed()."<br />");
 require_once("lib/tikilib.php");
+require_once("lib/cache/cachelib.php");
 
 //print("tiki-setup_base 3: before rest of tiki-setup_base: ".$tiki_timer->elapsed()."<br />");
 $tikilib = new TikiLib($dbTiki);
@@ -165,9 +166,17 @@ else {
 }
 
 
+// We might need to cache this on a per-user basis
+// Cache cache
 // function user_has_permission($user,$perm) 
-$allperms = $userlib->get_permissions(0, -1, 'permName_desc', '', '');
+if(!$cachelib->isCached("allperms")) {
+	$allperms = $userlib->get_permissions(0, -1, 'permName_desc', '', '');
+	$cachelib->cacheItem("allperms",serialize($allperms));
+} else {
+	$allperms = unserialize($cachelib->getCached("allperms"));
+}
 $allperms = $allperms["data"];
+
 
 foreach ($allperms as $vperm) {
     $perm = $vperm["permName"];
