@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.81 2004-06-28 16:16:25 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.82 2004-07-01 00:07:03 damosoft Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -621,3 +621,8 @@ CREATE TABLE tiki_searchwords(
   searchword varchar(80) NOT NULL default '',
   PRIMARY KEY  (syllable,searchword)
 ) TYPE=MyISAM;
+
+# added 29 06 04 06:24:56 by mose for more optoins in wiki
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage_prefix','UserPage');
+

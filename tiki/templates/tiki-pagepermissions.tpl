@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.16 2004-06-08 21:27:35 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.17 2004-07-01 00:07:07 damosoft Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: <a href="tiki-index.php?page={$page}">{$page}</a></h2>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
@@ -14,7 +14,7 @@
     (<a class="link" href="tiki-pagepermissions.php?referer={$referer}&amp;action=removestructure&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;page={$page}&amp;perm={$page_perms[pg].permName}&amp;group={$page_perms[pg].groupName}">{tr}remove from this structure{/tr}</a>)
   </td></tr>
 {sectionelse}
-<tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
+<tr><td>{tr}No individual permissions; category or global permissions apply{/tr}</td></tr>
 {/section}
 </table>
 <h3>{tr}Assign permissions{/tr}</h3>
@@ -37,6 +37,7 @@
 <input type="submit" name="assignstructure" value="{tr}this structure{/tr}" />
 </form>
 
+<br /><br />
 <h3>{tr}Current permissions for categories that this page belongs to{/tr}:</h3>
 <table class="normal">
 <tr><td class="heading">{tr}category{/tr}</td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td></tr>
@@ -50,10 +51,11 @@
 </tr>
 	{/section}
 {sectionelse}
-<tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
+<tr><td>{tr}No category permissions; global permissions apply{/tr}</td></tr>
 {/section}
 </table>
 
+<br /><br /><br />
 <h2>{tr}Send email notifications when this page changes to{/tr}:</h2>
 <form action="tiki-pagepermissions.php" method="post">
 <input type="hidden" name="page" value="{$page|escape}" />

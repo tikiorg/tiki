@@ -866,7 +866,7 @@ class TikiLib extends TikiDB {
 		if (!is_object($scorelib)) {
 			include_once("lib/score/scorelib.php");
 		}
-	if ($user == 'admin') { return; }
+	if ($user == 'admin' || !$user) { return; }
 
 	$event = $this->get_event($event_type);
 	

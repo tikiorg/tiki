@@ -21,7 +21,9 @@
   <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
   <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar}</td></tr>
   <tr><td class="form">{tr}HomePage{/tr}:</td><td>{$homePage}</td></tr>
-  <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a></td></tr>
+	{if $feature_wiki_userpage eq 'y'}
+  <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page={$feature_wiki_userpage_prefix}{$userinfo.login}">{$feature_wiki_userpage_prefix}{$userinfo.login}</a></td></tr>
+	{/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
 {if $feature_friends eq 'y' && $user ne $userwatch}
   {if $friend}

@@ -3852,7 +3852,10 @@ $lang=Array(
 "Replies below your current threshold" => "Antworten unter dem eingestellten Schwellenwert",
 "Posting replies" => "Post-Antworten",
 "HTML tags are not allowed inside posts" => "HTML-Tags sind in Posts nicht erlaubt",
+"Tip: hold down CTRL to select multiple categories" => "Tip: Strg halten um mehrere Kategorien auszuw&auml;hlen",
+"Tip: uncheck the above checkbox to uncategorize this page/object" => "Tip: die Checkbox deaktivieren um die Kategorien dieser Seite/dieses Objekts zu entfernen",
 /*
+"*=optional, Topline=small line above Title, Subtitle=small line below Title, Source=URL to article source" => "",
 "assign xxxxx to groups" => "",
 "Authoritative status for modified items" => "Authoritative status for modified items",
 "Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address" => "Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address",

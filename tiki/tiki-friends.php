@@ -1,7 +1,6 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-include_once("lib/imagegals/imagegallib.php");
 include_once('lib/messu/messulib.php');
 
 if(!$user) {
@@ -16,6 +15,7 @@ if($feature_friends != 'y') {
   die;
 }
 
+// TODO: all messages should be translated to receiver language, not sender.
 if (isset($_REQUEST['request_friendship'])) {
     $friend = $_REQUEST['request_friendship'];
 

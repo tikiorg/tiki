@@ -164,7 +164,7 @@ class LsAdminlib extends TikiLib {
 	}
 
 	function get_events($reqId) {
-		$query = "select tlr.`operator_id`,tlr.`user_id`,tle.`data`,tle.`timestamp`,tlr.`user`,tlr.`operator`,tlr.`tiki_user`,tle.`senderId` from `tiki_live_support_events` tle, `tiki_live_support_requests` tlr where tle.`reqId`=tlr.`reqId` and (`senderId`=`user_id` or `senderId`=`operator_id`) and `tlr.reqId`=?";
+		$query = "select tlr.`operator_id`,tlr.`user_id`,tle.`data`,tle.`timestamp`,tlr.`user`,tlr.`operator`,tlr.`tiki_user`,tle.`senderId` from `tiki_live_support_events` tle, `tiki_live_support_requests` tlr where tle.`reqId`=tlr.`reqId` and (`senderId`=tlr.`user_id` or tle.`senderId`=tlr.`operator_id`) and tlr.`reqId`=?";
 
 		$result = $this->query($query,array($reqId));
 		$ret = array();

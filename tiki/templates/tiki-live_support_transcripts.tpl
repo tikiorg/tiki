@@ -6,8 +6,8 @@
 <table>
 <tr>
 	<td>{tr}find{/tr}</td>
-	<td>{tr}user{/tr}</td>
-	<td>{tr}op{/tr}</td>	
+	<td>{tr}username{/tr}</td>
+	<td>{tr}operator{/tr}</td>	
 	<td>&nbsp;</td>
 </tr>
 
@@ -25,7 +25,7 @@
 		<select name="filter_operator">
 			<option value="" {if $filter_operator eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
 			{section name=ix loop=$operators}
-				<option value="{$operators[ix]|escape}" {if $operators[ix] eq $filter_operator}selected="selected"{/if}>{$users[ix]}</option>
+				<option value="{$operators[ix]|escape}" {if $operators[ix] eq $filter_operator}selected="selected"{/if}>{$operators[ix]}</option>
 			{/section}
 		</select>
 	</td>
@@ -36,20 +36,22 @@
 <table class="normal">
 <tr>
 <td  class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'chat_started_desc'}chat_started_asc{else}chat_started_desc{/if}">{tr}started{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tiki_user_desc'}tiki_user_asc{else}tiki_user_desc{/if}">{tr}user{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tiki_user_desc'}tiki_user_asc{else}tiki_user_desc{/if}">{tr}username{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'reason_desc'}reason_asc{else}reason_desc{/if}">{tr}reason{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'operator_desc'}operator_asc{else}operator_desc{/if}">{tr}op{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'operator_desc'}operator_asc{else}operator_desc{/if}">{tr}operator{/tr}</a></td>
 <td  class="heading">{tr}msgs{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
 <tr>
 <td class="{cycle advance=false}">{$items[ix].chat_started|tiki_short_datetime}</td><!--date_format:"%d %b [%H:%M]"-->
-<td class="{cycle advance=false}">{$items[ix].tiki_user}</td>
+<td class="{cycle advance=false}">{if $items[ix].tiki_user ne ""}{$items[ix].tiki_user}{else}{$items[ix].user}{/if}</td>
 <td class="{cycle advance=false}">{$items[ix].reason}</td>
 <td class="{cycle advance=false}">{$items[ix].operator}</td>
-<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}&amp;view={$items[ix].reqId}">{$items[ix].msgs}</a></td>
+<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;filter_user={$filter_user}&amp;filter_operator={$filter_operator}&amp;view={$items[ix].reqId}">{$items[ix].msgs}<a>&nbsp;</td>
 </tr>
+{sectionelse}
+<tr><td class="odd" colspan="5">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 

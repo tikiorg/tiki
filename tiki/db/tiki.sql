@@ -1,6 +1,6 @@
 # $Rev$
-# $Date: 2004-06-28 16:16:24 $
-# $Author: mose $
+# $Date: 2004-07-01 00:07:03 $
+# $Author: damosoft $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
@@ -4225,6 +4225,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_tables','o
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_templates','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_undo','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_usrlock','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_userpage_prefix','UserPage');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wikiwords','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_workflow','n');
@@ -4670,7 +4672,7 @@ CREATE TABLE tiki_score (
   event varchar(40) NOT NULL default '',
   score int(11) NOT NULL default '0',
   expiration int(11) NOT NULL default '0',
-  PRIMARY KEY  (event),
+  PRIMARY KEY  (event)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_users_score;

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.53 2004-06-10 20:48:22 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.54 2004-07-01 00:07:07 damosoft Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -167,7 +167,7 @@
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}cancel edit{/tr}</a></td>
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" /></td>
 </tr>
 </table>
 </form>

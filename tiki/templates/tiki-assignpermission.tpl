@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.49 2004-06-08 05:15:56 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.50 2004-07-01 00:07:07 damosoft Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
@@ -164,6 +164,7 @@
 {/if}
 {/section}
 </table>
+<input type="submit" name="update" value="{tr}update{/tr}" />
 </form>
 <br />
 <div align="center">

@@ -21,6 +21,15 @@
 </div>
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
+{if $page_ref_id}
+<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
+{/if}
+{if $current_page_id}
+<input type="hidden" name="current_page_id" value="{$current_page_id}" />
+{/if}
+{if $add_child}
+<input type="hidden" name="add_child" value="true" />
+{/if}
 <div style="margin-bottom:1px;">
 {if !$lock}
   {if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
@@ -75,7 +84,7 @@
 {/if}
 
 {if $tiki_p_admin_wiki eq 'y'}
-        <span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
+<span class="tabbut"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="tablink">{tr}export{/tr}</a></span>
 {/if}
 
 {if $feature_wiki_discuss eq 'y'}
@@ -86,7 +95,6 @@
 </div>
 
 <table class="normal">
-
 {include file=categorize.tpl}
 {include file=structures.tpl}
 
@@ -197,15 +205,9 @@
 </td></tr>
 {/if}
 
+
 <input type="hidden" name="page" value="{$page|escape}" />
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
-
-{if $feature_antibot eq 'y' && $anon_user eq 'y'}
-<tr><td class="formcolor">{tr}Anti-Bot verification code{/tr}:</td>
-<td class="formcolor"><img src="tiki-random_num_img.php" alt='{tr}Random Image{/tr}'/></td></tr>
-<tr><td class="formcolor">{tr}Enter the code you see above{/tr}:</td>
-<td class="formcolor"><input type="text" maxlength="8" size="8" name="antibotcode" /></td></tr>
-{/if}
 
 {if $wiki_feature_copyrights  eq 'y'}
 <tr><td class="formcolor">{tr}License{/tr}:</td><td class="formcolor"><a href="tiki-index.php?page={$wikiLicensePage}">{tr}{$wikiLicensePage}{/tr}</a></td>
@@ -217,7 +219,7 @@
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" /></td>
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}cancel edit{/tr}</a></td>
 </tr>
 </table>
 </form>
