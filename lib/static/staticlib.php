@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.3 2004-07-29 21:14:01 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.4 2004-07-29 21:38:26 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,7 +50,7 @@ class StaticLib extends TikiLib {
 		global $smarty, $tikidomain, $wikiHomePage, $style, $tiki_p_edit;
 		$static_path = "static";
 		if ($tikidomain) {
-			$dump_path .= "/$tikidomain";
+			$static_path .= "/$tikidomain";
 		}
 		$filename = $static_path . '/' . $pagename . '.html';
 		
@@ -92,7 +92,7 @@ class StaticLib extends TikiLib {
 		global $tikidomain;
 		$static_path = "static";
 		if ($tikidomain) {
-			$dump_path .= "/$tikidomain";
+			$static_path .= "/$tikidomain";
 		}
 		$oldfilename = $static_path . '/' . $oldpagename . '.html';
 		$newfilename = $static_path . '/' . $newpagename . '.html';
@@ -110,7 +110,7 @@ class StaticLib extends TikiLib {
 		global $tikidomain, $wikilib;
 		$static_path = "static";
 		if ($tikidomain) {
-			$dump_path .= "/$tikidomain";
+			$static_path .= "/$tikidomain";
 		}
 		$filename = $static_path . '/' . $pagename . '.html';
 		
@@ -136,9 +136,12 @@ class StaticLib extends TikiLib {
 	
 	function purge_ghost_pages() {
 
-		global $docroot;
-		
-		$dir = $docroot . 'static';
+		global $tikidomain;
+		$static_path = "static";
+		if ($tikidomain) {
+			$static_path .= "/$tikidomain";
+		}
+		$dir = $static_path;
 
 		// supress the PHP error because that causes Tiki to crash
 		$dh = @opendir($dir);
@@ -157,8 +160,8 @@ class StaticLib extends TikiLib {
 		
 		foreach ($filesarray as $file) {
 			$pagename = str_replace('.html', '', $file);
-			if (!$tikilib->page_exists($pagename)) {
-				$filename = $docroot . '/static/' . $file;
+			if (!$this->page_exists($pagename)) {
+				$filename = $dir . '/' . $file;
 				@unlink($filename);
 			}
 		}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.37 2004-07-28 20:16:39 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.38 2004-07-29 21:38:27 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -114,6 +114,14 @@ if (isset($_REQUEST['staticwiki'])) {
 		$smarty->assign('feature_wiki_realtime_static', 'n');
 	}
 }
+
+// purge ghost static html pages
+if (isset($_REQUEST['purgestatic']) && $_REQUEST['purgestatic'] == 'y') {
+	check_ticket('admin-inc-wiki');
+	global $staticlib;
+	include_once('lib/static/staticlib.php');
+	$staticlib->purge_ghost_pages();
+}	
 
 if (isset($_REQUEST["setwikiregex"])) {
 	check_ticket('admin-inc-wiki');
