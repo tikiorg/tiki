@@ -382,7 +382,10 @@ class UsersLib extends TikiDB {
 			// see if we can create a new account
 			if ($cas_create_tiki) {
 			    // need to make this better! *********************************************************
-			    $result = $this->add_user($user, '', '');
+			    $randompass = $this->genPass();
+			    // in case CAS auth is turned off accidentally;
+			    // we don't want ppl to be able to login as any user with blank passwords
+			    $result = $this->add_user($user, $randompass, '');
 
 			    // if it worked ok, just log in
 			    if ($result == USER_VALID)
