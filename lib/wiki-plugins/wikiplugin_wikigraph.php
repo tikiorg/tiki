@@ -9,24 +9,27 @@ include_once ("lib/graphviz/GraphViz.php");
 
 function wikiplugin_wikigraph_help() {
 	$back = "Renders a graph, with linked pages navigation visually figured.\n";
-	$back.= "<pre>Parameters:\n";
-	$back.= "level=>0 where 0 is the number of hops the graph follows\n";
-	$back.= "title=>wikigraph where wikigraph is the title of the map\n";
-	$back.= "nodesep=>.1 where .1 is the space beetween nodes\n";
-	$back.= "rankdir=>LR where LR is Left-Right, the direction of graph\n";
-	$back.= "bgcolor=>transparent where transparent is the background color, use #rrvvbb color types.\n";
-	$back.= "size=> nothing there, unlimited size. use 5,3 type sizes in inches\n";
-	$back.= "fontsize=>9 where 9 is the font size in pts presumably\n";
-	$back.= "fontname=>Helvetica where Helvetica is the name of the font used for labels\n";
-	$back.= "shape=>box where box is the shape of a node. can be \n";
-	$back.= "           plaintext ellipse circle egg triangle box diamond trapezium parallelogram house hexagon octagon\n";
-	$back.= "nodestyle=>filled where filled is the style for drawing nodes.\n";
-	$back.= "nodecolor=>#aeaeae where #aeaeae is the color of the border\n";
-	$back.= "nodefillcolor=>#FFFFFF where #FFFFFF is the background color of the node\n";
-	$back.= "nodewidth=>.1 where .1 is a sortof relative width ??\n";
-	$back.= "nodeheight=>.1 where .1 is the same mystery as above\n";
-	$back.= "edgecolor=>#999999 where #999999 is the color for links (called edges here)\n";
-	$back.= "edgestyle=>solid where solid is the shap of the arrow that come with the link\n";
+	$back.= "^Parameters: key=>value,...\n";
+	$back.= "||\n";
+	$back.= "__key__ | __default__ | __comments__\n";
+	$back.= "level | 0 | the number of hops the graph follows\n";
+	$back.= "title | wikigraph | the title of the map\n";
+	$back.= "nodesep | .1 | the space beetween nodes\n";
+	$back.= "rankdir | LR | Left to Right, the direction of graph\n";
+	$back.= "bgcolor | transparent |  the background color, use #rrvvbb color types.\n";
+	$back.= "size | | nothing there, unlimited size. use 5,3 type sizes in inches\n";
+	$back.= "fontsize | 9 | the font size in pts presumably\n";
+	$back.= "fontname | Helvetica | the name of the font used for labels\n";
+	$back.= "shap | box | the shape of a node. can be ";
+	$back.= "plaintext ellipse circle egg triangle box diamond trapezium parallelogram house hexagon octagon\n";
+	$back.= "nodestyle | filled | style for drawing nodes.\n";
+	$back.= "nodecolor | #aeaeae | color of the border\n";
+	$back.= "nodefillcolor | #FFFFFF | background color of the node\n";
+	$back.= "nodewidth | .1 | sortof relative width ??\n";
+	$back.= "nodeheight | .1 | same mystery as above\n";
+	$back.= "edgecolor | #999999 | color for links (called edges here)\n";
+	$back.= "edgestyle | solid | shape of the arrow that come with the link\n";
+	$back.= "||^";
 	return $back;
 }
 
