@@ -43,7 +43,7 @@
 <table width="100%">
 <tr>
 <td>
-(<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a> {$listpages[ix].size} bytes)
+(<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a> - {if $listpages[ix].comments_cant eq 1}{tr}1 Comment{/tr}{else}{$listpages[ix].comments_cant} comments{/if})
 </td>
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.9 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.10 2003-08-11 22:16:57 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,6 +10,8 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
+include_once("lib/commentslib.php");
+$commentslib = new Comments($dbTiki);
 
 /*
 if($feature_listPages != 'y') {
@@ -93,6 +95,10 @@ $listpages = $tikilib->list_articles(0, $maxArticles, $sort_mode, $find, $pdate,
 
 for ($i = 0; $i < count($listpages["data"]); $i++) {
 	$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
+	$comments_prefix_var='article';
+	$comments_object_var=$listpages["data"][$i]["articleId"];
+	$comments_objectId = $comments_prefix_var.$comments_object_var;
+	$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
 }
 
 // If there're more records then assign next_offset
