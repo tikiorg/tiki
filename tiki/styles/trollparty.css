@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.7 2003-10-07 23:30:04 zaufi Exp $
+$Id: trollparty.css,v 1.8 2003-10-13 13:38:57 zaufi Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -17,12 +17,6 @@ border-bottom: 1px dashed #2255aa;
 
 cbox: bg #333333;
 */
-
-/*
- * Use default looking for doxygened docs 'till
- * theme authors redefine needed styles...
- */
-@import "doxygen.css";
 
 
 body

@@ -1,12 +1,7 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.19 2003-10-07 23:30:03 zaufi Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.20 2003-10-13 13:38:56 zaufi Exp $
 2003 - created and maintained by mose@feu.org
 */
-/*
- * Use default looking for doxygened docs 'till
- * theme authors redefine needed styles...
- */
-@import "doxygen.css";
 
 body {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;

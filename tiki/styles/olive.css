@@ -1,9 +1,4 @@
 /* Olive Style for Tiki 1.7+ by Oliver Hertel */
-/*
- * Use default looking for doxygened docs 'till
- * theme authors redefine needed styles...
- */
-@import "doxygen.css";
 
 body {
 	background-color:    white;
