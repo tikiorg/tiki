@@ -164,7 +164,7 @@ class TikiLib extends TikiDB {
 	global $userlib;
 
 	$hash = md5(uniqid('.'));
-	$email = $this->get_user_email($user);
+	$email = $userlib->get_user_email($user);
 	$query = "delete from `tiki_user_watches` where `user`=? and `event`=? and `object`=?";
 	$this->query($query,array($user,$event,$object));
 	$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`) ";
