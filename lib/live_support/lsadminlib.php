@@ -23,7 +23,7 @@ class LsAdminlib extends Tikilib {
 	}
 
 	function is_operator($user) {
-		return $this->getOne("select count(*) from `tiki_live_support_operators` where `user`='$user'");
+		return $this->getOne("select count(*) from `tiki_live_support_operators` where `user`=?", array($user));
 	}
 
 	function get_operators($status) {
