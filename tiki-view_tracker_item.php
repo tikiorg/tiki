@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.21 2004-01-04 08:30:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.22 2004-01-05 05:52:42 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -133,11 +133,19 @@ if ($tiki_p_modify_tracker_items == 'y') {
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	for ($i = 0; $i < count($fields["data"]); $i++) {
-		$name = $fields["data"][$i]["name"];
-		$ins_name = 'ins_' . $name;
-		$ins_fields["data"][$i]["value"] = $info["$name"];
-		if ($fields["data"][$i]["type"] == 'a') {
-			$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+		if ($fields["data"][$i]["type"] != 'h') {
+			$name = ereg_replace("[^a-zA-Z0-9]","",$fields["data"][$i]["name"]);
+			$ins_name = 'ins_' . $name;
+			if ($fields["data"][$i]["type"] == 'c') {
+				if (!isset($info["$name"])) $info["$name"] = 'n';
+			} else {
+				if (!isset($info["$name"])) $info["$name"] = '';
+			}
+			$ins_fields["data"][$i]["value"] = $info["$name"];
+			if ($fields["data"][$i]["type"] == 'a') {
+				$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+			}
+		// var_dump($info);
 		}
 	}
 }
