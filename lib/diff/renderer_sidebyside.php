@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.1 2004-07-01 22:33:42 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.2 2004-08-03 19:44:57 teedog Exp $
 
 /**
  * "Side-by-Side" diff renderer.
@@ -19,7 +19,7 @@ class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
     function _startDiff()
     {
         ob_start();
-        echo '<table class="normal">';
+        echo '<table class="normal diff">';
     }
 
     function _endDiff()
@@ -48,16 +48,29 @@ class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
     {
     	if ($type == 'context') {
 	        foreach ($lines as $line) {
+	        	if (!empty($line))
 	            echo "<tr class='diffbody'><td></td><td>$line</td><td></td><td>$line</td></tr>\n";
 	        }
     	} elseif ($type == 'added') {
 	        foreach ($lines as $line) {
+	        	if (!empty($line))
 	            echo "<tr class='diffadded'><td colspan='2'></td><td>$prefix</td><td>$line</td></tr>\n";
 	        }
     	} elseif ($type == 'deleted') {
 	        foreach ($lines as $line) {
+	        	if (!empty($line))
 	            echo "<tr class='diffdeleted'><td>$prefix</td><td>$line</td><td colspan='2'></td></tr>\n";
 	        }
+    	} elseif ($type == 'change-deleted') {
+    		foreach ($lines as $line) {
+    			if (!empty($line))
+    			echo "<tr><td class='diffdeleted'>$prefix</td><td class='diffdeleted'>$line</td>\n";
+    		}
+    	} elseif ($type == 'change-added') {
+    		foreach ($lines as $line) {
+    			if (!empty($line))
+    			echo "<td class='diffadded'>$prefix</td><td class='diffadded'>$line</td></tr>\n";
+    		}
     	}
     }
 
@@ -66,20 +79,28 @@ class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
         $this->_lines('context', $lines);
     }
 
-    function _added($lines)
+    function _added($lines, $changemode = FALSE)
     {
-        $this->_lines('added', $lines, '+');
+        if ($changemode) {
+        	$this->_lines('change-added', $lines, '+');
+        } else {
+        	$this->_lines('added', $lines, '+');
+        }
     }
 
-    function _deleted($lines)
+    function _deleted($lines, $changemode = FALSE)
     {
-        $this->_lines('deleted', $lines, '-');
+        if ($changemode) {
+        	$this->_lines('change-deleted', $lines, '-');
+        } else {
+	        $this->_lines('deleted', $lines, '-');
+        }
     }
 
     function _changed($orig, $final)
     {
-        $this->_deleted($orig);
-        $this->_added($final);
+        $this->_deleted($orig, TRUE);
+        $this->_added($final, TRUE);
     }
 
 }

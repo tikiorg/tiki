@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.65 2004-07-29 17:38:15 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.66 2004-08-03 19:44:56 teedog Exp $
 
 MoreNeat theme
 */
@@ -1908,6 +1908,12 @@ TABLE.admin { width: 100%; }
 
 /* wiki diff styles */
 
+table.diff {
+border-color: #A9B8C2;
+border-width: 1px 1px 1px 1px;
+border-style: solid;
+font-family: monospace, 'Courier New', courier;
+}
 .diffheader {
 margin: 10px 5px 0px 5px;
 padding: 4px;
