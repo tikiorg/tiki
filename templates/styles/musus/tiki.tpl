@@ -35,7 +35,6 @@
 			{include file="tiki-bot_bar.tpl"}
 		</div>
 	{/if}
-
 </div>
 
 {if $feature_bidi eq 'y'}
