@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.13 2003-09-30 13:05:01 sylvieg Exp $
+/* $Id: wikiplugin_module.php,v 1.14 2003-10-14 10:10:02 zaufi Exp $
 Displays a module inlined in page
 
 Parameters
@@ -17,6 +17,14 @@ about module params : all params are passed in $module_params
 so if you need to use parmas just add them in MODULE()
 like the trackerId in the above example.
 */
+
+/**
+ * \warning zaufi: using cached module template is break the idea of
+ *   having different (than system default) parameters for modules...
+ *   so cache checking and maintaining currently commented out
+ *   'till another solution will be implemented :)
+ */
+
 function wikiplugin_module_help() {
 	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,align=>left|center|right,max=>,np=>0|1,args...)}{MODULE}~/np~";
 }
@@ -68,7 +76,7 @@ function wikiplugin_module($data, $params) {
 		$template = 'modules/mod-' . $module . '.tpl';
 		$nocache = 'templates/modules/mod-' . $module . '.tpl.nocache';
 
-		if ((!file_exists($cachefile)) || (file_exists($nocache)) || ((time() - filemtime($cachefile)) > $cache_time)) {
+//		if ((!file_exists($cachefile)) || (file_exists($nocache)) || ((time() - filemtime($cachefile)) > $cache_time)) {
 			if (file_exists($phpfile)) {
 				$module_rows = $max;
 
@@ -95,23 +103,23 @@ function wikiplugin_module($data, $params) {
 				fwrite($fp, $data, strlen($data));
 				fclose ($fp);
 			}
-		} else {
-			$fp = fopen($cachefile, "r");
-
-			$out = fread($fp, filesize($cachefile));
-			fclose ($fp);
-		}
+//		} else {
+//			$fp = fopen($cachefile, "r");
+//			$out = fread($fp, filesize($cachefile));
+//			fclose ($fp);
+//		}
 
 		$out = eregi_replace("\n", "", $out);
 	}
 
 	if ($out) {
 		if ($np) {
-			$data = "<div style='float:$align;'>~pp~$out~/pp~</div>" . $data;
+  		    $data = "<div style='float:$align;'>~np~$out~/np~</div>".$data;
 		} else {
 			$data = "<div style='float:$align;'>$out</div>" . $data;
 		}
 	} else {
+        // \todo Baad practice to use hardcoded style!! ;]
 		$data = "<div style='float:$align;color:#AA2200;'>" . tra("Sorry no such module"). "<br/><b>$module</b></div>" . $data;
 	}
 
