@@ -10,20 +10,20 @@ class MailinLib extends TikiLib {
 	}
 
 	function list_mailin_accounts($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where (account like $findesc)";
+			$findesc = '%'.$find.'%';
+			$mid = " where `account` like ?";
+			$bindvars = array($findesc);
 		} else {
 			$mid = "  ";
+			$bindvars = array();
 		}
 
-		$query = "select * from tiki_mailin_accounts $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_mailin_accounts $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_mailin_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_mailin_accounts` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -37,20 +37,20 @@ class MailinLib extends TikiLib {
 	}
 
 	function list_active_mailin_accounts($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where active='y' and (account like $findesc)";
+			$findesc = '%'.$find.'%';
+			$mid = " where `active`=? and `account` like ?";
+			$bindvars = array("y",$findesc);
 		} else {
-			$mid = " where active='y'";
+			$mid = " where `active`=?";
+			$bindvars = array("y");
 		}
 
-		$query = "select * from tiki_mailin_accounts $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_mailin_accounts $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_mailin_accounts` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_mailin_accounts` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -63,42 +63,33 @@ class MailinLib extends TikiLib {
 		return $retval;
 	}
 
-	function replace_mailin_account($accountId, $account, $pop, $port, $username, $pass, $smtp, $useAuth, $smtpPort, $type, $active)
-		{
-		$account = addslashes($account);
-
-		$username = addslashes($username);
-		$pass = addslashes($pass);
-		// Check the name
+	function replace_mailin_account($accountId, $account, $pop, $port, $username, $pass, $smtp, $useAuth, $smtpPort, $type, $active) {
 		if ($accountId) {
-			$query = "update tiki_mailin_accounts set account='$account', pop='$pop', port=$port,smtpPort=$smtpPort,username='$username', pass='$pass',smtp='$smtp',useAuth='$useAuth',type='$type',active='$active' where accountId=$accountId";
-
-			$result = $this->query($query);
+			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active,(int)$accountId);
+			$query = "update `tiki_mailin_accounts` set `account`=?, `pop`=?, `port`=?, `smtpPort`=?, `username`=?, `pass`=?, `smtp`=?, `useAuth`=?, `type`=?, `active`=? where `accountId`=?";
+			$result = $this->query($query,$bindvars);
 		} else {
-			$query = "replace into tiki_mailin_accounts(account,pop,port,username,pass,smtp,useAuth,smtpPort,type,active)
-                values('$account','$pop',$port,'$username','$pass','$smtp','$useAuth',$smtpPort,'$type','$active')";
-
-			$result = $this->query($query);
+			$bindvars = array($account,$pop,(int)$port,(int)$smtpPort,$username,$pass,$smtp,$useAuth,$type,$active);
+			$query = "delete from `tiki_mailin_accounts` where `account`=? and `pop`=? and `port`=? and `smtpPort`=? and `username`=? and `pass`=? and `smtp`=? and `useAuth`=? and `type`=? and `active`=?";
+			$result = $this->query($query,$bindvars,-1,-1,false);
+			$query = "insert into `tiki_mailin_accounts`(`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`type`,`active`) values(?,?,?,?,?,?,?,?,?,?)";
+			$result = $this->query($query,$bindvars);
 		}
-
 		return true;
 	}
 
 	function remove_mailin_account($accountId) {
-		$query = "delete from tiki_mailin_accounts where accountId=$accountId";
-
-		$result = $this->query($query);
+		$query = "delete from `tiki_mailin_accounts` where `accountId`=?";
+		$result = $this->query($query,array((int)$accountId));
 		return true;
 	}
 
 	function get_mailin_account($accountId) {
-		$query = "select * from tiki_mailin_accounts where accountId=$accountId";
-
-		$result = $this->query($query);
-
-		if (!$result->numRows())
+		$query = "select * from `tiki_mailin_accounts` where `accountId`=?";
+		$result = $this->query($query,array((int)$accountId));
+		if (!$result->numRows()) { 
 			return false;
-
+		}
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 		return $res;
 	}
