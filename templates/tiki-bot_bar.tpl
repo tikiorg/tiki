@@ -1,12 +1,12 @@
 
-	<div id="power" style="text-align: center">
-		<a title="{tr}CSS standards{/tr}" href="http://www.w3.org/Style/CSS/"><img style="border: 0" alt="{tr}Made with CSS{/tr}" src="img/css1.png" /></a>
-		<a title="{tr}Validate this page{/tr}" href="http://validator.w3.org/check/referer"><img style="border: 0" alt="{tr}Valid XHTML 1.0{/tr}" src="img/valid-xhtml10.png" /></a>
-		<a title="{tr}Pear website{/tr}" href="http://pear.php.net/"><img style="border: 0" alt="{tr}Powered by Pear{/tr}" src="img/pear.png" /></a>
-		<a title="{tr}PHP website{/tr}" href="http://www.php.net"><img style="border: 0" alt="{tr}Powered by PHP{/tr}" src="img/php.png" /></a>
-		<a title="{tr}Smarty website{/tr}" href="http://smarty.php.net/"><img style="border: 0" alt="{tr}Powered by Smarty{/tr}" src="img/smarty.gif"  /></a>
-		<a title="{tr}RDF standards{/tr}" href="http://www.w3.org/RDF/"><img style="border: 0" alt="{tr}powered by RDF{/tr}" src="img/rdf.gif" /></a>
-	</div>
+<div id="power" style="text-align: center">
+<a title="{tr}CSS standards{/tr}" href="http://www.w3.org/Style/CSS/"><img style="border: 0" alt="{tr}Made with CSS{/tr}" src="img/css1.png" /></a>
+<a title="{tr}Validate this page{/tr}" href="http://validator.w3.org/check/referer"><img style="border: 0" alt="{tr}Valid XHTML 1.0{/tr}" src="img/valid-xhtml10.png" /></a>
+<a title="{tr}Pear website{/tr}" href="http://pear.php.net/"><img style="border: 0" alt="{tr}Powered by Pear{/tr}" src="img/pear.png" /></a>
+<a title="{tr}PHP website{/tr}" href="http://www.php.net"><img style="border: 0" alt="{tr}Powered by PHP{/tr}" src="img/php.png" /></a>
+<a title="{tr}Smarty website{/tr}" href="http://smarty.php.net/"><img style="border: 0" alt="{tr}Powered by Smarty{/tr}" src="img/smarty.gif"  /></a>
+<a title="{tr}RDF standards{/tr}" href="http://www.w3.org/RDF/"><img style="border: 0" alt="{tr}powered by RDF{/tr}" src="img/rdf.gif" /></a>
+</div>
 	<div id="rss" style="text-align: center">
 		{if $rss_wiki eq 'y'}
 				<a title="{tr}Wiki RSS{/tr}" href="tiki-wiki_rss.php?ver={$rssfeed_default_version}{$rssfeed_cssparam}"><img alt="RSS" style="border: 0" src="img/rss.png" /></a>

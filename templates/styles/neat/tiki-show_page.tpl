@@ -86,7 +86,7 @@
     <option value="tiki-index.php?page={$page|escape:"url"}">{tr}Structures{/tr}...</option>
 	{section name=struct loop=$showstructs}
 	  <option value="tiki-index.php?page_ref_id={$showstructs[struct].req_page_ref_id}">
-{if $showstructs[struct].page_alias} 
+{if $showstructs[struct].page_alias}
 	{$showstructs[struct].page_alias}
 {else}
 	{$showstructs[struct].pageName}
@@ -164,11 +164,11 @@
 {/if}
 
 {if $feature_wiki_comments eq 'y' and $show_page eq 'y'}
-        <span class="tabbut"><a href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
+        <span class="tabbut"><a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
 {/if}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
-<span class="tabbut"><a href="javascript:document.location='#attachments';flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
-{/if} 
+<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+{/if}
 
 {/if}
 
@@ -196,12 +196,12 @@
 				<tr>
 	<td width='33%'>
 		{if $prev_info and $prev_info.page_ref_id}
-			<a class="tocnavlink" href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}">&lt;&lt; 
+			<a class="tocnavlink" href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}">&lt;&lt;
 				{if $prev_info.page_alias}
 					{$prev_info.page_alias}
 				{else}
 					{$prev_info.pageName}
-				{/if} 
+				{/if}
 			</a>
 
 		{else}
@@ -226,7 +226,7 @@
 						{$next_info.page_alias}
 					{else}
 						{$next_info.pageName}
-					{/if} 
+					{/if}
 					&gt;&gt;
 				</a>
 			{else}
@@ -270,13 +270,13 @@
 <a name="attachments"></a>
 <div id="attzone">
 <table class="normal">
-<tr> 
+<tr>
   <td class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a></td>
   <td class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}uploaded{/tr}</a></td>
   <td style="text-align:right;"   class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a></td>
   <td style="text-align:right;"   class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}dls{/tr}</a></td>
   <td class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}desc{/tr}</a></td>
-</tr> 
+</tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$atts}
 <tr>

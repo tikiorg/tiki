@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.9 2003-12-08 01:36:20 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.10 2004-02-26 06:30:28 mose Exp $
  *
  */
 
@@ -179,6 +179,7 @@ div.tocnav {
 
 /* Code listing style */
 div.codelisting {
+    color: InfoText;
     background-color: InfoBackground;
     border: 2px ridge WindowFrame;
     margin: 4px;

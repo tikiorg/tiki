@@ -1,6 +1,6 @@
 <div class="cbox">
   <div class="cbox-title">{tr}Search settings{/tr}</div>
-  <div class"cbox-data">
+  <div class="cbox-data">
     <div class="simplebox">
       {tr}Settings for searching content{/tr}<br />
       <form action="tiki-admin.php?page=search" method="post">

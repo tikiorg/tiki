@@ -24,9 +24,9 @@
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <input type="hidden" name="user" value="{$userwatch|escape}" /> 
   <table>
-  <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
-  <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
-  <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td>
+  <tr><td class="form">{tr}Name{/tr}:</td><td class="form">{$userinfo.login}</td></tr>
+  <tr><td class="form">{tr}Last login{/tr}:</td><td class="form">{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
+  <tr><td class="form">{tr}Is email public? (uses scrambling to prevent spam){/tr}</td><td class="form">
   <select name="email_isPublic">
    {section name=ix loop=$scramblingMethods}
       <option value="{$scramblingMethods[ix]|escape}" {if $email_isPublic eq $scramblingMethods[ix]}selected="selected"{/if}>{$scramblingEmails[ix]}</option>
@@ -34,7 +34,7 @@
   </select>
   </td></tr>
   </td></tr>
-  <tr><td class="form">{tr}Country{/tr}:</td><td>
+  <tr><td class="form">{tr}Country{/tr}:</td><td class="form">
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   <select name="country">
   {sortlinks}
@@ -45,7 +45,7 @@
   </select>
   </td></tr>
   {if $change_theme eq 'y'}
-  <tr><td class="form">{tr}Theme{/tr}:</td><td><select name="style">
+  <tr><td class="form">{tr}Theme{/tr}:</td><td class="form"><select name="style">
         {section name=ix loop=$styles}
         <option value="{$styles[ix]|escape}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
         {/section}
@@ -56,7 +56,7 @@
 				</td></tr>
   {/if}
   {if $change_language eq 'y'}      
-  <tr><td  class="form">{tr}Language{/tr}:</td><td>
+  <tr><td  class="form">{tr}Language{/tr}:</td><td class="form">
         <select name="language">
         {section name=ix loop=$languages}
         <option value="{$languages[ix].value|escape}"
@@ -66,9 +66,9 @@
         {/section}
         </select></td></tr>
   {/if}      
-  <tr><td class="form">{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
-  <tr><td class="form">{tr}Avatar{/tr}:</td><td>{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
-  <tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td>
+  <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
+  <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
+  <tr><td class="form">{tr}Number of visited pages to remember{/tr}:</td><td class="form">
   <select name="userbreadCrumb">
   <option value="1" {if $userbreadCrumb eq 1}selected="selected"{/if}>1</option>
   <option value="2" {if $userbreadCrumb eq 2}selected="selected"{/if}>2</option>
@@ -78,9 +78,9 @@
   <option value="10" {if $userbreadCrumb eq 10}selected="selected"{/if}>10</option>
   </select>
   </td></tr>
-  <tr><td class="form">{tr}HomePage{/tr}:</td><td><input type="text" name="homePage" value="{$homePage|escape}" /></td></tr>
+  <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" name="homePage" value="{$homePage|escape}" /></td></tr>
   {if $feature_wiki eq 'y'}
-  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
+  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td class="form"><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
   {/if}
 	{if $userTracker eq 'y'}
   <tr><td class="form">{tr}Your personal tracker information{/tr}:</td><td>
@@ -91,12 +91,12 @@
 	{/if}
 	{/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td>
-  <td>
+  <td class="form">
   <input type="radio" name="display_timezone" value="UTC" {if $display_timezone eq 'UTC'}checked="checked"{/if}/> {tr}UTC{/tr}
   <input type="radio" name="display_timezone" value="Local" {if $display_timezone ne 'UTC'}checked="checked"{/if}/> {tr}Local{/tr}
   </td>
   </tr>
-  <tr><td class="form">{tr}User information{/tr}:</td><td>
+  <tr><td class="form">{tr}User information{/tr}:</td><td class="form">
   <select name="user_information">
     <option value='private' {if $user_information eq 'private'}selected="selected"{/if}>{tr}private{/tr}</option>
     <option value='public' {if $user_information eq 'public'}selected="selected"{/if}>{tr}public{/tr}</option>
@@ -104,7 +104,7 @@
   </td></tr>
   {if $feature_wiki eq 'y'}
   <tr><td class="form">{tr}Use dbl click to edit pages{/tr}:</td>
-  <td>
+  <td class="form">
   <input type="checkbox" name="user_dbl" {if $user_dbl eq 'y'}checked="checked"{/if} />
   </td>
   </tr>
@@ -113,7 +113,7 @@
   {* Custom fields *}
   {section name=ir loop=$customfields}
     <tr><td class="form">{$customfields[ir].prefName}:</td>
-        <td><input type="text" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" /></td>
+        <td class="form"><input type="text" name="{$customfields[ir].prefName}" value="{$customfields[ir].value}" /></td>
     </tr>
   {/section}
 
@@ -127,8 +127,8 @@
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
-  <tr><td class="form">{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
-  <tr><td>{tr}Password{/tr}:</td><td><input type="password" name="pass" /></td></tr>
+  <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
+  <tr><td class="form">{tr}Password{/tr}:</td><td><input type="password" name="pass" /></td></tr>
   <tr><td colspan="2" class="button"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
   </table>
   </form>
