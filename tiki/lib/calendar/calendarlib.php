@@ -331,11 +331,10 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "dir":
-				//TODO: db abstraction: continue here.
-				$query = "select `siteId`, created, name, `description`, url ";
+				$query = "select `siteId`, `created`, `name`, `description`, `url` ";
 
-				$query .= "from `tiki_directory_sites` where (created>$tstart and created<$tstop)";
-				$result = $this->query($query);
+				$query .= "from `tiki_directory_sites` where (`created`>? and `created`<?)";
+				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
@@ -357,10 +356,10 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "fgal":
-				$query = "select f.created as created, f.user as user, f.name as name, f.`description` as description, g.galleryId as fgalId, g.name as fgalname ";
+				$query = "select f.`created` as created, f.`user` as user, f.`name` as name, f.`description` as description, g.`galleryId` as fgalId, g.`name` as fgalname ";
 
-				$query .= "from `tiki_files` as f left join tiki_file_galleries as g on f.galleryId=g.galleryId where (f.created>$tstart and f.created<$tstop)";
-				$result = $this->query($query);
+				$query .= "from `tiki_files` as f left join `tiki_file_galleries` as g on f.`galleryId`=g.`galleryId` where (f.`created`>? and f.`created`<?)";
+				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
@@ -382,10 +381,10 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "faq":
-				$query = "select `faqId`, created, title, `description` ";
+				$query = "select `faqId`, `created`, `title`, `description` ";
 
-				$query .= "from `tiki_faqs` where (created>$tstart and created<$tstop)";
-				$result = $this->query($query);
+				$query .= "from `tiki_faqs` where (`created`>? and `created`<?)";
+				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
@@ -407,10 +406,10 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "quiz":
-				$query = "select `quizId`, created, name, `description` ";
+				$query = "select `quizId`, `created`, `name`, `description` ";
 
-				$query .= "from `tiki_quizzes` where (created>$tstart and created<$tstop)";
-				$result = $this->query($query);
+				$query .= "from `tiki_quizzes` where (`created`>? and `created`<?)";
+				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
@@ -432,10 +431,10 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "track":
-				$query = "select i.itemId as itemId, i.created as created, t.name as name, t.trackerId as tracker ";
+				$query = "select i.`itemId` as itemId, i.`created` as created, t.`name` as name, t.`trackerId` as tracker ";
 
-				$query .= "from `tiki_tracker_items` as i left join tiki_trackers as t on t.trackerId=i.trackerId where (i.created>$tstart and i.created<$tstop)";
-				$result = $this->query($query);
+				$query .= "from `tiki_tracker_items` as i left join `tiki_trackers` as t on t.`trackerId`=i.`trackerId` where (i.`created`>? and i.`created`<?)";
+				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
@@ -457,10 +456,10 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "surv":
-				$query = "select `surveyId`, created, name, `description` ";
+				$query = "select `surveyId`, `created`, `name`, `description` ";
 
-				$query .= "from `tiki_surveys` where (created>$tstart and created<$tstop)";
-				$result = $this->query($query);
+				$query .= "from `tiki_surveys` where (`created`>? and `created`<?)";
+				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
@@ -482,10 +481,10 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "nl":
-				$query = "select count(s.email) as count, FROM_UNIXTIME(s.subscribed,'%d') as d, max(s.subscribed) as day, s.nlId as nlId, n.name as name from `tiki_newsletter_subscriptions` as s ";
+				$query = "select count(s.`email`) as count, FROM_UNIXTIME(s.`subscribed`,'%d') as d, max(s.`subscribed`) as day, s.`nlId` as nlId, n.`name` as name from `tiki_newsletter_subscriptions` as s ";
 
-				$query .= "left join tiki_newsletters as n on n.nlId=s.nlId  where (subscribed>$tstart and subscribed<$tstop) group by s.nlId, d";
-				$result = $this->query($query);
+				$query .= "left join `tiki_newsletters` as n on n.`nlId`=s.`nlId`  where (`subscribed`>? and `subscribed`<?) group by s.`nlId`, d";
+				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['day']), date("d", $res['day']), date("Y", $res['day']));
@@ -507,10 +506,10 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "eph":
-				$query = "select `publish` as created, title as name, textdata as description ";
+				$query = "select `publish` as created, `title` as name, `textdata` as description ";
 
-				$query .= "from `tiki_eph` where (publish>$tstart and publish<$tstop)";
-				$result = $this->query($query);
+				$query .= "from `tiki_eph` where (`publish`>? and `publish`<?)";
+				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
@@ -532,10 +531,10 @@ class CalendarLib extends TikiLib {
 				break;
 
 			case "chart":
-				$query = "select `chartId`, created, title as name, `description` ";
+				$query = "select `chartId`, `created`, `title` as name, `description` ";
 
-				$query .= "from `tiki_charts` where (created>$tstart and created<$tstop)";
-				$result = $this->query($query);
+				$query .= "from `tiki_charts` where (`created`>$tstart and `created`<$tstop)";
+				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
@@ -562,17 +561,17 @@ class CalendarLib extends TikiLib {
 	}
 
 	function get_item($calitemId) {
-		$query = "select i.calitemId as calitemId, i.calendarId as calendarId, i.user as user, i.start as start, i.end as end, t.name as calname, ";
+		$query = "select i.`calitemId` as calitemId, i.`calendarId` as calendarId, i.`user` as user, i.`start` as start, i.`end` as end, t.`name` as calname, ";
 
-		$query .= "i.`locationId` as locationId, l.name as locationName, i.categoryId as categoryId, c.name as categoryName, i.priority as priority, ";
-		$query .= "i.status as status, i.url as url, i.lang as lang, i.name as name, i.`description` as description, i.created as created, i.lastModif as lastModif, ";
-		$query .= "t.customlocations as customlocations, t.customcategories as customcategories, t.customlanguages as customlanguages, t.custompriorities as custompriorities, ";
-		$query .= "t.customparticipants as customparticipants from `tiki_calendar_items` as i left join tiki_calendar_locations as l on i.`locationId`=l.callocId ";
-		$query .= "left join tiki_calendar_categories as c on i.categoryId=c.calcatId left join tiki_calendars as t on i.calendarId=t.calendarId where `calitemId`=$calitemId";
-		$result = $this->query($query);
+		$query .= "i.`locationId` as locationId, l.`name` as locationName, i.`categoryId` as categoryId, c.`name` as categoryName, i.`priority` as priority, ";
+		$query .= "i.`status` as status, i.`url` as url, i.`lang` as lang, i.`name` as name, i.`description` as description, i.`created` as created, i.`lastModif` as lastModif, ";
+		$query .= "t.`customlocations` as customlocations, t.`customcategories` as customcategories, t.`customlanguages` as customlanguages, t.`custompriorities` as custompriorities, ";
+		$query .= "t.`customparticipants` as customparticipants from `tiki_calendar_items` as i left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` ";
+		$query .= "left join `tiki_calendar_categories` as c on i.`categoryId`=c.`calcatId` left join `tiki_calendars` as t on i.`calendarId`=t.`calendarId` where `calitemId`=?";
+		$result = $this->query($query,array($calitemId));
 		$res = $result->fetchRow();
-		$query = "select `username`, role from `tiki_calendar_roles` where `calitemId`=$calitemId order by role";
-		$rezult = $this->query($query);
+		$query = "select `username`, `role` from `tiki_calendar_roles` where `calitemId`=? order by `role`";
+		$rezult = $this->query($query,array($calitemId));
 		$ppl = array();
 		$org = array();
 
@@ -595,10 +594,12 @@ class CalendarLib extends TikiLib {
 		}
 
 		if (trim($data["newloc"])) {
-			$query = "replace into tiki_calendar_locations (calendarId,name) values (" . $data["calendarId"] . ",'" . trim($data["newloc"]). "')";
-
-			$this->query($query);
-			$data["locationId"] = mysql_insert_id();
+			$query = "delete from `tiki_calendar_locations` where `calendarId`=? and `name`=?";
+			$bindvars=array($data["calendarId"],trim($data["newloc"]));
+			$this->query($query,$bindvars,-1,-1,false);
+			$query = "insert into `tiki_calendar_locations` (`calendarId`,`name`) values (?,?)";
+			$this->query($query,$bindvars);
+			$data["locationId"] = $this->GetOne("select `callocId` from `tiki_calendar_locations` where `calendarId`=? and `name`=?",$bindvars);
 		}
 
 		if (!$data["locationId"] and !$data["newcat"]) {
@@ -606,10 +607,13 @@ class CalendarLib extends TikiLib {
 		}
 
 		if (trim($data["newcat"])) {
-			$query = "replace into tiki_calendar_categories (calendarId,name) values (" . $data["calendarId"] . ",'" . trim($data["newcat"]). "')";
+			$query = "delete from `tiki_calendar_locations` where `calendarId`=? and `name`=?";
+			$bindvars=array($data["calendarId"],trim($data["newcat"]));
+			$this->query($query,$bindvars,-1,-1,false);
+			$query = "insert into `tiki_calendar_locations` (`calendarId`,`name`) values (?,?)";
+			$this->query($query,$bindvars);
+			$data["locationId"] = $this->GetOne("select `callocId` from `tiki_calendar_locations` where `calendarId`=? and `name`=?",$bindvars);
 
-			$this->query($query);
-			$data["categoryId"] = mysql_insert_id();
 		}
 
 		$roles = array();
@@ -635,34 +639,35 @@ class CalendarLib extends TikiLib {
 		}
 
 		if ($calitemId) {
-			$query = "update `tiki_calendar_items` set `calendarId`=" . $data["calendarId"] . ", user='$user',";
+			$query = "update `tiki_calendar_items` set `calendarId`=?, `user`=?,";
 
-			$query .= "start=" . $data["start"] . ",end=" . $data["end"] . ",`locationId`='" . $data["locationId"] . "',categoryId='" . $data["categoryId"] . "',";
-			$query .= "priority=" . $data["priority"] . ",status='" . $data["status"] . "',url='" . $data["url"] . "',";
-			$query .= "lang='" . $data["lang"] . "',name='" . $data["name"] . "',`description`='" . $data["description"] . "',lastmodif=" . time(). " where `calitemId`=$calitemId";
-			$result = $this->query($query);
+			$query .= "`start`=?,`end`=? ,`locationId`=? ,`categoryId`='?,";
+			$query .= "`priority`=?,`status`=?,`url`=?,";
+			$query .= "`lang`=?,`name`=?,`description`=?,`lastmodif`=? where `calitemId`=?";
+			$bindvars=array($data["calendarId"],$user,$data["start"],$data["end"],$data["locationId"],$data["categoryId"],$data["priority"],$data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],time(),$calitemId);
+			$result = $this->query($query,$bindvars);
 		} else {
-			$query = "insert into `tiki_calendar_items` (calendarId, user, start, end, `locationId`, categoryId, ";
+			$now=time();
+			$query = "insert into `tiki_calendar_items` (`calendarId`, `user`, `start`, `end`, `locationId`, `categoryId`, ";
 
-			$query .= " priority, status, url, lang, name, `description`, created, lastmodif) values (";
-			$query .= $data["calendarId"] . ",'" . $data["user"] . "'," . $data["start"] . "," . $data["end"] . ",'" . $data["locationId"] . "','";
-			$query .= $data["categoryId"] . "'," . $data["priority"] . ",'" . $data["status"] . "','" . $data["url"] . "','";
-			$query .= $data["lang"] . "','" . $data["name"] . "','" . $data["description"] . "'," . time(). "," . time(). ")";
-			$result = $this->query($query);
-			$calitemId = mysql_insert_id();
+			$query .= " `priority`, `status`, `url`, `lang`, `name`, `description`, `created`, `lastmodif`) values (";
+			$query .= "?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars=array($data["calendarId"],$user,$data["start"],$data["end"],$data["locationId"],$data["categoryId"],$data["priority"],$data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],$now,$now);
+			$result = $this->query($query,$bindvars);
+			$calitemId = $this->GetOne("select `calitemId` from `tiki_calendar_items` where `calendarId`=? and `created`=?",array($data["calendarId"],$now));
 		}
 
 		if ($calitemId) {
-			$query = "delete from `tiki_calendar_roles` where `calitemId`=$calitemId";
+			$query = "delete from `tiki_calendar_roles` where `calitemId`=?";
 
-			$this->query($query);
+			$this->query($query,array($calitemId));
 		}
 
 		foreach ($roles as $lvl => $ro) {
 			foreach ($ro as $r) {
-				$query = "insert into `tiki_calendar_roles` (calitemId,username,role) values ($calitemId,'$r','$lvl')";
+				$query = "insert into `tiki_calendar_roles` (`calitemId`,`username`,`role`) values (?,?,?)";
 
-				$this->query($query);
+				$this->query($queryi,array($calitemId,$r,$lvl));
 			}
 		}
 
@@ -671,9 +676,9 @@ class CalendarLib extends TikiLib {
 
 	function drop_item($user, $calitemId) {
 		if ($calitemId) {
-			$query = "delete from `tiki_calendar_items` where `calitemId`=$calitemId";
+			$query = "delete from `tiki_calendar_items` where `calitemId`=?";
 
-			$this->query($query);
+			$this->query($query,array($calitemId));
 		}
 	}
 
@@ -681,9 +686,9 @@ class CalendarLib extends TikiLib {
 		$res = array();
 
 		if ($calendarId > 0) {
-			$query = "select `callocId` as locationId, name from `tiki_calendar_locations` where `calendarId`=$calendarId";
+			$query = "select `callocId` as locationId, `name` from `tiki_calendar_locations` where `calendarId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($calendarId));
 
 			while ($rez = $result->fetchRow()) {
 				$res[] = $rez;
@@ -697,9 +702,9 @@ class CalendarLib extends TikiLib {
 		$res = array();
 
 		if ($calendarId > 0) {
-			$query = "select `calcatId` as categoryId, name from `tiki_calendar_categories` where `calendarId`=$calendarId";
+			$query = "select `calcatId` as categoryId, `name` from `tiki_calendar_categories` where `calendarId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($calendarId));
 
 			while ($rez = $result->fetchRow()) {
 				$res[] = $rez;
