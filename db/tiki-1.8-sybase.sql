@@ -5511,7 +5511,7 @@ go
 
 -- --------------------------------------------------------
 ------ Administrator account
-INSERT INTO users_users(email,login,password,realname,hash) VALUES('','admin','admin','System Administrator',md5('adminadmin'))
+INSERT INTO users_users(email,login,password,realname,hash) VALUES('','admin','admin','System Administrator','93715224f66e1e1d0b075c76f808a47e')
 go
 
 
