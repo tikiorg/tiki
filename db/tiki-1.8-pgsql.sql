@@ -273,6 +273,21 @@ CREATE TABLE "messu_messages" (
 
 -- --------------------------------------------------------
 
+
+DROP TABLE "sessions";
+
+
+CREATE TABLE "sessions"(
+  "SESSKEY" varchar(32) NOT NULL default '',
+  "EXPIRY" bigint NOT NULL default '0',
+  "DATA" text NOT NULL,
+  PRIMARY KEY ("SESSKEY")
+
+) ;
+
+CREATE  INDEX "sessions_EXPIRY" ON "sessions"("EXPIRY");
+
+
 --
 -- Table structure for table `tiki_actionlog`
 --
@@ -2933,6 +2948,23 @@ CREATE TABLE "tiki_rss_feeds" (
 
 -- --------------------------------------------------------
 
+DROP TABLE "tiki_searchindex";
+
+
+CREATE TABLE "tiki_searchindex"(
+  "searchword" varchar(80) NOT NULL default '',
+  "location" varchar(80) NOT NULL default '',
+  "page" varchar(255) NOT NULL default '',
+  "count" bigint NOT NULL default '1',
+  "last_update" bigint NOT NULL default '0',
+  PRIMARY KEY ("searchword","location","page")
+
+) ;
+
+CREATE  INDEX "tiki_searchindex_last_update" ON "tiki_searchindex"("last_update");
+
+
+
 --
 -- Table structure for table `tiki_search_stats`
 --
@@ -3048,6 +3080,7 @@ DROP TABLE "tiki_structures";
 
 
 CREATE TABLE "tiki_structures" (
+  "structID" varchar(40) NOT NULL default '',
   "page" varchar(240) NOT NULL default '',
   "page_alias" varchar(240) NOT NULL default '',
   "parent" varchar(240) NOT NULL default '',
@@ -5060,6 +5093,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_warn_on_edit','
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_webmail','n');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_showstructs','n');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_wiki_attachments','n');
 
 
@@ -5650,10 +5686,10 @@ INSERT INTO tiki_integrator_rules VALUES (3,1,3,'<body.*>','-->','y','n','i','En
 INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove </body>');
 
 
-INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"/{path}/','y','n','i','Fix images path');
+INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path');
 
 
-INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(http|ftp)://)','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
+INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(--|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
 
 
 
