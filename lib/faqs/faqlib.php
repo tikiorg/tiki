@@ -14,33 +14,35 @@ class FaqLib extends TikiLib {
 	}
 
 	function add_suggested_faq_question($faqId, $question, $answer, $user) {
-		$question = addslashes(strip_tags($question, '<a>'));
+		$question = strip_tags($question, '<a>');
 
-		$answer = addslashes(strip_tags($answer, '<a>'));
+		$answer = strip_tags($answer, '<a>');
 		$now = date("U");
-		$query = "insert into tiki_suggested_faq_questions(faqId,question,answer,user,created)
-    values($faqId,'$question','$answer','$user',$now)";
-		$result = $this->query($query);
+		$query = "insert into `tiki_suggested_faq_questions`(`faqId`,`question`,`answer`,`user`,`created`)
+    values(?,?,?,?,?)";
+		$result = $this->query($queryi,array($faqId,$question,$answer,$user,$now));
 	}
 
 	function list_suggested_questions($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
+		
+		$bindvars=array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (question like $findesc or answer like $findesc)";
+			$mid = " where (`question` like ? or `answer` like ?)";
+			$bindvars[]=$findesc;
+			$bindvars[]=$findesc;
 		} else {
 			$mid = "";
 		}
 
-		$query = "select * from tiki_suggested_faq_questions $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_suggested_faq_questions $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_suggested_faq_questions` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_suggested_faq_questions` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -51,23 +53,25 @@ class FaqLib extends TikiLib {
 	}
 
 	function list_all_faq_questions($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
+		$bindvars=array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where (question like $findesc or answer like $findesc)";
+			$mid = " where (`question` like ? or `answer` like ?)";
+			$bindvars[]=$findesc;
+			$bindvars[]=$findesc;
 		} else {
 			$mid = "";
 		}
 
-		$query = "select * from tiki_faq_questions $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_faq_questions $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_faq_questions` $mid ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_faq_questions` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
@@ -78,35 +82,35 @@ class FaqLib extends TikiLib {
 	}
 
 	function remove_faq($faqId) {
-		$query = "delete from tiki_faqs where faqId=$faqId";
+		$query = "delete from `tiki_faqs` where `faqId`=?";
 
-		$result = $this->query($query);
-		$query = "delete from tiki_faq_questions where faqId=$faqId";
-		$result = $this->query($query);
+		$result = $this->query($query,array($faqId));
+		$query = "delete from `tiki_faq_questions` where `faqId`=?";
+		$result = $this->query($query,array($faqId));
 		// Remove comments and/or individual permissions for faqs
 		$this->remove_object('faq', $faqId);
 		return true;
 	}
 
 	function remove_faq_question($questionId) {
-		$faqId = $this->getOne("select faqId from tiki_faq_questions where questionId=$questionId");
+		$faqId = $this->getOne("select `faqId` from `tiki_faq_questions` where `questionId`=?",array($questionId));
 
-		$query = "delete from tiki_faq_questions where questionId=$questionId";
-		$result = $this->query($query);
-		$query = "update tiki_faqs set questions=questions-1 where faqId=$faqId";
-		$result = $this->query($query);
+		$query = "delete from `tiki_faq_questions` where `questionId`=?";
+		$result = $this->query($query,array($questionId));
+		$query = "update `tiki_faqs` set `questions`=`questions`-1 where `faqId`=?";
+		$result = $this->query($query,array($faqId));
 		return true;
 	}
 
 	function get_faq_question($questionId) {
-		$query = "select * from tiki_faq_questions where questionId=$questionId";
+		$query = "select * from `tiki_faq_questions` where `questionId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($questionId));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 
@@ -116,70 +120,72 @@ class FaqLib extends TikiLib {
 		global $user;
 
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
-			$query = "update tiki_faqs set hits=hits+1 where faqId=$faqId";
+			$query = "update `tiki_faqs` set `hits`=`hits`+1 where `faqId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($faqId));
 		}
 	}
 
 	function replace_faq_question($faqId, $questionId, $question, $answer) {
-		$question = addslashes($question);
 
-		$answer = addslashes($answer);
 		// Check the name
 		if ($questionId) {
-			$query = "update tiki_faq_questions set question='$question',answer='$answer' where questionId=$questionId";
+			$query = "update `tiki_faq_questions` set `question`=?,`answer`=? where `questionId`=?";
+			$bindvars=array($question,$answer,$questionId);
+			$result = $this->query($query,$bindvars);
 		} else {
-			$query = "update tiki_faqs set questions=questions+1 where faqId=$faqId";
+			$query = "update `tiki_faqs` set `questions`=`questions`+1 where `faqId`=?";
 
-			$result = $this->query($query);
-			$query = "replace into tiki_faq_questions(faqId,question,answer)
-                values($faqId,'$question','$answer')";
+			$result = $this->query($query,array($faqId));
+			$query = "delete from `tiki_faq_questions` where `faqId`=? and question=?";
+			$result = $this->query($query,array($faqId,$question));
+			$query = "insert into tiki_faq_questions(faqId,question,answer)
+                		values(?,?,?)";
+			$result = $this->query($query,array($faqId,$question,$answer));
 		}
 
-		$result = $this->query($query);
 		return true;
 	}
 
 	function replace_faq($faqId, $title, $description, $canSuggest) {
-		$description = addslashes($description);
 
-		$title = addslashes($title);
 		// Check the name
 		if ($faqId) {
-			$query = "update tiki_faqs set title='$title',description='$description',canSuggest='$canSuggest' where faqId=$faqId";
+			$query = "update `tiki_faqs` set `title`=?,`description`=? ,`canSuggest`=? where `faqId`=?";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($title,$description,$canSuggest,$faqId));
 		} else {
 			$now = date("U");
-
-			$query = "replace into tiki_faqs(title,description,created,hits,questions,canSuggest)
-                values('$title','$description',$now,0,0,'$canSuggest')";
-			$result = $this->query($query);
-			$faqId = $this->getOne("select max(faqId) from tiki_faqs where title='$title' and created=$now");
+			$query = "delete from `tiki_faqs`where `title`=?";
+			$result = $this->query($query,array($title));
+			$query = "insert into `tiki_faqs`(`title`,`description`,`created`,`hits`,`questions`,`canSuggest`)
+                		values(?,?,?,?,?,?)";
+			$result = $this->query($query,array($title,$description,$now,0,0,$canSuggest));
+			$faqId = $this->getOne("select max(`faqId`) from `tiki_faqs` where `title`=? and `created`=?",array($title,$now));
 		}
 
 		return $faqId;
 	}
 
 	function list_faq_questions($faqId, $offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
 
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
+			$findesc = '%' . $find . '%';
 
-			$mid = " where faqId=$faqId and (question like $findesc or answer like $findesc)";
+			$mid = " where `faqId`=? and (`question` like ? or `answer` like ?)";
+			$bindvars=array($faqId,$findesc,$findesc);
 		} else {
-			$mid = " where faqId=$faqId ";
+			$mid = " where `faqId`=? ";
+			$bindvars=array($faqId);
 		}
 
-		$query = "select * from tiki_faq_questions $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_faq_questions $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_faq_questions` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_faq_questions` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$res['parsed'] = $this->parse_data($res['answer']);
 
 			$ret[] = $res;
@@ -192,9 +198,9 @@ class FaqLib extends TikiLib {
 	}
 
 	function remove_suggested_question($sfqId) {
-		$query = "delete from tiki_suggested_faq_questions where sfqId=$sfqId";
+		$query = "delete from `tiki_suggested_faq_questions` where `sfqId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($sfqId));
 	}
 
 	function approve_suggested_question($sfqId) {
@@ -205,14 +211,14 @@ class FaqLib extends TikiLib {
 	}
 
 	function get_suggested_question($sfqId) {
-		$query = "select * from tiki_suggested_faq_questions where sfqId=$sfqId";
+		$query = "select * from `tiki_suggested_faq_questions` where `sfqId`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($sfqId));
 
 		if (!$result->numRows())
 			return false;
 
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$res = $result->fetchRow();
 		return $res;
 	}
 }
