@@ -74,10 +74,22 @@ if($offset>0) {
 // Since the first message is the last one...
 $count=0;
 $articles=Array();
+
+if(isset($_REQUEST['mark'])) {
+  $newslib->news_mark($user,$_REQUEST['serverId'],$_REQUEST['group']);
+}
+
+$mark = $newslib->news_get_mark($user,$_REQUEST['serverId'],$_REQUEST['group']);
+
 for($i=$info['last']-$offset;$count<$maxRecords&&$i>=$info['first'];$i--) {
   $count++;
   $art=$newslib->news_split_headers($i);
   $art['loopid']=$i;
+  if(strtotime($art['Date']) > $mark) {
+    $art['status']='new';
+  } else {
+    $art['status']='old';
+  }
   //$art['timestamp']=$tikilib->get_iso8601_datetime($art["Date"]);
   $articles[]=$art;
   

@@ -74,6 +74,8 @@ $body = nl2br(htmlentities($newslib->news_get_body($_REQUEST['id'])));
 $smarty->assign('headers',$headers);
 $smarty->assign('body',$body);
 
+
+
 if($feature_messages=='y' && $tiki_p_messages=='y') {
   $unread = $tikilib->user_unread_messages($user);
   $smarty->assign('unread',$unread);
