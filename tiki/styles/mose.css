@@ -1,17 +1,38 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.28 2003-12-18 14:36:49 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.29 2003-12-26 01:08:52 mose Exp $
 2003 - created and maintained by mose@feu.org
+
+colorset:
+sand light: #EFEFE7;
+sand medium: #DED6C6;
+beige: #B5A58C;
+marron: #6A5A49;
+
+
 */
 
 body {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background-color:   #EFEFE7;
-	margin-top:   0px;
-	margin-left:   0px;
-	margin-bottom:   0px;
-	margin-right:   0px;
+	margin:   0px;
+}
+H1 H2 H3 {
+	font-weight:    bold;
+	font-family:   Arial, Helvetica, sans-serif;
+	margin:   0;
 }
 
+H1 {
+	font-size: 20px;
+}
+
+H2 {
+	font-size: 16px;
+}
+
+H3 {
+	font-size: 14px;
+}
 table {
 padding: 0;
 margin: 0;
@@ -20,23 +41,61 @@ border-spacing: 0;
 tr, td {
 padding: 0;
 margin: 0;
+vertical-align: top;
+text-align:   left;
+}
+FORM {
+	margin:    0px 0px 0px 0px;
+	padding-bottom:   0px;
+	padding-left:   0px;
+	padding-right:   0px;
+	padding-top:   0px;
+}
+
+/* 
+General form elements 
+*/
+input, select {
+	color:    #000000;
+	font:   normal 11px Verdana, Arial, Helvetica, sans-serif;
+}
+
+textarea {
+	color:    #000000;
+	font:   normal 12px fixed, courier, monospace;
+}
+
+input {
+	text-indent: 2px;
+}
+
+
+a {
+color: #000000;
+text-decoration: none;
+border-bottom: 0;
+padding-bottom: 1px;
+}
+a:hover {
+color: #772200;
+background-color: #ffffaa;
+border-bottom: 1px dashed #6A5A49;
+}
+a:active {
+color: #990000;
+}
+
+ul {
+	margin: 0;
 }
 /*
 GENERAL LAYOUT 
 */
 
-/* 
-This div encloses the whole Tiki application 
-*/
 DIV#tiki-main {
-	background-color:    #EFEFE7;
 	margin:   0px;
 	padding:   0;
 }
-
-/* 
-This is the header 
-*/
 #tiki-top {
 	font-size: 90%;
 	color:   #7a6a59;
@@ -164,9 +223,7 @@ Boxes used for modules
 div.box {
 	background:    white;
 	border:   1px solid black;
-	padding-bottom:   3px;
 	overflow:   hidden;
-	width:   178px;
 }
 
 /* 
@@ -178,11 +235,9 @@ div.box-title {
 	font-size:   10px;
 	overflow:   hidden;
 	text-align:   left;
-	padding-left:   5px;
-	padding-right:   5px;
+	padding:   0 5px 0 5px;
 	margin-bottom:   1px;
-	width:   168px;
-	background-image:   url(/styles/mose/bgtitlebox.png);
+	background-image:   url(mose/bgtitlebox.png);
 	background-position:   top;
 	background-repeat:   repeat-x;
 }
@@ -197,11 +252,8 @@ And this is the data
 div.box-data {
 	overflow:    hidden;
 	color:   black;
-	background:   #FFFFFF;
-	margin-left:   5px;
-	margin-right:   5px;
 	font-size:   11px;
-	width:   168px;
+	padding:   1px 3px 1px 3px;
 }
 
 div.box-data li:before {
@@ -219,7 +271,6 @@ When modules display a list of items each item is enclosed
 in a cell with the following style 
 */
 TD.module {
-	font-size:    10px;
 	color:   black;
 	text-align:   left;
 }
@@ -228,22 +279,13 @@ TD.module {
 Links in modules 
 */
 .linkmodule {
-	font-size:    11px;
-	color:   black;
-	text-decoration:   none;
+padding: 0 5px 0 5px;
 }
 
 .linkmodule:active {
-	font-size:    11px;
-	color:   black;
-	text-decoration:   none;
 }
 
 .linkmodule:hover {
-	font-size:    11px;
-	color:   black;
-	text-decoration:   underline;
-	background:   #EEEEEE;
 }
 
 /* 
@@ -251,10 +293,7 @@ Now the boxes for the rest of Tiki (non-modules
 */
 div.cbox {
 	background:    white;
-	margin-left:   4px;
-	margin-right:   4px;
-	margin-top:   4px;
-	margin-bottom:   0px;
+	margin:   4px;
 	border:   1px solid black;
 	padding-bottom:   10px;
 	overflow:   hidden;
@@ -281,17 +320,14 @@ When there's a link in a cbox-title
 */
 .cboxtlink, div.cbox-title a {
 	color:   white;
-	text-decoration:   none;
 }
 
 .cboxtlink:active, div.cbox-title a:active {
 	color:   white;
-	text-decoration:   none;
 }
 
 .cboxtlink:hover, div.cbox-title a:hover {
 	color:   #EFEFEF;
-	text-decoration:   underline;
 }
 
 /* 
@@ -319,22 +355,12 @@ div.separator:hover {
 	background: #dada89;
 }
 .linkmenu, .rsslink {
-	font-size:    11px;
-	color:   black;
-	text-decoration:   none;
 }
 
 .linkmenu:active, .rsslink:active {
-	font-size:    11px;
-	color:   black;
-	text-decoration:   none;
 }
 
 .linkmenu:hover, .rsslink:hover {
-	font-size:    11px;
-	color:   black;
-	text-decoration:   underline;
-	background:   #EFEFEF;
 }
 .separatorline, .optionline {
   border-top: 1px solid #dedede;
@@ -347,39 +373,27 @@ div.separator:hover {
 Links to extend/collapse menus 
 */
 .separator {
-	color:   black;
-	text-decoration:   none;
 }
 
 .separator:active {
-	color:   black;
-	text-decoration:   none;
 }
 
 .separator:hover {
-	color:   black;
-	text-decoration:   none;
 }
 /* 
 Links to collapse menus for example the main menu 
 can be completely collapsed
 */
 .flip {
-	font-size:    13px;
 	color:   white;
-	text-decoration:   none;
 }
 
 .flip:active {
-	font-size:    13px;
 	color:   white;
-	text-decoration:   none;
 }
 
 .flip:hover {
-	font-size:    13px;
 	color:   white;
-	text-decoration:   none;
 }
 
 /* 
@@ -419,85 +433,22 @@ A simple box is just a div with a border around and
 some margin. used for example in the admin screen 
 */
 div.simplebox {
-	margin-left:    1px;
-	margin-right:   1px;
-	margin-top:   5px;
-	margin-bottom:   5px;
-	padding-left:   2px;
-	padding-top:   2px;
-	padding-bottom:   2px;
-	padding-right:   2px;
+	margin: 5px 1px 5px 1px;
+	padding:   2px;
 	color:   black;
 	border:   1px solid black;
 	background:   #EFEFE7;
 	font-size:   11px;
 }
 
-/* 
-Prevent forms from generating unwanted padding or margins 
-*/
-FORM {
-	margin:    0px 0px 0px 0px;
-	padding-bottom:   0px;
-	padding-left:   0px;
-	padding-right:   0px;
-	padding-top:   0px;
-}
-
-/* 
-General form elements 
-*/
-input, select {
-	color:    #000000;
-	font:   normal 11px Verdana, Arial, Helvetica, sans-serif;
-}
-
-textarea {
-	color:    #000000;
-	font:   normal 12px fixed, courier, monospace;
-}
-
-input {
-	text-indent: 2px;
-}
-
-/* 
-General tables
-
-These styles apply to tables used to display common 
-listings such as the wiki page listing, last changes,
-listings in admin screens, etc. 
-*/
-
-/* 
-Cells where nothing is specified 
-*/
-TD {
-	color:    Black;
-	font-size:   12px;
-	vertical-align:   top;
-}
-
-/* 
-Cells in forms without background color 
-(inside a div for example) 
-*/
 TD.form {
-	color:    Black;
-	font-size:   11px;
-	vertical-align:   top;
-	text-align:   left;
 }
 
 /* 
 Cells in forms using a background color 
 */
 TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.comform, td.forumform {
-	color:    Black;
 	background:   #DED6C6;
-	font-size:   11px;
-	vertical-align:   top;
-	text-align:   left;
 }
 
 /* 
@@ -545,19 +496,13 @@ a.tablename, a.galname, a.imagename, a.blogname, a.fgalname, a.artname, a.forumn
 	font-weight:    bold;
 	font-size:   12px;
 	letter-spacing:   1px;
-	color:   black;
-	text-decoration:   none;
 }
 
 a.tablename:active, a.galname:active, a.imagename:active, a.blogname:active, a.fgalname:active, a.artname:active,
 	a.forumname:active {
-	text-decoration:    none;
-	color:   black;
-	text-decoration:   none;
 }
 
 a.tablename:hover, a.galname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover {
-	text-decoration: underline;
 }
 
 /* 
@@ -567,23 +512,16 @@ Links in table headings
 	color:    white;
 	font-size:   11px;
 	font-weight:   bold;
-	text-decoration:   none;
 }
 
 .tableheading:active, .gallistheading:active, .listgalheading:active, .bloglistheading:active, .llisfgalheading:active, .
 	llistfileslink:active, .llistart:active, .lforumheading:active {
 	color:    white;
-	font-size:   11px;
-	font-weight:   bold;
-	text-decoration:   none;
 }
 
 .tableheading:hover, .gallistheading:hover, .listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover, .
 	llistfileslink:hover, .llistart:hover, .lforumheading:hover {
 	color:    #CCCCCC;
-	font-size:   11px;
-	font-weight:   bold;
-	text-decoration:   none;
 }
 
 /* 
@@ -608,8 +546,6 @@ TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.ga
 	font-size:    12px;
 	color:   Black;
 	background-color:   #EFEeE5;
-	vertical-align:   top;
-	text-align:   left;
 }
 
 /* 
@@ -619,32 +555,21 @@ TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, t
 	font-size:    12px;
 	background-color:   #fefef5;
 	color:   Black;
-	vertical-align:   top;
-	text-align:   left;
 }
 
 TD.odddark {
 	font-size:    12px;
-	color:   Black;
 	background-color:   #cecece;
-	vertical-align:   top;
-	text-align:   left;
 }
 
 TD.evendark {
 	font-size:    12px;
-	color:   Black;
 	background-color:   #dedede;
-	vertical-align:   top;
-	text-align:   left;
 }
 
 TD.third {
 	font-size:    12px;
-	color:   Black;
 	background-color:   #CCCCCC;
-	vertical-align:   top;
-	text-align:   left;
 }
 
 /* 
@@ -666,7 +591,6 @@ a.pagetitle, a.forumspagetitle {
 	font-weight:    bold;
 	font-size:   18px;
 	font-family:   Arial, Helvetica, sans-serif;
-	text-decoration:   none;
 	color:   #534333;
 	background-color:   #eeeeee;
 }
@@ -675,7 +599,6 @@ a.pagetitle:hover, a.forumspagetitle:hover {
 	font-weight:    bold;
 	font-size:   18px;
 	font-family:   Arial, Helvetica, sans-serif;
-	text-decoration:   underline;
 	color:   black;
 	background-color:   #eeeeee;
 }
@@ -683,48 +606,19 @@ a.pagetitle:hover, a.forumspagetitle:hover {
 /* 
 Non-linking titles (three levels) 
 */
-H1 H2 H3 {
-	font-weight:    bold;
-	font-family:   Arial, Helvetica, sans-serif;
-	color:   black;
-	margin:   0;
-	margin-top:   7px;
-}
-
-H1 {
-	font-size: 20px;
-}
-
-H2 {
-	font-size: 16px;
-}
-
-H3 {
-	font-size: 14px;
-}
-
 /* 
 Links where no special link style apply 
 (usually with the general application background)
 */
 .link, .gallink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink, .admlink, .forumbutlink {
 	font-size:    11px;
-	color:   black;
-	text-decoration:   none;
 	background-color:   #eeeecc;
 }
 
 .link:active, .gallink:active, .bloglink:active, .fgallink:active, .trailer:active, .opencomlink:active, .commentslink:active, .admlink:active, .forumbutlink:active {
-	font-size:    11px;
-	color:   black;
-	text-decoration:   none;
 }
 
 .link:hover, .gallink:hover, .bloglink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover, .commentslink:hover, .admlink:hover, .forumbutlink:hover {
-	font-size:    11px;
-	color:   black;
-	text-decoration:   underline;
-	background-color:   #ffffaa;
 }
 
 /* 
@@ -740,7 +634,6 @@ Pagination for listings
 */
 .mini {
 	font-size:    10px;
-	color:   Black;
 }
 
 /* 
@@ -748,18 +641,12 @@ prev & next buttons in pagination
 */
 .prevnext, .galprevnext, .blogprevnext, .fgalprevnext, .artprevnext, .forumprevnext {
 	font-size:    12px;
-	color:   black;
 }
 
 .prevnext:active, .galprevnext:active, .blogprevnext:active, .fgalprevnext:active, .artprevnext:active, .forumprevnext:active {
-	font-size:    12px;
-	color:   black;
 }
 
 .prevnext:hover, .galprevnext:hover, .blogprevnext:hover, .fgalprevnext:hover, .artprevnext:hover, .forumprevnext:hover {
-	font-size:    12px;
-	color:   black;
-	background-color:   #EFEFEF;
 }
 
 /* 
@@ -774,14 +661,9 @@ THE WIKI
 */
 div.titlebar {
 	background:    #B5A58C;
-	color:   white;
-	border:   1px solid white;
-	padding-left:   1px;
-	padding-right:   1px;
-	padding-top:   1px;
-	padding-bottom:   1px;
-	margin:   1px 1px;
-	width:   99%;
+	color:   black;
+	border-bottom:   1px solid #6A5A49;
+	padding:   1px 5px 2px 5px;
 	clear:   both;
 	font-weight:   bold;
 }
@@ -793,7 +675,7 @@ DIV#page-bar {
 	margin-left: 5px;
 }
 
-table.wikitopline {
+.wikitopline {
 width: 100%;
 }
 /* 
@@ -805,12 +687,8 @@ end of each page to edit/print/remove/etc a page
 	font-weight:   bold;
 	background:   white;
 	border:   1px solid black;
-	margin:   0.0ex 0px;
-	margin-left: 3px;
-	padding-left:   0.3em;
-	padding-right:   0.3em;
-	padding-top:   0.1em;
-	padding-bottom:   0.1em;
+	padding: 1px 0 1px 0;
+	margin-left: 2px;
 }
 
 /* 
@@ -818,23 +696,13 @@ Links in buttons
 */
 .linkbut {
 	font-size:    11px;
-	color:   black;
-	background:   white;
-	text-decoration:   none;
+	padding:  1px 5px 1px 5px;
 }
 
 .linkbut:active {
-	font-size:    11px;
-	background:   white;
-	color:   black;
-	text-decoration:   none;
 }
 
 .linkbut:hover {
-	font-size:    11px;
-	color:   black;
-	background:   #CCCC66;
-	text-decoration:   none;
 }
 
 /* 
@@ -843,22 +711,14 @@ When a cached version of an external link is displayed
 div.cache {
 	background:    #EFEFEF;
 	border:   1px solid black;
-	padding-left:   0.1em;
-	padding-right:   0.1em;
-	padding-top:   0.1em;
-	padding-bottom:   0.1em;
+	padding:   0.1em;
 	margin:   0.1ex 0px;
-	width:   100%;
 }
 
 div.cachedpage {
 	border:    1px solid black;
-	padding-left:   0.1em;
-	padding-right:   0.1em;
-	padding-top:   0.1em;
-	padding-bottom:   0.1em;
+	padding:   0.1em;
 	margin:   0.1ex 0px;
-	width:   100%;
 }
 
 /* 
@@ -868,19 +728,13 @@ cached version (cache) is displayed using this style
 .wikicache {
 	font-size:    8px;
 	color:   #003399;
-	text-decoration:   none;
 }
 
 .wikicache:active {
-	font-size:    8px;
-	color:   #003399;
-	text-decoration:   none;
 }
 
 .wikicache:hover {
-	font-size:    8px;
 	color:   #0000FF;
-	text-decoration:   underline;
 }
 
 table.wikitable {
@@ -899,15 +753,8 @@ div.wikitext {
 	background:    #f6f4f3;
 	font-size:   12px;
 	border:   1px solid #B5A58C;
-	padding-left:   10px;
-	padding-right:   10px;
-	padding-top:   3px;
-	padding-bottom:   3px;
-	margin-left:   0px;
-	margin-right:   0px;
-	margin-top:   1px;
-	margin-bottom:   1px;
-	width:   100%;
+	padding:  3px 10px 3px 10px;
+	margin: 1px 0 1px 0;
 	clear:   both;
 }
 
@@ -915,22 +762,17 @@ div.wikitext {
 Links to wiki pages 
 */
 .wiki {
-	color:    black;
 	background-color:   #eeeecc;
 }
 
 .wiki:hover {
-	color:    black;
-	background-color:   #ffffaa;
 }
 
 /* 
 Date displayed for last modification date of pages 
 */
 p.editdate {
-	color:    black;
 	font-size:   smaller;
-	margin-bottom:   -1ex;
 	font-family:   Helvetica, Arial, sans-serif;
 }
 
@@ -956,11 +798,7 @@ Gallery description
 div.galdesc {
 	background:    #EFEFEF;
 	border:   1px solid black;
-	padding-left:   0.8em;
-	padding-right:   0.8em;
-	padding-top:   0.5em;
-	padding-bottom:   0.5em;
-	margin:   0.5ex 0px;
+	padding:   0.5em 0.8em 0.5em;
 	clear:   both;
 }
 
@@ -2668,4 +2506,91 @@ div#rules-copy-panel {
 	font-weight:bold;
 }
 
+TABLE.admin { width: 100%; }
+table.commentinfo { width: 100%; background-color: #FFF7E6; }
+div#loadstats {
+	background-color: #dedede;
+	font-size: 70%;
+	color: #666666;
+	padding: 5px;
+}
+
+/* phplayers style */
+.box-data table {
+	width: 100%;
+}
+.mdkverbar	{
+	margin: 0px;
+}
+
+.mdksubmenu	{
+	z-index: 999;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: #FFFFFF;
+	visibility: hidden;
+}
+.mdksubmenu table {
+	width: auto;
+}
+
+.mdksubframe	{
+	z-index: 1000;
+	position: relative;
+	display: block;
+	border: 1px solid #000000;
+}
+
+.mdkitem	{
+	border-top: 1px solid #dedede;
+	position: relative;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.mdkitem a	{
+	padding: 2px 5px 2px 5px;
+	position: relative;
+	display: block;
+}
+
+.mdkitem a:visited	{
+}
+
+.mdkitem a:hover	{
+	padding: 2px 5px 1px 5px;
+}
+
+.mdkitem a:active	{
+	color: #993300;
+}
+
+.mdkitem .mdkfwdarr	{
+	position: absolute;
+	top: 5px;
+	right: 12px;
+}
+
+.toc {
+}
+.toc li {
+	margin-top: 3px;
+}
+.tocnav {
+	background-color: #ededed;
+	margin-bottom: 16px;
+}
+.tocnav table {
+	width: 100%;
+	background-color: #ffffff;
+}
+.tocnav a {
+	font-size: 90%;
+	color: #424242;
+}
+/* for jscalendar */
+.calendar {
+	z-index: 200;
+}
 
