@@ -1,25 +1,42 @@
 {assign var=opensec value='n'}
+
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
-{section name=ix loop=$channels}
-{if $channels[ix].type eq 's'}
+
+{foreach key=pos item=chdata from=$channels}
+{assign var=cname value=$menu_info.menuId|cat:'__'|cat:$chdata.position}
+{if $chdata.type eq 's'}
 {if $opensec eq 'y'}</div>{/if}
 <div class="separator">
-<a class='separator' href="javascript:toggle('userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}');"><img src="styles/neat/linkOpaque.gif" border="0" />&nbsp;</a>
-<a href="{$channels[ix].url}" class="separator">{tr}{$channels[ix].name}{/tr}</a>
+
+{if $feature_menusfolderstyle eq 'y'}
+<a class='separator' href="javascript:icntoggle('{$cname}');"><img src="img/icons/fo.gif" border="0" name="{$cname}icn" alt=''/></a>&nbsp;
+{else}<a class='separator' href="javascript:toggle('{$cname}');" title="{tr}Click{/tr}"><img src="styles/neat/linkOpaque.gif" border="0" />&nbsp;</a>{/if} 
+<a href="{$chdata.url}" class="separator">{tr}{$chdata.name}{/tr}</a>
 </div>
 {assign var=opensec value='y'}
-<div {if $menu_info.type eq 'd'}style="display:none;"{/if} id='userm{$channels[ix].name|regex_replace:"/[^a-zA-Z0-9]/":""}'>
+<div {if $menu_info.type eq 'd' and $smarty.cookies.$cname ne 'o'}style="display:none;"{else}style="display:block;"{/if} id='{$cname}'>
 {else}
-<div class="button">&nbsp;<a href="{$channels[ix].url}" class="linkmenu">{tr}{$channels[ix].name}{/tr}</a></div>
+<div>&nbsp;<a href="{$chdata.url}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {/if}
-{/section}
+{/foreach}
 {if $opensec eq 'y'}</div>{/if}
+
 {else}
-{section name=ix loop=$channels}
-{if $channels[ix].type eq 's'}
-<div class="separator"><a class='separator' href="{$channels[ix].url}">{tr}{$channels[ix].name}{/tr}</a></div>
+{foreach key=pos item=chdata from=$channels}
+{if $chdata.type eq 's'}
+<div class="separator"><a class='separator' href="{$chdata.url}">{tr}{$chdata.name}{/tr}</a></div>
 {else}
-<div class="button">&nbsp;<a href="{$channels[ix].url}" class="linkmenu">{tr}{$channels[ix].name}{/tr}</a></div>
+<div>&nbsp;<a href="{$chdata.url}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {/if}
-{/section}
+{/foreach}
+{/if}
+
+{if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
+<script language='Javascript' type='text/javascript'>
+{foreach key=pos item=chdata from=$channels}
+{if $chdata.type eq 's'}{if $feature_menusfolderstyle eq 'y'}
+setfolderstate('{$menu_info.menuId|cat:'__'|cat:$chdata.position}');
+{/if}{/if}
+{/foreach}
+</script>
 {/if}
