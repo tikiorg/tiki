@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.64 2003-09-01 23:10:16 luciash Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.65 2003-09-08 07:52:38 mose Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -153,7 +153,7 @@
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('galmenu');"><img src="img/icons/fo.gif" style="border: 0" name="galmenuicn" alt="{tr}GalMenu{/tr}"/>&nbsp;</a>
   {else}<a class="separator" href="javascript:toggle('galmenu');">[-]</a>{/if} 
-  <a class="separator" href="tiki-galleries.php">{tr}Image Gals{/tr}</a> 
+  <a class="separator" href="tiki-galleries.php">{tr}Image Galleries{/tr}</a> 
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('galmenu');">[+]</a>{/if}
   </div>
   <div id="galmenu" style="{$mnu_galmenu}">
