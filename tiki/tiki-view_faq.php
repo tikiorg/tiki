@@ -27,6 +27,11 @@ $smarty->assign('faqId',$_REQUEST["faqId"]);
 $faq_info = $tikilib->get_faq($_REQUEST["faqId"]);
 $smarty->assign('faq_info',$faq_info);
 
+if(!isset($_REQUEST["sort_mode"])) {
+  $sort_mode = 'position,questionId_asc'; 
+} else {
+  $sort_mode = $_REQUEST["sort_mode"];
+} 
 
 if(isset($_REQUEST["find"])) {
   $find = $_REQUEST["find"];  
@@ -35,7 +40,7 @@ if(isset($_REQUEST["find"])) {
 }
 $smarty->assign('find',$find);
 
-$channels = $faqlib->list_faq_questions($_REQUEST["faqId"],0,-1,'question_asc',$find);
+$channels = $faqlib->list_faq_questions($_REQUEST["faqId"],0,-1,'position,questionId_asc',$find);
 
 
 $smarty->assign_by_ref('channels',$channels["data"]);
