@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.28 2004-01-28 10:45:08 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.29 2004-02-20 19:22:23 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -18,6 +18,32 @@ class CategLib extends TikiLib {
 		$this->db = $db;
 	}
 
+	function list_categs() {
+		global $cachelib;
+		if (!$cachelib->isCached("allcategs")) {
+			$query = "select * from `tiki_categories`";
+			$result = $this->query($query,array());
+			$ret = array();
+			while ($res = $result->fetchRow()) {
+				$catpath = $this->get_category_path($res["categId"]);
+				$tepath = array();	
+				foreach ($catpath as $cat) {
+					$tepath[] = $cat['name'];
+				}
+				$categpath = implode("::",$tepath);
+				$res["categpath"] = $categpath;
+				$res["tepath"] = $tepath;
+				$ret["$categpath"] = $res;
+			}
+			ksort($ret);
+			$back = array_values($ret);
+			$cachelib->cacheItem("allcategs",serialize($back));
+			return $back;
+		} else {
+			return unserialize($cachelib->getCached("allcategs"));
+		}
+	}
+	
 	function list_all_categories($offset, $maxRecords, $sort_mode = 'name_asc', $find, $type, $objid) {
 		$cats = $this->get_object_categories($type, $objid);
 
@@ -82,11 +108,10 @@ class CategLib extends TikiLib {
 	}
 
 	function remove_category($categId) {
-		// Delete the category
-		$query = "delete from `tiki_categories` where `categId`=?";
+		global $cachelib;
 
+		$query = "delete from `tiki_categories` where `categId`=?";
 		$result = $this->query($query,array((int) $categId));
-		// Remove objects for this category
 		$query = "select `catObjectId` from `tiki_category_objects` where `categId`=?";
 		$result = $this->query($query,array((int) $categId));
 
@@ -106,30 +131,31 @@ class CategLib extends TikiLib {
 			// Recursively remove the subcategory
 			$this->remove_category($res["categId"]);
 		}
-
+		$cachelib->invalidate('allcategs');
 		return true;
 	}
 
 	function update_category($categId, $name, $description, $parentId) {
+		global $cachelib;
 		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
 		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
+		$cachelib->invalidate('allcategs');
 	}
 
 	function add_category($parentId, $name, $description) {
+		global $cachelib;
 		$query = "insert into `tiki_categories`(`name`,`description`,`parentId`,`hits`) values(?,?,?,?)";
 		$result = $this->query($query,array($name,$description,(int) $parentId,0));
+		$cachelib->invalidate('allcategs');
 	}
 
 	function is_categorized($type, $objId) {
-
 		$query = "select `catObjectId` from `tiki_categorized_objects` where `type`=? and `objId`=?";
 		$bindvars=array($type,$objId);
 		settype($bindvars["1"],"string");
 		$result = $this->query($query,$bindvars);
-
 		if ($result->numRows()) {
 			$res = $result->fetchRow();
-
 			return $res["catObjectId"];
 		} else {
 			return 0;
@@ -137,8 +163,9 @@ class CategLib extends TikiLib {
 	}
 
 	function add_categorized_object($type, $objId, $description, $name, $href) {
-		$description = strip_tags($description);
+		global $cachelib;
 
+		$description = strip_tags($description);
 		$name = strip_tags($name);
 		$now = date("U");
 		$query = "insert into `tiki_categorized_objects`(`type`,`objId`,`description`,`name`,`href`,`created`,`hits`)
@@ -146,6 +173,7 @@ class CategLib extends TikiLib {
 		$result = $this->query($query,array($type,(string) $objId,$description,$name,$href,(int) $now,0));
 		$query = "select `catObjectId` from `tiki_categorized_objects` where `created`=? and `type`=? and `objId`=?";
 		$id = $this->getOne($query,array((int) $now,$type,(string) $objId));
+		$cachelib->invalidate('allcategs');
 		return $id;
 	}
 
@@ -278,18 +306,16 @@ class CategLib extends TikiLib {
 	}
 
 	function remove_object_from_category($catObjectId, $categId) {
+		global $cachelib;
 		$query = "delete from `tiki_category_objects` where `catObjectId`=? and `categId`=?";
-
 		$result = $this->query($query,array($catObjectId,$categId));
-		// If the object is not listed in any category then remove the object
 		$query = "select count(*) from `tiki_category_objects` where `catObjectId`=?";
 		$cant = $this->getOne($query,array((int) $catObjectId));
-
 		if (!$cant) {
 			$query = "delete from `tiki_categorized_objects` where `catObjectId`=?";
-
 			$result = $this->query($query,array((int) $catObjectId));
 		}
+		$cachelib->invalidate('allcategs');
 	}
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS ////
@@ -462,54 +488,60 @@ class CategLib extends TikiLib {
 	}
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS END ////
 	function get_child_categories($categId) {
-		$ret = array();
-
-		$query = "select * from `tiki_categories` where `parentId`=?";
-		$result = $this->query($query,array($categId));
-
-		while ($res = $result->fetchRow()) {
-			$id = $res["categId"];
-
-			$query = "select count(*) from `tiki_categories` where `parentId`=?";
-			$res["children"] = $this->getOne($query,array($id));
-			$query = "select count(*) from `tiki_category_objects` where `categId`=?";
-			$res["objects"] = $this->getOne($query,array($id));
-			$ret[] = $res;
+		global $cachelib;
+		if (!$cachelib->isCached("childcategs$categId")) {
+			$ret = array();
+			$query = "select * from `tiki_categories` where `parentId`=?";
+			$result = $this->query($query,array($categId));
+			while ($res = $result->fetchRow()) {
+				$id = $res["categId"];
+				$query = "select count(*) from `tiki_categories` where `parentId`=?";
+				$res["children"] = $this->getOne($query,array($id));
+				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
+				$res["objects"] = $this->getOne($query,array($id));
+				$ret[] = $res;
+			}
+			$cachelib->cacheItem("childcategs$categId",serialize($ret));
+		} else {
+			$ret = unserialize($cachelib->getCached("childcategs$categId"));
 		}
-
 		return $ret;
 	}
 
 	function get_all_categories() {
+		global $cachelib;
+	/*
+		// inhibited because allcateg_ext is cached now
 		$query = " select `name`,`categId`,`parentId` from `tiki_categories` order by `name`";
-
 		$result = $this->query($query,array());
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
-
-		return $ret;
+	*/
+		return $this->get_all_categories_ext();
 	}
 
 	// Same as get_all_categories + it also get info about count of objects
 	function get_all_categories_ext() {
-		$ret = array();
-
-		$query = "select * from `tiki_categories` order by `name`";
-		$result = $this->query($query,array());
-
-		while ($res = $result->fetchRow()) {
-			$id = $res["categId"];
-
-			$query = "select count(*) from `tiki_categories` where `parentId`=?";
-			$res["children"] = $this->getOne($query,array($id));
-			$query = "select count(*) from `tiki_category_objects` where `categId`=?";
-			$res["objects"] = $this->getOne($query,array($id));
-			$ret[] = $res;
+		global $cachelib;
+		if (!$cachelib->isCached("allcategs")) {
+			$ret = array();
+			$query = "select * from `tiki_categories` order by `name`";
+			$result = $this->query($query,array());
+			while ($res = $result->fetchRow()) {
+				$id = $res["categId"];
+				$query = "select count(*) from `tiki_categories` where `parentId`=?";
+				$res["children"] = $this->getOne($query,array($id));
+				$query = "select count(*) from `tiki_category_objects` where `categId`=?";
+				$res["objects"] = $this->getOne($query,array($id));
+				$ret[] = $res;
+			}
+			$cachelib->cacheItem("allcategs",serialize($ret));
+		} else {
+			$ret = unserialize($cachelib->getCached("allcategs"));
 		}
-
 		return $ret;
 	}
 
