@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.39 2004-08-12 22:31:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.40 2004-08-13 22:28:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.39 2004-08-12 22:31:23 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.40 2004-08-13 22:28:58 teedog Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -86,12 +86,6 @@ $isdue = false;
 
 // Verify user is valid
 $isvalid = $userslibadmin->validate_user($user, $pass, $challenge, $response);
-
-global $auth_ext_xml_enabled, $auth_ext_xml_skip_admin;
-if ($isvalid && $auth_ext_xml_enabled == 'y' && ($auth_ext_xml_skip_admin != 'y' || $user != 'admin')) {
-	// Verify user with external XML
-	$isvalid = $userslibadmin->validate_user_external_xml($user);
-}
 
 // If the password is valid but it is due then force the user to change the password by
 // sending the user to the new password change screen without letting him use tiki
