@@ -19,6 +19,7 @@ if(!isset($_REQUEST["where"])) {
 }
 $find_where='find_'.$where;
 $smarty->assign('where',$where);
+$smarty->assign('where2',tra($where));
 
 if($where=='pages' and $feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -56,7 +57,7 @@ if(($where=='blogs' || $where=='posts') and $feature_blogs != 'y') {
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
-$smarty->assign('where',$where);
+// Already assigned above! $smarty->assign('where',$where);
 
 
 if(!isset($_REQUEST["offset"])) {
