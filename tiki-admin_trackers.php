@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.18 2004-02-05 10:29:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.19 2004-02-10 01:54:07 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -158,12 +158,12 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["modItemStatus"] = $_REQUEST["modItemStatus"];
 	}
 
-	if (isset($_REQUEST["writerCanModify"]) && $_REQUEST["writerCanModify"]) {
-		$tracker_options["writerCanModify"] = $_REQUEST["writerCanModify"];
+	if (isset($_REQUEST["writerCanModify"]) && $_REQUEST["writerCanModify"] == 'on') {
+		$tracker_options["writerCanModify"] = 'y';
 	}
 
-	if (isset($_REQUEST["writerGroupCanModify"]) && $_REQUEST["writerGroupCanModify"]) {
-		$tracker_options["writerGroupCanModify"] = $_REQUEST["writerGroupCanModify"];
+	if (isset($_REQUEST["writerGroupCanModify"]) && $_REQUEST["writerGroupCanModify"] == 'on') {
+		$tracker_options["writerGroupCanModify"] = 'y';
 	}
 
 	if (isset($_REQUEST['ui']) and is_array($_REQUEST['ui'])) {
