@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-list_faqs.php">FAQs</a><br/>
+<a class="pagetitle" href="tiki-list_faqs.php">{tr}FAQs{/tr}</a><br/>
 {if $tiki_p_admin_faqs eq 'y'}
 <h2>{tr}Create/edit Faq{/tr}</h2>
 <form action="tiki-list_faqs.php" method="post">
@@ -12,7 +12,7 @@
 </table>
 </form>
 {/if}
-<h2>Available FAQs</h2>
+<h2>{tr}Available FAQs{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

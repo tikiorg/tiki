@@ -4,9 +4,9 @@
 {/if}
 <a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}">{tr}Edit Post{/tr}</a><br/><br/>
 [{if $blogId > 0 }
-<a class="bloglink" href="tiki-view_blog.php?blogId={$blogId}">view blog</a>|
+<a class="bloglink" href="tiki-view_blog.php?blogId={$blogId}">{tr}view blog{/tr}</a>|
 {/if}
-<a class="bloglink" href="tiki-list_blogs.php">list blogs</a>]
+<a class="bloglink" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>]
 <br/><br/>
 <form method="post" action="tiki-blog_post.php">
 <input type="hidden" name="postId" value="{$postId}" />

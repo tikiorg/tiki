@@ -1,7 +1,7 @@
-<a class="pagetitle" href="tiki-admin_polls.php">Admin Polls</a><br/><br/>
-[<a href="tiki-admin_polls.php?setlast=1" class="link">Set last poll as current</a>|
-<a href="tiki-admin_polls.php?closeall=1" class="link">Close all polls but last</a>|
-<a href="tiki-admin_polls.php?activeall=1" class="link">Activate all polls</a>]
+<a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a><br/><br/>
+[<a href="tiki-admin_polls.php?setlast=1" class="link">{tr}Set last poll as current{/tr}</a>|
+<a href="tiki-admin_polls.php?closeall=1" class="link">{tr}Close all polls but last{/tr}</a>|
+<a href="tiki-admin_polls.php?activeall=1" class="link">{tr}Activate all polls{/tr}</a>]
 <h2>{tr}Create/edit Polls{/tr}</h2>
 <form action="tiki-admin_polls.php" method="post">
 <input type="hidden" name="pollId" value="{$pollId}" />
@@ -21,8 +21,8 @@
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<h2>Polls</h2>
-<div  align="center">
+<h2>{tr}Polls{/tr}</h2>
+<div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">

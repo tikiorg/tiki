@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a><br/><br/>
 {if $tiki_p_create_blogs eq 'y'}
-<a class="bloglink" href="tiki-edit_blog.php">edit blog</a>
+<a class="bloglink" href="tiki-edit_blog.php">{tr}edit blog{/tr}</a>
 {/if}
 <br/><br/>
 <div align="center">
