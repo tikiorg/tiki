@@ -133,8 +133,7 @@ if(isset($_REQUEST["save"])) {
   } else {
     $tikilib->blog_post($_REQUEST["blogId"],$_REQUEST["data"],$user);
   }
-  $links = $tikilib->get_links($_REQUEST["data"]);
-  $tikilib->cache_links($links);
+  
   header("location: tiki-view_blog.php?blogId=".$_REQUEST["blogId"]);
   die;
 }

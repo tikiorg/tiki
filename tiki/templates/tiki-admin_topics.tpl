@@ -41,7 +41,7 @@
 <td class="even">{$topics[user].name}</td>
 <td class="even"><img alt="topic image" border="0" src="topic_image.php?id={$topics[user].topicId}" /></td>
 <td class="even">{$topics[user].active}</td>
-<td class="even">{$topics[user].arts} o({$topics[user].subs})</td>
+<td class="even">{$topics[user].arts} ({$topics[user].subs})</td>
 <td class="even">
 <a class="link" href="tiki-admin_topics.php?remove={$topics[user].topicId}">{tr}Remove{/tr}</a>
 {if $topics[user].active eq 'n'}

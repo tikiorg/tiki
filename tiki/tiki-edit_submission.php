@@ -284,10 +284,18 @@ if(isset($_REQUEST["save"])) {
                             $_REQUEST["image_y"],
                             $_REQUEST["type"],
                             $_REQUEST["rating"]);
+/*                            
   $links = $tikilib->get_links($body);
-  $tikilib->cache_links($links);
+  $notcachedlinks = $tikilib->get_links_nocache($body);
+  $cachedlinks = array_diff($links, $notcachedlinks);
+  $tikilib->cache_links($cachedlinks); 
+
   $links = $tikilib->get_links($heading);
-  $tikilib->cache_links($links);
+  $notcachedlinks = $tikilib->get_links_nocache($heading);
+  $cachedlinks = array_diff($links, $notcachedlinks);
+  $tikilib->cache_links($cachedlinks); 
+*/                            
+                            
   header("location: tiki-list_submissions.php");
   die;
 }
