@@ -1,7 +1,19 @@
 {section name=ix loop=$listpages}
 <div class="articletitle">
+{if $art_view_title eq 'y'}
 <span class="titlea">{$listpages[ix].title}</span><br />
-<span class="titleb">{tr}By:{/tr} {$listpages[ix].authorName} {tr}on:{/tr} {$listpages[ix].publishDate|tiki_short_datetime} ({$listpages[ix].reads} {tr}reads{/tr})</span><br />
+{/if}
+<span class="titleb">
+{if $art_view_author eq 'y'}	
+{tr}By:{/tr} {$listpages[ix].authorName} 
+{/if}
+{if $art_view_date eq 'y'}
+{tr}on:{/tr} {$listpages[ix].publishDate|tiki_short_datetime} 
+{/if}
+{if $art_view_reads eq 'y'}
+({$listpages[ix].reads} {tr}reads{/tr})
+{/if}
+</span><br />
 </div>
 {if $listpages[ix].type eq 'Review'}
 <div class="articleheading">
@@ -18,6 +30,7 @@
 <div class="articleheading">
 <table  cellpadding="0" cellspacing="0">
 <tr>
+{if $art_view_img eq 'y'}
 {if $listpages[ix].isfloat eq 'n'}
 <td  valign="top">
 {else}
@@ -38,6 +51,7 @@
 {/if}
 {if $listpages[ix].isfloat eq 'n'}
 </td><td  valign="top">
+{/if}
 {/if}
 <span class="articleheading">{$listpages[ix].parsed_heading}</span>
 </td></tr>

@@ -62,37 +62,63 @@
     </div>
     
     <div class="simplebox">
-      {tr}Articles listing configuration{/tr} <a href="tiki-list_articles.php"
-         class="link">{tr}view{/tr}</a>
+      {tr}Fields to display:{/tr}<br />
       <form method="post" action="tiki-admin.php?page=cms">
         <table><tr>
+          <td class="form"><a href="tiki-list_articles.php" class="link">{tr}List articles{/tr}</a></td>
+          <td class="form"> </td>
+          <td class="form"><a href="tiki-view_articles.php" class="link">{tr}View articles{/tr}</a></td>
+        </tr><tr>
           <td class="form">{tr}Title{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_title"
               {if $art_list_title eq 'y'}checked="checked"{/if} /></td>
+          <td class="form">{tr}Title{/tr}</td>
+          <td class="form"><input type="checkbox" name="art_view_title"
+              {if $art_view_title eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form">{tr}Topic{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_topic"
               {if $art_list_topic eq 'y'}checked="checked"{/if} /></td>
+{*          <td class="form">{tr}Topic{/tr}</td>
+          <td class="form"><input type="checkbox" name="art_view_topic"
+              {if $art_view_topic eq 'y'}checked="checked"{/if} /></td>
+*}
         </tr><tr>
           <td class="form">{tr}Date{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_date"
               {if $art_list_date eq 'y'}checked="checked"{/if} /></td>
+          <td class="form">{tr}Date{/tr}</td>
+          <td class="form"><input type="checkbox" name="art_view_date"
+              {if $art_view_date eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form">{tr}Author{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_author"
               {if $art_list_author eq 'y'}checked="checked"{/if} /></td>
+          <td class="form">{tr}Author{/tr}</td>
+          <td class="form"><input type="checkbox" name="art_view_author"
+              {if $art_view_author eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form">{tr}Reads{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_reads"
               {if $art_list_reads eq 'y'}checked="checked"{/if} /></td>
+          <td class="form">{tr}Reads{/tr}</td>
+          <td class="form"><input type="checkbox" name="art_view_reads"
+              {if $art_view_reads eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form">{tr}Size{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_size"
               {if $art_list_size eq 'y'}checked="checked"{/if} /></td>
+{*          <td class="form">{tr}Size{/tr}</td>
+          <td class="form"><input type="checkbox" name="art_view_size"
+              {if $art_view_size eq 'y'}checked="checked"{/if} /></td>
+*}
         </tr><tr>
           <td class="form">{tr}Img{/tr}</td>
           <td class="form"><input type="checkbox" name="art_list_img"
               {if $art_list_img eq 'y'}checked="checked"{/if} /></td>
+          <td class="form">{tr}Img{/tr}</td>
+          <td class="form"><input type="checkbox" name="art_view_img"
+              {if $art_view_img eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td class="form">&nbsp;</td>
           <td class="form"><input type="submit" name="artlist" 
