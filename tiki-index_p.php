@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.12 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.13 2004-05-25 00:56:12 rlpowell Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -170,6 +170,11 @@ if (isset($_REQUEST['refresh'])) {
 // assign_by_ref
 $smarty->assign('cached_page', 'n');
 
+// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
+$preparsed = array();
+$noparsed = array();
+$tikilib->parse_pp_np( $info["data"], $preparsed, $noparsed );
+
 if ($wiki_cache > 0) {
 	$cache_info = $wikilib->get_cache_info($page);
 
@@ -212,6 +217,10 @@ if ($_REQUEST['pagenum'] > 1) {
 $smarty->assign('first_page', 1);
 $smarty->assign('last_page', $pages);
 $smarty->assign('pagenum', $_REQUEST['pagenum']);
+
+// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
+$tikilib->replace_pp_np( $info["data"], $preparsed, $noparsed );
+$tikilib->replace_pp_np( $pdata, $preparsed, $noparsed );
 
 $smarty->assign_by_ref('parsed', $pdata);
 

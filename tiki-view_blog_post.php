@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.21 2004-05-12 13:15:28 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog_post.php,v 1.22 2004-05-25 00:56:12 rlpowell Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,6 +95,11 @@ $offset = $_REQUEST["offset"];
 $sort_mode = $_REQUEST["sort_mode"];
 $find = $_REQUEST["find"];
 
+// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
+$preparsed = array();
+$noparsed = array();
+$tikilib->parse_pp_np( $post_info["data"], $preparsed, $noparsed );
+
 $parsed_data = $tikilib->parse_data($post_info["data"]);
 
 if (!isset($_REQUEST['page']))
@@ -119,6 +124,10 @@ if ($_REQUEST['page'] > 1) {
 $smarty->assign('first_page', 1);
 $smarty->assign('last_page', $pages);
 $smarty->assign('pagenum', $_REQUEST['page']);
+
+// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
+$tikilib->parse_pp_np( $post_info["data"], $preparsed, $noparsed );
+$tikilib->parse_pp_np( $parsed_data, $preparsed, $noparsed );
 
 $smarty->assign('parsed_data', $parsed_data);
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.14 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.15 2004-05-25 00:56:12 rlpowell Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -132,6 +132,11 @@ if ($tiki_p_admin_wiki == 'y') {
 	$smarty->assign('canundo', 'y');
 }
 
+// Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
+$preparsed = array();
+$noparsed = array();
+$tikilib->parse_pp_np( $info["data"], $preparsed, $noparsed );
+
 $pdata = $tikilib->parse_data_raw($info["data"]);
 
 if (!isset($_REQUEST['pagenum']))
@@ -156,6 +161,10 @@ if ($_REQUEST['pagenum'] > 1) {
 $smarty->assign('first_page', 1);
 $smarty->assign('last_page', $pages);
 $smarty->assign('pagenum', $_REQUEST['pagenum']);
+
+// Put ~pp~, ~np~ and <pre> back. --rlpowell, 24 May 2004
+$tikilib->replace_pp_np( $info["data"], $preparsed, $noparsed );
+$tikilib->replace_pp_np( $pdata, $preparsed, $noparsed );
 
 $smarty->assign_by_ref('parsed', $pdata);
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
