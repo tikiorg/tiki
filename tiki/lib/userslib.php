@@ -733,6 +733,7 @@ function get_included_groups($group) {
     }
 
     function remove_group($group) {
+	global $acachelib;
 	$query = "delete from `users_groups` where `groupName` = ?";
 	$result = $this->query($query, array($group));
 	$query = "delete from `tiki_group_inclusion` where `groupName` = ? or `includeGroup` = ?";
@@ -741,7 +742,7 @@ function get_included_groups($group) {
 	$result = $this->query($query, array($group));
 	$query = "delete from `users_usergroups` where `groupName` = ?";
 	$result = $this->query($query, array($group));
-	
+	$cachelib->invalidate('grouplist');
 	return true;
     }
 
@@ -1233,13 +1234,14 @@ function get_included_groups($group) {
     }
 
     function add_group($group, $desc, $home, $utracker=0, $gtracker=0) {
-    
+  	global $cachelib;  
 	if ($this->group_exists($group))
 	    return false;
 
 	$query = "insert into `users_groups`(`groupName`, `groupDesc`,
 		`groupHome`,`usersTrackerId`,`groupTrackerId`) values(?,?,?,?,?)";
 	$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker) );
+	$cachelib->invalidate('grouplist');
 	return true;
     }
 
@@ -1268,6 +1270,7 @@ function get_included_groups($group) {
 
 	$query = "update `tiki_modules` set `groups`=replace(`groups`, ?, ?) where `groups` like ?";
 	$result = $this->query($query, array($olgroup, $group, '%'.$olgroup.'%'));
+	$cachelib->invalidate('grouplist');
 	return true;
     }
 
@@ -1277,6 +1280,7 @@ function get_included_groups($group) {
 
 	$query = "delete from `tiki_group_inclusion` where `groupName` = ?";
 	$result = $this->query($query, array($group));
+	$this->groupinclude_cache = array();
 	return true;
     }
 
