@@ -1,5 +1,5 @@
 <table class="normal">
-  <form method="post">
+  <form method="post" action="tiki-index.php?page={$page}">
   <tr>
     <td class="heading">Instance</td>
 {assign var="colspan" value=1}
@@ -11,7 +11,9 @@
 
 {cycle values="odd,even" print=false}
 {foreach from=$instances item=inst}
-{* include file="wikiplugin_galaxiamultiroute_commentwindow.tpl" *}
+{*include file="wikiplugin_galaxiamultiroute_commentwindow.tpl"*}
+
+
   <script language="JavaScript">
     {assign var=instance value=$inst.properties}
     {eval var=$instance_template assign="instance_data"}
@@ -19,7 +21,8 @@
     var instance_{$inst.instanceId} = '{$instance_data|escape:javascript}';
   </script>
   <tr>
-    <td class="{cycle advance=false}"><a onmouseover="return overlib(instance_{$inst.instanceId}, VAUTO, HAUTO, CAPTION, '{$inst.label|escape:"javascript"}');" onmouseout="nd();" onmousedown="toggle('commentconsole_{$inst.instanceId}');">{$inst.label}</a></td>
+    <td class="{cycle advance=false}"><a onmouseover="return overlib(instance_{$inst.instanceId}, VAUTO, HAUTO, CAPTION, '{$inst.label|escape:"javascript"}');" onmouseout="nd();" onmousedown="toggle('commentconsole_{$inst.instanceId}');"{if $inst.url} href="{$inst.url}"{/if}>{$inst.label}</a>
+    </td>
 {foreach from=$candidates item=c}
   {if $type eq 'switch'}  
     <td class="{cycle advance=false}"><input onmouseover="return overlib(instance_{$inst.instanceId}, VAUTO, HAUTO, CAPTION, '{$inst.label|escape:"javascript"}');" onmouseout="nd();" type="radio" name="route_{$inst.instanceId}" value="{$c.value}"></td>

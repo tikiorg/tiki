@@ -1,7 +1,12 @@
 <?php
+// Executes a Galaxia STANDALONE activity inside a wiki page
+// Usage:
+// {GALAXIASTANDALONE(activityId => ID)}{GALAXIASTANDALONE}
 
 function wikiplugin_galaxiastandalone_help() {
-    return tra("TODO HELP");
+	$help = tra("Executes a Galaxia standalone activity").":\n";
+	$help.= "~np~{GALAXIASTANDALONE(activityId => ID)}{GALAXIASTANDALONE}~/np~";
+	return $help;
 }
 
 function wikiplugin_galaxiastandalone($data, $params) {
