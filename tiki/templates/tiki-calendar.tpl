@@ -251,19 +251,23 @@ onmouseover="this.style.textDecoration='underline';"
 <table cellpadding="0" cellspacing="0" border="0">
 <tr><td class="middle" nowrap="nowrap">
 {if $feature_jscalendar eq 'y'}
-<form action="tiki-calendar.php" method="get" class="daterow">
+<form action="tiki-calendar.php" method="get" class="daterow" name="f">
 <img src="img/icons/calendar.gif" width="16" height="16" vspace="2" hspace="2" align="top"
 /><input type="hidden" id="todate" name="todate" value="{$focusdate}" /><span style="font-weight:bold;cursor:pointer;" title="{tr}Date Selector{/tr}" id="datrigger">{$focusdate|tiki_short_date}</span>
 <input type="submit" name="action" value="{tr}Go{/tr}" class="linkbut" />
 </form>
 <script type="text/javascript">
+{literal}function gotocal(calendar)  { {/literal}
+window.location = 'tiki-calendar.php?todate='+document.getElementById('todate').value;
+{literal} } {/literal}
 {literal}Calendar.setup( { {/literal}
 date        : "{$focusdate|date_format}",      // initial date
 inputField  : "todate",      // ID of the input field
 ifFormat    : "%s",    // the date format
 displayArea : "datrigger",       // ID of the span where the date is to be shown
 daFormat    : "{$daformat}",  // format of the displayed date
-singleClick : true
+singleClick : true,
+onClose     : gotocal
 {literal} } );{/literal}
 </script>
 {else}
