@@ -19,6 +19,27 @@
 
 {if $tiki_p_view_quiz_stats eq 'y'}
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
+<! -- begin find field ---!>
+<br />
+<br />
+
+<div  align="center">
+<table class="findtable">
+<tr>
+<td class="findtable">{tr}Find{/tr}</td>
+   <td class="findtable">
+   <form method="get" action="tiki-list_quizzes.php">
+     <input type="text" name="find" value="{$find|escape}" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="quizId" value="{$quizId|escape}" />
+   </form>
+   </td>
+</tr>
+</table>
+</div>
+
+
 <!-- begin the table  -->
 <br /><br />
 {/if}
