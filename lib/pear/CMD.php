@@ -16,7 +16,7 @@
 // | Author: Anders Johannsen <anders@johannsen.com>                      |
 // +----------------------------------------------------------------------+
 //
-define('CMD_RCSID', '$Id: CMD.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $');
+define('CMD_RCSID', '$Id: CMD.php,v 1.3 2003-07-06 14:46:51 mose Exp $');
 
 /**
  * The Cmd:: class implements an abstraction for various ways 
@@ -25,7 +25,7 @@ define('CMD_RCSID', '$Id: CMD.php,v 1.2 2003-06-19 21:03:23 awcolley Exp $');
  * register_shutdown_function() or as a detached process using nohup).
  *
  * @author  Anders Johannsen <anders@johannsen.com>
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  **/
 
 require_once 'PEAR.php';
@@ -101,7 +101,7 @@ class Cmd extends PEAR
      * @param $setting is the value of the option currently
      * being toggled.
      *
-     * @return bool true if succes, else false
+     * @return bool true if success, else false
      *
      * @access public
      * 
@@ -158,7 +158,7 @@ class Cmd extends PEAR
      *
      * @param $command accepts both arrays and regular strings
      *
-     * @return bool true if succes, else false
+     * @return bool true if success, else false
      *
      * @access public
      * 
@@ -186,7 +186,7 @@ class Cmd extends PEAR
     /**
      * Executes the code according to given options
      *
-     * @return bool true if succes, else false
+     * @return bool true if success, else false
      *
      * @access public
      * 

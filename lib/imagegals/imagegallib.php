@@ -1082,7 +1082,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $merge = array_unique($merge);
     //print_r($merge);
     // Now for each element in the array capture the image and
-    // if the capture was succesful then change the reference to the
+    // if the capture was successful then change the reference to the
     // internal image
     $page_data = $data;
     foreach($merge as $img) {

@@ -302,7 +302,7 @@ class BlogLib extends TikiLib {
     $result = $this->query($query);
     $query = "select max(postId) from tiki_blog_posts where created=$now and user='$user'";
     $id = $this->getOne($query);
-    // Send trackbacks recovering only succesful trackbacks
+    // Send trackbacks recovering only successful trackbacks
     $trackbacks = addslashes(serialize($this->send_trackbacks($id,$trackbacks)));
     // Update post with trackbacks successfully sent
     $query = "update tiki_blog_posts set trackbacks_from='', trackbacks_to = '$trackbacks' where postId=$id";

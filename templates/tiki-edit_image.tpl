@@ -3,8 +3,8 @@
 {if $show eq 'y'}
 <br/>
 <hr>
-<h2>{tr}Edit succesful!{/tr}</h2>
-<h3>{tr}The following image was succesfully edited{/tr}:</h3>
+<h2>{tr}Edit successful!{/tr}</h2>
+<h3>{tr}The following image was successfully edited{/tr}:</h3>
 <hr>
 <br/>
 {/if}

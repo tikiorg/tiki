@@ -117,7 +117,7 @@
 		    </form>  
 		  {/if}
     	{else}
-    		<b>Print operations executed succesfully</b><br/>
+    		<b>Print operations executed successfully</b><br/>
     		<textarea rows="5" cols="80">
     		{section loop=$commands name=ix}
     		{$commands[ix]}
