@@ -148,6 +148,7 @@ class UsersLib {
       // Use challenge-reponse method
       // Compare pass against md5(user,challenge,hash)
       $hash = $this->db->getOne("select hash from users_users where login='$user'");
+      
       if(!isset($_SESSION["challenge"])) return false;
       //print("pass: $pass user: $user hash: $hash <br/>");
       //print("challenge: ".$_SESSION["challenge"]." challenge: $challenge<br/>");

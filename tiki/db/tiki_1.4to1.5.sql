@@ -1,3 +1,19 @@
+### Webmail ###
+drop table if exists tiki_user_mail_accounts;
+create table tiki_user_mail_accounts (
+  accountId integer(12) not null auto_increment,
+  user varchar(200) not null,
+  account varchar(50) not null,
+  pop varchar(255),
+  port integer(4),
+  username varchar(100),
+  pass varchar(100),
+  msgs integer(4),
+  primary key(accountId)
+);
+
+### Webmail ###
+
 ### MODIFICATIONS TO USERS TABLE ###
 alter table users_users add challenge char(32);
 alter table users_users add hash char(32);
