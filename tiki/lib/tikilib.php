@@ -1104,7 +1104,7 @@ function get_random_image($galleryId = -1) {
 function get_gallery($id) {
     $query = "select * from `tiki_galleries` where `galleryId`=?";
 
-    $result = $this->query($query,array($id));
+    $result = $this->query($query,array((int) $id));
     $res = $result->fetchRow();
     return $res;
 }
@@ -2416,8 +2416,8 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	} else {
 	    $mid = " where ";
 	}
-	$mid .= "(`publishDate`<=? and `type`<>'Event') or (`publishDate`>=? and `type`='Event')";
-	$bindvars=array($date,$date);
+	$mid .= "(`publishDate`<=? and `type`<>?) or (`publishDate`>=? and `type`=?)";
+	$bindvars=array((int) $date,'Event',(int) $date,'Event');
     }
 
     if ($type) {
