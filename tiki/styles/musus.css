@@ -10,16 +10,17 @@ body {
 /********************************************* GENERAL LAYOUT *******************************************************/
 
 /* This is the header */
-DIV#tiki-top {
+#top {
 	background-color: #EFEFEF;
 	color: black;
-	padding-right: 0px;
 	width: 100%;
 	text-decoration: none;
+	clear: both;
+
 }
 
 /* And this is the footer */
-DIV#tiki-bot {
+#tiki-bot {
 	padding-top: 10px;
 	margin-top: 0px;
 	background-color: white;
@@ -30,6 +31,8 @@ DIV#tiki-bot {
 	#left {
 	width: 180px;
 	float: left;
+	background-color: #FFFFFF;
+
 	}
 
 	#right {
@@ -38,21 +41,17 @@ DIV#tiki-bot {
 	padding: 0px;
 	float: right;
 	width: 180px;
-	position: absolute;
-	left: auto;
-	top: 0px;
-	right: 0px;
-	bottom: auto;
 	}
 
 	#middle {
 	background-color: white;
-	height: auto;
-	width: auto;
-	margin-top: 0px;
 	margin-right: 180px;
-	margin-bottom: auto;
 	margin-left: 180px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+
+
+
 	}
 	
 	.column-in {
@@ -369,20 +368,11 @@ input {
 }
 
 /* Cells where nothing is specified */
-TD {
+td {
 	color: Black;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	vertical-align: top;
-}
-
-/* Cells in forms without background color (inside a div for example) */
-TD.form {
-	color: black;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	vertical-align: top;
-	text-align: left;
 }
 
 /* The table */
@@ -469,9 +459,6 @@ th:hover {
 	width: 97%;
 	margin-bottom: 20px;
 	padding-bottom: 10px;
-}
-
-.findtable {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 }
@@ -606,7 +593,7 @@ a:hover {
 	color: #006396;
 }
 
-/* Warning color */
+/* attention */
 .attention {
 	color: red;
 }
@@ -705,11 +692,11 @@ a:hover {
 	text-decoration: none;
 }
 
-table.wikitable {
+.wikitable {
 	border: 1px solid black;
 }
 
-td.wikicell {
+.wikicell {
 	background-color: #EFEFEF;
 }
 
@@ -968,25 +955,25 @@ td.imageinfo {
 }
 
 /* The whole container for the browse image screen (may be useful for a fancy background) */
-div.browseimage {
+.browseimage {
 	background-color: White;
 	width: 100%;
 }
 
-div.imagetitle {
+.imagetitle {
 	font-weight: bold;
 	font-size: 26px;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #006699;
 }
 
-div.showimage {
+.showimage {
 	text-align: center;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
-div.imageinfo {
+.imageinfo {
 	text-align: center;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -996,7 +983,7 @@ table.tableinfo {
 	text-align: center;
 }
 
-div.linksinfo {
+.linksinfo {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 9px;
 	color: Black;
@@ -1291,7 +1278,7 @@ table.listarticles {
 	width: 98%;
 }
 
-a.artname {
+.artname {
 	font-weight: bold;
 	font-size: 12px;
 	letter-spacing: 1px;
@@ -1299,7 +1286,7 @@ a.artname {
 	color: #006699
 }
 
-a.artname:hover {
+.artname:hover {
 	text-decoration: underline;
 }
 
@@ -1509,6 +1496,7 @@ TD.comform {
 .commentscomment {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
+	margin-left: 5px;
 	margin-bottom: 20px;
 	width: 98%;
 }
@@ -1517,14 +1505,6 @@ TD.comform {
 	background-color: #EFEFEF;
 	border: 0px solid blue;
 	font-size: 11px;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	width: 98%;
-}
-
-/* The text */
-.commenttext {
-	font-size: 11px;
-	margin-left: 5px;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	width: 98%;
 }

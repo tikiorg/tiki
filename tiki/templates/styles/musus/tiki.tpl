@@ -3,40 +3,41 @@
 {if $feature_bidi eq 'y'}
 	<table dir="rtl"><tr><td>
 {/if}
-<div id="tiki-main">
 	{if $feature_top_bar eq 'y'}
-		{include file="tiki-top_bar.tpl"}
+		<div class="column-in">
+			{include file="tiki-top_bar.tpl"}
+		</div>
 	{/if}
 
 	{if $feature_left_column eq 'y'}
-		<div id="left">
+		<div id="left" class="column-in">
 			{section name=homeix loop=$left_modules}
 				{$left_modules[homeix].data}
 			{/section}
 		</div>
 	{/if}
 
-	<div id="middle">{include file=$mid}
+	<div id="middle" class="column-in">{include file=$mid}
 		{if $show_page_bar eq 'y'}
 			{include file="tiki-page_bar.tpl"}
 		{/if}
 	</div>
 
 	{if $feature_right_column eq 'y'}
-		<div id="right">
+		<div id="right" class="column-in">
 			{section name=homeix loop=$right_modules}
 				{$right_modules[homeix].data}
 			{/section}
 		</div>
 	{/if}
 
+	<div class="cleaner">&nbsp;</div>
+
 	{if $feature_bot_bar eq 'y'}
-		<div id="tiki-bot">
+		<div id="tiki-bot"  class="column-in">
 			{include file="tiki-bot_bar.tpl"}
 		</div>
 	{/if}
-</div>
-
 {if $feature_bidi eq 'y'}
 	</td></tr></table>
 {/if}
