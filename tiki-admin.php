@@ -185,6 +185,8 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("siteTitle",$_REQUEST["siteTitle"]); 
     $smarty->assign_by_ref('siteTitle',$_REQUEST["siteTitle"]);
   }
+  $tikilib->set_preference('feature_server_name',$_REQUEST["feature_server_name"]);
+  $smarty->assign('feature_server_name',$_REQUEST["feature_server_name"]);
   
   if(isset($_REQUEST["language"])) {
     $tikilib->set_preference("language",$_REQUEST["language"]); 
@@ -229,6 +231,14 @@ if(isset($_REQUEST["prefs"])) {
   } else {
     $tikilib->set_preference("count_admin_pvs",'n');
     $smarty->assign('count_admin_pvs','n');
+  }
+  
+  if(isset($_REQUEST["feature_bidi"]) && $_REQUEST["feature_bidi"]=="on") {
+    $tikilib->set_preference("feature_bidi",'y'); 
+    $smarty->assign('feature_bidi','y');
+  } else {
+    $tikilib->set_preference("feature_bidi",'n');
+    $smarty->assign('feature_bidi','n');
   }
 
   if(isset($_REQUEST["popupLinks"]) && $_REQUEST["popupLinks"]=="on") {

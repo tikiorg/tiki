@@ -43,12 +43,14 @@ class POP3{
         }
 
          function AddError($error) {
+                 
                  $this->has_error = true;
                  echo "<center>\n";
         	 echo "<b>Error:</b> $error\n";
                  echo "</center>\n";
                  $this->CloseConnection();
                  if ($this->exit) exit;
+                 
         }
 	
         function POP3Command($command, $result="") {

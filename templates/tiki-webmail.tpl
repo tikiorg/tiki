@@ -31,12 +31,13 @@
 <input type="hidden" name="accountId" value="{$accountId}" />
 <input type="hidden" name="section" value="settings" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Account name{/tr}</td><td class="formcolor"><input type="text" name="account" value="{$info.account}" /></td></tr>
-<tr><td class="formcolor">{tr}Pop server{/tr}</td><td class="formcolor"><input type="text" name="pop" value="{$info.pop}" /></td></tr>
-<tr><td class="formcolor">{tr}Username{/tr}</td><td class="formcolor"><input type="text" name="username" value="{$info.username}" /></td></tr>
-<tr><td class="formcolor">{tr}Password{/tr}</td><td class="formcolor"><input type="text" name="pass" value="{$info.pass}" /></td></tr>
-<tr><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="port" size="7" value="{$info.port}" /></td></tr>
-<tr><td class="formcolor">{tr}Messages per page{/tr}</td><td class="formcolor"><input type="text" name="msgs" size="7" value="{$info.msgs}" /></td></tr>
+<tr><td class="formcolor">{tr}Account name{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="account" value="{$info.account}" /></td></tr>
+<tr><td class="formcolor">{tr}POP server{/tr}</td><td class="formcolor"><input type="text" name="pop" value="{$info.pop}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="port" size="7" value="{$info.port}" /></td></tr>
+<tr><td class="formcolor">{tr}SMTP server{/tr}</td><td class="formcolor"><input type="text" name="smtp" value="{$info.smtp}" /></td><td class="formcolor">{tr}Port{/tr}</td><td class="formcolor"><input type="text" name="smtpPort" size="7" value="{$info.smtpPort}" /></td></tr>
+<tr><td class="formcolor">{tr}SMTP requires authentication{/tr}</td><td  colspan="3" class="formcolor">{tr}Yes{/tr}<input type="radio" name="useAuth" value="yes" {if $info.useAuth eq 'y'}checked="checked"{/if} /> {tr}No{/tr}<input type="radio" name="useAuth" value="no" {if $info.useAuth eq 'n'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Username{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username}" /></td></tr>
+<tr><td class="formcolor">{tr}Password{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="pass" value="{$info.pass}" /></td></tr>
+<tr><td class="formcolor">{tr}Messages per page{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="msgs" size="7" value="{$info.msgs}" /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="new_acc" value="add" /></td></tr>
 </table>
 </form>
@@ -88,26 +89,25 @@
 <br/><br/>
 <table class="normal">
 <tr>
-  <td class="heading"></td>
-  <td class="heading"></td>
-  <td class="heading">{tr}sender{/tr}</td>
-  <td class="heading"></td>
-  <td class="heading">{tr}subject{/tr}</td>
-  <td class="heading">{tr}date{/tr}</td>
-  <td class="heading">{tr}size{/tr}</td>
+  <td width="2%" class="heading"></td>
+  <td width="2%" class="heading"></td>
+  <td width="20%" class="heading">{tr}sender{/tr}</td>
+  <td width="30%" class="heading">{tr}subject{/tr}</td>
+  <td width="12%" class="heading">{tr}date{/tr}</td>
+  <td width="8%" align="right" class="heading">{tr}size{/tr}</td>
 </tr>
 {section name=ix loop=$list}
 {if $list[ix].isRead eq 'y'}
-{assign var=class value=even}
+{assign var=class value="#CCCCCC"}
 {else}
-{assign var=class value=odd}
+{assign var=class value="#FFFFFF"}
 {/if}
 <tr>
-<td class="{$class}">
+<td style="background:{$class};">
 <input type="checkbox" name="msg[{$list[ix].msgid}]" />
 <input type="hidden" name="realmsg[{$list[ix].msgid}]" value="{$list[ix].realmsgid}" />
 </td>
-<td class="{$class}">
+<td style="background:{$class};">
 {if $list[ix].isFlagged eq 'y'}
 <img src="img/webmail/flagged.gif" />
 {/if}
@@ -115,11 +115,10 @@
 <img src="img/webmail/replied.gif" />
 {/if}
 </td>
-<td class="{$class}">{$list[ix].sender.name}</td>
-<td class="{$class}">{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" />{/if}</td>
-<td class="{$class}"><a class="link" href="tiki-webmail.php?section=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a></td>
-<td class="{$class}">{$list[ix].date}</td>
-<td class="{$class}">{$list[ix].size}</td>
+<td style="background:{$class};">{$list[ix].sender.name}</td>
+<td style="background:{$class};"><a class="link" href="tiki-webmail.php?section=read&amp;msgid={$list[ix].msgid}">{$list[ix].subject}</a>{if $list[ix].has_attachment}<img src="img/webmail/clip.gif" />{/if}</td>
+<td style="background:{$class};">{$list[ix].date}</td>
+<td align="right" style="background:{$class};">{$list[ix].size|kbsize}</td>
 </tr>
 {/section}
 </table>
@@ -138,13 +137,36 @@
 <table>
 <tr>
   <td>
-    <input type="submit" name="delete" value="{tr}delete{/tr}" />
+    <form method="post" action="tiki-webmail.php">
+    <input type="submit" name="delete_one" value="{tr}delete{/tr}" />
+    {if $next}
+    <input type="hidden" name="section" value="read" />
+    <input type="hidden" name="msgid" value="{$next}" />
+    {else}
+    <input type="hidden" name="section" value="mailbox" />
+    {/if}
+    <input type="hidden" name="msgdel" value="{$msgid}" />
+    </form>
   </td>
   <td>
+    <form method="post" action="tiki-webmail.php">
+    <input type="hidden" name="section" value="compose" />
     <input type="submit" name="reply" value="{tr}reply{/tr}" />
+    <input type="hidden" name="realmsgid" value="{$realmsgid}" />
+    <input type="hidden" name="to" value="{$headers.replyto}" />
+    <input type="hidden" name="subject" value="Re:{$headers.subject}" />
+    <input type="hidden" name="body" value="{$allbodies}" />
+    </form>
   </td>
   <td>
+    <form method="post" action="tiki-webmail.php">
+    <input type="hidden" name="section" value="compose" />
     <input type="submit" name="replyall" value="{tr}reply all{/tr}" />
+    <input type="hidden" name="to" value="{$headers.replyto}" />
+    <input type="hidden" name="cc" value="{$headers.replycc}" />
+    <input type="hidden" name="subject" value="Re:{$headers.subject}" />
+    <input type="hidden" name="body" value="{$allbodies}" />
+    </form>
   </td>
   <td>
     <input type="submit" name="reply" value="{tr}forward{/tr}" />
@@ -179,7 +201,7 @@
 </table>
 <br/>
 {section name=ix loop=$bodies}
-{$bodies[ix]}
+{$bodies[ix]|nl2br}
 <hr/>
 {/section}
 </div>
@@ -190,19 +212,169 @@
 {/section}
 {/if}
 
-{if $section eq 'compose'}
-<table width="100%">
-<tr><td class="formcolor">{tr}To{/tr}</td><td colspan="3" class="formcolor"><input size="69" type="text" name="to" value="{$to}" /></td></tr>
-<tr><td class="formcolor">{tr}cc{/tr}</td><td class="formcolor"><input type="text" name="cc" value="{$cc}" /></td><td class="formcolor">{tr}bcc{/tr}</td><td class="formcolor"><input type="text" name="bcc" value="{$bcc}" /></td></tr>
-<tr><td class="formcolor">{tr}Subject{/tr}</td><td colspan="3" class="formcolor"><input size="69" type="text" name="subject" /></td></tr>
-<tr><td class="formcolor">{tr}Attachments{/tr}</td><td colspan="3" class="formcolor">
-
-</td></tr>
-<tr>
-<tr><td class="formcolor">&nbsp;</td>
-<td class="formcolor" colspan="3">
-<textarea name="body" cols="60" rows="30"></textarea>
-</td></tr>
+{if $section eq 'contacts'}
+<h2>{tr}Create/edit contacts{/tr}</h2>
+<form action="tiki-webmail.php" method="post">
+<input type="hidden" name="section" value="contacts" />
+<input type="hidden" name="contactId" value="{$contactId}" />
+<table class="normal">
+<tr><td class="formcolor">{tr}First Name{/tr}:</td><td class="formcolor"><input type="text" maxlength="80" size="20" name="firstName" value="{$info.firstName}" /></td></tr>
+<tr><td class="formcolor">{tr}Last Name{/tr}:</td><td class="formcolor"><input type="text" maxlength="80" size="20" name="lastName" value="{$info.lastName}" /></td></tr>
+<tr><td class="formcolor">{tr}Email{/tr}:</td><td class="formcolor"><input type="text" maxlength="80" size="20" name="email" value="{$info.email}" /></td></tr>
+<tr><td class="formcolor">{tr}Nickname{/tr}:</td><td class="formcolor"><input type="text" maxlength="80" size="20" name="nickname" value="{$info.nickname}" /></td></tr>
+<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
+</form>
+<h2>{tr}Contacts{/tr}</h2>
+<div  align="center">
+<table class="findtable">
+<tr><td class="findtable">{tr}Find{/tr}</td>
+   <td class="findtable">
+   <form method="get" action="tiki-webmail.php">
+     <input type="text" name="find" value="{$find}" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <input type="hidden" name="section" value="contacts" />
+   </form>
+   </td>
+</tr>
+</table>
+<a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{tr}all{/tr}</a>
+{section name=ix loop=$letters}
+<a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;letter={$letters[ix]}">{$letters[ix]}</a>
+{/section}
+<table class="normal">
+<tr>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></td>
+</tr>
+{cycle values="odd,even" print=false}
+{section name=user loop=$channels}
+<tr>
+<td class="{cycle advance=false}">{$channels[user].firstName}</td>
+<td class="{cycle advance=false}">{$channels[user].lastName}</td>
+<td class="{cycle advance=false}"><a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].email}</a>
+[<a class="link" href="tiki-webmail.php?section=contacts&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}">x</a>]
+</td>
+<td class="{cycle advance=false}">{$channels[user].nickname}</td>
+</tr>
+{/section}
+</table>
+<div class="mini">
+{if $prev_offset >= 0}
+[<a class="prevnext" href="tiki-webmail.php?section=contacts&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+{/if}
+{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+{if $next_offset >= 0}
+&nbsp;[<a class="prevnext" href="tiki-webmail.php?section=contacts&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+{/if}
+</div>
+</div>
+{/if}
 
+{if $section eq 'compose'}
+{if $attaching eq 'n'}
+  {if $sent eq 'n'}
+    <form action="tiki-webmail.php" method="post">
+    <input type="hidden" name="section" value="compose" />
+    <input type="hidden" name="attach1" value="{$attach1}" />
+    <input type="hidden" name="attach2" value="{$attach2}" />
+    <input type="hidden" name="attach3" value="{$attach3}" />
+    <input type="hidden" name="attach1file" value="{$attach1file}" />
+    <input type="hidden" name="attach2file" value="{$attach2file}" />
+    <input type="hidden" name="attach3file" value="{$attach3file}" />
+    <input type="hidden" name="attach1type" value="{$attach1type}" />
+    <input type="hidden" name="attach2type" value="{$attach2type}" />
+    <input type="hidden" name="attach3type" value="{$attach3type}" />
+    <input type="submit" name="send" value="{tr}send{/tr}" />
+    <table width="100%">
+    <tr><td class="formcolor"><a title="{tr}select from address book{/tr}" class="link" href="#" onClick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:</td><td colspan="3" class="formcolor"><input size="69" type="text" id="to" name="to" value="{$to}" /></td></tr>
+    <tr><td class="formcolor">{tr}cc{/tr}</td><td class="formcolor"><input id="cc" type="text" name="cc" value="{$cc}" /></td><td class="formcolor">{tr}bcc{/tr}</td><td class="formcolor"><input type="text" name="bcc" value="{$bcc}" id="bcc" /></td></tr>
+    <tr><td class="formcolor">{tr}Subject{/tr}</td><td colspan="3" class="formcolor"><input size="69" type="text" name="subject" value="{$subject}" /></td></tr>
+    <tr><td class="formcolor">{tr}Attachments{/tr}</td><td colspan="3" class="formcolor">
+    {if $attach1}
+    ({$attach1})
+    {/if}
+    {if $attach2}
+    ({$attach2})
+    {/if}
+    {if $attach3}
+    ({$attach3})
+    {/if}
+    <input type="submit" name="attach" value="{tr}add{/tr}" />
+    </td></tr>
+    <tr>
+    <tr><td class="formcolor">&nbsp;</td>
+    <td class="formcolor" colspan="3">
+    <textarea name="body" cols="60" rows="30">{$body}</textarea>
+    <tr><td class="formcolor">{tr}Use HTML mail{/tr}</td><td colspan="3" class="formcolor"><input type="checkbox" name="useHTML" /></td></tr>
+    </td></tr>
+    </table>
+    </form>
+  {else}
+    {$msg}<br/><br/>
+    {if $notcon eq 'y'}
+      {tr}The following addresses are not in your address book{/tr}<br/><br/>
+      <form action="tiki-webmail.php" method="post">
+      <table class="normal">
+      <tr>
+        <td class="heading"></td>
+        <td class="heading">{tr}Email{/tr}</td>
+        <td class="heading">{tr}First Name{/tr}</td>
+        <td class="heading">{tr}Last Name{/tr}</td>
+        <td class="heading">{tr}Nickname{/tr}</td>
+      </tr>
+      {section name=ix loop=$not_contacts}
+      <tr><td><input type="checkbox" name="add[{$smarty.section.ix.index}]" /><input type="hidden" name="addemail[{$smarty.section.ix.index}]" value="{$not_contacts[ix]}" /></td>
+          <td>{$not_contacts[ix]}</td>
+          <td><input type="text" name="addFirstName[{$smarty.section.ix.index}]" /></td>
+          <td><input type="text" name="addLastName[{$smarty.section.ix.index}]" /></td>
+          <td><input type="text" name="addNickname[{$smarty.section.ix.index}]" /></td>
+      </tr>
+      {/section}
+      <tr><td>&nbsp;</td><td><input type="submit" name="add_contacts" value="{tr}add contacts{/tr}" /></td></tr>
+      </table>
+      </form>
+    {/if}
+  {/if}
+{else}
+  <form enctype="multipart/form-data" action="tiki-webmail.php" method="post">
+    <input type="hidden" name="section" value="compose" />
+    <input type="hidden" name="to" value="{$to}" />
+    <input type="hidden" name="cc" value="{$cc}" />
+    <input type="hidden" name="bcc" value="{$bcc}" />
+    <input type="hidden" name="subject" value="{$subject}" />
+    <input type="hidden" name="body" value="{$body}" />
+    <input type="hidden" name="attach1" value="{$attach1}" />
+    <input type="hidden" name="attach2" value="{$attach2}" />
+    <input type="hidden" name="attach3" value="{$attach3}" />
+    <input type="hidden" name="attach1file" value="{$attach1file}" />
+    <input type="hidden" name="attach2file" value="{$attach2file}" />
+    <input type="hidden" name="attach3file" value="{$attach3file}" />
+    <input type="hidden" name="attach1type" value="{$attach1type}" />
+    <input type="hidden" name="attach2type" value="{$attach2type}" />
+    <input type="hidden" name="attach3type" value="{$attach3type}" />
+    <table class="normal">
+    {if $attach1}
+    <tr><td class="formcolor">{tr}Attachment 1{/tr}</td><td class="formcolor">{$attach1} <input type="submit" name="remove_attach1" value="{tr}remove{/tr}" /></td></tr>
+    {else}
+    <tr><td class="formcolor">{tr}Attachment 1{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1500000"><input name="userfile1" type="file"></td></tr>
+    {/if}
+    {if $attach2}
+    <tr><td class="formcolor">{tr}Attachment 2{/tr}</td><td class="formcolor">{$attach2} <input type="submit" name="remove_attach2" value="{tr}remove{/tr}" /></td></tr>
+    {else}
+    <tr><td class="formcolor">{tr}Attachment 2{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1500000"><input name="userfile2" type="file"></td></tr>
+    {/if}
+    {if $attach3}
+    <tr><td class="formcolor">{tr}Attachment 3{/tr}</td><td class="formcolor">{$attach3} <input type="submit" name="remove_attach3" value="{tr}remove{/tr}" /></td></tr>
+    {else}
+    <tr><td class="formcolor">{tr}Attachment 3{/tr}</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1500000"><input name="userfile3" type="file"></td></tr>
+    {/if}
+    <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="attached" value="{tr}done{/tr}" /></td></tr>
+    </table>
+    </form>
+  
+{/if}
 {/if}

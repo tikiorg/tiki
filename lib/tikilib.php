@@ -22,6 +22,129 @@ class TikiLib {
   }
   
   /* Webmails */
+  
+  // Contacts
+  function list_contacts($user,$offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where user='$user' and (nickname like '%".$find."%' or firstName like '%".$find."%' or lastName like'%".$find."%' or email like '%".$find."%')";  
+    } else {
+      $mid=" where user='$user' "; 
+    }
+    $query = "select * from tiki_webmail_contacts $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_webmail_contacts $mid";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function are_contacts($contacts,$user)
+  {
+   $ret=Array();
+   foreach($contacts as $con) {
+     $con=trim($con);
+     $cant = $this->db->getOne("select count(*) from tiki_webmail_contacts where email='$con'");
+     if(!$cant) $ret[]=$con;
+   }
+   return $ret;
+  }
+  
+  function list_contacts_by_letter($user,$offset,$maxRecords,$sort_mode,$letter)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    $mid=" where user='$user' and (email like '".$letter."%')";  
+    $query = "select * from tiki_webmail_contacts $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_webmail_contacts $mid";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function parse_nicknames($dirs)
+  {
+    for($i=0;$i<count($dirs);$i++) {
+      if(!strstr($dirs[$i],'@')&&!empty($dirs[$i])) {
+        print($dirs[$i]);
+        $query = "select email from tiki_webmail_contacts where nickname='".$dirs[$i]."'";  
+        $result = $this->db->query($query);
+        if(DB::isError($result)) $this->sql_error($query, $result);
+        if($result->numRows()) {
+          $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+          $dirs[$i]=$res["email"];      
+        }
+      } 
+    }
+    return $dirs;
+  }
+  
+  function replace_contact($contactId, $firstName, $lastName, $email, $nickname,$user)
+  {
+    $firstName=addslashes(trim($firstName));
+    $lastName=addslashes(trim($lastName));
+    $email=addslashes(trim($email));
+    $nickname=addslashes(trim($nickname));
+    
+    // Check the name
+        
+    if($contactId) {
+      $query = "update tiki_webmail_contacts set firstName='$firstName', lastName='$lastName', email='$email', nickname='$nickname' where contactId='$contactId' and user='$user'";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);
+    } else {
+      $query = "replace into tiki_webmail_contacts(firstName,lastName,email,nickname,user)
+                values('$firstName','$lastName','$email','$nickname','$user')";
+      
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);
+    }
+    
+    return true;
+  }
+  
+  function remove_contact($contactId,$user) 
+  {
+    $query = "delete from tiki_webmail_contacts where contactId=$contactId and user='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    return true;
+  }
+  
+  function get_contact($contactId,$user)
+  {
+    $query = "select * from tiki_webmail_contacts where contactId=$contactId and user='$user'";
+    $result = $this->db->query($query);
+    if(!$result->numRows()) return false;
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
+  
+  
+  
+  function remove_webmail_message($current,$user,$msgid) {
+    $query = "delete from tiki_webmail_messages where accountId=$current and mailId=$msgid and user='$user'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);          	
+  }
+  
   function replace_webmail_message($current,$user,$msgid)   {
     $query = "select count(*) from tiki_webmail_messages where accountId=$current and mailId=$msgid and user='$user'";
     
@@ -87,7 +210,7 @@ class TikiLib {
     return $retval;
   }
   
-  function replace_webmail_account($accountId, $user, $account, $pop, $port, $username, $pass, $msgs)
+  function replace_webmail_account($accountId, $user, $account, $pop, $port, $username, $pass, $msgs,$smtp,$useAuth,$smtpPort)
   {
     $account=addslashes($account);
     $username=addslashes($username);
@@ -95,12 +218,12 @@ class TikiLib {
     // Check the name
  
     if($accountId) {
-      $query = "update tiki_user_mail_accounts set user='$user', account='$account', pop='$pop', port=$port, username='$username', pass='$pass',msgs=$msgs where accountId=$accountId and user='$user'";
+      $query = "update tiki_user_mail_accounts set user='$user', account='$account', pop='$pop', port=$port,smtpPort=$smtpPort,username='$username', pass='$pass',smtp='$smtp',useAuth='$useAuth',msgs=$msgs where accountId=$accountId and user='$user'";
       $result = $this->db->query($query);
       if(DB::isError($result)) $this->sql_error($query, $result);
     } else {
-      $query = "replace into tiki_user_mail_accounts(user,account,pop,port,username,pass,msgs)
-                values('$user','$account','$pop',$port,'$username','$pass',$msgs)";
+      $query = "replace into tiki_user_mail_accounts(user,account,pop,port,username,pass,msgs,smtp,useAuth,smtpPort)
+                values('$user','$account','$pop',$port,'$username','$pass',$msgs,'$smtp','$useAuth',$smtpPort)";
                 $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
     }

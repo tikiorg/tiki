@@ -26,7 +26,9 @@ $output = Mail_mimeDecode::decode($params);
 $part = $output->parts[$_REQUEST["getpart"]];
 $type = $part->headers["content-type"];
 $content = $part->body;
-$file=$part->headers["content-description"];
+$names=split(';',$part->headers["content-disposition"]);
+$names=split('=',$names[1]);
+$file=$names[1];
 
 header("Content-type: $type");
 //header( "Content-Disposition: attachment; filename=$file" );
