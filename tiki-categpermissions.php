@@ -26,7 +26,7 @@ if (!isset($_REQUEST['categId'])) {
 }
 
 // Now check permissions to access this page
-if ($tiki_p_admin_categories != 'y') {
+if ($tiki_p_admin_categories != 'y' && $tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra('Permission denied; you cannot assign permissions for this category'));
 
 	$smarty->display("error.tpl");
