@@ -515,7 +515,7 @@ class TrackerLib extends TikiLib {
 				`isTblVisible`=?,`options`=? where `fieldId`=?";
 			$bindvars=array($name,$type,$isMain,$isTblVisible,$options,(int) $fieldId);
 
-			$result = $this->query($query);
+			$result = $this->query($query, $bindvars);
 		} else {
 			$this->getOne("delete from `tiki_tracker_fields` where `trackerId`=? and `name`=?",
 				array((int) $trackerId,$name),false);
