@@ -15,6 +15,7 @@
 <tr><td class="form">{tr}Height of inner Heading{/tr}:</td><td class="form"><input type="text" name="h3height" value="{$h3height|escape}" /></td></tr>
 <tr><td class="form">{tr}tbheight{/tr}:</td><td class="form"><input type="text" name="tbheight" value="{$tbheight|escape}" /></td></tr>
 <tr><td class="form">{tr}imagescale{/tr}:</td><td class="form"><input type="text" name="imagescale" value="{$imagescale|escape}" /></td></tr>
+<tr><td class="form">{tr}Automatic Page Breaks{/tr}:</td><td class="form"><input type="checkbox" {if $autobreak eq 'on'}checked="checked"{/if} name="autobreak" /></td></tr>
 <tr><td align="center" colspan="2" class="form"><input type="submit" name="send" value="{tr}send{/tr}" /></td></tr>
 </table>
 </form>
@@ -37,6 +38,7 @@
 <input type="hidden" name="h3height" value="{$h3height|escape}" />
 <input type="hidden" name="tbheight" value="{$tbheight|escape}" />
 <input type="hidden" name="imagescale" value="{$imagescale|escape}" />
+<input type="hidden" name="autobreak" value="{$autobreak|escape}" />
 {tr}filter{/tr}:<input type="text" name="find" value="{$find|escape}" /><input type="submit" name="filter" value="{tr}filter{/tr}" /><br />
 </form>
 </div>
@@ -59,6 +61,7 @@
 <input type="hidden" name="h3height" value="{$h3height|escape}" />
 <input type="hidden" name="tbheight" value="{$tbheight|escape}" />
 <input type="hidden" name="imagescale" value="{$imagescale|escape}" />
+<input type="hidden" name="autobreak" value="{$autobreak|escape}" />
 <table class="normal">
 <tr><td class="normal" align="center">
 <select name="addpageName[]" size="10" multiple="multiple">
@@ -98,6 +101,7 @@
 <input type="hidden" name="h3height" value="{$h3height|escape}" />
 <input type="hidden" name="tbheight" value="{$tbheight|escape}" />
 <input type="hidden" name="imagescale" value="{$imagescale|escape}" />
+<input type="hidden" name="autobreak" value="{$autobreak|escape}" />
 </form>
 </div>
 </div>

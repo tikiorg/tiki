@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.7 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.8 2003-10-21 09:04:57 caustin_ats Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -66,6 +66,10 @@ if (!isset($_REQUEST["imagescale"])) {
 	$_REQUEST["imagescale"] = 0.4;
 }
 
+if (!isset($_REQUEST["autobreak"])) {
+	$_REQUEST["autobreak"] = 'off';
+}
+
 if (!isset($_REQUEST["convertpages"])) {
 	$convertpages = array();
 
@@ -91,20 +95,35 @@ $pdflib = &new TikiPdfLib($pdfopts);
 // Get pages data
 $data = '';
 
-foreach (array_values($convertpages)as $page) {
-	$info = $tikilib->get_page_info($page);
+if ($_REQUEST["autobreak"] == 'on') {
+	foreach (array_values($convertpages)as $page) {
+		$data = '';
+		$info = $tikilib->get_page_info($page);
 
-	$data .= "\n<C:page:$page>\n<br/>\n";
-	$data .= $tikilib->parse_data($info["data"]);
+		$data = "\n<C:page:$page>\n<br/>\n";
+		$data .= $tikilib->parse_data($info["data"]);
+		$data = utf8_decode($data);
+		$pdflib->add_linkdestination($page);
+		$pdflib->insert_html($data);
+		$pdflib->ezNewPage();
+	}
+}
+else {
+	foreach (array_values($convertpages)as $page) {
+		$info = $tikilib->get_page_info($page);
+
+		$data .= "\n<C:page:$page>\n<br/>\n";
+		$data .= $tikilib->parse_data($info["data"]);
+	}
+
+	//todo: add linkdestinations for titlebars
+	$pdflib->insert_linkdestinations($convertpages);
+	// now add data
+	$data = utf8_decode($data);
+	$pdflib->insert_html($data);
 }
 
-//todo: add linkdestinations for titlebars
-$pdflib->insert_linkdestinations($convertpages);
-// now add data
-$data = utf8_decode($data);
-$pdflib->insert_html($data);
 $pdfdebug = false;
-
 if ($pdfdebug) {
 	$pdfcode = $pdflib->output(1);
 
