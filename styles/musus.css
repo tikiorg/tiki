@@ -23,7 +23,7 @@ body {
 	padding-bottom: 15px;
 }
 
-/* The three columns please do NOT change the order.  Left, Right, and then Middle MUST be kept that way for the theme to function correctly.  Thanks. :) */
+/* Standard three columns please do NOT change the order.  Left, Right, and then Middle MUST be kept that way for the theme to function correctly.  Thanks. :) */
 #left {
 	width: 180px;
 	float: left;
@@ -539,7 +539,7 @@ H3 {
 }
 
 /* Warning background/color */
-span.warn {
+.attention {
 	color: #D40000;
 }
 
@@ -685,11 +685,11 @@ div.browsegallery {
 
 /* You can set a different background color for odd and even rows in the thumbnails table */
 /* Thumbnails in odd rows are shown inside oddthumb tds */
-TD.oddthumb {
+.oddthumb {
 	background: white;
 }
 
-TD.eventhumb {
+.eventhumb {
 	background: #F5F5F5;
 }
 
@@ -707,12 +707,6 @@ div.sortoptions {
 	margin-bottom:   5px;
 	padding-top:   10px;
 	padding-bottom:   10px;
-}
-
-span.sorttitle {
-}
-
-span.sortoptions {
 }
 
 /* Container for thumbnails */
@@ -737,14 +731,6 @@ p.norecords {
 
 /* Browsing an image */
 
-/* The whole container for the browse image screen (may be useful for a fancy background) */
-div.browseimage {
-}
-
-/*div.imagetitle {font-weight: bold; font-size: 26px; font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif; color : black;}*/
-div.gallerylink {
-}
-
 div.showimage {
 	text-align:    center;
 	margin-top:   15px;
@@ -755,9 +741,6 @@ div.imageinfo {
 	text-align:    center;
 	margin-top:   10px;
 	margin-bottom:   10px;
-}
-
-td.imageinfo {
 }
 
 table.tableinfo {
@@ -793,7 +776,7 @@ div.posthead {
 
 /* The font used in the heading of the weblog */
 span.posthead {
-	font-family:    TVerdana, Geneva, Arial, Helvetica, sans-serif;
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	font-weight:   bold;
 	color:   white;
@@ -1200,17 +1183,13 @@ div.pollresults {
 	padding-left:   5px;
 }
 
-table.pollresults {
-}
-
 td.pollr {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
 	color:   black;
 }
-/* MODULES */
 
-/***************************************************** FORUMS *****************************************************/
+/*** FORUMS ***/
 
 /* Title for the forums page */
 table.threads {
@@ -1319,7 +1298,7 @@ td.forumtoolbar {
 	color:   black;
 }
 
-/************************************************ CATEGORIES **************************************************************/
+/*** CATEGORIES ***/
 table.tcategpath {
 	margin-bottom:    40px;
 	border-color:   #403429;
@@ -1437,7 +1416,7 @@ td.categobjectsdataeven, td.categobjectsdataodd {
 	text-decoration:   none;
 }
 
-/***************************************************** FAQS **************************************************************/
+/*** FAQS ***/
 /* The list of questions */
 div.faqlistquestions {
 	background:    #FFFFFF;
@@ -1476,14 +1455,14 @@ div.faqquestion {
 	width:   97%;
 }
 
-/* The answer */
+/* answer */
 div.faqanswer {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
 	width:   97%;
 }
 
-/***************************************************** QUIZZES **************************************************************/
+/*** QUIZZES ***/
 div.questionblock {
 	border:    1px solid black;
 	background:   white;
@@ -1518,7 +1497,7 @@ div.quizanswer {
 	margin-bottom:   10px;
 }
 
-/***************************************************** SHOUTBOX **************************************************************/
+/*** SHOUTBOX ***/
 div.shoutboxmsg {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
@@ -1551,7 +1530,7 @@ textarea.tshoutbox {
 	font-size:   10px;
 }
 
-/*************************************************** WIKI TOCS ***************************************************/
+/*** WIKI TOCS ***/
 div.tocnav {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
@@ -1574,8 +1553,8 @@ div.tocnav {
 	font-size:   10px;
 }
 
-/*************************************************** DIRECTORY ***************************************************/
-/* The list of categories */
+/*** DIRECTORY ***/
+/* list of categories */
 div.dircategs {
 	border:    0.5px solid black;
 	padding-bottom:   5px;
@@ -1615,7 +1594,7 @@ div.dircategs {
 	text-decoration:   underline;
 }
 
-/* The list of sites in any category */
+/* list of sites in any category */
 div.dirlistsites {
 	background-color:    white;
 	padding-left:   5px;
@@ -1632,14 +1611,8 @@ div.dirsite {
 	margin-bottom:   10px;
 }
 
-span.dirsitedesc {
-}
-
 span.dirsitetrail {
 	font-size: 10px;
-}
-
-span.dirsitecats {
 }
 
 /* Links to sites */
@@ -1678,7 +1651,7 @@ div.dirfooter {
 	border:   1px solid black;
 }
 
-/*************************************************** MESSAGES ***************************************************/
+/*** MESSAGES ***/
 /* Links for priority colors */
 td.prio1 {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -1753,8 +1726,7 @@ div.messureadbody {
 }
 
 /* calendar styles */
-#calendar
-{
+#calendar {
 width:100%;
 }
 
@@ -1778,7 +1750,7 @@ width:100%;
 	content:    "X ";
 	background-color:   #eeeeaa;
 }
-/* misc cal styles */
+
 .caltitle {
 	font-weight:    bold;
 	color:   #425262;
@@ -1825,12 +1797,14 @@ a.caltabon:hover {
 	background-color: transparent;
 }
 
-div#tab, div#tabcal, div#tabnav {
+div#tabcal, div#tabnav {
 	margin-top:    10px;
 	margin-left:   30px;
 }
 
 div#tab {
+	margin-top:    10px;
+	margin-left:   30px;
 	margin-bottom: 1px;
 }
 
@@ -2166,6 +2140,7 @@ div.tabcal, div.tabnav {
 .calprio9 {
 	background-color: #DA9A9A;
 }
+
 div.tabrow {
 	margin-left: 29px;
 	background-color: #efefef;
@@ -2173,16 +2148,16 @@ div.tabrow {
 	border-bottom: 0;
 	font-size: 11px;
 }
-td.middle {
-	vertical-align: middle; 
-}
+
 .daterow {
 	margin-left: 10px;
 }
+
 .mininotes {
 	font-size: 80%;
 	color:#666666;
 }
+
 .opaque
 {
 	background-color: #ffffff;

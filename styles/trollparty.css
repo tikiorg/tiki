@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.22 2004-02-01 21:42:25 musus Exp $
+$Id: trollparty.css,v 1.23 2004-02-03 01:36:06 musus Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -510,7 +510,7 @@ vertical-align: top;
 Cells in forms without background color 
 (inside a div for example) 
 */
-TD.form
+.form
 {
 vertical-align: top;
 text-align: left;
@@ -519,12 +519,12 @@ text-align: left;
 /* 
 Cells in forms using a background color 
 */
-TD.formcolor,
-td.galform,
-td.editblogform,
-td.editfgalform,
-TD.comform,
-td.forumform
+.formcolor,
+.galform,
+.editblogform,
+.editfgalform,
+.comform,
+.forumform
 {
 background: #232323;
 vertical-align: top;
@@ -589,7 +589,6 @@ th.listfilesheading,
 th.jukeboxlistheading,
 th.listartheading,
 th.forumheading,
-th.thead
 {
 font-weight : bold;
 padding-left: 2px;
@@ -1047,7 +1046,7 @@ prev & next buttons in pagination
 /* 
 Warning background/color 
 */
-span.warn
+.attention
 {
 color: red;
 }
