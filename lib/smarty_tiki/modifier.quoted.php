@@ -4,14 +4,19 @@
  * Smarty plugin
  * -------------------------------------------------------------
  * Type:     modifier
- * Name:     spacify
- * Purpose:  add spaces between characters in a string
+ * Name:     quoted
+ * Purpose:  quote text by adding ">" or using {QUOTE()} plugin
  * -------------------------------------------------------------
  */
-function smarty_modifier_quoted($string)
+function smarty_modifier_quoted($string, $format='simple', $replyto='')
 {
-    $string = str_replace("\n","\n>",$string);
-    return '>'.$string;
+	if ($format == 'simple') {
+	    $string = str_replace("\n","\n>",$string);
+	    $string = '>'.$string;
+	} elseif ($format == 'fancy') {
+		$string = "{QUOTE(replyto=>$replyto)}" . $string . '{QUOTE}';
+	}
+	return $string;
 }
 
 /* vim: set expandtab: */

@@ -1,23 +1,23 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.4 2004-07-01 16:43:17 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_quote.php,v 1.5 2004-07-02 22:07:38 teedog Exp $
  *
  * TikiWiki QUOTE plugin.
  * 
  * Syntax:
  * 
- *  {QUOTE([title=>Title])}
+ *  {QUOTE([replyto=>name])}
  *   Content inside box
  *  {QUOTE}
  * 
  */
 function wikiplugin_quote_help() {
-	return tra("Quote text by surrounding the text with a box, like the [QUOTE] BBCode").":<br />~np~{QUOTE(title=>Title)}".tra("text")."{QUOTE}~/np~";
+	return tra("Quote text by surrounding the text with a box, like the [QUOTE] BBCode").":<br />~np~{QUOTE(replyto=>name)}".tra("text")."{QUOTE}~/np~";
 }
 
 function wikiplugin_quote($data, $params) {
 	/* set default values for some args */
-	$title = tra("Quote:");
+	$replyto = '';
 	
 	// Remove first <ENTER> if exists...
 //	if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
@@ -25,9 +25,14 @@ function wikiplugin_quote($data, $params) {
 	$data = trim($data);
     
 	extract ($params);
+	if (!empty($replyto)) {
+		$caption = $replyto . tra(' wrote:');
+	} else {
+		$caption = tra('Quote:');
+	}
     
 	$begin  = "<div class='quoteheader'>";
-    $begin .= "$title</div><div class='quotebody'>";
+    $begin .= "$caption</div><div class='quotebody'>";
 	$end = "</div>";
 		// Prepend any newline char with br
 		$data = preg_replace("/\\n/", "<br />", $data);

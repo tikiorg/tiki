@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.14 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.15 2004-07-02 22:07:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -70,6 +70,16 @@ $messulib->flag_message($user, $_REQUEST['msgId'], 'isRead', 'y');
 // Get the message and assign its data to template vars
 $msg = $messulib->get_message($user, $_REQUEST['msgId']);
 $smarty->assign('msg', $msg);
+
+// which quote format should tiki use?
+global $feature_use_quoteplugin;
+if ($feature_use_quoteplugin == 'y') {
+	$quote_format = 'fancy';
+} else {
+	$quote_format = 'simple';
+}
+$smarty->assign('quote_format',$quote_format);
+
 ask_ticket('messu-read');
 $section = 'user_messages';
 include_once ('tiki-section_options.php');

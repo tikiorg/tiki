@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.249 2004-07-02 16:49:30 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.250 2004-07-02 22:07:40 teedog Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -546,6 +546,10 @@ $feature_wiki_footnotes = 'n';
 $smarty->assign('feature_wiki_footnotes', $feature_wiki_footnotes);
 $feature_wiki_monosp = 'y';
 $smarty->assign('feature_wiki_monosp', $feature_wiki_monosp);
+
+// default setting for whether to use the QUOTE plugin rather than ">" for quoting
+$feature_use_quoteplugin = 'n';
+$smarty->assign('feature_use_quoteplugin',$feature_use_quoteplugin);
 
 $system_os = $tikilib->get_preference('system_os', TikiSetup::os());
 $smarty->assign('system_os', $system_os);
