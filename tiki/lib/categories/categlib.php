@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.25 2003-12-31 11:38:35 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.26 2004-01-01 03:19:12 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -44,15 +44,17 @@ class CategLib extends TikiLib {
 			}
       
       $catpath = $this->get_category_path($res["categId"]);
-			
+			$tepath = array();	
 			foreach ($catpath as $cat) {
 				$tepath[] = $cat['name'];
 			}
 			$categpath = implode("::",$tepath);
 			$res["categpath"] = $categpath;
+			$res["tepath"] = $tepath;
 			$ret["$categpath"] = $res;
 		}
 		ksort($ret);
+		
 		$retval = array();
     $retval["data"] = array_values($ret);
 		$retval["cant"] = $cant;
@@ -61,12 +63,14 @@ class CategLib extends TikiLib {
 	
 	function get_category_path($categId) {
 		$info = $this->get_category($categId);
-		$path[] = array('categId'=>$info["categId"],'name'=>$info["name"]);
+		$i=999999;
+		$path[$i--] = array('categId'=>$info["categId"],'name'=>$info["name"]);
 		while ($info["parentId"] != 0) {
 			$info = $this->get_category($info["parentId"]);
-			$path[] = array('categId'=>$info["categId"],'name'=>$info["name"]);
+			$path[$i--] = array('categId'=>$info["categId"],'name'=>$info["name"]);
 		}
-		return $path;
+		ksort($path);
+		return array_values($path);
 	}
 
 	function get_category($categId) {
@@ -230,8 +234,7 @@ class CategLib extends TikiLib {
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$result2 = $this->query($query_cant,$bindvars);
 		$cant = $result2->numRows();
-		$cant2
-			= $this->getOne("select count(*) from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid",$bindvars);
+		$cant2 = $this->getOne("select count(*) from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid",$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {

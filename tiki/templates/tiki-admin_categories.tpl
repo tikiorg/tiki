@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.14 2003-12-31 02:34:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.15 2004-01-01 03:19:14 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -21,13 +21,41 @@
 <a class="categpath" href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
 {/section}
 </div>
-
-{if $parentId ne '0'}
-<div class="treenode">
-<a class="catname" href="tiki-admin_categories.php?parentId={$father}" title="Upper level">..</a>
+<div>
+{assign var=categ value=''}
+{assign var=parent value=''}
+{assign var=space value=1}
+{assign var=step value='-'}
+{section name=dx loop=$catree}
+{if $catree[dx].parentId eq $categ}
+{assign var=space value=$space+1}
+{assign var=step value='o'}
+{elseif $catree[dx].parentId ne $parent}
+{assign var=space value=$space-1}
+{assign var=step value='c'}
+{else}
+{assign var=step value='-'}
+{/if}
+{if $step eq 'c'}
 </div>
 {/if}
-{$tree}
+{if $step eq 'o'}
+<a href="javascript:toggle('id{$catree[dx].parentId}');" class="linkmenu">&gt;&gt;&gt;</a>
+</div>
+<div id="id{$catree[dx].parentId}" style="display:none;">
+{else}
+</div>
+{/if}
+<div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}" style="padding-left:{$space*30+20}px;">
+<!-- {$catree[dx].parentId} :: {$catree[dx].categId} :: -->
+<a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
+{if $catree[dx].children > 0}<i class="mini">{$catree[dx].children} {tr}Child categories{/tr}</i>{/if}
+{if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
+{assign var=categ value=$catree[dx].categId}
+{assign var=parent value=$catree[dx].parentId}
+{/section}
+</div>
+{* $tree *}
 </div>
 
 

@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.18 2003-12-31 02:34:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.19 2004-01-01 03:19:07 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.18 2003-12-31 02:34:13 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.19 2004-01-01 03:19:07 mose Exp $
 //
 
 // Initialization
@@ -156,18 +156,17 @@ $smarty->assign('description', $info["description"]);
 // If the parent category is not zero get the category path
 if ($_REQUEST["parentId"]) {
 	$path = $categlib->get_category_path($_REQUEST["parentId"]);
-
 	$p_info = $categlib->get_category($_REQUEST["parentId"]);
 	$father = $p_info["parentId"];
 } else {
-	$path = tra("TOP");
-
+	$path = "";
 	$father = 0;
 }
 
 $smarty->assign('path', $path);
 $smarty->assign('father', $father);
-
+/*
+// ---------------------------------------------------
 // Convert $childrens
 //$debugger->var_dump('$children');
 $ctall = $categlib->get_all_categories_ext();
@@ -191,10 +190,24 @@ foreach ($ctall as $c) {
 	);
 }
 
-$debugger->var_dump('$tree_nodes');
+//$debugger->var_dump('$tree_nodes');
 $tm = new CatAdminTreeMaker("admcat");
 $res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
 $smarty->assign('tree', $res);
+*/
+// ---------------------------------------------------
+function array_csort($marray, $column) {
+  foreach ($marray as $key=>$row) { $sortarr[$key] = $row[$column]; }
+  array_multisort($sortarr, $marray); return $marray;
+}
+
+$catree = $categlib->list_all_categories(0,-1,'name_asc','','',0);
+$catree = array_csort($catree['data'],'categpath');
+$smarty->assign('catree', $catree);
+
+// var_dump($catree); 
+
+// ---------------------------------------------------
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';
