@@ -797,9 +797,13 @@ class ActivityManager extends BaseManager {
     $query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=$cant+1 where pId=$pId";
     $this->query($query);
     
+    $seen = array();
     while(count($nodes)) {
       $newnodes = Array();
       foreach($nodes as $node) {
+        // avoid endless loops
+        if (isset($seen[$node])) continue;
+        $seen[$node] = 1;
         $query = "update ".GALAXIA_TABLE_PREFIX."activities set flowNum=$num where activityId=$node";
         $this->query($query);
         $query = "select actFromId from ".GALAXIA_TABLE_PREFIX."transitions where actToId=".$node;
