@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.130 2003-11-13 08:52:16 markusvk Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.131 2003-11-16 05:51:48 markusvk Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -19,7 +19,7 @@ Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
 
 * [MOD] Modules for anonymous-only can now be hidden for registered users
-* [MOD] An alternative module-switch_lang2 using the flags
+* [MOD] An alternative module-switch_lang2
 * [MOD] Allow article creators to edit their articles even if they don't have
   the p_edit_article permission. Default behavior is unchanged, must be turned
   on via the article types.
