@@ -12,7 +12,7 @@
       </td>
       <td class="module">&nbsp;
        <a class="linkmodule" href="tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}">
-        {$modLastModif[ix].pageName}
+        {$modLastModif[ix].pageName|truncate:$maxlen:"...":true}
        </a>
       </td>
      </tr>
