@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.92 2003-08-08 04:48:15 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.93 2003-11-10 00:02:30 gongo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,6 +48,8 @@ function byref_set_value($feature, $pref = "") {
 	if (isset($_REQUEST[$feature])) {
 		if (strlen($pref) > 0) {
 			$tikilib->set_preference($pref, $_REQUEST[$feature]);
+			// also assign the ref appareantly --gongo
+			$smarty->assign_by_ref($pref, $_REQUEST[$feature]);
 		} else {
 			$tikilib->set_preference($feature, $_REQUEST[$feature]);
 		}
