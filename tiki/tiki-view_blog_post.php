@@ -20,7 +20,13 @@ $post_info = $bloglib->get_post($_REQUEST["postId"]);
 $smarty->assign('post_info',$post_info);
 $smarty->assign('postId',$_REQUEST["postId"]);
 $_REQUEST["blogId"]=$post_info["blogId"];
+$blog_data = $bloglib->get_blog($_REQUEST['blogId']);
+$smarty->assign('blog_data',$blog_data);
 $smarty->assign('blogId',$_REQUEST["blogId"]);
+
+if(!isset($_REQUEST['offset'])) $_REQUEST['offset']=0;
+if(!isset($_REQUEST['sort_mode'])) $_REQUEST['sort_mode']='created_desc';
+if(!isset($_REQUEST['find'])) $_REQUEST['find']='';
 
 $smarty->assign('offset',$_REQUEST["offset"]);
 $smarty->assign('sort_mode',$_REQUEST["sort_mode"]);

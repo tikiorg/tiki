@@ -11,24 +11,61 @@ class BlogLib extends TikiLib {
   }
   
   
-    function add_blog_hit($blogId)
+  function add_blog_hit($blogId)
   {
     $query = "update tiki_blogs set hits = hits+1 where blogId=$blogId";
     $result = $this->query($query);
     return true;
   }
+  
+  function insert_post_image($postId,$filename,$filesize,$filetype,$data)
+  {
+    $data = addslashes($data);
+    $query = "insert into tiki_blog_posts_images(postId,filename,filesize,filetype,data)
+    values($postId,'$filename',$filesize,'$filetype','$data')";
+    $this->query($query);
+  }
+  
+  function get_post_image($imgId)
+  {
+    $query = "select * from tiki_blog_posts_images where imgId=$imgId";
+  	$result = $this->query($query);  
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
+  function get_post_images($postId)
+  {
+    $query = "select postId,filename,filesize,imgId from tiki_blog_posts_images where postId=$postId";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $imgId=$res['imgId'];
+      $res['link']="<img src='tiki-view_blog_post_image.php?imgId=$imgId' border='0' alt='image' />";
+      $ret[] = $res;
+    }
+    return $ret;
+  }
+  
+  function remove_post_image($imgId)
+  {
+    $query = "delete from tiki_blog_posts_images where imgId=$imgId";
+    $this->query($query);
+  }
 
-  function replace_blog($title,$description,$user,$public,$maxPosts,$blogId)
+
+  function replace_blog($title,$description,$user,$public,$maxPosts,$blogId,$heading,$use_title,$use_find,$allow_comments)
   {
     $title = addslashes($title);
     $description = addslashes($description);
+    $heading=addslashes($heading);
     $now = date("U");
     if($blogId) {
-      $query = "update tiki_blogs set title='$title',description='$description',user='$user',public='$public',lastModif=$now,maxPosts=$maxPosts where blogId=$blogId";
+      $query = "update tiki_blogs set title='$title',description='$description',user='$user',public='$public',lastModif=$now,maxPosts=$maxPosts,heading='$heading',use_title='$use_title',use_find='$use_find',allow_comments='$allow_comments' where blogId=$blogId";
       $result = $this->query($query);
     } else {
-      $query = "insert into tiki_blogs(created,lastModif,title,description,user,public,posts,maxPosts,hits)
-                       values($now,$now,'$title','$description','$user','$public',0,$maxPosts,0)";
+      $query = "insert into tiki_blogs(created,lastModif,title,description,user,public,posts,maxPosts,hits,heading,use_title,use_find,allow_comments)
+                       values($now,$now,'$title','$description','$user','$public',0,$maxPosts,0,'$heading','$use_title','$use_find','$allow_comments')";
       $result = $this->query($query);
       $query2 = "select max(blogId) from tiki_blogs where lastModif=$now";
       $blogId=$this->getOne($query2);
@@ -98,13 +135,14 @@ class BlogLib extends TikiLib {
     return $retval;
   }
 
-  function blog_post($blogId,$data,$user)
+  function blog_post($blogId,$data,$user,$title='')
   {
     // update tiki_blogs and call activity functions
+    $title=addslashes($title);
     $data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
     $data=addslashes($data);
     $now = date("U");
-    $query = "insert into tiki_blog_posts(blogId,data,created,user) values($blogId,'$data',$now,'$user')";
+    $query = "insert into tiki_blog_posts(blogId,data,created,user,title) values($blogId,'$data',$now,'$user','$title')";
     $result = $this->query($query);
     $query = "select max(postId) from tiki_blog_posts where created=$now and user='$user'";
     $id = $this->getOne($query);
@@ -135,6 +173,8 @@ class BlogLib extends TikiLib {
       $query = "update tiki_blogs set posts=posts-1 where blogId=$blogId";
       $result = $this->query($query);
     }
+    $query = "delete from tiki_blog_posts_images where postId=$postId";
+    $this->query($query);
     return true;
   }
 
@@ -151,10 +191,11 @@ class BlogLib extends TikiLib {
     return $res;
   }
 
-  function update_post($postId,$data,$user)
+  function update_post($postId,$data,$user,$title='')
   {
     $data = addslashes($data);
-    $query = "update tiki_blog_posts set data='$data',user='$user' where postId=$postId";
+    $title= addslashes($title);
+    $query = "update tiki_blog_posts set data='$data',user='$user',title='$title' where postId=$postId";
     $result = $this->query($query);
 
   }

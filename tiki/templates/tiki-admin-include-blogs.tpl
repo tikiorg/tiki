@@ -40,9 +40,34 @@
     <option value="activity_desc" {if $blog_list_order eq 'activity_desc'}selected="selected"{/if}>{tr}Activity (desc){/tr}</option>
     </select>
     </td></tr>
+    <tr><td class="form">{tr}In blog listing show user as{/tr}</td>
+    <td>
+    <select name="blog_list_user">
+    	<option value="text" {if $blog_list_user eq 'text'}selected="selected"{/if}>{tr}Plain text{/tr}</option>
+    	<option value="link" {if $blog_list_user eq 'link'}selected="selected"{/if}>{tr}Link to user information{/tr}</option>
+    	<option value="avatar" {if $blog_list_user eq 'avatar'}selected="selected"{/if}>{tr}User avatar{/tr}</option>
+    </select>
+    </td>
+    </td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="blogfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
+</div>
+
+<div class="simplebox">
+{tr}Blog listing configuration (when listing available blogs){/tr}
+    <form method="post" action="tiki-admin.php">
+    <table>
+    <tr><td class="form">{tr}title{/tr}</td><td class="form"><input type="checkbox" name="blog_list_title" {if $blog_list_title eq 'y'}checked="checked"{/if}></td></tr>
+    <tr><td class="form">{tr}description{/tr}</td><td class="form"><input type="checkbox" name="blog_list_description" {if $blog_list_description eq 'y'}checked="checked"{/if}></td></tr>
+    <tr><td class="form">{tr}creation date{/tr}</td><td class="form"><input type="checkbox" name="blog_list_created" {if $blog_list_created eq 'y'}checked="checked"{/if}></td></tr>    
+    <tr><td class="form">{tr}last modification time{/tr}</td><td class="form"><input type="checkbox" name="blog_list_lastmodif" {if $blog_list_lastmodif eq 'y'}checked="checked"{/if}></td></tr>    
+    <tr><td class="form">{tr}user{/tr}</td><td class="form"><input type="checkbox" name="blog_list_user" {if $blog_list_user eq 'y'}checked="checked"{/if}></td></tr>    
+    <tr><td class="form">{tr}posts{/tr}</td><td class="form"><input type="checkbox" name="blog_list_posts" {if $blog_list_posts eq 'y'}checked="checked"{/if}></td></tr>    
+    <tr><td class="form">{tr}visits{/tr}</td><td class="form"><input type="checkbox" name="blog_list_visits" {if $blog_list_visits eq 'y'}checked="checked"{/if}></td></tr>    
+    <tr><td class="form">{tr}activity{/tr}</td><td class="form"><input type="checkbox" name="blog_list_activity" {if $blog_list_activity eq 'y'}checked="checked"{/if}></td></tr>
+	<tr><td align="center" colspan="2"><input type="submit" name="bloglistconf" value="{tr}Configure{/tr}" /></td></tr>
+	</table>
 </div>
 
     <div class="simplebox">

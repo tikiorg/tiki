@@ -399,6 +399,24 @@ $smarty->assign('cms_spellcheck',$cms_spellcheck);
 $smarty->assign('blog_spellcheck',$blog_spellcheck);
 $smarty->assign('blog_list_order',$blog_list_order);
 
+$blog_list_user = 'text';
+$smarty->assign('blog_list_user',$blog_list_user);
+$blog_list_title = 'y';
+$blog_list_description = 'y';
+$blog_list_created = 'y';
+$blog_list_lastmodif = 'y';
+$blog_list_user = 'y';
+$blog_list_posts = 'y';
+$blog_list_visits = 'y';
+$blog_list_activity = 'y';
+$smarty->assign('blog_list_title',$blog_list_title);
+$smarty->assign('blog_list_description',$blog_list_description);
+$smarty->assign('blog_list_created',$blog_list_created);
+$smarty->assign('blog_list_lastmodif',$blog_list_lastmodif);
+$smarty->assign('blog_list_user',$blog_list_user);
+$smarty->assign('blog_list_posts',$blog_list_posts);
+$smarty->assign('blog_list_visits',$blog_list_visits);
+$smarty->assign('blog_list_activity',$blog_list_activity);
 $smarty->assign('trl','');
 
 $smarty->assign('userbreadCrumb',$userbreadCrumb);

@@ -1092,6 +1092,77 @@ if(isset($_REQUEST["cmsfeatures"])) {
   }
 }
 
+if(isset($_REQUEST['bloglistconf'])) {
+  if(isset($_REQUEST["blog_list_title"]) && $_REQUEST["blog_list_title"]=="on") {
+    $tikilib->set_preference("blog_list_title",'y'); 
+    $smarty->assign("blog_list_title",'y');
+  } else {
+    $tikilib->set_preference("blog_list_title",'n');
+    $smarty->assign("blog_list_title",'n');
+  }
+
+  if(isset($_REQUEST["blog_list_description"]) && $_REQUEST["blog_list_description"]=="on") {
+    $tikilib->set_preference("blog_list_description",'y'); 
+    $smarty->assign("blog_list_description",'y');
+  } else {
+    $tikilib->set_preference("blog_list_description",'n');
+    $smarty->assign("blog_list_description",'n');
+  }
+
+  if(isset($_REQUEST["blog_list_activity"]) && $_REQUEST["blog_list_activity"]=="on") {
+    $tikilib->set_preference("blog_list_activity",'y'); 
+    $smarty->assign("blog_list_activity",'y');
+  } else {
+    $tikilib->set_preference("blog_list_activity",'n');
+    $smarty->assign("blog_list_activity",'n');
+  }
+
+
+  if(isset($_REQUEST["blog_list_visits"]) && $_REQUEST["blog_list_visits"]=="on") {
+    $tikilib->set_preference("blog_list_visits",'y'); 
+    $smarty->assign("blog_list_visits",'y');
+  } else {
+    $tikilib->set_preference("blog_list_visits",'n');
+    $smarty->assign("blog_list_visits",'n');
+  }
+
+
+  if(isset($_REQUEST["blog_list_posts"]) && $_REQUEST["blog_list_posts"]=="on") {
+    $tikilib->set_preference("blog_list_posts",'y'); 
+    $smarty->assign("blog_list_posts",'y');
+  } else {
+    $tikilib->set_preference("blog_list_posts",'n');
+    $smarty->assign("blog_list_posts",'n');
+  }
+
+
+  if(isset($_REQUEST["blog_list_lastmodif"]) && $_REQUEST["blog_list_lastmodif"]=="on") {
+    $tikilib->set_preference("blog_list_lastmodif",'y'); 
+    $smarty->assign("blog_list_lastmodif",'y');
+  } else {
+    $tikilib->set_preference("blog_list_lastmodif",'n');
+    $smarty->assign("blog_list_lastmodif",'n');
+  }
+
+  if(isset($_REQUEST["blog_list_user"]) && $_REQUEST["blog_list_user"]=="on") {
+    $tikilib->set_preference("blog_list_user",'y'); 
+    $smarty->assign("blog_list_user",'y');
+  } else {
+    $tikilib->set_preference("blog_list_user",'n');
+    $smarty->assign("blog_list_user",'n');
+  }
+
+
+  if(isset($_REQUEST["blog_list_created"]) && $_REQUEST["blog_list_created"]=="on") {
+    $tikilib->set_preference("blog_list_created",'y'); 
+    $smarty->assign("blog_list_created",'y');
+  } else {
+    $tikilib->set_preference("blog_list_created",'n');
+    $smarty->assign("blog_list_created",'n');
+  }
+
+}
+
 if(isset($_REQUEST["blogfeatures"])) {
   if(isset($_REQUEST["feature_blog_rankings"]) && $_REQUEST["feature_blog_rankings"]=="on") {
     $tikilib->set_preference("feature_blog_rankings",'y'); 
@@ -1126,7 +1197,9 @@ if(isset($_REQUEST["blogfeatures"])) {
   }
   
   $tikilib->set_preference("blog_list_order",$_REQUEST["blog_list_order"]);
+  $tikilib->set_preference("blog_list_user",$_REQUEST["blog_list_user"]);
   $smarty->assign('blog_list_order',$_REQUEST["blog_list_order"]);
+  $smarty->assign('blog_list_user',$_REQUEST['blog_list_user']);
 }
 
 if(isset($_REQUEST["blogset"])&&isset($_REQUEST["homeBlog"])) {

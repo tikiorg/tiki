@@ -1,3 +1,25 @@
+### Modifications for blog improvements
+drop table if exists tiki_blog_posts_images;
+create table tiki_blog_posts_images(
+  imgId integer(14) not null auto_increment,
+  postId integer(14) not null,
+  filename varchar(80),
+  filetype varchar(80),
+  filesize integer(14),
+  data longblob,
+  primary key(imgId)
+);
+
+alter table tiki_blogs add heading text;
+alter table tiki_blogs add use_find char(1);
+alter table tiki_blogs add use_title char(1);
+alter table tiki_blogs add add_date char(1);
+alter table tiki_blogs add add_poster char(1);
+alter table tiki_blogs add allow_comments char(1);
+alter table tiki_blog_posts add title varchar(80);
+### End of modifications for blog improvements
+
+
 alter table tiki_pages add creator varchar(200);
 
 #### Workflow tables and permissions
