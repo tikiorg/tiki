@@ -2,6 +2,7 @@
 // Initialization
 
 require_once('tiki-setup.php');
+include_once('lib/webmail/webmaillib.php');
 
 if($feature_webmail != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -79,7 +80,7 @@ $smarty->assign('section',$_REQUEST["section"]);
 if(isset($_REQUEST["add_contacts"])) {    
   if(isset($_REQUEST["add"])) {      
     foreach(array_keys($_REQUEST["add"]) as $i) {        
-      $tikilib->replace_contact(0, $addFirstName[$i], $addLastName[$i], $addemail[$i], $addNickname[$i],$user)  ;
+      $webmaillib->replace_contact(0, $addFirstName[$i], $addLastName[$i], $addemail[$i], $addNickname[$i],$user)  ;
     }
   }
 } 
@@ -91,20 +92,20 @@ if($_REQUEST["section"]=='read') {
   } else {    
      $smarty->assign('fullheaders','n');		  
   }  
-  $current=$tikilib->get_current_webmail_account($user);  
+  $current=$webmaillib->get_current_webmail_account($user);  
   $smarty->assign('current',$current);  
   $pop3=new POP3($current["pop"],$current["username"],$current["pass"]);  
   $pop3->Open();  
   if(isset($_REQUEST["delete_one"])) {    
     $realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);  
-    $tikilib->remove_webmail_message($current["accountId"],$user,$realmsgid);
+    $webmaillib->remove_webmail_message($current["accountId"],$user,$realmsgid);
     $pop3->DeleteMessage($_REQUEST["msgdel"]);  
   }  
   $message = $pop3->GetMessage($_REQUEST["msgid"]);  
   $realmsgid = $pop3->GetMessageID($_REQUEST["msgid"]);  
   $smarty->assign('msgid',$_REQUEST["msgid"]);  
   $smarty->assign('realmsgid',$realmsgid);  
-  $tikilib->set_mail_flag($current["accountId"],$user,$realmsgid,'isRead','y');  
+  $webmaillib->set_mail_flag($current["accountId"],$user,$realmsgid,'isRead','y');  
   $s = $pop3->Stats();  
   $mailsum = $s["message"];  
   $numshow=$current["msgs"];  
@@ -190,7 +191,7 @@ if($_REQUEST["section"]=='mailbox') {
   }
   closedir($h);
 
-  $current=$tikilib->get_current_webmail_account($user);  
+  $current=$webmaillib->get_current_webmail_account($user);  
   if(!$current) {    
     header("location: tiki-webmail.php?section=settings");    
     die;	 
@@ -204,7 +205,7 @@ if($_REQUEST["section"]=='mailbox') {
       // Now we can delete the messages      
       foreach(array_keys($_REQUEST["msg"]) as $msg) {        
         $realmsgid = $pop3->GetMessageID($msg);  
-        $tikilib->remove_webmail_message($current["accountId"],$user,$realmsgid);
+        $webmaillib->remove_webmail_message($current["accountId"],$user,$realmsgid);
         $pop3->DeleteMessage($msg);      
       }    
     }  
@@ -212,7 +213,7 @@ if($_REQUEST["section"]=='mailbox') {
   
   if(isset($_REQUEST["delete_one"])) {    
     $realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);  
-    $tikilib->remove_webmail_message($current["accountId"],$user,$realmsgid);
+    $webmaillib->remove_webmail_message($current["accountId"],$user,$realmsgid);
     $pop3->DeleteMessage($_REQUEST["msgdel"]);  
   }  
   // Now delete the messages and reopen the mailbox to renumber messages
@@ -225,16 +226,16 @@ if($_REQUEST["section"]=='mailbox') {
         $realmsg=$_REQUEST["realmsg"][$msg];        
         switch($_REQUEST["action"]) {          
           case "flag":             
-            $tikilib->set_mail_flag($current["accountId"],$user,$realmsg,'isFlagged','y');             
+            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isFlagged','y');             
             break;          
           case "unflag":	             
-            $tikilib->set_mail_flag($current["accountId"],$user,$realmsg,'isFlagged','n');             
+            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isFlagged','n');             
             break;          
           case "read":             
-            $tikilib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','y');             
+            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','y');             
             break;          
           case "unread":             
-            $tikilib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','n');             
+            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','n');             
             break;        
         }      
       }    
@@ -258,8 +259,8 @@ if($_REQUEST["section"]=='mailbox') {
       
       $aux["msgid"]=$i;      
       $aux["realmsgid"]=$pop3->GetMessageID($i);      
-      $tikilib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);
-      list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$tikilib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);
+      $webmaillib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);
+      list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$webmaillib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);
       if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      
       if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
       $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      
@@ -285,8 +286,8 @@ if($_REQUEST["section"]=='mailbox') {
       $aux = $pop3->ListMessage($i);	      
       //print_r($aux);print("<br/>");
       $aux["realmsgid"]=$pop3->GetMessageID($i);      
-      $tikilib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);         
-      list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$tikilib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);      
+      $webmaillib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);         
+      list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$webmaillib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);      
       if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      
       if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
       $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      
@@ -337,17 +338,17 @@ if($_REQUEST["section"]=='settings') {
   if(!isset($_REQUEST["accountId"])) $_REQUEST["accountId"]=0;  
   $smarty->assign('accountId',$_REQUEST["accountId"]);  
   if(isset($_REQUEST["new_acc"])) {    
-    $tikilib->replace_webmail_account($_REQUEST["accountId"],$user,$_REQUEST["account"],$_REQUEST["pop"],$_REQUEST["port"],$_REQUEST["username"],$_REQUEST["pass"],$_REQUEST["msgs"],$_REQUEST["smtp"],$_REQUEST["useAuth"],$_REQUEST["smtpPort"]);
+    $webmaillib->replace_webmail_account($_REQUEST["accountId"],$user,$_REQUEST["account"],$_REQUEST["pop"],$_REQUEST["port"],$_REQUEST["username"],$_REQUEST["pass"],$_REQUEST["msgs"],$_REQUEST["smtp"],$_REQUEST["useAuth"],$_REQUEST["smtpPort"]);
     $_REQUEST["accountId"]=0;  
   }  
   if(isset($_REQUEST["remove"])) {    
-    $tikilib->remove_webmail_account($user,$_REQUEST["remove"]);  
+    $webmaillib->remove_webmail_account($user,$_REQUEST["remove"]);  
   }  
   if(isset($_REQUEST["current"])) {    
-    $tikilib->current_webmail_account($user,$_REQUEST["current"]);  
+    $webmaillib->current_webmail_account($user,$_REQUEST["current"]);  
   }  
   if($_REQUEST["accountId"]) {    
-    $info = $tikilib->get_webmail_account($user,$_REQUEST["accountId"]); 
+    $info = $webmaillib->get_webmail_account($user,$_REQUEST["accountId"]); 
   } else {    
     $info["account"]='';    
     $info["username"]='';    
@@ -361,21 +362,21 @@ if($_REQUEST["section"]=='settings') {
   }  
   $smarty->assign('info',$info);  
   // List  
-  $accounts = $tikilib->list_webmail_accounts($user,0,-1,'account_asc','');  
+  $accounts = $webmaillib->list_webmail_accounts($user,0,-1,'account_asc','');  
   $smarty->assign('accounts',$accounts["data"]);
 }
 
 
 /*************** Compose *********************************************************************************************/
 if($_REQUEST["section"]=='compose') {  
-  $current=$tikilib->get_current_webmail_account($user);  
+  $current=$webmaillib->get_current_webmail_account($user);  
   if(!$current) {    
     header("location: tiki-webmail.php?section=settings");    
     die;	  
   }  
   // Send a message  
   if(isset($_REQUEST["reply"])||isset($_REQUEST["replyall"])) {
-    $tikilib->set_mail_flag($current["accountId"],$user,$_REQUEST["realmsgid"],'isReplied','y');  
+    $webmaillib->set_mail_flag($current["accountId"],$user,$_REQUEST["realmsgid"],'isReplied','y');  
   }
   $smarty->assign('sent','n');  
   $smarty->assign('attaching','n');
@@ -413,10 +414,10 @@ if($_REQUEST["section"]=='compose') {
         $to_array[]=$to_1;
       }
     }
-    $to_array=$tikilib->parse_nicknames($to_array);
+    $to_array=$webmaillib->parse_nicknames($to_array);
     
     // Get email addresses not in the address book
-    $not_contacts=$tikilib->are_contacts($to_array,$user);
+    $not_contacts=$webmaillib->are_contacts($to_array,$user);
        
     if(count($not_contacts)>0) {
       $smarty->assign('notcon','y');
@@ -463,7 +464,7 @@ if($_REQUEST["section"]=='compose') {
        if($size<1500000) {
          $name = $_FILES['userfile1']['name'];
          $type = $_FILES['userfile1']['type'];
-         $_REQUEST["attach1file"]=$user.md5($tikilib->genPass());
+         $_REQUEST["attach1file"]=$user.md5($webmaillib->genPass());
          $_REQUEST["attach1type"]=$type;
          $_REQUEST["attach1"]=$name;
          move_uploaded_file($_FILES['userfile1']['tmp_name'],'temp/mail_attachs/'.$_REQUEST["attach1file"]);
@@ -474,7 +475,7 @@ if($_REQUEST["section"]=='compose') {
        if($size<1500000) {
          $name = $_FILES['userfile2']['name'];
          $type = $_FILES['userfile2']['type'];
-         $_REQUEST["attach2file"]=$user.md5($tikilib->genPass());
+         $_REQUEST["attach2file"]=$user.md5($webmaillib->genPass());
          $_REQUEST["attach2type"]=$type;
          $_REQUEST["attach2"]=$name;
          move_uploaded_file($_FILES['userfile2']['tmp_name'],'temp/mail_attachs/'.$_REQUEST["attach2file"]);
@@ -485,7 +486,7 @@ if($_REQUEST["section"]=='compose') {
        if($size<1500000) {
          $name = $_FILES['userfile3']['name'];
          $type = $_FILES['userfile3']['type'];
-         $_REQUEST["attach3file"]=$user.md5($tikilib->genPass());
+         $_REQUEST["attach3file"]=$user.md5($webmaillib->genPass());
          $_REQUEST["attach3type"]=$type;
          $_REQUEST["attach3"]=$name;
          move_uploaded_file($_FILES['userfile3']['tmp_name'],'temp/mail_attachs/'.$_REQUEST["attach3file"]);
@@ -531,7 +532,7 @@ if($_REQUEST["section"]=='contacts') {
   $smarty->assign('contactId',$_REQUEST["contactId"]);
 
   if($_REQUEST["contactId"]) {
-    $info = $tikilib->get_contact($_REQUEST["contactId"],$user);
+    $info = $webmaillib->get_contact($_REQUEST["contactId"],$user);
     
   } else {
     $info = Array();
@@ -543,11 +544,11 @@ if($_REQUEST["section"]=='contacts') {
   $smarty->assign('info',$info);
 
   if(isset($_REQUEST["remove"])) {
-    $tikilib->remove_contact($_REQUEST["remove"],$user);
+    $webmaillib->remove_contact($_REQUEST["remove"],$user);
   }
 
   if(isset($_REQUEST["save"])) {
-    $tikilib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"],$_REQUEST["lastName"],$_REQUEST["email"],$_REQUEST["nickname"],$user );
+    $webmaillib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"],$_REQUEST["lastName"],$_REQUEST["email"],$_REQUEST["nickname"],$user );
     $info["firstName"]='';
     $info["lastName"]='';
     $info["email"]='';
@@ -578,9 +579,9 @@ if($_REQUEST["section"]=='contacts') {
 
   $smarty->assign_by_ref('sort_mode',$sort_mode);
   if(!isset($_REQUEST["letter"])) {
-    $channels = $tikilib->list_contacts($user,$offset,$maxRecords,$sort_mode,$find);
+    $channels = $webmaillib->list_contacts($user,$offset,$maxRecords,$sort_mode,$find);
   } else {
-    $channels = $tikilib->list_contacts_by_letter($user,$offset,$maxRecords,$sort_mode,$_REQUEST["letter"]);
+    $channels = $webmaillib->list_contacts_by_letter($user,$offset,$maxRecords,$sort_mode,$_REQUEST["letter"]);
   }
   $cant_pages = ceil($channels["cant"] / $maxRecords);
   $smarty->assign_by_ref('cant_pages',$cant_pages);

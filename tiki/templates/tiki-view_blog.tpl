@@ -10,12 +10,12 @@
 {if $rss_blog eq 'y'}
 [<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}">RSS</a>]
 {/if}
-
 {/if}
 {if ($user and $creator eq $user) or $tiki_p_blog_admin eq 'y'}
 [<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit{/tr}</a>]
 {/if}
 </div>
+
 <div class="blogdesc">{tr}Description:{/tr}{$description}</div>
 <div class="blogtools">
 <table><tr><td>
@@ -42,23 +42,28 @@
 </div>
 <div class="postbody">
 {$listpages[ix].parsed_data}
+{if $feature_blogposts_comments eq 'y'}
+<hr/>
+{$listpages[ix].comments} {tr}comments{/tr}
+ [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}view comments{/tr}</a>]
+{/if}
 </div>
 {/section}
 <br/><br/>
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="blogprevnext" href="tiki-view_blog.php?blogId={$blogId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="blogprevnext" href="tiki-view_blog.php?blogId={$blogId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="blogprevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br/>
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-view_blog.php?blogId={$blogId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+<a class="prevnext" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}

@@ -168,6 +168,9 @@ $feature_right_column = 'y';
 $feature_top_bar = 'y';
 $feature_bot_bar = 'y';
 
+$feature_blogposts_comments = 'n';
+$smarty->assign('feature_blogposts_comments',$feature_blogposts_comments);
+
 $feature_wiki_description = 'n';
 $smarty->assign('feature_wiki_description',$feature_wiki_description);
 $feature_surveys = 'n';

@@ -827,6 +827,14 @@ if(isset($_REQUEST["blogfeatures"])) {
     $smarty->assign("feature_blog_comments",'n');
   }
   
+  if(isset($_REQUEST["feature_blogposts_comments"]) && $_REQUEST["feature_blogposts_comments"]=="on") {
+    $tikilib->set_preference("feature_blogposts_comments",'y'); 
+    $smarty->assign("feature_blogposts_comments",'y');
+  } else {
+    $tikilib->set_preference("feature_blogposts_comments",'n');
+    $smarty->assign("feature_blogposts_comments",'n');
+  }
+  
   $tikilib->set_preference("blog_list_order",$_REQUEST["blog_list_order"]);
   $smarty->assign('blog_list_order',$_REQUEST["blog_list_order"]);
 }
