@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.12 2004-06-07 20:37:27 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagesetup.php,v 1.13 2004-06-08 18:31:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,6 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if ($tiki_p_admin != 'y' && isset($page) && $userlib->object_has_one_permission($page, 'wiki page')) {
 	$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'wiki');
+	$object_has_perms = true;
 	if ($userlib->object_has_permission($user, $page, 'wiki page', 'tiki_p_admin_wiki')) {
 		foreach ($perms["data"] as $perm) {
 			$perm = $perm["permName"];
@@ -33,6 +34,6 @@ if ($tiki_p_admin != 'y' && isset($page) && $userlib->object_has_one_permission(
 		}
 	}
 } else {
-	$has_object_perms = false;
+	$object_has_perms = false;
 }
 ?>

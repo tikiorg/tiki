@@ -27,7 +27,7 @@ if ($tiki_p_admin != 'y') {
 					// if a user lacks a given permission regarding a particular category,
 					// that category takes precedence when considering if user has that permission
 					break 1;
-					// break out of 1 FOREACH loop
+					// break out of one FOREACH loop
 				}
 			} else {
 				$categpath = $categlib->get_category_path($categId);
@@ -45,7 +45,7 @@ if ($tiki_p_admin != 'y') {
 							// if a user lacks a given permission regarding a particular category,
 							// that category takes precedence when considering if user has that permission
 							break 2;
-							// break out of two FOR loops
+							// break out of one FOR loop and one FOREACH loop
 						}
 					}
 				}
