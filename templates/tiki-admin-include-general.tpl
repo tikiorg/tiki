@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.31 2004-04-09 19:36:31 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.32 2004-05-13 08:12:23 russwilde Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -236,14 +236,18 @@
         <td class="form"><label for="general-send_email">{tr}Sender Email{/tr}:</label></td>
         <td><input type="text" name="sender_email" id="general-send_email" value="{$sender_email|escape}" size="50" /></td>
       </tr>
-      <tr>
+			<tr>
         <td class="form"><label for="general-contact">{tr}Contact user{/tr}:</label></td>
-        <td>{if $feature_contact eq 'y'}
-              <input type="text" name="contact_user" id="general-contact" value="{$contact_user|escape}" size="40" />
-            {else}
-              {tr}contact feature disabled{/tr}
-            {/if}
+{if $feature_contact eq 'y'}
+        <td><input type="text" name="contact_user" id="general-contact" value="{$contact_user|escape}" size="40" /></td>
+      </tr><tr>
+        <td class="form"><label for="contact_anon">{tr}Allow anonymous users to "Contact Us"{/tr}:</label></td>
+        <td><input type="checkbox" name="contact_anon" id="contact_anon"
+              {if $contact_anon eq 'y'}checked="checked"{/if}/>
         </td>
+{else}
+        <td>{tr}contact feature disabled{/tr}</td>
+{/if}
       </tr><tr>
         <td class="form"><label for="general-session_db">{tr}Store session data in database{/tr}:</label></td>
         <td><input type="checkbox" name="session_db" id="general-session_db"
