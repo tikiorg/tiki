@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.185 2004-04-16 05:53:35 franck Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.186 2004-04-21 00:21:40 ggeller Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4355,7 +4355,7 @@ CREATE TABLE tiki_quicktags (
   taginsert varchar(255) default NULL,
   tagicon varchar(255) default NULL,
   tagcategory varchar(255) default NULL,
-  PRIMARY KEY  (tagId)
+  PRIMARY KEY  (tagId),
   KEY `tagcategory` (`tagcategory`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
