@@ -11,11 +11,24 @@
 <table class="viewthread">
 <tr>
   <td class="viewthreadl" width="15%">
+  <div align="center">
+  {if $forum_info.ui_avatar eq 'y'}
   {$thread_info.userName|avatarize}<br/>
+  {/if}
   <b>{tr}author{/tr}</b>:<br/>
-  
   {$thread_info.userName|userlink}
+  {if $forum_info.ui_flag eq 'y'}
   <br/>{$thread_info.userName|countryflag}
+  {/if}
+  {if $thread_info.userName and $forum_info.ui_posts eq 'y'}
+  <br/><small>posts:{$thread_info.user_posts}</small>
+  {/if}
+  <!--
+  {if $thread_info.userName and $forum_info.ui_email eq 'y'}  
+  {mailto address="$thread_info.user_email" encode="javascript" text="email" extra='class="link"'}
+  {/if}
+  -->
+  </div>
   </td>
   <td class="viewthreadr" width="85%">
   <b>{$thread_info.title}</b><br/><br/>
@@ -227,8 +240,18 @@
 <tr>
   <td  class="threads{cycle advance=false}l" width="15%">
   <div align="center">
+  {if $forum_info.ui_avatar eq 'y'}
   {$comments_coms[ix].userName|avatarize}<br/>
-  <b>{tr}author{/tr}</b><br/>{$comments_coms[ix].userName|userlink}<br/>{$comments_coms[ix].userName|countryflag}
+  {/if}
+  <b>{tr}author{/tr}</b>
+  <br/>{$comments_coms[ix].userName|userlink}
+  {if $forum_info.ui_flag eq 'y'}
+  <br/>{$comments_coms[ix].userName|countryflag}
+  {/if}
+  {if $comments_coms[ix].userName and $forum_info.ui_posts eq 'y'}
+  <br/><small>posts:{$comments_coms[ix].user_posts}</small>
+  {/if}
+
   </div>
   </td>
   <td  class="threads{cycle}r" width="85%">

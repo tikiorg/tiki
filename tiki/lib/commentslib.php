@@ -333,6 +333,8 @@ class Comments extends TikiLib {
     $result = $this->query($query);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     $res["parsed"] = $this->parse_comment_data($res["data"]);
+    $res['user_posts']=$this->getOne("select count(*) from tiki_comments where userName='".$res['userName']."'");
+    $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
     return $res;
   }
 
@@ -455,6 +457,8 @@ class Comments extends TikiLib {
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Get the last reply
       $tid = $res["threadId"];
+      $res['user_posts']=$this->getOne("select count(*) from tiki_comments where userName='".$res['userName']."'");
+      $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
       $res["lastPost"]=$this->getOne($query);
       if(!$res["lastPost"]) $res["lastPost"]=$res["commentDate"];
@@ -473,6 +477,7 @@ class Comments extends TikiLib {
       } else {
         $res["isEmpty"] = 'n'; 
       }
+     
       //$res["average"]=$res["points"]/$res["votes"];
       $res["average"] = $res["average"];
       $ret1[] = $res;
@@ -493,6 +498,9 @@ class Comments extends TikiLib {
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Get the last reply
       $tid = $res["threadId"];
+      $res['user_posts']=$this->getOne("select count(*) from tiki_comments where userName='".$res['userName']."'");
+      $res['user_email']=$this->getOne("select email from users_users where login='".$res['userName']."'");
+
       $query = "select max(commentDate) from tiki_comments where parentId='$tid'";
       $res["lastPost"]=$this->getOne($query);
       if(!$res["lastPost"]) $res["lastPost"]=$res["commentDate"];
