@@ -1,6 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.12 2004-03-22 05:11:08 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.13 2004-04-18 20:34:08 damosoft Exp $
+
+//this script may only be included - so its better to die if called directly.
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+}
+
 
 /*
     The idea here is that all access to the hw tables goes through this
