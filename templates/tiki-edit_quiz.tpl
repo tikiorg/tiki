@@ -1,3 +1,11 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.13 2004-04-29 19:02:23 ggeller Exp $ *}
+ 
+{* Copyright (c) 2004 *}
+{* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
+{* Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details. *}
+
+<!- tiki-edit_quiz.tpl start ->
+
 <a class="pagetitle" href="tiki-edit_quiz.php">{tr}Admin quizzes{/tr}</a>
 
 <!-- the help link info -->
@@ -120,3 +128,4 @@
 </div>
 </div>
 
+<!- tiki-edit_quiz.tpl end ->
