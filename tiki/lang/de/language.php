@@ -643,8 +643,8 @@ $lang=Array(
 "Home Gallery (main gallery)" => "Home-Galerie (Hauptgalerie)",
 "Home Image Gal" => "Home-BilderGal",
 "Home Image Gallery" => "Home-Bildergalerie",
-"Home Page" => "Home-Seite",
-"Home page" => "Home-Seite",
+"Home Page" => "Startseite",
+"Home page" => "Startseite",
 "home" => "Hauptseite",
 "HomePage" => "HomePage",
 "hot" => "hot",
@@ -2283,5 +2283,7 @@ in Admin-Allgemein abgestellt haben.
 "more" => "weiter",
 "today" => "heute",
 "browse by" => "betrachte",
+"You will receive an email with your password soon" => "Eine E-Mail mit dem neuen Passwort ist unterwegs.",
+"Thank you for you registration. You may log in now." => "Vielen Dank f&uuml;r die Registrierung. Sie k&ouml;nnen sich jetzt anmelden.",
 "##end###" => "###end###");
 ?>

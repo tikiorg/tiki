@@ -2212,5 +2212,6 @@ $lang = Array(
 "1 day" => "1 day",
 "1 week" => "1 week",
 "1 month" => "1 month",
+"Thank you for you registration. You may log in now." => "Thank you for you registration. You may log in now.",
 "##end###" => "###סוף###");
 ?>
