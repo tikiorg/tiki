@@ -17,7 +17,7 @@
 // |          Chuck Hagenbuch <chuck@horde.org>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Socket.php,v 1.1 2003-07-25 08:24:53 redflo Exp $
+// $Id: Socket.php,v 1.2 2003-10-12 16:03:03 mose Exp $
 //
 
 require_once 'PEAR.php';
@@ -103,9 +103,9 @@ class Net_Socket extends PEAR {
         $errno = 0;
         $errstr = '';
         if ($this->timeout) {
-            $fp = $openfunc($this->addr, $this->port, $errno, $errstr, $this->timeout);
+            $fp = @$openfunc($this->addr, $this->port, $errno, $errstr, $this->timeout);
         } else {
-            $fp = $openfunc($this->addr, $this->port, $errno, $errstr);
+            $fp = @$openfunc($this->addr, $this->port, $errno, $errstr);
         }
         
         if (!$fp) {
