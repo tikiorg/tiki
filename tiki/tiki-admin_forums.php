@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.19 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.20 2004-01-29 02:29:22 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -158,7 +158,7 @@ $smarty->assign('pruneUnrepliedAge', $info["pruneUnrepliedAge"]);
 $smarty->assign('usePruneOld', $info["usePruneOld"]);
 $smarty->assign('pruneMaxAge', $info["pruneMaxAge"]);
 
-$users = $userlib->get_users_names(0, -1, 'login_desc', '');
+$users = $userlib->list_all_users();
 $smarty->assign_by_ref('users', $users);
 
 if (isset($_REQUEST["remove"])) {
@@ -416,8 +416,8 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
-$groups = $userlib->get_groups(0, -1, 'groupName_asc', '');
-$smarty->assign_by_ref('groups', $groups['data']);
+$groups = $userlib->list_all_groups();
+$smarty->assign_by_ref('groups', $groups);
 
 $cat_type = 'forum';
 $cat_objid = $_REQUEST["forumId"];

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_categories.php,v 1.10 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_categories.php,v 1.11 2004-01-29 02:29:23 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -144,8 +144,8 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('items', $items["data"]);
 
-$groups = $userlib->get_groups(0, -1, 'groupName_asc', '');
-$smarty->assign_by_ref('groups', $groups["data"]);
+$groups = $userlib->list_all_groups();
+$smarty->assign_by_ref('groups', $groups);
 
 $categs = $dirlib->dir_get_all_categories(0, -1, 'name_asc', $find);
 $smarty->assign('categs', $categs);

@@ -54,16 +54,17 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Moderator user{/tr}:</td><td class="formcolor">
 <select name="moderator">
-{section name=ix loop=$users}
-<option value="{$users[ix]|escape}" {if $moderator eq $users[ix]}selected="selected"{/if}>{$users[ix]}</option>
-{/section}
+<option value="" {if $moderator eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+{foreach key=id item=one from=$users}
+<option value="{$one|escape}" {if $moderator eq $one}selected="selected"{/if}>{$one}</option>
+{/foreach}
 </select>
 </td></tr>
 <tr><td class="formcolor">{tr}Moderator group{/tr}:</td><td class="formcolor">
 <select name="moderator_group">
 <option value="" {if $moderator_group eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 {section name=ix loop=$groups}
-<option value="{$groups[ix].groupName|escape}" {if $moderator_group eq $groups[ix].groupName}selected="selected"{/if}>{$groups[ix].groupName}</option>
+<option value="{$groups[ix]|escape}" {if $moderator_group eq $groups[ix]}selected="selected"{/if}>{$groups[ix]}</option>
 {/section}
 </select>
 </td></tr>
