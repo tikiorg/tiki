@@ -8,18 +8,9 @@
  */
 function smarty_resource_style_source($tpl_name, &$tpl_source, &$smarty)
 {
-    // do database call here to fetch your template,
-    // populating $tpl_source
-    $sql = new SQL;
-    $sql->query("select tpl_source
-                   from my_table
-                  where tpl_name='$tpl_name'");
-    if ($sql->num_rows) {
-        $tpl_source = $sql->record['tpl_source'];
-        return true;
-    } else {
-        return false;
-    }
+	// Check if file exists in the style directory if not
+	// check if file exists in the templates directory,
+	// if not then fall
 }
 
 function smarty_resource_style_timestamp($tpl_name, &$tpl_timestamp, &$smarty)

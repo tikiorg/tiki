@@ -1,4 +1,15 @@
 <?php
+
+function file_get_contents($file) {
+  $data = '';
+  $fp = fopen($file,'r');
+  while(!feof($fp)) {
+          $data .= fread($fp,4096);
+  }
+  fclose($fp);
+  return $data;
+}
+
 class ParseDataTest extends PHPUnit_TestCase {
     // contains the object handle of the string class
     var $t;
@@ -20,7 +31,7 @@ class ParseDataTest extends PHPUnit_TestCase {
         // delete your instance
         unset($this->t);
     }
-    // test the toString function
+  
     function test1() {
         $input = file_get_contents('tests/parse_data/test1');
         $result = $this->t->parse_data($input);

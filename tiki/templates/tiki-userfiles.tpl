@@ -9,7 +9,7 @@
 	<tr>
 		<td>
 			<table border='0' height='20' cellpadding='0' cellspacing='0' 
-			       width='200' style='background-color:white;'>
+			       width='200' style='background-color:#666666;'>
 				<tr>
 					<td style='background-color:red;' width='{$cellsize}'>&nbsp;</td>
 					<td>&nbsp;</td>
@@ -25,7 +25,7 @@
 			<small>{tr}quota{/tr}</small>
 		</td>
 	</tr>
-</table> 
+</table>
 </div>
 
 <form action="tiki-userfiles.php" method="post">
