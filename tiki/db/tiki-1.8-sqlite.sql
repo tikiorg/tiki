@@ -2228,6 +2228,7 @@ CREATE TABLE "tiki_mailin_accounts" (
   "smtp" varchar(255) default NULL,
   "useAuth" char(1) default NULL,
   "smtpPort" smallint default NULL,
+  "anonymous" char(1) default 'y' NOT NULL,
   PRIMARY KEY ("accountId")
 )   ;
 
