@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.45 2003-11-19 04:08:00 xenfasa Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.46 2003-11-20 17:51:07 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br/><br/>
 {if $forum_info.show_description eq 'y'}
@@ -156,11 +156,11 @@ a moderator approves it.{/tr}</small>
     {if $feature_smileys eq 'y'}
      <tr>
 	<td class="formcolor">{tr}Smileys{/tr}</td>
-	<td class="formcolor">{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl"}</td>
+	<td class="formcolor">{include file="tiki-smileys.tpl" area_name='editpost'}</td>
      </tr>
     {/if}
     <tr>
-      <td class="formcolor">{tr}Comment{/tr}<br/><br />{include file="textareaSize.tpl"}</td>
+      <td class="formcolor">{tr}Comment{/tr}<br/><br />{include file="textareaSize.tpl" area_name='editpost' formId='editpageform'}</td>
       <td class="formcolor"><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea><input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/></td>
     </tr>
