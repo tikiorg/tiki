@@ -176,7 +176,9 @@ class UsersLib extends TikiLib {
 
 	function validate_hash($user, $hash) {
 		return $this->db->getOne(
-			"select count(*) from `users_users` where " . $this->convert_binary(). " `login` = '$user' and hash='$hash'");
+			"select count(*) from `users_users` where " . $this->convert_binary(). " `login` = ? and hash=?",
+			array($user, $hash)
+		);
 	}
 
 	function validate_user($user, $pass, $challenge, $response) {
@@ -367,14 +369,15 @@ class UsersLib extends TikiLib {
 		// If the user is loggin in the the lastLogin should be the last currentLogin?
 		global $feature_challenge;
 
-		$user = addslashes($user);
-
 		// first verify that the user exists
 		$query = "select `email` from `users_users` where " . $this->convert_binary(). " `login` = ?";
-		$result = $this->query($query, array($user));
+		$result = $this->query($query, array($user) );
 
 		if (!$result->numRows())
+		{
 			return USER_NOT_FOUND;
+		}
+
 
 		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 		$hash=md5($user.$pass.$res['email']);
@@ -419,7 +422,8 @@ class UsersLib extends TikiLib {
 		} else {
 			// Use challenge-reponse method
 			// Compare pass against md5(user,challenge,hash)
-			$hash = $this->getOne("select `hash`  from `users_users` where " . $this->convert_binary(). " `login`='$user'");
+			$hash = $this->getOne("select `hash`  from `users_users` where " . $this->convert_binary(). " `login`=?",
+			    array($user) );
 
 			if (!isset($_SESSION["challenge"]))
 				return false;
@@ -673,12 +677,12 @@ class UsersLib extends TikiLib {
 	}
 
 	function remove_user($user) {
-		$userId = $this->getOne("select `userId`  from `users_users` where `login` = '$user'");
+		$userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($user));
 
-		$query = "delete from `users_users` where `login` = '$user'";
-		$result = $this->query($query);
-		$query = "delete from `users_usergroups` where `userId`=$userId";
-		$result = $this->query($query);
+		$query = "delete from `users_users` where `login` = ?";
+		$result = $this->query($query, array( $user ) );
+		$query = "delete from `users_usergroups` where `userId`=?";
+		$result = $this->query($query, array( $userId ) );
 
 		return true;
 	}
