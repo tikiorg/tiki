@@ -39,7 +39,7 @@
 {if ($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y'}
 {foreach key=st item=stdata from=$status_types}
 <td><div class="{$stdata.class}">
-<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $filtervalue}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filtervalue}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" 
+<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $filtervalue}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filterfield}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" 
 class="statusimg">{html_image file=$stdata.image title=$stdata.label alt=$stdata.label align=top}</a></div></td>
 {/foreach}
 {/if}
@@ -49,7 +49,7 @@ class="statusimg">{html_image file=$stdata.image title=$stdata.label alt=$stdata
 <select name="filterfield">
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].isSearchable eq 'y' and $fields[ix].type ne 'f' and $fields[ix].type ne 'j' and $fields[ix].type ne 'i'}
-<option value="{$fields[ix].name|escape}">{$fields[ix].name|truncate:52:"..."}</option>
+<option value="{$fields[ix].fieldId|escape}"{if $fields[ix].fieldId eq filterfield} selected="selected"{/if}>{$fields[ix].name|truncate:52:"..."}</option>
 {/if}
 {/section}
 </select>
@@ -84,9 +84,8 @@ class="prevnext">{tr}All{/tr}</a>
 {if $fields[ix].type eq 'l' and $fields[ix].isTblVisible eq 'y'}
 <td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
 {elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
-<td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if
-$fields[x].value}&amp;{$fields[x].name|escape:"url"}={$fields[x].value|escape:"url"}{/if}{/section}&amp;sort_mode=f_{if $sort_mode eq
-'f_'|cat:$fields[ix].name|cat:'_asc'}{$fields[ix].name|escape:"url"}_desc{else}{$fields[ix].name|escape:"url"}_asc{/if}">{$fields[ix].name|truncate:52:"..."|default:"&nbsp;"}</a></td>
+<td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode=f_{if $sort_mode eq
+'f_'|cat:$fields[ix].fieldId|cat:'_asc'}{$fields[ix].fieldId|escape:"url"}_desc{else}{$fields[ix].fieldId|escape:"url"}_asc{/if}">{$fields[ix].name|truncate:52:"..."|default:"&nbsp;"}</a></td>
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
@@ -132,7 +131,8 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {if $items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId}
 <a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$items[user].field_values[ix].linkId}" class="link">
 
-{elseif $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}
+{elseif $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' 
+ or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group)}
 <a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$items[user].itemId}&amp;show=view">
 {/if}
 
@@ -220,10 +220,6 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <div id="content{cycle name=content}" class="content">
 <form action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<input type="hidden" name="itemId" value="{$itemId|escape}" />
-{section name=ix loop=$fields}
-<input type="hidden" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
-{/section}
 
 <h3>{tr}Insert new item{/tr}</h3>
 <table class="normal">
