@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.62 2003-11-26 11:13:11 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.63 2003-12-14 03:49:07 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -616,6 +616,9 @@ if (isset($_REQUEST["save"])) {
 	  */
       $t = date("U");
       $tikilib->create_page($_REQUEST["page"], 0, $edit, $t, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description);  
+      if ($wiki_watch_author == 'y') 
+        $tikilib->add_user_watch($user,"wiki_page_changed",$_REQUEST["page"],tra('Wiki page'),$page,"tiki-index.php?page=$page");
+
     } else {
       $links = $tikilib->get_links($edit);
       /*
