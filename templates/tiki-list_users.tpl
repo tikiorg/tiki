@@ -1,6 +1,8 @@
-<span class="pagetitle">{tr}Addressbook{/tr}</span>
-&nbsp;<a href="javascript:ajuda('helptiki-list_users','300','400');"><img src="img/icons/help.gif" alt="{tr}help alt{/tr}" border=0></a>
+<span class="pagetitle">{tr}Member list{/tr}</span>
 
+      {if $feature_help eq 'y'}
+<a href="{$helpurl}MemberList" target="tikihelp" class="tikihelp" title="{tr}Member List{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <br/><br/>
 {if $tiki_p_create_users eq 'y'}
@@ -22,11 +24,19 @@
 <table class="userlist">
 <tr>
   <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Login{/tr}</a></td>
+  <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'realName_desc'}realName_asc{else}realName_desc{/if}">{tr}Real Name{/tr}</a></td>
+{if $feature_score eq 'y'}
+  <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'score_desc'}score_asc{else}score_desc{/if}">{tr}Score{/tr}</a></td>
+{/if}
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listusers}
 <tr>
   <td class="userlistlogin{cycle advance=false}">&nbsp;{$listusers[changes].login|userlink}&nbsp;</td>
+  <td class="userlistlogin{cycle advance=false}">&nbsp;{$listusers[changes].realName}&nbsp;</td>
+{if $feature_score eq 'y'}
+  <td class="userlistlogin{cycle advance=false}">&nbsp;{$listusers[changes].score}&nbsp;</td>
+{/if}
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -53,8 +63,3 @@
 {/if}
 </div>
 </div>
-{if $tiki_p_admin eq 'y'}
-<br/><br/>
-<a href="tiki-admin.php?page=users"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-{/if}
-

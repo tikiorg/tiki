@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.18 2004-05-01 01:06:20 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.19 2004-06-14 05:44:31 lfagundes Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,6 +27,10 @@ if (isset($_REQUEST['view_user'])) {
 
 $smarty->assign('userwatch', $userwatch);
 
+if ($feature_friends == 'y') {
+     $smarty->assign('friend', $tikilib->verify_friendship($userwatch, $user));
+}
+
 if (!$userlib->user_exists($userwatch)) {
 	$smarty->assign('msg', tra("Unknown user"));
 
@@ -39,7 +43,6 @@ if ($tiki_p_admin != 'y') {
 
 	if ($user_information == 'private') {
 		$smarty->assign('msg', tra("The user has chosen to make his information private"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
