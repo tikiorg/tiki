@@ -55,6 +55,7 @@
 	<td width="30%" class="{cycle advance=false}">{tr}Vote tihis item{/tr}</td>
 	<td class="{cycle}">
 		<form method="post">
+		<input type="hidden" name="itemId" value="{$info.itemId}">
 		{if $chart_info.maxVoteValue eq '5'}
 		<input type="radio" name="points" value="1" />
 		<input type="radio" name="points" value="2" />
