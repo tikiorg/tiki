@@ -7,13 +7,13 @@ include_once('lib/webmail/webmaillib.php');
 if($feature_webmail != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 
 if($tiki_p_use_webmail != 'y') {
   $smarty->assign('msg',tra("Permission denied to use this feature"));
   $smarty->display("styles/$style_base/error.tpl");
-  die;  
+  die;
 }
 
 require_once ("lib/webmail/pop3.php");
@@ -21,90 +21,90 @@ require_once ("lib/webmail/mimeDecode.php");
 include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/webmail/htmlMimeMail.php");
 
-function parse_output(&$obj, &$parts,$i) {  
-  if(!empty($obj->parts)) {    
-    for($i=0; $i<count($obj->parts); $i++)      
-      parse_output($obj->parts[$i], $parts,$i);  
-  }else{    
-    $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;    
-    switch($ctype) {    
-      case 'text/plain':      
-        if(!empty($obj->disposition) AND $obj->disposition == 'attachment') {        
-          $names=split(';',$obj->headers["content-disposition"]);        
-          $names=split('=',$names[1]);        
+function parse_output(&$obj, &$parts,$i) {
+  if(!empty($obj->parts)) {
+    for($i=0; $i<count($obj->parts); $i++)
+      parse_output($obj->parts[$i], $parts,$i);
+  }else{
+    $ctype = $obj->ctype_primary.'/'.$obj->ctype_secondary;
+    switch($ctype) {
+      case 'text/plain':
+        if(!empty($obj->disposition) AND $obj->disposition == 'attachment') {
+          $names=split(';',$obj->headers["content-disposition"]);
+          $names=split('=',$names[1]);
           $aux['name']=$names[1];
-          $aux['content-type']=$obj->headers["content-type"];        
-          $aux['part']=$i;        
-          $parts['attachments'][] = $aux;      
+          $aux['content-type']=$obj->headers["content-type"];
+          $aux['part']=$i;
+          $parts['attachments'][] = $aux;
         }else{
-          $parts['text'][] = $obj->body;      
-        }      
+          $parts['text'][] = $obj->body;
+        }
         break;
-      case 'text/html':      
-        if(!empty($obj->disposition) AND $obj->disposition == 'attachment') {        
-          $names=split(';',$obj->headers["content-disposition"]);        
-          $names=split('=',$names[1]);        
-          $aux['name']=$names[1];        
-          $aux['content-type']=$obj->headers["content-type"];        
-          $aux['part']=$i;        
-          $parts['attachments'][] = $aux;      
-        }else{        
-          $parts['html'][] = $obj->body;      
-        }      
-        break;    
-      default:            
-        $names=split(';',$obj->headers["content-disposition"]);      
-        $names=split('=',$names[1]);      
-        $aux['name']=$names[1];      
-        $aux['content-type']=$obj->headers["content-type"];      
-        $aux['part']=$i;      
-        $parts['attachments'][] = $aux;    
-    } 
+      case 'text/html':
+        if(!empty($obj->disposition) AND $obj->disposition == 'attachment') {
+          $names=split(';',$obj->headers["content-disposition"]);
+          $names=split('=',$names[1]);
+          $aux['name']=$names[1];
+          $aux['content-type']=$obj->headers["content-type"];
+          $aux['part']=$i;
+          $parts['attachments'][] = $aux;
+        }else{
+          $parts['html'][] = $obj->body;
+        }
+        break;
+      default:
+        $names=split(';',$obj->headers["content-disposition"]);
+        $names=split('=',$names[1]);
+        $aux['name']=$names[1];
+        $aux['content-type']=$obj->headers["content-type"];
+        $aux['part']=$i;
+        $parts['attachments'][] = $aux;
+    }
   }
 }
-    
-if(!$user) {  
-  $smarty->assign('msg',tra("You are not logged in"));  
-  $smarty->display("styles/$style_base/error.tpl");  
+
+if(!$user) {
+  $smarty->assign('msg',tra("You are not logged in"));
+  $smarty->display("styles/$style_base/error.tpl");
   die;
 }
 
 
 
-if(!isset($_REQUEST["section"])) {  
+if(!isset($_REQUEST["section"])) {
   $_REQUEST["section"]='mailbox';
 }
 $smarty->assign('section',$_REQUEST["section"]);
 
 // Search if we have to add some contacts
-if(isset($_REQUEST["add_contacts"])) {    
-  if(isset($_REQUEST["add"])) {      
-    foreach(array_keys($_REQUEST["add"]) as $i) {        
+if(isset($_REQUEST["add_contacts"])) {
+  if(isset($_REQUEST["add"])) {
+    foreach(array_keys($_REQUEST["add"]) as $i) {
       $webmaillib->replace_contact(0, $_REQUEST["addFirstName"][$i], $_REQUEST["addLastName"][$i], $_REQUEST["addemail"][$i], $_REQUEST["addNickname"][$i],$user)  ;
     }
   }
-} 
+}
 
 /*************** Read an Email **************************************************************************************/
-if($_REQUEST["section"]=='read') {  
-  if(isset($_REQUEST["fullheaders"])) {    
-    $smarty->assign('fullheaders','y');	  
-  } else {    
-     $smarty->assign('fullheaders','n');		  
-  }  
-  $current=$webmaillib->get_current_webmail_account($user);  
-  $smarty->assign('current',$current);  
-  $pop3=new POP3($current["pop"],$current["username"],$current["pass"]);  
-  $pop3->Open();  
-  if(isset($_REQUEST["delete_one"])) {    
-    $realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);  
+if($_REQUEST["section"]=='read') {
+  if(isset($_REQUEST["fullheaders"])) {
+    $smarty->assign('fullheaders','y');
+  } else {
+     $smarty->assign('fullheaders','n');
+  }
+  $current=$webmaillib->get_current_webmail_account($user);
+  $smarty->assign('current',$current);
+  $pop3=new POP3($current["pop"],$current["username"],$current["pass"]);
+  $pop3->Open();
+  if(isset($_REQUEST["delete_one"])) {
+    $realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);
     $webmaillib->remove_webmail_message($current["accountId"],$user,$realmsgid);
-    $pop3->DeleteMessage($_REQUEST["msgdel"]);  
-  }  
-  $message = $pop3->GetMessage($_REQUEST["msgid"]);  
+    $pop3->DeleteMessage($_REQUEST["msgdel"]);
+  }
+  $message = $pop3->GetMessage($_REQUEST["msgid"]);
   $realmsgid = $pop3->GetMessageID($_REQUEST["msgid"]);
-  $smarty->assign('msgid',$_REQUEST["msgid"]);  
-  $smarty->assign('realmsgid',$realmsgid);  
+  $smarty->assign('msgid',$_REQUEST["msgid"]);
+  $smarty->assign('realmsgid',$realmsgid);
   $webmaillib->set_mail_flag($current["accountId"],$user,$realmsgid,'isRead','y');
   $s = $pop3->Stats();
   $mailsum = $s["message"];
@@ -161,10 +161,10 @@ if($_REQUEST["section"]=='read') {
     }
   }
 
-  if(isset($output->headers["cc"])||ereg(',',$output->headers["to"])) {
+  if(isset($output->headers["cc"])) {
     $cc_addresses = $output->headers["cc"];
     //add addresses to cc from "to" field (for 'reply to all')
-    $cc_addresses .= ",".$output->headers["to"];
+    if (ereg(',',$output->headers["to"])) $cc_addresses .= ",".$output->headers["to"];
     $cc_addresses = split(',',$cc_addresses);
     for($i=0;$i<count($cc_addresses);$i++) {
       preg_match("/<([^>]+)>/",$cc_addresses[$i],$add);
@@ -215,195 +215,195 @@ if($_REQUEST["section"]=='mailbox') {
   }
 
 
-  if(isset($_REQUEST["delete"])) {    
-    if(isset($_REQUEST["msg"])) {      
-      // Now we can delete the messages      
-      foreach(array_keys($_REQUEST["msg"]) as $msg) {        
-        $realmsgid = $pop3->GetMessageID($msg);  
+  if(isset($_REQUEST["delete"])) {
+    if(isset($_REQUEST["msg"])) {
+      // Now we can delete the messages
+      foreach(array_keys($_REQUEST["msg"]) as $msg) {
+        $realmsgid = $pop3->GetMessageID($msg);
         $webmaillib->remove_webmail_message($current["accountId"],$user,$realmsgid);
-        $pop3->DeleteMessage($msg);      
-      }    
-    }  
-  }  
-  
-  if(isset($_REQUEST["delete_one"])) {    
-    $realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);  
+        $pop3->DeleteMessage($msg);
+      }
+    }
+  }
+
+  if(isset($_REQUEST["delete_one"])) {
+    $realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);
     $webmaillib->remove_webmail_message($current["accountId"],$user,$realmsgid);
-    $pop3->DeleteMessage($_REQUEST["msgdel"]);  
-  }  
+    $pop3->DeleteMessage($_REQUEST["msgdel"]);
+  }
   // Now delete the messages and reopen the mailbox to renumber messages
   $pop3->close();
-  
-  $pop3->Open();  
-  $s = $pop3->Stats() ;  
+
+  $pop3->Open();
+  $s = $pop3->Stats() ;
   $mailsum = $s["message"];
 
-  if(isset($_REQUEST["operate"])) {    
-    if(isset($_REQUEST["msg"])) {      
+  if(isset($_REQUEST["operate"])) {
+    if(isset($_REQUEST["msg"])) {
       // Now we can operate the messages
-      foreach(array_keys($_REQUEST["msg"]) as $msg) {      	
-        $realmsg=$_REQUEST["realmsg"][$msg];        
+      foreach(array_keys($_REQUEST["msg"]) as $msg) {
+        $realmsg=$_REQUEST["realmsg"][$msg];
         switch($_REQUEST["action"]) {
-          case "flag":             
-            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isFlagged','y');             
-            break;          
-          case "unflag":	             
+          case "flag":
+            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isFlagged','y');
+            break;
+          case "unflag":
             $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isFlagged','n');
-            break;          
-          case "read":             
-            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','y');             
-            break;          
-          case "unread":             
-            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','n');             
-            break;        
-        }      
-      }    
-    }  	  
-  }   
-  $s = $pop3->Stats() ;  
-  $mailsum = $s["message"];  
-  $numshow=$current["msgs"];        
-  
+            break;
+          case "read":
+            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','y');
+            break;
+          case "unread":
+            $webmaillib->set_mail_flag($current["accountId"],$user,$realmsg,'isRead','n');
+            break;
+        }
+      }
+    }
+  }
+  $s = $pop3->Stats() ;
+  $mailsum = $s["message"];
+  $numshow=$current["msgs"];
+
   if(isset($_REQUEST["start"])&&$_REQUEST["start"]>$mailsum) $_REQUEST["start"]=$mailsum;
-  
-  if(!isset($_REQUEST["filter"]))     
-    $smarty->assign('filter','');   
-  else     
-    $smarty->assign('filter',$_REQUEST["filter"]);    
+
+  if(!isset($_REQUEST["filter"]))
+    $smarty->assign('filter','');
+  else
+    $smarty->assign('filter',$_REQUEST["filter"]);
   // If we have a filter then we have to
   if(isset($_REQUEST["filter"])) {
-    $tot=0;	      
-    $aux["msgid"]='foo';    
-    $filtered=Array();    
-    $filtered[]=$aux;    
-    for($i=1;$i<=$mailsum;$i++) {      
+    $tot=0;
+    $aux["msgid"]='foo';
+    $filtered=Array();
+    $filtered[]=$aux;
+    for($i=1;$i<=$mailsum;$i++) {
       $aux = $pop3->ListMessage($i);
-      
-        $aux["msgid"]=$i;      
-        $aux["realmsgid"]=$pop3->GetMessageID($i);      
+
+        $aux["msgid"]=$i;
+        $aux["realmsgid"]=$pop3->GetMessageID($i);
         $webmaillib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);
         list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$webmaillib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);
-        if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];      
-        if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
-        $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      
-        $aux["subject"]=htmlspecialchars($aux["subject"]);      
-        if($_REQUEST["filter"]=='unread' && $aux["isRead"]=='n') {      	
-          $tot++;      	
-          $filtered[]=$aux;      
-        }  elseif ($_REQUEST["filter"]=='flagged' && $aux["isFlagged"]=='y') {      	
-          $tot++;      	
-          $filtered[]=$aux;      
-        }    
-      
-    }    
-    $mailsum=count($filtered)-1;     
-  }     
-  if(!isset($_REQUEST["start"])) $_REQUEST["start"]=$mailsum;  
-  $upperlimit=$_REQUEST["start"];  
-  $smarty->assign('start',$_REQUEST["start"]);    
-  $list=Array();  
-  for ($i=$upperlimit;$i>0&&count($list)<$numshow;$i--) {
-    if(isset($_REQUEST["filter"])) {
-      $aux = $filtered[$i];	    
-    } else {      
-      $aux = $pop3->ListMessage($i);	      
-      
-        //print_r($aux);print("<br/>");
-        $aux["realmsgid"]=$pop3->GetMessageID($i);
-        $webmaillib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);         
-        list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$webmaillib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);      
         if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];
         if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
-        $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);      
+        $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);
+        $aux["subject"]=htmlspecialchars($aux["subject"]);
+        if($_REQUEST["filter"]=='unread' && $aux["isRead"]=='n') {
+          $tot++;
+          $filtered[]=$aux;
+        }  elseif ($_REQUEST["filter"]=='flagged' && $aux["isFlagged"]=='y') {
+          $tot++;
+          $filtered[]=$aux;
+        }
+
+    }
+    $mailsum=count($filtered)-1;
+  }
+  if(!isset($_REQUEST["start"])) $_REQUEST["start"]=$mailsum;
+  $upperlimit=$_REQUEST["start"];
+  $smarty->assign('start',$_REQUEST["start"]);
+  $list=Array();
+  for ($i=$upperlimit;$i>0&&count($list)<$numshow;$i--) {
+    if(isset($_REQUEST["filter"])) {
+      $aux = $filtered[$i];
+    } else {
+      $aux = $pop3->ListMessage($i);
+
+        //print_r($aux);print("<br/>");
+        $aux["realmsgid"]=$pop3->GetMessageID($i);
+        $webmaillib->replace_webmail_message($current["accountId"],$user,$aux["realmsgid"]);
+        list($aux["isRead"],$aux["isFlagged"],$aux["isReplied"])=$webmaillib->get_mail_flags($current["accountId"],$user,$aux["realmsgid"]);
+        if(empty($aux["sender"]["name"])) $aux["sender"]["name"]=$aux["sender"]["email"];
+        if(!strstr($aux["sender"]["name"],' ')) $aux["sender"]["name"]=substr($aux["sender"]["name"],0,25);
+        $aux["sender"]["name"]=htmlspecialchars($aux["sender"]["name"]);
         if(empty($aux["subject"])) {
           $aux["subject"]='['.tra('No subject').']';
         }
-        $aux["subject"]=htmlspecialchars($aux["subject"]);    
-      
-    }    
-    
-      $aux["msgid"]=$i;    
-      $list[]=$aux;  
-    
-  }  
-  $lowerlimit=$i;      
-  if ($lowerlimit < 0) 
-    $lowerlimit = 0;  
-  $showstart =  $mailsum - $upperlimit + 1;  
-  $showend = $mailsum - $lowerlimit;  
-  $smarty->assign('showstart',$showstart);  
-  $smarty->assign('showend',$showend);  
-  $smarty->assign('total',$mailsum);    
+        $aux["subject"]=htmlspecialchars($aux["subject"]);
+
+    }
+
+      $aux["msgid"]=$i;
+      $list[]=$aux;
+
+  }
+  $lowerlimit=$i;
+  if ($lowerlimit < 0)
+    $lowerlimit = 0;
+  $showstart =  $mailsum - $upperlimit + 1;
+  $showend = $mailsum - $lowerlimit;
+  $smarty->assign('showstart',$showstart);
+  $smarty->assign('showend',$showend);
+  $smarty->assign('total',$mailsum);
   if($lowerlimit>0) {
     $smarty->assign('nextstart',$lowerlimit);
-  } else {    
-    $smarty->assign('nextstart','');  	  
-  }  
-  if($upperlimit<>$mailsum) {    
-    $prevstart=$upperlimit+$numshow;    
+  } else {
+    $smarty->assign('nextstart','');
+  }
+  if($upperlimit<>$mailsum) {
+    $prevstart=$upperlimit+$numshow;
     if($prevstart>$mailsum) $prevstart=$mailsum;
-    $smarty->assign('prevstart',$prevstart);  
-  } else {    
-    $smarty->assign('prevstart','');	  
-  } 	  
+    $smarty->assign('prevstart',$prevstart);
+  } else {
+    $smarty->assign('prevstart','');
+  }
   if($_REQUEST["start"]<>$mailsum) {
-    $smarty->assign('first',$mailsum);  
-  } else {    
-    $smarty->assign('first','');	  
-  }  
-  // Now calculate the last message block  
-  $last = $mailsum % $numshow;  
-  if($_REQUEST["start"]<>$last) {    
-    $smarty->assign('last',$last);		  
-  } else {    
-    $smarty->assign('last','');	  
-  }          
-  $pop3->Close();  
+    $smarty->assign('first',$mailsum);
+  } else {
+    $smarty->assign('first','');
+  }
+  // Now calculate the last message block
+  $last = $mailsum % $numshow;
+  if($_REQUEST["start"]<>$last) {
+    $smarty->assign('last',$last);
+  } else {
+    $smarty->assign('last','');
+  }
+  $pop3->Close();
   $smarty->assign('list',$list);
 }
 
 /******************** Settings **************************************************************************************/
-if($_REQUEST["section"]=='settings') {  
-  // Add a new mail account for the user here  
-  if(!isset($_REQUEST["accountId"])) $_REQUEST["accountId"]=0;  
-  $smarty->assign('accountId',$_REQUEST["accountId"]);  
+if($_REQUEST["section"]=='settings') {
+  // Add a new mail account for the user here
+  if(!isset($_REQUEST["accountId"])) $_REQUEST["accountId"]=0;
+  $smarty->assign('accountId',$_REQUEST["accountId"]);
   if(isset($_REQUEST["new_acc"])) {
     $webmaillib->replace_webmail_account($_REQUEST["accountId"],$user,$_REQUEST["account"],$_REQUEST["pop"],$_REQUEST["port"],$_REQUEST["username"],$_REQUEST["pass"],$_REQUEST["msgs"],$_REQUEST["smtp"],$_REQUEST["useAuth"],$_REQUEST["smtpPort"]);
-    $_REQUEST["accountId"]=0;  
-  }  
-  if(isset($_REQUEST["remove"])) {
-    $webmaillib->remove_webmail_account($user,$_REQUEST["remove"]);  
-  }  
-  if(isset($_REQUEST["current"])) {    
-    $webmaillib->current_webmail_account($user,$_REQUEST["current"]);  
+    $_REQUEST["accountId"]=0;
   }
-  if($_REQUEST["accountId"]) {    
-    $info = $webmaillib->get_webmail_account($user,$_REQUEST["accountId"]); 
-  } else {    
-    $info["account"]='';    
-    $info["username"]='';    
-    $info["pass"]='';    
-    $info["pop"]='';    
-    $info["smtp"]='';    
-    $info["useAuth"]='n';    
-    $info["port"]=110;    
-    $info["smtpPort"]=25;    
-    $info["msgs"]=20;  
-  }  
-  $smarty->assign('info',$info);  
-  // List  
-  $accounts = $webmaillib->list_webmail_accounts($user,0,-1,'account_asc','');  
+  if(isset($_REQUEST["remove"])) {
+    $webmaillib->remove_webmail_account($user,$_REQUEST["remove"]);
+  }
+  if(isset($_REQUEST["current"])) {
+    $webmaillib->current_webmail_account($user,$_REQUEST["current"]);
+  }
+  if($_REQUEST["accountId"]) {
+    $info = $webmaillib->get_webmail_account($user,$_REQUEST["accountId"]);
+  } else {
+    $info["account"]='';
+    $info["username"]='';
+    $info["pass"]='';
+    $info["pop"]='';
+    $info["smtp"]='';
+    $info["useAuth"]='n';
+    $info["port"]=110;
+    $info["smtpPort"]=25;
+    $info["msgs"]=20;
+  }
+  $smarty->assign('info',$info);
+  // List
+  $accounts = $webmaillib->list_webmail_accounts($user,0,-1,'account_asc','');
   $smarty->assign('accounts',$accounts["data"]);
 }
 
 
 /*************** Compose *********************************************************************************************/
 if($_REQUEST["section"]=='compose') {
-  $current=$webmaillib->get_current_webmail_account($user);  
-  if(!$current) {    
-    header("location: tiki-webmail.php?section=settings");    
-    die;	  
-  }  
+  $current=$webmaillib->get_current_webmail_account($user);
+  if(!$current) {
+    header("location: tiki-webmail.php?section=settings");
+    die;
+  }
   // Send a message
   if(isset($_REQUEST["reply"])||isset($_REQUEST["replyall"])) {
     $webmaillib->set_mail_flag($current["accountId"],$user,$_REQUEST["realmsgid"],'isReplied','y');
@@ -523,25 +523,25 @@ if($_REQUEST["section"]=='compose') {
        }
     }
   }
-  // Build the to array   
-  if(!isset($_REQUEST["attach1"])) $_REQUEST["attach1"]='';  
-  if(!isset($_REQUEST["attach2"])) $_REQUEST["attach2"]='';  
-  if(!isset($_REQUEST["attach3"])) $_REQUEST["attach3"]='';  
-  if(!isset($_REQUEST["attach1file"])) $_REQUEST["attach1file"]='';  
-  if(!isset($_REQUEST["attach2file"])) $_REQUEST["attach2file"]='';  
-  if(!isset($_REQUEST["attach3file"])) $_REQUEST["attach3file"]='';  
-  if(!isset($_REQUEST["attach1type"])) $_REQUEST["attach1type"]='';  
-  if(!isset($_REQUEST["attach2type"])) $_REQUEST["attach2type"]='';  
+  // Build the to array
+  if(!isset($_REQUEST["attach1"])) $_REQUEST["attach1"]='';
+  if(!isset($_REQUEST["attach2"])) $_REQUEST["attach2"]='';
+  if(!isset($_REQUEST["attach3"])) $_REQUEST["attach3"]='';
+  if(!isset($_REQUEST["attach1file"])) $_REQUEST["attach1file"]='';
+  if(!isset($_REQUEST["attach2file"])) $_REQUEST["attach2file"]='';
+  if(!isset($_REQUEST["attach3file"])) $_REQUEST["attach3file"]='';
+  if(!isset($_REQUEST["attach1type"])) $_REQUEST["attach1type"]='';
+  if(!isset($_REQUEST["attach2type"])) $_REQUEST["attach2type"]='';
   if(!isset($_REQUEST["attach3type"])) $_REQUEST["attach3type"]='';
-  if(!isset($_REQUEST["to"])) $_REQUEST["to"]='';  
-  if(!isset($_REQUEST["cc"])) $_REQUEST["cc"]='';  
-  if(!isset($_REQUEST["bcc"])) $_REQUEST["bcc"]='';  
-  if(!isset($_REQUEST["body"])) $_REQUEST["body"]='';  
-  if(!isset($_REQUEST["subject"])) $_REQUEST["subject"]='';  
-  $smarty->assign('cc',$_REQUEST["cc"]);  
-  $smarty->assign('to',$_REQUEST["to"]);  
-  $smarty->assign('bcc',$_REQUEST["bcc"]);  
-  $smarty->assign('body',$_REQUEST["body"]);  
+  if(!isset($_REQUEST["to"])) $_REQUEST["to"]='';
+  if(!isset($_REQUEST["cc"])) $_REQUEST["cc"]='';
+  if(!isset($_REQUEST["bcc"])) $_REQUEST["bcc"]='';
+  if(!isset($_REQUEST["body"])) $_REQUEST["body"]='';
+  if(!isset($_REQUEST["subject"])) $_REQUEST["subject"]='';
+  $smarty->assign('cc',$_REQUEST["cc"]);
+  $smarty->assign('to',$_REQUEST["to"]);
+  $smarty->assign('bcc',$_REQUEST["bcc"]);
+  $smarty->assign('body',$_REQUEST["body"]);
   $smarty->assign('subject',$_REQUEST["subject"]);
   $smarty->assign('attach1',$_REQUEST["attach1"]);
   $smarty->assign('attach2',$_REQUEST["attach2"]);
@@ -555,7 +555,7 @@ if($_REQUEST["section"]=='compose') {
 }
 
 /******************** Contacts **************************************************************************************/
-if($_REQUEST["section"]=='contacts') {  
+if($_REQUEST["section"]=='contacts') {
   if(!isset($_REQUEST["contactId"])) {
     $_REQUEST["contactId"] = 0;
   }
@@ -563,7 +563,7 @@ if($_REQUEST["section"]=='contacts') {
 
   if($_REQUEST["contactId"]) {
     $info = $webmaillib->get_contact($_REQUEST["contactId"],$user);
-    
+
   } else {
     $info = Array();
     $info["firstName"]='';
@@ -588,22 +588,22 @@ if($_REQUEST["section"]=='contacts') {
   }
 
   if(!isset($_REQUEST["sort_mode"])) {
-    $sort_mode = 'email_asc'; 
+    $sort_mode = 'email_asc';
   } else {
     $sort_mode = $_REQUEST["sort_mode"];
-  } 
+  }
 
   if(!isset($_REQUEST["offset"])) {
     $offset = 0;
   } else {
-    $offset = $_REQUEST["offset"]; 
+    $offset = $_REQUEST["offset"];
   }
   $smarty->assign_by_ref('offset',$offset);
 
   if(isset($_REQUEST["find"])) {
-    $find = $_REQUEST["find"];  
+    $find = $_REQUEST["find"];
   } else {
-    $find = ''; 
+    $find = '';
   }
   $smarty->assign('find',$find);
 
@@ -619,17 +619,17 @@ if($_REQUEST["section"]=='contacts') {
   if($channels["cant"] > ($offset+$maxRecords)) {
     $smarty->assign('next_offset',$offset + $maxRecords);
   } else {
-    $smarty->assign('next_offset',-1); 
+    $smarty->assign('next_offset',-1);
   }
-  
+
   $letters='a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z';
   $letters=split('-',$letters);
   $smarty->assign('letters',$letters);
-  
-  
+
+
   // If offset is > 0 then prev_offset
   if($offset>0) {
-    $smarty->assign('prev_offset',$offset - $maxRecords);  
+    $smarty->assign('prev_offset',$offset - $maxRecords);
   } else {
     $smarty->assign('prev_offset',-1);
   }
