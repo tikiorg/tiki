@@ -730,7 +730,6 @@ CREATE TABLE tiki_charts (
   lastChart int(14) default NULL,
   voteAgainAfter int(14) default NULL,
   created int(14) default NULL,
-  hist int(12) default NULL,
   PRIMARY KEY  (chartId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

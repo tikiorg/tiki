@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.81 2003-11-23 23:12:16 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.82 2003-11-24 02:23:55 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -819,3 +819,8 @@ UPDATE tiki_menu_options SET name = 'HTML pages' WHERE position='1185';
 
 # added on 2003-11-24 by mose (typo)
 UPDATE tiki_menu_options SET url = 'tiki-edit_submission.php' WHERE url = 'tiki-edit_submissions.php';
+
+# added on 2003-11-24 by mose (strange alien typo field no idea why it was there)
+ALTER TABLE `tiki_charts` DROP `hist`;
+
+
