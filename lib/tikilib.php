@@ -3547,11 +3547,13 @@ class TikiLib {
         }
       }
     }
-    
+
+
     //unset($smc);
     if($feature_wiki_tables != 'new') {
 	    // New syntax for tables
 	    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
+
 	     $maxcols = 1;
 	      $cols = array();
 	      for($i = 0; $i < count($tables[0]); $i++) {
@@ -3584,11 +3586,12 @@ class TikiLib {
 	    }
     } else {
 	    // New syntax for tables
-	    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
+	    // REWRITE THIS CODE
+	    if (preg_match_all("/\|\|(.*?)\|\|/s", $data, $tables)) {
  	      $maxcols = 1;
 	      $cols = array();
 	      for($i = 0; $i < count($tables[0]); $i++) {
-	        $rows = explode("<br/>", $tables[0][$i]);
+	        $rows = explode("\n", $tables[0][$i]);
 	        $col[$i] = array();
 	        for ($j = 0; $j < count($rows); $j++) {
 	          $rows[$j]=str_replace('||','',$rows[$j]);
