@@ -3617,7 +3617,7 @@ function parse_data($data) {
     //If there are instances of {toc} on this page
     if (count($tocs[0]) > 0) {
       //And we are currently viewing a structure
-      $page_info = $structlib->get_page_info($page_ref_id);
+      $page_info = $structlib->s_get_page_info($page_ref_id);
       if (isset($page_info)) {
   	    include_once ("lib/structures/structlib.php");
     	  $html = '';
@@ -5115,7 +5115,7 @@ function get_iso8601_datetime($timestamp, $user = false) {
     return $this->date_format('%Y-%m-%dT%H:%M:%S%O', $timestamp, $user);
 }
 
-    function get_rfc2822_datetime($timestamp = false, $user = false) {
+function get_rfc2822_datetime($timestamp = false, $user = false) {
 	if (!$timestamp)
 	    $timestamp = time();
 
@@ -5132,7 +5132,7 @@ function get_iso8601_datetime($timestamp, $user = false) {
 	return $rv;
     }
 
-    function get_rfc2822_timezone_offset($time = false, $no_colon = false, $user = false) {
+function get_rfc2822_timezone_offset($time = false, $no_colon = false, $user = false) {
 	if ($time === false)
 	    $time = time();
 
