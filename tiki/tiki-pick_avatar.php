@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.11 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.12 2003-11-03 20:24:26 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -86,7 +86,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 		}
 
 		// CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
-		$tmpfname = tempnam($tmpDir, "FOO"). '.jpg';
+		$tmpfname = tempnam($tmpDir, "TMPIMG");
 		imagejpeg($t, $tmpfname);
 		// Now read the information
 		$fp = fopen($tmpfname, "rb");
