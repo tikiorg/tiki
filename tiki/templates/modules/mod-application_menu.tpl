@@ -63,6 +63,9 @@
   {if $tiki_p_admin_received_pages eq 'y'}
     &nbsp;<a href="tiki-received_pages.php" class="linkmenu">{tr}received pages{/tr}</a><br/>
   {/if}
+  {if $tiki_p_edit_structures eq 'y'}
+   &nbsp;<a href="tiki-admin_structures.php" class="linkmenu">{tr}structures{/tr}</a><br/>
+  {/if}
   </div>
 {/if}
 {if $feature_galleries eq 'y'}

@@ -1,13 +1,16 @@
 <?php
 // Initialization
-
-die;
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 
+if($tiki_p_edit_structures != 'y') {
+    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;
+}
+
 
 if(isset($_REQUEST["create"])) {
-	
   $structlib->s_create_page('','',$_REQUEST["name"]);
 }
 
