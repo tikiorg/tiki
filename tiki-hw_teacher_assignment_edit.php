@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignment_edit.php,v 1.4 2004-03-11 17:12:27 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignment_edit.php,v 1.5 2004-03-12 20:58:26 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -9,9 +9,6 @@
 
 // Todo:
 //   Check for due dates in the past.
-//   Set the page title (for mozilla window.)
-//   Preview has to have the assignmentId stored internally somewhere.
-//   When editing an existing assignment, overwrite it instead of creating a new one.
 
 error_reporting (E_ALL);
 
@@ -95,7 +92,7 @@ if (isset($_REQUEST["preview"])) {
     $_REQUEST["Date_Year"]));
   $assignment_data["title"] = $_REQUEST["title"];
   $assignment_data["parsed_title"] = $tikilib->parse_data($assignment_data["title"]);
-  $assignment_data["heading"] = $_REQUEST["heading"];;
+  $assignment_data["heading"] = $_REQUEST["heading"];
   $assignment_data["parsed_heading"] = $tikilib->parse_data($assignment_data["heading"]);
   $assignment_data["body"] = $_REQUEST["body"];
   $assignment_data["parsed_body"] = $tikilib->parse_data($assignment_data["body"]);
@@ -109,7 +106,6 @@ else { // Create new, or edit old assignment
                                            $cur_time["year"]);
   }
   else { // edit an existing assignment
-	// $assignment_data = array();
 	// If hw_assignment_fetch might fail is a bogus id is passed in.
 	if (!$homeworklib->hw_assignment_fetch(&$assignment_data, $assignment_data["assignmentId"])){
 	  $msg = __FILE__." line: ".__LINE__.tra(" error: Can not find assignment ").$assignment_data["assignmentId"].".";
@@ -117,10 +113,6 @@ else { // Create new, or edit old assignment
 	  $smarty->display("error.tpl");
 	  die;
 	}
-
-//  	print('$assignment_data = ');
-//  	print_r($assignment_data);
-//  	die;
   }
 }
 
@@ -133,5 +125,6 @@ $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 $smarty->assign('mid', 'tiki-hw_teacher_assignment_edit.tpl');
 $smarty->assign('show_page_bar', 'n'); // Do not show the wiki-specific tiki-page_bar.tpl
+$smarty->assign('page', $assignment_data["title"]);    // Display the assignment title in the browser titlebar
 $smarty->display("tiki.tpl");
 ?>

@@ -1,4 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_page.tpl,v 1.2 2004-02-06 20:31:49 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_page.tpl,v 1.3 2004-03-12 20:58:25 ggeller Exp $ *}
+<!-- tiki-hw_page.tpl start -->
 <h1>
   <a  href="tiki-hw_student_assignment.php?assignmentId={$assignmentId}" class="pagetitle">
     {$assignmentTitle}
@@ -66,3 +67,4 @@
 TODO *}
 
 </form>
+<!-- tiki-hw_page.tpl end -->

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignments.tpl,v 1.3 2004-03-01 04:49:00 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignments.tpl,v 1.4 2004-03-12 20:58:25 ggeller Exp $ *}
 {* George G. Geller *}
 
 <!-- templates/tiki-hw_teacher_assignments.tpl start -->
@@ -35,7 +35,7 @@
             {if $tiki_p_hw_teacher eq 'y'}
               <a class="trailer" href="tiki-hw_teacher_assignment_edit.php?assignmentId={$listassignments[ix].assignmentId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
             {/if}
-            <a class="trailer" href="tiki-hw_teacher_assignment_print.php?assignmentId={$listassignments[ix].assignmentId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
+{* GGG            <a class="trailer" href="tiki-hw_teacher_assignment_print.php?assignmentId={$listassignments[ix].assignmentId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a> *}
             {if $tiki_p_hw_teacher eq 'y'}
               <a class="trailer" href="tiki-hw_teacher_assignments.php?remove={$listassignments[ix].assignmentId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
             {/if}
