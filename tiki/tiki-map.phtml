@@ -29,6 +29,14 @@ if (isset($_REQUEST['mapfile']))
   $mapfile = $default_map;
 }
 
+//checking the mapfile
+if (preg_match("/(\/\.)/", $map_path.$mapfile))
+{
+  $smarty->assign('msg',tra("invalid mapfile name"));
+  $smarty->display("error.tpl");
+  die;
+}
+
 // user defined error handling function to handle errors in loading mapfile
 function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars)
 {
@@ -86,7 +94,7 @@ $old_error_handler = set_error_handler("userErrorHandler");
 $map = ms_newMapObj($map_path.$mapfile);
 
 restore_error_handler();
-  
+
  
 $layerbol=FALSE;
 if (isset($_REQUEST['size']))
@@ -113,7 +121,7 @@ if (isset($_REQUEST['minx']) && isset($_REQUEST['miny'])
 }
 
 $query=FALSE;
-$map_querymsg='<table class="normal"';
+$map_querymsg='<table class="normal">';
 if (isset($_REQUEST['zoom']))
 {
   $zoom=$_REQUEST['zoom'];
@@ -160,11 +168,11 @@ if (isset($_REQUEST['zoom']))
 }
 
 
-
 //define which layer is visible
 for ($j=0;$j<$map->numlayers;$j++)
 {
   $my_layer=$map->getLayer($j);
+
   if (isset($_REQUEST[str_replace(" ","_",$my_layer->name)]))
   {
     if ($_REQUEST[str_replace(" ","_",$my_layer->name)]==1)
@@ -179,6 +187,7 @@ for ($j=0;$j<$map->numlayers;$j++)
     	$my_layer->Set("status",MS_OFF);
     }
   }
+
   //Display labels
   if ($my_layer->labelitem!="")
   {
@@ -231,6 +240,7 @@ for ($j=0;$j<$map->numlayers;$j++)
   }
 }  
 $map_querymsg.="</table>";
+
 $smarty->assign('map_querymsg',$map_querymsg);
 
 $image = $map->drawquery();
