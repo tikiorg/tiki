@@ -36,14 +36,14 @@
 				<td class="editfgalform"><input type="checkbox" name="show_id" {if $show_id eq 'y'} checked="checked"{/if} /></td>
 				<td class="editfgalform">
 					<select name="show_name">
-						<option value="a" {if $show_name eq 'n'}selected="selected"{/if}>{tr}Name-filename{/tr}</option>
-						<option value="n" {if $show_name eq 'f'}selected="selected"{/if}>{tr}Name{/tr}</option>
+						<option value="a" {if $show_name eq 'a'}selected="selected"{/if}>{tr}Name-filename{/tr}</option>
+						<option value="n" {if $show_name eq 'n'}selected="selected"{/if}>{tr}Name{/tr}</option>
 						<option value="f" {if $show_name eq 'f'}selected="selected"{/if}>{tr}Filename only{/tr}</option>
 					</select>
 				</td>
 				<td class="editfgalform"><input type="checkbox" name="show_size" {if $show_size eq 'y'} checked="checked"{/if} /></td>
 				<td class="editfgalform"><input type="checkbox" name="show_description" {if $show_description eq 'y'} checked="checked"{/if} /></td>
-				<td class="editfgalform"><input type="checkbox" name="show_created" {if $show_created eq 'y'} checked="checked"{/if} />{/tr}</td>
+				<td class="editfgalform"><input type="checkbox" name="show_created" {if $show_created eq 'y'} checked="checked"{/if} /></td>
 				<td class="editfgalform"><input type="checkbox" name="show_dl" {if $show_dl eq 'y'} checked="checked"{/if} /></td>
 			</tr>
 		</table>
