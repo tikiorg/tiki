@@ -12,7 +12,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <a name="features"></a>
 <div class="cbox">
@@ -103,7 +104,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}General preferences and settings{/tr}</div>
@@ -220,7 +222,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}User registration and login{/tr}</div>
@@ -272,7 +275,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Wiki settings{/tr}</div>
@@ -456,7 +460,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Image galleries{/tr}</div>
@@ -530,7 +535,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}File galleries{/tr}</div>
@@ -601,7 +607,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}CMS settings{/tr}</div>
@@ -663,7 +670,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Poll settings{/tr}</div>
@@ -702,7 +710,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Blog settings{/tr}</div>
@@ -782,7 +791,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Forums{/tr}</div>
@@ -842,7 +852,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}FAQs settings{/tr}</div>
@@ -884,7 +895,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}Trackers{/tr}</div>
@@ -895,6 +907,30 @@
 <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="y" {if $t_use_db eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="t_use_db" value="n" {if $t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<input type="text" name="t_use_dir" value="{$t_use_dir}" /> </tr>
 <tr><td align="center" colspan="2"><input type="submit" name="trkset" value="{tr}Set prefs{/tr}" /></td></tr>    
+</table>
+</form>
+</div>
+</div>
+</div>
+
+<a name="webmail"></a>
+<div class="cbox">
+<div class="cbox-title">{tr}Webmail{/tr}</div>
+<div class="cbox-data">
+<div class="simplebox">
+<form action="tiki-admin.php" method="post">
+<table width="100%">
+<tr><td class="form">{tr}Allow viwing HTML mails?{/tr}:</td><td><input type="checkbox" name="webmail_view_html" {if $webmail_view_html eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Maximum size for each attachment{/tr}:</td><td><select name="webmail_max_attachment">
+<option value="500000" {if $webmail_max_attachment eq 500000}selected="selected"{/if}>500Kb</option>
+<option value="1000000" {if $webmail_max_attachment eq 1000000}selected="selected"{/if}>1Mb</option>
+<option value="1500000" {if $webmail_max_attachment eq 1500000}selected="selected"{/if}>1.5Mb</option>
+<option value="2000000" {if $webmail_max_attachment eq 2000000}selected="selected"{/if}>2Mb</option>
+<option value="2500000" {if $webmail_max_attachment eq 2500000}selected="selected"{/if}>2.5Mb</option>
+<option value="3000000" {if $webmail_max_attachment eq 3000000}selected="selected"{/if}>3Mb</option>
+<option value="100000000" {if $webmail_max_attachment eq 100000000}selected="selected"{/if}>Unlimited</option>
+</select></tr>
+<tr><td align="center" colspan="2"><input type="submit" name="webmail" value="{tr}Set prefs{/tr}" /></td></tr>    
 </table>
 </form>
 </div>
@@ -918,7 +954,8 @@
 <a href="#rss" class="link">{tr}rss{/tr}</a> |
 <a href="#cms" class="link">{tr}cms{/tr}</a> |
 <a href="#faqs" class="link">{tr}FAQs{/tr}</a> |
-<a href="#trackers" class="link">{tr}trckrs{/tr}</a>
+<a href="#trackers" class="link">{tr}trckrs{/tr}</a> |
+<a href="#webmail" class="link">{tr}webmail{/tr}</a>
 ]
 <div class="cbox">
 <div class="cbox-title">{tr}RSS feeds{/tr}</div>

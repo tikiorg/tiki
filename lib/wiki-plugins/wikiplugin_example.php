@@ -15,9 +15,7 @@
  * wiki page.
  */
 
-function wikiplugin_doc() {
-  return '{EXAMPLE(face=face,size=size)}content{EXAMPLE} to display content using a specific font';	
-}
+
 
 function wikiplugin_example($data,$params) {
   

@@ -262,6 +262,17 @@ class NlLib extends TikiLib {
     $retval["cant"] = $cant;
     return $retval;
   }
+
+  function get_unsub_msg($nlId,$email) 
+  {
+    $foo = parse_url($_SERVER["REQUEST_URI"]);
+    $foo=str_replace('send_newsletters','newsletters',$foo);
+    $url_subscribe = httpPrefix().$foo["path"];
+    $code = $this->db->getOne("select code from tiki_newsletter_subscriptions where nlId=$nlId and email='$email'");
+    $url_unsub = $url_subscribe.'?unsubscribe='.$code;
+    $msg = '<br/><br/>'.tra('You can unsubscribe from this newsletter following this link').": <a href='$url_unsub'>$url_unsub</a>";
+    return $msg;
+  }
     
   function remove_newsletter($nlId)
   {

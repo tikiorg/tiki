@@ -80,7 +80,7 @@
 <tr><td class="formcolor">{tr}Import page{/tr}:</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
 <input name="userfile1" type="file">
-<a href="tiki-export_wiki_pages.php?page={$page}&amp;all=1" class="linkbut">{tr}export all versions{/tr}</a>
+<a href="tiki-export_wiki_pages.php?page={$page}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
 </td></tr>
 {/if}
 {if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}

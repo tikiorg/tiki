@@ -227,6 +227,11 @@ $smarty->assign('t_use_dir',$t_use_dir);
 $feature_trackers = 'n';
 $smarty->assign('feature_trackers',$feature_trackers);
 
+$webmail_view_html = 'y';
+$smarty->assign('webmail_view_html',$webmail_view_html);
+$webmail_max_attachment = 1500000;
+$smarty->assign('webmail_max_attachment',$webmail_max_attachment);
+
 $feature_clear_passwords = 'y';
 $smarty->assign('feature_clear_passwords','n');
 $feature_challenge = 'n';

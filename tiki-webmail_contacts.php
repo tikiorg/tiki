@@ -2,6 +2,7 @@
 // Initialization
 
 require_once('tiki-setup.php');
+include_once('lib/webmail/webmaillib.php');
 
   $smarty->assign('element',$_REQUEST["element"]);
 
@@ -11,7 +12,7 @@ require_once('tiki-setup.php');
   $smarty->assign('contactId',$_REQUEST["contactId"]);
 
   if($_REQUEST["contactId"]) {
-    $info = $tikilib->get_contact($_REQUEST["contactId"],$user);
+    $info = $webmaillib->get_contact($_REQUEST["contactId"],$user);
     
   } else {
     $info = Array();
@@ -23,11 +24,11 @@ require_once('tiki-setup.php');
   $smarty->assign('info',$info);
 
   if(isset($_REQUEST["remove"])) {
-    $tikilib->remove_contact($_REQUEST["remove"],$user);
+    $webmaillib->remove_contact($_REQUEST["remove"],$user);
   }
 
   if(isset($_REQUEST["save"])) {
-    $tikilib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"],$_REQUEST["lastName"],$_REQUEST["email"],$_REQUEST["nickname"],$user );
+    $webmaillib->replace_contact($_REQUEST["contactId"], $_REQUEST["firstName"],$_REQUEST["lastName"],$_REQUEST["email"],$_REQUEST["nickname"],$user );
     $info["firstName"]='';
     $info["lastName"]='';
     $info["email"]='';
@@ -58,9 +59,9 @@ require_once('tiki-setup.php');
   $maxRecords=20;
   $smarty->assign_by_ref('sort_mode',$sort_mode);
   if(!isset($_REQUEST["letter"])) {
-    $channels = $tikilib->list_contacts($user,$offset,$maxRecords,$sort_mode,$find);
+    $channels = $webmaillib->list_contacts($user,$offset,$maxRecords,$sort_mode,$find);
   } else {
-    $channels = $tikilib->list_contacts_by_letter($user,$offset,$maxRecords,$sort_mode,$_REQUEST["letter"]);
+    $channels = $webmaillib->list_contacts_by_letter($user,$offset,$maxRecords,$sort_mode,$_REQUEST["letter"]);
   }
   
   $cant_pages = ceil($channels["cant"] / $maxRecords);
@@ -86,6 +87,7 @@ require_once('tiki-setup.php');
   }
   $smarty->assign_by_ref('channels',$channels["data"]);
 
-$smarty->display("styles/$style_base/tiki-webmail_contacts.tpl");
+//$smarty->display("styles/$style_base/tiki-webmail_contacts.tpl");
+$smarty->display("tiki-webmail_contacts.tpl");
 
 ?>

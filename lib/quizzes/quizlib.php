@@ -192,6 +192,7 @@ class QuizLib extends TikiLib {
   {
     $query = "select * from tiki_quiz_results where fromPoints<=$points and toPoints>=$points and quizId=$quizId";
     $result = $this->db->query($query);
+    if(!$result->numRows()) return 0;
     if(DB::isError($result)) $this->sql_error($query, $result);
     $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
     return $res;
