@@ -419,6 +419,12 @@
     <tr><td class="form">{tr}Create watch for author on page creation{/tr}:</td><td><input type="checkbox" name="wiki_watch_author" {if $wiki_watch_author eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Enable watches on comments{/tr}:</td><td><input type="checkbox" name="wiki_watch_comments" {if $wiki_watch_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Enable watch events when I am the editor{/tr}:</td><td><input type="checkbox" name="wiki_watch_editor" {if $wiki_watch_editor eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Diff style{/tr}:</td><td>
+      <select name="feature_wiki_email_diff_style">
+        <option value="source" {if $feature_wiki_email_diff_style eq 'source'}selected="selected"{/if}>{tr}New page source{/tr}</option>
+        <option value="unidiff" {if $feature_wiki_email_diff_style eq 'unidiff'}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
+      </select>
+    </td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikisetwatch" value="{tr}Set{/tr}" /></td></tr>
     </table>
     </form>

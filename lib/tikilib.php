@@ -4603,7 +4603,7 @@ class TikiLib extends TikiDB {
 	    // Use largest version +1 in history table rather than tiki_page because versions used to be bugged
 	    //    $old_version = $info["version"];
 	    include_once ("lib/wiki/histlib.php");
-	    $old_version = $histlib->get_page_latest_version($pageName);
+	    $old_version = $histlib->get_page_latest_version($pageName, &$old_data);
 	   
 	    if (!$minor && $pageName != 'SandBox') {
 		// Archive current version
@@ -4665,9 +4665,16 @@ class TikiLib extends TikiDB {
 		global $feature_user_watches;
 		if ($feature_user_watches == 'y') {
 			//  Deal with mail notifications.
+			global $smarty, $feature_wiki_email_diff_style;
 			include_once('lib/notifications/notificationemaillib.php');
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$machine = httpPrefix(). dirname( $foo["path"] );
+			$feature_wiki_email_diff_style = $this->get_preference("feature_wiki_email_diff_style", "source");
+			if ($feature_wiki_email_diff_style == "unidiff") {
+				require_once('lib/diff/difflib.php');
+				$edit_data = diff2($old_data , $edit_data, $feature_wiki_email_diff_style);
+			}
+			$smarty->assign('feature_wiki_email_diff_style', $feature_wiki_email_diff_style);
 			sendWikiEmailNotification('wiki_page_changed', $pageName, $edit_user, $edit_comment, $version, $edit_data, $machine);
 		}
 
