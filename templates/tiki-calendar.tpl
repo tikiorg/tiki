@@ -243,7 +243,7 @@ onchange="javascript:document.getElementById('participants').value+=this.options
 <option value="{$listpeople[lp]}">{$listpeople[lp]}</option>
 {/section}
 </select>
- {tr}with role{tr} 
+ {tr}with role{/tr} 
  <select name="roles" id="roles">
 <option value="0">{tr}Chair{/tr}:0 </option>
 <option value="1">{tr}Required{/tr}:1 </option>
