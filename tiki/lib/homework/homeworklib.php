@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.14 2004-04-27 20:28:03 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.15 2004-04-28 23:42:36 ggeller Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -1185,8 +1185,44 @@ function get_assignment($articleId) {
    $cant = $this->getOne($query_cant);
    return $cant;
  }
-
 } //end of class HomeworkLib
+
+function NextText($text){
+	$found = -1;
+	for ($i = 0; $i < count($text); $i++){
+		if (strlen($text[$i]) > 0){
+			$found = $i;
+			break;
+		}
+	}
+	return $found;
+}
+
+// Find the next non-blank or retrun the last element
+function NextBlank($text){
+	$found = 0;
+	for ($i = 0; $i < count($text); $i++){
+		$found = $i;
+		if ($text[$i] == "")
+			break;
+	}
+	return $found;
+}
+
+// Called by tiki-edit_quiz_questions.php
+function TextToQuestions($text){
+	global $ggg_tracer;
+	$questions = Array();
+
+ 	while (NextText($text) != -1){
+ 		$text = array_slice($text,NextText($text));
+ 		$lines = array_slice($text,NextText($text),NextBlank($text));
+ 		$text = array_slice($text,NextBlank($text));
+ 		$question = new HW_QuizQuestionMultipleChoice($lines);
+ 		array_push($questions, $question);
+ 	}
+	return $questions;
+}
 
 function compare_lastModif($ar1, $ar2) {
     return $ar1["lastChanged"] - $ar2["lastChanged"];
@@ -1195,11 +1231,18 @@ function compare_lastModif($ar1, $ar2) {
 
 // An abstract class
 class HW_QuizQuestion {
+  var $question;
   function from_text($lines){
     // Set the question according to an array of text lines.
   }
+  function getQuestion(){
+    return $this->question;
+  }
   function to_text(){
     // Export the question to an array of text lines.
+  }
+  function getAnswerCount(){
+    // How many possible answers (i.e. choices in a multiple-choice)
   }
 }
 
@@ -1211,7 +1254,6 @@ class HW_QuizQuestion {
 //                    Array('text'=>"Green",'correct'=>1));
 //   Any of the answers are correct in this example.
 class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion {
-  var $question;
   var $choices  = Array();
 
   function HW_QuizQuestionMultipleChoice($lines){
@@ -1230,9 +1272,9 @@ class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion {
     $lines = array_slice($lines,1);
     foreach ($lines as $line){
       if (preg_match("/^\*\s*(.*)/",$line,$match)) // Ignore spaces after the "*"
-	$a = Array('text'=>$match[1],'correct'=>1);
+				$a = Array('text'=>$match[1],'correct'=>1);
       else
-	$a = Array('text'=>$line,'correct'=>0);
+				$a = Array('text'=>$line,'correct'=>0);
       array_push($this->choices, $a);
     }
   }
@@ -1243,21 +1285,33 @@ class HW_QuizQuestionMultipleChoice extends HW_QuizQuestion {
     array_push($lines, $this->question);
     foreach($this->choices as $choice){
       if ($show_answer && $choice['correct'])
-	array_push($lines, "*".$choice['text']);
+				array_push($lines, "*".$choice['text']);
       else
-	array_push($lines, " ".$choice['text']);
+				array_push($lines, " ".$choice['text']);
     }
     return $lines;
   }
 
-  function dump(){
+	function getChoiceCount(){
+    return count($this->choices);
+	}
+
+	function getChoice($i){
+    return $this->choices[$i]['text'];
+	}
+
+	function getCorrect($i){
+    return $this->choices[$i]['correct'];
+	}
+  
+	function dump(){
     echo "question = \"".$this->question."\"\n";
     echo "choices =\n";
     foreach ($this->choices as $choice){
       if ($choice['correct'])
-	echo "*";
+				echo "*";
       else
-	echo " ";
+				echo " ";
       echo $choice['text']."\n";
     }
   }

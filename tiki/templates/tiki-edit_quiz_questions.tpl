@@ -1,3 +1,11 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.11 2004-04-28 23:42:32 ggeller Exp $ *}
+
+{* Copyright (c) 2004 *}
+{* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
+{* Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details. *}
+
+<!- tiki-edit_quiz_questions.tpl start ->
+
 <a class="pagetitle" href="tiki-edit_quiz_questions.php?quizId={$quizId}">{tr}Edit quiz questions{/tr}</a><br /><br />
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
@@ -40,6 +48,47 @@
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="useQuestion" value="{tr}use{/tr}" /></td></tr>
 </table>
 </form>
+
+<h2>{tr}Import questions from text{/tr}</h2>
+<form enctype="multipart/form-data" method="post" action="tiki-edit_quiz_questions.php">
+  <input type="hidden" name="quizId" value="{$quizId|escape}" />
+  <table class="normal">
+    <tr>
+      <td class="formcolor" colspan=2>Instructions: Replace the sample text.  Type your multiple-choice questions. Seperate each question with a blank line.  Start answer choices on subsequent lines.  Indicatate correct answers by starting them an "*".  White space before and after text is ignored. Click on the "Import" button when finished.
+      </td>
+    </tr>
+
+    <tr>
+      <td class="formcolor">
+        {tr}Input{/tr}
+      </td>
+      <td class="formcolor">
+        <textarea class="wikiedit" name="input_data" rows="30" cols="80" id='subheading' wrap="virtual" >
+What is the flight speed of a sparrow?   
+     *African or European?
+About the same as a duck.
+It depends on where he's going.
+    
+What is your favorite colour?
+*Red
+*Green
+    Red. No green.
+    
+What were the first names of the fictional Kramdens?
+   George and Gracie
+*Ralph and Alice
+Alexander and Cleopatra
+Joe and Didi
+   
+  </textarea>
+      </td>
+    </tr>
+  </table>
+  <div align="center">
+    <input type="submit" class="wikiaction" name="import" value="Import" />
+  </div>
+</form>
+
 <h2>{tr}Questions{/tr}</h2>
 <div  align="center">
 <table class="findtable">
@@ -112,3 +161,4 @@
 </div>
 </div>
 
+<!- tiki-edit_quiz_questions.tpl end ->
