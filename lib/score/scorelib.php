@@ -126,7 +126,7 @@ class ScoreLib extends TikiLib {
                                                                                                                                             
 	if (!empty($star)) {
 	    $alt = sprintf(tra("%d points"), $score);
-	    $star = "<img src=\"images/$star\" alt=\"$alt\">&nbsp;";
+	    $star = "<img src=\"images/$star\" alt=\"$alt\" />&nbsp;";
 	}
 
 	return $star;
