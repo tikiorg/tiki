@@ -132,7 +132,10 @@
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
-  <tr><td>{tr}Old password{/tr}:</td><td><input type="password" name="old" /></td></tr>
+  // admin can change password of __other__ users without giving old password
+  {if $tiki_p_admin ne 'y' or $userwatch eq $user}
+   <tr><td>{tr}Old password{/tr}:</td><td><input type="password" name="old" /></td></tr>
+  {/if}
   <tr><td>{tr}New password{/tr}:</td><td><input type="password" name="pass1" /></td></tr>
   <tr><td>{tr}Again please{/tr}:</td><td><input type="password" name="pass2" /></td></tr>
   <tr><td colspan="2" class="button"><input type="submit" name="chgpswd" value="{tr}change password{/tr}"></td></tr>
