@@ -127,6 +127,7 @@ src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' /></a>{if $channel
 </td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Autoritative status for modified items{/tr}</td><td>
 <select name="modItemStatus">
+<option value="">{tr}No change{/tr}</option>
 {foreach key=st item=stdata from=$status_types}
 <option value="{$st}"{if $modItemStatus eq $st} selected="selected"{/if}>{$stdata.label}</option>
 {/foreach}

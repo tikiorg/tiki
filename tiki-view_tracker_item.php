@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.43 2004-02-05 20:55:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.44 2004-02-10 07:07:36 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,7 +53,11 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 	}
 }
 
-if ($tiki_p_view_trackers != 'y') {
+$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
+$tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
+$smarty->assign('tracker_info', $tracker_info);
+
+if ($tiki_p_view_trackers != 'y' and ($tracker_info["writerCanModify"] != 'y') and ($tracker_info["writerGroupCanModify"] != 'y')) {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
@@ -61,9 +65,6 @@ if ($tiki_p_view_trackers != 'y') {
 
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
-
-$tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
-$smarty->assign('tracker_info', $tracker_info);
 
 $fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 $ins_fields = $fields;
@@ -118,10 +119,19 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 
 	} elseif ($fields["data"][$i]["type"] == 'u' and isset($fields["data"][$i]["options"]) and $user)	{
-		if ($fields["data"][$i]["options"] == 2) {
-			$ins_fields["data"][$i]["value"] = $user;
+		if (isset($_REQUEST["$ins_id"])) {
+			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
-			$ins_fields["data"][$i]["value"] = '';
+			if ($fields["data"][$i]["options"] == 2) {
+				$ins_fields["data"][$i]["value"] = $user;
+			} elseif ($fields["data"][$i]["options"] == 1) {
+				if (isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
+					$tracker_info["authorfield"] = $fid;
+				}
+				unset($ins_fields["data"][$i]["fieldId"]);
+			} else {
+				$ins_fields["data"][$i]["value"] = '';
+			}
 		}
 		if (isset($_REQUEST["$filter_id"])) {
 			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
@@ -130,12 +140,19 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 	
 	} elseif ($fields["data"][$i]["type"] == 'g' and isset($fields["data"][$i]["options"]) and $group)	{
-		if ($fields["data"][$i]["options"] == 2) {
-			$ins_fields["data"][$i]["value"] = $group;
-		} elseif ($fields["data"][$i]["options"] == 1)  {
-			unset($ins_fields["data"][$i]["fieldId"]);
+		if (isset($_REQUEST["$ins_id"])) {
+			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
-			$ins_fields["data"][$i]["value"] = '';
+			if ($fields["data"][$i]["options"] == 2) {
+				$ins_fields["data"][$i]["value"] = $group;
+			} elseif ($fields["data"][$i]["options"] == 1)  {
+				if (isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
+					$tracker_info["authorgroupfield"] = $fid;
+				}
+				unset($ins_fields["data"][$i]["fieldId"]);
+			} else {
+				$ins_fields["data"][$i]["value"] = '';
+			}
 		}
 		if (isset($_REQUEST["$filter_id"])) {
 			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
@@ -183,6 +200,38 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 	}
 }
 
+if (isset($tracker_info["authorgroupfield"])) {
+	$tracker_info['authorgroup'] = $trklib->get_item_value($_REQUEST["trackerId"],$_REQUEST["itemId"],$tracker_info["authorgroupfield"]);
+	if ($tracker_info['authorgroup'] == $group) {
+		$tiki_p_modify_tracker_items = 'y';
+		$smarty->assign("tiki_p_modify_tracker_items","y");
+		$tiki_p_attach_trackers = 'y';
+		$smarty->assign("tiki_p_attach_trackers","y");
+		$tiki_p_comment_trackers = 'y';
+		$smarty->assign("tiki_p_comment_trackers","y");
+		$tiki_p_view_trackers = 'y';
+		$smarty->assign("tiki_p_view_trackers","y");
+	}
+} 
+if (isset($tracker_info["authorfield"])) {
+	$tracker_info['authorindiv'] = $trklib->get_item_value($_REQUEST["trackerId"],$_REQUEST["itemId"],$tracker_info["authorfield"]);
+	if ($tracker_info['authorindiv'] == $user) {
+		$tiki_p_modify_tracker_items = 'y';
+		$smarty->assign("tiki_p_modify_tracker_items","y");
+		$tiki_p_attach_trackers = 'y';
+		$smarty->assign("tiki_p_attach_trackers","y");
+		$tiki_p_comment_trackers = 'y';
+		$smarty->assign("tiki_p_comment_trackers","y");
+		$tiki_p_view_trackers = 'y';
+		$smarty->assign("tiki_p_view_trackers","y");
+	}
+}
+if ($tiki_p_view_trackers != 'y') {
+	$smarty->assign('msg', tra("You dont have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 if (!isset($mainfield)) {
 	$mainfield = $fields["data"][0]["value"];
 }
@@ -198,7 +247,7 @@ if ($tiki_p_admin_trackers == 'y') {
 		$trklib->remove_tracker_item($_REQUEST["remove"]);
 	}
 }
-
+var_dump($tracker_info);
 if ($tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["save"])) {
 		check_ticket('view-trackers-items');
@@ -442,17 +491,14 @@ if ($tracker_info["useAttachments"] == 'y') {
 $tabi = 2;
 if (isset($_REQUEST['show'])) {
 	if ($_REQUEST['show'] == 'view') {
-		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");	
-	} elseif ($tracker_info["useAttachments"] == 'y' and $_REQUEST['show'] == 'com') {
-		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab$tabi");	
-	} elseif ($tracker_info["useComments"] == 'y' and $_REQUEST['show'] == 'att') {
+		$tabi = 1;
+	} elseif ($tracker_info["useComments"] == 'y' and $_REQUEST['show'] == 'com') {
 		if ($tracker_info["useAttachments"] == 'y') $tabi++;
-		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab$tabi");	
-	} elseif (isset($_REQUEST['mod']))  {
+	} elseif ($_REQUEST['show'] == "mod") {
 		if ($tracker_info["useAttachments"] == 'y') $tabi++;
 		if ($tracker_info["useComments"] == 'y') $tabi++;
-		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab$tabi");
 	}
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab$tabi");
 } 
 
 $section = 'trackers';

@@ -1,4 +1,5 @@
-<a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Editing tracker item{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}">{tr}Editing tracker item{/tr} {$tracker_info.name}</a>
+<br /><br />
 <div>
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List trackers{/tr}</a></span>
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View this tracker items{/tr}</a></span>
@@ -268,27 +269,27 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {if $ins_fields[ix].type eq 'u'}
-{if $ins_fields[ix].options}
-<a href="tiki-user_information.php?user={$ins_fields[ix].value|escape:"url"}" class="link">{$ins_fields[ix].value}</a>
-{else}
+{if !$fields[ix].options or $tiki_p_admin_trackers eq 'y'}
 <select name="ins_{$ins_fields[ix].id}">
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
 <option value="{$one|escape}" {if $ins_fields[ix].value eq $one}selected="selected"{/if}>{$one}</option>
 {/foreach}
 </select>
+{elseif $ins_fields[ix].options}
+<a href="tiki-user_information.php?user={$ins_fields[ix].value|escape:"url"}" class="link">{$ins_fields[ix].value}</a>
 {/if}
 
 {elseif $ins_fields[ix].type eq 'g'}
-{if $ins_fields[ix].options}
-{$ins_fields[ix].value}
-{else}
+{if !$fields[ix].options or $tiki_p_admin_trackers eq 'y'}
 <select name="ins_{$ins_fields[ix].id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux]|escape}" {if $ins_fields[ix].value eq $groups[ux]}selected="selected"{/if}>{$groups[ux]}</option>
 {/section}
 </select>
+{elseif $ins_fields[ix].options}
+{$ins_fields[ix].value}
 {/if}
 
 {elseif $ins_fields[ix].type eq 'l'}

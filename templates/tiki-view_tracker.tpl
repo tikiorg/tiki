@@ -256,9 +256,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {/if}
 
 {if $fields[ix].type eq 'u'}
-{if $fields[ix].options and $user}
-{$user}
-{else}
+{if !$fields[ix].options or ($fields[ix].options eq '1' and $tiki_p_admin_trackers eq 'y')}
 <select name="{$fields[ix].ins_id}">
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
@@ -269,18 +267,20 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {/if}
 {/foreach}
 </select>
+{elseif $fields[ix].options eq 1 and $user}
+{$user}
 {/if}
 
 {elseif $fields[ix].type eq 'g'}
-{if $fields[ix].options and $group}
-{$group}
-{else}
+{if !$fields[ix].options or ($fields[ix].options eq '1' and $tiki_p_admin_trackers eq 'y')}
 <select name="{$fields[ix].ins_id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux]|escape}">{$groups[ux]}</option>
 {/section}
 </select>
+{elseif $fields[ix].options eq 1 and $group}
+{$group}
 {/if}
 
 {elseif $fields[ix].type eq 'e'}
