@@ -3724,9 +3724,7 @@ CREATE TABLE users_users (
   login varchar(40) NOT NULL default '',
   password varchar(30) default '',
   provpass varchar(30) default NULL,
-  realname varchar(80) default NULL,
   default_group varchar(255),
-  homePage varchar(200) default NULL,
   lastLogin int(14) default NULL,
   currentLogin int(14) default NULL,
   registrationDate int(14) default NULL,
@@ -3734,7 +3732,6 @@ CREATE TABLE users_users (
   pass_due int(14) default NULL,
   hash varchar(32) default NULL,
   created int(14) default NULL,
-  country varchar(80) default NULL,
   avatarName varchar(80) default NULL,
   avatarSize int(14) default NULL,
   avatarFileType varchar(250) default NULL,
@@ -3745,8 +3742,9 @@ CREATE TABLE users_users (
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 ### Administrator account
-INSERT INTO users_users(email,login,password,realname,hash) VALUES ('','admin','admin','System Administrator',md5('adminadmin'));
+INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md5('adminadmin'));
 UPDATE users_users set currentLogin=lastLogin,registrationDate=lastLogin;
+INSERT INTO tiki_user_preferences(user,prefName,value) VALUES ('admin','realName','System Administrator'); 
 # --------------------------------------------------------
 
 # Inserts of all default values for preferences
