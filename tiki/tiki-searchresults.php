@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.18 2003-08-21 00:51:20 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.19 2003-09-28 16:00:02 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -166,20 +166,17 @@ if ((!isset($_REQUEST["words"])) || (empty($_REQUEST["words"]))) {
 	$smarty->assign('words', $_REQUEST["words"]);
 }
 
-if ($fulltext == 'y') {
-	$CurrentIndex = -1;
-
-	$CurrentData = NULL;
-
-	foreach ($results["data"] as $current) {
-		if ($current["relevance"] > 0) {
-			$CurrentData[++$CurrentIndex] = $current;
-		}
-	}
-
-	$results['data'] = $CurrentData;
-	$results['cant'] = $CurrentIndex + 1;
-}
+//if ($fulltext == 'y') {
+//	$CurrentIndex = -1;
+//	$CurrentData = NULL;
+//	foreach ($results["data"] as $current) {
+//		if ($current["relevance"] > 0) {
+//			$CurrentData[++$CurrentIndex] = $current;
+//		}
+//	}
+//	$results['data'] = $CurrentData;
+//	$results['cant'] = $CurrentIndex + 1;
+//}
 
 $cant_pages = ceil($results["cant"] / $maxRecords);
 $smarty->assign('cant_results', $results["cant"]);

@@ -41,7 +41,11 @@
 {section  name=search loop=$results}
 <a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> ({tr}Hits{/tr}: {$results[search].hits})
 {if $feature_search_fulltext eq 'y'}
-&nbsp;({tr}Relevance{/tr}: {$results[search].relevance})
+	{if $results[search].relevance <= 0}
+		&nbsp;({tr}Simple search{/tr})
+	{else}
+		&nbsp;({tr}Relevance{/tr}: {$results[search].relevance})
+	{/if}
 {/if}
 {if $results[search].type > ''}
 &nbsp;({$results[search].type})

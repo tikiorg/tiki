@@ -59,7 +59,7 @@ class SearchLib extends TikiLib {
 
 			$qwords = $this->db->quote($words);
 			$sqlft = 'MATCH(' . join(',', $search_fields). ') AGAINST (' . $qwords . ')';
-			$sql2 .= ' AND ' . $sqlft . ' >= 0';
+			$sql2 .= ' AND ' . $sqlft ;
 			$sql .= ', ' . $sqlft . ' AS relevance';
 			$orderby = 'relevance desc, ' . $orderby;
 		#		if (count($h['search'])) {
@@ -90,17 +90,20 @@ class SearchLib extends TikiLib {
 		} else {
 			$sql .= ', -1 AS relevance';
 		}
-
 		$cant = $this->getOne('SELECT COUNT(*)' . $sql2);
 
-		if (!$cant) {
-			return array(
-				'data' => array(),
-				'cant' => 0
-			);
+		if (!$cant) { // no result
+			if ($fulltext && $words) // try a simple search
+				return $this->_find($h, $words, $offset, $maxRecords, false);
+			else
+				return array(
+					'data' => array(),
+					'cant' => 0
+				);
 		}
 
 		$sql .= $sql2 . ' ORDER BY ' . $orderby . ' DESC LIMIT ' . $offset . ',' . $maxRecords;
+
 		$result = $this->query($sql);
 		$ret = array();
 
