@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.14 2003-08-30 12:23:03 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.15 2003-10-06 17:51:58 mose Exp $
  *
  * \brief Categiries support class
  *
@@ -192,7 +192,7 @@ class CategLib extends TikiLib {
 
 		$des = $this->get_category_descendants($categId);
 		if (count($des)>0) {
-			$cond = "where tbl1.`categId` in (".str_repeat("?,",count($des)-1)."?)";
+			$cond = "and tbl1.`categId` in (".str_repeat("?,",count($des)-1)."?)";
 		} else {
 			$cond = "";
 		}
@@ -206,13 +206,13 @@ class CategLib extends TikiLib {
 			$mid = "";
 		}
 
-		$query = "select * from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 $cond and tbl1.`catObjectId`=tbl2.`catObjectId` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select distinct tbl1.`catObjectId` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 $cond and tbl1.`catObjectId`=tbl2.`catObjectId` $mid";
+		$query = "select * from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` $cond $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select distinct tbl1.`catObjectId` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` $cond $mid";
 		$result = $this->query($query,$des,$maxRecords,$offset);
 		$result2 = $this->query($query_cant,$des);
 		$cant = $result2->numRows();
 		$cant2
-			= $this->getOne("select count(*) from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 $cond and tbl1.`catObjectId`=tbl2.`catObjectId` $mid",$des);
+			= $this->getOne("select count(*) from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` $cond $mid",$des);
 		$ret = array();
 		$objs = array();
 
