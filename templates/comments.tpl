@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.22 2003-10-10 07:06:27 traivor Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.23 2003-10-10 09:28:33 traivor Exp $ *}
 
 <br />
 {if $comments_show eq 'y'}
@@ -135,13 +135,28 @@
   		{if $comments_coms[com].replies.numReplies > 0}
   			<br />
   			<ul>
-  			{section name=rep loop=$comments_coms[com].replies.replies}
+			{assign var="lastlevel" value="0"}
+			{assign var="first" value="1"}
+  			{section name=rep loop=$comments_coms[com].replies_flat}
+				{assign var="level" value=$comments_coms[com].replies_flat[rep].level}
+				{if $first}
+					{assign var="first" value="0"}
+				{else}
+					{if $level == $lastlevel}
+						</li>
+					{elseif $level < $lastlevel}
+						{repeat count="$lastlevel = $level"}</li></ul>{/repeat}
+					{else}
+						<ul>
+					{/if}
+				{/if}
   				<li><a class="commentshlink"
-				href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].threadId}#threadId{$comments_coms[com].replies.replies[rep].threadId}">{$comments_coms[com].replies.replies[rep].title}</a>
+				href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_coms[com].replies_flat[rep].parentId}#threadId{$comments_coms[com].replies_flat[rep].threadId}">{$comments_coms[com].replies_flat[rep].title}</a>
    				<a class="link"
-				href="tiki-user_information.php?view_user={$comments_coms[com].replies.replies[rep].userName}">{tr}by{/tr} {$comments_coms[com].replies.replies[rep].userName} ({tr}Score{/tr}: {$comments_coms[com].replies.replies[rep].points}) {tr}on{/tr} {$comments_coms[com].replies.replies[rep].commentDate|tiki_long_datetime}</a></li>
+				href="tiki-user_information.php?view_user={$comments_coms[com].replies_flat[rep].userName}">{tr}by{/tr} {$comments_coms[com].replies_flat[rep].userName} ({tr}Score{/tr}: {$comments_coms[com].replies_flat[rep].points}) {tr}on{/tr} {$comments_coms[com].replies_flat[rep].commentDate|tiki_long_datetime}</a></li>
+				{assign var="lastlevel" value=$level}
   			{/section}
-  			</ul>
+  			</li></ul>
   		{/if}
   	</td>
   </tr>
