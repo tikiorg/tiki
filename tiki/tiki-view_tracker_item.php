@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.35 2004-01-29 03:12:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.36 2004-02-02 06:15:45 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -169,6 +169,7 @@ if ($tiki_p_modify_tracker_items == 'y') {
 
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
+	$last = array();
 	for ($i = 0; $i < count($fields["data"]); $i++) {
 		if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin_trackers) {
 			if ($fields["data"][$i]["type"] != 'h') {
@@ -186,6 +187,18 @@ if ($_REQUEST["itemId"]) {
 					foreach ($cat as $c) {
 						$ins_fields["data"][$i]["cat"]["$c"] = 'y';
 					}
+				} elseif  ($fields["data"][$i]["type"] == 'l') {
+					if (isset($fields["data"][$i]["options_array"][3])) {
+						$lst = $last["{$fields["data"][$i]["options_array"][2]}"];
+						$ins_fields["data"][$i]['links'] = array();
+						if ($lst) {
+							$links = $tikilib->get_items_list($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$lst);
+							foreach ($links as $link) {
+								$ins_fields["data"][$i]['links'][$link] = $tikilib->get_item_value($fields["data"][$i]["options_array"][0],$link,$fields["data"][$i]["options_array"][3]);
+							}
+							$ins_fields["data"][$i]['trackerId'] = $fields["data"][$i]["options_array"][0];
+						}
+					}
 				} elseif  ($fields["data"][$i]["type"] == 'r') {
 					$ins_fields["data"][$i]["linkId"] = $trklib->get_item_id($ins_fields["data"][$i]["options_array"][0],$ins_fields["data"][$i]["options_array"][1],$info["$fid"]);
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
@@ -195,6 +208,9 @@ if ($_REQUEST["itemId"]) {
 					$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$fid"]);
 				} else {
 					$ins_fields["data"][$i]["value"] = $info["$fid"];
+				}
+				if (isset($ins_fields["data"][$i]["value"])) {
+					$last[$fid] = $ins_fields["data"][$i]["value"];
 				}
 			}
 		}

@@ -83,8 +83,10 @@ class="prevnext">{tr}All{/tr}</a>
 <th style="width:20px;">&nbsp;</th>
 {/if}
 {section name=ix loop=$fields}
-{if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
-<th><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if
+{if $fields[ix].type eq 'l'}
+<td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
+{elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
+<td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if
 $fields[x].value}&amp;{$fields[x].name|escape:"url"}={$fields[x].value|escape:"url"}{/if}{/section}&amp;sort_mode=f_{if $sort_mode eq
 'f_'|cat:$fields[ix].name|cat:'_asc'}{$fields[ix].name|escape:"url"}_desc{else}{$fields[ix].name|escape:"url"}_asc{/if}">{$fields[ix].name|default:"&nbsp;"}</a></th>
 {/if}
@@ -213,7 +215,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 <table class="normal">
 {section name=ix loop=$fields}
 
-{if $fields[ix].type ne 'x'}
+{if $fields[ix].type ne 'x' and $fields[ix].type ne 'l'}
 {if $fields[ix].type eq 'h'}
 </table>
 <h3>{$fields[ix].name}</h3>
