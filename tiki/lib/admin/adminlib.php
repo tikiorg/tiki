@@ -179,11 +179,15 @@ class AdminLib extends TikiLib {
 			}
 		}
 
-		$h = opendir("img/wiki_up/$tikidomain");
+		$path = "img/wiki_up";
+		if ($tikidomain) {
+			$path.= "/$tikidomain";
+		}
+		$h = opendir($path);
 
 		while (($file = readdir($h)) !== false) {
-			if (is_file("img/wiki_up/$tikidomain$file") && ($file != 'license.txt')) {
-				$filename = "img/wiki_up/$tikidomain$file";
+			if (is_file("$path/$file") && ($file != 'license.txt')) {
+				$filename = "$path/$file";
 
 				if (!in_array($filename, $pictures)) {
 					@unlink ($filename);
@@ -360,8 +364,12 @@ class AdminLib extends TikiLib {
 	// changed for virtualhost support
 	function dump() {
 		global $tikidomain, $wikiHomePage, $style;
+		$dump_path = "dump";
+		if ($tikidomain) {
+			$dump_path.= "/$tikidomain";
+		}
 
-		@unlink ("dump/" . $tikidomain . "new.tar");
+		@unlink ("$dump_path/new.tar");
 		$tar = new tar();
 		$tar->addFile("styles/$style");
 		// Foreach page
@@ -382,7 +390,7 @@ class AdminLib extends TikiLib {
 			$tar->addData($pageName, $data, $res["lastModif"]);
 		}
 
-		$tar->toTar("dump/" . $tikidomain . "new.tar", FALSE);
+		$tar->toTar("$dump_path/new.tar", FALSE);
 		unset ($tar);
 		$action = "dump created";
 		$t = date("U");
