@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 28. June 2003
+// Last modified: 29. June 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -27,11 +27,11 @@
 // monospaced BLANK text (workaround: small)
 // headings ! !! !!!
 // numbered lists
-// paragraphs -= paragraph =- (workaround: big and bold within rules)
+// paragraphs -= paragraph =-
 // WikiNames
 // links
 // tables
-// textbox ^box^ (workaround: underlined)
+// textbox ^box^
 // horizontal rules ----
 // images
 // smileys
@@ -610,7 +610,7 @@ class HAWIKI_wiki
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
             printf("<b>Paragraph:</b> %s<br>\n", $po["text"]);
 
-          $paragraph = new HAW_text($po["text"], HAW_TEXTFORMAT_BIG);
+          $paragraph = new HAW_text($po["text"], HAW_TEXTFORMAT_BIG | HAW_TEXTFORMAT_BOXED);
           $this->deck->add_text($paragraph);
 
           break;
@@ -621,8 +621,7 @@ class HAWIKI_wiki
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
             printf("<b>Box:</b> %s<br>\n", $po["text"]);
 
-          // boxes are not supported by HAWHAW -> underline instead
-          $box = new HAW_text($po["text"], HAW_TEXTFORMAT_UNDERLINE);
+          $box = new HAW_text($po["text"], HAW_TEXTFORMAT_BOXED);
           $box->set_br(0);
           $this->deck->add_text($box);
 
