@@ -118,8 +118,10 @@ $dbTiki = &ADONewConnection($db_tiki);
 
 if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 	print "
-<pre>
-Unable to login to the '$db_tiki' database '$dbs_tiki' on '$host_tiki' as user '$user_tiki'
+<html><body>
+<p>Unable to login to the MySQL database '$dbs_tiki' on '$host_tiki' as user '$user_tiki'<br />
+<a href='tiki-install.php'>Go here to begin the installation process</a>, if you haven't done so already.</p>
+</body></html>
 ";
 
 	print $dbTiki->ErrorMsg();
