@@ -3251,12 +3251,13 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
 	    $forums = $commentslib->list_forums( 0, 1,
 		    'name_asc',
 		    $this->get_preference('wiki_forum') );
-
+    if ($forums) {
 	    $forumEmail = $forums["data"][0]["outbound_from"];
 
 	    @mail($email, $name, $mail_data,
 		    "From: $forumEmail\r\nContent-type: text/plain;charset=utf-8\r\n"
 		 );
+    }
 	} else {
 	    @mail($email, tra('Wiki page'). ' ' . $name . '
 		    ' . tra('changed'), $mail_data,
