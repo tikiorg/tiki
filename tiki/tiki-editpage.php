@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.50 2003-10-25 01:18:14 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.51 2003-10-25 16:15:45 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -136,18 +136,79 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
  * This is initial implementation (don't generate any wiki syntaxes)
  *
  */
-function walk_and_parse(&$c, &$src)
+function walk_and_parse(&$c, &$src, &$stack)
 {
     for ($i=0; $i <= $c["contentpos"]; $i++)
     {
         // If content type 'text' output it to destination...
-        if (($c[$i]["type"] == "text") && (($c[$i]["data"] != "\n") || (substr($src, -1) != "\n")))
+        if ($c[$i]["type"] == "text")
             $src .= $c[$i]["data"];
+        elseif ($c[$i]["type"] == "tag")
+        {
+            if ($c[$i]["data"]["type"] == "open")
+            {
+                // Open tag type
+                switch ($c[$i]["data"]["name"])
+                {
+                case "title"; $src .= "\n!"; array_push($stack, array('tag' => 'title', 'string' => "\n")); break;
+                case "p": $src .= "\n"; array_push($stack, array('tag' => 'p', 'string' => "\n")); break;
+                case "b": $src .= '__'; array_push($stack, array('tag' => 'b', 'string' => '__')); break;
+                case "i": $src .= "''"; array_push($stack, array('tag' => 'i', 'string' => "''")); break;
+                case "u": $src .= "=="; array_push($stack, array('tag' => 'u', 'string' => "==")); break;
+                case "center": $src .= '::'; array_push($stack, array('tag' => 'center', 'string' => '::')); break;
+                case "code": $src .= '-+';  array_push($stack, array('tag' => 'code', 'string' => '+-')); break;
+                case "h1": $src .= "\n!"; array_push($stack, array('tag' => 'h1', 'string' => "\n")); break;
+                case "h2": $src .= "\n!!"; array_push($stack, array('tag' => 'h2', 'string' => "\n")); break;
+                case "h3": $src .= "\n!!!"; array_push($stack, array('tag' => 'h3', 'string' => "\n")); break;
+                case "h3": $src .= "\n!!!!"; array_push($stack, array('tag' => 'h4', 'string' => "\n")); break;
+                case "h5": $src .= "\n!!!!!"; array_push($stack, array('tag' => 'h5', 'string' => "\n")); break;
+                case "h6": $src .= "\n!!!!!!"; array_push($stack, array('tag' => 'h6', 'string' => "\n")); break;
+                case "pre": $src .= '~pp~'; array_push($stack, array('tag' => 'pre', 'string' => '~/pp~')); break;
+                case "font":
+                    // If href attribute present in <a> tag
+                    if (array_key_exists("pars", $c[$i]) 
+                     && array_key_exists("color", $c[$i]["pars"])
+                     && array_key_exists("value", $c[$i]["pars"]["color"]))
+                    {
+                        $src .= '~~'.$c[$i]["pars"]["color"]["value"].':';
+                        array_push($stack, array('tag' => 'font', 'string' => '~~'));
+                    }
+                    break;
+                case "img":
+                    // If href attribute present in <a> tag
+                    if (array_key_exists("pars", $c[$i]) 
+                     && array_key_exists("src", $c[$i]["pars"])
+                     && array_key_exists("value", $c[$i]["pars"]["src"]))
+                        $src .= '(img src='.$c[$i]["pars"]["src"]["value"].')';
+                    break;
+                case "a":
+                    // If href attribute present in <a> tag
+                    if (array_key_exists("pars", $c[$i]) 
+                     && array_key_exists("href", $c[$i]["pars"])
+                     && array_key_exists("value", $c[$i]["pars"]["href"]))
+                    {
+                        $src .= '['.$c[$i]["pars"]["href"]["value"].'|';
+                        array_push($stack, array('tag' => 'a', 'string' => ']'));
+                    }
+                    break;
+                }
+            }
+            else
+            {
+                // This is close tag type. Is that smth we r waiting for?
+                $e = end($stack);
+                if ($c[$i]["data"]["name"] == $e['tag'])
+                {
+                    $src .= $e['string'];
+                    array_pop($stack);
+                }
+            }
+        }
         // Recursive call on tags with content...
         if (isset($c[$i]["content"]))
         {
-            if (substr($src, -1) != "\n") $src .= "\n";
-            walk_and_parse($c[$i]["content"],$src);
+//            if (substr($src, -1) != " ") $src .= " ";
+            walk_and_parse($c[$i]["content"], $src, $stack);
         }
     }
 }
@@ -192,7 +253,8 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
         $htmlparser->Parse();
         // Should I try to convert HTML to wiki?
         $parseddata = '';
-        walk_and_parse($htmlparser->content, $parseddata);
+        $close_stack = array();
+        walk_and_parse($htmlparser->content, $parseddata, $close_stack);
         $sdta = $parseddata;
     }
     $_REQUEST['edit'] .= $sdta;
