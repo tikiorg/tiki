@@ -27,7 +27,7 @@ class SurveyLib extends TikiLib {
 	}
 
 	function register_survey_rate_vote($questionId, $rate) {
-		$query = "update `tiki_survey_questions` set `votes`=`votes`+1, `value`=`value` + ? where questionId`=?";
+		$query = "update `tiki_survey_questions` set `votes`=`votes`+1, `value`=`value` + ? where `questionId`=?";
 		$result = $this->query($query, array((int)$rate,(int)$questionId));
 		$query = "update `tiki_survey_questions` set `average`=`value`/`votes` where `questionId`=?";
 		$result = $this->query($query, array((int)$questionId));
