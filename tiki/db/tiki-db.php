@@ -12,7 +12,7 @@ ini_set('include_path', dirname(dirname(__FILE__)).'/lib/pear'.$separator.$curre
 //$api_tiki        = 'pear';
 $api_tiki       = 'adodb';
 $db_tiki     = 'mysql';
-$dbversion_tiki = 'mysql3';
+$dbversion_tiki = '1.8';
 $host_tiki   = 'localhost';
 $user_tiki   = 'root';
 $pass_tiki   = '';
