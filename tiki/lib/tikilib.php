@@ -5638,18 +5638,37 @@ function set_locale($user = false) {
 
     return $locale;
 }
-} //end of class
+
+	function read_raw($text) {
+		$file = split("\n",$text);
+		foreach ($file as $line) {
+			$r = $s = '';
+			if (substr($line,0,1) != "#") {
+				if (ereg("^\[([A-Z]+)\]",$line,$r)) {
+					$var = strtolower($r[1]);
+				}
+				if ($var and (ereg("^([-_/ a-zA-Z0-9]+)[ \t]+[:=][ \t]+(.*)",$line,$s))) {
+					$back[$var][trim($s[1])] = trim($s[2]);
+				}
+			}
+		}
+		return $back;
+	}
+
+} 
+
+// end of class ------------------------------------------------------
 
 function compare_links($ar1, $ar2) {
-    return $ar1["links"] - $ar2["links"];
+	return $ar1["links"] - $ar2["links"];
 }
 
 function compare_backlinks($ar1, $ar2) {
-    return $ar1["backlinks"] - $ar2["backlinks"];
+	return $ar1["backlinks"] - $ar2["backlinks"];
 }
 
 function r_compare_links($ar1, $ar2) {
-    return $ar2["links"] - $ar1["links"];
+	return $ar2["links"] - $ar1["links"];
 }
 
 function r_compare_backlinks($ar1, $ar2) {
