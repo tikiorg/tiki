@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.57 2004-03-03 05:32:58 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.58 2004-03-07 19:37:02 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -426,23 +426,15 @@ $smarty->assign('status', $_REQUEST["status"]);
 
 $items = $trklib->list_items($_REQUEST["trackerId"], $offset, $maxRecords, $sort_mode, $listfields, $filterfield, $filtervalue, $_REQUEST["status"],$initial,$exactvalue,$numsort);
 //var_dump($items);die();
-
-$cant_pages = ceil($items["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($items["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$urlquery['status'] = $_REQUEST["status"];
+$urlquery['initial'] = $initial;
+$urlquery['trackerId'] = $_REQUEST["trackerId"];
+$urlquery['sort_mode'] = $sort_mode;
+$urlquery['exactvalue'] = $exactvalue;
+$urlquery["$filterfield"] = $filtervalue;
+$smarty->assign_by_ref('urlquery', $urlquery);
+$cant = $items["cant"];
+include "tiki-pagination.php";
 
 $smarty->assign_by_ref('items', $items["data"]);
 
