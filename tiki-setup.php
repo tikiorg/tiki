@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.142 2003-09-21 18:26:06 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.143 2003-09-24 18:16:26 lrargerich Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -402,6 +402,7 @@ $feature_blog_rankings = 'y';
 $feature_cms_rankings = 'y';
 $feature_gal_rankings = 'y';
 $feature_wiki_rankings = 'y';
+$feature_wiki_icache = 'n';
 $feature_wiki_undo = 'n';
 $feature_wiki_multiprint = 'n';
 $feature_wiki_pdf = 'n';
@@ -824,6 +825,7 @@ $smarty->assign('feature_blog_rankings', $feature_blog_rankings);
 $smarty->assign('feature_gal_rankings', $feature_gal_rankings);
 $smarty->assign('feature_wiki_rankings', $feature_wiki_rankings);
 $smarty->assign('feature_wiki_undo', $feature_wiki_undo);
+$smarty->assign('feature_wiki_icache', $feature_wiki_icache);
 $smarty->assign('feature_menusfolderstyle', $feature_menusfolderstyle);
 $smarty->assign('feature_calendar', $feature_calendar);
 $smarty->assign('feature_editcss', $feature_editcss);

@@ -252,6 +252,15 @@ class WikiLib extends TikiLib {
 
 		return true;
 	}
+	
+	function set_page_cache($page,$cache) {
+		$query = "update `tiki_pages` set `wiki_cache`=? where `pageName`=?";
+		$this->query($query, array(
+			$cache,
+			$page
+		));
+		
+	}
 
 	function save_notepad($user, $title, $data) {
 		$data = addslashes($data);
