@@ -65,7 +65,7 @@ function smarty_function_tikicon($params, &$smarty)
 	//if we have site styles, look there
 	if (isset($style) && isset($style_base)) 
 	{
-		if (false !== ($matchFile = get_first_match("templates/styles/$style_base/img/icons/".$params['igroup']."/",$params['iname']))) 
+		if (false !== ($matchFile = get_first_match("styles/$style_base/icons/".$params['igroup']."/",$params['iname']))) 
 		{
 			return output_icon($params, $matchFile);		 
 		}
