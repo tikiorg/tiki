@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-forums_best_voted_topics.tpl,v 1.7 2003-11-24 01:33:46 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-forums_best_voted_topics.tpl,v 1.8 2003-12-08 15:04:29 sylvieg Exp $ *}
 
 {if $feature_forums eq 'y'}
 {if $nonums eq 'y'}
-{eval var="{tr}Top `$module_rws` topics{/tr}" assign="tpl_module_title"}
+{eval var="{tr}Top `$module_rows` topics{/tr}" assign="tpl_module_title"}
 {else}
 {eval var="{tr}Top topics{/tr}" assign="tpl_module_title"}
 {/if}
