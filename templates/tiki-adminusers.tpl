@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.45 2004-02-10 10:57:39 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.46 2004-02-23 20:34:30 musus Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -73,14 +73,14 @@ class="prevnext">{tr}All{/tr}</a>
 
 <table class="normal">
 <tr>
-<td class="heading thin"></td>
-<td class="heading thin"></td>
-<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'currentLogin_desc'}currentLogin_asc{else}currentLogin_desc{/if}">{tr}Last login{/tr}</a></td>
-<td class="heading thin">&nbsp;</td>
-<td class="heading">{tr}Groups{/tr}</td>
-<td class="heading thin"></td>
+<th></th>
+<th></th>
+<th><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Name{/tr}</a></th>
+<th><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></th>
+<th><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'currentLogin_desc'}currentLogin_asc{else}currentLogin_desc{/if}">{tr}Last login{/tr}</a></th>
+<th>&nbsp;</th>
+<th>{tr}Groups{/tr}</th>
+<th></th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$users}
