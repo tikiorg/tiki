@@ -150,7 +150,7 @@ class HistLib extends TikiLib {
 				th.`lastModif`";
 			} else {
 				$where.="and
-				ta.lastModif =
+				ta.`lastModif` =
 				th.`lastModif`";
 			}
 
