@@ -1218,20 +1218,25 @@ div.fgaldesc {
 /****************************************************** CMS ***************************************************************/
 
 /* The article title bar */
+div.article {
+	width: 100%;
+}
+
 div.articletitle {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
-	color:   white;
+	color:   black;
+	-moz-border-radius: 0.6em 0.6em 0 0;
 	font-size:   11px;
 	font-weight:   bold;
-	background-color:   #666666;
+	background-color:   #CCCCCC;
 	border:   1px solid black;
 	border-bottom:   0px;
 	padding-left:   0.8em;
 	padding-right:   0.8em;
 	padding-top:   0.5em;
+
 	padding-bottom:   0.5em;
 	margin-top:   5px;
-	width:   98%;
 	clear:   both;
 }
 
@@ -1246,7 +1251,6 @@ div.articleheading {
 	border-bottom:   0px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	width:   98%;
 	clear:   both;
 }
 
@@ -1258,8 +1262,11 @@ div.articletrailer {
 	margin-bottom:   20px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
-	width: 98%;
 	clear:   both;
+}
+
+.articletrailer TABLE {
+	width: 99%;
 }
 
 /* Text in the article heading */
@@ -1280,7 +1287,6 @@ div.articlebody {
 	margin:   10px 0px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
-	width:   98%;
 	clear:   both;
 }
 
