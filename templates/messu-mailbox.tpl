@@ -24,7 +24,7 @@
 </select>
 {tr}Containing{/tr}:
 <input type="text" name="find" value="{$find}" />
-<input type="submit" name="filter" value="filter" />
+<input type="submit" name="filter" value="{tr}filter{/tr}" />
 </form>
 <br/>
 
