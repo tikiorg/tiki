@@ -154,11 +154,13 @@ class TrackerLib extends TikiLib {
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('mail_action', 'New comment added for item:' . $itemId . ' at tracker ' . $trackerName);
 		$smarty->assign('mail_data', $title . "\n\n" . $data);
+		
+		include_once ('lib/mail/maillib.php');
 
 		foreach ($emails as $email) {
 			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
 
-			@mail($email, tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], $mail_data,
+			mail($email, encode_headers(tra('Tracker was modified at '). $_SERVER["SERVER_NAME"],'utf-8'), $mail_data,
 				"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
 		}
 
@@ -493,10 +495,13 @@ class TrackerLib extends TikiLib {
 			$smarty->assign('mail_action', $mail_action);
 			$smarty->assign('mail_data', $the_data);
 			$mail_data = $smarty->fetch('mail/tracker_changed_notification.tpl');
+			
+			include_once ('lib/mail/maillib.php');
+			
 			foreach ($emails as $email) {
 				//var_dump($email);
 				//var_dump($mail_data);
-				@mail($email, '['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
+				mail($email, encode_headers('['.$trackerName.'] '.tra('Tracker was modified at '). $_SERVER["SERVER_NAME"], 'utf-8'), $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8");
 				//echo "$email, ";
 			}
 		}
