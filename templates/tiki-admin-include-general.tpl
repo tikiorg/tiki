@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.24 2003-11-18 18:44:07 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.25 2003-11-20 19:36:53 sylvieg Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -222,12 +222,13 @@ get back in if this happens to you. The corresponding SF bug tracker is 835233."
         <td class="form">{tr}Sender Email{/tr}:</td>
         <td><input type="text" name="sender_email" value="{$sender_email|escape}" size="50" /></td>
       </tr><tr>
-        <td class="form">{tr}Email Encoding{/tr}:</td>
+<!--        <td class="form">{tr}Email Encoding{/tr}:</td>
         <td><select name="email_encoding">
                   <option value="utf-8" {if $email_encoding != "iso-8859-1"}selected="selected"{/if}>utf-8</option>
                   <option value="iso-8859-1"{if $email_encoding == "iso-8859-1"}selected="selected"{/if}>iso-8859-1</option>
         </select></td>
       </tr><tr>
+-->
         <td class="form">{tr}Contact user{/tr}:</td>
         <td>{if $feature_contact eq 'y'}
               <input type="text" name="contact_user" value="{$contact_user|escape}" size="40" />
