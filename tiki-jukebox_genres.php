@@ -53,7 +53,7 @@ if (isset($_REQUEST["edit"])) {
 	if ($_REQUEST["genreId"] == 0) {
 		$info = $jukeboxlib->replace_genres($_REQUEST["title"], $_REQUEST["description"], '');
 	} else {
-		$info = $jukeboxlib->replace_genres($_REQUEST["title"], $_REQUEST["description"], $_REQEUST["genreId"]);
+		$info = $jukeboxlib->replace_genres($_REQUEST["title"], $_REQUEST["description"], $_REQUEST["genreId"]);
 	}
 }
 
