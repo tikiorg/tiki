@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.11 2004-04-26 17:55:12 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.12 2004-05-06 00:47:10 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,10 +40,10 @@ if (isset($_REQUEST["template"])) {
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-templates');
-  if (isset($tikidomain) and is_file($smarty->template_dir.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"])) {
-    $fp = fopen($smarty->template_dir.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"], "w");
-  } elseif (isset($tikidomain) and is_dir($smarty->template_dir.$tikidomain)) {
-    $fp = fopen($smarty->template_dir.$tikidomain.'/'.$_REQUEST["template"], "w");
+  if (isset($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"])) {
+    $fp = fopen($smarty->template_dir.'/'.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"], "w");
+  } elseif (isset($tikidomain) and is_dir($smarty->template_dir.'/'.$tikidomain)) {
+    $fp = fopen($smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"], "w");
   } elseif (isset($tikidomain) and is_file($smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"])) {
 		$fp = fopen($smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"], "w");
   } else {
@@ -61,10 +61,10 @@ if (isset($_REQUEST["save"])) {
 
 if (isset($_REQUEST["template"])) {
 	$mode = 'editing';
-	if (isset($tikidomain) and is_file($smarty->template_dir.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"])) {
-		$file = $smarty->template_dir.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"];
-	} elseif (isset($tikidomain) and is_file($smarty->template_dir.$tikidomain.'/'.$_REQUEST["template"])) {
-		$file = $smarty->template_dir.$tikidomain.'/'.$_REQUEST["template"];
+	if (isset($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"])) {
+		$file = $smarty->template_dir.'/'.$tikidomain.'/'.$style_base.'/'.$_REQUEST["template"];
+	} elseif (isset($tikidomain) and is_file($smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"])) {
+		$file = $smarty->template_dir.'/'.$tikidomain.'/'.$_REQUEST["template"];
 	} elseif (is_file($smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"])) {
 		$file = $smarty->template_dir.'/'.$style_base.'/'.$_REQUEST["template"];
 	} else {
