@@ -3763,6 +3763,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useRegisterPasscode','n
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('userfiles_quota','30');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('useUrlIndex','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('validateUsers','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('eponymousGroups','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('warn_on_edit_time','2');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('webmail_max_attachment','1500000');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('webmail_view_html','y');

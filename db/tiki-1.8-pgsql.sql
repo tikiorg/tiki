@@ -5315,6 +5315,9 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('useUrlIndex','n');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('validateUsers','n');
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('eponymousGroups','n');
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('warn_on_edit_time','2');
 
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.143 2003-09-24 18:16:26 lrargerich Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.144 2003-09-28 23:13:58 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -920,6 +920,7 @@ $change_theme = $tikilib->get_preference("change_theme", 'y');
 $cachepages = $tikilib->get_preference("cachepages", 'y');
 $cacheimages = $tikilib->get_preference("cacheimages", 'y');
 $allowRegister = $tikilib->get_preference("allowRegister", 'n');
+$eponymousGroups = $tikilib->get_preference("eponymousGroups", 'n');
 $useRegisterPasscode = $tikilib->get_preference("useRegisterPasscode", 'n');
 $registerPasscode = $tikilib->get_preference("registerPasscode", '');
 $useUrlIndex = $tikilib->get_preference("useUrlIndex", 'n');
@@ -1009,6 +1010,7 @@ $smarty->assign('change_theme', $change_theme);
 $smarty->assign('change_language', $change_language);
 $smarty->assign('anonCanEdit', $anonCanEdit);
 $smarty->assign('allowRegister', $allowRegister);
+$smarty->assign('eponymousGroups', $eponymousGroups);
 $smarty->assign('cachepages', $cachepages);
 $smarty->assign('cacheimages', $cacheimages);
 

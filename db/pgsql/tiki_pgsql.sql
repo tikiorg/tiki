@@ -1,4 +1,4 @@
---$Id: tiki_pgsql.sql,v 1.3 2003-09-27 09:31:33 rlpowell Exp $
+--$Id: tiki_pgsql.sql,v 1.4 2003-09-28 23:13:59 rlpowell Exp $
 -- Dump of tiki_mysql.sql
 
 
@@ -2504,6 +2504,7 @@ INSERT INTO tiki_preferences VALUES ('siteTitle','Stemmin\' the Tide!');
 INSERT INTO tiki_preferences VALUES ('useRegisterPasscode','n');
 INSERT INTO tiki_preferences VALUES ('registerPasscode','');
 INSERT INTO tiki_preferences VALUES ('validateUsers','n');
+INSERT INTO tiki_preferences VALUES ('eponymousGroups','n');
 INSERT INTO tiki_preferences VALUES ('forgotPass','n');
 INSERT INTO tiki_preferences VALUES ('feature_shoutbox','y');
 INSERT INTO tiki_preferences VALUES ('feature_quizzes','y');
