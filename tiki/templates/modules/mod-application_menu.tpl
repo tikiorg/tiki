@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.80 2003-12-10 23:08:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.81 2003-12-15 00:08:06 redflo Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
@@ -26,9 +26,6 @@
 
 {if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
   &nbsp;<a href="tiki-calendar.php" class="linkmenu">{tr}Calendar{/tr}</a><br />
-{/if}
-{if $tiki_p_admin eq 'y' and $feature_debug_console eq 'y' and $feature_top_bar ne 'y'}
-   &nbsp;<a href="javascript:toggle('debugconsole');" class="linkmenu">{tr}Debugger console{/tr}</a><br />
 {/if}
 
 {if $user}
@@ -458,11 +455,19 @@
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('admmnu');"><img src="img/icons/fo.gif" style="border: 0" name="admmnuicn" alt="{tr}AdmMenu{/tr}"/></a>&nbsp;
   {else}<a class="separator" href="javascript:toggle('admmnu');">[-]</a>{/if}
-  {if $tiki_p_admin eq 'y'}<a class="separator" href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if}
+  {if $tiki_p_admin eq 'y'}
+  <a class="separator" href='tiki-admin.php'>{tr}Admin (click!){/tr}</a>
+  {else}
+  {tr}Admin{/tr}
+  {/if}
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('admmnu');">[+]</a>{/if}
   </div>
   <div id="admmnu" style="{$mnu_admmnu}">
   {sortlinks}
+	{if $feature_debug_console eq 'y'}
+		&nbsp;<a href="javascript:toggle('debugconsole');" class="linkmenu">{tr}Debugger console{/tr}</a><br />
+	{/if}
+
 	{if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
   		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br />
 	{/if}

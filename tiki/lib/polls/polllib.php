@@ -77,10 +77,10 @@ class PollLib extends TikiLib {
 			$findesc = '%' . $find . '%';
 
 			$mid = " where `active`=? and `publishDate`<=? and (`title` like ?)";
-			$bindvars=array('a',(int) $now,$findesc);
+			$bindvars=array('c',(int) $now,$findesc);
 		} else {
 			$mid = " where `active`=? and `publishDate`<=? ";
-			$bindvars=array('a',(int) $now);
+			$bindvars=array('c',(int) $now);
 		}
 
 		$query = "select * from `tiki_polls` $mid order by ".$this->convert_sortmode($sort_mode);

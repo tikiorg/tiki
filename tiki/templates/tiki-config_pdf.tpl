@@ -66,7 +66,7 @@
 <tr><td class="normal" align="center">
 <select name="addpageName[]" size="10" multiple="multiple">
 {section name=ix loop=$pages}
-<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName}</option>
+<option value="{$pages[ix].pageName|escape}">{$pages[ix].pageName|truncate:60:"..."}</option>
 {/section}
 </select>
 </td><td class="normal" align="center">

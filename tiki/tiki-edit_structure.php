@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.17 2003-12-03 10:37:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.18 2003-12-15 00:08:03 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,6 +22,26 @@ if (!isset($_REQUEST["page_ref_id"])) {
 	$smarty->assign('msg', tra("No structure indicated"));
 	$smarty->display("error.tpl");
 	die;
+}
+
+$smarty->assign('remove', 'n');
+
+if (isset($_REQUEST["remove"])) {
+	$smarty->assign('remove', 'y');
+  $remove_info = $structlib->s_get_page_info($_REQUEST["remove"]);
+	$smarty->assign('removepage', $_REQUEST["remove"]);
+	$smarty->assign('removePageName', $remove_info["pageName"]);
+}
+
+$page_info      = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
+if (isset($_REQUEST["rremove"])) {
+	$structlib->s_remove_page($_REQUEST["rremove"], false);
+  $_REQUEST["page_ref_id"] = $page_info["parent_id"];
+}
+
+if (isset($_REQUEST["sremove"])) {
+	$structlib->s_remove_page($_REQUEST["sremove"], true);
+  $_REQUEST["page_ref_id"] = $page_info["parent_id"];
 }
 
 $page_info      = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
@@ -76,32 +96,17 @@ if (isset($_REQUEST["move_node"])) {
 	
 }
 
-$smarty->assign('remove', 'n');
-
-if (isset($_REQUEST["remove"])) {
-	$smarty->assign('remove', 'y');
-  $remove_info = $structlib->s_get_page_info($_REQUEST["remove"]);
-	$smarty->assign('removepage', $_REQUEST["remove"]);
-	$smarty->assign('removePageName', $remove_info["pageName"]);
-}
-
-if (isset($_REQUEST["rremove"])) {
-	$structlib->s_remove_page($_REQUEST["rremove"], false);
-}
-
-if (isset($_REQUEST["sremove"])) {
-	$structlib->s_remove_page($_REQUEST["sremove"], true);
-}
-
 $page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 $smarty->assign('pageName', $page_info["pageName"]);
 $smarty->assign('pageAlias', $page_info["page_alias"]);
 
 $subpages = $structlib->s_get_pages($_REQUEST["page_ref_id"]);
-$max = $structlib->get_max_children($structure_info["page_ref_id"], $_REQUEST["page_ref_id"]);
+$max = count($subpages);
 $smarty->assign_by_ref('subpages', $subpages);
-$smarty->assign('max', $max);
-
+if ($max != 0) {
+  $last_child = $subpages[$max - 1];
+  $smarty->assign('insert_after', $last_child["page_ref_id"]);
+}
 if (isset($_REQUEST["find_objects"])) {
 	$find_objects = $_REQUEST["find_objects"];
 } else {

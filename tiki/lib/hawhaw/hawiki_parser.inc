@@ -1,7 +1,7 @@
 <?php
 
 // HAWIKI parser for TikiWiki
-// Last modified: 26. October 2003
+// Last modified: 13. December 2003
 
 // token definitions
 define("HAWIKI_TOKEN_NEWLINE",    1);
@@ -218,7 +218,7 @@ function HAWIKI_parser(&$input, $isFirstColumn)
       $po["page"]  = $link[0]; // no extra labelling of link required
       $po["label"] = $link[0];
     }
-    
+
     if (count($link) > 2)
     {
       // hawhaw voice specific enhancement (not part of TikiWiki syntax!)
@@ -359,8 +359,49 @@ function HAWIKI_parser(&$input, $isFirstColumn)
     return($po);
   }
 
+  if (preg_match("/^<[aA](.*?)>(.*?)<\/[aA]>/", $input, $matches))
+  {
+    // HTML link
+
+    $link_attribs = $matches[1];
+    $link_label = $matches[2];
+    $input = substr($input, strlen($link_attribs) + strlen($link_label) + 7);
+
+    if (!preg_match("/(href|HREF)=\"(.*?)\"/", $link_attribs, $matches))
+      return(0); // no href attribute found in link
+    
+    $url = $matches[2];
+
+    if (preg_match("/<(img|IMG)(.*?)>/", $link_label, $matches))
+    {
+      // image link
+
+      $img_attribs = $matches[2];
+
+      if (!preg_match("/(src|SRC)=\"(.*?)\"/", $img_attribs, $matches))
+        return(0); // no src attribute found in image
+
+      $po["src"] = $matches[2];
+
+      if (preg_match("/(alt|ALT)=\"(.*?)\"/", $img_attribs, $matches))
+        $po["alt"] = $matches[2];
+
+      $po["link"] = $url;
+      $po["token"] = HAWIKI_TOKEN_IMAGE;
+    }
+    else
+    {
+      // text link
+      $po["url"]   = $url;
+      $po["label"] = $link_label;
+      $po["token"] = HAWIKI_TOKEN_LINK;
+    }
+
+    return($po);
+  }
+
   // plain text - search next syntax element resp. eof
-  if (preg_match("/^(.*?)(~np~|__|''|-=|\^|::|~~|\)\)|\(\(|\[|\|\||\{img |\(:|[A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*|[\r\n]|\{[A-Z]+\([^\)]*\)\}|$)/",
+  if (preg_match("/^(.*?)(~np~|__|''|-=|\^|::|~~|\)\)|\(\(|\[|\|\||\{img |\(:|[A-Z][a-z0-9_]+[A-Z][a-z0-9_]+[\|\w]*|[\r\n]|\{[A-Z]+\([^\)]*\)\}|<[aA]|$)/",
       $input, $matches))
   {
     // plain text

@@ -23,11 +23,12 @@
 // | Author(s): Christian Jørgensen <mail@phpguru.dk>                     |
 // +----------------------------------------------------------------------+
 // 
-// $Id: start.php,v 1.3 2003-11-18 01:34:55 mose Exp $                                                                 
+// $Id: start.php,v 1.4 2003-12-15 00:08:05 redflo Exp $                                                                 
 
 ini_set('include_path', '.:../wollabot:../smartirc:../..:../../lib/pear:../../lib/adodb');
 
 require_once "lib/wollabot.php";
+include_once("../init/initlib.php");
 
 require_once("../../db/tiki-db.php");
 require_once("../tikilib.php");

@@ -1,44 +1,52 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/error.tpl,v 1.2 2003-11-28 14:46:21 mose Exp $ *}
-{* Index we display a wiki page here *}
-
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/error.tpl,v 1.3 2003-12-15 00:08:07 redflo Exp $ *}
+{* Main template for TikiWiki error page layout *}
 {include file="header.tpl"}
-<div id="tiki-main">
+<div id="main">
   {if $feature_top_bar eq 'y'}
-  <div id="tiki-top">
+  <div id="top">
     {include file="tiki-top_bar.tpl"}
   </div><!-- top -->
   {/if}
-
-  <div id="tiki-mid">
-
+  <span class="hidden"><a href="#content">{tr}Skip to Content{/tr}</a></span>
+  <div id="middle">
     {* Display left modules if available *}
 
     {if $feature_left_column eq 'y' and count($left_modules) gt 0}
-      <div id="leftcolumn">
+      <div id="modules1" class="left">
         {section name=homeix loop=$left_modules}
           {$left_modules[homeix].data}
         {/section}
-      </div><!-- left -->
+      </div><!-- used to be left -->
+    {/if}
+    
+    {* Display right modules if available *}
+
+    {if $feature_right_column eq 'y' and count($right_modules) gt 0}
+      <div id="modules2" class="right">
+        {section name=homeix loop=$right_modules}
+          {$right_modules[homeix].data}
+        {/section}
+      </div><!-- used to be right -->
     {/if}
 
-    {* Calculate size of center div *}
+    {* Calculate size of center div (this is really needed! luci) *}
 
     {php} $add_style=''; {/php}
     {if $feature_left_column eq 'y' and count($left_modules) gt 0}
-	{php} $add_style.='margin-left: 190px;'; {/php}
+	    {php} $add_style.='margin-left: 25%;'; {/php}
     {/if}
     {if $feature_right_column eq 'y' and count($right_modules) gt 0}
-	{php} $add_style.='margin-right: 190px;'; {/php}
+	    {php} $add_style.=' margin-right: 25%;'; {/php}
     {/if}
     {php}
-	$add_style = strlen($add_style) ? 'style="'.$add_style.'"' : '';
-	global $smarty;
-	$smarty->assign('add_style', $add_style);
+	  $add_style = strlen($add_style) ? ' style="'.$add_style.'"' : '';
+	  global $smarty;
+	  $smarty->assign('add_style', $add_style);
     {/php}
 
-    {* Display center column *}
-
-    <div id="tiki-center" {$add_style}>
+    {* Display main content in center column *}
+    <a name="content"></a>
+    <div id="maincontent"{$add_style}>
       <div class="cbox" id="error-box">
         <div class="cbox-title" id="error-caption">
           {tr}Error{/tr}
@@ -51,20 +59,13 @@
       </div>
     </div><!-- center -->
 
-    {* Display right modules if available *}
-
-    {if $feature_right_column eq 'y' and count($right_modules) gt 0}
-      <div id="rightcolumn">
-        {section name=homeix loop=$right_modules}
-          {$right_modules[homeix].data}
-        {/section}
-      </div><!-- right -->
-    {/if}
+    
 
   </div><!-- div id="tiki-mid" -->
 
   {if $feature_bot_bar eq 'y'}
-    <div id="tiki-bot">
+    <div id="bottom">
+      <br class="clear" />
       {include file="tiki-bot_bar.tpl"}
     </div><!-- bottom -->
   {/if}

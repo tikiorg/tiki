@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 8. November 2003
+// Last modified: 13. December 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -400,7 +400,7 @@ class HAWIKI_page
           }
           else
             $link = new HAW_link($po["label"], $this->wiki_base . $po["page"]);
-            
+
           if (isset($po["dtmf"]))
             // assign DTMF key
             $link->set_voice_dtmf($po["dtmf"]);
@@ -416,10 +416,27 @@ class HAWIKI_page
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
             printf("<b>Link:</b> url:%s label:%s<br>\n", $po["url"], $po["label"]);
 
-          $link = new HAW_link($po["label"], $po["url"]);
+          // determine file extension of link
+          if (preg_match("/\.(\w*)$/", $po["url"], $matches))
+            $extension = strtolower($matches[1]);
 
-          $link->set_br(0);
-          $this->deck->add_link($link);
+          if (($this->deck->ml == HAW_VXML) && isset($extension) &&
+              (($extension == "wav") || ($extension == "mp3")))
+          {
+            // play audio file on VoiceXML browser instead of creating link
+            $introtext = new HAW_text($po["label"]);
+            $this->deck->add_text($introtext);
+            $audio = new HAW_text("");
+            $audio->set_voice_text("Sorry, this voice browser does not support " . $extension . " format", HAWIKI_specchar($po["url"]));
+            $this->deck->add_text($audio);
+          }
+          else
+          {
+            // create link
+            $link = new HAW_link($po["label"], HAWIKI_specchar($po["url"]));
+            $link->set_br(0);
+            $this->deck->add_link($link);
+          }
 
           break;
         }
@@ -459,7 +476,7 @@ class HAWIKI_page
         case HAWIKI_TOKEN_IMAGE:
         {
           if ($this->debugflags & HAWIKI_DEBUG_PARSER)
-            printf("<b>Image:</b> src:%s alt:%s<br>\n", $po["src"], $po["alt"]);
+            printf("<b>Image:</b> src:%s alt:%s link:%s<br>\n", $po["src"], $po["alt"], $po["link"]);
 
           if ($po["src"])
           {
@@ -499,10 +516,10 @@ class HAWIKI_page
             $this->deck->add_image($image);
           }
 
-          if ($po["link"])
+          if ($po["link"] && ($this->deck->ml != HAW_VXML))
           {
             // HAWHAW does not support images as links
-            // ==> draw @-link next to image
+            // ==> draw @-link next to image (for visual browsers)
             $link = new HAW_link("@", $po["link"]);
             $link->set_br(0);
             $this->deck->add_link($link);
