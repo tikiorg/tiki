@@ -1,5 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.3 2004-02-05 19:10:00 ggeller Exp $
+
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.4 2004-02-06 20:08:31 ggeller Exp $
+
 require_once("doc/devtools/ggg-trace.php");
 $ggg_tracer->outln(__FILE__." line: ".__LINE__);
 
@@ -17,6 +19,11 @@ class HomeworkLib extends TikiLib {
 	// The homeworklib and hw_ functions always assume that admin has
 	//   the permissions of teacher, teacher has the pemissions of 
 	//   grader, and grader has the permissions of student
+	global $ggg_tracer;
+	global $tiki_p_hw_admin;
+	global $tiki_p_hw_teacher;
+	global $tiki_p_hw_grader;
+	global $tiki_p_hw_student;
 	if (isset($tiki_p_hw_admin) && $tiki_p_hw_admin == 'y'){
 	  $tiki_p_hw_teacher = 'y';
 	  $tiki_p_hw_grader = 'y';
@@ -29,6 +36,46 @@ class HomeworkLib extends TikiLib {
 	else if (isset($tiki_p_hw_grader) && $tiki_p_hw_grader == 'y'){
 	  $tiki_p_hw_student = 'y';
 	}
+  }
+
+  // See if $studentName is a user with $tiki_p_hw_student
+  // Stub for now.
+  function hw_is_student($studentName){
+	global $ggg_tracer;
+	$ggg_tracer->outln(__FILE__." line: ".__LINE__." In homeworklib.php,  hw_is_student.");
+	$ggg_tracer->outln(' $studentName = '.$studentName);
+	return true;
+  }
+
+  // Adapted from get_page_history in lib/wiki/histlib.php
+  function hw_page_get_history($pageId){
+    $query = "select `id`, `version`, `lastModif`, `user`, `ip`, `comment`, `data` from `hw_history` where `id`=? order by `version` desc";
+    $result = $this->query($query,array($pageId));
+    $ret = array();
+    
+    while ($res = $result->fetchRow()) {
+      $aux = array();
+      
+      $aux["version"] = $res["version"];
+      $aux["lastModif"] = $res["lastModif"];
+      $aux["user"] = $res["user"];
+      $aux["ip"] = $res["ip"];
+      $aux["data"] = $res["data"];
+      $aux["id"] = $res["id"];
+      // $aux["description"] = $res["description"];
+      $aux["comment"] = $res["comment"];
+      $ret[] = $aux;
+    }
+    
+    return $ret;
+  }
+
+  // Adapted from histlib.php, remove version
+  // Stub for now.
+  function hw_page_remove_version($pageId,$version){
+	$ggg_tracer->outln(__FILE__." line: ".__LINE__." In homeworklib.php, remove_version.");
+	$ggg_tracer->outln(' $pageId = '.$pageId);
+	$ggg_tracer->outln(' $version = '.$version);
   }
 
   // hw_grading_queue table
