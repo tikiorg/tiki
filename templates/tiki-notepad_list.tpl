@@ -54,7 +54,7 @@
 <input type="checkbox" name="note[{$channels[user].noteId}]" />
 </td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a>
-(<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">save</a>)</td>
+(<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">{tr}save{/tr}</a>)</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
 <td style="text-align:right;"  class="{cycle}">{$channels[user].size|kbsize}</td>
 </tr>
