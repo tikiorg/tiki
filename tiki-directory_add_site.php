@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.7 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_add_site.php,v 1.8 2003-11-17 17:08:24 awcolley Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -215,6 +215,10 @@ while ($file = readdir($h)) {
 
 closedir ($h);
 $smarty->assign_by_ref('countries', $countries);
+
+// This page should be displayed with Directory section options
+$section='directory';
+include_once('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-directory_add_site.tpl');
