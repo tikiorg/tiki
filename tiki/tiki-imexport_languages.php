@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.11 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.12 2003-11-27 00:24:47 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -28,7 +28,7 @@ $result = $tikilib->query($query,array());
 $languages = array();
 
 while ($res = $result->fetchRow()) {
-	$languages[] = $res["0"];
+	$languages[] = $res["lang"];
 }
 
 // Lookup translated names for the languages
