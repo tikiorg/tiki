@@ -1433,6 +1433,7 @@ from your php.ini file",//perhaps not used
 "items" => "элементы",
 "fields" => "поля",
 "Change password enforced" => "Требуется срочная смена пароля",
+"Page alias" => "Page alias",
 "page" => "стр.",
 "page|desc" => "стр.|описание",
 "SomeName" => "ЧьёТоИмя",

@@ -1563,6 +1563,7 @@ $lang=Array(
 "Use page description" => "תי�?ור עמוד",
 "Allow viwing HTML mails?" => "�?פשר לצפות בהודעות דו�?ר HTML",//perhaps not used
 "Maximum size for each attachment" => "גודל מרבי לכל קובץ מצורף",
+"Page alias" => "Page alias",
 "page" => "ש�? עמוד",
 "page|desc" => "ש�? עמוד|תי�?ור",
 "SomeName" => "SomeEnglishName",

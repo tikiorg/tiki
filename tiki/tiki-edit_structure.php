@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.6 2003-08-22 00:04:29 lueders Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.7 2003-10-14 08:51:03 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -38,11 +38,17 @@ if (isset($_REQUEST["create"])) {
 	if (!isset($_REQUEST["after"]))
 		$_REQUEST["after"] = '';
 
+	if (isset($_REQUEST["pageAlias"]))
+  {
+	  $structlib->set_page_alias($_REQUEST["page"], $_REQUEST["pageAlias"]);
+  }
+
 	if (!(empty($_REQUEST['name']))) {
 		$structlib->s_create_page($_REQUEST["page"], $_REQUEST["after"], $_REQUEST["name"]);
 		$userlib->copy_object_permissions($_REQUEST["page"],$_REQUEST["name"],'wiki page');
 
-	} else {
+	} 
+  elseif(!empty($_REQUEST['name2'])) {
 		$after = $_REQUEST['after'];
 
 		foreach ($_REQUEST['name2'] as $name) {
@@ -68,6 +74,11 @@ if (isset($_REQUEST["rremove"])) {
 if (isset($_REQUEST["sremove"])) {
 	$structlib->s_remove_page($_REQUEST["sremove"], true);
 }
+
+$pageAlias = $structlib->get_page_alias($_REQUEST["page"]);
+$smarty->assign('pageAlias', $pageAlias);
+$structAlias = $structlib->get_page_alias($_REQUEST["structure"]);
+$smarty->assign('structAlias', $structAlias);
 
 $subpages = $structlib->get_pages($_REQUEST["page"]);
 $max = $structlib->get_max_children($_REQUEST["page"]);

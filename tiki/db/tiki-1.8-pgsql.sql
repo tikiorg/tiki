@@ -2976,6 +2976,7 @@ DROP TABLE "tiki_structures";
 
 CREATE TABLE "tiki_structures" (
   "page" varchar(240) NOT NULL default '',
+  "page_alias" varchar(240) NOT NULL default '',
   "parent" varchar(240) NOT NULL default '',
   "pos" smallint default NULL,
   PRIMARY KEY ("page","parent")

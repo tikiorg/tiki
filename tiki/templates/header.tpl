@@ -5,6 +5,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+    {if $description ne ''}<meta name="description" content="{$description}" />{/if}
     <link rel="StyleSheet"  href="styles/{$style}" type="text/css" />
     {include file="bidi.tpl"}
     <title>{$siteTitle}{if $page ne ''} : {$page}

@@ -135,7 +135,7 @@ class StructLib extends TikiLib {
 		$first = true;
 		//$level++;
 		$sublevel = 0;
-		$query = "select `page` from `tiki_structures` where `parent`=? order by `pos` asc";
+		$query = "select `page`, `page_alias` from `tiki_structures` where `parent`=? order by `pos` asc";
 		$result = $this->query($query,array($page));
 		$subs = array();
 
@@ -156,7 +156,12 @@ class StructLib extends TikiLib {
 			}
 
 			$html .= "<li style='list-style:disc outside;'><a class='link' href='tiki-edit_structure.php?structure=" . urlencode(
-				$structure). "&amp;page=$upage'>$plevel&nbsp;" . $res["page"] . "</a>&nbsp;[<a class='link' href='tiki-edit_structure.php?structure=" . urlencode(
+				$structure). "&amp;page=$upage'>$plevel&nbsp;" . $res["page"];
+      $pageAlias = $res["page_alias"];
+      if (!empty($pageAlias)) {
+        $html .= "&nbsp(" . $pageAlias . ")";
+      }
+      $html .= "</a>&nbsp;[<a class='link' href='tiki-edit_structure.php?structure=" . urlencode(
 				$structure). "&amp;remove=$upage'>x</a>]";
 			$html .= "&nbsp;[<a class='link' href='tiki-index.php?page=$upage'>" . tra(
 				"view"). "</a>|<a  class='link' href='tiki-editpage.php?page=$upage'>" . tra("edit"). "</a>]";
@@ -196,7 +201,7 @@ class StructLib extends TikiLib {
 		$first = true;
 		//$level++;
 		$sublevel = 0;
-		$query = "select `page` from `tiki_structures` where `parent`=? order by `pos` asc";
+		$query = "select `page`, `page_alias` from `tiki_structures` where `parent`=? order by `pos` asc";
 		$result = $this->query($query,array($page));
 		$subs = array();
 
@@ -216,9 +221,16 @@ class StructLib extends TikiLib {
 			}
 
 			$upage = urlencode($res["page"]);
-			$html .= "<li style='list-style:disc outside;'><a class='link' href='tiki-index.php?page=$upage'>$plevel&nbsp;" . $res["page"] . "</a>";
+			$html .= "<li style='list-style:disc outside;'><a class='link' href='tiki-index.php?page=$upage'>$plevel&nbsp;";
+      $pageAlias = $res["page_alias"];
+      if (empty($pageAlias)) {
+        $html .= $res["page"];
+      }
+      else {
+        $html .= $pageAlias;
+      }
 			//$html.="&nbsp;[<a class='link' href='tiki-index.php?page=${res["page"]}'>view</a>|<a  class='link' href='tiki-editpage.php?page=${res["page"]}'>edit</a>]";
-			$html .= "</li>";
+			$html .= "</a></li>";
 
 			$subs[] = $this->get_subtree_toc($structure, $res["page"], $html, $plevel);
 		}
@@ -240,7 +252,7 @@ class StructLib extends TikiLib {
 		$first = true;
 		//$level++;
 		$sublevel = 0;
-		$query = "select `page` from `tiki_structures` where `parent`=? order by `pos` asc";
+		$query = "select `page`, `page_alias` from `tiki_structures` where `parent`=? order by `pos` asc";
 		$result = $this->query($query,array($page));
 		$subs = array();
 
@@ -260,9 +272,16 @@ class StructLib extends TikiLib {
 			}
 
 			$upage = urlencode($res["page"]);
-			$html .= "<li style='list-style:disc outside;'><a class='link' href='tiki-slideshow2.php?page=$upage'>$plevel&nbsp;" . $res["page"] . "</a>";
-			//$html.="&nbsp;[<a class='link' href='tiki-index.php?page=${res["page"]}'>view</a>|<a  class='link' href='tiki-editpage.php?page=${res["page"]}'>edit</a>]";
-			$html .= "</li>";
+			$html .= "<li style='list-style:disc outside;'><a class='link' href='tiki-slideshow2.php?page=$upage'>$plevel&nbsp;";
+			$pageAlias = $res["page_alias"];
+      if (empty($pageAlias)) {
+        $html .= $res["page"];
+      }
+      else {
+        $html .= $pageAlias;
+      }
+//$html.="&nbsp;[<a class='link' href='tiki-index.php?page=${res["page"]}'>view</a>|<a  class='link' href='tiki-editpage.php?page=${res["page"]}'>edit</a>]";
+			$html .= "</a></li>";
 
 			$subs[] = $this->get_subtree_toc($structure, $res["page"], $html, $plevel);
 		}
@@ -420,6 +439,19 @@ class StructLib extends TikiLib {
 		$retval["cant"] = $cant;
 		return $retval;
 	}
+  
+  function get_page_alias($page) {
+		$query = "select `page_alias` from `tiki_structures` where `page` like ?";
+		$res = $this->getOne($query, array($page));
+		
+    return $res;
+  }
+  
+  function set_page_alias($page, $pageAlias) {
+		$query = "update `tiki_structures` set `page_alias`=? where `page` like ?";
+
+		$this->query($query, array($pageAlias, $page));
+  }
 }
 
 $structlib = new StructLib($dbTiki);

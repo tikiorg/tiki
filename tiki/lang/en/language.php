@@ -522,6 +522,7 @@ $lang=Array(
 "type" => "type",
 "Add objects to category" => "Add objects to category",
 "page" => "page",
+"Page alias" => "Page alias",
 "article" => "article",
 "blog" => "blog",
 "directory" => "directory",

@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.32 2003-10-13 23:03:15 ohertel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.33 2003-10-14 08:51:01 chris_holman Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -357,6 +357,8 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('default_map', '
 ALTER TABLE `users_groups` ADD `groupHome` VARCHAR( 255 ) AFTER `groupDesc` ;
 
 ALTER TABLE `users_users` ADD `default_group` VARCHAR( 255 ) AFTER `realname` ;
+
+ALTER TABLE `tiki_structures` ADD `page_alias` VARCHAR( 240 ) DEFAULT '' NOT NULL AFTER `page` ;
 
 # Per-forum from address.  -rlpowell
 ALTER TABLE `tiki_forums` ADD `outbound_from` VARCHAR( 250 ) AFTER `outbound_address` ;

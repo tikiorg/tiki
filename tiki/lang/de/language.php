@@ -1143,6 +1143,7 @@ $lang=Array(
 "No version indicated" => "Keine Version angegeben",
 "Unexistant version" => "Nicht existierende Version",
 "Permission denied you cannot rollback this page" => "Zugriff verweigert. Rollback f&uuml;r diese Seite nicht erlaubt.",
+"Page alias" => "Page alias",
 "page" => "Seite",
 " successfully sent" => " erfolgreich verschickt",
 " not sent" => " nicht verschickt",

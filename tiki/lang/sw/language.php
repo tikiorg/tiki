@@ -1428,6 +1428,7 @@ from your php.ini file" => "Att skapa en säkerhetskopia kan ta lång tid. Om kopi
 "fields" => "fält",
 "search category" => "sökkategori",
 "Change password enforced" => "Lösenordsändring krävs",
+"Page alias" => "Page alias",
 "page" => "sida",
 "page|desc" => "sida|beskrivning",
 "SomeName" => "NågotNamn",

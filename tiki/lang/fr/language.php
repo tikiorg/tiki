@@ -137,6 +137,7 @@ $lang=Array(
 "Newsletter" => "Newsletter",
 "tiki-mobile.php" => "tiki-mobile.php",
 "pageviews" => "pageviews",
+"Page alias" => "Page alias",
 "page" => "page",
 "article" => "article",
 "forum" => "forum",

@@ -6,7 +6,7 @@
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="structure" value="{$structure|escape}" />
 <table class="normal">
-<tr>
+  <tr>
   <td class="formcolor">{tr}In parent page{/tr}</td>
   <td class="formcolor">
   <!--
@@ -17,6 +17,12 @@
   </select>
   -->
   {$page}
+  </td>
+  </tr>
+  <tr>
+  <td class="formcolor">{tr}Page alias{/tr}</td>
+  <td class="formcolor">
+  <input type="text" name="pageAlias" value="{$pageAlias}" />
   </td>
   </tr>
   <tr>
@@ -56,7 +62,7 @@
   <tr>
   <td class="formcolor">&nbsp;</td>
   <td class="formcolor">
-  <input type="submit" name="create" value="{tr}create{/tr}" />
+  <input type="submit" name="create" value="{tr}update{/tr}" />
   </td>
   </tr>
 </tr>
@@ -72,7 +78,7 @@
 {/if}
 <h2>{tr}Structure{/tr}</h2>
 <a class="link" href="tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;page={$structure|escape:"url"}">
-  {$structure}
+  {$structure} {if $structAlias ne ''} ({$structAlias}) {/if}
 </a>
 [
  <a class="link" href="tiki-index.php?page={$structure|escape:"url"}">
