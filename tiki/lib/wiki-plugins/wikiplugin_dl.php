@@ -8,7 +8,7 @@ function wikiplugin_dl($data, $params) {
 
 	global $replacement;
 	if (isset($param))
-		extract ($params);
+		extract ($params,EXTR_SKIP);
 	$result = '<dl>';
 	$lines = split("\n", $data);
 

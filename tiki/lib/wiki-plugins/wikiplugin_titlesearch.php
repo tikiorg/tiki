@@ -17,7 +17,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.16 $
+    * @version $Revision: 1.17 $
     */
     class WikiPluginTitleSearch extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -28,23 +28,29 @@
             return array('exclude' => '' ,
                 'noheader' => 0,
                 'info' => false,
-                'search' => false);
+                'search' => false,
+				'style' => 'table'
+		);
         }
         function getName() {
             return "TitleSearch";
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.16 $");
+                "\$Revision: 1.17 $");
         }
         function run ($data, $params) {
             global $wikilib;
             $aInfoPreset = array_keys($this->aInfoPresetNames);
             $params = $this->getParams($params, true);
-            extract ($params);
+            extract ($params,EXTR_SKIP);
             if (!$search) {
                 return $this->error("You have to define a search");
             }
+
+            // no additional infos in list output
+            if ($style == 'list') $info = false;
+
             //
             /////////////////////////////////
             // Create a valid list for $info
@@ -92,7 +98,12 @@
                 }
                 $sOutput  .= "\n";
             }
-            $sOutput.=PluginsLibUtil::createTable($aPages["data"],$info);
+            if ($style == 'list') {
+                $sOutput.=PluginsLibUtil::createList($aPages["data"]);
+            }
+            else {
+                $sOutput.=PluginsLibUtil::createTable($aPages["data"],$info);
+            }
             return $sOutput;
         }
     }

@@ -24,8 +24,8 @@ if ($tiki_p_view_directory != 'y') {
 }
 
 $feed = "directories";
-$title = tra("Tiki RSS feed for directory sites");
-$desc = tra("Last sites.");
+$title = (!empty($desc_rss_directories)) ? $desc_rss_directories :tra("Tiki RSS feed for directory sites");
+$desc = (!empty($desc_rss_directories)) ? $desc_rss_directories :tra("Last sites.");
 $now = date("U");
 $id = "siteId";
 $titleId = "name";

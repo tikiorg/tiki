@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.20 2004-09-08 19:52:38 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.21 2005-01-22 22:55:56 mose Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -33,7 +33,7 @@ function wikiplugin_split($data, $params) {
     // it may be here if present after {SPLIT()} in original text
 	if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
 	
-	extract ($params);
+	extract ($params,EXTR_SKIP);
    $fixedsize = (!isset($fixedsize) || $fixedsize == 'y' || $fixedsize == 1 ? true : false);
    $joincols  = (!isset($joincols)  || $joincols  == 'y' || $joincols  == 1 ? true : false);
    // Split data by rows and cells

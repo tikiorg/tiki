@@ -3,6 +3,10 @@
   * set some default params (mainly utf8 as titi is utf8) + use the mailCharset pref from a user
   */
 include_once("lib/webmail/htmlMimeMail.php");
+if (isset($mail_crlf) && $mail_crlf == "LF")
+	DEFINE('CRLF', "\n");
+else
+	DEFINE('CRLF', "\r\n");
 class TikiMail extends HtmlMimeMail {
 		var $charset;
 	
@@ -20,7 +24,7 @@ class TikiMail extends HtmlMimeMail {
 
 	function setUser($user) {
 		global $tikilib;
-		$this->charset = $tikilib->get_user_preference($user, "mailCharset", "utf-8");
+		$this->charset = $tikilib->get_user_preference($user, "mailCharset", $tikilib->get_preference('default_mail_charset', 'utf-8'));
 		$this->setTextCharset($this->charset);
 		$this->setHtmlCharset($this->charset);
 		$this->setHeadCharset($this->charset);

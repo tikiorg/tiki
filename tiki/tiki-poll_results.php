@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.15 2005-01-01 00:16:34 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_results.php,v 1.16 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,20 +31,20 @@ if (!isset($_REQUEST["pollId"])) {
 
 $poll_info = $polllib->get_poll($_REQUEST["pollId"]);
 $polls = $polllib->list_active_polls(0, -1, 'publishDate_desc', '');
-$options = $polllib->list_poll_options($_REQUEST["pollId"], 0, -1, 'optionId_asc', '');
+$options = $polllib->list_poll_options($_REQUEST["pollId"]);
 
-$temp_max = count($options["data"]);
+$temp_max = count($options);
 for ($i = 0; $i < $temp_max; $i++) {
 	if ($poll_info["votes"] == 0) {
 		$percent = 0;
 	} else {
-		$percent = number_format($options["data"][$i]["votes"] * 100 / $poll_info["votes"], 2);
+		$percent = number_format($options[$i]["votes"] * 100 / $poll_info["votes"], 2);
 
-		$options["data"][$i]["percent"] = $percent;
+		$options[$i]["percent"] = $percent;
 	}
 
 	$width = $percent * 200 / 100;
-	$options["data"][$i]["width"] = $percent;
+	$options[$i]["width"] = $percent;
 }
 
 // Poll comments
@@ -59,8 +59,9 @@ if ($feature_poll_comments == 'y') {
 }
 
 $smarty->assign_by_ref('poll_info', $poll_info);
+$smarty->assign('title', $poll_info['title']);
 $smarty->assign_by_ref('polls', $polls["data"]);
-$smarty->assign_by_ref('options', $options["data"]);
+$smarty->assign_by_ref('options', $options);
 
 ask_ticket('poll-results');
 

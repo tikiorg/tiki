@@ -1763,6 +1763,7 @@ $lang = Array(
 "Invalid old password" => "סיסמה ישנה לא תקינה.",
 "The passwords did not match" => "הסיסאות החדשות אינן תואמות.",
 "You do not have permission to view other users data" => "אין הרשאה לצפות בנתוני משתמשים אחרים",
+"The passwords didn't match" => "הסיסאות החדשות אינן תואמות.",
 "Password should be at least" => "הסיסמה צריכה להיות באורך של לפחות",
 "Password must contain both letters and numbers" => "הסיסמה צריכה להכיל גם תווים וגם ספרות",
 "characters long" => "תווים",

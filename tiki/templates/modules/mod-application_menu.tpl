@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.116 2004-10-15 15:54:51 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.117 2005-01-22 22:56:27 mose Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -108,7 +108,7 @@
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('friendsmenu');"><img src="img/icons/{$icn_friendsmenu}fo.gif" style="border: 0" name="friendsmenuicn" alt="{tr}FriendsMenu{/tr}"/></a>&nbsp;
   {else}<a class="separator" href="javascript:toggle('friendsmenu');">[-]</a>{/if}
-  <a class="separator" href="tiki-list_users.php">{tr}Community{/tr}</a>
+  <a class="separator" href={if $tiki_p_list_users eq 'y'}"tiki-list_users.php"{else}"tiki-friends.php"{/if}>{tr}Community{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('friendsmenu');">[+]</a>{/if}
   </div>
   <div id="friendsmenu" style="{$mnu_friendsmenu}">
@@ -162,6 +162,22 @@
    &nbsp;<a href="tiki-admin_structures.php" class="linkmenu">{tr}Structures{/tr}</a><br />
   {/if}
   </div>
+{/if}
+
+{if $feature_projects eq 'y'}
+	<div class="separator">
+	{if $feature_menusfolderstyle eq 'y'}
+	<a class="separator" href="javascript:toggle('prjmenu');"><img src="img/icons/{$icn_projectmenu}fo.gif" style="border: 0" name="projectmenuicn" alt="{tr}Projects Menu{/tr}"/></a>&nbsp;
+	{else}
+	<a class="separator" href="javascript:toggle('prjmenu');">[-]</a>{/if}
+	<a class="separator" href="tiki-list_projects.php">{tr}Projects{/tr}</a>
+	{if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('prjmenu');">[+]</a>{/if}
+	</div>
+	<div id="prjmenu" style="{$mnu_prjmenu}">
+	{if $tiki_p_project_register eq 'y'}
+	  <a class="separator" href="tiki-project_register.php">{tr}Register New Project{/tr}</a><br />
+	{/if}
+	</div>
 {/if}
 
 {if $feature_homework eq 'y' and $tiki_p_hw_student eq 'y'}
@@ -395,6 +411,7 @@
   {if $tiki_p_admin_quizzes eq 'y'}
   &nbsp;<a href="tiki-edit_quiz.php" class="linkmenu">{tr}Admin quiz{/tr}</a><br />
   {/if}
+  &nbsp;<a href="tiki-list_courses.php" class="linkmenu">{tr}List Courses{/tr}</a><br />
   </div>
 {/if}
 
@@ -445,7 +462,7 @@
   </div>
 {/if}
 
-{if $feature_newsletters eq 'y'}
+{if $feature_newsletters eq 'y' && ($tiki_p_subscribe_newsletters eq 'y' || $tiki_p_admin_newsletters eq 'y' || $tiki_p_send_newsletters eq 'y')}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('nlmenu');"><img src="img/icons/{$icn_nlmenu}fo.gif" style="border: 0" name="nlmenuicn" alt=""/></a>&nbsp;
@@ -454,9 +471,27 @@
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('nlmenu');">[+]</a>{/if}
   </div>
   <div id="nlmenu" style="{$mnu_nlmenu}">
-  {if $tiki_p_admin_newsletters eq 'y'}
+  {if $tiki_p_send_newsletters eq 'y'}
   &nbsp;<a href="tiki-send_newsletters.php" class="linkmenu">{tr}Send newsletters{/tr}</a><br />
+  {/if}
+  {if $tiki_p_admin_newsletters eq 'y'}
   &nbsp;<a href="tiki-admin_newsletters.php" class="linkmenu">{tr}Admin newsletters{/tr}</a><br />
+  {/if}
+  </div>
+{/if}
+
+{if $feature_events eq 'y'}
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class="separator" href="javascript:icntoggle('evmenu');"><img src="img/icons/{$icn_evmenu}fo.gif" style="border: 0" name="evmenuicn" alt=""/></a>&nbsp;
+  {else}<a class="separator" href="javascript:toggle('evmenu');">[-]</a>{/if}
+  <a href="tiki-events.php" class="separator">{tr}Events{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('evmenu');">[+]</a>{/if}
+  </div>
+  <div id="evmenu" style="{$mnu_evmenu}">
+  {if $tiki_p_admin_events eq 'y'}
+  &nbsp;<a href="tiki-send_events.php" class="linkmenu">{tr}Send events{/tr}</a><br />
+  &nbsp;<a href="tiki-admin_events.php" class="linkmenu">{tr}Admin events{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -491,27 +526,6 @@
   </div>
 {/if}
 
-{if $feature_jukebox eq 'y'}
-  <div class="separator">
-  {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('jukeboxmenu');"><img src="img/icons/{$icn_jukeboxmenu}fo.gif" style="border: 0" name="jukeboxmenuicn" alt="{tr}Jukebox Menu{/tr}" /></a>&nbsp;
-  {else}<a class="separator" href="javascript:toggle('jukeboxmenu');">[-]</a>{/if}
-  <a href="tiki-jukebox_albums.php" class="separator">{tr}Jukebox{/tr}</a>
-  {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('jukeboxmenu');">[+]</a>{/if}
-  </div>
-  <div id="jukeboxmenu" style="{$mnu_jukeboxmenu}">
-  {if $tiki_p_jukebox_genres eq 'y'}
-  &nbsp;<a href="tiki-jukebox_genres.php" class="linkmenu">{tr}Genres Admin{/tr}</a><br />
-  {/if}
-  {if $tiki_p_jukebox_tracks eq 'y'}
-  &nbsp;<a href="tiki-jukebox_tracks.php" class="linkmenu">{tr}Tracks{/tr}</a><br />
-  {/if}
-  {if $tiki_p_jukebox_admin eq 'y'}
-  &nbsp;<a href="tiki-jukebox_admin.php" class="linkmenu">{tr}Jukebox Admin{/tr}</a><br />
-  {/if}
-  </div>
-{/if}
-
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or
  $tiki_p_admin_categories eq 'y' or
@@ -527,7 +541,7 @@
  $tiki_p_admin_shoutbox eq 'y' or
  $tiki_p_admin_live_support eq 'y' or
  $user_is_operator eq 'y' or
- $tiki_p_admin_users
+ $tiki_p_admin_users eq 'y'
  }
  
   <div class="separator">
@@ -634,12 +648,12 @@
           &nbsp;<a href="tiki-admin_integrator.php" class="linkmenu">{tr}Integrator{/tr}</a><br />
     {/if}
     {if $tiki_p_admin eq 'y'}
-      &nbsp;<a href="tiki-import_phpwiki.php" class="linkmenu">{tr}Import PHPWiki Dump{/tr}</a><br />
       &nbsp;<a href="tiki-phpinfo.php" class="linkmenu">{tr}phpinfo{/tr}</a><br />
       &nbsp;<a href="tiki-admin_dsn.php" class="linkmenu">{tr}DSN{/tr}</a><br />
       &nbsp;<a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External wikis{/tr}</a><br />
       &nbsp;<a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a><br />
       &nbsp;<a href="tiki-mods.php" class="linkmenu">{tr}Mods Admin{/tr}</a><br />
+			&nbsp;<a href="tiki-admin_security.php" class="linkmenu">{tr}Security Admin{/tr}</a><br />
     {/if}
     {/sortlinks}
   </div>

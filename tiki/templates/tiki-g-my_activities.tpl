@@ -36,7 +36,7 @@
             {*exception*}
             {if $tiki_p_exception_instance eq 'y'}
               {if $process.status ne 'aborted' and $process.status ne 'exception' and $process.user eq $user}
-                <a href="tiki-g-user_instances.php?abort=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a>
+                <a onclick="javascript:return confirm('Are you sure you want to exception this instance?');" href="tiki-g-user_instances.php?abort=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a>
               {else}
                 <img border='0' src='lib/Galaxia/img/icons/trdot.gif' width="16" />
               {/if}
@@ -56,7 +56,7 @@
             {*abort*}
             {if $tiki_p_abort_instance eq 'y'}
               {if $process.status ne 'aborted' and $process.user eq $user}
-                <a href="tiki-g-user_instances.php?abort=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}abort instance{/tr}' alt='{tr}abort instance{/tr}' src='lib/Galaxia/img/icons/trash.gif' /></a>
+                <a onclick="javascript:return confirm('Are you sure you want to abort this instance?');" href="tiki-g-user_instances.php?abort=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}abort instance{/tr}' alt='{tr}abort instance{/tr}' src='lib/Galaxia/img/icons/trash.gif' /></a>
               {else}
                 <img border='0' src='lib/Galaxia/img/icons/trdot.gif' width="16" />
               {/if}

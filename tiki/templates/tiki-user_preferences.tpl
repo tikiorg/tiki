@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}UserPreferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences{/tr}">
+<a href="{$helpurl}User+Preferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 
@@ -35,7 +35,7 @@
 {/if}
 
 {cycle name=content values="1,2,3" print=false advance=false}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
   <div class="cbox">
   <div class="cbox-title">{tr}Personal Information{/tr}</div>
@@ -65,10 +65,8 @@
   </select>
   </td></tr>
   
-  {if $feature_maps eq 'y'}
   <tr><td class="form">{tr}Latitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lat" value="{$lat|escape}" /></td></tr>
   <tr><td class="form">{tr}Longitude (WGS84/decimal degrees){/tr}:</td><td class="form"><input type="text" name="lon" value="{$lon|escape}" /></td></tr>
-  {/if}
   
   <tr><td class="form">{tr}Avatar{/tr}:</td><td class="form">{$avatar} <a href="tiki-pick_avatar.php" class="link">{tr}Pick user Avatar{/tr}</a></td></tr>
   <tr><td class="form">{tr}HomePage{/tr}:</td><td class="form"><input type="text" size="40" name="homePage" value="{$homePage|escape}" /></td></tr>
@@ -101,7 +99,7 @@
 </div>
 
 
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
   <div class="cbox">
   <div class="cbox-title">{tr}Preferences{/tr}</div>
@@ -190,6 +188,20 @@
   <input type="checkbox" name="user_dbl" {if $user_dbl eq 'y'}checked="checked"{/if} />
   </td>
   </tr>
+  {* not used {if $feature_history eq 'y'}
+  <tr><td class="form">Use new diff any version interface:</td>
+  <td class="form">
+  <input type="checkbox" name="diff_versions" {if $diff_versions eq 'y'}checked="checked"{/if} />
+  </td>
+  </tr>
+  {/if} *}
+  {/if}
+  {if $feature_community_mouseover eq 'y'}
+  <tr><td class="form">{tr}Show user's info on mouseover{/tr}:</td>
+  <td class="form">
+  <input type="checkbox" name="show_mouseover_user_info" {if $show_mouseover_user_info eq 'y'}checked="checked"{/if} />
+  </td>
+  </tr>
   {/if}
 
   <tr><td colspan="2" class="button"><input type="submit" name="prefs" value="{tr}Change preferences{/tr}" /></td></tr>
@@ -207,7 +219,7 @@
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
-  <tr><td class="form">{tr}Email address{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
+  <tr><td class="form">{tr}Email address{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td></tr>
 {if $auth_method neq 'cas' || ($cas_skip_admin eq 'y' && $user eq 'admin')}
   <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
   <tr><td class="form">{tr}Confirm new password{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
@@ -215,7 +227,7 @@
     <tr><td class="form">{tr}Current password (required){/tr}:</td><td class="form"><input type="password" name="pass" /></td></tr>
   {/if}
 {/if}
-  <tr><td colspan="2" class="button"><input type="submit" name="chgadmin" value="{tr}Change administrative info{/tr}"></td></tr>
+  <tr><td colspan="2" class="button"><input type="submit" name="chgadmin" value="{tr}Change administrative info{/tr}" /></td></tr>
   </table>
   </form>
   </div>
@@ -224,7 +236,7 @@
 </div>
 
 
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
   <div class="cbox">
@@ -295,10 +307,6 @@
   </td>
 </tr>
 
-<tr>
-  <td class="form">{tr}Use dates{/tr}</td>
-  <td class="form"><input type="checkbox" name="tasks_useDates" {if $tasks_useDates eq 'y'}checked="checked"{/if}/></td>
-</tr>
 
 
 <tr>

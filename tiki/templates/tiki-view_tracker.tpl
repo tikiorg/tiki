@@ -117,7 +117,7 @@ class="prevnext">{tr}All{/tr}</a>
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
 <td class="heading auto" style="width:20px;">&nbsp;</td>
 {/if}
-{section name=ix loop=$listfields}
+{section name=ix loop=$fields}
 {if $fields[ix].type eq 'l' and $fields[ix].isTblVisible eq 'y'}
 <td class="heading auto">{$fields[ix].name|default:"&nbsp;"}</td>
 {elseif $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}

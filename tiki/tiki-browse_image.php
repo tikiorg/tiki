@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.29 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_image.php,v 1.30 2005-01-22 22:54:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -219,8 +219,8 @@ $smarty->assign('galleryId', $_REQUEST["galleryId"]);
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1 = str_replace("tiki-browse_image", "tiki-browse_image", $foo["path"]);
 $foo2 = str_replace("tiki-browse_image", "show_image", $foo["path"]);
-$smarty->assign('url_browse', httpPrefix(). $foo1);
-$smarty->assign('url_show', httpPrefix(). $foo2);
+$smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
+$smarty->assign('url_show', $tikilib->httpPrefix(). $foo2);
 
 $imagegallib->add_image_hit($_REQUEST["imageId"]);
 $info = $imagegallib->get_image_info($_REQUEST["imageId"]); //todo: already known???
@@ -244,6 +244,7 @@ if (isset($_REQUEST["move_image"])) {
 $smarty->assign_by_ref('owner', $gal_info["user"]);
 $smarty->assign_by_ref('imageId', $_REQUEST["imageId"]);
 $smarty->assign_by_ref('name', $info["name"]);
+$smarty->assign_by_ref('title', $info["name"]);
 $smarty->assign_by_ref('galleryId', $info["galleryId"]);
 $smarty->assign_by_ref('description', $info["description"]);
 $smarty->assign_by_ref('lat', $info["lat"]);

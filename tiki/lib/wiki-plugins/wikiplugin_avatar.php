@@ -16,7 +16,7 @@ function wikiplugin_avatar($data, $params) {
 
 	global $userlib;
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (isset($float))
 		$avatar = $tikilib->get_user_avatar($data, $float);

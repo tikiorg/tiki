@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.21 2004-10-08 10:00:04 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.22 2005-01-22 22:56:21 mose Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}ArticleDoc" target="tikihelp" class="tikihelp" title="{tr}Admin Article Types{/tr}">
+<a href="{$helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Article Types{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 
@@ -59,6 +59,7 @@
 <td>{tr}Show Image Caption{/tr}</td>
 <td>{tr}Show lang{/tr}</td>
 <td>{tr}Creator can edit{/tr}</td>
+<td>{tr}Articles{/tr}</td>
 <td>{tr}Delete{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
@@ -68,7 +69,7 @@
 <td class="{cycle advance=false}">
   <a class="link" href="tiki-view_articles.php?type={$types[user].type}">{tr}{$types[user].type}{/tr}</a>
 </td>
-{*get_strings {tr}Articl{/tr}{tr}Review{/tr}{tr}Event{/tr}{tr}Classified{/tr} *}
+{*get_strings {tr}Article{/tr}{tr}Review{/tr}{tr}Event{/tr}{tr}Classified{/tr} *}
 <td class="{cycle advance=false}"><input type="checkbox" name="use_ratings[{$types[user].type}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="show_pre_publ[{$types[user].type}]" {if $types[user].show_pre_publ eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="show_post_expire[{$types[user].type}]" {if $types[user].show_post_expire eq 'y'}checked="checked"{/if} /></td>
@@ -88,11 +89,12 @@
 <td class="{cycle advance=false}"><input type="checkbox" name="show_image_caption[{$types[user].type}]" {if $types[user].show_image_caption eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="show_lang[{$types[user].type}]" {if $types[user].show_lang eq 'y'}checked="checked"{/if} /></td>
 <td class="{cycle advance=false}"><input type="checkbox" name="creator_edit[{$types[user].type}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} /></td>
+<td class="{cycle advance=false}">{$types[user].article_cnt}</td>
 <td class="{cycle}">
 {if $types[user].article_cnt eq 0}
 <a class="link" href="tiki-article_types.php?remove_type={$types[user].type}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' /></a>
 {else}
-{$types[user].article_cnt}
+&nbsp;
 {/if}
 </td>
 </tr>

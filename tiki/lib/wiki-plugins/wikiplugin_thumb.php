@@ -21,7 +21,7 @@ function wikiplugin_thumb_help() {
 
 function wikiplugin_thumb($data, $params) {
 	global $smarty, $tikidomain;
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (!isset($data) or !$data) {
 		$data = '&nbsp;';

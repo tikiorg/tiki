@@ -2679,3 +2679,10 @@ padding : 2px 30px;
 float : right;
 }
 
+/* wiki diff styles */
+.diff div{border-top: 1px solid black;}
+.diffheader{background-color:#a9b8c2; font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffbody{background-color:#F2F4F5}
+.diffchar {color: red;}

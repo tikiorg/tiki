@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.2 2004-07-22 13:08:44 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.3 2005-01-22 22:55:56 mose Exp $
  *
  * DIV plugin. Creates a division block for the content. Forces the content 
  * to be aligned (left by deafault).
@@ -18,7 +18,7 @@ function wikiplugin_div_help() {
 
 function wikiplugin_div($data, $params) {
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 	$w    = (isset($width)) ? " width: $width;"  : "";
 	$bg   = (isset($bg))    ? " background: $bg;" : "";
 	$al   = (isset($align) && ($align == 'right' || $align == "center")) ? " text-align: $align;" : " text-align: left;";

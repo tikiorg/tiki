@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.17 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.18 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -100,6 +100,8 @@ if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
 	$gal_info["name"] = 'System';
 	$gal_info["public"] = 'y';
 	$gal_info["description"] = 'System Gallery';
+	$gal_info["sortdirection"] = 'desc';
+	$gal_info["sortorder"] = 'created';
 }
 
 $smarty->assign_by_ref('owner', $gal_info["user"]);
@@ -148,6 +150,9 @@ if ($_REQUEST["galleryId"] == 0) {
 	$info["name"] = 'System';
 	$info["public"] = 'y';
 	$info["description"] = 'System Gallery';
+	$info["sortdirection"] = 'desc';
+	$info["sortorder"] = 'created';
+
 	$smarty->assign('system', 'y');
 } else {
 	$info = $imagegallib->get_gallery($_REQUEST["galleryId"]);

@@ -18,7 +18,7 @@ function wikiplugin_countdown_help() {
 	return tra("Example").":<br />~np~{COUNTDOWN(enddate=>April 1 2004[,locatetime=>on])}".tra("text")."{COUNTDOWN}~/np~";
 }
 function wikiplugin_countdown($data, $params) {
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (!isset($enddate)) {
 		return ("<b>COUNTDOWN: Missing 'enddate' parameter for plugin</b><br />");

@@ -1,11 +1,13 @@
-<a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{tr}Upload File{/tr}</a><br /><br />
+<a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{tr}{if $editFileId}Edit File: {$fileInfo.filename}{else}Upload File{/if}{/tr}</a><br /><br />
 {if count($galleries) > 0}
 	<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse gallery{/tr}</a><br /><br />
 	<div align="center">
 	<form enctype="multipart/form-data" action="tiki-upload_file.php" method="post">
 	<table class="normal">
-	<tr><td class="formcolor">{tr}File Title{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td></tr>
-	<tr><td class="formcolor">{tr}File Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description"></textarea></td></tr>
+	<tr><td class="formcolor">{tr}File Title{/tr}:</td><td class="formcolor"><input type="text" name="name" {if $fileInfo.name}value="{$fileInfo.name}"{/if}/></td></tr>
+	<tr><td class="formcolor">{tr}File Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea></td></tr>
+	{if $editFileId}<input type="hidden" name="galleryId" value="{$galleryId}"/>
+	<input type="hidden" name="fileId" value="{$editFileId}"/>{else}
 	<tr><td class="formcolor">{tr}File Gallery{/tr}:</td><td class="formcolor"> 
 	<select name="galleryId">
 	{section name=idx loop=$galleries}
@@ -13,24 +15,24 @@
 	<option  value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
 	{/if}
 	{/section}
-	</select></td></tr>
+	</select>{/if}</td></tr>
 	<!--<tr><td colspan="2"><b>{tr}Now enter the file URL{/tr}{tr} or upload a local file from your disk{/tr}
 	<tr><td class="formcolor">URL:</td><td><input size="50" type="text" name="url" /></td></tr>-->
 	<tr><td class="formcolor">	{tr}Upload from disk:{/tr}</td>
 	<td class="formcolor">
 		<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 		<input name="userfile1" type="file" />
-		<input name="userfile2" type="file" />
+		{if !$editFileId}<input name="userfile2" type="file" />
 		<br />
 		<input name="userfile3" type="file" />
 		<input name="userfile4" type="file" />
 		<br />
 		<input name="userfile5" type="file" />
-		<input name="userfile6" type="file" />
+		<input name="userfile6" type="file" />{/if}
 	</td></tr>
-	<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
-	<input type="checkbox" name="isbatch" /></td></tr>
-	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}upload{/tr}" /></td></tr>
+	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
+	<input type="checkbox" name="isbatch" /></td></tr>{/if}
+	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}{if $editFileId}edit{else}upload{/if}{/tr}" /></td></tr>
 	</table>
 	</form>
 	</div>
@@ -54,6 +56,12 @@
 				</div>
 			</div>
 		{/section}
+	{elseif $fileChangedMessage}
+	<div align="center">
+		<div class="wikitext">
+		{$fileChangedMessage}
+		</div>
+	</div>
 	{/if}
 {else}
 	{tr}You have to create a gallery first!{/tr}

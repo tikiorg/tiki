@@ -3,7 +3,6 @@ static
 templates_c
 var
 .project
-.htaccess
 phpmyadmin
 tiki-emptycache.php
 project.index

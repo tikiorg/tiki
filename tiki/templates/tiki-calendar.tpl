@@ -1,9 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.50 2004-09-08 19:53:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.51 2005-01-22 22:56:21 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
 {if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
 <span class="button2"><a href="tiki-admin_calendars.php" class="linkbut">{tr}admin{/tr}</a></span>
+{/if}
+{if $feature_tabs ne 'y'}
+<span class="button2"><a href="#filter">{tr}filter{/tr}</a></span>
+{if $modifiable}
+<span class="button2"><a href="#add">{tr}add item{/tr}</a></span>
+{/if}
 {/if}
 <br /><br />
 
@@ -11,10 +17,10 @@
 {cycle name=tabs values="1,2,3" print=false advance=false}
 <div id="page-bar">
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Calendar{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Filter{/tr}</a></span>
 {if $modifiable}
 <span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit/Create{/tr}</a></span>
 {/if}
-<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Filter{/tr}</a></span>
 </div>
 {/if}
 
@@ -41,7 +47,8 @@ ifFormat    : "%s",    // the date format
 displayArea : "datrigger",       // ID of the span where the date is to be shown
 daFormat    : "{$daformat2}",  // format of the displayed date
 singleClick : true,
-onUpdate     : gotocal
+onUpdate     : gotocal,
+firstDay : {$firstDayofWeek}
 {literal} } );{/literal}
 </script>
 {else}
@@ -57,7 +64,7 @@ onUpdate     : gotocal
 {/if}
 </td>
 <td style="text-align:center;" width="100%" class="middle">
-<div><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_short_date}"><b>{tr}today{/tr}:</b> {$now|tiki_short_date}</a></div>
+<div><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_short_date}"><b>{tr}today{/tr}:</b> {$now|tiki_short_datetime}</a></div>
 </td>
 <td align="right" class="middle" nowrap="nowrap" width="100">
 <a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}" title="{tr}day{/tr}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" align="top" /></a>
@@ -107,7 +114,7 @@ onUpdate     : gotocal
 </span>
 <span style="float:right;margin-right:3px;padding-right:4px;">
 {if $tiki_p_add_events eq 'y' and count($listcals) > 0}
-<a href="tiki-calendar.php?todate={$cell[w][d].day}&amp;editmode=add">{tr}+{/tr}</a>
+<a href="tiki-calendar.php?todate={$cell[w][d].day}&amp;editmode=add{if $feature_tabs ne 'y'}#add{/if}">{tr}+{/tr}</a>
 {/if}
 </span>
 .<br />
@@ -115,11 +122,14 @@ onUpdate     : gotocal
 <div class="calcontent">
 {section name=items loop=$cell[w][d].items}
 {assign var=over value=$cell[w][d].items[items].over}
-<div class="Cal{$cell[w][d].items[items].type}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
+<div class="Cal{$cell[w][d].items[items].type} calId{$cell[w][d].items[items].calendarId}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
 <span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"} 
 class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..."}</a></span>
 {if $cell[w][d].items[items].web}
 <a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}">w</a>
+{/if}
+{if $cell[w][d].items[items].evId > 0}
+<a href=tiki-events.php?evId={$cell[w][d].items[items].evId}&info=1 target="_other" class="calweb" title="Event Registration">e</a>
 {/if}
 <br />
 </div>
@@ -134,21 +144,56 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 </div>
 
 {* ----------------------------------- *}
+<a name="filter" />
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<form class="box" method="get" action="tiki-calendar.php" name="f">
+<table border="0" >
+<tr>
+<td>
+<input type="submit" name="refresh" value="{tr}Refresh{/tr}"/><br />
+</td>
+
+{* si au moins qqle chose *}
+<td>
+<div class="caltitle">{tr}Group Calendars{/tr}</div>
+<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onchange="switchCheckboxes(this.form,'calIds[]',this.checked);"/> <label for="calswitch">{tr}check / uncheck all{/tr}</label></div>
+{foreach item=k from=$listcals}
+<div class="calcheckbox"><input type="checkbox" name="calIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
+<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name} (id #{$k})</label>
+</div>
+{/foreach}
+</td>
+
+<td>
+<div class="caltitle">{tr}Tools Calendars{/tr}</div>
+<div class="caltoggle"><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form,'tikicals[]',this.checked);" /> <label for="tikiswitch">{tr}check / uncheck all{/tr}</label></div>
+{foreach from=$tikiItems key=ki item=vi}
+{if $vi.feature eq 'y' and $vi.right eq 'y'}
+<div class="calcheckbox"><input type="checkbox" name="tikicals[]" value="{$ki|escape}" id="tikical_{$ki}" {if $tikical.$ki}checked="checked"{/if} />
+<label for="tikical_{$ki}" class="Cal{$ki}"> = {$vi.label}</label></div>
+{/if}
+{/foreach}
+</td>
+</tr></table>
+</form>
+</div>
+{* ----------------------------------- *}
 
 {if $modifiable}
+<a name="add" />
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 {* ................................................................................... *}
-{if ($calitemId > 0 and $tiki_p_change_events eq 'y') or ($calendarId > 0 and $tiki_p_add_events eq 'y')}
+{if ($calitemId > 0 and $tiki_p_change_events eq 'y') or ($tiki_p_add_events eq 'y')}
 
 {* .............................................. *}{if $calitemId}
-<div class="pagetitle">{tr}Edit Calendar Item{/tr}</div>
+<h2>{tr}Edit Calendar Item{/tr}</h2>
 <div><b>{$calname}</b> : {$name|default:"new event"} (id #{$calitemId})</div>
 <div class="mininotes">{tr}Created{/tr}: {$created|tiki_long_date} {$created|tiki_long_time} </div>
 <div class="mininotes">{tr}Modified{/tr}: {$lastModif|tiki_long_date} {$lastModif|tiki_long_time} </div>
 <div class="mininotes">{tr}by{/tr}: {$lastUser} </div>
 {* ................................................ *}{else}
-<div class="pagetitle">{tr}New Calendar Item{/tr}</div>
+<h2>{tr}New Calendar Item{/tr}</h2>
 <div><b>{$calname}</b> </div>
 {* .................................... *}{/if}
 
@@ -212,14 +257,15 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 <span id="start_date_display" class="daterow">{$start|date_format:$daformat}</span>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
-date        : "{$starti|date_format:"%B %e, %Y %H:%M"}",      // initial date
+date        : "{$start|date_format:"%B %e, %Y %H:%M"}",      // initial date
 inputField  : "start_date_input",      // ID of the input field
 ifFormat    : "%s",    // the date format
 displayArea : "start_date_display",       // ID of the span where the date is to be shown
 daFormat    : "{$daformat}",  // format of the displayed date
 showsTime   : true,
 singleClick : true,
-align       : "bR"
+align       : "bR",
+firstDay : {$firstDayofWeek}
 {literal} } );{/literal}
 </script>
 {else}
@@ -242,7 +288,8 @@ displayArea : "end_date_display",       // ID of the span where the date is to b
 daFormat    : "{$daformat}",  // format of the displayed date
 showsTime   : true,
 singleClick : true,
-align       : "bR"
+align       : "bR",
+firstDay : {$firstDayofWeek}
 {literal} } );{/literal}
 </script>
 {else}
@@ -263,6 +310,13 @@ align       : "bR"
 <tr><td class="formcolor">{tr}URL{/tr}</td><td class="formcolor"><input type="text" name="url" value="{$url|escape}" />
 {if $url}<span class="mini">( <a href="{$url}">{$url}</a> )</span>{/if}
 </td></tr>
+
+{if $customevents eq 'y'}
+<tr><td class="formcolor">{tr}Event ID{/tr}</td><td class="formcolor">
+<input type="text" name="evId" value="{$evId|escape}" />
+{if $evId}<span class="mini">( <a href=tiki-events.php?evId={$evId}&info=1>tiki-events.php?evId={$evId}&info=1</a> )</span>{/if}
+</td></tr>
+{/if}
 
 {if $custompriorities eq 'y'}
 <tr><td class="formcolor">{tr}Priority{/tr}</td><td class="formcolor">
@@ -313,13 +367,14 @@ align       : "bR"
 {tr}to{/tr}
 <select name="calendarId">
 {foreach item=lc from=$listcals}
-<option value="{$lc|escape}" {if $calendarId eq $lc}selected="selected"{/if} onchange="document.forms[f].submit();">{$infocals.$lc.name}</option>
+<option value="{$lc|escape}" {if $defaultAddCal eq $lc}selected="selected"{/if} onchange="document.forms[f].submit();">{$infocals.$lc.name}</option>
 {/foreach}
 </select>
 
 </td></tr>
 </table>
 </form>
+
 {* ....................................................... *}{else}
 <h2>{tr}Add Calendar Item{/tr}</h2>
 
@@ -335,39 +390,4 @@ align       : "bR"
 </div>
 {/if}
 
-{* ----------------------------------- *}
-
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-<form class="box" method="get" action="tiki-calendar.php" name="f">
-<table border="0" >
-<tr>
-<td>
-<input type="submit" name="refresh" value="{tr}Refresh{/tr}"/><br />
-</td>
-
-{if $modifiable}
-<td>
-<div class="caltitle">{tr}Group Calendars{/tr}</div>
-<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onchange="switchCheckboxes(this.form,'calIds[]',this.checked);"/> <label for="calswitch">{tr}check / uncheck all{/tr}</label></div>
-{foreach item=k from=$listcals}
-<div class="calcheckbox"><input type="checkbox" name="calIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
-<label for="groupcal_{$k}">{$infocals.$k.name} (id #{$k})</label>
-</div>
-{/foreach}
-</td>
-{/if}
-
-<td>
-<div class="caltitle">{tr}Tools Calendars{/tr}</div>
-<div class="caltoggle"><input name="tikiswitch" id="tikiswitch" type="checkbox" onclick="switchCheckboxes(this.form,'tikicals[]',this.checked);" /> <label for="tikiswitch">{tr}check / uncheck all{/tr}</label></div>
-{foreach from=$tikiItems key=ki item=vi}
-{if $vi.feature eq 'y' and $vi.right eq 'y'}
-<div class="calcheckbox"><input type="checkbox" name="tikicals[]" value="{$ki|escape}" id="tikical_{$ki}" {if $tikical.$ki}checked="checked"{/if} />
-<label for="tikical_{$ki}" class="Cal{$ki}"> = {$vi.label}</label></div>
-{/if}
-{/foreach}
-</td>
-</tr></table>
-</form>
-</div>
 

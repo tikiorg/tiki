@@ -164,6 +164,7 @@ class BlogLib extends TikiLib {
     }
 
 	function send_trackbacks($id, $trackbacks) {
+	        global $tikilib;
 		// Split to get each URI
 		$tracks = explode(',', $trackbacks);
 
@@ -173,7 +174,7 @@ class BlogLib extends TikiLib {
 		$blog_info = $this->get_blog($post_info['blogId']);
 		//Build uri for post
 		$parts = parse_url($_SERVER['REQUEST_URI']);
-		$uri = httpPrefix(). str_replace('tiki-blog_post',
+		$uri = $tikilib->httpPrefix(). str_replace('tiki-blog_post',
 			'tiki-view_blog_post', $parts['path']). '?postId=' . $id . '&amp;blogId=' . $post_info['blogId'];
 		include ("lib/snoopy/Snoopy.class.inc");
 		$snoopy = new Snoopy;
@@ -270,7 +271,7 @@ class BlogLib extends TikiLib {
 		if ($count_admin_pvs == 'y' || $user != 'admin') {
 			$query = "update `tiki_blogs` set `hits` = `hits`+1 where `blogId`=?";
 
-			$result = $this->query($query,array($blogId));
+			$result = $this->query($query,array((int) $blogId));
 		}
 
 		return true;
@@ -292,6 +293,7 @@ class BlogLib extends TikiLib {
 	}
 
 	function get_post_images($postId) {
+	        global $tikilib;
 		$query = "select `postId`,`filename`,`filesize`,`imgId` from `tiki_blog_posts_images` where `postId`=?";
 
 		$result = $this->query($query,array((int) $postId));
@@ -303,7 +305,7 @@ class BlogLib extends TikiLib {
 			$res['link'] = "<img src='tiki-view_blog_post_image.php?imgId=$imgId' border='0' alt='image' />";
 			$parts = parse_url($_SERVER['REQUEST_URI']);
 			$path = str_replace('tiki-blog_post.php', 'tiki-view_blog_post_image.php', $parts['path']);
-			$res['absolute'] = httpPrefix(). $path . "?imgId=$imgId";
+			$res['absolute'] = $tikilib->httpPrefix(). $path . "?imgId=$imgId";
 			$ret[] = $res;
 		}
 
@@ -472,6 +474,7 @@ class BlogLib extends TikiLib {
 	function blog_post($blogId, $data, $user, $title = '', $trackbacks = '') {
 		// update tiki_blogs and call activity functions
 		global $smarty;
+		global $tikilib;
 
 		global $feature_user_watches;
 		global $sender_email;
@@ -499,6 +502,7 @@ class BlogLib extends TikiLib {
 			if (count($nots)) {
 				include_once("lib/notifications/notificationemaillib.php");
 
+
 				$smarty->assign('mail_site', $_SERVER["SERVER_NAME"]);
 				$query = "select `title` from `tiki_blogs` where `blogId`=?";
 				$blogTitle = $this->getOne($query, array((int)$blogId));
@@ -509,12 +513,12 @@ class BlogLib extends TikiLib {
 				$smarty->assign('mail_user', $user);
 				$smarty->assign('mail_data', $data);
 				$foo = parse_url($_SERVER["REQUEST_URI"]);
-				$machine = httpPrefix(). $foo["path"];
+				$machine = $tikilib->httpPrefix(). $foo["path"];
 				$smarty->assign('mail_machine', $machine);
 				$parts = explode('/', $foo['path']);
 				if (count($parts) > 1)
 					unset ($parts[count($parts) - 1]);
-				$smarty->assign('mail_machine_raw', httpPrefix(). implode('/', $parts));
+				$smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
 				sendEmailNotification($nots, "watch", "user_watch_blog_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_blog_post.tpl");
 				//@mail($not['email'], tra('Blog post'). ' ' . $blogTitle, $mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
 			}

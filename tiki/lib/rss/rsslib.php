@@ -93,43 +93,61 @@ class RSSLib extends TikiLib {
 
 		$news = array();
 
-		// get title and link of the feed:
-		preg_match("/<title>(.*?)<\/title>/i", $data, $title);
- 		preg_match("/<link>(.*?)<\/link>/i", $data, $link);
+		//Only include the title if the option for doing that (showTitle) has been set.
+		if ($showTitle=="y") {
+			// get title and link of the feed:
+			preg_match("/<title>(.*?)<\/title>/i", $data, $title);
+			preg_match("/<link>(.*?)<\/link>/i", $data, $link);
+                        
+			// set "y" if title should be shown:
+			$anew["isTitle"]=$showTitle;
+			$anew["title"] = "";
+			if (isset($title[1])) { $anew["title"] = $title[1]; }
+			$anew["link"] = "";
+			if (isset($link[1])) { $anew["link"] = $link[1]; }
+			$news[] = $anew;
+		}
 
-		// set "y" if title should be shown:
-		$anew["isTitle"]=$showTitle;
-		$anew["title"] = "";
-		if (isset($title[1])) { $anew["title"] = $title[1]; }
-		$anew["link"] = "";
-		if (isset($link[1])) { $anew["link"] = $link[1]; }
-		$news[] = $anew;
- 		
 		// get all items / entries of the feed:		
-		preg_match_all("/<item[^s].*?>(.*?)<\/item>/ms", $data, $items);
+		preg_match_all("/<item[^s].*?>(.*?)<\/item>/msi", $data, $items);
 		if (count($items[1])<1)				
-			preg_match_all("/<entry.*?>(.*?)<\/entry>/ms", $data, $items);
+			preg_match_all("/<entry.*?>(.*?)<\/entry>/msi", $data, $items);
 
-		// get data from all items:
 		for ($it = 0; $it < count($items[1]); $it++) {
-		
-			preg_match_all("/<title>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/title>/i", $items[0][$it], $titles);//Some feeds like to enclose data in CDATA-tags.
-	 		preg_match_all("/<link>(.*?)<\/link>/i", $items[0][$it], $links);
+			// extract all the data we need:
+			preg_match_all("/<title>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/title>/msi", $items[0][$it], $titles);
+	 		preg_match_all("/<link>(.*?)<\/link>/msi", $items[0][$it], $links);
 			if (count($links[1])<1)
-		 		preg_match_all("/<link.*?href=\"(.*?)\".*?>/i", $items[0][$it], $links);
+		 		preg_match_all("/<link.*?href=\"(.*?)\".*?>/msi", $items[0][$it], $links);
+	 		preg_match_all("/<description>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/description>/msi", $items[0][$it], $description);
+			if (count($description[1])<1)
+		 		preg_match_all("/<dc:description>(<!\[CDATA\[)?(.*?)(\]\]>)?<\/dc:description>/i", $items[0][$it], $description);
 
 			$pubdate = array();
-			preg_match_all("/<dc:date>(.*?)<\/dc:date>/i", $items[0][$it], $pubdate);
+			preg_match_all("/<dc:date>(.*?)<\/dc:date>/msi", $items[0][$it], $pubdate);
 			if (count($pubdate[1])<1)				
-				preg_match_all("/<pubDate>(.*?)<\/pubDate>/i", $items[0][$it], $pubdate);
+				preg_match_all("/<pubDate>(.*?)<\/pubDate>/msi", $items[0][$it], $pubdate);
 			if (count($pubdate[1])<1)				
-				preg_match_all("/<issued>(.*?)<\/issued>/i", $items[0][$it], $pubdate);
+				preg_match_all("/<issued>(.*?)<\/issued>/msi", $items[0][$it], $pubdate);
+
+			preg_match_all("/<author>(.*?)<\/author>/msi", $items[0][$it], $author);
+			if (count($author[1])<1)				
+				preg_match_all("/<dc:creator>(.*?)<\/dc:creator>/msi", $items[0][$it], $author);
 
 				$anew["title"] = '';
-				if (isset($titles[2][0])) { $anew["title"] = $titles[2][0]; } //Because of the CDATA-matching, the index is off by 1.
+				if (isset($titles[2][0])) {
+					$anew["title"] = $titles[2][0]; } //Because of the CDATA-matching, the index is off by 1.
 				$anew["link"] = '';
 				if (isset($links[1][0])) {
 					$anew["link"] = $links[1][0];
+				}
+				$anew["author"] = '';
+				if (isset($author[1][0])) {
+					$anew["author"] = $author[1][0];
+				}
+				$anew["description"] = '';
+				if (isset($description[2][0])) {
+					$anew["description"] = $description[2][0]; //Because of the CDATA-matching, the index is off by 1.
 				}
 				$anew["pubDate"] = '';
 				if ( isset($pubdate[1][0]) && ($showPubDate == 'y') )

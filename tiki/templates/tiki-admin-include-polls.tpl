@@ -1,3 +1,7 @@
+{if $feature_help eq 'y'}
+<div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove polls, look for "Polls" under "Admin" on the application menu, or{/tr} <a class="link" href="tiki-admin_polls.php">{tr}click here{/tr}</a>.</div><br />
+{/if}
+
 <div class="cbox">
 <div class="cbox-title">{tr}Poll settings{/tr}</div>
 <div class="cbox-data">

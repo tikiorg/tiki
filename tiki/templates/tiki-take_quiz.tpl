@@ -45,7 +45,11 @@ settimeleft(itid);
 {if $ans eq 'y'}
 {tr}Result{/tr}:
 <div class="quizanswer">
+{if $result.answer}
 {$result.answer}
+{else}
+{tr}Thank you for your submission{/tr}.
+{/if}
 </div>
 {/if}
 </form>

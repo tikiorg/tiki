@@ -16,6 +16,8 @@ function taginsert($area_name,$tagid)
 </script>
 {/literal}
 <a href="javascript:toggleBlock('quicktags{$qtnum}');" class="link"><img src="img/icons/plus.gif" border='0' alt='+' />&nbsp;{tr}Quicktags{/tr} ...</a><br /><br />
+{*get_strings {tr}bold{/tr}{tr}italic{/tr}{tr}underline{/tr}{tr}table{/tr}{tr}table new{/tr}{tr}external link{/tr}{tr}wiki link'{/tr}{tr}heading1{/tr}{tr}title bar{/tr}{tr}box{/tr}
+{tr}rss feed{/tr}{tr}dynamic content{/tr}{tr}tagline{/tr}{tr}hr{/tr}{tr}center text{/tr}{tr}colored text{/tr}{tr}dynamic variable{/tr}{tr}image{/tr}{tr}New wms Metadata{/tr}{tr}New Class{/tr}{tr}New Projection{/tr}{tr}New Query{/tr}{tr}New Scalebar{/tr}{tr}New Layer{/tr}{tr}New Label{/tr}{tr}New Reference{/tr}{tr}New Legend{/tr}{tr}New Web{/tr}{tr}New Outputformat{/tr}{tr}New Mapfile{/tr} *}
 <div id='quicktags{$qtnum}' {if $showtags}style="display:block;"{else}style="display:none;"{/if}>
 <div>
 {cycle name='cycle'|cat:$qtnum values=$qtcycle|default:",,,</div><div>" advance=false print=false}

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.44 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.45 2005-01-22 22:54:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -244,8 +244,7 @@ if ($feature_user_watches == 'y') {
 	if ($user && isset($_REQUEST['watch_event'])) {
 		check_ticket('blog');
 		if ($_REQUEST['watch_action'] == 'add') {
-			$post_info = $bloglib->get_post($_REQUEST['watch_object']);
-			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'blog', $post_info['title'],
+			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'blog', $blog_data['title'],
 				"tiki-view_blog.php?blogId=" . $_REQUEST['blogId']);
 		} else {
 			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);

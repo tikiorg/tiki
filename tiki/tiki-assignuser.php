@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.15 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-assignuser.php,v 1.16 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -68,7 +68,7 @@ if(isset($_REQUEST['set_default'])) {
 	$userlib->set_default_group($_REQUEST['login'],$_REQUEST['defaultgroup']);
 }
 
-$user_info = $userlib->get_user_info($assign_user);
+$user_info = $userlib->get_user_info($assign_user,true);
 $smarty->assign_by_ref('user_info', $user_info);
 
 if (!isset($_REQUEST["sort_mode"])) {

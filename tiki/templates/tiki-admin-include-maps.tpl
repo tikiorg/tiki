@@ -10,6 +10,9 @@
 <tr><td class="form">{tr}Wiki Page for Comments{/tr}:</td><td><input type="text" name="map_comments" value="{$map_comments}" /> </td></tr>
 <tr><td class="form">{tr}Full path to gdaltindex{/tr}:</td><td><input type="text" name="gdaltindex" value="{$gdaltindex}" size="50" /> </td></tr>
 <tr><td class="form">{tr}Full path to ogr2ogr{/tr}:</td><td><input type="text" name="ogr2ogr" value="{$ogr2ogr}" size="50" /> </td></tr>
+<tr><td class="form">{tr}Map Zone{/tr}:</td><td>
+{html_radios name="mapzone" options=$checkboxes_mapzone selected=$mapzone_id separator="  "}
+</td></tr>
 <tr><td colspan="2" class="button"><input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" /></td></tr> 
 <hr>
 <tr><td colspan="2" class="button"><input type="submit" name="mapuser" value="{tr}Generate User Map{/tr}" /></td></tr> 

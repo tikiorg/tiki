@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_dsn.php,v 1.9 2005-01-05 19:22:40 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_dsn.php,v 1.10 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,6 +54,7 @@ if (isset($_REQUEST["save"])) {
 	$info['name'] = '';
 	$smarty->assign('info', $info);
 	$smarty->assign('name', '');
+	$smarty->assign('dsnId', '');
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

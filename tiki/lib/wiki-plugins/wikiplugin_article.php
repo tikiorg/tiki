@@ -11,7 +11,7 @@ function wikiplugin_article_help() {
 function wikiplugin_article($data, $params) {
 	global $tikilib;
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (!isset($Id)) {
 		global $artlib;

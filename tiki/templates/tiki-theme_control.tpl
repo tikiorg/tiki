@@ -39,7 +39,7 @@
   <td class="formcolor">
     <select name="categId">
       {section name=ix loop=$categories}
-      <option value="{$categories[ix].categId|escape}">{$categories[ix].name}</option>
+      <option value="{$categories[ix].categId|escape}">{$categories[ix].name} ({$categories[ix].categId})</option>
       {/section}
     </select>
   </td>
@@ -82,7 +82,7 @@
 <td class="{cycle advance=false}">
 <input type="checkbox" name="categ[{$channels[user].categId}]" />
 </td>
-<td class="{cycle advance=false}">{$channels[user].name}</td>
+<td class="{cycle advance=false}">{$channels[user].name} ({$channels[user].categId})</td>
 <td class="{cycle}">{$channels[user].theme}</td>
 </tr>
 {/section}

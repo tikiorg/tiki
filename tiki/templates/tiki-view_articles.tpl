@@ -46,14 +46,14 @@
 {if $listpages[ix].hasImage eq 'y'}
 <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
-{if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} 
+{if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" 
 src="article_image.php?id={$listpages[ix].articleId} class="articletypeimage" 
 {if $listpages[ix].image_x > 0}width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 }height="{$listpages[ix].image_y}"{/if}/></a>
 {else}
 <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
-{if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} 
+{if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" 
 src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage"/></a>
 {/if}
@@ -62,7 +62,7 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage"/></a>
 {if ($topics[it].topicId eq $listpages[ix].topicId) and ($topics[it].image_size > 0)}
 <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
-{if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{/if} 
+{if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" 
 src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a>
 {/if}
@@ -107,7 +107,7 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a
   {/if}
 {/if}
 <td style="text-align:right;">
-{if $tiki_p_edit_article eq 'y'}
+{if $tiki_p_edit_article eq 'y' or ($listpages[ix].author eq $user and $listpages[ix].creator_edit eq 'y')}
   <a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}
   <a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
@@ -122,15 +122,15 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a
 {/if}
 {/section}
 
-{if $cant_pages ne 0}
+{if $cant_pages and $cant_pages ne 0}
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="artprevnext" href="tiki-view_articles.php?find={$find}&amp;topic={$topic}&amp;type={$type}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="artprevnext" href="tiki-view_articles.php?offset={$prev_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="artprevnext" href="tiki-view_articles.php?find={$find}&amp;topic={$topic}&amp;type={$type}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="artprevnext" href="tiki-view_articles.php?offset={$next_offset}{if $find}&amp;find={$find}{/if}{if $topic}&amp;topic={$topic}{/if}{if $type}&amp;type={$type}{/if}{if $sort_mode ne 'publishDate_desc'}&amp;sort_mode={$sort_mode}{/if}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
@@ -143,4 +143,3 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a
 </div>
 </div>
 {/if}
-&nbsp;

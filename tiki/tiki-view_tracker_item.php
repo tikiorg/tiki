@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.75 2005-01-05 19:22:43 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.76 2005-01-22 22:54:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -333,9 +333,11 @@ if ($tiki_p_modify_tracker_items == 'y') {
 		$_REQUEST['show']  = 'view';
 		$temp_max = count($fields["data"]);
 		for ($i = 0; $i < $temp_max; $i++) {
-			$fid = $fields["data"][$i]["fieldId"];
-			$ins_id = 'ins_' . $fid;
-			$ins_fields["data"][$i]["value"] = '';
+			if (isset($fields["data"][$i])) {
+				$fid = $fields["data"][$i]["fieldId"];
+				$ins_id = 'ins_' . $fid;
+				$ins_fields["data"][$i]["value"] = '';
+			}
 		}
 		$item_info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 		$smarty->assign('item_info', $item_info);
@@ -358,15 +360,22 @@ if ($tiki_p_modify_tracker_items == 'y') {
 	}
 }
 
+if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' and $tiki_p_tracker_view_ratings == 'y') {
+	if ($user and $tiki_p_tracker_vote_ratings == 'y' and isset($_REQUEST['rate']) and isset($_REQUEST['fieldId'])) {
+		$trklib->replace_rating($_REQUEST['trackerId'],$_REQUEST['itemId'],$_REQUEST['fieldId'],$user,$_REQUEST["rate"]);
+		header('Location: tiki-view_tracker_item.php?trackerId='.$_REQUEST['trackerId'].'&itemId='.$_REQUEST['itemId']);
+	}
+	$my_rate = $tikilib->get_user_vote("tracker.".$_REQUEST['trackerId'].'.'.$_REQUEST['itemId'],$user);
+	$smarty->assign('my_rate',$my_rate);
+}
+
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	$last = array();
 	$lst = '';
 	$temp_max = count($xfields["data"]);
 	for ($i = 0; $i < $temp_max; $i++) {
-		if (($xfields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin_trackers == 'y') and
-			($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') 
-		) {
+		if ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
 			$fields["data"][$i] = $xfields["data"][$i];
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];
@@ -513,9 +522,7 @@ if ($tracker_info["useComments"] == 'y') {
 	if ($tiki_p_comment_tracker_items == 'y') {
 		if (isset($_REQUEST["save_comment"])) {
 			check_ticket('view-trackers-items');
-			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"],
-				$_REQUEST["comment_data"], $user);
-
+			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"], $_REQUEST["comment_data"], $user);
 			$smarty->assign('comment_title', '');
 			$smarty->assign('comment_data', '');
 			$smarty->assign('commentId', 0);

@@ -15,7 +15,7 @@ class CalendarLib extends TikiLib {
 		$this->db = $db;
 	}
 
-	function list_calendars($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
+	function list_calendars($offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '') {
 		$mid = '';
 		$res = array();
 		$bindvars = array();
@@ -96,9 +96,12 @@ class CalendarLib extends TikiLib {
 	function drop_calendar($calendarId) {
 		$query = "delete from `tiki_calendars` where `calendarId`=?";
 		$this->query($query,array($calendarId));
+		$query = "delete from `tiki_calendar_items` where `calendarId`=?";
+		$this->query($query,array($calendarId));
 	}
 
 	function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find) {
+		global $user, $tikilib, $calendar_timezone;
 		$where = array();
 		$bindvars=array();
 		$time = new timer;
@@ -115,18 +118,28 @@ class CalendarLib extends TikiLib {
 		$bindvars[] = (int)$tstop;
 		$bindvars[] = (int)$tstart;
 
+		$cond .= " and ((c.`personal`='y' and i.`user`=?) or c.`personal` != 'y')";
+		$bindvars[] = $user;
+
 		$query = "select i.`calitemId` as `calitemId`, i.`name` as `name`, i.`description` as `description`, i.`start` as `start`, i.`end` as `end`, ";
 		$query .= "i.`url` as `url`, i.`status` as `status`, i.`priority`  as `priority`, c.`name` as `calname`, i.`calendarId` as `calendarId`, ";
-		$query .= "i.`locationID` as `locationID`, i.`categoryID` as `categoryID` ";
+		$query .= "i.`locationID` as `locationID`, i.`categoryID` as `categoryID`, i.`evId` as `evId` ";
 		$query .= "from `tiki_calendar_items` as i left join `tiki_calendars` as c on i.`calendarId`=c.`calendarId` where ($cond) ";
 		$result = $this->query($query,$bindvars);
 		$ret = array();
+		if ($calendar_timezone == 'y')
+			$offset_user = $tikilib->get_display_offset($user);
+		else
+			$offset_user = 0;
 		while ($res = $result->fetchRow()) {
 			$dstart = mktime(0, 0, 0, date("m", $res['start']), date("d", $res['start']), date("Y", $res['start']));
 			$dend = mktime(0, 0, 0, date("m", $res['end']), date("d", $res['end']), date("Y", $res['end']));
+			$res['start'] += $offset_user;
+			$res['end'] += $offset_user;
 			$tstart = date("Hi", $res["start"]);
 			$tend = date("Hi", $res["end"]);
 			for ($i = $dstart; $i <= $dend; $i = ($i + (60 * 60 * 24))) {
+				/* $head is in local time */
 				if ($dstart == $dend) {
 					$head = date("H:i", $res["start"]). " - " . date("H:i", $res["end"]);
 				} elseif ($i == $dstart) {
@@ -139,12 +152,13 @@ class CalendarLib extends TikiLib {
 
 				$resitem = array();
 				$resitem=$this->get_item($res["calitemId"]);
-				
+
+				/* $i is timestamp unix of midnight of a day */
 				$ret["$i"][] = array(
 					"result" => $resitem,
 					"calitemId" => $res["calitemId"],
 					"calname" => $res["calname"],
-					"time" => $tstart,
+					"time" => $tstart, /* local time */
 					"type" => $res["status"],
 					"web" => $res["url"],
 					"prio" => $res["priority"],
@@ -152,9 +166,11 @@ class CalendarLib extends TikiLib {
 					"category" => $resitem["categoryName"],
 					"url" => "tiki-calendar.php?todate=$i&amp;editmode=1&amp;calitemId=" . $res["calitemId"],
 					"name" => $res["name"],
+					"evId" => $res["evId"],
 					"extra" => "<div align='right'>... " . tra("click to edit"),
 					"head" => $head,
-					"description" => str_replace("\n|\r", "", $res["description"])
+					"description" => str_replace("\n|\r", "", $res["description"]),
+					"calendarId" => $res['calendarId']
 				);
 			}
 		}
@@ -291,15 +307,18 @@ class CalendarLib extends TikiLib {
 				while ($res = $result->fetchRow()) {
 					$dstart = mktime(0, 0, 0, date("m", $res['created']), date("d", $res['created']), date("Y", $res['created']));
 					$tstart = date("Hi", $res["created"]);
-					if ($res["parentId"] == 0)
+					if ($res["parentId"] == 0) {
 						$res["parentId"] = $res["threadId"];
+						$anchor = "";
+					} else
+						$anchor = "#threadId".$res['threadId'];
 					$ret["$dstart"][] = array(
 						"calitemId" => "",
 						"calname" => "",
 						"prio" => "",
 						"time" => $tstart,
 						"type" => "forum",
-						"url" => "tiki-view_forum_thread.php?forumId=" . $res["forumid"]."&amp;comments_parentId=".$res["parentId"] ,
+						"url" => "tiki-view_forum_thread.php?forumId=" . $res["forumid"]."&amp;comments_parentId=".$res["parentId"].$anchor ,
 						"name" => $res["name"],
 						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . $res["forum"]. "</b>",
 						"description" => "<i>" . tra("by"). " " . $res["user"] . "</i>"
@@ -514,11 +533,12 @@ class CalendarLib extends TikiLib {
 	}
 
 	function get_item($calitemId) {
+		global $user, $tikilib, $calendar_timezone;
 		$query = "select i.`calitemId` as `calitemId`, i.`calendarId` as `calendarId`, i.`user` as `user`, i.`start` as `start`, i.`end` as `end`, t.`name` as `calname`, ";
-		$query.= "i.`locationId` as `locationId`, l.`name` as `locationName`, i.`categoryId` as `categoryId`, c.`name` as `categoryName`, i.`priority` as `priority`, ";
+		$query.= "i.`locationId` as `locationId`, l.`name` as `locationName`, i.`categoryId` as `categoryId`, c.`name` as `categoryName`, i.`priority` as `priority`, i.`evId` as `evId`, ";
 		$query.= "i.`status` as `status`, i.`url` as `url`, i.`lang` as `lang`, i.`name` as `name`, i.`description` as `description`, i.`created` as `created`, i.`lastmodif` as `lastModif`, ";
 		$query.= "t.`customlocations` as `customlocations`, t.`customcategories` as `customcategories`, t.`customlanguages` as `customlanguages`, t.`custompriorities` as `custompriorities`, ";
-		$query.= "t.`customparticipants` as `customparticipants` from `tiki_calendar_items` as i left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` ";
+		$query.= "t.`customparticipants` as `customparticipants`, t.`customevents` as `customevents`  from `tiki_calendar_items` as i left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` ";
 		$query.= "left join `tiki_calendar_categories` as c on i.`categoryId`=c.`calcatId` left join `tiki_calendars` as t on i.`calendarId`=t.`calendarId` where `calitemId`=?";
 		$result = $this->query($query,array((int)$calitemId));
 		$res = $result->fetchRow();
@@ -537,6 +557,12 @@ class CalendarLib extends TikiLib {
 
 		$res["participants"] = implode(',', $ppl);
 		$res["organizers"] = implode(',', $org);
+		if ($calendar_timezone == 'y')
+			$offset_user = $tikilib->get_display_offset($user);
+		else
+			$offset_user = 0;
+		$res["start"] += $offset_user;
+		$res["end"] += $offset_user;
 		return $res;
 	}
 
@@ -586,15 +612,15 @@ class CalendarLib extends TikiLib {
 
 		if ($calitemId) {
 			$query = "update `tiki_calendar_items` set `calendarId`=?,`user`=?,`start`=?,`end`=? ,`locationId`=? ,`categoryId`=?,`priority`=?,`status`=?,`url`=?,";
-			$query.= "`lang`=?,`name`=?,`description`=?,`lastmodif`=? where `calitemId`=?";
+			$query.= "`lang`=?,`name`=?,`description`=?,`evId`=?,`lastmodif`=? where `calitemId`=?";
 			$bindvars=array((int)$data["calendarId"],$user,(int)$data["start"],(int)$data["end"],(int)$data["locationId"],(int)$data["categoryId"],(int)$data["priority"],
-			                $data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],(int)time(),(int)$calitemId);
+			                $data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],(int)$data["evId"],(int)time(),(int)$calitemId);
 			$result = $this->query($query,$bindvars);
 		} else {
 			$now=time();
-			$query = "insert into `tiki_calendar_items` (`calendarId`, `user`, `start`, `end`, `locationId`, `categoryId`, ";
-			$query.= " `priority`, `status`, `url`, `lang`, `name`, `description`, `created`, `lastmodif`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			$bindvars=array((int)$data["calendarId"],$user,(int)$data["start"],(int)$data["end"],(int)$data["locationId"],(int)$data["categoryId"],$data["priority"],$data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],(int)$now,(int)$now);
+			$query = "insert into `tiki_calendar_items` (`calendarId`, `user`, `start`, `end`, `locationId`, `categoryId`,`evId`,  ";
+			$query.= " `priority`, `status`, `url`, `lang`, `name`, `description`, `created`, `lastmodif`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars=array((int)$data["calendarId"],$user,(int)$data["start"],(int)$data["end"],(int)$data["locationId"],(int)$data["categoryId"],(int)$data["evId"],$data["priority"],$data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],(int)$now,(int)$now);
 			$result = $this->query($query,$bindvars);
 			$calitemId = $this->GetOne("select `calitemId` from `tiki_calendar_items` where `calendarId`=? and `created`=?",array($data["calendarId"],$now));
 		}
@@ -607,7 +633,7 @@ class CalendarLib extends TikiLib {
 		foreach ($roles as $lvl => $ro) {
 			foreach ($ro as $r) {
 				$query = "insert into `tiki_calendar_roles` (`calitemId`,`username`,`role`) values (?,?,?)";
-				$this->query($queryi,array($calitemId,$r,$lvl));
+				$this->query($query,array($calitemId,$r,$lvl));
 			}
 		}
 		return $calitemId;

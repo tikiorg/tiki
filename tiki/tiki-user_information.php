@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.26 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.27 2005-01-22 22:54:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -120,7 +120,7 @@ $display_timezone = $tikilib->get_user_preference($userwatch, 'display_timezone'
 $smarty->assign_by_ref('display_timezone', $display_timezone);
 
 $userinfo = $userlib->get_user_info($userwatch);
-$email_isPublic = $tikilib->get_user_preference($userwatch, 'email is public');
+$email_isPublic = $tikilib->get_user_preference($userwatch, 'email is public', 'n');
 if ($email_isPublic != 'n') {
 	$userinfo['email'] = scrambleEmail($userinfo['email'], $email_isPublic);
 }

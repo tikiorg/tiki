@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.43 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.44 2005-01-22 22:54:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -220,18 +220,22 @@ if (isset($_REQUEST["preview"])) {
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 		
 		$file_name = $_FILES['userfile1']['name'];
+		// Simple check if it's an image file
+		if (preg_match('/\.(gif|png|jpe?g)$/i',$file_name)) {			
 		$file_tmp_name = $_FILES['userfile1']['tmp_name'];
-		$tmp_dest = $tmpDir . "/" . $file_name;
+		$tmp_dest = $tmpDir . "/" . $file_name.".tmp";
 		if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 			$smarty->assign('msg', tra('Errors detected'));
 			$smarty->display("error.tpl");
 			die();
 		}
+		
 
 		$fp = fopen($tmp_dest, "rb");
 		$data = fread($fp, filesize($tmp_dest));
 		
 		fclose ($fp);
+		unlink($tmp_dest);
 		$imgtype = $_FILES['userfile1']['type'];
 		$imgsize = $_FILES['userfile1']['size'];
 		$imgname = $_FILES['userfile1']['name'];
@@ -241,6 +245,7 @@ if (isset($_REQUEST["preview"])) {
 		$smarty->assign('image_size', $imgsize);
 		$hasImage = 'y';
 		$smarty->assign('hasImage', 'y');
+		}
 	}
 
 	if ($hasImage == 'y') {

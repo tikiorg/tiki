@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.16 2005-01-05 19:22:41 jburleyebuilt Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.17 2005-01-22 22:54:55 mose Exp $
  *
  * Integrated files viewer (wrapper)
  *
@@ -53,7 +53,7 @@ if ((substr($file, 0, 7) != 'http://')
 if (isset($_REQUEST["clear_cache"]) && $rep["cacheable"])
     $integrator->clear_cached_file($repID, (isset($_REQUEST["file"]) ? $_REQUEST["file"] : ''));
 //
-$url2cache = httpPrefix().$_SERVER["SCRIPT_NAME"]."?repID=".$repID.(isset($_REQUEST["file"]) ? "&file=".$_REQUEST["file"] : '');
+$url2cache = $tikilib->httpPrefix().$_SERVER["SCRIPT_NAME"]."?repID=".$repID.(isset($_REQUEST["file"]) ? "&file=".$_REQUEST["file"] : '');
 $data = $integrator->get_file($repID, $file, $rep["cacheable"], $url2cache);
 $smarty->assign_by_ref('data', $data);
 $smarty->assign('repID', $repID);

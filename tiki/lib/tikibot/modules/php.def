@@ -2009,9 +2009,9 @@ xml_parser_create_ns([string encoding [, string sep]]) Create an XML parser
 xml_set_end_namespace_decl_handler(int pind, string hdl) Set up character data handler
 xml_set_start_namespace_decl_handler(int pind, string hdl) Set up character data handler
 xmlrpc_encode_request(string method, mixed params) Generates XML for a method request
-xmlrpc_encode(mixed value) Generates XML for a PHP value
+xmlrpc_tkencode(mixed value) Generates XML for a PHP value
 xmlrpc_decode_request(string xml, string method [, stringencoding]) Decodes XML into native PHP types
-xmlrpc_decode(string xml [, string encoding]) Decodes XML into native PHP types
+xmlrpc_tkdecode(string xml [, string encoding]) Decodes XML into native PHP types
 xmlrpc_server_create(void) Creates an xmlrpc server
 xmlrpc_server_destroy(resource server) Destroys server resources
 xmlrpc_server_call_method(resource server, string xml, mixeduser_data [, array output_options]) Parses XML requests and call methods

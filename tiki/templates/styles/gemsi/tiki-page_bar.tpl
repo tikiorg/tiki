@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.6 2004-10-08 10:00:13 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.7 2005-01-22 22:56:28 mose Exp $ *}
 
 <div id="page-bar">
 
@@ -62,10 +62,6 @@ class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</s
 
 {if $feature_wiki_discuss eq 'y'}
 <div class="button2"><a href="tiki-view_forum.php?forumId={$wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={"Use this thread to discuss the [tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"] page."}&amp;comment_topictype=n" class="linkbut">{tr}discuss{/tr}</a></div>
-{/if}
-
-{if $edit_page eq 'y'}
-<div class="button2"><a title="Show quick help for wiki syntax" href="javascript:flip('edithelpzone');" class="linkbut">{tr}wiki help{/tr}</a></div>
 {/if}
 
 {if $show_page == 'y'}

@@ -32,18 +32,31 @@ function random_refresh_img() {
   }
 }
 
-function random_refresh_index_comments() {
+function random_refresh_index_comments( $times = 1 ) {
   //find random forum comment
   global $tikilib;
+
+    for( $i = 1; $i <= $times; $i ++ )
+    {
   // get random comment
-  $cant=$tikilib->getOne("select count(*) from `tiki_comments`",array());
+  $cant = $tikilib->getOne("select count(*) from `tiki_comments`");
+    // print "<pre>cant:";
+    // print_r( $cant );
+    // print "</pre>";
   if($cant>0) {
     $query="select * from `tiki_comments`";
     $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
     $res=$result->fetchRow();
+    // print "<pre>res:";
+    // print_r( $res );
+    // print "</pre>";
     $words=&search_index($res["title"]." ".$res["data"]." ".$res["summary"]);
+    // print "<pre>words:";
+    // print_r( $words );
+    // print "</pre>";
     insert_index($words,$res["objectType"].'comment',$res["threadId"]);
   }
+    }
 }
 
 function random_refresh_index_blogs() {
@@ -222,6 +235,28 @@ function refresh_index_wiki($page) {
   insert_index($words,'wiki',$page);
 }
 
+function refresh_index_comments($threadId) {
+    global $tikilib;
+
+    if( isset( $threadId ) )
+    {
+    $query="select * from `tiki_comments` where threadID = ? ";
+    $result = $tikilib->query( $query, array( $threadId ) );
+    $res=$result->fetchRow();
+
+    // print "<pre>res:";
+    // print_r( $res );
+    // print "</pre>";
+
+    $words=&search_index($res["title"]." ".$res["data"]." ".$res["summary"]);
+    // print "<pre>words:";
+    // print_r( $words );
+    // print "</pre>";
+
+    insert_index($words,$res["objectType"].'comment',$res["threadId"]);
+    }
+}
+
 function refresh_index_forum($page) {
 
 }
@@ -233,7 +268,7 @@ function refresh_index_trackers($page) {
 function &search_index($data) {
   $data=strip_tags($data);
   // split into words
-  $sstrings=preg_split("/[\W]+/",$data,-1,PREG_SPLIT_NO_EMPTY);
+  $sstrings=preg_split("/[\s]+/",$data,-1,PREG_SPLIT_NO_EMPTY);
   // count words
   $words=array();
   foreach ($sstrings as $key=>$value) {

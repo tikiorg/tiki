@@ -124,11 +124,11 @@ function since_last_visit_new($user) {
 
     if($userlib->user_has_permission($user, "tiki_p_edit_article")) {
       $query = "select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `created`>? and `expireDate`>?";
+	  $bindvars = array((int)$last,time());
     }else {
-      $query = "select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `publishDate`>? and `expireDate`>?";
+      $query = "select `articleId`,`title`,`publishDate`,`authorName` from `tiki_articles` where `publishDate`>? and `publishDate`<=? and `expireDate`>?";
+	  $bindvars = array((int)$last,time(),time());
     }
-    $bindvars = array((int)$last);
-    $bindvars[] = time();
     $result = $tikilib->query($query, $bindvars);
 
     $count = 0;

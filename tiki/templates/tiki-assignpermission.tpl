@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.53 2004-09-28 12:59:38 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.54 2005-01-22 22:56:21 mose Exp $ *}
 { *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
 
 
@@ -27,7 +27,7 @@
 </td></tr>
 </table>
 <br />
-
+<hr>
 <form method="post" action="tiki-assignpermission.php">
 <input type="hidden" name="group" value="{$group|escape}" />
 <input type="hidden" name="type" value="{$type|escape}" />
@@ -48,22 +48,22 @@
 </select>
 <input type="submit" name="allper" value="{tr}update{/tr}" />
 </form>
-
+<hr>
 <br /><br />
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
 <td class="findtable">
-<form method="post" action="tiki-assignpermission.php">
+<form method="post" action="tiki-assignpermission.php" name="permselects">
 <input type="text" name="find" value="{$find|escape}" />
 <input type="submit" value="{tr}find{/tr}" name="search" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<select name="type">
+<select name="type" onchange="permselects.submit()">
 <option value="">{tr}all{/tr}</a>
 {section name=v loop=$types}
 <option value="{$types[v]}"{if $type eq $types[v]} selected="selected"{/if}>{tr}{$types[v]}{/tr}</a>
 {/section}
 </select>
-<select name="group">
+<select name="group" onchange="permselects.submit()">
 {section name=v loop=$groups}
 <option value="{$groups[v].groupName}"{if $group eq $groups[v].groupName} selected="selected"{/if}>{$groups[v].groupName}</a>
 {/section}
@@ -74,15 +74,14 @@
 <form name="tiki-assignpermission.php" method="post">
 <input type="hidden" name="group" value="{$group|escape}" />
 <input type="hidden" name="type" value="{$type|escape}" />
+<input type="submit" name="update" value="{tr}update{/tr}" /><br />
 <table class="normal">
 <tr>
 <td class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'permName_desc'}permName_asc{else}permName_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading">{tr}level{/tr}</td>
-<!--<td class="heading">{tr}assgn{/tr}</td>-->
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}type{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-assignpermission.php?type={$type}&amp;group={$group}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}permDesc_asc{else}permDesc_desc{/if}">{tr}desc{/tr}</a></td>
-<!-- <td class="heading">{tr}action{/tr}</td> -->
 </tr>
 {section name=user loop=$perms}
 <input type="hidden" name="permName[{$perms[user].permName}]" />
@@ -91,34 +90,16 @@
 <td class="odd"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
 <td class="odd">{$perms[user].permName}</td>
 <td class="odd"><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
-<!--<td class="odd">{$perms[user].hasPerm}</td>-->
 <td class="odd">{tr}{$perms[user].type}{/tr}</td>
 <td class="odd">{tr}{$perms[user].permDesc}{/tr}</td>
-<!--
-<td class="odd">
-{if $perms[user].hasPerm eq 'n'}
-<a class="link" href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;perm={$perms[user].permName}&amp;group={$group}">{tr}assign{/tr}</a></td>
-{else}
-<a class="link" href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$perms[user].permName}&amp;group={$group}&amp;action=remove">remove</a></td>
-{/if}
--->
 </tr>
 {else}
 <tr>
 <td class="even"><input type="checkbox" name="perm[{$perms[user].permName}]" {if $perms[user].hasPerm eq 'y'}checked="checked"{/if}/></td>
 <td class="even">{$perms[user].permName}</td>
 <td class="even"><select name="level[{$perms[user].permName}]">{html_options output=$levels values=$levels selected=$perms[user].level}</select></td>
-<!--<td class="even">{$perms[user].hasPerm}</td>-->
 <td class="even">{$perms[user].type}</td>
 <td class="even">{$perms[user].permDesc}</td>
-<!--
-<td class="even">
-{if $perms[user].hasPerm eq 'n'}
-<a class="link" href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;action=assign&amp;perm={$perms[user].permName}&amp;group={$group}">{tr}assign{/tr}</a></td>
-{else}
-<a class="link" href="tiki-assignpermission.php?type={$type}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$perms[user].permName}&amp;group={$group}&amp;action=remove">remove</a></td>
-{/if}
--->
 </tr>
 {/if}
 {/section}

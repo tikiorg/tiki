@@ -17,7 +17,7 @@
 // |          Chuck Hagenbuch <chuck@horde.org>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Socket.php,v 1.2 2003-10-12 16:03:03 mose Exp $
+// $Id: Socket.php,v 1.3 2005-01-22 22:55:50 mose Exp $
 //
 
 require_once 'PEAR.php';
@@ -91,7 +91,14 @@ class Net_Socket extends PEAR {
             $this->addr = $addr;
         } else {
             $this->addr = gethostbyname($addr);
+
+        	if($this->addr == $addr) {
+            	return $this->raiseError($errstr, $errno);
+        	}
         }
+
+
+
         $this->port = $port % 65536;
         if ($persistent !== null) {
             $this->persistent = $persistent;

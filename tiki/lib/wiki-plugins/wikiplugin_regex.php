@@ -16,7 +16,7 @@ return tra("Takes regex expressions and parses the content between the REGEX tag
 function wikiplugin_regex($data, $params) {
 global $tikilib;
 
-extract ($params);
+extract ($params,EXTR_SKIP);
 $pageName = (isset($pageName)) ? $pageName : "pageName";//gets a page
 $info = $tikilib->get_page_info($pageName);
 $content=$info["data"]; 

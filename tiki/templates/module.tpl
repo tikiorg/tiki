@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.14 2004-09-08 19:53:01 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.15 2005-01-22 22:56:18 mose Exp $ *}
 {* Module layout with controls *}
 
 <div class="box {$module_name}">
@@ -33,4 +33,5 @@
 {else}
   {$module_content}
 {/if}
+{$module_error}
 </div></div>

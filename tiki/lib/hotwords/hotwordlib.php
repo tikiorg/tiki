@@ -44,7 +44,7 @@ class HotwordsLib extends TikiLib {
 	}
 
 	function add_hotword($word, $url) {
-		$word = addslashes($word);
+//		$word = addslashes($word);
 
 		$url = addslashes($url);
 		$query = "delete from `tiki_hotwords` where `word`=?";

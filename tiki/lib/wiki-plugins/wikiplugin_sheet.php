@@ -19,7 +19,7 @@ function wikiplugin_sheet_help() {
 }
 function wikiplugin_sheet($data, $params) {
 	global $dbTiki, $tikilib;
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 	$tikilib = &new TikiLib( $dbTiki );
 
 	if (!isset($id)) {

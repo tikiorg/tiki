@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rankings.php,v 1.13 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_rankings.php,v 1.14 2005-01-22 22:54:53 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -76,6 +76,7 @@ $rk = $ranklib->$which($limit);
 $rank["data"] = $rk["data"];
 $rank["title"] = $rk["title"];
 $rank["y"] = $rk["y"];
+$rank["type"] = $rk["type"];
 $rankings[] = $rank;
 
 $smarty->assign_by_ref('rankings', $rankings);

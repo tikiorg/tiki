@@ -1,12 +1,16 @@
 <?php
-if (isset($_GET['version'])) {
-	$version = $_GET['version'];
+
+$tikiversion='1.9';
+if(!isset($_GET['version'])) {
+   echo "version not given. Using default $tikiversion.<br />";
 } else {
-	$version = 'last';
+   if(preg_match('/\d\.\d/',$_GET['version'])) {
+      $tikiversion=$_GET['version'];
+   }
 }
 
 // read file
-$file="../tiki.sql";
+$file="../tiki-$tikiversion-mysql.sql";
 @$fp = fopen($file,"r");
 if(!$fp) echo "Error opening $file";
 $data = '';
@@ -25,7 +29,7 @@ $statements=preg_split("#(;\n)|(;\r\n)#",$data);
 
 echo "<table>\n";
 // step though statements
-$fp=fopen($version.".to_sqlite.sql","w");
+$fp=fopen($tikiversion.".to_sqlite.sql","w");
 foreach ($statements as $statement)
 {
   echo "<tr><td><pre>\n";

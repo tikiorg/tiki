@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-view_faq.php?faqId={$faqId}">{$faq_info.title}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}FAQ" target="tikihelp" class="tikihelp" title="{tr}view faq{/tr}">
+<a href="{$helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}view faq{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
@@ -11,7 +11,9 @@
 
 
 <br /><br />
-<a class="linkbut" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a><br /><br />
+<a class="linkbut" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a>
+{if $tiki_p_admin_faqs eq 'y'}<a class="linkbut" href="tiki-list_faqs.php?faqId={$faqId}">{tr}Edit this FAQ{/tr}</a>{/if}
+{if $tiki_p_admin_faqs eq 'y'}<a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}new question{/tr}{/if}<br /><br />
 <h2>{tr}Questions{/tr}</h2>
 <div class="faqlistquestions">
 <ol>

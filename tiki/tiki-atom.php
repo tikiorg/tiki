@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-atom.php,v 1.6 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-atom.php,v 1.7 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,17 +20,17 @@ $urlarray = parse_url($url);
 
 $pagename = substr($urlarray["path"], strrpos($urlarray["path"], '/') + 1);
 
-$home = htmlspecialchars(httpPrefix().str_replace($pagename, $tikiIndex, $urlarray["path"]));
-$img = htmlspecialchars(httpPrefix().str_replace($pagename, "img/tiki.jpg", $urlarray["path"]));
+$home = htmlspecialchars($tikilib->httpPrefix().str_replace($pagename, $tikiIndex, $urlarray["path"]));
+$img = htmlspecialchars($tikilib->httpPrefix().str_replace($pagename, "img/tiki.jpg", $urlarray["path"]));
 
-$read = httpPrefix().str_replace($pagename, "$readrepl", $urlarray["path"]);
+$read = $tikilib->httpPrefix().str_replace($pagename, "$readrepl", $urlarray["path"]);
 
-$url = htmlspecialchars(httpPrefix().$url);
+$url = htmlspecialchars($tikilib->httpPrefix().$url);
 $title = preg_replace("/RSS/","Atom", $title);
 $title = htmlspecialchars($title);
 $desc = htmlspecialchars($desc);
 $url = htmlspecialchars($url);
-$css = htmlspecialchars(httpPrefix().str_replace($pagename, "lib/rss/atom-style.css", $urlarray["path"]));
+$css = htmlspecialchars($tikilib->httpPrefix().str_replace($pagename, "lib/rss/atom-style.css", $urlarray["path"]));
 
 $atom_use_css = false; // default is: do not use css
 if (isset($_REQUEST["css"])) {

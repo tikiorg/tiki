@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_jukebox.php,v 1.4 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_jukebox.php,v 1.5 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,6 +16,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["filesset"]) && isset($_REQUEST["feature_jukebox_files"])) {
 	check_ticket('admin-inc-jukebox');
+	if (substr($_REQUEST["feature_jukebox_files"], -1) != "\\" && substr($_REQUEST["feature_jukebox_files"], -1) != "/" && $_REQUEST["feature_jukebox_files"] != "") {
+		$_REQUEST["feature_jukebox_files"] .= "/";
+	}
 	$tikilib->set_preference("feature_jukebox_files", $_REQUEST["feature_jukebox_files"]);
 	$smarty->assign('feature_jukebox_files', $_REQUEST["feature_jukebox_files"]);
 }

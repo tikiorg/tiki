@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.18 2004-09-08 19:52:59 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.19 2005-01-22 22:56:15 mose Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -2042,3 +2042,10 @@ padding : 2px 30px;
 float : right;
 }
 
+/* wiki diff styles */
+.diff div {border-top: 1px solid #A9B8C2}
+.diffheader{background-color:#a9b8c2; font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffbody{background-color:#F2F4F5}
+.diffchar {color: red;}

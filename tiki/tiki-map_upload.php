@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.12 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.13 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,14 +21,38 @@ if ($tiki_p_map_edit !='y') {
   die;      
 }
 
+if (!is_dir($map_path)) {
+  $smarty->assign('msg', tra("Please create a directory named $map_path to hold your map files."));
+	$smarty->display('error.tpl');
+	die;
+}
+
 $max_file_size=ini_get("upload_max_filesize");
 $smarty->assign('max_file_size', $max_file_size);
 
+// checks to ensure no variable contains .. or ~ in file name or directory name
+if (isset($_REQUEST["file"])) {
+	$_REQUEST["file"] = preg_replace('~\.\.~','',$_REQUEST["file"]);
+	$_REQUEST["file"] = preg_replace('~\~~','',$_REQUEST["file"]);
+	$_REQUEST["file"] = preg_replace('~/+~','/',$_REQUEST["file"]);
+}
+
+if (isset($_REQUEST["directory"])) {
+	$_REQUEST["directory"] = preg_replace('~\.\.~','',$_REQUEST["directory"]);
+	$_REQUEST["directory"] = preg_replace('~\~~','',$_REQUEST["directory"]);
+	$_REQUEST["directory"] = preg_replace('~/+~','/',$_REQUEST["directory"]);
+}
+
 if (isset($_REQUEST["dir"])) {
-	$_REQUEST["dir"] = preg_replace('~\.\.~','',$_REQUEST["dir"]);
+	$_REQUEST["dir"] = preg_replace('~\~~','',$_REQUEST["dir"]);
 	$_REQUEST["dir"] = preg_replace('~/+~','/',$_REQUEST["dir"]);
-  $directory_path = $map_path.$_REQUEST["dir"];
-  $dir = $_REQUEST["dir"];
+  $directory_path = realpath($map_path.$_REQUEST["dir"]);
+	if (substr($directory_path,0,strlen($map_path)+4)!= $map_path."data") {
+		$dir="/data";
+		$directory_path=$map_path."/data";
+	} else {
+		$dir="/data".substr($directory_path,strlen($map_path)+4);
+	}
 	$basedir = dirname($_REQUEST["dir"]);
   if (substr($dir,0,5) != "/data") {
     $directory_path = $map_path."/data";
@@ -108,19 +132,19 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
 		if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 					
-    if(!preg_match("/^\./", $_REQUEST["directory"]) || 
-       !preg_match("/\.\//", $_REQUEST["directory"])){
-      if ($tiki_p_map_delete !='y') {
-        $smarty->assign('msg',tra("You do not have permissions to delete a directory"));
-        $smarty->display("error.tpl");
-        die;      
-      }
-      if(!@rmdir($directory_path."/".$_REQUEST["directory"])) {
-        $smarty->assign('msg',tra("The Directory is not empty"));
-        $smarty->display("error.tpl");
-        die;      
-      }
-    }
+    	if(!preg_match("/^\./", $_REQUEST["directory"]) || 
+    	   !preg_match("/\.\//", $_REQUEST["directory"])){
+    	  if ($tiki_p_map_delete !='y') {
+    	    $smarty->assign('msg',tra("You do not have permissions to delete a directory"));
+    	    $smarty->display("error.tpl");
+    	    die;      
+    	  }
+    	  if(!@rmdir($directory_path."/".$_REQUEST["directory"])) {
+    	    $smarty->assign('msg',tra("The Directory is not empty"));
+    	    $smarty->display("error.tpl");
+    	    die;      
+    	  }
+    	}
 		} else {
 			key_get($area);
 		}
@@ -168,6 +192,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
 // Get layers from the layers directory
 $files = array();
 $dirs = array();
+if (is_dir($directory_path)) {
 $h = opendir($directory_path);
 
 while (($file = readdir($h)) !== false) {
@@ -182,6 +207,7 @@ while (($file = readdir($h)) !== false) {
   }
 }
 closedir ($h);
+}
 
 // if $dirs[] exists, sort it and print all elements in it.
 if(is_array($dirs)){

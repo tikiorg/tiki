@@ -224,7 +224,9 @@
 {/foreach}
 </table>
 </div>
-{/if}{$parsed}
+{/if}
+{if $feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+{$parsed}
 {if $pages > 1}
 	<br />
 	<div align="center">

@@ -244,82 +244,44 @@ class TikiLib extends TikiDB {
 	    return $ret;
 
 	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
+            switch($event) {
+                case 'wiki_page_changed':
+                    $res['perm']=($this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_view') ||
+                                  $this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_admin_wiki'));
+                    break;
+                case 'blog_post':
+                    $res['perm']=($this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_read_blog') ||
+                                  $this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_admin_blog'));
+                    break;
+                case 'map_changed':
+                    $res['perm']=$this->user_has_perm_on_object($res['user'],$object,'map','tiki_p_map_view');
+                    break;
+                case 'forum_post_topic':
+                    $res['perm']=($this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_forum_read') ||
+                                 $this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
+                    break;
+                case 'forum_post_thread':
+                    require_once('lib/commentslib.php');
+                    $commentslib = new Comments($dbTiki);
+                    $forumId=$commentslib->get_comment_father($object);
+                    $res['perm']=($this->user_has_perm_on_object($res['user'],$forumId,'forum','tiki_p_forum_read') ||
+                                  $this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
+                    break;
+                default:
+                    // for security we deny all others.
+                    $res['perm']=FALSE;
+                    break;
+                }
+            if($res['perm']) {
+               $ret[] = $res;
+            }
+
 	}
 
 	return $ret;
     }
 
 
-    /*shared*/
-    function replace_task($user, $taskId, $title, $description, $date, $status, $priority, $completed, $percentage) {
-	if ($taskId) {
-	    $query = "update `tiki_user_tasks` set `title` = ?, `description` = ?, `date` = ?, `status` = ?, `priority` = ?, ";
-	    $query.= "`percentage` = ?, `completed` = ?  where `user`=? and `taskId`=?";
-	    $this->query($query,array($title,$description,$date,$status,$priority,$percentage,$completed,$user,$taskId));
-	    return $taskId;
-	} else {
-	    $query = "insert into `tiki_user_tasks`(`user`,`taskId`,`title`,`description`,`date`,`status`,`priority`,`completed`,`percentage`) ";
-	    $query.= " values(?,?,?,?,?,?,?,?,?)";
-
-	    $this->query($query,array($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage));
-	    $taskId = $this->getOne( "select  max(`taskId`) from `tiki_user_tasks` where `user`=? and `title`=? and `date`=?",array($user,$title,$date));
-	    return $taskId;
-	}
-    }
-
-    /*shared*/
-    function complete_task($user, $taskId) {
-	$now = date("U");
-	$query = "update `tiki_user_tasks` set `completed`=?, `status`='c', `percentage`=100 where `user`=? and `taskId`=?";
-	$this->query($query,array((int)$now,$user,(int)$taskId));
-    }
-
-    /*shared*/
-    function remove_task($user, $taskId) {
-	$query = "delete from `tiki_user_tasks` where `user`=? and `taskId`=?";
-	$this->query($query,array($user,(int)$taskId));
-    }
-
-    /*shared*/
-    function list_tasks($user, $offset, $maxRecords, $sort_mode, $find, $use_date, $pdate) {
-	$now = date("U");
-	$bindvars=array($user);
-	if ($use_date == 'y') {
-	    $prio = " and date<=? ";
-	    $bindvars2=$pdate;
-	} else {
-	    $prio = '';
-	}
-
-	if ($find) {
-	    $findesc = '%' . $find . '%';
-
-	    $mid = " and (`title` like $findesc or `description` like $findesc)";
-	    $bindvars[]=$findesc;
-	    $bindvars[]=$findesc;
-	} else {
-	    $mid = "" ;
-	}
-
-	$mid.=$prio;
-	if(isset($bindvars2)) $bindvars[]=$bindvars2;
-
-	$query = "select * from `tiki_user_tasks` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode).",`taskId` desc";
-	$query_cant = "select count(*) from `tiki_user_tasks` where `user`=? $mid";
-	$result = $this->query($query,$bindvars,$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,$bindvars);
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
 
     /*shared*/
     function dir_stats() {
@@ -462,7 +424,6 @@ class TikiLib extends TikiDB {
 	return $data;
     }
 
-    /*shared*/
     function list_surveys($offset, $maxRecords, $sort_mode, $find) {
 
 	if ($find) {
@@ -483,9 +444,6 @@ class TikiLib extends TikiDB {
 
 	while ($res = $result->fetchRow()) {
 
-	    $add = TRUE;
-	    global $feature_categories;
-	    global $userlib;
 	    global $user;
 	    global $tiki_p_admin;
 
@@ -602,12 +560,12 @@ class TikiLib extends TikiDB {
 	    $start = "0";
 	}
 	// admin doesn't go on ranking
-	$query = "select `userId`, `login`, `score` from `users_users` where `login` <> 'admin' order by `score` desc limit $start, $limit";
+	$query = "select `userId`, `login`, `score` from `users_users` where `login` <> 'admin' order by `score` desc";
 
-	$result = $this->query($query);
+	$result = $this->query($query,array(),$limit,$start);
 	$ranking = array();
 
-	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	while ($res = $result->fetchRow()) {
 	    $res['position'] = ++$start;
 	    $ranking[] = $res;
 	}
@@ -635,7 +593,7 @@ class TikiLib extends TikiDB {
 
 	if (!empty($star)) {
 	    $alt = sprintf(tra("%d points"), $score);
-	    $star = "<img src=\"img/icons/$star\" height=\"11\" width=\"11\" alt=\"$alt\" />&nbsp;";
+	    $star = "<img src='img/icons/$star' height='11' width='11' alt='$alt' />&nbsp;";
 	}
 
 	return $star;
@@ -653,12 +611,17 @@ class TikiLib extends TikiDB {
 	if (empty($user))
 	    return '';
 
-	if (!$userlib->user_exists($user)) {
+	$query = "select `login`,`avatarType`,`avatarLibName` from `users_users` where `login`=?";
+	$result = $this->query($query,array($user));
+
+	$res = $result->fetchRow();
+
+	if (!$res) {
 	    return '';
 	}
 
-	$type = $userlib->get_user_details('avatarType', $user);
-	$libname = $userlib->get_user_details('avatarLibName', $user);
+	$type = $res["avatarType"];
+	$libname = $res["avatarLibName"];
 
 	$ret = '';
 	$style = '';
@@ -975,6 +938,18 @@ class TikiLib extends TikiDB {
 	    return $this->usergroups_cache[$user];
 	}
     }
+    
+    function get_user_cache_id($user) {
+      $groups = $this->get_user_groups($user);
+      sort($groups, SORT_STRING);
+      $cacheId = implode(":", $groups);
+      if ($user == 'admin') {
+	// in this case user get permissions from no group
+	$cacheId = 'ADMIN:'.$cacheId;
+      }
+      return $cacheId;
+    }
+
 
     /*shared*/
     function genPass() {
@@ -1084,18 +1059,6 @@ class TikiLib extends TikiDB {
 
 		    $popup_text = '';
 
-		    //foreach($sugs as $sug=>$lev) {
-		    //  if($first) {
-		    //  $repl.=' <span style="color:red;">'.$word.'</span>'.'<a title="'.$sug.'" style="text-decoration: none; color:red;" href="javascript:replaceSome(\'editwiki\',\''.$word.'\',\''.$sug.'\');">.</a>';
-		    //  $first = 0;
-		    //  } else {
-		    //  $repl.='<a title="'.$sug.'" style="text-decoration: none; color:red;" href="javascript:replaceSome(\'editwiki\',\''.$word.'\',\''.$sug.'\');">.</a>';
-		    //  //$repl.='|'.'<a style="color:red;" href="javascript:replaceSome(\'editwiki\',\''.$word.'\',\''.$sug.'\');">'.$sug.'</a>';
-		    //  }
-		    //}
-		    //if($repl) {
-		    //  $repl.=' ';
-		    //}
 		    if (count($sugs) > 0) {
 			$asugs = array_keys($sugs);
 
@@ -1161,39 +1124,8 @@ class TikiLib extends TikiDB {
 
 	while ($res = $result->fetchRow()) {
 
-	    $add = TRUE;
-	    global $feature_categories;
-	    global $userlib;
 	    global $user;
-	    global $tiki_p_admin;
-
-	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['forumId'], 'forums')) {
-	    // quiz permissions override category permissions
-			if (!$userlib->object_has_permission($user, $res['forumId'], 'forums', 'tiki_p_forum_read'))
-			{
-			    $add = FALSE;
-			}
-	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
-	    	// no quiz permissions so now we check category permissions
-	    	global $categlib;
-			if (!is_object($categlib)) {
-				include_once('lib/categories/categlib.php');
-			}
-	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
-	    	$perms_array = $categlib->get_object_categories_perms($user, 'forums', $res['forumId']);
-	    	if ($perms_array) {
-	    		$is_categorized = TRUE;
-		    	foreach ($perms_array as $perm => $value) {
-		    		$$perm = $value;
-		    	}
-	    	} else {
-	    		$is_categorized = FALSE;
-	    	}
-
-	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
-	    		$add = FALSE;
-	    	}
-	    }
+	    $add=$this->user_has_perm_on_object($user,$res['forumId'],'forums','tiki_p_forum_read');
 
 		if ($add) {
 		    $ret[] = $res;
@@ -1254,34 +1186,6 @@ class TikiLib extends TikiDB {
 	$result = $this->query($query,array(md5($object),$type));
 	return true;
     }
-
-    /* get_categorypath_array() doesn't seem to be used anywhere
-       function get_categorypath_array($cats,$focus=0) {
-       global $dbTiki, $smarty, $tikilib, $feature_categories, $categlib;
-       if (!is_object($categlib)) {
-       require_once ("lib/categories/categlib.php");
-       }
-       foreach ($cats as $categId) {
-       $focused = false;
-       $info = $categlib->get_category($categId);
-       $out[$categId][] = array('id'=>$info["categId"],'name'=>$info["name"]);
-       while ($info["parentId"] != 0) {
-       $info = $categlib->get_category($info["parentId"]);
-       if ($focus and $info["categId"] == $focus) {
-       $focused = $categId;
-       break;
-       } else {
-       $out[$categId][] = array('id'=>$info["categId"],'name'=>$info["name"]);
-       }
-       }
-       }
-       if ($focused) {
-       return $out[$focused];
-       } else {
-       return $out;
-       }
-       }
-     */
 
     /*shared*/
     // function enhancing php in_array() function
@@ -1537,7 +1441,7 @@ class TikiLib extends TikiDB {
 
     // Registers a user vote
     /*shared*/
-    function register_user_vote($user, $id, $optionId = 0) {
+    function register_user_vote($user, $id, $optionId=false) {
 	// If user is not logged in then register in the session
 	if (!$user) {
 	    $_SESSION["votes"][] = $id;
@@ -1559,6 +1463,11 @@ class TikiLib extends TikiDB {
 	    }
 	}
     }
+
+  function get_user_vote($id,$user) {
+		return $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
+	}
+	// end of user voting methods		
 
     // FILE GALLERIES ////
     /*shared*/
@@ -1609,7 +1518,7 @@ class TikiLib extends TikiDB {
 	    $bindvars=array((int) $galleryId);
 	}
 
-	$query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads` from `tiki_files` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select `fileId` ,`name`,`description`,`created`,`filename`,`filesize`,`user`,`downloads`,`lastModif`,`lastModifUser` from `tiki_files` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `tiki_files` $mid";
 	$result = $this->query($query,$bindvars,$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,$bindvars);
@@ -1715,21 +1624,21 @@ class TikiLib extends TikiDB {
 	$sort_mode = $this->convert_sortmode($sort_mode);
 
 	if($find) {
-	    $findesc = $this->qstr('%'.$find.'%');
-	    $mid=" and (u.login like $findesc or p.value like $findesc) ";
+	    $findesc = '%'.$find.'%';
+	    $mid=" and (u.`login` like ? or p.`value` like ?) ";
+	    $bindvars=array($user,$findesc,$findesc);
 	} else {
 	    $mid='';
+	    $bindvars=array($user);
 	}
 
-	$user = addslashes($user);
-
 	// TODO: same as list_users
-	$query = "select u.*, p.`value` as realName from `tiki_friends` as f, `users_users` as u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and f.`user`='$user' and f.`user` <> f.`friend` $mid order by $sort_mode limit $offset, $maxRecords";
-	$query_cant = "select count(*) from `tiki_friends` as f, `users_users` as u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and f.`user`='$user' $mid";
-	$result = $this->query($query);
-	$cant = $this->getOne($query_cant);
+	$query = "select u.*, p.`value` as realName from `tiki_friends` as f, `users_users` as u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and f.`user`=? and f.`user` <> f.`friend` $mid order by $sort_mode";
+	$query_cant = "select count(*) from `tiki_friends` as f, `users_users` as u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and f.`user`=? $mid";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
 	$ret = Array();
-	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	while ($res = $result->fetchRow()) {
 	    $res['realname'] = $this->get_user_preference($res['login'], 'realName');
 	    $ret[] = $res;
 	}
@@ -1742,17 +1651,26 @@ class TikiLib extends TikiDB {
 
     function verify_friendship($user, $friend)
     {
-	global $userlib;
-
 	if ($user == $friend) {
 	    return 0;
 	}
 
-	$user = addslashes($user);
-	$friend = addslashes($friend);
+	$query = "select count(*) from `tiki_friends` where `user`=? and `friend`=?";
+	return $this->getOne($query, array($user, $friend));
+    }
 
-	$query = "select count(*) from tiki_friends where user='$user' and friend='$friend'";
-	return $this->getOne($query);
+    function get_friends_count($user) {
+	global $cachelib;
+	$cacheKey = 'friends_count_'.$user;
+
+	if ($cachelib->isCached($cacheKey)) {
+	    return $cachelib->getCached($cacheKey);
+	} else {
+	    $query = "select count(*) from `tiki_friends` where `user`=?";
+	    $count = $this->getOne($query, array($user));
+	    $cachelib->cacheItem($cacheKey, $count);
+	    return $count;
+	}
     }
 
 
@@ -1761,10 +1679,14 @@ class TikiLib extends TikiDB {
 	global $user;
 
 	if($find) {
-	    $findesc = $this->qstr('%'.$find.'%');
-	    $mid=" where (login like $findesc or p.value like $findesc) ";
+	    $findesc = '%'.$find.'%';
+	    $mid=" where (`login` like ? or p.`value` like ?) ";
+	    $bindvars=array($user,$findesc,$findesc);
+	    $bindvars2=array($findesc,$findesc);
 	} else {
 	    $mid='';
+	    $bindvars=array($user);
+	    $bindvars2=array();
 	}
 
 	$sort_mode = $this->convert_sortmode($sort_mode);
@@ -1772,12 +1694,18 @@ class TikiLib extends TikiDB {
 	// TODO: This is lousy, later we have to configure what fields would be fetched
 	// but how to get preferences avoiding the join, sort by any field and paginate without
 	// loading all user list in memory?
-	$query = "select u.*, f.`user` is not null as friend, p.`value` as realName from `users_users` as u left join `tiki_friends` as f on u.`login`=f.`friend` and f.`user`='".addslashes($user)."' left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName`='realName' $mid order by $sort_mode limit $offset, $maxRecords";
+
+	// This query is not database independent. the "is not null" and the left join syntax should be replaced
+	
+	// Fixed the not null. After some research i came to the conclusion that only these dbms that i use
+	// lack a ansi outer join syntax. I guess using outer joins should be ok. redflo.
+	$query = "select u.*, f.`user` as friend, p.`value` as realName from `users_users` as u left join `tiki_friends` as f on u.`login`=f.`friend` and f.`user`=? left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName`='realName' $mid order by $sort_mode";
 	$query_cant = "select count(*) from `users_users` u left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName`='realName' $mid";
-	$result = $this->query($query);
-	$cant = $this->getOne($query_cant);
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars2);
 	$ret = Array();
-	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	while ($res = $result->fetchRow()) {
+	    $res['friend']=!($res['friend']=='');
 	    $ret[] = $res;
 	}
 	$retval = Array();
@@ -2506,13 +2434,18 @@ class TikiLib extends TikiDB {
 	    }
 	    return $ret;
 	}
+        if ($initial) {                                                                                                                                                   
+                $mid = " where `pageName` like ?";                                                                                                                           
+                $mmid = $mid;
+                $bindvars = array($initial.'%');
+                $mbindvars = $bindvars;
+	}
 
 	function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc', $find = '') {
 
 	    if ($sort_mode == 'size_desc') {
 		$sort_mode = 'page_size_desc';
 	    }
-
 	    if ($sort_mode == 'size_asc') {
 		$sort_mode = 'page_size_asc';
 	    }
@@ -3295,8 +3228,8 @@ class TikiLib extends TikiDB {
 	if ($feature_hotwords == 'y') {
 	    foreach ($words as $word => $url) {
 		// \b is a word boundary, \s is a space char
-		$line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;])$word([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
-		$line = preg_replace("/([ \n\t\r\,\;]|^)$word($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
+		$line = preg_replace("/(=(\"|')[^\"']*[ \n\t\r\,\;'])$word([ \n\t\r\,\;][^\"']*(\"|'))/i","$1:::::$word,:::::$3",$line);
+		$line = preg_replace("/([ \n\t\r\,\;']|^)$word($|[ \n\t\r\,\;])/i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$2",$line);
 		$line = preg_replace("/:::::$word,:::::/i","$word",$line);
 	    }
 	}
@@ -4104,6 +4037,7 @@ class TikiLib extends TikiDB {
 	$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
 	// Replace definition lists
 	$line = preg_replace("/^;(.*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+	$line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
 
 	if (0) {
 	    $line = preg_replace("/\[([^\|]+)\|([^\]]+)\]/", "<a class='wiki' $target href='$1'>$2</a>", $line);
@@ -4324,6 +4258,7 @@ class TikiLib extends TikiDB {
 	    $line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
 	    // Replace definition lists
 	    $line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+	    $line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
 
 		/* this code following if (0) is never executed, right?
 		   if (0) {
@@ -4604,7 +4539,6 @@ class TikiLib extends TikiDB {
 		$pages = array_unique(array_merge($pages[2], $pages2[1], $pages3[1]));
 	    } else {
 		preg_match_all("/\(\(($page_regex)\)\)/", $data, $pages);
-
 		preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages2);
 		$pages = array_unique(array_merge($pages[1], $pages2[1]));
 	    }
@@ -5147,7 +5081,7 @@ class TikiLib extends TikiDB {
 				$h = opendir($path);
 
 				while ($file = readdir($h)) {
-				    if ($file != '.' && $file != '..' && $file != 'CVS' && $file != 'index.php' && is_dir("$path/$file") ) {
+						if (!strpos($file,'.') && $file != 'CVS' && $file != 'index.php' && is_dir("$path/$file") ) {
 					$languages[] = $file;
 				    }
 				}
@@ -5432,7 +5366,7 @@ class TikiLib extends TikiDB {
 
 	$dh = opendir("lang");
 	while ($lang = readdir($dh)) {
-	    if (file_exists("lang/$lang/language.php")) {
+	    if (!strpos($lang,'.') and file_exists("lang/$lang/language.php")) {
 		$available[] = $lang;
 		$available_aprox[substr($lang, 0, 2)] = $lang;
 	    }
@@ -5457,20 +5391,16 @@ class TikiLib extends TikiDB {
     }
 
 
-    if (!function_exists('file_get_contents')) {
+if (!function_exists('file_get_contents')) {
 	function file_get_contents($f) {
-	    ob_start();
-
-	    $retval = @readfile($f);
-
-	    if (false !== $retval) { // no readfile error
-		$retval = ob_get_contents();
-	    }
-
-	    ob_end_clean();
-	    return $retval;
+		ob_start();
+		$retval = @readfile($f);
+		if (false !== $retval) { // no readfile error
+			$retval = ob_get_contents();
+		}
+		ob_end_clean();
+		return $retval;
 	}
+}
 
-    }
-
-    ?>
+?>

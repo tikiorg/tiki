@@ -52,6 +52,7 @@ Set the names of the table headings to reflect the names of the db
 <td class="heading">
 <! -- sort results -->
 <a class="tableheading" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'resultId_desc'}resultId_asc{else}resultId_desc{/if}">{tr}result{/tr}</a></td>
+<td class="heading">P/F</td>
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
@@ -64,7 +65,7 @@ Set the names of the table headings to reflect the names of the db
 {if $channels[user].hasDetails eq 'y'}({tr}details{/tr}){/if}{/if}
 {if $tiki_p_admin_quizzes eq 'y'}<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{tr}del{/tr}</a>{/if}
 </td>
-</tr>
+<td class="odd">{if $channels[user].ispassing}{tr}P{/tr}{else}{tr}F{/tr}{/if}</td>
 {else}
 <tr>
 <td class="even">{$channels[user].user|userlink}</td>
@@ -75,8 +76,9 @@ Set the names of the table headings to reflect the names of the db
 {if $channels[user].hasDetails eq 'y'}({tr}details{/tr}){/if}{/if}
 {if $tiki_p_admin_quizzes eq 'y'}<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;remove={$channels[user].userResultId}">{tr}del{/tr}</a>{/if}
 </td>
-</tr>
+<td class="odd">{if $channels[user].ispassing}{tr}P{/tr}{else}{tr}F{/tr}{/if}</td>
 {/if}
+</tr>
 {/section}
 </table>
 

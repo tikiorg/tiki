@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.37 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.38 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,7 +41,8 @@ elseif (isset($_REQUEST["prefs"])) {
         "useUrlIndex",
         "use_load_threshold",
         "use_proxy",
-        "session_db"
+        "session_db",
+	"contact_anon"
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -57,6 +58,7 @@ elseif (isset($_REQUEST["prefs"])) {
         "system_os",
         "error_reporting_level",
         "default_mail_charset",
+        "mail_crlf",
         "urlIndex",
         "proxy_host",
         "proxy_port",
@@ -80,8 +82,8 @@ elseif (isset($_REQUEST["prefs"])) {
         "short_time_format",
         "siteTitle",
         "slide_style",
-        "icon_style",
-        "tikiIndex"
+        "tikiIndex",
+	"https"
     );
 
     foreach ($pref_byref_values as $britem) {
@@ -114,20 +116,6 @@ elseif (isset($_REQUEST["prefs"])) {
     // not needed anymore? -- gongo
     //$smarty->assign('pagetop_msg', tra("Your settings have been updated. <a href='tiki-admin.php?page=general'>Click here</a> or come back later see the changes. That is a known bug that will be fixed in the next release."));
     $smarty->assign('pagetop_msg', "");
-}
-// Site Identity Settings
-elseif (isset($_REQUEST["siteidentityset"])) {
- check_ticket('admin-inc-general');
- 	$pref_byref_values = array(
-  			"sitelogo_src",
-				"sitelogo_bgcolor",
-				"sitelogo_title",
-				"sitelogo_alt"
-    );
-
-    foreach ($pref_byref_values as $britem) {
-        byref_set_value ($britem);
-    } 
 }
 // Handle Password Change Request
 elseif (isset($_REQUEST["newadminpass"])) {
@@ -167,20 +155,6 @@ while ($file = readdir($h)) {
 closedir ($h);
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
-// Get list of available icon styles
-$icon_styles = array();
-$h = opendir("img/icons/");
-
-while ($file = readdir($h)) {
-    if (is_dir("img/icons/".$file) && !('.'==$file || '..'==$file || 'CVS'==$file)) {
-        $icon_styles[] = $file;
-    }
-}
-closedir( $h );
-sort($icon_styles);
-$smarty->assign_by_ref( "icon_styles", $icon_styles );
-
-
 // Get list of available languages
 $languages = array();
 $languages = $tikilib->list_languages();
@@ -208,12 +182,12 @@ $smarty->assign("maxRecords", $tikilib->get_preference("maxRecords", 10));
 $smarty->assign("title", $tikilib->get_preference("title", ""));
 $smarty->assign("popupLinks", $tikilib->get_preference("popupLinks", 'n'));
 $smarty->assign("style_site", $tikilib->get_preference("style", "default.css"));
-$smarty->assign("icon_style", $tikilib->get_preference("icon_style", "default"));
 $smarty->assign("site_closed", $tikilib->get_preference("site_closed", "n"));
 $smarty->assign('site_closed_msg', $tikilib->get_preference('site_closed_msg', 'Site is closed for maintainance; please come back later.'));
 $smarty->assign('use_load_threshold', $tikilib->get_preference('use_load_threshold', 'n'));
 $smarty->assign('load_threshold', $tikilib->get_preference('load_threshold', 3));
 $smarty->assign('site_busy_msg', $tikilib->get_preference('site_busy_msg', 'Server is currently too busy; please come back later.'));
+$smarty->assign('https', $tikilib->get_preference('https', 'auto'));
 
 // Get information for alternate homes
 $smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $home_forum);

@@ -38,7 +38,7 @@ Step one: unpack the archive
 Unpack the Tiki files to the document root of where you want Tiki installed, e.g. /var/www/tiki/ 
 
 To unpack the bz2 file, use:
-tar xjf tikiwiki-1.9.rc3.tar.bz2
+tar xjf tikiwiki-1.9.dr4.tar.bz2
 
 
 Step two: run setup.sh to set permissions

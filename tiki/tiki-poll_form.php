@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_form.php,v 1.13 2005-01-01 00:16:34 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-poll_form.php,v 1.14 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -31,17 +31,16 @@ if (!isset($_REQUEST["pollId"])) {
 }
 
 $poll_info = $polllib->get_poll($_REQUEST["pollId"]);
-//$polls = $polllib->list_active_polls(0,-1,'publishDate_desc','');
-$options = $polllib->list_poll_options($_REQUEST["pollId"], 0, -1, 'title_desc', '');
+$options = $polllib->list_poll_options($_REQUEST["pollId"]);
 
 $smarty->assign_by_ref('menu_info', $poll_info);
-//$smarty->assign_by_ref('polls',$polls["data"]);
-$smarty->assign_by_ref('channels', $options["data"]);
-$smarty->assign('ownurl', httpPrefix(). $_SERVER["REQUEST_URI"]);
+$smarty->assign_by_ref('channels', $options);
+$smarty->assign('ownurl', $tikilib->httpPrefix(). $_SERVER["REQUEST_URI"]);
 
 ask_ticket('poll-form');
 
 // Display the template
+$smarty->assign('title', $poll_info['title']);
 $smarty->assign('mid', 'tiki-poll_form.tpl');
 $smarty->display("tiki.tpl");
 

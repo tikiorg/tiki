@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.47 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.48 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,7 @@ if (!is_object($trklib)) {
 // PERMISSIONS: NEEDS p_admin
 if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
-		$smarty->assign('msg', tra("You do not have permission to use this feature"));
+		$smarty->assign('msg', tra("You don't have permission to use this feature"));
 		$smarty->display("error.tpl");
 		die;
 	}

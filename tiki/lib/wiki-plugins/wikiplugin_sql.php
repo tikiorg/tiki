@@ -6,7 +6,7 @@ function wikiplugin_sql_help() {
 function wikiplugin_sql($data, $params) {
 	global $tikilib;
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (!isset($db)) {
 		return tra('Missing db param');
@@ -38,24 +38,52 @@ function wikiplugin_sql($data, $params) {
 	}		
 
 	$ret = '';
+	$sql_oke = true;
+ 	$dbmsg = '';
+
 	if ($db == 'local') {
 		$result = $tikilib->query($data, $bindvars);
 	} else {
-		$dsn = $tikilib->get_dsn_by_name($db);
-		$dbPlugin = DB::connect($dsn);
-		if (DB::isError($dbPlugin)) {
-			return ($dbPlugin->getMessage());
+
+		$dsnsqlplugin = $tikilib->get_dsn_by_name($db);
+
+		$parsedsn=$dsnsqlplugin;
+		$dbdriver=strtok($parsedsn, ":");
+		$parsedsn=substr($parsedsn,strlen($dbdriver)+3);
+		$dbuserid=strtok($parsedsn, ":");
+		$parsedsn=substr($parsedsn,strlen($dbuserid)+1);
+		$dbpassword=strtok($parsedsn, "@");
+		$parsedsn=substr($parsedsn,strlen($dbpassword)+1);
+		$dbhost=strtok($parsedsn, "/");
+		$parsedsn=substr($parsedsn,strlen($dbhost)+1);
+		$database = $parsedsn;
+
+		$dbsqlplugin = &ADONewConnection($dbdriver);
+		if (!$dbsqlplugin) {
+			$dberror = $dbsqlplugin->ErrorMsg();
+            $dbmsg = "<div>$dberror</div>";
+			$sql_oke = false;
+		} else {
+        		if (!$dbsqlplugin->NConnect($dbhost, $dbuserid, $dbpassword, $database)) {
+					$dberror = $dbsqlplugin->ErrorMsg();
+            	   	$dbmsg = "<div>$dberror</div>";
+					$sql_oke = false;
+				} else {
+           			$result=$dbsqlplugin->Execute($data); 
+					if (!$result) {
+						$dberror = $dbsqlplugin->ErrorMsg();
+               			$dbmsg = "<div>$dberror</div>";
+						$sql_oke = false;
+					}
+				}
 		}
-		@$result = $dbPlugin->query($data, $bindvars);
-		if (DB::isError($result)) {
-			return $result->getMessage();
-		}
+
 	}
 
 	$first = true;
 	$class = 'even';
 
-	while ($res = $result->fetchRow()) {
+	while ($sql_oke && $res = $result->fetchRow()) {
 		if ($first) {
 			$ret .= "<div align='center'><table class='normal'><tr>";
 
@@ -75,19 +103,25 @@ function wikiplugin_sql($data, $params) {
 		} else {
 			$class = 'even';
 		}
-
+	
 		foreach ($res as $name => $val) {
 			$ret .= "<td class='$class'>$val</td>";
 		}
-
 		$ret .= "</tr>";
 	}
 
 	if ($ret) {
 		$ret .= "</table></div>";
 	}
+	if ($dbmsg) {
+		$ret .= $dbmsg;
+	}
+
+	if ($db != 'local') {
+		$dbsqlplugin->Close();
+	}
 
 	return $ret;
-}
+} 
 
 ?>

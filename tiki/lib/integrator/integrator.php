@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.29 2004-08-26 19:23:53 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.30 2005-01-22 22:55:47 mose Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -341,7 +341,7 @@ function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cache
         // name and 'repID' parameter equal to function arg...
         $query = "delete from `tiki_link_cache` where `url` like ?";
         $result = $tikilib->query($query,
-            array(httpPrefix()."/%integrator%.php?%repID=".$repID."%"));
+            array($tikilib->httpPrefix()."/%integrator%.php?%repID=".$repID."%"));
     }
     /// Clear cache of given file for given repository
     function clear_cached_file($repID, $file)
@@ -351,7 +351,7 @@ function add_replace_repository($repID, $name, $path, $start, $css, $vis, $cache
         // name and 'repID' parameter equal to function arg...
         $query = "delete from `tiki_link_cache` where `url` like ?";
         $result = $tikilib->query($query,
-            array(httpPrefix()."/%integrator%.php?repID=".$repID.(strlen($file) > 0 ? "&file=".$file : '')));
+            array($tikilib->httpPrefix()."/%integrator%.php?repID=".$repID.(strlen($file) > 0 ? "&file=".$file : '')));
     }
 }
 

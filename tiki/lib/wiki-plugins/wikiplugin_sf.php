@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.4 2004-03-31 07:38:43 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.5 2005-01-22 22:55:56 mose Exp $
  *
  * TikiWiki SF auto-links.
  * 
@@ -63,7 +63,7 @@ function wikiplugin_sf($data, $params) {
 	$sftags['jgsupport'] = array('43118','435211');
 	$sftags['jgrfe'] = array('43118','435213');
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 	
 	if (isset($tag) and isset($sftags["$tag"]) and is_array($sftags["$tag"])) {
 		list($sf_group_id,$sf_atid) = $sftags["$tag"];

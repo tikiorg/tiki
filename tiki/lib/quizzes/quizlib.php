@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.35 2005-01-01 00:17:36 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.36 2005-01-22 22:55:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -264,6 +264,9 @@ class QuizLib extends TikiLib {
 	function list_quiz_stats($quizId, $offset, $maxRecords, $sort_mode, $find) {
 		$this->compute_quiz_stats();
 
+		$query = "select passingperct from `tiki_quizzes` where quizId = ?";
+		$passingperct = $this->getOne($query,array((int)$quizId));
+
 		if ($find) {
 			//isnt that superflous? hmm.
 			$findesc = '%' . $find . '%';
@@ -279,6 +282,11 @@ class QuizLib extends TikiLib {
 
 		while ($res = $result->fetchRow()) {
 			$res["avgavg"] = ($res["maxPoints"] != 0) ? $res["points"] / $res["maxPoints"] * 100 : 0.0;
+
+			if(isset($passingperct) && $passingperct > 0) {
+				$res['ispassing'] = ($res["avgavg"] >= $passingperct)?true:false;
+			}
+
 			$hasDet = $this->getOne("select count(*) from `tiki_user_answers` where `userResultId`=?",array((int)$res["userResultId"]));
 			if ($hasDet) {
 				$res["hasDetails"] = 'y';
@@ -425,14 +433,14 @@ class QuizLib extends TikiLib {
 	}
 
 	// called by tiki-edit_quiz.php
-	function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults, $immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers, $questionsPerPage, $timeLimited, $timeLimit, $publishDate, $expireDate) {
+	function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults, $immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers, $questionsPerPage, $timeLimited, $timeLimit, $publishDate, $expireDate, $passingperct) {
 		if ($quizId) {
 			// update an existing quiz
  			$query = "update `tiki_quizzes` set `name` = ?, `description` = ?, `canRepeat` = ?, `storeResults` = ?,";
       $query.= "`immediateFeedback` = ?, `showAnswers` = ?,	`shuffleQuestions` = ?, `shuffleAnswers` = ?, ";
 			$query.= "`publishDate` = ?, `expireDate` = ?, ";
- 			$query.= "`questionsPerPage` = ?, `timeLimited` = ?, `timeLimit` =?  where `quizId` = ?";
- 			$bindvars=array($name,$description,$canRepeat,$storeResults,$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,$publishDate,$expireDate,(int)$questionsPerPage,$timeLimited,(int)$timeLimit,(int)$quizId);
+ 			$query.= "`questionsPerPage` = ?, `timeLimited` = ?, `timeLimit` =?, `passingperct` = ?  where `quizId` = ?";
+ 			$bindvars=array($name,$description,$canRepeat,$storeResults,$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,$publishDate,$expireDate,(int)$questionsPerPage,$timeLimited,(int)$timeLimit,(int)$passingperct,(int)$quizId);
 
 			$result = $this->query($query,$bindvars);
 		} else {
@@ -442,11 +450,11 @@ class QuizLib extends TikiLib {
 			$query = "insert into `tiki_quizzes`(`name`,`description`,`canRepeat`,`storeResults`,";
       $query.= "`immediateFeedback`, `showAnswers`,	`shuffleQuestions`, `shuffleAnswers`,";
 			$query.= "`publishDate`, `expireDate`,";
-      $query.="`questionsPerPage`,`timeLimited`,`timeLimit`,`created`,`taken`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      $query.="`questionsPerPage`,`timeLimited`,`timeLimit`,`created`,`taken`,`passingperct`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,$canRepeat,$storeResults,
 											$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,
 											$publishDate,$expireDate,
-											(int)$questionsPerPage,$timeLimited,(int) $timeLimit,(int) $now,0);
+											(int)$questionsPerPage,$timeLimited,(int) $timeLimit,(int) $now,0,(int)$passingperct);
 			$result = $this->query($query,$bindvars);
 			$queryid = "select max(`quizId`) from `tiki_quizzes` where `created`=?";
 			$quizId = $this->getOne($queryid,array((int) $now));

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.13 2005-01-01 00:16:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-export_pdf.php,v 1.14 2005-01-22 22:54:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,7 +103,11 @@ if ($_REQUEST["autobreak"] == 'on') {
 		$info = $tikilib->get_page_info($page);
 
 		$data = "\n<C:page:$page>\n<br />\n";
-		$data .= $tikilib->parse_data($info["data"]);
+		if($tikilib->user_has_perm_on_object($user,$page,'wiki page','tiki_p_view')) {
+		  $data .= $tikilib->parse_data($info["data"]);
+		} else {
+		   $data .= tra("No permission to view the page")."<br />\n";
+		}
 		$data = utf8_decode($data);
 		$pdflib->add_linkdestination($page);
 		$pdflib->insert_html($data);
@@ -115,7 +119,11 @@ else {
 		$info = $tikilib->get_page_info($page);
 
 		$data .= "\n<C:page:$page>\n<br />\n";
-		$data .= $tikilib->parse_data($info["data"]);
+		if($tikilib->user_has_perm_on_object($user,$page,'wiki page','tiki_p_view')) {
+		  $data .= $tikilib->parse_data($info["data"]);
+		} else {
+		   $data .= tra("No permission to view the page")."<br />\n";
+		}
 	}
 
 	//todo: add linkdestinations for titlebars

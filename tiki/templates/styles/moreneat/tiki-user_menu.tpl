@@ -27,6 +27,7 @@
 <div class="option{$sep}">&nbsp;<a href="{$chdata.url|escape}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 {else}
+{if $chdata.type eq '-'}{if $opensec eq 'y'}</div>{/if}{assign var=opensec value='n'}{/if}
 {assign var=sep value="line"}
 {/if}
 {/foreach}

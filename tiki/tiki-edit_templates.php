@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.14 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_templates.php,v 1.15 2005-01-22 22:54:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,15 +9,15 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-if ($feature_edit_templates != 'y') {
+if ($feature_view_tpl != 'y' && $feature_edit_templates != 'y' ) {
 	$smarty->assign('msg', tra("Feature disabled"));
 
 	$smarty->display("error.tpl");
 	die;
 }
 
-if ($tiki_p_edit_templates != 'y') {
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+if ($tiki_p_edit_templates != 'y' && isset($_REQUEST["save"])) { // no tiki_p_view_tpl
+	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 
 	$smarty->display("error.tpl");
 	die;
@@ -31,8 +31,9 @@ if (!isset($_REQUEST["mode"])) {
 
 // Validate to prevent editing any file
 if (isset($_REQUEST["template"])) {
-	if (strstr($_REQUEST["template"], '..')) {
+	if ((substr($_REQUEST["template"], 0, 10) != 'templates/') || (strstr($_REQUEST["template"], '..'))) {
 		$smarty->assign('msg', tra("You do not have permission to do that"));
+
 		$smarty->display('error.tpl');
 		die;
 	}

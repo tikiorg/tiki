@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.9 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.10 2005-01-22 22:54:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -356,7 +356,7 @@ function getUserBlogs($params) {
 	}
 	$blogs = $bloglib->list_user_blogs($username, true);
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
-	$foo1 = httpPrefix(). str_replace("xmlrpc", "tiki-view_blog", $foo["path"]);
+	$foo1 = $tikilib->httpPrefix(). str_replace("xmlrpc", "tiki-view_blog", $foo["path"]);
 
 	foreach ($blogs as $blog) {
 		$myStruct = new xmlrpcval(array(

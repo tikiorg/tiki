@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.18 2005-01-05 19:22:40 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.19 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,8 +19,8 @@ if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
 
 if (!isset($_REQUEST["calendarId"])) {
 	$_REQUEST["calendarId"] = 0;
-} elseif ($userlib->object_has_one_permission($_REQUEST["calendarId"], 'calendar')) {
-	$smarty->assign('individual', 'y');
+} else {
+	 $smarty->assign('individual', $userlib->object_has_one_permission($_REQUEST["calendarId"], 'calendar'));
 }
 
 if (isset($_REQUEST["drop"])) {
@@ -40,7 +40,14 @@ if (isset($_REQUEST["save"])) {
 	$customflags["customlocations"] = $_REQUEST["customlocations"];
 	$customflags["customcategories"] = $_REQUEST["customcategories"];
 	$customflags["custompriorities"] = $_REQUEST["custompriorities"];
+	$customflags["customevents"] = $_REQUEST["customevents"];
+	$customflags["personal"] = $_REQUEST["personal"];
 	$_REQUEST["calendarId"] = $calendarlib->set_calendar($_REQUEST["calendarId"],$user,$_REQUEST["name"],$_REQUEST["description"],$customflags);
+	if ($_REQUEST["personal"]) {
+		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_view_calendar");
+		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_edit_calendar");
+		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_add_calendar");
+	}
 }
 
 if ($_REQUEST["calendarId"]) {
@@ -54,7 +61,9 @@ if ($_REQUEST["calendarId"]) {
 	$info["customlocations"] = 'n';
 	$info["customcategories"] = 'n';
 	$info["custompriorities"] = 'n';
+	$info["customevents"] = 'n';
 	$info["user"] = "$user";
+	$info["personal"] = 'n';
 }
 
 $smarty->assign('name', $info["name"]);
@@ -64,7 +73,9 @@ $smarty->assign('customlanguages', $info["customlanguages"]);
 $smarty->assign('customlocations', $info["customlocations"]);
 $smarty->assign('customcategories', $info["customcategories"]);
 $smarty->assign('custompriorities', $info["custompriorities"]);
+$smarty->assign('customevents', $info["customevents"]);
 $smarty->assign('calendarId', $_REQUEST["calendarId"]);
+$smarty->assign('personal', $info["personal"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_desc';
@@ -85,11 +96,7 @@ $smarty->assign('find', $find);
 $calendars = $calendarlib->list_calendars(0, -1, $sort_mode, $find);
 
 foreach (array_keys($calendars["data"]) as $i) {
-	if ($userlib->object_has_one_permission($i, 'calendar')) {
-		$calendars["data"][$i]["individual"] = 'y';
-	} else {
-		$calendars["data"][$i]["individual"] = 'n';
-	}
+	$calendars["data"][$i]["individual"] = $userlib->object_has_one_permission($i, 'calendar');
 }
 
 if (!isset($_REQUEST["offset"])) {

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.12 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_blog_post.php,v 1.13 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -36,8 +36,8 @@ $smarty->assign('blogId', $_REQUEST["blogId"]);
 
 //Build absolute URI for this
 $parts = parse_url($_SERVER['REQUEST_URI']);
-$uri = httpPrefix(). $parts['path'] . '?blogId=' . $_REQUEST['blogId'] . '&postId=' . $_REQUEST['postId'];
-$uri2 = httpPrefix(). $parts['path'] . '/' . $_REQUEST['blogId'] . '/' . $_REQUEST['postId'];
+$uri = $tikilib->httpPrefix(). $parts['path'] . '?blogId=' . $_REQUEST['blogId'] . '&postId=' . $_REQUEST['postId'];
+$uri2 = $tikilib->httpPrefix(). $parts['path'] . '/' . $_REQUEST['blogId'] . '/' . $_REQUEST['postId'];
 $smarty->assign('uri', $uri);
 $smarty->assign('uri2', $uri2);
 
@@ -156,7 +156,7 @@ if (isset($_REQUEST['send'])) {
 	$emails = explode(',', $_REQUEST['addresses']);
 
 	$foo = parse_url($_SERVER["REQUEST_URI"]);
-	$machine = httpPrefix(). str_replace('tiki-send_blog_post',
+	$machine = $tikilib->httpPrefix(). str_replace('tiki-send_blog_post',
 		'tiki-view_blog_post', $foo["path"]). '?postId=' . $postId . '&blogId=' . $_REQUEST['blogId'];
 
 	foreach ($emails as $email) {

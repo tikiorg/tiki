@@ -32,7 +32,7 @@ function wikiplugin_catorphans($data, $params) {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	// array for converting long type names (as in database) to short names (as used in plugin)
 	$typetokens = array(

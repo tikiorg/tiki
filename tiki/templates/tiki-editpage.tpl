@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.61 2004-10-08 10:00:06 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.62 2005-01-22 22:56:22 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -55,7 +55,7 @@
 {/if}
 {include file=structures.tpl}
 
-{if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
+{if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
 <tr class="formcolor"><td>{tr}Apply template{/tr}:</td><td>
 <select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
@@ -63,6 +63,45 @@
 <option value="{$templates[ix].templateId|escape}" {if $templateId eq $templates[ix].templateId}selected="selected"{/if}>{tr}{$templates[ix].name}{/tr}</option>
 {/section}
 </select>
+</td></tr>
+{/if}
+
+{if $feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
+<tr class="formcolor"><td>{tr}Use rating{/tr}:</td><td>
+{if $poll_rated.info}
+<a href="tiki-admin_poll_options.php?pollId={$poll_rated.info.pollId}">{$poll_rated.info.title}</a>
+<span class="button2"><a class="linkbut" href="tiki-editpage.php?page={$page|escape:"url"}&amp;removepoll={$poll_rated.info.pollId}">{tr}disable{/tr}</a>
+<input type="hidden" name="poll_template" value="{$poll_rated.info.pollId}" />
+{if $tiki_p_admin_poll eq 'y'}
+<span class="button2"><a class="linkbut" href="tiki-admin_polls.php">{tr}admin polls{/tr}</a></span>
+{/if}
+{else}
+{if count($polls_templates)}
+{tr}type{/tr}
+<select name="poll_template">
+<option value="0">{tr}none{/tr}</option>
+{section name=ix loop=$polls_templates}
+<option value="{$polls_templates[ix].pollId|escape}"{if $polls_templates[ix].pollId eq $poll_template} selected="selected"{/if}>{tr}{$polls_templates[ix].title}{/tr}</option>
+{/section}
+</select>
+{tr}title{/tr}
+<input type="text" name="poll_title" value="{$poll_title|escape}" size="22" />
+{else}
+{tr}There is no available poll template.{/tr}
+{if $tiki_p_admin_polls ne 'y'}
+{tr}You should ask an admin to create them.{/tr}
+{/if}
+{/if}
+{if count($listpolls)}
+or use 
+<select name="olpoll">
+<option value="">... {tr}an existing poll{/tr}</option>
+{section name=ix loop=$listpolls}
+<option value="{$listpolls[ix].pollId|escape}">{tr}{$listpolls[ix].title|default:"<i>... no title ...</i>"}{/tr} ({$listpolls[ix].votes} {tr}votes{/tr})</option>
+{/section}
+</select>
+{/if}
+{/if}
 </td></tr>
 {/if}
 

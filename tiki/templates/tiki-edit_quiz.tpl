@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.21 2004-10-08 10:00:06 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.22 2005-01-22 22:56:22 mose Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -118,7 +118,19 @@
 <tr>
 <td class="formcolor">
 <label for="quiz-maxtime">{tr}Maximum time{/tr}</label></td><td class="formcolor"><select name="timeLimit" id="quiz-maxtime">{html_options values=$mins selected=$timeLimit output=$mins}</select> {tr}minutes{/tr}</td></tr>
+
+<tr>
+<td class="formcolor">
+<label for="quiz-passingperct">{tr}Passing Percentage{/tr}</label>
+</td>
+<td class="formcolor">
+<input type="text" name="passingperct" id="quiz-passingperct" size=3 maxlength=3 value="{$passingperct}">
+{tr}%{/tr}</td></tr>
+
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+
+
+
 </table>
 </form>
 

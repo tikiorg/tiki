@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.66 2004-10-28 01:03:55 chealer Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.67 2005-01-22 22:55:44 mose Exp $
  *
  * \brief Categories support class
  *
@@ -193,31 +193,113 @@ class CategLib extends TikiLib {
 		return $ret;
 	}
 
-	function list_category_objects_deep($categId, $offset, $maxRecords, $sort_mode = 'pageName_asc', $find) {
+	// Returns a hash indicating which permission is needed for viewing an object of desired type.
+	function map_object_type_to_permission() {
+	    return array('wiki page' => 'tiki_p_view',
+			 'forum' => 'tiki_p_forum_read',
+			 'image gallery' => 'tiki_p_view_image_gallery',
+			 'file gallery' => 'tiki_p_view_file_gallery',
+			 'tracker' => 'tiki_p_view_trackers',
+			 'blog' => 'tiki_p_read_blog',
+			 'quiz' => 'tiki_p_take_quiz',
 
-		$des = $this->get_category_descendants($categId);
-		if (count($des)>0) {
-			$cond = "and tbl1.`categId` in (".str_repeat("?,",count($des)-1)."?)";
-		} else {
-			$cond = "";
-		}
+			 // overhead - we are checking individual permission on types below, but they
+			 // can't have individual permissions, although they can be categorized.
+			 // should they have permissions too?
+			 'poll' => 'tiki_p_vote_poll',
+			 'survey' => 'tiki_p_take_survey',
+			 'directory' => 'tiki_p_view_directory',
+			 'faq' => 'tiki_p_view_faqs',
+			 'sheet' => 'tiki_p_view_sheet',
 
+			 // these ones are tricky, because permission type is for container, not object itself.
+			 // I think we need to refactor permission schemes for them to be wysiwyca - lfagundes
+			 //
+			 // by now they're not showing, list_category_objects needs support for ignoring permissions
+			 // for a type.
+			 'article' => '',
+			 'image' => '',
+			 
+			 // newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
+			 // 'newsletter' => ?,
+			 // 'events' => ?,
+			 );
+	}
+
+	function list_category_objects($categId, $offset, $maxRecords, $sort_mode='pageName_asc', $type='', $find='', $deep=false) {
+	    
+	    // Build the condition to restrict which categories objects must be in to be returned.
+	    if ($deep) {
+		$bindWhere = $this->get_category_descendants($categId);
+		$bindWhere[] = $categId;
+		$where = " AND c.`categId` IN (".str_repeat("?,",count($bindWhere)-1)."?)";
+	    } else {
+		$bindWhere = array($categId);
+		$where = ' AND c.`categId`=? ';
+	    }
+
+	        // Restrict results by keyword
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$des[]=$findesc;
-			$des[]=$findesc;
-			$mid = " and (`name` like ? or `description` like ?)";
-		} else {
-			$mid = "";
-		}
+			$bindWhere[]=$findesc;
+			$bindWhere[]=$findesc;
+			$where .= " AND (`name` LIKE ? OR `description` LIKE ?)";
+		} 
 
-		$query = "select * from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` $cond $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select distinct tbl1.`catObjectId` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` $cond $mid";
-		$result = $this->query($query,$des,$maxRecords,$offset);
-		$result2 = $this->query($query_cant,$des);
-		$cant = $result2->numRows();
-		$cant2
-			= $this->getOne("select count(*) from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` $cond $mid",$des);
+		global $user;
+		$permMap = $this->map_object_type_to_permission();
+		$groupList = $this->get_user_groups($user);
+
+		// $allowField will return true if user has individual permission on object, in case object has
+		// individual permissions. It it has not, $allowField will return null, but in this case 'perms'
+		// will return 0 and we won't check $allowField (that's aliased 'allow' in sql query)
+		$allowField = " MAX((";
+		$bindAllow = array();
+		
+		// 'perms' field in result is the number of individual permissions object has
+		// $sqlHaving will restrict results considering number of individual permissions 'perms',
+		// individual permission for user 'allow', and global permissions.
+		// The condition perms=0 is equivalent to allow is null, but the first one is more didatic, otherwise
+		// we wouldn't need counting. Does counting reduce performance?
+		$sqlHaving = " HAVING ((perms=0 AND o.`type` IN (''";
+		$bindHaving = array();
+
+		foreach ($permMap as $objType => $permName) {
+		  if (empty($type) || $type == $objType) {
+		    $allowField .= "(o.`type`=? AND u.permName=?) OR ";
+		    $bindAllow[] = $objType;
+		    $bindAllow[] = $permName;
+		    
+		    global $$permName;
+		    if ($$permName == 'y') {
+			$sqlHaving .= ",?";
+			$bindHaving[] = $objType;
+		    }
+		  }
+		}
+		
+		$sqlHaving .= ")) OR allow=1) ";
+
+		$allowField = preg_replace("/OR $/",") ",$allowField);
+		$allowField .= " AND u.`groupName` IN (''";
+		
+		foreach ($groupList as $grp) {
+		    $bindAllow[] = $grp;
+		    $allowField .= ",?";
+		}
+		$allowField .= ")) ";
+
+		$bindVars = array_merge($bindAllow, $bindWhere, $bindHaving);
+
+		$orderBy = " ORDER BY ".$this->convert_sortmode($sort_mode);
+
+		$query_cant = "SELECT c.*, o.*, count(u.`objectId`) as perms, $allowField as allow FROM `tiki_category_objects` c,`tiki_categorized_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`objId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`catObjectId` $where GROUP BY o.`type`, o.`objId` $sqlHaving";
+		$query = $query_cant . $orderBy;
+
+		$result = $this->query($query,$bindVars,$maxRecords,$offset);
+		$resultCant = $this->query($query_cant,$bindVars);
+		$cant = $resultCant->numRows();
+
 		$ret = array();
 		$objs = array();
 
@@ -232,37 +314,7 @@ class CategLib extends TikiLib {
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
-		$retval["cant2"] = $cant2;
-		return $retval;
-	}
 
-	function list_category_objects($categId, $offset, $maxRecords, $sort_mode = 'pageName_asc', $find) {
-		if ($find) {
-			$findesc = '%' . $find . '%';
-			$bindvars=array((int) $categId,$findesc,$findesc);
-			$mid = " and (tbl2.`name` like ? or tbl2.`description` like ?)";
-		} else {
-			$mid = "";
-			$bindvars=array((int) $categId);
-		}
-
-		$query = "select tbl1.`catObjectId`,`categId`,`type`,`objId`,`description`, `created`,`name`,`href`,`hits`
-			from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid order by tbl2.".$this->convert_sortmode($sort_mode);
-		$query_cant = "select distinct tbl1.`catObjectId` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$result2 = $this->query($query_cant,$bindvars);
-		$cant = $result2->numRows();
-		$cant2 = $this->getOne("select count(*) from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 where tbl1.`catObjectId`=tbl2.`catObjectId` and tbl1.`categId`=? $mid",$bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-		}
-
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		$retval["cant2"] = $cant2;
 		return $retval;
 	}
 
@@ -668,6 +720,7 @@ class CategLib extends TikiLib {
 		return $ret;
 	}
 
+	
 	// get categories related to a link. For Whats related module.
 	function get_link_categories($link) {
 		$ret=array();
@@ -741,8 +794,8 @@ class CategLib extends TikiLib {
 			global $feature_categories;
 
 			$catpath = '';
-			$catp = array();
 			foreach ($cats as $categId) {
+			        $catp = array();
 				$info = $this->get_category($categId);
 				$catp["{$info['categId']}"] = $info["name"];
 				while ($info["parentId"] != 0) {
@@ -825,11 +878,8 @@ class CategLib extends TikiLib {
 		foreach ($catids as $id) {
 			$titles["$id"] = $this->get_category_name($id);
 			$objectcat = array();
-			if ($sub) {
-				$objectcat = $this->list_category_objects_deep($id, $offset, $maxRecords, $sort, $find);
-			} else {
-				$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, $find);
-			}
+			$objectcat = $this->list_category_objects($id, $offset, $maxRecords, $sort, '', $find, $sub);
+
 			$acats = $andcat = array();
 			foreach ($objectcat["data"] as $obj) {
 				$type = $obj["type"];
@@ -891,6 +941,38 @@ class CategLib extends TikiLib {
 		    $ret['data'][] = $res;
 		}
 		return $ret;
+    }
+
+    // Gets a list of categories that will block objects to be seen by user, recursive
+    function list_forbidden_categories($parentId=0, $parentAllowed='') {
+	global $user, $userlib;
+	if (empty($parentAllowed)) {
+	    global $tiki_p_view_categories;
+	    $parentAllowed = $tiki_p_view_categories;
+	}
+
+	$query = "select `categId` from `tiki_categories` where `parentId`=?";
+	$result = $this->query($query, array($parentId));
+
+	$forbidden = array();
+
+	while ($row = $result->fetchRow()) {
+	    $child = $row['categId'];
+	    if ($userlib->object_has_one_permission($child, 'category')) {
+		if ($userlib->object_has_permission($user, $child, 'category', 'tiki_p_view_categories')) {
+		    $forbidden = array_merge($forbidden, $this->list_forbidden_categories($child, 'y'));
+		} else {
+		    $forbidden[] = $child;
+		    $forbidden = array_merge($forbidden, $this->list_forbidden_categories($child, 'n'));
+		}
+	    } else {
+		if ($parentAllowed != 'y') {
+		    $forbidden[] = $child;
+		}
+		$forbidden = array_merge($forbidden, $this->list_forbidden_categories($child, $parentAllowed));
+	    }
+	}
+	return $forbidden;
     }
 
 }

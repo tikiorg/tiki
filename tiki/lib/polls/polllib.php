@@ -67,8 +67,8 @@ class PollLib extends PollLibShared {
 		$now = date("U");
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where `active`=? and `publishDate`<=? and `releaseDate`>=? and (`title` like ?)";
-			$bindvars=array('c',(int) $now,(int)$now,$findesc);
+			$mid = " where (`active`=? or `active`=?) and `publishDate`<=? and (`title` like ?)";
+			$bindvars=array('a','c',(int) $now,$findesc);
 		} else {
 			$mid = " where `active`=? and `publishDate`<=? and `releaseDate`>=?";
 			$bindvars=array('c',(int) $now,(int)$now);
@@ -155,8 +155,8 @@ class PollLib extends PollLibShared {
 		$now = date("U");
 		$query = "select max(`publishDate`) from `tiki_polls` where `publishDate`<=?";
 		$last = $this->getOne($query,array((int) $now));
-		$query = "update `tiki_polls` set `active`='x' where `publishDate`<=?";
-		$result = $this->query($query,array((int) $now));
+		$query = "update `tiki_polls` set `active`=? where `publishDate`<=?";
+		$result = $this->query($query,array('x',(int) $now));
 	}
 
 	function active_all_polls() {

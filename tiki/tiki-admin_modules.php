@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.37 2005-01-05 19:22:40 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.38 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,6 +50,7 @@ if ($user != 'admin') {
 $smarty->assign('um_name', '');
 $smarty->assign('um_title', '');
 $smarty->assign('um_data', '');
+$smarty->assign('um_parse', '');
 
 $smarty->assign('assign_name', '');
 //$smarty->assign('assign_title','');
@@ -137,7 +138,8 @@ if (isset($_REQUEST["um_update"])) {
 	$smarty->assign_by_ref('um_name', $_REQUEST["um_name"]);
 	$smarty->assign_by_ref('um_title', $_REQUEST["um_title"]);
 	$smarty->assign_by_ref('um_data', $_REQUEST["um_data"]);
-	$modlib->replace_user_module(preg_replace("/\W/", "_",$_REQUEST["um_name"]), $_REQUEST["um_title"], $_REQUEST["um_data"]);
+	$smarty->assign_by_ref('um_parse', $_REQUEST["um_parse"]);
+	$modlib->replace_user_module(preg_replace("/\W/", "_",$_REQUEST["um_name"]), $_REQUEST["um_title"], $_REQUEST["um_data"], $_REQUEST["um_parse"]);
 	$logslib->add_log('adminmodules','changed user module '.$_REQUEST["um_name"]);
 }
 
@@ -155,9 +157,11 @@ if (isset($_REQUEST["preview"])) {
 
 	if ($tikilib->is_user_module($_REQUEST["assign_name"])) {
 		$info = $tikilib->get_user_module($_REQUEST["assign_name"]);
-
 		$smarty->assign_by_ref('user_title', $info["title"]);
-		$smarty->assign_by_ref('user_data', $info["data"]);
+		if ($info["parse"] == "y")
+			$smarty->assign_by_ref('user_data', $tikilib->parse_data($info["data"]));
+		else
+			$smarty->assign_by_ref('user_data', $info["data"]);
 		$data = $smarty->fetch('modules/user_module.tpl');
 	} else {
 		$phpfile = 'modules/mod-' . $_REQUEST["assign_name"] . '.php';
@@ -238,6 +242,7 @@ if (isset($_REQUEST["um_edit"])) {
 	$smarty->assign_by_ref('um_name', $um_info["name"]);
 	$smarty->assign_by_ref('um_title', $um_info["title"]);
 	$smarty->assign_by_ref('um_data', $um_info["data"]);
+	$smarty->assign_by_ref('um_parse', $um_info["parse"]);
 }
 
 $user_modules = $modlib->list_user_modules();

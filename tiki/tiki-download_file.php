@@ -67,8 +67,8 @@ if (!IsSet($_SERVER['REQUEST_URI'])) {
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-browse_image","tiki-browse_image",$foo["path"]);
 $foo2=str_replace("tiki-browse_image","show_image",$foo["path"]);
-$smarty->assign('url_browse',httpPrefix().$foo1);
-$smarty->assign('url_show',httpPrefix().$foo2);
+$smarty->assign('url_browse',$tikilib->httpPrefix().$foo1);
+$smarty->assign('url_show',$tikilib->httpPrefix().$foo2);
 
 
 $tikilib->add_file_hit($_REQUEST["fileId"]);

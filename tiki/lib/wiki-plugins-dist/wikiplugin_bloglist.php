@@ -10,7 +10,7 @@ function wikiplugin_bloglist_help() {
 function wikiplugin_bloglist($data, $params) {
 	global $tikilib;
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	if (!isset($Id)) {
 		return ("<b>missing blog ID for plugin BLOGLIST</b><br />");

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.135 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.136 2005-01-22 22:54:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -156,7 +156,7 @@ $objId = urldecode($page);
 if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 	// Check to see if page is categorized
 	$perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
-   	if (is_array($perms_array)) {
+   	if ($perms_array) {
    		$is_categorized = TRUE;
     	foreach ($perms_array as $perm => $value) {
     		$$perm = $value;
@@ -182,7 +182,6 @@ if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 } else {
 	$is_categorized = FALSE;
 }
-
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
@@ -360,7 +359,7 @@ if($feature_wiki_attachments == 'y') {
 
 	    $file_name = $_FILES['userfile1']['name'];	
 	    $file_tmp_name = $_FILES['userfile1']['tmp_name'];
-	    $tmp_dest = $tmpDir . "/" . $file_name;
+	    $tmp_dest = $tmpDir . "/" . $file_name.".tmp";
 	    if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 		$smarty->assign('msg', tra('Errors detected'));
 		$smarty->display("error.tpl");
@@ -388,6 +387,7 @@ if($feature_wiki_attachments == 'y') {
 		}
 	    }
 	    fclose($fp);
+	    unlink($tmp_dest);
 	    if($w_use_db == 'n') {
 		fclose($fw);
 		$data='';
@@ -495,9 +495,9 @@ if($feature_wiki_footnotes == 'y') {
 
 $smarty->assign('wiki_extras','y');
 
+$cat_type='wiki page';
+$cat_objid = $page;
 if($feature_theme_control == 'y') {
-    $cat_type='wiki page';
-    $cat_objid = $page;
     include('tiki-tc.php');
 }
 
@@ -562,6 +562,19 @@ if (isset($is_categorized) && $is_categorized) {
     $smarty->assign('is_categorized','n');
 }
 
+if ($feature_polls =='y' and $feature_wiki_ratings == 'y' && $tiki_p_wiki_view_ratings == 'y') {
+	function pollnameclean($s) { global $page; if (isset($s['title'])) $s['title'] = substr($s['title'],strlen($page)+2); return $s; }	
+	if (!isset($polllib) or !is_object($polllib)) include("lib/polls/polllib_shared.php");
+	$ratings = $polllib->get_rating($cat_type,$cat_objid);
+	$ratings['info'] = pollnameclean($ratings['info']);
+	$smarty->assign('ratings',$ratings);
+	if ($user) {
+		$user_vote = $tikilib->get_user_vote("poll".$ratings['info']['pollId'],$user);
+		$smarty->assign('user_vote',$user_vote);
+	}
+							
+}
+
 // Flag for 'page bar' that currently 'Page view' mode active
 // so it is needed to show comments & attachments panels
 $smarty->assign('show_page','y');
@@ -594,5 +607,6 @@ $smarty->assign('page_id',$info['page_id']);
 $smarty->display("tiki.tpl");
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
+// debug: print all objects
 
 ?>

@@ -16,7 +16,7 @@
 function wikiplugin_jabber($data,$params) {
   global $tikilib;
   global $user;
-  extract($params);
+  extract($params,EXTR_SKIP);
 
   if(!isset($height)) {
     $height = 200;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.78 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.79 2005-01-22 22:54:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -484,6 +484,8 @@ if ($my and $writerfield) {
 } else {
 	if (isset($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$filterfield"])) {
 		$filtervalue = $_REQUEST["filtervalue"]["$filterfield"];
+	} else if (isset($_REQUEST["filtervalue"])) {
+		$filtervalue = $_REQUEST["filtervalue"];
 	} else {
 		$filtervalue = '';
 	}

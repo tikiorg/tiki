@@ -38,3 +38,26 @@
 {/foreach}
 </table>
 {/if}
+<br />
+<table class="normal">
+<tr><td colspan="4" class="heading">{tr}Fix UTF-8 Errors in Tables{/tr}</td></tr>
+<tr><td colspan="4">{tr}Warning: Make a backup of your Database before using this function!{/tr}</td></tr>
+<tr><td colspan="4">{tr}Warning: If you try to convert large tables, raise the maximum execution time in your php.ini!{/tr}</td></tr>
+<tr><td colspan="4">{tr}This function converts ISO-8859-1 encoded strings in your tables to UTF-8{/tr}</td></tr>
+<tr><td colspan="4">{tr}This may be necessary if you created content with tiki &lt; 1.8.4 and Default Charset settings in apache set to ISO-8859-1{/tr}</td></tr>
+<tr></tr>
+{if isset($utf8it)}
+<tr><td>{$utf8it}</td><td>{$utf8if}</td><td colspan="2">{$investigate_utf8}</td></tr>
+{/if}
+{if isset($utf8ft)}
+<tr><td>{$utf8ft}</td><td>{$utf8ff}</td><td colspan="2">{$errc} {tr}UTF-8 Errors fixed{/tr}</td></tr>
+{/if}
+<tr><td class="heading">{tr}Table{/tr}</td><td class="heading">{tr}Field{/tr}</td><td class="heading">{tr}Investigate{/tr}</td><td class="heading">{tr}Fix it{/tr}</td></tr>
+{foreach key=key item=item from=$tabfields}
+<tr><td>{$item.table}</td><td>{$item.field}</td>
+<td><a href="tiki-admin_system.php?utf8it={$item.table}&utf8if={$item.field}" class="link">{tr}Investigate{/tr}</a></td>
+<td><a href="tiki-admin_system.php?utf8ft={$item.table}&utf8ff={$item.field}" class="link">{tr}Fix it{/tr}</a></td>
+</tr>
+{/foreach}
+
+</table>

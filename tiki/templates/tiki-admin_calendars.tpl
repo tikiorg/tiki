@@ -1,10 +1,12 @@
 <a class="pagetitle" href="tiki-admin_calendars.php">{tr}Admin Calendars{/tr}</a>
 <br /><br />
 
+{if $feature_tabs eq 'y'}
 <div class="tabs">
 <span id="tab1" class="tab tabActive">{tr}List Calendars{/tr}</span>
 <span id="tab2" class="tab">{tr}Create/edit Calendars{/tr}</span>
 </div>
+{/if}
 
 {* --- tab with list --- *}
 <div id="content1" class="content">
@@ -30,6 +32,8 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customcategories_desc'}customcategories_asc{else}customcategories_desc{/if}">{tr}cat{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customlanguages_desc'}customlanguages_asc{else}customlanguages_desc{/if}">{tr}lang{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'custompriorities_desc'}custompriorities_asc{else}custompriorities_desc{/if}">{tr}prio{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'customevents_desc'}customevents_asc{else}customevents_desc{/if}">{tr}event{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'personal_desc'}personal_asc{else}personal_desc{/if}">{tr}perso{/tr}</a></td>
 <td class="heading">&nbsp;</td>
 <td class="heading">&nbsp;</td>
 </tr>
@@ -42,10 +46,12 @@
 <td>{$cal.customcategories}</td>
 <td>{$cal.customlanguages}</td>
 <td>{$cal.custompriorities}</td>
-<td>{if $cal.individual eq 'y'}({/if}
+<td>{$cal.customevents}</td>
+<td>{$cal.personal}</td>
+<td>
 <a title="{tr}permissions{/tr}" class="link" 
 href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}"><img 
-src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' /></a>{if $cal.individual eq 'y'}){/if}</td>
+src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' />{if $cal.individual gt 0} {$cal.individual}</a>{/if}</td>
 <td>
    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 
 title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
@@ -111,6 +117,18 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 <select name="custompriorities">
 <option value='y' {if $custompriorities eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
 <option value='n' {if $custompriorities eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+</select>
+</td></tr>
+<tr><td class="formcolor">{tr}Custom Events{/tr}:</td><td class="formcolor">
+<select name="customevents">
+<option value='y' {if $customevents eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
+<option value='n' {if $customevents eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
+</select>
+</td></tr>
+<tr><td class="formcolor">{tr}Personal Calendar{/tr}:</td><td class="formcolor">
+<select name="personal">
+<option value='y' {if $personal eq 'y'}selected="selected"{/if}>{tr}yes{/tr}</option>
+<option value='n' {if $personal eq 'n'}selected="selected"{/if}>{tr}no{/tr}</option>
 </select>
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>

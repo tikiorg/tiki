@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.38 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.39 2005-01-22 22:54:54 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,7 +80,7 @@ if ($userlib->object_has_one_permission($_REQUEST["galleryId"], 'image gallery')
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo["path"] = str_replace("tiki-galleries", "tiki-browse_gallery", $foo["path"]);
-$smarty->assign('url', httpPrefix(). $foo["path"]);
+$smarty->assign('url', $tikilib->httpPrefix(). $foo["path"]);
 
 // Init smarty variables to blank values
 //$smarty->assign('theme','');
@@ -303,13 +303,13 @@ if (isset($_REQUEST["removegal"])) {
   }
 }
 
+$map_error="";
 if (isset($_REQUEST["make_map"])) {
 		if ($_REQUEST["galleryId"] > 0) {
 			$info = $imagegallib->get_gallery_info($_REQUEST["galleryId"]);
 
 			if ($tiki_p_admin != 'y' || !$user || $info["user"] != $user) {
 				$smarty->assign('msg', tra("Permission denied you cannot make the map of this gallery"));
-
 				$smarty->display("error.tpl");
 				die;
 			}
@@ -318,34 +318,10 @@ if (isset($_REQUEST["make_map"])) {
 			if ($tikidomain) {
 				$tdo = "$tikidomain.".$tdo;
 			}
-	      $datastruct="  name Char(200)\n";
-	      $datastruct.="  description Char(250)\n";
-	      $datastruct.="  image Char(250)\n";
-	      // Prepare the data
-
-	      // Franck you need to move this to a lib somewhere -- Damian
-	      $query = "select * from `tiki_images` Where `galleryID`=?";
-	   	$result = $tikilib->query($query, array($_REQUEST["galleryId"]));
-			$i=0;
-			$data=array();
-			while ($res = $result->fetchRow()) {
-				$name=substr($res["name"],0,20);
-				$description=substr($res["description"],0,250);
-				$lat=$res["lat"];
-				$lon=$res["lon"];
-				$link="<img src='show_image.php?id=".$res["imageId"]."' />";
-				if (isset($lat) && isset($lon) && $lat && $lon) {
-					$data[$i][0]=$lat;
-					$data[$i][1]=$lon;
-					$data[$i][2]=$name;
-					$data[$i][3]=$description;
-					$data[$i][4]=$link;
-					$i++;
-				}
-			}
-			makemap($tdo,$datastruct,$data,3);
+			$map_error=$mapslib->makeimagemap($tdo,$_REQUEST["galleryId"]);
 		}
 }
+$smarty->assign('map_error', $map_error);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_asc';

@@ -13,7 +13,7 @@ function wikiplugin_sort_help() {
 function wikiplugin_sort($data, $params) {
 	global $tikilib;
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	$sort = (isset($sort)) ? $sort : "asc";
 

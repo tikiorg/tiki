@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.21 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-send_newsletters.php,v 1.22 2005-01-22 22:54:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,7 +122,8 @@ if (isset($_REQUEST["send"])) {
 
 	foreach ($subscribers as $email) {
 		$userEmail = $userlib->get_user_by_email($email);
-		$mail->setUser($userEmail);
+		if ($userEmail)
+			$mail->setUser($userEmail);
 		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
 		$languageEmail = !$userEmail? $language: $tikilib->get_user_preference($userEmail, "language", $language);
 		if ($nl_info["unsubMsg"] == 'y')

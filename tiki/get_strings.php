@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.41 2005-01-01 00:16:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.42 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,9 +12,9 @@
  * call example: get_strings.php?lang=fr&close
  * \param lang=xx    : only translate lang 'xx' - if the parameter is not given all languages are translated
  * \param comments   : generate all comments (equal to close&module)
- * \param close      : look for similar strings that are allready translated and generate a commet if a 'match' is made
- * \param module     : generate comments that describes in which .php and/or .tpl\n module(s) a certain string was found (useful for checking translations in context)
- * \param patch      : looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintaner
+ * \param close      : look for similar strings that are already translated and generate a comment if a 'match' is made
+ * \param module     : generate comments that describe in which .php and/or .tpl\n module(s) a certain string was found (useful for checking translations in context)
+ * \param patch      : looks for the file 'language.patch' in the same directory as the corresponding language.php and overrides any strings in language.php - good if a user does not agree with some translations or if only changes are sent to the maintainer
  * \param spelling   : generate a file spellcheck_me.txt in the applicable languages directory that contains all the words used in the translated text. This makes it simple to use a spellchecker on the resulting file
  * \param groupwrite : Sets the generated files permissions to allow the generated language.php also be group writable. This is good for translators if they do not have root access to tiki but are in the same group as the webserver. Please remember to have write access removed when translation is finished for security reasons. (Run script again whithout this parameter)
  */
@@ -112,29 +112,30 @@ function collect_files ($dir)
   closedir ($handle);
 }
 
-function addToWordlist (&$wordlist, $sentence) {
+function addToWordlist (&$wordlist, &$sentence) {
   global $spelling;
   if ($spelling) {
-    // Perhapps regexphandling must be improved?!
+    // Perhaps regexphandling must be improved?!
     // Spellcheckers seems to handle special chars quite OK however.
-    $words = preg_split  ("/[\s]+/", $sentence);
+    $words = preg_split ("!\s+!", $sentence);
     
     foreach ($words as $dummy => $word) {
-	if (function_exists('mb_strtolower'))
-      	$wordlist[mb_strtolower($word)] = 1;
-	else
-		$wordlist[$word] = 1;
+        if (function_exists('mb_strtolower')) {
+           $wordlist[mb_strtolower($word)] = 1;
+        } else {
+           $wordlist[$word] = 1;
+        }
     }
   }
 }
 
 
-function writeFile_and_User ($fd, $outstring) {
+function writeFile_and_User (&$fd, $outstring) {
   print (nl2br ($outstring));
   fwrite ($fd, $outstring);
 }
 
-function writeTranslationPair ($fd, $key, $val) {
+function writeTranslationPair (&$fd, &$key, &$val) {
   writeFile_and_User ($fd, 
 		      '"' . addphpslashes ($key) . '"' . " => " .
 		      '"' . addphpslashes ($val) . '",');
@@ -167,6 +168,9 @@ require_once('tiki-setup.php');
 if($tiki_p_admin != 'y') {
   die("You need to be admin to run this script");
 }
+
+echo "Initialization time: ", $tiki_timer->elapsed(), " seconds<br/>\n";
+$tiki_timer->start("files");
 
 $comments = isset ($_REQUEST['comments']);
 $close    = isset ($_REQUEST['close'])  || $comments;
@@ -214,6 +218,16 @@ hardwire_file ('./lang/langmapping.php');
 hardwire_file ('./img/flags/flagnames.php');
 
 
+// Sort files to make generated strings appear in language.php in the same 
+// order across different systems
+echo "Sorting files...";
+flush();
+sort($files);
+echo count($files), " items done.<br/>\nTiki directory parsed in: ", $tiki_timer->stop("files"), " seconds<br/>\n<br/>\n";
+flush();
+$tiki_timer->start("processing");
+
+
 $oldEndMarker = '##end###';
 $endMarker = '###end###';
 foreach ($languages as $sel) {
@@ -230,7 +244,7 @@ foreach ($languages as $sel) {
   if ($patch) {
     $origPatch = "lang/$sel/language.patch";
     if (!file_exists ($origPatch)) {
-      die ("No patch file .../$origPatch exisits");
+      die ("No patch file .../$origPatch exists");
     }
     require ($origPatch);
     $patchLang = $lang;
@@ -274,20 +288,20 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "// lang=xx    : only tranlates language 'xx',\n");
     writeFile_and_User ($fw, "//              if not given all languages are translated\n");
     writeFile_and_User ($fw, "// comments   : generate all comments (equal to close&module)\n");
-    writeFile_and_User ($fw, "// close      : look for similar strings that are allready translated and\n");
-    writeFile_and_User ($fw, "//              generate a commet if a 'match' is made\n");
-    writeFile_and_User ($fw, "// module     : generate comments that describes in which .php and/or .tpl\n");
+    writeFile_and_User ($fw, "// close      : look for similar strings that are already translated and\n");
+    writeFile_and_User ($fw, "//              generate a comment if a 'match' is made\n");
+    writeFile_and_User ($fw, "// module     : generate comments that describe in which .php and/or .tpl\n");
     writeFile_and_User ($fw, "//              module(s) a certain string was found (useful for checking\n");
     writeFile_and_User ($fw, "//              translations in context)\n");
 
     writeFile_and_User ($fw, "// patch      : looks for the file 'language.patch' in the same directory\n");
     writeFile_and_User ($fw, "//              as the corresponding language.php and overrides any strings\n");
     writeFile_and_User ($fw, "//              in language.php - good if a user does not agree with\n");
-    writeFile_and_User ($fw, "//              some translations or if only changes are sent to the maintaner\n");
+    writeFile_and_User ($fw, "//              some translations or if only changes are sent to the maintainer\n");
 
     writeFile_and_User ($fw, "// spelling   : generates a file 'spellcheck_me.txt' that contains the\n");
-    writeFile_and_User ($fw, "//              words used in the translation.It is then easy to check this\n");
-    writeFile_and_User ($fw, "//              file for spelling errors (corrections must be done in\n ");
+    writeFile_and_User ($fw, "//              words used in the translation. It is then easy to check this\n");
+    writeFile_and_User ($fw, "//              file for spelling errors (corrections must be done in\n");
     writeFile_and_User ($fw, "//              'language.php, however)\n");
 
 
@@ -321,9 +335,7 @@ foreach ($languages as $sel) {
   writeFile_and_User ($fw, "\n\$lang=Array(\n");  
   
   foreach ($files as $file) {
-    $fp = fopen ($file, "r");
-    $data = fread ($fp, filesize ($file));
-    fclose ($fp);
+    $data = file_get_contents($file);
 
     unset ($words);   $words   = Array ();
     unset ($uqwords); $uqwords = Array ();
@@ -332,29 +344,28 @@ foreach ($languages as $sel) {
 
 
     // PM for unusual regexps
-    // (?m) sets PCRE_MULTILINE which makes '^' and '$' ignore '\n'
-    // (?s) sets PCRE_DOTALL which makes that '.' also matches '\n'
+    // (?m) inline or m after regex delimiter sets PCRE_MULTILINE which makes '^' and '$' ignore '\n'
+    // (?s) inline or s after regex delimiter sets PCRE_DOTALL which makes that '.' also matches '\n'
     // ?: below makes that the pharentesis is not extracted int the outarray
-    // +? below is the nongreedy version of the ? operator
-
+    // +? and *? below are nongreedy versions of the + and * operators accordingly
 
     if (preg_match ("/\.php$/", $file)) {
       // Do not translate PHP comments (we only filter the "safe" cases)
       // Calling php -w <filename> would take care of all comments,
       // but that does not go well with safe-mode.
-      $data = preg_replace ("/(?s)\/\*.*?\*\//", "", $data);  // C comments
-	/* the "unused strings" - the strings that will be translated later through a variable are marked with //get_strings tra("string") */
-	$data = preg_replace("/(?m)^\s*\/\/get_strings.*\$/", " ", $data);
-      $data = preg_replace ("/(?m)^\s*\/\/.*\$/", "", $data); // C++ comments
-      $data = preg_replace ("/(?m)^\s*\#.*\$/",   "", $data); // shell comments
+      $data = preg_replace ("!/\*.*?\*/!s", "", $data);  // C comments
+      /* the "unused strings" - the strings that will be translated later through a variable are marked with //get_strings tra("string") */
+      $data = preg_replace ("!^\s*//get_strings(.*)\$!m", "$1", $data);
+      $data = preg_replace ("!^\s*//.*\$!m", "", $data); // C++ comments
+      $data = preg_replace ("!^\s*\#.*\$!m", "", $data); // shell comments
 
       // Only extract tra () and hawtra () in .php-files
 
       // Extract from SINGLE qouted strings
-      preg_match_all ('/(?s)[^a-zA-Z0-9_\x7f-\xff](?:haw)?tra\s*\(\s*\'(.+?)\'\s*[\),]/', $data, $sqwords);
+      preg_match_all ('!\W(?:haw)?tra\s*\(\s*\'(.+?)\'\s*[\),]!s', $data, $sqwords);
 
       // Extract from DOUBLE quoted strings
-      preg_match_all ('/(?s)[^a-zA-Z0-9_\x7f-\xff](?:haw)?tra\s*\(\s*"(.+?)"\s*[\),]/', $data, $dqwords);
+      preg_match_all ('!\W(?:haw)?tra\s*\(\s*"(.+?)"\s*[\),]!s', $data, $dqwords);
     }
 
     if (preg_match ("/\.tpl$/", $file)) {
@@ -372,12 +383,13 @@ foreach ($languages as $sel) {
     }
 
     // Transfer UNqouted words (if any) to the words array
-    if (count ($uqwords) > 0) {
-      $words = $uqwords[1];
+    // counting recursive, because we have two empty subarrays after failed match
+    if (count($uqwords, COUNT_RECURSIVE) > 2) {
+        $words = $uqwords[1];
     }
 
     // Transfer SINGLEqouted words (if any) to the words array
-    if (count ($sqwords) > 0) {
+    if (count ($sqwords, COUNT_RECURSIVE) > 2) {
       foreach (array_unique ($sqwords[1]) as $sqword) {
 	// Strip the extracted strings from escapes
 	// (these will not be reinserted during generation, since ' need
@@ -388,7 +400,7 @@ foreach ($languages as $sel) {
     }
 
     // Transfer DOUBLEqouted words (if any) to the words array
-    if (count ($dqwords) > 0) {
+    if (count ($dqwords, COUNT_RECURSIVE) > 2) {
       foreach (array_unique ($dqwords[1]) as $dqword) {
 	// Strip the extracted strings from escapes
 	// (these will be reinserted during generation)
@@ -410,14 +422,15 @@ foreach ($languages as $sel) {
 	  $to_translate[$word]=$word;
 	}
       }
-      
-      if (isset ($modulename[$word])) {
-	if (!strpos ($modulename[$word], $file)) {
-	  $modulename[$word] = $modulename[$word] .', '. $file;
-	}
-      }
-      else {
-	$modulename[$word] = $file;
+
+      if ($module) {
+        if (isset ($modulename[$word])) {
+          if (!strpos ($modulename[$word], $file)) {
+              $modulename[$word] = $modulename[$word] .', '. $file;
+          }
+        } else {
+          $modulename[$word] = $file;
+        }
       }
     }
   } // foreach ($files as $file)
@@ -453,13 +466,14 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "// ### Please remove manually!\n");
     writeFile_and_User ($fw, "// ### N.B. Legitimate strings may be marked");
     writeFile_and_User ($fw, "// ### as unused!\n");
-    writeFile_and_User ($fw, "// ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for further info.\n");
+    writeFile_and_User ($fw, "// ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for further info\n");
     foreach ($unused as $key => $val) {
       writeTranslationPair ($fw, $key, $val);
       addToWordlist ($wordlist, $val);
       writeFile_and_User ($fw, "\n");
     }
     writeFile_and_User ($fw, "// ### end of unused words\n\n");
+    unset($unused); // free memory
   }
 
   unset ($to_translate['']);
@@ -566,4 +580,8 @@ foreach ($languages as $sel) {
     umask($old_umask); // Reset umask back to original value
   }
 }
+
+echo "Processing time: ", $tiki_timer->stop("processing"), " seconds<br/>\n";
+echo "Total time spent: ", $tiki_timer->elapsed(), " seconds<br/>\n";
+
 ?>

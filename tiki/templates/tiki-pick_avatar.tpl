@@ -10,6 +10,8 @@
 </tr>
 </table>
 
+{if sizeof($avatars) > 0}
+
 {if $showall eq 'y'}
 <h2>{tr}Pick avatar from the library{/tr} <a href="tiki-pick_avatar.php?showall=n">{tr}Hide all{/tr}</a> {$numav} {tr}icons{/tr}</h2>
 <div class="normal">
@@ -75,6 +77,7 @@ function subavt() {
 </form>
 {/if}
 
+{/if}
 
 <h2>{tr}Upload your own avatar{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">

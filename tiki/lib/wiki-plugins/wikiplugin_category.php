@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.11 2004-10-15 15:54:50 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.12 2005-01-22 22:55:56 mose Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -9,7 +9,7 @@
  * 
  * {CATEGORY(
  *	id=>1+2+3,	 # defaults to current
- *	types=>article+blog+directory+faq+fgal+forum+igal+newsletter+poll+quiz+survey+tracker+wiki # list of types of objects, default * (all),
+ *	types=>article+blog+directory+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki # list of types of objects, default * (all),
  *	sort=>[type|created|name|hits]_[asc|desc]	# default name_asc,
  *	sub=>true|false		# display items of subcategories # default is 'true';
  *	split=>y|n		# when displaying multiple categories, whether they should be split or not; defaults to yes
@@ -19,7 +19,7 @@
  * 
   */
 function wikiplugin_category_help() {
-	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3,types=>article+blog+faq+fgal+igal+newsletter+poll+quiz+survey+tracker+wiki+img,sort=>[type|created|name|hits]_[asc|desc],sub=>true|false,split=>y|n)}{CATEGORY}~/np~";
+	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=>1+2+3,types=>article+blog+faq+fgal+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img,sort=>[type|created|name|hits]_[asc|desc],sub=>true|false,split=>y|n)}{CATEGORY}~/np~";
 }
 
 function wikiplugin_category($data, $params) {
@@ -35,7 +35,7 @@ function wikiplugin_category($data, $params) {
 		return "<span class='warn'>" . tra("Categories are disabled"). "</span>";
 	}
 
-	extract ($params);
+	extract ($params,EXTR_SKIP);
 
 	// TODO: use categ name instead of id (alternative)
 	if (isset($split) and substr(strtolower($split),0,1) == 'n') {

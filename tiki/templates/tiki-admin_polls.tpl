@@ -1,5 +1,8 @@
 <a class="pagetitle" href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a>
 
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=polls"><img src='img/icons/config.gif' border='0'  alt="{tr}configure polls{/tr}" title="{tr}configure polls{/tr}" /></a>
+{/if}
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Polls" target="tikihelp" class="tikihelp" title="{tr}admin polls{/tr}">
@@ -27,7 +30,10 @@
 <select name="active">
 <option value='a' {if $active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
 <option value='c' {if $active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
+<option value='t' {if $active eq 't'}selected="selected"{/if}>{tr}template{/tr}</option>
 <option value='x' {if $active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>
+<option value='t' {if $active eq 't'}selected="selected"{/if} style="border-top:1px solid black;">{tr}template{/tr}</option>
+<option value='o' {if $active eq 'o'}selected="selected"{/if}>{tr}object{/tr}</option>
 </select>
 </td></tr>
 {include file=categorize.tpl}

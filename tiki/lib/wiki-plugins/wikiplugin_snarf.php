@@ -15,7 +15,7 @@ function wikiplugin_snarf($data, $params)
 
     global $tikilib;
 
-    extract ($params);
+    extract ($params,EXTR_SKIP);
 
     if( ! isset( $url ) )
     {

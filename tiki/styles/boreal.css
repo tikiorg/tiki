@@ -437,8 +437,8 @@ a.forumnameread:hover {
 }
 
 .tableheading:hover,
-	gallistheading:hover, .listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover, .llistfileslink:hover, .
-	llistart:hover, .lforumheading:hover {
+	.gallistheading:hover, .listgalheading:hover, .bloglistheading:hover, .llisfgalheading:hover, .llistfileslink:hover,
+	.llistart:hover, .lforumheading:hover {
 	font-family:    Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	color:   #EFEFEF;
 	font-size:   10px;
@@ -2553,7 +2553,7 @@ TABLE.admin {
   margin: 1px;
   border: 1px inset #666666;
   -moz-border-radius: 20px;
-  vertcal-align: middle;
+  vertical-align: middle;
   background-color: #bbaa99;
 }
 .statusoff {
@@ -2661,3 +2661,10 @@ padding : 2px 30px;
 float : right;
 }
 
+/* wiki diff styles */
+.diff div{border-top: 1px solid #444444;}
+.diffheader{background-color:#606371; font-weight: bold;}
+.diffadded {background-color:#cccccc; color: black}
+.diffdeleted {background-color:#000033;}
+.diffbody{background-color:black}
+.diffchar {color: red;}

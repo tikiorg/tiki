@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.31 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.32 2005-01-22 22:54:52 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,7 @@ if ($feature_trackers != 'y') {
 
 // To admin tracker fields the user must have permission to admin trackers
 if ($tiki_p_admin_trackers != 'y') {
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->assign('msg', tra("You don't have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }	
@@ -33,6 +33,7 @@ if (!isset($_REQUEST["trackerId"])) {
 
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
+$tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
 $smarty->assign('tracker_info', $tracker_info);
 
 $field_types = $trklib->field_types();
@@ -80,7 +81,7 @@ $smarty->assign('isHidden', $info["isHidden"]);
 $smarty->assign('isMandatory', $info["isMandatory"]);
 
 
-if (isset($_REQUEST["remove"])) {
+if (isset($_REQUEST["remove"]) and ($tracker_info['useRatings'] != 'y' or $info['name'] != tra('Rating'))) {
   $area = 'deltrackerfield';
   if ($feature_ticketlib2 != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);

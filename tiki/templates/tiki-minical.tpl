@@ -1,7 +1,7 @@
 <a class="pagetitle" href="tiki-minical.php?view={$view}">{tr}Mini Calendar{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}UserCalendarDoc" target="tikihelp" class="tikihelp" title="{tr}User Calendar Doc{/tr}">
+<a href="{$helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar{/tr}">
 <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
 {/if}
 

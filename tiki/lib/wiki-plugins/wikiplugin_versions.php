@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.5 2004-10-08 10:00:01 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_versions.php,v 1.6 2005-01-22 22:55:56 mose Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -18,7 +18,7 @@ function wikiplugin_versions_help() {
 function wikiplugin_versions($data, $params) {
 	
 	if (isset($params) and is_array($params)) {
-		extract ($params);
+		extract ($params,EXTR_SKIP);
 	}
 	$data = trim($data);
 	$navbar = '';
@@ -80,7 +80,7 @@ function wikiplugin_versions($data, $params) {
 				if (strpos($_SERVER['REQUEST_URI'],'?')) { 
 					$navb = preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']);
 				} else {
-					$nav = $_SERVER['REQUEST_URI'];
+					$navb = $_SERVER['REQUEST_URI'];
 				}
 				if (strpos($navb,'?')) {
 					$navbar.= "$navb&";
