@@ -106,6 +106,7 @@ function wikiplugin_tracker($data, $params) {
 					}
 					$back.= "</td><td>";
 					$back.= '<select name="track['.$f["fieldId"].']">';
+					$back.= '<option value=""></option>';
 					foreach ($list as $key=>$item) {
 						$back.= '<option value="'.$item.'">'.$item.'</option>';
 					}
