@@ -136,6 +136,30 @@ $smarty->assign_by_ref('listpages',$listpages["data"]);
 $section='blogs';
 include_once('tiki-section_options.php');
 
+if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
+	require_once("lib/hawhaw/hawhaw.inc");
+	require_once("lib/hawhaw/hawiki.inc");
+	error_reporting(E_WARNING);
+    $DemoPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
+    $title = new HAW_text("Tiki Blogs", HAW_TEXTFORMAT_BOLD);
+    $DemoPage->add_text($title);
+    $linkset = new HAW_linkset();
+	for($i=0;$i<count($listpages['data']);$i++) {
+		$blog = $listpages['data'][$i];
+		// check for tiki_p_read_blog here
+		if($blog['individual'] == 'n' && $tiki_p_read_blog == 'y' ||
+		   $blog['individual_tiki_p_read_blog'] == 'y') {
+			$link2 = new HAW_link($blog['title'],"tiki-view_blog.php?mode=wap&blogId=".$blog['blogId']);
+			$linkset->add_link($link2);
+		}
+	}
+    $DemoPage->add_linkset($linkset);
+    $DemoPage->create_page();
+    $DemoPage->display();
+	die;
+
+}
+
 
 // Display the template
 $smarty->assign('mid','tiki-list_blogs.tpl');

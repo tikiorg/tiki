@@ -206,6 +206,26 @@ if($feature_user_watches == 'y') {
 	}
 }
 
+if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='wap') {
+	require_once("lib/hawhaw/hawhaw.inc");
+	require_once("lib/hawhaw/hawiki.inc");
+	error_reporting(E_WARNING);
+    $DemoPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
+    $title = new HAW_text("Tiki Blogs", HAW_TEXTFORMAT_BOLD);
+    $DemoPage->add_text($title);
+    $linkset = new HAW_linkset();
+	for($i=0;$i<count($listpages['data']);$i++) {
+		$blog = $listpages['data'][$i];
+		// check for tiki_p_read_blog here
+			$link2 = new HAW_link(isset($blog['title'])?$blog['title']:date("d/m/Y [h:I]",$blog['created']),"tiki-view_blog_post.php?mode=wap&blogId=".$_REQUEST['blogId']."&amp;postId=".$blog['postId']);
+			$linkset->add_link($link2);
+	}
+    $DemoPage->add_linkset($linkset);
+    $DemoPage->create_page();
+    $DemoPage->display();
+	die;
+
+}
 
 
 // Display the template
