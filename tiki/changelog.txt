@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.134 2003-11-19 17:58:12 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.135 2003-11-21 11:55:15 redflo Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,17 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
 
+- (rc2) ------------------------------------------------------------
+* [MOD] Enhanced user menus so that the menu items only show if a
+        feature/permission/group is on. Added new application menu
+	as sample.
+* [FIX] fixed pagination in forums
+* [FIX] fixed computation of number of queries
+* [MOD] Trackers are now faster if you have a large number of 
+        registred users
+* [NEW] new search engine with background collecting of searchwords.
+        This search engine is database independent. Use the "new_search"
+	module to be able to use the new search engine.
 * [MOD] all links that were displayed with [ link ] now use
   linkbut css style for a more homogen navigation
 * [FIX] fixed rankings for authors in wiki and cms
