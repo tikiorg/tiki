@@ -3233,6 +3233,7 @@ DROP TABLE IF EXISTS users_groups;
 CREATE TABLE users_groups (
   groupName varchar(30) NOT NULL default '',
   groupDesc varchar(255) default NULL,
+  groupHome varchar(255),
   PRIMARY KEY  (groupName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
@@ -3453,6 +3454,7 @@ CREATE TABLE users_users (
   password varchar(30) NOT NULL default '',
   provpass varchar(30) default NULL,
   realname varchar(80) default NULL,
+  default_group varchar(255),
   homePage varchar(200) default NULL,
   lastLogin int(14) default NULL,
   currentLogin int(14) default NULL,
