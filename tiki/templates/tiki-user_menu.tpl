@@ -50,13 +50,18 @@
 {if $sep eq 'line'}
 <div class="separator{$sep}">&nbsp;</div>
 {/if}
-{if $feature_menusfolderstyle eq 'y'}
+
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 <script language='Javascript' type='text/javascript'>
 {foreach key=pos item=chdata from=$channels}
 {if $chdata.type eq 's'}
-setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
+  {if $feature_menusfolderstyle eq 'y'}
+    setfolderstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}', '{$menu_info.type}');
+  {else}
+    setsectionstate('menu{$menu_info.menuId|cat:'__'|cat:$chdata.position}');
+  {/if}
 {/if}
 {/foreach}
 </script>
-{/if}{/if}
+{/if}
+

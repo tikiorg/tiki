@@ -23,3 +23,10 @@
 {/if}
 {/section}
 {/if}
+
+{* This template uses different ids for the divs used to open/close section.
+ * Is this desired? It's the only one where the open/closed state is not kept
+ * in cookies - lfagundes
+ *}
+
+

@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.47 2004-05-05 20:09:52 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.48 2004-05-31 11:48:42 lfagundes Exp $
 
 function getElementById(id) {
     if (document.all) {
@@ -282,6 +282,15 @@ function setfolderstate(foo, def) {
 	setfoldericonstate(foo);
 }
 
+function setsectionstate(foo) {
+	status = getCookie(foo);
+        if (status == "o") {
+	    show(foo, "o");
+        } else if (status == "c") {
+            hide(foo, "c");
+        }
+}
+
 function icntoggle(foo) {
 	if (document.getElementById(foo).style.display == "none") {
 		show(foo);
@@ -345,6 +354,7 @@ function getCookie(name) {
 
 		if (begin != 0)
 			return null;
+
 	} else begin += 2;
 
 	var end = document.cookie.indexOf(";", begin);
