@@ -87,6 +87,7 @@
 <br/>
 {if $feature_wiki_attachments eq 'y'}
 {if $tiki_p_wiki_view_attachments eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
+<div id="attzone">
 <table class="normal">
 <tr> 
   <td width="28%" class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a></td>
@@ -128,9 +129,17 @@
 </table>
 </form>
 {/if}
+</div>
 {/if}
 {/if}
 {if $feature_wiki_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
 {/if}
+{if $print_page eq 'y'}
+<p><div class="editdate" align="center">{tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page{$page|escape:"url"}</div></p>
+{/if}
+{if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categoryobjects eq 'y'}
+{$display_catobjects}
+{/if}
+
