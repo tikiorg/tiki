@@ -100,10 +100,11 @@ function removeRowClick()
 
 function removeRowSubmit( form )
 {
-    g.getRow( form.row.value ).remove();
+    row = g.getRow( form.row.value );
+	row.remove();
 
     g.draw();
-    //g.refresh();
+    g.refresh();
 
     document.getElementById( 'detail' ).innerHTML = "";
 
@@ -165,4 +166,21 @@ function restoreCellClick()
 		g.refresh();
 		g.draw();
 	}
+}
+
+// Copy Calculation {{{1
+function copyCalculationClick()
+{
+    element = document.getElementById( 'detail' );
+	
+	element.innerHTML = controlCopyCalculation;
+}
+
+function copyCalculationSubmit( form )
+{
+	g.copy( form.clicked.value );
+
+    document.getElementById( 'detail' ).innerHTML = "";
+
+	return false;
 }

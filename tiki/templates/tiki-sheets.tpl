@@ -1,7 +1,7 @@
 <a href="tiki-sheets.php" class="pagetitle">{tr}TikiSheet{/tr}</a>
   
       {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=TikiSheet" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Image Gallery{/tr}">
+<a href="http://tikiwiki.org/tiki-index.php?page=TikiSheet" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Tiki Sheet{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
 
@@ -27,6 +27,9 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}"/></td></tr>
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description">{$description|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}Class Name{/tr}:</td><td class="formcolor"><input type="text" name="className" value="{$className|escape}"/></td></tr>
+<tr><td class="formcolor">{tr}Header Rows{/tr}:</td><td class="formcolor"><input type="text" name="headerRow" value="{$headerRow|escape}"/></td></tr>
+<tr><td class="formcolor">{tr}Footer Rows{/tr}:</td><td class="formcolor"><input type="text" name="footerRow" value="{$footerRow|escape}"/></td></tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" value="{tr}save{/tr}" name="edit" /></td></tr>
 </table>
@@ -78,9 +81,13 @@
   <td class="{cycle advance=false}">{$sheets[changes].description}</td>
   <td class="{cycle advance=false}">{$sheets[changes].author}</td>
   <td class="{cycle}">
+    <a class="gallink" href="tiki-export_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/export.gif' alt='{tr}Export{/tr}' title='{tr}Export{/tr}' border='0' /></a>
+  {if $tiki_p_admin_sheet eq 'y' or ($author and $sheets[changes].author eq $author) or ($tiki_p_admin eq 'y') }
+    <a class="gallink" href="tiki-import_sheet.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/import.gif' alt='{tr}Import{/tr}' title='{tr}Import{/tr}' border='0' /></a>
+  {/if}
   {if $tiki_p_admin_sheet eq 'y' or ($author and $sheets[changes].author eq $author) or ($tiki_p_admin eq 'y') }
     <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;sheetId={$sheets[changes].sheetId}"><img src='img/icons/config.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' border='0' /></a>
-    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet={$sheets[changes].sheetId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' /></a>
+    <a class="gallink" href="tiki-sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removesheet={$sheets[changes].sheetId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Delete{/tr}' title='{tr}Delete{/tr}' /></a>
   {/if}
   </td>
 </tr>
