@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.9 2004-05-21 20:43:14 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-quiz_edit.php,v 1.10 2004-05-24 20:53:05 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -95,10 +95,33 @@ function	fetchYNOption(&$quiz, $_REQUEST, $option){
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz-question');
 
-	$cat_href = "tiki-quiz.php?quizId=" . $cat_objid;
-	$cat_name = $_REQUEST["name"];
-	$cat_desc = substr($_REQUEST["description"], 0, 200);
-	include_once ("categorize.php");
+	// See tiki-edit_quiz_questions.php for how to get import the quiz questions.
+// if (isset($_REQUEST["import"])) {
+// 	check_ticket('edit-quiz-question');
+
+// 	$questions = TextToQuestions($_REQUEST["input_data"]);
+
+// 	foreach ($questions as $question){
+// 		$question_text = $question->getQuestion();
+// 		$id = $quizlib->replace_quiz_question(0, $question_text, 'o', $_REQUEST["quizId"], 0);
+// 		for ($i = 0; $i < $question->getChoiceCount(); $i++){
+// 			$a = $question->GetChoice($i);
+// 			$b = $question->GetCorrect($i);
+// 			$quizlib->replace_question_option(0, $a, $b, $id);
+// 		}
+// 	}
+
+// 	$smarty->assign('question', '');
+// 	$smarty->assign('questionId', 0);
+// }
+
+	// Fixme, this doesn't work for a brand-new quiz because the quizId is zero!
+	if ($cat_objid != 0){
+		$cat_href = "tiki-quiz.php?quizId=" . $cat_objid;
+		$cat_name = $_REQUEST["name"];
+		$cat_desc = substr($_REQUEST["description"], 0, 200);
+		include_once ("categorize.php");
+	}
 
 	echo "line: ".__LINE__."<br>";
 	echo "Sorry, this is only a prototype at present.<br>";
@@ -175,15 +198,15 @@ if (isset($_REQUEST["save"])) {
 	// If everything works, preview the quiz.
 	// 
 } else if ($_REQUEST["quizId"] == 0) { // When the quiz id is not indicated, create a new quiz
-	$quizNew = new Quiz;
-	/*
-	echo "line ".__LINE__."<br>";
-	$lines = $quizNew->show_html();
-	foreach ($lines as $line){
-		echo $line;
-	}
-	die;
-	*/
+	$quiz = new Quiz;
+
+	// scaffolding
+// 	echo "line ".__LINE__."<br>";
+// 	$lines = $quiz->show_html();
+// 	foreach ($lines as $line){
+// 		echo $line;
+// 	}
+// 	die;
 } else {
 	$quiz = $quizlib->get_quiz($_REQUEST["quizId"]);
 	echo "line ".__LINE__."<br>";
@@ -196,127 +219,74 @@ if (isset($_REQUEST["save"])) {
 	$quizOld = $quizlib->quiz_fetch($_REQUEST["quizId"]);
 }
 
+// The taken and history stuff has to come from version and studentAttempts fields in
+//  the tiki_quiz table in the database.
+// $quiz['taken'] = 'y';
+// $quiz['history'] = array();
+// $quiz['history'][] = "and so on...";
+// $quiz['history'][] = "Version 3 was attempted by students 3 time(s).";
+// $quiz['history'][] = "Version 2 was attempted by students 2 time(s).";
+// $quiz['history'][] = "Version 1 was attempted by students 1 time(s).";
+
 $smarty->assign('quiz', $quiz);
 
 // echo __LINE__."<br>";
+// echo '$quiz->id = '.$quiz->id."<br>";
 // die;
 
-// Fill array with possible number of questions per page
+function setup_options(){
+	global $smarty;
+	global $tikilib;
+	global $user;
+	$smarty->assign('online_choices', array('choice_online'  => 'Online',
+																					'choice_offline' => 'Offline'));
+	
+	$optionsGrading = array();
+	$optionsGrading[] = "machine";
+	$optionsGrading[] = "peer review";
+	$optionsGrading[] = "teacher";
+	$smarty->assign('optionsGrading', $optionsGrading);
 
-$positions = array();
+	$optionsShowScore = array();
+	$optionsShowScore[] = "immediately";
+	$optionsShowScore[] = "after expire date";
+	$optionsShowScore[] = "never";
+	$smarty->assign('optionsShowScore', $optionsShowScore);
+	
+	// FIXME - This needs to be limited to the session timeout in php.ini
+	$mins = array();
+	for ($i = 1; $i <= 20; $i++){
+		$mins[] = $i;
+	}
+	$smarty->assign('mins', $mins);
+	
+	$repetitions = array();
+	$qpp = array();
+	
+	for ($i = 1; $i <= 10; $i++){
+		$qpp[] = $i;
+		$repetitions[] = $i;
+	}
+	$repetitions[] = "unlimited";
+	$smarty->assign('repetitions', $repetitions);
+	$smarty->assign('qpp', $qpp);
+	
+	$smarty->assign('questionsPerPage', "Unlimited");
+	
+	// Additional data for smarty
+	$tzName = $tikilib->get_display_timezone($user);
+	if ($tzName == "Local"){
+		$tzName = "";
+	}
+	$smarty->assign('siteTimeZone', $tzName);
+}
 
-for ($i = 1; $i < 100; $i++)
-	$positions[] = $i;
+setup_options();
 
-$smarty->assign('positions', $positions);
 ask_ticket('edit-quiz-question');
-
-// GGG scaffolding -start
-
-$smarty->assign('online_choices', array(
-			'choice_offline' => 'Offline',
-			'choice_online'  => 'Online'));
-$smarty->assign('online', 'choice_offline');
-
-$quiz['online'] = "n";
-
-$quiz['name'] = "Chapter 01";
-$quiz['description'] = "Quiz on Chapter 01 of Tom Sawyer";
-$quiz['version'] = 'x';
-
-// The taken and history stuff has to come from the database.
-$quiz['taken'] = 'y';
-$quiz['history'] = array();
-$quiz['history'][] = "and so on...";
-$quiz['history'][] = "Version 3 was attempted by student(s) 3 time(s).";
-$quiz['history'][] = "Version 2 was attempted by student(s) 2 time(s).";
-$quiz['history'][] = "Version 1 was attempted by student(s) 1 time(s).";
-
-// The default publish date to be Jan 1, of this year at midnight.
-$quiz['datePub'] = mktime(0, 0, 0, 1, 1,  date("Y"));
-
-// The default expire date to be 10 years after the default publish date
-$quiz['dateExp'] = mktime(0, 0, 0, 1, 1,  date("Y")+10);
-
-$quiz['grading'] = "machine";
-
-$quiz['showScore'] = "immediately";
-
-$quiz['showCorrectAnswers'] = "immediately";
-
-// GGG scaffolding -end
-
-$optionsGrading = array();
-$optionsGrading[] = "machine";
-$optionsGrading[] = "peer review";
-$optionsGrading[] = "teacher";
-$smarty->assign('optionsGrading', $optionsGrading);
-
-$optionsShowScore = array();
-$optionsShowScore[] = "immediately";
-$optionsShowScore[] = "after expire date";
-$optionsShowScore[] = "never";
-$smarty->assign('optionsShowScore', $optionsShowScore);
-
-$smarty->assign_by_ref('quiz', $quiz);
-
-// GGG scaffolding
-// $smarty->assign('repetitionLimit', "10");
-$mins = array();
-
-for ($i = 1; $i <= 20; $i++)
-	$mins[] = $i;
-$smarty->assign('mins', $mins);
-
-$mins = array();
-$repetitions = array();
-$qpp = array();
-
-for ($i = 1; $i <= 20; $i++){
-	$mins[] = $i;
-}
-$smarty->assign('mins', $mins);
-
-for ($i = 1; $i <= 10; $i++){
-	$qpp[] = $i;
-	$repetitions[] = $i;
-}
-$repetitions[] = "unlimited";
-$smarty->assign('repetitions', $repetitions);
-$smarty->assign('qpp', $qpp);
-
-$smarty->assign('questionsPerPage', "Unlimited");
-
-$quiz_info["name"] = "Chapter 01";
-
-// Additional data for smarty
-$tzName = $tikilib->get_display_timezone($user);
-if ($tzName == "Local"){
-	$tzName = "";
-}
-$smarty->assign('siteTimeZone', $tzName);
 
 // Display the template
 $smarty->assign('mid', 'tiki-quiz_edit.tpl');
 $smarty->display("tiki.tpl");
-
-// if (isset($_REQUEST["import"])) {
-// 	check_ticket('edit-quiz-question');
-
-// 	$questions = TextToQuestions($_REQUEST["input_data"]);
-
-// 	foreach ($questions as $question){
-// 		$question_text = $question->getQuestion();
-// 		$id = $quizlib->replace_quiz_question(0, $question_text, 'o', $_REQUEST["quizId"], 0);
-// 		for ($i = 0; $i < $question->getChoiceCount(); $i++){
-// 			$a = $question->GetChoice($i);
-// 			$b = $question->GetCorrect($i);
-// 			$quizlib->replace_question_option(0, $a, $b, $id);
-// 		}
-// 	}
-
-// 	$smarty->assign('question', '');
-// 	$smarty->assign('questionId', 0);
-// }
 
 ?>
