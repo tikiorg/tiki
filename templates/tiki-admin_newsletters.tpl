@@ -1,4 +1,27 @@
-<a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-admin_newsletters.php">{tr}Admin newsletters{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=Newsletters" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Newsletters{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_newsletters.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin newsletters tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!--- beginning of next bit --->
+
+
+
+
+
+
+
+<br/><br/>
 [<a class="link" href="tiki-newsletters.php">{tr}list newsletters{/tr}</a>
 |<a class="link" href="tiki-send_newsletters.php">{tr}send newsletters{/tr}</a>
 ]<br/><br/>
