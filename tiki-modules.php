@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.26 2004-01-06 20:46:54 gravesweeper Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.27 2004-01-10 16:05:29 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,10 +103,10 @@ for ($i = 0; $i < count($left_modules); $i++) {
             //print("Refrescar cache<br/>");
             $r["data"] = '';
 
-            if (file_exists(TIKI_TEMPLATES_PATH."/$phpfile")) {
+            if (file_exists($phpfile)) {
                 //print("Haciendo el include<br/>");
                 // If we have a php file then use it!
-                include_once (TIKI_TEMPLATES_PATH."/$phpfile");
+                include_once ($phpfile);
             }
 
             //print("Template file: $template<br/>");
