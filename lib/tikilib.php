@@ -3023,8 +3023,9 @@ class TikiLib {
 
 	/*shared*/
 	function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
+		global $tiki_p_admin_galleries;
 		// If $user is admin then get ALL galleries, if not only user galleries are shown
-
+		
 		$old_sort_mode = '';
 
 		if (in_array($sort_mode, array(
@@ -3041,7 +3042,7 @@ class TikiLib {
 		}
 
 		// If the user is not admin then select `it` 's own galleries or public galleries
-		if ($user != 'admin') {
+		if (($user != 'admin') and ($tiki_p_admin_galleries != 'y')) {
 			$whuser = "and `user`=? or `public`=?";
 			$bindvars=array('y',$user,'y');
 		} else {
