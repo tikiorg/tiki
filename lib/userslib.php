@@ -732,8 +732,8 @@ class UsersLib extends TikiLib {
 	}
   
 	function get_group_home($group) {
-		$query = "select groupHome from users_groups where groupName='$group'";
-		$result = $this->query($query);
+		$query = "select `groupHome` from `users_groups` where `groupName`=?";
+		$result = $this->query($query,array($group));
 		if($result->numRows()) {
 			$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
 			$ret = $res['groupHome'];
@@ -744,29 +744,23 @@ class UsersLib extends TikiLib {
 	}
 
 	function get_group_users($group) {
-		$query = "select `login`  from `users_users` uu,users_usergroups ug where `uu`.userId=ug.userId and groupName='$group'";
-
-		$result = $this->query($query);
+		$query = "select `login`  from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` and `groupName`=?";
+		$result = $this->query($query,array($group));
 		$ret = array();
-
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res["login"];
 		}
-
 		return $ret;
 	}
 
 	function get_user_info($user) {
-		$query = "select * from `users_users` where `login`='$user'";
-
-		$result = $this->query($query);
+		$query = "select * from `users_users` where `login`=?";
+		$result = $this->query($query,array($user));
 		$res = $result->fetchRow();
 		$aux = array();
-
 		foreach ($res as $key => $val) {
 			$aux[$key] = $val;
 		}
-
 		$groups = $this->get_user_groups($user);
 		$res["groups"] = $groups;
 		return $res;
