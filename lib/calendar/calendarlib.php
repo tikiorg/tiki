@@ -304,7 +304,7 @@ class CalendarLib extends TikiLib {
 
 				$query .= "from `tiki_comments` as c
 				left join `tiki_forums` as f on
-				c.`object`=f.`forumId` and c.`objectId` = ?
+				c.`object`=f.`forumId` and c.`objectType` = ?
 				";
 
 				$query .= "where f.`forumId` != ? and (c.`commentDate`>? and c.`commentDate`<?)";
@@ -533,7 +533,7 @@ class CalendarLib extends TikiLib {
 			case "chart":
 				$query = "select `chartId`, `created`, `title` as name, `description` ";
 
-				$query .= "from `tiki_charts` where (`created`>$tstart and `created`<$tstop)";
+				$query .= "from `tiki_charts` where (`created`>? and `created`<?)";
 				$result = $this->query($query,array($tstart,$tstop));
 
 				while ($res = $result->fetchRow()) {

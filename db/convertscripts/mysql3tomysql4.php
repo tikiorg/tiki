@@ -1,7 +1,7 @@
 <?php
 
 // read file
-$file="../tiki-mysql3.sql";
+$file="../tiki-1.8-mysql.sql";
 @$fp = fopen($file,"r");
 if(!$fp) echo "Error opening $file";
 $data = '';
