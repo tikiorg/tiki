@@ -17,7 +17,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.13 $
+    * @version $Revision: 1.14 $
     */
     class WikiPluginTitleSearch extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -31,11 +31,11 @@
                 'search' => false);
         }
         function getName() {
-            return tra("TitleSearch");
+            return "TitleSearch";
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.13 $");
+                "\$Revision: 1.14 $");
         }
         function run ($data, $params) {
             global $wikilib;
