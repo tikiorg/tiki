@@ -44,6 +44,7 @@
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 <table class="normal">
+{if ($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y'}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
 <td>
 <select name="status">
@@ -51,7 +52,6 @@
 <option value="o" {if $status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
 <option value="c" {if $status eq 'c'}selected="selected"{/if}>{tr}closed{/tr}</option>
 </select>
-{if $fields[ix].type ne 'i'}
 </td></tr>
 {/if}
 {section name=ix loop=$fields}
@@ -60,9 +60,9 @@
 <tr class="formcolor"><td>{$fields[ix].name}</td>
 {/if}
 {if $fields[ix].type ne 'i'}
-<td>
+<td class="third auto">
 {/if}
-{if $fields[ix].type eq 't' or $fields[ix].type eq 'a'}
+{if $fields[ix].type eq 't' or $fields[ix].type eq 'a' or $fields[ix].type eq 'r'}
 <input type="text" name="{$fields[ix].id|escape}" value="{$fields[ix].value|escape}" />
 {/if}
 {if $fields[ix].type eq 'u'}
@@ -123,12 +123,12 @@ class="prevnext">{tr}All{/tr}</a>
 
 <table class="normal">
 <tr>
-{if $tracker_info.showStatus eq 'y'}
-<td class="third">
+{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
+<td class="third auto" width="20" style="width:20px;">
 {if $status eq 'o'}
-{html_image file=img/icons/ofo.gif title="{tr}closed{/tr}" alt="{tr}closed{/tr}" link="tiki-view_tracker.php?trackerId=$trackerId&status=c"}
+{html_image file=img/icons2/dotgrey.gif title="{tr}closed{/tr}" alt="{tr}closed{/tr}" link="tiki-view_tracker.php?trackerId=$trackerId&status=c"}
 {else}
-{html_image file=img/icons/fo.gif title="{tr}open{/tr}" alt="{tr}open{/tr}" link="tiki-view_tracker.php?trackerId=$trackerId&status=o"}
+{html_image file=img/icons2/dotgreen.gif title="{tr}open{/tr}" alt="{tr}open{/tr}" link="tiki-view_tracker.php?trackerId=$trackerId&status=o"}
 {/if}
 </td>
 {/if}
@@ -158,19 +158,19 @@ $fields[ix].name|escape:'url'|cat:'_desc'}{$fields[ix].name|escape:"url"}_asc{el
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
 <tr class="{cycle}">
-{if $tracker_info.showStatus eq 'y'}
-<td class="third">
+{if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
+<td class="auto" style="width:20px;">
 {if $items[user].status eq 'o'}
-<img src='img/icons/ofo.gif' border='0' alt='{tr}open{/tr}' title='{tr}open{/tr}' />
+<img src='img/icons2/dotgreen.gif' border='0' alt='{tr}open{/tr}' title='{tr}open{/tr}' />
 {else}
-<img src='img/icons/fo.gif' border='0' alt='{tr}closed{/tr}' title='{tr}closed{/tr}' />
+<img src='img/icons2/dotgrey.gif' border='0' alt='{tr}closed{/tr}' title='{tr}closed{/tr}' />
 {/if}
 </td>
 {/if}
 {section name=ix loop=$items[user].field_values}
 {if $items[user].field_values[ix].isTblVisible eq 'y'}
 {if $items[user].field_values[ix].isMain eq 'y'}
-<td>{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}">{/if}
+<td class="auto">{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}">{/if}
 {if $items[user].field_values[ix].type eq 'f'}
 {$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
 {elseif $items[user].field_values[ix].type eq 'c'}
