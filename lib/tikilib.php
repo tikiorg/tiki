@@ -8,7 +8,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 include_once ('lib/diff.php');
 
 require_once ('lib/pear/Date.php');
-include_once ('lib/pear/HTTP/Request.php');
 require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
 //performance collecting:
@@ -44,7 +43,7 @@ class TikiLib extends TikiDB {
 
 
 /*shared*/
-function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
+function httprequest($url, $reqmethod = "GET") {
 	  global $use_proxy,$proxy_host,$proxy_port;
 		// test url :
 		if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%]*$/",$url)) return false;
@@ -66,6 +65,7 @@ function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
 			$aSettingsRequest["proxy_host"]=$proxy_host;
 			$aSettingsRequest["proxy_port"]=$proxy_port;
 	  }
+	  include_once ('lib/pear/HTTP/Request.php');
 	  $req = &new HTTP_Request($url, $aSettingsRequest);
 	  $data="";
 	  // (cdx) return false when can't connect
