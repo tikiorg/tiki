@@ -1,15 +1,15 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_quiz_import.php,v 1.1 2004-04-28 00:47:10 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_quiz_import.php,v 1.2 2004-04-28 13:13:25 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// Put put a text box where the user can enter a question for importing.
-// A question ending with a qestion mark?
+// Put up a text box where the user can enter a question for importing.
+// A question ending on the first line.
 // *the correct answer
 // an incorrect answer
-// another insorrect answer
+// another incorrect answer
 
 // Correct answers must start with an "*"
 // White space before and after text is ignored.
