@@ -1,6 +1,7 @@
 <?php
 include('tiki-setup.php');
 include('lib/Galaxia/API.php');
+include_once ("lib/webmail/htmlMimeMail.php");
 
 $__activity_completed = false;
 
