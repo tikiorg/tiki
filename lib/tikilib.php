@@ -361,9 +361,12 @@ class TikiLib {
 	$hash = md5(uniqid('.'));
 	$email = $userlib->get_user_email($user);
 	$query = "delete from `tiki_user_watches`
-	    where `user`=? and `event`=? and `object`=? and `email`=? and `hash`=? and `type`=? and `title`=? and `url`=?";
+	    where `user`=? and `event`=? and `object`=? and
+	    `email`=? and `hash`=? and `type`=? and `title`=? and
+	    `url`=?";
 	$this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url),-1,-1,false);
-	$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`)
+	$query = "insert into
+	`tiki_user_watches`(`user`,`event`,`object`,`email`,`hash`,`type`,`title`,`url`)
 	    values(?,?,?,?,?,?,?,?)";
 	$this->query($query,array($user,$event,$object,$email,$hash,$type,$title,$url));
 	return true;
@@ -1518,11 +1521,11 @@ class TikiLib {
 	}
 
 	$query = "select * from `tiki_comments`,`tiki_forums` where
-	    `object`=concat('forum',forumId) and `parentId`=0 $mid
+	    `object`=forumId and `objectType` = 'forum' and `parentId`=0 $mid
 	    order by $sort_mode limit $offset,$maxRecords";
 	$query_cant = "select count(*) from
 	    `tiki_comments`,`tiki_forums` where
-	    `object`=concat('forum',forumId) and `parentId`=0 $mid
+	    `object`=forumId and `objectType` = 'forum' and `parentId`=0 $mid
 	    order by $sort_mode limit $offset,$maxRecords";
 	$result = $this->query($query);
 	$cant = $this->getOne($query_cant);
@@ -1552,13 +1555,14 @@ class TikiLib {
 	}
 
 	$query = "select * from `tiki_comments`,`tiki_forums`  where
-	    `forumId`=$forumId `object`=concat('forum',$forumId)
-	    and `parentId`=0 $mid order by $sort_mode limit
+	    `forumId`=$forumId `object`=$forumId and `objectType` =
+	    'forum' and `parentId`=0 $mid order by $sort_mode limit
 	    $offset,$maxRecords";
 	$query_cant = "select count(*) from
 	    `tiki_comments`,`tiki_forums` where
-	    `object`=concat('forum',$forumId) and `parentId`=0 $mid
-	    order by $sort_mode limit $offset,$maxRecords";
+	    `object`=$forumId and `objectType` = 'forum' and
+	    `parentId`=0 $mid order by $sort_mode limit
+	    $offset,$maxRecords";
 	$result = $this->query($query);
 	$cant = $this->getOne($query_cant);
 	$now = date("U");
@@ -1605,9 +1609,10 @@ class TikiLib {
 	    }
 
 	    // Now select `users` 
-	    $objectId = 'forum' . $res["forumId"];
+	    $objectId = $res["forumId"];
 	    $query = "select distinct `username` from
-		`tiki_comments` where `object`='$objectId'";
+		`tiki_comments` where `object`='$objectId' and
+		`objectType` = 'forum'";
 	    $result2 = $this->query($query);
 	    $res["users"] = $result2->numRows();
 
@@ -1632,8 +1637,9 @@ class TikiLib {
 
 	// Now remove comments
 	$object = $type . $id;
-	$query = "delete from `tiki_comments` where `object`='$object'";
-	$result = $this->query($query);
+	$query = "delete from `tiki_comments` where `object`='?'
+	and `objectType` = ?";
+	$result = $this->query($query, array( $id, $type ));
 	// Remove individual permissions for this object if they exist
 	$query = "delete from `users_objectpermissions` where `objectId`='$object' and `objectType`='$type'";
 	$result = $this->query($query);
@@ -2280,8 +2286,9 @@ class TikiLib {
 	    $blogId = $res["blogId"];
 
 	    $query = "select `title`  from `tiki_blogs` where `blogId`=?";
-	    $hash = 'postId' . $res["postId"];
-	    $cant_com = $this->getOne("select count(*) from `tiki_comments` where `object`=?",array($hash));
+	    $cant_com = $this->getOne("select count(*) from
+	    `tiki_comments` where `object`=? and `objectType` =
+	    'blog'",array($res["postId"]));
 	    $res["comments"] = $cant_com;
 	    $res["blogTitle"] = $this->getOne($query,array($blogId));
 	    $res["size"] = strlen($res["data"]);

@@ -276,9 +276,11 @@ class BlogLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$hash = 'post' . $res["postId"];
+			$cant_com = $this->getOne("select count(*)
+			from `tiki_comments` where
+			`object`=? and `objectType` = 'post'", array(
+			$res["postId"] ) );
 
-			$cant_com = $this->getOne("select count(*) from `tiki_comments` where `object`=?",array($hash));
 			$res["comments"] = $cant_com;
 			if($res['trackbacks_from']!=null)
 				$res['trackbacks_from'] = unserialize($res['trackbacks_from']);

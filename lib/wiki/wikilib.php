@@ -218,7 +218,8 @@ class WikiLib extends TikiLib {
 
 		// in tiki_categorized_objects update objId
 		$newcathref = 'tiki-index.php?page=' . urlencode($newName_as);
-		$query = "update `tiki_categorized_objects` set `objId`=?,`name`=?,`href`=? where `objId`=?";
+		$query = "update `tiki_categorized_objects` set
+		`objId`=?,`name`=?,`href`=? where `objId`=?";
 		$this->query($query, array(
 			$newName_as,
 			$newName_as,
@@ -231,8 +232,9 @@ class WikiLib extends TikiLib {
 		//    $this->query($query);	  	  	  	
 
 		// in tiki_comments update object  
-		$query = "update `tiki_comments` set `object`='$newId' where `object`='$oldId'";
-		$this->query($query);
+		$query = "update `tiki_comments` set
+		`object`=? where `object`=?";
+		$this->query($query, array( $newName, $oldName ) );
 
 		// in tiki_mail_events by object
 		$query = "update `tiki_mail_events` set `object`='$newId' where `object`='$oldId'";

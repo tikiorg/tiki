@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.33 2003-09-28 22:19:16 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.34 2003-10-03 22:10:49 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,7 +130,7 @@ if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
     die;
 }
 
-$next_thread = $commentslib->get_comments('forum' . $_REQUEST['forumId'], 0, $_REQUEST['topics_offset'] + 1,
+$next_thread = $commentslib->get_comments('forum:' . $_REQUEST['forumId'], 0, $_REQUEST['topics_offset'] + 1,
 	1, $_REQUEST["topics_sort_mode"], $_REQUEST["topics_find"], $_REQUEST['topics_threshold']);
 
 if (count($next_thread['data'])) {
@@ -143,7 +143,7 @@ $smarty->assign('topics_next_offset', $_REQUEST['topics_offset'] + 1);
 $smarty->assign('topics_prev_offset', $_REQUEST['topics_offset'] - 1);
 
 // Use topics_offset, topics_find, topics_sort_mode to get the next and previous topics!
-$prev_thread = $commentslib->get_comments('forum' . $_REQUEST['forumId'], 0, $_REQUEST['topics_offset'] - 1,
+$prev_thread = $commentslib->get_comments('forum:' . $_REQUEST['forumId'], 0, $_REQUEST['topics_offset'] - 1,
 	1, $_REQUEST["topics_sort_mode"], $_REQUEST["topics_find"], $_REQUEST['topics_threshold']);
 
 if (count($prev_thread['data'])) {
@@ -189,7 +189,7 @@ $smarty->assign_by_ref('thread_info', $thread_info);
 $comments_per_page = $forum_info["topicsPerPage"];
 $comments_default_ordering = $forum_info["threadOrdering"];
 $comments_vars = array('forumId');
-$comments_prefix_var = 'forum';
+$comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
 
 $commentslib->process_inbound_mail($_REQUEST['forumId']);
