@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.165 2003-11-18 14:45:20 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.166 2003-11-20 14:35:11 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -292,6 +292,11 @@ class timer {
 
 $tiki_timer = new timer();
 $tiki_timer->start();
+
+// for PHP<4.2.0
+if (!function_exists('array_fill')) {
+  require_once('lib/compat/array_fill.func.php');
+}
 
 include_once ("tiki-setup_base.php");
 //print("tiki-setup: before rest of tiki-setup:".$tiki_timer->elapsed()."<br />");
