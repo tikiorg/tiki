@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.71 2004-05-21 09:18:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.72 2004-06-16 19:33:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -714,7 +714,8 @@ if ($feature_user_watches == 'y') {
 if ($tiki_p_admin_forum == 'y' || $feature_forum_quickjump == 'y') {
     $all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
 
-    for ($i = 0; $i < count($all_forums["data"]); $i++) {
+    $temp_max = count($all_forums["data"]);
+    for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($all_forums["data"][$i]["forumId"], 'forum')) {
 	    if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $all_forums["data"][$i]["forumId"], 'forum', 'tiki_p_admin_forum') || $userlib->object_has_permission($user, $all_forums["data"][$i]["forumId"], 'forum', 'tiki_p_forum_read')) {
 		$all_forums["data"][$i]["can_read"] = 'y';

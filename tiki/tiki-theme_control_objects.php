@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.9 2004-06-14 00:44:10 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.10 2004-06-16 19:33:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,8 @@ include_once ('lib/filegals/filegallib.php');
 include_once ('lib/htmlpages/htmlpageslib.php');
 
 function correct_array(&$arr, $id, $name) {
-	for ($i = 0; $i < count($arr); $i++) {
+	$temp_max = count($arr);
+	for ($i = 0; $i < $temp_max; $i++) {
 		$arr[$i]['objId'] = $arr[$i][$id];
 
 		$arr[$i]['objName'] = $arr[$i][$name];

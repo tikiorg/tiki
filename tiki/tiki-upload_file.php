@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.27 2004-06-06 08:42:46 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.28 2004-06-16 19:33:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -235,7 +235,8 @@ if ($tiki_p_admin_file_galleries != 'y') {
 	$galleries = $filegallib->list_file_galleries(0, -1, 'lastModif_desc', $user, '');
 }
 
-for ($i = 0; $i < count($galleries["data"]); $i++) {
+$temp_max = count($galleries["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
 	if ($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"], 'file gallery')) {
 		$galleries["data"][$i]["individual"] = 'y';
 

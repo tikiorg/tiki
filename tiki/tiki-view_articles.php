@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.21 2004-06-13 04:21:00 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_articles.php,v 1.22 2004-06-16 19:33:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,7 +113,8 @@ if (isset($_REQUEST["topic"])) {
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_articles(0, $maxArticles, $sort_mode, $find, $pdate, $user, $type, $topic, 'y');
 
-for ($i = 0; $i < count($listpages["data"]); $i++) {
+$temp_max = count($listpages["data"]);
+for ($i = 0; $i < $temp_max; $i++) {
 	$listpages["data"][$i]["parsed_heading"] = $tikilib->parse_data($listpages["data"][$i]["heading"]);
 	$comments_prefix_var='article:';
 	$comments_object_var=$listpages["data"][$i]["articleId"];
