@@ -12,6 +12,10 @@ require_once("lib/copyrights/copyrightslib.php");
 // text
 // {COPYRIGHT}
 
+function wikiplugin_copyright_help() {
+  return "Insert copyright notices";
+}
+
 function wikiplugin_copyright($data,$params) {
   global $dbTiki;
   $copyrightslib = new CopyrightsLib($dbTiki);

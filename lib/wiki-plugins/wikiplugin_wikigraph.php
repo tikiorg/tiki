@@ -4,6 +4,10 @@
 // {WIKIGRAPH(level=>n)}page{WIKIGRAPH}
 include_once('lib/wiki/wikilib.php');
 include_once("lib/graphviz/GraphViz.php");
+
+function wikiplugin_wikigraph_help() {
+  return "Renders a graph";
+}
   
 function wikiplugin_wikigraph($data,$params) {
   global $tikilib;
