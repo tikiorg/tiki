@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.14 2004-04-29 21:47:43 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz.tpl,v 1.15 2004-04-30 23:01:59 ggeller Exp $ *}
  
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -39,6 +39,16 @@
 <tr><td class="formcolor"><label for="quiz-name">{tr}Name{/tr}:</label></td><td class="formcolor"><input type="text" name="name" id="quiz-name" value="{$name|escape}" /></td></tr>
 <tr><td class="formcolor"><label for="quiz-desc">{tr}Description{/tr}:</label></td><td class="formcolor"><textarea name="description" id="quiz-desc" rows="4" cols="40">{$description|escape}</textarea></td></tr>
 {include file=categorize.tpl}
+<tr class="formcolor"><td>{tr}Publish Date{/tr}</td><td>
+{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false}
+&nbsp;{$siteTimeZone}
+</span>
+</td></tr>
+<tr class="formcolor"><td>{tr}Expiration Date{/tr}</td><td>
+{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10"} {tr}at{/tr} <span dir="ltr">{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false}
+&nbsp;{$siteTimeZone}
+</span>
+</td></tr>
 <tr><td class="formcolor"><label for="quiz-repeat">{tr}Quiz can be repeated{/tr}</td><td class="formcolor"><input type="checkbox" name="canRepeat" id="quiz-repeat" {if $canRepeat eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor"><label for="quiz-results">{tr}Store quiz results{/tr}</td><td class="formcolor"><input type="checkbox" name="storeResults" id="quiz-results" {if $storeResults eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor"><label for="immediate-feedback">{tr}Immediate feedback{/tr}</td><td class="formcolor"><input type="checkbox" name="immediateFeedback" id="immediate-feedback" {if $immediateFeedback eq 'y'}checked="checked"{/if} /></td></tr>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.10 2004-04-30 04:12:43 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_quiz.php,v 1.11 2004-04-30 23:01:59 ggeller Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,6 +21,8 @@ if ($feature_quizzes != 'y') {
 if (!isset($_REQUEST["quizId"])) {
 	$_REQUEST["quizId"] = 0;
 }
+
+$dc = &$tikilib->get_date_converter($user);
 
 $smarty->assign('quizId', $_REQUEST["quizId"]);
 
@@ -60,6 +62,9 @@ $_REQUEST["questionsPerPage"] = 999;
 $info = array();
 $info["name"] = '';
 $info["description"] = '';
+$info["publishDate"] = date("U");
+$cur_time = getdate();
+$info["expireDate"] = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
 $info["canRepeat"] = 'n';
 $info["storeResults"] = 'n';
 $info["immediateFeedback"] = 'n';
@@ -72,6 +77,24 @@ $info["timeLimit"] = 60 * 60;
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('edit-quiz');
+
+// 	print $_REQUEST["publish_Hour"]."<br>";
+// 	print $_REQUEST["publish_Minute"]."<br>";
+// 	print $_REQUEST["publish_Month"]."<br>";
+// 	print $_REQUEST["publish_Day"]."<br>";
+// 	print $_REQUEST["publish_Year"]."<br>";
+
+
+ 	# convert from the displayed 'site' time to 'server' time
+ 	$publishDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["publish_Hour"], $_REQUEST["publish_Minute"],
+ 		0, $_REQUEST["publish_Month"], $_REQUEST["publish_Day"], $_REQUEST["publish_Year"]));
+ 	$expireDate = $dc->getServerDateFromDisplayDate(mktime($_REQUEST["expire_Hour"], $_REQUEST["expire_Minute"],
+ 		0, $_REQUEST["expire_Month"], $_REQUEST["expire_Day"], $_REQUEST["expire_Year"]));
+
+//  	print $publishDate."<br>";
+//  	print $expireDate."<br>";
+//  	die;
+
 	if (isset($_REQUEST["canRepeat"]) && $_REQUEST["canRepeat"] == 'on') {
 		$_REQUEST["canRepeat"] = 'y';
 	} else {
@@ -114,20 +137,32 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST["timeLimited"] = 'n';
 	}
 
+	// GGG Have to change $quizlib->replace_quiz to take publish and expire dates.
 	$qid = $quizlib->replace_quiz($_REQUEST["quizId"], $_REQUEST["name"],
 																$_REQUEST["description"],	$_REQUEST["canRepeat"],
 																$_REQUEST["storeResults"], $_REQUEST["immediateFeedback"],
 																$_REQUEST["showAnswers"],	$_REQUEST["shuffleQuestions"],
 																$_REQUEST["shuffleAnswers"], $_REQUEST["questionsPerPage"],
-																$_REQUEST["timeLimited"], $_REQUEST["timeLimit"]);
+																$_REQUEST["timeLimited"], $_REQUEST["timeLimit"],
+																$publishDate, $expireDate);
 	$cat_type = 'quiz';
 	$cat_objid = $qid;
 	$cat_desc = substr($_REQUEST["description"], 0, 200);
 	$cat_name = $_REQUEST["name"];
 	$cat_href = "tiki-take_quiz.php?quizId=" . $cat_objid;
 	include_once ("categorize.php");
+	$_REQUEST["quizId"] = 0;
 } elseif ($_REQUEST["quizId"]) {
+	// GGG Have to change $quizlib->get_quiz to handle publish and expire dates.  Maybe it does automagically!
 	$info = $quizlib->get_quiz($_REQUEST["quizId"]);
+
+	if (!isset($info["publishDate"])){
+		$info["publishDate"] = date("U");
+	}
+	if (!isset($info["expireDate"])){
+		$cur_time = getdate();
+		$info["expireDate"] = mktime ($cur_time["hours"], $cur_time["minutes"], 0, $cur_time["mon"], $cur_time["mday"]+365, $cur_time["year"]);
+	}
 }
 
 $smarty->assign('name', $info["name"]);
@@ -260,6 +295,12 @@ $cat_type = 'quiz';
 $cat_objid = $_REQUEST["quizId"];
 include_once ("categorize_list.php");
 ask_ticket('edit-quiz');
+
+$smarty->assign('publishDate', $info['publishDate']);
+$smarty->assign('publishDateSite', $dc->getDisplayDateFromServerDate($info['publishDate']));
+$smarty->assign('expireDate', $info['expireDate']);
+$smarty->assign('expireDateSite', $dc->getDisplayDateFromServerDate($info['expireDate']));
+$smarty->assign('siteTimeZone', $dc->getTzName());
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_quiz.tpl');
