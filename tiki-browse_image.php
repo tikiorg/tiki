@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once("lib/imagegals/imagegallib.php");
 
 if($feature_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -16,7 +17,7 @@ if(!isset($_REQUEST["imageId"])) {
 }
 
 // get info for scaled images
-$scaleinfo = $tikilib->get_gallery_scale_info($_REQUEST["galleryId"]);
+$scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
 $sxsize=0;
 $sysize=0;
 if(isset($_REQUEST["xsize"])) $sxsize=$_REQUEST["xsize"];
@@ -65,8 +66,8 @@ $smarty->assign_by_ref('prevt',$prevt);
 
   
 
-$info = $tikilib->get_image_info($_REQUEST["imageId"],$itype,$sxsize,$sysize);
-$gal_info = $tikilib->get_gallery($info["galleryId"]);
+$info = $imagegallib->get_image_info($_REQUEST["imageId"],$itype,$sxsize,$sysize);
+$gal_info = $imagegallib->get_gallery($info["galleryId"]);
 $_REQUEST["galleryId"] = $info["galleryId"];
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -120,13 +121,13 @@ if(!isset($_REQUEST["offset"])) {
   $_REQUEST["offset"]=0;
 }
 $offset=$_REQUEST["offset"];
-$image_prev = $tikilib->get_images($offset+$_REQUEST["desp"]-1,1,$sort_mode,'',$_REQUEST["galleryId"]);
+$image_prev = $imagegallib->get_images($offset+$_REQUEST["desp"]-1,1,$sort_mode,'',$_REQUEST["galleryId"]);
 if(count($image_prev["data"])==1) {
   $smarty->assign('previmg',$image_prev["data"][0]["imageId"]);
 } else {
   $smarty->assign('previmg','');
 }
-$image_next = $tikilib->get_images($offset+$_REQUEST["desp"]+1,1,$sort_mode,'',$_REQUEST["galleryId"]);
+$image_next = $imagegallib->get_images($offset+$_REQUEST["desp"]+1,1,$sort_mode,'',$_REQUEST["galleryId"]);
 if(count($image_next["data"])==1) {
   $smarty->assign('nextimg',$image_next["data"][0]["imageId"]);
 } else {
@@ -146,9 +147,9 @@ $smarty->assign('url_browse',httpPrefix().$foo1);
 $smarty->assign('url_show',httpPrefix().$foo2);
 
 
-$tikilib->add_image_hit($_REQUEST["imageId"]);
-$info = $tikilib->get_image_info($_REQUEST["imageId"]); //todo: already known???
-$gal_info = $tikilib->get_gallery($info["galleryId"]);
+$imagegallib->add_image_hit($_REQUEST["imageId"]);
+$info = $imagegallib->get_image_info($_REQUEST["imageId"]); //todo: already known???
+$gal_info = $imagegallib->get_gallery($info["galleryId"]);
 //$smarty->assign_by_ref('theme',$gal_info["theme"]);
 //$smarty->assign('use_theme','y');
 
@@ -160,7 +161,7 @@ if(isset($_REQUEST["move_image"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $tikilib->move_image($_REQUEST["imageId"],$_REQUEST["galleryId"]);
+  $imagegallib->move_image($_REQUEST["imageId"],$_REQUEST["galleryId"]);
 }
 
 
@@ -177,7 +178,7 @@ $smarty->assign_by_ref('ysize',$info["ysize"]);
 $smarty->assign_by_ref('hits',$info["hits"]);
 $smarty->assign_by_ref('image_user',$info["user"]);
 
-$galleries = $tikilib->list_visible_galleries(0,-1,'lastModif_desc', $user,'');
+$galleries = $imagegallib->list_visible_galleries(0,-1,'lastModif_desc', $user,'');
 $smarty->assign_by_ref('galleries',$galleries["data"]);
 
 $section='galleries';

@@ -1,9 +1,10 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.4 2003-03-04 22:53:42 redflo Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.5 2003-03-23 12:59:40 redflo Exp $
 
 if (!isset($_REQUEST["nocache"]))
   session_cache_limiter('private_no_expire');
 
 include_once("tiki-setup_base.php");
+include_once("lib/imagegals/imagegallib.php");
 // show_image.php
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
@@ -29,7 +30,7 @@ else {
   $itype='o';
   }
 
-$data = $tikilib->get_image($_REQUEST["id"],$itype,$sxsize,$sysize);
+$data = $imagegallib->get_image($_REQUEST["id"],$itype,$sxsize,$sysize);
 $galleryId=$data["galleryId"];
 
 $smarty->assign('individual','n');
@@ -56,7 +57,7 @@ if(!isset($tiki_p_view_image_gallery)) {
 }
 
 if(!isset($_REQUEST["thumb"])) {
-  $tikilib->add_image_hit($_REQUEST["id"]);
+  $imagegallib->add_image_hit($_REQUEST["id"]);
 } 
 
 $type=$data["filetype"];
