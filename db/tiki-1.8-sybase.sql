@@ -2732,11 +2732,7 @@ go
 
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')
-go
-
-
-',40,'feature_debug_console','tiki_p_admin','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','')
 go
 
 
@@ -4295,7 +4291,7 @@ CREATE TABLE "tiki_rss_feeds" (
   "refresh" numeric(8,0) default '300',
   "lastUpdated" numeric(14,0) default NULL NULL,
   "cache" image default '',
-  PRIMARY KEY ("name"," rssVer")
+  PRIMARY KEY ("name","rssVer")
 ) 
 go
 
@@ -8283,12 +8279,12 @@ go
 
 
 
-CREATE TABLE `tiki_quicktags` (
-  `tagId` numeric(4,0) NOT NULL auto_increment,
-  `taglabel` varchar(255) default NULL NULL,
-  `taginsert` varchar(255) default NULL NULL,
-  `tagicon` varchar(255) default NULL NULL,
-  PRIMARY KEY ("`tagId`")
+CREATE TABLE "tiki_quicktags" (
+  "tagId" numeric(4,0) NOT NULL auto_increment,
+  "taglabel" varchar(255) default NULL NULL,
+  "taginsert" varchar(255) default NULL NULL,
+  "tagicon" varchar(255) default NULL NULL,
+  PRIMARY KEY ("tagId")
 )   
 go
 
