@@ -329,7 +329,7 @@ class TikiLib {
   
   /*shared*/ function get_watches_events()
   {
-    $query = "select distinct(event) from tiki_user_watches";
+    $query = "select distinct `event` from tiki_user_watches";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow()) {
@@ -744,7 +744,7 @@ class TikiLib {
 
   /*shared*/ function get_forum_sections()
   {
-    $query = "select `distinct`  section from `tiki_forums` where `section`<>''";
+    $query = "select distinct `section` from `tiki_forums` where `section`<>''";
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow()) {
@@ -1253,7 +1253,7 @@ class TikiLib {
       }
       // Now select `users` 
       $objectId=md5('forum'.$res["forumId"]);
-      $query = "select `distinct` (username) from `tiki_comments` where `object`='$objectId'";
+      $query = "select distinct `username` from `tiki_comments` where `object`='$objectId'";
       $result2 = $this->query($query);
       $res["users"] = $result2->numRows();
       if($forum_age) {
