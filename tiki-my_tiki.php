@@ -35,6 +35,16 @@ if(isset($_REQUEST["view_user"])) {
 $smarty->assign('userwatch',$userwatch);
 
 
+$smarty->assign('mytiki_wiki','display:none;');
+$smarty->assign('mytiki_wiki_open','n');
+if(isset($_COOKIE["mytiki_wiki"])) {
+  if($_COOKIE["mytiki_wiki"]=='o') {
+    $smarty->assign('mytiki_wiki','display:block;');
+    $smarty->assign('mytiki_wiki_open','y');
+  }	
+}
+
+
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-user_preferences","tiki-editpage",$foo["path"]);
 $foo2=str_replace("tiki-user_preferences","tiki-index",$foo["path"]);
@@ -241,6 +251,7 @@ $smarty->assign('mytiki_tasks',$tikilib->get_user_preference($user,'mytiki_tasks
 $section='mytiki';
 include_once('tiki-section_options.php');
 
+$smarty->assign('uses_tabs','y');
 $smarty->assign('mid','tiki-my_tiki.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 
