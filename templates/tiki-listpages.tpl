@@ -1,9 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.25 2004-07-15 20:05:09 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.26 2004-07-16 19:26:43 teedog Exp $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}List Wiki Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=wiki"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-<br /><br />
+<br />
+{if $tikifeedback}
+<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
+{/if}
+<br />
 {/if}
 <table class="findtable">
 <tr><td class="findtitle">{tr}Find{/tr}</td>
@@ -179,7 +183,7 @@ per page</td></tr>
     {/if}
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
     {if $feature_categories eq 'y' && $tiki_p_admin_categories eq 'y'}
-      <option value="categorize" >{tr}add to or remove from categories{/tr}</option>
+      <option value="categorize" >{tr}categorize{/tr}</option>
     {/if}
   </select>
 {*

@@ -2375,7 +2375,10 @@ class TikiLib extends TikiDB {
 	    $result = $this->query($query, array( $page ) );
 	    $query = "delete from `tiki_links` where `fromPage` = ?";
 	    $result = $this->query($query, array( $page ) );
-	    include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
+	    global $multilinguallib;
+	    if (!is_object($multilinguallib)) {
+		    include_once('lib/multilingual/multilinguallib.php');// must be done even in feature_multilingual not set
+	    }
 	    $multilinguallib->detachTranslation('wiki page', $multilinguallib->get_page_id_from_name($page));
 	    $action = "Removed"; //get_strings tra("Removed");
 	    $t = date("U");
