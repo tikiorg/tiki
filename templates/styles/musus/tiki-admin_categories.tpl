@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_categories.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin_categories.tpl,v 1.2 2004-01-07 23:22:05 musus Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -12,13 +12,12 @@
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin categories tpl{/tr}">
-<img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
+<img border="0" alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
 
 <!-- begin -->
 
 <br />
 <br />
-
 <div class="tree" id="top">
 <table class="tcategpath">
 <tr>

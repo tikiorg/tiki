@@ -9,7 +9,7 @@
 <a href="tiki-edit_templates.php?template=templates/messu-mailbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}messages tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
 {/if}
 
-{include file=tiki-mytiki_bar.tpl}
+{include file="tiki-mytiki_bar.tpl"}
 {include file="messu-nav.tpl"}
 <br/><br/>
 
@@ -35,7 +35,7 @@
 	<input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
 	<input type="submit" name="filter" value="{tr}filter{/tr}" />
 </form>
-<br/>
+<br />
 
 <form action="messu-mailbox.php" method="post">
 	<input type="hidden" name="offset" value="{$offset|escape}" />
@@ -52,14 +52,14 @@
 		<option value="isFlagged_y">{tr}Mark as flagged{/tr}</option>
 	</select>
 	<input type="submit" name="mark" value="{tr}mark{/tr}" />
-	<table class="normal" >
-		<tr>
-			<td class="heading" >&nbsp;</td>
-    <td class="heading" >&nbsp;</td>
-    <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}from{/tr}</a></td>
-    <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
-    <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}date{/tr}</a></td>
-    <td style="text-align:right;" class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a></td>
+	<table>
+		<tr class="heading">
+			<td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td><a href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}from{/tr}</a></td>
+    <td><a href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
+    <td><a href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}date{/tr}</a></td>
+    <td style="text-align:right;"><a href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a></td>
   </tr>
   {cycle values="odd,even" print=false}
   {section name=user loop=$items}
@@ -72,19 +72,19 @@
     <td  style="text-align:right;{if $items[user].isRead eq 'n'}font-weight:bold;{/if}" class="prio{$items[user].priority}">{$items[user].len|kbsize}</td>
   </tr>
   {sectionelse}
-  <tr><td colspan="6">{tr}No messages to display{/tr}<td></tr>
+  <tr><td colspan="6">{tr}No messages to display{/tr}</td></tr>
   {/section}
 </table>
 </form>
-<br/>
+<br />
 <div align="center">
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}prev{/tr}</a>] 
+[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
- [<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="messu-mailbox.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>
