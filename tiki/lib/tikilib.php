@@ -23,6 +23,7 @@ class TikiLib extends TikiDB {
     var $parser;
     var $pre_handlers = array();
     var $pos_handlers = array();
+    var $usergroups_cache = array();
 
     var $num_queries = 0;
 
@@ -989,16 +990,37 @@ function get_user_id($user) {
 }
 
 /*shared*/
+function get_included_groups($group) {
+	$query = "select `includeGroup`  from `tiki_group_inclusion` where `groupName`=?";
+	$result = $this->query($query, array($group));
+	$ret = array();
+	while ($res = $result->fetchRow()) {
+		$ret[] = $res["includeGroup"];
+		$ret2 = $this->get_included_groups($res["includeGroup"]);
+		$ret = array_merge($ret, $ret2);
+	}
+	return array_unique($ret);
+}
+
+/*shared*/
 function get_user_groups($user) {
-    $userid = $this->get_user_id($user);
-    $query = "select `groupName`  from `users_usergroups` where `userId`=?";
-    $result=$this->query($query,array((int) $userid));
-    $ret = array();
-    while ($res = $result->fetchRow()) {
-	$ret[] = $res["groupName"];
-    }
-    $ret[] = "Anonymous";
-    return $ret;
+	if (!isset($this->usergroups_cache[$user])) {
+		$userid = $this->get_user_id($user);
+		$query = "select `groupName`  from `users_usergroups` where `userId`=?";
+		$result=$this->query($query,array((int) $userid));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res["groupName"];
+			$included = $this->get_included_groups($res["groupName"]);
+			$ret = array_merge($ret, $included);
+		}
+		$ret[] = "Anonymous";
+		$ret = array_unique($ret);
+		$this->usergroups_cache[$user] = $ret;
+		return $ret;
+	} else {
+		return $this->usergroups_cache[$user];
+	}
 }
 
 // Functions for FAQs ////
@@ -1594,22 +1616,28 @@ function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find, $fu
 				foreach ($sections as $sec) {
 					if (!isset($smarty->_tpl_vars["$sec"]) or $smarty->_tpl_vars["$sec"] != 'y') {
 						$display = false;
+						break;
 					}
 				}
 			}
-			if (isset($res['perm']) and $res['perm']) {
-				$sections = split(",",$res['perm']);
-				foreach ($sections as $sec) {
-					if (!isset($smarty->_tpl_vars["$sec"]) or $smarty->_tpl_vars["$sec"] != 'y') {
-						$display = false;
+			if ($display) {
+				if (isset($res['perm']) and $res['perm']) {
+					$sections = split(",",$res['perm']);
+					foreach ($sections as $sec) {
+						if (!isset($smarty->_tpl_vars["$sec"]) or $smarty->_tpl_vars["$sec"] != 'y') {
+							$display = false;
+							break;
+						}
 					}
 				}
 			}
-			if (isset($res['groupname']) and $res['groupname']) {
-				$sections = split(",",$res['groupname']);
-				foreach ($sections as $sec) {
-					if ($sec and !in_array($sec,$usergroups)) {
-						$display = false;
+			if ($display) {
+				if (isset($res['groupname']) and $res['groupname']) {
+					$sections = split(",",$res['groupname']);
+					foreach ($sections as $sec) {
+						if ($sec and !in_array($sec,$usergroups)) {
+							$display = false;
+						}
 					}
 				}
 			}
