@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.160 2004-08-12 22:31:21 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.161 2004-08-13 08:51:15 ang23 Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionally include an identifer
@@ -21,6 +21,7 @@ Version 1.10
 Version 1.9 
 <http://tikiwiki.org/ReleaseProcess19>
 - (rc2) ---------------------------------------------------------------------
+* [NEW] lang/hu/language.php - Magyar - tra('Hungarian')
 * [FIX] tiki-install.php don't spits out many errors anymore
 * [FIX] Restoration of Forum moderator controls
 * [FIX] Replies to replies to forum topics are hidden when viewing forum 
