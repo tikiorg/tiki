@@ -1,7 +1,7 @@
 <?php
 
 // HAWIKI parser for TikiWiki
-// Last modified: 5. July 2003
+// Last modified: 19. September 2003
 
 // token definitions
 define("HAWIKI_TOKEN_NEWLINE",    1);
@@ -22,7 +22,8 @@ define("HAWIKI_TOKEN_TABLE",      15);
 define("HAWIKI_TOKEN_IMAGE",      16);
 define("HAWIKI_TOKEN_SMILEY",     17);
 define("HAWIKI_TOKEN_PLUGIN",     18);
-define("HAWIKI_TOKEN_DUMMY",      19);
+define("HAWIKI_TOKEN_WIKIVOICE",  19);
+define("HAWIKI_TOKEN_DUMMY",      20);
 
 
 function HAWIKI_parser(&$input, $isFirstColumn)
@@ -313,7 +314,8 @@ function HAWIKI_parser(&$input, $isFirstColumn)
       $arguments = array();
       foreach($params as $param)
       {
-        $parts = explode("=>", $param);
+        $decoded_param = str_replace('&gt;', '>', $param);
+        $parts = explode( '=>', $decoded_param );
         if (isset($parts[0]) && isset($parts[1]))
         {
           $name = trim($parts[0]);
@@ -322,14 +324,27 @@ function HAWIKI_parser(&$input, $isFirstColumn)
       }
       if (file_exists($php_name))
       {
-        include_once($php_name);
-        $po["html"] = $func_name($plugin_data,$arguments);
+        if (strtolower($plugin_name) == "wikivoice")
+        {
+          // wikivoice plugin
+          $po["php_name"]  = $php_name;  // file name to include
+          $po["func_name"] = $func_name; // function to call
+          $po["data"]   = $plugin_data;  // data string (to be parsed from plugin)
+          $po["params"] = $arguments;    // array of parameters (only cmd=>... is used)
+          $po["token"]  = HAWIKI_TOKEN_WIKIVOICE;
+        }
+        else
+        {
+          // some other tiki plugin
+          include_once($php_name);
+          $po["html"]  = $func_name($plugin_data,$arguments);
+          $po["token"] = HAWIKI_TOKEN_PLUGIN;
+        }
       }
     }
     else
       return(0); // no plugin end found
 
-    $po["token"] = HAWIKI_TOKEN_PLUGIN;
     return($po);
   }
 
