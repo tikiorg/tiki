@@ -44,5 +44,5 @@
 
 {else}
 {$grid_content}
-<a href="tiki-view_sheets.php?sheetId={$sheetId}&mode=edit" class="linkbut">Edit</a>
+<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">Edit</a>
 {/if}
