@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.9 2003-08-04 00:29:46 redflo Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.10 2003-08-06 22:47:04 franck Exp $
 
 session_start();
 // Define and load Smarty components
@@ -386,6 +386,7 @@ if($noadmin) {
 //Load SQL scripts
 $files=Array();
 $h = opendir('db/');
+echo $dbversion_tiki."---";
 while($file = readdir($h)) {
   if(strstr($file,'to') && strstr($file,$dbversion_tiki)) {
     $files[]=$file;

@@ -3414,6 +3414,11 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_add_events', 'Can add events in the calendar', 'registered', 'calendar');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_create_css', 'Can create new css suffixed with -user', 'registered', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editor', 'maps');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_create', 'Can create new mapfile', 'admin', 'maps');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_delete', 'Can delete mapfiles', 'admin', 'maps');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view', 'Can view mapfiles', 'basic', 'maps');
+
 # --------------------------------------------------------
 
 #
