@@ -1708,6 +1708,43 @@ function add_pageview() {
 	$retval["cant"] = $cant;
 	return $retval;
     }
+
+    /* shared 
+     * gets result from list_menu_options and sorts "sorted section" sections.
+     */
+    function sort_menu_options($channels) {
+
+	$sorted_channels = array();
+
+	if (isset($channels['data'])) {
+	    $cant = $channels['cant'];
+	    $channels = $channels['data'];
+	}
+	
+	for ($i=0; $i < sizeof($channels); $i++) {
+	    $sorted_channels[$i] = $channels[$i];
+	    if ($sorted_channels[$i]['type'] == 'r') { // sorted section
+		$sorted_channels[$i]['type'] = 's'; // common section, let's make it transparent
+		$i++;
+		$section = array();
+		while ($i < sizeof($channels) && $channels[$i]['type'] == 'o') {
+		    $section[] = $channels[$i];
+		    $i++;
+		}
+		$i--;
+		usort($section, "compare_menu_options");
+		$sorted_channels = array_merge($sorted_channels, $section);
+	    }
+	}
+
+	if (isset($cant)) {
+	    $sorted_channels = array ('data' => $sorted_channels,
+				      'cant' => $cant);
+	}
+
+	return $sorted_channels;
+    }
+
     // Menubuilder ends ////
 
     // User voting system ////
