@@ -12,7 +12,7 @@
 
 <br />
 <div class="admin">
-Attachements
+{tr}Attachements{/tr}
 <form action="tiki-admin.php?page=wikiatt" method="post">
 <input type="text" name="find" value="{$find|escape}">
 <input type="submit" name="action" value="{tr}find{/tr}">
