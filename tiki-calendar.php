@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.20 2003-12-02 05:03:36 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.21 2003-12-04 13:08:38 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -442,6 +442,8 @@ if ($_SESSION['CalendarViewMode'] == 'month') {
 	$viewend = $focusdate + ($d - 1);
 	$weekdays = array(date('w', $focusdate));
 	$numberofweeks = 0;
+	$hours = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
+	$smarty->assign('hours', $hours);
 }
 
 $smarty->assign('viewstart', $viewstart);
@@ -522,11 +524,23 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 
 		if (is_array($leday)) {
 			ksort ($leday);
-
 			$cell[$i][$w]['items'] = array_values($leday);
 		}
 	}
 }
+
+$hrow = array();
+if ($viewmode == 'day') {
+	foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
+		$rawhour = substr($dayitems['time'],0,2);
+		$dayitems['mins'] = substr($dayitems['time'],2);
+		//$unsortday["{$dayitems['time']}"] = $dayitems;
+		//ksort($unsortday);
+		//$dayits = array_values($unsortday);
+		$hrows["$rawhour"][] = $dayitems;
+	}
+}
+$smarty->assign('hrows', $hrows); 
 
 $smarty->assign('trunc', $trunc); 
 $smarty->assign('daformat', $short_date_format); 
@@ -545,4 +559,5 @@ include_once ('tiki-section_options.php');
 $smarty->assign('mid', 'tiki-calendar.tpl');
 $smarty->display("tiki.tpl");
 
+echo "<pre>";print_r($cell);echo "</pre>";
 ?>
