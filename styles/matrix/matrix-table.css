@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.4 2003-07-13 05:35:21 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-table.css,v 1.5 2003-07-15 17:24:39 zaufi Exp $
  *
  */
 
@@ -24,7 +24,7 @@ td { vertical-align: top; }
 /* Cells in forms without background color (inside a div for example) */
 td.form
 {
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
   vertical-align: top;
 }
@@ -32,7 +32,7 @@ td.form
 td.formcolor
 {
   color: #001000;
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
   text-align: left;
   vertical-align: top;

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.4 2003-07-13 05:35:21 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.5 2003-07-15 17:24:38 zaufi Exp $
  *
  */
 
@@ -25,7 +25,8 @@ div.simplebox
   padding-top: 10px;
   padding-bottom: 10px;
   border: 1px ridge #00A000;
-  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
 }
 /* Change color to light if simplebox placed on tiki-center
  * which is darkest than usual wiki-page background...
@@ -62,7 +63,8 @@ div.box-data
 {
   margin: 0px;
   padding: 4px;
-  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
   color: #00B000;
 }
 
@@ -71,8 +73,8 @@ div.box-data
  */
 td.module
 {
-  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
   color: #00B000;
   text-align: left;
 }
@@ -103,7 +105,8 @@ div.cbox
   padding-right: 2px;
   padding-bottom: 20px;
   border: 3px ridge #00B000;
-  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
 }
 div.cbox#error-box
 {

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.4 2003-07-13 05:35:21 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-wiki.css,v 1.5 2003-07-15 17:24:39 zaufi Exp $
  *
  */
 
@@ -8,7 +8,7 @@
  */
 
 
- /* Titles */
+/* Titles */
 /* When the page title is a link this is the style */
 .pagetitle, .pagetitle:hover, .pagetitle:active, .pagetitle:visited, .pagetitle:visited:hover
 {
@@ -20,19 +20,6 @@
   text-decoration: none;
   text-transform: none;
 }
-
-/*
- * Currently this code too buggy with my favorite konqueror :()
- */
-/*
-div#tiki-center h1 > a.pagetitle
-{
-  display: block;
-  width: 100%;
-  padding: 10px;
-  border: 1px solid green;
-}
-*/
 
 /* Text in wiki pages is displayed using the following style */
 div.wikitext
@@ -50,9 +37,8 @@ div.titlebar
 {
   font-family: "Matrix_vs_miltown", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
   font-variant: small-caps;
-  font-size: 18px;
+  font-size: 20px;
   padding-left: 5px;
-  /*margin: 1px 1px;*/
   border: 1px outset #00B000;
 }
 
@@ -68,8 +54,8 @@ div.button2
 {
   color: green;
   background: transparent;
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
   font-weight : bold;
   border: 1px solid lightgreen;
   padding: 0.1em;
@@ -115,14 +101,14 @@ div.cachedpage
 .wikicache, .wikicache:active, .wikicache:hover
 {
   color: #00E000;
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
   text-decoration: none;
 }
 .wikicache:visited, .wikicache:visited:hover
 {
   color: #00B000;
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
   text-decoration: none;
 }
@@ -150,17 +136,23 @@ p.editdate
 {
   font-size: smaller;
   margin-bottom: -1ex;
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
 }
 
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp
 {
-    border: 1px outset #00A000;
-    font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-    font-size: smaller;
-    padding: 6px;
-    color: #001000;
+  border: 1px outset #00A000;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  padding: 6px;
+  color: #001000;
+}
+/* tabs in help panel (all content in tables so right align will be applied only to links */
+div.wiki-edithelp > div#wikihelp-tab,
+div.wiki-edithelp > div#wikiplhelp-tab
+{
 }
 
 /* Wiki structures navigation bar */
@@ -208,8 +200,8 @@ TD.comform
 {
   color: #001000;
   border: 1px outset #00A000;
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
   vertical-align: center;
   text-align: left;
 }
@@ -219,8 +211,8 @@ div.commentsedithelp
 {
   color: #001000;
   border: 1px outset #00A000;
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: smaller;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
   margin: 1px;
   padding: 4px;
   vertical-align: center;
@@ -230,8 +222,8 @@ div.commentsedithelp
 div.commentstoolbar
 {
   border: 1px outset #00A000;
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: smaller;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 4px;
@@ -254,8 +246,8 @@ div.commentscomment
 div.commentheader
 {
   color: #001000;
-  font-family: "Ghost Type b", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: smaller;
+  font-family: "GOST type B", Tahoma, Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
 }
 div.commentscomment > div.commentheader
 {
@@ -328,3 +320,29 @@ table.userstory
   padding-bottom: 10px;
   margin-bottom: 10px;
 }
+
+/*
+ * Wiki style hacks
+ */
+
+/* Links to wiki pages without descriptions */
+:link[title='no description'],
+:link[title='no description']:visited,
+{
+  color: #E0E0E0;
+  text-decoration: none;
+}
+:link[title='no description']:hover,
+:link[title='no description']:visited:hover
+{
+  color: #E0E0E0;
+  text-decoration: underline;
+}
+
+/*
+:link[title~='Updated']:after
+{
+  display: marker;
+  /*content: url(img/hot.png);*/
+}
+*/

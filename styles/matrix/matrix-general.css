@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.4 2003-07-13 05:35:21 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-general.css,v 1.5 2003-07-15 17:24:39 zaufi Exp $
  *
  */
 
@@ -20,37 +20,18 @@ body
   font-size: 11px;
 }
 
-:link, :link:active
+a.link, a.link:active, :link, :link:active,
+a.link:visited, :link:visited
 {
   color: #00E000;
   text-decoration: none;
 }
-:link:visited
-{
-  color: #00B000;
-  text-decoration: none;
-}
-:link:hover
+a.link:hover, :link:hover, :link:visited:hover, a.link:visited:hover
 {
   color: #00F000;
   text-decoration: underline;
 }
-:link:visited:hover
-{
-  color: #00F000;
-  text-decoration: underline;
-}
-/* Links to wiki pages without descriptions */
-:link[title='no description']
-{
-  color: #E0E0E0;
-  text-decoration: none;
-}
-:link[title~='Updated']:after
-{
-  display: marker;
-  /*content: url(img/hot.png);*/
-}
+
 hr
 {
   color: #00A000;
@@ -79,8 +60,8 @@ h3
 /* Description on wiki pages */
 small
 {
-  font-family: "Ghost Type b", Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-family: "GOST type B", Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
 }
 
 /* Prevent forms from generating unwanted padding or margins */
@@ -91,11 +72,15 @@ input, textarea, select
 {
   color: #001000;
   background: #D8DFC8;
-  font: normal 10px "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+  font: normal 11px "Urw Gothic l", "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 }
 
 /* Warning background/color */
-span.warn { color: red; background: #900000; }
+span.warn
+{
+  color: red;
+  background: #900000;
+}
 
 /* Code fragments */
 pre, code
