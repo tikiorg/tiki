@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.3 2003-09-14 05:24:57 bligneri Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.4 2003-09-18 19:09:08 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,6 +75,10 @@ if (!isset($tikidomain))
 $smarty = new Smarty_TikiWiki($tikidomain);
 $smarty->load_filter('pre', 'tr');
 //$smarty->load_filter('output','trimwhitespace');
+
+if (isset($_REQUEST['highlight'])) {
+	$smarty->load_filter('output','highlight');
+}
 
 // Count number of online users using:
 // print($GLOBALS["PHPSESSID"]);
