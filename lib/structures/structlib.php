@@ -121,14 +121,69 @@ class StructLib extends TikiLib {
 		return true;
 	}
 
-	function s_move_page_up($page_ref_id) {
-    $page_info = $this->get_page_info($page_ref_id);
+	function promote_node($page_ref_id) {
+        $page_info = $this->s_get_page_info($page_ref_id);
+        $parent_info = $this->s_get_parent_info($page_ref_id);
+
+        //If there is a parent and the parent isnt the structure root node.
+        if (isset($parent_info) && isset($parent_info["parent_id"])) {
+			//Make a space for the node after its parent
+			$query = "update `tiki_structures` set `pos`=`pos`+1 where `pos`>? and `parent_id`=?";
+			$this->query($query,array($parent_info["pos"], $parent_info["parent_id"]));
+			//Move the node up one level
+		    $query = "update `tiki_structures` set `parent_id`=?, `pos`=(? + 1) where `page_ref_id`=?";
+			$this->query($query, array($parent_info["parent_id"], $parent_info["pos"], $page_ref_id));
+			
+	    }
+    }
   
-  }
+	function demote_node($page_ref_id) {
+        $page_info = $this->s_get_page_info($page_ref_id);
+	    $query = "select `page_ref_id`, `pos` from `tiki_structures` where `pos`<? and `parent_id`=? order by `pos` desc";
+		$result = $this->query($query,array($page_info["pos"], $page_info["parent_id"]));
+		if ($previous = $result->fetchRow()) {
+			//Get last child nodes for previous sibling
+    	    $query = "select `pos` from `tiki_structures` where `parent_id`=? order by `pos` desc";
+	    	$result = $this->query($query,array($previous["page_ref_id"]));
+			if ($res = $result->fetchRow()) {
+				$pos = $res["pos"];
+			}
+			else{
+				$pos = 0;
+			}
+   		    $query = "update `tiki_structures` set `parent_id`=?, `pos`=(? + 1) where `page_ref_id`=?";
+    		$this->query($query, array($previous["page_ref_id"], $pos, $page_ref_id));
+		}
+			
+    }
   
-	function s_move_page_down($page_ref_id) {
-    $page_info = $this->get_page_info($page_ref_id);
-  }
+	function move_after_next_node($page_ref_id) {
+        $page_info = $this->s_get_page_info($page_ref_id);
+	    $query = "select `page_ref_id`, `pos` from `tiki_structures` where `pos`>? and `parent_id`=? order by `pos` asc";
+		$result = $this->query($query,array($page_info["pos"], $page_info["parent_id"]));
+		$res = $result->fetchRow();
+		if ($res) {
+			//Swap position values
+		    $query = "update `tiki_structures` set `pos`=? where `page_ref_id`=?";
+    		$this->query($query,array($page_info["pos"], $res["page_ref_id"]) );
+		    $query = "update `tiki_structures` set `pos`=? where `page_ref_id`=?";
+    		$this->query($query,array($res["pos"], $page_info["page_ref_id"]) );
+		}
+    }
+  
+	function move_before_previous_node($page_ref_id) {
+        $page_info = $this->s_get_page_info($page_ref_id);
+	    $query = "select `page_ref_id`, `pos` from `tiki_structures` where `pos`<? and `parent_id`=? order by `pos` desc";
+		$result = $this->query($query,array($page_info["pos"], $page_info["parent_id"]));
+		$res = $result->fetchRow();
+		if ($res) {
+			//Swap position values
+		    $query = "update `tiki_structures` set `pos`=? where `page_ref_id`=?";
+    		$this->query($query,array($page_info["pos"], $res["page_ref_id"]) );
+		    $query = "update `tiki_structures` set `pos`=? where `page_ref_id`=?";
+    		$this->query($query,array($res["pos"], $page_info["page_ref_id"]) );
+		}
+    }
   
   
     
