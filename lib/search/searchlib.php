@@ -419,13 +419,13 @@ class SearchLib extends TikiLib {
 			$imggalsresults['cant'] = 0;
 		}
 		if ($feature_galleries == 'y') {
-			$wikiresults=$this->find_exact_img($words,$offset, $maxRecords);
+			$imgresults=$this->find_exact_img($words,$offset, $maxRecords);
 		} else {
 			$imgresults['data'] = NULL;
 			$imgresults['cant'] = 0;
 		}
 		if ($feature_trackers == 'y') {
-			$wikiresults=$this->find_exact_trackers($words,$offset, $maxRecords);
+			$trackerresults=$this->find_exact_trackers($words,$offset, $maxRecords);
 		} else {
 			$trackerresults['data'] = NULL;
 			$trackerresults['cant'] = 0;
