@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.51 2003-11-03 03:17:19 dgdaniels Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.52 2003-11-03 21:11:54 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -293,7 +293,7 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('slide_style', '
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('style', 'moreneat.css');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('system_os', 'unix');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('tikiIndex', 'tiki-index.php');
-INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('tmpDir', '/tmp');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('tmpDir', 'temp');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('t_use_db', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('t_use_dir', '');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('uf_use_db', 'y');

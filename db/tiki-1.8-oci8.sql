@@ -5602,7 +5602,7 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('system_os','unix');
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('tikiIndex','tiki-index.php');
 
 
-INSERT INTO "tiki_preferences" ("name","value") VALUES ('tmpDir','/tmp');
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('tmpDir','temp');
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('t_use_db','y');
