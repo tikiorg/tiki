@@ -67,7 +67,7 @@
 	
 	{if $feature_backlinks eq 'y' and $backlinks}
 		<select name=page onchange="go(this)">
-			<option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks...{/tr}</option>
+			<option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks{/tr}...</option>
 			{section name=back loop=$backlinks}
 			<option value="tiki-index.php?page={$backlinks[back].fromPage|escape:"url"}">{$backlinks[back].fromPage}</option>
 			{/section}
