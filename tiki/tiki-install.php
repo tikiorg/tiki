@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.36 2003-12-05 03:32:23 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.37 2003-12-05 03:58:15 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.36 2003-12-05 03:32:23 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.37 2003-12-05 03:58:15 dheltzel Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -174,9 +174,13 @@ if (isset($_REQUEST['kill'])) {
 }
 
 // Tiki Applications feature
-// Written by dheltzel
+// Written by dheltzel 12/4/2003 - status: experimental
+
+// This is the directory where it looks for the application files. If no .zip files are in this dir, the Installer will be disabled.
 $app_repository = "app_repos/";
+// This is the suffix it uses to look for an install SQL script
 $app_sql_install_suf = "_install.sql";
+// This is the suffix it uses to look for a remove SQL script
 $app_sql_remove_suf = "_remove.sql";
 
 // This is used to install files into the Tiki file structure from a zip file
