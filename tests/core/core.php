@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/tests/core/core.php,v 1.3 2003-08-25 22:57:43 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tests/core/core.php,v 1.4 2003-11-25 22:49:12 marcius Exp $
  *
  * \brief Main file
  *
@@ -114,34 +114,34 @@ class TikiCore
     }
     function get_object_types_list()
     {
-        return $this->sys_objmgr->get_object_types_list()
+        return $this->sys_objmgr->get_object_types_list();
     }
     function is_registered($objtype)
     {
-        return $this->sys_objmgr->is_registered($objtype)
+        return $this->sys_objmgr->is_registered($objtype);
     }
     /*
      * Objects Management API
      */
     function add_object($objid, $objtype, $parentobjid, $parentobjtype)
     {
-        return $this->sys_objmgr->add_object($objid, $objtype, $parentobjid, $parentobjtype)
+        return $this->sys_objmgr->add_object($objid, $objtype, $parentobjid, $parentobjtype);
     }
     function remove_object($objid, $objtype)
     {
-        return $this->sys_objmgr->remove_object($objid, $objtype)
+        return $this->sys_objmgr->remove_object($objid, $objtype);
     }
     function get_parent_object($objid, $objtype)
     {
-        return $this->sys_objmgr->get_parent_object($objid, $objtype)
+        return $this->sys_objmgr->get_parent_object($objid, $objtype);
     }
     function set_parent_object($objid, $objtype, $parentobjid, $parentobjtype)
     {
-        return $this->sys_objmgr->set_parent_object($objid, $objtype, $parentobjid, $parentobjtype)
+        return $this->sys_objmgr->set_parent_object($objid, $objtype, $parentobjid, $parentobjtype);
     }
     function get_child_objects_list($objid, $objtype)
     {
-        return $this->sys_objmgr->get_child_objects_list($objid, $objtype)
+        return $this->sys_objmgr->get_child_objects_list($objid, $objtype);
     }
     /*
      * Permissions (Rights) Management API
