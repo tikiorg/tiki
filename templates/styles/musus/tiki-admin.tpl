@@ -1,7 +1,7 @@
 {popup_init src="lib/overlib.js"}
 <a class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a>
 {if $feature_help}
-	<a title="{tr}Help{/tr}" href="http://tikiwiki.org/tiki-index.php?page=TikiAdminSettings" target="help">{$helpIcon $helpIconDesc}</a>
+	<a title="{tr}Help{/tr}" href="http://tikiwiki.org/tiki-index.php?page=TikiAdminSettings" target="help">help icon here</a>
 {/if}
 {* The rest determines which page to include using "page" GET parameter. Default: list-sections
 Add a value in first check when you create a new admin page. *}
