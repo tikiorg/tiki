@@ -4,13 +4,14 @@
 <table class="normal">
 {cycle values="odd,even" print=false}
 <tr>
-<td class="heading">{tr}id{/tr}</td>
+<td class="heading">{tr}Subject{/tr}</td>
 <td class="heading">{tr}Date{/tr}</td>
 </tr>
 {section loop=$articles name=ix}
 <tr>
-<td class="{cycle}">{$articles[ix].loopid}</td>
-<td class="{cycle}">{$articles[ix].Date}</td>
+
+<td class="{cycle}"><a class="link" href="tiki-newsreader_read.php?server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}&amp;offset={$offset}&amp;id={$articles[ix].loopid}">{$articles[ix].Subject}</a></td>
+<td class="{cycle}">{$articles[ix].Date|tiki_short_datetime}</td>
 </tr>
 {/section}
 </table>
