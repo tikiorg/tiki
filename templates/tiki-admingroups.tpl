@@ -1,6 +1,25 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.13 2003-08-08 10:08:40 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.14 2003-08-15 01:23:48 dgdaniels Exp $ *}
 
-<a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=PermissionAdmin" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin groups{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-admingroups.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin groups tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+<br /><br />
 {if $groupname eq ''}
 <h3>{tr}Add New Group{/tr}</h3>
 {else}
