@@ -1,6 +1,6 @@
 <?php
 //
-// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.10 2004-05-05 13:20:35 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tikidblib.php,v 1.11 2004-06-16 19:55:40 teedog Exp $
 //
 
 //this script may only be included - so its better to die if called directly.
@@ -169,7 +169,8 @@ function convert_query(&$query) {
         $qe = explode("?", $query);
         $query = '';
 
-        for ($i = 0; $i < sizeof($qe) - 1; $i++) {
+        $temp_max = sizeof($qe) - 1;
+        for ($i = 0; $i < $temp_max; $i++) {
             $query .= $qe[$i] . ":" . $i;
         }
 

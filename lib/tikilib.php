@@ -745,7 +745,8 @@ class TikiLib extends TikiDB {
 	$filters = array();
 
 	if ($fields) {
-	    for ($i = 0; $i < count($fields["data"]); $i++) {
+		$temp_max = count($fields["data"]);
+	    for ($i = 0; $i < $temp_max; $i++) {
 		$fieldId = $fields["data"][$i]["fieldId"];
 		$filters[$fieldId] = $fields["data"][$i];
 	    }
@@ -766,7 +767,8 @@ class TikiLib extends TikiDB {
 	    $bindvars[] = $initial.'%';
 	}
 	if (!$sort_mode) {
-	    for ($i = 0; $i < count($fields["data"]); $i++) {
+	    $temp_max = count($fields["data"]);
+	    for ($i = 0; $i < $temp_max; $i++) {
 		if ($fields['data'][$i]['isMain'] == 'y') {
 		    $csort_mode = $fields['data'][$i]['name'];
 		    break;
@@ -1393,7 +1395,8 @@ function add_pageview() {
 		    if (count($sugs) > 0) {
 			$asugs = array_keys($sugs);
 
-			for ($i = 0; $i < count($asugs) && $i < 5; $i++) {
+			$temp_max = count($asugs);
+			for ($i = 0; $i < $temp_max && $i < 5; $i++) {
 			    $sug = $asugs[$i];
 
 			    // If you want to use the commented out line below, please remove the \ in <\/script>; it was breaking vim highlighting.  -rlpowell
@@ -1721,7 +1724,8 @@ function add_pageview() {
 	    $channels = $channels['data'];
 	}
 	
-	for ($i=0; $i < sizeof($channels); $i++) {
+	$temp_max = sizeof($channels);
+	for ($i=0; $i < $temp_max; $i++) {
 	    $sorted_channels[$i] = $channels[$i];
 	    if ($sorted_channels[$i]['type'] == 'r') { // sorted section
 		$sorted_channels[$i]['type'] = 's'; // common section, let's make it transparent
@@ -2789,7 +2793,8 @@ function add_pageview() {
 	// Now that we have the positions we just build the data
 	$ret = array();
 
-	for ($i = 0; $i < count($positions); $i++) {
+	$temp_max = count($positions);
+	for ($i = 0; $i < $temp_max; $i++) {
 	    $index = $positions[$i];
 
 	    $query = "select `pageName`  from `tiki_pages`";
@@ -3960,7 +3965,8 @@ function add_pageview() {
 
 	// Close open divs
 	if ($close_divs) {
-	    for ($i = 1; $i <= count($divdepth); $i++) {
+	    $temp_max = count($divdepth);
+	    for ($i = 1; $i <= $temp_max; $i++) {
 		$data .= '</div>';
 		$closed++;
 	    }
@@ -4058,13 +4064,15 @@ function add_pageview() {
 
 		// Loop over all the case-specific versions of {toc} used
 		// (if the user is consistent, this is a loop of count 1)
-		for ($i = 0; $i < count($tocs[0]); $i++) {
+		$temp_max = count($tocs[0]);
+		for ($i = 0; $i < $temp_max; $i++) {
 		    $data = str_replace($tocs[0], $html, $data);
 		}
 	    }
 	    //Dont display the {toc} string for non structure pages
 	    else {
-		for ($i = 0; $i < count($tocs[0]); $i++) {
+		$temp_max = count($tocs[0]);
+		for ($i = 0; $i < $temp_max; $i++) {
 		    $data = str_replace($tocs[0], '', $data);
 		}
 	    }
@@ -4074,7 +4082,8 @@ function add_pageview() {
 	if ($feature_wiki_pictures == 'y') {
 	    preg_match_all("/\{picture file=([^\}]+)\}/", $data, $pics);
 
-	    for ($i = 0; $i < count($pics[0]); $i++) {
+	    $temp_max = count($pics[0]);
+	    for ($i = 0; $i < $temp_max; $i++) {
 		// Check if the image exists
 		$name = $pics[1][$i];
 
@@ -4112,7 +4121,8 @@ function add_pageview() {
 	    $pars_parts = split('/', $pars["path"]);
 	    $pars = array();
 
-	    for ($i = 0; $i < count($pars_parts) - 1; $i++) {
+	    $temp_max = count($pars_parts) - 1;
+	    for ($i = 0; $i < $temp_max; $i++) {
 		$pars[] = $pars_parts[$i];
 	    }
 
@@ -4120,7 +4130,8 @@ function add_pageview() {
 
 	    if (preg_match_all("/\{draw +name=([A-Za-z_\-0-9]+) *\}/", $data, $draws)) {
 		//$this->invalidate_cache($page);
-		for ($i = 0; $i < count($draws[0]); $i++) {
+		$temp_max = count($draws[0]);
+		for ($i = 0; $i < $temp_max; $i++) {
 		    $id = $draws[1][$i];
 
 		    $repl = '';
@@ -4150,7 +4161,8 @@ function add_pageview() {
 
 	// Replace cookies
 	if (preg_match_all("/\{cookie\}/", $data, $rsss)) {
-	    for ($i = 0; $i < count($rsss[0]); $i++) {
+	    $temp_max = count($rsss[0]);
+	    for ($i = 0; $i < $temp_max; $i++) {
 		$cookie = $this->pick_cookie();
 
 		$data = str_replace($rsss[0][$i], $cookie, $data);
@@ -4202,7 +4214,8 @@ function add_pageview() {
 
 	// Replace dynamic content occurrences
 	if (preg_match_all("/\{content +id=([0-9]+)\}/", $data, $dcs)) {
-	    for ($i = 0; $i < count($dcs[0]); $i++) {
+	    $temp_max = count($dcs[0]);
+	    for ($i = 0; $i < $temp_max; $i++) {
 		$repl = $this->get_actual_content($dcs[1][$i]);
 
 		$data = str_replace($dcs[0][$i], $repl, $data);
@@ -4212,7 +4225,8 @@ function add_pageview() {
 	// Replace Dynamic content with random selection
 	if (preg_match_all("/\{rcontent +id=([0-9]+)\}/", $data, $dcs)) {
 	    include_once("dcs/dcslib.php");
-	    for ($i = 0; $i < count($dcs[0]); $i++) {
+	    $temp_max = count($dcs[0]);
+	    for ($i = 0; $i < $temp_max; $i++) {
 		$repl = $dcslib->get_random_content($dcs[1][$i]);
 
 		$data = str_replace($dcs[0][$i], $repl, $data);
@@ -4231,7 +4245,8 @@ function add_pageview() {
 	// New syntax for wiki pages ((name|desc)) Where desc can be anything
 	preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
 
-	for ($i = 0; $i < count($pages[1]); $i++) {
+	$temp_max = count($pages[1]);
+	for ($i = 0; $i < $temp_max; $i++) {
 	    $pattern = $pages[0][$i];
 
 	    $pattern = preg_quote($pattern, "/");
@@ -4511,12 +4526,14 @@ function add_pageview() {
 
 		$cols = array();
 
-		for ($i = 0; $i < count($tables[0]); $i++) {
+		$temp_max = count($tables[0]);
+		for ($i = 0; $i < $temp_max; $i++) {
 		    $rows = explode('||', $tables[0][$i]);
 
 		    $col[$i] = array();
 
-		    for ($j = 0; $j < count($rows); $j++) {
+		    $temp_max2 = count($rows);
+		    for ($j = 0; $j < $temp_max2; $j++) {
 			$cols[$i][$j] = explode('|', $rows[$j]);
 
 			if (count($cols[$i][$j]) > $maxcols)
@@ -4524,10 +4541,12 @@ function add_pageview() {
 		    }
 		}
 
-		for ($i = 0; $i < count($tables[0]); $i++) {
+		$temp_max3 = count($tables[0]);
+		for ($i = 0; $i < $temp_max3; $i++) {
 		    $repl = '<table class="wikitable">';
 
-		    for ($j = 0; $j < count($cols[$i]); $j++) {
+		    $temp_max4 = count($cols[$i]);
+		    for ($j = 0; $j < $temp_max4; $j++) {
 			$ncols = count($cols[$i][$j]);
 
 			if ($ncols == 1 && !$cols[$i][$j][0])
@@ -4559,12 +4578,14 @@ function add_pageview() {
 
 		$cols = array();
 
-		for ($i = 0; $i < count($tables[0]); $i++) {
+		$temp_max5 = count($tables[0]);
+		for ($i = 0; $i < $temp_max5; $i++) {
 		    $rows = split("\n|\<br\/\>", $tables[0][$i]);
 
 		    $col[$i] = array();
 
-		    for ($j = 0; $j < count($rows); $j++) {
+		    $temp_max6 = count($rows);
+		    for ($j = 0; $j < $temp_max6; $j++) {
 			$rows[$j] = str_replace('||', '', $rows[$j]);
 
 			$cols[$i][$j] = explode('|', $rows[$j]);
@@ -4574,10 +4595,12 @@ function add_pageview() {
 		    }
 		}
 
-		for ($i = 0; $i < count($tables[0]); $i++) {
+		$temp_max7 = count($tables[0]);
+		for ($i = 0; $i < $temp_max7; $i++) {
 		    $repl = '<table class="wikitable">';
 
-		    for ($j = 0; $j < count($cols[$i]); $j++) {
+		    $temp_max8 = count($cols[$i]);
+		    for ($j = 0; $j < $temp_max8; $j++) {
 			$ncols = count($cols[$i][$j]);
 
 			if ($ncols == 1 && !$cols[$i][$j][0])
@@ -4905,7 +4928,8 @@ function add_pageview() {
 		include ('lib/rss/rsslib.php');
 	    }
 
-	    for ($i = 0; $i < count($rsss[0]); $i++) {
+	    $temp_max = count($rsss[0]);
+	    for ($i = 0; $i < $temp_max; $i++) {
 		$id = $rsss[1][$i];
 
 		$max = $rsss[3][$i];
@@ -4918,7 +4942,8 @@ function add_pageview() {
 
 		$repl = '<ul class="rsslist">';
 
-		for ($j = 1; $j < count($items) && $j < $max; $j++) {
+		$temp_max2 = count($items);
+		for ($j = 1; $j < $temp_max2 && $j < $max; $j++) {
 		    $repl .= '<li class="rssitem"><a target="_blank" href="' . $items[$j]["link"] . '" class="rsslink">' . $items[$j]["title"] . '</a>';
 		    if ($items[$j]["pubdate"] <> '') { $repl .= ' <span class="rssdate">('.$items[$j]["pubdate"].')</span>'; }
 		    $repl .= '</li>';

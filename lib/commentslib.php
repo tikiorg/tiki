@@ -171,7 +171,8 @@ class Comments extends TikiLib {
 
     function parse_output(&$obj, &$parts, $i) {
 	if (!empty($obj->parts)) {
-	    for ($i = 0; $i < count($obj->parts); $i++)
+	    $temp_max = count($obj->parts);
+	    for ($i = 0; $i < $temp_max; $i++)
 		$this->parse_output($obj->parts[$i], $parts, $i);
 	} else {
 	    $ctype = $obj->ctype_primary . '/' . $obj->ctype_secondary;
@@ -1298,7 +1299,8 @@ class Comments extends TikiLib {
 
 	// Cookies
 	if (preg_match_all("/\{cookie\}/", $data, $rsss)) {
-	    for ($i = 0; $i < count($rsss[0]); $i++) {
+	    $temp_max = count($rsss[0]);
+	    for ($i = 0; $i < $temp_max; $i++) {
 		$cookie = $this->pick_cookie();
 
 		$data = str_replace($rsss[0][$i], $cookie, $data);
