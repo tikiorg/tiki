@@ -13,6 +13,8 @@
 		<script language="JavaScript" type="text/javascript"><!--
 		{php} include ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
 		// --></script>
+		<script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
+		<script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>
 		<script language="JavaScript" type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
 		{/if}
 		
