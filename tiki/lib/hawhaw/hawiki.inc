@@ -3,7 +3,7 @@
 // HAWIKI
 // PHP wrapper class for HAWHAW-based wiki's
 // Copyright (C) 2003 Norbert Huffschmid & TikiWiki community
-// Last modified: 27. June 2003
+// Last modified: 28. June 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -435,6 +435,7 @@ class HAWIKI_wiki
   var $navlink;       // array with navigation links (home, menue etc.)
   var $smiley_dir;    // where smiley gif's are stored
   var $link_jingle;   // where link wav file for VoiceXML is located
+  var $hawimconv;     // where HAWHAW image converter script is located
   var $firstColumn;   // flag to determine parser position
   var $listLine;      // flag to indicate that line belongs to a list
   var $listNumbering; // array with current list numbers
@@ -447,6 +448,7 @@ class HAWIKI_wiki
     $this->wiki_base = $wiki_base;
     $this->smiley_dir = "";       // has to be set later by function call
     $this->link_jingle = "";      // dito
+    $this->hawimconv = "";        // dito
     $this->extwiki = array();
     $this->navlink = array();
     $this->firstColumn = true;
@@ -790,7 +792,34 @@ class HAWIKI_wiki
 
           if ($po["src"])
           {
-            $img_wbmp = ereg_replace(".gif$|.png$|.jpg$", ".wbmp", $po["src"]);
+            if ($this->hawimconv)
+            {
+              // HAWHAW image converter available
+              
+              if (preg_match("/^htt/", $po["src"]))
+              {
+                // full qualified url ==> use unchanged
+                $img_wbmp = sprintf("%s?img=%s", $this->hawimconv, urlencode($po["src"]));
+              }
+              elseif(preg_match("/^\//", $po["src"]))
+              {
+                // absolute url ==> append filename to document root
+                $img_wbmp = sprintf("%s?img=%s", $this->hawimconv,
+                                    urlencode($_SERVER["DOCUMENT_ROOT"] . $po["src"]));
+
+              }
+              else
+              {
+                // relative url ==> append filename to working directory
+                $img_wbmp = sprintf("%s?img=%s", $this->hawimconv,
+                                    urlencode(getcwd() . "/" . $po["src"]));
+              }
+            }
+            else
+            {
+              // no image converter available ==> rely on available wbmp image ...
+              $img_wbmp = ereg_replace(".gif$|.png$|.jpg$", ".wbmp", $po["src"]);
+            }
 
             if (!($img_alt = $po["alt"]))
               $img_alt = $po["src"]; // set alternative text to src, if not available
@@ -901,7 +930,7 @@ class HAWIKI_wiki
         $this->deck->set_voice_jingle("./lib/hawhaw/link.wav");
       }
     }
-    
+
     // output appropriate markup language
     $this->deck->create_page();
   }
@@ -938,13 +967,22 @@ class HAWIKI_wiki
 
   function set_smiley_dir($dir)
   {
+    // set directory where smileys are stored
     $this->smiley_dir = $dir;
   }
 
 
   function set_link_jingle($url)
   {
+    // set link wav-file for VoiceXML
     $this->link_jingle = $url;
+  }
+
+
+  function set_hawimconv($url)
+  {
+    // determine HAWHAW image conversion script
+    $this->hawimconv = $url;
   }
 
 
