@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.32 2004-06-21 03:16:21 dgdaniels Exp $
+$Id: trollparty.css,v 1.33 2004-07-01 21:07:55 teedog Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -3086,3 +3086,59 @@ padding : 2ex;
 background-color : #400099; /***kinda purple***/
 margin : 1ex;
 border : 1px dashed #adacaf; }
+
+/* wiki diff styles */
+
+.diffheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.diffbody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+font-family: monospace, 'Courier New', courier;
+color: black;
+background-color: #edeeef;
+}
+.diffdeleted {
+border-color: #A9B8C2;
+color: black;
+background-color: #ffcccc;
+}
+.diffadded {
+border-color: #A9B8C2;
+color: black;
+background-color: #ccffcc;
+}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
