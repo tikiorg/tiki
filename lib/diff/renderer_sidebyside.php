@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.4 2004-08-11 18:34:35 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/diff/renderer_sidebyside.php,v 1.5 2004-08-12 16:04:48 sylvieg Exp $
 
 /**
  * "Side-by-Side" diff renderer.
@@ -32,12 +32,28 @@ class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
 
     function _blockHeader($xbeg, $xlen, $ybeg, $ylen)
     {
-        return "Line: $xbeg";
+        return "$xbeg,$xlen,$ybeg,$ylen";
     }
 
     function _startBlock($header)
     {
-        echo '<tr class="diffheader"><td></td><td>'.$header.'</td><td></td><td>'.$header.'</tr>';
+        $h = split(",", $header);
+        echo '<tr class="diffheader"><td>&nbsp;</td><td>';
+        if ($h[1] == 1)
+           echo tra('Line:').$h[0];
+        else {
+           $h[1] = $h[0]+$h[1]-1;
+           echo tra('Lines:').$h[0].'-'.$h[1];
+        }
+        echo '</td><td>&nbsp;</td><td>';
+        if ($h[3] == 1)
+           echo tra('Line:').$h[2];
+        else {
+           $h[3] = $h[2]+$h[3]-1;
+           echo tra('Lines:').$h[2].'-'.$h[3];
+        }
+
+        echo '</td></tr>';
     }
 
     function _endBlock()
@@ -49,7 +65,7 @@ class Text_Diff_Renderer_sidebyside extends Text_Diff_Renderer {
     	if ($type == 'context') {
 	        foreach ($lines as $line) {
 	        	if (!empty($line))
-	            echo "<tr class='diffbody'><td></td><td>$line</td><td></td><td>$line</td></tr>\n";
+	            echo "<tr class='diffbody'><td>&nbsp;</td><td>$line</td><td>&nbsp;</td><td>$line</td></tr>\n";
 	        }
     	} elseif ($type == 'added') {
 	        foreach ($lines as $line) {
