@@ -1,4 +1,5 @@
 <h1><a href="cc.php?page={$page}{if $userid}&amp;user={$userid}{/if}" class="pagetitle">List of currencies</a></h1>
+<span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
 
 <span class="button2"><a href="cc.php?page=currencies" class="linkbut">All Currencies</a></span>
 {if $tiki_p_cc_use eq 'y'}
@@ -34,9 +35,12 @@
 {foreach key=ccid item=it from=$thelist}
 <tr class="{cycle}">
 {if $ccuser.registered_cc.$ccid.approved eq 'y'}
-<td class="highlight"><a href="cc.php?page={$page}&amp;unregister={$it.id}">Unregister</a></td>
+<td class="highlight">
+<a href="cc.php?page={$page}&amp;unregister={$it.id}">{tr}Unregister{/tr}</a>
+<a href="cc.php?page=transactions&amp;currency={$it.id}&amp;new">{tr}Transaction{/tr}</a>
+</td>
 {elseif $ccuser.registered_cc.$ccid.approved eq 'c'}
-<td><a href="cc.php?page={$page}&amp;register={$it.id}">Reregister</a></td>
+<td><a href="cc.php?page={$page}&amp;register={$it.id}">{tr}Reregister{/tr}</a></td>
 {else}
 <td><a href="cc.php?page={$page}&amp;register={$it.id}">{tr}Register{/tr}</a></td>
 {/if}

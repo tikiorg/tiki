@@ -1,8 +1,10 @@
 {if $info and ($tiki_p_cc_admin eq 'y' or $info.owner eq $user)}
 <a href="cc.php?page=currencies&amp;cc_id={$info.id}" class="pagetitle">{tr}Modify a Currency{/tr}</a>
+<span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
 <br /><br />
 {else}
 <a href="cc.php?page=currencies&amp;new" class="pagetitle">{tr}Create a new Currency{/tr}</a>
+<span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
 <br /><br />
 {/if}
 

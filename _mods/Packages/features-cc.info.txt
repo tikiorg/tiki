@@ -1,11 +1,11 @@
 contributor:
-$Author: mose $
+$Author: mlinton $
 
 revision:
-1.3.2
+1.3.3
 
 lastmodif:
-$Date: 2004-11-21 00:46:50 $
+$Date: 2004-12-01 12:18:15 $
 
 files: 
 features/cc/cc.php cc.php
@@ -70,5 +70,6 @@ Description:
 Multi-currencies management system
 
 Changelog:
+1.3.3 added help link and transaction from currencies list
 1 initial package
 

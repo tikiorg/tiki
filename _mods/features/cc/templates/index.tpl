@@ -24,7 +24,6 @@ access.</li></ol>
 <li>Click to submit. </li>
 <li>Balances and records are updated. </li>
 <li>Confirmation will display, or any reasons for failure. </li>
-<li>warning - screen refresh after posting may cause the transaction to replicate, </li>
 
 </ul>
 

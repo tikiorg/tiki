@@ -1,6 +1,9 @@
-<a href="cc.php?page=transactions{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}" class="pagetitle">{tr}Transactions history{/tr}</a>
+<h1><a href="cc.php?page=transactions{if $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}" class="pagetitle">{tr}Transactions history{/tr}</a>
 {if $userid}for <b>{$userid}</b> {/if}
 {if $ccid}in <b>{$ccid}</b>{/if}
+</h1>
+<span class="button2"><a href="cc.php" class="linkbut">{tr}Help{/tr}</a></span><br />
+
 <br /><br />
 
 {if $msg}<div class="simplebox">{$msg}</div>{/if}

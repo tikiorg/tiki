@@ -68,8 +68,14 @@ if ($user) {
 			}
 		}
 		if (isset($_REQUEST['new'])) {
+			if (isset($_REQUEST['currency'])) {
+				$currency = $_REQUEST['currency'];
+			} else {
+				$currency = false;
+			}
 			$currencies = $cclib->get_registered_cc($user);
 			$smarty->assign('currencies',$currencies);
+			$smarty->assign('currency',$currency);
 			$view = 'new';
 			$mid = 'cc/transactions_form.tpl';
 		} elseif (isset($_REQUEST['all']) and $tiki_p_cc_admin == 'y') {
