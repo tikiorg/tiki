@@ -1,5 +1,28 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-theme_control.php">{tr}Theme Control Center: categories{/tr}</a><br/><br/>
+<a class="pagetitle" href="tiki-theme_control.php">{tr}Theme Control Center: categories{/tr}</a>
+
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=ThemeControl" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}ThemeControl{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-theme_control.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ThemeControl tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+
+
+<br/><br/>
 <div class="simplebox">
 <b>{tr}Theme is selected as follows{/tr}:</b><br/>
 1. {tr}If a theme is assigned to the individual object that theme is used.{/tr}<br/>
