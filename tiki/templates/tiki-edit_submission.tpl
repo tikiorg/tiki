@@ -26,7 +26,7 @@
 <input type="hidden" name="image_size" value="{$image_size|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Title{/tr}</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Author Name{/tr}</td><td class="formcolor"><input type="text" name="authorName" value="{$user|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Author Name{/tr}</td><td class="formcolor"><input type="text" name="authorName" value="{$authorName|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Topic{/tr}</td><td class="formcolor">
 <select name="topicId">
 {section name=t loop=$topics}
