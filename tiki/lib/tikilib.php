@@ -4327,21 +4327,78 @@ Debug::d('get_site_date()');
 
     return sprintf("%s%02d%s%02d", $sign, $mins / 60, $colon, $mins % 60);
   }
+  
+  function list_languages($path = false) {
+    $languages=Array();
+    if (!$path) $path = "lang";
+    if (!is_dir($path)) return array();
+    $h=opendir($path);
+    while($file=readdir($h)) {
+      if($file!='.' && $file!='..' && is_dir("$path/$file") && strlen($file)==2) {
+        $languages[]=$file;
+      }
+    }
+    closedir($h);
 
-	function list_languages($path = false) {
-		$languages=Array();
-		if (!$path) $path = "lang";
-		if (!is_dir($path)) return array();
-		$h=opendir($path);
-		while($file=readdir($h)) {
-			if($file!='.' && $file!='..' && is_dir("$path/$file") && strlen($file)==2) {
-				$languages[]=$file;
-			}
-		}
-		closedir($h);
-		sort($languages);
-		return $languages;
-	}
+    // Format and return the list
+    return $this->format_language_list($languages);
+  }
+
+  // Returns a list of languages formatted as a twodimensionel array
+  // with 'value' being the language code and 'name' being the name of
+  // the language.
+  function format_language_list($languages) {
+
+    // Comparison function used to sort languages by their name in the
+    // current locale.
+    function formatted_language_compare($a, $b) {
+      return strcmp($a['name'], $b['name']);
+    }
+
+    // The list of available languages so far with both English and
+    // translated names.
+    $mapping = Array('cs' => Array('Czech', tra("Czech")),
+                     'da' => Array('Danish', tra("Danish")),
+                     'de' => Array('German', tra("German")),
+                     'en' => Array('English', tra("English")),
+                     'es' => Array('Spanish', tra("Spanish")),
+                     'el' => Array('Greek', tra("Greek")),
+                     'fr' => Array('French', tra("French")),
+                     'it' => Array('Italian', tra("Italian")), 
+                     'nl' => Array('Dutch', tra("Dutch")),
+                     'no' => Array('Norwegian', tra("Norwegian")),
+                     'pl' => Array('Polish', tra("Polish")),
+                     'ru' => Array('Russian', tra("Russian")),
+                     'es' => Array('Spanish', tra("Spanish")), 
+                     'sv' => Array('Swedish', tra("Swedish")),
+                     'tw' => Array('Twi', tra("Twi")),
+                     'zh' => Array('Chinese', tra("Chinese")));
+
+    $formatted = Array();
+    // run through all the language codes:
+    foreach ($languages as $lc) {
+      if (isset($mapping[$lc])) {
+        // known language
+        if ($mapping[$lc][0] == $mapping[$lc][1]) {
+          // Skip repeated text, 'English (English, en)' looks silly.
+          $formatted[] = Array('value' => $lc,
+                               'name' => $mapping[$lc][0] . " ($lc)");
+        } else {
+          $formatted[] = Array('value' => $lc,
+                               'name' => $mapping[$lc][1] .
+                               ' (' . $mapping[$lc][0] . ', ' . $lc . ')');
+        }
+      } else {
+        // unknown language
+        $formatted[] = Array('value' => $lc,
+                             'name' => tra("Unknown language") . " ($lc)");
+      }
+    }
+
+    // Sort the languages by their name in the current locale
+    usort($formatted, 'formatted_language_compare');
+    return $formatted;
+  }
 
   function get_language($user = false) {
     static $language = false;

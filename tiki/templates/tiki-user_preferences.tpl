@@ -40,7 +40,10 @@
   <tr><td  class="form">{tr}Language{/tr}:</td><td>
         <select name="language">
         {section name=ix loop=$languages}
-        <option value="{$languages[ix]|escape}" {if $language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
+        <option value="{$languages[ix].value|escape}"
+          {if $language eq $languages[ix].value}selected="selected"{/if}>
+          {$languages[ix].name}
+        </option>
         {/section}
         </select></td></tr>
   {/if}      
