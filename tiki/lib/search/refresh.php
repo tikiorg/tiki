@@ -6,7 +6,7 @@ function refresh_search_index() {
 
   // check if we have to run. Run every n-th click:
   $n=5; //todo: make it configurable
-  //$n=1; //debug
+  $n=1; //debug
   list($usec, $sec) = explode(" ",microtime());
   srand (ceil($sec+100*$usec));
   if(rand(1,$n)==1) {
@@ -29,6 +29,11 @@ function refresh_search_index() {
     if ($feature_faqs == 'y') {
       $locs[]="random_refresh_index_faqs";
       $locs[]="random_refresh_index_faq_questions";
+    }
+    global $feature_directory;
+    if ($feature_directory == 'y') {
+      $locs[]="random_refresh_index_dir_cats";
+      $locs[]="random_refresh_index_dir_sites";
     }
 
     // comments can be everywhere?
@@ -67,6 +72,32 @@ function random_refresh_index_blogs() {
     $res=$result->fetchRow();
     $words=&search_index($res["title"]." ".$res["user"]." ".$res["description"]);
     insert_index($words,'blog',$res["blogId"]);
+  }
+}
+
+function random_refresh_index_dir_cats() {
+  global $tikilib;
+  // get random directory ctegory
+  $cant=$tikilib->getOne("select count(*) from `tiki_directory_categories`",array());
+  if($cant>0) {
+    $query="select * from `tiki_directory_categories`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["name"]." ".$res["description"]);
+    insert_index($words,'dir_cat',$res["categId"]);
+  }
+}
+
+function random_refresh_index_dir_sites() {
+  global $tikilib;
+  // get random directory ctegory
+  $cant=$tikilib->getOne("select count(*) from `tiki_directory_sites`",array());
+  if($cant>0) {
+    $query="select * from `tiki_directory_sites`";
+    $result=$tikilib->query($query,array(),1,rand(0,$cant-1));
+    $res=$result->fetchRow();
+    $words=&search_index($res["name"]." ".$res["description"]);
+    insert_index($words,'dir_site',$res["siteId"]);
   }
 }
 
