@@ -1,7 +1,7 @@
-{**}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_student_assignment.tpl,v 1.2 2004-03-12 20:58:25 ggeller Exp $ *}
 {* George G. Geller *}
-{* January 31, 2004 *}
-{* Adapted from tiki-read_article.php *}
+
+<!-- templates/tiki-hw_student_assignment.tpl start -->
 
 <div class="articletitle">
   <span class="titlea">{$title}</span><br />
@@ -29,7 +29,7 @@
       <td>
         <a href="tiki-hw_page.php?assignmentId={$assignmentId}" class="trailer">{tr}My Work{/tr}</a>
       </td>
-      <td style="text-align:right;">
+      <td style="text-align:right">
         {* TODO IN VERSION2
           <a class="trailer" href="tiki-hw_student_assignment_print.php?assignmentId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
         TODO IN VERSION 2 *}
@@ -38,6 +38,6 @@
   </table>
 </div>
 
-<div class="articlebody">
-  {$parsed_body}
-</div>
+<div class="articlebody">{$parsed_body}</div>
+
+<!-- templates/tiki-hw_student_assignment.tpl end -->

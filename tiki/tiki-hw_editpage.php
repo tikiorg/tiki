@@ -1,18 +1,16 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_editpage.php,v 1.3 2004-02-22 15:01:53 ggeller Exp $
-
-// 20040206 - Fix typos in error messages, comments, tabs.
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_editpage.php,v 1.4 2004-03-12 20:58:25 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-// Adapted from tiki-editpage.php
-
-// Students cannot edit/view another student's page.  This may change in VERSION2 when we do peer reviewers.
+// Students cannot edit/view another student's page.  This may change in VERSION2
+//   when we do peer reviewers.
 // Students cannot edit their own pages after the due date.
 // Admin, teachers and graders can edit anyone's page after the due date, no one's before the due date.
+//   This may be modified in VERSION2
 
 error_reporting (E_ALL);
 
@@ -49,11 +47,10 @@ if ($status == "HW_INVALID_ID"){
   die;
 } elseif ($status == "HW_PAGE_LOCKED"){
   $smarty->assign('msg', tra("Error: This page is being edited by another user."));
+  // TODO: Report the user name or "anonymous grader" or "anonymous peer reviewer"
   $smarty->display("error.tpl");
   die;
 }
-$ggg_tracer->out(__FILE__." line ".__LINE__.' $page_data = ');
-$ggg_tracer->outvar($page_data);
 
 // TODO for VERSION2 - change this for peer review
 $studentName = $page_data['studentName'];
@@ -66,16 +63,19 @@ if (!$tiki_p_hw_grader && $usr != $studentName /* && !homeworklib->hw_peer_revie
 $assignmentId = $page_data['assignmentId'];
 $smarty->assign('assignmentId',$assignmentId);
 
-$assignment_data = $homeworklib->get_assignment($assignmentId);
-$ggg_tracer->out(__FILE__." line ".__LINE__.' $assignment_data = ');
-$ggg_tracer->outvar($assignment_data);
+// $assignment_data = $homeworklib->get_assignment($assignmentId);
+if (!$homeworklib->hw_assignment_fetch(&$assignment_data, $assignmentId)){
+  $smarty->assign('msg', tra("Assignment not found"));
+  $smarty->display("error.tpl");
+  die;
+}
 
 // Students cannot edit their own pages after the due date. (unlock the page and exit)
 // $ggg_tracer->outln(__FILE__." line ".__LINE__.' date("U") = '.date("U"));
 // $ggg_tracer->outln(__FILE__." line ".__LINE__.' $assignment_data["expireDate"] = '.$assignment_data['expireDate']);
 // $sdate = date("Ymd G:i:s", $assignment_data["expireDate"]);
 // $ggg_tracer->outln(__FILE__." line ".__LINE__.' $sdate = '.$sdate);
-if (($tiki_p_hw_grader == 'n') && (date("U") > $assignment_data['expireDate']) ) {
+if (($tiki_p_hw_grader == 'n') && (date("U") > $assignment_data['dueDate']) ) {
   $homeworklib->hw_page_unlock($pageId);
   $smarty->assign('msg', tra("Permission denied: Students may NOT edit their work after the due date."));
   $smarty->display("error.tpl");
@@ -131,6 +131,7 @@ $smarty->assign("pageId",$pageId);
 // Display the Index Template
 $smarty->assign('mid', 'tiki-hw_editpage.tpl');
 $smarty->assign('show_page_bar', 'y');
+$smarty->assign('page', $assignment_data["title"]);    // Display the assignment title in the browser titlebar
 $smarty->display("tiki.tpl");
 
 ?>

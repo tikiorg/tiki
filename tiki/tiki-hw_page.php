@@ -1,7 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_page.php,v 1.3 2004-02-22 14:56:50 ggeller Exp $
-
-// 20040207 - Fix typo in error message
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_page.php,v 1.4 2004-03-12 20:58:25 ggeller Exp $
 
 // Initialization
 
@@ -48,20 +46,20 @@ if($tiki_p_hw_student != 'y') {
 // For teacher, graders, and admin the student must be specified
 if($tiki_p_hw_grader == 'y') {
   if(isset($_REQUEST["student"]) && $_REQUEST["student"] != "") {
-	$studentName = $_REQUEST["student"];
-	// make sure $studentName is really a student
-	if (!$homeworklib->hw_is_student($studentName)){
-	  $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.",
+    $studentName = $_REQUEST["student"];
+    // make sure $studentName is really a student
+    if (!$homeworklib->hw_is_student($studentName)){
+      $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.",
         ".tra("Error: ").$studentName.tra(" is not a student."));
-	  $smarty->display("error.tpl");
-	  die;
-	}
+      $smarty->display("error.tpl");
+      die;
+    }
   }
   else{
-	$smarty->assign('msg', __FILE__.tra(" line ").__LINE__.",
+    $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.",
     ".tra("Error: No")." student ".tra("specified."));
-	$smarty->display("error.tpl");
-	die;  
+    $smarty->display("error.tpl");
+    die;  
   }
 }
 else {
@@ -80,32 +78,21 @@ else{
   die;  
 }
 
-$assignment_data = $homeworklib->get_assignment($assignmentId);
-// $ggg_tracer->out(__FILE__." line: ".__LINE__.' $assignment_data = ');
-// $ggg_tracer->outvar($assignment_data);
+// Get the assignment data
+if (!$homeworklib->hw_assignment_fetch(&$assignment_data, $assignmentId)){
+  $smarty->assign('msg', tra("Assignment not found"));
+  $smarty->display("error.tpl");
+  die;
+}
 
+// Todo: see if the file has been deleted.
 // check for valid assignment id.
-if(!$assignment_data /* || $article_data['deleted'] */) {
+if(!$assignment_data || $assignment_data['deleted']) {
   $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.",
     ".tra("Error: Invalid")." assignmentId");
   $smarty->display("error.tpl");
-  die;  
+  die;
 }
-
-/*
-
-Regarding fields in the hw_assignment table:
-Most of the fields aren't used.  They are just there because I stole the code
-and the fields for the table from articles.
-I'm using the following here:
- articleId translates to assignmentId
- title
- expireDate translates to due date
- heading is used for the short summary
- body is only visible in the preview.
-
-I need to add a field to designate assignments that have been deleted.
-*/
 
 $thedate = date("U");
 
@@ -116,24 +103,26 @@ if (!$homeworklib->hw_page_fetch(&$info, $studentName, $assignmentId))
   $homeworklib->hw_page_fetch(&$info, $studentName, $assignmentId);
   $pageId = $info['id'];
   if ($user == $studentName){
-	header ("location: tiki-hw_editpage.php?id=$pageId");
-	die;
+    header ("location: tiki-hw_editpage.php?id=$pageId");
+    die;
   }
 }
 
 $smarty->assign('assignmentTitle',$assignment_data['title']);
 $smarty->assign('assignmentHeading',$assignment_data['heading']);
-$smarty->assign('dueDate',$assignment_data['expireDate']);
+$smarty->assign('dueDate',$assignment_data['dueDate']);
 
 // Verify lock status
 // GGG The hw-style lock on edit may need a time-out as well as auto-lock on edit.
 // TODO: This functionality has been moved into homeworklib
-// Have to modify template to accomadate locking scheme.
-if($info["flag"] == 'L') {
-  $smarty->assign('lock',true);  
-} else {
-  $smarty->assign('lock',false);
-}
+// Have to modify template to accommadate locking scheme.
+// This will not be needed right away because at present, only the student can edit
+//  it before the due date, and only the teacher can edit it after the due date.
+// if($info["flag"] == 'L') {
+//   $smarty->assign('lock',true);  
+// } else {
+//   $smarty->assign('lock',false);
+// }
 
 $pdata = $tikilib->parse_data($info["data"]);
 
@@ -181,7 +170,7 @@ $smarty->assign("comment",$info["comment"]);
 if (isset($_REQUEST["submit"])) {
   // $ggg_tracer->outln(__FILE__." line: ".__LINE__.' submit detected! ');
   $homeworklib->hw_grading_queue_submit($pageId, $info['lastModif'],
-										$info['version'], $assignmentId);
+					$info['version'], $assignmentId);
 }
 
 // 0 means it is not in the queue
@@ -191,10 +180,10 @@ $smarty->assign("nGradingQueue",$nGradingQueue);
 
 $smarty->assign("studentName",$info['studentName']);
 
-
 // Display the template
 // GGG have to figure out how to use dblclickedit $smarty->assign('dblclickedit','y');
 $smarty->assign('mid','tiki-hw_page.tpl');
+$smarty->assign('page', $title);    // Display the assignment title in the browser titlebar
 $smarty->display("tiki.tpl");
 
 ?>

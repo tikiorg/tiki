@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_student_last_changes.php,v 1.3 2004-02-22 14:49:05 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_student_last_changes.php,v 1.4 2004-03-12 20:58:26 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -82,6 +82,9 @@ $smarty->assign_by_ref('offset', $offset);
 // Get a list of last changes to the hw database
 $more = 0;
 $lastchanges = $homeworklib->hw_pages_list(0, -1,'lastModif_desc');
+
+// print(__FILE__." line: ".__LINE__);
+// die;
 
 $smarty->assign_by_ref('cant_records', $lastchanges["cant"]);
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignments.php,v 1.5 2004-03-01 04:49:00 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignments.php,v 1.6 2004-03-12 20:58:26 ggeller Exp $
 
 // Copyright (c) 2004, George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -37,7 +37,6 @@ if ($tiki_p_hw_grader != 'y') {
 }
 
 if (isset($_REQUEST["remove"])) {
-  // TODO: Add the check ticket stuff and test this
   $homeworklib->hw_assignment_remove($_REQUEST["remove"]);
 }
 

@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_pagehistory.php,v 1.3 2004-02-22 14:53:43 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_pagehistory.php,v 1.4 2004-03-12 20:58:25 ggeller Exp $
 
-// 20040207 Fixed typo in error message, clean up comments.
+// 20040311 Fixed for new hw_assignments table.
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -43,13 +43,20 @@ $smarty->assign_by_ref('info', $page_data);
 // Get the assignment data
 $assignmentId = $page_data['assignmentId'];
 $smarty->assign("assignmentId",$assignmentId);
-$assignment_data = $homeworklib->get_assignment($assignmentId);
-if ($assignment_data == false){
-  $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.",
-    ".tra("Error: Could not fetch assignment ").$assignmentId);
+
+// Get the assignment data
+if (!$homeworklib->hw_assignment_fetch(&$assignment_data, $assignmentId)){
+  $smarty->assign('msg', tra("Assignment not found"));
   $smarty->display("error.tpl");
   die;
 }
+// $assignment_data = $homeworklib->get_assignment($assignmentId);
+// if ($assignment_data == false){
+//   $smarty->assign('msg', __FILE__.tra(" line ").__LINE__.",
+//     ".tra("Error: Could not fetch assignment ").$assignmentId);
+//   $smarty->display("error.tpl");
+//   die;
+// }
 
 // Get the assignment title from the hw_assignment table.
 $_REQUEST["page"] = $assignment_data["title"];
@@ -83,7 +90,6 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"])) {
 $smarty->assign('source', 0);
 
 if (isset($_REQUEST['source'])) {
-  $ggg_tracer->outln(__FILE__." line: ".__LINE__.' $_REQUEST["source"] = '.$_REQUEST["source"]);
   $smarty->assign('source', $_REQUEST['source']);
   $version = $homeworklib->hw_page_get_version($pageId, $_REQUEST["source"]);
   $smarty->assign('sourcev', nl2br(htmlentities($version["data"])));
