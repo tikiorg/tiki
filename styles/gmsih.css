@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.2 2003-12-13 18:35:26 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.3 2003-12-15 09:29:50 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -2204,3 +2204,69 @@ div#loadstats {
 	color: #666666;
 	padding: 5px;
 }
+
+/* phplayers style */
+.box-data table {
+	width: 100%;
+}
+.mdkverbar	{
+	margin: 0px;
+}
+
+.mdksubmenu	{
+	z-index: 999;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: #cccccc;
+	visibility: hidden;
+}
+.mdksubmenu table {
+	width: auto;
+}
+
+.mdksubframe	{
+	z-index: 1000;
+	position: relative;
+	display: block;
+	border: 1px outset #fdfefd;
+}
+
+.mdkitem	{
+	border-top: 1px solid #dedede;
+	position: relative;
+	text-align: left;
+	white-space: nowrap;
+}
+
+.mdkitem a	{
+	padding: 2px 5px 2px 5px;
+	color: #1c60a8;
+	position: relative;
+	display: block;
+	text-decoration: none;
+}
+
+.mdkitem a:link	{
+	color: #1c60a8;
+}
+
+.mdkitem a:visited	{
+	color: #1c60a8;
+}
+
+.mdkitem a:hover	{
+	color: #000000;
+	background-color: #ffffff;
+}
+
+.mdkitem a:active	{
+	color: #ff0000;
+}
+
+.mdkitem .mdkfwdarr	{
+	position: absolute;
+	top: 5px;
+	right: 12px;
+
+
