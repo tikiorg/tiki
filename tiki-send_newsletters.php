@@ -82,6 +82,7 @@ if(isset($_REQUEST["send"])) {
 	$mail->setHeadCharset("utf-8");
 	$mail->setTextCharset("utf-8");
 	$mail->setHtmlCharset("utf-8");
+    $mail->setFrom($sender_email);
     $mail->setHTML($_REQUEST["data"].$unsubmsg,strip_tags($_REQUEST["data"]));    
     if($mail->send($to_array,'mail')) $sent++;
   }
