@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.199 2004-05-31 12:05:30 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.200 2004-06-03 18:57:08 ggeller Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2530,7 +2530,27 @@ CREATE TABLE tiki_quizzes (
   shuffleAnswers char(1) default NULL,
   publishDate int(14) default NULL,
   expireDate int(14) default NULL,
-  PRIMARY KEY  (quizId)
+  bDeleted char(1) default NULL,
+  nVersion int(4) NOT NULL,
+  nAuthor int(4) default NULL,
+  bOnline char(1) default NULL,
+  bRandomQuestions char(1) default NULL,
+  nRandomQuestions tinyint(4) default NULL,
+	bLimitQuestionsPerPage char(1) default NULL,
+  nLimitQuestionsPerPage tinyint(4) default NULL,
+	bMultiSession char(1) default NULL,
+	nCanRepeat tinyint(4) default NULL,
+	sGradingMethod varchar(80) default NULL,
+	sShowScore varchar(80) default NULL,
+	sShowCorrectAnswers varchar(80) default NULL,
+	sPublishStats varchar(80) default NULL,
+	bAdditionalQuestions char(1) default NULL,
+	bForum char(1) default NULL,
+	sForum varchar(80) default NULL,
+	sPrologue text,
+	sData text,
+	sEpilogue text
+  PRIMARY KEY  (quizId, nVersion)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
