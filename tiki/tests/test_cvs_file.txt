@@ -21,5 +21,3 @@ COLORADO TESTS THIS
 
 hi
 
-wq
-xw
