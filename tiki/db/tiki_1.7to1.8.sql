@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.103 2004-02-09 18:20:19 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.104 2004-02-24 21:51:58 wolff_borg Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -852,18 +852,6 @@ ALTER TABLE `tiki_tracker_item_attachments` ADD `longdesc` blob after `data` ;
 ALTER TABLE `tiki_tracker_item_attachments` ADD `version` varchar(40) after `downloads` ;
 ALTER TABLE `tiki_tracker_item_attachments` CHANGE `itemId` `itemId` INT( 12 ) DEFAULT '0' NOT NULL ;
 ALTER TABLE `tiki_trackers` ADD `orderAttachments` VARCHAR( 255 ) DEFAULT 'filename,created,filesize,downloads,desc' NOT NULL AFTER `showAttachments` ;
-
-# added on 2003-12-19 by mose (because wolff forgot)
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mantis', 'Can admin Mantis configuration', 'admin', 'mantis');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_mantis', 'Can view Mantis bugs', 'registered', 'mantis');
-INSERT INTO tiki_preferences(name,value) VALUES ('feature_mantis','n');
-
-# added on 2003-12-19 by wolff (cause he remembered...)
-UPDATE users_permissions SET permName = 'tiki_p_mantis_admin' WHERE permName = 'tiki_p_admin_mantis';
-UPDATE users_permissions SET permName = 'tiki_p_mantis_view' WHERE permName = 'tiki_p_view_mantis';
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Mantis','tiki-mantis-main.php',190,'feature_mantis','tiki_p_mantis_view','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','View Bugs','tiki-mantis-view_bugs.php',192,'feature_mantis','tiki_p_mantis_view','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin','tiki-mantis-admin.php',198,'feature_mantis','tiki_p_mantis_admin','');
 
 # added on 2003-16-19 by mose (typo reported by xenfasa)
 UPDATE tiki_menu_options set `url`='tiki-forum_rankings.php' where `url`='tiki-forums_rankings.php';

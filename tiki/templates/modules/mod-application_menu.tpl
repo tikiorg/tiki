@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.91 2004-02-07 14:08:18 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.92 2004-02-24 21:52:00 wolff_borg Exp $ *}
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
@@ -98,22 +98,6 @@
   &nbsp;<a href="tiki-g-user_processes.php" class="linkmenu">{tr}User processes{/tr}</a><br />  
   &nbsp;<a href="tiki-g-user_activities.php" class="linkmenu">{tr}User activities{/tr}</a><br />  
   &nbsp;<a href="tiki-g-user_instances.php" class="linkmenu">{tr}User instances{/tr}</a><br />  
-  </div>
-{/if}
-
-{if $feature_mantis eq 'y' and $tiki_p_mantis_view eq 'y'}
-  <div class="separator">
-  {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('mantismenu');"><img src="img/icons/fo.gif" style="border: 0" name="mantismenuicn" alt="{tr}MantisMenu{/tr}"/></a>&nbsp;
-  {else}<a class="separator" href="javascript:toggle('mantismenu');">[-]</a>{/if} 
-  <a href="tiki-mantis-main.php" class="separator">{tr}Mantis{/tr}</a>
-  {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('mantismenu');">[+]</a>{/if}
-  </div>
-  <div id="mantismenu" style="{$mnu_mantis}">
-  &nbsp;<a href="tiki-mantis-view_bugs.php" class="linkmenu">{tr}View Bugs{/tr}</a><br />  
-  {if $tiki_p_mantis_admin eq 'y'}
-      &nbsp;<a href="tiki-mantis-admin.php" class="linkmenu">{tr}Admin{/tr}</a><br />  
-  {/if}
   </div>
 {/if}
 
@@ -637,9 +621,6 @@
 {/if}
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
   setfoldericonstate('wfmenu');
-{/if}
-{if $feature_mantis eq 'y' and $tiki_p_view_mantis eq 'y'}
-  setfoldericonstate('mantismenu');
 {/if}
 {if $feature_wiki eq 'y'}
   setfoldericonstate('wikimenu');

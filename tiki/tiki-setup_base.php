@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.50 2004-01-30 07:45:00 btodoroff Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.51 2004-02-24 21:51:45 wolff_borg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -357,16 +357,6 @@ if ($tiki_p_admin_cms == 'y') {
     }
 
     $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'topics');
-
-    foreach ($perms["data"] as $perm) {
-        $perm = $perm["permName"];
-
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-if ($tiki_p_mantis_admin == 'y') {
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'mantis');
 
     foreach ($perms["data"] as $perm) {
         $perm = $perm["permName"];

@@ -411,8 +411,6 @@ $lang=Array(
 // "Import PHPWiki Dump" => "Import PHPWiki Dump", // ## MODULES ./templates/modules/mod-admin_menu.tpl, ./templates/modules/mod-application_menu.tpl, ./templates/styles/moreneat/modules/mod-application_menu.tpl, ./templates/styles/mose/modules/mod-application_menu.tpl, ./templates/styles/musus/modules/mod-admin_menu.tpl, ./templates/styles/musus/modules/mod-application_menu.tpl, ./templates/styles/neat/modules/mod-application_menu.tpl, ./templates/styles/simple/modules/mod-application_menu.tpl, ./templates/styles/tiki/modules/mod-application_menu.tpl
 // "MyMenu" => "MyMenu", // ## CLOSE: Menu=>Menu // ## MODULES ./templates/modules/mod-application_menu.tpl, ./templates/styles/musus/modules/mod-application_menu.tpl, ./templates/styles/simple/modules/mod-application_menu.tpl
 // "WfMenu" => "WfMenu", // ## CLOSE: Menu=>Menu // ## MODULES ./templates/modules/mod-application_menu.tpl, ./templates/styles/musus/modules/mod-application_menu.tpl, ./templates/styles/simple/modules/mod-application_menu.tpl
-// "MantisMenu" => "MantisMenu", // ## MODULES ./templates/modules/mod-application_menu.tpl
-// "Mantis" => "Mantis", // ## MODULES ./templates/modules/mod-application_menu.tpl, ./templates/styles/moreneat/modules/mod-application_menu.tpl, ./templates/tiki-admin-include-features.tpl, ./templates/tiki-assignpermission.tpl
 // "View Bugs" => "View Bugs", // ## MODULES ./templates/modules/mod-application_menu.tpl, ./templates/styles/moreneat/modules/mod-application_menu.tpl
 // "WikiMenu" => "WikiMenu", // ## MODULES ./templates/modules/mod-application_menu.tpl, ./templates/styles/musus/modules/mod-application_menu.tpl, ./templates/styles/simple/modules/mod-application_menu.tpl
 // "Send pages" => "Send pages", // ## MODULES ./templates/modules/mod-application_menu.tpl, ./templates/styles/moreneat/modules/mod-application_menu.tpl, ./templates/styles/musus/modules/mod-application_menu.tpl
@@ -1090,7 +1088,6 @@ $lang=Array(
 // "Enlarge area width" => "Enlarge area width", // ## MODULES ./templates/textareasize.tpl
 // "Meta Tags" => "Meta Tags", // ## MODULES ./templates/tiki-admin-include-anchors.tpl, ./templates/tiki-admin-include-list-sections.tpl, ./templates/tiki-admin-include-metatags.tpl
 // "Not Installed" => "Not Installed", // ## MODULES ./templates/tiki-admin-include-blogs.tpl, ./templates/tiki-admin-include-cms.tpl, ./templates/tiki-admin-include-wiki.tpl
-// "Mantis Bug Tracker" => "Mantis Bug Tracker", // ## MODULES ./templates/tiki-admin-include-features.tpl
 // "Jukebox settings" => "Jukebox settings", // ## MODULES ./templates/tiki-admin-include-jukebox.tpl
 // "Jukebox tracks location" => "Jukebox tracks location", // ## MODULES ./templates/tiki-admin-include-jukebox.tpl
 // "Jukebox features" => "Jukebox features", // ## MODULES ./templates/tiki-admin-include-jukebox.tpl
