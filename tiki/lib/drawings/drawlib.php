@@ -64,16 +64,20 @@ class DrawLib extends TikiLib {
 
 	function remove_drawing($drawId) {
 		global $tikidomain;
+		$path = "img/wiki";
+		if ($tikidomain) {
+			$path.= "/$tikidomain";
+		}
 		$info = $this->get_drawing($drawId);
-		$f1 = "img/wiki/$tikidomain" . $info['filename_draw'];
-		$f2 = "img/wiki/$tikidomain" . $info['filename_pad'];
+		$f1 = "$path/" . $info['filename_draw'];
+		$f2 = "$path/" . $info['filename_pad'];
 		$max = $this->getOne("select count(*) from `tiki_drawings` where `name`=?",array($info['name']));
 		@unlink ($f1);
 		@unlink ($f2);
 		if ($max == 1) {
-			$f1 = "img/wiki/$tikidomain" . $name . ".pad_xml";
+			$f1 = "$path/$name.pad_xml";
 			unlink ($f1);
-			$f1 = "img/wiki/$tikidomain" . $name . ".gif";
+			$f1 = "$path/$name.gif";
 			unlink ($f1);
 		}
 
@@ -83,11 +87,11 @@ class DrawLib extends TikiLib {
 		$query = "select * from `tiki_drawings` where `name`=? and `version`=?";
 		$result = $this->query($query,array($info["name"],(int)$max));
 		$res = $result->fetchRow();
-		$f1 = "img/wiki/$tikidomain" . $res['filename_draw'];
-		$f2 = "img/wiki/$tikidomain" . $res['name'] . '.gif';
+		$f1 = "$path/" . $res['filename_draw'];
+		$f2 = "$path/" . $res['name'] . '.gif';
 		copy($f1, $f2);
-		$f1 = "img/wiki/$tikidomain" . $res['filename_pad'];
-		$f2 = "img/wiki/$tikidomain" . $res['name'] . '.pad_xml';
+		$f1 = "$path/" . $res['filename_pad'];
+		$f2 = "$path/" . $res['name'] . '.pad_xml';
 		copy($f1, $f2);
 	}
 

@@ -32,8 +32,10 @@ class StructLib extends TikiLib {
 			$data = $exportlib->export_wiki_page($page["pageName"], 0);
 			$tar->addData($page["pageName"], $data, date("U"));
 		}
-		$tar->toTar("dump/$tikidomain" . $page_name . ".tar", FALSE);
-		header ("location: dump/$tikidomain" . $page_name . ".tar");
+		$dump = "dump";
+		if ($tikidomain) { $dump.= "/$tikidomain"; }
+		$tar->toTar("$dump/$page_name.tar", FALSE);
+		header ("location: $dump/$page_name.tar");
 		return '';
 	}
 
