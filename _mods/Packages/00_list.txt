@@ -5,6 +5,7 @@
 'avatars','xmen','1.3','Collection of 46 avatars from the Xmen (tm) serie.','unknown'
 'menus','tikiring','1.2','The menu including all tiki sites. hardstamped to menuId=41','GNU/LGPL'
 'themes','508','1.1','Originaly aimed for 508 compliance, but not very successful','GNU/LGPL'
+'themes','3dblue','1.1','blue theme with 3d module layout','GNU/LGPL'
 'themes','akwa','1.2','Looking like MacOSX','GNU/LGPL'
 'themes','bluemetal','1.1','Theme borrowed to another cms.','GNU/GPL'
 'themes','classicblue','1.1','Variation of BlueMetal','GNU/GPL'
