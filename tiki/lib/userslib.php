@@ -715,7 +715,7 @@ class UsersLib extends TikiLib {
 	    $userid = $this->get_user_id($user);
 
 	    $query = "select `groupName` from `users_usergroups` where `userId`=?";
-	    $result = $this->query($query, array($userid));
+	    $result = $this->query($query, array((int)$userid));
 	    $ret = array();
 
 	    while ($res = $result->fetchRow()) {
