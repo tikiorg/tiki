@@ -1,28 +1,28 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-application_menu.tpl,v 1.4 2004-01-19 18:17:24 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-application_menu.tpl,v 1.5 2004-01-21 00:02:13 musus Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
-&nbsp;<a href="{$tikiIndex}" class="menu">{tr}Home{/tr}</a><br />
+&nbsp;<a title="" href="{$tikiIndex}" class="menu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
-&nbsp;<a href="tiki-chat.php" class="menu">{tr}Chat{/tr}</a><br />
+&nbsp;<a title="" href="tiki-chat.php" class="menu">{tr}Chat{/tr}</a><br />
 {/if}
 {if $feature_contact eq 'y'}
-  &nbsp;<a href="tiki-contact.php" class="menu">{tr}Contact us{/tr}</a><br />
+  &nbsp;<a title="" href="tiki-contact.php" class="menu">{tr}Contact us{/tr}</a><br />
 {/if}
 {if $feature_stats eq 'y' and $tiki_p_view_stats eq 'y'}
-  &nbsp;<a href="tiki-stats.php" class="menu">{tr}Stats{/tr}</a><br />
+  &nbsp;<a title="" href="tiki-stats.php" class="menu">{tr}Stats{/tr}</a><br />
 {/if}
 
 {if $feature_categories eq 'y' and $tiki_p_view_categories eq 'y'}
-  &nbsp;<a href="tiki-browse_categories.php" class="menu">{tr}Categories{/tr}</a><br />
+  &nbsp;<a title="" href="tiki-browse_categories.php" class="menu">{tr}Categories{/tr}</a><br />
 {/if}
 
 {if $feature_games eq 'y' and $tiki_p_play_games eq 'y'}
-  &nbsp;<a href="tiki-list_games.php" class="menu">{tr}Games{/tr}</a><br />
+  &nbsp;<a title="" href="tiki-list_games.php" class="menu">{tr}Games{/tr}</a><br />
 {/if}
 
 {if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
-  &nbsp;<a href="tiki-calendar.php" class="menu">{tr}Calendar{/tr}</a><br />
+  &nbsp;<a title="" href="tiki-calendar.php" class="menu">{tr}Calendar{/tr}</a><br />
 {/if}
 
 {if $user}
@@ -81,7 +81,7 @@
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
   <div class="menu-subtitle">
   {if $feature_menusfolderstyle eq 'y'}
-  <a title="" href="javascript:icntoggle('wfmenu');"><img src="img/icons/fo.gif" alt="{tr}WfMenu{/tr}"/></a>&nbsp;
+  <a title="" href="javascript:icntoggle('wfmenu');"><img src="img/icons/fo.gif" alt="{tr}WfMenu{/tr}" /></a>&nbsp;
   {else}<a title="" href="javascript:toggle('wfmenu');">[-]</a>{/if} 
   <a title="" href="tiki-g-user_processes.php">{tr}Workflow{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a title="" href="javascript:toggle('wfmenu');">[+]</a>{/if}
@@ -207,10 +207,10 @@
 {if $feature_blogs eq 'y'}
   <div class="menu-subtitle">
   {if $feature_menusfolderstyle eq 'y'}
-  <a href="javascript:icntoggle('blogmenu');"><img src="img/icons/fo.gif" alt=""/></a>&nbsp;
-  {else}<a href="javascript:toggle('blogmenu');">[-]</a>{/if}
-  <a href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
-  {if $feature_menusfolderstyle ne 'y'}<a href="javascript:toggle('blogmenu');">[+]</a>{/if}
+  <a title="" href="javascript:icntoggle('blogmenu');"><img src="img/icons/fo.gif" alt=""/></a>&nbsp;
+  {else}<a title="" href="javascript:toggle('blogmenu');">[-]</a>{/if}
+  <a title="" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a title="" href="javascript:toggle('blogmenu');">[+]</a>{/if}
   </div>
   <div id="blogmenu" style="{$mnu_blogmenu}">
   {if $tiki_p_read_blog eq 'y'}
@@ -234,10 +234,10 @@
 {if $feature_forums eq 'y'}
   <div class="menu-subtitle">
   {if $feature_menusfolderstyle eq 'y'}
-  <a href="javascript:icntoggle('formenu');"><img src="img/icons/fo.gif" name="formenuicn" alt="{tr}ForMenu{/tr}"/></a>&nbsp;
-  {else}<a href="javascript:toggle('formenu');">[-]</a>{/if} 
-  <a href="tiki-forums.php">{tr}Forums{/tr}</a>
-  {if $feature_menusfolderstyle ne 'y'}<a href="javascript:toggle('formenu');">[+]</a>{/if}
+  <a title="" href="javascript:icntoggle('formenu');"><img src="img/icons/fo.gif" name="formenuicn" alt="{tr}ForMenu{/tr}"/></a>&nbsp;
+  {else}<a title="" href="javascript:toggle('formenu');">[-]</a>{/if} 
+  <a title="" href="tiki-forums.php">{tr}Forums{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a title="" href="javascript:toggle('formenu');">[+]</a>{/if}
   </div>
   <div id="formenu" style="{$mnu_formenu}">
   {if $tiki_p_forum_read eq 'y'}
@@ -255,20 +255,20 @@
 {if $feature_directory eq 'y'}
   <div class="menu-subtitle">
   {if $feature_menusfolderstyle eq 'y'}
-  <a href="javascript:icntoggle('dirmenu');"><img src="img/icons/fo.gif" name="dirmenuicn" alt="{tr}DirMenu{/tr}"/></a>&nbsp;
-  {else}<a href="javascript:toggle('dirmenu');">[-]</a>{/if} 
-  <a href="tiki-directory_browse.php">{tr}Directory{/tr}</a>
+  <a title="" href="javascript:icntoggle('dirmenu');"><img src="img/icons/fo.gif" alt="{tr}DirMenu{/tr}"/></a>&nbsp;
+  {else}<a title="" href="javascript:toggle('dirmenu');">[-]</a>{/if} 
+  <a title="" href="tiki-directory_browse.php">{tr}Directory{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a href="javascript:toggle('dirmenu');">[+]</a>{/if}
   </div>
   <div id="dirmenu" style="{$mnu_dirmenu}">
 	{if $tiki_p_submit_link eq 'y'}
-	&nbsp;<a href="tiki-directory_add_site.php" class="menu">{tr}Submit a new link{/tr}</a><br />
+	&nbsp;<a class="menu" title="" href="tiki-directory_add_site.php">{tr}Submit a new link{/tr}</a><br />
 	{/if}
   {if $tiki_p_view_directory eq 'y'}
-  &nbsp;<a href="tiki-directory_browse.php" class="menu">{tr}Browse directory{/tr}</a><br />
+  &nbsp;<a class="menu" title="" href="tiki-directory_browse.php">{tr}Browse directory{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_directory_cats eq 'y' or $tiki_p_admin_directory_sites eq 'y' or $tiki_p_validate_links eq 'y'}
-  &nbsp;<a href="tiki-directory_admin.php" class="menu">{tr}Admin directory{/tr}</a><br />
+  &nbsp;<a class="menu" title="" href="tiki-directory_admin.php">{tr}Admin directory{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -276,20 +276,20 @@
 {if $feature_file_galleries eq 'y'}
   <div class="menu-subtitle">
   {if $feature_menusfolderstyle eq 'y'}
-  <a href="javascript:icntoggle('filegalmenu');"><img src="img/icons/fo.gif" name="filegalmenuicn" alt="{tr}FileGalMenu{/tr}"/></a>&nbsp;
-  {else}<a href="javascript:toggle('filegalmenu');">[-]</a>{/if} 
-  <a href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
-  {if $feature_menusfolderstyle ne 'y'}<a href="javascript:toggle('filegalmenu');">[+]</a>{/if}
+  <a title="" href="javascript:icntoggle('filegalmenu');"><img src="img/icons/fo.gif" alt="{tr}FileGalMenu{/tr}" /></a>&nbsp;
+  {else}<a title="" href="javascript:toggle('filegalmenu');">[-]</a>{/if} 
+  <a title="" href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a title="" href="javascript:toggle('filegalmenu');">[+]</a>{/if}
   </div>
   <div id="filegalmenu" style="{$mnu_filegalmenu}">
   {if $tiki_p_view_file_gallery eq 'y'}
-  &nbsp;<a href="tiki-file_galleries.php" class="menu">{tr}List galleries{/tr}</a><br />
+  &nbsp;<a class="menu" title="" href="tiki-file_galleries.php">{tr}List galleries{/tr}</a><br />
   {/if}
   {if $feature_file_galleries_rankings eq 'y' and $tiki_p_view_file_gallery eq 'y'}
-  &nbsp;<a href="tiki-file_galleries_rankings.php" class="menu">{tr}Rankings{/tr}</a><br />
+  &nbsp;<a class="menu" title="" href="tiki-file_galleries_rankings.php">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $tiki_p_upload_files eq 'y'}
-  &nbsp;<a href="tiki-upload_file.php" class="menu">{tr}Upload file{/tr}</a><br />
+  &nbsp;<a class="menu" title="" href="tiki-upload_file.php">{tr}Upload file{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -297,17 +297,17 @@
 {if $feature_faqs eq 'y'}
   <div class="menu-subtitle">
   {if $feature_menusfolderstyle eq 'y'}
-  <a href="javascript:icntoggle('faqsmenu');"><img src="img/icons/fo.gif" name="faqsmenuicn" alt=""/></a>&nbsp;
-  {else}<a href="javascript:toggle('faqsmenu');">[-]</a>{/if} 
-  <a href="tiki-list_faqs.php">{tr}FAQs{/tr}</a>
-  {if $feature_menusfolderstyle ne 'y'}<a href="javascript:toggle('faqsmenu');">[+]</a>{/if}
+  <a title="" href="javascript:icntoggle('faqsmenu');"><img src="img/icons/fo.gif" alt=""/></a>&nbsp;
+  {else}<a title="" href="javascript:toggle('faqsmenu');">[-]</a>{/if} 
+  <a title="" href="tiki-list_faqs.php">{tr}FAQs{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a title="" href="javascript:toggle('faqsmenu');">[+]</a>{/if}
   </div>
   <div id="faqsmenu" style="{$mnu_faqsmenu}">
   {if $tiki_p_view_faqs eq 'y'}
-  &nbsp;<a href="tiki-list_faqs.php" class="menu">{tr}List FAQs{/tr}</a><br />
+  &nbsp;<a class="menu" title="" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_faqs eq 'y'}
-  &nbsp;<a href="tiki-list_faqs.php" class="menu">{tr}Admin FAQs{/tr}</a><br />
+  &nbsp;<a class="menu" title="" href="tiki-list_faqs.php">{tr}Admin FAQs{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -322,10 +322,10 @@
   </div>
   <div id="mapsmenu" style="{$mnu_mapsmenu}">
   {if $tiki_p_map_view eq 'y'}
-  &nbsp;<a href="tiki-map_edit.php" class="menu">{tr}Mapfiles{/tr}</a><br />
+  &nbsp;<a class="menu" title="" href="tiki-map_edit.php">{tr}Mapfiles{/tr}</a><br />
   {/if}
   {if $tiki_p_map_edit eq 'y'}
-  &nbsp;<a href="tiki-map_upload.php" class="menu">{tr}Layer management{/tr}</a><br />
+  &nbsp;<a class="menu" title="" href="tiki-map_upload.php">{tr}Layer management{/tr}</a><br />
   {/if}
   </div>
 {/if}
