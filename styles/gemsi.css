@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.15 2004-01-17 23:16:40 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.16 2004-01-20 09:03:53 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -1016,6 +1016,7 @@ td.categobjectsnameodd, td.categobjectsdataodd {
 }
 div.tree {
 	text-align: left;
+	margin: 10px;
 }
 div.tree#top {
 	border: 1px solid #aeaeae;
@@ -1790,3 +1791,14 @@ a.removeTab{
 	clear:both;
 	}
 
+.treemenudiv	{
+	display: block;
+	white-space: nowrap;
+	font-size: 14px;
+}
+a.phplm	{
+	color: #000000;
+	text-decoration: none;
+}
+a.phplm:hover	{
+	background-color: #dedede;
