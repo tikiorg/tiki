@@ -669,6 +669,8 @@ function get_included_groups($group) {
 	if ($find) {
 	    $mid = " where `groupName` like ?";
 	    $bindvars[] = "%" . $find . "%";
+			$mmid = $mid;
+			$mbindvars = $bindvars;
 	}
 
 	if ($initial) {
