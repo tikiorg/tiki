@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision:
-1.2.3
+1.2.4
 
 lastmodif:
-$Date: 2004-11-07 23:57:22 $
+$Date: 2004-11-09 15:41:57 $
 
 files: 
 features/cc/lib/auth.php lib/cc/auth.php
@@ -24,22 +24,22 @@ features/cc/lib/list_cc.php lib/cc/list_cc.php
 features/cc/lib/list_regcc.php lib/cc/list_regcc.php
 features/cc/lib/listbrowser.php lib/cc/listbrowser.php
 features/cc/htdocs/cc.php cc.php
-features/cc/htdocs/templates/admincc.tpl templates/cc/admincc.tpl
-features/cc/htdocs/templates/app.tpl templates/cc/app.tpl
-features/cc/htdocs/templates/createcc.tpl templates/cc/createcc.tpl
-features/cc/htdocs/templates/help.tpl templates/cc/help.tpl
-features/cc/htdocs/templates/history.tpl templates/cc/history.tpl
-features/cc/htdocs/templates/index.tpl templates/cc/index.tpl
-features/cc/htdocs/templates/internal.tpl templates/cc/internal.tpl
-features/cc/htdocs/templates/login.tpl templates/cc/login.tpl
-features/cc/htdocs/templates/menu.tpl templates/cc/menu.tpl
-features/cc/htdocs/templates/newcc.tpl templates/cc/newcc.tpl
-features/cc/htdocs/templates/page.tpl templates/cc/page.tpl
-features/cc/htdocs/templates/registercc.tpl templates/cc/registercc.tpl
-features/cc/htdocs/templates/registered.tpl templates/cc/registered.tpl
-features/cc/htdocs/templates/tr_failed.tpl templates/cc/tr_failed.tpl
-features/cc/htdocs/templates/tr_record.tpl templates/cc/tr_record.tpl
-features/cc/htdocs/templates/tr_recorded.tpl templates/cc/tr_recorded.tpl
+features/cc/templates/admincc.tpl templates/cc/admincc.tpl
+features/cc/templates/app.tpl templates/cc/app.tpl
+features/cc/templates/createcc.tpl templates/cc/createcc.tpl
+features/cc/templates/help.tpl templates/cc/help.tpl
+features/cc/templates/history.tpl templates/cc/history.tpl
+features/cc/templates/index.tpl templates/cc/index.tpl
+features/cc/templates/internal.tpl templates/cc/internal.tpl
+features/cc/templates/login.tpl templates/cc/login.tpl
+features/cc/templates/menu.tpl templates/cc/menu.tpl
+features/cc/templates/newcc.tpl templates/cc/newcc.tpl
+features/cc/templates/page.tpl templates/cc/page.tpl
+features/cc/templates/registercc.tpl templates/cc/registercc.tpl
+features/cc/templates/registered.tpl templates/cc/registered.tpl
+features/cc/templates/tr_failed.tpl templates/cc/tr_failed.tpl
+features/cc/templates/tr_record.tpl templates/cc/tr_record.tpl
+features/cc/templates/tr_recorded.tpl templates/cc/tr_recorded.tpl
 
 sql-install:
 create table if not exists cc_cc ( seq int not null primary key auto_increment, id varchar(10) not null unique, cc_name varchar(20) not null, cc_description text, owner_id varchar(10), requires_approval char(1) not null, index ( id ), index ( cc_name(6) ));
