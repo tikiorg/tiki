@@ -9850,6 +9850,8 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   function update_page($pageName,$edit_data,$edit_comment, $edit_user, $edit_ip) 
   {
     global $smarty;
+    // Collect pages before modifying edit_data (see update of links below)
+    $pages = $this->get_pages($edit_data);
     $edit_data = addslashes($edit_data);
     $edit_comment = addslashes($edit_comment);
     if(!$this->page_exists($pageName)) return false;
@@ -9892,7 +9894,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     if(DB::isError($result)) $this->sql_error($query,$result);
     // Parse edit_data updating the list of links from this page
     $this->clear_links($pageName);
-    $pages = $this->get_pages($edit_data);
+    // Pages collected above
     foreach($pages as $page) {
       $this->replace_link($pageName,$page);
     }
