@@ -3,6 +3,7 @@
 require_once('tiki-setup.php');
 include_once('lib/blogs/bloglib.php');
 
+
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
@@ -56,7 +57,6 @@ if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
   if($user && $user==$blog_data["user"]) {
     $data["user"] = $user;
   } 
-  
   if($data["user"]!=$user || !$user) {
     if($tiki_p_blog_admin != 'y') {
       $smarty->assign('msg',tra("Permission denied you cannot edit this post"));
@@ -65,7 +65,6 @@ if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
     }
   }
   if(empty($data["data"])) $data["data"]=' ';
-
 
   $smarty->assign('data',$data["data"]);
   $smarty->assign('title',$data["title"]);

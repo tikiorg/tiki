@@ -1,6 +1,11 @@
 Version 1.7 -Eta Carinae-
 
-
+* [NEW] Weblogs: interface added to add images to a weblog post, this works
+  with the traditional editor or the brand-new WYSIWYG editor.
+* [NEW] Customizable heading (all the html before posts) for weblogs.
+* [NEW] You can control if individual weblogs accept comments
+* [NEW] Weblogs: blog posts can use titles if the blog is configured to
+  use titles.
 * [NEW] Weblogs: admin can select what columns to list in the blog listing,
   the blog owner can be listed as an avatar, link or text. Improved the look
   and fell of the blog listing.

@@ -70,9 +70,7 @@ will be able to edit/post images (you can only upload images to an existing post
 </td></tr>
 {/if}
 <tr><td class="editblogform">{tr}Data{/tr}</td><td class="editblogform">
-<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="60" wrap="virtual">
-{$data}
-</textarea>
+<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="60" wrap="virtual">{$data}</textarea>
 {if $wysiwyg eq 'y'}
 	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
 	<script type="text/javascript" src="lib/htmlarea/htmlarea-lang-en.js"></script>
@@ -99,7 +97,8 @@ will be able to edit/post images (you can only upload images to an existing post
 				<a class="link" href="tiki-view_blog_post_image.php?imgId={$post_images[ix].imgId}">{$post_images[ix].filename}</a> 
 			</td>
 			<td>
-				<small>{$post_images[ix].link|escape}</small>
+				<small>{$post_images[ix].link|escape}<br/>
+				{$post_images[ix].absolute}</small>
 			</td>
 			<td>
 				<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img border='0' src='img/icons/del.gif' /></a>

@@ -42,6 +42,9 @@ class BlogLib extends TikiLib {
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $imgId=$res['imgId'];
       $res['link']="<img src='tiki-view_blog_post_image.php?imgId=$imgId' border='0' alt='image' />";
+      $parts = parse_url($_SERVER['REQUEST_URI']);
+	  $path=str_replace('tiki-blog_post.php','tiki-view_blog_post_image.php',$parts['path']);
+      $res['absolute']=httpPrefix().$path."?imgId=$imgId";
       $ret[] = $res;
     }
     return $ret;
