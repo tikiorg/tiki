@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.27 2003-12-01 14:45:47 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.28 2003-12-02 05:03:35 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -21,7 +21,7 @@
 <div>
 <a href="javascript:show('tabcal',1);hide('tabnav',1);hide('tab',1);" class="caltabon">{tr}Calendars Panel{/tr}</a>
 <a href="javascript:hide('tabcal',1);show('tabnav',1);hide('tab',1);" class="caltab">{tr}Events Panel{/tr}</a>
-<a href="javascript:hide('tabcal',1);hide('tabnav',1);show('tab',1);" class="caltab">{tr}Hide Panels{/tr}</a>
+<a href="javascript:hide('tabcal',1);hide('tabnav',1);show('tab',1);" class="caltab">{tr}Hide{/tr}</a>
 </div>
 
 <form class="box" method="get" action="tiki-calendar.php" name="f">
@@ -73,7 +73,7 @@ onmouseover="this.style.textDecoration='underline';"
 <div>
 <a href="javascript:show('tabcal',1);hide('tabnav',1);hide('tab',1);" class="caltab">{tr}Calendars Panel{/tr}</a>
 <a href="javascript:hide('tabcal',1);show('tabnav',1);hide('tab',1);" class="caltabon">{tr}Events Panel{/tr}</a>
-<a href="javascript:hide('tabcal',1);hide('tabnav',1);show('tab',1);" class="caltab">{tr}Hide Panels{/tr}</a>
+<a href="javascript:hide('tabcal',1);hide('tabnav',1);show('tab',1);" class="caltab">{tr}Hide{/tr}</a>
 </div>
 
 <div class="tabnav">
@@ -252,15 +252,18 @@ onmouseover="this.style.textDecoration='underline';"
 <table cellpadding="0" cellspacing="0" border="0">
 <tr><td class="middle" nowrap="nowrap">
 {if $feature_jscalendar eq 'y'}
-<form action="#" method="get">
-<input type="text" id="todate" name="todate" value="" />
-<button type="reset" id="trigger">...</button>
+<form action="tiki-calendar.php" method="get" class="daterow">
+<img src="img/icons/calendar.gif" width="16" height="16" vspace="2" hspace="2" align="top"
+/><input type="hidden" id="todate" name="todate" value="{$focusdate}"><span style="font-weight:bold;cursor:pointer;" title="{tr}Date Selector{/tr}" id="datrigger">{$focusdate|tiki_short_date}</span>
+<input type="submit" name="action" value="{tr}Go{/tr}" class="linkbut">
 </form>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
 inputField  : "todate",      // ID of the input field
-ifFormat    : "%d-%m-%Y",    // the date format
-button      : "trigger"    // ID of the button
+ifFormat    : "%s",    // the date format
+displayArea : "datrigger",       // ID of the span where the date is to be shown
+daFormat    : "{$daformat}",  // format of the displayed date
+singleClick : true
 {literal} } );{/literal}
 </script>
 {else}
@@ -276,7 +279,7 @@ button      : "trigger"    // ID of the button
 {/if}
 </td>
 <td align="center" width="100%" class="middle">
-<div><b><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_long_date}">{tr}today{/tr} {$now|tiki_long_date}</a></b></div>
+<div><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_long_date}"><b>{tr}today{/tr}:</b> {$now|tiki_long_date}</a></div>
 </td>
 <td align="right" class="middle" nowrap="nowrap" width="90">
 <a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" align="top" /></a><a 
@@ -317,11 +320,12 @@ href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}
 </span>
 .<br />
 </div>
+<div class="calcontent">
 {section name=items loop=$cell[w][d].items}
 {assign var=over value=$cell[w][d].items[items].over}
 <div class="Cal{$cell[w][d].items[items].type}" id="cal{$cell[w][d].items[items].type}" {if $cell[w][d].items[items].calitemId eq $calitemId and $calitemId|string_format:"%d" ne 0}style="padding:5px;border:1px solid black;"{/if}>
 <span class="calprio{$cell[w][d].items[items].prio}" style="padding-left:3px;padding-right:3px;"><a href="{$cell[w][d].items[items].url}" {popup fullhtml="1" text="$over"} 
-class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}</a></span>
+class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..."}</a></span>
 {if $cell[w][d].items[items].web}
 <a href="{$cell[w][d].items[items].web}" target="_other" class="calweb" title="{$cell[w][d].items[items].web}">w</a>
 {/if}
@@ -332,6 +336,7 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:22:".."|default:"..."}<
 {/section}
 </tr>
 {/section}
+</div>
 {/if}
 </table>
 
