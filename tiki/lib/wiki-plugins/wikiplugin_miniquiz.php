@@ -1,4 +1,12 @@
 <?php
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_miniquiz.php,v 1.2 2004-04-19 07:31:45 mose Exp $
+/*
+DEV NOTE
+that plugin is not finished !! -- mose
+\todo put message in an external file or source
+\todo use smarty templates rather than hardcode html
+*/
+
 // Includes a miniquiz form
 
 // fields to use in trackers to prepare miniquiz
@@ -20,11 +28,9 @@ function rcmp($a, $b) { return mt_rand(-1, 1); }
 function shuf(&$ar) { srand((double) microtime() * 10000000); uksort($ar, "rcmp"); }
 
 function wikiplugin_miniquiz($data, $params) {
-	global $tikilib, $userlib, $dbTiki, $user, $group;
-	//var_dump($_REQUEST);
+	global $tikilib, $user, $group;
 	extract ($params);
 
-	
 	if (!isset($trackerId)) {
 		return ("<b>missing tracker ID for plugin TRACKER</b><br/>");
 	}
@@ -36,65 +42,100 @@ function wikiplugin_miniquiz($data, $params) {
 			$field = $val['name'];
 			$info["$id"]["$field"] = $val['value'];
 		}
+		$info["$id"]['qresult'] = 'n';
 	}
 	$back = '';
 	
 	if ($tracker) {
-	
+		$success_mess[] = "Wow !";
+		$success_mess[] = "Congratulation !";
+		$success_mess[] = "Success !";
+		$success_mess[] = "Excellent !";
+		$success_mess[] = "Superb !";
+		$success_mess[] = "Bravo !";
+		$success_mess[] = "Well done !";
+		$success_comment[] = "You found it right !";
+		$success_comment[] = "This is correct.";
+		$success_comment[] = "You are the best !";
+		$success_comment[] = "The answer is correct.";
+		$success_comment[] = "Your cleverness is amazing.";
+		$success_comment[] = "Go on that way !";
+		$failed_mess[] = "Wrong !";
+		$failed_mess[] = "Too bad !";
+		$failed_mess[] = "No luck !";
+		$failed_mess[] = "Failed !";
+		$failed_mess[] = "Argh !";
+		$failed_mess[] = "Missed !";
+		$failed_comment[] = "Please think before clicking.";
+		$failed_comment[] = "Did you read the question before reading the answer ?";
+		$failed_comment[] = "Try again.";
+		$failed_comment[] = "Get another chance.";
+		$failed_comment[] = "Think carefully that time.";
+		$failed_comment[] = "Use the force !";
+		$failed_comment[] = "You should concentrate a little more.";
+
 		if (isset($_REQUEST['quizit']) and $_REQUEST['quizit']) {
-			foreach ($_REQUEST['track'] as $fld=>$val) {
-				$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val, 'type' => 1);
-			}
-			if (isset($_REQUEST['authorfieldid']) and $_REQUEST['authorfieldid']) {
-				$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorfieldid'], 'value' => $user, 'type' => 'u', 'options' => 1);
-			}
-			if (isset($_REQUEST['authorgroupfieldid']) and $_REQUEST['authorgroupfieldid']) {
-				$ins_fields["data"][] = array('fieldId' => $_REQUEST['authorgroupfieldid'], 'value' => $group, 'type' => 'g', 'options' => 1);
-			}
-			$rid = $trklib->replace_item($trackerId,0,$ins_fields,$tracker['newItemStatus']);
-			return "<div>$data</div>";
-		}
-		$optional = array();
-		if (isset($fields)) {
-			$outf = array();
-			$fl = split(":",$fields);
-			
-			foreach ($fl as $l) {
-				if (substr($l,0,1) == '-') {
-					$l = substr($l,1);
-					$optional[] = $l;
+			if (isset($_REQUEST['answer']) and is_array($_REQUEST['answer'])) {
+				$out.= "[MiniQuiz]\n";
+				$out.= "trackerId : $trackerId\n";
+				$out.= "user : $user\n";
+				$out.= "group : $group\n";
+				foreach ($_REQUEST['answer'] as $q=>$a) {
+					if ($info["$q"]['Answer'] == $a) {
+						$out.= "$q : $a --> yeah !\n";
+						$info["$q"]['qresult'] = 'y';
+					} else {
+						$out.= "$q : $a\n";
+						$info["$q"]['qresult'] = 'b';
+					}
 				}
-				$outf[] = $l;
+				$bout = "^$data^";
+				$bout.= "~pp~$out~/pp~";
+				//return $bout;
+			} else{
+				$back.= "!Please fill the quiz!\n";
 			}
 		}
-			
-		$back.= '~np~<form><input type="hidden" name="quizit" value="1" />';
+
+		$back.= '~np~<form method="post"><input type="hidden" name="quizit" value="1" />';
 		$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 		$back.= '<div class="titlebar"><a href="tiki-view_tracker.php?trackerId='.$trackerId.'">'.$tracker["name"].'</a></div>';
 		$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
 		$back.= '<style>.q label { background-color: none; cursor: normal; border: 1px solid white; padding: 0 5px 0 5px; }';
 		$back.= '.q label:hover { background-color: #efe0d0; cursor: pointer; border: 1px solid black; }</style>';
-		
-		$back.= '<div class="wikitext">';
+	
 		foreach ($info as $id=>$item) {
 			if ($item['valid'] == 'y') {
 				$back.= '<div class="titlebar">'.$item['question'].'</div>';
-				$answers = array($item['Answer'],$item['option a'],$item['option b'],$item['option c']);
-				shuf($answers);
-				$back.= '<div class="wikitext">';
-				$i = 1;
-				foreach ($answers as $answer) {
-					$back.= '<div class="q"><input type="radio" id="answer'.$id.'_'.++$i.'" name="answer'.$id.'" value="'. htmlspecialchars($answer).'" /> ';
-					$back.= '<label for="answer'.$id.'_'.$i.'">'.$answer.'</label>';
-					$back.= '</div>';
+				if ($item['qresult'] == 'y') {
+					$back.= '<div class="wikitext" style="background-color:#ccffcc;">';
+					if (!isset($_POST["$id"])) {
+						$back.= '<b>'.$success_mess[array_rand($success_mess)].'</b> '. $success_comment[array_rand($success_comment)].'<br />';
+					}
+					$back.= 'The answer was: <b>'.$item['Answer'].'</b></div><br />';
+					$back.= '<input type="hidden" name="answer['.$id.']" value="'. htmlspecialchars($item['Answer']).'" />';
+					$back.= '<input type="hidden" name="'.$id.'" value="1" />';
+				} else {
+					if ($item['qresult'] == 'b') {
+						$back.= '<div class="wikitext" style="background-color:#ffcccc;">';
+						$back.= '<b>'.$failed_mess[array_rand($failed_mess)].'</b> '. $failed_comment[array_rand($failed_comment)].'</div>';
+					}
+					$answers = array($item['Answer'],$item['option a'],$item['option b'],$item['option c']);
+					shuf($answers);
+					$back.= '<div class="wikitext">';
+					$i = 1;
+					foreach ($answers as $aid=>$answer) {
+						$back.= '<div class="q"><input type="radio" id="answer'.$id.'_'.++$i.'" name="answer['.$id.']" value="'. htmlspecialchars($answer).'" /> ';
+						$back.= '<label for="answer'.$id.'_'.$i.'">'.$answer.'</label>';
+						$back.= '</div>';
+					}
+					$back.= '</div><br />';
+					$failed = true;
 				}
-				$back.= '</div><br />';
 			}
 		}
-		$back.= '<div class="titlebar">';
 
-		$back.= '</div>';
-		$back.= "<div><input type='reset' name='reset' value='Start Over' /><input type='submit' name='action' value='Finish' />";
+		$back.= "<br /><div><input type='reset' name='reset' value='Start Over' /><input type='submit' name='action' value='Finish' />";
 		$back.= '</div>';
 		$back.= '<br /><div><b>Students</b>: <a href="tiki-view_tracker.php?trackerId='.$trackerId.'&amp;new">Suggest a new question</a></div>';
 		
