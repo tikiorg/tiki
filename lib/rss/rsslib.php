@@ -115,7 +115,7 @@ class RSSLib extends TikiLib {
 		xml_set_character_data_handler($this->parser, "characterDataHandler");
 
 		if (!xml_parse($this->parser, $data, 1)) {
-			print ("Xml error: " . xml_error_string(xml_get_error_code($this->parser)). "<br />");
+			print ("Xml error: " . xml_error_string(xml_get_error_code($this->parser))."-".xml_get_current_line_number($this->parser). "<br />");
 
 			return $news;
 		}
@@ -148,6 +148,7 @@ class RSSLib extends TikiLib {
 
 		if ($info) {
 			$data = $this->httpRequest($info['url']);
+			$data = $this->rss_iconv($data);
 			$now = date("U");
 			$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
 			$result = $this->query($query,array($data,(int) $now, (int) $rssId));
