@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.85 2004-06-10 20:48:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.86 2004-06-11 13:57:25 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -129,6 +129,18 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
       if (isset($_REQUEST["save"])) {
         make_clean($description);
         if ($tikilib->page_exists($pagename)) {
+		if (feature_multilingual == 'y') {
+			$info = $tikilib->get_page_info($pagename);
+			if ($info['lang'] != $pageLang) {
+				include_once("lib/multilingual/multilinguallib.php");
+				 if ($multilinguallib->updatePageLang('wiki page', $info['page_id'], $pageLang, true)){
+					$pageLang = $info['lang'];
+					$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
+					$smarty->display("error.tpl");
+					die;
+				}
+			}
+  		}
           $tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang);
         } else {
           $tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang);
@@ -538,7 +550,16 @@ if(isset($_REQUEST["allowhtml"]) and $_REQUEST["allowhtml"] == "on") {
   $smarty->assign('allowhtml','n');
 }
 if (isset($_REQUEST["lang"])) {
-  $pageLang = $_REQUEST["lang"];
+  if ($feature_multilingual == 'y' && isset($info["lang"]) && $info['lang'] != $_REQUEST["lang"]) {
+	include_once("lib/multilingual/multilinguallib.php");
+	if ($multilinguallib->updatePageLang('wiki page', $info['page_id'], $_REQUEST["lang"], true)) {
+		$pageLang = $info['lang'];
+		$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
+		$smarty->display("error.tpl");
+		die;
+  	} else
+		$pageLang = $_REQUEST["lang"];
+  }
 } elseif (isset($info["lang"])) {
   $pageLang = $info["lang"];
 } else {
