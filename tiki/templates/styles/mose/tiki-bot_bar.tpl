@@ -10,12 +10,12 @@
 <a target="_blank" href="http://www.php.net"><img border="0" alt="php" src="img/php.png" width="62" height="22"/></a>
 </td>
 <td width="100%">
-<div align="center">
+<div align="center" style="color:#727272;font-size:80%;">
 <small>[ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; 
-[ {$num_queries} {tr}database queries used{/tr} ] &nbsp; 
+[ {$num_queries} {tr}database queries used{/tr} ]<br />
 [ GZIP {$gzip} ] &nbsp; 
 [ {tr}Server load{/tr}: {$server_load} ] &nbsp; 
-[ <a href="http://tikiwiki.org" class="link">TikiWiki</a> ]</small>
+[ <a href="http://tikiwiki.org" class="link" style="color:#727272;font-size:80%;">TikiWiki</a> ]</small>
 </div>
 </td>
 {if $rss_wiki eq 'y'}
