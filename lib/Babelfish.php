@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.5 2003-08-21 00:13:19 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.6 2003-09-22 00:49:14 lueders Exp $
 
 // Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -92,7 +92,7 @@ class Babelfish {
 	function links($lang_from = 'en') {
 		static $fishes = array(
 			'en' => array(	# English
-				'de' => '&Uuml;bersetzen&nbsp;Sie&nbsp;diese&nbsp;Seite&nbsp;in&nbsp;Deutschen',
+				'de' => '&Uuml;bersetzen&nbsp;Sie&nbsp;diese&nbsp;Seite&nbsp;ins&nbsp;Deutsche',
 				'es' => 'Traduzca&nbsp;esta&nbsp;paginaci&oacute;n&nbsp;a&nbsp;espa&ntilde;ol',
 				'fr' => 'Traduisez&nbsp;cette&nbsp;page&nbsp;en&nbsp;fran&ccedil;ais',
 				'it' => 'Tradurre&nbsp;questa&nbsp;pagina&nbsp;in&nbsp;italiano',
