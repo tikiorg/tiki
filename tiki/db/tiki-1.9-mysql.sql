@@ -502,6 +502,7 @@ CREATE TABLE tiki_blogs (
   add_date char(1) default NULL,
   add_poster char(1) default NULL,
   allow_comments char(1) default NULL,
+	show_avatar char(1) default NULL,
   PRIMARY KEY  (blogId),
   KEY title (title),
   KEY description (description(255)),
@@ -2136,8 +2137,8 @@ CREATE TABLE tiki_modules (
   PRIMARY KEY  (name)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
-INSERT INTO tiki_modules (name,position,ord,cache_time) VALUES ('login_box','r',1,0);
-INSERT INTO tiki_modules (name,position,ord,cache_time) VALUES ('application_menu','l',1,0);
+INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
+INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('application_menu','l',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 # --------------------------------------------------------
 
 #
@@ -2956,7 +2957,7 @@ CREATE TABLE tiki_tracker_fields (
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,
   isSearchable char(1) default NULL,
-  isPublic char(1) default NULL,
+  isPublic char(1) NOT NULL default 'y',
   PRIMARY KEY  (fieldId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3727,6 +3728,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_stats', 'Can view site stats', 'basic', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_survey_stats', 'Can view survey stats', 'basic', 'surveys');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers', 'Can view trackers', 'basic', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_pending', 'Can view trackers pending items', 'editors', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_user_results', 'Can view user quiz results', 'editors', 'quizzes');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_chart', 'Can vote', 'basic', 'charts');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_comments', 'Can vote comments', 'registered', 'comments');
@@ -3742,6 +3744,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_tracks', 'Can view jukebox tracklist', 'registered', 'jukebox');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_upload', 'Can upload new jukebox tracks', 'registered', 'jukebox');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_admin', 'Can admin the jukebox system', 'admin', 'jukebox');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_jukebox_genres', 'Can admin the jukebox genres', 'admin', 'jukebox');
 
 # --------------------------------------------------------
 
