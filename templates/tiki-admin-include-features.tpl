@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.16 2003-08-19 00:15:26 franck Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.17 2003-08-31 20:55:31 mose Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with {tr} which means translate...
@@ -379,9 +379,13 @@
 
         <td>&nbsp;</td>
 
-{* add next option to 2nd column here *}
-        <td class="form"><td>
-        <td></td>
+        <td class="form">
+					{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Calendar" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Calendar{/tr}">{/if}
+					{tr}Tiki Calendar{/tr}
+					{if $feature_help eq 'y'}</a>{/if}
+					:</td>
+				<td><input type="checkbox" name="feature_calendar"
+					{if $feature_calendar eq 'y'}checked="checked"{/if}/></td>
 
       </tr>
 
