@@ -1,6 +1,8 @@
 <a class="pagetitle" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{$chart_info.title}</a><br/>
+{if $chart_info.hits > 0}
 <small>{tr}viewed{/tr} {$chart_info.hits} {tr}times{/tr}</small>
 <br/><br/>
+{/if}
 {if strlen($chart_info.description)}
 {$chart_info.description}<br/><br/><br/>
 {/if}
@@ -9,7 +11,7 @@
 <a href="tiki-admin_chart_items.php?chartId={$smarty.request.chartId}"><img src='img/icons/ico_olist.gif' border='0' alt='{tr}edit items{/tr}' title='{tr}edit items{/tr}' /></a>
 {/if}
 <a href="tiki-charts.php"><img src='img/icons/ico_table.gif' border='0' alt='{tr}list charts{/tr}' title='{tr}list charts{/tr}' /></a>
-<a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}"><img border='0' src='img/icons/today.gif' alt='{tr}last chart{/tr}' title='{tr}lat chart{/tr}' /></a>
+<a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}"><img border='0' src='img/icons/today.gif' alt='{tr}last chart{/tr}' title='{tr}last chart{/tr}' /></a>
 {if $chart_info.frequency > 0}
     <br/>
 	{if $prevPeriod > 0}
@@ -94,6 +96,7 @@
 <td>
 <form id='selit' method="post" action="tiki-view_chart_item.php">
 <select name="itemId" onChange="javascript:document.getElementById('selit').submit();">
+<option value="">{tr}Select something to vote on{/tr}</option>
 {section name=ix loop=$all_items}
 <option value="{$all_items[ix].itemId}">{$all_items[ix].title}</option>
 {/section}
@@ -101,14 +104,4 @@
 </form>
 </td>
 </tr>
-<!--
-<tr>
-<td>
-<form method="post" action="tiki-suggest_chart_item.php">
-<input type="hidden" name="itemId" value="0" />
-<input type="submit" name="suggest" value="{tr}suggest a new item{/tr}" />
-</form>
-</td>
-</tr>
--->
 </table>
