@@ -29,7 +29,6 @@ print('<head>');
 //update_channel_ratio($channelId);
 if(isset($_REQUEST["channelId"])) {
   $messages = $tikilib->get_messages($_REQUEST["channelId"],$lastMessage,$_REQUEST["enterTime"]); 
-  
   if(count($messages)>0) {
     print("<script>");
     foreach ($messages as $msg) {
@@ -44,7 +43,7 @@ if(isset($_REQUEST["channelId"])) {
         //$com = "top.document.frames[0].document.write('".$prmsg."');";
         $com = "top.chatdata.document.write('".$prmsg."');";
         //$com="top.document.frames[0].document.write('hey')";
-        if($msg["messageId"]>$lastMessage) $lastMessage=$msg["messageId"];
+        if($msg["messageId"]>$_SESSION["lastMessage"]) $_SESSION["lastMessage"]=$msg["messageId"];
         //print("alert('$com');");
         print($com);
         //print("top.document.frames[0].document.write('\n');");
@@ -52,7 +51,7 @@ if(isset($_REQUEST["channelId"])) {
     }
     print("top.chatdata.scrollTo(0,100000)");
     print("</script>");
-    session_register("lastMessage");
+    //session_register("lastMessage");
   }
 }
 
