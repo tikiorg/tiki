@@ -104,7 +104,9 @@ class StructLib extends TikiLib {
 	function s_remove_page($page_ref_id, $delete) {
 		// Now recursively remove
 
-		$query = "select `page_ref_id`, ts.`page_id`, `pageName` from `tiki_structures` as ts, `tiki_pages` as tp where tp.`page_id`=ts.`page_id` and `parent_id`=?";
+		$query = "select `page_ref_id`, ts.`page_id`, `pageName` ";
+    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+    $query .= "where tp.`page_id`=ts.`page_id` and `parent_id`=?";
 		$result = $this->query($query,array($page_ref_id));
 
 		while ($res = $result->fetchRow()) {

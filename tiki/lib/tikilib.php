@@ -2533,23 +2533,32 @@ function remove_all_versions($page, $comment = '') {
 		$action,$page,(int) $t,'admin',$_SERVER["REMOTE_ADDR"],$comment
 		) );
     $this->remove_object('wiki page', $page);
-    $this->remove_from_structure($page);
+    
+    //Get a list of structure references for this page
+    $query  = "select `page_ref_id` ";
+    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+	  $query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
+    $result = $this->query($query, array( $page ) );
+    while ($res = $result->fetchRow()) {
+      $this->remove_from_structure($res["page_ref_id"]);
+    }
     return true;
 }
 
 /*shared*/
-function remove_from_structure($page) {
+function remove_from_structure($page_ref_id) {
     // Now recursively remove
-    $query = "select `page` from `tiki_structures`
-	where `parent`=?";
-    $result = $this->query($query, array( $page ) );
+    $query  = "select `page_ref_id`";
+    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
+	  $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=?";
+    $result = $this->query($query, array( $page_ref_id ) );
 
     while ($res = $result->fetchRow()) {
-	$this->remove_from_structure($res["page"]);
+	    $this->remove_from_structure($res["page_ref_id"]);
     }
 
-    $query = "delete from `tiki_structures` where `page`=?";
-    $result = $this->query($query, array( $page ) );
+    $query = "delete from `tiki_structures` where `page_ref_id`=?";
+    $result = $this->query($query, array( $page_ref_id ) );
     return true;
 }
 
