@@ -31,9 +31,9 @@ require_once('tiki-pagesetup.php');
 // for example lock/unlock
 if(isset($_REQUEST["action"])) {
   if($_REQUEST["action"]=='lock') {
-    $tikilib->lock_page($page);
+    $wikilib->lock_page($page);
   } elseif ($_REQUEST["action"]=='unlock') {
-    $tikilib->unlock_page($page);
+    $wikilib->unlock_page($page);
   }  
 }
 

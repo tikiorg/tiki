@@ -67,7 +67,88 @@ class HistLib extends TikiLib {
     return $ret;
   }
   
+  // Returns information about a specific version of a page
+  function get_version($page, $version)
+  {
+    $page = addslashes($page);
+    $query = "select * from tiki_history where pageName='$page' and version=$version";
+    $result = $this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
   
+  // Returns all the versions for this page
+  // without the data itself
+  function get_page_history($page)
+  {
+    $page = addslashes($page);
+    $query = "select pageName, description, version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aux = Array();
+      $aux["version"] = $res["version"];
+      $aux["lastModif"] = $res["lastModif"];
+      $aux["user"] = $res["user"];
+      $aux["ip"] = $res["ip"];
+      $aux["data"] = $res["data"];
+      $aux["pageName"] = $res["pageName"];
+      $aux["description"] = $res["description"];
+      $aux["comment"] = $res["comment"];
+      //$aux["percent"] = levenshtein($res["data"],$actual);
+      $ret[]=$aux;
+    }
+    return $ret;
+  }
+  
+  function version_exists($pageName, $version)
+  {
+    $pageName = addslashes($pageName);
+    $query = "select pageName from tiki_history where pageName = '$pageName' and version='$version'";
+    $result = $this->query($query);
+    return $result->numRows();
+  }
+  
+  // This function get the last changes from pages from the last $days days
+  // if days is 0 this gets all the registers
+  // function parameters modified by ramiro_v on 11/03/2002
+  function get_last_changes($days, $offset=0, $limit=-1, $sort_mode = 'lastModif_desc', $findwhat='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+  // section added by ramiro_v on 11/03/2002 begins here
+    if($findwhat == '') {
+      $where=" where 1";
+    } else {
+      $where=" where pageName like '%" . $findwhat . "%' or user like '%" . $findwhat . "%' or comment like '%" . $findwhat . "%'";
+    }
+  // section added by ramiro_v on 11/03/2002 ends here
+
+    if($days) {
+      $toTime = mktime(23,59,59,date("m"),date("d"),date("Y"));
+      $fromTime = $toTime - (24*60*60*$days);
+      $where = $where . " and lastModif>=$fromTime and lastModif<=$toTime";
+    }
+
+    $query = "select action, lastModif, user, ip, pageName,comment from tiki_actionlog " . $where . " order by $sort_mode limit $offset,$limit";
+    $query_cant = "select count(*) from tiki_actionlog " . $where;
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array(); $r=Array();
+    while($res=$result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $r["action"] = $res["action"];
+      $r["lastModif"] = $res["lastModif"];
+      $r["user"] = $res["user"];
+      $r["ip"] = $res["ip"];
+      $r["pageName"] = $res["pageName"];
+      $r["comment"] = $res["comment"];
+      $ret[]=$r;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+
 
   
 }

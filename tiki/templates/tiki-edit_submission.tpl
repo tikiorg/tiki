@@ -87,6 +87,7 @@
 {assign var=area_name value="subbody"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
+</tr>
 <tr><td class="formcolor">{tr}Body{/tr}</td><td class="formcolor">
 <b>{tr}Use ...page... to sepparate pages in a multi-page article{/tr}</b><br/>
 <textarea class="wikiedit" id='subbody' name="body" rows="25" cols="80" wrap="virtual">{$body}</textarea></td></tr>

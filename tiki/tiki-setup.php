@@ -168,7 +168,6 @@ class timer
 $tiki_timer = new timer();
 $tiki_timer->start();
 
-
 include_once("tiki-setup_base.php");
 //print("profile: include tiki-setup_base:".$tiki_timer->elapsed()."<br/>");
 

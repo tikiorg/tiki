@@ -103,7 +103,7 @@
 {if $gal_info.show_dl eq 'y'}
 	<td style="text-align:right;" width="5%" class="listfilesheading"><a class="llistfileslink" href="tiki-list_file_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}Dls{/tr}</a></td>
 {/if}
-<td class="listfilesheading">Actions</td>
+<td width="8%" class="listfilesheading">Actions</td>
 </tr>
 
 
@@ -200,8 +200,4 @@
 </div>
 {if $feature_file_galleries_comments eq 'y'}
 {include file=comments.tpl}
-{/if}
-{if $tiki_p_admin eq 'y'}
-<br/><br/>
-<a href="tiki-admin.php?page=fgal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 {/if}

@@ -1,6 +1,9 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/structures/structlib.php');
+include_once('lib/wiki/wikilib.php');
+
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -38,9 +41,9 @@ require_once('tiki-pagesetup.php');
 if($tiki_p_admin_wiki == 'y') {
 if(isset($_REQUEST["action"])) {
   if($_REQUEST["action"]=='lock') {
-    $tikilib->lock_page($page);
+    $wikilib->lock_page($page);
   } elseif ($_REQUEST["action"]=='unlock') {
-    $tikilib->unlock_page($page);
+    $wikilib->unlock_page($page);
   }  
 }
 }

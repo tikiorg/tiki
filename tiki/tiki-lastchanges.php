@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/wiki/histlib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -61,7 +62,7 @@ $smarty->assign_by_ref('offset',$offset);
 // Get a list of last changes to the Wiki database
 $more=0;
 // the following line has been modified by ramiro_v on 11/03/2002
-$lastchanges = $tikilib->get_last_changes($days,$offset,$maxRecords,$sort_mode,$findwhat);
+$lastchanges = $histlib->get_last_changes($days,$offset,$maxRecords,$sort_mode,$findwhat);
 // next line added by ramiro_v on 11/03/2002 
 $smarty->assign_by_ref('cant_records',$lastchanges["cant"]);
 

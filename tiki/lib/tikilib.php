@@ -1936,74 +1936,6 @@ class TikiLib {
     return $res;
   }
 
-  function tag_exists($tag)
-  {
-    $query = "select distinct tagName from tiki_tags where tagName = '$tag'";
-    $result = $this->query($query);
-    return $result->numRows($result);
-  }
-
-  function remove_tag($tagname)
-  {
-    $query = "delete from tiki_tags where tagName='$tagname'";
-    $result = $this->query($query);
-    $action = "removed tag: $tagname";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
-    $result = $this->query($query);
-    return true;
-  }
-
-  function get_tags()
-  {
-    $query = "select distinct tagName from tiki_tags";
-    $result = $this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res["tagName"];
-    }
-    return $ret;
-  }
-
-  // This function can be used to store the set of actual pages in the "tags"
-  // table preserving the state of the wiki under a tag name.
-  function create_tag($tagname,$comment='')
-  {
-    $tagname = addslashes($tagname);
-    $comment = addslashes($comment);
-    $query = "select * from tiki_pages";
-    $result=$this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query = "replace into tiki_tags(tagName,pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
-                values('$tagname','".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."','".$res["description"]."')";
-      $result2=$this->query($query);
-    }
-    $action = "created tag: $tagname";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','$comment')";
-    $result = $this->query($query);
-    return true;
-  }
-
-  // This funcion recovers the state of the wiki using a tagName from the
-  // tags table
-  function restore_tag($tagname)
-  {
-    $query = "update tiki_pages set cache_timestamp=0";
-    $this->query($query);
-    $query = "select * from tiki_tags where tagName='$tagname'";
-    $result=$this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $query = "replace into tiki_pages(pageName,hits,data,lastModif,comment,version,user,ip,flag,description)
-                values('".$res["pageName"]."',".$res["hits"].",'".addslashes($res["data"])."',".$res["lastModif"].",'".$res["comment"]."',".$res["version"].",'".$res["user"]."','".$res["ip"]."','".$res["flag"]."','".$res["description"]."')";
-      $result2=$this->query($query);
-    }
-    $action = "recovered tag: $tagname";
-    $t = date("U");
-    $query = "insert into tiki_actionlog(action,pageName,lastModif,user,ip,comment) values('$action','HomePage',$t,'admin','".$_SERVER["REMOTE_ADDR"]."','')";
-    $result = $this->query($query);
-    return true;
-  }
 
   // This funcion return the $limit most accessed pages
   // it returns pageName and hits for each page
@@ -2514,110 +2446,8 @@ class TikiLib {
     return false;
   }
 
-  // Like pages are pages that share a word in common with the current page
-  function get_like_pages($page)
-  {
-    preg_match_all("/([A-Z])([a-z]+)/",$page,$words);
-    // Add support to ((x)) in either strict or full modes
-    preg_match_all("/(([A-Za-z]|[\x80-\xFF])+)/",$page,$words2);
-    $words=array_unique(array_merge($words[0], $words2[0]));
-    $exps = Array();
-    foreach($words as $word) {
-      $exps[] = "pageName like '%$word%'";
-    }
-    $exp = implode(" or ",$exps);
-    $query = "select pageName from tiki_pages where $exp";
-    $result = $this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res["pageName"];
-    }
-    return $ret;
-  }
-
-  // Returns information about a specific version of a page
-  function get_version($page, $version)
-  {
-    $page = addslashes($page);
-    $query = "select * from tiki_history where pageName='$page' and version=$version";
-    $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    return $res;
-  }
-
-  // Returns all the versions for this page
-  // without the data itself
-  function get_page_history($page)
-  {
-    $page = addslashes($page);
-    $query = "select pageName, description, version, lastModif, user, ip, data, comment from tiki_history where pageName='$page' order by version desc";
-    $result = $this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux = Array();
-      $aux["version"] = $res["version"];
-      $aux["lastModif"] = $res["lastModif"];
-      $aux["user"] = $res["user"];
-      $aux["ip"] = $res["ip"];
-      $aux["data"] = $res["data"];
-      $aux["pageName"] = $res["pageName"];
-      $aux["description"] = $res["description"];
-      $aux["comment"] = $res["comment"];
-      //$aux["percent"] = levenshtein($res["data"],$actual);
-      $ret[]=$aux;
-    }
-    return $ret;
-  }
-
-  function is_locked($page)
-  {
-    $page = addslashes($page);
-    $query = "select flag from tiki_pages where pageName='$page'";
-    $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    if($res["flag"]=='L') return true;
-    return false;
-  }
-
-  function lock_page($page)
-  {
-    global $user;
-    $page = addslashes($page);
-    $query = "update tiki_pages set flag='L' where pageName='$page'";
-    $result = $this->query($query);
-    if(isset($user)) {
-    	$query = "update tiki_pages set user='$user' where pageName='$page'";
-    	$result = $this->query($query);
-    }
-    return true;
-  }
-
-  function unlock_page($page)
-  {
-    $page = addslashes($page);
-    $query = "update tiki_pages set flag='' where pageName='$page'";
-    $result = $this->query($query);
-    return true;
-  }
-  
-  
-
-  // Returns backlinks for a given page
-  function get_backlinks($page)
-  {
-    $query = "select fromPage from tiki_links where toPage = '$page'";
-    $result = $this->query($query);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $aux["fromPage"] = $res["fromPage"];
-      $ret[] = $aux;
-    }
-    return $ret;
-  }
-
-  // tikilib.php a Library to access the Tiki's Data Model
   // This implements all the functions needed to use Tiki
-  function page_exists($pageName)
+  /*shared*/ function page_exists($pageName)
   {
     $pageName = addslashes($pageName);
     $query = "select pageName from tiki_pages where pageName = '$pageName'";
@@ -2635,14 +2465,7 @@ class TikiLib {
     if(!$res["description"]) $res["description"]=tra('no description');
     return $res["description"];
   }
-
-  function version_exists($pageName, $version)
-  {
-    $pageName = addslashes($pageName);
-    $query = "select pageName from tiki_history where pageName = '$pageName' and version='$version'";
-    $result = $this->query($query);
-    return $result->numRows();
-  }
+ 
 
   function add_hit($pageName) {
     $pageName = addslashes($pageName);
@@ -2765,17 +2588,12 @@ class TikiLib {
     global $structlib;
     global $user;
 
-	
-
 	// Process pre_handlers here
 	foreach($this->pre_handlers as $handler) {
 	  $data = $handler($data);
 	}
 	
-
-	
     $preparsed=Array();
-    
     
     preg_match_all("/\~pp\~((.|\n)*?)\~\/pp\~/",$data,$preparse);
     foreach(array_unique($preparse[1]) as $pp) {
@@ -3492,7 +3310,6 @@ class TikiLib {
     return $data;
   }
 
-
   
 
 
@@ -3693,46 +3510,7 @@ class TikiLib {
     }
   }
 
-  // This function get the last changes from pages from the last $days days
-  // if days is 0 this gets all the registers
-  // function parameters modified by ramiro_v on 11/03/2002
-  function get_last_changes($days, $offset=0, $limit=-1, $sort_mode = 'lastModif_desc', $findwhat='')
-  {
-    $sort_mode = str_replace("_"," ",$sort_mode);
-  // section added by ramiro_v on 11/03/2002 begins here
-    if($findwhat == '') {
-      $where=" where 1";
-    } else {
-      $where=" where pageName like '%" . $findwhat . "%' or user like '%" . $findwhat . "%' or comment like '%" . $findwhat . "%'";
-    }
-  // section added by ramiro_v on 11/03/2002 ends here
-
-    if($days) {
-      $toTime = mktime(23,59,59,date("m"),date("d"),date("Y"));
-      $fromTime = $toTime - (24*60*60*$days);
-      $where = $where . " and lastModif>=$fromTime and lastModif<=$toTime";
-    }
-
-    $query = "select action, lastModif, user, ip, pageName,comment from tiki_actionlog " . $where . " order by $sort_mode limit $offset,$limit";
-    $query_cant = "select count(*) from tiki_actionlog " . $where;
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
-    $ret = Array(); $r=Array();
-    while($res=$result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $r["action"] = $res["action"];
-      $r["lastModif"] = $res["lastModif"];
-      $r["user"] = $res["user"];
-      $r["ip"] = $res["ip"];
-      $r["pageName"] = $res["pageName"];
-      $r["comment"] = $res["comment"];
-      $ret[]=$r;
-    }
-    $retval = Array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
-  }
-
+  
   # TODO move all of these date/time functions to a static class: TikiDate
 
   function get_timezone_list($use_default = false) {
@@ -4247,5 +4025,4 @@ if(!function_exists('file_get_contents')) {
 	  return $retval;
 	}
 }
-
 ?>

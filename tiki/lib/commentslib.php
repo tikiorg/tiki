@@ -1,5 +1,4 @@
 <?php
-
 // A library to handle comments on object (notes, articles, etc)
 // This is just a test
 class Comments extends TikiLib {
@@ -766,7 +765,7 @@ class Comments extends TikiLib {
      global $tikilib;
      
      if($feature_forum_parse == 'y') {
-       return $tikilib->parse_data($data);
+       return $this->parse_data($data);
      }
 
      // Cookies

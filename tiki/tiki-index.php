@@ -113,7 +113,7 @@ if(
    ) {
 if(isset($_REQUEST["action"])) {
   if($_REQUEST["action"]=='lock') {
-    $tikilib->lock_page($page);
+    $wikilib->lock_page($page);
   }  
 }
 }
@@ -125,7 +125,7 @@ if(
    ) {
 if(isset($_REQUEST["action"])) {
   if ($_REQUEST["action"]=='unlock') {
-    $tikilib->unlock_page($page);
+    $wikilib->unlock_page($page);
   }  
 }
 }

@@ -186,6 +186,13 @@ a moderator approves it.{/tr}</small>
     	</td>
     </tr>
     {/if}
+{if $feature_forum_parse eq 'y'}    
+    <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+{assign var=area_name value="editpost"}
+{include file=tiki-edit_help_tool.tpl}
+</td>
+</tr>
+{/if}
     <tr>
       <td class="forumform">{tr}Comment{/tr}</td>
       <td class="forumform"><textarea id='editpost' name="comments_data" rows="8" cols="60">{$comment_data}</textarea></td>

@@ -57,14 +57,14 @@ if(isset($_REQUEST["delete"]) && isset($_REQUEST["hist"])) {
 $smarty->assign('source',0);
 if(isset($_REQUEST['source'])) {
   $smarty->assign('source',$_REQUEST['source']);
-  $version = $tikilib->get_version($page,$_REQUEST["source"]);
+  $version = $histlib->get_version($page,$_REQUEST["source"]);
   $smarty->assign('sourcev',nl2br(htmlentities($version["data"])));  
 }
 
 // If we have to include a preview please show it
 $smarty->assign('preview',false);
 if(isset($_REQUEST["preview"])) {
-  $version = $tikilib->get_version($page,$_REQUEST["preview"]);
+  $version = $histlib->get_version($page,$_REQUEST["preview"]);
   $version["data"] = $tikilib->parse_data($version["data"]);
   if($version) {
     $smarty->assign_by_ref('preview',$version);
@@ -74,7 +74,7 @@ if(isset($_REQUEST["preview"])) {
 
 $smarty->assign('diff2','n');
 if(isset($_REQUEST["diff2"])) {
-  $diff = $tikilib->get_version($page,$_REQUEST["diff2"]);
+  $diff = $histlib->get_version($page,$_REQUEST["diff2"]);
   $info = $tikilib->get_page_info($page);
   $html = $tikilib->diff2($diff["data"],$info["data"]);
   $smarty->assign('diffdata',$html);
@@ -85,7 +85,7 @@ if(isset($_REQUEST["diff2"])) {
 // We are going to change this to "compare" instead of diff
 $smarty->assign('diff',false);
 if(isset($_REQUEST["diff"])) {
-  $diff = $tikilib->get_version($page,$_REQUEST["diff"]);
+  $diff = $histlib->get_version($page,$_REQUEST["diff"]);
   $diff["data"] = $tikilib->parse_data($diff["data"]);
   $smarty->assign_by_ref('diff',$diff["data"]);
   $info = $tikilib->get_page_info($page);
@@ -97,7 +97,7 @@ if(isset($_REQUEST["diff"])) {
 $info = $tikilib->get_page_info($page);
 $smarty->assign_by_ref('info',$info);
 
-$history = $tikilib->get_page_history($page);
+$history = $histlib->get_page_history($page);
 $smarty->assign_by_ref('history',$history);
 
 // Display the template
