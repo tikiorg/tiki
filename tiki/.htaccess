@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/.htaccess,v 1.1 2003/05/01 18:06:50 rossta Exp $
+# $Header: /cvsroot/tikiwiki/tiki/.htaccess,v 1.2 2003/05/02 15:12:36 rossta Exp $
 
 <FilesMatch "\.(bak|inc|lib|sh|sql|tpl)$">
 	order deny,allow
@@ -99,5 +99,5 @@
 
 	# todo add support for all characters allowed in a Wiki name
 	# make sure this is the last rule!
-	RewriteRule	/([A-Za-z0-9]+)(.*)$	/tiki-index.php?page=$1$2 [L]
+	RewriteRule	/([A-Za-z0-9]+)$	/tiki-index.php?page=$1 [L]
 </IfModule>
