@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.23 2003-10-22 16:28:07 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.24 2003-10-22 19:58:48 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.23 2003-10-22 16:28:07 dheltzel Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.24 2003-10-22 19:58:48 dheltzel Exp $
 session_start();
 
 // Define and load Smarty components
@@ -549,25 +549,32 @@ if ($noadmin) {
 }
 
 //Load Profiles
-$profiles = array();
-$h = opendir('db/profiles/');
+// the profiles are only mysql-safe at this time, so make other DB's only show the default, which is empty
+if ($db_tiki == "mysql") {
+	$profiles = array();
+	$h = opendir('db/profiles/');
 
-while ($file = readdir($h)) {
-	if (strstr($file, '.prf')) {
-		// Assign the filename of the profile to the name field
-		$prof1 = array("name" => $file);
-		// Open the profile and pull out the description from the first line
-		$fp = fopen("db/profiles/$file", "r");
-		$desc = substr(fgets($fp,40),2);
-		fclose($fp);
-		$prof1["desc"] = $desc;
-		// Assign the record to the profile array
-		$profiles[] = $prof1;
+	while ($file = readdir($h)) {
+		if (strstr($file, '.prf')) {
+			// Assign the filename of the profile to the name field
+			$prof1 = array("name" => $file);
+			// Open the profile and pull out the description from the first line
+			$fp = fopen("db/profiles/$file", "r");
+			$desc = substr(fgets($fp,40),2);
+			fclose($fp);
+			$prof1["desc"] = $desc;
+			// Assign the record to the profile array
+			$profiles[] = $prof1;
+		}
 	}
-}
 
-closedir ($h);
-sort($profiles);
+	closedir ($h);
+	sort($profiles);
+} else {
+	$prof1 = array("name" => "_default.prf");
+	$prof1["desc"] = "Default installation profile";
+	$profiles[] = $prof1;
+}
 $smarty->assign('profiles', $profiles);
 
 //Load SQL scripts
