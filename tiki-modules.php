@@ -13,7 +13,6 @@ if($user != 'admin') {
     $user_groups[]=$grp["groupName"];	
   }
 }
-
 if($user_assigned_modules=='y' && $tiki_p_configure_modules =='y' && $user && $usermoduleslib->user_has_assigned_modules($user)) {
   $left_modules = $usermoduleslib->get_assigned_modules_user($user,'l');
   $right_modules = $usermoduleslib->get_assigned_modules_user($user,'r');
@@ -21,6 +20,7 @@ if($user_assigned_modules=='y' && $tiki_p_configure_modules =='y' && $user && $u
   $left_modules = $tikilib->get_assigned_modules('l');
   $right_modules = $tikilib->get_assigned_modules('r');
 }
+//var_dump($left_modules);
 for($i=0;$i<count($left_modules);$i++) {
     $r=&$left_modules[$i];
     
@@ -156,8 +156,27 @@ for($i=0;$i<count($right_modules);$i++) {
     }
 }
 
+//
+// ATTENTION: Quick hack: remove modules not assigned to Anonymous group
+//            if unregistered user here... (I'll send details to list soon)
+if ($user)
+{
+  $smarty->assign_by_ref('right_modules',$right_modules);
+  $smarty->assign_by_ref('left_modules',$left_modules);
+}
+else
+{
+  $rm = array();
+  foreach ($right_modules as $r)
+    if (strstr($r["module_groups"], "Anonymous"))
+      $rm[] = $r;
 
-$smarty->assign_by_ref('right_modules',$right_modules);
-$smarty->assign_by_ref('left_modules',$left_modules);
+  $lm = array();
+  foreach ($left_modules as $r) 
+    if (strstr($r["module_groups"], "Anonymous"))
+      $lm[] = $r;
 
+  $smarty->assign_by_ref('right_modules',$rm);
+  $smarty->assign_by_ref('left_modules',$lm);
+}
 ?>
