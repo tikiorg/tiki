@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.49 2004-04-27 18:06:59 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.50 2004-04-30 14:34:38 sylvieg Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -61,25 +61,25 @@
 {/if}
 <!--<a class="link" href="javascript:insertAt('editwiki',"''text here''");">i</a>-->
 {if $feature_wiki_description eq 'y'}
-<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
+<tr class="formcolor"><td>{tr}Description{/tr}:</td><td><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td></tr>
 {/if}
 <tr class="formcolor"><td>{tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
 {include file=tiki-edit_help_tool.tpl}
 </td>
 <td>
-<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
+<textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}">{$pagedata|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td></tr>
 {if $feature_wiki_footnotes eq 'y'}
 {if $user}
-<tr class="formcolor"><td>{tr}Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td>
+<tr class="formcolor"><td>{tr}Footnotes{/tr}:</td><td><textarea name="footnote" rows="8" cols="80">{$footnote|escape}</textarea></td></tr>
 {/if}
 {/if}
 
 {if $page ne 'SandBox'}
-<tr class="formcolor"><td>{tr}Comment{/tr}:</td><td><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td>
+<tr class="formcolor"><td>{tr}Comment{/tr}:</td><td><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {/if}
 {if $wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
@@ -88,13 +88,13 @@
 <tr class="formcolor"><td>{tr}Year:{/tr}</td><td><input size="4" class="wikitext" type="text" name="copyrightYear" value="{$copyrightYear|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Authors:{/tr}</td><td><input size="40" class="wikitext" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td></tr>
 </table>
-</td>
+</td></tr>
 {/if}
 {if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
-<tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td>
+<tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 {if $wiki_spellcheck eq 'y'}
-<tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
+<tr class="formcolor"><td>{tr}Spellcheck{/tr}: </td><td><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 
 <tr class="formcolor">
@@ -141,11 +141,11 @@
 </td></tr>
 {/if}
 
-<input type="hidden" name="page" value="{$page|escape}" />
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="hidden" name="page" value="{$page|escape}" />
+<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td></tr>
 
 {if $wiki_feature_copyrights  eq 'y'}
-<tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="tiki-index.php?page={$wikiLicensePage}">{tr}{$wikiLicensePage}{/tr}</a></td>
+<tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="tiki-index.php?page={$wikiLicensePage}">{tr}{$wikiLicensePage}{/tr}</a></td></tr>
 {if $wikiSubmitNotice neq ""}
 <tr class="formcolor"><td>{tr}Important{/tr}:</td><td><b>{tr}{$wikiSubmitNotice}{/tr}</b></td>
 {/if}
