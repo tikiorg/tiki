@@ -1,6 +1,26 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.6 2003-08-01 10:31:09 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.7 2003-08-15 04:16:30 dgdaniels Exp $ *}
 
-<a class="pagetitle" href="tiki-admin_drawings.php">{tr}Edit drawings{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=DrawingsDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}admin Drawings{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-admin_drawings.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Drawings tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+<br /><br />
 
 {if $preview eq 'y'}
 <div align="center">
