@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.97 2004-06-07 17:08:18 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.98 2004-06-07 19:43:44 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -24,6 +24,7 @@ if(!isset($_SESSION["thedate"])) {
 } else {
     $thedate = $_SESSION["thedate"];
 }
+
 if (isset($_REQUEST["page_id"])) {
 	$_REQUEST["page"] = $tikilib->get_page_name_from_id($_REQUEST["page_id"]);
 }
@@ -138,6 +139,13 @@ if($tiki_p_view != 'y') {
     } 
     $smarty->display("error.tpl");
     die;  
+}
+
+// Get translated page
+if ($feature_multilingual == 'y') {
+	include_once("lib/multilingual/multilinguallib.php");
+	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
+	$smarty->assign('trads', $trads);
 }
 
 // BreadCrumbNavigation here
