@@ -22,10 +22,10 @@
 
 {if $tiki_p_create_tracker_items eq 'y'}
 <h3>{tr}Insert new item{/tr}</h3>
-<table class="normal">
+<table>
 {section name=ix loop=$ins_fields}
-<tr><td class="formcolor">{$ins_fields[ix].name}</td>
-<td class="formcolor">
+<tr><td>{$ins_fields[ix].name}</td>
+<td>
 {if $ins_fields[ix].type eq 'u'}
 <select name="ins_{$ins_fields[ix].name}">
 <option value="">{tr}None{/tr}</option>
@@ -67,7 +67,7 @@
 </td>
 </tr>
 {/section}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
@@ -75,10 +75,10 @@
 <h3>{tr}Tracker Items{/tr}</h3>
 <form action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
-<table class="normal">
+<table>
 <tr><td class="heading" colspan="2">{tr}Filters{/tr}</td></tr>
-<tr><td class="formcolor">{tr}Status{/tr}</td>
-<td class="formcolor">
+<tr><td>{tr}Status{/tr}</td>
+<td>
 <select name="status">
 <option value="" {if $status eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 <option value="o" {if $status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
@@ -90,10 +90,10 @@
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'f'}
 {if $fields[ix].type ne 'i'}
-<tr><td class="formcolor">{$fields[ix].name}</td>
+<tr><td>{$fields[ix].name}</td>
 {/if}
 {if $fields[ix].type ne 'i'}
-<td class="formcolor">
+<td>
 {/if}
 {if $fields[ix].type eq 't' or $fields[ix].type eq 'a'}
 <input type="text" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
@@ -135,28 +135,28 @@
 {/if}
 {/if}
 {/section}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="filter" value="{tr}filter{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="filter" value="{tr}filter{/tr}" /></td></tr>
 </table>
 </form>
 
 
 <br/>
 
-<table class="normal">
+<table>
 <tr>
 {if $tracker_info.showStatus eq 'y'}
 <td class="heading">&nbsp;</td>
 {/if}
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y'}
-<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if $fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq $fields[x].name|escape:'url'|cat:'_desc'}{$fields[x].name|escape:"url"}_asc{else}{$fields[x].name|escape:"url"}_desc{/if}">{$fields[ix].name}</a></td>
+<td class="heading"><a href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if $fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq $fields[x].name|escape:'url'|cat:'_desc'}{$fields[x].name|escape:"url"}_asc{else}{$fields[x].name|escape:"url"}_desc{/if}">{$fields[ix].name}</a></td>
 {/if}
 {/section}
 {if $tracker_info.showCreated eq 'y'}
-<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></td>
+<td class="heading"><a href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}created{/tr}</a></td>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></td>
+<td class="heading"><a href="tiki-view_tracker.php?status={$status}&amp;find={$find}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].value}{/if}{/section}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></td>
 {/if}
 {if $tracker_info.useComments eq 'y'}
 <td class="heading">{tr}coms{/tr}</td>
@@ -187,9 +187,9 @@
 {/if}
 {if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}</a>{/if}
 {if $tiki_p_admin_trackers eq 'y'}
- [<a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
+ [<a href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this tracker?{/tr}')" 
-title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" hspace="8" /></a>]
+title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>]
 {/if}
 </td>
 {else}

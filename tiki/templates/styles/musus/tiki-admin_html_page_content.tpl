@@ -1,8 +1,5 @@
 <a class="pagetitle" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}">{tr}admin HTML page dynamic zones{/tr}</a>
 
-
-
-
 <br/>
 <h2>{tr}Page{/tr}: {$pageName}</h2><br/><br/>
 <a class="linkbut" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
@@ -14,25 +11,25 @@
 <form action="tiki-admin_html_page_content.php" method="post">
 <input type="hidden" name="pageName" value="{$pageName|escape}" />
 <input type="hidden" name="zone" value="{$zone|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Zone{/tr}:</td><td class="formcolor">{$zone}</td></tr>
-<tr><td class="formcolor">{tr}Content{/tr}:</td><td class="formcolor">
+<table>
+<tr><td>{tr}Zone{/tr}:</td><td>{$zone}</td></tr>
+<tr><td>{tr}Content{/tr}:</td><td>
 {if $type eq 'ta'}
 <textarea rows="5" cols="60" name="content">{$content|escape}</textarea>
 {else}
 <input type="text" name="content" value="{$content|escape}" />
 {/if}
 </td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 {/if}
 
 <h2>{tr}Dynamic zones{/tr}</h2>
-<div  align="center">
+<div align="center">
 <table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
+<tr><td>{tr}Find{/tr}</td>
+   <td>
    <form method="get" action="tiki-admin_html_page_content.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -45,41 +42,41 @@
 <form action="tiki-admin_html_page_content.php" method="post">
 <input type="hidden" name="pageName" value="{$pageName|escape}" />
 <input type="hidden" name="zone" value="{$zone|escape}" />
-<table class="normal">
+<table>
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}zone{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'content_desc'}content_asc{else}content_desc{/if}">{tr}content{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<th><a href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}zone{/tr}</a></th>
+<th><a href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'content_desc'}content_asc{else}content_desc{/if}">{tr}content{/tr}</a></th>
+<th>{tr}action{/tr}</th>
 </tr>
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
-<tr>
-<td class="odd">{$channels[user].zone}</td>
-<!--<td class="odd">{$channels[user].content|truncate:250:"(...)":true}</td>-->
-<td class="odd">
+<tr class="odd">
+<td>{$channels[user].zone}</td>
+<!--<td>{$channels[user].content|truncate:250:"(...)":true}</td>-->
+<td>
 {if $channels[user].type eq 'ta'}
 <textarea name="{$channels[user].zone|escape}" cols="20" rows="4">{$channels[user].content|escape}</textarea>
 {else}
 <input type="text" name="{$channels[user].zone|escape}" value="{$channels[user].content|escape}" />
 {/if}
 </td>
-<td class="odd">
-   <a class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">{tr}edit{/tr}</a>
+<td>
+   <a href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {else}
-<tr>
-<td class="even">{$channels[user].zone}</td>
-<!--<td class="even">{$channels[user].content|truncate:250:"(...)":true}</td>-->
-<td class="even">
+<tr class="even">
+<td>{$channels[user].zone}</td>
+<!--<td>{$channels[user].content|truncate:250:"(...)":true}</td>-->
+<td>
 {if $channels[user].type eq 'ta'}
 <textarea name="{$channels[user].zone|escape}" cols="20" rows="4">{$channels[user].content|escape}</textarea>
 {else}
 <input type="text" name="{$channels[user].zone|escape}" value="{$channels[user].content|escape}" />
 {/if}
 </td>
-<td class="even">
-   <a class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">{tr}edit{/tr}</a>
+<td>
+   <a href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}"><img alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 </td>
 </tr>
 {/if}
@@ -98,14 +95,12 @@
 &nbsp;[<a class="prevnext" href="tiki-admin_html_page_content.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
-<br/>
+<br />
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-admin_html_page_content.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-
 </div>
 </div>
-

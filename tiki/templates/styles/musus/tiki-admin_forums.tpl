@@ -24,15 +24,15 @@
 <h2>{tr}Create New Forum{/tr}</h2>
 {/if}
 {if $individual eq 'y'}
-<a class="link" href="tiki-objectpermissions.php?objectName=forum%20{$name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$galleryId}">{tr}There are individual permissions set for this forum{/tr}</a>
+<a href="tiki-objectpermissions.php?objectName=forum%20{$name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$galleryId}">{tr}There are individual permissions set for this forum{/tr}</a>
 {/if}
 <form action="tiki-admin_forums.php" method="post">
 <input type="hidden" name="forumId" value="{$forumId|escape}" />
-<table class="normal">
-<tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
-<tr><td class="formcolor">{tr}Show description{/tr}:</td><td class="formcolor"><input type="checkbox" name="show_description" {if $show_description eq 'y'}checked="checked"{/if} /></td></tr>
-<tr><td class="formcolor">{tr}Prevent flooding{/tr}:</td><td class="formcolor"><input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} /> 
+<table>
+<tr><td>{tr}Name{/tr}:</td><td><input type="text" name="name" value="{$name|escape}" /></td></tr>
+<tr><td>{tr}Description{/tr}:</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
+<tr><td>{tr}Show description{/tr}:</td><td><input type="checkbox" name="show_description" {if $show_description eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td>{tr}Prevent flooding{/tr}:</td><td><input type="checkbox" name="controlFlood" {if $controlFlood eq 'y'}checked="checked"{/if} /> 
 {tr}Minimum time between posts{/tr}: 
 <select name="floodInterval">
 <option value="15" {if $floodInterval eq 15}selected="selected"{/if}>15 {tr}secs{/tr}</option>
@@ -41,8 +41,8 @@
 <option value="120" {if $floodInterval eq 120}selected="selected"{/if}>2 {tr}mins{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Topics per page{/tr}:</td><td class="formcolor"><input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Section{/tr}:</td><td class="formcolor">
+<tr><td>{tr}Topics per page{/tr}:</td><td><input type="text" name="topicsPerPage" value="{$topicsPerPage|escape}" /></td></tr>
+<tr><td>{tr}Section{/tr}:</td><td>
 <select name="section">
 <option value="" {if $section eq ""}selected="selected"{/if}>{tr}None{/tr}</option>
 <option value="__new__"}>{tr}Create new{/tr}</option>
@@ -52,14 +52,14 @@
 </select>
 <input name="new_section" type="text" />
 </td></tr>
-<tr><td class="formcolor">{tr}Moderator user{/tr}:</td><td class="formcolor">
+<tr><td>{tr}Moderator user{/tr}:</td><td>
 <select name="moderator">
 {section name=ix loop=$users}
 <option value="{$users[ix]|escape}" {if $moderator eq $users[ix]}selected="selected"{/if}>{$users[ix]}</option>
 {/section}
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Moderator group{/tr}:</td><td class="formcolor">
+<tr><td>{tr}Moderator group{/tr}:</td><td>
 <select name="moderator_group">
 <option value="" {if $moderator_group eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 {section name=ix loop=$groups}
@@ -67,17 +67,17 @@
 {/section}
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Password protected{/tr}</td><td class="formcolor">
+<tr><td>{tr}Password protected{/tr}</td><td>
 <select name="forum_use_password">
 <option value="n" {if $forum_use_password eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
 <option value="t" {if $forum_use_password eq 't'}selected="selected"{/if}>{tr}Topics only{/tr}</option>
 <option value="a" {if $forum_use_password eq 'a'}selected="selected"{/if}>{tr}All posts{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Forum password{/tr}</td><td class="formcolor"><input type="text" name="forum_password" value="{$forum_password|escape}" /></td></tr>
+<tr><td>{tr}Forum password{/tr}</td><td><input type="text" name="forum_password" value="{$forum_password|escape}" /></td></tr>
 
 {include file=categorize.tpl}
-<tr><td class="formcolor">{tr}Default ordering for topics{/tr}:</td><td class="formcolor">
+<tr><td>{tr}Default ordering for topics{/tr}:</td><td>
 <select name="topicOrdering">
 <option value="commentDate_desc" {if $topicOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date (desc){/tr}</option>
 <option value="average_desc" {if $topicOrdering eq 'average_desc'}selected="selected"{/if}>{tr}Score (desc){/tr}</option>
@@ -88,7 +88,7 @@
 <option value="title_asc" {if $topicOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor">{tr}Default ordering for threads{/tr}:</td><td class="formcolor">
+<tr><td>{tr}Default ordering for threads{/tr}:</td><td>
 <select name="threadOrdering">
 <option value="commentDate_desc" {if $threadOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date (desc){/tr}</option>
 <option value="commentDate_asc" {if $threadOrdering eq 'commentDate_asc'}selected="selected"{/if}>{tr}Date (asc){/tr}</option>
@@ -97,8 +97,8 @@
 <option value="title_asc" {if $threadOrdering eq 'title_asc'}selected="selected"{/if}>{tr}Title (asc){/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor"><input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email{/tr}:</td><td class="formcolor"><input type="text" name="mail" value="{$mail|escape}" /></td></tr>
-<tr><td class="formcolor"><input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} /> {tr}Prune unreplied messages after{/tr}:</td><td class="formcolor">
+<tr><td><input type="checkbox" name="useMail" {if $useMail eq 'y'}checked="checked"{/if} /> {tr}Send this forums posts to this email{/tr}:</td><td><input type="text" name="mail" value="{$mail|escape}" /></td></tr>
+<tr><td><input type="checkbox" name="usePruneUnreplied" {if $usePruneUnreplied eq 'y'}checked="checked"{/if} /> {tr}Prune unreplied messages after{/tr}:</td><td>
 <select name="pruneUnrepliedAge">
 <option value="86400" {if $pruneUnrepliedAge eq 86400}selected="selected"{/if}>1 {tr}day{/tr}</option>
 <option value="172800" {if $pruneUnrepliedAge eq 172800}selected="selected"{/if}>2 {tr}days{/tr}</option>
@@ -110,7 +110,7 @@
 <option value="7776000" {if $pruneUnrepliedAge eq 7776000}selected="selected"{/if}>90 {tr}days{/tr}</option>
 </select>
 </td></tr>
-<tr><td class="formcolor"><input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if} /> {tr}Prune old messages after{/tr}:</td><td class="formcolor">
+<tr><td><input type="checkbox" name="usePruneOld" {if $usePruneOld eq 'y'}checked="checked"{/if} /> {tr}Prune old messages after{/tr}:</td><td>
 <select name="pruneMaxAge">
 <option value="86400" {if $pruneMaxAge eq 86400}selected="selected"{/if}>1 {tr}day{/tr}</option>
 <option value="172800" {if $pruneMaxAge eq 172800}selected="selected"{/if}>2 {tr}days{/tr}</option>
@@ -123,15 +123,15 @@
 </select>
 </td></tr>
 <tr>
-	<td class="formcolor">{tr}Topic list configuration{/tr}</td>
-	<td class="formcolor">
-		<table class="normal">
+	<td>{tr}Topic list configuration{/tr}</td>
+	<td>
+		<table>
 			<tr>
-				<td class="formcolor">{tr}Replies{/tr}</td>
-				<td class="formcolor">{tr}Reads{/tr}</td>
-				<td class="formcolor">{tr}Points{/tr}</td>
-				<td class="formcolor">{tr}Last post{/tr}</td>
-				<td class="formcolor">{tr}author{/tr}</td>
+				<td>{tr}Replies{/tr}</td>
+				<td>{tr}Reads{/tr}</td>
+				<td>{tr}Points{/tr}</td>
+				<td>{tr}Last post{/tr}</td>
+				<td>{tr}author{/tr}</td>
 			</tr>
 			<tr>
 				<td><input type="checkbox" name="topics_list_replies" {if $topics_list_replies eq 'y'}checked="checked"{/if} /></td>
@@ -144,12 +144,12 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Threads can be voted{/tr}</td>
-	<td class="formcolor"><input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if} /></td>
+	<td>{tr}Threads can be voted{/tr}</td>
+	<td><input type="checkbox" name="vote_threads" {if $vote_threads eq 'y'}checked="checked"{/if} /></td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Display last post titles{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Display last post titles{/tr}</td>
+	<td>
 		<select name="forum_last_n">
 			<option value="0" {if $forum_last_n eq 0}selected="selected"{/if}>{tr}no display{/tr}</option>
 			<option value="5" {if $forum_last_n eq 5}selected="selected"{/if}>5</option>
@@ -159,52 +159,52 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address{/tr}</td>
-	<td class="formcolor"><input type="text" name="outbound_address" size=30 value="{$outbound_address|escape}" /></td>
+	<td>{tr}Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address{/tr}</td>
+	<td><input type="text" name="outbound_address" size=30 value="{$outbound_address|escape}" /></td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Originating e-mail address for mails from this forum{/tr}</td>
-	<td class="formcolor"><input type="text" name="outbound_from" size=30 value="{$outbound_from|escape}" /></td>
+	<td>{tr}Originating e-mail address for mails from this forum{/tr}</td>
+	<td><input type="text" name="outbound_from" size=30 value="{$outbound_from|escape}" /></td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Add messages from this email to the forum{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Add messages from this email to the forum{/tr}</td>
+	<td>
 		<table>
 		<tr>
-			<td class="formcolor">{tr}POP3 server{/tr}:</td>
+			<td>{tr}POP3 server{/tr}:</td>
 			<td><input type="text" name="inbound_pop_server" value="{$inbound_pop_server|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}User{/tr}:</td>
+			<td>{tr}User{/tr}:</td>
 			<td><input type="text" name="inbound_pop_user" value="{$inbound_pop_user|escape}" /></td>
 		</tr>
 		<tr>
-			<td class="formcolor">{tr}Password{/tr}:</td>
+			<td>{tr}Password{/tr}:</td>
 			<td><input type="text" name="inbound_pop_password" value="{$inbound_pop_password|escape}" /></td>
 		</tr>
 		</table>
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Use topic smileys{/tr}</td>
-	<td class="formcolor"><input type="checkbox" name="topic_smileys" {if $topic_smileys eq 'y'}checked="checked"{/if} /></td>
+	<td>{tr}Use topic smileys{/tr}</td>
+	<td><input type="checkbox" name="topic_smileys" {if $topic_smileys eq 'y'}checked="checked"{/if} /></td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Show topic summary{/tr}</td>
-	<td class="formcolor"><input type="checkbox" name="topic_summary" {if $topic_summary eq 'y'}checked="checked"{/if} /></td>
+	<td>{tr}Show topic summary{/tr}</td>
+	<td><input type="checkbox" name="topic_summary" {if $topic_summary eq 'y'}checked="checked"{/if} /></td>
 </tr>
 
 <tr>
-	<td class="formcolor">{tr}User information display{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}User information display{/tr}</td>
+	<td>
 	<table >
 	<tr>
-		<td class="formcolor">{tr}avatar{/tr}</td>
-		<td class="formcolor">{tr}flag{/tr}</td>
-		<td class="formcolor">{tr}posts{/tr}</td>
-		<td class="formcolor">{tr}user level{/tr}</td>
-		<td class="formcolor">{tr}email{/tr}</td>
-		<td class="formcolor">{tr}online{/tr}</td>
+		<td>{tr}avatar{/tr}</td>
+		<td>{tr}flag{/tr}</td>
+		<td>{tr}posts{/tr}</td>
+		<td>{tr}user level{/tr}</td>
+		<td>{tr}email{/tr}</td>
+		<td>{tr}online{/tr}</td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" name="ui_avatar" {if $ui_avatar eq 'y'}checked="checked"{/if} /></td>
@@ -218,8 +218,8 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Approval type{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Approval type{/tr}</td>
+	<td>
 		<select name="approval_type">
 			<option value="all_posted" {if $approval_type eq 'all_posted'}selected="selected"{/if}>{tr}All posted{/tr}</option>
 			<option value="queue_anon" {if $approval_type eq 'queue_anon'}selected="selected"{/if}>{tr}Queue anonymous posts{/tr}</option>
@@ -228,8 +228,8 @@
 	</td>
 </tr>
 <tr>
-	<td class="formcolor">{tr}Attachments{/tr}</td>
-	<td class="formcolor">
+	<td>{tr}Attachments{/tr}</td>
+	<td>
 		<select name="att">
 			<option value="att_no" {if $att eq 'att_no'}selected="selected"{/if}>{tr}No attachments{/tr}</option>
 			<option value="att_all" {if $att eq 'att_all'}selected="selected"{/if}>{tr}Everybody can attach{/tr}</option>
@@ -258,14 +258,14 @@
 	</td>
 </tr>
 
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Forums{/tr}</h2>
 <div  align="center">
 <table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
+<tr><td>{tr}Find{/tr}</td>
+   <td>
    <form method="get" action="tiki-admin_forums.php">
      <input type="text" name="find" value="{$find|escape}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
@@ -274,22 +274,22 @@
    </td>
 </tr>
 </table>
-<table class="normal">
+<table>
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}coms{/tr}</a></td>
-<td class="heading">{tr}users{/tr}</td>
-<td class="heading">{tr}age{/tr}</td>
-<td class="heading">{tr}ppd{/tr}</td>
-<!--<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></td>-->
-<td class="heading"><a class="tableheading" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></td>
-<td class="heading">{tr}action{/tr}</td>
+<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}name{/tr}</a></th>
+<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}">{tr}topics{/tr}</a></th>
+<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}">{tr}coms{/tr}</a></th>
+<th>{tr}users{/tr}</th>
+<th>{tr}age{/tr}</th>
+<th>{tr}ppd{/tr}</th>
+<!--<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}last post{/tr}</a></th>-->
+<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}hits{/tr}</a></th>
+<th>{tr}action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="odd"><a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a></td>
+<td class="odd"><a href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a></td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].comments}</td>
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].users}</td>
@@ -299,9 +299,9 @@
 <td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 <td class="{cycle advance=false}">
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-   <a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
-   <a class="link" href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /></a>
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" 
+   <a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+   <a href="tiki-objectpermissions.php?objectName={tr}Forum{/tr}%20{$channels[user].name}&amp;objectType=forum&amp;permType=forums&amp;objectId={$channels[user].forumId}"><img border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key.gif" /></a>
+   &nbsp;&nbsp;<a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].forumId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this forum?{/tr}')" 
 title="{tr}Click here to delete this forum{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-view_forum_thread.tpl,v 1.1 2004-01-07 04:13:54 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-view_forum_thread.tpl,v 1.2 2004-01-09 15:02:33 musus Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -13,7 +13,7 @@
 a moderator approves it.{/tr}</small>
 </div>
 {/if}
-<a class="link" href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
+<a href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
 <div align="right">
 [{if $prev_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
 {if $next_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_next_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$next_topic}" class="link">{tr}next topic{/tr}</a>{/if}] 
@@ -25,7 +25,7 @@ a moderator approves it.{/tr}</small>
 {assign var="postclass" value="forumpost"}
 {/if}
 
-<table class="normal">
+<table>
 <tr>
   <td class="odd" >
   <div align="center">
@@ -85,11 +85,11 @@ a moderator approves it.{/tr}</small>
   <br/>
   {if count($thread_info.attachments) > 0}
 	{section name=ix loop=$thread_info.attachments}
-		<a class="link" href="tiki-download_forum_attachment.php?attId={$thread_info.attachments[ix].attId}">
+		<a href="tiki-download_forum_attachment.php?attId={$thread_info.attachments[ix].attId}">
 		<img border='0' src='img/icons/attachment.gif' alt='{tr}attachment{/tr}' />
 		{$thread_info.attachments[ix].filename} ({$thread_info.attachments[ix].filesize|kbsize})</a>
 		{if $tiki_p_admin_forum eq 'y'}
-			<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$thread_info.attachments[ix].attId}">[{tr}del{/tr}]</a>					
+			<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$thread_info.attachments[ix].attId}">[{tr}del{/tr}]</a>					
 		{/if}
 		<br/>
 	{/section}
@@ -122,11 +122,11 @@ a moderator approves it.{/tr}</small>
     <td style="font-size:8pt;">{tr}score{/tr}</b>: {$thread_info.points}</td>
     {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<td style="font-size:8pt;">
 	  <b>{tr}Vote{/tr}</b>: 
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
-	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
+	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
+	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=2&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">2</a>
+	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=3&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">3</a>
+	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=4&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">4</a>
+	  <a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=5&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">5</a>
   	  </td>
   	{/if}
   	{/if}
@@ -188,10 +188,10 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
     <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
-    <table class="normal">
+    <table>
     <tr>
-      <td class="formcolor">{tr}Title{/tr}</td>
-      <td class="formcolor"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
+      <td>{tr}Title{/tr}</td>
+      <td><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
     </tr>
     {if $forum_info.forum_use_password eq 'a'}
     <tr>
@@ -203,7 +203,7 @@ a moderator approves it.{/tr}</small>
     {/if}
     
 {if $feature_forum_parse eq 'y'}        
-    <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
+    <tr><td>{tr}Quicklinks{/tr}</td><td>
 {assign var=area_name value="editpost"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
@@ -211,28 +211,28 @@ a moderator approves it.{/tr}</small>
 {/if}
     {if $feature_smileys eq 'y'}
     <tr>
-      <td class="formcolor">{tr}Smileys{/tr}</td>
-      <td class="formcolor">{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl" area_name='editpost'}</td>
+      <td>{tr}Smileys{/tr}</td>
+      <td>{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl" area_name='editpost'}</td>
      </tr>
     {/if}
     <tr>
-      <td class="formcolor">{tr}Comment{/tr}<br/><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
-      <td class="formcolor"><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
+      <td>{tr}Comment{/tr}<br/><br />{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}</td>
+      <td><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td>
     </tr>
     {if ($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and $tiki_p_admin_form eq 'y') or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y')}
     <tr>
-	  <td class="formcolor">{tr}Attach file{/tr}</td>
-	  <td class="formcolor">
+	  <td>{tr}Attach file{/tr}</td>
+	  <td>
 	  	<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />
 	  </td>   
     </tr>
     {/if}
     <tr>
-      <td class="formcolor">{tr}Post{/tr}</td>
-      <td class="formcolor">
+      <td>{tr}Post{/tr}</td>
+      <td>
       <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
       <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
       <input type="button" name="comments_postComment" value="{tr}cancel{/tr}" onclick="hide('{$postclass}');"/></td>
@@ -266,7 +266,7 @@ a moderator approves it.{/tr}</small>
   <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />    
   <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />    
 
-  <table class="normal">
+  <table>
   <tr>
     <td class="heading">{tr}Comments{/tr} 
         <select name="comments_maxComments">
@@ -321,7 +321,7 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
 
 {if $tiki_p_admin_forum eq 'y'}
-<table class="normal">
+<table>
 	<tr>
 		<td colspan="3" class="heading">{tr}Moderator actions{/tr}</td>
 	</tr>
@@ -342,9 +342,9 @@ a moderator approves it.{/tr}</small>
 		</td>
 		<td style="text-align:right;" class="odd">
 			{if $reported > 0}
-				<small><a class="link" href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported:{/tr}{$reported}</a> | </small>
+				<small><a href="tiki-forums_reported.php?forumId={$forumId}">{tr}reported:{/tr}{$reported}</a> | </small>
 			{/if}
-			<small><a class="link" href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued:{/tr}{$queued}</a></small>
+			<small><a href="tiki-forum_queue.php?forumId={$forumId}">{tr}queued:{/tr}{$queued}</a></small>
 		</td>
 
 	</tr>
@@ -352,7 +352,7 @@ a moderator approves it.{/tr}</small>
 {/if}
 {/if}
 
-<table class="normal" >
+<table>
 <tr>
   <td class="heading">{tr}author{/tr}</td>
   <td class="heading">{tr}message{/tr}</td>
@@ -420,11 +420,11 @@ a moderator approves it.{/tr}</small>
   <br/>
   {if count($comments_coms[ix].attachments) > 0}
 	{section name=iz loop=$comments_coms[ix].attachments}
-		<a class="link" href="tiki-download_forum_attachment.php?attId={$comments_coms[ix].attachments[iz].attId}">
+		<a href="tiki-download_forum_attachment.php?attId={$comments_coms[ix].attachments[iz].attId}">
 		<img border='0' src='img/icons/attachment.gif' alt='{tr}attachment{/tr}' />
 		{$comments_coms[ix].attachments[iz].filename} ({$comments_coms[ix].attachments[iz].filesize|kbsize})</a>
 		{if $tiki_p_admin_forum eq 'y'}
-			<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comments_coms[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
+			<a href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_find={$smarty.request.topics_find}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;comments_offset={$smarty.request.topics_offset}&amp;comments_sort_mode={$smarty.request.topics_sort_mode}&amp;comments_threshold={$smarty.request.topics_threshold}&amp;comments_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;remove_attachment={$comments_coms[ix].attachments[iz].attId}">[{tr}del{/tr}]</a>					
 		{/if}
 		<br/>
 	{/section}
