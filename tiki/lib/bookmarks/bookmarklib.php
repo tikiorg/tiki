@@ -121,18 +121,11 @@ class BookmarkLib extends TikiLib {
 		if (strstr($info["url"], 'tiki-') || strstr($info["url"], 'messu-'))
 			return false;
 
-		@$fp = fopen($info["url"], "r");
+		$data=@$this->httprequest($info["url"]);
 
-		if (!$fp)
+		if (!$data)
 			return;
 
-		$data = '';
-
-		while (!feof($fp)) {
-			$data .= fread($fp, 4096);
-		}
-
-		fclose ($fp);
 		$now = date("U");
 		$query = "update `tiki_user_bookmarks_urls` set `lastUpdated`=?, `data`=? where `urlId`=?";
 		$result = $this->query($query,array((int) $now,$data,$urlId));
