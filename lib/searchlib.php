@@ -43,7 +43,8 @@ class SearchLib Extends TikiLib {
 	  $sql .= ', -1 AS relevance';
       $vwords = split(' ',$words);
       foreach ($vwords as $aword) {
-        $aword = $this->db->quote('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
+        //$aword = $this->db->quote('[[:<:]]' . strtoupper($aword) . '[[:>:]]');
+        $aword = $this->db->quote('.*'.strtoupper($aword).'.*');
         $sql2 .= ' AND (';
         for ($i = 0; $i < count($search_fields); ++$i) {
           if ($i)
