@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.9 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_rssmodules.php,v 1.10 2003-10-13 21:26:35 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,7 @@ if (isset($_REQUEST["view"])) {
 	$smarty->assign('preview', 'y');
 
 	$data = $rsslib->get_rss_module_content($_REQUEST["view"]);
-	$items = $rsslib->parse_rss_data($data);
+	$items = $rsslib->parse_rss_data($data, $_REQUEST["rssId"]);
 
 	$smarty->assign_by_ref('items', $items);
 }
@@ -44,30 +44,56 @@ if ($_REQUEST["rssId"]) {
 } else {
 	$info = array();
 
+  // default for new rss feed:
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["url"] = '';
-	$info["refresh"] = 15;
+	$info["refresh"] = 1;
+	$info["showTitle"] = 'n';
+	$info["showPubDate"] = 'n';
 }
 
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
 $smarty->assign('url', $info["url"]);
 $smarty->assign('refresh', $info["refresh"]);
+$smarty->assign('showTitle', $info["showTitle"]);
+$smarty->assign('showPubDate', $info["showPubDate"]);
 
 if (isset($_REQUEST["remove"])) {
 	$rsslib->remove_rss_module($_REQUEST["remove"]);
 }
 
 if (isset($_REQUEST["save"])) {
-	$rsslib->replace_rss_module($_REQUEST["rssId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"],
-		$_REQUEST["refresh"]);
+
+	if (isset($_REQUEST['showTitle']) == 'on') {
+		$smarty->assign('showTitle', 'y');
+		$info["showTitle"] = 'y';
+	}
+	else
+	{
+		$smarty->assign('showTitle', 'n');
+		$info["showTitle"] = 'n';
+	}
+	if (isset($_REQUEST['showPubDate']) == 'on') {
+		$smarty->assign('showPubDate', 'y');
+		$info["showPubDate"] = 'y';
+	}
+	else
+	{
+		$smarty->assign('showPubDate', 'n');
+		$info["showPubDate"] = 'n';
+	}
+
+	$rsslib->replace_rss_module($_REQUEST["rssId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["url"], $_REQUEST["refresh"], $info["showTitle"], $info["showPubDate"]);
 
 	$smarty->assign('rssId', 0);
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');
 	$smarty->assign('url', '');
 	$smarty->assign('refresh', 900);
+	$smarty->assign('showTitle', 'n');
+	$smarty->assign('showPubDate', 'n');
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

@@ -17,12 +17,14 @@ function smarty_function_rss($params, &$smarty)
        $max = 99;
     }
     $data = $rsslib->get_rss_module_content($id);
-    $items = $rsslib->parse_rss_data($data);
-    //print('<ul class="rss">');
+    $items = $rsslib->parse_rss_data($data, $id);
+		print('<ul style="margin-left: 0.7em;	padding-left: 0.7em;">');
     for($i=0;$i<count($items) && $i<$max;$i++) {
-       print('<li><a target="_blank" href="'.$items[$i]["link"].'" class="linkmenu">'.$items[$i]["title"].'</a></li>');
+       if ($items[$i]["title"] <> '') print('<li><a target="_blank" href="'.$items[$i]["link"].'" class="linkmenu">'.$items[$i]["title"].'</a>');
+       if ($items[$i]["pubdate"] <> '') print(' ('.$items[$i]["pubdate"].')');
+       print('</li>');
     }
-    //print('</ul>');
+    print('</ul>');
 }
 
 /* vim: set expandtab: */

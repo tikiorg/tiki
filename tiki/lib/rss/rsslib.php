@@ -39,19 +39,18 @@ class RSSLib extends TikiLib {
 		return $retval;
 	}
 
-	function replace_rss_module($rssId, $name, $description, $url, $refresh) {
-		//if($this->rss_module_name_exists($name)) return false;
-		// Check the name
+	function replace_rss_module($rssId, $name, $description, $url, $refresh, $showTitle, $showPubDate) {
+		//if($this->rss_module_name_exists($name)) return false; // TODO: Check the name
 		$refresh = 60 * $refresh;
 
 		if ($rssId) {
-			$query = "update `tiki_rss_modules` set `name`=?,`description`=?,`refresh`=?,`url`=? where `rssId`=?";
-			$bindvars=array($name,$description,$refresh,$url,$rssId);
+			$query = "update `tiki_rss_modules` set `name`=?,`description`=?,`refresh`=?,`url`=?,`showTitle`=?,`showPubDate`=? where `rssId`=?";
+			$bindvars=array($name,$description,$refresh,$url,$showTitle,$showPubDate,$rssId);
 		} else {
 			// was: replace into, no clue why.
-			$query = "insert into `tiki_rss_modules`(`name`,`description`,`url`,`refresh`,`content`,`lastUpdated`)
-                values(?,?,?,?,?,?)";
-			$bindvars=array($name,$description,$url,$refresh,'',1000000);
+			$query = "insert into `tiki_rss_modules`(`name`,`description`,`url`,`refresh`,`content`,`lastUpdated`,`showTitle`,`showPubDate`)
+                values(?,?,?,?,?,?,?,?)";
+			$bindvars=array($name,$description,$url,$refresh,'',1000000,$showTitle,$showPubDate);
 		}
 
 		$result = $this->query($query,$bindvars);
@@ -103,8 +102,10 @@ class RSSLib extends TikiLib {
 		}
 	}
 
-	function NewsFeed($data) {
+	function NewsFeed($data, $rssId) {
 		$news = array();
+
+		$showPubDate = $this->get_rss_showPubDate($rssId);
 
 		$this->buffer = '';
 		$this->flag = 0;
@@ -121,8 +122,13 @@ class RSSLib extends TikiLib {
 		}
 
 		xml_parser_free ($this->parser);
-		preg_match_all("/<title>(.*?)<\/title>/", $this->buffer, $titles);
-		preg_match_all("/<link>(.*?)<\/link>/", $this->buffer, $links);
+		preg_match_all("/<title>(.*?)<\/title>/i", $this->buffer, $titles);
+		preg_match_all("/<link>(.*?)<\/link>/i", $this->buffer, $links);
+
+		$pubdate = array();
+		preg_match_all("/<dc:date>(.*?)<\/dc:date>/i", $this->buffer, $pubdate);
+		if (count($pubdate[1])<1)				
+		preg_match_all("/<pubDate>(.*?)<\/pubDate>/i", $this->buffer, $pubdate);
 
 		for ($i = 0; $i < count($titles[1]); $i++) {
 			$anew["title"] = $titles[1][$i];
@@ -132,15 +138,19 @@ class RSSLib extends TikiLib {
 			} else {
 				$anew["link"] = '';
 			}
-
+			if ( isset($pubdate[1][$i]) && ($showPubDate == 'y') )
+			{
+				$anew["pubdate"] = $pubdate[1][$i];
+			} else {
+				$anew["pubdate"] = '';
+			}
 			$news[] = $anew;
 		}
-
 		return $news;
 	}
 
-	function parse_rss_data($rssdata) {
-		return $this->NewsFeed($rssdata);
+	function parse_rss_data($rssdata, $rssId) {
+		return $this->NewsFeed($rssdata, $rssId);
 	}
 
 	function refresh_rss_module($rssId) {
@@ -169,6 +179,20 @@ class RSSLib extends TikiLib {
 
 		$id = $this->getOne($query,array($name));
 		return $id;
+	}
+
+	function get_rss_showTitle($rssId) {
+		$query = "select `showTitle` from `tiki_rss_modules` where `rssId`=?";
+
+		$showTitle = $this->getOne($query,array($rssId));
+		return $showTitle;
+	}
+
+	function get_rss_showPubDate($rssId) {
+		$query = "select `showPubDate` from `tiki_rss_modules` where `rssId`=?";
+
+		$showPubDate = $this->getOne($query,array($rssId));
+		return $showPubDate;
 	}
 
 	function get_rss_module_content($rssId) {

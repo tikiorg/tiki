@@ -17,7 +17,7 @@ function smarty_function_rss($params, &$smarty)
        $max = 99;
     }
     $data = $rsslib->get_rss_module_content($id);
-    $items = $rsslib->parse_rss_data($data);
+    $items = $rsslib->parse_rss_data($data, $id);
     //print('<ul class="rss">');
     for($i=0;$i<count($items) && $i<$max;$i++) {
        print('<li><a target="_blank" href="'.$items[$i]["link"].'" class="linkmenu">'.$items[$i]["title"].'</a></li>');

@@ -361,9 +361,9 @@ $lang=Array(
 // "admin charts tpl" => "admin charts tpl", // ## CLOSE: Admin charts=>Admin Hitlisten
 // "ChatAdmin" => "ChatAdmin",
 // "ChatAdmin tpl" => "ChatAdmin tpl",
-// "admin content templates" => "admin content templates", // ## CLOSE: Admin content templates=>Admin Content-Templates
+"admin content templates" => "Admin Content-Templates",
 // "admin content templates tpl" => "admin content templates tpl", // ## CLOSE: Admin content templates=>Admin Content-Templates
-// "Edit this template:" => "Edit this template:",
+"Edit this template:" => "Dieses Template bearbeiten:",
 // "admin FortuneCookie" => "admin FortuneCookie",
 // "admin FortuneCookie tpl" => "admin FortuneCookie tpl",
 "admin Drawings" => "Admin Zeichnungen",
@@ -379,9 +379,9 @@ $lang=Array(
 "no display" => "keine Anzeige",
 // "Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address" => "Forward messages to this forum to this e-mail address, in a format that can be used for sending back to the inbound forum e-mail address",
 // "Originating e-mail address for mails from this forum" => "Originating e-mail address for mails from this forum",
-// "admin hotwords" => "admin hotwords", // ## CLOSE: Admin Hotwords=>Admin Hotwords
+"admin hotwords" => "Admin Hotwords",
 // "admin hotwords tpl" => "admin hotwords tpl", // ## CLOSE: Admin Hotwords=>Admin Hotwords
-// "aAdmin HTML page dynamic zones" => "aAdmin HTML page dynamic zones", // ## CLOSE: Admin HTML page dynamic zones=>Admin HTML Seite dynamische Bereiche
+// "admin HTML page dynamic zones" => "admin HTML page dynamic zones", // ## CLOSE: Admin HTML page dynamic zones=>Admin HTML Seite dynamische Bereiche
 // "admin HtmlPages" => "admin HtmlPages", // ## CLOSE: Admin HTML pages=>Admin HTML Seiten
 // "admin HtmlPages tpl" => "admin HtmlPages tpl",
 // "Edit this HTML page:" => "Edit this HTML page:", // ## CLOSE: Edit this HTML page=>Diese HTML Seite bearbeiten
@@ -413,23 +413,23 @@ $lang=Array(
 // "admin Email Notifications" => "admin Email Notifications", // ## CLOSE: Tiki email notification=>Tiki EMail Benachrichtigung
 // "admin notifications tpl" => "admin notifications tpl",
 // "Any wiki page is changed" => "Any wiki page is changed",
-// "admin polls" => "admin polls", // ## CLOSE: Admin Polls=>Admin Abstimmungen
+"admin polls" => "Admin Abstimmungen",
 // "admin polls tpl" => "admin polls tpl",
 "admin RSS modules" => "Admin RSS-Module",
 // "admin RSSmodules tpl" => "admin RSSmodules tpl",
-// "Edit this RSS module:" => "Edit this RSS module:", // ## CLOSE: Edit this user module:=>Dieses Benutzer-Modul bearbeiten:
+"Edit this RSS module:" => "Dieses RSS-Modul bearbeiten:",
 // "admin structures tpl" => "admin structures tpl", // ## CLOSE: Admin structures=>Admin Strukturen
 // "admin surveys tpl" => "admin surveys tpl", // ## CLOSE: admin surveys=>Admin Umfragen
-// "Edit this Survey:" => "Edit this Survey:", // ## CLOSE: edit this survey=>Diese Umfrage bearbeiten
-// "Create New Survey:" => "Create New Survey:",
+"Edit this Survey:" => "Diese Umfrage bearbeiten:",
+"Create New Survey:" => "Neue Umfrage erstellen:",
 // "admin topics tpl" => "admin topics tpl", // ## CLOSE: Admin Topics=>Admin-Themen
 // "admin Trackers tpl" => "admin Trackers tpl", // ## CLOSE: Admin trackers=>Admin Tracker
-// "admin groups" => "admin groups", // ## CLOSE: Admin groups=>Admin Gruppen
+"admin groups" => "Admin Gruppen",
 // "admin groups tpl" => "admin groups tpl", // ## CLOSE: Admin groups=>Admin Gruppen
-// "Add New Group" => "Add New Group", // ## CLOSE: Add a new group=>Eine neue Gruppe hinzuf&uuml;gen
-// "Edit this group:" => "Edit this group:", // ## CLOSE: Edit this Forum:=>Dieses Forum bearbeiten:
-// "Add new group" => "Add new group", // ## CLOSE: Add a new group=>Eine neue Gruppe hinzuf&uuml;gen
-// "admin users" => "admin users", // ## CLOSE: Admin users=>Admin Benutzer
+"Add New Group" => "Neue Gruppe hinzuf&uuml;gen",
+"Edit this group:" => "Diese Gruppe bearbeiten:",
+"Add new group" => "Neue Gruppe hinzuf&uuml;gen",
+"admin users" => "Admin Benutzer",
 // "admin users tpl" => "admin users tpl",
 "Never" => "Nie",
 "Edit Article" => "Artikel bearbeiten",
@@ -3494,5 +3494,8 @@ $lang=Array(
 "Allow search" => "Suchen erlauben",
 "Allow comments" => "Kommentare erlauben",
 "Blog heading" => "Blog Kopfbereich",
+"show feed title" => "Feed-Titel anzeigen",
+"show publish date" => "Ver&ouml;ffentlichungsdatum anzeigen",
+"show pubdate" => "Datum anzeigen",
 "###end###"=>"###end###");
 ?>
