@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.195 2004-05-05 00:12:58 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.196 2004-05-05 13:53:59 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4486,21 +4486,6 @@ CREATE TABLE tiki_hw_assignments (
   deleted tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (assignmentId),
   KEY dueDate (dueDate)
-) TYPE=MyISAM;
-
-DROP TABLE IF EXISTS hw_grading_queue;
-DROP TABLE IF EXISTS tiki_hw_grading_queue;
-CREATE TABLE tiki_hw_grading_queue (
-  id int(14) NOT NULL auto_increment,
-  status int(4) default NULL,
-  submissionDate int(14) default NULL,
-  userLogin varchar(40) NOT NULL default '',
-  userIp varchar(15) default NULL,
-  pageId int(14) default NULL,
-  pageDate int(14) default NULL,
-  pageVersion int(14) default NULL,
-  assignmentId int(14) default NULL,
-  PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS hw_grading_queue;
