@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.25 2003-10-28 14:20:45 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.26 2003-10-31 13:53:22 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.25 2003-10-28 14:20:45 redflo Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.26 2003-10-31 13:53:22 redflo Exp $
 session_start();
 
 // Define and load Smarty components
@@ -18,8 +18,12 @@ $commands = array();
 function process_sql_file($file,$db_tiki) {
 	global $dbTiki;
 
-	global $commands;
+	global $succcommands;
+	global $failedcommands;
 	global $smarty;
+	$succcommands=array();
+	$failedcommands=array();
+
 	$command = '';
 	$fp = fopen("db/$file", "r");
 
@@ -31,24 +35,51 @@ function process_sql_file($file,$db_tiki) {
 	  case "sybase":
 	    $statements=split("(\r|\n)go(\r|\n)",$command);
 	    break;
+	  case "oci8":
+	    $statements=preg_split("#;|(\n/\n)#",$command);
+	    break;
 	  default:
 	    $statements=split(";",$command);
 	    break;
 	}
+	$prestmt="";
+	$do_exec=true;
 	foreach ($statements as $statement) {
 	  //echo "executing $statement </br>";
-		$result = $dbTiki->Execute($statement);
+
+	  	switch ($db_tiki) {
+		  case "oci8":
+		    // we have to preserve the ";" in sqlplus programs (triggers)
+		    if (preg_match("/BEGIN/",$statement)) {
+		      $prestmt=$statement.";";
+		      $do_exec=false;
+		    }
+		    if (preg_match("/END/",$statement)) {
+		      $statement=$prestmt."\n".$statement.";";
+		      $do_exec=true;
+		    }
+
+		    if($do_exec) $result = $dbTiki->Execute($statement);
+		    break;
+		  default:
+		    $result = $dbTiki->Execute($statement);
+		    break;
+		}
 
 		if (!$result) {
+			$failedcommands[]=$statement."\n Message: ".$dbTiki->ErrorMsg()."\n\n";
+
 			//trigger_error("DB error:  " . $dbTiki->ErrorMsg(). " in query:<br/><pre>" . $command . "<pre/><br/>", E_USER_WARNING);
 		// Do not die at the moment. Wen need some better error checking here
 		//die;
 		} else {
-			$commands.=$statement;
+			$succcommands[]=$statement;
+
 		}
 	}
 
-	$smarty->assign('commands', $commands);
+	$smarty->assign_by_ref('succcommands', $succcommands);
+	$smarty->assign_by_ref('failedcommands', $failedcommands);
 }
 
 /*
