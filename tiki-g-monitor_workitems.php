@@ -54,7 +54,7 @@ if(isset($_REQUEST['filter_process'])&&$_REQUEST['filter_process']) {
 $all_acts  = $processMonitor->monitor_list_activities(0,-1,'name_desc','',$where);
 $smarty->assign_by_ref('all_acts',$all_acts["data"]);
 
-
+$sameurl_elements = Array('offset','sort_mode','where','find','filter_user','filter_activity','filter_process','filter_instance','processId','filter_process');
 $types = $processMonitor->monitor_list_activity_types();
 $smarty->assign_by_ref('types',$types);
 

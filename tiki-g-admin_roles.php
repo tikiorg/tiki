@@ -144,7 +144,7 @@ if(!$valid) {
 }
 $smarty->assign('errors',$errors);
 $smarty->assign('proc_info',$proc_info);
-
+$sameurl_elements = Array('offset','sort_mode','where','find','offset2','find2','sort_mode2','where2','processId');
 $smarty->assign('mid','tiki-g-admin_roles.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 ?>

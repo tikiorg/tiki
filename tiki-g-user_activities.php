@@ -51,7 +51,7 @@ $smarty->assign_by_ref('all_procs',$processes['data']);
 
 $section='workflow';
 include_once('tiki-section_options.php');
-
+$sameurl_elements = Array('offset','sort_mode','where','find','filter_isInteractive','filter_isAutoRouted','filter_activity','filter_type','processId','filter_process');
 
 $smarty->assign('mid','tiki-g-user_activities.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

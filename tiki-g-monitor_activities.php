@@ -58,7 +58,7 @@ $types = $processMonitor->monitor_list_activity_types();
 $smarty->assign_by_ref('types',$types);
 
 $smarty->assign('stats', $processMonitor->monitor_stats());
-
+$sameurl_elements = Array('offset','sort_mode','where','find','filter_isInteractive','filter_isAutoRouted','filter_activity','filter_type','processId','filter_process');
 
 $smarty->assign('mid','tiki-g-monitor_activities.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

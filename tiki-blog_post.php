@@ -198,6 +198,9 @@ if(count($blogs)==0) {
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
+
+$sameurl_elements = Array('offset','sort_mode','where','find','blogId','postId');
+
 $smarty->assign_by_ref('blogs',$blogs);
 $section='blogs';
 include_once('tiki-section_options.php');

@@ -100,6 +100,7 @@ $smarty->assign('stats', $processMonitor->monitor_stats());
 $all_statuses=Array('aborted','active','completed','exception');
 $smarty->assign('all_statuses',$all_statuses);
 
+$sameurl_elements = Array('offset','sort_mode','where','find','filter_user','filter_status','filter_act_status','filter_type','processId','filter_process','filter_owner','filter_activity');
 
 $smarty->assign('statuses', $processMonitor->monitor_list_statuses());
 $smarty->assign('users', $processMonitor->monitor_list_users());

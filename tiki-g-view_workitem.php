@@ -26,7 +26,7 @@ $smarty->assign_by_ref('wi',$wi);
 
 $smarty->assign('stats', $processMonitor->monitor_stats());
 
-
+$sameurl_elements = Array('offset','sort_mode','where','find','itemId');
 $smarty->assign('mid','tiki-g-view_workitem.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 

@@ -78,6 +78,7 @@ $smarty->assign('statuses',$all_statuses);
 $section='workflow';
 include_once('tiki-section_options.php');
 
+$sameurl_elements = Array('offset','sort_mode','where','find','filter_user','filter_status','filter_act_status','filter_type','processId','filter_process','filter_owner','filter_activity');
 
 $smarty->assign('mid','tiki-g-user_instances.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

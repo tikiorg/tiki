@@ -45,6 +45,8 @@ $smarty->assign_by_ref('items',$items["data"]);
 $all_procs = $items = $processMonitor->monitor_list_processes(0,-1,'name_desc','','');
 $smarty->assign_by_ref('all_procs',$all_procs["data"]);
 
+$sameurl_elements = Array('offset','sort_mode','where','find','filter_valid','filter_process','filter_active','processId');
+
 $smarty->assign('stats', $processMonitor->monitor_stats());
 
 $smarty->assign('mid','tiki-g-monitor_processes.tpl');
