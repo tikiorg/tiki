@@ -66,7 +66,7 @@
 <td nowrap="nowrap">{if $channels[user].individual eq 'y'}<a title="{tr}active permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={"{tr}Tracker{/tr} "|cat:$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}"><img 
 src='img/icons/key_active.gif' border='0' alt="{tr}active permissions{/tr}" /></a>{else}
 <a title="{tr}permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={"{tr}Tracker{/tr} "|cat:$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}"><img
-src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a></td>
+src='img/icons/key.gif' border='0' alt="{tr}permissions{/tr}" /></a>{/if}</td>
 <td>{$channels[user].description}</td>
 <td><a title="{tr}fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='img/icons/ico_table.gif' alt="{tr}fields{/tr}" border='0' /></a></td>
 <td>{$channels[user].created|tiki_short_date}</td>
