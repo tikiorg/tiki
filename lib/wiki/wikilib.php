@@ -124,6 +124,12 @@ class WikiLib extends TikiLib {
   	// theme_control_objects(objId,name)
   	$query = "update tiki_theme_control_objects set objId='newId',name='$newName_as' where objId='$oldId'";
     $this->query($query);	  	  	  	
+    
+    //update structures
+    $query = "update tiki_structures set page='$newName' where page='$oldName'";
+    $this->query($query);
+    $query = "update tiki_structures set parent='$newName' where parent='$oldName'";
+  	$this->query($query);
   	
 	return true;
   }

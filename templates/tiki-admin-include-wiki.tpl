@@ -127,6 +127,93 @@
     </tr></table>
     </form>
     </div>
+    
+    <div class="simplebox">
+    {tr}Wiki page list configuration{/tr}
+    <form method="post" action="tiki-admin.php#wiki">
+    <table>
+    	<tr>
+    		<td class="form">{tr}Name{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_name" {if $wiki_list_name eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Hits{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_hits" {if $wiki_list_hits eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+     	<tr>
+    		<td class="form">{tr}Last modification date{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_lastmodif" {if $wiki_list_lastmodif eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Creator{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_creator" {if $wiki_list_creator eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}User{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_user" {if $wiki_list_user eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Last version{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_lastver" {if $wiki_list_lastver eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Comment{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_comment" {if $wiki_list_comment eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Status{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_status" {if $wiki_list_status eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Versions{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_versions" {if $wiki_list_versions eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Links{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_links" {if $wiki_list_links eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Backlinks{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_backlinks" {if $wiki_list_backlinks eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+    	<tr>
+    		<td class="form">{tr}Size{/tr}</td>
+    		<td class="form">
+    			<input type="checkbox" name="wiki_list_size" {if $wiki_list_size eq 'y'}checked="checked"{/if} />
+    		</td>
+    	</tr>
+
+    	<tr>
+    		<td class="form">&nbsp;</td>
+    		<td class="form">
+   	 			<input type="submit" name="wikilistprefs" value="{tr}set{/tr}" />
+    		</td>
+    	</tr>
+    </table>
+    </form>
+    </div>
 
     </td>
     
@@ -176,6 +263,7 @@
     </td></tr>
     <tr><td class="form">{tr}Footnotes{/tr}:</td><td><input type="checkbox" name="feature_wiki_footnotes" {if $feature_wiki_footnotes eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Users can lock pages (if perm){/tr}:</td><td><input type="checkbox" name="feature_wiki_usrlock" {if $feature_wiki_usrlock eq 'y'}checked="checked"{/if}/></td></tr>    
+    <tr><td class="form">{tr}Page creators are admin of their pages{/tr}:</td><td><input type="checkbox" name="wiki_creator_admin" {if $wiki_creator_admin eq 'y'}checked="checked"{/if}/></td></tr>    
     <tr><td class="form">{tr}Tables syntax{/tr}:</td><td>
     <select name="feature_wiki_tables">
     <option value="old" {if $feature_wiki_tables eq 'old'}selected="selected"{/if}>{tr}|| for rows{/tr}</option>

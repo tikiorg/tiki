@@ -54,6 +54,13 @@ if(isset($_REQUEST["delete"]) && isset($_REQUEST["task"])) {
 }
 
 
+if(isset($_REQUEST["update"]) ) {
+  foreach($_REQUEST["task_perc"] as $task => $perc) {      	
+    $tasklib->update_task_percentage($user, $task, $perc);
+  }
+}
+
+
 
 if(isset($_REQUEST["tasks_useDates"])) {
   $tasks_useDates = $_REQUEST["tasks_useDates"];
@@ -154,6 +161,11 @@ $smarty->assign('tasks_useDates',$tasks_useDates);
 
 include_once('tiki-mytiki_shared.php');
 
+$percs=Array();
+for($i=0;$i<=100;$i+=10) {
+	$percs[]=$i;
+}
+$smarty->assign_by_ref('percs',$percs);
 
 $smarty->assign('mid','tiki-user_tasks.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

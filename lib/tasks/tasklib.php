@@ -24,7 +24,11 @@ class TaskLib extends TikiLib {
     return $res;	
   }
   
-  
+  function update_task_percentage($user,$taskId,$perc)
+  {
+  	$query = "update tiki_user_tasks set percentage=$perc where user='$user' and taskId=$taskId";
+  	$this->query($query);
+  }
   
   function open_task($user,$taskId)
   {

@@ -980,6 +980,95 @@ if(isset($_REQUEST["setwikiregex"])) {
   $smarty->assign('wiki_page_regex',$_REQUEST["wiki_page_regex"]);	
 }
 
+if(isset($_REQUEST['wikilistprefs'])) {
+	if(isset($_REQUEST['wiki_list_name'])) {
+		$tikilib->set_preference('wiki_list_name','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_name','n');		
+	}
+	$smarty->assign('wiki_list_name',isset($_REQUEST['wiki_list_name'])?'y':'n');
+
+	if(isset($_REQUEST['wiki_list_hits'])) {
+		$tikilib->set_preference('wiki_list_hits','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_hits','n');		
+	}
+	$smarty->assign('wiki_list_hits',isset($_REQUEST['wiki_list_hits'])?'y':'n');	
+	
+	if(isset($_REQUEST['wiki_list_lastmodif'])) {
+		$tikilib->set_preference('wiki_list_lastmodif','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_lastmodif','n');		
+	}
+	$smarty->assign('wiki_list_lastmodif',isset($_REQUEST['wiki_list_lastmodif'])?'y':'n');
+	
+	if(isset($_REQUEST['wiki_list_creator'])) {
+		$tikilib->set_preference('wiki_list_creator','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_creator','n');		
+	}
+	$smarty->assign('wiki_list_creator',isset($_REQUEST['wiki_list_creator'])?'y':'n');	
+		
+	if(isset($_REQUEST['wiki_list_user'])) {
+		$tikilib->set_preference('wiki_list_user','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_user','n');		
+	}
+	$smarty->assign('wiki_list_user',isset($_REQUEST['wiki_list_user'])?'y':'n');
+	
+	if(isset($_REQUEST['wiki_list_lastver'])) {
+		$tikilib->set_preference('wiki_list_lastver','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_lastver','n');		
+	}
+	$smarty->assign('wiki_list_lastver',isset($_REQUEST['wiki_list_lastver'])?'y':'n');
+	
+	if(isset($_REQUEST['wiki_list_comment'])) {
+		$tikilib->set_preference('wiki_list_comment','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_comment','n');		
+	}
+	$smarty->assign('wiki_list_comment',isset($_REQUEST['wiki_list_comment'])?'y':'n');
+	
+	if(isset($_REQUEST['wiki_list_status'])) {
+		$tikilib->set_preference('wiki_list_status','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_status','n');		
+	}
+	$smarty->assign('wiki_list_status',isset($_REQUEST['wiki_list_status'])?'y':'n');
+	
+	if(isset($_REQUEST['wiki_list_versions'])) {
+		$tikilib->set_preference('wiki_list_versions','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_versions','n');		
+	}
+	$smarty->assign('wiki_list_versions',isset($_REQUEST['wiki_list_versions'])?'y':'n');
+	
+	if(isset($_REQUEST['wiki_list_links'])) {
+		$tikilib->set_preference('wiki_list_links','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_links','n');		
+	}
+	$smarty->assign('wiki_list_links',isset($_REQUEST['wiki_list_links'])?'y':'n');
+	
+	if(isset($_REQUEST['wiki_list_backlinks'])) {
+		$tikilib->set_preference('wiki_list_backlinks','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_backlinks','n');		
+	}
+	$smarty->assign('wiki_list_backlinks',isset($_REQUEST['wiki_list_backlinks'])?'y':'n');
+	
+	if(isset($_REQUEST['wiki_list_size'])) {
+		$tikilib->set_preference('wiki_list_size','y');		
+	} else {
+		$tikilib->set_preference('wiki_list_size','n');		
+	}
+	$smarty->assign('wiki_list_size',isset($_REQUEST['wiki_list_size'])?'y':'n');
+		
+	
+	
+}
+
 if(isset($_REQUEST["wikifeatures"])) {
   if(isset($_REQUEST["feature_lastChanges"]) && $_REQUEST["feature_lastChanges"]=="on") {
     $tikilib->set_preference("feature_lastChanges",'y'); 
@@ -1097,6 +1186,15 @@ if(isset($_REQUEST["wikifeatures"])) {
     $tikilib->set_preference("feature_wiki_undo",'n');
     $smarty->assign("feature_wiki_undo",'n');
   }
+
+  if(isset($_REQUEST["wiki_creator_admin"]) && $_REQUEST["wiki_creator_admin"]=="on") {
+    $tikilib->set_preference("wiki_creator_admin",'y'); 
+    $smarty->assign("wiki_creator_admin",'y');
+  } else {
+    $tikilib->set_preference("wiki_creator_admin",'n');
+    $smarty->assign("wiki_creator_admin",'n');
+  }
+
   
   if(isset($_REQUEST["feature_wiki_templates"]) && $_REQUEST["feature_wiki_templates"]=="on") {
     $tikilib->set_preference("feature_wiki_templates",'y'); 

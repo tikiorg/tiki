@@ -7,14 +7,14 @@
 <table class="normal">
 <tr>
   <td class="heading">{tr}Group{/tr}</td>
-  <td class="heading">{tr}Msgs{/tr}</td>
+  <td style="text-align:right;" class="heading">{tr}Msgs{/tr}</td>
   <td class="heading">{tr}Desc{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {foreach from=$groups key=group item=item}
 <tr>
   <td class="{cycle advance=false}"><a class="link" href="tiki-newsreader_news.php?server={$info.server}&amp;port={$info.port}&amp;username={$info.username}&amp;password={$info.password}&amp;group={$group}&amp;offset=0&amp;serverId={$serverId}&amp;serverId={$serverId}">{$group}</a></td>
-  <td class="{cycle advance=false}">{math equation="1+x-y" x=$item.last y=$item.first}</td>
+  <td style="text-align:right;" class="{cycle advance=false}">{math equation="1+x-y" x=$item.last y=$item.first}</td>
   <td class="{cycle}">{$item.desc}</td>
 </tr>
 {/foreach}

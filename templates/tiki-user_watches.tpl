@@ -16,14 +16,14 @@
 <form action="tiki-user_watches.php" method="post">
 <table class="normal">
 <tr>
-<td width="5%" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
+<td style="text-align:center;" width="5%" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td class="heading">{tr}event{/tr}</td>
 <td class="heading">{tr}object{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$watches}
 <tr>
-<td class="{cycle advance=false}">
+<td style="text-align:center;"class="{cycle advance=false}">
 <input type="checkbox" name="watch[{$watches[ix].hash}]" />
 </td>
 <td class="{cycle advance=false}">{$watches[ix].event}</td>

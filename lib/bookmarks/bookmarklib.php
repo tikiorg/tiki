@@ -74,6 +74,8 @@ class BookmarkLib extends TikiLib {
   
   function add_folder($parentId,$name,$user)
   {
+    // Don't allow empty/blank folder names.
+  	if(empty($name)) return false;
     $name = addslashes($name);
     $query = "insert into tiki_user_bookmarks_folders(name,parentId,user) values('$name',$parentId,'$user')";
     $result = $this->query($query);
@@ -97,6 +99,7 @@ class BookmarkLib extends TikiLib {
   function refresh_url($urlId)
   {
     $info = $this->get_url($urlId);
+    if(strstr($info["url"],'tiki-') || strstr($info["url"],'messu-')) return false;
     @$fp = fopen($info["url"],"r");
     if(!$fp) return;
     $data = '';

@@ -70,6 +70,11 @@ if(count($assignables)>0) {
 }
 //print_r($assignables);
 $modules = $usermoduleslib->get_user_assigned_modules($user);
+
+$smarty->assign('modules_l',$usermoduleslib->get_user_assigned_modules_pos($user,'l'));
+$smarty->assign('modules_r',$usermoduleslib->get_user_assigned_modules_pos($user,'r'));
+
+
 //print_r($modules);
 $smarty->assign_by_ref('assignables',$assignables);
 $smarty->assign_by_ref('modules',$modules);

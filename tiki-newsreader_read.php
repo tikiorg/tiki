@@ -86,6 +86,15 @@ include_once('tiki-section_options.php');
 
 include_once('tiki-mytiki_shared.php');
 
+if($user 
+	&& $feature_notepad == 'y' 
+	&& isset($_REQUEST['savenotepad'])) {
+  //Get the news	
+  
+  $tikilib->replace_note($user,0,$headers['Subject'],$body);
+}
+
+
 $smarty->assign('mid','tiki-newsreader_read.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 ?>

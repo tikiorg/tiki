@@ -176,7 +176,7 @@ Errors:<br/>
 <input type="hidden" name="activityId" value="{$info.activityId}" />
 <table class="normal">
 <tr>
-<td width="7%" class="heading"><input type="submit" name="delete_act" value="x " /></td>
+<td style="text-align:center;" width="7%" class="heading"><input type="submit" name="delete_act" value="x " /></td>
 <td width="1%" class="heading" ><a class="tableheading" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'flowNum_desc'}flowNum_asc{else}flowNum_desc{/if}">{tr}#{/tr}</a></td>
 <td width="47%" class="heading" ><a class="tableheading" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td width="5%" class="heading" ><a class="tableheading" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></td>
@@ -187,7 +187,7 @@ Errors:<br/>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
 <tr>
-	<td class="{cycle advance=false}">
+	<td style="text-align:center;" class="{cycle advance=false}">
 		<input type="checkbox" name="activity[{$items[ix].activityId}]" />
 	</td>
 	<td style="text-align:right;" class="{cycle advance=false}">

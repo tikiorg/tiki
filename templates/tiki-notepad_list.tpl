@@ -45,7 +45,7 @@
 <td class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a></td>
-<td class="heading" >{tr}Size{/tr}</td>
+<td style="text-align:right;" class="heading" >{tr}Size{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -56,7 +56,7 @@
 <td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a>
 (<a href="tiki-notepad_get.php?noteId={$channels[user].noteId}" class="link">save</a>)</td>
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
-<td class="{cycle}">{$channels[user].size|kbsize}</td>
+<td style="text-align:right;"  class="{cycle}">{$channels[user].size|kbsize}</td>
 </tr>
 {sectionelse}
 <tr>
@@ -64,7 +64,7 @@
 </tr>
 {/section}
 <tr>
-	<td class="heading" colspan="4"><input type="submit" name="merge" value="{tr}merge notes into{/tr}" /><input type="text" name="merge_name" size="10" /></td>
+	<td class="heading" colspan="4"><input type="submit" name="merge" value="{tr}merge notes into{/tr}" /><input type="text" name="merge_name" size="20" /></td>
 </tr>
 </table>
 </form>

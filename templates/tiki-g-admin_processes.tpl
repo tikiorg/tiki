@@ -83,7 +83,7 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode}" />
 <table class="normal">
 <tr>
-<td width="5%" class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td style="text-align:center;" width="5%" class="heading"><input type="submit" name="delete" value="x " /></td>
 <td width="55%" class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td width="10%" class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}">{tr}version{/tr}</a></td>
 <td width="5%" class="heading" ><a class="tableheading" href="tiki-g-admin_processes.php?find={$find}&amp;where={$where}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isActive_desc'}isActive_asc{else}isActive_desc{/if}">{tr}act{/tr}</a></td>
@@ -93,7 +93,7 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
 <tr>
-	<td class="{cycle advance=false}">
+	<td style="text-align:center;" class="{cycle advance=false}">
 		<input type="checkbox" name="process[{$items[ix].pId}]" />
 	</td>
 	<td class="{cycle advance=false}">
@@ -129,7 +129,7 @@
 </tr>
 {sectionelse}
 <tr>
-	<td class="{cycle advance=false}" colspan="5">
+	<td class="{cycle advance=false}" colspan="15">
 	{tr}No processes defined yet{/tr}
 	</td>
 </tr>	

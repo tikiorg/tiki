@@ -13,72 +13,105 @@
 <div align="center">
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last mod{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Last author{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}">{tr}Last ver{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}Com{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'flag_desc'}flag_asc{else}flag_desc{/if}">{tr}Status{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'versions_desc'}versions_asc{else}versions_desc{/if}">{tr}Vers{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'links_desc'}links_asc{else}links_desc{/if}">{tr}Links{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'backlinks_desc'}backlinks_asc{else}backlinks_desc{/if}">{tr}Backlinks{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
+{if $wiki_list_name eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></td>
+{/if}
+{if $wiki_list_hits eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
+{/if}	
+{if $wiki_list_lastmodif eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last mod{/tr}</a></td>
+{/if}
+{if $wiki_list_creator eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'creator_desc'}creator_asc{else}creator_desc{/if}">{tr}Creator{/tr}</a></td>
+{/if}	
+
+{if $wiki_list_user eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}Last author{/tr}</a></td>
+{/if}	
+{if $wiki_list_lastver eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'version_desc'}version_asc{else}version_desc{/if}">{tr}Last ver{/tr}</a></td>
+{/if}
+{if $wiki_list_comment eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}Com{/tr}</a></td>
+{/if}
+{if $wiki_list_status eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'flag_desc'}flag_asc{else}flag_desc{/if}">{tr}Status{/tr}</a></td>
+{/if}
+{if $wiki_list_versions eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'versions_desc'}versions_asc{else}versions_desc{/if}">{tr}Vers{/tr}</a></td>
+{/if}
+{if $wiki_list_links eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'links_desc'}links_asc{else}links_desc{/if}">{tr}Links{/tr}</a></td>
+{/if}
+{if $wiki_list_backlinks eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'backlinks_desc'}backlinks_asc{else}backlinks_desc{/if}">{tr}Backlinks{/tr}</a></td>
+{/if}
+{if $wiki_list_size eq 'y'}
+	<td class="heading"><a class="tableheading" href="tiki-orphan_pages.php?find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
+{/if}
 </tr>
+{cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
-{if $smarty.section.changes.index % 2}
-<td class="odd">&nbsp;<a href="tiki-index.php?page={$listpages[changes].pageName}" title="{$listpages[changes].pageName}" class="link">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;
-{if $tiki_p_edit eq 'y'}
-<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">{tr}edit{/tr}</a>)
+{if $wiki_list_name eq 'y'}
+	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>
+	{if $tiki_p_edit eq 'y'}
+	<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">{tr}edit{/tr}</a>)
+	{/if}
+	</td>
 {/if}
-</td>
-<td class="odd">&nbsp;{$listpages[changes].hits}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].version}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].comment}&nbsp;</td>
-<td class="odd">&nbsp;{$listpages[changes].flag}&nbsp;</td>
-{if $feature_history eq 'y'}
-<td class="odd">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName}">{$listpages[changes].versions}</a>&nbsp;</td>
-{else}
-<td class="odd">&nbsp;{$listpages[changes].versions}&nbsp;</td>
+{if $wiki_list_hits eq 'y'}	
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].hits}</td>
 {/if}
-<td class="odd">&nbsp;{$listpages[changes].links}&nbsp;</td>
-{if $feature_backlinks eq 'y'}
-<td class="odd">&nbsp;<a class="link" href="tiki-backlinks.php?page={$listpages[changes].pageName}">{$listpages[changes].backlinks}</a>&nbsp;</td>
-{else}
-<td class="odd">&nbsp;{$listpages[changes].backlinks}&nbsp;</td>
+{if $wiki_list_lastmodif eq 'y'}
+	<td class="{cycle advance=false}">{$listpages[changes].lastModif|tiki_short_datetime}</td>
 {/if}
-<td class="odd">&nbsp;{$listpages[changes].len}&nbsp;</td>
-{else}
-<td class="even">&nbsp;<a href="tiki-index.php?page={$listpages[changes].pageName}" title="{$listpages[changes].pageName}" class="link">{$listpages[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;
-{if $tiki_p_edit eq 'y'}
-<br>(<a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName}">{tr}edit{/tr}</a>)
+{if $wiki_list_creator eq 'y'}
+	<td class="{cycle advance=false}">{$listpages[changes].creator|userlink}</td>
 {/if}
-</td>
-<td class="even">&nbsp;{$listpages[changes].hits}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].version}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].comment}&nbsp;</td>
-<td class="even">&nbsp;{$listpages[changes].flag}&nbsp;</td>
-{if $feature_history eq 'y'}
-<td class="even">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName}">{$listpages[changes].versions}</a>&nbsp;</td>
-{else}
-<td class="even">&nbsp;{$listpages[changes].versions}&nbsp;</td>
+
+{if $wiki_list_user eq 'y'}
+	<td class="{cycle advance=false}">{$listpages[changes].user|userlink}</td>
 {/if}
-<td class="even">&nbsp;{$listpages[changes].links}&nbsp;</td>
-{if $feature_backlinks eq 'y'}
-<td class="even">&nbsp;<a class="link" href="tiki-backlinks.php?page={$listpages[changes].pageName}">{$listpages[changes].backlinks}</a>&nbsp;</td>
-{else}
-<td class="even">&nbsp;{$listpages[changes].backlinks}&nbsp;</td>
+{if $wiki_list_lastver eq 'y'}
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].version}</td>
 {/if}
-<td class="even">&nbsp;{$listpages[changes].len}&nbsp;</td>
+{if $wiki_list_comment eq 'y'}
+	<td class="{cycle advance=false}">{$listpages[changes].comment}</td>
+{/if}
+{if $wiki_list_status eq 'y'}
+	<td style="text-align:center;" class="{cycle advance=false}">
+	{if $listpages[changes].flag eq 'locked'}
+		<img src='img/icons/lock_topic.gif' alt='{tr}locked{/tr}' />
+	{else}
+		<img src='img/icons/unlock_topic.gif' alt='{tr}unlocked{/tr}' />
+	{/if}
+	</td>
+{/if}
+{if $wiki_list_versions eq 'y'}
+	{if $feature_history eq 'y'}
+	<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName}">{$listpages[changes].versions}</a></td>
+	{else}
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].versions}</td>
+	{/if}
+{/if}
+{if $wiki_list_links eq 'y'}
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].links}</td>
+{/if}
+{if $wiki_list_backlinks eq 'y'}
+	{if $feature_backlinks eq 'y'}
+	<td style="text-align:right;" class="{cycle advance=false}"><a class="link" href="tiki-backlinks.php?page={$listpages[changes].pageName}">{$listpages[changes].backlinks}</a></td>
+	{else}
+	<td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].backlinks}</td>
+	{/if}
+{/if}
+{if $wiki_list_size eq 'y'}
+	<td style="text-align:right;" class="{cycle}">{$listpages[changes].len|kbsize}</td>
 {/if}
 </tr>
 {sectionelse}
-<tr><td colspan="6">
+<tr><td colspan="16">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
@@ -87,18 +120,18 @@
 <!--
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-orphan_pages.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="prevnext" href="tiki-orphan_pages.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-orphan_pages.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+[<a class="prevnext" href="tiki-orphan_pages.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br/>
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
 <a class="prevnext" href="tiki-orphan_pages.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
+{$smarty.section.foo.index_next}</a>
 {/section}
 {/if}
 </div>

@@ -3,42 +3,75 @@
 <br/><br/>
 <a class="link" href="tiki-user_assigned_modules.php?recreate=1">{tr}Restore defaults{/tr}</a><br/><br/>
 <h2>{tr}User assigned modules{/tr}</h2>
-<table class="normal">
+<table width="100%">
 <tr>
-  <td class="heading">{tr}name{/tr}</td>
-  <td class="heading">{tr}order{/tr}</td>
-  <td class="heading">{tr}column{/tr}</td>
-  <td class="heading">{tr}action{/tr}</td>
+	<td width="50%">
+	<b>{tr}Left column{/tr}</b>
+	</td>
+	<td width="50%">
+	<b>{tr}Right column{/tr}</b>
+	</td>
 </tr>
-{assign var="what" value="l"}
-{section name=ix loop=$modules}
 <tr>
-  {if $what eq 'l'}
-    <td style="text-align:center;" class="even" colspan="4"><b>{tr}Left column{/tr}</b></td></tr><tr>
-    {assign var="what" value="r"}
-  {/if}
-  {if $what eq 'r' and $modules[ix].position eq 'r'}
-    <td style="text-align:center;" class="even" colspan="4"><b>{tr}Right column{/tr}</b></td></tr><tr>
-    {assign var="what" value="x"}
-  {/if}
-  <td class="even">{$modules[ix].name}</td>
-  <td class="even">{$modules[ix].ord}</td>
-  <td class="even">{$modules[ix].position}</td>
-  <td class="even">
-  {if $modules[ix].name ne 'application_menu' and $modules[ix].name ne 'login_box'}
-  <a class="link" href="tiki-user_assigned_modules.php?unassign={$modules[ix].name}">{tr}unassign{/tr}</a> |
-  {/if}
-  <a class="link" href="tiki-user_assigned_modules.php?up={$modules[ix].name}">{tr}up{/tr}</a> |
-  <a class="link" href="tiki-user_assigned_modules.php?down={$modules[ix].name}">{tr}down{/tr}</a> |
-  {if $modules[ix].position eq 'l'}
-  <a class="link" href="tiki-user_assigned_modules.php?right={$modules[ix].name}">{tr}move{/tr}</a>
-  {else}
-  <a class="link" href="tiki-user_assigned_modules.php?left={$modules[ix].name}">{tr}move{/tr}</a>
-  {/if}
-  </td>
+	<!-- left column -->
+	<td width="50%">
+		<table width="100%" class="normal">
+			<tr>
+				<td class="heading">{tr}#{/tr}</td>
+				<td class="heading">{tr}name{/tr}</td>
+				<td width="20%" class="heading">{tr}act{/tr}</td>
+			</tr>
+			{cycle values="odd,even" print=false}
+			{section name=ix loop=$modules_l}
+			<tr>
+				<td class="{cycle advance=false}">{$modules_l[ix].ord}</td>
+				<td class="{cycle advance=false}">{$modules_l[ix].name}</td>
+				<td class="{cycle}">
+				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_l[ix].name}"><img src='img/icons2/up.gif' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_l[ix].name}"><img src='img/icons2/down.gif' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?right={$modules_l[ix].name}"><img src='img/icons2/nav_dot_left.gif' alt='{tr}right{/tr}' title='{tr}move to right column{/tr}' border='0' /></a>
+				  {if $modules[ix].name ne 'application_menu' and $modules_l[ix].name ne 'login_box'}
+  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].name}"><img src='img/icons2/delete.gif' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' /></a> 
+  				  {/if}
+
+				
+				</td>
+			</tr>
+			{/section}
+		</table>
+	</td>
+	
+	<!-- right column -->
+	<td width="50%">
+		<table width="100%" class="normal">
+			<tr>
+				<td class="heading">{tr}#{/tr}</td>
+				<td class="heading">{tr}name{/tr}</td>
+				<td width="20%" class="heading">{tr}act{/tr}</td>
+			</tr>
+			{cycle values="odd,even" print=false}
+			{section name=ix loop=$modules_r}
+			<tr>
+				<td class="{cycle advance=false}">{$modules_r[ix].ord}</td>
+				<td class="{cycle advance=false}">{$modules_r[ix].name}</td>
+				<td class="{cycle}">
+				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_r[ix].name}"><img src='img/icons2/up.gif' alt='{tr}up{/tr}' title='{tr}up{/tr}' border='0' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].name}"><img src='img/icons2/down.gif' alt='{tr}down{/tr}' title='{tr}down{/tr}' border='0' /></a>
+  				  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].name}"><img src='img/icons2/nav_dot_right.gif' alt='{tr}left{/tr}' title='{tr}move to left column{/tr}' border='0' /></a>
+				  {if $modules[ix].name ne 'application_menu' and $modules_r[ix].name ne 'login_box'}
+  					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].name}"><img src='img/icons2/delete.gif' border='0' alt='{tr}unassign{/tr}' title='{tr}unassign{/tr}' /></a> 
+  				  {/if}
+
+				
+				</td>
+			</tr>
+			{/section}
+		</table>
+	
+	</td>
 </tr>
-{/section}  
 </table>
+
 {if $canassign eq 'y'}
 <br/>
 <form action="tiki-user_assigned_modules.php" method="post">

@@ -182,6 +182,22 @@ $feature_dynamic_content = 'n';
 $feature_chat = 'n';
 $feature_polls = 'n';
 
+$wiki_creator_admin = 'n';
+$smarty->assign('wiki_creator_admin',$wiki_creator_admin);
+
+$smarty->assign('wiki_list_name','y');
+$smarty->assign('wiki_list_hits','y');
+$smarty->assign('wiki_list_lastmodif','y');
+$smarty->assign('wiki_list_creator','y');
+$smarty->assign('wiki_list_user','y');
+$smarty->assign('wiki_list_lastver','y');
+$smarty->assign('wiki_list_comment','y');
+$smarty->assign('wiki_list_status','y');
+$smarty->assign('wiki_list_versions','y');
+$smarty->assign('wiki_list_links','y');
+$smarty->assign('wiki_list_backlinks','y');
+$smarty->assign('wiki_list_size','y');
+
 $feature_wiki_comments = 'n';
 $wiki_comments_default_ordering = 'points_desc';
 $wiki_comments_per_page = 10;
