@@ -3,8 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 24. June 2003
-// Tested with PHP 3.0.7, 3.0.13, 4.0.0 and 4.1.1
+// Last modified: 29. June 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -24,6 +23,7 @@
 //
 // changes against V5.0:
 // - bugfix: HAW_linkset: dtmf attribute in VoiceXML option tag 1-9 only
+// - new text format attribute: HAW_TEXTFORMAT_BOXED
 
 // miscellaneous constants
 define("HAW_VERSION", "HAWHAW V5.1b");
@@ -78,6 +78,7 @@ define("HAW_TEXTFORMAT_UNDERLINE", 2);
 define("HAW_TEXTFORMAT_ITALIC", 4);
 define("HAW_TEXTFORMAT_BIG", 8);
 define("HAW_TEXTFORMAT_SMALL", 16);
+define("HAW_TEXTFORMAT_BOXED", 32);
 
 // constants for input treatment
 define("HAW_INPUT_TEXT", 0);
@@ -2336,7 +2337,8 @@ class HAW_text
       HAW_TEXTFORMAT_UNDERLINE<br>
       HAW_TEXTFORMAT_ITALIC<br>
       HAW_TEXTFORMAT_BIG<br>
-      HAW_TEXTFORMAT_SMALL
+      HAW_TEXTFORMAT_SMALL<br>
+      HAW_TEXTFORMAT_BOXED (HTML only)
   */
   function HAW_text($text, $attrib=HAW_TEXTFORMAT_NORMAL)
   {
@@ -2409,6 +2411,15 @@ class HAW_text
     {
       // HTML or WML
 
+      if (($this->attrib & HAW_TEXTFORMAT_BOXED) && ($deck->ml == HAW_HTML))
+      {
+        if (!($box_color = $deck->color))
+          $box_color = "#000000"; // set box color black, if no text color specified
+          
+        printf("<table border=\"0\" bgcolor=\"%s\" width=\"100%%\"><tr><td><font color=\"%s\">\n",
+               $box_color, $deck->disp_bgcolor);
+      }
+
       if ($this->attrib & HAW_TEXTFORMAT_BOLD)
         echo "<b>\n";
 
@@ -2442,6 +2453,9 @@ class HAW_text
 
       if ($this->attrib & HAW_TEXTFORMAT_BOLD)
         echo "</b>\n";
+
+      if (($this->attrib & HAW_TEXTFORMAT_BOXED) && ($deck->ml == HAW_HTML))
+        echo "</font></td></tr></table>\n";
 
       // create required amount of carriage return's
       if ($deck->ml == HAW_HTML)
