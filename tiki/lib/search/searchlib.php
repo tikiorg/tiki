@@ -273,12 +273,15 @@ class SearchLib extends TikiLib {
                 `tiki_searchindex` s, `tiki_directory_sites` d ,`tiki_category_sites` cs where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='dir_site' and
-                s.`page`=d.`siteId` order by `hits` desc";
+                s.`page`=d.`siteId` and 
+		cs.`siteId`=d.`siteId`
+		order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
-            $querycant="select count(*) from `tiki_searchindex` s, `tiki_directory_sites` d where `searchword` in
+            $querycant="select count(*) from `tiki_searchindex` s, `tiki_directory_sites` d , `tiki_category_sites` cs where `searchword` in
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='dir_site' and
-                s.`page`=d.`siteId`";
+                s.`page`=d.`siteId` and
+		cs.`siteId`=d.`siteId`";
             $cant=$this->getOne($querycant,$words);
             $ret=array();
             while ($res = $result->fetchRow()) {
