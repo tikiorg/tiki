@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/tiki/textareaSize.php,v 1.1 2003-11-23 23:30:55 sylvieg Exp $
+/* $Header: /cvsroot/tikiwiki/tiki/textareaSize.php,v 1.2 2003-11-23 23:41:16 gongo Exp $
  * \brief: 4 buttoms to change a textArea size - works with textareaSize.tpl template
  * \param: $defaultRows - optional : the number of rows by default
  * \comment: the cols nb is managed by a javascript program to optimize the display perf (seems to work generally with browsers)
