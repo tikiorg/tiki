@@ -3542,7 +3542,9 @@ class TikiLib extends TikiDB {
 	    $data = preg_replace("/::(.+?)::/", "<div align=\"center\">$1</div>", $data);
 
 	    // New syntax for wiki pages ((name|desc)) Where desc can be anything
-	    preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
+	    // preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
+	    // match ((name|desc)) as well as ((name|))
+	    preg_match_all("/\(\(($page_regex)\|(.*)\)\)/", $data, $pages);
 
 	    $temp_max = count($pages[1]);
 	    for ($i = 0; $i < $temp_max; $i++) {
@@ -3584,7 +3586,17 @@ class TikiLib extends TikiDB {
 			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 			$uri_ref = "tiki-index.php?page=" . urlencode($pages[1][$i]);
 
-			$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki">' . (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '</a>';
+			// check to see if desc is blank in ((page|desc))
+			if (strlen(trim($text[0])) > 0) {
+				$linktext = $text[0];
+			} elseif ($desc != tra('no description')) {
+				// desc is blank; use the page description instead
+				$linktext = $pages[1][$i] . ': ' . $desc;
+			} else {
+				// there is no page description
+				$linktext = $pages[1][$i];
+			}
+			$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki">' . $linktext . '</a>';
 
 			// Check is timeout expired?
 			if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
