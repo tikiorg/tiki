@@ -82,7 +82,7 @@ class CategLib extends TikiLib {
     $result = $this->query($query);
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $object = $res["catObjectId"];
-      $query2 = "delete from tiki_categorized_objects where catObjectId=$object";
+      $query2 = "delete from tiki_categorized_objects where catObjectId=".addslashes($object);
       $result2 = $this->query($query2);
 
     }
@@ -115,6 +115,7 @@ class CategLib extends TikiLib {
 
   function is_categorized($type,$objId)
   {
+    $objId=addslashes($objId);
     $query = "select catObjectId from tiki_categorized_objects where type='$type' and objId='$objId'";
     $result = $this->query($query);
     if($result->numRows()) {
@@ -129,7 +130,9 @@ class CategLib extends TikiLib {
   {
     $description = addslashes(strip_tags($description));
     $name = addslashes(strip_tags($name));
+    $objId=addslashes($objId);
     $now = date("U");
+    $href=addslashes($href);
     $query = "insert into tiki_categorized_objects(type,objId,description,name,href,created,hits)
     values('$type','$objId','$description','$name','$href',$now,0)";
     $result = $this->query($query);
@@ -226,6 +229,7 @@ class CategLib extends TikiLib {
 
   function get_object_categories($type,$objId)
   {
+    $objId=addslashes($objId);
     $query = "select categId from tiki_category_objects tco, tiki_categorized_objects tto
     where tco.catObjectId=tto.catObjectId and type='$type' and objId='$objId'";
     $result = $this->query($query);
@@ -265,11 +269,12 @@ class CategLib extends TikiLib {
   function categorize_page($pageName, $categId)
   {
     // Check if we already have this object in the tiki_categorized_objects page
-    $catObjectId=$this->is_categorized('wiki page',$pageName);
+    $pageName_sl=addslashes($pageName);
+    $catObjectId=$this->is_categorized('wiki page',$pageName_sl);
     if(!$catObjectId) {
       // The page is not cateorized
       $info = $this->get_page_info($pageName);
-      $href = 'tiki-index.php?page='.$pageName;
+      $href = 'tiki-index.php?page='.urlencode($pageName);
       $catObjectId = $this->add_categorized_object('wiki page',$pageName,substr($info["data"],0,200),$pageName,$href);
     }
     $this->categorize($catObjectId,$categId);

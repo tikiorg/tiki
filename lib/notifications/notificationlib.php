@@ -34,18 +34,22 @@ class NotificationLib extends TikiLib {
   
   function add_mail_event($event,$object,$email)
   {
+    $object=addslashes($object);
+    $email=addslashes($email);
     $query = "replace into tiki_mail_events(event,object,email) values('$event','$object','$email')";
     $result = $this->query($query);
   }
   
   function remove_mail_event($event,$object,$email)
   {
+    $object=addslashes($object);
     $query = "delete from tiki_mail_events where event='$event' and object='$object' and email='$email'";
     $result = $this->query($query);
   }
   
   function get_mail_events($event,$object)
   {
+    $object=addslashes($object);
     $query = "select email from tiki_mail_events where event='$event' and object='$object'";
     $result = $this->query($query);
     $ret = Array();
