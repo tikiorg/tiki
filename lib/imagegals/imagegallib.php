@@ -972,6 +972,262 @@ class ImageGalsLib extends TikiLib {
 		return $this->get_images($offset, $maxRecords, $sort_mode, $find);
 	}
 
+    function get_random_image($galleryId = -1) {
+	$whgal = "";
+	$bindvars = array();
+	if (((int)$galleryId) != -1) {
+	    $whgal = " where `galleryId`=? ";
+	    $bindvars[] = (int) $galleryId;
+	}
+
+	$query = "select count(*) from `tiki_images` $whgal";
+	$cant = $this->getOne($query,$bindvars);
+	$ret = array();
+
+	if ($cant) {
+	    $pick = rand(0, $cant - 1);
+
+	    $query = "select `imageId` ,`galleryId`,`name` from `tiki_images` $whgal";
+	    $result = $this->query($query,$bindvars,1,$pick);
+	    $res = $result->fetchRow();
+	    $ret["galleryId"] = $res["galleryId"];
+	    $ret["imageId"] = $res["imageId"];
+	    $ret["name"] = $res["name"];
+	    $query = "select `name`  from `tiki_galleries` where `galleryId` = ?";
+	    $ret["gallery"] = $this->getOne($query,array((int)$res["galleryId"]));
+	} else {
+	    $ret["galleryId"] = 0;
+
+	    $ret["imageId"] = 0;
+	    $ret["name"] = tra("No image yet, sorry.");
+	}
+
+	return ($ret);
+    }
+
+	function list_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
+	    // If $user is admin then get ALL galleries, if not only user galleries are shown
+	    global $tiki_p_admin_galleries;
+
+	    $old_sort_mode = '';
+
+	    if (in_array($sort_mode, array(
+			    'images desc',
+			    'images asc'
+			    ))) {
+		$old_offset = $offset;
+
+		$old_maxRecords = $maxRecords;
+		$old_sort_mode = $sort_mode;
+		$sort_mode = 'user desc';
+		$offset = 0;
+		$maxRecords = -1;
+	    }
+
+	    // If the user is not admin then select `it` 's own galleries or public galleries
+	    if (($tiki_p_admin_galleries == 'y') or ($user == 'admin')) {
+		$whuser = "";
+		$bindvars=array();
+	    } else {
+		$whuser = "where `user`=? or public=?";
+		$bindvars=array($user,'y');
+	    }
+
+	    if ($find) {
+		$findesc = '%' . $find . '%';
+
+		if (empty($whuser)) {
+		    $whuser = "where `name` like ? or `description` like ?";
+		    $bindvars=array($findesc,$findesc);
+		} else {
+		    $whuser .= " and `name` like ? or `description` like ?";
+		    $bindvars[]=$findesc;
+		    $bindvars[]=$findesc;
+		}
+	    }
+
+	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    $query = "select * from `tiki_galleries` $whuser order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_galleries` $whuser";
+	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+	    $cant = $this->getOne($query_cant,$bindvars);
+	    $ret = array();
+
+	    while ($res = $result->fetchRow()) {
+
+		$add = TRUE;
+		global $feature_categories;
+		global $userlib;
+		global $user;
+		global $tiki_p_admin;
+
+		if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['galleryId'], 'image gallery')) {
+		    // gallery permissions override category permissions
+		    if (!$userlib->object_has_permission($user, $res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
+			$add = FALSE;
+		    }
+		} elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+		    // no forum permissions so now we check category permissions
+		    global $categlib;
+		    if (!is_object($categlib)) {
+			include_once('lib/categories/categlib.php');
+		    }
+		    unset($tiki_p_view_categories); // unset this var in case it was set previously
+		    $perms_array = $categlib->get_object_categories_perms($user, 'image gallery', $res['galleryId']);
+		    if ($perms_array) {
+			$is_categorized = TRUE;
+			foreach ($perms_array as $perm => $value) {
+			    $$perm = $value;
+			}
+		    } else {
+			$is_categorized = FALSE;
+		    }
+
+		    if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+			$add = FALSE;
+		    }
+		}
+
+		if ($add) {
+		    $aux = array();
+
+		    $aux["name"] = $res["name"];
+		    $gid = $res["galleryId"];
+		    $aux["visible"] = $res["visible"];
+		    $aux["id"] = $gid;
+		    $aux["galleryId"] = $res["galleryId"];
+		    $aux["description"] = $res["description"];
+		    $aux["created"] = $res["created"];
+		    $aux["lastModif"] = $res["lastModif"];
+		    $aux["user"] = $res["user"];
+		    $aux["hits"] = $res["hits"];
+		    $aux["public"] = $res["public"];
+		    $aux["theme"] = $res["theme"];
+		    $aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
+		    $ret[] = $aux;
+		}
+	    }
+
+	    if ($old_sort_mode == 'images asc') {
+		usort($ret, 'compare_images');
+	    }
+
+	    if ($old_sort_mode == 'images desc') {
+		usort($ret, 'r_compare_images');
+	    }
+
+	    if (in_array($old_sort_mode, array(
+			    'images desc',
+			    'images asc'
+			    ))) {
+		$ret = array_slice($ret, $old_offset, $old_maxRecords);
+	    }
+
+	    $retval = array();
+	    $retval["data"] = $ret;
+	    $retval["cant"] = $cant;
+	    return $retval;
+	}
+
+	function list_visible_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user, $find) {
+	    global $tiki_p_admin_galleries;
+	    // If $user is admin then get ALL galleries, if not only user galleries are shown
+
+	    $old_sort_mode = '';
+
+	    if (in_array($sort_mode, array(
+			    'images desc',
+			    'images asc'
+			    ))) {
+		$old_offset = $offset;
+
+		$old_maxRecords = $maxRecords;
+		$old_sort_mode = $sort_mode;
+		$sort_mode = 'user desc';
+		$offset = 0;
+		$maxRecords = -1;
+	    }
+
+	    // If the user is not admin then select `it` 's own galleries or public galleries
+	    if (($user != 'admin') and ($tiki_p_admin_galleries != 'y')) {
+		$whuser = "and `user`=? or `public`=?";
+		$bindvars=array('y',$user,'y');
+	    } else {
+		$whuser = "";
+		$bindvars=array('y');
+	    }
+
+	    if ($find) {
+		$findesc = '%' . $find . '%';
+
+		if (empty($whuser)) {
+		    $whuser = " and (`name` like ? or `description` like ?)";
+		    $bindvars=array('y',$findesc,$findesc);
+		} else {
+		    $whuser .= " and (`name` like ? or `description` like ?)";
+		    $bindvars[]=$findesc;
+		    $bindvars[]=$findesc;
+		}
+	    }
+
+	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
+	    $query = "select * from `tiki_galleries` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_galleries` where `visible`=? $whuser";
+	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+	    $cant = $this->getOne($query_cant,$bindvars);
+	    $ret = array();
+
+	    while ($res = $result->fetchRow()) {
+		$aux = array();
+
+		$aux["name"] = $res["name"];
+		$gid = $res["galleryId"];
+		$aux["visible"] = $res["visible"];
+		$aux["id"] = $gid;
+		$aux["galleryId"] = $res["galleryId"];
+		$aux["description"] = $res["description"];
+		$aux["created"] = $res["created"];
+		$aux["lastModif"] = $res["lastModif"];
+		$aux["user"] = $res["user"];
+		$aux["hits"] = $res["hits"];
+		$aux["public"] = $res["public"];
+		$aux["theme"] = $res["theme"];
+		$aux["images"] = $this->getOne("select count(*) from `tiki_images` where `galleryId`=?",array($gid));
+		$ret[] = $aux;
+	    }
+
+	    if ($old_sort_mode == 'images asc') {
+		usort($ret, 'compare_images');
+	    }
+
+	    if ($old_sort_mode == 'images desc') {
+		usort($ret, 'r_compare_images');
+	    }
+
+	    if (in_array($old_sort_mode, array(
+			    'images desc',
+			    'images asc'
+			    ))) {
+		$ret = array_slice($ret, $old_offset, $old_maxRecords);
+	    }
+
+	    $retval = array();
+	    $retval["data"] = $ret;
+	    $retval["cant"] = $cant;
+	    return $retval;
+	}
+
+    function get_gallery($id) {
+	$query = "select * from `tiki_galleries` where `galleryId`=?";
+	$result = $this->query($query,array((int) $id));
+	$res = $result->fetchRow();
+	return $res;
+    }
+
 	function get_gallery_owner($galleryId) {
 		$query = "select `user` from `tiki_galleries` where `galleryId`=?";
 

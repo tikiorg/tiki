@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.10 2004-06-16 19:33:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-theme_control_objects.php,v 1.11 2004-07-15 21:28:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -61,7 +61,11 @@ $smarty->assign('type', $_REQUEST['type']);
 
 switch ($_REQUEST['type']) {
 case 'image gallery':
-	$objects = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
+	global $imagegallib;
+	if (!is_object($imagegallib)) {
+		require_once('lib/imagegals/imagegallib.php');
+	}
+	$objects = $imagegallib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 
 	$smarty->assign_by_ref('objects', $objects["data"]);
 	$objects = $objects['data'];
