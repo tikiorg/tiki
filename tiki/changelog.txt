@@ -1,5 +1,7 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Users can configure if they want to double-click to
+  edit wiki pages.
 * [NEW] Themes can redefine ANY template of Tiki, just create the template in
   the templates/styles/name directory and Tiki will use that file. If the file
   is not there it will default to the templates directory. 
@@ -32,9 +34,10 @@ Version 1.6 -Tau Ceti-
   all the per-user sections of Tiki.
 * [NEW] Wiki plugin added: SPLIT used to split a wiki page in two columns.
 * [NEW] Wiki plugin added: SQL can be used to display the result of an SQL 
-  query to the tiki database, useful for reports and others. If you don't use 
-  tiki as an intranet you may want to remove this plugin for security reasons 
-  (!!).
+  query to the tiki database, useful for reports and others. As admin you can
+  setup dsns that users can use and set permissions for each dsn!. This cool
+  feature can be used to display queries from your tiki site, or from other
+  applications or databases in a controlled way in your wiki pages.
 * [NEW] User tasks, users can set-up tasks and mark tasks as completed or 
   remove tasks,  a user module is provided. This can be used as a simple to-do 
   list for users.

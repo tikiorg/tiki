@@ -1,5 +1,15 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
+
+drop table if exists tiki_dsn;
+create table tiki_dsn(
+  dsnId integer(12) not null auto_increment,
+  name varchar(20) not null,
+  dsn varchar(255),
+  primary key(dsnId)
+);
+
 alter table tiki_semaphores add user varchar(200);
+
 drop table if exists tiki_minical_topics;
 create table tiki_minical_topics(
   user varchar(200),

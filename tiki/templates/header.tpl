@@ -14,4 +14,5 @@
 {$trl}
 
   </head>
-  <body {if $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page}';"{/if}>  
+
+  <body {if $user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page}';"{/if}>  

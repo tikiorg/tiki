@@ -10,6 +10,70 @@ class AdminLib extends TikiLib {
     $this->db = $db;  
   }
   
+  function list_dsn($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where (dsn like '%".$find."%')";
+    } else {
+      $mid="";
+    }
+    $query = "select * from tiki_dsn $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_dsn $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  function replace_dsn($dsnId, $dsn,$name)
+  {
+    $dsn=addslashes($dsn);
+    $name=addslashes($name);
+    // Check the name
+
+    if($dsnId) {
+      $query = "update tiki_dsn set dsn='$dsn',name='$name' where dsnId=$dsnId";
+    } else {
+      $query = "replace into tiki_dsn(dsn,name)
+                values('$dsn','$name')";
+    }
+    $result = $this->query($query);
+    // And now replace the perm if not created
+    $perm_name = 'tiki_p_dsn_'.$name;
+    $query = "replace into users_permissions(permName,permDesc,type,level) values
+    ('$perm_name','Can use dsn $dsn','dsn','editor')";
+	$this->query($query);
+    return true;
+  }
+  
+  function remove_dsn($dsnId)
+  {
+    $info = $this->get_dsn($dsnId);
+    $perm_name = 'tiki_p_dsn_'.$info['name'];
+    $query = "delete from users_permissions where permName='$perm_name'";
+    $this->query($query);
+    $query = "delete from tiki_dsn where dsnId=$dsnId";
+    $this->query($query);
+    return true;
+  }
+  
+  function get_dsn($dsnId)
+  {
+    $query = "select * from tiki_dsn where dsnId=$dsnId";
+    $result = $this->query($query);
+    if(!$result->numRows()) return false;
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+
+  
   function remove_unused_pictures()
   {
     $query = "select data from tiki_pages";
