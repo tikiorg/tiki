@@ -314,10 +314,12 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('wiki_top_bar','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_db','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
 
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editor', 'maps');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_create', 'Can create new mapfile', 'admin', 'maps');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_delete', 'Can delete mapfiles', 'admin', 'maps');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view', 'Can view mapfiles', 'basic', 'maps');
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_edit', 'Can edit mapfiles', 'editor', 'maps');
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_create', 'Can create new mapfile', 'admin', 'maps');
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_delete', 'Can delete mapfiles', 'admin', 'maps');
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view', 'Can view mapfiles', 'basic', 'maps');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.map');
 
 # adding field for group HomePage feature
 ALTER TABLE `users_groups` ADD `groupHome` VARCHAR( 255 ) AFTER `groupDesc` ;

@@ -245,7 +245,7 @@
   </div>
   <div id="mapsmenu" style="{$mnu_mapsmenu}">
   {if $tiki_p_map_edit eq 'y'}
-  &nbsp;<a href="tiki-map_edit.php" class="linkmenu">{tr}Edit mapfiles{/tr}</a><br />
+  &nbsp;<a href="tiki-map_edit.php" class="linkmenu">{tr}Mapfiles{/tr}</a><br />
   {/if}
   </div>
 {/if}

@@ -8,8 +8,6 @@ if(@$feature_maps != 'y') {
   die;
 }
 
-$map_path="/var/www/html/map/";
-
 if (isset($_REQUEST['mapfile']))
 {
   $mapfile = $_REQUEST['mapfile'];
@@ -17,7 +15,7 @@ if (isset($_REQUEST['mapfile']))
 } else
 {
   $mapfile = "pacific.map";
-  $map = ms_newMapObj($map_path."pacific.map");
+  $map = ms_newMapObj($map_path.$default_map);
 }
 
 $layerbol=FALSE;
