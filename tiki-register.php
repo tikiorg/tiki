@@ -20,7 +20,7 @@ if (!isset($_REQUEST['novalidation'])) {
 }
 
 if(isset($_REQUEST["register"])) {
-  if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["pass2"])) {
+  if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"])) {
     $smarty->assign('msg',tra("The passwords don't match"));
     $smarty->display("error.tpl");
     die;
