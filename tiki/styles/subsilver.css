@@ -885,6 +885,20 @@ div.wiki-edithelp {
 	font-size:   smaller;
 	padding:   6pt;
 }
+/* ********************* TRACKERS *********************************** */
+.statuson {
+	padding: 1px;
+	margin: 1px;
+	border: 1px inset #666666;
+	-moz-border-radius: 20px;
+	vertcal-align: middle;
+	background-color: #bbaa99;
+}
+.statusoff {
+	padding: 1px;
+	margin: 2px;
+	vertcal-align: middle;
+}
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
@@ -4672,7 +4686,6 @@ div.tabs {
 .content {
 	position: relative;
 	border: 1px solid #666;
-	width: 600px;
 	padding: 10px;
 	margin-bottom: 25px;
 	z-index: 80;
