@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.24 2004-06-11 18:44:09 lfagundes Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/mose/modules/mod-application_menu.tpl,v 1.25 2004-06-20 21:02:52 teedog Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -455,10 +455,13 @@
   {if $feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('admmnu');"><img src="styles/mose/fo.gif" width="16" height="12" alt="[+]" border="0" name="admmnuicn" />&nbsp;</a>
   {else}<a class="separator" href="javascript:toggle('admmnu');">[-]</a>{/if}
-  {if $tiki_p_admin eq 'y'}<a class="separator" href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if}
+  {if $tiki_p_admin eq 'y'}<a class="separator" href='tiki-admin.php'>{/if} {tr}Admin{/tr}{if $tiki_p_admin eq 'y'}</a>{/if}
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('admmnu');">[+]</a>{/if}
   </div>
   <div id="admmnu" style="{$mnu_admmnu}">
+	{if $tiki_p_admin eq 'y'}
+		&nbsp;<a href="tiki-admin.php" class="linkmenu">{tr}Admin home{/tr}</a><br />
+	{/if}
 	{sortlinks}
 	{if $feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
   		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br />
