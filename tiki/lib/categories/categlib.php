@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.55 2004-07-15 22:55:20 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.56 2004-07-20 17:46:35 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -490,8 +490,12 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('faq', $faqId);
 
 		if (!$catObjectId) {
+			global $faqlib;
+			if (!is_object($faqlib)) {
+				include_once('lib/faqs/faqlib.php');
+			}
 			// The page is not cateorized
-			$info = $this->get_faq($faqId);
+			$info = $faqlib->get_faq($faqId);
 
 			$href = 'tiki-view_faq.php?faqId=' . $faqId;
 			$catObjectId = $this->add_categorized_object('faq', $faqId, $info["description"], $info["title"], $href);
