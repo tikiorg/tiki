@@ -4,3 +4,4 @@ var
 .project
 .htaccess
 phpmyadmin
+tiki-emptycache.php
