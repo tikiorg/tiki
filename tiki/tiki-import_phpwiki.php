@@ -42,12 +42,14 @@ function compare_import_versions($a1,$a2) {
 
 $smarty->assign('result','y');
 if(isset($_REQUEST["import"])) {
-$h=opendir("phpwikidump/");
+$path = $_REQUEST["path"];
+$h=opendir("$path/");
 $lines=Array();
 while($file=readdir($h)) {
-  if(is_file("phpwikidump/$file")) {
-    $fp=fopen("phpwikidump/$file","r");
-    $full=fread($fp,filesize("phpwikidump/$file"));
+  if(is_file("$path/$file")) {
+    $fp=fopen("$path/$file","r");
+    $full=fread($fp,filesize("$path/$file"));
+    //$full=htmlspecialchars($full);
     fclose($fp);
     $params = array('input' => $full,
                   'crlf'  => "\r\n", 
@@ -68,9 +70,12 @@ while($file=readdir($h)) {
       }
       if(isset($part["pagename"])) {
         // Parse the body replacing links to Tiki links
-        //print_r($part);die;
+        
         $part["body"]=preg_replace("/ (http:\/\/[^ ]+) /"," [$1] ",$part["body"]);
         $part["body"]=preg_replace("/\[(http:\/\/[^\]]+)\]/","{img src=$1}",$part["body"]);
+        $part["body"]=preg_replace("/\[([^\|\]]+)\]/","(($1))",$part["body"]);
+        $part["body"]=preg_replace("/\[([^\|]+)\|([^\]]+)\]/","(($1|$2))",$part["body"]);
+
         $pagename=urldecode($part["pagename"]);
         $version=urldecode($part["version"]);
         $author=urldecode($part["author"]);

@@ -101,7 +101,6 @@ class BackupLib extends TikiLib {
     $pwd = $this->getOne($query);
     @$fp = fopen($filename,"w");
     if(!$fp) return false;
-
     $query = "show tables";
     $result = $this->query($query);
     $sql='';

@@ -910,6 +910,19 @@ class TikiLib {
     $result = $this->query($query);
     return true;
    }
+   
+  /*shared*/ function uncategorize_object($type,$id)
+  {
+    $query = "select catObjectId from tiki_categorized_objects where type='$type' and objId='$id'";
+    $catObjectId = $this->getOne($query);
+    if($catObjectId) {
+      $query = "delete from tiki_category_objects where catObjectId=$catObjectId";
+      $result = $this->query($query);
+      $query = "delete from tiki_categorized_objects where catObjectId=$catObjectId";
+      $result = $this->query($query);
+    }
+  }
+
 
   /*shared*/ function list_received_pages($offset,$maxRecords,$sort_mode='pageName_asc',$find)
   {
@@ -3447,6 +3460,7 @@ class TikiLib {
     global $tiki_p_upload_picture;
     global $feature_wiki_tables;
     global $page; 
+    global $rsslib;
     global $dbTiki;
     global $structlib;
 
@@ -3653,7 +3667,10 @@ class TikiLib {
 
     // Replace rss modules
     if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
-	  include_once('lib/rss/rsslib.php');
+	  if(!isset($rsslib)) {
+	  include('lib/rss/rsslib.php');
+	  }
+
       for($i=0;$i<count($rsss[0]);$i++) {
         $id = $rsss[1][$i];
         $max = $rsss[3][$i];
@@ -3759,11 +3776,12 @@ class TikiLib {
     // New syntax for wiki pages ((name|desc)) Where desc can be anything
     preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages);
     for($i=0;$i<count($pages[1]);$i++) {
-      $pattern = "/".$pages[0][$i]."/";
+      $pattern = $pages[0][$i];
       $pattern=str_replace('|','\|',$pattern);
       $pattern=str_replace('(','\(',$pattern);
       $pattern=str_replace(')','\)',$pattern);
-      
+      $pattern=str_replace('/','\/',$pattern);
+      $pattern = "/".$pattern."/";
       // Replace links to external wikis
       $repl2=true;
       if(strstr($pages[1][$i],':')) {
@@ -3787,7 +3805,6 @@ class TikiLib {
 	      	$uri_ref = "tiki-editpage.php?page=".urlencode($pages[1][$i]);
 	        $repl = $pages[5][$i]."<a href='$uri_ref' class='wiki'>?</a>";
 	      }
-	
 	      $data = preg_replace($pattern,"$repl",$data);
       }
     }
@@ -4137,6 +4154,7 @@ class TikiLib {
   {
     global $smarty;
     global $dbTiki;
+    global $notificationlib;
     include_once('lib/notifications/notificationlib.php');
     $this->invalidate_cache($pageName);
     // Collect pages before modifying edit_data (see update of links below)

@@ -71,17 +71,6 @@ class CategLib extends TikiLib {
     return $res;
   }
   
-  function uncategorize_object($type,$id)
-  {
-    $query = "select catObjectId from tiki_categorized_objects where type='$type' and objId='$id'";
-    $catObjectId = $this->getOne($query);
-    if($catObjectId) {
-      $query = "delete from tiki_category_objects where catObjectId=$catObjectId";
-      $result = $this->query($query);
-      $query = "delete from tiki_categorized_objects where catObjectId=$catObjectId";
-      $result = $this->query($query);
-    }
-  }
   
   function remove_category($categId)
   {

@@ -322,7 +322,7 @@ class QuizLib extends TikiLib {
       $query = "insert into tiki_quiz_question_options(optionText,points,questionId)
       values('$option',$points,$questionId)";
       $result = $this->query($query);
-      $queryid = "select max(optionId) from tiki_quiz_questions where optionText='$option' and questionId=$questionId";
+      $queryid = "select max(optionId) from tiki_quiz_question_options where optionText='$option' and questionId=$questionId";
       $optionId = $this->getOne($queryid);
     }
     
