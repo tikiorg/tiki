@@ -37,6 +37,7 @@ $lang=Array(
 "Set features" => "Fasts&aelig;t indstillinger",
 "Change admin password" => "Skift administratoradgangskode",
 "Again" => "Igen",
+"Repeat password" => "Igen",
 "change" => "ret",
 "name" => "navn",
 "desc" => "beskrivelse",

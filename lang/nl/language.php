@@ -42,6 +42,7 @@ $lang=Array(
 "Set features" => "Kenmerken instellen",
 "Change admin password" => "Beheerderspaswoord wijzigen",
 "Again" => "Opnieuw",
+"Repeat password" => "Opnieuw",
 "change" => "wijzigen",
 "name" => "naam",
 "desc" => "omschr.",

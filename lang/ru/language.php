@@ -42,6 +42,7 @@ $lang=Array(
 "Set features" => "Задать свойства",
 "Change admin password" => "Пароль администратора",
 "Again" => "Снова",
+"Repeat password" => "Снова",
 "change" => "изменить",
 "name" => "имя",
 "desc" => "описание",

@@ -43,6 +43,7 @@ $lang=Array(
 "Set features" => "Set features",
 "Change admin password" => "Change admin password",
 "Again" => "Again",
+"Repeat password" => "Repeat password",
 "change" => "change",
 "name" => "name",
 "desc" => "desc",

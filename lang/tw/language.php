@@ -42,6 +42,7 @@ $lang=Array(
 "Set features" => "Set features",
 "Change admin password" => "改變系統管�?�者密碼",
 "Again" => "�?次輸入",
+"Repeat password" => "�?次輸入",
 "change" => "改變",
 "name" => "�??稱",
 "desc" => "�??述",
