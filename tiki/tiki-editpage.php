@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.49 2003-10-18 16:58:02 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.50 2003-10-25 01:18:14 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,7 +130,74 @@ if (($feature_wiki_pictures == 'y') && (isset($tiki_p_upload_picture)) && ($tiki
 		$_REQUEST["edit"] = $_REQUEST["edit"] . "{picture file=img/wiki_up/$tikidomain$picname}";
 	}
 }
-
+/**
+ * \brief Parsed HTML tree walker (used by HTML sucker)
+ *
+ * This is initial implementation (don't generate any wiki syntaxes)
+ *
+ */
+function walk_and_parse(&$c, &$src)
+{
+    for ($i=0; $i <= $c["contentpos"]; $i++)
+    {
+        // If content type 'text' output it to destination...
+        if (($c[$i]["type"] == "text") && (($c[$i]["data"] != "\n") || (substr($src, -1) != "\n")))
+            $src .= $c[$i]["data"];
+        // Recursive call on tags with content...
+        if (isset($c[$i]["content"]))
+        {
+            if (substr($src, -1) != "\n") $src .= "\n";
+            walk_and_parse($c[$i]["content"],$src);
+        }
+    }
+}
+// Suck another page and append to the end of current
+include ('lib/htmlparser/htmlparser.inc');
+$repl = isset($_REQUEST["suck_url"]) ? $_REQUEST["suck_url"] : '';
+$parsehtml = isset ($_REQUEST["parsehtml"]) ? ($_REQUEST["parsehtml"] == 'on' ? 'y' : 'n')  : 'n';
+if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
+{
+    // \note by zaufi
+    //   This is ugly implementation of wiki HTML import.
+    //   I think it should be plugable import/export converters with ability
+    //   to choose from edit form what converter to use for operation.
+    //   In case of import converter, it can try to guess what source
+    //   file is (using mime type from remote server response).
+    //   Of couse converters may have itsown configuration panel what should be
+    //   pluged into wiki page edit form too... (like HTML importer may have
+    //   flags 'strip HTML tags' and 'try to convert HTML to wiki' :)
+    //   At least one export filter for wiki already coded :) -- PDF exporter...
+    $sdta = @file_get_contents($suck_url);
+    if (isset($php_errormsg) && strlen($php_errormsg))
+    {
+        $smarty->assign('msg', tra("Can't import remote HTML page"));
+        $smarty->display("styles/$style_base/error.tpl");
+        die;
+    }
+    // Need to parse HTML?
+    if ($parsehtml == 'y')
+    {
+        // Read compiled (serialized) grammar
+        $grammarfile = 'lib/htmlparser/htmlgrammar.cmp';
+        if (!$fp = @fopen($grammarfile,'r'))
+        {
+            $smarty->assign('msg', tra("Can't parse remote HTML page"));
+            $smarty->display("styles/$style_base/error.tpl");
+            die;
+        }
+        $grammar = unserialize(fread($fp, filesize($grammarfile)));
+        fclose($fp);
+        // create parser object, insert html code and parse it
+        $htmlparser = new HtmlParser($sdta, $grammar, '', 0);
+        $htmlparser->Parse();
+        // Should I try to convert HTML to wiki?
+        $parseddata = '';
+        walk_and_parse($htmlparser->content, $parseddata);
+        $sdta = $parseddata;
+    }
+    $_REQUEST['edit'] .= $sdta;
+}
+//
 if(strcasecmp(substr($page,0,8),"UserPage")==0) {
 	$name = substr($page,8);
 	if(strcasecmp($user,$name)!=0) {
