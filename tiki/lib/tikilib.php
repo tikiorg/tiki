@@ -2518,7 +2518,7 @@ function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDa
 		} else {
 			$mid = " where `publishDate` <= ? ";
 		}
-		$bindvars[] = $date
+		$bindvars[] = $date;
 	}
 
 	$query = "select * from `tiki_submissions` $mid order by ".$this->convert_sortmode($sort_mode);
