@@ -2,7 +2,8 @@ package wiki3d;
 import java.awt.*;
 class Config
 {
-static Color background = new Color(111,200,211);
+	//static Color background = new Color(111,200,211);
+static Color background = new Color(255,255,255);
 static Color facecolorblue=new Color(0,0,255);
 static Color facecolorblack=new Color(0,0,0);
 static Color colorface1=new Color(255,0,0);//color of the navigator
@@ -19,7 +20,7 @@ static int originy=200;//
 static int originz=0;//
 static int faceoriginx=400,faceoriginy=400,camposz=500;//origin of navigator and z position of the viewer .
 static int facesize=30;//size of the navigator
-static float initroty=20,initrotx=20;//initial rotation of the navigator
+
 static int fieldOfView=200;//field of view
 static int faceadjust=50;//to adjust the position of the navigator box
 static int controlwidth=100;//width of the navigator box
@@ -45,7 +46,8 @@ static float scaley = 3f;
 static int nodeDistance = 200;
 public static int minimumBallSize = 2;
 public static float maxSpeed = 50;
-public static int navigationDepth = 1;
+public static int navigationDepth = 2;
+public static int throwDragTime = 500;
 
 
 

@@ -4,18 +4,17 @@ class Balancer implements Runnable {
 	boolean animating = false;
 
 	Vector v = new Vector();
-	Can3d c;
-	Balancer(Can3d c) {
+	Morcego c; 
+	Balancer(Morcego c) {
 
 		this.c = c;
 
 	}
 
 	public void add(Node vr) {
-
-		v.addElement(vr);
-		Node.setBalancer(this);
+		v.addElement(vr);		
 	}
+	
 	public void remove(Node vr) {
 
 		v.removeElement(vr);
@@ -56,7 +55,8 @@ class Balancer implements Runnable {
 					Node node = (Node) en.nextElement();
 					node.balance();
 				}
-
+				
+				this.c.graph.transform();
 				this.c.repaint();
 
 				Thread.sleep(40);

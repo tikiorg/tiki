@@ -2,20 +2,55 @@ package wiki3d;
 import java.util.*;
 import java.awt.*;
 
+
+
 public class Graph extends Vector {
-	Node focus;
-	public Matrix3D transformationMatrix, rotationMatrix;
-	public Face face;
-	
-	public Graph() {
-		transformationMatrix = new Matrix3D();
-		rotationMatrix = new Matrix3D();
-		face = new Face();
+
+	private final class RenderingStrategy implements Comparator {
+		public int compare(Object o1, Object o2) {
+			if (((Node) o1).z < ((Node) o2).z) {
+				return -1;
+			} else if (((Node) o1).z == ((Node) o2).z) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}
 	}
 
-	//checks whether any of the vertex in the collection contains the
-	// given
-	// point.
+	public void add(Node node) {
+		super.add(node);
+		nodesFromName.put(node.name, node);
+	}
+
+	Node focus;
+	public Matrix3D rotation, // Used to rotate graph
+	//accumulatedRotation, // Holds all rotations made to get current
+									 // angle
+	nodePositioner; // Aplied to all nodes to know position
+
+
+	public Hashtable nodesFromName = new Hashtable();
+	public Vertex origin;
+	boolean rotating ;
+
+	
+	public Graph() {
+		rotation = new Matrix3D();
+		//accumulatedRotation = new Matrix3D();
+		nodePositioner = new Matrix3D();
+		
+		rotation.setIdentity();
+		//accumulatedRotation.setIdentity();
+		nodePositioner.setIdentity();
+	}
+	
+	public void setOrigin(int x, int y, int z) {
+		origin = new Vertex(x,y,z);
+		//nodePositioner.translate(x, y, z);
+	}
+
+	
 	public boolean contains(int x, int y) {
 		int i = 0;
 
@@ -32,73 +67,35 @@ public class Graph extends Vector {
 	}
 
 	synchronized public void paint(Graphics g) {
-		//orders the vertexes in increasing order of Z (world coordinate)and
-		// paints
-		//which ensures that the vertex in the backside doesnot obscures the
-		// one above
-
-		Enumeration e = elements();
-		int min = 0;
-		Pos ps[] = new Pos[this.size()];
-		int count = size();
-		int i = 0;
-		//object ps contains the value of Z for each vertex and the position
-		// of the vertex in the collection.
-		while (e.hasMoreElements()) {
-			Node node = (Node) e.nextElement();
-			ps[i] = new Pos(node.Z, i);
-			i++;
-
-		}
-		count = i;
-		//System.out.println("size"+count);
-		i = 0;
-		//sorting here
-		while (i < count - 1) {
-			min = i;
-			if (ps[i + 1] != null && ps[i] != null) {
-				for (int j = i + 1; j < count; j++) {
-					if (ps[j].z < ps[min].z) {
-						min = j;
-					}
-				}
-			}
-			Pos zm = ps[i];
-			ps[i] = ps[min];
-			ps[min] = zm;
-			i++;
-
-		}
-
-		for (i = 0; i < count; i++) {
+		Collections.sort(this, getStrategy());
+		for (int i = 0; i < size(); i++) {
 			try {
-				((Node) elementAt(ps[i].pos)).paint(g);
+				((Node) elementAt(i)).paint(g);
 			} catch (Exception ex) {
 			}
 		}
 
 	}
 
+	private Comparator getStrategy() {
+		return new RenderingStrategy();
+	}
+
 	public void transform() {
-		//transforming each of the vertex in coll.
-		//first prepare the transformation matrix which is common and then
-		// operate
-		//on each points.
-
-		Node.mat.unit();
-		Node.mat.mult(rotationMatrix);
-		Node.mat.translate(Node.origin.x, Node.origin.y, Node.origin.z);
-
+		
 		Enumeration e = elements();
 		while (e.hasMoreElements()) {
-			Node cc = (Node) e.nextElement();
-			cc.transform();
-			//first change to world coordinate and then projectto 2d
-			cc.proj();
-
+			Node node = (Node) e.nextElement();
+			//accumulatedRotation.transform(node);
+			rotation.transformReal(node);
+			node.proj();
 		}
 		
-		face.transform(rotationMatrix);
+		if (!rotating ) {
+			rotation.setIdentity();
+		}
+
+	
 
 	}
 
@@ -114,7 +111,7 @@ public class Graph extends Vector {
 		node.remove();
 	}
 
-	public void rotate(double xtheta, double ytheta) {
+	public void rotate(float xtheta, float ytheta) {
 		if (xtheta > Config.thetamax)
 			xtheta = Config.thetamax;
 		else if (xtheta < -Config.thetamax)
@@ -133,11 +130,21 @@ public class Graph extends Vector {
 		else if (ytheta < 0 && ytheta > Config.thetamin)
 			ytheta = -Config.thetamin;
 
-		transformationMatrix.unit();
-		transformationMatrix.xrot(-xtheta);
-		transformationMatrix.yrot(-ytheta);
+		rotation.setIdentity();
+		rotation.xrot(-xtheta);
+		rotation.yrot(-ytheta);
 
-		rotationMatrix.mult(transformationMatrix);
+		//accumulatedRotation.mul(rotation); //mul(rotation);
+		
+		nodePositioner.setIdentity();
+		//nodePositioner.mul(accumulatedRotation);
+		//nodePositioner.translate(origin.x, origin.y, origin.z);
+		
+	}
+
+	public Node nodeFromName(String nodeName) {
+		Node node = (Node) nodesFromName.get(nodeName);
+		return node;
 	}
 
 }

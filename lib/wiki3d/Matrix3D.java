@@ -1,8 +1,12 @@
 package wiki3d;
-public class Matrix3D {
-	public float xx = 1.0f, xy, xz, xo = 0;
+
+import javax.vecmath.Matrix3f;
+
+
+public class Matrix3D  {
+	 public float xx = 1.0f, xy, xz, xo = 0;
 	public float yx, yy = 1.0f, yz, yo = 0;
-	public float zx, zy, zz = 1.0f, zo = 0;
+	public float zx, zy, zz = 1.0f, zo = 0; 
 
 	public static int fieldOfView = Config.fieldOfView;
 	
@@ -19,34 +23,23 @@ public class Matrix3D {
 	
 	/** Create a new unit matrix */
 
-	public Matrix3D() {
+	public Matrix3D() {	
+				
 		xx = 1.0f;
 		yy = 1.0f;
 		zz = 1.0f;
 	}
-	/** Scale along each axis independently */
-	public void scaleAxis() {
-		xx *= xf;
-		xy *= xf;
-		xz *= xf;
-		xo *= xf;
-		yx *= yf;
-		yy *= yf;
-		yz *= yf;
-		yo *= yf;
-		zx *= zf;
-		zy *= zf;
-		zz *= zf;
-		zo *= zf;
-	}
-	public void translate(float x, float y, float z) {
+	
+	public void translate(float x, float y, float z) {			
 		xo += x;
 		yo += y;
 		zo += z;
 	}
 	/** rotate theta degrees about the y axis */
-	public void yrot(double theta) {
+	public void xrot(double theta) {
+		
 		theta *= (Math.PI / 180);
+		
 		double ct = Math.cos(theta);
 		double st = Math.sin(theta);
 
@@ -70,8 +63,10 @@ public class Matrix3D {
 		zz = Nzz;
 	}
 	/** rotate theta degrees about the x axis */
-	public void xrot(double theta) {
+	public void yrot(double theta) {
+		
 		theta *= (Math.PI / 180);
+		
 		double ct = Math.cos(theta);
 		double st = Math.sin(theta);
 
@@ -98,6 +93,7 @@ public class Matrix3D {
 	 * Is this necessary?? */
 	public void zrot(double theta) {
 		theta *= (Math.PI / 180);
+		
 		double ct = Math.cos(theta);
 		double st = Math.sin(theta);
 
@@ -122,7 +118,8 @@ public class Matrix3D {
 	}
 	/** Multiply this matrix by a second: M = M*R */
 
-	void mult(Matrix3D rhs) {
+	void mul(Matrix3D rhs) {
+		
 		float lxx = xx * rhs.xx + yx * rhs.xy + zx * rhs.xz;
 		float lxy = xy * rhs.xx + yy * rhs.xy + zy * rhs.xz;
 		float lxz = xz * rhs.xx + yz * rhs.xy + zz * rhs.xz;
@@ -156,7 +153,8 @@ public class Matrix3D {
 	}
 
 	/** Reinitialize to the unit matrix */
-	public void unit() {
+	public void setIdentity() {
+		
 		xo = 0;
 		xx = 1;
 		xy = 0;
@@ -169,20 +167,42 @@ public class Matrix3D {
 		zx = 0;
 		zy = 0;
 		zz = 1;
-		scaleAxis();
+		
 	}
-	public void transform(Vertex v1) {
-		float lxx = xx, lxy = xy, lxz = xz, lxo = xo;
-		float lyx = yx, lyy = yy, lyz = yz, lyo = yo;
-		float lzx = zx, lzy = zy, lzz = zz, lzo = zo;
-		v1.X = (int) (v1.x * lxx + (v1.y) * lxy + v1.z * lxz + lxo);
-		v1.Y = (int) (v1.x * lyx + v1.y * lyy + v1.z * lyz + lyo);
-		v1.Z = (int) (v1.x * lzx + v1.y * lzy + v1.z * lzz + lzo);
-		//  System.out.println(v1.X+" "+v1.Y);
-		v1.X = Math.max(xmin, Math.min(v1.X, xmax));
-		v1.Y = Math.max(ymin, Math.min(v1.Y, ymax));
-		v1.Z = Math.max(zmin, Math.min(v1.Z, zmax));
+	public void transformReal(Vertex v1) {	
+		float X, Y, Z;
+		X = v1.x * xx + (v1.y) * xy + v1.z * xz + xo;
+		Y = v1.x * yx + v1.y * yy + v1.z * yz + yo;
+		Z = v1.x * zx + v1.y * zy + v1.z * zz + zo;
 
+		X = Math.max(xmin, Math.min(X, xmax));
+		Y = Math.max(ymin, Math.min(Y, ymax));
+		Z = Math.max(zmin, Math.min(Z, zmax));
+		
+		v1.x=X;
+		v1.y=Y;
+		v1.z=Z;		
+	}
+
+	public Matrix3D invert() {
+		Matrix3f m = new Matrix3f(xx, xy, xz, yx, yy, yz, zx, zy, zz);
+		Matrix3D inverted = new Matrix3D();
+		
+		inverted.xx = (float)m.m00;
+		inverted.xy = (float)m.m01;
+		inverted.xz = (float)m.m02;
+
+		inverted.yx = (float)m.m10;
+		inverted.yy = (float)m.m11;
+		inverted.yz = (float)m.m12;
+		
+		inverted.zx = (float)m.m20;
+		inverted.zy = (float)m.m21;
+		inverted.zz = (float)m.m22;
+		
+		m.invert();
+
+		return inverted;		
 	}
 
 	public String toString() {

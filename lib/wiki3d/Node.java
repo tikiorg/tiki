@@ -16,15 +16,12 @@ import java.util.Set;
 public class Node extends Vertex {
 	int relativeBallSize, ballSize;
 
-	static Balancer balancer;
-	public static Vertex origin;
-	public static Matrix3D mat;
 	public boolean mouseover = false;
 	boolean focussed = true;
 	Rectangle boundRectangle = new Rectangle();
 	int U, V;
 	int i, j;
-	int xpos, ypos, zpos;
+	float fixedX, fixedY, fixedZ;
 	public int id;
 	SpeedVector speed = new SpeedVector(0, 0, 0);
 
@@ -34,20 +31,19 @@ public class Node extends Vertex {
 
 	public String name;
 
-	public int distanceFromCenter = 0;
 	public boolean passed = false;
 	public boolean initialized = false;
 
-	private static Hashtable nodesFromName = new Hashtable();
+	private Graph graph;
 
-	public Node(String name) {
+	public Node(String name, Graph graph) {
 		super();
 		links = new Hashtable();
-		mat = new Matrix3D();
+
+		this.graph = graph;
 
 		this.name = name;
 		this.passed = false;
-		distanceFromCenter = -1;
 
 		relativeBallSize = Config.ballsize;
 		ballSize = Config.ballsize;
@@ -55,15 +51,8 @@ public class Node extends Vertex {
 		y = length();
 		x = length();
 		z = length();
+
 		setBounds();
-
-		//System.out.println("Creating " + name);
-		nodesFromName.put(name, this);
-
-	}
-
-	public static void setBalancer(Balancer a) {
-		balancer = a;
 	}
 
 	public SpeedVector getForceFromNode(Node node) {
@@ -124,9 +113,6 @@ public class Node extends Vertex {
 
 	public void unCenter() {
 		isCentered = false;
-		x++;
-		y++;
-		z++;
 	}
 
 	public void clearSpeed() {
@@ -141,7 +127,7 @@ public class Node extends Vertex {
 		if (centered()) {
 			clearSpeed();
 			addSpeed(getForceToCenter());
-			change(speed.x, speed.y, speed.z);
+			moveBy(speed.x, speed.y, speed.z);
 		} else if (!this.positionFixed()) {
 			change(speed);
 		}
@@ -159,19 +145,30 @@ public class Node extends Vertex {
 	public void fixPosition() {
 
 		positionFixed = true;
-		xpos = x;
-		ypos = y;
-		zpos = z;
+		fixedX = x;
+		fixedY = y;
+		fixedZ = z;
 
 	}
 
 	//function for changing the object space coordinates,
-	public void change(int dx, int dy, int dz) {
+	public void moveBy(float dx, float dy, float dz) {
 
 		x = x + (dx);
 		y = y + (dy);
 		z = z + (dz);
-
+		
+		adjustPosition();
+	}
+	
+	public void moveTo(float x, float y, float z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		adjustPosition();
+	}
+	
+	public void adjustPosition() {
 		if (x > Config.xmax) {
 			x = Config.xmax;
 		}
@@ -197,24 +194,32 @@ public class Node extends Vertex {
 		if (sp.module() > Config.maxSpeed) {
 			sp.resize(Config.maxSpeed / sp.module());
 		}
-		change(sp.x, sp.y, sp.z);
+		moveBy(sp.x, sp.y, sp.z);
+	}
+	
+	public void changeInProjection(int u, int v) {
+		
 	}
 
 	synchronized public void proj() {
 		relativeBallSize =
-			(int) Math.round((double) ballSize * FOV / (-Z + ZC));
+			(int) Math.round((double) ballSize * FOV / (-z + cameraZ));
 		//diameter reduced to projection
 		//System.out.println("ZC"+ZC+"Z"+Z+"b"+b);
 		if (relativeBallSize < Config.minimumBallSize)
 			relativeBallSize = Config.minimumBallSize;
 
 		//projection for X,and Y of 3d to u,v of 2d;
-		int k = Z - ZC;
-		int ZZ = Z - ZC;
+		int k = (int) (z - cameraZ);
+		int ZZ = (int) (z - cameraZ);
 		if (Math.abs(ZZ) < 1)
 			ZZ = 1;
-		u = new Float(origin.x + (FOV * (X - origin.x)) / (ZZ)).intValue();
-		v = new Float(origin.y + (FOV * (Y - origin.y)) / (ZZ)).intValue();
+		u =
+			new Float(graph.origin.x + (FOV * (x - graph.origin.x)) / (ZZ))
+				.intValue();
+		v =
+			new Float(graph.origin.y + (FOV * (y - graph.origin.y)) / (ZZ))
+				.intValue();
 
 		int c = relativeBallSize / 2;
 
@@ -239,10 +244,6 @@ public class Node extends Vertex {
 
 	}
 
-	synchronized public void transform() {
-		mat.transform(this);
-	}
-
 	public int length() {
 		return (int) (Math.random() * Config.randomlength)
 			- Config.lengthmedian;
@@ -257,22 +258,17 @@ public class Node extends Vertex {
 
 	public void addLink(String nodeName) {
 		links.put(nodeName, new Object());
-		Node neighbour = Node.fromString(nodeName);
+		Node neighbour = graph.nodeFromName(nodeName);
 		if (neighbour != null) {
 			neighbour.links.put(this.name, new Object());
 		}
-	}
-
-	public static Node fromString(String nodeName) {
-		Node node = (Node) nodesFromName.get(nodeName);
-		return node;
 	}
 
 	public void paint(Graphics g) {
 
 		Graphics2D graphic = (Graphics2D) g;
 
-		double zc = Z - ZC;
+		double zc = z - cameraZ;
 		double scale;
 		if (Math.abs(zc) > 1)
 			scale = Math.abs(FOV * 1 / zc);
@@ -289,7 +285,7 @@ public class Node extends Vertex {
 		Set linkSet = links.keySet();
 
 		for (Iterator it = linkSet.iterator(); it.hasNext();) {
-			Node neighbour = fromString((String) it.next());
+			Node neighbour = graph.nodeFromName((String) it.next());
 			if (neighbour != null) {
 				g.drawLine(u, v, neighbour.u, neighbour.v);
 			}
@@ -316,6 +312,7 @@ public class Node extends Vertex {
 		graphic.setComposite(al);
 		graphic.fillOval(U, V, relativeBallSize, relativeBallSize);
 		AffineTransform at2 = new AffineTransform();
+
 		at2.setToScale(scale, scale);
 		FontRenderContext frc = new FontRenderContext(at2, true, true);
 
@@ -326,7 +323,7 @@ public class Node extends Vertex {
 	}
 
 	public void remove() {
-		nodesFromName.remove((String) name);
+		graph.nodesFromName.remove((String) name);
 	}
 
 }
