@@ -1119,9 +1119,9 @@ class ImageGalsLib extends TikiLib {
 			// Create a new record
 			$query = "insert into `tiki_galleries`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`)
                                     values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-			$result = $this->query($query,array($name,$description,$theme,$now,$user,$now,$maxRows,$rowImages,$thumbSizeX,$thumbSizeY,$public,0,$visible));
-			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries` where `name`=? and `created`=?",array($name,$now));
+			$bindvars=array($name,$description,$theme,(int) $now,$user,(int) $now,(int) $maxRows,(int) $rowImages,(int) $thumbSizeX,(int) $thumbSizeY,$public,0,$visible);
+			$result = $this->query($query,$bindvars);
+			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries` where `name`=? and `created`=?",array($name,(int) $now));
 		}
 
 		return $galleryId;
@@ -1136,14 +1136,14 @@ class ImageGalsLib extends TikiLib {
 
 	function remove_gallery_scale($galleryId, $xsize = 0, $ysize = 0) {
 		$mid = "";
-		$bindvars=array($galleryId);
+		$bindvars=array((int) $galleryId);
 		if ($xsize != 0) {
 			$mid = " and `xsize`=? ";
-			$bindvars=array($galleryId,$xsize);
+			$bindvars=array((int) $galleryId,(int) $xsize);
 		}
 		if ($ysize != 0) {
 			$mid .= " and `ysize`=? ";
-			$bindvars=array($galleryId,$ysize);
+			$bindvars=array((int) $galleryId,(int) $ysize);
 		}
 		$query = "delete from `tiki_galleries_scales` where
             `galleryId`=? $mid";
@@ -1154,7 +1154,7 @@ class ImageGalsLib extends TikiLib {
 		global $gal_use_dir;
 
 		$query = "select `imageId`,path from `tiki_images` where `galleryId`=?";
-		$result = $this->query($query,array($id));
+		$result = $this->query($query,array((int) $id));
 
 		while ($res = $result->fetchRow()) {
 			$path = $res["path"];
@@ -1194,9 +1194,9 @@ class ImageGalsLib extends TikiLib {
 		}
 
 		$query = "delete from `tiki_galleries` where `galleryId`=?";
-		$result = $this->query($query,array($id));
+		$result = $this->query($query,array((int) $id));
 		$query = "delete from `tiki_images` where `galleryId`=?";
-		$result = $this->query($query,array($id));
+		$result = $this->query($query,array((int) $id));
 		$this->remove_gallery_scale($id);
 		$this->remove_object('image gallery', $id);
 		return true;
@@ -1214,7 +1214,7 @@ class ImageGalsLib extends TikiLib {
 		$query = "select * from `tiki_galleries_scales` where `galleryId`=?
               order by `xsize`*`ysize` asc";
 
-		$result = $this->query($query,array($id));
+		$result = $this->query($query,array((int) $id));
 		$resa = array();
 
 		while ($res = $result->fetchRow()) {
