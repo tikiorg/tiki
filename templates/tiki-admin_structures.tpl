@@ -1,12 +1,11 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.15 2003-11-14 09:02:53 chris_holman Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_structures.tpl,v 1.16 2003-11-15 12:12:32 sylvieg Exp $ *}
 
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
 <!-- the help link info --->
   
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Structures" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Structures{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
