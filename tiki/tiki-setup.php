@@ -591,7 +591,7 @@ $auth_ldap_userdn = "";
 $smarty->assign('auth_ldap_userdn',$auth_ldap_userdn);
 $auth_ldap_userattr = "uid";
 $smarty->assign('auth_ldap_userattr',$auth_ldap_userattr);
-$auth_ldap_useroc = "posixAccount";
+$auth_ldap_useroc = "inetOrgPerson";
 $smarty->assign('auth_ldap_useroc',$auth_ldap_useroc);
 $auth_ldap_groupdn = "";
 $smarty->assign('auth_ldap_groupdn',$auth_ldap_groupdn);
