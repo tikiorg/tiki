@@ -310,7 +310,9 @@ class ImageGalsLib extends TikiLib {
 		if ($this->uselib == "imagick") {
 			//imagick can read everything ... we assume
 			return true;
-		} else if ($this->uselib == "gd") {
+		} else if ( $this->uselib == "gd" &&
+		    $this->havegd == true )
+		{
 			switch (strtolower($imagetype)) {
 			case 'jpeg':
 			case 'pjpeg':
@@ -351,6 +353,8 @@ class ImageGalsLib extends TikiLib {
 
 				break;
 			}
+		} else {
+		    return false;
 		}
 	}
 
