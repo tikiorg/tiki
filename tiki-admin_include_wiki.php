@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.9 2003-11-26 11:13:11 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.10 2003-12-02 08:30:36 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -498,6 +498,14 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$smarty->assign("feature_userVersions", 'n');
 	}
 
+	if (isset($_REQUEST["wiki_uses_slides"]) && $_REQUEST["wiki_uses_slides"] == "on") {
+		$tikilib->set_preference("wiki_uses_slides", 'y');
+		$smarty->assign("wiki_uses_slides", 'y');
+	} else {
+		$tikilib->set_preference("wiki_uses_slides", 'n');
+		$smarty->assign("wiki_uses_slides", 'n');
+	}
+
 }
 
 if (isset($_REQUEST["wikisetprefs"])) {
@@ -561,6 +569,7 @@ if(isset($_REQUEST["wikisetwatch"])) {
     $smarty->assign("wiki_watch_editor",'n');
   }
 }
+
 
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);
