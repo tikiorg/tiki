@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-backup.php,v 1.7 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-backup.php,v 1.8 2003-10-31 13:20:31 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -30,15 +30,15 @@ $smarty->assign('restore', 'n');
 if (isset($_REQUEST["restore"])) {
 	$smarty->assign('restore', 'y');
 
-	$smarty->assign('restorefile', $_REQUEST["restore"]);
+	$smarty->assign('restorefile', basename($_REQUEST["restore"]));
 }
 
 if (isset($_REQUEST["rrestore"])) {
-	$backuplib->restore_database("backups/$tikidomain" . $_REQUEST["rrestore"]);
+	$backuplib->restore_database("backups/$tikidomain" . basename($_REQUEST["rrestore"]));
 }
 
 if (isset($_REQUEST["remove"])) {
-	$filename = "backups/$tikidomain" . $_REQUEST["remove"];
+	$filename = "backups/$tikidomain" . basename($_REQUEST["remove"]);
 
 	unlink ($filename);
 }
