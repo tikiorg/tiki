@@ -230,7 +230,7 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("tmpDir",$_REQUEST["tmpDir"]);
     $smarty->assign_by_ref('tmpDir',$_REQUEST["tmpDir"]);
   } else {
-    if (substr(PHP_OS, 0, 3) == 'WIN') $tdir='C:/temp' ; else $tdir='/tmp'; // untested. Dont have windows
+    $tdir = TikiSetup::tempdir();
     $tikilib->set_preference("tmpDir",$tdir);
     $smarty->assign('tmpDir',$tdir);
   }

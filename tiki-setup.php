@@ -2,63 +2,151 @@
 
 //xdebug_start_profiling();
 
-function system_check() {
-	if (!function_exists('posix_getuid'))
-		return true;
+#error_reporting(E_ALL);
 
-	$user = @posix_getpwuid(@posix_getuid());
-	$group = @posix_getpwuid(@posix_getgid());
-	$wwwuser = $user ? $user['name'] : false;
-	$wwwgroup = $group ? $group['name'] : false;
-
-	if (!$wwwuser) {
-		$wwwuser = 'nobody (or the user account the web server is running under)';
-	}
-	if (!$wwwgroup) {
-		$wwwgroup = 'nobody (or the group account the web server is running under)';
-	}
-	$docroot = $_SERVER['DOCUMENT_ROOT'];
-
-	$errors = '';
-
-	if (!is_dir('templates_c')) {
-		$errors .= "The directory '$docroot/templates_c' does not exist.\n";
-	} else 
-	if (!is_writeable('templates_c')) {
-		$errors .= "The directory '$docroot/templates_c' is not writeable by $wwwuser.\n";
-	}
-	if (!is_dir('modules/cache')) {
-		$errors .= "The directory '$docroot/modules/cache' does not exist.\n";
-	} else 
-	if (!is_writeable('modules/cache')) {
-		$errors .= "The directory '$docroot/modules/cache' is not writeable by $wwwuser.\n";
+class TikiSetup {
+	function os() {
+		static $os;
+		
+		if (!isset($os)) {
+			if (substr(PHP_OS, 0, 3) == 'WIN') {
+				$os = 'windows';
+			} else {
+				$os = 'unix';
+			}
+		}
+		
+		return $os;
 	}
 
-	if ($errors) {
-		print "
+	function isWindows() {
+		static $windows;
+		
+		if (!isset($windows)) {
+			$windows = substr(PHP_OS, 0, 3) == 'WIN';
+		}
+		
+		return $windows;
+	}
+	
+	function tempdir() {
+		static $tempdir;
+		
+		if (!$tempdir) {
+			$tempdir = dirname(tempnam(false, ''));
+		}
+		
+		return $tempdir;
+	}
+	
+	function check() {
+		static $checked;
+		
+		if ($checked) {
+			return;
+		}
+			
+		$checked = true;
+		
+		$errors = '';
+
+		$docroot = dirname($_SERVER['SCRIPT_FILENAME']);
+
+		if (ini_get('session.save_handler') == 'files') {
+			$save_path = ini_get('session.save_path');
+
+			if (!is_dir($save_path)) {
+				$errors .= "The directory '$save_path' does not exist.\n";
+			} else 
+			if (!is_writeable($save_path)) {
+				$errors .= "The directory '$save_path' is not writeable.\n";
+			}
+
+			if ($errors) {
+				$save_path = TikiSetup::tempdir();
+				if (is_dir($save_path) && is_writeable($save_path)) {
+					ini_set('session.save_path', $save_path);
+					$errors = '';
+				}
+			}
+		}
+
+		$wwwuser	= '';
+		$wwwgroup	= '';
+		
+		if (TikiSetup::isWindows()) {
+			$wwwuser	= 'SYSTEM';
+			$wwwgroup	= 'SYSTEM';
+		}
+
+		if (function_exists('posix_getuid')) {
+			$user		= @posix_getpwuid(@posix_getuid());
+			$group		= @posix_getpwuid(@posix_getgid());
+			$wwwuser	= $user ? $user['name'] : false;
+			$wwwgroup	= $group ? $group['name'] : false;
+		}
+
+		if (!$wwwuser) {
+			$wwwuser = 'nobody (or the user account the web server is running under)';
+		}
+		if (!$wwwgroup) {
+			$wwwgroup = 'nobody (or the group account the web server is running under)';
+		}
+
+		static $dirs = array(
+			'templates_c', 
+			'modules/cache'
+		);
+		
+		foreach ($dirs as $dir) {
+			if (!is_dir($dir)) {
+				$errors .= "The directory '$docroot/$dir' does not exist.\n";
+			} else 
+			if (!is_writeable($dir)) {
+				$errors .= "The directory '$docroot/$dir' is not writeable by $wwwuser.\n";
+			}
+		}
+		
+		if ($errors) {
+			print "
 <pre>
 Your tiki is not properly set up:
 
 $errors
+";
+		}
+
+		if (!TikiSetup::isWindows()) {
+			print "
 To set up your tiki, log in to the system running tiki,
 and type the following commands:
 
 \$ bash
 \$ cd $docroot
+\$ chmod +x setup.sh
 \$ su -c './setup.sh $wwwuser'
 
-or
+or if you can't become root, but are a member of the group $wwwgroup:
 
-\$ su -c './setup.sh mylogin $wwwgroup'
+\$ bash
+\$ cd $docroot
+\$ chmod +x setup.sh
+\$ ./setup.sh mylogin $wwwgroup
 
 Once you have executed these commands, this message will disappear!
 
-";
-		exit;
+	";
+		}
+		
+		if ($errors) {
+			exit;
+		}
 	}
 }
 
-system_check();
+TikiSetup::check();
+
+$tmpDir = TikiSetup::tempdir();
 
 class timer
         {
@@ -85,9 +173,6 @@ if(!isset($_SESSION["votes"])) {
   //session_register("votes");
   $_SESSION["votes"]=$votes;
 }
-
-
- 
   
 $appname="tiki";
 if(!isset($_SESSION["appname"])) {
@@ -247,8 +332,6 @@ $feature_file_galleries_rankings = 'n';
 $language = 'en';
 $lang_use_db = 'n';
 
-if (substr(PHP_OS, 0, 3) == 'WIN') $tmpDir='C:/Windows/temp' ; else $tmpDir='/tmp'; // untested. Dont have windows
-
 $feature_left_column = 'y';
 $feature_right_column = 'y';
 $feature_top_bar = 'y';
@@ -266,7 +349,7 @@ $smarty->assign('feature_newsreader',$feature_newsreader);
 $feature_wiki_footnotes = 'n';
 $smarty->assign('feature_wiki_footnotes',$feature_wiki_footnotes);
 
-$system_os = $tikilib->get_preference('system_os','unknown');
+$system_os = $tikilib->get_preference('system_os',TikiSetup::os());
 $smarty->assign('system_os',$system_os);
 
 $rememberme = $tikilib->get_preference('rememberme','disabled');

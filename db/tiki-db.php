@@ -44,7 +44,12 @@ $dsn = "mysql://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 //$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
 $dbTiki = DB::connect($dsn);
 if (DB::isError($dbTiki)) {        
-  die ($dbTiki->getMessage());
+  print "
+<pre>
+Unable to login to the mySQL database '$dbs_tiki' on '$host_tiki' as user '$user_tiki'
+";
+print $dbTiki->getMessage();
+exit;
 } 
 
 // Forget db info so that malicious PHP may not get password etc.

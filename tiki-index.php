@@ -1,10 +1,9 @@
 <?php
 // Initialization
+
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
-
 include_once('lib/wiki/wikilib.php');
-
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -61,7 +60,6 @@ if(!$tikilib->page_exists($page)) {
   $smarty->display("styles/$style_base/error.tpl");
   die;
 }
-
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
