@@ -171,14 +171,14 @@ src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' /></a>{if $channel
 <div id="attachmentsconf" style="display:{if $useAttachments eq 'y'}block{else}none{/if};">
 {tr}Attachment display options (Use numbers to order items, 0 will not be displayed, and negative values display in popups){/tr}<br />
 <table width="100%"><tr>
-<td>{tr}name{/tr}</td>
-<td>{tr}date{/tr}</td>
-<td>{tr}dls{/tr}</td>
-<td>{tr}desc{/tr}</td>
-<td>{tr}size{/tr}</td>
+<td>{tr}filename{/tr}</td>
+<td>{tr}created{/tr}</td>
+<td>{tr}downloads{/tr}</td>
+<td>{tr}comment{/tr}</td>
+<td>{tr}filesize{/tr}</td>
 <td>{tr}version{/tr}</td>
-<td>{tr}type{/tr}</td>
-<td>{tr}long desc{/tr}</td></tr>
+<td>{tr}filetype{/tr}</td>
+<td>{tr}longdesc{/tr}</td></tr>
 <tr>
 <td><input type="text" size="2" name="ui[filename]" value="{$ui.filename}" /></td>
 <td><input type="text" size="2" name="ui[created]" value="{$ui.created}" /></td>
