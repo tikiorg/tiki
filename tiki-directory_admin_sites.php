@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.6 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.7 2003-10-12 20:49:09 ohertel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,7 +99,10 @@ if (isset($_REQUEST["save"])) {
 		die;
 	}
 
-	if (substr($_REQUEST["url"], 0, 7) <> 'http://') {
+	if ((substr($_REQUEST["url"], 0, 7) <> 'http://') &&
+	    (substr($_REQUEST["url"], 0, 8) <> 'https://') &&
+	    (substr($_REQUEST["url"], 0, 6) <> 'ftp://'))
+	{
 		$_REQUEST["url"] = 'http://' . $_REQUEST["url"];
 	}
 
