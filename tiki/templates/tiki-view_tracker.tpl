@@ -20,7 +20,7 @@
 
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3" print=false advance=false}
-<div class="tabs">
+<div id="page-bar">
 {if $tiki_p_view_trackers eq 'y'}
 <span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></a></span>
 {/if}
@@ -30,11 +30,10 @@
 </div>
 {/if}
 
-{cycle name=content values="1,2,3" print=false advance=false assign=focustab}
+{cycle name=content values="1,2,3" print=false advance=false}
 {* -------------------------------------------------- tab with list --- *}
 {if $tiki_p_view_trackers eq 'y'}
-
-<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
 <form action="tiki-view_tracker.php" method="post">
@@ -216,7 +215,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 
 {* --------------------------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_create_tracker_items eq 'y'}
-<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <form action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 

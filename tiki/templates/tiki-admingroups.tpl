@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.48 2004-04-09 04:07:02 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.49 2004-04-09 05:11:47 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -35,9 +35,9 @@
 </div>
 {/if}
 
-{cycle name=content values="1,2,3,4" print=false advance=false assign=focustab}
+{cycle name=content values="1,2,3,4" print=false advance=false}
 {* ----------------------- tab with list --------------------------------------- *}
-<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h3>{tr}List of existing groups{/tr}</h3>
 
 <form method="get" action="tiki-admingroups.php">
@@ -119,7 +119,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 </div>
 
 {* ----------------------- tab with form --------------------------------------- *}
-<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 {if $groupname}
 <h3>{tr}Edit group{/tr} {$groupname}</h3>
 {else}
@@ -206,7 +206,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/de
 
 {* ----------------------- tab with memberlist --------------------------------------- *}
 {if $groupname and $memberslist}
-<div id="content{cycle name=content}" class="wikitext"{if $features_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <h3>{tr}Members List{/tr}: {$groupname}</h3>
 <table class="normal"><tr>
 {cycle name=table values=',,,,</tr><tr>' print=false advance=false}
