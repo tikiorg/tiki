@@ -2086,5 +2086,6 @@ from Admin->General
 "LDAP Admin User" => "LDAP Admin User",
 "LDAP Admin Pwd" => "LDAP Admin Pwd",
 "picture not found" => "picture not found",
+"Menu options" => "Menu options",
 "##end###" => "###end###");
 ?>

@@ -1,10 +1,10 @@
 <a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$menu_info.name}</a><br/><br/>
-<a href="tiki-admin_menus.php" class="link">{tr}List menus{/tr}</a>
+<a href="tiki-admin_menus.php" class="link">{tr}List menus{/tr}</a> |
 <a href="tiki-admin_menus.php?menuId={$menuId}" class="link">{tr}Edit this menu{/tr}</a>
 <h2>{tr}Preview menu{/tr}</h2>
 <div align="center">
-<div style="text-align:left;width:130px;" class="box">
-<div class="box-title">{$menu_info.name}</div>
+<div style="text-align:left;width:180px;" class="box">
+<div class="box-title">[{$menu_info.name}]</div>
 <div class="box-data">
 {include file=tiki-user_menu.tpl}
 </div>
@@ -80,7 +80,7 @@
 |<a class="link" href="javascript:setMenuCon('tiki-quiz_stats.php','{tr}Quiz stats{/tr}');">{tr}Quiz stats{/tr}</a>
 |<a class="link" href="javascript:setMenuCon('tiki-quiz_stats_quiz.php?quizId=','');">{tr}Stats for a Quiz{/tr}</a>]
 </td></tr></table>
-<h2>Menu options</h2>
+<h2>{tr}Menu options{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
