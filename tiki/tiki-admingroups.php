@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.30 2004-03-02 16:00:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.31 2004-03-03 13:36:09 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -233,17 +233,17 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 		}
 	}
 
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1,80)),"tab2");
+	setcookie("activeTabs".urlencode(substr($_SERVER["PHP_SELF"],1,80)),"tab2");
 } else {
 	$allgroups = $userlib->list_all_groups();
 	foreach ($allgroups as $rr) {
 		$inc["$rr"] = "n";
 	}
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1,80)),"tab1");
+	setcookie("activeTabs".urlencode(substr($_SERVER["PHP_SELF"],1,80)),"tab1");
 	$_REQUEST["group"] = 0;
 }
 if (isset($_REQUEST['add'])) {
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1,80)),"tab2");
+	setcookie("activeTabs".urlencode(substr($_SERVER["PHP_SELF"],1,80)),"tab2");
 }
 
 if ($_REQUEST['group']) {
