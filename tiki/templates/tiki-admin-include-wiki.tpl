@@ -122,7 +122,7 @@
     dash, period and semicolon (dash, period and semicolon not allowed at the beginning and the end).{tr}<br />
     {tr}Full adds accented characters.{/tr}<br />
     {tr}Very full adds single and double quotes, and allows periods at the beginning and the end of a page name.{/tr}
-    <br />{tr}Note that this does not affect BumpyWord recognition, only page names surrounded by (( and )).{/tr}
+    <br />{tr}Note that this does not affect WikiWord recognition, only page names surrounded by (( and )).{/tr}
     </p>
     <select name="wiki_page_regex">
     <option value='very full' {if $wiki_page_regex eq 'very_full'}selected="selected"{/if}>{tr}very full{/tr}</option>
