@@ -1108,9 +1108,32 @@ function add_pageview() {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $res["suggested"] = $this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=?",array((int) $res["faqId"]));
 
-	    $ret[] = $res;
+	    $add = TRUE;
+	    global $feature_categories;
+	    global $userlib;
+	    global $user;
+	    global $tiki_p_admin;
+
+		if ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	    	global $categlib;
+	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+	    	$perms_array = $categlib->get_object_categories_perms($user, 'faq', $res['faqId']);
+	    	if ($perms_array) {
+		    	foreach ($perms_array as $perm => $value) {
+		    		$$perm = $value;
+		    	}
+	    	}
+
+	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    		$add = FALSE;
+	    	}
+	    }
+
+		if ($add) {
+		    $res["suggested"] = $this->getOne("select count(*) from `tiki_suggested_faq_questions` where `faqId`=?",array((int) $res["faqId"]));
+		    $ret[] = $res;
+		}
 	}
 
 	$retval = array();
