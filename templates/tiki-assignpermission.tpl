@@ -1,3 +1,7 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignpermission.tpl,v 1.33 2003-07-12 00:25:15 zaufi Exp $ *}
+{ *TODO: Must fix even/odd table rows detection byusing Smarty 'cycle' *}
+
+
 <a href="tiki-assignpermission.php?group={$group}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a><br/><br/>
 <h3>{tr}Group Information{/tr}</h3>
 <table class="normal">
@@ -9,7 +13,6 @@
 {/section}
 </td></tr>
 </table>
-</div>
 <br/>
 
 <form method="post" action="tiki-assignpermission.php">
