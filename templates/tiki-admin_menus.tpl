@@ -61,11 +61,11 @@
 <td class="odd">{$channels[user].type}</td>
 <td class="odd">{$channels[user].options}</td>
 <td class="odd">
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].menuId}" 
+	&nbsp;&nbsp;<a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].menuId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this menu?{/tr}')" 
 title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;menuId={$channels[user].menuId}" title="{tr}Click here to edit this menu{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
-   <a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Click here to configure this menu{/tr}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+	<a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;menuId={$channels[user].menuId}" title="{tr}Click here to edit this menu{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+	<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Click here to configure this menu{/tr}><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
 </td>
 </tr>
 {else}
@@ -76,11 +76,11 @@ title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{
 <td class="even">{$channels[user].type}</td>
 <td class="even">{$channels[user].options}</td>
 <td class="even">
-   &nbsp;&nbsp;<a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].menuId}" 
+	&nbsp;&nbsp;<a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].menuId}" 
 onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this menu?{/tr}')" 
-title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif"  /></a>&nbsp;&nbsp;
-   <a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;menuId={$channels[user].menuId}" title="{tr}Click here to edit this menu{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
-   <a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Click here to configure this menu{/tr}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+	<a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;menuId={$channels[user].menuId}" title="{tr}Click here to edit this menu{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
+	<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Click here to configure this menu{/tr}><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
 </td>
 </tr>
 {/if}
@@ -92,7 +92,7 @@ title="{tr}Click here to delete this menu{/tr}"><img border="0" alt="{tr}Remove{
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-[<a class="prevnext" href="tiki-admin_menus.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="prevnext" href="tiki-admin_menus.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />

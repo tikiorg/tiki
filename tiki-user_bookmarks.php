@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_bookmarks.php,v 1.11 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_bookmarks.php,v 1.12 2004-01-06 11:10:23 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -137,7 +137,7 @@ $smarty->assign('folders', $folders);
 
 include_once ('tiki-mytiki_shared.php');
 
-ask_ticket('user-bookmarks')
+ask_ticket('user-bookmarks');
 
 // Display the template
 $smarty->assign('mid', 'tiki-user_bookmarks.tpl');

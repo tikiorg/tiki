@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.33 2003-12-19 05:45:24 wolff_borg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.34 2004-01-06 11:10:26 redflo Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -361,7 +361,7 @@
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Babelfish" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Babelfish Translation Logo{/tr}">{/if}
         		{tr}Show Babelfish Translation Logo{/tr}
-        		{if $feature_babelfish_logo eq 'y'}</a>{/if}
+        		{if $feature_help eq 'y'}</a>{/if}
         		:</td>
         <td><input type="checkbox" name="feature_babelfish_logo"
             {if $feature_babelfish_logo eq 'y'}checked="checked"{/if}/></td>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.35 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.36 2004-01-06 11:10:23 redflo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -307,7 +307,7 @@ if (isset($_REQUEST["save"])) {
 
 	if (!isset($_REQUEST["rating"]))
 		$_REQUEST['rating'] = 0;
-	  if (!isset($_REQUEST['topicId'])) $_REQUEST['topicId'] = 0;
+	  if (!isset($_REQUEST['topicId']) || $_REQUEST['topicId'] == '') $_REQUEST['topicId'] = 0;
 
 	// If page exists
 	$artid = $tikilib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>'), $_REQUEST["authorName"],
