@@ -53,6 +53,8 @@ static int balanceSpeedFactor=1;
 
 static int nodeDistance = 200;
 public static int minimumBallSize = 2;
+public static float maxSpeed = 30;
+public static int navigationDepth = 1;
 
 
 

@@ -4,45 +4,7 @@ import java.awt.*;
 
 public class Graph extends Vector {
 	Node focus;
-	public static HashMap nodeNameMap;
-	public static Node centerNode;
-	static Node lastNode;
-	
-	XmlReader xmlReader;
-	private int maxDistance = 2;
-
 	public Graph() {
-		nodeNameMap = new HashMap();
-		
-	}
-
-	public void setXmlReader(XmlReader xr) {
-		xmlReader = xr;
-	}
-
-	public Node add(String nodeName) {
-		Node node;
-		if (nodeNameMap.containsKey(nodeName)) {
-			node = (Node) nodeNameMap.get(nodeName);
-		} else {
-			node = new Node(nodeName, this);
-			nodeNameMap.put(nodeName, node);
-			addElement(node);
-			
-		}
-
-		if (centerNode == null) {
-			node.center();
-		}
-
-		return node;
-	}
-
-	public void addLink(String nodeName1, String nodeName2) {
-		Node node1 = add(nodeName1);
-		Node node2 = add(nodeName2);
-		node1.addLink(node2);
-		node2.addLink(node1);
 	}
 
 	//checks whether any of the vertex in the collection contains the
@@ -53,8 +15,7 @@ public class Graph extends Vector {
 
 		while (i < size()) {
 			if (((Node) elementAt(i)).contains(x, y)) {
-				focus = ((Node) elementAt(i));
-				lastNode = (Node) focus;
+				focus = ((Node) elementAt(i));				
 				return true;
 			}
 			i++;
@@ -78,18 +39,24 @@ public class Graph extends Vector {
 		//object ps contains the value of Z for each vertex and the position
 		// of the vertex in the collection.
 		while (e.hasMoreElements()) {
-			ps[i] = new Pos(((Node) e.nextElement()).Z, i);
-			i++;
+			Node node = (Node) e.nextElement();
+			if (node.visible()) {
+				ps[i] = new Pos(node.Z, i);
+				i++;				
+			}
 
 		}
+		count = i;
 		//System.out.println("size"+count);
 		i = 0;
 		//sorting here
 		while (i < count - 1) {
 			min = i;
-			for (int j = i + 1; j < count; j++) {
-				if (ps[j].z < ps[min].z) {
-					min = j;
+			if (ps[i + 1] != null && ps[i] != null) {
+				for (int j = i + 1; j < count; j++) {
+					if (ps[j].z < ps[min].z) {
+						min = j;
+					}
 				}
 			}
 			Pos zm = ps[i];
@@ -102,9 +69,10 @@ public class Graph extends Vector {
 		//
 
 		for (i = 0; i < count; i++) {
-			((Node) elementAt(ps[i].pos)).paint(g);
-			//System.out.print(" "+ps[i].pos);
-
+			try {
+				((Node) elementAt(ps[i].pos)).paint(g);
+			} catch (Exception ex) {
+			}
 		}
 		//System.out.println("\n "+z[0]+ " "+ z[1]+" "+z[2]);
 
@@ -131,70 +99,16 @@ public class Graph extends Vector {
 
 	}
 
-	/**
-	 * @param node
-	 */
-	public void navigateTo(Node node) {
-		node.center();
-		populateGraph();
-		removeFarNodes();
-	}
-
 	public void removeNode(Node node) {
 		for (int i = 0; i < size(); i++) {
 			if (this.elementAt(i) == node) {
-				this.remove(i);
-				
-				return;
+				this.remove(i);				
 			}
 		}
-	}
-
-	public void mapDistances(Node node) {
-		
-		if (node == null) {
-			for (int i = 0; i < size(); i++) {
-				((Node) elementAt(i)).passed = false;
-				((Node) elementAt(i)).distanceFromCenter = -1;
-			}
-			node = centerNode;
-			node.distanceFromCenter = 0;
-			node.passed = true;
+		if (focus == node) {
+			focus = null;
 		}
-
-		Set linkSet = node.links.keySet();
-		for (Iterator it = linkSet.iterator(); it.hasNext();) {
-			Node neighbour = (Node) it.next();
-			if (!neighbour.passed) {
-				neighbour.distanceFromCenter = node.distanceFromCenter+1;
-				neighbour.passed = true;
-				mapDistances(neighbour);
-			}
-		}
-	}
-	
-	public void removeFarNodes() {		
-		mapDistances(null);
-		for (int i=0; i<size(); i++) {
-			Node node = ((Node) elementAt(i));
-			int d = node.distanceFromCenter;
-			if (d > maxDistance || d < 0) {
-				node.clean();
-			}
-		}
-	}
-	
-	public void populateGraph() {
-		mapDistances(null);
-		for (int i=0; i<size(); i++) {
-			Node node = ((Node) elementAt(i));
-			int d = node.distanceFromCenter;
-			if (d <= maxDistance && d >= 0) { 
-				xmlReader.getNodeData(node.name, this);
-				mapDistances(null);
-			}
-		}
-		
+		node.remove();
 	}
 
 }
