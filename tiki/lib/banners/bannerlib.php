@@ -256,11 +256,13 @@ class BannerLib extends TikiLib {
 
 		$result = $this->query($query,array($zone));
 
+/* this code following if (0) is never executed, right?
 		if (0) {
 			$query = "delete from `tiki_banner_zones` where `zoneName`=?";
 
 			$result = $this->query($query,array($zone));
 		}
+*/
 
 		return true;
 	}

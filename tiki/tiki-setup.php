@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.236 2004-06-11 22:17:36 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.237 2004-06-13 01:38:59 teedog Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1333,11 +1333,13 @@ $smarty->assign('style', $style);
 $feature_babelfish = $tikilib->get_preference('feature_babelfish', 'y');
 $feature_babelfish_logo = $tikilib->get_preference('feature_babelfish_logo', 'n');
 
- /* \todo if this page is not viewable by anonymous, then don't display the babelfish stuff */
+// \todo if this page is not viewable by anonymous, then don't display the babelfish stuff
+/* this code following if (0) is never executed, right?
 if (0) {
     $feature_babelfish = 'n';
     $feature_babelfish_logo = 'n';
 }
+*/
 
 if ($feature_babelfish == 'y') {
     require_once('lib/Babelfish.php');
