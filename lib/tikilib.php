@@ -2471,6 +2471,17 @@ class TikiLib {
     return $res["description"];
   }
  
+  function page_exists_modtime($pageName)
+  {
+    $pageName = addslashes($pageName);
+    $query = "select lastModif from tiki_pages where pageName = '$pageName'";
+    $result = $this->query($query);
+    if(!$result->numRows()) return false;
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    if(!$res["lastModif"]) $res["lastModif"]=0;
+    return $res["lastModif"];
+  }
+ 
 
   function add_hit($pageName) {
     $pageName = addslashes($pageName);
@@ -2597,6 +2608,41 @@ class TikiLib {
 	foreach($this->pre_handlers as $handler) {
 	  $data = $handler($data);
 	}
+
+    // Now search for plugins
+    //$smc = new Smarty_Compiler();
+    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
+    
+    for($i=count($plugins[0])-1;$i>=0;$i--) {
+      $plugin_start = $plugins[0][$i];
+      $plugin_end = '{'.$plugins[1][$i].'}';
+      $plugin_start_base = '{'.$plugins[1][$i].'(';
+      $pos = strpos($data,$plugin_start);
+      $pos_end = strpos($data,$plugin_end,$pos);
+      if($pos_end>$pos) {
+        $plugin_data_len=$pos_end-$pos-strlen($plugins[0][$i]);
+        $plugin_data = substr($data,$pos+strlen($plugin_start),$plugin_data_len);
+        $php_name = 'lib/wiki-plugins/wikiplugin_'.strtolower($plugins[1][$i]).'.php';
+        $func_name = 'wikiplugin_'.strtolower($plugins[1][$i]);
+        $params = split(',',trim($plugins[2][$i]));
+        $arguments=Array();
+        foreach($params as $param) {
+          $parts=explode('=>',$param);
+          if(isset($parts[0])&&isset($parts[1])) {
+            $name=trim($parts[0]);
+            $arguments[$name]=trim($parts[1]);
+          }
+        }
+        if(file_exists($php_name)) {
+          include_once($php_name);
+          $ret = $func_name($plugin_data,$arguments);
+          $ret = $this->parse_data($ret);
+          $data = substr_replace($data,$ret,$pos,$pos_end - $pos + strlen($plugin_end));
+          
+        }
+      }
+    }
+
 	
     $preparsed=Array();
     
@@ -2608,7 +2654,20 @@ class TikiLib {
       $preparsed[]=$aux;
       $data=str_replace("~pp~$pp~/pp~",$key,$data);
     } 
-    
+    // Temporary remove <pre> tags too
+    // TODO: Is this a problem if user insert <PRE> but after parsing
+    //       will get <pre> (lowercase)?? :)
+    preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/",$data,$preparse);
+    $idx=0;
+    foreach(array_unique($preparse[2]) as $pp) {
+      $key=md5($this->genPass());
+      $aux["key"]=$key;
+      $aux["data"]=$pp;
+      $preparsed[]=$aux;
+      $data=str_replace($preparse[1][$idx].$pp.$preparse[4][$idx],$key,$data);
+      $idx=$idx+1;
+    }
+
     //Extract noparse sections almost before anything
     $noparsed=Array();
     /*
@@ -2701,39 +2760,6 @@ class TikiLib {
     }
     //$page='';
 
-    // Now search for plugins
-    //$smc = new Smarty_Compiler();
-    preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
-    
-    for($i=count($plugins[0])-1;$i>=0;$i--) {
-      $plugin_start = $plugins[0][$i];
-      $plugin_end = '{'.$plugins[1][$i].'}';
-      $plugin_start_base = '{'.$plugins[1][$i].'(';
-      $pos = strpos($data,$plugin_start);
-      $pos_end = strpos($data,$plugin_end,$pos);
-      if($pos_end>$pos) {
-        $plugin_data_len=$pos_end-$pos-strlen($plugins[0][$i]);
-        $plugin_data = substr($data,$pos+strlen($plugin_start),$plugin_data_len);
-        $php_name = 'lib/wiki-plugins/wikiplugin_'.strtolower($plugins[1][$i]).'.php';
-        $func_name = 'wikiplugin_'.strtolower($plugins[1][$i]);
-        $params = split(',',trim($plugins[2][$i]));
-        $arguments=Array();
-        foreach($params as $param) {
-          $parts=explode('=>',$param);
-          if(isset($parts[0])&&isset($parts[1])) {
-            $name=trim($parts[0]);
-            $arguments[$name]=trim($parts[1]);
-          }
-        }
-        if(file_exists($php_name)) {
-          include_once($php_name);
-          $ret = $func_name($plugin_data,$arguments);
-          $ret = $this->parse_data($ret);
-          $data = substr_replace($data,$ret,$pos,$pos_end - $pos + strlen($plugin_end));
-          
-        }
-      }
-    }
 
     //unset($smc);
     if($feature_wiki_tables != 'new') {
@@ -2975,14 +3001,25 @@ class TikiLib {
       }
 
       if($repl2) {
-	      if($desc = $this->page_exists_desc($pages[1][$i])) {
-	      	$uri_ref = "tiki-index.php?page=".urlencode($pages[1][$i]);
-	        $repl = "<a title='$desc' href='$uri_ref' class='wiki'>".$pages[5][$i]."</a>";
-	      } else {
-	      	$uri_ref = "tiki-editpage.php?page=".urlencode($pages[1][$i]);
-	        $repl = $pages[5][$i]."<a href='$uri_ref' class='wiki'>?</a>";
-	      }
-	      $data = preg_replace($pattern,"$repl",$data);
+        // 24-Jun-2003, by zaufi
+        // TODO: future optimize: get page description and modification time at once.
+
+        // text[0] = link description (previous format)
+        // text[1] = timeout in seconds (new field)
+        // text[2..N] = drop
+        $text=explode("|",$pages[5][$i]);
+	if($desc = $this->page_exists_desc($pages[1][$i])) {
+	  $uri_ref = "tiki-index.php?page=".urlencode($pages[1][$i]);
+	  $repl = "<a title='$desc' href='$uri_ref' class='wiki'>".(strlen(trim($text[0]))>0?$text[0]:$pages[1][$i])."</a>";
+          // Check is timeout expired?
+	  if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1]))
+            // Append small 'new' image. TODO: possible 'updated' image more suitable...
+            $repl.="&nbsp;<img src='img/icons/new.gif'>";
+	} else {
+	  $uri_ref = "tiki-editpage.php?page=".urlencode($pages[1][$i]);
+	  $repl = (strlen(trim($text[0]))>0?$text[0]:$pages[1][$i])."<a href='$uri_ref' class='wiki'>?</a>";
+	}
+	$data = preg_replace($pattern,"$repl",$data);
       }
     }
 
@@ -3146,14 +3183,14 @@ class TikiLib {
 
       // If the first character is ' ' and we are not in pre then we are in pre
       if(substr($line,0,1)==' ') {
-				while(count($listbeg)) {
-					$data.=array_shift($listbeg);
-				}
+	while(count($listbeg)) $data.=array_shift($listbeg);
         // If the first character is space then
         // change spaces for &nbsp;
         $line = '<font face="courier" size="2">'.str_replace(' ','&nbsp;',substr($line,1)).'</font>';
         $line.='<br/>';
       } else {
+        // Replace monospaced text
+        $line = preg_replace("/-\+(.*?)\+-/","<code>$1</code>",$line);
         // Replace bold text
         $line = preg_replace("/__(.*?)__/","<b>$1</b>",$line);
         $line = preg_replace("/\'\'(.*?)\'\'/","<i>$1</i>",$line);
@@ -3168,43 +3205,41 @@ class TikiLib {
 
         // This line is parseable then we have to see what we have
         if(substr($line,0,3)=='---') {
-					while(count($listbeg)) $data.=array_shift($listbeg);
+          while(count($listbeg)) $data.=array_shift($listbeg);
           $line='<hr/>';
         } else {
-					$litype=substr($line,0,1);
-					if ($litype=='*'||$litype=='#') {
-						$listlevel=$this->how_many_at_start($line,$litype);
-						$liclose='</li>';
-						if ($listlevel<count($listbeg)) {
-							while($listlevel!=count($listbeg)) $data.=array_shift($listbeg);
-							if(substr(current($listbeg),0,5)!='</li>') $liclose='';
-						} elseif($listlevel>count($listbeg)) {
-							while ($listlevel!=count($listbeg)) {
-								$data.=($litype=='*'?'<ul>':'<ol>');
-								array_unshift($listbeg,($litype=='*'?'</ul>':'</ol>'));
+          $litype=substr($line,0,1);
+          if ($litype=='*'||$litype=='#') {
+            $listlevel=$this->how_many_at_start($line,$litype);
+            $liclose='</li>';
+            if ($listlevel<count($listbeg)) {
+              while($listlevel!=count($listbeg)) $data.=array_shift($listbeg);
+              if(substr(current($listbeg),0,5)!='</li>') $liclose='';
+            } elseif($listlevel>count($listbeg)) {
+              while ($listlevel!=count($listbeg)) {
+                $data.=($litype=='*'?'<ul>':'<ol>');
+                array_unshift($listbeg,($litype=='*'?'</ul>':'</ol>'));
               }
-							$liclose='';
+              $liclose='';
             }
-
-						if ($litype == '*'&&!strstr(current($listbeg),'</ul>')) {
-							$data.=array_shift($listbeg).($litype=='*'?'<ul>':'<ol>');
-							$liclose='';
+            if ($litype == '*'&&!strstr(current($listbeg),'</ul>')) {
+              $data.=array_shift($listbeg).($litype=='*'?'<ul>':'<ol>');
+              $liclose='';
             }
-
-						$line=$liclose.'<li>'.substr($line,$listlevel);
-						if(substr(current($listbeg),0,5)!='</li>')
-							array_unshift($listbeg,'</li>'.array_shift($listbeg));
-					} elseif(substr($line,0,1)=='+') {
-						$listlevel=$this->how_many_at_start($line,$litype);
-						if($listlevel<count($listbeg))
-							while($listlevel!=count($listbeg)) $data.=array_shift($listbeg);
-						if(count($listbeg)) {
-							if(substr(current($listbeg),0,5) != '</li>') {
-								array_unshift($listbeg,'</li>'.array_shift($listbeg));
-								$liclose='<li>';
-							} else $liclose='<br>';
-						} else $liclose='';
-						$line=$liclose.substr($line,count($listbeg));
+            $line=$liclose.'<li>'.substr($line,$listlevel);
+            if(substr(current($listbeg),0,5)!='</li>')
+              array_unshift($listbeg,'</li>'.array_shift($listbeg));
+	  } elseif($litype=='+') {
+            $listlevel=$this->how_many_at_start($line,$litype);
+            if($listlevel<count($listbeg))
+              while($listlevel!=count($listbeg)) $data.=array_shift($listbeg);
+            if(count($listbeg)) {
+              if(substr(current($listbeg),0,5) != '</li>') {
+                array_unshift($listbeg,'</li>'.array_shift($listbeg));
+                $liclose='<li>';
+              } else $liclose='<br>';
+            } else $liclose='';
+            $line=$liclose.substr($line,count($listbeg));
           } elseif(substr($line,0,3)=='!!!') {
             $line = '<h3>'.substr($line,3).'</h3>';
           } elseif(substr($line,0,2)=='!!') {
@@ -3212,16 +3247,16 @@ class TikiLib {
           } elseif(substr($line,0,1)=='!') {
             $line = '<h1>'.substr($line,1).'</h1>';
           } else {
-						while(count($listbeg)) $data.=array_shift($listbeg);
-						$line.='<br/>';
+            while(count($listbeg)) $data.=array_shift($listbeg);
+            $line.='<br/>';
           }
         }
       }
       $data.=$line;
     }
-		// Close lists may remains opened
-		while(count($listbeg)) $data.=array_shift($listbeg);
 
+    // Close lists may remains opened
+    while(count($listbeg)) $data.=array_shift($listbeg);
     
     // Replace rss modules
     if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
