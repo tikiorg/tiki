@@ -508,6 +508,13 @@ $feature_server_name=$tikilib->get_preference('feature_server_name',$_SERVER["SE
 $smarty->assign('feature_server_name',$feature_server_name);
 $_SERVER["SERVER_NAME"] = $feature_server_name;
 
+
+
+// Fix IIS servers not settin
+if(!isset($_SERVER['REQUEST_URI'])||empty($_SERVER['REQUEST_URI'])) {
+  $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '/' . $_SERVER['QUERY_STRING'];
+}
+
 if (!isset($feature_bidi)) {
 	$feature_bidi='n';
 }

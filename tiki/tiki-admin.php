@@ -183,9 +183,9 @@ if(isset($_REQUEST["prefs"])) {
     $smarty->assign_by_ref('tikiIndex',$_REQUEST["tikiIndex"]);	
   }
 
-  if(isset($_REQUEST["style"])) {
-    $tikilib->set_preference("style",$_REQUEST["style"]); 
-    $smarty->assign_by_ref('style',$_REQUEST["style"]);
+  if(isset($_REQUEST["style_site"])) {
+    $tikilib->set_preference("style",$_REQUEST["style_site"]); 
+    $smarty->assign_by_ref('style_site',$_REQUEST["style_site"]);
   }
   
   if(isset($_REQUEST["slide_style"])) {
@@ -1407,7 +1407,15 @@ $smarty->assign_by_ref('validateUsers',$validateUsers);
 $smarty->assign_by_ref('maxVersions',$maxVersions);
 $smarty->assign_by_ref('title',$title);
 $smarty->assign_by_ref('maxRecords',$maxRecords);
+
+// The style here is the style for the site not for the theme
+$style_site = $tikilib->get_preference("style",'default.css'); 
+$smarty->assign_by_ref('style_site',$style_site);
+
+
 // Display the template
 $smarty->assign('mid','tiki-admin.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
+
+
 ?>
