@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.66 2004-04-29 20:01:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.67 2004-05-12 03:55:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -197,7 +197,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$fields["data"][$i]["value"] = '';
 		}
 		
-	} elseif ($fields["data"][$i]["type"] == 'a' and isset($fields["data"][$i]["options_array"][3]))	{
+	} elseif ($fields["data"][$i]["type"] == 'a' and isset($fields["data"][$i]["options_array"][2]))	{
 		if (isset($_REQUEST["$ins_id"])) {
 			if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
 				$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
@@ -212,7 +212,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		} else {
 			$fields["data"][$i]["value"] = '';
 		}
-		if ($fields["data"][$i]["options_array"][0])	{
+		if (1 or $fields["data"][$i]["options_array"][0])	{
 			$textarea_options = true;
 		} 
 
@@ -292,7 +292,7 @@ if (!isset($mainfield)) {
 if ($textarea_options) {
 	include_once ('lib/quicktags/quicktagslib.php');
 	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','');
-	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
+	$smarty->assign('quicktags', $quicktags["data"]);
 }
 
 if ($tiki_p_admin_trackers == 'y') {
