@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.20 2003-08-04 09:05:27 zaufi Exp $ *}
+
 {popup_init src="lib/overlib.js"}
 <script type="javascript" src="lib/calendar/dates.js"></script>
 <a class="pagetitle" href="tiki-calendar.php?view={$view}">{tr}Calendar{/tr}</a>
@@ -104,7 +106,7 @@ onmouseover="this.style.textDecoration='underline';"
 </div>
 
 
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" id="calendar">
 {if $viewmode eq 'day'}
 
 {else}
