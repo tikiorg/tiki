@@ -473,7 +473,9 @@ class TrackerLib extends TikiLib {
 					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 					$this->query($query,array((int) $new_itemId,(int) $fieldId,$value));
 				}
-				$cachelib->invalidate(md5('trackerfield'.$fieldId));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
+				$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));
 			}
 		}
 		include_once('lib/notifications/notificationlib.php');	
@@ -646,7 +648,9 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,$bindvars);
 		$query = "delete from `tiki_tracker_item_fields` where `fieldId`=?";
 		$result = $this->query($query,$bindvars);
-		$cachelib->invalidate(md5('trackerfield'.$fieldId));
+		$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
+		$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));
+		$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
 		return true;
 	}
 
