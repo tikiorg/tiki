@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.4 2003-08-08 04:55:08 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.5 2003-08-09 18:47:12 zaufi Exp $
  *
  * Debug console used styles.
  *
@@ -17,7 +17,7 @@ div#debugconsole {
 	min-width: 700px;
 	max-width: 700px;
 	width: 700px;
-	z-index: 1;
+	z-index: 5;
 	padding: 5px;
 	border: 3px ridge WindowFrame;
 	font-size: small;
