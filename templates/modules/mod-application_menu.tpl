@@ -75,7 +75,7 @@
   </div>
 {/if}
 {if $feature_galleries eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('galmenu','c');hide('galmenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('galmenu','c');hide('galmenu');">[-]</a> 
   <a class='separator' href="tiki-galleries.php">{tr}Image Gals{/tr}</a> 
   <a class='separator' href="javascript:setCookie('galmenu','o');show('galmenu');">[+]</a></div>
   <div id='galmenu' style="{$mnu_galmenu}">
@@ -95,7 +95,7 @@
 {/if}
 
 {if $feature_articles eq 'y' or $feature_submissions eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('cmsmenu','c');hide('cmsmenu');">[-]</a> <a class='separator' href='tiki-view_articles.php'>{tr}CMS{/tr}</a> <a class='separator' href="javascript:setCookie('cmsmenu','o');show('cmsmenu');">[+]</a></div>
+  <div class="separator"><a class='separator' href="javascript:setCookie('cmsmenu','c');hide('cmsmenu');">[-]</a> <a class='separator' href='tiki-view_articles.php'>{tr}CMS{/tr}</a> <a class='separator' href="javascript:setCookie('cmsmenu','o');show('cmsmenu');">[+]</a></div>
   <div id='cmsmenu' style="{$mnu_cmsmenu}">
   {if $tiki_p_read_article eq 'y'}
   &nbsp;<a href="tiki-view_articles.php" class="linkmenu">{tr}Articles Home{/tr}</a><br/>
@@ -128,7 +128,7 @@
 {/if}
 
 {if $feature_blogs eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('blogmenu','c');hide('blogmenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('blogmenu','c');hide('blogmenu');">[-]</a> 
   <a class='separator' href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
   <a class='separator' href="javascript:setCookie('blogmenu','o');show('blogmenu');">[+]</a></div>
   <div id='blogmenu' style="{$mnu_blogmenu}">
@@ -151,7 +151,7 @@
 {/if}
 
 {if $feature_forums eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('formenu','c');hide('formenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('formenu','c');hide('formenu');">[-]</a> 
   <a class='separator' href="tiki-forums.php">{tr}Forums{/tr}</a>
   <a class='separator' href="javascript:setCookie('formenu','o');show('formenu');">[+]</a></div>
   <div id='formenu' style="{$mnu_formenu}">
@@ -168,7 +168,7 @@
 {/if}
 
 {if $feature_directory eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('dirmenu','c');hide('dirmenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('dirmenu','c');hide('dirmenu');">[-]</a> 
   <a class='separator' href="tiki-directory_browse.php">{tr}Directory{/tr}</a>
   <a class='separator' href="javascript:setCookie('dirmenu','o');show('dirmenu');">[+]</a></div>
   <div id='dirmenu' style="{$mnu_dirmenu}">
@@ -182,7 +182,7 @@
 {/if}
 
 {if $feature_file_galleries eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('filegalmenu','c');hide('filegalmenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('filegalmenu','c');hide('filegalmenu');">[-]</a> 
   <a class='separator' href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
   <a class='separator' href="javascript:setCookie('filegalmenu','o');show('filegalmenu');">[+]</a></div>
   <div id='filegalmenu' style="{$mnu_filegalmenu}">
@@ -199,7 +199,7 @@
 {/if}
 
 {if $feature_faqs eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('faqsmenu','c');hide('faqsmenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('faqsmenu','c');hide('faqsmenu');">[-]</a> 
   <a href="tiki-list_faqs.php" class="separator">{tr}FAQs{/tr}</a>
   <a class='separator' href="javascript:setCookie('faqsmenu','o');show('faqsmenu');">[+]</a></div>
   <div id='faqsmenu' style="{$mnu_faqsmenu}">
@@ -213,7 +213,7 @@
 {/if}
 
 {if $feature_quizzes eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('quizmenu','c');hide('quizmenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('quizmenu','c');hide('quizmenu');">[-]</a> 
   <a href="tiki-list_quizzes.php" class="separator">{tr}Quizzes{/tr}</a>
   <a class='separator' href="javascript:setCookie('quizmenu','o');show('quizmenu');">[+]</a></div>
   <div id='quizmenu' style="{$mnu_quizmenu}">
@@ -228,7 +228,7 @@
 {/if}
 
 {if $feature_trackers eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('trkmenu','c');hide('trkmenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('trkmenu','c');hide('trkmenu');">[-]</a> 
   <a href="tiki-list_trackers.php" class="separator">{tr}Trackers{/tr}</a>
   <a class='separator' href="javascript:setCookie('trkmenu','o');show('trkmenu');">[+]</a></div>
   <div id='trkmenu' style="{$mnu_trkmenu}">
@@ -240,7 +240,7 @@
 {/if}
 
 {if $feature_surveys eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('srvmenu','c');hide('srvmenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('srvmenu','c');hide('srvmenu');">[-]</a> 
   <a href="tiki-list_surveys.php" class="separator">{tr}Surveys{/tr}</a>
   <a class='separator' href="javascript:setCookie('srvmenu','o');show('srvmenu');">[+]</a></div>
   <div id='srvmenu' style="{$mnu_srvmenu}">
@@ -255,7 +255,7 @@
 {/if}
 
 {if $feature_newsletters eq 'y'}
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('nlmenu','c');hide('nlmenu');">[-]</a> 
+  <div class="separator"><a class='separator' href="javascript:setCookie('nlmenu','c');hide('nlmenu');">[-]</a> 
   <a href="tiki-newsletters.php" class="separator">{tr}Newsletters{/tr}</a>
   <a class='separator' href="javascript:setCookie('nlmenu','o');show('nlmenu');">[+]</a></div>
   <div id='nlmenu' style="{$mnu_nlmenu}">
@@ -281,7 +281,7 @@
  $tiki_p_admin_shoutbox eq 'y'
  }
  
-  <div class="separator"><a class='separator' href="javascript:javascript:setCookie('admmnu','c');hide('admmnu');">[-]</a>{if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if} <a class='separator' href="javascript:setCookie('admmnu','o');show('admmnu');">[+]</a></div>
+  <div class="separator"><a class='separator' href="javascript:setCookie('admmnu','c');hide('admmnu');">[-]</a>{if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin (click!){/tr}{if $tiki_p_admin eq 'y'}</a>{/if} <a class='separator' href="javascript:setCookie('admmnu','o');show('admmnu');">[+]</a></div>
   <div id='admmnu' style="{$mnu_admmnu}">
 
     {if $tiki_p_admin eq 'y'}
