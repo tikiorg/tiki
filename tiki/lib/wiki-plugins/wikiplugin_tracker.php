@@ -5,7 +5,7 @@
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=>1,fields=>login:email:-optionalfield,action=>Name of submit button)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=>1,fields=>id1:id2:id3,action=>Name of submit button)}Notice{TRACKER}~/np~";
 	return $help;
 }
 function wikiplugin_tracker($data, $params) {
@@ -56,7 +56,7 @@ function wikiplugin_tracker($data, $params) {
 		$back = '~np~<form><input type="hidden" name="trackit" value="1" />';
 		$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 		$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
-		$back.= '<div class="wikitext">'.$tracker["description"].'</div>';
+		$back.= '<div class="wikitext">'.$tracker["description"].'</div><br />';
 		$back.= '<table>';
 		foreach ($flds['data'] as $f) {
 			if ($f['type'] == 'u' and $f['options'] == '1') {
