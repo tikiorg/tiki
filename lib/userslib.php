@@ -237,7 +237,7 @@ class UsersLib extends TikiLib {
 				return $this->update_lastlogin($user);
 			}
 				// if the user wasn't found in either system, just fail
-				elseif (!$userTikiPresent && $userAuthPresent) {
+				elseif (!$userTikiPresent && !$userAuthPresent) {
 				return false;
 			}
 				// if the user was logged into Tiki but not found in Auth
