@@ -1,83 +1,74 @@
 <?php
 class ProcessMonitor extends Base {
 
-  function monitor_stats()
-  {
+  function monitor_stats() {
     $res = Array();
-    $res['active_processes']=$this->getOne("select count(*) from galaxia_processes where isActive='y'");
-    $res['processes']=$this->getOne("select count(*) from galaxia_processes");
-    $result=$this->query("select distinct(pId) from galaxia_instances where status='active'");
+    $res['active_processes']=$this->getOne("select count(*) from `galaxia_processes` where `isActive`=$",array('y'));
+    $res['processes']=$this->getOne("select count(*) from `galaxia_processes`");
+    $result=$this->query("select distinct(`pId`) from `galaxia_instances` where `status`=?",array("active"));
     $res['running_processes']=$result->numRows();
-    $res['active_instances']=$this->getOne("select count(*) from galaxia_instances where status='active'");
-    $res['completed_instances']=$this->getOne("select count(*) from galaxia_instances where status='completed'");
-    $res['exception_instances']=$this->getOne("select count(*) from galaxia_instances where status='exception'");
-    $res['aborted_instances']=$this->getOne("select count(*) from galaxia_instances where status='aborted'");
+    $res['active_instances']=$this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("active"));
+    $res['completed_instances']=$this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("completed"));
+    $res['exception_instances']=$this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("exception"));
+    $res['aborted_instances']=$this->getOne("select count(*) from `galaxia_instances` where `status`=?",array("aborted"));
     return $res;
   }
   
-  function update_instance_status($iid,$status)
-  {
-  	$query = "update galaxia_instances set status='$status' where instanceId=$iid";
-  	$this->query($query);
+  function update_instance_status($iid,$status) {
+  	$query = "update `galaxia_instances` set `status`=? where `instanceId`=?";
+  	$this->query($queryi,array($status,$iid));
   }
   
-  function update_instance_activity_status($iid,$activityId,$status)
-  {
-  	$query = "update galaxia_instance_activities set status='$status' where instanceId=$iid and activityId=$activityId";
-  	$this->query($query);
+  function update_instance_activity_status($iid,$activityId,$status) {
+  	$query = "update `galaxia_instance_activities` set `status`=? where `instanceId`=? and `activityId`=?";
+  	$this->query($query,array($status,$iid,$activityId));
   
   }
   
-  function remove_instance($iid)
-  {
-	$query = "delete from galaxia_workitems where instanceId=$iid";
-	$this->query($query);
-	$query = "delete from galaxia_instance_activities where instanceId=$iid";
-	$this->query($query);
-	$query = "delete from galaxia_instances where instanceId=$iid";
-	$this->query($query);  
+  function remove_instance($iid) {
+		$query = "delete from `galaxia_workitems` where `instanceId`=?";
+		$this->query($query,array($iid));
+		$query = "delete from `galaxia_instance_activities` where `instanceId`=?";
+		$this->query($query,array($iid));
+		$query = "delete from `galaxia_instances` where `instanceId`=?";
+		$this->query($query,array($iid));  
   }
   
-  function remove_aborted()
-  {
+  function remove_aborted() {
 	
-	$query="select instanceId from galaxia_instances where status='aborted'";
-	$result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {	
-      $iid = $res['instanceId'];
-      $query = "delete from galaxia_instance_activities where instanceId=$iid";
-	  $this->query($query);
-	  $query = "delete from galaxia_workitems where instanceId=$iid";
-	  $this->query($query);  
-    }
-	$query = "delete from galaxia_instances where status='aborted'";
-	$this->query($query);
+	$query="select `instanceId` from `galaxia_instances` where `status`=?";
+	$result = $this->query($query,array('aborted'));
+	while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {	
+		$iid = $res['instanceId'];
+		$query = "delete from `galaxia_instance_activities` where `instanceId`=?";
+	  $this->query($query,array($iid));
+	  $query = "delete from `galaxia_workitems` where `instanceId`=?";
+	  $this->query($query,array($iid));  
+	}
+	$query = "delete from `galaxia_instances` where `status`=?";
+	$this->query($query,array('aborted'));
 	
   }
 
-  function remove_all($pId)
-  {
-	$query="select instanceId from galaxia_instances where pId=$pId";
-	$result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {	
-      $iid = $res['instanceId'];
-      $query = "delete from galaxia_instance_activities where instanceId=$iid";
-	  $this->query($query);
-	  $query = "delete from galaxia_workitems where instanceId=$iid";
-	  $this->query($query);  
-    }
-	$query = "delete from galaxia_instances where pId=$pId";
-	$this->query($query);
-	
+  function remove_all($pId) {
+		$query="select `instanceId` from `galaxia_instances` where `pId`=?";
+		$result = $this->query($query,array($pId));
+		while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {	
+			$iid = $res['instanceId'];
+			$query = "delete from `galaxia_instance_activities` where `instanceId`=?";
+			$this->query($query,array($iid));
+			$query = "delete from `galaxia_workitems` where `instanceId`=?";
+			$this->query($query,array($iid));  
+		}
+		$query = "delete from `galaxia_instances` where `pId`=?";
+		$this->query($query,array($pId));
   }
 
-
   
-  function monitor_list_processes($offset,$maxRecords,$sort_mode,$find,$where='')
-  {
+  function monitor_list_processes($offset,$maxRecords,$sort_mode,$find,$where='') {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-	$findesc = $this->qstr('%'.$find.'%');
+			$findesc = $this->qstr('%'.$find.'%');
       $mid=" where ((name like $findesc) or (description like $findesc))";
     } else {
       $mid="";
