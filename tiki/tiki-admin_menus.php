@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menus.php,v 1.10 2004-03-31 07:38:41 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_menus.php,v 1.11 2004-04-16 15:33:32 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -43,6 +43,7 @@ if (isset($_REQUEST["remove"])) {
   if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
     key_check($area);
 		$menulib->remove_menu($_REQUEST["remove"]);
+		$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST['menuId']);
   } else {
     key_get($area);
   }
@@ -51,7 +52,7 @@ if (isset($_REQUEST["remove"])) {
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-menus');
 	$menulib->replace_menu($_REQUEST["menuId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["type"]);
-
+	$smarty->clear_cache('tiki-user_menu.tpl', $_REQUEST['menuId']);
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');
 	$smarty->assign('type', '');
