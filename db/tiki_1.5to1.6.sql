@@ -5,7 +5,8 @@ create table tiki_newsreader_marks (
   user varchar(200) not null,
   serverId integer(12) not null,
   groupName varchar(255) not null,
-  timestamp integer(14) not null
+  timestamp integer(14) not null,
+  primary key(user,serverId,groupName)
 );
 
 drop table if exists tiki_newsreader_servers;

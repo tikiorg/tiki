@@ -24,6 +24,28 @@ class Newslib extends Tikilib {
     return $res;	
   }
   
+  function news_mark($user,$serverId,$groupName)
+  {
+  	$groupName = addslashes($groupName);
+    $now = date("U");
+	if($this->getOne("select count(*) from tiki_newsreader_marks where user='$user' and serverId=$serverId and groupName='$groupName'")) {
+      $query = "update tiki_newsreader_marks set timestamp=$now where user='$user' and serverId=$serverId and groupName='$groupName'";		
+      $this->query($query);
+	} else {
+	  $query = "insert into tiki_newsreader_marks(user,serverId,groupName,timestamp) values('$user',$serverId,'$groupName',$now)";
+	  $this->query($query);
+	}
+  }
+  
+  function news_get_mark($user,$serverId,$groupName)
+  {
+	if($this->getOne("select count(*) from tiki_newsreader_marks where user='$user' and serverId=$serverId and groupName='$groupName'")) {
+      return $this->getOne("select timestamp from tiki_newsreader_marks where user='$user' and serverId=$serverId and groupName='$groupName'");		
+	} else {
+	  return 0;
+	}
+  }
+  
   function replace_server($user,$serverId,$server,$port,$username,$password)
   {
     $server = addslashes($server);	
