@@ -47,13 +47,13 @@
           <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
           <tr>
           {if $allowRegister eq 'y' and $forgotPass eq 'y'}
-            <td valign="bottom">[<a class="link" href="tiki-register.php">{tr}register{/tr}</a>|<a class="link" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a>]</td>
+            <td valign="bottom">[<a class="linkmodule" href="tiki-register.php">{tr}register{/tr}</a>|<a class="linkmodule" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a>]</td>
           {/if}
           {if $forgotPass eq 'y' and $allowRegister ne 'y'}
-            <td valign="bottom"><a class="link" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a></td>
+            <td valign="bottom"><a class="linkmodule" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a></td>
           {/if}
           {if $forgotPass ne 'y' and $allowRegister eq 'y'}
-            <td valign="bottom"><a class="link" href="tiki-register.php">{tr}register{/tr}</a></td>
+            <td valign="bottom"><a class="linkmodule" href="tiki-register.php">{tr}register{/tr}</a></td>
           {/if}
           {if $forgotPass ne 'y' and $allowRegister ne 'y'}
           <td valign="bottom">&nbsp;</td>
@@ -62,8 +62,8 @@
           {if $http_login_url ne '' or $https_login_url ne ''}
           <tr>
           <td valign="bottom">
-            <a class="link" href="{$http_login_url}">{tr}standard{/tr}</a> |
-            <a class="link" href="{$https_login_url}">{tr}secure{/tr}</a>
+            <a class="linkmodule" href="{$http_login_url}">{tr}standard{/tr}</a> |
+            <a class="linkmodule" href="{$https_login_url}">{tr}secure{/tr}</a>
           </td>
           </tr>
           {/if}
