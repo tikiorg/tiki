@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.51 2004-06-19 14:54:12 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.52 2004-06-19 18:02:57 mose Exp $
 
 MoreNeat theme
 */
@@ -1898,3 +1898,10 @@ TABLE.admin { width: 100%; }
   vertcal-align: middle;
 }
 
+.codelisting {
+font-family : monospace;
+padding : 2ex;
+background-color : #edeeef;
+margin : 1ex;
+border : 1px dashed #adacaf;
+}
