@@ -68,6 +68,13 @@
     <option value='public' {if $user_information eq 'public'}selected="selected"{/if}>{tr}public{/tr}</option>
   </select>
   </td></tr>
+  {if $feature_wiki eq 'y'}
+  <tr><td class="form">{tr}Use dbl click to edit pages{/tr}:</td>
+  <td>
+  <input type="checkbox" name="user_dbl" {if $user_dbl eq 'y'}checked="checked"{/if} />
+  </td>
+  </tr>
+  {/if}
 
   <tr><td align="center" colspan="2"><input type="submit" name="prefs" value="{tr}set{/tr}" /></td></tr>
   </table>

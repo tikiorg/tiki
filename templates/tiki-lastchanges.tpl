@@ -18,7 +18,7 @@
      <input type="hidden" name="days" value="0" />
    </form>
    </td>
-{if $findwhat<>""}
+{if $findwhat != ""}
    <td>
    <a href="tiki-lastchanges.php" class="wiki">{tr}Search by Date{/tr}</a>
    </td>
@@ -26,7 +26,7 @@
 </tr>
 </table>
 <br/>
-{if $findwhat<>""}
+{if $findwhat!=""}
 {tr}Found{/tr} "<b>{$findwhat}</b>" {tr}in{/tr} {$cant_records} {tr}LastChanges{/tr} 
 {/if}
 <div align="left">
@@ -39,23 +39,15 @@
 <td class="heading" bgcolor="#bbbbbb"><a class="tableheading" href="tiki-lastchanges.php?days={$days}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'ip_desc'}ip_asc{else}ip_desc{/if}">{tr}Ip{/tr}</a></td>
 <td class="heading" bgcolor="#bbbbbb"><a class="tableheading" href="tiki-lastchanges.php?days={$days}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}Comment{/tr}</a></td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=changes loop=$lastchanges}
 <tr>
-{if $smarty.section.changes.index % 2}
-<td class="odd">&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="odd">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;</td>
-<td class="odd">&nbsp;{$lastchanges[changes].action}&nbsp;</td>
-<td class="odd">&nbsp;{$lastchanges[changes].user}&nbsp;</td>
-<td class="odd">&nbsp;{$lastchanges[changes].ip}&nbsp;</td>
-<td class="odd">&nbsp;{$lastchanges[changes].comment}&nbsp;</td>
-{else}
-<td class="even">&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td class="even">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"(...)":true}</a>&nbsp;</td>
-<td class="even">&nbsp;{$lastchanges[changes].action}&nbsp;</td>
-<td class="even">&nbsp;{$lastchanges[changes].user}&nbsp;</td>
-<td class="even">&nbsp;{$lastchanges[changes].ip}&nbsp;</td>
-<td class="even">&nbsp;{$lastchanges[changes].comment}&nbsp;</td>
-{/if}
+<td class="{cycle advance=false}">&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
+<td class="{cycle advance=false}">&nbsp;<a href="tiki-index.php?page={$lastchanges[changes].pageName}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:20:"(...)":true}</a> (<a class="link" href="tiki-pagehistory.php?page={$lastchanges[changes].pageName}">{tr}hist{/tr}</a>)
+<td class="{cycle advance=false}">{$lastchanges[changes].action}</td>
+<td class="{cycle advance=false}">&nbsp;{$lastchanges[changes].user}&nbsp;</td>
+<td class="{cycle advance=false}">&nbsp;{$lastchanges[changes].ip}&nbsp;</td>
+<td class="{cycle}">&nbsp;{$lastchanges[changes].comment}&nbsp;</td>
 </tr>
 {sectionelse}
 <tr><td class="even" colspan="6">

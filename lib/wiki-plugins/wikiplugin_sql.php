@@ -1,11 +1,23 @@
 <?php
 function wikiplugin_sql($data,$params) {
   global $tikilib;
-  $ret = '';
-  @$result = $tikilib->query($data);
-  if(!$result) {
-    return tra('There is an error in the plugin data');
+  extract($params);
+  if(!isset($db)) {
+    return tra('Missing db param');
   }
+  $perm_name = 'tiki_p_dsn_'.$db;
+  global $$perm_name;
+  if($$perm_name!='y') {
+    return('');
+  }
+  $ret = '';
+  $dsn = $tikilib->get_dsn_by_name($db);    
+  $dbPlugin = DB::connect($dsn);
+  if (DB::isError($dbPlugin)) {        
+    return($dbPlugin->getMessage());
+  } 
+  @$result = $dbPlugin->query($data);
+  if(DB::isError($result)) return  $result->getMessage();
   $first = true;
   $class='even';
   while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {

@@ -70,6 +70,11 @@ class TikiLib {
     die;
   }
 
+  /*shared*/ function get_dsn_by_name($name) 
+  {
+    return $this->getOne("select dsn from tiki_dsn where name='$name'");
+  }
+
 
   /*shared*/ function replace_task($user,$taskId,$title,$description,$date,$status,$priority,$completed,$percentage)
   {

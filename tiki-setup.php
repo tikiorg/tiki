@@ -346,7 +346,6 @@ $feature_eph = 'n';
 $smarty->assign('feature_eph',$feature_eph);
 
 
-
 $feature_contact = 'n';
 $smarty->assign('feature_contact',$feature_contact);
 $contact_user = $tikilib->get_preference('contact_user','admin');
@@ -703,11 +702,12 @@ if ($lang_use_db!='y') {
   include_once('lang/'.$language.'/language.php');
 }
 
-
+$user_dbl='y';
 if($feature_userPreferences == 'y') {
   // Check for FEATURES for the user
   $user_style = $tikilib->get_preference("style", 'jalist2.css');
   if($user) {
+    $user_dbl=$tikilib->get_user_preference($user,'user_dbl','y'); 
     if($change_theme == 'y') {
       $user_style = $tikilib->get_user_preference($user,'theme',$style);
       if($user_style) {
@@ -725,6 +725,7 @@ if($feature_userPreferences == 'y') {
   $smarty->assign('style',$style);
   $smarty->assign('language',$language);
 }
+$smarty->assign('user_dbl',$user_dbl);
 
 $stlstl=explode('.',$style);
 $style_base = $stlstl[0];

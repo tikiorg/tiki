@@ -65,6 +65,13 @@ if(isset($_REQUEST["prefs"])) {
   }
   $tikilib->set_user_preference($userwatch,'country',$_REQUEST["country"]);
   $tikilib->set_user_preference($userwatch,'user_information',$_REQUEST['user_information']);
+  if(isset($_REQUEST['user_dbl'])&&$_REQUEST['user_dbl']=='on') {
+    $tikilib->set_user_preference($userwatch,'user_dbl','y');
+    $smarty->assign('user_dbl','y');
+  } else {
+    $tikilib->set_user_preference($userwatch,'user_dbl','n');
+    $smarty->assign('user_dbl','n');
+  }
   header("location: tiki-user_preferences.php?view_user=$userwatch");
   die;
 }
