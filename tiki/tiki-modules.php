@@ -1,10 +1,9 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.29 2004-01-17 03:02:50 redflo Exp $
-
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 include_once ('lib/usermodules/usermoduleslib.php');
 include_once('tiki-module_controls.php');
 
@@ -86,8 +85,8 @@ for ($i = 0; $i < count($left_modules); $i++) {
 // the cache is here to avoid calls to consumming queries, but a module is different for each language because of the strings
 
         $phpfile = 'modules/mod-' . $r["name"] . '.php';
-        $template = 'templates/modules/mod-' . $r["name"] . '.tpl';
-        $nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
+        $template = 'modules/mod-' . $r["name"] . '.tpl';
+	$nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
 
         //print("Cache: $cachefile PHP: $phpfile Template: $template<br/>");
         if (!$r["rows"])
@@ -110,7 +109,7 @@ for ($i = 0; $i < count($left_modules); $i++) {
             }
 
             //print("Template file: $template<br/>");
-            if (file_exists("$template")) {
+	    if (file_exists("templates/".$template)) {
                 //print("FETCH<br/>");
                 $data = $smarty->fetch($template);
             } else {
@@ -191,9 +190,9 @@ for ($i = 0; $i < count($right_modules); $i++) {
     if ($pass == 'y') {
         $cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
 
-        $phpfile = 'modules/mod-' . $r["name"] . '.php';
-        $template = 'templates/modules/mod-' . $r["name"] . '.tpl';
-        $nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
+	$phpfile = 'templates/modules/mod-' . $r["name"] . '.php';
+	$template = 'templates/modules/mod-' . $r["name"] . '.tpl';
+	$nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
 
         if (!$r["rows"])
             $r["rows"] = 10;
@@ -224,7 +223,7 @@ for ($i = 0; $i < count($right_modules); $i++) {
                     // Ahora usar el template de user
                     $smarty->assign_by_ref('user_title', $info["title"]);
                     $smarty->assign_by_ref('user_data', $info["data"]);
-                    $data = $smarty->fetch('templates/modules/user_module.tpl');
+		    $data = $smarty->fetch('templates/modules/user_module.tpl');
                 }
             }
 
