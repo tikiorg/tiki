@@ -58,10 +58,10 @@
 <td class="odd">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
 <td class="odd">{$channels[user].created|tiki_short_datetime}</td>
 <td class="odd">
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName}">{tr}edit{/tr}</a>
-   <a class="link" href="tiki-page.php?pageName={$channels[user].pageName}">{tr}view{/tr}</a>
-   <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName}">{tr}content{/tr}</a>
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>
+   <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a>
 </td>
 </tr>
 {else}
@@ -70,10 +70,10 @@
 <td class="even">{$channels[user].type} {if $channels[user].type eq 'd'}({$channels[user].refresh} secs){/if}</td>
 <td class="even">{$channels[user].created|tiki_short_datetime}</td>
 <td class="even">
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName}">{tr}remove{/tr}</a>
-   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName}">{tr}edit{/tr}</a>
-   <a class="link" href="tiki-page.php?pageName={$channels[user].pageName}">{tr}view{/tr}</a>
-   <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName}">{tr}content{/tr}</a>
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pageName|escape:"url"}">{tr}remove{/tr}</a>
+   <a class="link" href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pageName={$channels[user].pageName|escape:"url"}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-page.php?pageName={$channels[user].pageName|escape:"url"}">{tr}view{/tr}</a>
+   <a class="link" href="tiki-admin_html_page_content.php?pageName={$channels[user].pageName|escape:"url"}">{tr}content{/tr}</a>
 </td>
 </tr>
 {/if}

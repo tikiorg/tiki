@@ -15,23 +15,15 @@
 <td id="heading">{tr}Comment{/tr}</td>
 <td id="heading">{tr}Action{/tr}</td>
 </tr>
+{cycle values="even,odd" print=false}
 {section name=hist loop=$history}
 <tr>
-{if $smarty.section.hist.index % 2}
-<td id="odd">&nbsp;{$history[hist].lastModif|tiki_long_datetime}&nbsp;</td>
-<td id="odd">&nbsp;<a href="tiki-index.php?page={$history[hist].pageName}">{$history[hist].pageName}</a>&nbsp;</td>
-<td id="odd">&nbsp;{$history[hist].version}&nbsp;</td>
-<td id="odd">&nbsp;{$history[hist].ip}&nbsp;</td>
-<td id="odd">&nbsp;{$history[hist].comment}&nbsp;</td>
-<td id="odd">&nbsp;<a href="tiki-userversions.php?ruser={$ruser}&page={$history[hist].pageName}&preview=1&version={$history[hist].version}">{tr}view{/tr}</a>&nbsp;</td>
-{else}
-<td id="even">&nbsp;{$history[hist].lastModif|tiki_long_datetime}&nbsp;</td>
-<td id="even">&nbsp;<a href="tiki-index.php?page={$history[hist].pageName}">{$history[hist].pageName}</a>&nbsp;</td>
-<td id="even">&nbsp;{$history[hist].version}&nbsp;</td>
-<td id="even">&nbsp;{$history[hist].ip}&nbsp;</td>
-<td id="even">&nbsp;{$history[hist].comment}&nbsp;</td>
-<td id="even">&nbsp;<a href="tiki-userversions.php?ruser={$ruser}&page={$history[hist].pageName}&preview=1&version={$history[hist].version}">{tr}view{/tr}</a>&nbsp;</td>
-{/if}
+<td id="{cycle advance=false}">&nbsp;{$history[hist].lastModif|tiki_long_datetime}&nbsp;</td>
+<td id="{cycle advance=false}">&nbsp;<a href="tiki-index.php?page={$history[hist].pageName|escape:"url"}">{$history[hist].pageName}</a>&nbsp;</td>
+<td id="{cycle advance=false}">&nbsp;{$history[hist].version}&nbsp;</td>
+<td id="{cycle advance=false}">&nbsp;{$history[hist].ip}&nbsp;</td>
+<td id="{cycle advance=false}">&nbsp;{$history[hist].comment}&nbsp;</td>
+<td id="{cycle}">&nbsp;<a href="tiki-userversions.php?ruser={$ruser}&page={$history[hist].pageName|escape:"url"}&preview=1&version={$history[hist].version}">{tr}view{/tr}</a>&nbsp;</td>
 </tr>
 {sectionelse}
 <tr><td colspan="6">

@@ -1,8 +1,8 @@
-<a class="pagetitle" href="tiki-admin_html_page_content.php?pageName={$pageName}">{tr}Admin HTML page dynamic zones{/tr}</a><br/>
+<a class="pagetitle" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}">{tr}Admin HTML page dynamic zones{/tr}</a><br/>
 <h2>{tr}Page{/tr}: {$pageName}</h2><br/><br/>
 [<a class="link" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
-|<a class="link" href="tiki-admin_html_pages.php?pageName={$pageName}">{tr}Edit this page{/tr}</a>]
-|<a class="link" href="tiki-page.php?pageName={$pageName}">{tr}View page{/tr}</a>]<br/><br/>
+|<a class="link" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit this page{/tr}</a>]
+|<a class="link" href="tiki-page.php?pageName={$pageName|escape:"url"}">{tr}View page{/tr}</a>]<br/><br/>
 
 {if $zone}
 <h2>{tr}Edit zone{/tr}</h2>
@@ -42,8 +42,8 @@
 <input type="hidden" name="zone" value="{$zone}" />
 <table class="normal">
 <tr>
-<td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}zone{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'content_desc'}content_asc{else}content_desc{/if}">{tr}content{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'zone_desc'}zone_asc{else}zone_desc{/if}">{tr}zone{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'content_desc'}content_asc{else}content_desc{/if}">{tr}content{/tr}</a></td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
 {section name=user loop=$channels}
@@ -59,7 +59,7 @@
 {/if}
 </td>
 <td class="odd">
-   <a class="link" href="tiki-admin_html_page_content.php?pageName={$pageName}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">{tr}edit{/tr}</a>
 </td>
 </tr>
 {else}
@@ -74,7 +74,7 @@
 {/if}
 </td>
 <td class="even">
-   <a class="link" href="tiki-admin_html_page_content.php?pageName={$pageName}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">{tr}edit{/tr}</a>
+   <a class="link" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;zone={$channels[user].zone}">{tr}edit{/tr}</a>
 </td>
 </tr>
 {/if}
