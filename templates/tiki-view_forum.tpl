@@ -325,11 +325,11 @@ a moderator approves it.{/tr}</small>
   </td>
   {/if}	
   <td style="text-align:center;" class="topictitle{cycle advance=false}">
-  {if $comments_coms[ix].type eq 'n'}<img src="img/icons/folder{$newtopic}.gif" alt="folder" />{/if}
-  {if $comments_coms[ix].type eq 'a'}<img src="img/icons/folder_announce{$newtopic}.gif" alt="announce" />{/if}
-  {if $comments_coms[ix].type eq 'h'}<img src="img/icons/folder_hot{$newtopic}.gif" alt="hot" />{/if}
-  {if $comments_coms[ix].type eq 's'}<img src="img/icons/folder_sticky{$newtopic}.gif" alt="sticky" />{/if}
-  {if $comments_coms[ix].type eq 'l'}<img src="img/icons/folder_locked{$newtopic}.gif" alt="locked" />{/if}
+  {if $comments_coms[ix].type eq 'n'}<img src="img/icons/folder{$newtopic}.gif" alt="{tr}normal{/tr}" />{/if}
+  {if $comments_coms[ix].type eq 'a'}<img src="img/icons/folder_announce{$newtopic}.gif" alt="{tr}announce{/tr}" />{/if}
+  {if $comments_coms[ix].type eq 'h'}<img src="img/icons/folder_hot{$newtopic}.gif" alt="{tr}hot{/tr}" />{/if}
+  {if $comments_coms[ix].type eq 's'}<img src="img/icons/folder_sticky{$newtopic}.gif" alt="{tr}sticky{/tr}" />{/if}
+  {if $comments_coms[ix].type eq 'l'}<img src="img/icons/folder_locked{$newtopic}.gif" alt="{tr}locked{/tr}" />{/if}
   </td>
   {if $forum_info.topic_smileys eq 'y'}
   <td style="text-align:center;" class="topictitle{cycle advance=false}">
