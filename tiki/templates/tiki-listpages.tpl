@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.26 2004-07-16 19:26:43 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.27 2004-07-16 19:40:38 teedog Exp $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}List Wiki Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}
@@ -204,7 +204,7 @@ per page</td></tr>
   </select>
   {tr}the following categories:{/tr}
   {section name=ix loop=$categories}
-  	<br /><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" /> {$categories[ix].categpath}
+  	<br /><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" /> <a class="link" href="tiki-admin_categories.php?parentId={$categories[ix].categId}" title="{tr}edit{/tr}">{$categories[ix].categpath}</a>
   {/section}
   <br /><input type="submit" value="{tr}ok{/tr}" />
   {/if}
