@@ -215,9 +215,9 @@ function getPost($params) {
   }
 
   $dateCreated=date("Ymd",$post_data["created"])."T".date("h:i:s",$post_data["created"]);
-
+  // added dateTime type for blogger compliant xml tag Joerg Knobloch <joerg@happypenguins.net>
   $myStruct=new xmlrpcval(array("userid" => new xmlrpcval($username),
-                                 "dateCreated" => new xmlrpcval($dateCreated),
+                                 "dateCreated" => new xmlrpcval($dateCreated, "dateTime.iso8601"),
                                  "content" => new xmlrpcval($post_data["data"]),
                                  "postid" => new xmlrpcval($post_data["postId"])
                                  ),"struct");
@@ -260,7 +260,7 @@ function getRecentPosts($params) {
   foreach($posts["data"] as $post) {
     $dateCreated=date("Ymd",$post["created"])."T".date("h:i:s",$post["created"]);    
     $myStruct=new xmlrpcval(array("userid" => new xmlrpcval($username),
-                                 "dateCreated" => new xmlrpcval($dateCreated),
+                                 "dateCreated" => new xmlrpcval($dateCreated, "dateTime.iso8601"),
                                  "content" => new xmlrpcval($post["data"]),
                                  "postid" => new xmlrpcval($post["postId"])
                                  ),"struct");

@@ -15,16 +15,9 @@ class timer
 $tiki_timer = new timer();
 $tiki_timer->start();
 
-require_once("setup.php");
-require_once("lib/tikilib.php");
-require_once("lib/userslib.php");
 
-$userlib = new UsersLib($dbTiki);
-if(isset($_SESSION["user"])) {
-  $user = $_SESSION["user"];  
-} else {
-  $user = false;
-}
+include_once("tiki-setup_base.php");
+
 
 // The votes array stores the votes the user has made
 if(!isset($_SESSION["votes"])) {
@@ -32,121 +25,6 @@ if(!isset($_SESSION["votes"])) {
   session_register("votes");
 }
 
-// function user_has_permission($user,$perm) 
-
-$allperms = $userlib->get_permissions(0,-1,'permName_desc','','');
-$allperms = $allperms["data"];
-foreach($allperms as $vperm) {
-  $perm=$vperm["permName"];
-  if($user != 'admin' && (!$user || !$userlib->user_has_permission($user,'tiki_p_admin'))) {
-    $$perm = 'n';
-    $smarty->assign("$perm",'n');  
-  } else {
-    $$perm = 'y';
-    $smarty->assign("$perm",'y');    
-  }
-}
-
-
-// Permissions
-// Get group permissions here
-$perms = $userlib->get_user_permissions($user);
-foreach($perms as $perm) {
-  //print("Asignando permiso global : $perm<br/>");
-  $smarty->assign("$perm",'y');  
-  $$perm='y';
-}
-
-// If the user can admin file galleries then assign all the file galleries permissions
-if($tiki_p_admin_file_galleries == 'y') {
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','file galleries');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-}
- 
-if($tiki_p_blog_admin == 'y') {
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','blogs');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-} 
-
-if($tiki_p_admin_galleries == 'y') {
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','image galleries');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-}
-
-if($tiki_p_admin_forum == 'y') {
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','forums');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-}
-
-if($tiki_p_admin_wiki == 'y') {
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','wiki');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-}
-
-if($tiki_p_admin_faqs == 'y') {
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','faqs');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-}
-
-if($tiki_p_admin_shoutbox == 'y') {
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','shoutbox');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-}
-
-
-if($tiki_p_admin_quizzes == 'y') {
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','quizzes');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-}
-
-
-
-if($tiki_p_admin_cms == 'y') {
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','cms');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-  $perms = $userlib->get_permissions(0,-1,'permName_desc','','topics');
-  foreach($perms["data"] as $perm) {
-    $perm=$perm["permName"];
-    $smarty->assign("$perm",'y');  
-    $$perm='y';
-  }
-}
 
  
   
@@ -157,7 +35,6 @@ if(!isset($_SESSION["appname"])) {
 $smarty->assign("appname","tiki");
 
 
-$tikilib = new TikiLib($dbTiki);
 if(isset($GLOBALS["PHPSESSID"])) {
   $tikilib->update_session($GLOBALS["PHPSESSID"]);
 }
@@ -177,13 +54,25 @@ $userbreadCrumb = 4;
 $wiki_spellcheck = 'n';
 $cms_spellcheck = 'n';
 $blog_spellcheck = 'n';
+$blog_list_order = 'created_desc';
 $home_blog = 0;
 $home_gallery = 0;
 $home_file_gallery = 0;
 $home_forum = 0;
 $fgal_use_db = 'y';
+$gal_use_db = 'y';
+$fgal_match_regex = '';
+$fgal_nmatch_regex = '';
+$gal_match_regex = '';
+$gal_nmatch_regex = '';
 $fgal_use_dir = '';
+$gal_use_dir = '';
 $feature_xmlrpc = 'n';
+$feature_drawings = 'n';
+$layout_section = 'n';
+$feature_html_pages = 'n';
+$feature_search_stats = 'n';
+$feature_referer_stats = 'n';
 $feature_smileys = 'y';
 $feature_quizzes = 'n';
 $feature_comm = 'n';
@@ -215,13 +104,13 @@ $feature_userVersions = 'y';
 $feature_galleries = 'y';
 $feature_featuredLinks = 'y';
 $feature_hotwords = 'y';
+$feature_hotwords_nw = 'n';
 $feature_banners = 'n';
 $feature_top_banner = 'n';
 $feature_wiki = 'y';
 $feature_articles = 'n';
 $feature_submissions = 'n';
 $feature_blogs = 'n';
-$feature_xmlrpc = 'n';
 $feature_edit_templates = 'n';
 $feature_dynamic_content = 'n';
 $feature_chat = 'n';
@@ -266,13 +155,17 @@ $feature_wiki_templates = 'n';
 $feature_cms_templates = 'n';
 
 $feature_warn_on_edit ='n';
+$warn_on_edit_time =2;
 $feature_file_galleries = 'n';
 $feature_file_galleries_rankings = 'n';
 $language = 'en';
+
 $feature_left_column = 'y';
 $feature_right_column = 'y';
 $feature_top_bar = 'y';
 $feature_bot_bar = 'y';
+
+
 
 $rss_forums = 'y';
 $rss_forum = 'y';
@@ -284,6 +177,8 @@ $rss_wiki = 'y';
 $rss_image_gallery = 'n';
 $rss_file_gallery = 'n';
 $rss_blog = 'n';
+
+$count_admin_pvs='y';
 
 $max_rss_forums = 10;
 $max_rss_forum = 10;
@@ -300,15 +195,31 @@ $keep_versions = 1;
 
 $feature_custom_home = 'n';
 
+$w_use_db = 'y';
+$w_use_dir = '';
+$feature_wiki_attachments = 'n';
+$feature_page_title = 'y';
+
+
+$smarty->assign('feature_page_title',$feature_page_title);
+$smarty->assign('w_use_db',$w_use_db);
+$smarty->assign('w_use_dir',$w_use_dir);
+$smarty->assign('feature_wiki_attachments',$feature_wiki_attachments);
+
 $smarty->assign('dblclickedit','n');
 
 $smarty->assign('feature_custom_home',$feature_custom_home);
 
 $smarty->assign('keep_versions',$keep_versions);
 
+$smarty->assign('count_admin_pvs',$count_admin_pvs);
+
 $smarty->assign('wiki_spellcheck',$wiki_spellcheck);
 $smarty->assign('cms_spellcheck',$cms_spellcheck);
-$smarty->assign('blog_spellcheck',$cms_spellcheck);
+$smarty->assign('blog_spellcheck',$blog_spellcheck);
+$smarty->assign('blog_list_order',$blog_list_order);
+
+$smarty->assign('trl','');
 
 $smarty->assign('userbreadCrumb',$userbreadCrumb);
 $smarty->assign('feature_polls',$feature_polls);
@@ -337,11 +248,22 @@ $smarty->assign('max_rss_blog',$max_rss_blog);
 
 $smarty->assign('fgal_use_db',$fgal_use_db);
 $smarty->assign('fgal_use_dir',$fgal_use_dir);
+$smarty->assign('gal_use_db',$gal_use_db);
+$smarty->assign('gal_use_dir',$gal_use_dir);
+$smarty->assign('fgal_match_regex',$fgal_match_regex);
+$smarty->assign('fgal_nmatch_regex',$fgal_nmatch_regex);
+$smarty->assign('gal_match_regex',$gal_match_regex);
+$smarty->assign('gal_nmatch_regex',$gal_nmatch_regex);
+
 
 $smarty->assign('feature_left_column',$feature_left_column);
 $smarty->assign('feature_right_column',$feature_right_column);
 $smarty->assign('feature_top_bar',$feature_top_bar);
 $smarty->assign('feature_bot_bar',$feature_bot_bar);
+
+
+
+
 $smarty->assign('feature_file_galleries',$feature_file_galleries);
 $smarty->assign('feature_file_galleries_rankings',$feature_file_galleries_rankings);
 $smarty->assign('language',$language);
@@ -354,6 +276,11 @@ $smarty->assign('feature_edit_templates',$feature_edit_templates);
 $smarty->assign('feature_top_banner',$feature_top_banner);
 $smarty->assign('feature_banners',$feature_banners);
 $smarty->assign('feature_xmlrpc',$feature_xmlrpc);
+$smarty->assign('feature_drawings',$feature_drawings);
+$smarty->assign('layout_section',$layout_section);
+$smarty->assign('feature_html_pages',$feature_html_pages);
+$smarty->assign('feature_search_stats',$feature_search_stats);
+$smarty->assign('feature_referer_stats',$feature_referer_stats);
 $smarty->assign('feature_smileys',$feature_smileys);
 $smarty->assign('feature_comm',$feature_comm);
 $smarty->assign('feature_cms_rankings',$feature_cms_rankings);
@@ -367,6 +294,7 @@ $smarty->assign('feature_cms_templates',$feature_cms_templates);
 
 $smarty->assign('feature_forum_rankings',$feature_forum_rankings);
 $smarty->assign('feature_hotwords',$feature_hotwords);
+$smarty->assign('feature_hotwords_nw',$feature_hotwords_nw);
 $smarty->assign('feature_lastChanges',$feature_lastChanges);
 $smarty->assign('feature_dump',$feature_dump);
 $smarty->assign('feature_categories',$feature_categories);
@@ -391,7 +319,6 @@ $smarty->assign('feature_wiki',$feature_wiki);
 $smarty->assign('feature_articles',$feature_articles);
 $smarty->assign('feature_submissions',$feature_submissions);
 $smarty->assign('feature_blogs',$feature_blogs);
-$smarty->assign('feature_xmlrpc',$feature_xmlrpc);
 
 $smarty->assign('feature_wiki_comments',$feature_wiki_comments);
 $smarty->assign('wiki_comments_default_ordering',$wiki_comments_default_ordering);
@@ -431,35 +358,63 @@ $smarty->assign('article_comments_per_page',$article_comments_per_page);
 
 
 $smarty->assign('feature_warn_on_edit',$feature_warn_on_edit);
+$smarty->assign('warn_on_edit_time',$warn_on_edit_time);
 
 // Other preferences
 $popupLinks = $tikilib->get_preference("popupLinks",'n');
 $anonCanEdit = $tikilib->get_preference("anonCanEdit",'n');
 $modallgroups = $tikilib->get_preference("modallgroups",'y');
+$change_language = $tikilib->get_preference("change_language",'y');
+$change_theme = $tikilib->get_preference("change_theme",'y');
 $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 $cachepages = $tikilib->get_preference("cachepages",'y');
 $cacheimages = $tikilib->get_preference("cacheimages",'y');
 $allowRegister = $tikilib->get_preference("allowRegister",'n');
 $useRegisterPasscode = $tikilib->get_preference("useRegisterPasscode",'n');
+$registerPasscode = $tikilib->get_preference("registerPasscode",'');
+$useUrlIndex = $tikilib->get_preference("useUrlIndex",'n');
+$urlIndex = $tikilib->get_preference("useUrlIndex",'');
+
+
 $validateUsers = $tikilib->get_preference("validateUsers",'n');
 $forgotPass = $tikilib->get_preference("forgotPass",'n');
 $title = $tikilib->get_preference("title","");
 $maxRecords = $tikilib->get_preference("maxRecords",10);
 $maxArticles = $tikilib->get_preference("maxArticles",10);
+
+$smarty->assign('useUrlIndex',$useUrlIndex);
+$smarty->assign('urlIndex',$urlIndex);
+$smarty->assign('registerPasscode',$registerPasscode);
+$smarty->assign('useRegisterPasscode',$useRegisterPasscode);
+
 $smarty->assign('tikiIndex',$tikiIndex);
 $smarty->assign('maxArticles',$maxArticles);
 $smarty->assign('popupLinks',$popupLinks);
 $smarty->assign('modallgroups',$modallgroups);
+$smarty->assign('change_theme',$change_theme);
+$smarty->assign('change_language',$change_language);
 $smarty->assign('anonCanEdit',$anonCanEdit);
 $smarty->assign('allowRegister',$allowRegister);
 $smarty->assign('cachepages',$cachepages);
 $smarty->assign('cacheimages',$cacheimages);
 
 
+
 $prefs = $tikilib->get_all_preferences();
-foreach($prefs as $name => $val) {
-  $$name = $val;
-  $smarty->assign("$name",$val);
+if(!file_exists('templates_c/preferences.php')) {
+  $fw=fopen('templates_c/preferences.php',"w");
+  fwrite($fw,'<?php'."\n");
+  foreach($prefs as $name => $val) {
+    $$name = $val;
+    fwrite($fw,'$'.$name."='".$val."';");
+    fwrite($fw,'$smarty->assign("'.$name.'","'.$val.'");');
+    fwrite($fw,"\n");
+    $smarty->assign("$name",$val);
+  }
+  fwrite($fw,'?>');
+  fclose($fw);
+} else {
+  include_once('templates_c/preferences.php');
 }
 
 $style = $tikilib->get_preference("style", 'subsilver.css');
@@ -509,21 +464,36 @@ $smarty->assign('maxRecords',$maxRecords);
 include_once("tiki-modules.php");
 $smarty->assign('beingEdited','n');
 
-if($feature_warn_on_edit == 'y') {
-// Check if the page is being edited
-if(isset($_REQUEST["page"])) {
- $chkpage = $_REQUEST["page"];
-} else {
- $chkpage = 'HomePage';
-}
-// Notice if a page is being edited or if it was being edited and not anymore
-//print($GLOBALS["HTTP_REFERER"]);
-// IF isset the referer and if the referer is editpage then unset taking the pagename from the
-// query or homepage if not query
 
-if(isset($GLOBALS["HTTP_REFERER"])) {
-  if(strstr($GLOBALS["HTTP_REFERER"],'tiki-editpage')) {
-    $purl = parse_url($GLOBALS["HTTP_REFERER"]);
+
+if($feature_warn_on_edit == 'y') {
+  // Check if the page is being edited
+  if(isset($_REQUEST["page"])) {
+   $chkpage = $_REQUEST["page"];
+  } else {
+   $chkpage = 'HomePage';
+  }
+  // Notice if a page is being edited or if it was being edited and not anymore
+  //print($GLOBALS["HTTP_REFERER"]);
+  // IF isset the referer and if the referer is editpage then unset taking the pagename from the
+  // query or homepage if not query
+  if(isset($GLOBALS["HTTP_REFERER"])) {
+    if(strstr($GLOBALS["HTTP_REFERER"],'tiki-editpage')) {
+      $purl = parse_url($GLOBALS["HTTP_REFERER"]);
+      if(!isset($purl["query"])) {
+        $purl["query"]='';
+      }
+      parse_str($purl["query"],$purlquery);
+      if(!isset($purlquery["page"])) {
+        $purlquery["page"]='HomePage';
+      }
+      if(isset($_SESSION["edit_lock"])) {
+            $tikilib->semaphore_unset($purlquery["page"],$_SESSION["edit_lock"]);
+      }
+    }
+  }
+  if(strstr($_SERVER["REQUEST_URI"],'tiki-editpage')) {
+    $purl = parse_url($_SERVER["REQUEST_URI"]);
     if(!isset($purl["query"])) {
       $purl["query"]='';
     }
@@ -531,28 +501,19 @@ if(isset($GLOBALS["HTTP_REFERER"])) {
     if(!isset($purlquery["page"])) {
       $purlquery["page"]='HomePage';
     }
-    $tikilib->semaphore_unset($purlquery["page"]);
+  
+    $_SESSION["edit_lock"]=$tikilib->semaphore_set($purlquery["page"]);
+    
+  } 
+  
+  if($tikilib->semaphore_is_set($chkpage,$warn_on_edit_time*60)) {
+    $smarty->assign('beingEdited','y');
+    $beingedited='y';
+  } else {
+    $smarty->assign('beingEdited','n');
+    $beingedited='n';
   }
-}
-if(strstr($_SERVER["REQUEST_URI"],'tiki-editpage')) {
-  $purl = parse_url($_SERVER["REQUEST_URI"]);
-  if(!isset($purl["query"])) {
-    $purl["query"]='';
-  }
-  parse_str($purl["query"],$purlquery);
-  if(!isset($purlquery["page"])) {
-    $purlquery["page"]='HomePage';
-  }
-  $tikilib->semaphore_set($purlquery["page"]);
-}
-if($tikilib->semaphore_is_set($chkpage)) {
-  $smarty->assign('beingEdited','y');
-  $beingedited='y';
-} else {
-  $smarty->assign('beingEdited','n');
-  $beingedited='n';
-}
-
+  
 }
 
 if(isset($_REQUEST["pollVote"])) {
@@ -565,14 +526,48 @@ if(isset($_REQUEST["pollVote"])) {
 }
 
 $ownurl = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+$server = $_SERVER["SERVER_NAME"];
+$parsed=parse_url($_SERVER["REQUEST_URI"]);
+if(!isset($parsed["query"])) {
+  $parsed["query"]='';
+}
+parse_str($parsed["query"],$query);
+$father='http://'.$server.$parsed["path"];
+if(count($query)>0) {
+  $first=1;
+  foreach($query as $name => $val) {
+    if($first) {
+      $first=false;
+      $father.='?'.$name.'='.$val;
+    } else {
+      $father.='&amp;'.$name.'='.$val;
+    }
+  }
+  $father.='&amp;';
+} else {
+  $father.='?';
+}
+$ownurl_father=$father;
 $smarty->assign('ownurl','http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
+
+if($feature_referer_stats != 'y') {
+// Referer tracking
+if(isset($GLOBALS["HTTP_REFERER"])) {
+  $pref = parse_url($GLOBALS["HTTP_REFERER"]);
+  if(!strstr($_SERVER["SERVER_NAME"],$pref["host"])) {
+    $tikilib->register_referer($pref["host"]);
+  }
+}
+}
 
 
 // Stats
 if($feature_stats == 'y') {
-if(!strstr($_SERVER["REQUEST_URI"],'chat')) {
-  $tikilib->add_pageview();
-}
+  if($count_admin_pvs == 'y' || $user!='admin') {	
+    if(!strstr($_SERVER["REQUEST_URI"],'chat')) {
+      $tikilib->add_pageview();
+    }
+  }
 }
 
 ?>

@@ -32,6 +32,7 @@ CREATE TABLE tiki_modules (
   title varchar(40),
   cache_time integer(14),
   rows integer(4),
+  params varchar(255),
   groups text,
   primary key(name)
 );
@@ -88,6 +89,7 @@ CREATE TABLE tiki_images (
   t_data longblob,
   t_type varchar(30),
   hits integer(14),
+  path varchar(255),
   primary key(imageId)
 );
 
@@ -539,6 +541,7 @@ CREATE TABLE tiki_files (
 drop table if exists tiki_semaphores;
 create table tiki_semaphores (
   semName varchar(30) not null,
+  timestamp integer(14),
   primary key(semName)
 );
 

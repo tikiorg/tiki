@@ -85,6 +85,21 @@ if(isset($_REQUEST["upload"])) {
    */
      // We process here file uploads
      if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+       // Check the name
+       if(!empty($fgal_match_regex)) {
+         if(!preg_match("/$fgal_match_regex/",$_FILES['userfile1']['name'],$reqs)) {
+           $smarty->assign('msg',tra('Invalid filename (using filters for filenames)'));
+           $smarty->display('error.tpl');
+           die;  	
+         }
+       }
+       if(!empty($fgal_nmatch_regex)) {
+          if(preg_match("/$fgal_nmatch_regex/",$_FILES['userfile1']['name'],$reqs)) {
+           $smarty->assign('msg',tra('Invalid filename (using filters for filenames)'));
+           $smarty->display('error.tpl');
+           die;  	
+         }
+       }
        $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
        $data = '';
        $fhash='';
@@ -101,7 +116,7 @@ if(isset($_REQUEST["upload"])) {
          if($fgal_use_db == 'y') {
            $data .= fread($fp,8192*16);
          } else {
-           $data = fread($fp,8192);
+           $data = fread($fp,8192*16);
            fwrite($fw,$data);
          }
        }
@@ -192,6 +207,10 @@ for($i=0;$i<count($galleries["data"]);$i++) {
 }
 
 $smarty->assign_by_ref('galleries',$galleries["data"]);
+
+$section='file_galleries';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-upload_file.tpl');

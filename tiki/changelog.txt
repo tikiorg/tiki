@@ -48,6 +48,58 @@ Version 1.4 -Mira-
   you have personalized modules you will have to assign them from your user preferences page)
 * [NEW] Since your last visit module showing new items on the site after the user last login date.
 * [NEW] Now assigned permissions are identified from unassigned permissions when assigning permissions to a group.          
+* [NEW] The page layout can be configured different for each section (blogs, galleries, etc)
+* [NEW] HTML pages and dynamic pages, you can create any HTML page and display it using a URI,
+  pages can have dynamic zones that can be edited from an admin screen, you can create 
+  dynamic pages that will be updated live without the need to refresh the browser. This can
+  be used to show sports scores, stock info, weather, etc.
+* [NEW] You can set any URI as your home page so you can make any section of Tiki your home.
+* [NEW] You can activate stats for the search module and you will be able to see the number
+  of times each word was searched by users.
+* [NEW] Usage graph in the stats page, you can see how many hits you have in different sections
+  of your site.
+* [NEW] You can enable disable the users ability to change the theme or language from the
+  user preferences screen
+* [NEW] You can setup filters for file names that can or cannot be uplaoded, the filter
+  accepts a Perl-style regular expression and you can set positive matches and negative 
+  matches (accept only files matching xx or reject files matching xx)
+* [NEW] Google search module
+* [NEW] Preview feature when assigning modules
+* [NEW] Modules can now receive parameters in the form of a query string ex: foo=1&bar=3    
+  this can be used to alter the behaviour of modules.
+* [NEW] The last_files module now accepts the galleryId parameter, if set the module will
+  list the last "n" files for the specified gallery only.
+* [NEW] Added the number of articles for each topic when listing topics (submissions too)
+* [NEW] Added quiz stats to the stats page    
+* [NEW] You can now select the default ordering for the blog listing from the admin menu
+* [NEW] Raw mode navigation added to the wiki, you can use tiki-index_raw.php instead
+  of tiki-index.php to get a raw representation of wiki pages without the columns, bars
+  and decorations. This can be used to feed an application that navigates wikis such
+  as the Touchgraph Wiki browser.
+* [NEW] Improved forums section, some bugs fixed and now the information baout the last
+  forum post or last topic message shows the title of that post and the author.
+* [NEW] Option added in the admin screen to prevent counting admin pageviews for the
+  site stats.        
+* [NEW] New syntax for tables you can use ||r1-c1|r1-c2c3||r1c1c2||r1-c1|r1-c2|r1-c3|| [Ross]
+* [NEW] Editable drawings can be included in Wiki pages, articles and blog posts using {draw name=foo}, a permission
+  is needed to be able to edit_drawings. Drawings are stored in a directory and identified by their name. The drawings
+  are edited using a Java applet called jHotDraw. This feature can be disabled
+* [NEW] Referer stats, you can enable an option to store statistics about referers to your site, a screen where the
+  referers are listed is provided to see the stats.
+* [NEW] Batch upload of Images. If you have the permission you can upload .zip files and all the images in the zip
+  file are automatically added to the gallery.
+* [NEW] File attachments for wiki pages, with the right permissions you can upload files to wiki pages and a list of
+  attached files will be displayed at the bottom of the wiki page and they can be downloaded.
+* [NEW] Now images for the image galleries can be stored optionally in a directory instead of the database, the same
+  recommendations and tips about storing file uploads should be observed.
+* [NEW] Improved spellchecker, now the spellchecker suggest several options for miss-spelled words and you can choose
+  the option that you prefer from the list.
+* [NEW] Icons are displayed for file extensions when listing files
+* [NEW] You can enable/disable an option to display the page title for wiki pages
+* [NEW] Improved menu builder
+* [NEW] You can now choose if hotword links are opened in a new window
+* [OPT] Reduced the number of queries that tiki makes when loading preferences, if not changed preferences are loaded
+  from a file now this is controlled automatically and you don't have to do anything.
 
 Version 1.3 -Pollux-
 

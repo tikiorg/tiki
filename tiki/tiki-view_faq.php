@@ -57,6 +57,8 @@ if($feature_faq_comments == 'y') {
   include_once("comments.php");
 }
 
+$section='faqs';
+include_once('tiki-section_options.php');
 
 
 // Display the template

@@ -50,7 +50,7 @@ for($i=0;$i<count($left_modules);$i++) {
     //print("Cache: $cachefile PHP: $phpfile Template: $template<br/>");
     if(!$r["rows"]) $r["rows"]=10;
     $module_rows=$r["rows"];
-    
+    parse_str($r["params"],$module_params);
     //$mnm = $r["name"]."_module_title";
     //$smarty->assign_by_ref($mnm,$r["title"]);
     //$smarty->assign_by_ref('module_rows',$r["rows"]);
@@ -118,6 +118,7 @@ for($i=0;$i<count($right_modules);$i++) {
     $nocache= 'templates/modules/mod-'.$r["name"].'.tpl.nocache';
     if(!$r["rows"]) $r["rows"]=10;
     $module_rows=$r["rows"];
+    parse_str($r["params"],$module_params);
     //print("Cache: $cachefile PHP: $phpfile Template: $template<br/>");
     if((!file_exists($cachefile)) || (file_exists($nocache)) || ( ($now - filemtime($cachefile))>$r["cache_time"] )){
       $r["data"]='';

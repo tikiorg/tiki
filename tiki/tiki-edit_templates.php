@@ -15,13 +15,6 @@ if($tiki_p_edit_templates != 'y') {
 }
 
 
-// Only an admin can use this script
-if($tiki_p_admin != 'y') {
-  $smarty->assign('msg',tra("You dont have permission to use this feature"));
-  $smarty->display('error.tpl');
-  die;
-}
-
 if(!isset($_REQUEST["mode"])) {
   $mode = 'listing';
 }
@@ -69,6 +62,14 @@ while (($file = readdir($h)) !== false) {
   }
 }  
 closedir($h);
+$h = opendir("templates/mail/");
+while (($file = readdir($h)) !== false) {
+  if(strstr($file,'.tpl')) {
+    $files[]="templates/mail/".$file;
+  }
+}  
+closedir($h);
+
 sort($files);
 $smarty->assign('files',$files);
 

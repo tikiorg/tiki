@@ -91,6 +91,9 @@ for($i=0;$i<count($listpages["data"]);$i++) {
 $smarty->assign_by_ref('listpages',$listpages["data"]);
 //print_r($listpages["data"]);
 
+$section='cms';
+include_once('tiki-section_options.php');
+
 // Display the template
 $smarty->assign('mid','tiki-view_articles.tpl');
 $smarty->display('tiki.tpl');

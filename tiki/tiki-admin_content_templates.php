@@ -15,6 +15,11 @@ $smarty->assign('templateId',$_REQUEST["templateId"]);
 
 if($_REQUEST["templateId"]) {
   $info = $tikilib->get_template($_REQUEST["templateId"]);
+  if($tikilib->template_is_in_section($_REQUEST["templateId"],'html')) {
+    $info["section_html"]='y';
+  } else {
+    $info["section_html"]='n';
+  }
   if($tikilib->template_is_in_section($_REQUEST["templateId"],'wiki')) {
     $info["section_wiki"]='y';
   } else {
@@ -30,6 +35,7 @@ if($_REQUEST["templateId"]) {
   $info["name"]='';
   $info["content"]='';
   $info["section_cms"]='n';
+  $info["section_html"]='n';
   $info["section_wiki"]='n';
 }
 $smarty->assign('info',$info);
@@ -48,7 +54,13 @@ if(isset($_REQUEST["removesection"])) {
 $smarty->assign('preview','n');
 if(isset($_REQUEST["preview"])) {
   $smarty->assign('preview','y');
-  $parsed = $tikilib->parse_data($_REQUEST["content"]);
+  if(isset($_REQUEST["section_html"])&&$_REQUEST["section_html"]=='on') {
+     $info["section_html"]='y';
+     $parsed = nl2br($_REQUEST["content"]);
+  }  else {
+     $info["section_html"]='n';
+     $parsed = $tikilib->parse_data($_REQUEST["content"]);
+  }
   $smarty->assign('parsed',$parsed);
   if(isset($_REQUEST["section_wiki"])&&$_REQUEST["section_wiki"]=='on') {
      $info["section_wiki"]='y';
@@ -67,11 +79,19 @@ if(isset($_REQUEST["preview"])) {
 
 if(isset($_REQUEST["save"])) {
   $tid = $tikilib->replace_template($_REQUEST["templateId"], $_REQUEST["name"],$_REQUEST["content"]);
+
   $smarty->assign("templateId",'0');
   $info["name"]='';
   $info["content"]='';
   $info["section_cms"]='n';
   $info["section_wiki"]='n';
+  $info["section_html"]='n';
+  if(isset($_REQUEST["section_html"])&&$_REQUEST["section_html"]=='on') {
+     $tikilib->add_template_to_section($tid,'html');
+  }  else {
+     $tikilib->remove_template_from_section($tid,'html');
+  }
+
   if(isset($_REQUEST["section_wiki"])&&$_REQUEST["section_wiki"]=='on') {
     $tikilib->add_template_to_section($tid,'wiki');
   }  else {

@@ -149,6 +149,56 @@ if($feature_wiki_comments == 'y') {
   include_once("comments.php");
 }
 
+$section='wiki';
+include_once('tiki-section_options.php');
+
+
+
+if($feature_wiki_attachments == 'y') {
+  if(isset($_REQUEST["removeattach"])) {
+    $owner = $tikilib->get_attachment_owner($_REQUEST["removeattach"]);
+    if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
+      $tikilib->remove_wiki_attachment($_REQUEST["removeattach"]);
+    }
+  }
+  if(isset($_REQUEST["attach"]) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
+    // Process an attachment here
+    if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+      $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
+      $data = '';
+      $fhash='';
+      if($w_use_db == 'n') {
+        $fhash = md5($name = $_FILES['userfile1']['name']);    
+        $fw = fopen($w_use_dir.$fhash,"w");
+        if(!$fw) {
+          $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
+          $smarty->display('error.tpl');
+          die;  
+        }
+      }
+      while(!feof($fp)) {
+        if($w_use_db == 'y') {
+          $data .= fread($fp,8192*16);
+        } else {
+          $data = fread($fp,8192*16);
+          fwrite($fw,$data);
+        }
+      }
+      fclose($fp);
+      if($w_use_db == 'n') {
+        fclose($fw);
+        $data='';
+      }
+      $size = $_FILES['userfile1']['size'];
+      $name = $_FILES['userfile1']['name'];
+      $type = $_FILES['userfile1']['type'];
+      $tikilib->wiki_attach_file($page,$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
+    }
+  }
+
+  $atts = $tikilib->list_wiki_attachments($page,0,-1,'created_desc','');
+  $smarty->assign('atts',$atts["data"]);
+}
 
 // Display the Index Template
 $smarty->assign('dblclickedit','y');

@@ -35,6 +35,12 @@ if(isset($_REQUEST["register"])) {
     die;
   }
   
+  if(strstr($_REQUEST["name"],' ')) {
+    $smarty->assign('msg',tra("Username cannot contain whitespace"));
+    $smarty->display('error.tpl');
+    die; 	
+  }
+  
   if(!preg_match_all("/[A-Z0-9a-z_-]+/",$_REQUEST["name"],$matches)) {
     $smarty->assign('msg',tra("Invalid username"));
     $smarty->display('error.tpl');

@@ -112,6 +112,9 @@ $cat_type='faq';
 $cat_objid = $_REQUEST["faqId"];
 include_once("categorize_list.php");
 
+$section='faqs';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-list_faqs.tpl');

@@ -21,6 +21,7 @@ $smarty->assign('assign_position','');
 $smarty->assign('assign_order','');
 $smarty->assign('assign_cache',0);
 $smarty->assign('assign_rows',10);
+$smarty->assign('assign_params','');
 
 if(isset($_REQUEST["clear_cache"])) {
   $h = opendir("modules/cache");
@@ -51,6 +52,7 @@ if(isset($_REQUEST["edit_assign"])) {
   $smarty->assign_by_ref('assign_position',$info["position"]);
   $smarty->assign_by_ref('assign_cache',$info["cache_time"]);
   $smarty->assign_by_ref('assign_rows',$info["rows"]);
+  $smarty->assign_by_ref('assign_params',$info["params"]);
   $cosa="".$info["ord"];
   $smarty->assign_by_ref('assign_order',$cosa);
 }
@@ -84,10 +86,31 @@ if(!isset($_REQUEST["groups"])) {
   $_REQUEST["groups"]=Array();
 }
 
-if(isset($_REQUEST["assign"])) {
-  $_REQUEST["assing"]=urldecode($_REQUEST["assign"]);	
+$smarty->assign('preview','n');
+if(isset($_REQUEST["preview"])) {
+  $smarty->assign('preview','y');
   $smarty->assign_by_ref('assign_name',$_REQUEST["assign_name"]);
-  //$smarty->assign_by_ref('assign_title',$_REQUEST["assign_title"]);
+  if($tikilib->is_user_module($_REQUEST["assign_name"])) {
+    $info = $tikilib->get_user_module($_REQUEST["assign_name"]);
+    $smarty->assign_by_ref('user_title',$info["title"]);
+    $smarty->assign_by_ref('user_data',$info["data"]);
+    $data = $smarty->fetch('modules/user_module.tpl');
+  } else {
+    $phpfile = 'modules/mod-'.$_REQUEST["assign_name"].'.php';
+    $template= 'modules/mod-'.$_REQUEST["assign_name"].'.tpl';	
+    if(file_exists($phpfile)) {
+      $module_rows=$_REQUEST["assign_rows"];
+      parse_str($_REQUEST["assign_params"],$module_params);
+      include($phpfile);	
+    }
+    if(file_exists('templates/'.$template)) {
+      $data = $smarty->fetch($template);
+    } else {
+      $data = '';	
+    }
+  }
+  $smarty->assign_by_ref('assign_name',$_REQUEST["assign_name"]);
+  $smarty->assign_by_ref('assign_params',$_REQUEST["assign_params"]);
   $smarty->assign_by_ref('assign_position',$_REQUEST["assign_position"]);
   $smarty->assign_by_ref('assign_order',$_REQUEST["assign_order"]);
   $smarty->assign_by_ref('assign_cache',$_REQUEST["assign_cache"]);
@@ -98,7 +121,25 @@ if(isset($_REQUEST["assign"])) {
     $grps = $grps." $amodule ";	
   }
   $smarty->assign('module_groups',$grps);
-  $tikilib->assign_module($_REQUEST["assign_name"],'',$_REQUEST["assign_position"],$_REQUEST["assign_order"],$_REQUEST["assign_cache"],$_REQUEST["assign_rows"],serialize($module_groups));
+  $smarty->assign_by_ref('preview_data',$data);
+}
+
+if(isset($_REQUEST["assign"])) {
+  $_REQUEST["assing"]=urldecode($_REQUEST["assign"]);	
+  $smarty->assign_by_ref('assign_name',$_REQUEST["assign_name"]);
+  //$smarty->assign_by_ref('assign_title',$_REQUEST["assign_title"]);
+  $smarty->assign_by_ref('assign_position',$_REQUEST["assign_position"]);
+  $smarty->assign_by_ref('assign_params',$_REQUEST["assign_params"]);
+  $smarty->assign_by_ref('assign_order',$_REQUEST["assign_order"]);
+  $smarty->assign_by_ref('assign_cache',$_REQUEST["assign_cache"]);
+  $smarty->assign_by_ref('assign_rows',$_REQUEST["assign_rows"]);
+  $module_groups = $_REQUEST["groups"];
+  $grps='';
+  foreach($module_groups as $amodule) {
+    $grps = $grps." $amodule ";	
+  }
+  $smarty->assign('module_groups',$grps);
+  $tikilib->assign_module($_REQUEST["assign_name"],'',$_REQUEST["assign_position"],$_REQUEST["assign_order"],$_REQUEST["assign_cache"],$_REQUEST["assign_rows"],serialize($module_groups),$_REQUEST["assign_params"]);
   header("location: tiki-admin_modules.php");
 }
 
@@ -123,7 +164,7 @@ sort($all_modules);
 $smarty->assign_by_ref('all_modules',$all_modules);
 
 $orders = Array();
-for($i=1;$i<20;$i++) {
+for($i=1;$i<50;$i++) {
   $orders[]=$i;
 }
 $smarty->assign_by_ref('orders',$orders);
@@ -145,6 +186,8 @@ $contents = $tikilib->list_content(0,-1,'contentId_desc','');
 $smarty->assign('contents',$contents["data"]);
 $rsss = $tikilib->list_rss_modules(0,-1,'name_desc','');
 $smarty->assign('rsss',$rsss["data"]);
+$menus = $tikilib->list_menus(0,-1,'menuId_desc','');
+$smarty->assign('menus',$menus["data"]);
 $banners = $tikilib->list_zones();
 $smarty->assign('banners',$banners["data"]);
 $left = $tikilib->get_assigned_modules('l');

@@ -20,6 +20,11 @@ if(isset($_REQUEST["pv_chart"])) {
   $smarty->assign('days',$_REQUEST["days"]);
 }
 
+$smarty->assign('usage_chart','n');
+if(isset($_REQUEST["chart"])) {
+  $smarty->assign($_REQUEST["chart"]."_chart",'y');
+}
+
 $wiki_stats =  $tikilib->wiki_stats();
 $smarty->assign_by_ref('wiki_stats',$wiki_stats);
 $igal_stats = $tikilib->image_gal_stats();
@@ -40,6 +45,8 @@ $user_stats = $tikilib->user_stats();
 $smarty->assign_by_ref('user_stats',$user_stats);
 $site_stats = $tikilib->site_stats();
 $smarty->assign_by_ref('site_stats',$site_stats);
+$quiz_stats = $tikilib->quiz_stats();
+$smarty->assign_by_ref('quiz_stats',$quiz_stats);
 
 
 // Display the template

@@ -2,6 +2,7 @@
 // Initialization
 require_once('tiki-setup.php');
 
+
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
@@ -56,6 +57,7 @@ if(!page_exists($page)) {
 */
 
 include_once("tiki-pagesetup.php");
+
 
 // Now check permissions to access this page
 if($page != 'SandBox') {
@@ -172,9 +174,6 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('preview',1); 
 } 
 
-if(isset($_REQUEST["cancel"])) {
-  header("location: tiki-index.php?page=$page");
-}
 
 // Pro
 if(isset($_REQUEST["save"])) {
@@ -222,12 +221,12 @@ $cat_type='wiki page';
 $cat_objid = $_REQUEST["page"];
 include_once("categorize_list.php");
 
-
-
-
+$section='wiki';
+include_once('tiki-section_options.php');
 
 // Display the Index Template
 $smarty->assign('mid','tiki-editpage.tpl');
 $smarty->assign('show_page_bar','y');
 $smarty->display('tiki.tpl');
+
 ?>

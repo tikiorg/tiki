@@ -98,9 +98,10 @@ $smarty->assign_by_ref('channels',$channels["data"]);
 $questions = $tikilib->list_quiz_question_stats($_REQUEST["quizId"],0,-1,'position_desc','');
 $smarty->assign_by_ref('questions',$questions);
 
+$section='quizzes';
+include_once('tiki-section_options.php');
+
 // Display the template
 $smarty->assign('mid','tiki-quiz_stats_quiz.tpl');
 $smarty->display('tiki.tpl');
-
-
 ?>

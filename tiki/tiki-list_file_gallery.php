@@ -148,6 +148,9 @@ if($feature_file_galleries_comments == 'y') {
 }
 
 
+$section='file_galleries';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-list_file_gallery.tpl');

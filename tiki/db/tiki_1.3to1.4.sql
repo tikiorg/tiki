@@ -1,3 +1,78 @@
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_referer_stats','tiki','Can view referer stats');
+
+DROP TABLE IF EXISTS tiki_referer_stats;
+create table tiki_referer_stats (
+  referer varchar(50) not null,
+  hits integer(10),
+  last integer(14),
+  primary key(referer)
+);
+
+
+### Wiki attachments
+
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_wiki_attach_files','wiki','Can attach files to wiki pages');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_wiki_admin_attachments','wiki','Can admin attachments to wiki pages');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_wiki_view_attachments','wiki','Can view wiki attachments and download');
+
+DROP TABLE IF EXISTS tiki_wiki_attachments;
+create table tiki_wiki_attachments(
+  attId integer(12) not null auto_increment,
+  page varchar(40) not null,
+  filename varchar(80),
+  filetype varchar(80),
+  filesize integer(14),
+  user varchar(200),
+  data longblob,
+  path varchar(255),
+  downloads integer(10),
+  created integer(14),
+  comment varchar(250),
+  primary key(attId)
+);
+###
+
+alter table tiki_semaphores add timestamp integer(14);
+
+alter table tiki_images add paINSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_upload_images','image galleries','Can upload zip files with images');th varchar(255);
+
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_drawings','drawings','Can admin drawings');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_drawings','drawings','Can edit drawings');
+
+alter table tiki_modules add params varchar(250);
+
+## search stats
+
+DROP TABLE IF EXISTS tiki_search_stats;
+create table tiki_search_stats (
+  term varchar(50) not null,
+  hits integer(10),
+  primary key(term)
+);
+
+### Static and dynamic HTML pages ###
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_html_pages','html pages','Can view HTML pages');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_html_pages','html pages','Can edit HTML pages');
+DROP TABLE IF EXISTS tiki_html_pages;
+create table tiki_html_pages (
+  pageName varchar(40) not null,
+  content longblob,
+  refresh integer(10),
+  type char(1),
+  created integer(14),
+  primary key(pageName)
+);
+
+DROP TABLE IF EXISTS tiki_html_pages_dynamic_zones;
+create table tiki_html_pages_dynamic_zones (
+  pageName varchar(40) not null,
+  zone varchar(80) not null,
+  type char(2),
+  content text,
+  primary key(pageName,zone)
+);
+###
+
 alter table users_users add currentLogin integer(14);
 update users_users set currentLogin=lastLogin;
 alter table users_users add registrationDate integer(14);

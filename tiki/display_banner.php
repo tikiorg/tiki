@@ -21,7 +21,10 @@ switch($data["which"]) {
   case 'useFixedURL':
     $fp = fopen($data["fixedURLData"],"r");
     if ($fp) {
-      $raw = fread($fp,999999);
+      $raw='';
+      while(!feof($fp)) {
+        $raw .= fread($fp,8192);
+      }
     }
     fclose($fp);
     break;

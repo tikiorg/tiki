@@ -168,6 +168,9 @@ if($feature_blog_comments == 'y') {
   include_once("comments.php");
 }
 
+$section='blogs';
+include_once('tiki-section_options.php');
+
 
 // Display the template
 $smarty->assign('mid','tiki-view_blog.tpl');

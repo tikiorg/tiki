@@ -145,6 +145,8 @@ if(count($blogs)==0) {
   die;  
 }
 $smarty->assign_by_ref('blogs',$blogs);
+$section='blogs';
+include_once('tiki-section_options.php');
 
 
 // Display the Index Template
