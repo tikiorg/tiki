@@ -1,18 +1,17 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.4 2003-10-28 22:24:11 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.5 2003-10-29 20:43:07 dheltzel Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
 <!-- the help link info --->
-  
-      {if $feature_help eq 'y'}
-<a href="http://tikiwiki.org/tiki-index.php?page=Forums" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Forums{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+{if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=ArticleTypes" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Article Types{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+
 <!-- link to tpl -->
-      {if $feature_view_tpl eq 'y'}
+{if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-article_types.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Article Types tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
+
 <!--- beginning of next bit --->
 <br />
 <h3>{tr}List of types{/tr}</h3>
