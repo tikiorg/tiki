@@ -207,7 +207,7 @@ class TrackerLib extends TikiLib {
 
 
 	/* experimental shared */
-	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='') {
+	function list_items($trackerId, $offset, $maxRecords, $sort_mode, $listfields, $filterfield='', $filtervalue='', $status = '', $initial = '',$exactvalue='',$numsort=false) {
 		
 		$mid = " where tti.`trackerId`=? ";
 		$bindvars = array((int) $trackerId);
@@ -247,8 +247,13 @@ class TrackerLib extends TikiLib {
 				list($a,$csort_mode,$corder) = split('_',$sort_mode);
 			}
 			$bindvars[] = $csort_mode;
-			$query = "select tti.*, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
-			$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? order by ttif.".$this->convert_sortmode('value_'.$corder);
+			if ($numsort) { 
+				$query = "select tti.*, ttif.`value`,ttf.`type`, right(lpad(ttif.`value`,40,'0'),40) as ok from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+				$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? order by ".$this->convert_sortmode('ok_'.$corder);
+			} else {
+				$query = "select tti.*, ttif.`value`,ttf.`type` from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
+				$query.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? order by ttif.".$this->convert_sortmode('value_'.$corder);
+			}
 			$query_cant = "select count(*) from `tiki_tracker_items` tti, `tiki_tracker_item_fields` ttif, `tiki_tracker_fields` ttf  ";
 			$query_cant.= " $mid and tti.`itemId`=ttif.`itemId` and ttf.`fieldId`=ttif.`fieldId` and ttif.`fieldId`=? ";
 		} else {
@@ -257,6 +262,7 @@ class TrackerLib extends TikiLib {
 		}
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
+		$type = '';
 		$ret = array();
 		$opts = $optsl = array();
 		while ($res = $result->fetchRow()) {
@@ -301,8 +307,11 @@ class TrackerLib extends TikiLib {
 						$fopt["trackerId"] = $optsl[0];
 					}
 				}
-				if ($fopt["name"] == $csort_mode) {
-					$kx = $fopt["value"].$itid;
+				if (isset($fopt["options"])) {
+					$fopt["options_array"] = split(',',$fopt["options"]);
+				}
+				if ($fieldId == $csort_mode) {
+					$kx = $fopt["value"].'.'.$itid;
 				}
 				$last[$fieldId] = $fopt["value"];
 				$fields[] = $fopt;
@@ -310,15 +319,15 @@ class TrackerLib extends TikiLib {
 // var_dump($fields);die();
 			$res["field_values"] = $fields;
 			$res["comments"] = $this->getOne("select count(*) from `tiki_tracker_item_comments` where `itemId`=?",array((int) $itid));
-				$kl = $kx.$itid;
-				$ret["$kl"] = $res;
+			$ret["$kx"] = $res;
 		}
-
+		
 		if ($corder == 'asc') {
-			ksort($ret);
+			uksort($ret, 'strnatcasecmp');
 		} else {
 			krsort($ret);
 		}
+		
 		//$ret=$this->sort_items_by_condition($ret,$sort_mode);
 		$retval = array();
 		$retval["data"] = array_values($ret);
@@ -327,18 +336,26 @@ class TrackerLib extends TikiLib {
 	}
 
 
-	function replace_item($trackerId, $itemId, $ins_fields, $status = 'o') {
+	function replace_item($trackerId, $itemId, $ins_fields, $status = '') {
 		global $user;
 
 		global $smarty;
 		global $notificationlib;
 		global $sender_email;
 		$now = date("U");
-
+		
 		if ($itemId) {
-			$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
-			$result = $this->query($query,array($status,(int) $now,(int) $itemId));
+			if ($status) {
+				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
+				$result = $this->query($query,array($status,(int) $now,(int) $itemId));
+			} else {
+				$query = "update `tiki_tracker_items` set `lastModif`=? where `itemId`=?";
+				$result = $this->query($query,array((int) $now,(int) $itemId));
+			}
 		} else {
+			if (!$status) {
+				$status = $this->getOne("select `value` from `tiki_tracker_options` where `trackerId`=? and `name`=?",array((int) $trackerId,'newItemStatus'));
+			}
 			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`) values(?,?,?,?)";
 			$result = $this->query($query,array((int) $trackerId,(int) $now,(int) $now,$status));
 			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $now,(int) $trackerId));
@@ -578,7 +595,8 @@ class TrackerLib extends TikiLib {
 
 	function field_types() {
 		$type['c'] = array('label'=>tra('checkbox'),      'opt'=>true,  'help'=>tra('Checkbox options: put 1 if you need that next field is on the same row.'));
-		$type['t'] = array('label'=>tra('text field'),    'opt'=>true,  'help'=>tra('Text options: size,unit,1 with size in chars, unit is the symbol that append the field, and optionaly next text field or checkbox is in same row, if you indicate only 1 it means next field is in same row too.'));
+		$type['n'] = array('label'=>tra('numeric field'), 'opt'=>true,  'help'=>tra('Numeric options: 1,size,prepend,append with size in chars, prepend will be display before the field append wil be display just after, and optionaly 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
+		$type['t'] = array('label'=>tra('text field'),    'opt'=>true,  'help'=>tra('Text options: 1,size,prepend,append with size in chars, prepend will be display before the field append wil be display just after, and optionaly 1 to make that next text field or checkbox is in same row. If you indicate only 1 it means next field is in same row too.'));
 		$type['a'] = array('label'=>tra('textarea'),      'opt'=>true,  'help'=>tra('Textarea options: options,width,height with option is 1 or 0, rest is size indicated in chars and lines.'));
 		$type['d'] = array('label'=>tra('drop down'),     'opt'=>true,  'help'=>tra('Dropdown options: list of items separated with commas.') );
 		$type['u'] = array('label'=>tra('user selector'), 'opt'=>true,  'help'=>tra('User Selector: use options for automatic field feeding : you can use 1 for author login or 2 for modificator login.'));

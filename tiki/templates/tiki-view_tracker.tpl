@@ -140,6 +140,9 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$items[user].itemId}&amp;show=view">
 {/if}
 
+{if  ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
+ and $items[user].field_values[ix].options_array[2]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[2]}</span>{/if}
+
 {if $items[user].field_values[ix].type eq 'f'}
 {$items[user].field_values[ix].value|tiki_short_datetime|truncate:52:"..."|default:"&nbsp;"}
 
@@ -153,6 +156,9 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {$items[user].field_values[ix].value|truncate:52:"..."|default:"&nbsp;"}
 
 {/if}
+
+{if ($items[user].field_values[ix].type eq 't' or $items[user].field_values[ix].type eq 'n' or $items[user].field_values[ix].type eq 'c') 
+ and $items[user].field_values[ix].options_array[3]}<span class="formunit">&nbsp;{$items[user].field_values[ix].options_array[3]}</span>{/if}
 
 {if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' or $items[user].field_values[ix].linkId}</a>{/if}
 </td>
@@ -230,6 +236,19 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <table class="normal">
 <tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
 
+{if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}
+<tr class="formcolor"><td>{tr}Status{/tr}</td>
+<td>
+<select name="status">
+{foreach key=st item=stdata from=$status_types}
+<option value="{$st}"{if $tracker_info.newItemStatus eq $st} selected="selected"{/if} 
+style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:17px;">{$stdata.label}</option>
+{/foreach}
+</select>
+</td></tr>
+{/if}
+
+
 {section name=ix loop=$fields}
 {assign var=fid value=$fields[ix].fieldId}
 
@@ -239,7 +258,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <h3>{$fields[ix].name}</h3>
 <table class="normal">
 {else}
-{if ($fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1'}
+{if ($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0] eq '1'}
 <tr class="formcolor"><td class="formlabel">{$fields[ix].name}</td><td nowrap="nowrap">
 {elseif $stick eq 'y'}
 <td class="formlabel right">{$fields[ix].name}</td><td nowrap="nowrap">
@@ -250,7 +269,7 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {assign var=area_name value=$fields[ix].ins_id}
 {include file=tiki-edit_help_tool.tpl}
 {/if}
-</td><td colspan="3">
+</td><td colspan="3" nowrap="nowrap">
 {/if}
 {/if}
 
@@ -295,8 +314,14 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <input type="file" name="{$fields[ix].ins_id}"/>
 
 {elseif $fields[ix].type eq 't'}
+{if $fields[ix].options_array[2]}<span class="formunit">{$fields[ix].options_array[2]}&nbsp;</span>{/if}
 <input type="text" name="{$fields[ix].ins_id}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}"{/if} value="{$defaultvalues.$fid|escape}" />
-{if $fields[ix].options_array[2]}<span class="formunit">&nbsp;{$fields[ix].options_array[2]}</span>{/if}
+{if $fields[ix].options_array[3]}<span class="formunit">&nbsp;{$fields[ix].options_array[3]}</span>{/if}
+
+{elseif $fields[ix].type eq 'n'}
+{if $fields[ix].options_array[2]}<span class="formunit">{$fields[ix].options_array[2]}&nbsp;</span>{/if}
+<input type="text" name="{$fields[ix].ins_id}" {if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}"{/if} value="{$defaultvalues.$fid|escape}" />
+{if $fields[ix].options_array[3]}<span class="formunit">&nbsp;{$fields[ix].options_array[3]}</span>{/if}
 
 {elseif $fields[ix].type eq 'a'}
 <textarea id="{$fields[ix].ins_id}" name="{$fields[ix].ins_id}" cols="{if $fields[ix].options_array[1] gt 1}{$fields[ix].options_array[1]}{else}50{/if}" 
@@ -336,7 +361,7 @@ align       : "bR"
 
 {/if}
 
-{if (($fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
+{if (($fields[ix].type eq 'c' or $fields[ix].type eq 't' or $fields[ix].type eq 'n') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
 </td>{assign var=stick value="y"}
 {else}
 </td></tr>{assign var=stick value="n"}

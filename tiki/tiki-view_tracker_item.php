@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.50 2004-02-19 05:23:31 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.51 2004-02-20 06:14:53 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -266,12 +266,8 @@ if ($tiki_p_admin_trackers == 'y') {
 if ($tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["save"])) {
 		check_ticket('view-trackers-items');
-		if (!isset($_REQUEST["status"])) {
-			if (isset($tracker_info["modItemStatus"])) {
-				$_REQUEST["status"] = $tracker_info["modItemStatus"];
-			} else {
-				$_REQUEST["status"] = 'o';
-			}
+		if (!isset($_REQUEST["status"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
+			$_REQUEST["status"] = '';
 		}
 		
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["status"]);
