@@ -32,11 +32,6 @@ function wikiplugin_copyright($data,$params) {
     $result=$result.$notice;
   }
 
-  global $tiki_p_edit_copyrights;
-  if((isset($tiki_p_edit_copyrights)) && ($tiki_p_edit_copyrights == 'y')) {
-    $result=$result."\n<a href=\"copyrights.php?page=".$_REQUEST['copyrightpage']."\">Edit copyrights</a> for ((".$_REQUEST['copyrightpage']."))\n";
-  }
-
   return $result;
 }
 ?>

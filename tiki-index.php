@@ -51,8 +51,9 @@ if($wiki_creator_admin == 'y') {
 	}
 }
 
-
-
+if(isset($_REQUEST["copyrightpage"])) {
+  $smarty->assign_by_ref('copyrightpage',$_REQUEST["copyrightpage"]); 
+}
 
 // If the page doesn't exist then display an error
 if(!$tikilib->page_exists($page)) {
