@@ -260,11 +260,11 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 <table class="normal">
 {else}
 {if ($fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1'}
-<tr class="formcolor"><td>{$fields[ix].name}</td><td>
+<tr class="formcolor"><td class="formlabel">{$fields[ix].name}</td><td nowrap="nowrap">
 {elseif $stick eq 'y'}
-<td>{$fields[ix].name}</td><td>
+<td class="formlabel right">{$fields[ix].name}</td><td nowrap="nowrap">
 {else}
-<tr class="formcolor"><td>{$fields[ix].name}</td><td colspan="3">
+<tr class="formcolor"><td class="formlabel">{$fields[ix].name}</td><td colspan="3">
 {/if}
 {/if}
 
@@ -301,7 +301,8 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 <input type="file" name="{$fields[ix].id}"/>
 
 {elseif $fields[ix].type eq 't'}
-<input type="text" name="{$fields[ix].id}" />
+<input type="text" name="{$fields[ix].id}"{if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}"{/if} />
+{if $fields[ix].options_array[2]}<span class="formunit">&nbsp;{$fields[ix].options_array[2]}</span>{/if}
 
 {elseif $fields[ix].type eq 'a'}
 <textarea name="{$fields[ix].id}" rows="4" cols="50"></textarea>
@@ -334,7 +335,18 @@ singleClick : true,
 align       : "bR"
 {literal} } );{/literal}
 </script>
+
+{elseif $fields[ix].type eq 'r'}
+<input type="text" name="{$fields[ix].id}"{if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
+
+{elseif $fields[ix].type eq 'l'}
+<input type="text" name="{$fields[ix].id}"{if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
+
+
 {/if}
+
+
+
 {if (($fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
 </td>{assign var=stick value="y"}
 {else}
