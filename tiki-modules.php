@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.34 2004-03-23 12:01:52 djnz Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.35 2004-03-23 12:09:11 djnz Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -88,13 +88,12 @@ for ($i = 0; $i < count($these_modules); $i++) {
 		$smarty->assign_by_ref('module_rows',$r["rows"]);
 		if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) > $r["cache_time"])) {
 			$r["data"] = '';
+            $smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 			if (file_exists($phpfile)) {
 				include ($phpfile);
 			}
 			if (file_exists("templates/".$template)) {
-                $smarty->assign_by_ref('module_params', $module_params);
 				$data = $smarty->fetch($template);
-                $smarty->assign('module_params',array()); // ensure params not available outside current module
 			} else {
 				if ($tikilib->is_user_module($r["name"])) {
 					$info = $tikilib->get_user_module($r["name"]);
@@ -104,6 +103,7 @@ for ($i = 0; $i < count($these_modules); $i++) {
 					$data = $smarty->fetch('templates/modules/user_module.tpl');
 				}
 			}
+            $smarty->assign('module_params',array()); // ensure params not available outside current module
 			$r["data"] = $data;
 			if (!file_exists($nocache)) {
 				$fp = fopen($cachefile, "w+");
