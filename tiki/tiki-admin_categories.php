@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.15 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.16 2003-11-19 00:02:28 gongo Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.15 2003-11-17 15:44:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.16 2003-11-19 00:02:28 gongo Exp $
 //
 
 // Initialization
@@ -168,10 +168,10 @@ foreach ($ctall as $c) {
 			'Objects in category'). ':' . $c["objects"] . '">' . $c["name"] . '</a>',
 		"edit" =>
 			'<a class="link" href="tiki-admin_categories.php?parentId=' . $c["parentId"] . '&amp;categId=' . $c["categId"] . '#editcreate" title="' . tra(
-			'edit'). '"><img border="0" src="img/icons/edit.gif"></a>',
+			'edit'). '"><img border="0" src="img/icons/edit.gif" /></a>',
 		"remove" =>
 			'<a class="link" href="tiki-admin_categories.php?parentId=' . $c["parentId"] . '&amp;removeCat=' . $c["categId"] . '" title="' . tra(
-			'remove'). '"><img  border="0" src="img/icons2/delete.gif"></a>',
+			'remove'). '"><img  border="0" src="img/icons2/delete.gif" /></a>',
 		"children" => $c["children"],
 		"objects" => $c["objects"]
 	);
