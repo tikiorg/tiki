@@ -1990,7 +1990,8 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	`tiki_article_types`.`show_pubdate`,
 	`tiki_article_types`.`show_expdate`,
 	`tiki_article_types`.`show_reads`,
-	`tiki_article_types`.`show_size`
+	`tiki_article_types`.`show_size`,
+	`tiki_article_types`.`creator_edit`
 	from `tiki_articles`, `tiki_article_types`, `users_users` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_articles`, `tiki_article_types`, `users_users` $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -2094,7 +2095,24 @@ function list_submissions($offset = 0, $maxRecords = -1, $sort_mode = 'publishDa
 }
 
 function get_article($articleId) {
-    $query = "select * from `tiki_articles` where `articleId`=?";
+    $mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
+    $query = "select `tiki_articles`.*,
+	`users_users`.`avatarLibName`,
+	`tiki_article_types`.`use_ratings`,
+	`tiki_article_types`.`show_pre_publ`,
+	`tiki_article_types`.`show_post_expire`,
+	`tiki_article_types`.`heading_only`,
+	`tiki_article_types`.`allow_comments`,
+	`tiki_article_types`.`show_image`,
+	`tiki_article_types`.`show_avatar`,
+	`tiki_article_types`.`show_author`,
+	`tiki_article_types`.`show_pubdate`,
+	`tiki_article_types`.`show_expdate`,
+	`tiki_article_types`.`show_reads`,
+	`tiki_article_types`.`show_size`,
+	`tiki_article_types`.`creator_edit`
+	from `tiki_articles`, `tiki_article_types`, `users_users` $mid and `tiki_articles`.`articleId`=?";
+    //$query = "select * from `tiki_articles` where `articleId`=?";
     $result = $this->query($query,array((int)$articleId));
     if ($result->numRows()) {
 	$res = $result->fetchRow();

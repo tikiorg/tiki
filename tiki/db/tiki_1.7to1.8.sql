@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.63 2003-11-11 12:02:57 sylvieg Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.64 2003-11-11 18:47:16 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -464,6 +464,7 @@ CREATE TABLE tiki_article_types (
   show_expdate varchar(1) default NULL,
   show_reads varchar(1) default 'y',
   show_size varchar(1) default 'y',
+  creator_edit varchar(1) default NULL,
   PRIMARY KEY  (type)
 ) TYPE=MyISAM ;
 
