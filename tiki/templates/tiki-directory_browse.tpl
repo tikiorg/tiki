@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.9 2003-11-10 02:26:52 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-directory_browse.tpl,v 1.10 2003-11-21 11:42:01 redflo Exp $ *}
 
 <a class="pagetitle" href="tiki-directory_browse.php?parent={$parent}">{tr}Directory{/tr}</a><br/><br/>
 {* The navigation bar *}
@@ -124,7 +124,7 @@
 <br/>
 {section loop=$cant_pages name=foo}
 {assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
-<a class="prevnext" href="tiki-directory_admin_sites.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
+<a class="prevnext" href="tiki-directory_browse.php?parent={$parent}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
