@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.16 2004-08-11 18:55:39 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/smartiki.css,v 1.17 2004-08-12 22:31:52 teedog Exp $
 
 Smarty style by mose@tikiwiki.org
 
@@ -842,6 +842,8 @@ span.trailer {    font-size: 10px; }
 
 /* The comment title */
 span.commentstitle {  font-weight: bold;  font-size: 12px;    width: 100%;}
+
+.subcomment {margin-left: 10px; }
 
 /************************************************************ CHAT *********************************************************/
 

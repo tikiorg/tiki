@@ -1,24 +1,17 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.38 2004-08-09 21:29:14 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.39 2004-08-12 22:31:23 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.38 2004-08-09 21:29:14 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.39 2004-08-12 22:31:23 teedog Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
 require_once('tiki-setup.php');
 require_once ('lib/userslib/userslib_admin.php');
-
-/*
-if (!isset($_REQUEST["login"])) {
-  header("location: $HTTP_REFERER");
-  die;  
-}
-*/
 
 // Alert user if cookies are switched off
 // for some reason, CAS proxy tickets don't work if the following cookie check occurs: help!
@@ -90,14 +83,6 @@ $challenge = isset($_REQUEST['challenge']) ? $_REQUEST['challenge'] : false;
 $response = isset($_REQUEST['response']) ? $_REQUEST['response'] : false;
 $isvalid = false;
 $isdue = false;
-
-// unneeded since admin/admin is created by tiki.sql; potential security hole
-//if ($user == 'admin' && !$userlib->user_exists('admin')) {
-//  if ($pass == 'admin') {
-//     $isvalid = true;
-//     $userlib->add_user('admin', 'admin', 'none');
-//  }  
-//} else {
 
 // Verify user is valid
 $isvalid = $userslibadmin->validate_user($user, $pass, $challenge, $response);

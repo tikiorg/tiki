@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.3 2004-06-19 20:55:40 gmuslera Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.4 2004-08-12 22:31:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,12 +21,6 @@ if ($feature_multilingual != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
-//if ($tiki_p_edit_translation != 'y') {
-//	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-//	$smarty->display("error.tpl");
-//	die;
-//}
 
 if (!(isset($_REQUEST['page']) && $_REQUEST['page']) && !(isset($_REQUEST['id']) && $_REQUEST['id'])) {
 	$smarty->assign('msg',tra("No object indicated"));
@@ -79,6 +73,21 @@ else if ($_REQUEST['id']) {
 		$find_objects = '';
 		$articles = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', $user);
 		$smarty->assign_by_ref('articles', $articles["data"]);
+	}
+}
+
+if ($type == "wiki page") {
+	if ($tiki_p_edit != 'y') {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
+		$smarty->display("error.tpl");
+		die;
+	}
+}
+else if ($type == "article") {
+	if ($tiki_p_edit_article != 'y') {
+		$smarty->assign('msg', tra("Permission denied you cannot edit this article"));
+		$smarty->display("error.tpl");
+		die;
 	}
 }
 

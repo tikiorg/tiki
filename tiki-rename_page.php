@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.10 2004-07-29 17:37:46 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-rename_page.php,v 1.11 2004-08-12 22:31:23 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ if (isset($_REQUEST["rename"])) {
 	check_ticket('rename-page');
 	// If the new pagename does match userpage prefix then display an error
 	$newName = $_REQUEST['newpage'];
-	if (strpos($newName, $feature_wiki_userpage_prefix)===0) { // don't use ==, we check the position here!
+	if (stristr($newName, $feature_wiki_userpage_prefix) == $newName) {//stripos is only php5
 		$smarty->assign('msg', tra("Cannot rename page because the new name begins with reserved prefix").' ('.$feature_wiki_userpage_prefix.').');
 
 		$smarty->display("error.tpl");

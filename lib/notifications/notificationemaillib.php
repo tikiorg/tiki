@@ -2,12 +2,13 @@
 /** \brief send the email notifications dealing with the forum changes to
   * \brief outbound address + admin notification addresses / forum admin email + watching users addresses
   * \param $event = 'forum_post_topic' or 'forum_post_thread'
-  * \param $object = objectid watch
+  * \param $object = forumId watch if forum_post_topic or topicId watch if forum_post_thread
+  * \param $threadId = topicId if forum_post_thread
   * \param $title of the message
   * \param $topicName name of the parent topic
   */
 
-function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='') { 
+function sendForumEmailNotification($event, $object, $forum_info, $title, $data, $author, $topicName, $messageId='', $inReplyTo='', $threadId='') { 
 	global $tikilib, $feature_user_watches, $smarty, $userlib, $sender_email;
 
 	// Per-forum From address overrides global default.
@@ -68,8 +69,17 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		$smarty->assign('mail_date', date("U"));
 		$smarty->assign('mail_message', $data);
 		$smarty->assign('mail_author', $author);
-		if ($event == "forum_post_topic")
+      	$foo = parse_url($_SERVER["REQUEST_URI"]);
+       	$machine = httpPrefix(). dirname( $foo["path"] );
+ 		$smarty->assign('mail_machine', $machine);
+		$smarty->assign('forumId', $forum_info["forumId"]);
+		if ($event == "forum_post_topic") {
 			$smarty->assign('new_topic', 'y');
+			$smarty->assign('topicId', $threadId);
+		}
+		else {
+			$smarty->assign('topicId', $object);
+		}
 		$smarty->assign('mail_topic', $topicName);
 		foreach ($nots as $not) {
 			$mail->setUser($not['user']);

@@ -1539,6 +1539,26 @@ div.commenttext {
 	text-decoration:   underline;
 }
 
+
+/* The text */
+div.commenttext {
+  font-size: 11px;
+  margin-left: 5px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  width: 95%;
+}
+
+/* The text */
+div.commenttext {
+  font-size: 11px;
+  margin-left: 5px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  width: 95%;
+}
+.comments .normal {
+	width: 100%;
+}
+
 /************************************************************ CHAT *********************************************************/
 table.chatroom {
 	border-color:    #5A4A39;

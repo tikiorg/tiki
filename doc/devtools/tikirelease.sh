@@ -1,34 +1,37 @@
 #!/bin/sh
-# $Id: tikirelease.sh,v 1.7 2004-06-21 10:55:12 mose Exp $
+# $Id: tikirelease.sh,v 1.8 2004-08-12 22:31:26 teedog Exp $
 # written and maintained by mose@feu.org
 
 # HOWTO release TikiWiki ?
 # --------------------------
 # 
-# 0/ Check that everything is working. When you are sure, check again.
-# 
-# 1/ Tag the release with instructions on http://tikiwiki.org/TikiCvsTags
-#    for example : cvs tag  REL-1-7-3
-#    
-# 2/ Setup the lines in the configuration section just below with your own
+# 0/ Setup the lines in the configuration section just below with your own
 #    identity and settings (note that the script could be used on other projects)
+#
+# 1/ Create and test pre-release packages by executing the script with the release
+#    version as argument, using the format major.minor.sub (ex. ./tikirelease.sh 1.7.3)
+#
+# 2/ After testing, tag the release with instructions on http://tikiwiki.org/TikiCvsTags
+#    for example : cvs tag REL-1-7-3
 #    
-# 3/ Execute the script with the release version as argument, under the shape
+# 3/ Uncomment the second "RELTAG=" line and the "grep -rl" line as instructed below
+#
+# 4/ Execute the script with the release version as argument, using the format
 #    major.minor.sub (like in 1.7.3)
 #    
-# 4/ Test the produced tarball and share the testing with friends if possible
+# 5/ Test the produced tarball and share the testing with friends if possible
 # 
-# 5/ When the tarball is validated you can copyu-paste the produced line to upload
+# 6/ When the tarball is validated you can copy-paste the produced line to upload
 #    both .gz and .bz2 to sourceforge
 #    
-# 6/ If you are release technician on sourceforge, add the files to the repository 
-#    in admin sf section. If you are not, ask one release technician to do it 
+# 7/ If you are release technician on sourceforge, add the files to the repository 
+#    in admin sf section. If you are not, ask a release technician to do it 
 # 
-# 7/ Warn people that do .zip, .7z, .rpm that the archive is avalaible so they can
+# 8/ Warn people that do .zip, .7z, .rpm that the archive is avalaible so they can
 #    complete the packaging process with new files. If you don't know who does that,
 #    warn everybody.
 #
-# 8/ unless in step 7/ you warned everybody you have now to announce the good news
+# 9/ unless in step 6/ you warned everybody you have now to announce the good news
 #    on devel mailing-list and ask marc to launch the announce-speading process 
 #    (manually for now).
 #
@@ -44,6 +47,10 @@ CVSROOT=":ext:$USER@cvs.sf.net:/cvsroot/tikiwiki"
 WORKDIR="/home/$USER/tikipack"
 MODULE="tikiwiki"
 
+# when creating pre-release packages, change RELTAG to the correct branch
+# comment this line when ready to release (step 3)
+RELTAG="BRANCH-1-8"
+
 # end of configuration
 # ############################################################
 
@@ -55,7 +62,9 @@ fi
 
 OLDIR=`pwd`
 VER=$1
-RELTAG="REL-`echo $VER | tr '.' '-'`"
+
+# when ready to release (step 3), uncomment this line
+# RELTAG="REL-`echo $VER | tr '.' '-'`"
 
 # ############################################################
 
@@ -84,18 +93,13 @@ rm -rf $MODULE-$VER/SPIDERCORE
 rm -rf $MODULE-$VER/Smarty
 rm -rf $MODULE-$VER/templates_c/%*
 
-#uncomment for real release
+#uncomment for real release: remove all instances of "(CVS)" in templates
 #grep -rl ' (CVS) ' $MODULE-$VER/templates | xargs -- perl -pi -e "s/ \(CVS\) / /"
 chmod 775 $MODULE-$VER/setup.sh
 
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
 tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER
 zip -r $MODULE-$VER.zip $MODULE-$VER
-
-echo ""
-echo "copy-paste and exectue the following line at will (depending on SF mood) :"
-echo "  lftp -u anonymous,release@tikiwiki.org -e 'cd incoming;put $MODULE-$VER.tar.gz;put $MODULE-$VER.tar.bz2;put $MODULE-$VER.zip;quit;' upload.sf.net"
-echo ""
 
 # ############################################################
 # special operation for a lighter tikiwiki
@@ -114,8 +118,15 @@ echo ""
 # tar -czf $MODULE-$VER.light.tar.gz tikilight_$VER
 # tar -cjf $MODULE-$VER.light.tar.bz2 tikilight_$VER
 # zip -r $MODULE-$VER.light.zip tikilight_$VER
-# echo "lftp -u anonymous,tiki@mose.com -e 'cd incoming;put $MODULE-$VER.light.tar.gz;put $MODULE-$VER.light.tar.bz2;put $MODULE-$VER.light.zip;quit;' upload.sf.net"
+# echo ""
+# echo "To upload the light archives, copy-paste and exectue the following line at will (depending on SF's mood):"
+# echo "cd $WORKDIR/$VER; lftp -u anonymous,release@tikiwiki.org -e 'cd incoming;put $MODULE-$VER.light.tar.gz;put $MODULE-$VER.light.tar.bz2;put $MODULE-$VER.light.zip;quit;' upload.sf.net"
 # ############################################################
+
+echo ""
+echo "To upload the archives, copy-paste and exectue the following line at will (depending on SF's mood):"
+echo "cd $WORKDIR/$VER; lftp -u anonymous,release@tikiwiki.org -e 'cd incoming;put $MODULE-$VER.tar.gz;put $MODULE-$VER.tar.bz2;put $MODULE-$VER.zip;quit;' upload.sf.net"
+echo ""
 
 cd $OLDIR
 

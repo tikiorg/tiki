@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.40 2004-07-17 12:49:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-calendar.php,v 1.41 2004-08-12 22:31:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -224,7 +224,7 @@ if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
 if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
 	$_SESSION['CalendarViewMode'] = 'week';
 }
-$smarty->assign('viewmode', $_SESSION['CalendarViewMode']);
+$smarty->assign_by_ref('viewmode', $_SESSION['CalendarViewMode']);
 
 if (isset($_REQUEST["delete"])and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"])) {
   $area = 'delcalevent';
@@ -459,6 +459,7 @@ $smarty->assign('focuscell', $focuscell);
 $smarty->assign('now', mktime(date('G'), date('i'), date('s'), date('n'), date('d'), date('Y')));
 
 $weekdays = range(0, 6);
+$hours = range(0, 23);
 
 $d = 60 * 60 * 24;
 $currentweek = date("W", $focusdate);
@@ -520,9 +521,9 @@ if ($_SESSION['CalendarViewMode'] == 'month' ||
    $firstweek = $currentweek;
    $lastweek = $currentweek;
    $viewstart = mktime(0,0,0,$focus_month, $focus_day, $focus_year);
-   $daystart=$viewstart;
+   $daystart = $viewstart;
    $viewend = $viewstart + ($d - 1);
-   $dayend=$viewend;
+   $dayend = $daystart;
    $weekdays = array(date('w',$focusdate));
    $numberofweeks = 0;
 }
@@ -573,7 +574,6 @@ if ($_SESSION['CalendarViewTikiCals']) {
 } else {
 	$listtikievents = array();
 }
-
 define("weekInSeconds", 604800);
 
 // note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
@@ -587,10 +587,14 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 
 	foreach ($weekdays as $w) {
 		$leday = array();
-	        $dday = $startOfWeek + $d * $w;
+		If ($_SESSION['CalendarViewMode'] == 'day') {
+			$dday = $daystart;
+		} else {
+			$dday = $startOfWeek + $d * $w;
+		}
 		$cell[$i][$w]['day'] = $dday;
 		
-		If ($dday>=$daystart && $dday<=$dayend) {
+		If ($_SESSION['CalendarViewMode'] == 'day' or ($dday>=$daystart && $dday<=$dayend)) {
 		  $cell[$i][$w]['focus'] = true;
 		} else {
 		  $cell[$i][$w]['focus'] = false;
@@ -642,7 +646,9 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 }
 
 $hrows = array();
+$hours = array();
 if ($_SESSION['CalendarViewMode'] == 'day') {
+	$hours = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
 	foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
 		$rawhour = substr($dayitems['time'],0,2);
 		$dayitems['mins'] = substr($dayitems['time'],2);
@@ -650,6 +656,7 @@ if ($_SESSION['CalendarViewMode'] == 'day') {
 	}
 }
 $smarty->assign('hrows', $hrows); 
+$smarty->assign('hours', $hours); 
 
 $smarty->assign('trunc', $trunc); 
 $smarty->assign('daformat', $tikilib->get_long_date_format()." ".tra("at")." %H:%M"); 

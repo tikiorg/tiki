@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.43 2004-07-17 12:49:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.44 2004-08-12 22:31:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,9 +85,6 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"])) {
 				$userlib->group_inclusion($_REQUEST["name"], $include);
 			}
 		}
-	}
-	if (isset($_REQUEST['batch_set_default']) and $_REQUEST['batch_set_default'] == 'on') {
-		$userlib->batch_set_default_group($_REQUEST["name"]);
 	}
 	$_REQUEST["group"] = $_REQUEST["name"];
 	$logslib->add_log('admingroups','modified group '.$_REQUEST["olgroup"].' to '.$_REQUEST["group"]);

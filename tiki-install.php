@@ -1,10 +1,15 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.65 2004-07-18 19:54:05 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.66 2004-08-12 22:31:22 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+// To re-enable this script comment the following two lines with two / and stopinstall: making sure there are no spaces inbetween // and stopinstall:
+
+//stopinstall: header ('location: index.php');
+//stopinstall: die('gone');
 
 error_reporting (E_ALL);
 
@@ -189,7 +194,21 @@ class Smarty_TikiWiki extends Smarty {
 }
 
 function kill_script() {
-	@$removed = rename('tiki-install.php', 'tiki-install.done');
+	// remove the header and die comments to render this script dead
+	$removed = false;
+	$fh = fopen('tiki-install.php', 'rb');
+	$data = fread($fh, filesize('tiki-install.php'));
+	fclose($fh);
+
+	$data = preg_replace('/\/\/stopinstall: /', '', $data);
+
+	if (is_writable("tiki-install.php")) {
+		$fh = fopen('tiki-install.php', 'wb');
+		if (fwrite($fh, $data) > 0) {
+			$removed = true;
+		}
+		fclose($fh);	
+	}
 
 	if ($removed == true) {
 		header ('location: tiki-index.php');
@@ -384,7 +403,7 @@ function load_sql_scripts() {
 	//echo $dbversion_tiki . "---";
 
 	while ($file = readdir($h)) {
-        	if (preg_match('#1\..to1\..#',$file)) {
+        	if (preg_match('#1\..to1\..*\.sql$#',$file)) {
                 	$files[] = $file;
         	}
 	}
@@ -600,7 +619,6 @@ if (isset($_SESSION['install-logged'])) {echo '$_SESSION[install-logged] is set<
 }
 echo "admin_acc=$admin_acc<br>";
 */
-
 if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' && 
 		($admin_acc=='n' || (isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"]=='y'))
 	)) && isset($_REQUEST['dbinfo'])) {

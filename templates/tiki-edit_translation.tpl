@@ -36,6 +36,7 @@
 <input type="hidden" name="type" value="{$type|escape}" />
 
 <h2>{tr}Language{/tr}</h2>
+<p>{tr}Use this section to set the language of the version you are currently working on.{/tr}</p>
 <table>
 <tr>
 	<td><select name="langpage" size="1">
@@ -80,6 +81,7 @@
 	</td></tr></table>
 
 {else} {* first translation *}
+	<p>{tr}To create a new translation of a page that has never been translated before, create an initial version of the translation, select the translation language above, enter the page name of the original page below, and hit "go".{/tr}</p>
 	{tr}Translation of:{/tr}&nbsp;
 	{if $articles}
 		<select name="srcId">{section name=ix loop=$articles}<option value="{$articles[ix].articleId|escape}">{$articles[ix].title|truncate:40:"(...)":true}</option>{/section}</select>

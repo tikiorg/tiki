@@ -921,7 +921,7 @@ div.commenttext {
 .commentshlink:active {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: none;}
 .commentshlink:hover {  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color : black; text-decoration: underline;}
 
-
+.comments .normal { width: 100%;}
 /************************************************************ CHAT *********************************************************/
 
 table.chatroom { border-color: #5A4A39;  border-style: solid;  border-width: 2px;  width: 98%;}

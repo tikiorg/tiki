@@ -168,8 +168,7 @@ class Comments extends TikiLib {
 
 	$this->query($query,array($attId));
     }
-/*
-loop included in lib/mail/mimlib.php
+
     function parse_output(&$obj, &$parts, $i) {
 	if (!empty($obj->parts)) {
 	    $temp_max = count($obj->parts);
@@ -227,7 +226,7 @@ loop included in lib/mail/mimlib.php
 	    }
 	}
     }
-*/
+
     function process_inbound_mail($forumId) {
 	require_once ("lib/webmail/pop3.php");
 
@@ -283,22 +282,22 @@ loop included in lib/mail/mimlib.php
 	    $title = trim(
 		    preg_replace( "/[rR][eE]:/", "", 
 			preg_replace( "/\[[-A-Za-z _:]*\]/", "", 
-			    $output->headers['subject'] 
+			    $output['header']['subject'] 
 			    )
 			)
 		    );
+
 	    if (stristr($aux['subject'], "=?iso-8859-1?") == $aux['subject'])
 		$title = utf8_encode($title);
 
-
 	    //Todo: check permissions
-	    $message_id = substr($output->headers["message-id"], 1,
-		    strlen($output->headers["message-id"])-2);
+	    $message_id = substr($output['header']["message-id"], 1,
+		    strlen($output['header']["message-id"])-2);
 
-	    if( isset( $output->headers["in-reply-to"] ) )
+	    if( isset( $output['header']["in-reply-to"] ) )
 	    {
-		$in_reply_to = substr($output->headers["in-reply-to"], 1,
-			strlen($output->headers["in-reply-to"])-2);
+		$in_reply_to = substr($output['header']["in-reply-to"], 1,
+			strlen($output['header']["in-reply-to"])-2);
 	    } else {
 		$in_reply_to = '';
 	    }
@@ -314,7 +313,7 @@ loop included in lib/mail/mimlib.php
 		    "select `threadId` from `tiki_comments` where
 		    `object`=? and `objectType` = 'forum' and
 		    `parentId`=0 and `title`=?",
-		    array($forumId,$title) 
+		    array($forumId, $title) 
 		    );
 
 	    if (!$parentId)
@@ -1053,10 +1052,15 @@ loop included in lib/mail/mimlib.php
     }
 
     // FORUMS END
-    function get_comment($id) {
-	$query = "select * from `tiki_comments` where `threadId`=?";
-
-	$result = $this->query($query, array( (int) $id ) );
+    function get_comment($id, $message_id=null) {
+	if ($message_id) {
+		$query = "select * from `tiki_comments` where `message_id`=?";
+		$result = $this->query($query, array($message_id ) );
+	}
+	else {
+		$query = "select * from `tiki_comments` where `threadId`=?";
+		$result = $this->query($query, array( (int) $id ) );
+	}
 	$res = $result->fetchRow();
 	if($res) { //if there is a comment with that id
 	    $res["parsed"] = $this->parse_comment_data($res["data"]);
@@ -1410,7 +1414,7 @@ loop included in lib/mail/mimlib.php
     }
 
     function get_comments($objectId, $parentId, $offset = 0, $maxRecords = -1,
-	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded')
+	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0)
     {
 	global $userlib;
 	// Turn maxRecords into maxRecords + offset, so we can increment it without worrying too much.
@@ -1478,7 +1482,7 @@ loop included in lib/mail/mimlib.php
 		left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
 		$mid 
 		and (tc1.`in_reply_to` = ?
-		or (tc1.`in_reply_to` = \"\" or tc1.`in_reply_to` is null or tc1.message_id is null))
+		or (tc2.`in_reply_to` = \"\" or tc2.`in_reply_to` is null or tc2.message_id is null))
 		$time_cond order by tc1.".$this->convert_sortmode($sort_mode).",tc1.`threadId`";
 		$bind_mid = array_merge($bind_mid, array($parent_message_id));
 
@@ -1492,8 +1496,9 @@ loop included in lib/mail/mimlib.php
 	$logins = array();
 	$threadIds = array();
 
-	if ($parentId > 0 && $style == 'commentStyle_threaded' && $object[0] != "forum") {
-		$ret[] = $this->get_comments_fathers($parentId, $ret);
+//	if ($parentId > 0 && $style == 'commentStyle_threaded' && $object[0] != "forum") {
+	if ($reply_threadId > 0 && $style == 'commentStyle_threaded') {
+		$ret[] = $this->get_comments_fathers($reply_threadId, $ret);
 		$cant = 1;
 	}
 	else {
@@ -1534,29 +1539,30 @@ loop included in lib/mail/mimlib.php
 	    if( !( $maxRecords <= 0  && $orig_maxRecords != 0 ) )
 	    {
 		// Get the replies
-		if ($parentId == 0 || $style != 'commentStyle_threaded' || $object[0] == "forum") {
-		if( $object[0] == "forum" )
+		if ($parentId == 0 || $style != 'commentStyle_threaded' || $object[0] == "forum")
 		{
-		    // For plain style, don't handle replies at all.
-		    if( $style == 'commentStyle_plain' )
+		    if( $object[0] == "forum" )
 		    {
-			$ret[$key]['replies_info']['numReplies'] = 0;
-			$ret[$key]['replies_info']['totalReplies'] = 0;
+			// For plain style, don't handle replies at all.
+			if( $style == 'commentStyle_plain' )
+			{
+			    $ret[$key]['replies_info']['numReplies'] = 0;
+			    $ret[$key]['replies_info']['totalReplies'] = 0;
+			} else {
+			    $ret[$key]['replies_info'] = $this->get_comment_replies($res["parentId"], $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find, $res["message_id"], 1);
+			}
 		    } else {
-			$ret[$key]['replies_info'] = $this->get_comment_replies($res["parentId"], $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find, $res["message_id"], 1);
+			$ret[$key]['replies_info'] = $this->get_comment_replies($res["threadId"], $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find );
 		    }
-		} else {
-		    $ret[$key]['replies_info'] = $this->get_comment_replies($res["threadId"], $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold, $find );
-		}
 
-		/* Trim to maxRecords, including replies! */
-		if( $offset >= 0  && $orig_offset != 0 )
-		{
-		    $offset = $offset - $ret[$key]['replies_info']['totalReplies'];
+		    /* Trim to maxRecords, including replies! */
+		    if( $offset >= 0  && $orig_offset != 0 )
+		    {
+			$offset = $offset - $ret[$key]['replies_info']['totalReplies'];
+		    }
+		    $maxRecords = $maxRecords - $ret[$key]['replies_info']['totalReplies'];
 		}
-		$maxRecords = $maxRecords - $ret[$key]['replies_info']['totalReplies'];
 	    }
-		}
 
 	    if (empty($res["data"])) {
 		$ret[$key]["isEmpty"] = 'y';
@@ -1596,16 +1602,22 @@ loop included in lib/mail/mimlib.php
 	return $retval;
     }
 
-	/* @brief: gets the comments of the thread and of all its fathers
+	/* @brief: gets the comments of the thread and of all its fathers (ex cept first one for forum)
  	*/
-	function get_comments_fathers($threadId, $ret = null) {
-		$com = $this->get_comment($threadId);
+	function get_comments_fathers($threadId, $ret = null, $message_id = null) {
+		$com = $this->get_comment($threadId, $message_id);
+		if ($com['objectType'] == 'forum' && $com['parentId'] == 0 ) {// don't want the 1 level
+			return $ret;
+		}
 		if ($ret) {
 			$com['replies_info']['replies'][0] = $ret;
 			$com['replies_info']['numReplies'] = 1;
 			$com['replies_info']['totalReplies'] = 1;
 		}
-		if ($com['parentId'] > 0) {
+		if ($com['objectType'] == 'forum' && $com['in_reply_to']) {
+			return $this->get_comments_fathers(null, $com, $com['in_reply_to']);
+		}
+		else if ($com['parentId'] > 0) {
 			return $this->get_comments_fathers($com['parentId'], $com);
 		}
 		else{

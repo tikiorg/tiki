@@ -1,7 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.10 2004-07-11 10:27:48 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map_upload.tpl,v 1.11 2004-08-12 22:31:58 teedog Exp $ *}
 
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br /><br />
-<h3>{tr}{$dir}{/tr}</h3>
+<a class="link" href="tiki-map_upload.php?dir={$dir}">
+<h3>{tr}{$dir}{/tr}</h3></a>
 <table class="normal">
 <tr>
 <td class="heading" colspan="2">{tr}Directories{/tr}</a></td>
@@ -21,7 +22,7 @@
 </td>
 <td class="odd">
 {if $tiki_p_map_delete eq 'y'}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&amp;directory={$dirs[user]}&amp;action=deldir"
+<a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
 {/if}
@@ -36,7 +37,7 @@
 </td>
 <td class="even">
 {if $tiki_p_map_delete eq 'y'}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&amp;directory={$dirs[user]}&amp;action=deldir"
+<a class="link" href="tiki-map_upload.php?dir={$dir}&directory={$dirs[user]}&action=deldir">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
 {/if}
@@ -53,7 +54,7 @@
 </td>
 <td class="odd">
 {if $tiki_p_map_delete eq 'y'}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&amp;file={$files[user]}&amp;action=delete"
+<a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
 {/if}
@@ -66,7 +67,7 @@
 </td>
 <td class="even">
 {if $tiki_p_map_delete eq 'y'}
-<a class="link" href="tiki-map_upload.php?dir={$dir}&amp;file={$files[user]}&amp;action=delete"
+<a class="link" href="tiki-map_upload.php?dir={$dir}&file={$files[user]}&action=delete">
 <img src='img/icons2/delete.gif' border='0' alt='{tr}delete{/tr}' title='{tr}delete{/tr}' />
 </a>
 {/if}

@@ -180,18 +180,20 @@ class MultilingualLib extends TikiLib {
 				$langs[] = $l;
 		}
 
-		$ls = array_merge($langs, preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE']))); // browser
-		foreach ($ls as $l) {
-			if (!in_array($l, $langs)) {
-				$langs[] = $l;
-				$l = $this->rootLang($l);
-				if (!in_array($l, $langs))
+		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+			$ls = preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE'])); // browser
+			foreach ($ls as $l) {
+				if (!in_array($l, $langs)) {
 					$langs[] = $l;
+					$l = $this->rootLang($l);
+					if (!in_array($l, $langs))
+						$langs[] = $l;
+				}
 			}
 		}
 		$l = $tikilib->get_preference("language", "en");
 		if (!in_array($l, $langs)) {
-			$langs[] = $language; // site language
+			$langs[] = $l; // site language
 			$l = $this->rootLang($language);
 			if (!in_array($l, $langs))
 				$langs[] = $l;
@@ -207,6 +209,8 @@ class MultilingualLib extends TikiLib {
 	/* @brief : fitler a list of object to have only one objet in the set of translations with the best language
 	 */
 	function selectLangList($type, $listObjs, $langContext = null) {
+		if (!$listObjs || count($listObjs) <= 1)
+			return $listObjs;
 		$langs = $this->preferedLangs($langContext);
 //echo "<pre>";print_r($langs);echo "</pre>";
 		for ($i = 0; $i < count($listObjs); ++$i) {
@@ -214,6 +218,8 @@ class MultilingualLib extends TikiLib {
 				continue; // previously withdrawn or no language
 			if ($type == 'wiki page')
 				$objId = $listObjs[$i]['page_id'];
+			else if ($type == 'objId')
+				$objId = $listObjs[$i]['objId'];
 			else
 				$objId = $listObjs[$i]['articleId'];
 			$trads = $this->getTrads($type, $objId);
@@ -224,6 +230,8 @@ class MultilingualLib extends TikiLib {
 					continue;
 				if ($type == 'wiki page')
 					$objId2 = $listObjs[$j]['page_id'];
+				else if ($type == 'objId')
+					$objId2 = $listObjs[$j]['objId'];
 				else
 					$objId2 = $listObjs[$j]['articleId'];
 				if ($this->exist($trads, $objId2, 'objId')) {
@@ -251,8 +259,23 @@ class MultilingualLib extends TikiLib {
 				}
 			}
 		}
-		$listObjs = array_merge($listObjs);// take away the unset row
-		return $listObjs;
+		return array_merge($listObjs, null);// take away the unset rows
+	}
+
+	/* @brief : select the object with the best language from another object
+	 */
+	function selectLangObj($type, $objId, $langContext = null) {
+		$trads = $this->getTrads($type, $objId);
+		if (!$trads)
+			return $objId;
+		$langs = $this->preferedLangs($langContext);
+		foreach ($langs as $l) {
+			foreach ($trads as $trad) {
+				if ($trad['lang'] == $l)
+					return $trad['objId'];
+			}
+		}
+		return $objId;
 	}
 }
 $multilinguallib = new MultilingualLib($dbTiki);

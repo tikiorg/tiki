@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.43 2004-07-13 22:53:53 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.44 2004-08-12 22:31:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -180,6 +180,10 @@ if ($tiki_p_post_comments == 'y') {
 			$_REQUEST["comments_title"],
 			$_REQUEST["comments_data"],
 			$message_id, $in_reply_to );
+		if ($object[0] != "forum")
+			$smarty->assign("comments_parentId", 0); // to display all the comments
+		$_REQUEST["comments_reply_threadId"] = 0;
+		$smarty->assign("comments_reply_threadId", 0); // without the flag
 	    } else {
 		if ($tiki_p_edit_comments == 'y') {
 		    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
@@ -375,9 +379,13 @@ if( isset( $_REQUEST["comments_grandParentId"] ) )
 if(!empty($forum_mode) && $forum_mode == 'y') {
 	$_REQUEST["comments_parentId"] > 0;
 }
+if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]))
+	$threadId_if_reply = $_REQUEST["comments_reply_threadId"];
+else
+	$threadId_if_reply = 0;
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
 	$comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
-	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"]);
+	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"], $threadId_if_reply);
 $comments_cant = $commentslib->count_comments($comments_objectId);
 $smarty->assign('comments_below', $comments_coms["below"]);
 $smarty->assign('comments_cant', $comments_cant);

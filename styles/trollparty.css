@@ -1,5 +1,5 @@
 /*
-$Id: trollparty.css,v 1.35 2004-08-11 18:55:39 sylvieg Exp $
+$Id: trollparty.css,v 1.36 2004-08-12 22:31:54 teedog Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -19,125 +19,83 @@ cbox: bg #333333;
 */
 
 
-body
-{
+body {
 font-family: Helvetica, Verdana, Geneva, Arial, sans-serif;
 background-color: #000000;
 color: #aeaeae;
 margin: 0px;
 }
-a
-{
+a {
 color: #dede98;
 text-decoration: none;
 }
-a:hover
-{
+a:hover {
 color: #ffffff;
 background: #131333;
 }
-a:active
-{
+a:active {
 color: #336699;
 background: #000000;
 }
-a:visited
-{
+a:visited {
 color: #aea067;
 }
-/* 
-GENERAL LAYOUT EXPLANATION
-
-The tiki application is enclosed as a whole in 
-tiki-main tiki-main contains three divs: tiki-top,
-tiki-mid and tiki-botthat will be used for the header, 
-application and footer.
-
-tiki-mid contains a 3-column table, the columns are 
-called (ids) leftcolumn, centercolumn and rightcolumn
-
-Finally centercolumn contains tiki-center where the main 
-area of the application is displayed.
-*/
-
-/*
-GENERAL LAYOUT 
-*/
 
 /* 
 This div encloses the whole Tiki application 
 */
-DIV#tiki-main
-{
+DIV#tiki-main {
 height: 100%;
 width: 100%;
 margin: 0px;
 }
 
-/* 
-This is the header 
-*/
-DIV#tiki-top
-{
-font-size: 80%;
-padding-right: 5px;
-padding-left: 6px;
+DIV#tiki-top {
+font-size: .8em;
+padding: 0 5px;
 }
 
-/* 
-This is the middle 
-*/
-DIV#tiki-mid
-{
-height: auto;
-padding-bottom: 0px;
+DIV#tiki-mid {
+padding : 0;
+margin : 0;
 }
 
-/* 
-And this is the footer 
-*/
-DIV#tiki-bot
-{
-padding-top: 5px;
-margin-top: 0px;
-padding-bottom: 0px;
+DIV#tiki-bot {
+padding : 0;
+margin : 0px;
 }
 
 /* 
 The three columns 
 */
-TD#leftcolumn
-{
+TD#leftcolumn {
 vertical-align: top;
 width: 180px;
 border-right: 1px solid #003388;
+padding-right : 1px;
 }
 
-TD#rightcolumn
-{
+TD#rightcolumn {
 vertical-align: top;
-width: 180px;
+width: 2000px;
 border-left: 1px solid #003388;
+padding-left : 1px;
+}
+TD#leftcolumn div.box,TD#rightcolumn div.box {
+width: 200px;
 }
 
-TD#centercolumn
-{
+TD#centercolumn {
 vertical-align: top;
 width: 100%;
 border-left: 1px solid #003388;
 border-right: 1px solid #003388;
+padding : 0 1px;
 }
 
-/* 
-centercolumn 
-*/
-DIV#tiki-center
-{
-margin-top: 0;
-margin-left: 0;
-margin-right: 0;
-padding-left: 0;
-padding-right: 0;
+DIV#tiki-center {
+margin: 0;
+padding: 0;
 }
 
 div#debugconsole {
@@ -175,7 +133,6 @@ div.box
 /*background: #e1e2b9; */
 padding-top: 3px;
 overflow: hidden;
-width: 180px;
 margin-top: 13px;
 }
 
@@ -194,7 +151,6 @@ text-align: left;
 padding-left: 6px;
 padding-right: 6px;
 margin-bottom: 1px;
-width: 180px;
 }
 
 div.box-title table {
@@ -209,7 +165,6 @@ div.box-data
 overflow: hidden;
 margin-left: 15px;
 margin-right: 5px;
-width: 160px;
 }
 
 div.box-data li:before
@@ -259,7 +214,6 @@ margin-top: 4px;
 margin-bottom: 0px;
 padding-bottom: 10px;
 overflow: hidden;
-width: 100%;
 }
 
 /* 
@@ -273,7 +227,6 @@ text-align: left;
 padding-left: 10px;
 padding-right: 0px;
 margin-bottom: 0px;
-width: 100%;
 }
 
 /* 
@@ -297,32 +250,14 @@ div.cbox-data
 {
 overflow: hidden;
 color: #aeaeae;
-width: 100%;
+padding : 5px;
 }
 
-/* 
-Some boxes are identified by an ID, for example the  
-boxes in the main application menu, we set display to
-none to make the menu appear collapsed initially, 
-change this to 'block' if you want it to be extended fully 
-*/
-
-
-/* 
-Menus
-*/
-
-/* 
-Separators are used to sepparate menu areas in the application 
-menu and user created menus
-*/
-div.separator
-{
+div.separator {
 margin-top: 4px;
 margin-bottom: 2px;
 padding-bottom: 2px;
 border-bottom: 1px dashed #2255aa;
-width: 100%;
 }
 
 /* 
@@ -438,81 +373,52 @@ padding-right: 2px;
 color: #aeaeae;
 border: 1px solid #777750;
 background: #424242;
-width: 100%;
 }
 
 /* 
 Prevent forms from generating unwanted padding or margins 
 */
-FORM
-{
-margin : 0px 0px 0px 0px;
-padding-bottom : 0px;
-padding-left : 0px;
-padding-right : 0px;
-padding-top : 0px;
+FORM {
+margin : 0px;
+padding : 0px;
 }
 
-/* 
-General form elements 
-*/
-input, 
-select
-{
+input, select {
 color : #ffffff;
 background-color: #122232;
 font: normal 10px Verdana, Arial, Helvetica, sans-serif;
 border: 1px solid #425262;
 }
 
-textarea
-{
+textarea {
 color : #ffffff;
 background-color: #122232;
 border: 1px solid #425262;
 font: normal 12px fixed, courier, monospace;
 }
 
-input
-{
+input {
 text-indent : 2px;
 }
 
-input[type=submit]
-{
+input[type=submit] {
 color: #b1b299;
 background-color: #424242;
 border: 1px solid #b1b299;
 text-indent: 0;
 }
-input[type=submit]:hover
-{
+input[type=submit]:hover {
 color: #ffffff;
 background-color: #000000;
 border: 1px solid #ffffff;
 }
-/* 
-General tables
 
-These styles apply to tables used to display common 
-listings such as the wiki page listing, last changes,
-listings in admin screens, etc. 
-*/
 
-/* 
-Cells where nothing is specified 
-*/
-TD
-{
+TD {
 vertical-align: top;
 }
 
-/* 
-Cells in forms without background color 
-(inside a div for example) 
-*/
-.form td
-{
+.form td {
 vertical-align: top;
 text-align: left;
 }
@@ -713,15 +619,15 @@ vertical-align: top;
 text-align: left;
 }
 tr.odd:hover {
-background-color: #FFF7E6;
+background-color: #000000;
 }
 tr.even {
-background-color: #323232;
+background-color: #222222;
 vertical-align: top;
 text-align: left;
 }
 tr.even:hover {
-background-color: #FFF7E6;
+background-color: #000000;
 }
 
 TD.odd,
@@ -868,7 +774,7 @@ td.jukeboxlistusereven,
 td.jukeboxlisttrackseven, 
 td.jukeboxlistvisitseven
 {
-background-color: #323232;
+background-color: #222222;
 vertical-align: top;
 text-align: left;
 }
@@ -1021,28 +927,6 @@ font-size: 80%;
 color : #999999;
 }
 
-/* 
-prev & next buttons in pagination 
-*/
-.prevnext,
-.galprevnext,
-.blogprevnext,
-.fgalprevnext,
-.artprevnext,
-.forumprevnext,
-.jukeboxprevnext
-{
-}
-
-.prevnext:hover,
-.galprevnext:hover,
-.blogprevnext:hover,
-.jukeboxprevnext:hover,
-.fgalprevnext:hover,
-.artprevnext:hover,
-.forumprevnext:hover
-{
-}
 
 /* 
 Warning background/color 
@@ -1066,7 +950,6 @@ padding-right: 1px;
 padding-top: 1px;
 padding-bottom: 1px;
 margin: 1px 1px;
-width: 100%;
 clear: both;
 font-weight: bold;
 }
@@ -1086,7 +969,6 @@ end of each page to edit/print/remove/etc a page
 .button2, .button3
 {
 border-top: 1px solid #2255aa;
-font-size: 90%;
 margin: 0;
 padding-left: 4px;
 padding-right: 4px;
@@ -1097,43 +979,36 @@ padding-right: 4px;
 /* 
 Links in buttons 
 */
-.linkbut
-{
-padding-left: 5px;
-padding-right: 5px;
-padding-top: 2px;
-padding-bottom: 2px;
+.linkbut {
+padding: 2px 5px;
 color: #b1b299;
 text-decoration: none;
+font-size: .8em;
 }
 
-.linkbut:hover
-{
+.linkbut:hover {
 border-top: 1px solid #ffffff;
 color: white;
 }
 
-.button2top
-{
+.button2top {
 border-bottom: 1px solid #2255aa;
 display: inline;
 margin: 0;
 padding-right: 4px;
 padding-left: 4px;
 }
-
-.linkbuttop
-{
-padding-left: 5px;
-padding-right: 5px;
-padding-top: 2px;
-padding-bottom: 2px;
+.button2top form {
+display : inline;
+}
+.linkbuttop {
+padding: 2px 5px;
 color: #b1b299;
 text-decoration: none;
+font-size: .8em;
 }
 
-.linkbuttop:hover
-{
+.linkbuttop:hover {
 border-bottom: 1px solid #ffffff;
 color: #ffffff;
 }
@@ -1141,69 +1016,50 @@ color: #ffffff;
 /* 
 When a cached version of an external link is displayed 
 */
-div.cache
-{
+div.cache {
 border: 1px solid #aeaeae;
-padding-left: 0.1em;
-padding-right: 0.1em;
-padding-top: 0.1em;
-padding-bottom: 0.1em;
+padding: .2em;
 margin: 0.1ex 0px;
-width: 100%;
 }
 
-div.cachedpage
-{
+div.cachedpage {
 border: 1px solid #aeaeae;
 padding-left: 0.1em;
 padding-right: 0.1em;
 padding-top: 0.1em;
 padding-bottom: 0.1em;
 margin: 0.1ex 0px;
-width: 100%;
 }
 
 /* 
 When an external link is cached a small link to the 
 cached version (cache) is displayed using this style 
 */
-.wikicache
-{	
+.wikicache {	
 font-size: 80%;	
 text-decoration: none;
 }
 
-.wikicache:hover
-{
+.wikicache:hover {
 color : #ffffff;
 background-color: #f1f1c9;
 }
 
-table.wikitable
-{
+table.wikitable {
 border: 1px solid #2255aa;
 }
 
-td.wikicell
-{
+td.wikicell {
 background-color: #121212;
 }
 
 /* 
 Text in wiki pages is displayed using the following style 
 */
-div.wikitext
-{
+div.wikitext {
 background-color: #000000;
-padding-left: 10px;
-padding-right: 10px;
-padding-top: 3px;
-padding-bottom: 3px;
-margin-left: 0px;
-margin-right: 0px;
-margin-top: 1px;
-margin-bottom: 1px;
-width: 100%;
+padding: 3px 20px;
+margin: 1px 0px;
 clear: both;
 }
 
@@ -1221,32 +1077,22 @@ text-decoration: none;
 color: white;
 }
 
-hr
-{
+hr {
 size: 1px;
 border: 0;
 display: none;
 }
-/* 
-Date displayed for last modification date of pages 
-*/
-.editdate
-{
+
+.editdate {
 font-size: smaller;
 text-align: right;
-margin-bottom: -18px;
-margin-top: 0px;
-padding-left: 10px;
-padding-right: 10px;
+margin-top: 20px;
+padding: 0 10px;
 color: #999999;
 background: #121212;
-font-family:  Helvetica, Arial, sans-serif;
 }
-/*
 
-*/
-.toptitledesc
-{
+.toptitledesc {
 font-size: smaller;
 padding-left: 10px;
 color: #aeaeae;
@@ -1258,8 +1104,7 @@ font-family:  Helvetica, Arial, sans-serif;
 The edit-help used to display the wiki 
 syntax when editing a page 
 */
-div.wiki-edithelp
-{
+div.wiki-edithelp {
 background: #121212;
 border: 1px solid #999999;
 font-size: smaller;
@@ -1270,8 +1115,8 @@ padding: 10px;
 IMAGE GALLERIES 
 */
 TABLE.galtable {
-        border-collapse: collapse;
-        width: 100%;
+border-collapse: collapse;
+width: 100%;
 }
 
 /* 
@@ -1284,7 +1129,6 @@ padding-right: 0.8em;
 padding-top: 0.5em;
 padding-bottom: 0.5em;
 margin: 0.5ex 0px;
-width: 100%;
 clear: both;
 }
 
@@ -1293,7 +1137,6 @@ Container for the whole gallery
 */
 div.browsegallery
 {
-width: 100%;
 }
 
 /* 
@@ -1397,7 +1240,6 @@ The whole container for the browse image screen (may be useful for a fancy backg
 div.browseimage
 {
 background: #EFEFE7;
-width: 100%;
 }
 
 div.imagetitle
@@ -1546,7 +1388,6 @@ padding-right: 0.8em;
 padding-top: 0.5em;
 padding-bottom: 0.5em;
 margin: 0.5ex 0px;
-width: 100%;
 clear: both;
 }
 
@@ -1761,7 +1602,6 @@ padding-right: 0px;
 padding-top: 0px;
 padding-bottom: 0px;
 margin-bottom: 10px;
-width: 99%;
 }
 
 /* Help box*/
@@ -1770,14 +1610,12 @@ div.commentsedithelp
 background: white;
 border: 1px solid black;
 font-size: smaller;
-width: 99%;
 }
 
 /* The toolbar where the ordering number of comments and find box are found */
 div.commentstoolbar
 {
 margin-bottom: 20px;
-width: 100%;
 padding-top: 2px;
 padding-left: 2px;
 }
@@ -1786,14 +1624,12 @@ padding-left: 2px;
 span.commentstitle
 {
 font-weight: bold;
-width: 98%;
 }
 ul.subcomment{margin-left: 10px;}
 /* The comment */
 div.commentscomment
 {
 margin-bottom: 20px;
-width: 100%;
 }
 
 /* The header for a comment */
@@ -1870,7 +1706,6 @@ font-weight: bold;
 
 div.pollresults
 {
-width: 98%;
 margin-top: 5px;
 padding-left: 5px;
 }
@@ -1950,7 +1785,6 @@ display: block;
 
 div.forumtoolbar
 {
-width: 98%;
 margin-bottom: 20px;
 border: 0px;
 }
@@ -2200,7 +2034,6 @@ padding-left: 5px;
 padding-top: 5px;
 padding-bottom: 10px;
 margin-top: 10px;
-width: 100%;
 }
 
 /* each site in the list of sites */
@@ -2382,17 +2215,14 @@ a.caltabon:hover
 {
 background-color: transparent;
 }
-div#tab, div#tabcal, div#tabnav
-{
+div#tab, div#tabcal, div#tabnav {
 margin-top: 10px;
 margin-left: 30px;
 }
-div#tab
-{
+div#tab {
 margin-bottom: 15px;
 }
-div.tabcal, div.tabnav
-{
+div.tabcal, div.tabnav {
 padding: 10px;
 background-color: #222222;
 }
@@ -2400,366 +2230,70 @@ background-color: #222222;
 .calcheckbox
 {
 }
-.caltoggle
-{
+.caltoggle {
 margin-bottom: 7px;
 }
-#opaque
-{
+#opaque {
 background-color: #222222;
 }
-.calfocus
-{
-font-size:r97px;
-background-color: transparent;
+.calfocus {
+font-size: 9px;
 }
-.calfocus a
-{
+.calfocus a {
 text-decoration: none;
-color: #000000;
+color : #cccccc;
 }
-.calfocuson
-{
-font-size:r97px;
-background-color: #f1f1c9;
+.calfocuson {
+font-size: 9px;
+background-color: #000000;
 }
-.calfocuson a
-{
+.calfocuson a {
 text-decoration: none;
-color: #000000;
+color : #ffffff;
 }
 
-
-
-.Calwiki
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-margin-top: 0;
+.Calwiki, .Calblog, .Calgal, .Calart, .Calforum, .Caldir, .Calfgal, .Calfaq, .Calquiz, .Caltrack, .Calsurv, .Calnl, .Caleph, .Calchart  {
+border-top : 1px dashed #666666; padding : 0 3px; font-size : .7em;
+}
+.Calwiki a, .Calblog a, .Calgal a, .Calart a, .Calforum a, .Caldir a, .Calfgal a, .Calfaq a, .Calquiz a, .Caltrack a, .Calsurv a, .Calnl a, .Caleph a, .Calchart a { 
+color: #ffffff; 
 }
 
-.Calwiki a
-{
-color: #443F39;
-}
+.Calwiki:before { content: "w"; font-family: monospace; }
+.Calblog:before { content: "b"; font-family: monospace; }
+.Calgal:before { content: "i"; font-family: monospace; }
+.Calart:before { content: "a"; font-family: monospace; }
+.Calforum:before { content: "o"; font-family: monospace; }
+.Caldir:before { content: "d"; font-family: monospace; }
+.Calfgal:before { content: "f"; font-family: monospace; }
+.Calfaq:before { content: "q"; font-family: monospace; } 
+.Calquiz:before { content: "z"; font-family: monospace; }
+.Caltrack:before { content: "t"; font-family: monospace; }
+.Calsurv:before { content: "s"; font-family: monospace; }
+.Calnl:before { content: "n"; font-family: monospace; }
+.Caleph:before { content: "e"; font-family: monospace; }
+.Calchart:before { content: "c"; font-family: monospace; }
 
-.Calwiki:before
-{
-content: "w";
-font-family: monospace;
-}
-
-.Calblog
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calblog a
-{
-color: #443039;
-}
-
-.Calblog:before
-{
-content: "b";
-font-family: monospace;
-}
-
-.Calgal
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calgal a
-{
-color: #303F49;
-}
-
-.Calgal:before
-{
-content: "i";
-font-family: monospace;
-}
-
-.Calart
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calart a
-{
-color: #304F30;
-}
-
-.Calart:before
-{
-content: "a";
-font-family: monospace;
-}
-
-.Calforum
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calforum a
-{
-color: #304F30;
-}
-
-.Calforum:before
-{
-content: "o";
-font-family: monospace;
-}
-
-.Caldir
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Caldir a
-{
-color: #304F30;
-}
-
-.Caldir:before
-{
-content: "d";
-font-family: monospace;
-}
-
-.Calfgal
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calfgal a
-{
-color: #304F30;
-}
-
-.Calfgal:before
-{
-content: "f";
-font-family: monospace;
-}
-
-.Calfaq
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calfaq a
-{
-color: #304F30;
-}
-
-.Calfaq:before
-{
-content: "q";
-font-family: monospace;
-}
-
-.Calquiz
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calquiz a
-{
-color: #304F30;
-}
-
-.Calquiz:before
-{
-content: "z";
-font-family: monospace;
-}
-
-.Caltrack
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Caltrack a
-{
-color: #304F30;
-}
-
-.Caltrack:before
-{
-content: "t";
-font-family: monospace;
-}
-
-.Calsurv
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calsurv a
-{
-color: #304F30;
-}
-
-.Calsurv:before
-{
-content: "s";
-font-family: monospace;
-}
-
-.Calnl
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calnl a
-{
-color: #304F30;
-}
-
-.Calnl:before
-{
-content: "n";
-font-family: monospace;
-}
-
-.Caleph
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Caleph a
-{
-color: #304F30;
-}
-
-.Caleph:before
-{
-content: "e";
-font-family: monospace;
-}
-
-.Calchart
-{
-border-top:1px dashed #cccccc;
-font-size:10px;
-padding-left:3px;
-padding-right:3px;
-}
-
-.Calchart a
-{
-color: #304F30;
-}
-
-.Calchart:before
-{
-content: "c";
-font-family: monospace;
-}
-.calweb
-{
+.calweb {
 font-weight: bold;
 text-decoration: none;
-padding-left: 3px;
-padding-right: 3px;
+padding: 0 3px;
 color: #336699;
 }
-.calweb:hover
-{
+.calweb:hover {
 color: #996633;
 }
-.calprio1
-{
-color: #ffffff;
-background-color: #212121;
-}
-.calprio2
-{
-color: #ffffff;
-background-color: #21262a;
-}
-.calprio3
-{
-color: #ffffff;
-background-color: #212a31;
-}
-.calprio4
-{
-color: #ffffff;
-background-color: #213136;
-}
-.calprio5
-{
-color: #ffffff;
-background-color: #21364a;
-}
-.calprio6
-{
-color: #ffffff;
-background-color: #213a51;
-font-weight: bold;
-}
-.calprio7
-{
-color: #ffffff;
-background-color: #21415a;
-font-weight: bold;
-}
-.calprio8
-{
-color: #ffffff;
-background-color: #214a61;
-font-weight: bold;
-}
-.calprio9
-{
-color: #ffffff;
-background-color: #215672;
-font-weight: bold;
-}
-#opaque
-{
+.calprio1 { color: #ffffff; background-color: #212121; }
+.calprio2 { color: #ffffff; background-color: #21262a; }
+.calprio3 { color: #ffffff; background-color: #212a31; }
+.calprio4 { color: #ffffff; background-color: #213136; }
+.calprio5 { color: #ffffff; background-color: #21364a; }
+.calprio6 { color: #ffffff; background-color: #213a51; font-weight: bold; }
+.calprio7 { color: #ffffff; background-color: #21415a; font-weight: bold; }
+.calprio8 { color: #ffffff; background-color: #214a61; font-weight: bold; }
+.calprio9 { color: #ffffff; background-color: #215672; font-weight: bold; }
+
+#opaque {
 background-color: #000000;
 border-bottom: 1px solid #b1b299;
 border-left: 1px solid #b1b299;
@@ -2784,9 +2318,9 @@ td.middle {
 }
 .opaque
 {
-	background-color: #ffffff;
+	background-color: #000000;
 	width: auto;
-	border: 1px solid #666666;
+	border: 1px solid #003388;
 	padding: 1px; 
 }
 .opaque .box-title,
@@ -2878,32 +2412,34 @@ cursor: help;
 text-decoration: inherit;
 }
 .catblock {
-  border: 1px solid #aaaaaa;
+padding : 0;
+margin : 0;
+width : inherit;
+font-size : .9em;
 }
 .catlists {
-  border-top: 1px solid #ffffff;
-  padding: 1px 6px 1px 6px;
   background-color: none;
   color: #666666;
 }
 .catlists:last-child {
-  border-bottom: 1px solid #ffffff;
+margin-bottom : 10px;
 }
 .catlists:hover {
-  background-color: #dedede;
+  background-color: #131313;
 }
 .cattitle {
-  color: #000000;
+  color: #2255aa;
   font-weight: bold;
 }
 .catlists a.link {
-  color: #666666;
+  color: #dede98;
   padding: 0px 4px 0px 4px;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #666666;
   -moz-border-radius: 6px;
 }
 .catlists a.link:hover {
-  color: #000000;
+  background-color: #000000;
+  border: 1px solid #ffffff;
 }
 /* TikiIntegrator: By default copy rules dialog not shown */
 div#rules-copy-panel {
@@ -3030,17 +2566,16 @@ TABLE.admin {
 .tabmark {
 	display: inline;
 	font-size: 85%;
-	background-color: #dddddd;
-	border: 1px solid #666666;
+	background-color: #333333;
+	border: 1px solid #003388;
 	margin: 0px;
-	margin-right: 5px;
 	padding: 1px 0px 1px 0px;
 	-moz-border-radius : 5px 5px 0 0;  
 }
 .tabmark a { 
 	-moz-border-radius : 5px 5px 0 0; 
 	border-bottom : 0; 
-	color: #666666;
+	color: #dede98;
 	font-weight: 700 !important;
 	padding: 1px 5px 1px 5px;
 }
@@ -3049,18 +2584,17 @@ TABLE.admin {
 	color: red;
 }
 .tabmark a:hover {
-	color: black;
-	background-color: #CCCCCC;
+	color: #ffffff;
+	background-color: #131333;
 }
 .tabcontent {
 	z-index : 200;
 	position: relative;
-	border: 1px solid #999999;
+	border: 1px solid #003388;
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
-	background-color: #eeeeee;
+	background-color: #333333;
 	-moz-border-radius: 0px 4px 4px 4px;
-	width: 100%;
 }
 
 
@@ -3081,12 +2615,22 @@ TABLE.admin {
 }
 
 /**** coloration for c o d e plugin *****/
-.codelisting 
-{ font-family : monospace;
+.codelisting  { 
+font-family : monospace;
 padding : 2ex;
-background-color : #400099; /***kinda purple***/
+background-color : #333333;
 margin : 1ex;
-border : 1px dashed #adacaf; }
+border : 1px dashed #003388; 
+}
+.codecaption {
+font-size : smaller;
+padding : .5ex 2ex;
+background-color : #333333;
+position : relative;
+bottom : -2ex;
+display : inline;
+border : 1px dashed #003388; 
+}
 
 /* wiki diff styles */
 
@@ -3144,3 +2688,4 @@ border-style: solid;
 color: black;
 background-color: #edeeef;
 }
+

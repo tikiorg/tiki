@@ -1,14 +1,6 @@
 {if $print_page ne 'y'}
 <div class="tabt1">
 
-{if $feature_backlinks eq 'y'}
-<span class="tabbut"><a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page|escape:"url"}" class="tablink">{tr}backlinks{/tr}</a></span>
-{/if}
-
-{if $wiki_feature_3d eq 'y'}
-<span class="tabbut"><a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})">{tr}3d browser{/tr}</a></span>
-{/if}
-
 {if $cached_page eq 'y'}
 <span class="tabbut"><a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1" class="tablink">{tr}refresh{/tr}</a></span>
 {/if}
@@ -23,6 +15,10 @@
 <span class="tabbut"><a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;savenotepad=1" class="tablink">{tr}save{/tr}</a></span>
 {/if}
 
+{if $wiki_feature_3d eq 'y'}
+<span class="tabbut"><a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})" class="tablink">{tr}3d browser{/tr}</a></span>
+{/if}
+
 {if $user and $feature_user_watches eq 'y'}
 {if $user_watching_page eq 'n'}
 <span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add" class="tablink">{tr}monitor this page{/tr}</a></span>
@@ -30,12 +26,24 @@
 <span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove" class="tablink">{tr}stop monitoring this page{/tr}</a></span>
 {/if}
 {/if}
+
+{if $feature_backlinks eq 'y' and $backlinks}
+<form action="tiki-index.php" method="post">
+<select name="page" onchange="page.form.submit()">
+<option>{tr}backlinks{/tr}...</option>
+{section name=back loop=$backlinks}
+<option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
+{/section}
+</select>
+</form>
+{/if}
+
 {if $feature_multilingual == 'y'}{include file="translated-lang.tpl"}{/if}
 </div>
 {/if}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
-{if $lock}
+{if $lock and $print_page ne 'y'}
 <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
 </h1>{/if}
@@ -84,13 +92,14 @@
 
 {if $print_page ne 'y'}
 {if $page ne 'SandBox'}
-	{if $tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user) and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y'))}
-		{if $lock}
+
+	{if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
 			<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="tablink">{tr}unlock{/tr}</a></span>
-		{else}
-			<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="tablink">{tr}lock{/tr}</a></span>
-		{/if}
 	{/if}
+	{if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y')))}
+		<span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="tablink">{tr}lock{/tr}</a></span>
+	{/if}
+
 	{if $tiki_p_admin_wiki eq 'y'}
 		<span class="tabbut"><a href="tiki-pagepermissions.php?page={$page|escape:"url"}" class="tablink">{tr}perms{/tr}</a></span>
 	{/if}
@@ -156,7 +165,7 @@
 {/if}
 {/if}
 
-{if $print_page ne 'y' &&  $feature_multilingual == 'y'}
+{if $print_page ne 'y' &&  $feature_multilingual == 'y' && $tiki_p_edit eq 'y'  and !$lock}
 <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
 {/if}
 
@@ -231,64 +240,14 @@
 
 {if $tiki_p_wiki_view_author eq 'y' || $tiki_p_admin eq 'y' || $tiki_p_admin_wiki eq 'y'}
 <p class="editdate">{tr}Created by{/tr}: {$creator|userlink} {tr}last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}</p>
-{else}
-<p class="editdate">{tr}Last modification{/tr}: {$lastModif|tiki_long_datetime}</p>
+{if $wiki_extras eq 'y' && $feature_wiki_attachments eq 'y'}
+{include file=attachments.tpl}
 {/if}
 
-{if $wiki_extras eq 'y'}
-<br />
-{if $feature_wiki_attachments eq 'y'}
-{if $tiki_p_wiki_view_attachments eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
-<a name="attachments"></a>
-<div id="attzone">
-<table class="normal">
-<tr>
-  <td class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a></td>
-  <td class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}uploaded{/tr}</a></td>
-  <td style="text-align:right;"   class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a></td>
-  <td style="text-align:right;"   class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'downloads_desc'}downloads_asc{else}downloads_desc{/if}">{tr}dls{/tr}</a></td>
-  <td class="heading"><a class="tableheading" href="tiki-index.php?page={$page}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'comment_desc'}comment_asc{else}comment_desc{/if}">{tr}desc{/tr}</a></td>
-</tr>
-{cycle values="odd,even" print=false}
-{section name=ix loop=$atts}
-<tr>
- <td class="{cycle advance=false}">
- {$atts[ix].filename|iconify}
- <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>
- {if $tiki_p_wiki_admin_attachments eq 'y' or ($user and ($atts[ix].user eq $user))}
- <a class="link" href="tiki-index.php?page={$page}&amp;removeattach={$atts[ix].attId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">[x]</a>
- {/if}
- </td>
- <td class="{cycle advance=false}"><small>{$atts[ix].created|tiki_short_datetime}{if $atts[ix].user} {tr}by{/tr} {$atts[ix].user}{/if}</small></td>
- <td style="text-align:right;" class="{cycle advance=false}">{$atts[ix].filesize|kbsize}</td>
- <td style="text-align:right;" class="{cycle advance=false}">{$atts[ix].downloads}</td>
- <td class="{cycle}"><small>{$atts[ix].comment}</small></td>
-</tr>
-{sectionelse}
-<tr>
- <td colspan="19" class="even">{tr}No attachments for this page{/tr}</td>
-</tr>
-{/section}
-</table>
-{if $tiki_p_wiki_attach_files eq 'y' or $tiki_p_wiki_admin_attachments eq 'y'}
-<form enctype="multipart/form-data" action="tiki-index.php?page={$page}" method="post">
-<table class="normal">
-<tr>
- <td class="formcolor">{tr}Upload file{/tr}:<input type="hidden" name="MAX_FILE_SIZE" value="1000000000"><input  style="font-size:9px;" size="16" name="userfile1" type="file">
- {tr}comment{/tr}: <input  style="font-size:9px;"  type="text" name="attach_comment" maxlength="250" />
- <input style="font-size:9px;" type="submit" name="attach" value="{tr}attach{/tr}" />
- </td>
-</tr>
-</table>
-</form>
-{/if}
-</div>
-{/if}
-{/if}
 {if $feature_wiki_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
-{/if}
+
 {if $print_page eq 'y'}
 <div class="editdate" align="center">
 <p>{tr}The original document is available at{/tr} {$urlprefix}tiki-index.php?page={$page|escape:"url"}

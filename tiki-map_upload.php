@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.9 2004-07-11 10:27:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.10 2004-08-12 22:31:23 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -63,22 +63,23 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
 		if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
 			key_check($area);
 					
-    if (is_file($directory_path."/".$_REQUEST["file"]) &&
-        !preg_match("/^\./", $_REQUEST["file"])) {
-      if ($tiki_p_map_delete !='y') {
-        $smarty->assign('msg',tra("You do not have permissions to delete a file"));
-        $smarty->display("error.tpl");
-        die;      
-      }
-      unlink($directory_path."/".$_REQUEST["file"]);
-			} else {
-				key_get($area);
-			}
-    } else {
-        $smarty->assign('msg',tra("File not found"));
-        $smarty->display("error.tpl");
-        die;    
-    }
+         if (is_file($directory_path."/".$_REQUEST["file"]) &&
+        		!preg_match("/^\./", $_REQUEST["file"])) {
+      		if ($tiki_p_map_delete !='y') {
+        			$smarty->assign('msg',tra("You do not have permissions to delete a file"));
+        			$smarty->display("error.tpl");
+        			die;      
+      		}
+      		unlink($directory_path."/".$_REQUEST["file"]);
+
+    		} else {
+        		$smarty->assign('msg',tra("File not found"));
+        		$smarty->display("error.tpl");
+        		die;    
+    		}
+    	} else {
+			key_get($area);
+		}
   }
 }
 
@@ -147,13 +148,13 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
         $smarty->display("error.tpl");
         die;      
       }
-				 if (!isset($gdaltindex)) {
+		if (!isset($gdaltindex)) {
         $smarty->assign('msg',tra("I do not know where is gdaltindex. Set correctly the Map feature"));
         $smarty->display("error.tpl");
         die;      
       }				
       
-      $command=$gdaltindex." ".$directory_path."/".$indexfile." ".$directory_path."/".$filestoindex;
+      $command=$gdaltindex." ".$directory_path."/".$_REQUEST["indexfile"]." ".$directory_path."/".$_REQUEST["filestoindex"];
       $output=array();
       exec($command,$output,$return);
       if ($return<>0) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.14 2004-06-01 03:41:45 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.15 2004-08-12 22:31:57 teedog Exp $ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -61,7 +61,7 @@
  				<div id="general" style="display:none;">
 					<table class="normal">
 						<tr class="formcolor">
-							<td><label for="quiz-name">Name:</label></td>
+							<td><label for="quiz-name">{tr}Name:{/tr}</label></td>
 							<td><input type="text" name=quiz.name id="quiz-name" value="{$quiz->name|escape}" size="60"></td>
 						</tr>
 						<tr class="formcolor">

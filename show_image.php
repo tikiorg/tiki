@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.21 2004-06-11 19:43:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.22 2004-08-12 22:31:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.21 2004-06-11 19:43:56 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.22 2004-08-12 22:31:21 teedog Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -110,11 +110,22 @@ $type = $imagegallib->filetype;
 
 //echo"<pre>";print_r(get_defined_vars());echo"</pre>";
 
-if (isset($imagegallib->image)) {
+header ("Content-type: $type");
 
-  header ("Content-type: $type");
-  header ("Content-length: ".$imagegallib->filesize);
-  header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"');
+//line commented out by teedog
+//I noticed that the browser sometimes sends erroneous "Range:" headers when calling show_image.php
+//which makes images fail to load.  It appears that commenting out the "Content-length:" header
+//makes this problem go away.  From what I found through Google, "Content-length:" is mostly optional
+//so commenting it out should not cause problems.
+// header ("Content-length: ".$imagegallib->filesize);
+
+header ("Content-Disposition: inline; filename=\"" . $imagegallib->filename.'"');
+//if($data["path"]) {
+//  readfile($gal_use_dir.$data["path"].$ter);
+//} else {
+echo $imagegallib->image;
+//}
+// ????? echo $data;
 
   echo $imagegallib->image;
 } else {

@@ -39,7 +39,7 @@
 <td style="text-align:center;"class="{cycle advance=false}">
 <input type="checkbox" name="watch[{$watches[ix].hash}]" />
 </td>
-<td class="{cycle advance=false}">{$watches[ix].event}</td>
+<td class="{cycle advance=false}">{tr}{$watches[ix].event}{/tr}</td>
 <td class="{cycle}"><a class="link" href="{$watches[ix].url}">{$watches[ix].type}:{$watches[ix].title}</a></td>
 </tr>
 {/section}

@@ -1538,6 +1538,12 @@ div.commenttext {
 	text-decoration:   underline;
 }
 
+.comments .normal {
+	width: 100%;
+}
+
+.subcomment {margin-left: 5px; }
+
 /************************************************************ CHAT *********************************************************/
 table.chatroom {
 	border-color:    #5B6C71;

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.25 2004-07-22 13:08:46 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_help.tpl,v 1.26 2004-08-12 22:31:57 teedog Exp $ *}
 {* Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
@@ -12,9 +12,7 @@
 {/if}
 <br />
 
-<p>{tr}For more information, please see <a
-href="http://www.tikiwiki.org/tiki-index.php?page=WikiSyntax">WikiSyntax</a>
-on <a href="http://www.tikiwiki.org">TikiWiki.org</a>.{/tr}</p>
+<p>{tr}For more information, please see <a href="{$helpurl}WikiSyntax">WikiSyntax</a>{/tr}</p>
 
 <table width="100%">
 <tr><td width="20%"><strong>{tr}Emphasis{/tr}:</strong></td><td> '<strong></strong>' {tr}for{/tr} <em>{tr}italics{/tr}</em>, _<em></em>_ {tr}for{/tr} <strong>{tr}bold{/tr}</strong>, '<strong></strong>'_<em></em>_ {tr}for{/tr} <em><strong>{tr}both{/tr}</strong></em></td></tr>
@@ -44,8 +42,8 @@ on <a href="http://www.tikiwiki.org">TikiWiki.org</a>.{/tr}</p>
 <tr><td><strong>{tr}Square Brackets{/tr}:</strong></td><td> {tr}Use [[foo] to show [foo].{/tr}</td></tr>
 <tr><td><strong>{tr}Block Preformatting{/tr}:</strong></td><td> {tr}Indent text with any number of spaces to turn it into a monospaced block that still follows other Wiki formatting instructions. It will be indended with the same number of spaces that you used.  Note that this mode does not preserve exact spacing and line breaks; use ~pp~...~/pp~ for that.{/tr}</td></tr>
 <tr><td><strong>{tr}Dynamic variables{/tr}:</strong></td><td> "%{tr}name{/tr}%" {tr}Inserts an editable variable{/tr}</td></tr>
-<tr><td><strong>{tr}Insert Module Output{/tr}:</strong></td><td> {tr}{literal}{MODULE(module=>some_module)}text{MODULE}{/literal}  can be used to insert the output of module "some_module" into your Wiki page. See <a href="http://tikiwiki.org/tiki-index.php?page=PluginModule">PluginModule</a> for more information. {/tr}</td></tr>
-<tr><td><strong>{tr}Rendering Program Code{/tr}:</strong></td><td> {tr}{literal}{CODE()}some code{CODE} {/literal} will render "some code" as program code. This plugin has other options; see <a href="http://tikiwiki.org/tiki-index.php?page=PluginCode">PluginCode</a>.{/tr}</td></tr>
+<tr><td><strong>{tr}Insert Module Output{/tr}:</strong></td><td> {tr}{literal}{MODULE(module=>some_module)}text{MODULE}{/literal}  can be used to insert the output of module "some_module" into your Wiki page. See <a href="{$helpurl}PluginModule">PluginModule</a> for more information. {/tr}</td></tr>
+<tr><td><strong>{tr}Rendering Program Code{/tr}:</strong></td><td> {tr}{literal}{CODE()}some code{CODE} {/literal} will render "some code" as program code. This plugin has other options; see <a href="{$helpurl}PluginCode">PluginCode</a>.{/tr}</td></tr>
 <tr><td><strong>{tr}Direction{/tr}:</strong></td><td>"{literal}{r2l}{/literal}", "{literal}{l2r}{/literal}", "{literal}{rm}{/literal}", "{literal}{lm}{/literal}"</td></tr>
 <tr><td><strong>{tr}Table of contents{/tr}</strong></td><td>{tr}"{literal}{toc}{/literal}", "{literal}{maketoc}{/literal}" prints out a table of contents for the current page based on structures (toc) or ! headings(maketop){/tr}</td></tr>
 <tr><td><strong>{tr}Misc{/tr}:</strong></td><td>"{literal}{cookie}{/literal}"</td></tr>

@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.67 2004-08-11 18:55:36 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.68 2004-08-12 22:31:50 teedog Exp $
 
 MoreNeat theme
 */
@@ -603,6 +603,8 @@ p.editdate { color: black; font-size: smaller; font-family: "Lucida Grande", Hel
 /* The edit-help used to display the wiki syntax when editing a page */
 div.wiki-edithelp { background: white; border: 1px solid black; font-size: smaller; padding: 6pt;}
 
+/* external link icons */
+img.externallink { margin-left: 3px; margin-right: 2px;}
 
 /******************************************************* IMAGE GALLERIES **********************************************/
 
@@ -823,7 +825,8 @@ span.trailer {  font-size: 10px; }
 /* The comment title */
 span.commentstitle {  font-weight: bold;  font-size: 12px;  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  width: 100%;}
 
-.subcomment { margin : 0 1ex 0 2ex;}
+.subcomment {margin-left: 10px; }
+
 /************************************************************ CHAT *********************************************************/
 
 table.chatroom { border-color: #5A4A39;  border-style: solid;  border-width: 2px;  width: 97%;}

@@ -70,8 +70,13 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
 
 if (isset($_REQUEST["remove"])) {
         check_ticket('jukebox-genres');
-
-        $jukeboxlib->remove_genre($_REQUEST["remove"]);
+	$area='deletegenre';
+	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) {
+		key_check($area);
+        	$jukeboxlib->remove_genre($_REQUEST["remove"]);
+	} else {
+		key_get($area);
+	}
 }
 
 $listgenres = $jukeboxlib->list_genres($offset, $maxRecords, $sort_mode, $find);

@@ -4,6 +4,7 @@
 {tr}Author{/tr}: {$mail_author}
 {tr}Title{/tr}: {$mail_title}
 {tr}Date{/tr}: {$mail_date|tiki_short_datetime}
+{$mail_machine}/tiki-view_forum_thread.php?forumId={$forumId}&comments_parentId={$topicId}
 
 {tr}Message{/tr}:
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.47 2004-07-17 12:49:34 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.48 2004-08-12 22:31:56 teedog Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -73,18 +73,18 @@ onUpdate     : gotocal
 {if $viewmode eq 'day'}
 <tr><td width="42" class="heading">{tr}Hours{/tr}</td><td class="heading">{tr}Events{/tr}</td></tr>
 {cycle values="odd,even" print=false}
-{section name=h loop=$hours}
-<tr><td width="42" class="{cycle advance=false}">{$hours[h]}{tr}h{/tr}</td>
+{foreach key=k item=h from=$hours}
+<tr><td width="42" class="{cycle advance=false}">{$h}{tr}h{/tr}</td>
 <td class="{cycle}">
-{section name=hr loop=$hrows[h]}
-<div class="Cal{$hrows[h][hr].type}">
-{$hours[h]}:{$hrows[h][hr].mins} : 
-<a href="{$hrows[h][hr].url}" class="linkmenu">{$hrows[h][hr].name}</a>
-{$hrows[h][hr].description}
+{section name=hr loop=$hrows[$h]}
+<div class="Cal{$hrows[$h][hr].type}">
+{$hours[$h]}:{$hrows[$h][hr].mins} : 
+<a href="{$hrows[$h][hr].url}" class="linkmenu">{$hrows[$h][hr].name}</a>
+{$hrows[$h][hr].description}
 </div>
 {/section}
 </td></tr>
-{/section}
+{/foreach}
 {else}
 <tr><td width="2%">&nbsp;</td>
 {section name=dn loop=$daysnames}
@@ -138,18 +138,19 @@ class="linkmenu">{$cell[w][d].items[items].name|truncate:$trunc:".."|default:"..
 {if $modifiable}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
-{* ������������������������������� *}{if ($calitemId > 0 and $tiki_p_change_events eq 'y') or ($calendarId > 0 and $tiki_p_add_events eq 'y')}
+{* ................................................................................... *}
+{if ($calitemId > 0 and $tiki_p_change_events eq 'y') or ($calendarId > 0 and $tiki_p_add_events eq 'y')}
 
-{* ���������������� *}{if $calitemId}
+{* .............................................. *}{if $calitemId}
 <div class="pagetitle">{tr}Edit Calendar Item{/tr}</div>
 <div><b>{$calname}</b> : {$name|default:"new event"} (id #{$calitemId})</div>
 <div class="mininotes">{tr}Created{/tr}: {$created|tiki_long_date} {$created|tiki_long_time} </div>
 <div class="mininotes">{tr}Modified{/tr}: {$lastModif|tiki_long_date} {$lastModif|tiki_long_time} </div>
 <div class="mininotes">{tr}by{/tr}: {$lastUser} </div>
-{* ���������������� *}{else}
+{* ................................................ *}{else}
 <div class="pagetitle">{tr}New Calendar Item{/tr}</div>
 <div><b>{$calname}</b> </div>
-{* ���������������� *}{/if}
+{* .................................... *}{/if}
 
 <form enctype="multipart/form-data" method="post" action="tiki-calendar.php" id="editcalitem" name="f" style="display:block;">
 <input type="hidden" name="editmode" value="1">
@@ -319,7 +320,7 @@ align       : "bR"
 </td></tr>
 </table>
 </form>
-{* ������������������������������� *}{else}
+{* ....................................................... *}{else}
 <h2>{tr}Add Calendar Item{/tr}</h2>
 
 <ul>
@@ -330,7 +331,7 @@ align       : "bR"
 {/foreach}
 </ul>
 
-{* ������������������������������� *}{/if}
+{* ....................................................... *}{/if}
 </div>
 {/if}
 

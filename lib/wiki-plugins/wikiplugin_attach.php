@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.6 2004-03-15 07:55:49 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.7 2004-08-12 22:31:46 teedog Exp $
 // Displays an attachment or a list of attachments
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -9,8 +9,8 @@
 function wikiplugin_attach_help() {
 	$help = tra("Displays an attachment or a list of them").": ";
 	$help.= "~np~{ATTACH(num=1,showdesc=0|1,dls=0|1,icon=0|1)}".tra("comment")."{ATTACH}~/np~ ";
-	$help.= "num is optionnal and is the order number of the attachment in the list. If not provided a list of all attachments is displayed.";
-	return tra($help);
+	$help.= tra("num is optional and is the order number of the attachment in the list. If not provided, a list of all attachments is displayed.");
+	return $help;
 }
 
 function wikiplugin_attach($data, $params) {

@@ -160,21 +160,20 @@ class StructLib extends TikiLib {
 
   
     
-    /** \brief Create a structure entry with the given name
-	
-	    \param parent_id The parent entry to add this to. 
-	           If NULL, create new structure.
-		\param after_ref_id The entry to add this one after.
-	           If NULL, put it in position 0.
-		\param name The wiki page to reference
-		\param alias An alias for the wiki page name.
-	    \return the new entries page_ref_id or null if not created.
-	*/
-	function s_create_page($parent_id, $after_ref_id, $name, $alias='') {
-        $ret = null;
-        // If the page doesn't exist then create a new wiki page!
-		$now = date("U");
-		$created = $this->create_page($name, 0, '', $now, tra('created from structure'), 'system', '0.0.0.0', '');
+  /** \brief Create a structure entry with the given name
+      \param parent_id The parent entry to add this to. 
+           If NULL, create new structure.
+      \param after_ref_id The entry to add this one after.
+           If NULL, put it in position 0.
+      \param name The wiki page to reference
+      \param alias An alias for the wiki page name.
+      \return the new entries page_ref_id or null if not created.
+  */
+  function s_create_page($parent_id, $after_ref_id, $name, $alias='') {
+    $ret = null;
+    // If the page doesn't exist then create a new wiki page!
+    $now = date("U");
+      $created = $this->create_page($name, 0, '', $now, tra('created from structure'), 'system', '0.0.0.0', '');
 		// if were not trying to add a duplicate structure head 
 		if ($created or isset($parent_id)) {
             //Get the page Id

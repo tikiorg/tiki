@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.5 2004-03-29 21:26:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.6 2004-08-12 22:31:23 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,11 +32,11 @@ if (!isset($_REQUEST['mapfile']) || !isset($_REQUEST['layer']))
 		die;
 } else
 {
-  $smarty->assign('mapfile', $mapfile);
-  $smarty->assign('layer', $layer);
+  $smarty->assign('mapfile', $_REQUEST['mapfile']);
+  $smarty->assign('layer', $_REQUEST['layer']);
 }
 
-if (!preg_match('/\.map$/i', $mapfile)) {
+if (!preg_match('/\.map$/i', $_REQUEST['mapfile'])) {
 	$smarty->assign('msg', tra("mapfile name incorrect"));
 	$smarty->display("error.tpl");
 	die;
@@ -63,7 +63,7 @@ if (isset($_REQUEST['mapfile']))
       
     //Metadata handling
     $download=FALSE;
-    if ($my_layers->name==$layer)
+    if ($my_layers->name==$_REQUEST['layer'])
     {
       if($my_layers->getMetadata("DOWNLOAD")=='T')
       {
@@ -115,9 +115,10 @@ while (($file = readdir($h)) !== false) {
 closedir ($h);
 
 // record that the user wanted to download some files
+// to be fixed by adding the tiki_download table definitively
 $userid = $userlib->get_user_id($user);
-$query = "insert into tiki_download (object,userid,type,date,IP) values ('$file_name',$userid,'maps',".date("U").",'".$_SERVER["REMOTE_ADDR"]."')";
-$result = $userlib->query($query);
+//$query = "insert into tiki_download (object,userid,type,date,IP) values ('$file_name',$userid,'maps',".date("U").",'".$_SERVER["REMOTE_ADDR"]."')";
+//$result = $userlib->query($query);
 
 
 $smarty->assign_by_ref('files',$files);

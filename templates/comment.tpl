@@ -105,7 +105,7 @@
   <tr>
   	<td colspan="3" class="even">
 			{$comment.parsed}
-			<br /><br />
+			<br />
 		</td>
 	</tr>
 	{/if}
@@ -114,10 +114,11 @@
 		<td colspan="3">
 		{* /if *} {* if $comments_style != 'commentStyle_headers' *}
 	  {if $comment.replies_info.numReplies > 0 && $comment.replies_info.numReplies != ''}
-			{foreach from=$comment.replies_info.replies item="comment"}
-		    <ul class="subcomment">
+			{foreach from=$comment.replies_info.replies item="comment" name="com"}
+<br />
+		    <div class="subcomment">
 				{include file="comment.tpl"  comment=$comment}
-		    </ul>
+		    </div>
 		  {/foreach}
 	  {/if} {* if $comment.replies_info.numReplies > 0 && $comment.replies_info.numReplies != '' *}
 	</td>
@@ -133,4 +134,3 @@
 	{/foreach}
     {/if}
 {/if} {* doNotShow *}
-<br />

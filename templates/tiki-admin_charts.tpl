@@ -131,7 +131,7 @@
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="findtable"><tr><td class="findtable">{tr}Find{/tr}</td><td class="findtable"<input type="text" name="find" value="{$find|escape}" /><input type="submit" value="{tr}find{/tr}" name="search" /></td></tr></table>
+<table class="findtable"><tr><td class="findtable">{tr}Find{/tr}</td><td class="findtable"><input type="text" name="find" value="{$find|escape}" /><input type="submit" value="{tr}find{/tr}" name="search" /></td></tr></table>
 </form>
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />

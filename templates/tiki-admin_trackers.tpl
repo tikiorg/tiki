@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-admin_trackers.php">{tr}Admin trackers{/tr}</a>
   
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="{$helpurl}Trackers" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
@@ -13,7 +13,7 @@
 {if $tiki_p_admin_trackers eq 'y'}
 <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
 {/if}
-<br />
+<br /><br />
 
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false}

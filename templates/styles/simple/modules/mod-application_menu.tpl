@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.20 2004-06-23 22:34:33 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.21 2004-08-12 22:32:19 teedog Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -36,7 +36,7 @@
 {if $user}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-    <a class="separator" href="javascript:icntoggle('mymenu');"><img src="img/icons/fo.gif" style="border: 0" name="mymenuicn" class="fldicn" alt="{tr}MyMenu{/tr}"/></a>
+    <a class="separator" href="javascript:icntoggle('mymenu');"><img src="img/icons/{$icn_mymenu}fo.gif" style="border: 0" name="mymenuicn" class="fldicn" alt="{tr}MyMenu{/tr}"/></a>
   {else}
     <a class="separator" href="javascript:toggle('mymenu');">[-]</a>
   {/if}
@@ -93,7 +93,7 @@
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-    <a class="separator" href="javascript:icntoggle('wfmenu');"><img src="img/icons/fo.gif" style="border: 0" name="wfmenuicn" alt="{tr}WfMenu{/tr}"/></a>
+    <a class="separator" href="javascript:icntoggle('wfmenu');"><img src="img/icons/{$icn_workflow}fo.gif" style="border: 0" name="wfmenuicn" alt="{tr}WfMenu{/tr}"/></a>
   {else}
     <a class="separator" href="javascript:toggle('wfmenu');">[-]</a>
   {/if}
@@ -102,7 +102,7 @@
     <a class="separator" href="javascript:toggle('wfmenu');">[+]</a>
   {/if}
   </div>
-  <div id="wfmenu" style="{$mnu_workflow}">
+  <div id="wfmenu" style="{$mnu_wfmenu}">
   {if $tiki_p_admin_workflow eq 'y'}
     <a href="tiki-g-admin_processes.php" class="linkmenu">{tr}Admin processes{/tr}</a><br />
     <a href="tiki-g-monitor_processes.php" class="linkmenu">{tr}Monitor processes{/tr}</a><br />
@@ -117,7 +117,7 @@
 {if $feature_wiki eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-    <a class="separator" href="javascript:icntoggle('wikimenu');"><img src="img/icons/fo.gif" style="border: 0" name="wikimenuicn" alt="{tr}WikiMenu{/tr}"/></a>
+    <a class="separator" href="javascript:icntoggle('wikimenu');"><img src="img/icons/{$icn_wikimenu}fo.gif" style="border: 0" name="wikimenuicn" alt="{tr}WikiMenu{/tr}"/></a>
   {else}
     <a class="separator" href="javascript:toggle('wikimenu');">[-]</a>
   {/if}
@@ -164,7 +164,7 @@
 {if $feature_galleries eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-    <a class="separator" href="javascript:icntoggle('galmenu');"><img src="img/icons/fo.gif" style="border: 0" name="galmenuicn" alt="{tr}GalMenu{/tr}"/></a>
+    <a class="separator" href="javascript:icntoggle('galmenu');"><img src="img/icons/{$icn_galmenu}fo.gif" style="border: 0" name="galmenuicn" alt="{tr}GalMenu{/tr}"/></a>
   {else}
     <a class="separator" href="javascript:toggle('galmenu');">[-]</a>
   {/if}
@@ -193,7 +193,7 @@
 {if $feature_articles eq 'y' or $feature_submissions eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-    <a class="separator" href="javascript:icntoggle('cmsmenu');"><img src="img/icons/fo.gif" style="border: 0" name="cmsmenuicn" alt=""/></a>
+    <a class="separator" href="javascript:icntoggle('cmsmenu');"><img src="img/icons/{$icn_cmsmenu}fo.gif" style="border: 0" name="cmsmenuicn" alt=""/></a>
   {else}
     <a class="separator" href="javascript:toggle('cmsmenu');">[-]</a>
   {/if}
@@ -238,7 +238,7 @@
 {if $feature_blogs eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('blogmenu');"><img src="img/icons/fo.gif" style="border: 0" name="blogmenuicn" alt=""/></a>
+  <a class="separator" href="javascript:icntoggle('blogmenu');"><img src="img/icons/{$icn_blogmenu}fo.gif" style="border: 0" name="blogmenuicn" alt=""/></a>
   {else}<a class="separator" href="javascript:toggle('blogmenu');">[-]</a>{/if}
   <a class="separator" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('blogmenu');">[+]</a>{/if}
@@ -265,7 +265,7 @@
 {if $feature_forums eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('formenu');"><img src="img/icons/fo.gif" style="border: 0" name="formenuicn" alt="{tr}ForMenu{/tr}"/></a>
+  <a class="separator" href="javascript:icntoggle('formenu');"><img src="img/icons/{$icn_formenu}fo.gif" style="border: 0" name="formenuicn" alt="{tr}ForMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('formenu');">[-]</a>{/if}
   <a class="separator" href="tiki-forums.php">{tr}Forums{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('formenu');">[+]</a>{/if}
@@ -286,7 +286,7 @@
 {if $feature_directory eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('dirmenu');"><img src="img/icons/fo.gif" style="border: 0" name="dirmenuicn" alt="{tr}DirMenu{/tr}"/></a>
+  <a class="separator" href="javascript:icntoggle('dirmenu');"><img src="img/icons/{$icn_dirmenu}fo.gif" style="border: 0" name="dirmenuicn" alt="{tr}DirMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('dirmenu');">[-]</a>{/if}
   <a class="separator" href="tiki-directory_browse.php">{tr}Directory{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('dirmenu');">[+]</a>{/if}
@@ -307,7 +307,7 @@
 {if $feature_file_galleries eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('filegalmenu');"><img src="img/icons/fo.gif" style="border: 0" name="filegalmenuicn" alt="{tr}FileGalMenu{/tr}"/></a>
+  <a class="separator" href="javascript:icntoggle('filegalmenu');"><img src="img/icons/{$icn_filegalmenu}fo.gif" style="border: 0" name="filegalmenuicn" alt="{tr}FileGalMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('filegalmenu');">[-]</a>{/if}
   <a class="separator" href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('filegalmenu');">[+]</a>{/if}
@@ -328,7 +328,7 @@
 {if $feature_faqs eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('faqsmenu');"><img src="img/icons/fo.gif" style="border: 0" name="faqsmenuicn" alt=""/></a>
+  <a class="separator" href="javascript:icntoggle('faqsmenu');"><img src="img/icons/{$icn_faqsmenu}fo.gif" style="border: 0" name="faqsmenuicn" alt=""/></a>
   {else}<a class="separator" href="javascript:toggle('faqsmenu');">[-]</a>{/if}
   <a href="tiki-list_faqs.php" class="separator">{tr}FAQs{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('faqsmenu');">[+]</a>{/if}
@@ -346,7 +346,7 @@
 {if $feature_maps eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('mapsmenu');"><img src="img/icons/fo.gif" style="border: 0" name="mapsmenuicn" alt=""/></a>
+  <a class="separator" href="javascript:icntoggle('mapsmenu');"><img src="img/icons/{$icn_mapsmenu}fo.gif" style="border: 0" name="mapsmenuicn" alt=""/></a>
   {else}<a class="separator" href="javascript:toggle('mapsmenu');">[-]</a>{/if}
   <a href="tiki-map.phtml" class="separator">{tr}Maps{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('mapsmenu');">[+]</a>{/if}
@@ -361,7 +361,7 @@
 {if $feature_quizzes eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('quizmenu');"><img src="img/icons/fo.gif" style="border: 0" name="quizmenuicn" alt="{tr}QuizMenu{/tr}"/></a>
+  <a class="separator" href="javascript:icntoggle('quizmenu');"><img src="img/icons/{$icn_quizmenu}fo.gif" style="border: 0" name="quizmenuicn" alt="{tr}QuizMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('quizmenu');">[-]</a>{/if}
   <a href="tiki-list_quizzes.php" class="separator">{tr}Quizzes{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('quizmenu');">[+]</a>{/if}
@@ -380,7 +380,7 @@
 {if $feature_trackers eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('trkmenu');"><img src="img/icons/fo.gif" style="border: 0" name="trkmenuicn" alt="{tr}TrkMenu{/tr}"/></a>
+  <a class="separator" href="javascript:icntoggle('trkmenu');"><img src="img/icons/{$icn_trkmenu}fo.gif" style="border: 0" name="trkmenuicn" alt="{tr}TrkMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('trkmenu');">[-]</a>{/if}
   <a href="tiki-list_trackers.php" class="separator">{tr}Trackers{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('trkmenu');">[+]</a>{/if}
@@ -396,7 +396,7 @@
 {if $feature_surveys eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('srvmenu');"><img src="img/icons/fo.gif" style="border: 0" name="srvmenuicn" alt="{tr}SrvMenu{/tr}"/></a>
+  <a class="separator" href="javascript:icntoggle('srvmenu');"><img src="img/icons/{$icn_srvmenu}fo.gif" style="border: 0" name="srvmenuicn" alt="{tr}SrvMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('srvmenu');">[-]</a>{/if}
   <a href="tiki-list_surveys.php" class="separator">{tr}Surveys{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('srvmenu');">[+]</a>{/if}
@@ -415,7 +415,7 @@
 {if $feature_newsletters eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('nlmenu');"><img src="img/icons/fo.gif" style="border: 0" name="nlmenuicn" alt=""/></a>
+  <a class="separator" href="javascript:icntoggle('nlmenu');"><img src="img/icons/{$icn_nlmenu}fo.gif" style="border: 0" name="nlmenuicn" alt=""/></a>
   {else}<a class="separator" href="javascript:toggle('nlmenu');">[-]</a>{/if}
   <a href="tiki-newsletters.php" class="separator">{tr}Newsletters{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('nlmenu');">[+]</a>{/if}
@@ -431,7 +431,7 @@
 {if $feature_eph eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('ephmenu');"><img src="img/icons/fo.gif" style="border: 0" name="ephmenuicn" alt="{tr}EphMenu{/tr}"/></a>
+  <a class="separator" href="javascript:icntoggle('ephmenu');"><img src="img/icons/{$icn_ephmenu}fo.gif" style="border: 0" name="ephmenuicn" alt="{tr}EphMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('ephmenu');">[-]</a>{/if}
   <a href="tiki-eph.php" class="separator">{tr}Ephemerides{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('ephmenu');">[+]</a>{/if}
@@ -446,7 +446,7 @@
 {if $feature_charts eq 'y'}
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('chartmenu');"><img src="img/icons/fo.gif" style="border: 0" name="chartmenuicn" alt="{tr}ChartMenu{/tr}"/></a>
+  <a class="separator" href="javascript:icntoggle('chartmenu');"><img src="img/icons/{$icn_chartmenu}fo.gif" style="border: 0" name="chartmenuicn" alt="{tr}ChartMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('chartmenu');">[-]</a>{/if}
   <a href="tiki-charts.php" class="separator">{tr}Charts{/tr}</a>
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('chartmenu');">[+]</a>{/if}
@@ -478,7 +478,7 @@
 
   <div class="separator">
   {if $feature_menusfolderstyle eq 'y'}
-  <a class="separator" href="javascript:icntoggle('admmnu');"><img src="img/icons/fo.gif" style="border: 0" name="admmnuicn" alt="{tr}AdmMenu{/tr}"/></a>
+  <a class="separator" href="javascript:icntoggle('admmnu');"><img src="img/icons/{$icn_admmnu}fo.gif" style="border: 0" name="admmnuicn" alt="{tr}AdmMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('admmnu');">[-]</a>{/if}
   {if $tiki_p_admin eq 'y'}<a class="separator" href='tiki-admin.php'>{/if} {tr}Admin{/tr}{if $tiki_p_admin eq 'y'}</a>{/if}
   {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('admmnu');">[+]</a>{/if}
@@ -576,7 +576,7 @@
 
     {if $feature_menusfolderstyle eq 'y'}
       <a class="separator" href="javascript:icntoggle('usrmenu');">
-        <img src="img/icons/fo.gif" style="border: 0" name="usrmenuicn" alt="{tr}UsrMenu{/tr}"/>
+        <img src="img/icons/{$icn_usrmenu}fo.gif" style="border: 0" name="usrmenuicn" alt="{tr}UsrMenu{/tr}"/>
       </a>
     {else}
       <a class="separator" href="javascript:toggle('usrmenu');">[-]</a>
@@ -603,79 +603,3 @@
 {/if}
 </div>
 {/tikimodule}
-
-{if $feature_menusfolderstyle eq 'y'}
-<script type='text/javascript'>
-{if $user}
-  {if $feature_userPreferences eq 'y'}
-    setfoldericonstate('mymenu');
-  {/if}
-{/if}
-{if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}
-  setfoldericonstate('wfmenu');
-{/if}
-{if $feature_wiki eq 'y'}
-  setfoldericonstate('wikimenu');
-{/if}
-{if $feature_galleries eq 'y'}
-  setfoldericonstate('galmenu');
-{/if}
-{if $feature_articles eq 'y' or $feature_submissions eq 'y'}
-  setfoldericonstate('cmsmenu');
-{/if}
-{if $feature_blogs eq 'y'}
-  setfoldericonstate('blogmenu');
-{/if}
-{if $feature_forums eq 'y'}
-  setfoldericonstate('formenu');
-{/if}
-{if $feature_directory eq 'y'}
-  setfoldericonstate('dirmenu');
-{/if}
-{if $feature_file_galleries eq 'y'}
-  setfoldericonstate('filegalmenu');
-{/if}
-{if $feature_faqs eq 'y'}
-  setfoldericonstate('faqsmenu');
-{/if}
-{if $feature_quizzes eq 'y'}
-  setfoldericonstate('quizmenu');
-{/if}
-{if $feature_trackers eq 'y'}
-  setfoldericonstate('trkmenu');
-{/if}
-{if $feature_surveys eq 'y'}
-  setfoldericonstate('srvmenu');
-{/if}
-{if $feature_newsletters eq 'y'}
-  setfoldericonstate('nlmenu');
-{/if}
-{if $feature_eph eq 'y'}
-  setfoldericonstate('ephmenu');
-{/if}
-{if $feature_charts eq 'y'}
-  setfoldericonstate('chartmenu');
-{/if}
-{if $tiki_p_admin eq 'y' or
- $tiki_p_admin_chat eq 'y' or
- $tiki_p_admin_categories eq 'y' or
- $tiki_p_admin_banners eq 'y' or
- $tiki_p_edit_templates eq 'y' or
- $tiki_p_admin_dynamic eq 'y' or
- $tiki_p_admin_dynamic eq 'y' or
- $tiki_p_admin_mailin eq 'y' or
- $tiki_p_edit_content_templates eq 'y' or
- $tiki_p_edit_html_pages eq 'y' or
- $tiki_p_view_referer_stats eq 'y' or
- $tiki_p_admin_drawings eq 'y' or
- $tiki_p_admin_shoutbox eq 'y' or
- $tiki_p_admin_live_support eq 'y' or
- $user_is_operator eq 'y'
- }
-  setfoldericonstate('admmnu');
-{/if}
-{if $feature_usermenu eq 'y'}
-  setfoldericonstate('usrmenu');
-{/if}
-</script>
-{/if}

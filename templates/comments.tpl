@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.56 2004-07-29 17:38:16 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.57 2004-08-12 22:31:55 teedog Exp $ *}
 
 {if $forum_mode eq 'y'}
     <td>
@@ -20,7 +20,7 @@
 
   {if $comments_cant gt 0}
 
- <form method="post" action="{$comments_father}">
+ <form method="post" action="{$comments_father}" class="comments">
   {section name=i loop=$comments_request_data}
   <input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
   {/section}
@@ -119,6 +119,7 @@
 <td class="odd">
   {section name=rep loop=$comments_coms}
   {include file="comment.tpl"  comment=$comments_coms[rep]}
+<br />
   {/section}
 </td>
 </tr>
@@ -172,11 +173,11 @@
     {if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Comment on the selected post{/tr}{else}{tr}Post new comment{/tr}{/if}
     {/if}
     </h2>
-    {if $comments_threadId > 0 || $parent_com}
+{* not working     {if $comments_threadId > 0 || $parent_com}
 		<div style="text-align: right">
-			<a class="linkbut" href="{$comments_complete_father}comments_threadId=0{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}">{tr}post new reply{/tr}</a>
+			<a class="linkbut" href="{$comments_complete_father}comments_threadId=0{$comments_threshold_param}&amp;comments_offset={$comments_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}&amp;comments_postComment">{tr}post new reply{/tr}</a>
 		</div>	
-    {/if}
+    {/if} *}
 		<br style="clear: both" />
 	</div>
 

@@ -1170,6 +1170,8 @@ span.commentstitle {
 	width:   98%;
 }
 
+.subcomment {margin-left: 10px; }
+
 /************************************************************ CHAT *********************************************************/
 table.chatroom {
 	border-color:    #5A4A39;

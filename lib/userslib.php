@@ -677,16 +677,14 @@ function get_included_groups($group) {
 
 
     function set_default_group($user,$group) {
+    	// if user is not in group, assign user to group before setting default group
+    	$user_groups = $this->get_user_groups($user);
+		if (!in_array($group, $user_groups)) {
+			$this->assign_user_to_group($user, $group);
+		}
 	$query = "update `users_users` set `default_group` = ?
 		where `login` = ?";
 	$this->query($query, array($group, $user));
-    }
-
-    function batch_set_default_group($group) {
-	$users = $this->get_group_users($group);
-	foreach ($users as $user) {
-	    $this->set_default_group($user,$group);
-	}
     }
 
     function change_permission_level($perm, $level) {
@@ -1024,6 +1022,12 @@ function get_included_groups($group) {
     }
     
     function is_due($user) {
+    	
+    	// if CAS auth is enabled, don't check if password is due since CAS does not use local Tiki passwords
+    	if ($this->get_preference('auth_method', 'tiki') == 'cas') {
+    		return false;
+    	}
+    	
 	$due = $this->getOne("select `pass_due`  from `users_users` where " . $this->convert_binary(). " `login`=?", array($user));
 
 	if ($due <= date("U"))

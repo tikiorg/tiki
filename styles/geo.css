@@ -20,10 +20,7 @@ blue links: #2255aa;
 body {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	background-color:   #e1e2b9;
-	margin-top:   0px;
-	margin-left:   0px;
-	margin-bottom:   0px;
-	margin-right:   0px;
+	margin :   0;
 	background-image:   url(geo/backmap.png);
 	background-position:   bottom right;
 	background-repeat:   no-repeat;
@@ -44,6 +41,10 @@ a:visited {
 	color:    #114499;
 	text-decoration:   none;
 }
+ul {
+	margin : 0 0 .2em 3ex;
+}
+
 
 /* 
 GENERAL LAYOUT EXPLANATION
@@ -80,8 +81,7 @@ This is the header
 */
 DIV#tiki-top {
 	font-size:    10px;
-	padding-right:   5px;
-	padding-left:   6px;
+	padding: 0  5px;
 	border-bottom:   1px dashed #777750;
 }
 
@@ -133,10 +133,8 @@ TD#centercolumn {
 centercolumn 
 */
 DIV#tiki-center {
-	margin-left:    0;
-	margin-right:   0;
-	padding-left:   0;
-	padding-right:   0;
+	margint:    0;
+	padding:   0;
 }
 
 div#debugconsole {
@@ -950,15 +948,8 @@ Text in wiki pages is displayed using the following style
 div.wikitext {
 	background-color:    #f1f1c9;
 	font-size:   12px;
-	padding-left:   10px;
-	padding-right:   10px;
-	padding-top:   3px;
-	padding-bottom:   3px;
-	margin-left:   0px;
-	margin-right:   0px;
-	margin-top:   1px;
-	margin-bottom:   1px;
-	width:   100%;
+	padding:   10px;
+	margin: 0  1px;
 	clear:   both;
 }
 
@@ -1012,7 +1003,6 @@ syntax when editing a page
 div.wiki-edithelp {
 	background:    #f1f1c9;
 	border:   1px solid black;
-	width:   94%;
 	font-size:   smaller;
 	padding:   6pt;
 }
@@ -1043,7 +1033,6 @@ div.galdesc {
 Container for the whole gallery 
 */
 div.browsegallery {
-	width: 100%;
 }
 
 /* 
@@ -1141,7 +1130,6 @@ td.imageinfo {
 The whole container for the browse image screen (may be useful for a fancy background) 
 */
 div.browseimage {
-	width: 100%;
 }
 
 div.imagetitle {
@@ -1278,7 +1266,6 @@ div.fgaldesc {
 	padding-top:   0.5em;
 	padding-bottom:   0.5em;
 	margin:   0.5ex 0px;
-	width:   100%;
 	clear:   both;
 }
 
@@ -1484,14 +1471,12 @@ div.commentspost {
 	padding-top:   0px;
 	padding-bottom:   0px;
 	margin-bottom:   10px;
-	width:   100%;
 }
 
 /* Help box*/
 div.commentsedithelp {
 	border:    1px solid black;
 	font-size:   smaller;
-	width:   100%;
 }
 
 /* The toolbar where the ordering number of comments and find box are found */
@@ -1499,7 +1484,6 @@ div.commentstoolbar {
 	background:    #b1b299;
 	color:   black;
 	margin-bottom:   20px;
-	width:   100%;
 	padding-top:   2px;
 	padding-left:   2px;
 }
@@ -1508,14 +1492,12 @@ div.commentstoolbar {
 span.commentstitle {
 	font-weight:    bold;
 	font-size:   12px;
-	width:   100%;
 }
 
 /* The comment */
 div.commentscomment {
 	font-size:    11px;
 	margin-bottom:   20px;
-	width:   100%;
 }
 
 /* The header for a comment */
@@ -1600,7 +1582,6 @@ span.chuser {
 
 /********************************************************** POLLS ********************************************************/
 div.pollresults {
-	width:    100%;
 	margin-top:   5px;
 	font-size:   14px;
 	padding-left:   5px;
@@ -1682,7 +1663,6 @@ td.threadseparator {
 }
 
 div.forumtoolbar {
-	width:    100%;
 	margin-bottom:   20px;
 	border:   0px;
 }
@@ -1803,7 +1783,6 @@ td.categobjectsdataeven, td.categobjectsdataodd {
 div.faqlistquestions {
 	color:    black;
 	font-size:   11px;
-	width:   100%;
 	padding-top:   5px;
 	padding-bottom:   5px;
 }
@@ -1813,7 +1792,6 @@ div.faqqa {
 	background:    #d1d2a9;
 	color:   black;
 	font-size:   12px;
-	width:   100%;
 	margin-bottom:   20px;
 	padding-top:   5px;
 	padding-bottom:   5px;
@@ -1824,13 +1802,11 @@ div.faqqa {
 div.faqquestion {
 	margin-bottom:    5px;
 	font-size:   12px;
-	width:   100%;
 }
 
 /* The answer */
 div.faqanswer {
 	font-size:    12px;
-	width:   100%;
 }
 
 /***************************************************** QUIZZES **************************************************************/
@@ -1936,7 +1912,6 @@ div.dirlistsites {
 	padding-top:   5px;
 	padding-bottom:   10px;
 	margin-top:   10px;
-	width:   100%;
 }
 
 /* each site in the list of sites */
@@ -2034,8 +2009,7 @@ div.messureadbody {
 }
 
 /* calendar styles */
-#calendar
-{
+#calendar {
 width:100%;
 }
 
@@ -2726,17 +2700,17 @@ TABLE.admin {
 .tabmark {
 	display: inline;
 	font-size: 85%;
-	background-color: #dddddd;
-	border: 1px solid #666666;
+	background-color: #d1d2a9;
+	border: 1px solid #999970;
 	margin: 0px;
-	margin-right: 5px;
+	margin-left: 5px;
 	padding: 1px 0px 1px 0px;
 	-moz-border-radius : 5px 5px 0 0;  
 }
 .tabmark a { 
 	-moz-border-radius : 5px 5px 0 0; 
 	border-bottom : 0; 
-	color: #666666;
+	color: #666646;
 	font-weight: 700 !important;
 	padding: 1px 5px 1px 5px;
 }
@@ -2746,18 +2720,18 @@ TABLE.admin {
 }
 .tabmark a:hover {
 	color: black;
-	background-color: #CCCCCC;
+	background-color: #f1f2d9;
 }
 
 .tabcontent {
 	z-index : 200;
 	position: relative;
-	border: 1px solid #999999;
+	border-top: 1px solid #999970;
+	border-bottom: 1px solid #999970;
 	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
-	background-color: #eeeeee;
+	background-color: #f1f2d9;
 	-moz-border-radius: 0px 4px 4px 4px;
-	width: 100%;
 }
 
 /* trackers specific style */

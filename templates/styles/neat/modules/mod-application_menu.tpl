@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.28 2004-07-11 10:27:49 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/neat/modules/mod-application_menu.tpl,v 1.29 2004-08-12 22:32:18 teedog Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -35,7 +35,7 @@
   <a class='separator' href="javascript:toggle('wfmenu');"><img src="styles/neat/linkOpaque.gif" border="0" />&nbsp;</a>
   <a href="tiki-g-user_processes.php" class="separator">{tr}Workflow{/tr}</a>
   </div>
-  <div id='wfmenu' style="{$mnu_workflow}">
+  <div id='wfmenu' style="{$mnu_wfmenu}">
   {if $tiki_p_admin_workflow eq 'y'}
       &nbsp;<a href="tiki-g-admin_processes.php" class="linkmenu">{tr}Admin processes{/tr}</a><br />  
       &nbsp;<a href="tiki-g-monitor_processes.php" class="linkmenu">{tr}Monitor processes{/tr}</a><br />  
