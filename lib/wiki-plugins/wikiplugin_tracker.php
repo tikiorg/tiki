@@ -9,7 +9,7 @@ function wikiplugin_tracker_help() {
 	return $help;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $dbTiki;
+	global $tikilib, $dbTiki, $notificationlib;
 	//var_dump($_REQUEST);
 	extract ($params);
 
@@ -21,14 +21,15 @@ function wikiplugin_tracker($data, $params) {
 	}
 	$tracker = $tikilib->get_tracker($trackerId);
 	if ($tracker) {
-		include "lib/trackers/trackerlib.php";
+		include_once('lib/trackers/trackerlib.php');
+		include_once('lib/notifications/notificationlib.php');	
 
 		if (isset($_REQUEST['trackit']) and $_REQUEST['trackit']) {
 			foreach ($_REQUEST['track'] as $fld=>$val) {
 				$ins_fields["data"][] = array('fieldId' => $fld, 'value' => $val);
 			}
 			$trklib->replace_item($trackerId,0,$ins_fields);
-			return "<div>Done!</div><pre>".print_r($ins_fields)."</pre>";
+			return "<div>$data</div>";
 		}
 		$flds = $trklib->list_tracker_fields($trackerId,0,-1,"position_asc","");
 		$optional = array();
