@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.39 2003-10-19 02:48:28 dheltzel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.40 2003-10-20 16:03:26 ohertel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -433,7 +433,7 @@ DROP TABLE IF EXISTS tiki_rss_feeds;
 CREATE TABLE tiki_rss_feeds (
   name varchar(30) NOT NULL default '',
   rssVer char(1) NOT NULL default '1',
-  refresh int(8) default NULL,
+  refresh int(8) default '300',
   lastUpdated int(14) default NULL,
   cache longblob,
   PRIMARY KEY  (name, rssVer)
