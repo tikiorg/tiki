@@ -1837,7 +1837,7 @@ div.tabcal, div.tabnav {
 }
 
 .calfocus {
-	font-size:    7px;
+	font-size:    9px;
 	background-color:   transparent;
 	color:   #ffffff;
 }
@@ -1848,7 +1848,7 @@ div.tabcal, div.tabnav {
 }
 
 .calfocuson {
-	font-size:    7px;
+	font-size:    9px;
 	background-color:   #003366;
 	color:   #ffffff;
 }
@@ -2083,26 +2083,6 @@ div.tabcal, div.tabnav {
 	font-family:   monospace;
 }
 
-.viewmodeon {
-	background-color:    #444444;
-	color:   #ffffff;
-	text-decoration:   none;
-	padding-left:   10px;
-	padding-right:   10px;
-}
-
-.viewmodeoff {
-	color:    #ffffff;
-	text-decoration:   none;
-	padding-left:   10px;
-	padding-right:   10px;
-}
-
-.viewmodeoff:hover {
-	background-color:    #003366;
-	color:   #000000;
-}
-
 .calweb {
 	font-weight:    bold;
 	font-size:   10px;
@@ -2160,6 +2140,63 @@ div.tabcal, div.tabnav {
 	color:    #000000;
 	background-color:   #DA9A9A;
 }
+
+div.tabrow {
+	margin-left: 29px;
+	color: #FFFFFF;
+	background-color: #000000;
+	border: 1px solid #787878;
+	border-bottom: 0;
+	font-size: 11px;
+}
+td.middle {
+	vertical-align: middle; 
+}
+.daterow {
+	margin-left: 10px;
+}
+.mininotes {
+	font-size: 80%;
+	color:#666666;
+}
+.opaque
+{
+	background-color: #ffffff;
+	width: auto;
+	border: 1px solid #666666;
+	padding: 1px; 
+}
+.opaque .box-title,
+.opaque, .box-data 
+{
+	width: auto;
+}
+.calcontent {
+	min-height: 60px;
+}
+.viewmodeon {
+	padding-left:   0px;
+	padding-right:   0px;
+}
+.viewmodeoff {
+	padding-left:   0px;
+	padding-right:   0px;
+}
+a.viewmodeon img {
+	margin: 0;
+padding: 0;
+}
+a.viewmodeoff img {
+	margin: 0;
+padding: 0;
+}
+#caltable {
+	width: 100%;
+}
+
+/*
+ * help zone
+ */
 
 div#edithelpzone {
 	display: none;
