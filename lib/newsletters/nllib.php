@@ -88,7 +88,7 @@ class NlLib extends TikiLib {
     $smarty->assign('url_subscribe',$url_subscribe);
     $smarty->assign('server_name',$_SERVER["SERVER_NAME"]);
     $mail_data=$smarty->fetch('mail/confirm_newsletter_subscription.tpl');
-    @mail($email, tra('Newsletter subscription information at ').$_SERVER["SERVER_NAME"],$mail_data);
+    @mail($email, tra('Newsletter subscription information at ').$_SERVER["SERVER_NAME"],$mail_data, "Content-type: text/plain;charset=utf-8\r\n");
     $this->update_users($nlId);    
   }
   
@@ -112,7 +112,7 @@ class NlLib extends TikiLib {
     $smarty->assign('code',$res["code"]);
     $smarty->assign('url_subscribe',$url_subscribe);
     $mail_data=$smarty->fetch('mail/newsletter_welcome.tpl');
-    @mail($res["email"], tra('Welcome to ').$info["name"].tra(' at ').$_SERVER["SERVER_NAME"],$mail_data);
+    @mail($res["email"], tra('Welcome to ').$info["name"].tra(' at ').$_SERVER["SERVER_NAME"],$mail_data, "Content-type: text/plain;charset=utf-8\r\n");
     return $this->get_newsletter($res["nlId"]);
   }
   
@@ -136,7 +136,7 @@ class NlLib extends TikiLib {
     $smarty->assign('mail_user',$user);
     $smarty->assign('url_subscribe',$url_subscribe);
     $mail_data=$smarty->fetch('mail/newsletter_byebye.tpl');
-    @mail($res["email"], tra('Bye bye from ').$info["name"].tra(' at ').$_SERVER["SERVER_NAME"],$mail_data);
+    @mail($res["email"], tra('Bye bye from ').$info["name"].tra(' at ').$_SERVER["SERVER_NAME"],$mail_data, "Content-type: text/plain;charset=utf-8\r\n");
     $this->update_users($res["nlId"]);    
     return $this->get_newsletter($res["nlId"]);
   }
