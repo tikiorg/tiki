@@ -399,7 +399,7 @@ class UsersLib extends TikiLib {
 
 
 	$res = $result->fetchRow();
-	$hash=md5($user.$pass.$res['email']);
+	$hash=md5($user.$pass.trim($res['email']));
 	$hash2 = md5($pass);
 
 	// next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
