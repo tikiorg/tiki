@@ -450,11 +450,105 @@ class Comments extends TikiLib {
 */
     }
 
-    function get_forum_topics($forumId) {
-	$query = "select * from `tiki_comments` where `object`=?
-	and `objectType` = 'forum' and `parentId`=0";
-	$result = $this->query($query,array($forumId));
+    function get_forum_topics($forumId, $offset = 0, $max = -1,
+		    $sort_mode = 'commentDate_asc') {
+	if ($sort_mode == 'points_asc') {
+		$sort_mode = 'average_asc';
+	}
+	if ($this->time_control) {
+		$limit = date("U") - $this->time_control;
+		$time_cond = " and `commentDate` > ? ";
+		$bind_time = array($limit);
+	} else {
+		$time_cond = '';
+		$bind_time = array();
+	}
+
+	$old_sort_mode = '';
+	if (in_array($sort_mode, array(
+			'replies_desc',
+			'replies_asc',
+			'lastPost_desc',
+			'lastPost_asc'
+			))) {
+	    $old_offset = $offset;
+
+	    $old_maxRecords = $max;
+	    $old_sort_mode = $sort_mode;
+	    $sort_mode = 'title_desc';
+	    $offset = 0;
+	    $maxRecords = -1;
+	}
+
+
 	$ret = array();
+	foreach (array('=', '<>') as $stickytest) {
+		$query = "select * from `tiki_comments` where `object`=?
+			and `type` $stickytest ?  and `objectType` = 'forum'
+			and `parentId` = ? $time_cond
+			order by ".$this->convert_sortmode($sort_mode).
+			", `threadId`";
+		$result = $this->query($query, array($forumId, 's', 0) +
+				$bind_time, $max, $offset);
+
+		while ($res = $result->fetchRow()) {
+		    $tid = $res['threadId'];
+		    // When was this topic last posted to?
+		    $query = "select max(`commentDate`) from `tiki_comments`
+			    where `parentId` = ?";
+		    $res['lastPost'] = $this->getOne($query, array($tid));
+		    if (!$res['lastPost']) {
+			    $res['lastPost'] = $res['commentDate'];
+		    } else {
+			    $query = "select * from `tiki_comments`
+				    where `parentId` = ? and `commentDate` = ?
+				    order by `threadId` desc";
+			    $r2 = $this->query($query, array($tid,
+						    $res['lastPost']));
+			    $res['lastPostData'] = $r2->fetchRow();
+		    }
+
+		    // How many replies to this topic?
+		    $query = "select count(*) from `tiki_comments`
+			    where `parentId` = ?";
+		    $res['replies']['numReplies'] = $this->getOne($query,
+				    array($tid));
+
+		    // Has the user read it?
+		    $res['is_marked'] = $this->is_marked($tid);
+		    $ret[] = $res;
+		}
+	}
+
+	if ($old_sort_mode) {
+		if ($old_sort_mode == 'replies_asc') {
+		    usort($ret, 'compare_replies');
+		} elseif ($old_sort_mode == 'replies_desc') {
+		    usort($ret, 'r_compare_replies');
+		} elseif ($old_sort_mode == 'lastPost_asc') {
+		    usort($ret, 'compare_lastPost');
+		} elseif ($old_sort_mode == 'lastPost_desc') {
+		    usort($ret, 'r_compare_lastPost');
+		}
+
+		$ret = array_slice($ret, $old_offset, $old_maxRecords);
+	}
+
+//	print("<pre>");
+//	print_r($ret);
+//	print("</pre>");
+
+	return $ret;
+    }
+
+    function get_last_forum_posts($forumId, $maxRecords = -1)
+    {
+	$mid = " where `objectType` = ? and `object`=? ";
+	$bind_mid = array('forum', $forumId);
+	$sort_mode = 'commentDate_desc';
+
+	$query = "select * from `tiki_comments` $mid order by ".$this->convert_sortmode($sort_mode);
+	$result = $this->query($query, $bind_mid, $maxRecords, 0);
 
 	while ($res = $result->fetchRow()) {
 	    $ret[] = $res;
@@ -960,7 +1054,6 @@ class Comments extends TikiLib {
 
 	$res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
 	$res['user_online'] = 'n';
-	$res['is_marked'] = $this->is_marked($res['threadId']);
 	$res['is_reported'] = $this->is_reported($res['threadId']);
 
 	if ($res['userName']) {
@@ -1086,44 +1179,7 @@ class Comments extends TikiLib {
     }
 
     function get_comments($objectId, $parentId, $offset = 0, $maxRecords = -1,
-		    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0,
-		    $mode = 'thread')
-    {
-	if (!in_array($mode, array('thread'))) {
-		return array('isEmpty' => 'y');
-	}
-
-	if ($mode == 'thread') {
-		$get_replies = true;
-	} else {
-		$get_replies = false;
-	}
-	$r1 = $this->_get_comments($objectId, $parentId, $offset, $maxRecords,
-			$sort_mode, $find, $threshold, true, $get_replies);
-	$r2 = $this->_get_comments($objectId, $parentId, $offset, $maxRecords,
-			$sort_mode, $find, $threshold, false, $get_replies);
-
-	$retval = array();
-	$retval["data"] = array_merge($r1["data"], $r2["data"]);
-	$retval["below"] = $r1["below"];
-	$retval["cant"] = $r1["cant"];
-
-	if ($mode == 'thread') {
-		$msgs = count($retval['data']);
-		for ($i = 0; $i < $msgs; $i++) {
-			$r = &$retval['data'][$i]['replies'];
-			$retval['data'][$i]['replies_flat'] = array();
-			$rf = &$retval['data'][$i]['replies_flat'];
-			$this->flatten_comment_replies($r, $rf);
-		}
-	}
-
-	return $retval;
-    }
-
-    function _get_comments($objectId, $parentId, $offset = 0, $maxRecords
-	    = -1, $sort_mode = 'commentDate_asc', $find = '', $threshold =
-	    0, $sticky, $get_replies)
+		    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0)
     {
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
@@ -1143,9 +1199,7 @@ class Comments extends TikiLib {
 
 	if (in_array($sort_mode, array(
 			'replies_desc',
-			'replies_asc',
-			'lastPost_desc',
-			'lastPost_asc'
+			'replies_asc'
 			))) {
 	    $old_offset = $offset;
 
@@ -1164,23 +1218,17 @@ class Comments extends TikiLib {
 	$below = $this->getOne($query, array_merge(
 	array($object[0], $object[1], (float) $threshold), $bind_time) );
 
-	if ($sticky) {
-		$typetest = '=';
-	} else {
-		$typetest = '<>';
-	}
-
 	if ($find) {
 	    $findesc = '%' . $find . '%';
 
 	    $mid = " where `objectType` = ? and `object`=? and
-	    `parentId`=? and `type`".$typetest."? and `average`>=? and (`title`
+	    `parentId`=? and `average`>=? and (`title`
 	    like ? or `data` like ?) ";
 	    $bind_mid=array($object[0],  $object[1],  (int) $parentId,
-	    's', (int) $threshold, $findesc, $findesc);
+			    (int) $threshold, $findesc, $findesc);
 	} else {
-	    $mid = " where `objectType` = ? and `object`=? and `parentId`=? and `type`".$typetest."? and `average`>=? ";
-	    $bind_mid=array($object[0], $object[1], (int) $parentId, 's', (int) $threshold);
+	    $mid = " where `objectType` = ? and `object`=? and `parentId`=? and `average`>=? ";
+	    $bind_mid=array($object[0], $object[1], (int) $parentId, (int) $threshold);
 	}
 
 	$query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
@@ -1191,7 +1239,6 @@ class Comments extends TikiLib {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    // Get the last reply
 	    $tid = $res["threadId"];
 
 	    $res['user_posts'] = $this->getOne("select `posts` from `tiki_user_postings` where `user`=?",array($res['userName']));
@@ -1204,24 +1251,13 @@ class Comments extends TikiLib {
 	    }
 
 	    $res['user_online'] = 'n';
-	    $res['is_marked'] = $this->is_marked($res['threadId']);
-	    $res['is_reported'] = $this->is_reported($res['threadId']);
+	    $res['is_reported'] = $this->is_reported($tid);
 
 	    if ($res['userName']) {
 		$res['user_online'] = $this->getOne("select count(*) from `tiki_sessions` where `user`=?",array($res['userName'])) ? 'y' : 'n';
 	    }
 
 	    $res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
-	    $query = "select max(`commentDate`) from `tiki_comments` where `parentId`=?";
-	    $res["lastPost"] = $this->getOne($query,array($tid));
-
-	    if (!$res["lastPost"])
-		$res["lastPost"] = $res["commentDate"];
-          else {
-              $query = "select * from `tiki_comments` where `parentId`=? and `commentDate` =?";
-              $result2 = $this->query($query,array($tid, $res["lastPost"]));
-              $res["lastPostData"] = $result2->fetchRow();
-          }
 
 	    // Get the grandfather
 	    if ($res["parentId"] > 0) {
@@ -1232,10 +1268,7 @@ class Comments extends TikiLib {
 
 	    $res["parsed"] = $this->parse_comment_data($res["data"]);
 	    // Get the replies
-	    if ($get_replies) {
-		    $replies = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
-		    $res["replies"] = $replies;
-	    }
+	    $res['replies'] = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
 
 	    if (empty($res["data"])) {
 		$res["isEmpty"] = 'y';
@@ -1243,100 +1276,6 @@ class Comments extends TikiLib {
 		$res["isEmpty"] = 'n';
 	    }
 
-	    $ret[] = $res;
-	}
-
-	if (!$sticky) {
-		if ($old_sort_mode == 'replies_asc') {
-		    usort($ret, 'compare_replies');
-		}
-
-		if ($old_sort_mode == 'replies_desc') {
-		    usort($ret, 'r_compare_replies');
-		}
-
-		if ($old_sort_mode == 'lastPost_asc') {
-		    usort($ret, 'compare_lastPost');
-		}
-
-		if ($old_sort_mode == 'lastPost_desc') {
-		    usort($ret, 'r_compare_lastPost');
-		}
-
-		if (in_array($old_sort_mode, array(
-				'replies_desc',
-				'replies_asc',
-				'lastPost_desc',
-				'lastPost_asc'
-				))) {
-		    $ret = array_slice($ret, $old_offset, $old_maxRecords);
-		}
-	}
-
-	$retval = array();
-	$retval["data"] = $ret;
-	$retval["below"] = $below;
-	$retval["cant"] = $cant;
-	return $retval;
-    }
-
-
-    function get_all_comments($objectId, $offset = 0, $maxRecords
-	    = -1, $sort_mode = 'commentDate_asc')
-    {
-	if ($sort_mode == 'points_asc') {
-	    $sort_mode = 'average_asc';
-	}
-
-	$time_cond = '';
-	$bind_time = array();
-
-	$old_sort_mode = '';
-
-	if (in_array($sort_mode, array(
-			'replies_desc',
-			'replies_asc',
-			'lastPost_desc',
-			'lastPost_asc'
-			))) {
-	    $old_offset = $offset;
-
-	    $old_maxRecords = $maxRecords;
-	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'title_desc';
-	    $offset = 0;
-	    $maxRecords = -1;
-	}
-
-	// Break out the type and object parameters.
-	$object = explode( ":", $objectId, 2);
-
-	$query = "select count(*) from `tiki_comments` where
-	    `objectType` = ? and `object`=? $time_cond";
-	$below = $this->getOne($query,array_merge($object,$bind_time));
-
-	$mid = " where `objectType` = ? and `object`=? ";
-	$bind_mid=$object;
-
-	$query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode);
-	$query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
-	$result = $this->query($query,array_merge($bind_mid,$bind_time),$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
-
-	while ($res = $result->fetchRow()) {
-	    // Get the last reply
-	    $tid = $res["threadId"];
-
-	    $res['is_marked'] = $this->is_marked($res['threadId']);
-
-	    if (empty($res["data"])) {
-		$res["isEmpty"] = 'y';
-	    } else {
-		$res["isEmpty"] = 'n';
-	    }
-
-	    //$res["average"]=$res["points"]/$res["votes"];
-	    $res["average"] = $res["average"];
 	    $ret[] = $res;
 	}
 
@@ -1348,38 +1287,28 @@ class Comments extends TikiLib {
 	    usort($ret, 'r_compare_replies');
 	}
 
-	if ($old_sort_mode == 'lastPost_asc') {
-	    usort($ret, 'compare_lastPost');
-	}
-
-	if ($old_sort_mode == 'lastPost_desc') {
-	    usort($ret, 'r_compare_lastPost');
-	}
-
 	if (in_array($old_sort_mode, array(
 			'replies_desc',
 			'replies_asc',
-			'lastPost_desc',
-			'lastPost_asc'
 			))) {
 	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
 	}
 
-
-
 	$retval = array();
-	if( isset( $ret ) )
-	{
-	    $retval["data"] = $ret;
-	} else {
-	    $retval["data"] = '';
-	}
+	$retval["data"] = $ret;
 	$retval["below"] = $below;
 	$retval["cant"] = $cant;
+
+	$msgs = count($retval['data']);
+	for ($i = 0; $i < $msgs; $i++) {
+		$r = &$retval['data'][$i]['replies'];
+		$retval['data'][$i]['replies_flat'] = array();
+		$rf = &$retval['data'][$i]['replies_flat'];
+		$this->flatten_comment_replies($r, $rf);
+	}
+
 	return $retval;
     }
-
-
 
     function lock_comment($threadId) {
 	$query = "update `tiki_comments`
@@ -1633,19 +1562,39 @@ class Comments extends TikiLib {
 }
 
 function compare_replies($ar1, $ar2) {
-    return $ar1["replies"]["numReplies"] - $ar2["replies"]["numReplies"];
+    if (($ar1['type'] == 's' && $ar2['type'] == 's') ||
+		    ($ar1['type'] != 's' && $ar2['type'] != 's')) {
+	return $ar1["replies"]["numReplies"] - $ar2["replies"]["numReplies"];
+    } else {
+	return $ar1['type'] == 's' ? -1 : 1;
+    }
 }
 
 function compare_lastPost($ar1, $ar2) {
-    return $ar1["lastPost"] - $ar2["lastPost"];
+    if (($ar1['type'] == 's' && $ar2['type'] == 's') ||
+		    ($ar1['type'] != 's' && $ar2['type'] != 's')) {
+	return $ar1["lastPost"] - $ar2["lastPost"];
+    } else {
+	return $ar1['type'] == 's' ? -1 : 1;
+    }
 }
 
 function r_compare_replies($ar1, $ar2) {
-    return $ar2["replies"]["numReplies"] - $ar1["replies"]["numReplies"];
+    if (($ar1['type'] == 's' && $ar2['type'] == 's') ||
+		    ($ar1['type'] != 's' && $ar2['type'] != 's')) {
+	return $ar2["replies"]["numReplies"] - $ar1["replies"]["numReplies"];
+    } else {
+	return $ar1['type'] == 's' ? -1 : 1;
+    }
 }
 
 function r_compare_lastPost($ar1, $ar2) {
-    return $ar2["lastPost"] - $ar1["lastPost"];
+    if (($ar1['type'] == 's' && $ar2['type'] == 's') ||
+		    ($ar1['type'] != 's' && $ar2['type'] != 's')) {
+	return $ar2["lastPost"] - $ar1["lastPost"];
+    } else {
+	return $ar1['type'] == 's' ? -1 : 1;
+    }
 }
 
 ?>
