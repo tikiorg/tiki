@@ -1,5 +1,14 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] Blogs: Blog posts now support multi-page posts, the first page will be displayed
+  when listing blog posts (can be used as a heading) and the other pages are navigable
+  when reading a blog post.
+* [NEW] Articles: Multi-page articles are now supported, use "...page..." to sepparate
+  pages in a multi-page article. Navigation links to article pages automatically added.
+* [NEW] Articles: The permission tiki_p_autoapprove_submission was added, groups with
+  that permission can submit articles that are automatically approved.
+* [NEW] Articles: The list of articles can be configured choosing which columns should
+  be displayed when listing articles.
 * [NEW] Wiki: Optionally admin can choose if the user who creates a page has
   admin privileges over that page (remove, assign perms, etc)
 * [NEW] Wiki: The listpages feature can be configured choosing what columns will

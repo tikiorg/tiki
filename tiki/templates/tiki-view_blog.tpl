@@ -69,15 +69,18 @@
 </td><td align="right">
 {if ($ownsblog eq 'y') or ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}"><img border='0' src='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
-<a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}"><img src='img/icons/trash.gif' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' /></a>
+<a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' /></a>
 {/if}
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="{sameurl savenotepad=$listpages[ix].postId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 {/if}
 </td></tr></table>
 </div>
 <div class="postbody">
 {$listpages[ix].parsed_data}
+{if $listpages[ix].pages > 1}
+<a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}read more{/tr} ({$listpages[ix].pages} {tr}pages{/tr})</a>
+{/if}
 <hr/>
 <table width="100%"><tr><td>
 <small>

@@ -35,7 +35,7 @@
 </td></tr>
 </table>
 </div>
-<div class="articletrailer">
+<div style="padding:5px;" class="articletrailer">
 ({$size} bytes
 )
 </div>

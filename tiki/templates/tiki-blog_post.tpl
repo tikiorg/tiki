@@ -72,6 +72,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 </td></tr>
 {/if}
 <tr><td class="editblogform">{tr}Data{/tr}</td><td class="editblogform">
+<b>{tr}Use ...page... to sepparate pages in a multi-page post{/tr}</b><br/>
 <textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="60" wrap="virtual">{$data}</textarea>
 {if $wysiwyg eq 'y'}
 	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>

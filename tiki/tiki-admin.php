@@ -988,6 +988,51 @@ if(isset($_REQUEST["setwikiregex"])) {
   $smarty->assign('wiki_page_regex',$_REQUEST["wiki_page_regex"]);	
 }
 
+if(isset($_REQUEST['artlist'])) {
+	if(isset($_REQUEST['art_list_title'])) {
+		$tikilib->set_preference('art_list_title','y');		
+	} else {
+		$tikilib->set_preference('art_list_title','n');		
+	}
+	$smarty->assign('art_list_title',isset($_REQUEST['art_list_title'])?'y':'n');
+	if(isset($_REQUEST['art_list_topic'])) {
+		$tikilib->set_preference('art_list_topic','y');		
+	} else {
+		$tikilib->set_preference('art_list_topic','n');		
+	}
+	$smarty->assign('art_list_topic',isset($_REQUEST['art_list_topic'])?'y':'n');
+	if(isset($_REQUEST['art_list_date'])) {
+		$tikilib->set_preference('art_list_date','y');		
+	} else {
+		$tikilib->set_preference('art_list_date','n');		
+	}
+	$smarty->assign('art_list_date',isset($_REQUEST['art_list_date'])?'y':'n');
+	if(isset($_REQUEST['art_list_author'])) {
+		$tikilib->set_preference('art_list_author','y');		
+	} else {
+		$tikilib->set_preference('art_list_author','n');		
+	}
+	$smarty->assign('art_list_author',isset($_REQUEST['art_list_author'])?'y':'n');
+	if(isset($_REQUEST['art_list_reads'])) {
+		$tikilib->set_preference('art_list_reads','y');		
+	} else {
+		$tikilib->set_preference('art_list_reads','n');		
+	}
+	$smarty->assign('art_list_reads',isset($_REQUEST['art_list_reads'])?'y':'n');
+	if(isset($_REQUEST['art_list_size'])) {
+		$tikilib->set_preference('art_list_size','y');		
+	} else {
+		$tikilib->set_preference('art_list_size','n');		
+	}
+	$smarty->assign('art_list_size',isset($_REQUEST['art_list_size'])?'y':'n');
+	if(isset($_REQUEST['art_list_img'])) {
+		$tikilib->set_preference('art_list_img','y');		
+	} else {
+		$tikilib->set_preference('art_list_img','n');		
+	}
+	$smarty->assign('art_list_img',isset($_REQUEST['art_list_img'])?'y':'n');
+}
+
 if(isset($_REQUEST['wikilistprefs'])) {
 	if(isset($_REQUEST['wiki_list_name'])) {
 		$tikilib->set_preference('wiki_list_name','y');		

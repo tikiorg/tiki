@@ -305,6 +305,10 @@ $tikilib->cache_links($cachedlinks);
   header("location: tiki-list_articles.php");
 }
 
+// Set date to today before it's too late
+$_SESSION["thedate"]=date("U");
+
+
 // Armar un select con los topics
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics',$topics);

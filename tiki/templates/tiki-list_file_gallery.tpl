@@ -201,3 +201,7 @@
 {if $feature_file_galleries_comments eq 'y'}
 {include file=comments.tpl}
 {/if}
+{if $tiki_p_admin eq 'y'}
+<br/><br/>
+<a href="tiki-admin.php?page=fgal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+{/if}

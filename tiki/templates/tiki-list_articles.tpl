@@ -28,74 +28,70 @@
 
 <table class="listarticles">
 <tr>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}AuthorName{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'reads_desc'}reads_asc{else}reads_desc{/if}">{tr}Reads{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
-<td class="listartheading">{tr}Img{/tr}</td>
-<!--<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'useImage_desc'}useImage_asc{else}useImage_desc{/if}">{tr}UseImg{/tr}</a></td>-->
-<!--<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}User{/tr}</a></td>-->
-<td class="listartheading">{tr}Action{/tr}</td>
+{if $art_list_title eq 'y'}
+	<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
+{/if}
+{if $art_list_topic eq 'y'}	
+	<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a></td>
+{/if}
+{if $art_list_date eq 'y'}
+	<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a></td>
+{/if}
+{if $art_list_author eq 'y'}
+	<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}AuthorName{/tr}</a></td>
+{/if}
+{if $art_list_reads eq 'y'}
+	<td style="text-align:right;" class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'reads_desc'}reads_asc{else}reads_desc{/if}">{tr}Reads{/tr}</a></td>
+{/if}
+{if $art_list_size eq 'y'}
+	<td style="text-align:right;" class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
+{/if}
+{if $art_list_img eq 'y'}
+	<td class="listartheading">{tr}Img{/tr}</td>
+{/if}
+<td width="7%" class="listartheading">{tr}Action{/tr}</td>
 </tr>
+{cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
-{if $smarty.section.changes.index % 2}
-<td class="listarttitleodd">&nbsp;
-{if $tiki_p_read_article eq 'y'}
-<a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">
+{if $art_list_title eq 'y'}
+	<td class="listarttitle{cycle advance=false}">
+	{if $tiki_p_read_article eq 'y'}
+		<a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">
+	{/if}
+	{$listpages[changes].title|truncate:20:"(...)":true}
+	{if $listpages[changes].type eq 'Review'}(r){/if}
+	{if $tiki_p_read_article eq 'y'}
+		</a>
+	{/if}
+	</td>
 {/if}
-{$listpages[changes].title|truncate:20:"(...)":true}
-{if $listpages[changes].type eq 'Review'}(r){/if}
-{if $tiki_p_read_article eq 'y'}
-</a>
+{if $art_list_topic eq 'y'}	
+	<td class="listarttopic{cycle advance=false}">{$listpages[changes].topicName}</td>
 {/if}
-&nbsp;</td>
-<td class="listarttopicodd">&nbsp;{$listpages[changes].topicName}&nbsp;</td>
-<td class="listartpublishDateodd">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
-<td class="listartauthorodd">&nbsp;{$listpages[changes].authorName}&nbsp;</td>
-<td class="listartreadsodd">&nbsp;{$listpages[changes].reads}&nbsp;</td>
-<td class="listartsizeodd">&nbsp;{$listpages[changes].size}&nbsp;</td>
-<td class="listarthasimageodd">&nbsp;{$listpages[changes].hasImage}/{$listpages[changes].useImage}&nbsp;</td>
-<!--<td class="listartuseimageodd">&nbsp;{$listpages[changes].useImage}&nbsp;</td>-->
-<!--<td class="listartauthorodd">&nbsp;{$listpages[changes].author}&nbsp;</td>-->
-<td class="listartactionsodd">
+{if $art_list_date eq 'y'}
+	<td class="listartpublishDate{cycle advance=false}">{$listpages[changes].publishDate|tiki_short_datetime}</td>
+{/if}
+{if $art_list_author eq 'y'}	
+	<td class="listartauthor{cycle advance=false}">{$listpages[changes].authorName}</td>
+{/if}
+{if $art_list_reads eq 'y'}
+	<td style="text-align:right;" class="listartreads{cycle advance=false}">{$listpages[changes].reads}</td>
+{/if}
+{if $art_list_size eq 'y'}
+	<td style="text-align:right;" class="listartsize{cycle advance=false}">{$listpages[changes].size|kbsize}</td>
+{/if}
+{if $art_list_img eq 'y'}
+	<td class="listarthasimage{cycle advance=false}">{$listpages[changes].hasImage}/{$listpages[changes].useImage}</td>
+{/if}
+<td class="listartactions{cycle}">
 {if $tiki_p_edit_article eq 'y'}
-<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">{tr}Edit{/tr}</a>
+	<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}
 {if $tiki_p_remove_article eq 'y'}
-<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}">{tr}Remove{/tr}</a>
+	<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
 {/if}
 </td>
-{else}
-<td class="listarttitleeven">&nbsp;
-{if $tiki_p_read_article eq 'y'}
-<a class="artname" href="tiki-read_article.php?articleId={$listpages[changes].articleId}">
-{/if}
-{$listpages[changes].title|truncate:20:"(...)":true}
-{if $listpages[changes].type eq 'Review'}(r){/if}
-{if $tiki_p_read_article eq 'y'}
-</a>
-{/if}
-&nbsp;</td>
-<td class="listarttopiceven">&nbsp;{$listpages[changes].topicName}&nbsp;</td>
-<td class="listartpublishDateeven">&nbsp;{$listpages[changes].publishDate|tiki_short_datetime}&nbsp;</td>
-<td class="listartauthoreven">&nbsp;{$listpages[changes].authorName}&nbsp;</td>
-<td class="listartreadseven">&nbsp;{$listpages[changes].reads}&nbsp;</td>
-<td class="listartsizeeven">&nbsp;{$listpages[changes].size}&nbsp;</td>
-<td class="listarthasimageeven">&nbsp;{$listpages[changes].hasImage}/{$listpages[changes].useImage}&nbsp;</td>
-<!--<td class="listartuseimageeven">&nbsp;{$listpages[changes].useImage}&nbsp;</td>-->
-<!--<td class="listartauthoreven">&nbsp;{$listpages[changes].author}&nbsp;</td>-->
-<td class="listartactionseven">
-{if $tiki_p_edit_article eq 'y'}
-<a class="link" href="tiki-edit_article.php?articleId={$listpages[changes].articleId}">{tr}Edit{/tr}</a>
-{/if}
-{if $tiki_p_remove_article eq 'y'}
-<a class="link" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].articleId}">{tr}Remove{/tr}</a>
-{/if}
-</td>
-{/if}
 </tr>
 {sectionelse}
 <tr><td colspan="6">
@@ -122,3 +118,7 @@
 {/if}
 </div>
 </div>
+{if $tiki_p_admin eq 'y'}
+<br/><br/>
+<a href="tiki-admin.php?page=cms"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+{/if}

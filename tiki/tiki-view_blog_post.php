@@ -81,6 +81,25 @@ $sort_mode=$_REQUEST["sort_mode"];
 $find=$_REQUEST["find"];
 
 $parsed_data = $tikilib->parse_data($post_info["data"]);
+
+if(!isset($_REQUEST['page'])) $_REQUEST['page']=1;
+  $pages = $bloglib->get_number_of_pages($parsed_data);
+  $parsed_data=$bloglib->get_page($parsed_data,$_REQUEST['page']);
+  $smarty->assign('pages',$pages);
+  if($pages>$_REQUEST['page']) {
+  	$smarty->assign('next_page',$_REQUEST['page']+1);
+  } else {
+  	$smarty->assign('next_page',$_REQUEST['page']);
+  }
+  if($_REQUEST['page']>1) {
+  	$smarty->assign('prev_page',$_REQUEST['page']-1);
+  } else {
+  	$smarty->assign('prev_page',1);
+  }
+  $smarty->assign('first_page',1);
+  $smarty->assign('last_page',$pages);
+  $smarty->assign('page',$_REQUEST['page']);
+
 $smarty->assign('parsed_data',$parsed_data);
 
 $smarty->assign('individual','n');

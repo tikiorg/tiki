@@ -37,18 +37,37 @@
 </table>
 </div>
 <div class="articletrailer">
-({$size} bytes
+<table width="100%"><tr><td>
+({$size} bytes)
+</td>
+<td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}
-[<a class="trailer" href="tiki-edit_article.php?articleId={$articleId}">{tr}Edit{/tr}</a>] 
+<a class="trailer" href="tiki-edit_article.php?articleId={$articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}
+<a class="trailer" href="tiki-print_article.php?articleId={$articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
 {if $tiki_p_remove_article eq 'y'}
-[<a class="trailer" href="tiki-list_articles.php?remove={$articleId}">{tr}Remove{/tr}</a>]
+<a class="trailer" href="tiki-list_articles.php?remove={$articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
 {/if}
-[<a class="trailer" href="tiki-print_article.php?articleId={$articleId}">Print</a>]
-)
+</td>
+</tr>
+</table>
 </div>
 <div class="articlebody">
 {$parsed_body}
+{if $pages > 1}
+	<div align="center">
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
+
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
+
+		<small>{tr}page{/tr}:{$page}/{$pages}</small>
+
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
+
+
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}"><img src='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' /></a>
+	</div>
+{/if}
 </div>
 {if $feature_article_comments eq 'y'}
 {include file=comments.tpl}

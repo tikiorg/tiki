@@ -404,7 +404,7 @@ div.wikitext {
 p.editdate { color: black; font-size: smaller; margin-bottom: -1ex; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
 
 /* The edit-help used to display the wiki syntax when editing a page */
-div.wiki-edithelp { background: white; border: 1px solid black;  width: 94%; font-size: smaller; padding: 6pt;}
+div.wiki-edithelp { background: white; border: 1px solid black;  font-size: smaller; padding: 6pt;}
 
 
 /******************************************************* IMAGE GALLERIES **********************************************/
@@ -593,10 +593,6 @@ div.articletrailer {
   border: 1px solid black;
   border-bottom: 1px solid black;
   border-top: 1px thin blue;
-  padding-left: 0.8em; 
-  padding-right: 0.8em; 
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
   margin-bottom: 20px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;

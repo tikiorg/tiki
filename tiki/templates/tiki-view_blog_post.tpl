@@ -25,15 +25,29 @@
 </td><td align="right">
 {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}"><img border='0' src='img/icons/edit.gif' title='{tr}Edit{/tr}' alt='{tr}Edit{/tr}' /></a>
-<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}"><img border='0' src='img/icons/trash.gif' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' /></a>
+<a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}"><img border='0' src='img/icons2/delete.gif' title='{tr}Remove{/tr}' alt='{tr}Remove{/tr}' /></a>
 {/if}
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-<a title="{tr}Save to notepad{/tr}" href="{sameurl savenotepad=1}"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+<a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 {/if}
 </td></tr></table>
 </div>
 <div class="postbody">
 {$parsed_data}
+{if $pages > 1}
+	<div align="center">
+		<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$first_page}"><img src='img/icons2/nav_first.gif' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' /></a>
+
+		<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$prev_page}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' title='{tr}Previous page{/tr}' /></a>
+
+		<small>{tr}page{/tr}:{$page}/{$pages}</small>
+
+		<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$next_page}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' title='{tr}Next page{/tr}' /></a>
+
+
+		<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$last_page}"><img src='img/icons2/nav_last.gif' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' /></a>
+	</div>
+{/if}
 <hr/>
 <table width="100%">
 <tr><td>

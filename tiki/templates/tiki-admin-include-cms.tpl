@@ -43,6 +43,65 @@
     </table>
     </form>
     </div>
+    
+    <div class="simplebox">
+    {tr}Articles listing configuration{/tr} <a href="tiki-list_articles.php" class="link">{tr}view{/tr}</a>
+	<form method="post" action="tiki-admin.php">
+	<table>
+	<tr>
+		<td class="form">{tr}Title{/tr}</td>
+		<td class="form">
+			<input type="checkbox" name="art_list_title" {if $art_list_title eq 'y'}checked="checked"{/if} />
+		</td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Topic{/tr}</td>
+		<td class="form">
+			<input type="checkbox" name="art_list_topic" {if $art_list_topic eq 'y'}checked="checked"{/if} />
+		</td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Date{/tr}</td>
+		<td class="form">
+			<input type="checkbox" name="art_list_date" {if $art_list_date eq 'y'}checked="checked"{/if} />
+		</td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Author{/tr}</td>
+		<td class="form">
+			<input type="checkbox" name="art_list_author" {if $art_list_author eq 'y'}checked="checked"{/if} />
+		</td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Reads{/tr}</td>
+		<td class="form">
+			<input type="checkbox" name="art_list_reads" {if $art_list_reads eq 'y'}checked="checked"{/if} />
+		</td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Size{/tr}</td>
+		<td class="form">
+			<input type="checkbox" name="art_list_size" {if $art_list_size eq 'y'}checked="checked"{/if} />
+		</td>
+	</tr>
+	<tr>
+		<td class="form">{tr}Img{/tr}</td>
+		<td class="form">
+			<input type="checkbox" name="art_list_img" {if $art_list_img eq 'y'}checked="checked"{/if} />
+		</td>
+	</tr>
+	<tr>
+		<td class="form">&nbsp;</td>
+		<td class="form">
+			<input type="submit" name="artlist" value="set preferences" />
+		</td>
+	</tr>
+
+
+	</table>
+	</form>    
+    </div>
+    
 
 </div>
 </div>

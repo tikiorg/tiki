@@ -277,6 +277,14 @@ $feature_polls = 'n';
 $wiki_creator_admin = 'n';
 $smarty->assign('wiki_creator_admin',$wiki_creator_admin);
 
+$smarty->assign('art_list_title','y');
+$smarty->assign('art_list_topic','y');
+$smarty->assign('art_list_date','y');
+$smarty->assign('art_list_author','y');
+$smarty->assign('art_list_reads','y');
+$smarty->assign('art_list_size','y');
+$smarty->assign('art_list_img','y');
+
 $smarty->assign('wiki_list_name','y');
 $smarty->assign('wiki_list_hits','y');
 $smarty->assign('wiki_list_lastmodif','y');

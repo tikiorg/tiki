@@ -10,6 +10,18 @@ class BlogLib extends TikiLib {
     $this->db = $db;  
   }
   
+  //Special parsing for multipage articles
+  function get_number_of_pages($data)
+  {
+  	$parts = explode("...page...",$data);
+  	return count($parts);	
+  }
+  
+  function get_page($data,$i)
+  {
+  	$parts = explode("...page...",$data);
+  	return $parts[$i-1];
+  }
 
   function send_trackbacks($id,$trackbacks)
   {
@@ -190,6 +202,7 @@ class BlogLib extends TikiLib {
       $res['trackbacks_from_count']=count(array_keys($res['trackbacks_from']));
       $res['trackbacks_to']=unserialize($res['trackbacks_to']);
       $res['trackbacks_to_count']=count($res['trackbacks_to']);
+      $res['pages']=$this->get_number_of_pages($res['data']);
       $ret[] = $res;
     }
     $retval = Array();

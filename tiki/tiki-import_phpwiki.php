@@ -87,7 +87,9 @@ while(false !== $file=readdir($h)) {
         $part["body"]=preg_replace("/ (http:\/\/[^ ]+) /"," [$1] ",$part["body"]);
         $part["body"]=preg_replace("/\[(http:\/\/[^\]]+)\]/","{img src=$1}",$part["body"]);
         $part["body"]=preg_replace("/\[([^\|\]]+)\]/","(($1))",$part["body"]);
-        $part["body"]=preg_replace("/\[([^\|]+)\|([^\]]+)\]/","(($1|$2))",$part["body"]);
+        //$part["body"]=preg_replace("/\[([^\|]+)\|([^\]]+)\]/","(($1|$2))",$part["body"]);
+        $part["body"]=preg_replace("/\[([^\|]+)\|([^\]]+)\]/","(($2|$1))",$part["body"]);
+
 
         $pagename=urldecode($part["pagename"]);
         $version=urldecode($part["version"]);

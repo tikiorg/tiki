@@ -89,7 +89,10 @@
 {assign var=area_name value="body"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
-<tr><td class="formcolor">{tr}Body{/tr}</td><td class="formcolor"><textarea class="wikiedit" id="body" name="body" rows="25" cols="80" id='subbody' wrap="virtual">{$body}</textarea></td></tr>
+</tr>
+<tr><td class="formcolor">{tr}Body{/tr}</td><td class="formcolor">
+<b>{tr}Use ...page... to sepparate pages in a multi-page article{/tr}</b><br/>
+<textarea class="wikiedit" id="body" name="body" rows="25" cols="80" id='subbody' wrap="virtual">{$body}</textarea></td></tr>
 {if $cms_spellcheck eq 'y'}
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}

@@ -40,15 +40,22 @@
 </table>
 </div>
 <div class="articletrailer">
-(<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a> {$listpages[ix].size} bytes
+<table width="100%">
+<tr>
+<td>
+(<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a> {$listpages[ix].size} bytes)
+</td>
+<td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}
-[<a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}">{tr}Edit{/tr}</a>] 
+	<a class="trailer" href="tiki-edit_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}
+	<a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
 {if $tiki_p_remove_article eq 'y'}
-[<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}">{tr}Remove{/tr}</a>]
+	<a class="trailer" href="tiki-list_articles.php?remove={$listpages[ix].articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
 {/if}
-[<a class="trailer" href="tiki-print_article.php?articleId={$listpages[ix].articleId}">{tr}Print{/tr}</a>]
-)
+</td>
+</tr>
+</table>
 </div>
 {/section}
 
