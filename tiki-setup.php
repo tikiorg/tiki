@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.134 2003-08-21 22:40:00 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.135 2003-08-21 23:11:48 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -295,6 +295,7 @@ $tiki_timer = new timer();
 $tiki_timer->start();
 
 include_once ("tiki-setup_base.php");
+//print("tiki-setup: before rest of tiki-setup:".$tiki_timer->elapsed()."<br />");
 
 //check to see if admin has closed the site
 $site_closed = $tikilib->get_preference('site_closed','n');
@@ -311,19 +312,6 @@ if ($load = @file('/proc/loadavg')) {
 	list($server_load) = explode(' ', $load[0]);
 	$smarty->assign('server_load',$server_load);
 }
-
-/*
-if (file_exists('/proc/loadavg')) {
-	if ($fh = @fopen('/proc/loadavg', 'r')) {
-		$data = @fread( $fh, 6 );
-		@fclose( $fh );
-		$load_avg = explode( " ", $data );
-		$server_load = trim($load_avg[0]);
-	}
-}
-*/
-
-//print("profile: include tiki-setup_base:".$tiki_timer->elapsed()."<br/>");
 
 // The votes array stores the votes the user has made
 if (!isset($_SESSION["votes"])) {
@@ -1598,15 +1586,18 @@ $smarty->assign('uses_tabs', 'n');
 
 $user_preferences = array();
 
+//print("tiki-setup: before include tiki-handlers.php:".$tiki_timer->elapsed()."<br />");
 include_once ('tiki-handlers.php');
 
 if ($feature_obzip == 'y') {
 	ob_start ("ob_gzhandler");
 }
 
+//print("tiki-setup: before include debugger.php:".$tiki_timer->elapsed()."<br />");
 /* Include debugger class declaration. So use loggin facility in
  * php files become much easier :)
  */
 include_once ('lib/debug/debugger.php');
+//print("tiki-setup: after include debugger.php:".$tiki_timer->elapsed()."<br />");
 
 ?>
