@@ -8239,7 +8239,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     // New syntax for wiki pages ((name)) Where name can be anything
     preg_match_all("/\(\(([A-Za-z0-9_\-]+)\)\)/",$data,$pages);
     foreach(array_unique($pages[1]) as $page) {
-      if($desc = $this->page_exists($page)) {
+      if($desc = $this->page_exists_desc($page)) {
         $repl = "<a title='$desc' href='tiki-index.php?page=$page' class='wiki'>$page</a>";
       } else {
         $repl = "$page<a href='tiki-editpage.php?page=$page' class='wiki'>?</a>";
