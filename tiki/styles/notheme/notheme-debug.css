@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.9 2003-11-07 23:49:06 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.10 2003-11-08 21:29:03 zaufi Exp $
  *
  * Debug console used styles.
  *
@@ -48,6 +48,7 @@ div.debugconsole table#permissions {
 	background: none;
 	border-collapse: collapse;
 	border-spacing: 0px;
+    width: 100%;
 }
 
 /*
