@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.35 2004-06-07 17:07:43 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.36 2004-06-07 17:21:41 teedog Exp $
  *
  * \brief Categiries support class
  *
@@ -749,6 +749,26 @@ class CategLib extends TikiDB {
 		//  $out = $smarty -> fetch("tiki-simple_plugin.tpl");
 		return $out;
 	}
+	
+	//Moved from tikilib.php
+    function last_category_objects($categId, $maxRecords, $type="") {
+		$mid = "and tbl1.`categId`=?";
+		$bindvars = array((int)$categId);
+		if ($type) {
+		    $mid.= " and tbl2.`type`=?";
+		    $bindvars[] = $type;
+		}
+		$sort_mode = "created_desc";
+		$query = "select tbl1.`catObjectId`,`categId`,`type`,`name`,`href` from `tiki_category_objects` tbl1,`tiki_categorized_objects` tbl2 ";
+		$query.= " where tbl1.`catObjectId`=tbl2.`catObjectId` $mid order by tbl2.".$this->convert_sortmode($sort_mode);
+		$result = $this->query($query,$bindvars,$maxRecords,0);
+
+		$ret = array('data'=>array());
+		while ($res = $result->fetchRow()) {
+		    $ret['data'][] = $res;
+		}
+		return $ret;
+    }
 
 }
 
