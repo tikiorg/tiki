@@ -65,10 +65,10 @@
 <td class="third auto">
 {/if}
 {if $fields[ix].type eq 't' or $fields[ix].type eq 'a' or $fields[ix].type eq 'r'}
-<input type="text" name="{$fields[ix].id|escape}" value="{$fields[ix].value|escape}" />
+<input type="text" name="{$fields[ix].filter_id|escape}" value="{$fields[ix].value|escape}" />
 {/if}
 {if $fields[ix].type eq 'u'}
-<select name="{$fields[ix].id|escape}]">
+<select name="{$fields[ix].filter_id|escape}]">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 {foreach key=id item=one from=$users}
 <option value="{$one|escape}">{$one}</option>
@@ -76,7 +76,7 @@
 </select>
 {/if}
 {if $fields[ix].type eq 'g'}
-<select name="{$fields[ix].id|escape}">
+<select name="{$fields[ix].filter_id|escape}">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux]|escape}">{$groups[ux]}</option>
@@ -84,7 +84,7 @@
 </select>
 {/if}
 {if $fields[ix].type eq 'd'}
-<select name="{$fields[ix].id|escape}">
+<select name="{$fields[ix].filter_id|escape}">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 {section name=jx loop=$fields[ix].options_array}
 <option value="{$fields[ix].options_array[jx]|escape}" {if $fields[ix].value eq $fields[ix].options_array[jx]}selected="selected"{/if}>{$fields[ix].options_array[jx]}</option>
@@ -92,7 +92,7 @@
 </select>
 {/if}
 {if $fields[ix].type eq 'c'}
-<select name="{$fields[ix].id|escape}">
+<select name="{$fields[ix].filter_id|escape}">
 <option value="" {if $fields[ix].value eq ''}selected="selected"{/if}>{tr}any{/tr}</option>
 <option value="y" {if $fields[ix].value eq 'y'}selected="selected"{/if}>{tr}checked{/tr}</option>
 <option value="n" {if $fields[ix].value eq 'n'}selected="selected"{/if}>{tr}unchecked{/tr}</option>
@@ -207,7 +207,7 @@ $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
 <td><a class="link" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;remove={$items[user].itemId}" 
-onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this tracker?{/tr}')" 
+onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this tracker item ?{/tr}');" 
 title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a></td>
 {/if}
 </tr>
