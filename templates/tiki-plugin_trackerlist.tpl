@@ -18,11 +18,13 @@
 <table class="normal">
 <tr>
 {foreach key=jx item=ix from=$fields}
+{if $ix.isPublic eq 'y' and $ix.isHidden ne 'y' and $ix.type ne 'x' and $ix.type ne 'h'}
 {if $ix.type eq 'l'}
 <td class="heading auto">{$ix.name|default:"&nbsp;"}</td>
-{elseif $ix.isPublic eq 'y' and $ix.isHidden ne 'y' and $ix.type ne 'x' and $ix.type ne 'h'}
+{else}
 <td class="heading auto"><a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode=f_{if 
 	$tr_sort_mode eq 'f_'|cat:$ix.name|cat:'_asc'}{$ix.name|escape:"url"}_desc{else}{$ix.name|escape:"url"}_asc{/if}">{$ix.name|default:"&nbsp;"}</a></th>
+{/if}
 {/if}
 {/foreach}
 {if $tracker_info.showCreated eq 'y'}
@@ -49,6 +51,7 @@
 
 {section name=ix loop=$items[user].field_values}
 
+{if $items[user].field_values[ix].isPublic eq 'y' and $items[user].field_values[ix].isHidden ne 'y' and $items[user].field_values[ix].type ne 'x' and $items[user].field_values[ix].type ne 'h'}
 {if $items[user].field_values[ix].type eq 'l'}
 <td class="auto">
 {foreach key=tid item=tlabel from=$items[user].field_values[ix].links}
@@ -93,8 +96,8 @@
 {/if}
 {/if}
 
+{/if}
 {/section}
-
 
 {if $tracker_info.showCreated eq 'y'}
 <td>{$items[user].created|tiki_short_datetime}</td>
