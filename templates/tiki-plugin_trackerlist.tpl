@@ -23,7 +23,7 @@
 <td class="heading auto">{$ix.name|default:"&nbsp;"}</td>
 {else}
 <td class="heading auto"><a class="tableheading" href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}&amp;{else}?{/if}{if $tr_offset}&amp;tr_offset={$tr_offset}{/if}&amp;tr_sort_mode=f_{if 
-	$tr_sort_mode eq 'f_'|cat:$ix.name|cat:'_asc'}{$ix.name|escape:"url"}_desc{else}{$ix.name|escape:"url"}_asc{/if}">{$ix.name|default:"&nbsp;"}</a></th>
+	$tr_sort_mode eq 'f_'|cat:$ix.fieldId|cat:'_asc'}{$ix.name|escape:"url"}_desc{else}{$ix.fieldId|escape:"url"}_asc{/if}">{$ix.name|default:"&nbsp;"}</a></th>
 {/if}
 {/if}
 {/foreach}
