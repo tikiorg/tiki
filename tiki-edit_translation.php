@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.2 2004-06-10 09:46:48 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_translation.php,v 1.3 2004-06-19 20:55:40 gmuslera Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,7 +44,7 @@ if (isset($_REQUEST['page']) && $_REQUEST['page']) {
 	$name = $_REQUEST['page'];
 	$type = "wiki page";
 	$objId = $info['page_id'];
-	$lang = $info['lang'];
+	$langpage = $info['lang'];
 }
 else if ($_REQUEST['id']) {
 	if (!isset($_REQUEST['type'])) {
@@ -62,7 +62,7 @@ else if ($_REQUEST['id']) {
 		$name = $info['pageName'];
 		$type = "wiki page";
 		$objId = $info['page_id'];
-		$lang = $info['lang'];
+		$langpage = $info['lang'];
 	}
 	else if ($_REQUEST['type'] == "article") {
 		$info = $tikilib->get_article($_REQUEST["id"]);
@@ -75,7 +75,7 @@ else if ($_REQUEST['id']) {
 		$name = $info['title'];
 		$type = "article";
 		$objId = $_REQUEST['id'];
-		$lang = $info['lang'];
+		$langpage = $info['lang'];
 		$find_objects = '';
 		$articles = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', $user);
 		$smarty->assign_by_ref('articles', $articles["data"]);
@@ -86,24 +86,24 @@ $smarty->assign('name', $name);
 $smarty->assign('type', $type);
 $smarty->assign('id', $objId);
 
-if (isset($_REQUEST['lang']) && !empty($_REQUEST['lang']) && $_REQUEST['lang'] != "NULL"
-				&& $lang != $_REQUEST['lang']) { // update the language
+if (isset($_REQUEST['langpage']) && !empty($_REQUEST['langpage']) && $_REQUEST['langpage'] != "NULL"
+				&& $langpage != $_REQUEST['langpage']) { // update the language
 
-	$error = $multilinguallib->updatePageLang($type, $objId, $_REQUEST['lang']);
+	$error = $multilinguallib->updatePageLang($type, $objId, $_REQUEST['langpage']);
 	if ($error)
 		$smarty->assign('error', $error);
 	else {
-		$info['lang'] = $_REQUEST['lang'];	
-		$lang = $_REQUEST['lang'];
+		$info['lang'] = $_REQUEST['langpage'];	
+		$langpage = $_REQUEST['langpage'];
 	}
 }
-$smarty->assign('lang', $lang);
+$smarty->assign('langpage', $langpage);
 
 if (isset($_REQUEST['detach'])) { // detach from a translation set
 	$multilinguallib->detachTranslation($type, $_REQUEST['srcId']);
 }
 else if (isset($_REQUEST['srcName']) && $_REQUEST['srcName']) { // attach to a translation set
-	if (empty($lang) || $lang == "NULL") {
+	if (empty($langpage) || $langpage == "NULL") {
 		$error = "traLang";
 		$smarty->assign('error', $error);
 	}
@@ -119,7 +119,7 @@ else if (isset($_REQUEST['srcName']) && $_REQUEST['srcName']) { // attach to a t
 				$smarty->assign('error', $error);
 			}
 			else {
-				$error = $multilinguallib->insertTranslation($type, $srcInfo['page_id'], $srcInfo['lang'], $objId, $lang);
+				$error = $multilinguallib->insertTranslation($type, $srcInfo['page_id'], $srcInfo['lang'], $objId, $langpage);
 				if ($error)
 					$smarty->assign('error', $error);
 				else
@@ -129,7 +129,7 @@ else if (isset($_REQUEST['srcName']) && $_REQUEST['srcName']) { // attach to a t
 	$smarty->assign('srcName', $_REQUEST['srcName']);
 }
 else if  (isset($_REQUEST['srcId']) && $_REQUEST['srcId']) {
-	if (empty($lang) || $lang == "NULL") {
+	if (empty($langpage) || $langpage == "NULL") {
 		$error = "traLang";
 		$smarty->assign('error', $error);
 	}
@@ -145,7 +145,7 @@ else if  (isset($_REQUEST['srcId']) && $_REQUEST['srcId']) {
 				$smarty->assign('error', $error);
 			}
 			else {
-				$error = $multilinguallib->insertTranslation($type, $srcInfo['articleId'], $srcInfo['lang'], $objId, $lang);
+				$error = $multilinguallib->insertTranslation($type, $srcInfo['articleId'], $srcInfo['lang'], $objId, $langpage);
 				if ($error)
 					$smarty->assign('error', $error);
 				else
@@ -155,7 +155,7 @@ else if  (isset($_REQUEST['srcId']) && $_REQUEST['srcId']) {
 	$smarty->assign('srcId', $_REQUEST['srcId']);
 }
 
-$trads = $multilinguallib->getTranslations($type, $objId, $name, $lang, true);
+$trads = $multilinguallib->getTranslations($type, $objId, $name, $langpage, true);
 $smarty->assign('trads', $trads);
 
 $languages = $tikilib->list_languages();
