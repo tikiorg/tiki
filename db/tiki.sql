@@ -2035,6 +2035,10 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','DSN','tiki-admin_dsn.php',1220,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','External wikis','tiki-admin_external_wikis.php',1225,'','tiki_p_admin','');
+
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','MantisBT','tiki-mantis-bugs.php',190,'feature_mantis','tiki_p_view_mantis','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Admin MantisBT','tiki-mantis-admin.php',192,'feature_mantis','tiki_p_admin_mantis','');
+
 # --------------------------------------------------------
 
 #
@@ -3045,7 +3049,7 @@ CREATE TABLE tiki_trackers (
   showComments char(1) default NULL,
   useAttachments char(1) default NULL,
   showAttachments char(1) default NULL,
-	orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,downloads,desc',
+  orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,downloads,desc',
   items int(10) default NULL,
   PRIMARY KEY  (trackerId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -3697,6 +3701,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_access_closed_site', 'Can access site when closed', 'admin', 'tiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_categories', 'Can browse categories', 'registered', 'tiki');
 
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_mantis', 'Can admin Mantis configuration', 'admin', 'mantis');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_mantis', 'Can view Mantis bugs', 'registered', 'mantis');
 # --------------------------------------------------------
 
 #
@@ -3881,6 +3887,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_left_column','y
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_likePages','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_listPages','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_live_support','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_mantis','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_menusfolderstyle','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_messages','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_minical','n');
