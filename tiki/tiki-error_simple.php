@@ -10,7 +10,7 @@ if (isset($_REQUEST['error']) and !is_null($_REQUEST['error'])) {
 }
 
 echo '</p>
-<form name="loginbox" action="tiki-login.php?url=tikiIndex" method="post">
+<form name="loginbox" action="tiki-login.php?page=tikiIndex" method="post">
 user: <input type="text" name="user"  size="20" /><br />
 pass: <input type="password" name="pass" size="20" /><br />
 <input type="submit" name="login" value="login" /></form>';

@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.15 2003-08-14 04:40:56 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.16 2003-08-22 00:29:04 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.15 2003-08-14 04:40:56 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.16 2003-08-22 00:29:04 teedog Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -26,6 +26,14 @@ if (!(isset($_SESSION['loginfrom']))) {
 	} else {
 		//Oh well, back to tikiIndex
 		$_SESSION['loginfrom'] = $tikiIndex;
+	}
+}
+
+if (isset($_REQUEST['page'])) {
+	if ($_REQUEST['page'] == 'tikiIndex') {
+		$_SESSION['loginfrom'] = $tikiIndex;
+	} else {
+		$_SESSION['loginfrom'] = $_REQUEST['page'];
 	}
 }
 
