@@ -84,7 +84,7 @@
 <option value="lastModif_desc" {if $sort_mode eq 'lastModif_desc'}selected="selected"{/if}>{tr}last updated (desc){/tr}</option>
 <option value="lastModif_asc" {if $sort_mode eq 'lastModif_asc'}selected="selected"{/if}>{tr}last updated (asc){/tr}</option>
 </select>
-<input type="submit" name="xx" value="sort" />
+<input type="submit" name="xx" value="{tr}sort{/tr}" />
 </form>
 <br/>
 {section name=ix loop=$items}
