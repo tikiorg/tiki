@@ -83,14 +83,14 @@
 <td class="listfgalactionsodd">
 {if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user)}
 {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_create_file_galleries eq 'y' ) }
-<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}">Edit</a>
-<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}">Remove</a>
+<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;edit_mode=1&amp;galleryId={$galleries[changes].id}">{tr}Edit{/tr}</a>
+<a class="fgallink" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removegal={$galleries[changes].id}">{tr}Remove{/tr}</a>
 {/if}
 {/if}
 {if $tiki_p_upload_files eq 'y'}
 {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_files eq 'y' ) }
 {if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
-<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}">Upload</a>
+<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}">{tr}Upload{/tr}</a>
 {/if}
 {/if}
 {/if}
@@ -124,7 +124,7 @@
 {if $tiki_p_admin_file_galleries eq 'y' or ($user and $galleries[changes].user eq $user) or $galleries[changes].public eq 'y'}
 {if $tiki_p_upload_files eq 'y'}
 {if ($tiki_p_admin eq 'y') or ($galleries[changes].individual eq 'n') or ($galleries[changes].individual_tiki_p_upload_files eq 'y' ) }
-<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}">Upload</a>
+<a class="fgallink" href="tiki-upload_file.php?galleryId={$galleries[changes].id}">{tr}Upload{/tr}</a>
 {/if}
 {/if}
 {/if}

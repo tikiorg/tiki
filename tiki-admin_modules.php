@@ -64,7 +64,7 @@ if(isset($_REQUEST["clear_cache"])) {
 $module_groups=Array();
 
 if(isset($_REQUEST["edit_assign"])) {
-  $_REQUEST["edit_assing"]=urldecode($_REQUEST["edit_assign"]);	
+  $_REQUEST["edit_assign"]=urldecode($_REQUEST["edit_assign"]);	
   $info = $tikilib->get_assigned_module($_REQUEST["edit_assign"]);
   $grps='';
   if($info["groups"]) {
@@ -88,7 +88,7 @@ if(isset($_REQUEST["edit_assign"])) {
 }
 
 if(isset($_REQUEST["unassign"])) {
-  $_REQUEST["unassing"]=urldecode($_REQUEST["unassign"]);		
+  $_REQUEST["unassign"]=urldecode($_REQUEST["unassign"]);		
   $tikilib->unassign_module($_REQUEST["unassign"]);
 }
 
@@ -155,7 +155,7 @@ if(isset($_REQUEST["preview"])) {
 }
 
 if(isset($_REQUEST["assign"])) {
-  $_REQUEST["assing"]=urldecode($_REQUEST["assign"]);	
+  $_REQUEST["assign"]=urldecode($_REQUEST["assign"]);	
   $smarty->assign_by_ref('assign_name',$_REQUEST["assign_name"]);
   //$smarty->assign_by_ref('assign_title',$_REQUEST["assign_title"]);
   $smarty->assign_by_ref('assign_position',$_REQUEST["assign_position"]);
