@@ -7,7 +7,7 @@
           <td class="form">{tr}Home Gallery (main gallery){/tr}</td>
           <td><select name="homeFileGallery">
               {section name=ix loop=$file_galleries}
-                <option value="{$file_galleries[ix].galleryId|escape}" {if $file_galleries[ix].galleryId eq $home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"(...)":true}</option>
+                <option value="{$file_galleries[ix].galleryId|escape}" {if $file_galleries[ix].galleryId eq $home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"...":true}</option>
               {/section}
               </select></td>
         </tr><tr>
