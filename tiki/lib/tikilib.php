@@ -2333,7 +2333,8 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
 	`tiki_article_types`.`show_author`,
 	`tiki_article_types`.`show_pubdate`,
 	`tiki_article_types`.`show_expdate`,
-	`tiki_article_types`.`show_reads`
+	`tiki_article_types`.`show_reads`,
+	`tiki_article_types`.`show_size`
 	from `tiki_articles`, `tiki_article_types` $mid order by ".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `tiki_articles`, `tiki_article_types` $mid";
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
