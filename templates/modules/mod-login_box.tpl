@@ -18,8 +18,8 @@
        str = document.loginbox.user.value + 
        MD5(document.loginbox.pass.value) +
        document.loginbox.challenge.value;
-       document.loginbox.pass.value = MD5(str);
-       
+       document.loginbox.response.value = MD5(str);
+       document.loginbox.pass.value='';
        /*
        document.login.password.value = "";
        document.logintrue.username.value = document.login.username.value;
@@ -34,6 +34,7 @@
     {/literal}
      <input type="hidden" name="challenge" value="{$challenge}" />
      <input type="hidden" name="zoofoo" value="" />
+     <input type="hidden" name="response" value="" />
      {/if}
       <table border="0">
       <tr>
