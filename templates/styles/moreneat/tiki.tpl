@@ -55,7 +55,7 @@
       {/if}
       <td id="centercolumn"><div id="tiki-center">
 	  {if $pagetop_msg ne ''}
-      <span class="pagetop_msg">{$pagetop_msg}</div>
+      <span class="pagetop_msg">{$pagetop_msg}</span>
 	  {/if}
 			<!-- content -->
       {include file=$mid}
