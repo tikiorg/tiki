@@ -1999,9 +1999,6 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_blogs",'n');
   }
 
-
-
-
   if(isset($_REQUEST["feature_hotwords"]) && $_REQUEST["feature_hotwords"]=="on") {
     $tikilib->set_preference("feature_hotwords",'y'); 
     $smarty->assign("feature_hotwords",'y');
@@ -2018,7 +2015,6 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_hotwords_nw",'n');
   }
   
-  
   if(isset($_REQUEST["feature_userPreferences"]) && $_REQUEST["feature_userPreferences"]=="on") {
     $tikilib->set_preference("feature_userPreferences",'y'); 
     $smarty->assign("feature_userPreferences",'y');
@@ -2027,7 +2023,6 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_userPreferences",'n');
   }
 
-
  if(isset($_REQUEST["feature_featuredLinks"]) && $_REQUEST["feature_featuredLinks"]=="on") {
     $tikilib->set_preference("feature_featuredLinks",'y'); 
     $smarty->assign("feature_featuredLinks",'y');
@@ -2035,7 +2030,6 @@ if(isset($_REQUEST["features"])) {
     $tikilib->set_preference("feature_featuredLinks",'n');
     $smarty->assign("feature_featuredLinks",'n');
   }
-
 
   if(isset($_REQUEST["feature_galleries"]) && $_REQUEST["feature_galleries"]=="on") {
     $tikilib->set_preference("feature_galleries",'y'); 
@@ -2051,6 +2045,14 @@ if(isset($_REQUEST["features"])) {
   } else {
     $tikilib->set_preference("feature_calendar",'n');
     $smarty->assign("feature_calendar",'n');
+  }
+
+  if(isset($_REQUEST["feature_editcss"]) && $_REQUEST["feature_editcss"]=="on") {
+    $tikilib->set_preference("feature_editcss",'y'); 
+    $smarty->assign("feature_editcss",'y');
+  } else {
+    $tikilib->set_preference("feature_editcss",'n');
+    $smarty->assign("feature_editcss",'n');
   }
 
   

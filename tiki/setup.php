@@ -38,8 +38,9 @@ class Smarty_Sterling extends Smarty {
     if(isset($style)&&isset($style_base)) {
       if(file_exists("templates/styles/$style_base/$_smarty_include_tpl_file")) {
         $_smarty_include_tpl_file="styles/$style_base/$_smarty_include_tpl_file";
-      } 
-      
+      } else {
+				$_smarty_include_tpl_file=preg_replace("/$style_base/","default",$_smarty_include_tpl_file);
+			}
     }
 
     return parent::_smarty_include($_smarty_include_tpl_file, $smarty_include_vars);
@@ -53,7 +54,9 @@ class Smarty_Sterling extends Smarty {
     if(isset($style)&&isset($style_base)) {
       if(file_exists("templates/styles/$style_base/$_smarty_tpl_file")) {
         $_smarty_tpl_file="styles/$style_base/$_smarty_tpl_file";
-      }
+      } else {
+				$_smarty_tpl_file=preg_replace("/$style_base/","default",$_smarty_tpl_file);
+			}
     }
     
     $_smarty_cache_id = $language.$_smarty_cache_id;

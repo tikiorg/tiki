@@ -23,6 +23,7 @@
 <tr><td class="form">{tr}XMLRPC API{/tr}:</td><td><input type="checkbox" name="feature_xmlrpc" {if $feature_xmlrpc eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Banners{/tr}:</td><td><input type="checkbox" name="feature_banners" {if $feature_banners eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Edit templates{/tr}:</td><td><input type="checkbox" name="feature_edit_templates" {if $feature_edit_templates eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Edit css{/tr}:</td><td><input type="checkbox" name="feature_editcss" {if $feature_editcss eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Dynamic content system{/tr}:</td><td><input type="checkbox" name="feature_dynamic_content" {if $feature_dynamic_content eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}File galleries{/tr}:</td><td><input type="checkbox" name="feature_file_galleries" {if $feature_file_galleries eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Chat{/tr}:</td><td><input type="checkbox" name="feature_chat" {if $feature_chat eq 'y'}checked="checked"{/if}/></td></tr>

@@ -672,8 +672,13 @@ INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_use_
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_exception_instance','workflow','Can declare an instance as exception','registered');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_send_instance','workflow','Can send instances after completion','registered');
 
+# for calendar
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_calendar','calendar','Can browse the calendar','basic');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_calendar','calendar','Can create/admin calendars','admin');
+
+# for csseditor
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_create_css','tiki','Can create new css suffixed with -user','registered');
+INSERT INTO tiki_preferences(name,value) VALUES ('feature_editcss','n');
 
 INSERT INTO tiki_preferences(name,value) VALUES ('wiki_feature_copyrights','n');
 
