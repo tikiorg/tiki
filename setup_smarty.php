@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.11 2004-01-07 14:16:17 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.12 2004-01-15 22:12:32 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,8 +37,8 @@ require_once ( 'lib/smarty/Smarty.class.php');
 class Smarty_TikiWiki extends Smarty {
 	
 	function Smarty_TikiWiki($tikidomain = "") {
-		$this->template_dir = TIKI_TEMPLATES_PATH;
-		$this->compile_dir = TIKI_PATH."/templates_c/$tikidomain";
+		$this->template_dir = 'templates/';
+		$this->compile_dir = "templates_c/$tikidomain";
 		$this->config_dir = "configs/";
 		$this->cache_dir = "cache/$tikidomain";
 		$this->caching = 0;
@@ -53,8 +53,8 @@ class Smarty_TikiWiki extends Smarty {
 		global $style, $style_base;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists(TIKI_STYLES_PATH."/$style_base/".$params['smarty_include_tpl_file'])) {
-				$params['smarty_include_tpl_file'] = TIKI_STYLES_PATH."/$style_base/".$params['smarty_include_tpl_file'];
+			if (file_exists("styles/$style_base/".$params['smarty_include_tpl_file'])) {
+				$params['smarty_include_tpl_file'] = "styles/$style_base/".$params['smarty_include_tpl_file'];
 			}
 		}
 		return parent::_smarty_include($params);
@@ -64,7 +64,7 @@ class Smarty_TikiWiki extends Smarty {
 		global $language, $style, $style_base;
 
 		if (isset($style) && isset($style_base)) {
-			if (file_exists(TIKI_STYLES_PATH."/$style_base/$_smarty_tpl_file")) {
+			if (file_exists("styles/$style_base/$_smarty_tpl_file")) {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
