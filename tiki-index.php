@@ -1,7 +1,6 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
-include_once('lib/structures/structlib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -129,16 +128,52 @@ if($tiki_p_admin_wiki == 'y' || ($info["flag"]!='L' && ( ($tiki_p_edit == 'y' &&
   $info = $tikilib->get_page_info($page);  	
 }
 }
-
+preg_match_all("/-=([^=]+)=-/",$info["data"],$reqs);
 $slides = split("-=[^=]+=-",$info["data"]);
 if(count($slides)>1) {
  $smarty->assign('show_slideshow','y');
+	    if(!isset($_REQUEST["slide"])) {
+	      $_REQUEST["slide"]=0;
+	    }
+	    $smarty->assign('prev_slide',$_REQUEST["slide"]-1);
+	    $smarty->assign('next_slide',$_REQUEST["slide"]+1);
+    
+	    $slide_title = $reqs[1][$_REQUEST["slide"]];
+	    //$slide_data = $tikilib->parse_data($slides[$_REQUEST["slide"]+1]);
+            //todo: temporary work around to add title tag back in.  Remove this
+            //      stuff when the split function is working as needed.
+            $temp_slide_data99 = "-=$slide_title=-".$slides[$_REQUEST["slide"]+1];
+            $slide_data = $tikilib->parse_data($temp_slide_data99);
+
+	    if(isset($reqs[1][$_REQUEST["slide"]-1])) {
+	      $slide_prev_title = $reqs[1][$_REQUEST["slide"]-1];
+	    } else {
+	      $slide_prev_title = '';
+	    }
+    
+	    if(isset($reqs[1][$_REQUEST["slide"]+1])) {
+	      $slide_next_title = $reqs[1][$_REQUEST["slide"]+1];
+	    } else {
+	      $slide_next_title = '';
+	    }
+	    $smarty->assign('slide_prev_title',$slide_prev_title);
+	    $smarty->assign('slide_next_title',$slide_next_title);
+	    
+	    $smarty->assign('slide_title',$slide_title);
+	    //$smarty->assign('slide_data',$slide_data);
+	    $smarty->assign('parsed',$slide_data);
+    
+	    $total_slides = count($slides)-1;
+	    $current_slide = $_REQUEST["slide"]+1;
+	    $smarty->assign('total_slides',$total_slides);
+	    $smarty->assign('current_slide',$current_slide);
+
 } else {
  $smarty->assign('show_slideshow','n');
-}
-
 $pdata = $tikilib->parse_data($info["data"]);
 $smarty->assign_by_ref('parsed',$pdata);
+}
+
 //$smarty->assign_by_ref('lastModif',date("l d of F, Y  [H:i:s]",$info["lastModif"]));
 $smarty->assign_by_ref('lastModif',$info["lastModif"]);
 if(empty($info["user"])) {
@@ -214,17 +249,6 @@ if($feature_wiki_attachments == 'y') {
 }
 
 $smarty->assign('wiki_extras','y');
-
-$smarty->assign('structure','n');
-if($structlib->page_is_in_structure($page)) {
-  $smarty->assign('structure','y');
-  $prev=$structlib->get_prev_page($page);
-  $next=$structlib->get_next_page($page);
-  $struct=$structlib->get_structure($page);
-  $smarty->assign('struct_next',$next);
-  $smarty->assign('struct_prev',$prev);
-  $smarty->assign('struct_struct',$struct);
-}
 
 // Display the Index Template
 $smarty->assign('dblclickedit','y');
