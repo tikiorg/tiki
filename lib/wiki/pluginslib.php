@@ -21,7 +21,7 @@
     * @package TikiWiki
     * @subpackage Plugins
     * @author Claudio Bustos
-    * @version 1.0
+    * @version $Revision: 1.3 $
     */
     class PluginsLib extends TikiLib {
         var $_errors;
@@ -71,14 +71,22 @@
                 } elseif(isset($_REQUEST[$arg])) {
                     $args[$arg] = $_REQUEST[$arg];
                 } else {
+                    // maybe this kind of transformation can be grouped on a external function
+                    if ($default_val==="[pagename]") {
+                        $default_val=$_REQUEST["page"];
+                    }
                     $args[$arg] = $default_val;
                 }
-                if (in_array($arg, $this->expanded_params) and $args[$arg]) {
+                if (in_array($arg, $this->expanded_params)) {
+                    if ($args[$arg]) {
                     $args[$arg] = explode($this->separator, $args[$arg]);
                     foreach($args[$arg] as $id=>$value) {
                         $args[$arg][$id]=trim($value);
                     }
-                }
+                    } else {
+                    $args[$arg]=array();
+                    }
+                } 
             }
             return $args;
         }
@@ -107,7 +115,7 @@
         function getVersion() {
             return tra("No version indicated");
             //return preg_replace("/[Revision: $]/", '',
-            //                    "\$Revision: 1.2 $");
+            //                    "\$Revision: 1.3 $");
         }
         /**
         * Returns the default arguments for the plugin
@@ -127,11 +135,10 @@
             /**
             * UGLY ERROR!.
             */
-            trigger_error("PluginsLib::run: pure virtual function",
-                E_USER_ERROR);
+            return $this->error("PluginsLib::run: pure virtual function. Don't be so lazy!");
         }
         function error ($message) {
-            return "~np~<span class='warn'>Plugin ".$this->getName()." failed : $message</span>~/np~";
+            return "~np~<span class='warn'>Plugin ".$this->getName()." ".tra("failed")." : ".tra($message)."</span>~/np~";
         }
         function getErrorDetail() {
             return $this->_errors;
@@ -149,15 +156,27 @@
         * Create a table with information from pages
         * @param array key ["data"] from one of the functions that retrieve información about pages
         * @param array list of keys to show.
+        * @param array definition of the principal field. By default: 
+        *              array("field"=>"pageName","name"=>"Page")
         * @return string
         */
-        function createTablePages($aData,$aInfo=false) {
+        function createTable($aData,$aInfo=false,$aPrincipalField=false) {
+            // contract
+            if (!$aPrincipalField or !is_array($aPrincipalField)) {
+                $aPrincipalField=array("field"=>"pageName","name"=>"Page");
+            }
+            if (!is_array($aInfo)) {
+                $aInfo=false;
+            }
+            // ~contract
             $sOutput="";
             if ($aInfo) {
+                $iNumCol=count($aInfo)+1;
+                $sStyle=" style='width:".(floor(100/$iNumCol))."%' ";
                 // Header for info
-                $sOutput  .= "<table class='normal'><tr><td class='heading'>".tra("Page")."</td>";
+                $sOutput  .= "<table class='normal'><tr><td class='heading' $sStyle>".tra($aPrincipalField["name"])."</td>";
                 foreach($aInfo as $iInfo => $sHeader) {
-                    $sOutput  .= "<td class='heading'>".tra($sHeader)."</td>";
+                    $sOutput  .= "<td class='heading' $sStyle >".tra($sHeader)."</td>";
                 }
                 $sOutput  .= "</tr>";
             }
@@ -165,9 +184,9 @@
             foreach($aData as $aPage) {
                 $sClass=($iCounter%2)?"odd":"even";
                 if (!$aInfo) {
-                    $sOutput  .= "*((".$aPage["pageName"]."))\n";
+                    $sOutput  .= "*((".$aPage[$aPrincipalField["field"]]."))\n";
                 } else {
-                    $sOutput  .= "<tr><td class='$sClass'>((".$aPage["pageName"]."))</td>";
+                    $sOutput  .= "<tr><td class='$sClass'>((".$aPage[$aPrincipalField["field"]]."))</td>";
                     foreach($aInfo as $sInfo) {
                         if (isset($aPage[$sInfo])) {
                             $sOutput  .= "<td class='$sClass'>".$aPage[$sInfo]."</td>";
@@ -181,6 +200,11 @@
                     $sOutput  .= "</table>";
                 }
         return $sOutput;
+        }
+        function isPage($page) {
+            global $tikilib;
+            $rs=$tikilib->getOne("select `pageName` from `tiki_pages` where `pageName`=?", array($page));
+            return ($rs?true:false);
         }
     }
 ?>
