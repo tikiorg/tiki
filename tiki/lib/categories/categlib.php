@@ -1,8 +1,8 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.37 2004-06-08 18:55:46 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.38 2004-06-08 21:13:30 teedog Exp $
  *
- * \brief Categiries support class
+ * \brief Categories support class
  *
  */
 
@@ -110,7 +110,17 @@ class CategLib extends TikiDB {
 		$res = $result->fetchRow();
 		return $res;
 	}
-
+	
+	function get_category_name($categId) {
+		$query = "select `name` from `tiki_categories` where `categId`=?";
+		$result = $this->query($query,array((int) $categId));
+		if (!$result->numRows()) {
+			return false;
+		}
+		$res = $result->fetchRow();
+		return $res;
+	}
+	
 	function remove_category($categId) {
 		global $cachelib;
 

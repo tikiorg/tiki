@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.14 2004-05-21 09:18:38 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.15 2004-06-08 21:13:30 teedog Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: <a href="tiki-index.php?page={$page}">{$page}</a></h2>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
@@ -36,6 +36,27 @@
 <input type="submit" name="assign" value="{tr}this page{/tr}" />
 <input type="submit" name="assignstructure" value="{tr}this structure{/tr}" />
 </form>
+
+<h3>{tr}Current permissions for categories that this page belongs to{/tr}:</h3>
+<table class="normal">
+<tr><td class="heading">{tr}category{/tr}</td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
+{cycle print=false values="even,odd"}
+{section  name=x loop=$categ_perms}
+	{section name=y loop=$categ_perms[x]}
+<tr>
+  <td class="{cycle advance=false}">{$categ_perms[x][0].catpath}</td>
+  <td class="{cycle advance=false}">{$categ_perms[x][y].groupName}</td>
+  <td class="{cycle advance=false}">{$categ_perms[x][y].permName}</td>
+  <td class="{cycle}">
+    ({tr}remove from this page{/tr})
+    ({tr}remove from this structure{/tr})
+  </td></tr>
+	{/section}
+{sectionelse}
+<tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
+{/section}
+</table>
+
 <h2>{tr}Send email notifications when this page changes to{/tr}:</h2>
 <form action="tiki-pagepermissions.php" method="post">
 <input type="hidden" name="page" value="{$page|escape}" />
