@@ -18,8 +18,9 @@ class QuizLib extends TikiLib {
 		return $res;
 	}
 
-	function list_quiz_question_stats($quizId) {
-		$query = "select distinct(tqs.`questionId`) from `tiki_quiz_stats` tqs,`tiki_quiz_questions` tqq where tqs.`questionId`=tqq.`questionId` and tqs.`quizId` = ? order by `position` desc";
+	function list_quiz_question_stats($quizId, $offset = 0, $maxRecords = -1, $sort_mode = 'position_asc', $find = '') {
+	  // $offset, $maxRecords, $find are ignored
+		$query = "select distinct(tqs.`questionId`) from `tiki_quiz_stats` tqs,`tiki_quiz_questions` tqq where tqs.`questionId`=tqq.`questionId` and tqs.`quizId` = ? order by ".$this->convert_sortmode($sort_mode);
 
 		$result = $this->query($query,array((int)$quizId));
 		$ret = array();
