@@ -223,7 +223,7 @@ $lang=Array(
 // "created from structure" => "created from structure", // ## CLOSE: Create new structure=>Nieuwe structuur aanmaken // ## MODULES ./lib/structures/structlib.php
 // "Click to edit dynamic variable" => "Click to edit dynamic variable", // ## MODULES ./lib/tikilib.php
 // "Update variables" => "Update variables", // ## MODULES ./lib/tikilib.php
-// "Unknown language" => "Unknown language", // ## MODULES ./lib/tikilib.php
+ "Unknown language" => "Onbekende taal", // ## MODULES ./lib/tikilib.php
 // "Sea Surfing (CSRF) detected. Operation blocked." => "Sea Surfing (CSRF) detected. Operation blocked.", // ## MODULES ./lib/tikiticketlib.php
 // "Modification of item \$itemId in tracker \$trackerName" => "Modification of item \$itemId in tracker \$trackerName", // ## MODULES ./lib/trackers/trackerlib.php
 // "New item \$itemId in tracker \$trackerName" => "New item \$itemId in tracker \$trackerName", // ## MODULES ./lib/trackers/trackerlib.php
