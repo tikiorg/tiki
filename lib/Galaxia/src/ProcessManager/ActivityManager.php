@@ -40,10 +40,12 @@ class ActivityManager extends BaseManager {
    Gets the roles asociated to an activity
   */
   function get_activity_roles($activityId) {
-    $query = "select activityId,roles.roleId,roles.name from ".GALAXIA_TABLE_PREFIX."activity_roles gar, ".GALAXIA_TABLE_PREFIX."roles roles where roles.roleId = gar.roleId and activityId=$activityId";
-        $result = $this->query($query);
+    $query = "select activityId,roles.roleId,roles.name
+              from ".GALAXIA_TABLE_PREFIX."activity_roles gar, ".GALAXIA_TABLE_PREFIX."roles roles
+              where roles.roleId = gar.roleId and activityId=?";
+    $result = $this->query($query,array($activityId));
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
+    while($res = $result->fetchRow()) {  
       $ret[] = $res;
     }
     return $ret;
@@ -54,7 +56,8 @@ class ActivityManager extends BaseManager {
   */
   function remove_activity_role($activityId, $roleId)
   {
-    $query = "delete from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=$activityId and roleId=$roleId";
+    $query = "delete from ".GALAXIA_TABLE_PREFIX."activity_roles
+              where activityId=$activityId and roleId=$roleId";
     $this->query($query);
   }
   
@@ -94,7 +97,7 @@ class ActivityManager extends BaseManager {
     if($a1['type'] == 'end') return false;
      
     
-    $query = "delete from `".GALAXIA_TABLE_PREFIX."transitions where `actFromId`=? and `actToId`=?";
+    $query = "delete from `".GALAXIA_TABLE_PREFIX."transitions` where `actFromId`=? and `actToId`=?";
     $this->query($query,array($actFromId, $actToId));
     $query = "insert into `".GALAXIA_TABLE_PREFIX."transitions`(`pId`,`actFromId`,`actToId`) values(?,?,?)";
     $this->query($query,array($pId, $actFromId, $actToId));
@@ -134,7 +137,7 @@ class ActivityManager extends BaseManager {
     }
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
+    while($res = $result->fetchRow()) {  
       $ret[] = $res;
     }
     return $ret;
@@ -157,7 +160,7 @@ class ActivityManager extends BaseManager {
        $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
+    while($res = $result->fetchRow()) {  
       $ret[] = $res;
     }
     return $ret;
@@ -269,7 +272,7 @@ class ActivityManager extends BaseManager {
           $query = "select actFromId from ".GALAXIA_TABLE_PREFIX."transitions where actToId=".$node['id'];
           $result = $this->query($query);
           $ret = Array();
-          while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
+          while($res = $result->fetchRow()) {  
             $aux['id'] = $res['actFromId'];
             $aux['visited']=false;
             if(!$this->_node_in_list($aux,$nodes)) {
@@ -290,7 +293,7 @@ class ActivityManager extends BaseManager {
     //Rule 5: standalone activities can't have transitions
     $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId = $pId";
     $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
+    while($res = $result->fetchRow()) {  
       $aid = $res['activityId'];
       if($res['isInteractive'] == 'y') {
           $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=".$res['activityId']);
@@ -317,7 +320,7 @@ class ActivityManager extends BaseManager {
     //Rule4: roles should be mapped
     $query = "select * from ".GALAXIA_TABLE_PREFIX."roles where pId = $pId";
     $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {      
+    while($res = $result->fetchRow()) {      
         $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."user_roles where roleId=".$res['roleId']);
         if(!$cant) {
           $errors[] = tra('Role').': '.$res['name'].tra(' is not mapped');
@@ -362,7 +365,7 @@ class ActivityManager extends BaseManager {
     
     $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$pid";
     $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {          
+    while($res = $result->fetchRow()) {          
       $actname = $res['normalized_name'];
       $source = GALAXIA_PROCESSES."/$procname/code/activities/$actname".'.php';
       if (!file_exists($source)) {
@@ -415,7 +418,7 @@ class ActivityManager extends BaseManager {
   {
       $query = "select * from ".GALAXIA_TABLE_PREFIX."activities where pId=$pId and activityId=$activityId";
     $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    $res = $result->fetchRow();
     return $res;
   }
   
@@ -426,21 +429,23 @@ class ActivityManager extends BaseManager {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-    $findesc = $this->qstr('%'.$find.'%');
-      $mid=" where pId=$pId and ((name like $findesc) or (description like $findesc))";
+      $findesc = '%'.$find.'%';
+      $mid=" where pId=? and ((name like ?) or (description like ?))";
+      $bindvars = array($pId,$findesc,$findesc);
     } else {
-      $mid=" where pId=$pId ";
+      $mid=" where pId=? ";
+      $bindvars = array($pId);
     }
     if($where) {
       $mid.= " and ($where) ";
     }
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities $mid order by $sort_mode limit $offset,$maxRecords";
+    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities $mid order by $sort_mode";
     $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."activities $mid";
-    $result = $this->query($query);
-    $cant = $this->getOne($query_cant);
+    $result = $this->query($query,$bindvars,$maxRecords,$offset);
+    $cant = $this->getOne($query_cant,$bindvars);
     $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res['roles'] = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=".$res['activityId']);
+    while($res = $result->fetchRow()) {
+      $res['roles'] = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=?",array($res['activityId']));
       $ret[] = $res;
     }
     $retval = Array();
@@ -463,7 +468,7 @@ class ActivityManager extends BaseManager {
     $this->query($query);
     $query = "select actFromId,actToId from ".GALAXIA_TABLE_PREFIX."transitions where actFromId=$activityId or actToId=$activityId";
     $result = $this->query($query);
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
+    while($res = $result->fetchRow()) {  
       $this->remove_transition($res['actFromId'], $res['actToId']);
     }
     $query = "delete from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=$activityId";
@@ -813,7 +818,7 @@ class ActivityManager extends BaseManager {
         $query = "select actFromId from ".GALAXIA_TABLE_PREFIX."transitions where actToId=".$node;
         $result = $this->query($query);
         $ret = Array();
-        while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {  
+        while($res = $result->fetchRow()) {  
           $newnodes[] = $res['actFromId'];
         }
       }
