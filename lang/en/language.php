@@ -2924,5 +2924,6 @@ $lang=Array(
 "Renders a graph" => "Renders a graph",
 "There is an error in the plugin data" => "There is an error in the plugin data",
 "Change your email" => "Change your email",
+"Whats related" => "Whats related",
 "##end###" => "###end###");
 ?>
