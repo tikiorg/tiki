@@ -129,11 +129,16 @@ class MultilingualLib extends TikiLib {
 
 	/* @brief: update lang in all tiki pages
 	 */
-	function updatePageLang($type, $objId, $lang) {
+	function updatePageLang($type, $objId, $lang, $optimisation = false) {
 		if ($this->getTranslation($type, $objId, $lang))
 			return 'alreadyTrad';
-		$query = "update `tiki_pages` set `lang`=? where `page_id`=?";
-		$this->query($query,array($lang, $objId));
+		if (!$optimisation) {
+			if ($type == 'wiki page')
+				$query = "update `tiki_pages` set `lang`=? where `page_id`=?";
+			else
+				$query = "update `tiki_articles` set `lang`=? where `page_id`=?";
+			$this->query($query,array($lang, $objId));
+		}
 		$query = "update `tiki_translated_objects` set `lang`=? where `objId`=?";
 		$this->query($query,array($lang, $objId));
 		return null;
@@ -144,10 +149,10 @@ class MultilingualLib extends TikiLib {
 	function detachTranslation($type, $objId) {
 		$query = "delete from `tiki_translated_objects` where `type`= ? and `objId`=?";
 		$this->query($query,array($type, $objId));
-//@@TODO: delete the set if only one remaining object 
+//@@TODO: delete the set if only one remaining object - not necesary but will clean the table
 	}
 	
-	/* @brief : test si lang exists in a tab of langs
+	/* @brief : test if lang exists in a list of langs
 	 */
 	function exist($tab, $lang) {
 		foreach ($tab as $t) {
