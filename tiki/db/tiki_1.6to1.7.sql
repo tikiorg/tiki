@@ -24,8 +24,8 @@ update tiki_file_galleries set max_desc = '1024';
 ### table to track posts read from forums ###
 drop table if exists tiki_forum_reads;
 create table tiki_forum_reads(
-	user varchar(200),
-	threadId integer(14),
+	user varchar(200) not null,
+	threadId integer(14) not null,
 	forumId integer(14),
 	timestamp integer(14),
 	primary key(user,threadId)
