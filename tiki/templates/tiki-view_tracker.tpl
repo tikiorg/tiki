@@ -134,7 +134,7 @@ class="prevnext">{tr}All{/tr}</a>
 {/if}
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'x' and $fields[ix].type ne 'h'}
-<td class="heading"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if
+<td class="heading auto"><a class="tableheading" href="tiki-view_tracker.php?status={$status}&amp;trackerId={$trackerId}&amp;offset={$offset}{section name=x loop=$fields}{if
 $fields[x].value}&amp;{$fields[x].name|escape:"url"}={$fields[x].value|escape:"url"}{/if}{/section}&amp;sort_mode=f_{if $sort_mode eq
 $fields[ix].name|escape:'url'|cat:'_desc'}{$fields[ix].name|escape:"url"}_asc{else}{$fields[ix].name|escape:"url"}_desc{/if}">{$fields[ix].name|default:"&nbsp;"}</a></td>
 {/if}

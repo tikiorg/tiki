@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_more_info.php,v 1.3 2003-12-19 06:12:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_more_info.php,v 1.4 2004-01-26 05:31:19 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,6 +23,7 @@ if (!isset($_REQUEST["attId"])) {
 
 $info = $trklib->get_moreinfo($_REQUEST["attId"]);
 $trackerId = $info['trackerId'];
+unset($info['trackerId']);
 
 if (!$trackerId) {
 	$smarty->assign('msg', tra("That tracker don't use extras."));
