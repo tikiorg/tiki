@@ -5978,7 +5978,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     if($galleryId>0) {
       //$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
       //if( ($user == 'admin') || ($res["user"]==$user) ) {
-      $query = "update tiki_galleries set visible='$visible', maxRows=$maxRows, rowImages=$rowImages, thumbSizeX=$thumbSizeX, thumbSizeY=$thumbSizeY, description='$description', theme='$theme', lastModif=$now, public='$public' where galleryId=$galleryId";
+      $query = "update tiki_galleries set name='$name',visible='$visible', maxRows=$maxRows, rowImages=$rowImages, thumbSizeX=$thumbSizeX, thumbSizeY=$thumbSizeY, description='$description', theme='$theme', lastModif=$now, public='$public' where galleryId=$galleryId";
       $result = $this->query($query);
     } else {
       // Create a new record

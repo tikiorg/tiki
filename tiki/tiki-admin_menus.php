@@ -33,6 +33,11 @@ if(isset($_REQUEST["remove"])) {
 if(isset($_REQUEST["save"])) {
   
   $tikilib->replace_menu($_REQUEST["menuId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["type"]);
+  $smarty->assign('name','');
+  $smarty->assign('description','');
+  $smarty->assign('type','');
+  $_REQUEST["menuId"] = 0;
+  $smarty->assign('menuId',0);  
 }
 
 if(!isset($_REQUEST["sort_mode"])) {

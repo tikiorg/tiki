@@ -67,6 +67,7 @@ if(isset($_REQUEST["save"])) {
    } else {
      $isTblVisible='n';
    }
+   $_REQUEST["name"]=str_replace(' ','_',$_REQUEST["name"]);
    $trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"],$isMain, $isTblVisible,$_REQUEST["options"]);
    $smarty->assign('fieldId',0);
    $smarty->assign('name','');
