@@ -1,11 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gmsih/tiki-page_bar.tpl,v 1.1 2003-12-13 17:55:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gmsih/tiki-page_bar.tpl,v 1.2 2003-12-22 08:02:38 mose Exp $ *}
 
 <div id="page-bar">
 
 {if $cached_page eq 'y'}<div class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1" class="linkbut">{tr}refresh{/tr}</a></div>{/if}
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox')}
-<div class="button2"><a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}" class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</span>{else}{tr}edit{/tr}{/if}</a></div>
+<div class="button2"><a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}" 
+class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</span>{else}{tr}edit{/tr}{/if}</a></div>
 {/if}
 
 {if $page ne 'SandBox'}
