@@ -135,6 +135,7 @@ if(!page_exists($page)) {
 include_once("tiki-pagesetup.php");
 
 
+
 // Now check permissions to access this page
 if($page != 'SandBox') {
 if($tiki_p_edit != 'y') {
@@ -221,6 +222,7 @@ if($feature_wiki_footnotes == 'y') {
 }
 
 
+
 if(isset($_REQUEST["templateId"])&&$_REQUEST["templateId"]>0) {
   $template_data = $tikilib->get_template($_REQUEST["templateId"]);
   $_REQUEST["edit"]=$template_data["content"];
@@ -266,6 +268,7 @@ if(isset($_REQUEST["allowhtml"])) {
 }
 $smarty->assign_by_ref('pagedata',$edit_data);
 $parsed = $tikilib->parse_data($edit_data);
+
 
 /* SPELLCHECKING INITIAL ATTEMPT */
 //This nice function does all the job!
