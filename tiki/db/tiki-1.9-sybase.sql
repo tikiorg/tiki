@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.26 2004-06-18 21:29:58 teedog Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.27 2004-06-18 22:33:37 teedog Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -4083,6 +4083,20 @@ go
 
 CREATE  INDEX "tiki_searchsyllable_lastUsed" ON "tiki_searchsyllable"("lastUsed")
 go
+
+-- searchword caching table for search syllables
+-- DROP TABLE "tiki_searchwords"
+go
+
+
+CREATE TABLE "tiki_searchwords"(
+  "syllable" varchar(80) default '' NOT NULL,
+  "searchword" varchar(80) default '' NOT NULL,
+  PRIMARY KEY ("syllable","searchword")
+) 
+go
+
+
 
 --
 -- Table structure for table `tiki_search_stats`
