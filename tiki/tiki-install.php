@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.59 2004-06-06 08:42:45 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.60 2004-06-12 07:02:49 damosoft Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.59 2004-06-06 08:42:45 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.60 2004-06-12 07:02:49 damosoft Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -30,7 +30,10 @@ function process_sql_file($file,$db_tiki) {
 	}
 
 	$command = '';
-	$fp = fopen("db/$file", "r");
+	if(!$fp = fopen("db/$file", "r")) {
+		print('Fatal: Cannot open db/'.$file);
+		exit(1);
+	}
 
 	while(!feof($fp)) {
 		$command.= fread($fp,4096);
