@@ -9,6 +9,6 @@ if (isset($_REQUEST['events']) && is_array($_REQUEST['events'])) {
 $smarty->assign('events',$scorelib->get_all_events());
 
 $smarty->assign('mid','tiki-admin_score.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>
