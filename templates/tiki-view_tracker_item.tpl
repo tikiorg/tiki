@@ -134,6 +134,8 @@
 {elseif $ins_fields[ix].type eq 'm'}
 {if $ins_fields[ix].options_array[0] eq '1'}
 {mailto address=$ins_fields[ix].value encode="javascript"}
+{elseif $ins_fields[ix].options_array[0] eq '2'}
+<a href="mailto:{$ins_fields[ix].value}">{$ins_fields[ix].value}</a>
 {else}
 {$ins_fields[ix].value|default:"&nbsp;"}
 {/if}

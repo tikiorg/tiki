@@ -176,6 +176,8 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 <td class="auto">
 {if $items[user].field_values[ix].options_array[0] eq '1'}
 {mailto address=$items[user].field_values[ix].value encode="javascript"}
+{elseif $items[user].field_values[ix].options_array[0] eq '2'}
+<a href="mailto:{$items[user].field_values[ix].value}">{$items[user].field_values[ix].value|default:"&nbsp;"}</a>
 {else}
 {$items[user].field_values[ix].value|default:"&nbsp;"}
 {/if}
