@@ -78,7 +78,7 @@ class TikiLib {
   function get_online_users()
   {
     $query = "select user from tiki_sessions where user<>''";
-    $result = $this->db->query($query);
+    $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $res['user_information'] = $this->get_user_preference($res['user'],'user_information','public');
