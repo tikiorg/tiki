@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.77 2003-11-22 05:46:52 gmuslera Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.78 2003-11-22 05:54:22 gmuslera Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -813,5 +813,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','DSN','tiki-admin_dsn.php',1220,'','tiki_p_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','External wikis','tiki-admin_external_wikis.php',1225,'','tiki_p_admin','');
 
+# added on 2003-11-21 by gmuslera
 # Updating the tiki-admin_html_pages title from Mail-in to HTML pages
 UPDATE tiki_menu_option SET name = 'HTML pages' WHERE position='1185';
