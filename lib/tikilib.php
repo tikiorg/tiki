@@ -1570,29 +1570,27 @@ function get_menu($menuId) {
 
 /*shared*/
 function list_menu_options($menuId, $offset, $maxRecords, $sort_mode, $find) {
-    $bindvars = array((int)$menuId);
-    if ($find) {
-	$mid = " where `menuId`=? and (`name` like ? or `url` like ?)";
-	$bindvars[] = '%'. $find . '%';
-	$bindvars[] = '%'. $find . '%';
-    } else {
-	$mid = " where `menuId`=? ";
-    }
-
-    $query = "select * from `tiki_menu_options` $mid order by ".$this->convert_sortmode($sort_mode);
-    $query_cant = "select count(*) from `tiki_menu_options` $mid";
-    $result = $this->query($query,$bindvars,$maxRecords,$offset);
-    $cant = $this->getOne($query_cant,$bindvars);
-    $ret = array();
-
-    while ($res = $result->fetchRow()) {
-	$ret[] = $res;
-    }
-
-    $retval = array();
-    $retval["data"] = $ret;
-    $retval["cant"] = $cant;
-    return $retval;
+	$ret = array();
+	$retval = array();
+	$bindvars = array((int)$menuId);
+	if ($find) {
+		$mid = " where `menuId`=? and (`name` like ? or `url` like ?)";
+		$bindvars[] = '%'. $find . '%';
+		$bindvars[] = '%'. $find . '%';
+	} else {
+		$mid = " where `menuId`=? ";
+	}
+	$query = "select * from `tiki_menu_options` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_menu_options` $mid";
+	$result = $this->query($query,$bindvars,$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,$bindvars);
+	while ($res = $result->fetchRow()) {
+		$res['menulabel'] = 'userm'.$menuId.preg_replace('/[^a-zA-Z0-9]/','',$res['name']);
+		$ret[] = $res;
+	}
+	$retval["data"] = $ret;
+	$retval["cant"] = $cant;
+	return $retval;
 }
 // Menubuilder ends ////
 
