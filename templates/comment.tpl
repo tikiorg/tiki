@@ -34,7 +34,6 @@
 			  			&nbsp;&nbsp;<a title="{tr}edit{/tr}" class="link" href="{$comments_complete_father}comments_threadId={$comment.threadId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a>
 			  		{/if}
 		{if $tiki_p_post_comments == 'y'}
-					<br /><br />
   		<a class="linkbut" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comment.threadId}&amp;comments_style={$comments_style}&amp;post_reply=1#form">{tr}reply{/tr}</a>
 		{/if}
 			  	</td>
@@ -47,6 +46,7 @@
   	<td class="even">
 {if $comments_style != 'commentsStyle_headers'}
   		{$comment.parsed}
+			<br />
 {/if}
   		{if $comment.replies_info.numReplies > 0 && $comment.replies_info.numReplies != ''}
 			{foreach from=$comment.replies_info.replies item="comment"}
@@ -55,6 +55,7 @@
 					</ul>
 			{/foreach}
   		{/if}
+			</div>
   	</td>
   </tr>
 {if $comments_style != 'commentStyle_plain' }
@@ -67,3 +68,4 @@
 			{/foreach}
   		{/if}
 {/if}
+<br />

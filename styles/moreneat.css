@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.50 2004-06-13 02:06:57 teedog Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.51 2004-06-19 14:54:12 mose Exp $
 
 MoreNeat theme
 */
@@ -434,7 +434,7 @@ td.listartuseimageodd,td.listartactionsodd,td.listartsizeodd,td.forumstableodd,t
 td.topicrepliesodd,td.topicreadsodd,td.topicscoreodd,td.topiclastpostodd,td.topicauthorodd,td.jukeboxlistnameodd, 
 td.jukeboxdescriptionodd, td.jukeboxcreatedodd, td.jukeboxlastmodifodd, td.jukeboxlistuserodd, td.jukeboxlisttracksodd, 
 td.jukeboxlistvisitsodd
-{border: 1px solid #8CACBB;  border-collapse: collapse;  font-size: 10px; color : black; background-color: #F7F9FA; vertical-align: top; text-align: left;}
+{border: 1px solid #8CACBB;  border-collapse: collapse;  font-size: 10px; color : black; background-color: #F2F4F5; vertical-align: top; text-align: left;}
 
 /* Even rows in several listings */
 TD.even,td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven,td.gallistlastModifeven, td.gallistusereven ,
@@ -450,7 +450,7 @@ td.listartuseimageeven,td.listartactionseven,td.listartsizeeven,td.forumstableev
 td.topicreplieseven,td.topicreadseven,td.topicscoreeven,td.topiclastposteven,td.topicauthoreven, td.jukeboxlistnameeven, 
 td.jukeboxdescriptioneven, td.jukeboxcreatedeven, td.jukeboxlastmodifeven, td.jukeboxlistusereven, td.jukeboxlisttrackseven, 
 td.jukeboxlistvisitseven
-{border: 1px solid #8CACBB; font-size: 10px; background-color: transparent; color : black; vertical-align: top; text-align: left;}
+{border: 1px solid #8CACBB; font-size: 10px; background-color: #fbfdfe; color : black; vertical-align: top; text-align: left;}
 
 TD.third {border: 1px solid #8CACBB;  font-size: 10px; color : Black; background-color: #8CACBB; vertical-align: top; text-align: left;}
 
