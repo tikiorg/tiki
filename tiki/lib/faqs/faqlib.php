@@ -20,7 +20,7 @@ class FaqLib extends TikiLib {
 		$now = date("U");
 		$query = "insert into `tiki_suggested_faq_questions`(`faqId`,`question`,`answer`,`user`,`created`)
     values(?,?,?,?,?)";
-		$result = $this->query($queryi,array($faqId,$question,$answer,$user,$now));
+		$result = $this->query($query,array($faqId,$question,$answer,$user,$now));
 	}
 
 	function list_suggested_questions($offset, $maxRecords, $sort_mode, $find) {
