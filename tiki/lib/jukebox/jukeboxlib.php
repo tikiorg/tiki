@@ -68,7 +68,24 @@ class JukeboxLib extends TikiLib {
 		return $retval;
 	}
 
+/* Remove genre */
+/* this will set the album and tracks who have this genreId to NULL as well */
+	function remove_genre($id) {
 
+		// Search for tracks
+		$query = "update `tiki_jukebox_tracks` set `genreId` = ? where `genreId` = ?";
+		$result = $this->query($query, array((int) $id, null));
+
+		// Search for albums
+                $query = "update `tiki_jukebox_albums` set `genreId` = ? where `genreId` = ?";
+                $result = $this->query($query, array((int) $id, null));
+
+		// Now zap the genre
+                $query = "delete from `tiki_jukebox_genres` where `genreId`=?";
+                $result = $this->query($query,array((int) $id));
+
+                return true;
+        }
 
 }
 
