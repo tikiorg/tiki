@@ -1,8 +1,19 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_quiz_import.tpl,v 1.1 2004-04-28 00:49:25 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_quiz_import.tpl,v 1.2 2004-04-28 16:43:41 ggeller Exp $ *}
 {* tiki-hw_quiz_import.tpl *}
-{* George G. Geller *}
+
+{* Copyright (c) 2004 George G. Geller *}
+{* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
+{* Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details. *}
 
 <!-- templates/sort_roster.tpl start -->
+
+{if $preview}
+  {* <h2>{tr}Preview{/tr}: {$homeworkTitle}</h2>
+  <div  class="wikitext">{$parsed}</div> *}
+
+  Preview goes here!
+
+{/if}
 
 
 <br /> <br />
@@ -28,6 +39,7 @@ another incorrect answer
   </table>
   <div align="center">
     <input type="submit" class="wikiaction" name="import" value="Import" />
+    <input type="submit" class="wikiaction" name="preview" value="Preview" />
   </div>
 </form>
 <br />
