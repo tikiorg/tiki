@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.64 2004-03-15 22:50:24 melmut Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.65 2004-03-15 23:12:37 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -191,7 +191,7 @@ if (!isset($comments_object_var) || (!$comments_object_var) || !isset($_REQUEST[
     die ("the comments_object_var variable is not set or cannot be found as a REQUEST variable");
 }
 
-$comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
+$comments_objectId = $comments_prefix_var.':'.$_REQUEST["$comments_object_var"];
 // Process a post form here 
 $smarty->assign('warning', 'n');
 
