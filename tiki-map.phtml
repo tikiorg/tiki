@@ -3,19 +3,19 @@ require_once('tiki-setup.php');
 
 if (!function_exists('ms_newMapObj')) {
 	$smarty->assign('msg',tra("You must first setup MapServer"));
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if(@$feature_maps != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 
 if($tiki_p_map_view != 'y') {
   $smarty->assign('msg',tra("You do not have permissions to view the maps"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 
@@ -61,7 +61,7 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars)
   }
   
   $smarty->assign('msg',$msg);
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 
@@ -330,5 +330,5 @@ $smarty->assign_by_ref('zoom_values',$zoom_values);
 $smarty->assign_by_ref('zoom_display',$zoom_display);
 
 $smarty->assign('mid','map/tiki-map.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 ?>

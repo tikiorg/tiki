@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.11 2003-10-19 13:44:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-read.php,v 1.12 2003-11-17 15:44:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,21 +12,21 @@ include_once ('lib/messu/messulib.php');
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($feature_messages != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_messages");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_messages != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -46,7 +46,7 @@ if (!isset($_REQUEST['msgId']) || $_REQUEST['msgId'] == 0) {
 	$smarty->assign('legend', tra("No more messages"));
 
 	$smarty->assign('mid', 'messu-read.tpl');
-	$smarty->display("styles/$style_base/tiki.tpl");
+	$smarty->display("tiki.tpl");
 	die;
 }
 
@@ -74,6 +74,6 @@ $section = 'user_messages';
 include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 $smarty->assign('mid', 'messu-read.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -12,14 +12,14 @@ include_once ('lib/ban/banlib.php');
 if ($feature_banning != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_banning");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_admin_banning != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -167,6 +167,6 @@ $sections = array(
 $smarty->assign('sections', $sections);
 
 $smarty->assign('mid', 'tiki-admin_banning.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.8 2003-11-13 23:42:08 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_edit.php,v 1.9 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,13 +11,13 @@ require_once ('tiki-setup.php');
 
 if(@$feature_maps != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 
 if($tiki_p_map_view != 'y') {
   $smarty->assign('msg',tra("You do not have permissions to view the maps"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 
@@ -44,7 +44,7 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 	if (!preg_match('/\.map$/i', $newmapfile)) {
 		$smarty->assign('msg', tra("mapfile name incorrect"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
   ini_set("display_errors","0");
@@ -53,7 +53,7 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 	if ($fp) {
 		$smarty->assign('msg', tra("This mapfile already exists"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		fclose ($fp);
 		die;
 	}
@@ -63,7 +63,7 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 	if (!$fp) {
 		$smarty->assign('msg', tra("You dont have permission to write to the mapfile"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -75,7 +75,7 @@ if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
   if(! unlink($map_path.$_REQUEST["mapfile"]))
   {
 		$smarty->assign('msg', tra("You dont have permission to delete the mapfile"));
-		$smarty->display("styles/$style_base/error.tpl");  
+		$smarty->display("error.tpl");  
 		die;
   }
   $mode='listing';
@@ -84,7 +84,7 @@ if ((isset($_REQUEST["delete"])) && ($tiki_p_map_delete == 'y')) {
 if (isset($_REQUEST["save"])) {
 if ($tiki_p_map_edit != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -94,7 +94,7 @@ if ($tiki_p_map_edit != 'y') {
 	if (!$fp) {
 		$smarty->assign('msg', tra("You dont have permission to write to the mapfile"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -131,7 +131,7 @@ if ($tiki_p_map_edit != 'y') {
 if ((isset($_REQUEST["mapfile"])) && ($mode=='editing')) {
 if ($tiki_p_map_edit != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
  $mapfile = $map_path .$_REQUEST["mapfile"];
@@ -140,7 +140,7 @@ if ($tiki_p_map_edit != 'y') {
   ini_set("display_errors","1");
 	if (!$fp) {
 		$smarty->assign('msg', tra("You dont have permission to read the mapfile"));
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -195,6 +195,6 @@ $smarty->assign('url_browse', httpPrefix(). $foo1);
 
 // Get templates from the templates/modules directori
 $smarty->assign('mid', 'map/tiki-map_edit.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

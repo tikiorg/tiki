@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.19 2003-11-12 01:00:57 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator_rules.php,v 1.20 2003-11-17 15:44:28 mose Exp $
  *
  * Admin interface for rules management
  *
@@ -13,13 +13,13 @@ require_once('lib/integrator/integrator.php');
 if ($feature_integrator != 'y')
 {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_integrator");
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 if (($tiki_p_admin_integrator != 'y') && ($tiki_p_admin != 'y'))
 {
     $smarty->assign('msg', tra("You dont have permission to use this feature"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 
@@ -47,7 +47,7 @@ $enabled     =  isset ($_REQUEST["enabled"])     ? ($_REQUEST["enabled"]   == 'o
 if (!isset($_REQUEST["repID"]) || $repID <= 0)
 {
     $smarty->assign('msg', tra("No repository"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 
@@ -69,7 +69,7 @@ if (isset($_REQUEST["save"]))
     else
     {
         $smarty->assign('msg', tra("Search is mandatory field"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;
     }
 }
@@ -112,7 +112,7 @@ if (isset($_REQUEST["preview"]))
          && !file_exists($f))
         {
             $smarty->assign('msg', tra("File not found ").$f);
-            $smarty->display("styles/$style_base/error.tpl");
+            $smarty->display("error.tpl");
             die;
         }
         // Get file content to string
@@ -163,7 +163,7 @@ if (isset($_REQUEST["action"]))
         break;
     default:
         $smarty->assign('msg', tra("Requested action in not supported on repository"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die; break;
     }
 }
@@ -190,6 +190,6 @@ $smarty->assign_by_ref('reps', $reps);
 
 // Display the template
 $smarty->assign('mid','tiki-admin_integrator_rules.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

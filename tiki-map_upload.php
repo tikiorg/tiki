@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.5 2003-11-13 05:55:46 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.6 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,13 +11,13 @@ require_once ('tiki-setup.php');
 
 if(@$feature_maps != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 
 if ($tiki_p_map_edit !='y') {
   $smarty->assign('msg',tra("You do not have permissions to view the layers"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;      
 }
 
@@ -44,7 +44,7 @@ if (isset($_REQUEST["upload"])) {
     if(isset($_FILES["userfile$i"]) && is_uploaded_file($_FILES["userfile$i"]['tmp_name'])) {
       if(!move_uploaded_file($_FILES["userfile$i"]['tmp_name'], $directory_path."/".$_FILES["userfile$i"]['name'])) {
         $smarty->assign('msg',tra("Could not upload the file"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;
       }
     }
@@ -58,13 +58,13 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["file"])) {
         !preg_match("/^\./", $_REQUEST["file"])) {
       if ($tiki_p_map_delete !='y') {
         $smarty->assign('msg',tra("You do not have permissions to delete a file"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }
       unlink($directory_path."/".$_REQUEST["file"]);
     } else {
         $smarty->assign('msg',tra("File not found"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;    
     }
   }
@@ -76,17 +76,17 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
     if(!preg_match("/\./", $_REQUEST["directory"])){
       if ($tiki_p_map_create !='y') {
         $smarty->assign('msg',tra("You do not have permissions to create a directory"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }
       if(!@mkdir($directory_path."/".$_REQUEST["directory"])) {
         $smarty->assign('msg',tra("The Directory is not empty"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }
     } else {
       $smarty->assign('msg',tra("Invalid directory name"));
-      $smarty->display("styles/$style_base/error.tpl");
+      $smarty->display("error.tpl");
       die;    
     }
   }
@@ -95,12 +95,12 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["directory"])) {
        !preg_match("/\.\//", $_REQUEST["directory"])){
       if ($tiki_p_map_delete !='y') {
         $smarty->assign('msg',tra("You do not have permissions to delete a directory"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }
       if(!@rmdir($directory_path."/".$_REQUEST["directory"])) {
         $smarty->assign('msg',tra("The Directory is not empty"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }
     }
@@ -113,24 +113,24 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
   if ($_REQUEST["action"]=="createindex") {
       if ($tiki_p_map_create !='y') {
         $smarty->assign('msg',tra("You do not have permissions to create an index file"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }
       
       if (preg_match("/\.\//", $_REQUEST["indexfile"]) || 
           !preg_match("/\.shp/", $_REQUEST["indexfile"])) {
         $smarty->assign('msg',tra("Invalid file name"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }
       if (preg_match("/\.\//", $_REQUEST["filestoindex"])) {
         $smarty->assign('msg',tra("Invalid files to index"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }
 				 if (!isset($gdaltindex)) {
         $smarty->assign('msg',tra("I do not know where is gdaltindex. Set correctly the Map feature"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }				
       
@@ -139,7 +139,7 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
       exec($command,$output,$return);
       if ($return<>0) {
         $smarty->assign('msg',tra("I could not create the index file"));
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;      
       }
   }
@@ -185,6 +185,6 @@ $smarty->assign('dirs', $dirs);
 
 // Get templates from the templates/modules directori
 $smarty->assign('mid', 'map/tiki-map_upload.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -9,7 +9,7 @@ include_once('lib/categories/categlib.php');
 
 if($feature_wiki != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;  
 }
 
@@ -87,7 +87,7 @@ $info = $tikilib->get_page_info($page);
 // If the page doesn't exist then display an error
 if(empty($info)) {
   $smarty->assign('msg',tra("Page cannot be found"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 } else {
   // Update the pagename with the canonical name.  This makes it
@@ -102,7 +102,7 @@ if(empty($info)) {
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view this page"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;  
 }
 
@@ -319,7 +319,7 @@ if($feature_wiki_attachments == 'y') {
         $fw = fopen($w_use_dir.$fhash,"wb");
         if(!$fw) {
           $smarty->assign('msg',tra('Cannot write to this file:').$fhash);
-          $smarty->display("styles/$style_base/error.tpl");
+          $smarty->display("error.tpl");
           die;  
         }
       }
@@ -447,7 +447,7 @@ $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
 $smarty->assign('categorypath',$feature_categorypath);
 $smarty->assign('categoryobjects',$feature_categoryobjects);
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 // xdebug_dump_function_profile(XDEBUG_PROFILER_CPU);
 

@@ -4,7 +4,7 @@ include_once('lib/articles/artlib.php');
 
 if($feature_articles != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_articles");
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;  
 }
 
@@ -13,20 +13,20 @@ if($feature_articles != 'y') {
 
   if($tiki_p_admin_cms != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
   }
 
 if (!isset($_REQUEST["topicid"])) {
   $smarty->assign('msg', tra("No topic id specified"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 
 $topic_info = $artlib->get_topic($_REQUEST["topicid"]);
 if ($topic_info == DB_ERROR) {
   $smarty->assign('msg', tra("Invalid topic id specified"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;
 }
 $smarty->assign_by_ref('topic_info', $topic_info);
@@ -51,7 +51,7 @@ if(isset($_REQUEST["edittopic"])) {
 }
 
 $smarty->assign('mid','tiki-edit_topic.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 
 ?>

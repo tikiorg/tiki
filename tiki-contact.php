@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.6 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-contact.php,v 1.7 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,14 +14,14 @@ include_once ('lib/messu/messulib.php');
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($feature_contact != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_contact");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -43,7 +43,7 @@ if ($user and $feature_messages == 'y' and $tiki_p_messages == 'y') {
 		if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
 			$smarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
 
-			$smarty->display("styles/$style_base/tiki.tpl");
+			$smarty->display("tiki.tpl");
 			die;
 		}
 
@@ -57,6 +57,6 @@ if ($user and $feature_messages == 'y' and $tiki_p_messages == 'y') {
 
 $smarty->assign('priority', 3);
 
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

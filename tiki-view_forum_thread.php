@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.41 2003-11-16 00:17:16 xenfasa Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum_thread.php,v 1.42 2003-11-17 15:44:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,21 +12,21 @@ require_once ('tiki-setup.php');
 if ($feature_forums != 'y') {
     $smarty->assign('msg', tra("This feature is disabled").": feature_forums");
 
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 
 if (!isset($_REQUEST['forumId'])) {
     $smarty->assign('msg', tra("No forum indicated"));
 
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 
 if (!isset($_REQUEST['comments_parentId'])) {
     $smarty->assign('msg', tra("No thread indicated"));
 
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 
@@ -126,7 +126,7 @@ if ($tiki_p_admin_forum == 'y') {
 if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
     $smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 
@@ -234,7 +234,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 		    if ($forum_info['forum_use_password'] == 'a' && $_REQUEST['password'] != $forum_info['forum_password']) {
 			$smarty->assign('msg', tra("Wrong password. Cannot post comment"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		    }
 
@@ -275,7 +275,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 				    if (!$fw) {
 					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 
-					$smarty->display("styles/$style_base/error.tpl");
+					$smarty->display("error.tpl");
 					die;
 				    }
 				}
@@ -305,7 +305,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 				if ($size > $forum_info['att_max_size']) {
 				    $smarty->assign('msg', tra('Cannot upload this file maximum upload size exceeded'));
 
-				    $smarty->display("styles/$style_base/error.tpl");
+				    $smarty->display("error.tpl");
 				    die;
 				}
 
@@ -370,7 +370,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 					if (!$fw) {
 					    $smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 
-					    $smarty->display("styles/$style_base/error.tpl");
+					    $smarty->display("error.tpl");
 					    die;
 					}
 				    }
@@ -400,7 +400,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 				    if ($size > $forum_info['att_max_size']) {
 					$smarty->assign('msg', tra('Cannot upload this file maximum upload size exceeded'));
 
-					$smarty->display("styles/$style_base/error.tpl");
+					$smarty->display("error.tpl");
 					die;
 				    }
 
@@ -500,7 +500,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 					    if (!$fw) {
 						$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 
-						$smarty->display("styles/$style_base/error.tpl");
+						$smarty->display("error.tpl");
 						die;
 					    }
 					}
@@ -530,7 +530,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 					if ($size > $forum_info['att_max_size']) {
 					    $smarty->assign('msg', tra('Cannot upload this file maximum upload size exceeded'));
 
-					    $smarty->display("styles/$style_base/error.tpl");
+					    $smarty->display("error.tpl");
 					    die;
 					}
 
@@ -544,7 +544,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 			    } else { // user can't edit this post
 				$smarty->assign('msg', tra('You are not permitted to edit someone else\'s post!'));
 
-				$smarty->display("styles/$style_base/error.tpl");
+				$smarty->display("error.tpl");
 				die;
 			    }
 			}
@@ -552,7 +552,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post == 'y') {
 		} else {
 		    $smarty->assign('msg', tra("Please wait 2 minutes between posts"));
 
-		    $smarty->display("styles/$style_base/error.tpl");
+		    $smarty->display("error.tpl");
 		    die;
 		}
 	    }
@@ -634,7 +634,7 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
     } else { // user can't edit this post
 	$smarty->assign('msg', tra('Only an admin can remove a thread.'));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
     }
 }
@@ -785,6 +785,6 @@ if ($tiki_p_admin_forum == 'y') {
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_forum_thread.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

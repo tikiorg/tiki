@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.18 2003-11-16 00:17:16 xenfasa Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.19 2003-11-17 15:44:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -143,7 +143,7 @@ if ($tiki_p_post_comments == 'y') {
 	} else {
 	    $smarty->assign('msg', tra("Missing title or body when trying to post a comment"));
 
-	    $smarty->display("styles/$style_base/error.tpl");
+	    $smarty->display("error.tpl");
 	    die;
 	}
     }

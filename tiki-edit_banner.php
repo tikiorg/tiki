@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.11 2003-11-03 20:24:26 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_banner.php,v 1.12 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,14 +20,14 @@ if (!isset($bannerlib)) {
 if ($feature_banners != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_banners");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_admin_banners != 'y') {
 	$smarty->assign('msg', tra("You dont have permissions to edit banners"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -37,7 +37,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	if (!$info) {
 		$smarty->assign('msg', tra("Banner not found"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -45,7 +45,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	if (($user != $info["client"]) && ($tiki_p_admin_banners != 'y')) {
 		$smarty->assign('msg', tra("You dont have permission to edit this banner"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -300,6 +300,6 @@ $smarty->assign_by_ref('clients', $clients["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_banner.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

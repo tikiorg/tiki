@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.12 2003-11-03 20:24:26 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pick_avatar.php,v 1.13 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -16,14 +16,14 @@ include_once ('lib/imagegals/imagegallib.php');
 if ($feature_userPreferences != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -41,7 +41,7 @@ if (isset($_REQUEST["view_user"])) {
 		} else {
 			$smarty->assign('msg', tra("You dont have permission to view other users data"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 	} else {
@@ -126,6 +126,6 @@ $avatar = $tikilib->get_user_avatar($user);
 $smarty->assign('avatar', $avatar);
 
 $smarty->assign('mid', 'tiki-pick_avatar.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

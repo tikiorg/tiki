@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.10 2003-11-12 01:00:57 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-list_integrator_repositories.php,v 1.11 2003-11-17 15:44:29 mose Exp $
  *
  * Admin interface for repositories management
  *
@@ -13,13 +13,13 @@ require_once('lib/integrator/integrator.php');
 if ($feature_integrator != 'y')
 {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_integrator");
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 if (($tiki_p_view_integrator != 'y') && ($tiki_p_admin_integrator != 'y') && ($tiki_p_admin != 'y'))
 {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
 }
 
@@ -32,6 +32,6 @@ $smarty->assign_by_ref('repositories', $repositories);
 
 // Display the template
 $smarty->assign('mid','tiki-list_integrator_repositories.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

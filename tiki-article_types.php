@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.6 2003-11-16 00:17:16 xenfasa Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.7 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ include_once ('lib/articles/artlib.php');
 if ($feature_articles != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -20,7 +20,7 @@ if ($feature_articles != 'y') {
 if ($tiki_p_admin_cms != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -117,6 +117,6 @@ $types = $artlib->list_types();
 $smarty->assign('types', $types);
 
 $smarty->assign('mid', 'tiki-article_types.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

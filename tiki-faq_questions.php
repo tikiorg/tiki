@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.9 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-faq_questions.php,v 1.10 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,21 +14,21 @@ include_once ('lib/faqs/faqlib.php');
 if ($feature_faqs != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_faqs");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_admin_faqs != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["faqId"])) {
 	$smarty->assign('msg', tra("No menu indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -141,6 +141,6 @@ $smarty->assign_by_ref('suggested', $suggested["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-faq_questions.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

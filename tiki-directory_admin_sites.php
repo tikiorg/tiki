@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.7 2003-10-12 20:49:09 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-directory_admin_sites.php,v 1.8 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once('lib/directory/dirlib.php');
 if ($feature_directory != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_directory");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -48,7 +48,7 @@ if (isset($parent_info) && $user) {
 if ($tiki_p_admin_directory_sites != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -88,14 +88,14 @@ if (isset($_REQUEST["save"])) {
 	if (empty($_REQUEST["name"])) {
 		$smarty->assign('msg', tra("Mus enter a name to add a site"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
 	if (empty($_REQUEST["url"])) {
 		$smarty->assign('msg', tra("Must enter a url to add a site"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -109,7 +109,7 @@ if (isset($_REQUEST["save"])) {
 	if (!isset($_REQUEST["siteCats"]) || count($_REQUEST["siteCats"]) == 0) {
 		$smarty->assign('msg', tra("Must select a category"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -203,6 +203,6 @@ $smarty->assign_by_ref('countries', $countries);
 
 // Display the template
 $smarty->assign('mid', 'tiki-directory_admin_sites.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

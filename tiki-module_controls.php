@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.9 2003-11-15 23:56:01 zaufi Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-module_controls.php,v 1.10 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -21,19 +21,19 @@ $check_req = (isset($_REQUEST["mc_unassign"])
 
 if ($tiki_p_configure_modules != 'y' && $check_req) {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($user_assigned_modules != 'y' && $check_req) {
 	$smarty->assign('msg', tra("This feature is disabled").": user_assigned_modules");
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!$user && $check_req) {
 	$smarty->assign('msg', tra("You must log in to use this feature"));
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 $url = $_SERVER["REQUEST_URI"];

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.8 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_layout.php,v 1.9 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,14 +12,14 @@ require_once ('tiki-setup.php');
 if ($layout_section != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": layout_section");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -124,6 +124,6 @@ $smarty->assign('sections', $sections_smt);
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_layout.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.2 2003-08-07 04:33:56 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/copyrights.php,v 1.3 2003-11-17 15:44:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,14 +15,14 @@ require_once ('tiki-setup.php');
 if ($wiki_feature_copyrights != 'y') {
 	$smarty->assign('msg', tra("The copyright management feature is not enabled."));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!((isset($tiki_p_edit_copyrights)) && ($tiki_p_edit_copyrights == 'y'))) {
 	$smarty->assign('msg', tra("You do not have permission to use this feature."));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -49,7 +49,7 @@ if (isset($_REQUEST['addcopyright'])) {
 	} else {
 		$smarty->assign('msg', tra("You must supply all the information, including title and year."));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -66,7 +66,7 @@ if (isset($_REQUEST['editcopyright'])) {
 	} else {
 		$smarty->assign('msg', tra("You must supply all the information, including title and year."));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -86,6 +86,6 @@ $smarty->assign('copyrights', $copyrights["data"]);
 
 // Display the template
 $smarty->assign('mid', 'copyrights.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.12 2003-10-17 20:56:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_information.php,v 1.13 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,7 +20,7 @@ if (isset($_REQUEST['view_user'])) {
 	} else {
 		$smarty->assign('msg', tra("You are not logged in and no user indicated"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -30,7 +30,7 @@ $smarty->assign('userwatch', $userwatch);
 if (!$userlib->user_exists($userwatch)) {
 	$smarty->assign('msg', tra("Unknown user"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -40,7 +40,7 @@ if ($tiki_p_admin != 'y') {
 	if ($user_information == 'private') {
 		$smarty->assign('msg', tra("The user has choosen to make his information private"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 }
@@ -60,7 +60,7 @@ if ($user) {
 		if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
 			$smarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
 
-			$smarty->display("styles/$style_base/tiki.tpl");
+			$smarty->display("tiki.tpl");
 			die;
 		}
 
@@ -109,6 +109,6 @@ if ($email_isPublic != 'n') {
 $smarty->assign_by_ref('userinfo', $userinfo);
 $smarty->assign_by_ref('email_isPublic',$email_isPublic);
 
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

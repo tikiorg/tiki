@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_read.php,v 1.9 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsreader_read.php,v 1.10 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,21 +12,21 @@ include_once ('lib/newsreader/newslib.php');
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($feature_newsreader != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsreader");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_newsreader != 'y') {
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -34,7 +34,7 @@ if ((!isset($_REQUEST['id'])) || (!isset($_REQUEST['server'])) || (!isset($_REQU
 	|| (!isset($_REQUEST['username'])) || (!isset($_REQUEST['password'])) || (!isset($_REQUEST['group']))) {
 	$smarty->assign('msg', tra("Missing information to read news (server,port,username,password,group) required"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -54,7 +54,7 @@ if (isset($_REQUEST['serverId'])) {
 if (!$newslib->news_set_server($_REQUEST['server'], $_REQUEST['port'], $_REQUEST['username'], $_REQUEST['password'])) {
 	$smarty->assign('msg', tra("Cannot connect to"). ':' . $info['server']);
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -71,7 +71,7 @@ $info = $newslib->news_select_group($_REQUEST['group']);
 if (!$info) {
 	$smarty->assign('msg', tra("Cannot get messages"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -108,6 +108,6 @@ if ($user && $feature_notepad == 'y' && isset($_REQUEST['savenotepad'])) {
 }
 
 $smarty->assign('mid', 'tiki-newsreader_read.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -22,19 +22,19 @@ if (!isset($_REQUEST['novalidation'])) {
 if(isset($_REQUEST["register"])) {
   if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["pass2"])) {
     $smarty->assign('msg',tra("The passwords don't match"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
   }
   if($userlib->user_exists($_REQUEST["name"])) {
     $smarty->assign('msg',tra("User already exists"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
   }
   
   if($rnd_num_reg == 'y') {
   	if($novalidation != 'yes' and(!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['regcode'])) {
     $smarty->assign('msg',tra("Wrong registration code"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;	
   	}
   }
@@ -42,26 +42,26 @@ if(isset($_REQUEST["register"])) {
   // VALIDATE NAME HERE
   if(strtolower($_REQUEST["name"])=='admin') {
     $smarty->assign('msg',tra("Invalid username"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
   }
   
   if(strlen($_REQUEST["name"])>37) {
     $smarty->assign('msg',tra("Username is too long"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
   }
   
   if(strstr($_REQUEST["name"],' ')) {
     $smarty->assign('msg',tra("Username cannot contain whitespace"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die; 	
   }
   
   //Validate password here
   if(strlen($_REQUEST["pass"])<$min_pass_length) {
     $smarty->assign('msg',tra("Password should be at least").' '.$min_pass_length.' '.tra("characters long"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die; 	
   }
   
@@ -69,14 +69,14 @@ if(isset($_REQUEST["register"])) {
   if($pass_chr_num == 'y') {
     if(!preg_match_all("/[0-9]+/",$_REQUEST["pass"],$foo) || !preg_match_all("/[A-Za-z]+/",$_REQUEST["pass"],$foo)) {
       $smarty->assign('msg',tra("Password must contain both letters and numbers"));
-      $smarty->display("styles/$style_base/error.tpl");
+      $smarty->display("error.tpl");
       die; 	
     }
   }
   
   if(!preg_match_all("/[A-Z0-9a-z\_\-]+/",$_REQUEST["name"],$matches)) {
     $smarty->assign('msg',tra("Invalid username"));
-    $smarty->display("styles/$style_base/error.tpl");
+    $smarty->display("error.tpl");
     die;
   }
   
@@ -85,7 +85,7 @@ if(isset($_REQUEST["register"])) {
     if(($_REQUEST["passcode"]!=$tikilib->get_preference("registerPasscode",md5($tikilib->genPass()))))
     {
       $smarty->assign('msg',tra("Wrong passcode you need to know the passcode to register in this site"));
-      $smarty->display("styles/$style_base/error.tpl");
+      $smarty->display("error.tpl");
       die;
     }
   }
@@ -104,7 +104,7 @@ if(isset($_REQUEST["register"])) {
       	} else {
 //			$smarty->assign('msg',"$ret[1]");
 	        $smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
-	        $smarty->display("styles/$style_base/error.tpl");
+	        $smarty->display("error.tpl");
 	        $email_valid = 'no';
 	        die;
       	}
@@ -146,5 +146,5 @@ if(isset($_REQUEST["register"])) {
 }
 
 $smarty->assign('mid','tiki-register.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 ?>

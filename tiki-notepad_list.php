@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.12 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-notepad_list.php,v 1.13 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,21 +13,21 @@ include_once ('lib/userfiles/userfileslib.php');
 if ($feature_notepad != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_notepad");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!$user) {
 	$smarty->assign('msg', tra("Must be logged to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_notepad != 'y') {
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -46,7 +46,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 	if (strlen($data) > 1000000) {
 		$smarty->assign('msg', tra("File is too big"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -159,6 +159,6 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 include_once ('tiki-mytiki_shared.php');
 
 $smarty->assign('mid', 'tiki-notepad_list.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

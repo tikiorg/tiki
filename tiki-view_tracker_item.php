@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.10 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.11 2003-11-17 15:44:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,14 +15,14 @@ include_once ('lib/notifications/notificationlib.php');
 if ($feature_trackers != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["itemId"])) {
 	$smarty->assign('msg', tra("No item indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -33,7 +33,7 @@ $smarty->assign('item_info', $item_info);
 if (!isset($_REQUEST["trackerId"])) {
 	$smarty->assign('msg', tra("No tracker indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -66,7 +66,7 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 if ($tiki_p_view_trackers != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -303,7 +303,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 				if (!$fw) {
 					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 
-					$smarty->display("styles/$style_base/error.tpl");
+					$smarty->display("error.tpl");
 					die;
 				}
 			}
@@ -342,6 +342,6 @@ include_once ('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker_item.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.8 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-newsletters.php,v 1.9 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -15,7 +15,7 @@ include_once ('lib/webmail/htmlMimeMail.php');
 if ($feature_newsletters != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -44,7 +44,7 @@ if (isset($_REQUEST["unsubscribe"])) {
 if (!$user && $tiki_p_subscribe_newsletters != 'y' && !isset($_REQUEST["confirm_subscription"])) {
 	$smarty->assign('msg', tra("You must be logged in to subscribe to newsletters"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -181,6 +181,6 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-newsletters.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

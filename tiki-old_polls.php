@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-old_polls.php,v 1.8 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-old_polls.php,v 1.9 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,14 +18,14 @@ if (!isset($polllib)) {
 if ($feature_polls != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_polls");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 /*
 if($feature_listPages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;  
 }
 */
@@ -34,7 +34,7 @@ if($feature_listPages != 'y') {
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot view pages"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;  
 }
 */
@@ -95,6 +95,6 @@ $smarty->assign_by_ref('listpages', $listpages["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-old_polls.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

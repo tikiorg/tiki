@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.11 2003-11-14 09:02:45 chris_holman Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_structure.php,v 1.12 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,14 +14,14 @@ include_once ('lib/structures/structlib.php');
 if ($tiki_p_edit_structures != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["structure_id"])) {
 	$smarty->assign('msg', tra("No structure indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -34,7 +34,7 @@ $page_info = $structlib->s_get_page_info($_REQUEST["page_ref_id"]);
 if (!isset($structure_info) or !isset($page_info) ) {
 	$smarty->assign('msg', tra("Invalid structure_id or page_ref_id"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -110,6 +110,6 @@ $smarty->assign('subtree', $subtree);
 
 // Display the template
 $smarty->assign('mid', 'tiki-edit_structure.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

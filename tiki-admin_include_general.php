@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.15 2003-11-13 08:52:16 markusvk Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.16 2003-11-17 15:44:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -103,7 +103,7 @@ elseif (isset($_REQUEST["newadminpass"])) {
     if ($_REQUEST["adminpass"] <> $_REQUEST["again"]) {
         $smarty->assign("msg", tra("The passwords don't match"));
 
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;
     }
 
@@ -114,7 +114,7 @@ elseif (isset($_REQUEST["newadminpass"])) {
         $text .= " " . $min_pass_length . " ";
         $text .= tra("characters long");
         $smarty->assign("msg", $text);
-        $smarty->display("styles/$style_base/error.tpl");
+        $smarty->display("error.tpl");
         die;
     }
 

@@ -13,7 +13,7 @@ require_once ('tiki-setup.php');
 if ($feature_forums != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -21,7 +21,7 @@ if ($feature_forums != 'y') {
 if (!isset($_REQUEST["forumId"])) {
 	$smarty->assign('msg', tra("No forum indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -72,7 +72,7 @@ if ($user) {
 if ($tiki_p_admin_forum != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -175,6 +175,6 @@ $smarty->assign_by_ref('topics', $topics);
 
 // Display the template
 $smarty->assign('mid', 'tiki-forums_reported.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

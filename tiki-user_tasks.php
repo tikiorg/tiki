@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.12 2003-10-08 03:53:09 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_tasks.php,v 1.13 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,21 +12,21 @@ include_once ('lib/tasks/tasklib.php');
 if ($feature_tasks != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_tasks");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!$user) {
 	$smarty->assign('msg', tra("Must be logged to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_tasks != 'y') {
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -197,6 +197,6 @@ for ($i = 0; $i <= 100; $i += 10) {
 $smarty->assign_by_ref('percs', $percs);
 
 $smarty->assign('mid', 'tiki-user_tasks.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

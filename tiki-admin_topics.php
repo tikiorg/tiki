@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.9 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_topics.php,v 1.10 2003-11-17 15:44:28 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,7 @@ include_once ('lib/articles/artlib.php');
 if ($feature_articles != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -20,7 +20,7 @@ if ($feature_articles != 'y') {
 if ($tiki_p_admin_cms != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -79,6 +79,6 @@ for ($i = 0; $i < count($topics); $i++) {
 $smarty->assign('topics', $topics);
 
 $smarty->assign('mid', 'tiki-admin_topics.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

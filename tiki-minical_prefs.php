@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_prefs.php,v 1.9 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical_prefs.php,v 1.10 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,20 +12,20 @@ include_once('lib/minical/minicallib.php');
 if ($feature_minical != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_minical");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!$user) {
 	$smarty->assign('msg', tra("Must be logged to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 //if($tiki_p_minical != 'y') {
 //  $smarty->assign('msg',tra("Permission denied to use this feature"));
-//  $smarty->display("styles/$style_base/error.tpl");
+//  $smarty->display("error.tpl");
 //  die;  
 //}
 if (isset($_REQUEST['save'])) {
@@ -138,6 +138,6 @@ $smarty->assign('cols', 4);
 include_once('tiki-mytiki_shared.php');
 
 $smarty->assign('mid', 'tiki-minical_prefs.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

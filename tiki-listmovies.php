@@ -24,5 +24,5 @@ $smarty->assign_by_ref('movies',$movies);
 
 // Display the template
 $smarty->assign('mid','tiki-listmovies.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 ?>

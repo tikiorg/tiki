@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.17 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.18 2003-11-17 15:44:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,7 +18,7 @@ $smarty->assign('forumId', $_REQUEST["forumId"]);
 if ($feature_forums != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_forums");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -49,7 +49,7 @@ if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
 if ($tiki_p_admin_forum != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -426,6 +426,6 @@ $smarty->assign_by_ref('sections', $sections);
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_forums.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

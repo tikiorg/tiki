@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pdf.php,v 1.6 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pdf.php,v 1.7 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,7 +50,7 @@ if (isset($_REQUEST["action"])) {
 if (!$tikilib->page_exists($page)) {
 	$smarty->assign('msg', tra("Page cannot be found"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -58,7 +58,7 @@ if (!$tikilib->page_exists($page)) {
 if ($tiki_p_view != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -101,7 +101,7 @@ $pdf->ezStream();
 /*
 $smarty->assign('mid','tiki-show_page.tpl');
 $smarty->assign('show_page_bar','y');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 */
 
 ?>

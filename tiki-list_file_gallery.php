@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.14 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_file_gallery.php,v 1.15 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,21 +14,21 @@ include_once ('lib/filegals/filegallib.php');
 if ($feature_file_galleries != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($_REQUEST["galleryId"] == 0) {
 	$smarty->assign('msg', tra("Unexistant gallery"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["galleryId"])) {
 	$smarty->assign('msg', tra("No gallery indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -96,7 +96,7 @@ if ($tiki_p_admin_file_galleries == 'y') {
 if ($tiki_p_view_file_gallery != 'y') {
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -112,7 +112,7 @@ if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_admin_file_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot remove files from this gallery"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -147,7 +147,7 @@ if (isset($_REQUEST['edit'])) {
 			// If you can't upload files then you can't edit a file you can't have a file
 			$smarty->assign('msg', tra("Permission denied you can't upload files so you can't edit them"));
 
-			$smarty->display("styles/$style_base/error.tpl");
+			$smarty->display("error.tpl");
 			die;
 		}
 
@@ -158,7 +158,7 @@ if (isset($_REQUEST['edit'])) {
 			if (!$user || $info["user"] != $user) {
 				$smarty->assign('msg', tra("Permission denied you cannot edit this file"));
 
-				$smarty->display("styles/$style_base/error.tpl");
+				$smarty->display("error.tpl");
 				die;
 			}
 		}
@@ -275,6 +275,6 @@ $smarty->assign('all_galleries', $all_galleries['data']);
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_file_gallery.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

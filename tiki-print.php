@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.12 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-print.php,v 1.13 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,7 +14,7 @@ include_once ('lib/wiki/wikilib.php');
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -50,7 +50,7 @@ if (isset($_REQUEST["action"])) {
 if (!$tikilib->page_exists($page)) {
 	$smarty->assign('msg', tra("Page cannot be found"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -58,7 +58,7 @@ if (!$tikilib->page_exists($page)) {
 if ($tiki_p_view != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot view this page"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -117,6 +117,6 @@ $smarty->assign('creator', $creator);
 $smarty->assign('mid', 'tiki-show_page.tpl');
 $smarty->assign('show_page_bar', 'n');
 $smarty->assign('print_page', 'y');
-$smarty->display("styles/$style_base/tiki-print.tpl");
+$smarty->display("tiki-print.tpl");
 
 ?>

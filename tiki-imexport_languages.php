@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.10 2003-10-14 10:41:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-imexport_languages.php,v 1.11 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,14 +12,14 @@ require_once ('tiki-setup.php');
 if ($lang_use_db != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": lang_use_db");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_edit_languages != 'y') {
 	$smarty->assign('msg', tra("Permission denied to use this feature"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -88,6 +88,6 @@ if (isset($_REQUEST["export"])) {
 }
 
 $smarty->assign('mid', 'tiki-imexport_languages.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.10 2003-10-08 03:53:08 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_gallery.php,v 1.11 2003-11-17 15:44:29 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -14,21 +14,21 @@ include_once ("lib/imagegals/imagegallib.php");
 if ($feature_galleries != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if ($_REQUEST["galleryId"] == 0 && $tiki_p_admin_galleries != 'y') {
 	$smarty->assign('msg', tra("Permission denied you cannot access this gallery"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["galleryId"])) {
 	$smarty->assign('msg', tra("No gallery indicated"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
@@ -70,14 +70,14 @@ if ($tiki_p_admin_galleries == 'y') {
 if ($tiki_p_view_image_gallery != 'y') {
 	$smarty->assign('msg', tra("Permission denied you can not view this section"));
 
-	$smarty->display("styles/$style_base/error.tpl");
+	$smarty->display("error.tpl");
 	die;
 }
 
 /*
 if($tiki_p_upload_images != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot upload images"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;  
 }
 */
@@ -89,7 +89,7 @@ if ($_REQUEST["galleryId"] != 0) {
 /*
 if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
   $smarty->assign('msg',tra("Permission denied you cannot browse this gallery"));
-  $smarty->display("styles/$style_base/error.tpl");
+  $smarty->display("error.tpl");
   die;  
 }
 */
@@ -113,7 +113,7 @@ if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot remove images from this gallery"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -125,7 +125,7 @@ if (isset($_REQUEST["rebuild"])) {
 	if ($tiki_p_admin_galleries != 'y' && (!$user || $user != $gal_info["user"])) {
 		$smarty->assign('msg', tra("Permission denied you cannot remove images from this gallery"));
 
-		$smarty->display("styles/$style_base/error.tpl");
+		$smarty->display("error.tpl");
 		die;
 	}
 
@@ -225,6 +225,6 @@ if ($feature_theme_control == 'y') {
 
 // Display the template
 $smarty->assign('mid', 'tiki-list_gallery.tpl');
-$smarty->display("styles/$style_base/tiki.tpl");
+$smarty->display("tiki.tpl");
 
 ?>
