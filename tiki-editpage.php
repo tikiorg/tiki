@@ -246,7 +246,7 @@ if(isset($_REQUEST["edit"])) {
   }
 }
 
-if($wiki_feature_copyrights == 'y') {
+if(isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y') {
  if(isset($_REQUEST['copyrightTitle'])) {
   $smarty->assign('copyrightTitle',$_REQUEST["copyrightTitle"]); 
  }
