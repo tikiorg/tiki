@@ -36,7 +36,7 @@
 
 {else}
 {if !$new_page}{tr}You can view a diff back to the previous version by following this link:{/tr}
-{$mail_machine}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&diff2={$mail_last_version}
+{$mail_machine}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&compare&oldver={$mail_last_version}
 
 {/if}
 {tr}The new page content follows below.{/tr}
