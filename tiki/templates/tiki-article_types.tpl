@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.6 2003-10-29 20:49:20 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.7 2003-11-11 18:58:20 dheltzel Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -30,6 +30,7 @@
 <td class="heading">{tr}Show expire date{/tr}</td>
 <td class="heading">{tr}Show reads{/tr}</td>
 <td class="heading">{tr}Show size{/tr}</td>
+<td class="heading">{tr}Creator can edit{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
 {cycle print=false values="even,odd"}
@@ -48,8 +49,9 @@
 <td class="{cycle advance=false}">{if $types[user].show_expdate eq 'y'}y{/if}</td>
 <td class="{cycle advance=false}">{if $types[user].show_reads eq 'y'}y{/if}</td>
 <td class="{cycle advance=false}">{if $types[user].show_size eq 'y'}y{/if}</td>
+<td class="{cycle advance=false}">{if $types[user].creator_edit eq 'y'}y{/if}</td>
 <td class="{cycle}">
-<a class="link" href="tiki-article_types.php?remove={$types[user].type}">{tr}Remove{/tr}</a>
+<a class="link" href="tiki-article_types.php?remove={$types[user].type}"><img src='img/icons2/delete.gif' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' border='0' /></a>
 </td>
 </tr>
 {/section}
@@ -71,6 +73,7 @@
 <tr><td class="formcolor">{tr}Show expire date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_expdate" {if $show_expdate eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show reads{/tr}</td><td class="formcolor"><input type="checkbox" name="show_reads" {if $show_reads eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show size{/tr}</td><td class="formcolor"><input type="checkbox" name="show_size" {if $show_size eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Creator can edit{/tr}</td><td class="formcolor"><input type="checkbox" name="creator_edit" {if $creator_edit eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="addtype" value="{tr}save{/tr}" /></td></tr>
 </table>
 </form>

@@ -297,7 +297,7 @@ class ArtLib extends TikiLib {
 	}
 
 // Article Type functions
-	function add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size) {
+	function add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit) {
 
 		if ($use_ratings == 'on') {$use_ratings = 'y';} else {$use_ratings = 'n';}
 		if ($show_pre_publ == 'on') {$show_pre_publ = 'y';} else {$show_pre_publ = 'n';}
@@ -311,6 +311,7 @@ class ArtLib extends TikiLib {
 		if ($show_expdate == 'on') {$show_expdate = 'y';} else {$show_expdate = 'n';}
 		if ($show_reads == 'on') {$show_reads = 'y';} else {$show_reads = 'n';}
 		if ($show_size == 'on') {$show_size = 'y';} else {$show_size = 'n';}
+		if ($creator_edit == 'on') {$creator_edit = 'y';} else {$creator_edit = 'n';}
 
 		$query = "select count(*) from `tiki_article_types` where `type`=?";
 		$rowcnt = $this->getOne($query,array($type));
@@ -321,9 +322,9 @@ class ArtLib extends TikiLib {
 			$result = $this->query($query,array($type));
 		}
 
-		$query = "insert into `tiki_article_types`(`type`,`use_ratings`,`show_pre_publ`,`show_post_expire`,`heading_only`,`allow_comments`,`show_image`,`show_avatar`,`show_author`,`show_pubdate`,`show_expdate`,`show_reads`,`show_size`)
+		$query = "insert into `tiki_article_types`(`type`,`use_ratings`,`show_pre_publ`,`show_post_expire`,`heading_only`,`allow_comments`,`show_image`,`show_avatar`,`show_author`,`show_pubdate`,`show_expdate`,`show_reads`,`show_size`,`creator_edit`)
                      values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$result = $this->query($query,array($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size));
+		$result = $this->query($query,array($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit));
 
 		return true;
 	}
