@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.168 2004-03-10 13:49:13 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.169 2004-03-12 01:29:14 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2737,10 +2737,10 @@ CREATE TABLE tiki_shoutbox (
 #
 
 DROP TABLE IF EXISTS tiki_shoutbox_words;
-CREATE TABLE `tiki_shoutbox_words` (
+CREATE TABLE tiki_shoutbox_words (
   word VARCHAR( 40 ) NOT NULL ,
   qty INT DEFAULT '0' NOT NULL ,
-  PRIMARY KEY ( `word` )
+  PRIMARY KEY (word)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3088,7 +3088,7 @@ CREATE TABLE tiki_tracker_options (
   trackerId int(12) NOT NULL default '0',
   name varchar(80) NOT NULL default '',
   value text default NULL,
-  PRIMARY KEY (trackerId,name(30))
+  PRIMARY KEY (trackerId)
 ) TYPE=MyISAM ;
 # --------------------------------------------------------
 
@@ -4306,7 +4306,7 @@ CREATE TABLE tiki_jukebox_albums (
   visits int(14),
   public char(1),
   genreId int(14),
-  PRIMARY KEY(albumId)
+  PRIMARY KEY (albumId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_jukebox_tracks;
@@ -4322,7 +4322,7 @@ CREATE TABLE tiki_jukebox_tracks (
   filetype varchar(250),
   genreId int(14),
   plays int(14),
-  PRIMARY KEY(trackId)
+  PRIMARY KEY (trackId)
 ) TYPE=MyISAM AUTO_INCREMENT=1;
 
 #
