@@ -212,7 +212,10 @@ class POP3{
                 //$this->POP3Command("RETR $msg",$this->dummy);
                 $this->POP3Command("TOP $msg 0",$this->dummy);
                 for ($m="";;) {
-                        $line = fgets($this->connection);
+			// Can't get it to work without the second
+			// parameter.  Shouldn't be a problem, though:
+			// that's 10 MB.
+                        $line = fgets($this->connection, 10485760);
                         $list["size"] += strlen($line);
                         if (trim($line) == "." OR feof($this->connection)) {
                                   break;
