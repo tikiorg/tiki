@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagination.php,v 1.3 2004-03-08 00:23:03 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagination.php,v 1.4 2004-03-31 10:04:59 mose Exp $
 
 // !! you need to have $offset var setup with default value 0
 // !! you need to setup $cant var to the total number of items in list
@@ -15,6 +15,7 @@ if (isset($cant) and $cant) {
 	if (!isset($offset)) $offset = 0;
 	if (!isset($maxRecords)) $maxRecords = 10;
 	$smarty->assign_by_ref('offset', $offset);
+	$smarty->assign_by_ref('maxRecords', $maxRecords);
 	$cant_pages = ceil($cant / $maxRecords);
 	$smarty->assign_by_ref('cant_pages', $cant_pages);
 	$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
