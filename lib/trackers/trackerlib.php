@@ -580,6 +580,7 @@ class TrackerLib extends TikiLib {
 			$result = $this->query($query,array((int)$attId));
 			$res = $result->fetchRow();
 			$res["trackerId"] = $resu['trackerId'];
+			$res["longdesc"] = $this->parse_data($res['longdesc']);
 		} else {
 			$res = array(tra("message") => tra("No extra information for that attached file. "));
 			$res['trackerId'] = 0;
