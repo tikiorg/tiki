@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.61 2004-05-29 21:32:22 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.62 2004-05-29 21:53:49 lfagundes Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -491,3 +491,16 @@ UPDATE `tiki_preferences` set `name`='image_galleries_comments_default_order' wh
 
 # Added 29 May 2004 by lfagundes; was in cvs but not in database
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_open_as_structure','n');
+
+# 
+# Changing language code from 'br' to 'pt-br'
+# 
+
+UPDATE tiki_calendar_items SET lang = 'pt-br' WHERE lang='br';
+UPDATE tiki_language SET lang = 'pt-br' WHERE lang='br';
+UPDATE tiki_languages SET lang = 'pt-br' WHERE lang='br';
+UPDATE tiki_menu_languages SET language = 'pt-br' WHERE language='br';
+UPDATE tiki_untranslated SET lang = 'pt-br' WHERE lang='br';
+UPDATE tiki_preferences SET value = 'pt-br' WHERE value='br' and name='language';
+UPDATE tiki_user_preferences SET value = 'pt-br' WHERE value='br' and prefName='language';
+
