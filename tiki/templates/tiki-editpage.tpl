@@ -2,10 +2,18 @@
 {include file="tiki-preview.tpl"}
 {/if}
 <h1>{tr}Edit{/tr}: {$page}</h1>
+{if $page eq 'SandBox'}
+<div class="wikitext">
+{tr}The SandBox is a page where you can practice your editing skills, use the preview feature
+to preview the appeareance of the page, no versions are stored for this page.{/tr}
+</div>
+{/if}
 <form  method="post" action="tiki-editpage.php">
 <textarea class="wikiedit" name="edit" rows="22" cols="80" wrap="virtual">{$pagedata}</textarea>
 <br/>
+{if $page ne 'SandBox'}
 <div align="center">{tr}Comment{/tr}: <input size="50" class="wikitext" name="comment" value="{$commentdata}" /></div>
+{/if}
 {if $tiki_p_use_HTML eq 'y'}
 <div align="center">{tr}Allow HTML{/tr}: <input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></div>
 {/if}

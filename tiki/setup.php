@@ -9,7 +9,9 @@ if(count($_FILES)==0) {
 // Remove automatic quotes added to POST/COOKIE by PHP
 if (get_magic_quotes_gpc ()) {
   foreach($_REQUEST as $k=>$v) {
-    $_REQUEST[$k]=stripslashes($v); 
+    if(!is_array($_REQUEST[$k])) {
+      $_REQUEST[$k]=stripslashes($v); 
+    } 
   }
 }
 }

@@ -22,6 +22,8 @@ $foo2=str_replace("tiki-upload_image","show_image",$foo["path"]);
 $smarty->assign('url_browse',$_SERVER["SERVER_NAME"].$foo1);
 $smarty->assign('url_show',$_SERVER["SERVER_NAME"].$foo2);
 
+
+
 $smarty->assign('show','n');
 // Process an upload here
 if(isset($_REQUEST["upload"])) {
@@ -35,6 +37,7 @@ if(isset($_REQUEST["upload"])) {
     $smarty->display('error.tpl');
     die;  
   }
+  $error_msg='';
   if(!empty($_REQUEST["url"])) {
     // Get the image from a URL
     $fp = fopen($_REQUEST["url"],"r");
@@ -46,6 +49,8 @@ if(isset($_REQUEST["upload"])) {
       $type = "image/".$pinfo["extension"];
       $name = $pinfo["basename"];
       $size = strlen($data);
+    } else {
+      $error_msg=tra("Cannot get image from URL");
     }
   } else {
     // We process here file uploads
@@ -56,18 +61,27 @@ if(isset($_REQUEST["upload"])) {
       $type = $_FILES['userfile1']['type'];
       $size = $_FILES['userfile1']['size'];
       $name = $_FILES['userfile1']['name'];
+    } else {
+      $error_msg=tra("cannot process upload");
     }
   }
+  if(empty($_REQUEST["name"])) {
+    $error_msg=tra("You have to provide a name to the image");
+  }
+  if($error_msg) {
+    $smarty->assign('msg',$error_msg);
+    $smarty->display('error.tpl');
+    die;  
+  }
   if(isset($data)) {
-    if(function_exists("ImageCreateFromString")&&defined(IMG_PNG)&&(!strstr($type,"gif"))) {
+    if(function_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
       $img = imagecreatefromstring($data);
       $size_x = imagesx($img);
       $size_y = imagesy($img);
       // Create thumbnail here 
       // Use the gallery preferences to get the data
       $t = imagecreate($gal_info["thumbSizeX"],$gal_info["thumbSizeY"]);
-      imagecopyresized ( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $size_x, $size_y);
-      
+      $tikilib->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $gal_info["thumbSizeX"],$gal_info["thumbSizeY"], $size_x, $size_y);
       // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
       //$tmpfname = 'temp.jpg';
       $tmpfname = tempnam ("/tmp", "FOO").'.jpg';     
@@ -83,7 +97,7 @@ if(isset($_REQUEST["upload"])) {
       $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $type, $data, $size, $size_x, $size_y, $user,$t_data,$t_type);
     } else {
       $tmpfname='';
-      $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $type, $data, $size, 100, 100, $user,'','');
+      $imageId = $tikilib->insert_image($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],$name, $type, $data, $size, 0, 0, $user,'','');
     }
     $smarty->assign_by_ref('imageId',$imageId);
     // Now that the image was inserted we can display the image here.

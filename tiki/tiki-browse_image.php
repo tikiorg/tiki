@@ -56,6 +56,7 @@ $smarty->assign_by_ref('description',$info["description"]);
 $smarty->assign_by_ref('created',$info["created"]);
 $smarty->assign_by_ref('filename',$info["filename"]);
 $smarty->assign_by_ref('xsize',$info["xsize"]);
+$smarty->assign_by_ref('ysize',$info["ysize"]);
 $smarty->assign_by_ref('hits',$info["hits"]);
 $smarty->assign_by_ref('image_user',$info["user"]);
 
