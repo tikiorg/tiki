@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.94 2004-05-25 00:56:12 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.95 2004-05-28 13:12:44 chris_holman Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -35,25 +35,35 @@ $page = $_REQUEST["page"];
 
 $smarty->assign('structure','n');
 
+//If we requested a structure page
 if (isset($_REQUEST["page_ref_id"])) {
     $page_ref_id = $_REQUEST["page_ref_id"];
-} else {
-    $page_ref_id = $structlib->get_struct_ref_id($page);
+}
+//else check if page is a structure head page 
+else {
+    $page_ref_id = $structlib->get_struct_ref_if_head($page);
 }
 
+//If a structure page isnt going to be displayed
 if (!isset($page_ref_id)) {
-    //Get the structures this page is a member of
+    //Check to see if its a member of any structures
     if (isset($_REQUEST['structure']) && !empty($_REQUEST['structure'])) {
-	$structure=$_REQUEST['structure'];
+      $structure=$_REQUEST['structure'];
     } else {
-	$structure='';
+      $structure='';
     }
     $structs = $structlib->get_page_structures($_REQUEST["page"],$structure);
-    $smarty->assign('showstructs', $structs);
-    if (count($structs)==1) {
-	$page_ref_id=$structs[0]['req_page_ref_id'];
-	$_REQUEST["page_ref_id"]=$page_ref_id;
+    //If page is only member of one structure, display if requested
+    $single_struct = count($structs) == 1; 
+    if ($feature_wiki_open_as_structure == 'y' and $single_struct ) {
+      $page_ref_id=$structs[0]['req_page_ref_id'];
+      $_REQUEST["page_ref_id"]=$page_ref_id;
     }
+    //Otherwise, populate a list of structures
+    else {
+      $smarty->assign('showstructs', $structs);
+    }
+
 }
 
 if(isset($page_ref_id)) {

@@ -28,7 +28,7 @@
 </td>
 {if $print_page ne 'y'}
 
-<td style="text-align:right;">
+<td style="text-align:right;" width =100%>
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
 <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img border="0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
@@ -64,20 +64,25 @@
     <a href="tiki-index.php?page={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this page{/tr}' title='{tr}stop monitoring this page{/tr}' src='img/icons/icon_unwatch.png' /></a>
   {/if}
 {/if}
-
+</td>
+<td  style="text-align:right;">
 {if $feature_backlinks eq 'y' and $backlinks}
-  <select name="page" onchange="go(this)">
-    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}backlinks{/tr}...</option>
+<form action="tiki-index.php" method="post">
+  <select name="page" onchange="page.form.submit()">
+    <option>{tr}backlinks{/tr}...</option>
 	{section name=back loop=$backlinks}
-	  <option value="tiki-index.php?page={$backlinks[back].fromPage|escape:"url"}">{$backlinks[back].fromPage}</option>
+	  <option value="{$backlinks[back].fromPage}">{$backlinks[back].fromPage}</option>
 	{/section}
   </select>
+</form>
 {/if}
-{if count($showstructs) ne 0}
-  <select name="page" onchange="go(this)">
-    <option value="tiki-index.php?page={$page|escape:"url"}">{tr}Structures{/tr}...</option>
-	{section name=struct loop=$showstructs}
-	  <option value="tiki-index.php?page_ref_id={$showstructs[struct].req_page_ref_id}">
+</td><td>
+{if !$page_ref_id and count($showstructs) ne 0}
+<form action="tiki-index.php" method="post">
+  <select name="page_ref_id" onchange="page_ref_id.form.submit()">
+    <option>{tr}Structures{/tr}...</option>
+    {section name=struct loop=$showstructs}
+    <option value="{$showstructs[struct].req_page_ref_id}">
 {if $showstructs[struct].page_alias}
 	{$showstructs[struct].page_alias}
 {else}
@@ -85,6 +90,7 @@
 {/if}</option>
 	{/section}
   </select>
+</form>
 {/if}
 </td>
 </tr>
