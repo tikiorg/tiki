@@ -1,3 +1,4 @@
+{* this would be ideal if these values could be accessed in a table and from a database so that users can set up their own smileys * }
 <table>
      <tr>
           <td><a href="javascript:insertAt('{$area_name}','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="{tr}big grin{/tr}" border="0" /></a></td>
