@@ -2045,6 +2045,14 @@ if(isset($_REQUEST["features"])) {
     $smarty->assign("feature_galleries",'n');
   }
 
+  if(isset($_REQUEST["feature_calendar"]) && $_REQUEST["feature_calendar"]=="on") {
+    $tikilib->set_preference("feature_calendar",'y'); 
+    $smarty->assign("feature_calendar",'y');
+  } else {
+    $tikilib->set_preference("feature_calendar",'n');
+    $smarty->assign("feature_calendar",'n');
+  }
+
   
 }
 

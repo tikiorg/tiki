@@ -63,6 +63,7 @@
 <tr><td class="form">{tr}User watches{/tr}:</td><td><input type="checkbox" name="feature_user_watches" {if $feature_user_watches eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Live support system{/tr}:</td><td><input type="checkbox" name="feature_live_support" {if $feature_live_support eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Banning system{/tr}:</td><td><input type="checkbox" name="feature_banning" {if $feature_banning eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Calendar{/tr}:</td><td><input type="checkbox" name="feature_calendar" {if $feature_calendar eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>

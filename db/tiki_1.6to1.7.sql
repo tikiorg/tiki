@@ -607,3 +607,71 @@ create table tiki_copyrights(
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_edit_copyrights','wiki','Can edit copyright notices','admin');
 
 #### Workflow schema ends
+
+#### Calendar tables
+
+DROP TABLE IF EXISTS tiki_calendars;
+CREATE TABLE tiki_calendars (
+  calendarId int(14) NOT NULL auto_increment,
+  groupname varchar(30) NOT NULL default '',
+  user varchar(40) NOT NULL default '',
+  name varchar(80) NOT NULL default '',
+  description varchar(255) default NULL,
+  created int(14) NOT NULL default '0',
+  lastmodif int(14) NOT NULL default '0',
+  public enum('n','y') NOT NULL default 'n',
+  visible enum('y','n') NOT NULL default 'y',
+  PRIMARY KEY  (calendarId),
+  KEY groupname (groupname)
+);
+
+DROP TABLE IF EXISTS tiki_calendar_roles;
+CREATE TABLE tiki_calendar_roles (
+  calitemId int(14) NOT NULL default '0',
+  username varchar(40) NOT NULL default '',
+  role enum('0','1','2','3') NOT NULL default '0',
+  PRIMARY KEY  (calitemId,username(10))
+);
+
+DROP TABLE IF EXISTS tiki_calendar_locations;
+CREATE TABLE tiki_calendar_locations (
+  callocId int(14) NOT NULL auto_increment,
+  calendarId int(14) NOT NULL default '0',
+  name varchar(255) NOT NULL default '',
+  description blob,
+  PRIMARY KEY  (callocId)
+);
+
+DROP TABLE IF EXISTS tiki_calendar_categories;
+CREATE TABLE tiki_calendar_categories (
+  calcatId int(11) NOT NULL auto_increment,
+  calendarId int(14) NOT NULL default '0',
+  name varchar(255) NOT NULL default '',
+  PRIMARY KEY  (calcatId)
+);
+
+DROP TABLE IF EXISTS tiki_calendar_items;
+CREATE TABLE tiki_calendar_items (
+  calitemId int(14) NOT NULL auto_increment,
+  calendarId int(14) NOT NULL default '0',
+  organizer varchar(40) default NULL,
+  start int(14) NOT NULL default '0',
+  end int(14) NOT NULL default '0',
+  locationId int(14) default NULL,
+  categoryId int(14) default NULL,
+  public enum('y','n') NOT NULL default 'y',
+  priority tinyint(1) NOT NULL default '5',
+  status enum('0','1','2') NOT NULL default '0',
+  url varchar(255) default NULL,
+  lang char(2) NOT NULL default 'en',
+  name varchar(255) NOT NULL default '',
+  description blob,
+  created int(14) NOT NULL default '0',
+  lastmodif int(14) NOT NULL default '0',
+  PRIMARY KEY  (calitemId),
+  KEY calendarId (calendarId)
+);
+
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_view_calendar','calendar','Can browse the calendar','basic');
+INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_admin_calendar','calendar','Can create/admin calendars','admin');
+
