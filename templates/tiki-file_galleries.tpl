@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.21 2003-09-25 01:05:21 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-file_galleries.tpl,v 1.22 2003-11-14 17:25:50 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-file_galleries.php?galleryId={$galleryId}">{tr}File Galleries{/tr}</a>
 
@@ -13,6 +13,10 @@
 {/if}
 
 <br/><br/>
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=fgal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<br/><br/>
+{/if}
 
 {if $tiki_p_create_file_galleries eq 'y'}
 {if $edit_mode eq 'y'}
@@ -20,7 +24,7 @@
 <h3>{tr}Create a file gallery{/tr}</h3>
 {else}
 <h3>{tr}Edit this file gallery:{/tr} {$name}</h3>
-<a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>
+[&nbsp;<a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>&nbsp;]
 {/if}
 {if $individual eq 'y'}
 <a class="fgallink" href="tiki-objectpermissions.php?objectName=file%20gallery%20{$name}&amp;objectType=file%20gallery&amp;permType=file%20galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
@@ -93,7 +97,7 @@
 
 <h2>{tr}Available File Galleries{/tr}</h2>
 {if $tiki_p_create_file_galleries eq 'y'}
-<a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br/><br/>
+[&nbsp;<a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>&nbsp;]<br/><br/>
 {/if}
 <div align="center">
 <table class="findtable">
@@ -224,8 +228,4 @@
 {/if}
 </div>
 </div>
-{if $tiki_p_admin eq 'y'}
-<br/><br/>
-<a href="tiki-admin.php?page=fgal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-{/if}
 
