@@ -102,6 +102,7 @@ font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;
 
 /* This is the middle */
 DIV#tiki-mid {  background: #E9ECEF;  height: auto;  padding-bottom: 0px; }
+DIV#tiki-mid table { width: 100%; }
 
 /* And this is the footer */
 DIV#tiki-bot {  padding-top: 10px;  margin-top: 5px;  background: #C7D0D9; border-top: 1px solid #87ACBB; border-bottom: 1px solid #87ACBB; margin-bottom: 10px; padding-bottom: 5px; }
@@ -110,7 +111,6 @@ DIV#tiki-bot {  padding-top: 10px;  margin-top: 5px;  background: #C7D0D9; borde
 TD#leftcolumn {  padding-left: 2px; padding-right: 2px; vertical-align: top;  width: 180px;}
 TD#rightcolumn {  padding-left: 2px; vertical-align: top;   width: 180px;}
 TD#centercolumn { padding-right: 12px; vertical-align: top; }
-TABLE#tikimidtbl { width: 100%; }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {  margin-left: 2px;  margin-right: 5px;  padding-left: 7px;  padding-right: 5px; }
