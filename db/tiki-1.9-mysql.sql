@@ -3704,6 +3704,10 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_admin_attachments', 'Can admin attachments to wiki pages', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_attach_files', 'Can attach files to wiki pages', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_wiki_view_attachments', 'Can view wiki attachments and download', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_admin', 'Can adminsiter homework', 'admin', 'homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher', 'Can create new homework assignments, see student names and grade assignments', 'editor', 'homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader', 'Can grade homework assignments', 'editors', 'homework');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student', 'Can do homework assignments', 'registered', 'homework');
 # --------------------------------------------------------
 
 #
