@@ -1,5 +1,6 @@
 <?php
-
+include_once ('lib/webmail/htmlMimeMail.php');
+include_once('lib/webmail/encodestring.php');
 class NlLib extends TikiLib {
 	function NlLib($db) {
 		parent::TikiLib($db);
@@ -43,7 +44,7 @@ class NlLib extends TikiLib {
 		$this->update_users($nlId);
 	}
 
-	function newsletter_subscribe($nlId, $email) {
+	function newsletter_subscribe($nlId, $email, $charset="utf-8") {
 		global $smarty;
 		global $user;
 		global $sender_email;
@@ -68,8 +69,14 @@ class NlLib extends TikiLib {
 			$smarty->assign('url_subscribe', $url_subscribe);
 			$smarty->assign('server_name', $_SERVER["SERVER_NAME"]);
 			$mail_data = $smarty->fetch('mail/confirm_newsletter_subscription.tpl');
-			@mail($email, tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"], $mail_data,
-				"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+			$mail = new htmlMimeMail();
+			$mail->setFrom($sender_email);
+			$mail->setSubject(encodeString(tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"], $charset));
+			$mail->setHeadCharset($charset);
+			$mail->setText(encodeString($mail_data, $charset));
+			$mail->setTextCharset($charset);
+			if (!$mail->send(array($email)))
+				return false;
 		} else {
 			$query = "delete from `tiki_newsletter_subscriptions` where `nlId`=? and `email`=?";
 			$result = $this->query($query,array((int)$nlId,$email));
@@ -77,9 +84,10 @@ class NlLib extends TikiLib {
 			$result = $this->query($query,array((int)$nlId,$email,$code,'y',(int)$now));
 		}
 		$this->update_users($nlId);
+		return true;
 	}
 
-	function confirm_subscription($code) {
+	function confirm_subscription($code, $charset="utf-8") {
 		global $smarty;
 		global $user;
 		global $sender_email;
@@ -101,12 +109,18 @@ class NlLib extends TikiLib {
 		$smarty->assign('code', $res["code"]);
 		$smarty->assign('url_subscribe', $url_subscribe);
 		$mail_data = $smarty->fetch('mail/newsletter_welcome.tpl');
-		@mail($res["email"], tra('Welcome to '). $info["name"] . tra(' at '). $_SERVER["SERVER_NAME"], $mail_data,
-			"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+		$mail = new htmlMimeMail();
+		$mail->setFrom($sender_email);
+		$mail->setSubject(encodeString(tra('Welcome to '). $info["name"] . tra(' at '). $_SERVER["SERVER_NAME"], $charset));
+		$mail->setHeadCharset($charset);
+		$mail->setText(encodeString($mail_data, $charset));
+		$mail->setTextCharset($charset);
+		if (!$mail->send(array($res["email"])))
+				return false;
 		return $this->get_newsletter($res["nlId"]);
 	}
 
-	function unsubscribe($code) {
+	function unsubscribe($code, $charset="utf-8") {
 		global $smarty;
 		global $user;
 		global $sender_email;
@@ -128,8 +142,14 @@ class NlLib extends TikiLib {
 		$smarty->assign('mail_user', $user);
 		$smarty->assign('url_subscribe', $url_subscribe);
 		$mail_data = $smarty->fetch('mail/newsletter_byebye.tpl');
-		@mail($res["email"], tra('Bye bye from '). $info["name"] . tra(' at '). $_SERVER["SERVER_NAME"], $mail_data,
-			"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+		$mail = new htmlMimeMail();
+		$mail->setFrom($sender_email);
+		$mail->setSubject(encodeString(tra('Bye bye from '). $info["name"] . tra(' at '). $_SERVER["SERVER_NAME"], $charset));
+		$mail->setHeadCharset($charset);
+		$mail->setText(encodeString($mail_data, $charset));
+		$mail->setTextCharset($charset);
+		$mail->send(array($res["email"]));
+
 		$this->update_users($res["nlId"]);
 		return $this->get_newsletter($res["nlId"]);
 	}
