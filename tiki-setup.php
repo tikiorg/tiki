@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.222 2004-05-07 18:24:35 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.223 2004-05-07 22:29:12 rlpowell Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1588,22 +1588,11 @@ if ($feature_warn_on_edit == 'y') {
 
 if (isset($_REQUEST["pollVote"])) {
     if ($tiki_p_vote_poll == 'y' && isset($_REQUEST["polls_optionId"])) {
-	$tikilib->register_user_vote($user, 'poll' . $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
-
-	if( $feature_poll_anonymous == 'y' )
+	if( $feature_poll_anonymous == 'y' || $user )
 	{
 	    $tikilib->poll_vote($user, $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
-	} else {
-	    if (in_array($_REQUEST["polls_pollId"], $_SESSION["votes"])) {
-		$update = true;
-	    } else {
-		$update = false;
-	    }
-
-	    if( $update )
-	    {
-		$tikilib->poll_vote($user, $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
-	    }
+	    // Poll vote must go first, or the new vote will be seen as the previous one.
+	    $tikilib->register_user_vote($user, 'poll' . $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
 	}
     }
 
