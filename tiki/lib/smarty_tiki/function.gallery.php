@@ -17,7 +17,7 @@ function smarty_function_gallery($params, &$smarty)
         $smarty->trigger_error("assign: missing 'id' parameter");
         return;
     }
-    $img = $tikilib->get_random_image($id);
+    $img = $imagegallib->get_random_image($id);
     print('<center>');
     print('<table  border="0" cellpadding="0" cellspacing="0">');
     print('<tr>');

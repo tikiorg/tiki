@@ -1,13 +1,13 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.27 2004-06-21 00:43:38 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.28 2004-07-15 21:28:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 //
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.27 2004-06-21 00:43:38 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_categories.php,v 1.28 2004-07-15 21:28:58 teedog Exp $
 //
 
 // Initialization
@@ -310,7 +310,11 @@ if ($offset > 0) {
 $categories = $categlib->get_all_categories();
 $smarty->assign_by_ref('categories', $categories);
 */
-$galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
+global $imagegallib;
+if (!is_object($imagegallib)) {
+	require_once('lib/imagegals/imagegallib.php');
+}
+$galleries = $imagegallib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
 $file_galleries = $filegallib->list_file_galleries(0, -1, 'name_desc', 'admin', $find_objects);

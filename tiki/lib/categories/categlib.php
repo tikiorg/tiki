@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.51 2004-07-15 20:24:11 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.52 2004-07-15 21:28:59 teedog Exp $
  *
  * \brief Categories support class
  *
@@ -531,8 +531,12 @@ class CategLib extends TikiLib {
 		$catObjectId = $this->is_categorized('image gallery', $galleryId);
 
 		if (!$catObjectId) {
+			global $imagegallib;
+			if (!is_object($imagegallib)) {
+				require_once('lib/imagegals/imagegallib.php');
+			}
 			// The page is not cateorized
-			$info = $this->get_gallery($galleryId);
+			$info = $imagegallib->get_gallery($galleryId);
 
 			$href = 'tiki-browse_gallery.php?galleryId=' . $galleryId;
 			$catObjectId = $this->add_categorized_object('image gallery', $galleryId, $info["description"], $info["name"], $href);

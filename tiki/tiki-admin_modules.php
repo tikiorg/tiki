@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.33 2004-06-16 01:34:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_modules.php,v 1.34 2004-07-15 21:28:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -265,7 +265,11 @@ for ($i = 0; $i < $temp_max; $i++) {
 }
 
 $smarty->assign("groups", $allgroups);
-$galleries = $tikilib->list_galleries(0, -1, 'lastModif_desc', $user, '');
+global $imagegallib;
+if (!is_object($imagegallib)) {
+	require_once('lib/imagegals/imagegallib.php');
+}
+$galleries = $imagegallib->list_galleries(0, -1, 'lastModif_desc', $user, '');
 $smarty->assign('galleries', $galleries["data"]);
 $polls = $polllib->list_active_polls(0, -1, 'publishDate_desc', '');
 $smarty->assign('polls', $polls["data"]);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.10 2004-06-14 19:30:11 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.11 2004-07-15 21:28:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,7 +85,11 @@ if($imagegallib->haveimagick) {
 $smarty->assign('gdlib',$gdlib);
 $smarty->assign('imagicklib',$imagicklib);
 
-$galleries = $tikilib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
+global $imagegallib;
+if (!is_object($imagegallib)) {
+	require_once('lib/imagegals/imagegallib.php');
+}
+$galleries = $imagegallib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 
 $smarty->assign("gal_match_regex", $tikilib->get_preference("gal_match_regex", ''));
