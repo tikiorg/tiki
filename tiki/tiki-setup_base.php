@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.36 2003-09-17 15:35:46 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.37 2003-09-22 23:19:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -8,8 +8,8 @@
 
 //print("tiki-setup_base 1: before include setup.php: ".$tiki_timer->elapsed()."<br />");
 # switch smarty with commenting either line
-require_once("setup.php"); // smarty 2.4.1
-#require_once("setup_smarty.php"); // smarty 2.6.0rc1
+#require_once("setup.php"); // smarty 2.4.1
+require_once("setup_smarty.php"); // smarty 2.6.0rc1
 
 //print("tiki-setup_base 2: before include tikilib.php: ".$tiki_timer->elapsed()."<br />");
 require_once("lib/tikilib.php");
