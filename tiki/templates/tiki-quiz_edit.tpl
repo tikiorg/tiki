@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.6 2004-05-13 16:24:24 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.7 2004-05-13 19:01:12 ggeller Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -25,8 +25,8 @@
 
 		<tr class="formcolor">
 			<td>{tr}General Options{/tr}</td>
-			<td {if $cols} colspan="{$cols}"{/if}>
-				[ <a class="link" href="javascript:show('general');">{tr}show{/tr}</a>
+			<td width="85%" {if $cols} colspan="{$cols}"{/if}>
+        [ <a class="link" href="javascript:show('general');">{tr}show{/tr}</a>
  				| <a class="link" href="javascript:hide('general');">{tr}hide{/tr}</a> ]
  				<div id="general" style="display:none;">
 					<table class="normal">
@@ -41,13 +41,13 @@
 						<tr class="formcolor">
       				<td>{tr}Publication Date{/tr}</td>
       				<td>
-								{html_select_date prefix="publish_" time=$publishDateSite start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="publish_" time=$publishDateSite display_seconds=false} HRS&nbsp;{$siteTimeZone} 
+								{html_select_date prefix="publish_" time=$quiz.publishDate start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="publish_" time=$quiz.publishDate display_seconds=false} HRS&nbsp;{$siteTimeZone} 
 							</td>
 						</tr>
 						<tr class="formcolor">
 							<td>{tr}Expiration Date{/tr}</td>
 							<td>
-								{html_select_date prefix="expire_" time=$expireDateSite start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="expire_" time=$expireDateSite display_seconds=false} HRS&nbsp;{$siteTimeZone}
+								{html_select_date prefix="expire_" time=$quiz.expireDate start_year="-5" end_year="+10"} {tr}at {/tr}{html_select_time prefix="expire_" time=$quiz.expireDate display_seconds=false} HRS&nbsp;{$siteTimeZone}
 							</td>
 						</tr>
 					</table>
