@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.31 2004-06-15 21:57:05 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.32 2004-06-22 22:25:46 rlpowell Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,7 +56,7 @@ foreach ($comments_vars as $c_name) {
     if (isset($_REQUEST[$c_name])) {
 	if ($comments_first) {
 	    $comments_first = 0;
-	    
+
 	    $comments_t_query .= "?$c_name=" . $_REQUEST["$c_name"];
 	} else {
 	    $comments_t_query .= "&amp;$c_name=" . $_REQUEST["$c_name"];
@@ -157,22 +157,25 @@ if ($tiki_p_post_comments == 'y') {
 	    $_REQUEST["comments_data"] = strip_tags($_REQUEST["comments_data"]);
 
 	    if ($_REQUEST["comments_threadId"] == 0) {
-		if (isset($_REQUEST["quote"]) &&
-			$_REQUEST["quote"] )
+		if (isset($_REQUEST["comments_reply_threadId"]) &&
+			$_REQUEST["comments_reply_threadId"] )
 		{
-		    $quote_info = $commentslib->get_comment($_REQUEST["quote"]);
-		    $in_reply_to = $quote_info["message_id"];
-
-		    // Don't carry the quote value through
-		    // after this.
-		    $smarty->clear_assign('quote');
-		    $quote = 0;
-		    $_REQUEST["quote"] = 0;
+		    $reply_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
+		    $in_reply_to = $reply_info["message_id"];
 		} else {
 		    $in_reply_to = '';
 		}
 		$message_id = '';
-		$commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"],
+
+		$object = explode(':', $comments_objectId );
+		if( $object[0] == 'forum' )
+		{
+		    $parent_id = $_REQUEST["comments_grandParentId"];
+		} else {
+		    $parent_id = $_REQUEST["comments_parentId"];
+		}
+
+		$commentslib->post_new_comment($comments_objectId, $parent_id,
 			$user,
 			$_REQUEST["comments_title"],
 			$_REQUEST["comments_data"],
@@ -267,10 +270,13 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $smarty->assign('comment_rating', $comment_info["comment_rating"]);	
     $smarty->assign('comment_data', $comment_info["data"]);
 } elseif ($_REQUEST["comments_reply_threadId"] > 0) {
-    // Replies to comments. TODO: optionally qouting the content of comment data into the reply
+    // Replies to comments.
     $comment_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
+    // Add the replied-to text, with >.
+    $smarty->assign('comment_data', preg_replace( '/\n/', '> ', '> ' . $comment_info["data"] ) );
 
     $smarty->assign('comment_title', tra('Re:').' '.$comment_info["title"]);
+    $smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
 } else {
     $smarty->assign('comment_title', '');
     $smarty->assign('comment_rating', '');	
@@ -350,6 +356,12 @@ if (!isset($_REQUEST["comments_parentId"])) {
 }
 
 $smarty->assign('comments_parentId', $_REQUEST["comments_parentId"]);
+
+if( isset( $_REQUEST["comments_grandParentId"] ) )
+{
+    $smarty->assign('comments_grandParentId', $_REQUEST["comments_grandParentId"]);
+}
+
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
 	$comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
 	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"]);
