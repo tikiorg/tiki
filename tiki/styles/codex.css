@@ -177,7 +177,7 @@ span.off-option {
 /********************************************* GENERAL STYLE PROPERTIES **********************************************/
 
 /* BOXES boxes are used to present a box with a title bar and content, they are used for modules and they
-   are also used in the rankings, admin screen etc. 
+   are also used in the rankings, admin screen etc.
    The box class is used for modules while the cbox class is used for other boxes
 */
 
@@ -216,7 +216,7 @@ div.box-title table {
 /* And this is the data */
 div.box-data {
 	overflow:    hidden;
-	color:   black;
+	color:   white;
 	margin-left:   5px;
 	margin-right:   5px;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -2923,3 +2923,6 @@ a.phplm:hover	{
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace; padding : 2ex; background-color : #edeeef; margin : 1ex; border : 1px dashed #adacaf; }
