@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.14 2004-04-29 13:23:23 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.15 2004-04-29 13:55:20 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -259,3 +259,20 @@ TABLE.admin {
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
 }
+
+/* trackers specific style */
+
+.statuson {
+  padding: 1px;
+  margin: 1px;
+  border: 1px inset #666666;
+  -moz-border-radius: 20px;
+  vertcal-align: middle;
+  background-color: #bbaa99;
+}
+.statusoff {
+  padding: 1px;
+  margin: 2px;
+  vertcal-align: middle;
+}
+
