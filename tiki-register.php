@@ -60,7 +60,7 @@ if(isset($_REQUEST["register"])) {
     }
   }
   
-  if(!preg_match_all("/[A-Z0-9a-z_-]+/",$_REQUEST["name"],$matches)) {
+  if(!preg_match_all("/[A-Z0-9a-z\_\-]+/",$_REQUEST["name"],$matches)) {
     $smarty->assign('msg',tra("Invalid username"));
     $smarty->display("styles/$style_base/error.tpl");
     die;

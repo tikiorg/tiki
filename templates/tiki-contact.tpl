@@ -29,5 +29,7 @@
 </form>
 {/if}
 <h2>{tr}Contact us by email{/tr}</h2>                              
+{if strlen($email)>0}
 {mailto address="$email" encode="javascript" text="click here to send us an email" extra='class="link"'}
+{/if}
                                
