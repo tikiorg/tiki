@@ -31,7 +31,7 @@ if(isset($_REQUEST['send'])) {
   // Validation:
   // must have a subject or body non-empty (or both)
   if(empty($_REQUEST['subject'])&&empty($_REQUEST['body'])) {
-    $smarty->assign('message','ERROR: Either the subject or body must be non-empty');
+    $smarty->assign('message',tra('ERROR: Either the subject or body must be non-empty'));
     $smarty->display("styles/$style_base/tiki.tpl");
     die;
   }
