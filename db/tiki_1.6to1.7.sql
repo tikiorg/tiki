@@ -1,5 +1,22 @@
 ### Live support chat system
 ### under construction
+
+drop table if exists tiki_live_support_operators;
+create table tiki_live_support_operators(
+	user varchar(200) not null,
+	accepted_requests integer(10),
+	status varchar(20),
+	longest_chat integer(10),
+	shortest_chat integer(10),
+	average_chat integer(10),
+	last_chat integer(14),
+	time_online integer(10),
+	votes integer(10),
+	points integer(10),
+	status_since integer(14),
+	primary key(user)
+);
+
 drop table if exists tiki_live_support_requests;
 create table tiki_live_support_requests(
 	reqId char(32) not null,
@@ -9,7 +26,7 @@ create table tiki_live_support_requests(
 	operator varchar(200),
 	operator_id char(32),
 	user_id char(32),
-	reason varchar(250),
+	reason text,
 	req_timestamp integer(14),
 	timestamp integer(14),
 	status varchar(40),

@@ -30,7 +30,20 @@ class Lslib {
     die;
   }
 
-  function new_user_request($user,$tiki_user,$email,$reason,$user_id)
+  function set_operator_id($reqId,$senderId)
+  {
+  	$query = "update tiki_live_support_requests set operator_id = '$senderId' where reqId='$reqId'";
+  	$this->query($query);
+  }
+
+  function set_user_id($reqId,$senderId)
+  {
+  	$query = "update tiki_live_support_requests set user_id = '$senderId' where reqId='$reqId'";
+  	$this->query($query);
+  }
+
+
+  function new_user_request($user,$tiki_user,$email,$reason)
   {
     $reqId = md5(uniqid('.'));
     $user = addslashes($user);
@@ -39,7 +52,7 @@ class Lslib {
     $reason = addslashes($reason);
     $now = date("U");
   	$query = "insert into tiki_live_support_requests(reqId,user,tiki_user,email,reason,req_timestamp,status,timestamp,operator,chat_started,chat_ended,operator_id,user_id)
-  	values('$reqId','$user','$tiki_user','$email','$reason',$now,'active',$now,'',0,0,'','$user_id')";
+  	values('$reqId','$user','$tiki_user','$email','$reason',$now,'active',$now,'',0,0,'','')";
   	$this->query($query);
   	return $reqId;
   }
@@ -50,16 +63,72 @@ class Lslib {
   	if($x) return $x; else return 0;
   }
   
+  function get_max_active_request()
+  {
+  	return $this->getOne("select max(reqId) from tiki_live_support_requests where status='active'");
+  }
+  
   // Remove active requests 
   function purge_requests()
   {
-  
+	$now = date("U");
+	$min = $now - 60*2; // 1 minute = timeout.
+	$query = "update tiki_live_support_requests set status='timeout' where timestamp < $min";
+	$this->query($query);  
   }
   
   // Get status for request
   function get_request_status($reqId)
   {
   	return $this->getOne("select status from tiki_live_support_requests where reqId='$reqId'");
+  }
+
+  function set_request_status($reqId,$status)
+  {
+  	$query = "update tiki_live_support_requests set status='$status' where reqId='$reqId'";
+  	$this->query($query);
+  }
+  
+  
+  // Get request information
+  function get_request($reqId)
+  {
+  	$query = "select * from tiki_live_support_requests where reqId='$reqId'";
+  	$result = $this->query($query);
+	$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+	return $res;  	
+  }
+  
+  /*
+	accepted_requests integer(10),
+	status varchar(20),
+	longest_chat integer(10),
+	shortest_chat integer(10),
+	average_chat integer(10),
+	last_chat integer(14),
+	time_online integer(10),
+	votes integer(10),
+	points integer(10),
+	status_since integer(14),
+	primary key(user)
+  */
+  function set_operator_status($user,$status)
+  {
+  	$now = date("U");
+  	// If switching to offline then sum online time for this operator
+  	if($status == 'offline') {
+  		$query = "update tiki_live_support_operators set time_online = $now - status_since where user='$user' and status='online'";
+  		$this->query($query);
+  	}
+  	$query = "update tiki_live_support_operators set status='$status', status_since=$now where user='$user'";
+	$this->query($query);  	
+  }
+  
+  function get_operator_status($user)
+  {
+  	$status = $this->getOne("select status from tiki_live_support_operators where user='$user'");
+  	if(!$status) $status = 'offline';
+  	return $status;
   }
   
   // Accepts a request, change status to op_accepted
@@ -68,6 +137,7 @@ class Lslib {
   	$now = date("U");
   	$query = "update tiki_live_support_requests set operator_id='$operator_id',operator='$user',status='op_accepted',timestamp=$now,chat_started=$now where reqId='$reqId'";
   	$this->query($query);
+  	$query = "update tiki_live_support_operators set accepted_requests = accepted_requests + 1 where operator='$user'";
   }
   
   
@@ -86,12 +156,11 @@ class Lslib {
   	$query = "update tiki_live_support_requests set status='operator closed',timestamp=$now,chat_ended=$now where reqId='$reqId'";
   	$this->query($query);
   }
-
   
-  function get_active_requests()
+  function get_requests($status)
   {
   	$this->purge_requests();
-  	$query = "select * from tiki_live_support_requests where status='active'";
+  	$query = "select * from tiki_live_support_requests where status='$status'";
   	$result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {

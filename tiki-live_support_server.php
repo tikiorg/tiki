@@ -28,8 +28,12 @@ if(isset($_REQUEST['request_chat'])) {
 	// Operator windows polling this server will be notified of current
 	// 'active' chat requests
 	header("Content-type: text/plain");
-	$id = $lslib->new_user_request($_REQUEST['user'],$_REQUEST['tiki_user'],$_REQUEST['email'],$_REQUEST['reason'],$_REQUEST['user_id']);
+	$id = $lslib->new_user_request($_REQUEST['user'],$_REQUEST['tiki_user'],$_REQUEST['email'],$_REQUEST['reason']);
 	print($id);  
+}
+
+if(isset($_REQUEST['set_operator_status'])) {
+	$lslib->set_operator_status($_REQUEST['set_operator_status'],$_REQUEST['status']);
 }
 
 if(isset($_REQUEST['write'])) {
@@ -39,7 +43,9 @@ if(isset($_REQUEST['write'])) {
 	if($_REQUEST['role']=='user') {
 	
 	}
-	$_REQUEST['msg']='('.$_REQUEST['name'].')'.' '.$_REQUEST['msg'];
+	if(!strstr('has left the chat',$_REQUEST['msg'])) {
+		$_REQUEST['msg']='('.$_REQUEST['name'].')'.' '.$_REQUEST['msg'];
+	}
 	$lslib->put_message($_REQUEST['write'],$_REQUEST['msg'],$_REQUEST['senderId']);
 }
 
