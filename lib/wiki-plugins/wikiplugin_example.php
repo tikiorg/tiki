@@ -14,6 +14,9 @@
  * The function returns some text that will replace the content in the
  * wiki page.
  */
+function wikiplugin_example_help() {
+	return tra("Example").": ~np~{EXAMPLE(face=> size=>)}".tra("data")."{EXAMPLE}~/np~";
+}
 function wikiplugin_example($data, $params) {
 	extract ($params);
 
