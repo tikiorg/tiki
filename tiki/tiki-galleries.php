@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.29 2004-08-22 01:37:25 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-galleries.php,v 1.30 2004-08-23 22:18:27 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -108,10 +108,12 @@ $options_galleryimage=array(tra('first uploaded image') => 'firstu',
 			    tra('last uploaded image') => 'lastu',
 			    tra('first image') => 'first',
 			    tra('last image') => 'last',
-			    tra('random image') => 'random',
-			    tra('individual image') => 'individual');
+			    tra('random image') => 'random');
 $smarty->assign_by_ref('options_galleryimage',$options_galleryimage);
 $smarty->assign('galleryimage','first');
+$galleries_list=$imagegallib->list_galleries(0,-1,'name_desc',$user);
+$smarty->assign_by_ref('galleries_list',$galleries_list['data']);
+$smarty->assign('parentagllery',-1);
 
 // If we are editing an existing gallery prepare smarty variables
 if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
@@ -126,6 +128,10 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$info = $imagegallib->get_gallery_info($_REQUEST["galleryId"]);
 
 		$scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
+		$gallery_images = $imagegallib->get_images(0,-1,'name_asc',false,$_REQUEST['galleryId']);
+		foreach($gallery_images['data'] as $key => $item) {
+			$options_galleryimage[tra('Image').' '.$item['name']]=$item['imageId'];
+		}
 		//$smarty->assign_by_ref('theme',$info["theme"]);
 		$smarty->assign_by_ref('name', $info["name"]);
 		$smarty->assign_by_ref('description', $info["description"]);
@@ -138,6 +144,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('sortorder',$info['sortorder']);
 		$smarty->assign('sortdirection',$info['sortdirection']);
 		$smarty->assign('galleryimage',$info['galleryimage']);
+		$smarty->assign('parentgallery',$info['parentgallery']);
 		$smarty->assign_by_ref('scaleinfo', $scaleinfo);
 	}
 }
@@ -181,6 +188,7 @@ if (isset($_REQUEST["edit"])) {
         $smarty->assign('sortorder',$_REQUEST['sortorder']);
 	$smarty->assign('sortdirection',$_REQUEST['sortdirection']);
 	$smarty->assign('galleryimage',$_REQUEST['galleryimage']);
+	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
 
 
 	if (isset($_REQUEST["visible"]) && $_REQUEST["visible"] == "on") {
@@ -203,7 +211,7 @@ if (isset($_REQUEST["edit"])) {
 	$smarty->assign_by_ref('public', $public);
 	$gid = $imagegallib->replace_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"],
 		'', $user, $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
-		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage']);
+		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage'],$_REQUEST['parentgallery']);
 
 	#add scales
 	if (isset($_REQUEST["scaleSizeX"])

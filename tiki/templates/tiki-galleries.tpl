@@ -58,6 +58,13 @@
 {/foreach}
 </select>
 </td></tr>
+<tr><td class="formcolor">{tr}Parent gallery{/tr}:</td><td class="formcolor"><select name="parentgallery">
+<option value="-1" {if $parentgallery == -1} selected="selected"{/if}>{tr}none{/tr}</option>
+{foreach from=$galleries_list key=key item=item}
+<option value="{$item.galleryId}" {if $parentgallery == $item.galleryId} selected="selected"{/if}>{$item.name}</option>
+{/foreach}
+</select>
+</td></tr>
 <tr><td class="formcolor">{tr}Available scales{/tr}:</td><td class="formcolor">
 {section  name=scales loop=$scaleinfo}
 {tr}Remove{/tr}:<input type="checkbox" name="{$scaleinfo[scales].xsize|escape}x{$scaleinfo[scales].ysize}" />
