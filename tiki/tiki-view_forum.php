@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.37 2003-10-09 18:18:41 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.38 2003-10-22 17:51:09 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -351,6 +351,9 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 			    // Deal with mail notifications.
 
+			    // outbound_from is redundant with sender_email: can be merged to simplify
+			    $from = $forum_info["outbound_from"]? $forum_info["outbound_from"]: $sender_email;
+
 			    if ($forum_info["outbound_address"]) {
 				$cdata_data = $_REQUEST["comments_data"];
 
@@ -365,7 +368,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 					    $forum_info["outbound_address"],
 					    $_REQUEST["comments_title"],
 					    $_REQUEST["comments_title"] . "\n" . $_REQUEST["comments_data"],
-					    "From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n"
+					    "From: " . $from. "\r\nContent-type: text/plain;charset=utf-8\r\n"
 					 );
 				}
 			    }
@@ -380,7 +383,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				$smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
 				$mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
 				@mail($forum_info["mail"], tra('Tiki email notification'), $mail_data,
-					"From: " . $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
+					"From: " . $from . "\r\nContent-type: text/plain;charset=utf-8\r\n");
 			    }
 
 			    // Check if the user is monitoring this post
@@ -397,7 +400,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				    $smarty->assign('mail_topic', tra(' new topic:'). $_REQUEST["comments_title"]);
 				    $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
 				    @mail($not['email'], tra('Tiki email notification'), $mail_data,
-					    "From: ". $forum_info["outbound_from"] . "\r\nContent-type: text/plain;charset=utf-8\r\n");
+					    "From: ". $from . "\r\nContent-type: text/plain;charset=utf-8\r\n");
 				}
 			    }
 
