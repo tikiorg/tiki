@@ -13,7 +13,9 @@
 body {
 	background-color:    #616264;
 	scrollbar-face-color: #DEE3E7;scrollbar-highlight-color: #FFFFFF;scrollbar-shadow-color: #DEE3E7;
-	scrollbar-3dlight-color: #D1D7DC;  scrollbar-arrow-color:  #006699;  scrollbar-track-color: #575151;
+	scrollbar-3dlight-color: #D1D7DC;
+	scrollbar-arrow-color:  #006699;
+	scrollbar-track-color: #575151; /**kinda brownish**/
 	scrollbar-darkshadow-color: #98AAB1;
 	margin-top:   10px;
 	margin-left:   10px;
@@ -213,16 +215,16 @@ span.off-option {
 	color: #005000;
 }
 
-/********************************************* GENERAL STYLE PROPERTIES **********************************************/
+/************************* GENERAL STYLE PROPERTIES *****************************/
 
 /* BOXES boxes are used to present a box with a title bar and content, they are used for modules and they
-   are also used in the rankings, admin screen etc. 
+   are also used in the rankings, admin screen etc.
    The box class is used for modules while the cbox class is used for other boxes
 */
 
 /* Boxes used for modules (modules are those boxes in the left/right columns) */
 div.box {
-	background:    #575151;
+	background:    #575151; /**kinda brownish**/
 	margin-bottom:   10px;
 	border:   1px solid black;
 	padding-bottom:   10px;
@@ -233,7 +235,7 @@ div.box {
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
 	background-color:   #D1D7DC;
-	border:   #575151;
+	border:   #575151; /**kinda brownish**/
 	border-style:   solid;
 	height:   28px;
 	border-width:   0px;
@@ -4638,3 +4640,10 @@ div#rules-copy-panel {
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting {
+font-family : monospace;
+padding : 2ex;
+background-color : #D1D7DC; /***kinda grey just like div box bkgrnd**/
+margin : 1ex;
+border : 1px dashed #adacaf; }
