@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.26 2003-11-02 21:50:19 dgdaniels Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.27 2003-11-16 00:19:54 xenfasa Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -235,8 +235,34 @@
     </tr>
     <tr>
       <td class="formcolor">{tr}Title{/tr} <span style="color: rgb(255, 0, 0);">{tr}Required{/tr}</span></td>
-      <td class="formcolor"><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
+      <td class="formcolor"><input type="text" size="40"name="comments_title" value="{$comment_title|escape}" /></td>
     </tr>
+
+{* Start: Xenfasa adding and testing article ratings in comments here. Not fully functional yet *}
+{if $comment_can_rate_article eq 'y'}
+    <tr>
+      <td class="formcolor">{tr}Rating{/tr} </td>
+      <td class="formcolor">
+        <select name="comment_rating">
+        <option value="" {if $comment_rating eq ''}selected="selected"{/if}>No</option>
+        <option value="0" {if $comment_rating eq 0}selected="selected"{/if}>0</option>
+        <option value="1" {if $comment_rating eq 1}selected="selected"{/if}>1</option>
+        <option value="2" {if $comment_rating eq 2}selected="selected"{/if}>2</option>
+        <option value="3" {if $comment_rating eq 3}selected="selected"{/if}>3</option>
+        <option value="4" {if $comment_rating eq 4}selected="selected"{/if}>4</option>
+        <option value="5" {if $comment_rating eq 5}selected="selected"{/if}>5</option>
+        <option value="6" {if $comment_rating eq 6}selected="selected"{/if}>6</option>
+        <option value="7" {if $comment_rating eq 7}selected="selected"{/if}>7</option>
+        <option value="8" {if $comment_rating eq 8}selected="selected"{/if}>8</option>
+        <option value="9" {if $comment_rating eq 9}selected="selected"{/if}>9</option>
+        <option value="10" {if $comment_rating eq 10}selected="selected"{/if}>10</option>
+        </select> Rate this Article (10=best, 0=worse)
+	  </td>
+    </tr>
+{/if}
+{* End: Xenfasa adding and testing article ratings in comments here *}
+
+
     {if $feature_smileys eq 'y'}
     <tr>
       <td class="formcolor">{tr}Smileys{/tr}</td>

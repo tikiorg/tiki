@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.17 2003-11-14 19:04:31 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.18 2003-11-16 00:17:16 xenfasa Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -22,6 +22,10 @@ if (!isset($comments_per_page)) {
 
 if (!isset($comments_default_ordering)) {
     $comments_default_ordering = 'commentDate_desc';
+}
+
+if (!isset($_REQUEST["comment_rating"])) {
+$_REQUEST["comment_rating"] = '';
 }
 
 $comments_aux = array();
@@ -127,12 +131,13 @@ if ($tiki_p_post_comments == 'y') {
 		$commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"],
 			$user,
 			$_REQUEST["comments_title"],
+			$_REQUEST["comment_rating"],			
 			$_REQUEST["comments_data"],
 			$message_id );
 	    } else {
 		if ($tiki_p_edit_comments == 'y') {
 		    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
-			    $_REQUEST["comments_data"]);
+			$_REQUEST["comment_rating"], $_REQUEST["comments_data"]);
 		}
 	    }
 	} else {
@@ -164,10 +169,11 @@ if ($_REQUEST["comments_threadId"] > 0) {
     $comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
 
     $smarty->assign('comment_title', $comment_info["title"]);
+    $smarty->assign('comment_rating', $comment_info["comment_rating"]);	
     $smarty->assign('comment_data', $comment_info["data"]);
 } else {
     $smarty->assign('comment_title', '');
-
+    $smarty->assign('comment_rating', '');	
     $smarty->assign('comment_data', '');
 }
 
@@ -186,6 +192,7 @@ if (isset($_REQUEST["comments_previewComment"])) {
 
     $smarty->assign('comments_preview_data', $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"])));
     $smarty->assign('comment_title', $_REQUEST["comments_title"]);
+    $smarty->assign('comment_rating', $_REQUEST["comment_rating"]);		
     $smarty->assign('comment_data', $_REQUEST["comments_data"]);
     $smarty->assign('comment_preview', 'y');
 }

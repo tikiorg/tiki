@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.7 2003-11-11 18:58:20 dheltzel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-article_types.tpl,v 1.8 2003-11-16 00:19:54 xenfasa Exp $ *}
 
 <a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
 
@@ -23,6 +23,7 @@
 <td class="heading">{tr}Show after expire date{/tr}</td>
 <td class="heading">{tr}Heading only{/tr}</td>
 <td class="heading">{tr}Comments{/tr}</td>
+<td class="heading">{tr}Comment Can Rate Article{/tr}</td>
 <td class="heading">{tr}Show image{/tr}</td>
 <td class="heading">{tr}Show avatar{/tr}</td>
 <td class="heading">{tr}Show author{/tr}</td>
@@ -42,6 +43,7 @@
 <td class="{cycle advance=false}">{if $types[user].show_post_expire eq 'y'}y{/if}</td>
 <td class="{cycle advance=false}">{if $types[user].heading_only eq 'y'}y{/if}</td>
 <td class="{cycle advance=false}">{if $types[user].allow_comments eq 'y'}y{/if}</td>
+<td class="{cycle advance=false}">{if $types[user].comment_can_rate_article eq 'y'}y{/if}</td>
 <td class="{cycle advance=false}">{if $types[user].show_image eq 'y'}y{/if}</td>
 <td class="{cycle advance=false}">{if $types[user].show_avatar eq 'y'}y{/if}</td>
 <td class="{cycle advance=false}">{if $types[user].show_author eq 'y'}y{/if}</td>
@@ -66,6 +68,7 @@
 <tr><td class="formcolor">{tr}Show after expire date{/tr}</td><td class="formcolor"><input type="checkbox" name="show_post_expire" {if $show_post_expire eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show heading only{/tr}</td><td class="formcolor"><input type="checkbox" name="heading_only" {if $heading_only eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Allow comments{/tr}</td><td class="formcolor"><input type="checkbox" name="allow_comments" {if $allow_comments eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Comment can rate Article{/tr}</td><td class="formcolor"><input type="checkbox" name="comment_can_rate_article" {if $comment_can_rate_article eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show image{/tr}</td><td class="formcolor"><input type="checkbox" name="show_image" {if $show_image eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show avatar{/tr}</td><td class="formcolor"><input type="checkbox" name="show_avatar" {if $show_avatar eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Show author{/tr}</td><td class="formcolor"><input type="checkbox" name="show_author" {if $show_author eq 'y'}checked="checked"{/if} /></td></tr>

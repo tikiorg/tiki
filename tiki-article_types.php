@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.5 2003-11-11 18:58:19 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-article_types.php,v 1.6 2003-11-16 00:17:16 xenfasa Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,6 +54,11 @@ if (isset($_REQUEST["allow_comments"])) {
 } else {
 	$allow_comments = 'y';
 }
+if (isset($_REQUEST["comment_can_rate_article"])) {
+	$comment_can_rate_article = $_REQUEST["comment_can_rate_article"];
+} else {
+	$comment_can_rate_article = 'y';
+}
 if (isset($_REQUEST["show_image"])) {
 	$show_image = $_REQUEST["show_image"];
 } else {
@@ -96,7 +101,7 @@ if (isset($_REQUEST["creator_edit"])) {
 }
 
 if (isset($_REQUEST["addtype"])) {
-	$artlib->add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit);
+	$artlib->add_edit_type($type, $use_ratings, $show_pre_publ, $show_post_expire, $heading_only, $allow_comments, $comment_can_rate_article, $show_image, $show_avatar, $show_author, $show_pubdate, $show_expdate, $show_reads, $show_size, $creator_edit);
 }
 
 if (isset($_REQUEST["type"])) {
