@@ -3466,7 +3466,7 @@ class TikiLib {
     //unset($smc);
     if($feature_wiki_tables != 'new') {
 	    // New syntax for tables
-	    if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
+	    if (preg_match_all("/\|\|(.*?)\|\|/", $data, $tables)) {
 
 	     $maxcols = 1;
 	      $cols = array();
@@ -3582,26 +3582,6 @@ class TikiLib {
     $data = $this->parse_smileys($data);
 
 
-    // Replace rss modules
-    if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
-	  if(!isset($rsslib)) {
-	  include('lib/rss/rsslib.php');
-	  }
-
-      for($i=0;$i<count($rsss[0]);$i++) {
-        $id = $rsss[1][$i];
-        $max = $rsss[3][$i];
-        if(empty($max)) $max=99;
-        $rssdata = $rsslib->get_rss_module_content($id);
-        $items = $rsslib->parse_rss_data($rssdata);
-        $repl='';
-        for($j=0;$j<count($items) && $j<$max;$j++) {
-         $repl.='<li><a target="_blank" href="'.$items[$j]["link"].'" class="wiki">'.$items[$j]["title"].'</a></li>';
-        }
-        $repl='<ul>'.$repl.'</ul>';
-        $data = str_replace($rsss[0][$i],$repl,$data);
-      }
-    }
 
     // Replace links to slideshows
     if($feature_drawings == 'y') {
@@ -3898,8 +3878,8 @@ class TikiLib {
         $line.='<br/>';
       } else {
         // Replace bold text
-        $line = preg_replace("/__([^_]+)__/","<b>$1</b>",$line);
-        $line = preg_replace("/\'\'([^']+)\'\'/","<i>$1</i>",$line);
+        $line = preg_replace("/__(.*?)__/","<b>$1</b>",$line);
+        $line = preg_replace("/\'\'(.*?)\'\'/","<i>$1</i>",$line);
         // Replace definition lists
         $line = preg_replace("/^;([^:]+):([^\n]+)/","<dl><dt>$1</dt><dd>$2</dd></dl>",$line);
         if(0) {
@@ -4002,6 +3982,28 @@ class TikiLib {
       }
       $data.=$line;
     }
+    
+    // Replace rss modules
+    if(preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/",$data,$rsss)) {
+	  if(!isset($rsslib)) {
+	  include('lib/rss/rsslib.php');
+	  }
+
+      for($i=0;$i<count($rsss[0]);$i++) {
+        $id = $rsss[1][$i];
+        $max = $rsss[3][$i];
+        if(empty($max)) $max=99;
+        $rssdata = $rsslib->get_rss_module_content($id);
+        $items = $rsslib->parse_rss_data($rssdata);
+        $repl='';
+        for($j=0;$j<count($items) && $j<$max;$j++) {
+         $repl.='<li><a target="_blank" href="'.$items[$j]["link"].'" class="wiki">'.$items[$j]["title"].'</a></li>';
+        }
+        $repl='<ul>'.$repl.'</ul>';
+        $data = str_replace($rsss[0][$i],$repl,$data);
+      }
+    }
+
 
 
     // Close BiDi DIVs if any

@@ -9,6 +9,19 @@ if($tiki_p_edit_structures != 'y') {
     die;
 }
 
+if(isset($_REQUEST['rremove'])) {
+  $structlib->s_remove_page($_REQUEST["rremove"],false);	
+}
+if(isset($_REQUEST['rremovex'])) {
+  $structlib->s_remove_page($_REQUEST["rremovex"],false);	
+}
+
+
+$smarty->assign('askremove','n');
+if(isset($_REQUEST['remove'])) {
+	$smarty->assign('askremove','y');
+	$smarty->assign('remove',$_REQUEST['remove']);
+}
 
 if(isset($_REQUEST["create"])) {
   $structlib->s_create_page('','',$_REQUEST["name"]);
