@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.16 2003-10-14 19:34:30 dheltzel Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.17 2003-10-16 10:51:46 redflo Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -277,7 +277,7 @@ class UserModulesLib extends TikiLib {
  			$user = $res["user"];
 //DH Fix
 			$query = "insert into `tiki_user_assigned_modules`(`user`,`name`,`position`,`ord`,`type`)
-			values(?,?,?,?,?,?,?,?,?)";
+			values(?,?,?,?,?)";
  			$this->query($query,array($user,$name,$position,$order,$type));
 		}
 	} 
