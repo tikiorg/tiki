@@ -264,11 +264,11 @@ else :
 	    {
 		eregi("(.*)? (.+@.+\\..+)", $from, $reg);
 		$list["sender"]["name"] = $reg[1];
-		$list["sender"]["email"] = $reg[2];
+		$list["sender"]["email"] = trim($reg[2]);
 	    } else {
 		eregi("(.+@.+\\..+)", $from, $reg);
 		$list["sender"]["name"] = $reg[1];
-		$list["sender"]["email"] = $reg[1];
+		$list["sender"]["email"] = trim($reg[1]);
 	    }
 	} else {
 	    $list = -1;
