@@ -1,15 +1,13 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.19 2003-11-04 09:25:15 gillesm Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.20 2003-11-10 17:14:45 mose Exp $
  *
  * \brief Categiries support class
  *
  */
  
-require_once('lib/trackers/trackerlib.php');
 
 class CategLib extends TikiLib {
-
 
 	function CategLib($db) {
 		# this is probably unneeded now
@@ -55,33 +53,26 @@ class CategLib extends TikiLib {
 	}
 
 	function get_category_path_admin($categId) {
-		$path = '';
 
 		$info = $this->get_category($categId);
 		$path = '<a class="categpath" href="tiki-admin_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>';
 
 		while ($info["parentId"] != 0) {
 			$info = $this->get_category($info["parentId"]);
-
-			$path
-				= $path = '<a class="categpath" href="tiki-admin_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>' . '>' . $path;
+			$path = '<a class="categpath" href="tiki-admin_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>' . '>' . $path;
 		}
 
 		return $path;
 	}
 
 	function get_category_path_browse($categId) {
-		$path = '';
 
 		$info = $this->get_category($categId);
-		$path
-			= '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>';
+		$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>';
 
 		while ($info["parentId"] != 0) {
 			$info = $this->get_category($info["parentId"]);
-
-			$path
-				= $path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>' . '>' . $path;
+			$path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a>' . '>' . $path;
 		}
 
 		return $path;
@@ -340,10 +331,10 @@ class CategLib extends TikiLib {
 			$info = $this->get_tracker($trackerId);
 
 			$href = 'tiki-view_tracker.php?trackerId=' . $trackerId;
-				$catObjectId = $this->add_categorized_object('tracker', $trackerId, substr($info["description"], 0, 200),$info["name"] , $href);
+			$catObjectId = $this->add_categorized_object('tracker', $trackerId, substr($info["description"], 0, 200),$info["name"] , $href);
 		}
 
-		$this->categorize($catObjectId, $trackerId);
+		$this->categorize($catObjectId, $categId);
 	}
 
 	function categorize_quiz($quizId, $categId) {
