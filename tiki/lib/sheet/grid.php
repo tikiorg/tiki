@@ -1,5 +1,11 @@
 <?php
 
+// $Header: /cvsroot/tikiwiki/tiki/lib/sheet/grid.php,v 1.11 2004-05-21 13:06:24 damosoft Exp $
+
+// Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 require_once( "PEAR.php" );
 require_once( "lib/sheet/excel/reader_ole.php" );
 require_once( "lib/sheet/excel/reader.php" );
