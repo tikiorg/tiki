@@ -2750,6 +2750,6 @@ a moderator approves it.",
 "You do not have permission to use this feature." => "You do not have permission to use this feature.",
 "You must supply all the information, including title and year." => "You must supply all the information, including title and year.",
 "Tuesday" => "Tuesday",
-"\n for rows" => "\n pour les rangées",
+"\n for rows" => "\n pour les rangÃ©es",
 "##end###" => "###end###");
 ?>
