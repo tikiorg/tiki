@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.15 2004-06-08 21:13:30 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagepermissions.tpl,v 1.16 2004-06-08 21:27:35 teedog Exp $ *}
 
 <h2>{tr}Assign permissions to page{/tr}: <a href="tiki-index.php?page={$page}">{$page}</a></h2>
 <h3>{tr}Current permissions for this page{/tr}:</h3>
@@ -39,7 +39,7 @@
 
 <h3>{tr}Current permissions for categories that this page belongs to{/tr}:</h3>
 <table class="normal">
-<tr><td class="heading">{tr}category{/tr}</td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
+<tr><td class="heading">{tr}category{/tr}</td><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td></tr>
 {cycle print=false values="even,odd"}
 {section  name=x loop=$categ_perms}
 	{section name=y loop=$categ_perms[x]}
@@ -47,10 +47,7 @@
   <td class="{cycle advance=false}">{$categ_perms[x][0].catpath}</td>
   <td class="{cycle advance=false}">{$categ_perms[x][y].groupName}</td>
   <td class="{cycle advance=false}">{$categ_perms[x][y].permName}</td>
-  <td class="{cycle}">
-    ({tr}remove from this page{/tr})
-    ({tr}remove from this structure{/tr})
-  </td></tr>
+</tr>
 	{/section}
 {sectionelse}
 <tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
