@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.39 2004-02-06 04:27:38 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.40 2004-03-12 00:01:03 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -375,5 +375,5 @@ onmouseover="this.style.textDecoration='underline';"
 </td>
 </tr></table>
 </form>
-</div></div>
+</div>
 
