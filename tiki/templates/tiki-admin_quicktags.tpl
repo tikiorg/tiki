@@ -16,10 +16,16 @@
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}label{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="10" name="taglabel" value="{$info.taglabel|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Insert (use 'text' for figuring the selection){/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="taginsert" value="{$info.taginsert|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Path to the tag icon{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="tagicon" value="{$info.tagicon|escape}" /></td></tr>
-<tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<tr class="formcolor"><td>{tr}label{/tr}:</td><td><input type="text" maxlength="255" size="10" name="taglabel" value="{$info.taglabel|escape}" /></td></tr>
+<tr class="formcolor"><td>{tr}Insert (use 'text' for figuring the selection){/tr}:</td><td><textarea maxlength="255" name="taginsert">{$info.taginsert|escape}</textarea></td></tr>
+<tr class="formcolor"><td>{tr}Path to the tag icon{/tr}:</td><td>
+<select name"tagicon">
+{section name=it loop=$list_icons}
+<option style="background-image:url('{$list_icons[it]|escape}');background-repeat:no-repeat;padding-left:26px;height:14px;"{if $info.tagicon eq $list_icons[it]} selected="selected"{/if}>{$list_icons[it]}</option>
+{/section}
+</select>
+</td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 

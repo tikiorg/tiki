@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.2 2003-12-04 13:09:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.3 2004-01-18 04:07:49 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -91,6 +91,9 @@ if ($offset > 0) {
 } else {
 	$smarty->assign('prev_offset', -1);
 }
+$icon_path = array("images","img/icons","img/icn");
+$list_icons = $quicktagslib->list_icons($icon_path);
+$smarty->assign_by_ref('list_icons', $list_icons);
 
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
