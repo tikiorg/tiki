@@ -13,7 +13,13 @@
 </tr>
 </table>
 </form>
-<br/><br/>
+
+<h3>{tr}Structures{/tr}</h3>
+{if $askremove eq 'y'}
+<a class="link" href="tiki-admin_structures.php?rremove={$remove}">{tr}Destroy the structure leaving the wiki pages{/tr}</a><br/>
+<a class="link" href="tiki-admin_structures.php?rremovex={$remove}">{tr}Destroy the structure and remove the pages{/tr}</a>
+<br/><br>
+{/if}
 <table class="normal">
 <tr>
   <td class="heading">{tr}Structure{/tr}</td>
@@ -21,7 +27,9 @@
 {cycle values="odd,even" print=false}
 {section loop=$channels name=ix}
 <tr>
-  <td class="{cycle}"><a class="tablename" href="tiki-edit_structure.php?structure={$channels[ix].page}">{$channels[ix].page}</a></td>
+  <td class="{cycle}"><a class="tablename" href="tiki-edit_structure.php?structure={$channels[ix].page}">{$channels[ix].page}</a>
+  [<a class="link" href="tiki-admin_structures.php?remove={$channels[ix].page}">{tr}remove structure{/tr}</a>]
+  </td>
 </tr>
 {/section}
 </table>
