@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.36 2004-07-23 22:05:47 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.37 2004-07-28 20:16:39 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -695,6 +695,24 @@ if (isset($_REQUEST["wikiset3d"])) {
 	if (isset($_REQUEST["wiki_3d_missing_page_color"])) {
 		$tikilib->set_preference("wiki_3d_missing_page_color", $_REQUEST["wiki_3d_missing_page_color"]);
 		$smarty->assign('wiki_3d_missing_page_color', $_REQUEST["wiki_3d_missing_page_color"]);
+	}
+}
+
+if (isset($_REQUEST["wikifooter"])) {
+	check_ticket('admin-inc-wiki');
+	if (isset($_REQUEST["feature_wiki_page_footer"]) && $_REQUEST["feature_wiki_page_footer"] = "on") {
+		$tikilib->set_preference("feature_wiki_page_footer",'y'); 
+		$smarty->assign("feature_wiki_page_footer",'y');
+	} else {
+		$tikilib->set_preference("feature_wiki_page_footer",'n'); 
+		$smarty->assign("feature_wiki_page_footer",'n');
+	}
+	if (!empty($_REQUEST["wiki_page_footer_content"])) {
+		$tikilib->set_preference("wiki_page_footer_content", $_REQUEST["wiki_page_footer_content"]); 
+		$smarty->assign("wiki_page_footer_content", $_REQUEST["wiki_page_footer_content"]);
+	} else {
+		$tikilib->set_preference("wiki_page_footer_content",'');
+		$smarty->assign("wiki_page_footer_content",'');
 	}
 }
 
