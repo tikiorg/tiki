@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.149 2003-10-13 23:03:16 ohertel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.150 2003-10-14 16:01:32 zaufi Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1652,5 +1652,15 @@ include_once ('lib/debug/debugger.php');
 //print("tiki-setup: after include debugger.php:".$tiki_timer->elapsed()."<br />");
 
 $smarty->assign_by_ref('num_queries',$tikilib->num_queries);
+
+/*
+ * Check location for Tiki Integrator script and setup aux CSS file if needed by repository
+ */
+include_once('lib/integrator/integrator.php');
+if ((strpos($_SERVER['REQUEST_URI'], 'tiki-integrator.php') != 0) && isset($_REQUEST['repID']))
+{
+    $integrator_css_file = $integrator->get_rep_css($integrator->get_repository($repID));
+    $smarty->assign('integrator_css_file', $integrator_css_file);
+}
 
 ?>
