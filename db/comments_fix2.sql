@@ -24,12 +24,7 @@
 #############
 
 # Save the old comments!
-# Note that this will only ever work once, which is *good* because we want to
-# keep it! 
 rename table tiki_comments to old2_tiki_comments;
-
-# Drop the comments table
-drop table tiki_comments;
 
 # New comments table; really just a change to object.
 CREATE TABLE tiki_comments (
