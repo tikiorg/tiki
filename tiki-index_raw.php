@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.15 2004-05-25 00:56:12 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.16 2004-07-01 19:06:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -198,7 +198,8 @@ include_once ('tiki-section_options.php');
 ask_ticket('index-raw');
 
 // Display the Index Template
-$smarty->assign('dblclickedit', 'y');
+global $feature_wiki_dblclickedit;
+$smarty->assign('feature_wiki_dblclickedit',$feature_wiki_dblclickedit);
 //$smarty->assign('mid','tiki-show_page.tpl');
 //$smarty->assign('show_page_bar','y');
 $smarty->display("tiki-show_page_raw.tpl");

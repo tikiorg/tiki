@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.30 2004-07-01 17:21:02 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_wiki.php,v 1.31 2004-07-01 19:06:16 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -337,6 +337,9 @@ if (isset($_REQUEST["wikifeatures"])) {
 
 	$tikilib->set_preference("warn_on_edit_time", $_REQUEST["warn_on_edit_time"]);
 	$smarty->assign('warn_on_edit_time', $_REQUEST["warn_on_edit_time"]);
+	
+	$tikilib->set_preference("feature_wiki_dblclickedit", $_REQUEST["feature_wiki_dblclickedit"]);
+	$smarty->assign('feature_wiki_dblclickedit', $_REQUEST["feature_wiki_dblclickedit"]);
 
 	if (isset($_REQUEST["feature_dump"]) && $_REQUEST["feature_dump"] == "on") {
 		$tikilib->set_preference("feature_dump", 'y');
@@ -378,15 +381,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 		$smarty->assign("feature_wiki_monosp", 'n');
 	}
 
-	/*  
-	  if(isset($_REQUEST["feature_wiki_notepad"]) && $_REQUEST["feature_wiki_notepad"]=="on") {
-		$tikilib->set_preference("feature_wiki_notepad",'y'); 
-		$smarty->assign("feature_wiki_notepad",'y');
-	  } else {
-		$tikilib->set_preference("feature_wiki_notepad",'n');
-		$smarty->assign("feature_wiki_notepad",'n');
-	  }
-	*/
 	if (isset($_REQUEST["feature_wiki_usrlock"]) && $_REQUEST["feature_wiki_usrlock"] == "on") {
 		$tikilib->set_preference("feature_wiki_usrlock", 'y');
 
@@ -490,18 +484,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 
 		$smarty->assign("feature_history", 'n');
 	}
-
-/* moved to admin->features
-	if (isset($_REQUEST["feature_mailin"]) && $_REQUEST["feature_mailin"] == "on") {
-		$tikilib->set_preference("feature_mailin", 'y');
-
-		$smarty->assign("feature_mailin", 'y');
-	} else {
-		$tikilib->set_preference("feature_mailin", 'n');
-
-		$smarty->assign("feature_mailin", 'n');
-	}
-*/
 
 	if (isset($_REQUEST["feature_sandbox"]) && $_REQUEST["feature_sandbox"] == "on") {
 		$tikilib->set_preference("feature_sandbox", 'y');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.244 2004-07-01 00:07:02 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.245 2004-07-01 19:06:16 teedog Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -459,6 +459,9 @@ $smarty->assign('wiki_list_links','y');
 $smarty->assign('wiki_list_backlinks','y');
 $smarty->assign('wiki_list_size','y');
 
+//default wiki double-click edit setting
+$feature_wiki_dblclickedit = 'wikitext_only';
+
 //default wiki mailin feature values
 $feature_mailin = 'n';
 $mailin_autocheck = 'n';
@@ -726,8 +729,6 @@ $smarty->assign('feature_page_title', $feature_page_title);
 $smarty->assign('w_use_db', $w_use_db);
 $smarty->assign('w_use_dir', $w_use_dir);
 $smarty->assign('feature_wiki_attachments', $feature_wiki_attachments);
-
-$smarty->assign('dblclickedit', 'n');
 
 $smarty->assign('feature_custom_home', $feature_custom_home);
 

@@ -265,6 +265,13 @@
     <table class="admin">
     <tr><td class="form">{tr}Sandbox{/tr}:</td><td><input type="checkbox" name="feature_sandbox" {if $feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Anonymous editors must input anti-bot code{/tr}:</td><td><input type="checkbox" name="feature_antibot" {if $feature_antibot eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Double-click to edit page{/tr}:</td><td>
+      <select name="feature_wiki_dblclickedit">
+        <option value="wikitext_only" {if $feature_wiki_dblclickedit eq 'wikitext_only'}selected="selected"{/if}>{tr}Double-click in wiki text only{/tr}</option>
+        <option value="whole_page" {if $feature_wiki_dblclickedit eq 'whole_page'}selected="selected"{/if}>{tr}Double-click in whole page{/tr}</option>
+        <option value="disabled" {if $feature_wiki_dblclickedit eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
+      </select>
+    </td></tr>
     <tr><td class="form">{tr}Last changes{/tr}:</td><td><input type="checkbox" name="feature_lastChanges" {if $feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Dump{/tr}:</td><td><input type="checkbox" name="feature_dump" {if $feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
     <!--<tr><td class="form">{tr}Ranking{/tr}:</td><td><input type="checkbox" name="feature_ranking" {if $feature_ranking eq 'y'}checked="checked"{/if}/></td></tr>-->
