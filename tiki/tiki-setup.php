@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.140 2003-09-09 08:32:23 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.141 2003-09-18 20:55:24 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -936,9 +936,11 @@ $smarty->assign('wiki_page_regex', $wiki_page_regex);
 // Please DO NOT modify any of the brackets in the regex(s).
 // It may seem redundent but, really, they are ALL REQUIRED.
 if ($wiki_page_regex == 'strict') {
-	$page_regex = '([A-Za-z0-9_])([\.: A-Za-z0-9_\-])*([A-Za-z0-9_])';
+    $page_regex = '([A-Za-z0-9_])([\.: A-Za-z0-9_\-])*([A-Za-z0-9_])';
+} elseif ($wiki_page_regex == 'full') {
+    $page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
 } else {
-	$page_regex = '([A-Za-z0-9_]|[\x80-\xFF])([\.: A-Za-z0-9_\-]|[\x80-\xFF])*([A-Za-z0-9_]|[\x80-\xFF])';
+    $page_regex = '([A-Za-z0-9_\'\.\"]|[\x80-\xFF])([: A-Za-z0-9_\-\'\.\"]|[\x80-\xFF])*([A-Za-z0-9_\'\.\"]|[\x80-\xFF])';
 }
 
 // PEAR::Auth support

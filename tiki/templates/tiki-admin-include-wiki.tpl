@@ -118,7 +118,14 @@
     <form method="post" action="tiki-admin.php?page=wiki">
     <table><tr>
     <td colspan="2" class="form">{tr}Wiki Page Names{/tr}</td></tr><tr><td class="form">
+    <p>Strict allows page names with only letters and numbers underscore and
+    dash.  Full adds accented characters and periods (except a period is now allowed at the end).
+    Very full adds single and double quotes, and allows periods at the end of a page name.
+    </p>
+    <p>Note that this does not affect BumpyWord recognition, only page names surrounded by (( and )).
+    </p>
     <select name="wiki_page_regex">
+    <option value='very full' {if $wiki_page_regex eq 'very_full'}selected="selected"{/if}>{tr}very full{/tr}</option>
     <option value='full' {if $wiki_page_regex eq 'full'}selected="selected"{/if}>{tr}full{/tr}</option>
     <option value='strict' {if $wiki_page_regex eq 'strict'}selected="selected"{/if}>{tr}strict{/tr}</option>
     </select>
