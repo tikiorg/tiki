@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.204 2004-06-07 14:10:46 sylvieg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.205 2004-06-08 03:11:40 lfagundes Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -2877,6 +2877,7 @@ CREATE TABLE tiki_submissions (
   title varchar(80) default NULL,
   subtitle varchar(255) default NULL,
   linkto varchar(255) default NULL,
+  lang varchar(16) default NULL,
   authorName varchar(60) default NULL,
   topicId int(14) default NULL,
   topicName varchar(40) default NULL,

@@ -1,4 +1,4 @@
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.21 2004-06-05 15:17:28 ggeller Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-pgsql.sql,v 1.22 2004-06-08 03:11:40 lfagundes Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -2270,7 +2270,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','');
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin types','tiki-articles_types.php',395,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','Blogs','tiki-list_blogs.php',450,'feature_blogs','tiki_p_read_blog','');
@@ -3264,6 +3264,7 @@ CREATE TABLE "tiki_sheet_values" (
   "calculation" varchar(255) default NULL,
   "width" smallint NOT NULL default '1',
   "height" smallint NOT NULL default '1',
+  "format" varchar(255) default NULL,
 
 
 ) ;
@@ -3372,6 +3373,7 @@ CREATE TABLE "tiki_submissions" (
   "title" varchar(80) default NULL,
   "subtitle" varchar(255) default NULL,
   "linkto" varchar(255) default NULL,
+  "lang" varchar(16) default NULL,
   "authorName" varchar(60) default NULL,
   "topicId" bigint default NULL,
   "topicName" varchar(40) default NULL,
@@ -5773,5 +5775,16 @@ CREATE  INDEX "tiki_hw_pages_studentName" ON "tiki_hw_pages"("studentName");
 --
 -- Homework tables end
 --
+
+--translated objects table
+CREATE TABLE "tiki_translated_objects" (
+  "traId" bigserial,
+  "type" varchar(50) NOT NULL,
+  "objId" varchar(255) NOT NULL,
+  "lang" varchar(16) default NULL,
+  PRIMARY KEY (type, objId),
+  KEY ( traId)
+)  ;
+
 ;
 

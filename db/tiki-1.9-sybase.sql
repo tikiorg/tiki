@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.21 2004-06-05 15:17:28 ggeller Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.22 2004-06-08 03:11:40 lfagundes Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -2824,7 +2824,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 go
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin types','tiki-articles_types.php',395,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','')
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_read_article,tiki_p_admin_cms','')
 go
 
 
@@ -4174,6 +4174,7 @@ CREATE TABLE "tiki_sheet_values" (
   "calculation" varchar(255) default NULL NULL,
   "width" numeric(4,0) default '1' NOT NULL,
   "height" numeric(4,0) default '1' NOT NULL,
+  "format" varchar(255) default NULL NULL,
 
 
 ) 
@@ -4309,6 +4310,7 @@ subId numeric(8 ,0) identity,
   "title" varchar(80) default NULL NULL,
   "subtitle" varchar(255) default NULL NULL,
   "linkto" varchar(255) default NULL NULL,
+  "lang" varchar(16) default NULL NULL,
   "authorName" varchar(60) default NULL NULL,
   "topicId" numeric(14,0) default NULL NULL,
   "topicName" varchar(40) default NULL NULL,
@@ -8075,6 +8077,19 @@ go
 --
 -- Homework tables end
 --
+
+--translated objects table
+CREATE TABLE "tiki_translated_objects" (
+traId numeric(14 ,0) identity,
+  "type" varchar(50) NOT NULL,
+  "objId" varchar(255) NOT NULL,
+  "lang" varchar(16) default NULL NULL,
+  PRIMARY KEY (type, objId),
+  KEY ( traId)
+)  
+go
+
+
 
 go
 
