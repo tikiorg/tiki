@@ -24,7 +24,7 @@ class NotepadLib extends TikiLib {
     return $res;	
   }
   
-  function replace_task($user,$noteId,$name,$data)
+  function replace_note($user,$noteId,$name,$data)
   {
     $name = addslashes($name);	
     $data = addslashes($data);
@@ -42,7 +42,7 @@ class NotepadLib extends TikiLib {
       values('$user',$noteId,'$name','$data',$now,$now)";
       $this->query($query);
       $noteId = $this->getOne("select max(noteId) from tiki_user_notes where user='$user' and name='$name' and created=$now");
-      return $taskId;
+      return $noteId;
     }
   }
    
@@ -63,8 +63,8 @@ class NotepadLib extends TikiLib {
     } else {
       $mid=""; 
     }
-    $query = "select * from tiki_user_notes where user='$user' $mid order by $sort_mode,taskId desc limit $offset,$maxRecords";
-    $query_cant = "select count(*) from tiki_user_noteswhere user='$user' $mid";
+    $query = "select * from tiki_user_notes where user='$user' $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_user_notes where user='$user' $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();

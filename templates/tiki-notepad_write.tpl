@@ -3,6 +3,7 @@
 {include file=tiki-mytiki_bar.tpl}
 <br/><br/>
 <a class="link" href="tiki-notepad_list.php">{tr}Notes{/tr}</a>
+<br/><br/>
 <form action="tiki-notepad_write.php" method="post">
 <input type="hidden" name="noteId" value="{$noteId}" />
 <table class="normal">
@@ -16,7 +17,8 @@
   </tr>
   <tr>
     <td class="formcolor">&nbsp;</td>
-    <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" /></td>
+    <td class="formcolor"><input type="submit" name="save" value="{tr}save{/tr}" />
+    </td>
   </tr>
 </table>
 </form>

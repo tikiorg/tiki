@@ -18,7 +18,7 @@ if(!$user) {
 
 if(isset($_REQUEST["delete"])) {
   foreach(array_keys($_REQUEST["note"]) as $note) {      	
-    $notepadlib->remove_task($user, $note);
+    $notepadlib->remove_note($user, $note);
   }
 }
 
