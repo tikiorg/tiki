@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.16 2004-02-26 22:48:27 techtonik Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-list_games.php,v 1.17 2004-02-28 22:01:07 techtonik Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -41,6 +41,60 @@ if ($tiki_p_play_games != 'y') {
     $smarty->display("error.tpl");
     die;
 }
+
+
+
+// 1. List Games //
+$games = array();
+$h = opendir("games/thumbs");
+
+while ($file = readdir($h)) {
+    $game = array();
+
+    // LeChuckdaPirate added "is_file" so folders don't be taken as games...
+    if (is_file("games/thumbs/$file") && $file != '.' && $file != '..' && !ereg('\.txt$',$file)) {
+
+        if (is_file("games/thumbs/$file" . '.txt')) {
+            $data = file_get_contents("games/thumbs/$file" . '.txt');
+            $desc = nl2br($data);
+        } else {
+            $desc = '';
+        }
+
+        $game["hits"] = $gamelib->get_game_hits($file);
+        $game["desc"] = $desc;
+        $game["game"] = $file;
+        $games[$file] = $game;
+    }
+}
+
+closedir($h);
+
+function compare($ar1, $ar2) {
+    return $ar2["hits"] - $ar1["hits"];
+}
+
+uasort($games, 'compare');
+
+$smarty->assign_by_ref('games', $games);
+
+
+
+// 2. Play games and count times game was played //
+$smarty->assign('play', 'n');
+
+if(isset($_REQUEST["game"])) {
+ $gamelib->add_game_hit($_REQUEST["game"]);
+ $game = str_replace( array('/','\\'), '_', $_REQUEST["game"]);
+ $parts=explode('.',$game);
+ $source='games/flash/'.$parts[0].'.'.$parts[1];
+ if (is_file($source))
+ {
+   $smarty->assign('source',$source);
+   $smarty->assign('play','y');
+ }
+}
+
 
 
 // 3. Upload games //
@@ -112,6 +166,7 @@ if (isset($_REQUEST["upload"])) {
 }
 
 
+
 // 4. Edit them //
 $smarty->assign('editgame', 'n');
 
@@ -146,6 +201,7 @@ if (isset($_REQUEST["save"]) && $tiki_p_admin_games == 'y') {
 }
 
 
+
 // 5. Delete //
 if (isset($_REQUEST["remove"]) && $tiki_p_admin_games == 'y') {
     // security issue - remove slashes to avoid deleting in parent directory
@@ -164,55 +220,7 @@ if (isset($_REQUEST["remove"]) && $tiki_p_admin_games == 'y') {
 }
 
 
-// 1. List Games //
-$games = array();
-$h = opendir("games/thumbs");
 
-while ($file = readdir($h)) {
-    $game = array();
-
-    // LeChuckdaPirate added "is_file" so folders don't be taken as games...
-    if (is_file("games/thumbs/$file") && $file != '.' && $file != '..' && !ereg('\.txt$',$file)) {
-
-        if (is_file("games/thumbs/$file" . '.txt')) {
-            $data = file_get_contents("games/thumbs/$file" . '.txt');
-            $desc = nl2br($data);
-        } else {
-            $desc = '';
-        }
-
-        $game["hits"] = $gamelib->get_game_hits($file);
-        $game["desc"] = $desc;
-        $game["game"] = $file;
-        $games[$file] = $game;
-    }
-}
-
-closedir($h);
-
-function compare($ar1, $ar2) {
-    return $ar2["hits"] - $ar1["hits"];
-}
-
-uasort($games, 'compare');
-
-$smarty->assign_by_ref('games', $games);
-
-
-// 2. Play games and count times game was played //
-$smarty->assign('play', 'n');
-
-if(isset($_REQUEST["game"])) {
- $gamelib->add_game_hit($_REQUEST["game"]);
- $game = str_replace( array('/','\\'), '_', $_REQUEST["game"]);
- $parts=explode('.',$game);
- $source='games/flash/'.$parts[0].'.'.$parts[1];
- if (is_file($source))
- {
-   $smarty->assign('source',$source);
-   $smarty->assign('play','y');
- }
-}
 
 
 $section = 'games';
