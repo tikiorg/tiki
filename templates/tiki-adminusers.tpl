@@ -1,15 +1,30 @@
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a><br/><br/>
 <h3>{tr}Add a new user{/tr}</h3>
-<form action="tiki-adminusers.php" method="post">
+<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
 <tr><td class="formcolor">{tr}User{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td></tr>
 <tr><td class="formcolor">{tr}Pass{/tr}:</td><td class="formcolor"><input type="password" name="pass" /></td></tr>
 <tr><td class="formcolor">{tr}Again{/tr}:</td><td class="formcolor"><input type="password" name="pass2" /></td></tr>
 <tr><td class="formcolor">{tr}Email{/tr}:</td><td class="formcolor"><input type="text" name="email" /></td></tr>
+<tr><td class="formcolor">{tr}Batch upload (CSV file){/tr}:</td><td class="formcolor"><input type="file" name="csvlist" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="newuser" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
 <br/><br/>
+{if (($added != "") || ($discarded != "")) }
+	<h3>{tr}Batch Upload Results{/tr}</h3>
+	Added users: {$added} - Rejected users: {$discarded}<br><br>
+	{if ($discarded != "") }
+		<table class="normal">
+			<tr><td class="heading">Username</td><td class="heading">Reason</td></tr>
+			{section name=reject loop=$discardlist}
+				<tr><td class="odd">{$discardlist[reject].name}</td><td class="odd">{$discardlist[reject].reason}</td></tr>
+			{/section}
+		</table>
+	{/if}
+{/if}
+
+<h3>
 <h3>{tr}Users{/tr}</h3>
 <div  align="center">
 <table class="findtable">

@@ -2,6 +2,73 @@
 // Initialization
 require_once('tiki-setup.php');
 
+function discardUser($u,$reason) {
+	$u['reason'] = $reason;
+	return $u;
+}
+
+function batchImportUsers() {
+global $userlib, $smarty;
+	$fname = $_FILES['csvlist']['tmp_name'];
+  	$fhandle = fopen($fname,"r");
+  	
+  	//Get the field names
+  	$fields = fgetcsv($fhandle,1000);
+  	//any?
+  	if (!$fields[0]) {
+	    $smarty->assign('msg',tra("The file is not a CSV file or has not a correct syntax"));
+	    $smarty->display("styles/$style_base/error.tpl");
+	    die;
+  	}
+  	//now load the users in a table
+  	while (!feof($fhandle)) {
+  		$data = fgetcsv($fhandle,1000);
+  		for ($i=0;$i<count($fields);$i++) {
+  			@$ar[$fields[$i]] = $data[$i];
+  		}
+  		$userrecs[] = $ar;
+  	}
+  	fclose($fhandle);
+  	// any?
+    if (!is_array($userrecs)) {
+      $smarty->assign('msg',tra("No records were found. Check the file please!"));
+      $smarty->display("styles/$style_base/error.tpl");
+      die;
+    }
+    // Process user array
+    $added = 0;
+    foreach ($userrecs as $u) {
+    	if (!$u['name']) {
+    		$discarded[] = discardUser($u,tra("User name is required"));
+    	}
+    	elseif (!$u['password']) {
+    		$discarded[] = discardUser($u,tra("Password is required"));
+    	}
+    	elseif (!$u['email']) {
+    		$discarded[] = discardUser($u,tra("Email is required"));
+    	}
+    	elseif ($userlib->user_exists($u['name'])) {
+    		$discarded[] = discardUser($u,tra("User is duplicated"));
+    	}
+    	else {
+    		$userlib->add_user($u['name'],$u['password'],$u['email']);
+    		if ($u['groups']) {
+    			$grps = explode(",",$u['groups']);
+    			foreach ($grps as $grp) {
+    				if ($userlib->group_exists($grp)) {
+    					$userlib->assign_user_to_group($u['name'],$grp);
+    				}
+    			}
+    		}
+    		$added++;
+    	}
+    }
+    $smarty->assign('added',$added);
+    if (is_array($discarded)) { $smarty->assign('discarded',count($discarded)); }
+   	$smarty->assign('discardlist',$discarded);
+}
+
+
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
     $smarty->assign('msg',tra("You dont have permission to use this feature"));
@@ -12,19 +79,25 @@ if($user != 'admin') {
 
 // Process the form to add a user here
 if(isset($_REQUEST["newuser"])) {
-  // Check if the user already exists
-  if($_REQUEST["pass"] != $_REQUEST["pass2"]) {
-    $smarty->assign('msg',tra("The passwords dont match"));
-    $smarty->display("styles/$style_base/error.tpl");
-    die;
-  } else {
-    if($userlib->user_exists($_REQUEST["name"])) {
-      $smarty->assign('msg',tra("User already exists"));
-      $smarty->display("styles/$style_base/error.tpl");
-      die;
-    } else {
-      $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"]);
-    }
+  // if no user data entered, check if it's a batch upload  
+  if ((!$_REQUEST["name"]) and (is_uploaded_file($_FILES['csvlist']['tmp_name']))) {  	
+  	batchImportUsers();
+  }
+  else {
+	  // Check if the user already exists
+	  if($_REQUEST["pass"] != $_REQUEST["pass2"]) {
+	    $smarty->assign('msg',tra("The passwords dont match"));
+	    $smarty->display("styles/$style_base/error.tpl");
+	    die;
+	  } else {
+	    if($userlib->user_exists($_REQUEST["name"])) {
+	      $smarty->assign('msg',tra("User already exists"));
+	      $smarty->display("styles/$style_base/error.tpl");
+	      die;
+	    } else {
+	      $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"]);
+	    }
+	  }
   }
 }
 
