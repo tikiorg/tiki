@@ -1,0 +1,52 @@
+contributor:
+$Author: mose $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-09-29 20:42:22 $
+
+files: 
+themes/purplemetal/theme/styles/purplemetal.css styles/purplemetal.css
+themes/purplemetal/theme/styles/purplemetal/purple_barbg.gif styles/purplemetal/purple_barbg.gif
+themes/purplemetal/theme/styles/purplemetal/purple_barleft.gif styles/purplemetal/purple_barleft.gif
+themes/purplemetal/theme/styles/purplemetal/purple_barright.gif styles/purplemetal/purple_barright.gif
+themes/purplemetal/theme/styles/purplemetal/purple_botbg.gif styles/purplemetal/purple_botbg.gif
+themes/purplemetal/theme/styles/purplemetal/purple_bottombg.gif styles/purplemetal/purple_bottombg.gif
+themes/purplemetal/theme/styles/purplemetal/purple_bottomleft.gif styles/purplemetal/purple_bottomleft.gif
+themes/purplemetal/theme/styles/purplemetal/purple_bottomright.gif styles/purplemetal/purple_bottomright.gif
+themes/purplemetal/theme/styles/purplemetal/purple_cornerbg.gif styles/purplemetal/purple_cornerbg.gif
+themes/purplemetal/theme/styles/purplemetal/purple_leftbg.gif styles/purplemetal/purple_leftbg.gif
+themes/purplemetal/theme/styles/purplemetal/purple_rightbg.gif styles/purplemetal/purple_rightbg.gif
+themes/purplemetal/theme/styles/purplemetal/purple_rtsidebg.gif styles/purplemetal/purple_rtsidebg.gif
+themes/purplemetal/theme/styles/purplemetal/purple_topbg.gif styles/purplemetal/purple_topbg.gif
+themes/purplemetal/theme/styles/purplemetal/purple_topleft.gif styles/purplemetal/purple_topleft.gif
+themes/purplemetal/theme/styles/purplemetal/purple_topleftbg.gif styles/purplemetal/purple_topleftbg.gif
+themes/purplemetal/theme/styles/purplemetal/purple_topright.gif styles/purplemetal/purple_topright.gif
+themes/purplemetal/theme/styles/purplemetal/purple_toprightbg.gif styles/purplemetal/purple_toprightbg.gif
+themes/purplemetal/theme/styles/purplemetal/nav_m.gif styles/purplemetal/nav_m.gif
+themes/purplemetal/theme/styles/purplemetal/page_0.gif styles/purplemetal/page_0.gif
+themes/purplemetal/theme/styles/purplemetal/page_back.png styles/purplemetal/page_back.png
+themes/purplemetal/theme/styles/purplemetal/tikibuttonmetal.gif styles/purplemetal/tikibuttonmetal.gif
+themes/purplemetal/theme/styles/purplemetal/tile_back.gif styles/purplemetal/tile_back.gif
+themes/purplemetal/theme/styles/purplemetal/topbgsmall.gif styles/purplemetal/topbgsmall.gif
+themes/purplemetal/theme/templates/styles/purplemetal/error.tpl templates/styles/purplemetal/error.tpl
+themes/purplemetal/theme/templates/styles/purplemetal/error_ticket.tpl templates/styles/purplemetal/error_ticket.tpl
+themes/purplemetal/theme/templates/styles/purplemetal/index.php templates/styles/purplemetal/index.php
+themes/purplemetal/theme/templates/styles/purplemetal/tiki-editpage.tpl templates/styles/purplemetal/tiki-editpage.tpl
+themes/purplemetal/theme/templates/styles/purplemetal/tiki-show_page.tpl templates/styles/purplemetal/tiki-show_page.tpl
+themes/purplemetal/theme/templates/styles/purplemetal/tiki-user_menu.tpl templates/styles/purplemetal/tiki-user_menu.tpl
+themes/purplemetal/theme/templates/styles/purplemetal/tiki.tpl templates/styles/purplemetal/tiki.tpl
+
+author:
+colorado
+
+licence:
+GNU/GPL
+
+Description: 
+Theme borrowed to another cms.
+
+Changelog:
+1 initial package
