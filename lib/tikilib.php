@@ -3727,6 +3727,7 @@ class TikiLib {
 		global $tiki_p_edit_drawings;
 		global $feature_wiki_pictures;
 		global $tiki_p_upload_picture;
+		global $feature_wiki_plurals;
 		global $feature_wiki_tables;
 		global $page;
 		global $rsslib;
@@ -4007,6 +4008,23 @@ class TikiLib {
 			foreach (array_unique($pages[2])as $page_parse) {
 				if ($desc = $this->page_exists_desc($page_parse)) {
 					$repl = '<a title="' . $desc . '" href="tiki-index.php?page=' . urlencode($page_parse). '" class="wiki">' . $page_parse . '</a>';
+				} elseif ($feature_wiki_plurals == 'y' && $this->get_locale() == 'en_US') {
+					# Link plural topic names to singular topic names if the plural
+					# doesn't exist, and the language is english
+					$plural_tmp = $page_parse;
+					# Plurals like policy / policies
+					$plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
+					# Plurals like address / addresses
+					$plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
+					# Plurals like box / boxes
+					$plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
+					# Others, excluding ending ss like address(es)
+					$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
+					if($desc = $this->page_exists_desc($plural_tmp)) {
+						$repl = "<a title='".$desc."' href='tiki-index.php?page=$plural_tmp' class='wiki'>$page_parse</a>";
+					} else {
+						$repl = "$page_parse<a href='tiki-editpage.php?page=$page_parse' class='wiki'>?</a>";
+					}
 				} else {
 					$repl = "$page_parse<a href='tiki-editpage.php?page=" . urlencode($page_parse). "' class='wiki'>?</a>";
 				}
@@ -5396,7 +5414,7 @@ Per http://www.w3.org/TR/NOTE-datetime
 			'tw' => 'tw_TW',
 		);
 
-		if (!$locale) {
+		if (!isset($locale) or !$locale) {
 			if (isset($locales[$this->get_language($user)]))
 				$locale = $locales[$this->get_language($user)];
 		#print "<pre>get_locale(): locale=$locale\n</pre>";
