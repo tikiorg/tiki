@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.55 2004-05-01 16:08:11 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.56 2004-05-02 04:18:21 rlpowell Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -465,3 +465,5 @@ ALTER TABLE `tiki_quizzes` ADD `expireDate` int(14) ;
 # Improved Quizzes end
 #
 
+# Added 1 May 2004 by Robin Lee Powell; anonymous poll votes allowed or not.
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_anonymous','n');

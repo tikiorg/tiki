@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.192 2004-05-01 15:37:30 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki.sql,v 1.193 2004-05-02 04:18:21 rlpowell Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -4096,6 +4096,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_obzip','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_page_title','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phpopentracker','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_comments','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_poll_anonymous','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_polls','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_phplayers','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_quizzes','n');
