@@ -3052,7 +3052,7 @@ CREATE TABLE tiki_tracker_items (
 DROP TABLE IF EXISTS tiki_tracker_options;
 CREATE TABLE tiki_tracker_options (
   trackerId int(12) NOT NULL default '0',
-  name varchar(80) default NULL,
+  name varchar(80) NOT NULL default '',
   value text default NULL,
   PRIMARY KEY (trackerId,name(30))
 ) TYPE=MyISAM ;
