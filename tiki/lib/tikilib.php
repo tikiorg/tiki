@@ -4874,7 +4874,7 @@ function add_pageview() {
 		$target = '';
 	    } else {
 	    	$class = 'class="wiki external"';
-	    	$ext_icon = "<img border=\"0\" src=\"img/icons/external_link.gif\" />";
+	    	$ext_icon = "<img border=\"0\" hspace=\"2\" src=\"img/icons/external_link.gif\" />";
 	    }
 
 	    if (!strstr($link, '//'))
