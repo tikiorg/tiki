@@ -2735,7 +2735,7 @@ function remove_all_versions($page, $comment = '') {
   $result = $this->query($query, array( $page ) );
   $query = "delete from `tiki_links` where `fromPage` = ?";
   $result = $this->query($query, array( $page ) );
-  $action = "Removed";
+  $action = "Removed"; //get_strings tra("Removed");
   $t = date("U");
   $query = "insert into ";
   $query .= "`tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) ";
@@ -3425,7 +3425,7 @@ function create_page($name, $hits, $data, $lastModif, $comment, $user = 'system'
 
     // Update the log
     if ($name != 'SandBox') {
-  $action = "Created";
+  $action = "Created";//get_strings tra("Created");
 
   $query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
   $result = $this->query($query, array(
@@ -4969,7 +4969,7 @@ function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip,
 
     // Update the log
     if ($pageName != 'SandBox' && !$minor) {
-  $action = "Updated";
+  $action = "Updated"; //get_strings tra("Updated")
 
   $query = "insert into `tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) values(?,?,?,?,?,?)";
   $result = $this->query($query,array($action,$pageName,(int) $t,$edit_user,$edit_ip,$edit_comment));

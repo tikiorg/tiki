@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.33 2004-03-03 23:24:37 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.34 2004-03-04 15:12:44 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -323,6 +323,8 @@ foreach ($languages as $sel) {
       // Calling php -w <filename> would take care of all comments,
       // but that does not go well with safe-mode.
       $data = preg_replace ("/(?s)\/\*.*?\*\//", "", $data);  // C comments
+	/* the "unused strings" - the strings that will be translated later through a variable are marked with //get_strings tra("string") */
+	$data = preg_replace("/(?m)^\s*\/\/get_strings.*\$/", " ", $data);
       $data = preg_replace ("/(?m)^\s*\/\/.*\$/", "", $data); // C++ comments
       $data = preg_replace ("/(?m)^\s*\#.*\$/",   "", $data); // shell comments
 
@@ -337,6 +339,8 @@ foreach ($languages as $sel) {
 
     if (preg_match ("/\.tpl$/", $file)) {
       // Do not translate text in Smarty comments: {* Smarty comment *}
+	// except if it is an "unused string marked {*get_strings {tr}string{/tr} *} 
+	$data = preg_replace('/(?s)\{\*get_strings(.*?)\*\}/', '$1', $data);
       $data = preg_replace ('/(?s)\{\*.*?\*\}/', '', $data); // Smarty comment 
 
       // Strings of the type {tr}{$perms[user].type}{/tr} need (should)
