@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision: 
-$Revision: 1.1 $
+$Revision: 1.2 $
 
 lastmodif:
-$Date: 2004-10-02 22:30:16 $
+$Date: 2004-10-02 22:42:58 $
 
 files: 
 thirdparty/tiki-mailman.php tiki-mailman.php
@@ -20,7 +20,8 @@ Description:
 Plugin to enable integrated mailman multi-list panel.
 
 Changelog:
-1 initial package
+1.2 fixe url for integrator setup
+1.1 initial package
 
 configuration help:
 You may want to add that line into your apache conf if you use rewrite rules
@@ -34,7 +35,7 @@ Domain name,domain,$HTTP_HOST
 
 sql-install:
 DELETE FROM `tiki_integrator_reps` where `repID`=42;
-INSERT INTO `tiki_integrator_reps` (`repID`, `name`, `path`, `start_page`, `css_file`, `visibility`, `cacheable`, `expiration`, `description`) VALUES (42,'Mailman lists', '$domain/', 'list.php', '', 'y', 'n', 0, '');
+INSERT INTO `tiki_integrator_reps` (`repID`, `name`, `path`, `start_page`, `css_file`, `visibility`, `cacheable`, `expiration`, `description`) VALUES (42,'Mailman lists', '$domain/', 'tiki-mailman.php', '', 'y', 'n', 0, '');
 DELETE FROM `tiki_integrator_rules` where `repID`=42;
 INSERT INTO `tiki_integrator_rules` (`repID`, `ord`, `srch`, `repl`, `type`, `casesense`, `rxmod`, `enabled`, `description`) VALUES (42, 1, 0x2e2a3c626f64795b5e3e5d2a3f3e282e2a3f293c2f626f64792e2a, 0x5c31, 'y', 'n', 'i', 'n', 'Extract code between <BODY> tags');
 INSERT INTO `tiki_integrator_rules` (`repID`, `ord`, `srch`, `repl`, `type`, `casesense`, `rxmod`, `enabled`, `description`) VALUES (42, 2, 0x696d67207372633d28227c2729283f21687474703a2f2f29, 0x696d67207372633d5c317b706174687d2f, 'y', 'n', 'i', 'y', 'Fix images path');
