@@ -2637,6 +2637,7 @@ accountId numeric(12 ,0) identity,
   "smtp" varchar(255) default NULL NULL,
   "useAuth" char(1) default NULL NULL,
   "smtpPort" numeric(4,0) default NULL NULL,
+  "anonymous" char(1) default 'y' NOT NULL,
   PRIMARY KEY ("accountId")
 )   
 go
