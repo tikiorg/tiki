@@ -28,8 +28,8 @@ $_SESSION["thedate"] = $thedate;
 // Calculate number of days in month
 // The format is S M T W T F S
 $c = new Calendar("en");
-$v = substr($c->nameOfMonth($mon),0,3);
-$dayofweek = $c->dayOfWeekStr($day,$mon,$year);
+$v = substr(tra($c->nameOfMonth($mon)),0,4);
+$dayofweek = tra($c->dayOfWeekStr($day,$mon,$year));
 
 
 $parsed = parse_url($_SERVER["REQUEST_URI"]);
@@ -63,7 +63,7 @@ if (!strstr($father,"?")) {
 }
 {/php}
 <div class="box">
-<div class="box-title" style="margin:0px;">{tr}Calendar{/tr}</div>
+<div class="box-title" style="margin:0px;">{tr}Calendar{/tr}-{tr}Filter{/tr}</div>
 <div class="box-data" style="margin:0px;padding-right:4px;">
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
