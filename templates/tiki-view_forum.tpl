@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.46 2003-11-20 17:51:07 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.47 2003-11-24 04:57:25 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br/><br/>
 {if $forum_info.show_description eq 'y'}
@@ -13,7 +13,7 @@
 {else}
 {assign var="postclass" value="forumpost"}
 {/if}
-<table width="98%">
+<table>
 <tr>
 <td>
 {if $tiki_p_forum_post_topic eq 'y'}
