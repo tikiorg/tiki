@@ -29,10 +29,10 @@ if(!isset($_REQUEST["limit"])) {
 }
 
 $allrankings = Array(
-  Array( 'name'=> 'Top pages', 'value'=>tra('wiki_ranking_top_pages')),
-  Array( 'name'=> 'Last pages', 'value'=>tra('wiki_ranking_last_pages')),
-  Array( 'name'=> 'Most relevant pages', 'value'=>tra('wiki_ranking_top_pagerank')),
-  Array( 'name'=> 'Top authors', 'value'=>tra('wiki_ranking_top_authors'))
+  Array( 'name'=> tra('Top pages'), 'value'=>'wiki_ranking_top_pages'),
+  Array( 'name'=> tra('Last pages'), 'value'=>'wiki_ranking_last_pages'),
+  Array( 'name'=> tra('Most relevant pages'), 'value'=>'wiki_ranking_top_pagerank'),
+  Array( 'name'=> tra('Top authors'), 'value'=>'wiki_ranking_top_authors')
 );
 $smarty->assign('allrankings',$allrankings);
 

@@ -9,7 +9,7 @@
 <a class="link" href="tiki-lastchanges.php?days=0">{tr}All{/tr}</a>]
 <br/><br/>
 <table class="findtable">
-<tr><td class="findtable">Find</td>
+<tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
    <form method="get" action="tiki-lastchanges.php">
      <input type="text" name="find" value="{$find}" />
