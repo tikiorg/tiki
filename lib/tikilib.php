@@ -7561,10 +7561,10 @@ function parse_data($data)
     preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/",$data,$pages);
     for($i=0;$i<count($pages[1]);$i++) {
       if($desc = $this->page_exists_desc($pages[1][$i])) {
-      	$uri_ref = urlencode("tiki-index.php?page=".$pages[1][$i]);
+      	$uri_ref = "tiki-index.php?page=".urlencode($pages[1][$i]);
         $repl = "<a title='$desc' href='$uri_ref' class='wiki'>".$pages[5][$i]."</a>";
       } else {
-      	$uri_ref = urlencode("tiki-editpage.php?page=".$pages[1][$i]);
+      	$uri_ref = "tiki-editpage.php?page=".urlencode($pages[1][$i]);
         $repl = $pages[5][$i]."<a href='$uri_ref' class='wiki'>?</a>";
       }
 
