@@ -53,6 +53,9 @@ class SearchLib extends TikiLib {
 	    case "posts":
 	      return $this->find_exact_blog_posts($words,$offset, $maxRecords);
 	      break;
+	    case "faqs":
+	      return $this->find_exact_faqs($words,$offset, $maxRecords);
+	      break;
 	    default:
 	      return $this->find_exact_all($words,$offset, $maxRecords);
 	      break;
@@ -66,15 +69,15 @@ class SearchLib extends TikiLib {
 	  $forumresults=$this->find_exact_forums($words,$offset, $maxRecords);
 	  $blogresults=$this->find_exact_blogs($words,$offset, $maxRecords);
 	  $blogpostsresults=$this->find_exact_blog_posts($words,$offset, $maxRecords);
-
+	  $faqresults=$this->find_exact_faqs($words,$offset, $maxRecords);
 
 	  //merge the results
 	  $res=array();
 	  $res["data"]=array_merge($wikiresults["data"],$artresults["data"],
-	  		$blogresults["data"],
+	  		$blogresults["data"],$faqresults["data"],
 			$blogpostsresults["data"],$forumresults["data"]);
 	  $res["cant"]=$wikiresults["cant"]+$artresults["cant"]+
-	  		$blogresults["cant"]+
+	  		$blogresults["cant"]+$faqresults["cant"]+
 			$blogpostsresults["cant"]+$forumresults["cant"];
 	  return ($res);
 	}
@@ -99,7 +102,7 @@ class SearchLib extends TikiLib {
               $href = "tiki-view_blog.php?blogId=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["title"],
-                'location' => $res["location"],
+                'location' => tra("Blog"),
                 'data' => substr($res["description"],0,250),
                 'hits' => $res["hits"],
                 'lastModif' => $res["lastModif"],
@@ -134,8 +137,8 @@ class SearchLib extends TikiLib {
             while ($res = $result->fetchRow()) {
               $href = "tiki-view_blog_post.php?blogId=".urlencode($res["blogId"])."&amp;postId=".urlencode($res["page"]);
               $ret[] = array(
-                'pageName' => $res["btitle"]."::".$res["title"],
-                'location' => tra("Blog post"),
+                'pageName' => $res["btitle"],
+                'location' => tra("Blog")."::".$res["title"],
                 'data' => substr($res["data"],0,250),
                 'hits' => $res["hits"],
                 'lastModif' => $res["created"],
@@ -169,7 +172,7 @@ class SearchLib extends TikiLib {
 	      $href = "tiki-read_article.php?articleId=".urlencode($res["page"]);
 	      $ret[] = array(
 	        'pageName' => $res["title"],
-	        'location' => $res["location"],
+	        'location' => tra("Article"),
 		'data' => substr($res["heading"],0,250),
 		'hits' => $res["reads"],
 		'lastModif' => $res["publishDate"],
@@ -206,7 +209,7 @@ class SearchLib extends TikiLib {
             $href = "tiki-index.php?page=".urlencode($res["page"]);
             $ret[] = array(
               'pageName' => $res["page"],
-	      'location' => $res["location"],
+	      'location' => tra("Wiki"),
               'data' => substr($res["data"],0,250),
               'hits' => $res["hits"],
               'lastModif' => $res["lastModif"],
@@ -220,6 +223,79 @@ class SearchLib extends TikiLib {
 	  return array('data' => array(),'cant' => 0);
 	  }
         }
+
+
+	function &find_exact_faqs($words,$offset, $maxRecords) {
+          global $feature_faqs;
+          if ($feature_faqs== 'y') {
+            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+                f.`description`,f.`hits`,f.`created`,f.`title` from
+                `tiki_searchindex` s, `tiki_faqs` f where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='faq' and
+                s.`page`=f.`faqId`";
+            $result=$this->query($query,$words,$maxRecords,$offset);
+            $querycant="select count(*) from `tiki_searchindex` s, `tiki_faqs` f where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='faq' and
+                s.`page`=f.`faqId`";
+            $cant=$this->getOne($querycant,$words);
+            $ret=array();
+            while ($res = $result->fetchRow()) {
+              $href = "tiki-view_faq.php?faqId=".urlencode($res["page"]);
+              $ret[] = array(
+                'pageName' => $res["title"],
+                'location' => tra("FAQ"),
+                'data' => substr($res["description"],0,250),
+                'hits' => $res["hits"],
+                'lastModif' => $res["created"],
+                'href' => $href,
+                'relevance' => $res["hits"]
+              );
+            }
+            $fquesres=$this->find_exact_faqquestions($words,$offset, $maxRecords);
+            return array('data' => array_merge($ret,$fquesres["data"]),'cant' => $cant+$fquesres["cant"]);
+          } else {
+            return array('data' => array(),'cant' => 0);
+          }
+        }
+
+        function &find_exact_faqquestions($words,$offset, $maxRecords) {
+          global $feature_faqs;
+          if ($feature_faqs== 'y') {
+            $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
+                f.`question`,faq.`hits`,faq.`created`,faq.`title`,f.`answer`,f.`faqId` from
+                `tiki_searchindex` s, `tiki_faqs` faq, `tiki_faq_questions` f where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='faq_question' and
+                s.`page`=f.`questionId` and
+		f.`faqId`=faq.`faqId`";
+            $result=$this->query($query,$words,$maxRecords,$offset);
+            $querycant="select count(*) from `tiki_searchindex` s, `tiki_faqs` faq, `tiki_faq_questions` f  where `searchword` in
+                (".implode(',',array_fill(0,count($words),'?')).") and
+                s.`location`='faq_question' and
+                s.`page`=f.`questionId` and
+                f.`faqId`=faq.`faqId`";
+            $cant=$this->getOne($querycant,$words);
+            $ret=array();
+            while ($res = $result->fetchRow()) {
+              $href = "tiki-view_faq.php?faqId=".urlencode($res["faqId"])."#".urlencode($res["page"]);
+              $ret[] = array(
+                'pageName' => substr($res["question"],0,40),
+                'location' => tra("FAQ")."::".$res["title"],
+                'data' => substr($res["answer"],0,250),
+                'hits' => $res["hits"],
+                'lastModif' => $res["created"],
+                'href' => $href,
+                'relevance' => $res["hits"]
+              );
+            }
+            return array('data' => $ret,'cant' => $cant);
+          } else {
+            return array('data' => array(),'cant' => 0);
+          }
+        }
+
 
         function &find_exact_forums($words,$offset, $maxRecords) {
           global $feature_forums;
@@ -241,7 +317,7 @@ class SearchLib extends TikiLib {
               $href = "tiki-view_forum.php?forumId=".urlencode($res["page"]);
               $ret[] = array(
                 'pageName' => $res["name"],
-                'location' => $res["location"],
+                'location' => tra("Forum"),
                 'data' => substr($res["description"],0,250),
                 'hits' => $res["hits"],
                 'lastModif' => $res["lastPost"],
@@ -260,24 +336,26 @@ class SearchLib extends TikiLib {
 	  global $feature_forums;
 	  if ($feature_forums == 'y') {
 	  $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
-	  	f.`data`,f.`hits`,f.`commentDate`,f.`object`,f.`title` from
-		`tiki_searchindex` s, `tiki_comments` f where `searchword` in
+	  	f.`data`,f.`hits`,f.`commentDate`,f.`object`,f.`title`,fo.`name` from
+		`tiki_searchindex` s, `tiki_comments` f,`tiki_forums` fo where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='forumcomment' and
-		s.`page`=f.`threadId`";
+		s.`page`=f.`threadId` and
+		fo.`forumId`=f.`object`";
 	  $result=$this->query($query,$words,$maxRecords,$offset);
 
-	  $querycant="select count(*) from `tiki_searchindex` s, `tiki_comments` f where `searchword` in
+	  $querycant="select count(*) from `tiki_searchindex` s, `tiki_comments` f ,`tiki_forums` fo where `searchword` in
 	  	(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='forumcomment' and
-		s.`page`=f.`threadId`";
+		s.`page`=f.`threadId` and
+		fo.`forumId`=f.`object`";
 	  $cant=$this->getOne($querycant,$words);
 	  $ret=array();
 	  while ($res = $result->fetchRow()) {
 	    $href = "tiki-view_forum_thread.php?comments_parentId=".urlencode($res["page"])."&amp;forumId=".urlencode($res["object"]);
 	    $ret[] = array(
 	      'pageName' => $res["title"],
-	      'location' => 'forum comment',
+	      'location' => tra("Forum")."::".$res["name"],
 	      'data' => substr($res["data"],0,250),
 	      'hits' => $res["hits"],
 	      'lastModif' => $res["commentDate"],
