@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.211 2004-04-09 19:36:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.212 2004-04-10 18:36:28 lphuberdeau Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -550,6 +550,8 @@ $feature_obzip = 'n';
 $smarty->assign('feature_obzip', $feature_obzip);
 $direct_pagination = 'n';
 $smarty->assign('direct_pagination', $direct_pagination);
+$feature_sheet = 'n';
+$smarty->assign('feature_sheet', $feature_sheet);
 
 $rss_forums = 'y';
 $rss_forum = 'y';
