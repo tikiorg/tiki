@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.32 2005-03-13 11:17:24 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.33 2005-03-13 11:33:36 ohertel Exp $ *}
 
 <h1><a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a></h1>
 
@@ -243,7 +243,6 @@ class="prevnext">{tr}All{/tr}</a>
   <br /><input type="submit" value="{tr}ok{/tr}" />
   <input type="hidden" name="find" value="{$find|escape}" />
   <input type="hidden" name="max_records" value="{$maxRecords}" />
-  {/if}
 
   </p>
 {/if}
