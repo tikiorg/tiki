@@ -110,8 +110,8 @@ foreach($files as $file) {
 }
 print('"'.'##end###'.'" => "'.'###end###'.'"'.");?&gt;\n<br/>");  
 foreach($lang as $key=>$val) {
-  fwrite($fw,'"'.$key.'" => "'.$val.'",');
-  //fwrite($fw,'"'.$key.'" => "'.utf8_decode($val).'",');
+  fwrite($fw,'"'.str_replace("{\$", "{\\\$",$key).'" => "'.str_replace("{\$", "{\\\$", $val).'",');
+  //fwrite($fw,'"'.str_replace("{\$", "{\\\$",$key).'" => "'.utf8_decode(str_replace("{\$", "{\\\$", $val)).'",');
   if (isset($used[$key]))
      fwrite($fw, "\n");
   else
