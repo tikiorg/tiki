@@ -6,4 +6,4 @@
 #
 # You might run this on an existing database, them compare the results with the defaults in the default-inserts.sql file
 
-SELECT concat( 'INSERT IGNORE INTO tiki_preferences(name,value) VALUES (''',name,''',''',value,''');') FROM tiki_preferences;
+SELECT concat( 'INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES (''',name,''',''',value,''');') FROM tiki_preferences;
