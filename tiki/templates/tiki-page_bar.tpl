@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.29 2004-02-25 17:17:42 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.30 2004-02-26 06:30:29 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -67,15 +67,7 @@
   <td>
     <div class="button2">
       <a title="Show quick help for wiki syntax"
-         href="javascript:flip('edithelpzone');
-hide('helpimg');
-hide('helplinks');
-hide('helplists');
-hide('helpdraw');
-hide('helpmisc');
-hide('helpdynamic');
-hide('helpplugins');
-hide('helptboxes');" class="linkbut">{tr}wiki help{/tr}</a>
+         href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}wiki help{/tr}</a>
     </div>
   </td>
 {/if}
@@ -90,7 +82,7 @@ hide('helptboxes');" class="linkbut">{tr}wiki help{/tr}</a>
    <td>
     <div class="button2">
       <a title="View/post comments"
-         href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');"
+         href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
          class="linkbut">
 	{if $comments_cant == 0}
           {tr}add comment{/tr}
@@ -112,13 +104,13 @@ hide('helptboxes');" class="linkbut">{tr}wiki help{/tr}</a>
   &&  count($atts) > 0
   ||  $tiki_p_wiki_attach_files      == 'y'
   ||  $tiki_p_wiki_admin_attachments == 'y')}
- 
-  <td>
-    
-    <div class="button2">
-      <a title="Manage attachments for this page" href="javascript:document.location='#attachments';flip('attzone');" class="linkbut">
 
-        {* display 'attach file' only if no attached files or 
+  <td>
+
+    <div class="button2">
+      <a title="Manage attachments for this page" href="#attachments" onclick="javascript:flip('attzone');" class="linkbut">
+
+        {* display 'attach file' only if no attached files or
          * only $tiki_p_wiki_attach_files perm
          *}
         {if $atts_cnt == 0

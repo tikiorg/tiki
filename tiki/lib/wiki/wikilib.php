@@ -231,7 +231,7 @@ class WikiLib extends TikiLib {
 		$this->query($query, array( $newId, $oldId ) );
 	
 		// theme_control_objects(objId,name)
-		$query = "update `tiki_theme_control_objects` set `objId`=?, name=? where `objId`=?";
+		$query = "update `tiki_theme_control_objects` set `objId`=?, `name`=? where `objId`=?";
 		$this->query($query, array( $newId, $newName, $oldId ) );
 	
 		$query = "update `tiki_wiki_attachments` set `page`=? where `page`=?";
@@ -291,7 +291,7 @@ class WikiLib extends TikiLib {
 	function wiki_attach_file($page, $name, $type, $size, $data, $comment, $user, $fhash) {
 		$comment = strip_tags($comment);
 		$now = date("U");
-		$query = "insert into tiki_wiki_attachments(page,filename,filesize,filetype,data,created,downloads,user,comment,path) values(?,?,?,?,?,?,0,?,?,?)";
+		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,`comment`,`path`) values(?,?,?,?,?,?,0,?,?,?)";
 		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $now,"$user","$comment","$fhash"));
 	}
 

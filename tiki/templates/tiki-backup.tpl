@@ -59,7 +59,6 @@
 <i>{tr}Creating backups may take a long time. If the process is not completed you will see a blank screen. If so you need to increment the maximum script execution time from your php.ini file{/tr}</i>
 <br /><br />
 <a href="tiki-backup.php?generate=1" class="linkbut">{tr}Create new backup{/tr}</a>
-<b>Warning : Backups are known not to work since some time now. Don't rely on them. Chealer9 20031117</b>
 </div>
 <br />
 <div class="simplebox">

@@ -1225,6 +1225,11 @@ div.articletrailer {
 	padding-right: 0.8em;
 }
 
+td.articletrailer {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
 /* Text in the article heading */
 div.articleheadingtext {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -1424,7 +1429,7 @@ div.commentsedithelp {
 
 /* The toolbar where the ordering number of comments and find box are found */
 div.commentstoolbar {
-	background-color: #99AAAE;
+	background-color: #9cba00;
 	color: black;
 	margin-bottom: 20px;
 	width: 97%;
@@ -1449,7 +1454,7 @@ div.commentscomment {
 }
 /* The header for a comment */
 div.commentheader {
-	background-color: #99AAAE;
+	background-color: #9cba00;
 	border: 0px solid blue;
 	font-size: 11px;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;

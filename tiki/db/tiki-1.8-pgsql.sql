@@ -1655,7 +1655,7 @@ CREATE TABLE "tiki_history" (
   "user" varchar(200) default NULL,
   "ip" varchar(15) default NULL,
   "comment" varchar(200) default NULL,
-  "data" bytea,
+  "data" text,
   PRIMARY KEY ("pageName","version")
 ) ;
 

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-tc.php,v 1.2 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-tc.php,v 1.3 2004-02-26 06:30:24 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,11 +29,14 @@ if ($feature_theme_control == 'y') {
 		}
 	}
 
-	//Objects
-	if (isset($cat_type) && isset($cat_objid)) {
-		$tc_theme = $tcontrollib->tc_get_theme_by_object($cat_type, $cat_objid);
-	}
-
+    // OBJECTS - if object has been particularly set, override SECTION or CATEGORIES $tc_theme
+	// if not set, make sure we don't squash whatever $tc_theme may have been
+    if (isset($cat_type) && isset($cat_objid)) {
+        if( $obj_theme = $tcontrollib->tc_get_theme_by_object($cat_type, $cat_objid) ) {
+            $tc_theme = $obj_theme;
+        }
+    }
+										
 	if ($tc_theme) {
 		$style = $tc_theme;
 

@@ -74,7 +74,7 @@
     <option value="tiki-index.php?page={$page|escape:"url"}">{tr}Structures{/tr}...</option>
 	{section name=struct loop=$showstructs}
 	  <option value="tiki-index.php?page_ref_id={$showstructs[struct].req_page_ref_id}">
-{if $showstructs[struct].page_alias} 
+{if $showstructs[struct].page_alias}
 	{$showstructs[struct].page_alias}
 {else}
 	{$showstructs[struct].pageName}
@@ -154,13 +154,13 @@
 {if $feature_wiki_comments eq 'y' and $show_page eq 'y'}
 <span class="tabbut">
 {if $comments_cant > 0}
-	<a href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
 {else}
-	<a href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
 {/if}
 {/if}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
-<span class="tabbut"><a href="javascript:document.location='#attachments';flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
 {/if}
 {/if}
 
@@ -187,12 +187,12 @@
 				<tr>
 	<td width='33%'>
 		{if $prev_info and $prev_info.page_ref_id}
-			<a class="tocnavlink" href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}">&lt;&lt; 
+			<a class="tocnavlink" href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}">&lt;&lt;
 				{if $prev_info.page_alias}
 					{$prev_info.page_alias}
 				{else}
 					{$prev_info.pageName}
-				{/if} 
+				{/if}
 			</a>
 
 		{else}
@@ -217,7 +217,7 @@
 						{$next_info.page_alias}
 					{else}
 						{$next_info.pageName}
-					{/if} 
+					{/if}
 					&gt;&gt;
 				</a>
 			{else}

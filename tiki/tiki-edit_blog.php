@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.20 2004-01-30 22:47:47 swillie Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_blog.php,v 1.21 2004-02-26 06:30:24 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -82,23 +82,24 @@ if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
 	$heading = $_REQUEST["heading"];
 } else {
 	$heading = '<div class="blogtitle">{tr}Blog{/tr}: {$title}</div>' . "\n";
-
 	$heading .= '<div class="bloginfo">' . "\n";
 	$heading .= '{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br />' . "\n";
 	$heading .= '{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br /><br />' . "\n";
-	$heading .= '({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})' . "\n";
+	$heading .= '<table><tr><td>' . "\n";
+	$heading .= '({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})</td>' . "\n";
+	$heading .= '<td style="text-align:right;">' . "\n";
 	$heading .= '{if $tiki_p_blog_post eq "y"}' . "\n";
 	$heading .= '{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}' . "\n";
-	$heading .= '[<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}">{tr}Post{/tr}</a>]' . "\n";
-	$heading .= '{/if}' . "\n";
+	$heading .= '<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}"><img src="img/icons/edit.gif" border="0" alt="{tr}Post{/tr}" title="{tr}post{/tr}" /></a>{/if}{/if}' . "\n";
 	$heading .= '{if $rss_blog eq "y"}' . "\n";
-	$heading .= '[<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}">RSS</a>]' . "\n";
-	$heading .= '{/if}' . "\n";
-	$heading .= '{/if}' . "\n";
+	$heading .= '<a class="bloglink" href="tiki-blog_rss.php?blogId={$blogId}"><img src="img/icons/mode_desc.gif" border="0" alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" /></a>{/if}' . "\n";
 	$heading .= '{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y"}' . "\n";
-	$heading .= '[<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit{/tr}</a>]' . "\n";
-	$heading .= '{/if}' . "\n";
-	$heading .= '</div>' . "\n";
+	$heading .= '<a class="bloglink" href="tiki-edit_blog.php?blogId={$blogId}"><img src="img/icons/config.gif" border="0" alt="{tr}Edit blog{/tr}" title="{tr}Edit blog{/tr}" /></a>{/if}' . "\n";
+	$heading .= '{if $user and $feature_user_watches eq "y"}' . "\n";
+	$heading .= '{if $user_watching_blog eq "n"}' . "\n";
+	$heading .= '<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=add"><img border="0" alt="{tr}monitor this blog{/tr}" title="{tr}monitor this blog{/tr}" src="img/icons/icon_watch.png" /></a>' . "\n";
+	$heading .= '{else}<a href="tiki-view_blog.php?blogId={$blogId}&amp;watch_event=blog_post&amp;watch_object={$blogId}&amp;watch_action=remove"><img border="0" alt="{tr}stop monitoring this blog{/tr}" title="{tr}stop monitoring this blog{/tr}" src="img/icons/icon_unwatch.png" /></a>' . "\n";
+	$heading .= '{/if}{/if}</td></tr></table></div>' . "\n";
 	$heading .= '<div class="blogdesc">{tr}Description:{/tr} {$description}</div>';
 }
 

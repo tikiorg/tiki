@@ -38,7 +38,7 @@
 <tr>
 <td  style="text-align:center;" class="{cycle advance=false}"><input type="checkbox" name="sites[{$items[user].siteId}]" /></td>
 <td class="{cycle advance=false}">{$items[user].name}</td>
-<td class="{cycle advance=false}">{$items[user].url}</td>
+<td class="{cycle advance=false}"><a href="{$items[user].url}" target="_blank">{$items[user].url}</a></td>
 <td class="{cycle advance=false}"><img src='img/flags/{$items[user].country}.gif' alt='{$items[user].country}'/></td>
 <td class="{cycle advance=false}">{$items[user].hits}</td>
 <td  class="{cycle advance=false}">

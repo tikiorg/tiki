@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/bluemetal/tiki-show_page.tpl,v 1.6 2004-02-26 06:30:29 mose Exp $ *}
+
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
 {if $structure eq 'y' and $page_info.page_alias ne ''}
 {$page_info.page_alias}
@@ -75,7 +77,7 @@
 	    <option>{tr}Structures{/tr}...</option>
 		{section name=struct loop=$showstructs}
 		  <option value="{$showstructs[struct].req_page_ref_id}">
-{if $showstructs[struct].page_alias} 
+{if $showstructs[struct].page_alias}
 {$showstructs[struct].page_alias}
 {else}
 {$showstructs[struct].pageName}
@@ -155,13 +157,13 @@
 {if $feature_wiki_comments eq 'y' and $show_page eq 'y'}
 <span class="tabbut">
 {if $comments_cant > 0}
-	<a href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
 {else}
-	<a href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
 {/if}
 {/if}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
-<span class="tabbut"><a href="javascript:document.location='#attachments';flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
 {/if}
 
 <div class="wikitext">{if $structure eq 'y'}
@@ -169,21 +171,21 @@
 <table>
 <tr><td>
     {if $prev_info and $prev_info.page_ref_id}
-		<a href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}' 
+		<a href="tiki-index.php?page_ref_id={$prev_info.page_ref_id}"><img src='img/icons2/nav_dot_right.gif' border='0' alt='{tr}Previous page{/tr}'
    			{if $prev_info.page_alias}
    				title='{$prev_info.page_alias}'
    			{else}
    				title='{$prev_info.pageName}'
    			{/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>{/if}
 	{if $parent_info}
-   	<a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src='img/icons2/nav_home.gif' border='0' alt='{tr}Parent page{/tr}' 
+   	<a href="tiki-index.php?page_ref_id={$parent_info.page_ref_id}"><img src='img/icons2/nav_home.gif' border='0' alt='{tr}Parent page{/tr}'
         {if $parent_info.page_alias}
    	      title='{$parent_info.page_alias}'
         {else}
    	      title='{$parent_info.pageName}'
         {/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>{/if}
    	{if $next_info and $next_info.page_ref_id}
-      <a href="tiki-index.php?page_ref_id={$next_info.page_ref_id}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}' 
+      <a href="tiki-index.php?page_ref_id={$next_info.page_ref_id}"><img src='img/icons2/nav_dot_left.gif' border='0' alt='{tr}Next page{/tr}'
 		  {if $next_info.page_alias}
 			  title='{$next_info.page_alias}'
 		  {else}
@@ -191,7 +193,7 @@
 		  {/if}/></a>{else}<img src='img/icons2/8.gif' border='0'/>
 	{/if}
 	{if $home_info}
-   	<a href="tiki-index.php?page_ref_id={$home_info.page_ref_id}"><img src='img/icons2/home.gif' border='0' alt='TOC' 
+   	<a href="tiki-index.php?page_ref_id={$home_info.page_ref_id}"><img src='img/icons2/home.gif' border='0' alt='TOC'
 		  {if $home_info.page_alias}
 			  title='{$home_info.page_alias}'
 		  {else}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.39 2004-02-24 21:52:00 wolff_borg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.40 2004-02-26 06:30:29 mose Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -400,7 +400,7 @@
 
         <td>&nbsp;</td>
         <td class="form">
-            	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=SmartyTplEditingDev" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}AutoLinks{/tr}">{/if}
+            	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=SmartyTplEditingDev" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Template Viewing{/tr}">{/if}
         		{tr}Tiki Template Viewing{/tr}
         		{if $feature_help eq 'y'}</a>{/if}
         		:</td>
@@ -421,7 +421,7 @@
 
         <td>&nbsp;</td>
         <td class="form">
-				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=PhpLayers" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Integrator{/tr}">{/if}
+				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=PhpLayers" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}PHPLayers{/tr}">{/if}
 				{tr}PhpLayers Dynamic menus{/tr}
 				{if $feature_help eq 'y'}</a>{/if}
 				:</td>
@@ -615,7 +615,16 @@
         		:</td>
         <td><input type="checkbox" name="feature_contact"
             {if $feature_contact eq 'y'}checked="checked"{/if}/></td>
-      </tr><tr>
+        </tr><tr>
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=ContactUs" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Contact Us{/tr}">{/if}
+        		{tr}Contact Us (Anonymous){/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="contact_anon"
+            {if $contact_anon eq 'y'}checked="checked"{/if}/></td>            
+                   
+        </tr><tr>
 
         <td class="heading" colspan="5"
             align="center">{tr}User Features{/tr}</td>

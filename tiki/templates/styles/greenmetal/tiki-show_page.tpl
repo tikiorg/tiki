@@ -1,3 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/greenmetal/tiki-show_page.tpl,v 1.4 2004-02-26 06:30:29 mose Exp $ *}
+
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">{$page}</a>
 {if $lock}
 <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
@@ -122,13 +124,13 @@
 {if $feature_wiki_comments eq 'y' and $show_page eq 'y'}
 <span class="tabbut">
 {if $comments_cant > 0}
-	<a href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink" style="background: #FFAAAA">{if $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></span>
 {else}
-	<a href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
+	<a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="tablink">{tr}comment{/tr}</a></span>
 {/if}
 {/if}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
-<span class="tabbut"><a href="javascript:document.location='#attachments';flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+<span class="tabbut"><a href="#attachments" onclick="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
 {/if}
 
 <div class="wikitext">{if $structure eq 'y'}
@@ -138,12 +140,12 @@
 	<tr>
 		<td width='33%'>
 			{if $struct.prev_page}
-				<a href="tiki-index.php?page={$struct.prev_page}&amp;structID={$key}" class="tocnavlink">&lt;&lt; 
+				<a href="tiki-index.php?page={$struct.prev_page}&amp;structID={$key}" class="tocnavlink">&lt;&lt;
 					{if $struct.prev_page_alias}
 						{$struct.prev_page_alias}
 					{else}
 						{$struct.prev_page}
-					{/if} 
+					{/if}
 				</a>
 
 			{else}
@@ -161,7 +163,7 @@
 						{$struct.next_page_alias}
 					{else}
 						{$struct.next_page}
-					{/if} 
+					{/if}
 					&gt;&gt;
 				</a>
 			{else}

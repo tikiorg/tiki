@@ -1,4 +1,4 @@
-﻿<?php // -*- coding:utf-8 -*-
+<?php // -*- coding:utf-8 -*-
 $lang=Array(
 "User_versions_for" => "User_versions_for",
 "Version" => "版本",

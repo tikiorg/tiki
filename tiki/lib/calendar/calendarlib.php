@@ -134,7 +134,7 @@ class CalendarLib extends TikiLib {
 					"calitemId" => $res["calitemId"],
 					"calname" => $res["calname"],
 					"time" => $tstart,
-					"type" => (string)$res["status"],
+					"type" => $res["status"],
 					"web" => $res["url"],
 					"prio" => $res["priority"],
 					"url" => "tiki-calendar.php?todate=$i&amp;editmode=1&amp;calitemId=" . $res["calitemId"],
@@ -214,7 +214,7 @@ class CalendarLib extends TikiLib {
 						"prio" => "",
 						"time" => $tstart,
 						"type" => "art",
-						"url" => "tiki-read_article.php?atricleId=" . $res["articleId"],
+						"url" => "tiki-read_article.php?articleId=" . $res["articleId"],
 						"name" => $res["title"],
 						"head" => "<b>" . date("H:i", $res["created"]). "</b> " . tra("in"). " <b>" . addslashes($res["topicName"]). "</b>",
 						"description" => "<i>" . tra("by"). " " . $res["authorName"] . "</i><br/>" . addslashes(str_replace('"', "'", $res["heading"]))
@@ -548,7 +548,7 @@ class CalendarLib extends TikiLib {
 			$query = "update `tiki_calendar_items` set `calendarId`=?,`user`=?,`start`=?,`end`=? ,`locationId`=? ,`categoryId`=?,`priority`=?,`status`=?,`url`=?,";
 			$query.= "`lang`=?,`name`=?,`description`=?,`lastmodif`=? where `calitemId`=?";
 			$bindvars=array((int)$data["calendarId"],$user,(int)$data["start"],(int)$data["end"],(int)$data["locationId"],(int)$data["categoryId"],(int)$data["priority"],
-			                (string)$data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],(int)time(),(int)$calitemId);
+			                $data["status"],$data["url"],$data["lang"],$data["name"],$data["description"],(int)time(),(int)$calitemId);
 			$result = $this->query($query,$bindvars);
 		} else {
 			$now=time();

@@ -92,7 +92,9 @@ class SearchLib extends TikiLib {
 		$this->query("delete from `tiki_searchsyllable` where `syllable`=?",array($syllable),-1,-1,false);
 		// search the searchindex - can take long time
 		$ret=array();
-		$query="select `searchword`,sum(`count`) as `cnt` from `tiki_searchindex` 
+		if (!isset($search_max_syllwords))
+			$search_max_syllwords = 100;
+		$query="select `searchword`, sum(`count`) as `cnt` from `tiki_searchindex`
 			where `searchword` like ? group by `searchword` order by `cnt` desc";
 		$result=$this->query($query,array('%'.$syllable.'%'),$search_max_syllwords); // search_max_syllwords: how many different searchwords that contain the syllable are taken into account?. Sortet by number of occurences.
 		while ($res = $result->fetchRow()) {
