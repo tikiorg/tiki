@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.111 2003-10-02 14:18:08 lrargerich Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.112 2003-10-06 08:52:25 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,8 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 --
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [NEW] plugin for automatic link building of sourceforge tracker items
+  using {SF(aid=>xxxxxx)}{SF}
 * [NEW] Editable dynamic variables can be added to tiki objects using %name%. This allows
   quick editing and displaying of short information in wiki pages and other objects.
 * [NEW] Last n messages posted in a forum can be displayed when listing forum topics
