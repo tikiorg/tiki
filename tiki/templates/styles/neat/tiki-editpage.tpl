@@ -136,7 +136,7 @@
 </tr>
 {/if}
 <!--<a class="link" href="javascript:insertAt('editwiki',"''text here''");">i</a>-->
-{if $feature_wiki_description}
+{if $feature_wiki_description eq 'y'}
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
 <tr><td class="formcolor">{tr}Edit{/tr}:<br/><br />{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}</td>

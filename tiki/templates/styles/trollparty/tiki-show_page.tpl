@@ -32,7 +32,7 @@
 </div>
 </div>
 
-{if $feature_wiki_description}
+{if $feature_wiki_description eq 'y'}
 <div class="toptitledesc">
 {if $lock}
 <img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
