@@ -42,6 +42,9 @@
 {/section}
 </select>
 {/if}
+{if $ins_fields[ix].type eq 'i'}
+<input type="file" name="ins_{$ins_fields[ix].name}"/>
+{/if}
 {if $ins_fields[ix].type eq 't'}
 <input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />
 {/if}
@@ -81,11 +84,17 @@
 <option value="o" {if $status eq 'o'}selected="selected"{/if}>{tr}open{/tr}</option>
 <option value="c" {if $status eq 'c'}selected="selected"{/if}>{tr}closed{/tr}</option>
 </select>
+{if $fields[ix].type ne 'i'}
 </td></tr>
+{/if}
 {section name=ix loop=$fields}
 {if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'f'}
+{if $fields[ix].type ne 'i'}
 <tr><td class="formcolor">{$fields[ix].name}</td>
+{/if}
+{if $fields[ix].type ne 'i'}
 <td class="formcolor">
+{/if}
 {if $fields[ix].type eq 't' or $fields[ix].type eq 'a'}
 <input type="text" name="{$fields[ix].name|escape}" value="{$fields[ix].value|escape}" />
 {/if}
@@ -120,8 +129,10 @@
 <option value="n" {if $fields[ix].value eq 'n'}selected="selected"{/if}>{tr}unchecked{/tr}</option>
 </select>
 {/if}
+{if $fields[ix].type ne 'i'}
 </td>
 </tr>
+{/if}
 {/if}
 {/section}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="filter" value="{tr}filter{/tr}" /></td></tr>
@@ -169,6 +180,11 @@
 <td class="{cycle advance=false}">{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}">{/if}
 {if $items[user].field_values[ix].type eq 'f'}
 {$items[user].field_values[ix].value|tiki_short_datetime}
+{else}
+{$items[user].field_values[ix].value}
+{/if}
+{if $items[user].field_values[ix].type eq 'i'}
+<img src="{$items[user].field_values[ix].value}"/>
 {else}
 {$items[user].field_values[ix].value}
 {/if}

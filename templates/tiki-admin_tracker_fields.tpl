@@ -21,9 +21,13 @@
 <option value="u" {if $type eq 'u'}selected="selected"{/if}>{tr}user selector{/tr}</option>
 <option value="g" {if $type eq 'g'}selected="selected"{/if}>{tr}group selector{/tr}</option>
 <option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}date and time{/tr}</option>
+<option value="i" {if $type eq 'i'}selected="selected"{/if}>{tr}image{/tr}</option>
 </select>
 </td></tr>
-<tr id='trkfldoptions' {if $type eq 'd'}style="display:block;"{else}style="display:none;"{/if}><td class="formcolor">{tr}Options (separated by commas used in dropdowns only){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$options|escape}" /></td></tr>
+
+<tr id='trkfldoptions' {if $type eq 'd'}style="display:block;"{else}style="display:none;"{/if}><td class="formcolor">{tr}Options (list commas separated or xSize){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$options|escape}" /></td></tr>
+
+
 <tr><td class="formcolor">{tr}Is column visible when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column links to edit/view item?{/tr}</td><td class="formcolor"><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>

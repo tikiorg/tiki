@@ -451,7 +451,7 @@ class TrackerLib extends TikiLib {
 		return $retval;
 	}
 
-	// Inserts or updates a tracker  
+				// Inserts or updates a tracker  
 	function replace_tracker($trackerId, $name, $description, $showCreated, $showLastModif, $useComments, $useAttachments, $showStatus) {
 
 		if ($trackerId) {
