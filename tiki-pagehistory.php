@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.22 2004-08-17 16:33:30 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.23 2004-08-20 11:26:08 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -107,7 +107,7 @@ if (isset($_REQUEST["compare"])) {
 			break;
 	}
 	$smarty->assign_by_ref('old', $old);
-	if ($_REQUEST["newver"] == 0) {
+	if ($_REQUEST["newver"] == 0 || $_REQUEST["newver"] == $info["version"]) {
 		$new =& $info;
 		$smarty->assign_by_ref('new', $info);
 	}
