@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.32 2004-03-03 20:12:31 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.33 2004-03-03 23:24:37 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -448,7 +448,6 @@ foreach ($languages as $sel) {
     foreach ($to_translate as $key => $val) {
       writeFile_and_User ($fw, "// ");
       writeTranslationPair ($fw, $key, $val);
-      addToWordlist ($wordlist, $val);
       if ($module || $close) {
 	$closeText  = "";
 	$moduleText = "";
