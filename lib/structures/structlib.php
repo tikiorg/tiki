@@ -34,7 +34,7 @@ class StructLib extends TikiLib {
 	function s_get_structure_pages($structure) {
 		$ret = array($structure);
 
-		$query = "select `page` from `tiki_structures` where `parent`=? order by ".$tiki->convert_sortmode("pos_asc");
+		$query = "select `page` from `tiki_structures` where `parent`=? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($structure));
 
 		while ($res = $result->fetchRow()) {
@@ -53,7 +53,7 @@ class StructLib extends TikiLib {
 
 	function s_export_structure_tree($structure, $level = 0) {
 
-		$query = "select `page` from `tiki_structures` where `parent`=? order by ".$tiki->convert_sortmode("pos_asc");
+		$query = "select `page` from `tiki_structures` where `parent`=? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($structure));
 
 		if ($level == 0) {
@@ -202,7 +202,7 @@ class StructLib extends TikiLib {
 		$first = true;
 		//$level++;
 		$sublevel = 0;
-		$query = "select `page`, `page_alias` from `tiki_structures` where `parent`=? order by ".$tiki->convert_sortmode("pos_asc");
+		$query = "select `page`, `page_alias` from `tiki_structures` where `parent`=? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($page));
 		$subs = array();
 
@@ -253,7 +253,7 @@ class StructLib extends TikiLib {
 		$first = true;
 		//$level++;
 		$sublevel = 0;
-		$query = "select `page`, `page_alias` from `tiki_structures` where `parent`=? order by ".$tiki->convert_sortmode("pos_asc");
+		$query = "select `page`, `page_alias` from `tiki_structures` where `parent`=? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($page));
 		$subs = array();
 
@@ -309,7 +309,7 @@ class StructLib extends TikiLib {
 
 		// If we have children then get the first children
 		if ($deep) {
-			$query = "select `page` from `tiki_structures` where `parent`=? order by ".$tiki->convert_sortmode("pos_asc");
+			$query = "select `page` from `tiki_structures` where `parent`=? order by ".$this->convert_sortmode("pos_asc");
 
 			$result = $this->query($query,array($page));
 
@@ -327,7 +327,7 @@ class StructLib extends TikiLib {
 		if (!$parent)
 			return '';
 
-		$query = "select `page` from `tiki_structures` where `parent`=? and `pos`>? order by ".$tiki->convert_sortmode("pos_asc");
+		$query = "select `page` from `tiki_structures` where `parent`=? and `pos`>? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($parent,$pos));
 
 		if ($result->numRows()) {
@@ -348,7 +348,7 @@ class StructLib extends TikiLib {
 		if (!$parent)
 			return '';
 
-		$query = "select `page` from `tiki_structures` where `parent`=? and `pos`<? order by ".$tiki->convert_sortmode("pos_asc");
+		$query = "select `page` from `tiki_structures` where `parent`=? and `pos`<? order by ".$this->convert_sortmode("pos_asc");
 		$result = $this->query($query,array($parent,$pos));
 
 		if ($result->numRows()) {

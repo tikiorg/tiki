@@ -102,11 +102,11 @@ class UsersLib extends TikiLib {
 
 	$query = "select `permName`, `groupName`
 	    from `users_objectpermissions`
-	    where `objectId` ='$objectId' and
+	    where `objectId` =? and
 	    `objectType` = ?";
 	$bindvars = array($objectId, $objectType);
 	$result = $this->query($query, $bindvars);
-	while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+	while($res = $result->fetchRow()) {
 	    $this->assign_object_permission($res["groupName"],$destinationObjectId,$objectType,$res["permName"]);
 	}
 	return true;
@@ -398,7 +398,7 @@ class UsersLib extends TikiLib {
 	}
 
 
-	$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+	$res = $result->fetchRow();
 	$hash=md5($user.$pass.$res['email']);
 	$hash2 = md5($pass);
 
@@ -738,7 +738,7 @@ class UsersLib extends TikiLib {
 	$query = "select `default_group` from `users_users` where `login` = ?";
 	$result = $this->query($query, array($user));
 	if($result->numRows()) {
-	    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+	    $res = $result->fetchRow();
 	    $ret = $res['default_group'];
 	} else {
 	    $ret ='';
@@ -750,7 +750,7 @@ class UsersLib extends TikiLib {
 	$query = "select `groupHome` from `users_groups` where `groupName`=?";
 	$result = $this->query($query,array($group));
 	if($result->numRows()) {
-	    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+	    $res = $result->fetchRow();
 	    $ret = $res['groupHome'];
 	} else {
 	    $ret ='';
