@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.54 2003-08-01 10:31:14 redflo Exp $*}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.55 2003-08-07 10:39:55 franck Exp $*}
 
 {*
  Next version feature frozen in 1,7 release...
@@ -340,6 +340,23 @@
   {/if}
   {if $tiki_p_admin_faqs eq 'y'}
   &nbsp;<a href="tiki-list_faqs.php" class="linkmenu">{tr}Admin FAQs{/tr}</a><br />
+  {/if}
+  </div>
+{/if}
+
+HEllo?????{$feature_maps}
+
+{if $feature_maps eq 'y'}
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class="separator" href="javascript:icntoggle('mapssmenu');"><img src="img/icons/fo.gif" border="0" name="mapsmenuicn" alt=""/>&nbsp;</a>
+  {else}<a class="separator" href="javascript:toggle('mapsmenu');">[-]</a>{/if} 
+  <a href="tiki-map.phtml" class="separator">{tr}Maps{/tr}</a>
+  {if $feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('mapsmenu');">[+]</a>{/if}
+  </div>
+  <div id="mapsmenu" style="{$mnu_mapsmenu}">
+  {if $tiki_p_map_edit eq 'y'}
+  &nbsp;<a href="tiki-map_edit.php" class="linkmenu">{tr}Edit mapfiles{/tr}</a><br />
   {/if}
   </div>
 {/if}

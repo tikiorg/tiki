@@ -2,7 +2,7 @@
 require_once('tiki-setup.php');
 $smarty->assign('mid','map/tiki-map.tpl');
 
-if($feature_map != 'y') {
+if(@$feature_maps != 'y') {
   $smarty->assign('msg',tra("Feature disabled"));
   $smarty->display("styles/$style_base/error.tpl");
   die;
