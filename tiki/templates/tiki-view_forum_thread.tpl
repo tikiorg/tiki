@@ -6,7 +6,7 @@
 a moderator approves it.{/tr}</small>
 </div>
 {/if}
-<a class="link" href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
+<a class="link" href="tiki-forums.php">{tr}Tiki forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
 <br/><br/>
 {if $openpost eq 'y'}
 {assign var="postclass" value="forumpostopen"}
@@ -61,6 +61,14 @@ a moderator approves it.{/tr}</small>
 	  {if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
 		  <a href="mailto:{$thread_info.user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
 	  {/if}
+	  {if $user and $feature_user_watches eq 'y'}
+		{if $user_watching_topic eq 'n'}
+			<a href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=add"><img border='0' alt='{tr}monitor this forum{/tr}' title='{tr}monitor this topic{/tr}' src='img/icons/icon_watch.png' /></a>
+		{else}
+			<a href="tiki-view_forum_thread.php?topics_offset={$smary.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$comments_parentId}&amp;watch_event=forum_post_thread&amp;watch_object={$comments_parentId}&amp;watch_action=remove"><img border='0' alt='{tr}stop monitoring this forum{/tr}' title='{tr}stop monitoring this topic{/tr}' src='img/icons/icon_unwatch.png' /></a>
+		{/if}
+	  {/if}
+
 
   	</td>
   </tr>

@@ -422,6 +422,14 @@ $smarty->assign('forum_list_lastpost','y');
 $smarty->assign('forum_list_visits','y');
 $smarty->assign('forum_list_desc','y');
 
+$smarty->assign('gal_list_name','y');
+$smarty->assign('gal_list_description','y');
+$smarty->assign('gal_list_created','y');
+$smarty->assign('gal_list_lastmodif','y');
+$smarty->assign('gal_list_user','y');
+$smarty->assign('gal_list_imgs','y');
+$smarty->assign('gal_list_visits','y');
+
 $blog_list_title = 'y';
 $blog_list_description = 'y';
 $blog_list_created = 'y';

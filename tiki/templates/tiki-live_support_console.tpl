@@ -36,7 +36,14 @@
     {if count($requests) > 0}
     <h3>{tr}Support requests{/tr}</h3>
     {if $new_requests eq 'y'}
-    	NEW!
+		<script>
+			var NSsound = navigator.plugins && navigator.plugins["LiveAudio"];
+  			var IEsound = navigator.plugins && document.all;
+  			var audioEnabled = NSsound || IEsound;
+  			if (audioEnabled) {
+				<EMBED SRC="aladdin.mid" HIDDEN="true" AUTOSTART="true"	STARTTIME="00:10" ENDTIME="00:15">
+  			}
+		</script>
     {/if}
 	<table id='reqs' class="normal">
 		<tr>

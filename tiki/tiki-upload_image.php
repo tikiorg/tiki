@@ -22,8 +22,6 @@ $foo2=str_replace("tiki-upload_image","show_image",$foo["path"]);
 $smarty->assign('url_browse',httpPrefix().$foo1);
 $smarty->assign('url_show',httpPrefix().$foo2);
 
-
-
 $smarty->assign('show','n');
 // Process an upload here
 if(isset($_REQUEST["upload"])) {
@@ -211,7 +209,6 @@ if(isset($_REQUEST["upload"])) {
 
       $imageId = $imagegallib->insert_image($_REQUEST["galleryId"],$name,$_REQUEST["description"],$filename, $type, $data, $size, $size_x, $size_y, $user,$thumb_data,$thumb_type);
     }
-    
     if(!$imageId) {
        $smarty->assign('msg',tra('Upload failed'));
        $smarty->display("styles/$style_base/error.tpl");

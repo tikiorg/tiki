@@ -167,12 +167,20 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
         } else { 
         	$smarty->assign('was_queued','n');
  	        if($_REQUEST["comments_threadId"]==0) {
+ 	          if($forum_info["outbound_address"]) {
+ 	            $cdata_data = $_REQUEST["comments_data"];
+ 	            if($_REQUEST["comments_topicssummary"]) {
+ 	            	$cadata_data = $_REQUEST["comments_topicssummary"].$cdata_data;
+ 	            }
+				@mail($forum_info["outbound_address"], '['.$forum_info['name'].']'.$_REQUEST["comments_title"],$cdata_data); 	          	
+ 	          }
 	          if($forum_info["useMail"]=='y') {
 	              $smarty->assign('mail_forum',$forum_info["name"]);
 	              $smarty->assign('mail_title',$_REQUEST["comments_title"]);
 	              $smarty->assign('mail_date',date("u"));
 	              $smarty->assign('mail_message',$_REQUEST["comments_data"]);
 	              $smarty->assign('mail_author',$user);
+	              $smarty->assign('mail_topic',tra(' new topic:').$_REQUEST["comments_title"]);
 	              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
 	              @mail($forum_info["mail"], tra('Tiki email notification'),$mail_data);
 	          }
@@ -185,6 +193,7 @@ if($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 	              $smarty->assign('mail_date',date("u"));
 	              $smarty->assign('mail_message',$_REQUEST["comments_data"]);
 	              $smarty->assign('mail_author',$user);
+	              $smarty->assign('mail_topic',tra(' new topic:').$_REQUEST["comments_title"]);
 	              $mail_data = $smarty->fetch('mail/forum_post_notification.tpl');
 	              @mail($not['email'], tra('Tiki email notification'),$mail_data);
 	            }
