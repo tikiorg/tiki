@@ -10,6 +10,7 @@ if ($feature_trackers == 'y') {
 	}
 
 	$smarty->assign('modLastModifItems', $ranking["data"]);
+    $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 }
 
 ?>

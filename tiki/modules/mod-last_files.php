@@ -7,5 +7,6 @@ if (isset($module_params["galleryId"])) {
 }
 
 $smarty->assign('modLastFiles', $ranking["data"]);
+$smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
 ?>
