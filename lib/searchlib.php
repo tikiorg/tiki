@@ -44,7 +44,8 @@ class SearchLib extends TikiLib {
 		if (count($id) < 2)
 			$sql .= ',1 AS id2';
 
-		$sql2 = ' FROM ' . $h['from'] . ' WHERE 1';
+		$sql2 = ' FROM ' . $h['from'] . ' WHERE ';
+		$sql2 .= (isset($h['filter']))? $h['filter'] : '1';
 		$search_fields = array($h['name']);
 
 		if ($h['data'] && $h['name'] != $h['data'])
@@ -103,7 +104,7 @@ class SearchLib extends TikiLib {
 		}
 
 		$sql .= $sql2 . ' ORDER BY ' . $orderby . ' DESC LIMIT ' . $offset . ',' . $maxRecords;
-
+echo $sql;
 		$result = $this->query($sql);
 		$ret = array();
 
@@ -213,19 +214,16 @@ class SearchLib extends TikiLib {
 
 	function find_forums($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
 		static $search_forums = array(
-			'from' => 'tiki_comments c LEFT JOIN
-			tiki_forums f ON objectType = "forum" AND f.forumId=c.object',
+			'from' => 'tiki_comments c, tiki_forums f',
 			'name' => 'c.title',
 			'data' => 'c.data',
 			'hits' => 'c.hits',
 			'lastModif' => 'c.commentDate',
 			'href' => 'tiki-view_forum_thread.php?forumId=%d&amp;comments_parentId=%d',
-			'id' => array(
-			'f.forumId',
-			'c.threadId'
-		),
+			'id' => array('f.forumId', 'c.threadId'),
 			'pageName' => 'CONCAT(name, ": ", title)',
 			'search' => array(),
+			'filter' => 'c.objectType = "forum" AND f.forumId=c.object',
 		);
 
 		return $this->_find($search_forums, $words, $offset, $maxRecords, $fulltext);
