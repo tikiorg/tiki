@@ -121,7 +121,7 @@ class tiki extends Wollabot_Module {
 		} else {
 			global $tikilib;
 			if (!isset($args[0]) or $args[0] < 0 or $args[0] > 20) { $args[0] = 0; }
-			$page = $tikilib->list_pages($args[0], 1, 'lastModif_desc', $arg);
+			$page = $tikilib->list_pages($args[0], 1, 'lastModif_desc', $arg[1);
 			return "Page [ ".$arg." ".$args[0]." ]:[ http://tikiwiki.org/".$page['data'][0]['pageName']." ]";
 		}
 	}
