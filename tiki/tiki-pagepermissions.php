@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.18 2004-06-08 21:13:30 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagepermissions.php,v 1.19 2004-06-14 19:37:37 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,12 @@ include_once ("tiki-setup.php");
 
 include_once ('lib/notifications/notificationlib.php');
 include_once('lib/structures/structlib.php');
+if ($feature_categories == 'y') {
+	include_once('lib/categories/categlib.php');
+	if (!isset($categlib)) {
+		$categlib = new CategLib($dbTiki);
+	}
+}
 
 if ($feature_wiki != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
