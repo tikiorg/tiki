@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.16 2004-01-04 19:41:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_tracker_fields.php,v 1.17 2004-01-04 19:47:00 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,7 +42,7 @@ if (!isset($_REQUEST["fieldId"])) {
 $smarty->assign('fieldId', $_REQUEST["fieldId"]);
 
 if (!isset($_REQUEST['position'])) {
-	$_REQUEST['position'] = 1;
+	$_REQUEST['position'] = $trklib->get_last_position($_REQUEST["trackerId"])+1;
 }
 
 if (!isset($_REQUEST['options'])) {
@@ -104,7 +104,10 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('name', '');
 	$smarty->assign('type', '');
 	$smarty->assign('options', '');
-	$smarty->assign('position', '');
+	$smarty->assign('isMain', $isMain);
+	$smarty->assign('isSearchable', $isSearchable);
+	$smarty->assign('isTblVisible', $isTblVisible);
+	$smarty->assign('position', $trklib->get_last_position($_REQUEST["trackerId"])+1);
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
