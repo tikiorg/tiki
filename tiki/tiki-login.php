@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.17 2003-09-24 06:17:29 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.18 2003-10-19 14:00:15 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.17 2003-09-24 06:17:29 rlpowell Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.18 2003-10-19 14:00:15 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -22,10 +22,10 @@ if (!isset($_REQUEST["login"])) {
 //Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
 if (!(isset($_SESSION['loginfrom']))) {
 	if (isset($_SERVER['HTTP_REFERER'])) {
-		$_SESSION['loginfrom'] = $_SERVER['HTTP_REFERER'];
+		$_SESSION['loginfrom'] = basename($_SERVER['HTTP_REFERER']);
 	} else {
 		//Oh well, back to tikiIndex
-		$_SESSION['loginfrom'] = $tikiIndex;
+		$_SESSION['loginfrom'] = basename($tikiIndex);
 	}
 }
 
@@ -40,8 +40,7 @@ if (isset($_REQUEST['page'])) {
 if ($tiki_p_admin == 'y') {
 	if (isset($_REQUEST["su"])) {
 		if ($userlib->user_exists($_REQUEST['username'])) {
-			$_SESSION['user'] = $_REQUEST["username"];
-
+			$_SESSION["$user_cookie_site"] = $_REQUEST["username"];
 			$smarty->assign_by_ref('user', $_REQUEST["username"]);
 		}
 
@@ -53,7 +52,7 @@ if ($tiki_p_admin == 'y') {
 	}
 }
 
-$https_mode = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+$https_mode = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
 $https_login_required = $tikilib->get_preference('https_login_required', 'n');
 
 if ($https_login_required == 'y' && !$https_mode) {
@@ -105,7 +104,7 @@ if ($isvalid) {
 	} else {
 		// User is valid and not due to change pass.. start session
 		//session_register('user',$user);
-		$_SESSION['user'] = $user;
+		$_SESSION["$user_cookie_site"] = $user;
 
 		$smarty->assign_by_ref('user', $user);
 		$url = $_SESSION['loginfrom'];
@@ -117,7 +116,7 @@ if ($isvalid) {
 			if (isset($_REQUEST['rme']) && $_REQUEST['rme'] == 'on') {
 				$hash = $userlib->get_user_hash($_REQUEST['user']);
 
-				setcookie('tiki-user', $hash, time() + $remembertime);
+				setcookie($user_cookie_site, $hash, time() + $remembertime);
 			}
 		}
 	}
@@ -140,7 +139,7 @@ if ($https_mode) {
 			if ($http_port != 80)
 				$prefix .= ':' . $http_port;
 
-			$prefix .= $https_prefix;
+			$prefix .= $httpxs_prefix;
 			$url = $prefix . $url;
 
 			if (SID)
