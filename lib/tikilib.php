@@ -9186,7 +9186,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
   {
     $cant =0;
     $i=0;
-    while( ($str{$i}==$car) && ($i<strlen($str)) ){
+    while(($i<strlen($str)) && (isset($str{$i})) && ($str{$i}==$car)){
       $i++;
       $cant++;
     }
