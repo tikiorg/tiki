@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.31 2005-01-22 22:54:53 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.32 2005-03-12 16:48:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -99,6 +99,10 @@ if ($tiki_p_view_image_gallery != 'y') {
 
 	$smarty->display("error.tpl");
 	die;
+}
+
+if (!isset($_REQUEST["galleryId"])) {
+	$_REQUEST["galleryId"] = 0;
 }
 
 if ($_REQUEST["galleryId"] != 0) {
@@ -295,7 +299,7 @@ if (isset($_REQUEST["find"])) {
 }
 
 // get subgalleries first
-$subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, $find, $_REQUEST["galleryId"]);
+$subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $_REQUEST["galleryId"]);
 $remainingImages = $maxImages-count($subgals['data']);
 $newoffset = $offset -$subgals['cant'];
 $images = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);

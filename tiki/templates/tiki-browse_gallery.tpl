@@ -1,9 +1,9 @@
-<a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
+<h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {tr}Browsing Gallery{/tr}: {$name}
-</a>
-<br /><br />
+</a></h1>
 
 &nbsp;&nbsp;
+<span class="button2"><a href="tiki-galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a></span>
 {if $system eq 'n'}
   {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
     <span class="button2"><a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut">{tr}edit gallery{/tr}</a></span>
@@ -14,19 +14,23 @@
       <span class="button2"><a href="tiki-upload_image.php?galleryId={$galleryId}" class="linkbut">{tr}upload image{/tr}</a></span>
     {/if}
   {/if}
+  {if $tiki_p_batch_upload_image_dir eq 'y'}
+    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
+      <span class="button2"><a href="tiki-batch_upload.php?galleryId={$galleryId}" class="linkbut">{tr}Directory batch{/tr}</a></span>
+    {/if}
+  {/if}
 {/if}
 <span class="button2"><a href="tiki-list_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}list gallery{/tr}</a></span>
 {if $rss_image_gallery eq 'y'}
   <span class="button2"><a href="tiki-image_gallery_rss.php?galleryId={$galleryId}" class="linkbut">RSS</a></span>
 {/if}
-
+<br /><br />
 {if strlen($description) > 0}
 	<div class="imgaldescr">
 	  {$description}
   </div>
 {/if}
-<br /><br />
-
+<br />
 
 	<span class="sorttitle">{tr}Sort Images by{/tr}</span>
     [ <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
@@ -127,9 +131,19 @@
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
 {/if}
-
   </div>
 </div>
+<table class="findtable">
+<tr><td class="findtable">{tr}Find{/tr}
+   <form method="get" action="tiki-browse_gallery.php">
+     <input type="text" name="find" value="{$find|escape}" />
+     <input type="submit" value="{tr}find{/tr}" name="search" />
+     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
+     <input type="hidden" name="galleryId" value="{$galleryId}" />
+   </form>
+   </td>
+</tr>
+</table>
 {if $feature_image_galleries_comments == 'y'
   && (($tiki_p_read_comments == 'y'
   && $comments_cant != 0)

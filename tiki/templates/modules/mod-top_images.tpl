@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images.tpl,v 1.9 2003-11-24 01:37:55 gmuslera Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_images.tpl,v 1.10 2005-03-12 16:51:00 mose Exp $ *}
 
 {if $feature_galleries eq 'y'}
 {if $nonums eq 'y'}
@@ -7,7 +7,7 @@
 {eval var="{tr}Top Images{/tr}" assign="tpl_module_title"}
 {/if}
 
-{tikimodule title=$tpl_module_title name="top_images"}
+{tikimodule title=$tpl_module_title name="top_images" flip=$module_params.flip decorations=$module_params.decorations}
 
 <table  border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modTopImages}

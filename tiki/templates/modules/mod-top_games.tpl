@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_games.tpl,v 1.8 2004-03-07 23:12:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-top_games.tpl,v 1.9 2005-03-12 16:51:00 mose Exp $ *}
 
 {if $feature_games eq 'y'}
 {if $nonums neq 'y'}
@@ -7,7 +7,7 @@
 {eval var="{tr}Top games{/tr}" assign="tpl_module_title"}
 {/if}
 
-{tikimodule title=$tpl_module_title name="top_games"}
+{tikimodule title=$tpl_module_title name="top_games" flip=$module_params.flip decorations=$module_params.decorations}
 <table  border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modTopGames}
 <tr>{if $nonums neq 'y'}<td class="module" valign="top">{$smarty.section.ix.index_next})</td>{/if}

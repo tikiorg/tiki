@@ -1,14 +1,14 @@
-<a class="pagetitle" href="tiki-minical_prefs.php">{tr}Mini Calendar: Preferences{/tr}</a>
+<h1><a class="pagetitle" href="tiki-minical_prefs.php">{tr}Mini Calendar: Preferences{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}UserCalendarDoc" target="tikihelp" class="tikihelp" title="{tr}User Calendar Doc{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-minical_prefs.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Calendar Preferences Doc tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
-{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+{/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
 <br />
@@ -22,7 +22,7 @@
 </tr>
 </table>
 
-<h3>{tr}Preferences{/tr}</h3>
+<h2>{tr}Preferences{/tr}</h2>
 <form action="tiki-minical_prefs.php" method="post">
 <table class="normal">
 <tr>
@@ -84,7 +84,7 @@
 </table>
 </form>
 <a name="import"></a>
-<h3>{tr}Import CSV file{/tr}</h3>
+<h2>{tr}Import CSV file{/tr}</h2>
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
 <table class="normal">
 <tr>
@@ -93,7 +93,7 @@
 </table>
 </form>
 
-<h3>{tr}Admin topics{/tr}</h3>
+<h2>{tr}Admin topics{/tr}</h2>
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
 <table class="normal">
 <tr>

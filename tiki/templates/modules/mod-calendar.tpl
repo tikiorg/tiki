@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.35 2004-03-10 03:24:13 gmuslera Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.36 2005-03-12 16:50:59 mose Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -64,7 +64,7 @@ if (count($query)>0) {
 $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y");
 {/php}
 
-{tikimodule title="{tr}Calendar{/tr}-{tr}Filter{/tr}" name="calendar"}
+{tikimodule title="{tr}Calendar{/tr}-{tr}Filter{/tr}" name="calendar" flip=$module_params.flip decorations=$module_params.decorations}
     <table  border="0" cellspacing="0" cellpadding="0">
     <!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
     <tr>

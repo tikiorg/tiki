@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.48 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.49 2005-03-12 16:48:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -53,7 +53,7 @@ $ag_home = '';
 if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
 
 // Process the form to add a group
-if (isset($_REQUEST["newgroup"])) {
+if (isset($_REQUEST["newgroup"]) and $_REQUEST["name"]) {
 	check_ticket('admin-groups');
 	// Check if the user already exists
 	if ($userlib->group_exists($_REQUEST["name"])) {
@@ -75,7 +75,7 @@ if (isset($_REQUEST["newgroup"])) {
 }
 
 // modification
-if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"])) {
+if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUEST["name"])) {
 	check_ticket('admin-groups');
 	$userslibadmin->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
@@ -226,6 +226,7 @@ if (isset($_REQUEST['add'])) {
 
 if ($_REQUEST['group'] and isset($_REQUEST['show'])) {
 	$memberslist = $userlib->get_group_users($_REQUEST['group']);
+	$cookietab = "3";
 } else {
 	$memberslist = '';
 }

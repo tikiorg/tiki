@@ -33,6 +33,7 @@ $langmapping = array(
     'pt' => array(  'Portuguese',       tra("Português")       ),
     'pt-br' => array(  'Português Brasileiro',  tra("Brazilian Portuguese")  ),
     'ru' => array(  'Русско',      tra("Russian")      ),
+    'sb' => array(  'Pijin Solomon', tra("Pijin Solomon")    ),
     'sk' => array(   'Slovenský',  tra("Slovak")       ),
     'sr' => array(   'Српски',  tra("Serbian")       ),
     'sr-latn' => array(   'Srpski',  tra("Serbian Latin")       ),

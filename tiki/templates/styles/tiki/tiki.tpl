@@ -3,11 +3,11 @@
 {assign var=cols value=1}
 {assign var=rcol value="n"}
 {assign var=lcol value="n"}
-{if $feature_left_column eq 'y' and count($left_modules) gt 0}
+{if $feature_left_column ne 'n' and count($left_modules) gt 0}
 {assign var=cols value=$cols+1}
 {assign var=lcol value="y"}
 {/if}
-{if $feature_right_column eq 'y' and count($right_modules) gt 0}
+{if $feature_right_column ne 'n' and count($right_modules) gt 0}
 {assign var=cols value=$cols+1}
 {assign var=rcol value="y"}
 {/if}

@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.60 2005-02-24 18:33:28 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.61 2005-03-12 16:49:18 mose Exp $
 var feature_no_cookie = 'n';
 
 function getElementById(id) {
@@ -334,7 +334,7 @@ function setfolderstate(foo, def) {
 }
 
 function setsectionstate(foo, img) {
-	status = getCookie(foo, "menu");
+	var status = getCookie(foo, "menu");
         if (status != "c") {
 	    show(foo);
             if (img) src = "o" + img;

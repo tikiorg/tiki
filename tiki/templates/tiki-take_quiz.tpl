@@ -1,5 +1,5 @@
 <!- templates/tiki-take_quiz.tpl start ->
-<form name="aform" action="tiki-take_quiz.php" method="post">
+<form enctype="multipart/form-data" name="aform" action="tiki-take_quiz.php" method="post">
 <input type="hidden" name="quizId" value="{$quizId|escape}" />
 <input id='timeleft' name="timeleft" type="hidden" value={$quiz_info.timeLimitsec} /><br />
 {if $quiz_info.timeLimited eq 'y'}
@@ -38,6 +38,12 @@ settimeleft(itid);
   <input type="radio" value="{$questions[ix].options[jx].optionId|escape}" name="question_{$questions[ix].questionId}">{$questions[ix].options[jx].optionText}<br />
   {/section}
 </div>  
+{if $questions[ix].type eq "f" }
+<br/>
+<div class="quizupload">
+Supporting Documentation: <input name="question_upload_{$questions[ix].questionId}" type="file">
+</div>
+{/if}
 </div>  
 {/section}
 <input type="submit" value="{tr}send answers{/tr}" name="ans" />

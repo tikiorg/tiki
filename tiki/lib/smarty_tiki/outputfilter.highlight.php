@@ -25,14 +25,25 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *           from application.
  * Author:   Greg Hinkle <ghinkl@users.sourceforge.net>
  *           patched by mose <mose@feu.org>
+ *           Referer parsing by mdavey
  * -------------------------------------------------------------
  */
  function smarty_outputfilter_highlight($source, &$smarty) {
+    global $feature_referer_highlight;
  	
     $highlight = $_REQUEST['highlight']; 
-    $words = $highlight;
+    if(isset($feature_referer_highlight) && $feature_referer_highlight == 'y') {
+        $refererhi = _refererhi();
+        if(isset($refererhi) && !empty($refererhi)) {
+            if(isset($highlight) && !empty($highlight)) {
+                $highlight = $highlight." ".$refererhi;
+            } else {
+                $highlight = $refererhi;
+            }
+        }
+    }
     if (!isset($highlight) || empty($highlight)) {
-			return $source;
+                        return $source;
     }
 
     // Pull out the script blocks
@@ -50,8 +61,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
     // Wrap all the highlight words with tags bolding them and changing
     // their background colors
-    $wordArr = split(" ",addslashes($words));
     $i = 0;
+    $wordArr = split('(%20)|[\+ ]',(htmlentities($highlight))); // htmlentities is safe but it would be better to do strip_tags() only the performance hit is too great
     foreach($wordArr as $word) {
 			$word = preg_quote($word);
 			$source = preg_replace('~('.$word.')~si', '<span style="color:black;background-color:'.$colorArr[$i].';">$1</span>', $source); 
@@ -68,5 +79,17 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
     }
 
     return $source;
+ }
+
+ // helper function
+ // q= for Google, p= for Yahoo
+ function _refererhi() {
+     $referer = parse_url($_SERVER['HTTP_REFERER']);
+     parse_str($referer['query'],$vars);
+     if (isset($vars['q'])) {
+         return $vars['q'];
+     } else if (isset($vars['p'])) {
+         return $vars['p'];
+     }
  }
 ?>

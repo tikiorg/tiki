@@ -1,21 +1,20 @@
-<a href="tiki-sheets.php" class="pagetitle">{tr}TikiSheet{/tr}</a>
+<h1><a href="tiki-sheets.php" class="pagetitle">{tr}TikiSheet{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=TikiSheet" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Tiki Sheet{/tr}">
 <img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
 
-
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-sheets.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}sheets tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
-
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
+</h1>
 
 {if $tiki_p_edit_sheet eq 'y' or $tiki_p_admin_sheet eq 'y' or $tiki_p_admin eq 'y'}
 {if $edit_mode eq 'y'}
 {if $sheetId eq 0}
-<h3>{tr}Create a sheet{/tr}</h3>
+<h2>{tr}Create a sheet{/tr}</h2>
 {else}
-<h3>{tr}Edit this sheet:{/tr} {$title}</h3>
+<h2>{tr}Edit this sheet:{/tr} {$title}</h2>
 <a class="linkbut" href="tiki-sheets.php?edit_mode=1&amp;sheetId=0">{tr}create new sheet{/tr}</a>
 {/if}
 <div align="center">

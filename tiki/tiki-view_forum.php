@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.82 2005-01-22 22:54:57 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.83 2005-03-12 16:49:02 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -256,30 +256,6 @@ $comments_objectId = $comments_prefix_var.$_REQUEST["$comments_object_var"];
 $smarty->assign('warning', 'n');
 
 
-// Here we send the user to the right thread/topic if it already exists;
-// this is used for the 'discuss' tab.
-if (isset($_REQUEST["comments_postComment"])) 
-{
-    // Check if the thread/topic already existis
-    $threadId = $commentslib->check_for_topic(
-	    $_REQUEST["comments_title"],
-	    $_REQUEST["comments_data"]
-	    );
-
-    // If it does, send the user there with no delay.
-    if ( $threadId )
-    {
-	// If the samely titled comment already
-	// exists, go straight to it.
-	$url = 'tiki-view_forum_thread.php?comments_parentId=' 
-	    . urlencode( $threadId )
-	    . '&topics_threshold=0&topics_offset=1&topics_sort_mode=commentDate_desc&topics_find=&forumId='
-	    . urlencode( $_REQUEST["forumId"]);
-	header('location: ' . $url);
-	exit;
-    }
-}
-
 if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
 	if ((!empty($_REQUEST["comments_title"])) && (!empty($_REQUEST["comments_data"]))) {
@@ -395,26 +371,35 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    $_REQUEST['comment_topicsmiley'] = '';
 
 			$message_id = '';
-			$threadId =
-			    $commentslib->post_new_comment(
-				    $comments_objectId,
-				    0, $user, $_REQUEST["comments_title"],
-				    ($_REQUEST["comments_data"]),
-				    $message_id,
-				    '', // in_reply_to
-				    $_REQUEST["comment_topictype"],
-				    $_REQUEST["comment_topicsummary"],
-				    $_REQUEST['comment_topicsmiley']
-				    );
 
-			if( $threadId ) 
+			// Check if the thread/topic already exist
+			$threadId = $commentslib->check_for_topic(
+				$_REQUEST["comments_title"],
+				$_REQUEST["comments_data"]
+				);
+
+			// The thread/topic does not already exist
+			if( ! $threadId )
 			{
-			    // The thread *WAS* successfully
-			    // created.
+			    $threadId =
+				$commentslib->post_new_comment(
+					$comments_objectId,
+					0, $user, $_REQUEST["comments_title"],
+					($_REQUEST["comments_data"]),
+					$message_id,
+					'', // in_reply_to
+					$_REQUEST["comment_topictype"],
+					$_REQUEST["comment_topicsummary"],
+					$_REQUEST['comment_topicsmiley']
+					);
 
-			    // Deal with mail notifications.
-			    include_once('lib/notifications/notificationemaillib.php');
-			    sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $user, $_REQUEST["comments_title"], '', '', $threadId);
+			    // The thread *WAS* successfully created.
+			    if( $threadId ) 
+			    {
+				// Deal with mail notifications.
+				include_once('lib/notifications/notificationemaillib.php');
+				sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $user, $_REQUEST["comments_title"], '', '', $threadId);
+			    }
 			}
 
 
@@ -565,6 +550,31 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 	    $smarty->assign('warning', 'y');
 	}
+    }
+}
+
+// Here we send the user to the right thread/topic if it already exists; this
+// is used for the 'discuss' tab.  This is done down here because the thread
+// might have to be created, which happens above.
+if (isset($_REQUEST["comments_postComment"])) 
+{
+    // Check if the thread/topic already existis
+    $threadId = $commentslib->check_for_topic(
+	    $_REQUEST["comments_title"],
+	    $_REQUEST["comments_data"]
+	    );
+
+    // If it does, send the user there with no delay.
+    if ( $threadId )
+    {
+	// If the samely titled comment already
+	// exists, go straight to it.
+	$url = 'tiki-view_forum_thread.php?comments_parentId=' 
+	    . urlencode( $threadId )
+	    . '&topics_threshold=0&topics_offset=1&topics_sort_mode=commentDate_desc&topics_find=&forumId='
+	    . urlencode( $_REQUEST["forumId"]);
+	header('location: ' . $url);
+	exit;
     }
 }
 

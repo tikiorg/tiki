@@ -1,18 +1,35 @@
 {*Smarty template*}
-<a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
+<h1><a class="pagetitle" href="messu-mailbox.php">{tr}Messages{/tr}</a>
 
 {if $feature_help eq 'y'}
-<a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="{$helpurl}UserMessagesDoc" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=messu-mailbox.tpl" target="tikihelp" class="tikihelp"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
-{/if}
+<a href="tiki-edit_templates.php?template=messu-mailbox.tpl" target="tikihelp" class="tikihelp"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>
+{/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
+{if $messu_mailbox_size gt '0'}
+<br />
+<table border='0' cellpadding='0' cellspacing='0'>
+	<tr>
+		<td>
+			<table border='0' height='20' cellpadding='0' cellspacing='0'
+			       width='200' style='background-color:#666666;'>
+				<tr>
+					<td style='background-color:red;' width='{$cellsize}'>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+			</table>
+		</td>
+		<td><small>{$percentage}%</small></td>
+	</tr>
+</table>
+[{$messu_mailbox_number} / {$messu_mailbox_size}] {tr}messages{/tr}. {if $messu_mailbox_number ge $messu_mailbox_size}{tr}Mailbox is full! Delete or archive some messages if you want to receive more messages.{/tr}{/if}
+{/if}
 <br /><br />
-
 <form action="messu-mailbox.php" method="get">
 <label for="mess-mailmessages">{tr}Messages{/tr}:</label>
 <select name="flags" id="mess-mailmessages">
@@ -45,6 +62,7 @@
 <input type="hidden" name="flagval" value="{$flagval|escape}" />
 <input type="hidden" name="priority" value="{$priority|escape}" />
 <input type="submit" name="delete" value="{tr}delete{/tr}" />
+<input type="submit" name="archive" value="{tr}move to archive{/tr}" />
 <select name="action">
 <option value="isRead_n">{tr}Mark as unread{/tr}</option>
 <option value="isRead_y">{tr}Mark as read{/tr}</option>
@@ -56,19 +74,27 @@
   <tr>
     <td class="heading" >&nbsp;</td>
     <td class="heading" >&nbsp;</td>
-    <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}from{/tr}</a></td>
+    <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_from_desc'}user_from_asc{else}user_from_desc{/if}">{tr}sender{/tr}</a></td>
     <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'subject_desc'}subject_asc{else}subject_desc{/if}">{tr}subject{/tr}</a></td>
     <td class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}date{/tr}</a></td>
+    <td class="heading" >{tr}reply to{/tr}</td>
     <td style="text-align:right;" class="heading" ><a class="tableheading" href="messu-mailbox.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}size{/tr}</a></td>
   </tr>
   {cycle values="odd,even" print=false}
   {section name=user loop=$items}
   <tr>
     <td class="prio{$items[user].priority}"><input type="checkbox" name="msg[{$items[user].msgId}]" /></td>
-    <td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}<img alt="flagged" src="img/flagged.gif" />{/if}</td>
-    <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_from}</td>
+    <td class="prio{$items[user].priority}">{if $items[user].isFlagged eq 'y'}<img src="img/flagged.gif" border="0" width="16" height="16" alt='{tr}flagged{/tr}'>{/if}</td>
+    <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].user_from|userlink}</td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}"><a class="readlink" href="messu-read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msgId={$items[user].msgId}">{$items[user].subject}</a></td>
     <td {if $items[user].isRead eq 'n'}style="font-weight:bold"{/if} class="prio{$items[user].priority}">{$items[user].date|tiki_short_datetime}</td><!--date_format:"%d %b %Y [%H:%I]"-->
+		<td class="prio{$items[user].priority}">
+		{if $items[user].replyto_hash eq ""}&nbsp;{else}
+			<a class="readlink" href="messu-mailbox.php?origto={$items[user].replyto_hash}">
+		    <img src="img/icons/up.gif" alt='{tr}find replied message{/tr}' border='0'/>
+			</a>
+		{/if}
+		</td>
     <td  style="text-align:right;{if $items[user].isRead eq 'n'}font-weight:bold;{/if}" class="prio{$items[user].priority}">{$items[user].len|kbsize}</td>
   </tr>
   {sectionelse}

@@ -21,7 +21,7 @@ if (isset($setup_parsed_uri["query"])) {
 
 if ($feature_user_bookmarks == 'y' && $user && $tiki_p_create_bookmarks == 'y') {
 	// check the session to get the parent or create parent =0
-	$smarty->assign('ownurl', $tikilib->httpPrefix(). $_SERVER["REQUEST_URI"]);
+	$smarty->assign('ownurl', $tikilib->httpPrefix().$_SERVER["REQUEST_URI"]);
 
 	if (!isset($_SESSION["bookmarks_parent"])) {
 		$_SESSION["bookmarks_parent"] = 0;

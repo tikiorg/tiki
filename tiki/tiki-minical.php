@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.16 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-minical.php,v 1.17 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -267,6 +267,8 @@ $smarty->assign('duration_minutes', $duration_minutes);
 
 $topics = $minicallib->minical_list_topics($user, 0, -1, 'name_asc', '');
 $smarty->assign('topics', $topics['data']);
+$section = 'calendar';
+include_once ('tiki-section_options.php');
 
 include_once('tiki-mytiki_shared.php');
 ask_ticket('minical');

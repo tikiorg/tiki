@@ -1,36 +1,29 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.21 2004-10-08 10:00:04 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_drawings.tpl,v 1.22 2005-03-12 16:50:29 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_drawings.php">{tr}Admin drawings{/tr}</a>
 
-  
       {if $feature_help eq 'y'}
-<a href="{$helpurl}DrawingsDoc" target="tikihelp" class="tikihelp" title="{tr}admin Drawings{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="{$helpurl}DrawingsDoc" target="tikihelp" class="tikihelp" title="{tr}admin Drawings{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
-
-
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_drawings.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin Drawings tpl{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
-
-
-
-<br /><br />
+<a href="tiki-edit_templates.php?template=tiki-admin_drawings.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin Drawings tpl{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>{/if}</h1>
 
 {if $preview eq 'y'}
+<h2>{tr}Preview{/tr}</h2>
 <div align="center">
 	<a href='#' onclick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$draw_info.name}','','menubar=no,width=252,height=25');">
 		<img width='154' height='98' border='0' src='img/wiki/{$draw_info.filename_draw}' alt='{tr}edit{/tr}' /></a>
 </div>
 {/if}
 
-
+<h2>{tr}Available drawings{/tr}:</h2>
 <form method="post" action="tiki-admin_drawings.php">
 <input type="hidden" name="ver" value="{$smarty.request.ver|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="findtable"><tr><td class="findtable">{tr}Find{/tr}:<td class="findtable"><input type="text" name="find" value="{$find|escape}" /></td></tr></table>
 </form>
-<h3>{tr}Available drawings{/tr}:</h3>
 <form method="post" action="tiki-admin_drawings.php">
 <input type="hidden" name="ver" value="{$smarty.request.ver|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
@@ -71,14 +64,14 @@
 <td class="{cycle}">
 {if $smarty.request.ver}
 	&nbsp;&nbsp;<a title="{tr}delete{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;remove={$items[user].drawId}" class="link" 
-><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
 {else}
 	&nbsp;&nbsp;<a title="{tr}delete{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;removeall={$items[user].name}" class="link" 
-><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
 {/if}
 <a title="{tr}view{/tr}" href="tiki-admin_drawings.php?ver={$smarty.request.ver}&amp;previewfile={$items[user].drawId}" class="link"><img src='img/icons/ico_img.gif' border='0' alt='{tr}view{/tr}' /></a>
 {if not $smarty.request.ver}
-<a title="{tr}edit{/tr}" class="link" href='#' onclick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$items[user].name}','','menubar=no,width=252,height=25');"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+<a title="{tr}edit{/tr}" class="link" href='#' onclick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$items[user].name}','','menubar=no,width=252,height=25');"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>
 {/if}
 </td>
 </tr>

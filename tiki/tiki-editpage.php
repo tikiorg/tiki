@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.106 2005-01-22 22:54:54 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.107 2005-03-12 16:48:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,15 +40,20 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $feature_ant
 }
 
 // Get the page from the request var or default it to HomePage
-if(!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') {
-  $smarty->assign('msg',tra("No page indicated"));
-  $smarty->display("error.tpl");
-  die;
-} else {
-  $page = $_REQUEST["page"];
-
-  $smarty->assign_by_ref('page', $_REQUEST["page"]);
+if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') { 
+        if ($useGroupHome == 'y') {
+                $groupHome = $userlib->get_user_default_homepage($user);
+                if ($groupHome) {
+                        $_REQUEST["page"] = $groupHome;
+                } else {
+                        $_REQUEST["page"] = $wikiHomePage;
+                }
+        } else {
+                $_REQUEST["page"] = $wikiHomePage;
+        }
 }
+$page = $_REQUEST["page"];
+$smarty->assign_by_ref('page', $_REQUEST["page"]);
 
 $page_ref_id = '';
 if (isset($_REQUEST["page_ref_id"])) {
@@ -128,23 +133,25 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
       $msg = '';
 
       if (isset($_REQUEST["save"])) {
-        make_clean($description);
-        if ($tikilib->page_exists($pagename)) {
-		if ($feature_multilingual == 'y') {
-			$info = $tikilib->get_page_info($pagename);
-			if ($info['lang'] != $pageLang) {
-				include_once("lib/multilingual/multilinguallib.php");
-				 if ($multilinguallib->updatePageLang('wiki page', $info['page_id'], $pageLang, true)){
-					$pageLang = $info['lang'];
-					$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
-					$smarty->display("error.tpl");
-					die;
+        if (strtolower($pagename) != 'sandbox' || $tiki_p_admin == 'y') {
+        	make_clean($description);
+        	if ($tikilib->page_exists($pagename)) {
+			if ($feature_multilingual == 'y') {
+				$info = $tikilib->get_page_info($pagename);
+				if ($info['lang'] != $pageLang) {
+					include_once("lib/multilingual/multilinguallib.php");
+				 	if ($multilinguallib->updatePageLang('wiki page', $info['page_id'], $pageLang, true)){
+						$pageLang = $info['lang'];
+						$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
+						$smarty->display("error.tpl");
+						die;
+					}
 				}
-			}
-  		}
-          $tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang);
-        } else {
-          $tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang);
+  			}
+          	$tikilib->update_page($pagename, $part["body"], tra('page imported'), $author, $authorid, $description, null, $pageLang);
+        	} else {
+          	$tikilib->create_page($pagename, $hits, $part["body"], $lastmodified, tra('created from import'), $author, $authorid, $description, $pageLang);
+        	}
         }
       } else {
         $_REQUEST["edit"] = $last_part;
@@ -364,9 +371,8 @@ if ($feature_wiki_userpage == 'y' && $tiki_p_admin != 'y') {
 	}
 }
 
-if ($_REQUEST["page"] == 'SandBox' && $feature_sandbox != 'y') {
+if (strtolower($_REQUEST["page"]) == 'sandbox' && $feature_sandbox != 'y') {
   $smarty->assign('msg', tra("The SandBox is disabled"));
-
   $smarty->display("error.tpl");
   die;
 }
@@ -378,7 +384,7 @@ if (!isset($_REQUEST["comment"])) {
 include_once ("tiki-pagesetup.php");
 
 // Now check permissions to access this page
-if ($page != 'SandBox') {
+if (strtolower($page) != 'sandbox') {
   if ($tiki_p_edit != 'y') {
     $smarty->assign('nocreate', 'y');
     $smarty->assign('msg', tra("Permission denied you cannot edit this page"));
@@ -403,7 +409,7 @@ if ($info["flag"] == 'L') {
   die;
 }
 
-if ($page != 'SandBox') {
+if (strtolower($page) != 'sandbox') {
 	// Permissions
 	// if this page has at least one permission then we apply individual group/page permissions
 	// if not then generic permissions apply
@@ -643,7 +649,7 @@ function parse_output(&$obj, &$parts,$i) {
 $cat_type='wiki page';
 $cat_objid = $_REQUEST["page"];
 
-if (isset($_REQUEST["save"])) {
+if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $tiki_p_admin == 'y')) {
   check_ticket('edit-page');
   // Check if all Request values are delivered, and if not, set them
   // to avoid error messages. This can happen if some features are

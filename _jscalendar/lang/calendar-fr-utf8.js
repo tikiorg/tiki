@@ -1,4 +1,4 @@
-// ** I18N
+// ** -*-codinf:utf-8 -*-
 Calendar._DN = new Array
 ("Dimanche",
  "Lundi",
@@ -22,14 +22,13 @@ Calendar._MN = new Array
  "Novembre",
  "Décembre");
 Calendar._SDN = new Array
-("Lun",
+("Dim",
+ "Lun",
  "Mar",
  "Mer",
  "Jeu",
- "Thu",
  "Ven",
- "Sam",
- "Dim");
+ "Sam");
 Calendar._SMN = new Array
 ("Jan",
  "Fev",
@@ -75,7 +74,7 @@ Calendar._TT["SEL_DATE"] = "Choisir une date";
 Calendar._TT["DRAG_TO_MOVE"] = "Déplacer";
 Calendar._TT["PART_TODAY"] = " (Aujourd'hui)";
 Calendar._TT["DAY_FIRST"] = "Commencer par %s";
-Calendar._TT["WEEKEND"] = "1,0";
+Calendar._TT["WEEKEND"] = "6,0";
 Calendar._TT["CLOSE"] = "Fermer";
 Calendar._TT["TODAY"] = "Aujourd'hui";
 Calendar._TT["TIME_PART"] = "Cliquez avec majuscule ou glissez pour changer de valeur.";

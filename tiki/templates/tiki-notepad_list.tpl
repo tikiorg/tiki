@@ -1,5 +1,5 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-notepad_list.php">{tr}Notes{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-notepad_list.php">{tr}Notes{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 <br />
 <div align="center">
@@ -32,6 +32,7 @@
 </div></td></tr></table>
 {if count($channels) > 0}
 <br />
+<h2>{tr}Notes{/tr}</h2>
 <table>
 <tr><td class="findtable">
    <form method="get" action="tiki-notepad_list.php">
@@ -92,7 +93,7 @@
 </div>
 {/if}
 
-<h3>{tr}Upload file{/tr}</h3>
+<h2>{tr}Upload file{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-notepad_list.php" method="post">
 <table class="normal">
 <!--

@@ -7,39 +7,49 @@
 {tr}You can view the page by following this link:{/tr}
 {$mail_machine_raw}/tiki-index.php?page={$mail_page|escape:"url"}
 
+{if !$new_page}{tr}You can view a diff back to the previous version by following this link:{/tr}
+{* Using the full diff syntax so the links are still valid, even after a new version has been made.  -rlpowell *}
+{$mail_machine_raw}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&compare&oldver={$mail_oldver}&newver={$mail_newver}&diff_style=unidiff
+{/if}
+
+
 {if $mail_hash}{tr}If you don't want to receive these notifications follow this link:{/tr}
 {$mail_machine_raw}/tiki-user_watches.php?hash={$mail_hash}
+{/if}
+
+{if $mail_comment}{tr}Comment:{/tr} {$mail_comment}
+{/if}
+
+{if $mail_diffdata}
+{tr}The changes in this version follow below, followed after by the current full page text.{/tr}
+
+***********************************************************
+
+{section name=ix loop=$mail_diffdata}
+{if $mail_diffdata[ix].type == "diffheader"}
+{assign var="oldd" value=$mail_diffdata[ix].old}
+{assign var="newd" value=$mail_diffdata[ix].new}
+@@ {tr}-Lines: {$oldd} changed to +Lines: {$newd}{/tr} @@
+{elseif $mail_diffdata[ix].type == "diffdeleted"}
+{section name=iy loop=$mail_diffdata[ix].data}
+- {$mail_diffdata[ix].data[iy]|strip_tags:false|html_entity_decode}
+{/section}
+{elseif $mail_diffdata[ix].type == "diffadded"}
+{section name=iy loop=$mail_diffdata[ix].data}
++ {$mail_diffdata[ix].data[iy]|strip_tags:false|html_entity_decode}
+{/section}
+{elseif $mail_diffdata[ix].type == "diffbody"}
+{section name=iy loop=$mail_diffdata[ix].data}
+{$mail_diffdata[ix].data[iy]|strip_tags:false|html_entity_decode}
+{/section}
+{/if}
+{/section}
 
 {/if}
-{if $feature_wiki_email_diff_style == "unidiff" && !$new_page}
-{tr}Differences between the 2 last versions:{/tr}
-{section name=ix loop=$mail_pagedata}
-{if $mail_pagedata[ix].type == "diffheader"}
-{assign var="old" value=$mail_pagedata[ix].old}
-{assign var="new" value=$mail_pagedata[ix].new}
+***********************************************************
 
-@@ {tr}-Lines: {$old} changed to +Lines: {$new}{/tr} @@
-{elseif $mail_pagedata[ix].type == "diffdeleted"}
-{section name=iy loop=$mail_pagedata[ix].data}
-- {$mail_pagedata[ix].data[iy]}
-{/section}
-{elseif $mail_pagedata[ix].type == "diffadded"}
-{section name=iy loop=$mail_pagedata[ix].data}
-+ {$mail_pagedata[ix].data[iy]}
-{/section}
-{elseif $mail_pagedata[ix].type == "diffbody"}
-{section name=iy loop=$mail_pagedata[ix].data}
-{$mail_pagedata[ix].data[iy]}
-{/section}
-{/if}
-{/section}
-
-{else}
-{if !$new_page}{tr}You can view a diff back to the previous version by following this link:{/tr}
-{$mail_machine}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&compare&oldver={$mail_last_version}
-
-{/if}
 {tr}The new page content follows below.{/tr}
+
 ***********************************************************
 {$mail_pagedata}
 {/if}

@@ -27,7 +27,7 @@ function smarty_function_fetch($params, &$smarty)
     }
 
     $content = '';
-    if ($smarty->security && !preg_match('!^(http|ftp)://!i', $params['file'])) {
+    if ($smarty->security && !preg_match('!^(http|https|ftp)://!i', $params['file'])) {
         $_params = array('resource_type' => 'file', 'resource_name' => $params['file']);
         require_once(SMARTY_CORE_DIR . 'core.is_secure.php');
         if(!smarty_core_is_secure($_params, $smarty)) {

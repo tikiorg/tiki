@@ -1,11 +1,12 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.19 2004-10-08 10:00:06 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-forums.tpl,v 1.20 2005-03-12 16:50:45 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
+<h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 
 {if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=forums"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-<br /><br />
+<a href="tiki-admin.php?page=forums" title="{tr}Configure/Options{/tr}">{html_image file='img/icons/config.gif' border='0'  alt="{tr}Configure/Options{/tr}"}</a>
 {/if}
+</h1>
+
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -52,7 +53,7 @@
 <td class="{cycle advance=false}">{$channels[user].name}
 {/if}
 {if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-<a class="admlink" title="{tr}configure forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+<a class="admlink" title="{tr}configure forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}"><img src="img/icons/config.gif" border="0" width="16" height="16" alt='{tr}Configure/Options{/tr}'></a>
 {/if}{if $forum_list_desc eq 'y'}<br />
 <small><i>{$channels[user].description|truncate:240:"...":true}</i></small>{/if}
 </td>

@@ -413,6 +413,23 @@ TD {vertical-align: top;}
 .forumform td
 { border: 1px solid #8CACBB;   background: #DEE7EC; }
 
+table.email {
+ border: 1px solid #8CACBB;
+}
+table.email td.body {
+ border: 1px solid #8CACBB;
+}
+
+table.email td.heading {
+ text-align: left;
+ width: 15px;
+}
+
+table.email td.closeButton {
+ text-align: right;
+ width: 100%;
+}
+
 /* Table headings */
 TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.jukeboxlistheading,
 td.listfilesheading, td.listartheading, td.forumheading, td.viewthread
@@ -933,6 +950,11 @@ table.pollresults {
   }
 td.pollr {  color: black;}
 /* MODULES */
+
+#pollopen { display: block; }
+#pollzone { display: none; }
+#polledit { display: none; }
+.pollnav { }
 
 /***************************************************** FORUMS *****************************************************/
 

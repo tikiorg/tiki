@@ -1,15 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.7 2005-01-22 22:56:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/gemsi/tiki-page_bar.tpl,v 1.8 2005-03-12 16:51:16 mose Exp $ *}
 
 <div id="page-bar">
 
 {if $cached_page eq 'y'}<div class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1" class="linkbut">{tr}refresh{/tr}</a></div>{/if}
 
-{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox')}
+{if !$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')}
 <div class="button2"><a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}" 
 class="linkbut">{if $beingEdited eq 'y'}<span class="highlight">{tr}edit{/tr}</span>{else}{tr}edit{/tr}{/if}</a></div>
 {/if}
 
-{if $page ne 'SandBox'}
+{if $page|lower ne 'sandbox'}
 
 {if $tiki_p_remove eq 'y'}
 <div class="button2"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="linkbut">{tr}remove{/tr}</a></div>

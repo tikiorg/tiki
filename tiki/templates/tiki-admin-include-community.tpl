@@ -1,10 +1,10 @@
 <div class="cbox">
   <div class="cbox-title">{tr}Community settings{/tr}</div>
   <div class="cbox-data">
-    <div class="simplebox">
-      {tr}User identity features{/tr}<br />
       <form action="tiki-admin.php?page=community" method="post">
         <table class="admin"><tr>
+          <td class="heading" colspan="2" align="center">{tr}User identity features{/tr}</td>
+        </tr><tr>
           <td class="form"><label for="community-mouseover">{tr}Show user's info on mouseover{/tr}:</label></td>
           <td><input type="checkbox" name="feature_community_mouseover" id="community-mouseover"
               {if $feature_community_mouseover eq 'y'}checked="checked"{/if} /></td>
@@ -41,10 +41,11 @@
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
-
-    <div class="simplebox">
-      {tr}Friendship network{/tr}<br />
+  </div>
+</div>
+<div class="cbox">
+  <div class="cbox-title">{tr}Friendship network{/tr}</div>
+  <div class="cbox-data">
       <form action="tiki-admin.php?page=community" method="post">
         <table class="admin"><tr>
           <td class="form">&nbsp;&nbsp;<label for="community-friends-permission">{tr}Allow permissions for friendship network{/tr}:</label></td>
@@ -59,7 +60,5 @@
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
-    </div>
-
   </div>
 </div>

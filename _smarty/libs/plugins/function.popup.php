@@ -48,10 +48,12 @@ function smarty_function_popup($params, &$smarty)
             case 'closefont':
             case 'fgbackground':
             case 'bgbackground':
+            case 'inarray':
             case 'caparray':
             case 'capicon':
             case 'background':
             case 'frame':
+            case 'function':
                 $append .= ',' . strtoupper($_key) . ",'$_value'";
                 break;
 

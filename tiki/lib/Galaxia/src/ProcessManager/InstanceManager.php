@@ -20,16 +20,35 @@ class InstanceManager extends BaseManager {
     $this->db = $db;  
   }
   
-  function get_instance_activities($iid)
+  function get_instance_activities($iid,$aid = "")
   {
-    $query = "select ga.type,ga.isInteractive,ga.isAutoRouted,gi.pId,ga.activityId,ga.name,gi.instanceId,gi.status,gia.activityId,gia.user,gi.started,gia.status as actstatus from ".GALAXIA_TABLE_PREFIX."activities ga,".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where ga.activityId=gia.activityId and gi.instanceId=gia.instanceId and gi.instanceId=$iid";
+  	if ($aid == "") {
+  		$and = "";
+  	}
+  	else {
+  		$and = "and ga.activityId = $aid";
+  	}
+    $query  = "select ga.activityId,ga.type,ga.type,ga.isInteractive,ga.isInteractive,ga.isAutoRouted,gi.pId,ga.activityId,ga.name,";
+    $query .= "gi.instanceId,gi.status,ga.expirationTime as exptime,gia.activityId,gia.user,";
+    $query .= "gi.started,gia.status as actstatus,gia.started as iaStarted,gia.ended from ";
+    $query .= GALAXIA_TABLE_PREFIX."activities ga,".GALAXIA_TABLE_PREFIX."instances gi,";
+    $query .= GALAXIA_TABLE_PREFIX."instance_activities gia where ga.activityId=gia.activityId ";
+    $query .= "and gi.instanceId=gia.instanceId and gi.instanceId=$iid ".$and." order by gia.started";
     $result = $this->query($query);
     $ret = Array();
-    while($res = $result->fetchRow()) {
-      // Number of active instances
-      $ret[] = $res;
+    if ($and == "") {
+    	while($res = $result->fetchRow()) {
+    		// Number of active instances
+    		$res['exptime'] = $this->make_ending_date($res['iaStarted'],$res['exptime']);
+    		$ret[] = $res;
+    	}
+    	return $ret;
     }
-    return $ret;
+    else {
+    	$res = $result->fetchRow();
+    	$res['exptime'] = $this->make_ending_date($res['iaStarted'],$res['exptime']);
+    	return $res;
+    }
   }
 
   function get_instance($iid)
@@ -51,6 +70,12 @@ class InstanceManager extends BaseManager {
   {
     $props = addslashes(serialize($prop));
     $query = "update ".GALAXIA_TABLE_PREFIX."instances set properties='$props' where instanceId=$iid";
+    $this->query($query);
+  }
+  
+  function set_instance_name($iid,$name)
+  {
+    $query = "update ".GALAXIA_TABLE_PREFIX."instances set name='$name' where instanceId=$iid";
     $this->query($query);
   }
   

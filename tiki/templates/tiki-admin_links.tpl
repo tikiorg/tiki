@@ -1,25 +1,16 @@
-<a href="tiki-admin_links.php" class="pagetitle">{tr}Featured links{/tr}</a>
-
-
+<h1><a href="tiki-admin_links.php" class="pagetitle">{tr}Featured links{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}FeaturedLinksAdmin" target="tikihelp" class="tikihelp" title="{tr}admin featured links{/tr}">
-<img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_links.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin featured links template{/tr}">
-<img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>{/if}</h1>
 
 
-
-
-
-
-<br /><br />
 <a class="linkbut" href="tiki-admin_links.php?generate=1">{tr}Generate positions by hits{/tr}</a>
-<h3>{tr}List of featured links{/tr}</h3>
+<h2>{tr}List of featured links{/tr}</h2>
 <table class="normal">
 <tr>
 <td class="heading">{tr}url{/tr}</td>
@@ -39,7 +30,7 @@
 <td class="{cycle advance=false}">{$links[user].type}</td>
 <td class="{cycle}">
  <a title="{tr}delete{/tr}" class="link" href="tiki-admin_links.php?remove={$links[user].url|escape:"url"}"><img border="0" alt="{tr}remove{/tr}" src="img/icons2/delete.gif" /></a>
- <a title="{tr}edit{/tr}" class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+ <a title="{tr}edit{/tr}" class="link" href="tiki-admin_links.php?editurl={$links[user].url|escape:"url"}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>
 </td>
 </tr>
 {sectionelse}
@@ -50,9 +41,9 @@
 </table>
 <br />
 {if $editurl eq 'n'}
-<h3>{tr}Add Featured Link{/tr}</h3>
+<h2>{tr}Add Featured Link{/tr}</h2>
 {else}
-<h3>{tr}Edit this Featured Link:{/tr} {$title}</h3>
+<h2>{tr}Edit this Featured Link:{/tr} {$title}</h2>
 <a href="tiki-admin_links.php">{tr}Create new Featured Link{/tr}</a>
 {/if}
 <form action="tiki-admin_links.php" method="post">

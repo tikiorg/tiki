@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_survey_questions.php,v 1.13 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_survey_questions.php,v 1.14 2005-03-12 16:48:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -78,7 +78,7 @@ if ($_REQUEST["questionId"]) {
 	$info["options"] = '';
 }
 
-$smarty->assign('info', $info);
+$smarty->assign_by_ref('info', $info);
 
 if (isset($_REQUEST["remove"])) {
   $area = 'delsurveyquestion';
@@ -129,6 +129,9 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $srvlib->list_survey_questions($_REQUEST["surveyId"], $offset, $maxRecords, $sort_mode, $find);
 //$smarty->assign('questions',$channels["data"]);
 $cant_pages = ceil($channels["cant"] / $maxRecords);
+if (empty($info["position"])) {
+	$info["position"] = $channels["cant"] + 1;
+}
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 

@@ -1,21 +1,14 @@
-<a class="pagetitle" href="tiki-admin_external_wikis.php">{tr}Admin external wikis{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-admin_external_wikis.php">{tr}Admin external wikis{/tr}</a>
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}admin External Wikis{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="{$helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}admin External Wikis{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
-
-
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_external_wikis.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki admin external wikis template{/tr}">
-<img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
-{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>
+{/if}</h1>
 
-
- 
-<br /><br />
 <h2>{tr}Create/Edit External Wiki{/tr}</h2>
 <form action="tiki-admin_external_wikis.php" method="post">
 <input type="hidden" name="extwikiId" value="{$extwikiId|escape}" />
@@ -42,8 +35,8 @@
 <td class="{cycle advance=false}">{$channels[user].extwiki}</td>
 <td class="{cycle}">
    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].extwikiId}" 
-><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;extwikiId={$channels[user].extwikiId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_external_wikis.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;extwikiId={$channels[user].extwikiId}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>
 </td>
 </tr>
 {sectionelse}

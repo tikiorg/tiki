@@ -1,8 +1,7 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<a class="pagetitle" href="tiki-charts.php">{tr}Charts{/tr}</a>
-<br /><br />
-<h3>{tr}Charts{/tr}</h3>
+<h1><a class="pagetitle" href="tiki-charts.php">{tr}Charts{/tr}</a></h1>
+<h2>{tr}Charts{/tr}</h2>
 <form action="tiki-charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />

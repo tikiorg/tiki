@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.15 2005-01-22 22:56:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/module.tpl,v 1.16 2005-03-12 16:50:09 mose Exp $ *}
 {* Module layout with controls *}
 
 <div class="box {$module_name}">
 <div class="box-title">{if $user and $user_assigned_modules == 'y' and $no_module_controls ne 'y' and $feature_modulecontrols eq 'y'}
-<table>
+<table class="box-title">
   <tr>
     <td width="11">
       <a title="{tr}Move module up{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}"><img src="img/icons2/up.gif" border="0" alt="[{tr}up{/tr}]" /></a>
@@ -11,8 +11,11 @@
     <td width="11">
       <a title="{tr}Move module down{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name|escape}"><img src="img/icons2/down.gif" border="0" alt="[{tr}down{/tr}]" /></a>
     </td>
-<td>
-{if $module_flip eq 'y'}<a class="flip" href="javascript:flip('flip-{$module_name|escape}');">{$module_title}</a>{else}{$module_title}{/if}
+<td {if $module_flip eq 'y'}ondblclick="javascript:icntoggle('mod-{$module_name|escape}','mo.png');"{/if}>
+<span class="box-titletext">{$module_title}</span>
+</td>
+    <td width="11">
+{if $module_flip eq 'y'}<a title="{tr}Hide module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|escape}','mo.png');"><img name="mod-{$module_name|escape}icn" class="flipmodimage" src="img/icons/omo.png" border="0" alt="[{tr}hide{/tr}]" /></a>{else}&nbsp;{/if}
 </td>
 <td width="11">
 <a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name|escape}"><img src="img/icons2/admin_move.gif" border="0" alt="[{tr}opp side{/tr}]" /></a>
@@ -23,15 +26,27 @@
 </tr>
 </table>
 {else}
-{if $module_flip eq 'y'}<a class="flip" href="javascript:flip('flip-{$module_name|escape}');">{$module_title}</a>{else}{$module_title}{/if}
-{/if}
-</div><div class="box-data">
 {if $module_flip eq 'y'}
-  <div id="flip-{$module_name|escape}" style="display: block">
-    {$module_content}
-  </div>
-{else}
-  {$module_content}
+<table class="box-title">
+  <tr>
+    <td ondblclick="javascript:icntoggle('mod-{$module_name|escape}','mo.png');">
+<span class="box-titletext">{/if}{$module_title}{if $module_flip eq 'y'}</span>
+    </td>
+    <td width="11">
+      <a title="{tr}Hide module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|escape}','mo.png');"><img name="mod-{$module_name|escape}icn" class="flipmodimage" src="img/icons/omo.png" border="0" alt="[{tr}hide{/tr}]" /></a>
+</td>
+</tr>
+</table>
 {/if}
+{/if}
+</div><div id="mod-{$module_name|escape}" style="display: block" class="box-data">
+{$module_content}
 {$module_error}
+{if $module_flip eq 'y'}
+{literal}
+<script language="Javascript" type="text/javascript">
+  setsectionstate('mod-{/literal}{$module_name|escape}{literal}','mo.png');
+</script>
+{/literal}
+{/if}
 </div></div>

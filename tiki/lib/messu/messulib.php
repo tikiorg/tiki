@@ -17,14 +17,42 @@ class Messu extends TikiLib {
 		$this->db = $db;
 	}
 
+	/**
+	 * Check if a users exists (wrapper for userlib function)
+	 */
 	function user_exists($user) {
 		global $userlib;
 
 		return $userlib->user_exists($user);
 	}
 
-	function post_message($user, $from, $to, $cc, $subject, $body, $priority) {
-		global $smarty, $userlib, $sender_email, $language,$tikilib;
+	/**
+	 * Put sent message to 'sent' box
+	 */
+	function save_sent_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash='') {
+		global $smarty, $userlib, $sender_email, $language, $tikilib;
+
+		$subject = strip_tags($subject);
+		$body = strip_tags($body, '<a><b><img><i>');
+		// Prevent duplicates
+		$hash = md5($subject . $body);
+
+		if ($this->getOne("select count(*) from `messu_sent` where `user`=? and `user_from`=? and `hash`=?",array($user,$from,$hash))) {
+			return false;
+		}
+
+		$now = date('U');
+		$query = "insert into `messu_sent`(`user`,`user_from`,`user_to`,`user_cc`,`subject`,`body`,`date`,`isRead`,`isReplied`,`isFlagged`,`priority`,`hash`,`replyto_hash`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$this->query($query,array($user,$from,$to,$cc,$subject,$body,(int) $now,'n','n','n',(int) $priority,$hash,$replyto_hash));
+
+		return true;
+	}
+
+	/**
+	 * Send a message to a user
+	 */
+	function post_message($user, $from, $to, $cc, $subject, $body, $priority, $replyto_hash='') {
+		global $smarty, $userlib, $sender_email, $language, $tikilib;
 
 		$subject = strip_tags($subject);
 		$body = strip_tags($body, '<a><b><img><i>');
@@ -36,8 +64,8 @@ class Messu extends TikiLib {
 		}
 
 		$now = date('U');
-		$query = "insert into `messu_messages`(`user`,`user_from`,`user_to`,`user_cc`,`subject`,`body`,`date`,`isRead`,`isReplied`,`isFlagged`,`priority`,`hash`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-		$this->query($query,array($user,$from,$to,$cc,$subject,$body,(int) $now,'n','n','n',(int) $priority,$hash));
+		$query = "insert into `messu_messages`(`user`,`user_from`,`user_to`,`user_cc`,`subject`,`body`,`date`,`isRead`,`isReplied`,`isFlagged`,`priority`,`hash`,`replyto_hash`) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$this->query($query,array($user,$from,$to,$cc,$subject,$body,(int) $now,'n','n','n',(int) $priority,$hash,$replyto_hash));
 
 		// Now check if the user should be notified by email
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -67,7 +95,6 @@ class Messu extends TikiLib {
 					return false; //TODO echo $mail->errors;
 			}
 		}
-
 		return true;
 	}
 
@@ -81,14 +108,28 @@ class Messu extends TikiLib {
 	}
 	*/
 
-	function list_user_messages($user, $offset, $maxRecords, $sort_mode, $find, $flag = '', $flagval = '', $prio = '') {
+	/**
+	 * Get a list of messages from users mailbox or users mail archive (from
+	 * which depends on $dbsource)
+	 */
+	function list_user_messages($user, $offset, $maxRecords, $sort_mode, $find, $flag = '', $flagval = '', $prio = '', $dbsource, $replyto_hash='', $orig_or_reply='r') {
+		if ($dbsource=='') $dbsource="messages";
 		$bindvars = array($user);
 		$mid="";
 		if ($prio) {
 			$mid = " and priority=? ";
 			$bindvars[] = $prio;
 		}
-
+		if ($replyto_hash) {
+			// find replies
+			if ($orig_or_reply == 'r') {
+				$mid .= " and replyto_hash=? ";
+			// find original for the reply
+			} else {
+				$mid .= " and hash=? ";
+			}
+			$bindvars[] = $replyto_hash;
+		}
 		if ($flag) {
 			// Process the flags
 			$mid.= " and `$flag`=? ";
@@ -101,8 +142,8 @@ class Messu extends TikiLib {
 			$bindvars[] = $findesc;
 		}
 
-		$query = "select * from `messu_messages` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode).",".$this->convert_sortmode("msgId_desc");
-		$query_cant = "select count(*) from `messu_messages` where `user`=? $mid";
+		$query = "select * from `messu_".$dbsource."` where `user`=? $mid order by ".$this->convert_sortmode($sort_mode).",".$this->convert_sortmode("msgId_desc");
+		$query_cant = "select count(*) from `messu_".$dbsource."` where `user`=? $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -122,23 +163,90 @@ class Messu extends TikiLib {
 		return $retval;
 	}
 
-	function flag_message($user, $msgId, $flag, $val) {
-		if (!$msgId)
-			return false;
-		$query = "update `messu_messages` set `$flag`=? where `user`=? and `msgId`=?";
-		$this->query($query,array($val,$user,(int)$msgId));
+	/**
+	 * Get the number of messages in the users mailbox or mail archive (from
+	 * which depends on $dbsource)
+	 */
+	function count_messages($user, $dbsource='messages') {
+		if ($dbsource=='') $dbsource="messages";
+		$bindvars = array($user);
+		$query_cant = "select count(*) from `messu_".$dbsource."` where `user`=?";
+		$cant = $this->getOne($query_cant,$bindvars);
+		return $cant;
 	}
 
-	function delete_message($user, $msgId) {
+	/**
+	 * Update message flagging
+	 */ 
+	function flag_message($user, $msgId, $flag, $val, $dbsource="messages") {
 		if (!$msgId)
 			return false;
-		$query = "delete from `messu_messages` where `user`=? and `msgId`=?";
+		if ($dbsource=='') $dbsource="messages";
+		$query = "update `messu_".$dbsource."` set `$flag`=? where `user`=? and `msgId`=?";
+		$this->query($query,array($val,$user,(int)$msgId));
+	}
+	
+	/**
+	 * Mark a message as replied
+	 */
+	function mark_replied($user, $replyto_hash, $dbsource="sent") {
+		if ((!$replyto_hash) || ($replyto_hash==''))
+			return false;
+		if ($dbsource=='') $dbsource="sent";
+		$query = "update `messu_".$dbsource."` set `isReplied`=? where `user`=? and `hash`=?";
+		$this->query($query,array('y', $user, $replyto_hash));
+	}	  
+
+	/**
+	 * Delete message from mailbox or users mail archive (from which depends on
+	 * $dbsource)
+	 */
+	function delete_message($user, $msgId, $dbsource="messages") {
+		if (!$msgId)
+			return false;
+		if ($dbsource=='') $dbsource="messages";
+		$query = "delete from `messu_".$dbsource."` where `user`=? and `msgId`=?";
 		$this->query($query,array($user,(int)$msgId));
 	}
 
-	function get_next_message($user, $msgId, $sort_mode, $find, $flag, $flagval, $prio) {
+	/**
+	 * Move message from mailbox to users mail archive
+	 */
+	function archive_message($user, $msgId, $dbsource="messages") {
+		if (!$msgId)
+			return false;
+		if ($dbsource=='') $dbsource="messages";
+		$query = "insert into `messu_archive` select * from `messu_".$dbsource."` where `user`=? and `msgId`=?";
+		$this->query($query,array($user,(int)$msgId));
+
+		$query = "delete from `messu_".$dbsource."` where `user`=? and `msgId`=?";
+		$this->query($query,array($user,(int)$msgId));
+	}
+
+	/**
+	 * Move read message older than x days from mailbox to users mail archive
+	 */
+	function archive_messages($user, $days, $dbsource="messages") {
+		if ($days<1)
+			return false;
+		if ($dbsource=='') $dbsource="messages";
+		$age = date("U") - ($days * 3600 * 24);
+		
+		// TODO: only move as much msgs into archive as there is space left in there
+		$query = "insert into `messu_archive` select * from `messu_".$dbsource."` where `user`=? and `isRead`=? and `date`<=?";
+		$this->query($query,array($user, 'y',(int)$age));
+
+		$query = "delete from `messu_".$dbsource."` where `user`=? and `isRead`=? and `date`<=?";
+		$this->query($query,array($user, 'y',(int)$age));
+	}
+
+	/**
+	 * Move forward to the next message and get it from the database
+	 */ 
+	function get_next_message($user, $msgId, $sort_mode, $find, $flag, $flagval, $prio, $dbsource="messages") {
 		if (!$msgId)
 			return 0;
+		if ($dbsource=='') $dbsource="messages";
 		
 		$mid = "";
 		$bindvars = array($user,(int)$msgId);
@@ -159,21 +267,26 @@ class Messu extends TikiLib {
 			$bindvars[] = $findesc;
 		}
 
-		$query = "select min(`msgId`) as `nextmsg` from `messu_messages` where `user`=? and `msgId` > ? $mid ";
+		$query = "select min(`msgId`) as `nextmsg` from `messu_".$dbsource."` where `user`=? and `msgId` > ? $mid";
 		$result = $this->query($query,$bindvars,1,0);
 		$res = $result->fetchRow();
 
 		if (!$res)
 			return false;
+
 		return $res['nextmsg'];
 	}
 
-	function get_prev_message($user, $msgId, $sort_mode, $find, $flag, $flagval, $prio) {
+	/**
+	 * Move backward to the next message and get it from the database
+	 */ 
+	function get_prev_message($user, $msgId, $sort_mode, $find, $flag, $flagval, $prio, $dbsource="messages") {
 		if (!$msgId)
 			return 0;
+		if ($dbsource=='') $dbsource="messages";
 		
+		$mid = "";
 		$bindvars = array($user,(int)$msgId);
-		$mid="";
 		if ($prio) {
 			$mid.= " and priority=? ";
 			$bindvars[] = $prio;
@@ -190,7 +303,8 @@ class Messu extends TikiLib {
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
-		$query = "select max(`msgId`) as `prevmsg` from `messu_messages` where `user`=? and `msgId` < ? $mid";
+
+		$query = "select max(`msgId`) as `prevmsg` from `messu_".$dbsource."` where `user`=? and `msgId` < ? $mid";
 		$result = $this->query($query,$bindvars,1,0);
 		$res = $result->fetchRow();
 
@@ -200,9 +314,14 @@ class Messu extends TikiLib {
 		return $res['prevmsg'];
 	}
 
-	function get_message($user, $msgId) {
+	/**
+	 * Get a message from the users mailbox or his mail archive (from which
+	 * depends on $dbsource)
+	 */
+	 function get_message($user, $msgId, $dbsource='messages') {
+		if ($dbsource=='') $dbsource="messages";
 		$bindvars = array($user,(int)$msgId);
-		$query = "select * from `messu_messages` where `user`=? and `msgId`=?";
+		$query = "select * from `messu_".$dbsource."` where `user`=? and `msgId`=?";
 		$result = $this->query($query,$bindvars);
 		$res = $result->fetchRow();
 		$res['parsed'] = $this->parse_data($res['body']);

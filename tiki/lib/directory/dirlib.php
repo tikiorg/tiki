@@ -504,6 +504,7 @@ class DirLib extends TikiLib {
 			$ret[] = $res;
 		}
 		$retval = array();
+		usort($ret, 'compare_paths');
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
 		return $retval;
@@ -624,13 +625,8 @@ class DirLib extends TikiLib {
 $dirlib = new DirLib($dbTiki);
 
 function compare_paths($p1, $p2) {
-	if ($p1["path"] < $p2["path"]) {
-		return -1;
-	} elseif ($p1["path"] > $p2["path"]) {
-		return +1;
-	} else {
-		return 0;
-	}
+		// must be case insentive to have the same than dir_mist_sites
+	return strcasecmp($p1["path"], $p2["path"]);
 }
 
 ?>

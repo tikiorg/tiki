@@ -61,6 +61,7 @@ function wikiplugin_trackerlist($data, $params) {
 		if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' 
 				and $user and isset($_REQUEST['itemId']) and isset($_REQUEST["rate_$trackerId"]) and isset($_REQUEST['fieldId'])
 				and in_array($_REQUEST["rate_$trackerId"],split(',',$tracker_info['ratingOptions']))) {
+			if ($_REQUEST["rate_$trackerId"] == 'NULL') $_REQUEST["rate_$trackerId"] = NULL;
 			$trklib->replace_rating($trackerId,$_REQUEST['itemId'],$_REQUEST['fieldId'],$user,$_REQUEST["rate_$trackerId"]);
 			header('Location: tiki-index.php?page='.urlencode($page));
 		}
@@ -96,16 +97,16 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		$smarty->assign_by_ref('tr_offset',$tr_offset);
 
+			
+		$tr_initial = '';
 		if ($showinitials == 'y') {
 			if (isset($_REQUEST["tr_initial"])) {
 				$query_array['tr_initial'] = $_REQUEST['tr_initial'];
 				$tr_initial = $_REQUEST["tr_initial"];
-			} else {
-				$tr_initial = '';
 			}
-			$smarty->assign_by_ref('tr_initial', $tr_initial);
 			$smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 		}
+		$smarty->assign_by_ref('tr_initial', $tr_initial);
 
 		if (!isset($filterfield)) {
 			$filterfield = '';

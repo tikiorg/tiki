@@ -1,21 +1,16 @@
-<a class="pagetitle" href="tiki-list_faqs.php">{tr}FAQs{/tr}</a>
+<h1><a class="pagetitle" href="tiki-list_faqs.php">{tr}FAQs{/tr}</a>
 
 {if $feature_help eq 'y'}
 
 <a href="{$helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}FAQs{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_faqs.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list faqs tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
-
-
-
-
-<br /><br />
 {if $tiki_p_admin_faqs eq 'y'}
 {if $faqId > 0}
 <h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
@@ -70,7 +65,7 @@
 <td  class="{cycle}">
    <a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}"><img src='img/icons/config.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
    <a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}"><img src='img/icons/question.gif' alt='{tr}questions{/tr}' title='{tr}questions{/tr}' border='0' /></a>
-   &nbsp;&nbsp;<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+   &nbsp;&nbsp;<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}'></a>
 </td>
 {/if}
 </tr>

@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-config_pdf.php">{tr}Create PDF{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-config_pdf.php">{tr}Create PDF{/tr}</a></H1>
 <div class="cbox">
 <div class="cbox-title">
 {tr}PDF Settings{/tr}

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.6 2004-08-26 19:24:02 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/smarty_tiki/block.tikimodule.php,v 1.7 2005-03-12 16:49:53 mose Exp $
 /**
  * \brief Smarty {tikimodule}{/tikimodule} block handler
  *
@@ -18,6 +18,8 @@
  *
  * It also supports the param flip="y" to make this module flippable.
  * flip="n" is the default.
+ * and the param decorations="n" to suppress module decorations
+ * decorations="y" is the default.
 
 \Note
 error was used only in case the name was not there.
@@ -33,16 +35,27 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 
 function smarty_block_tikimodule($params, $content, &$smarty) {
+	global $user_flip_modules;
 	extract($params);
 	if (!isset($content))   return "";
 	if (!isset($title))     $title = substr($content,0,12)."...";
 	if (!isset($name))      $name  = ereg_replace("[^-_a-zA-Z0-9]","",$title);
 	if (!isset($flip) || $flip != 'y') $flip = 'n';
-	
+	if (!isset($decorations) || $decorations != 'n') $decorations = 'y';
+
+        if (isset($user_flip_modules) && ($user_flip_modules != 'module')) {
+	    $flip = $user_flip_modules;
+	}
+
+if ($decorations == 'y') {	
 	$smarty->assign('module_title', $title);
 	$smarty->assign('module_name', $name);
 	$smarty->assign('module_flip', $flip);
+	$smarty->assign('module_decorations', $decorations);
 	$smarty->assign_by_ref('module_content', $content);
 	return $smarty->fetch('module.tpl');
+} else {
+	return $content.$module_error;
+}
 }
 ?>

@@ -21,6 +21,7 @@ Disallow: /tests/
 Disallow: /tikimovies/
 Disallow: tiki-install.php
 Disallow: tiki-admin
+Disallow: tiki-editpage.php
 Disallow: tiki-print.php
 Disallow: tiki-pagehistory.php
 Disallow: tiki-backlinks.php

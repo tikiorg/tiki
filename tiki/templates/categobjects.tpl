@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/categobjects.tpl,v 1.2 2004-10-08 10:00:03 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/categobjects.tpl,v 1.3 2005-03-12 16:50:08 mose Exp $ *}
 
 <div class="catblock">
 <div class="cattitle">
@@ -9,7 +9,7 @@
 </div>
 <div class="catlists">
 {foreach key=t item=i from=$listcat}
-<b>{$t}:</b>
+<b>{tr}{$t}{/tr}:</b>
 {section name=o loop=$i}
 <a href="{$i[o].href}" class="link">
 {$i[o].name}

@@ -6,14 +6,14 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaUserActivities" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Activities{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-user_activities.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia User Activities tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /> {/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
 
@@ -92,7 +92,7 @@
 		  {$items[ix].name}
 		{/if}
 		{if $items[ix].isInteractive eq 'y' and ($items[ix].type eq 'start' or $items[ix].type eq 'standalone')}
-			<a href="tiki-g-run_activity.php?activityId={$items[ix].activityId}"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>		  
+			<a onClick="var answer = prompt('{tr}Enter the name of this instance{/tr}:','');while(answer == '')answer = prompt('{tr}The name is not valid. Please, enter the name again{/tr}:','');if (answer != null)window.location = 'tiki-g-run_activity.php?activityId={$items[ix].activityId}&name='+answer;"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>		  
 		{/if}
 	</td>
 	<td class="{cycle}" style="text-align:right;">

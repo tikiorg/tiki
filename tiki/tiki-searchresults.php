@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.32 2005-02-04 21:14:37 michael_davey Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-searchresults.php,v 1.33 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -187,6 +187,9 @@ ask_ticket('searchresults');
 
 // Display the template
 $smarty->assign('mid', 'tiki-searchresults.tpl');
+// $smarty->assign('searchNoResults', 'true');       // false is default
+// $smarty->assign('searchStyle', 'menu');           // buttons is default
+// $smarty->assign('searchOrientation', 'horiz');    // vert is default 
 $smarty->display("tiki.tpl");
 
 ?>

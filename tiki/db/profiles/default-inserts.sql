@@ -160,6 +160,7 @@ INSERT INTO tiki_preferences VALUES ('feature_usermenu','n');
 INSERT INTO tiki_preferences VALUES ('feature_userPreferences','n');
 INSERT INTO tiki_preferences VALUES ('feature_userVersions','n');
 INSERT INTO tiki_preferences VALUES ('feature_user_watches','n');
+INSERT INTO tiki_preferences VALUES ('feature_user_watches_translations','y');
 INSERT INTO tiki_preferences VALUES ('feature_view_tpl','y');
 INSERT INTO tiki_preferences VALUES ('feature_warn_on_edit','n');
 INSERT INTO tiki_preferences VALUES ('feature_webmail','n');

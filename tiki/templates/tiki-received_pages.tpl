@@ -1,31 +1,13 @@
-<a class="pagetitle" href="tiki-received_pages.php">{tr}Received pages{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-received_pages.php">{tr}Received pages{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Communcation+Center" target="tikihelp" class="tikihelp" title="{tr}Communcation Center{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-received_pages.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}received pages tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
-
-
-
-
-
-
-
-
-
-
-
-<br /><br />
 {if $receivedPageId > 0 or $view eq 'y'}
 <h2>{tr}Preview{/tr}</h2>
 <div class="wikitext">{$parsed}</div>

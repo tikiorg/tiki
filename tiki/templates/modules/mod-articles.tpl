@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-articles.tpl,v 1.4 2004-08-26 19:24:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-articles.tpl,v 1.5 2005-03-12 16:50:59 mose Exp $ *}
 
 {if $feature_articles eq 'y'}
-{tikimodule title=$module_title name="articles"}
+{tikimodule title=$module_title name="articles" flip=$module_params.flip decorations=$module_params.decorations}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modArticles}
     <tr>

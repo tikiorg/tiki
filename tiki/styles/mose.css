@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.62 2004-09-19 19:37:09 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.63 2005-03-12 16:50:02 mose Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -16,7 +16,7 @@ body {
 	background-color:   #EFEFE7;
 	margin:   0px;
 }
-H1 H2 H3 {
+H1, H2, H3 {
 	font-weight:    bold;
 	font-family:   Arial, Helvetica, sans-serif;
 	margin:   0px;
@@ -366,6 +366,7 @@ div.cbox-data {
 	margin-right:   5px;
 	font-size:   11px;
 	color:   black;
+        background:   #EFEFE7;
 }
 
 /* 

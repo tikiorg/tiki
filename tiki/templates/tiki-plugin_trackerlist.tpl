@@ -101,10 +101,16 @@
 
 {elseif $items[user].field_values[ix].type eq 's' and $items[user].field_values[ix].name eq "{tr}Rating{/tr}" and $tiki_p_tracker_view_ratings eq 'y'}
 <td class="auto">
-{$items[user].field_values[ix].value|default:"-"}</td>
+<b title="{tr}Rating{/tr}: {$items[user].field_values[ix].value|default:"-"}, {tr}Number of voices{/tr}: {$items[user].field_values[ix].numvotes|default:"-"}, {tr}Average{/tr}: {$items[user].field_values[ix].voteavg|default:"-"}">&nbsp;{$items[user].field_values[ix].value|default:"-"}&nbsp;</b></td>
 {if $tiki_p_tracker_vote_ratings eq 'y'}
 <td class="auto" nowrap="nowrap">
 <span class="button2">
+{if $items[user].my_rate eq NULL}
+<b class="linkbut highlight">-</b>
+{else}
+<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}&amp;trackerId={$items[user].trackerId}&amp;itemId={$items[user].itemId}&amp;fieldId={$items[user].field_values[ix].fieldId}&amp;rate_{$items[user].trackerId}=NULL" 
+class="linkbut">-</a>
+{/if}
 {section name=i loop=$items[user].field_values[ix].options_array}
 {if $items[user].field_values[ix].options_array[i] eq $items[user].my_rate}
 <b class="linkbut highlight">{$items[user].field_values[ix].options_array[i]}</b>

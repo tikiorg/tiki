@@ -1,19 +1,13 @@
-<a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
 
-  
       {if $feature_help eq 'y'}
 <a href="{$helpurl}BanningSystem" target="tikihelp" class="tikihelp" title="{tr}Banning{/tr}">
-<img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin banning tpl{/tr}">
-<img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>{/if}</h1>
 
-
-
-<br /><br />
 <h2>{tr}Add or edit a rule{/tr}</h2>
 <form action="tiki-admin_banning.php" method="post">
 <input type="hidden" name="banId" value="{$banId|escape}" />
@@ -145,7 +139,7 @@
 </td>
 <td class="{cycle}">
 &nbsp;&nbsp;<a title="{tr}delete{/tr}" href="tiki-admin_banning.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$items[user].banId}" class="link" 
-><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
+><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
 </td>
 </tr>
 {sectionelse}

@@ -1,7 +1,7 @@
-<h2>{tr}Assign permissions to {/tr}{tr}{$objectType}{/tr} {$objectName}</h2>
+<h1>{tr}Assign permissions to {/tr}{tr}{$objectType}{/tr} {$objectName}</h1>
 <a href="{$referer}" class="linkbut">{tr}back{/tr}</a>
 <div>
-<h3>{tr}Current permissions for this object{/tr}:</h3>
+<h2>{tr}Current permissions for this object{/tr}:</h2>
 <table class="normal">
 <tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
 {cycle values="odd,even" print=false}
@@ -13,7 +13,7 @@
 <tr><td colspan="3" class="odd">{tr}No individual permissions global permissions apply{/tr}</td></tr>
 {/section}
 </table>
-<h3>{tr}Assign permissions to this object{/tr}</h3>
+<h2>{tr}Assign permissions to this object{/tr}</h2>
 <form method="post" action="tiki-objectpermissions.php">
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="referer" value="{$referer|escape}" />

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.47 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.48 2005-03-12 16:48:55 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -336,9 +336,13 @@ if ($_REQUEST["comments_threadId"] > 0) {
     // Replies to comments.
     $comment_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
     // Add the replied-to text, with >.
-// Disabled by damian
-//    $smarty->assign('comment_data', preg_replace( '/\n/', '> ', '> ' . $comment_info["data"] ) );
-	$smarty->assign('comment_data', '');
+    // Disabled by damian
+    //	$smarty->assign('comment_data', '');
+    // Re-enabled by rlpowell; my users rely on this.  If you want to disable it, put an option in the forums or something.
+    // However, I re-enabled it *working*, instead of broken.  -rlpowell
+    $comment_info["data"] = preg_replace( '/\n/', "\n> ", $comment_info["data"] ) ;
+    $comment_info["data"] = "\n> " . $comment_info["data"];
+    $smarty->assign( 'comment_data', $comment_info["data"] );
 
     $smarty->assign('comment_title', tra('Re:').' '.$comment_info["title"]);
     $smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
@@ -442,21 +446,32 @@ if (isset($_REQUEST["post_reply"]) && isset($_REQUEST["comments_reply_threadId"]
 	$threadId_if_reply = $_REQUEST["comments_reply_threadId"];
 else
 	$threadId_if_reply = 0;
+
 $comments_coms = $commentslib->get_comments($comments_objectId, $_REQUEST["comments_parentId"],
 	$comments_offset, $_REQUEST["comments_maxComments"], $_REQUEST["comments_sort_mode"], $_REQUEST["comments_commentFind"],
 	$_REQUEST['comments_threshold'], $_REQUEST["comments_style"], $threadId_if_reply);
-$comments_cant = $commentslib->count_comments($comments_objectId);
+
+$comments_cant = $comments_coms['cant'];
+
 $smarty->assign('comments_below', $comments_coms["below"]);
 $smarty->assign('comments_cant', $comments_cant);
 
 //print "<pre>";
 //print_r($comments_coms);
 //print "</pre>";
+
 // Offset management
 $comments_maxRecords = $_REQUEST["comments_maxComments"];
+
+//print "<pre>Counts: ";
+//print_r($comments_cant);
+//print ",";
+//print_r($comments_maxRecords);
+//print "</pre>";
+
 if( $comments_maxRecords != 0 )
 {
-    $comments_cant_pages = ceil($comments_coms["cant"] / $comments_maxRecords);
+    $comments_cant_pages = ceil($comments_cant / $comments_maxRecords);
     $smarty->assign('comments_actual_page', 1 + ($comments_offset / $comments_maxRecords));
 } else {
     $comments_cant_pages = 1;
@@ -464,7 +479,7 @@ if( $comments_maxRecords != 0 )
 }
 $smarty->assign('comments_cant_pages', $comments_cant_pages);
 
-if ($comments_coms["cant"] > ($comments_offset + $comments_maxRecords)) {
+if ($comments_cant > ($comments_offset + $comments_maxRecords)) {
     $smarty->assign('comments_next_offset', $comments_offset + $comments_maxRecords);
 } else {
     $smarty->assign('comments_next_offset', -1);

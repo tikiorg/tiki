@@ -3,13 +3,13 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Events" target="tikihelp" class="tikihelp" title="{tr}Events{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_events.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin events template{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}'></a>{/if}
 
 
 
@@ -73,7 +73,7 @@
 {section name=user loop=$channels}
 <tr>
 <td class="{cycle advance=false}">
-<a class="link" href="tiki-admin_events.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].evId}" title="{tr}remove{/tr}"><img border="0" src="img/icons2/delete.gif" alt="{tr}remove{/tr}" /></a>
+<a class="link" href="tiki-admin_events.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].evId}" title="{tr}remove{/tr}"><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}remove{/tr}'></a>
 </td>
 <td class="{cycle advance=false}">{$channels[user].evId}</td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-admin_events.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;evId={$channels[user].evId}" title="{tr}edit{/tr}">{$channels[user].name}</a></td>
@@ -84,9 +84,9 @@
 <td class="{cycle}">
 <a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=event&amp;permType=events&amp;objectId={$channels[user].evId}" title="{tr}Assign Permissions{/tr}"><img 
 border="0" alt="{tr}Assign Permissions{/tr}" src="img/icons/key{if $channels[user].individual eq 'y'}_active{/if}.gif" /></a>&nbsp;
-<a class="link" href="tiki-admin_events.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;evId={$channels[user].evId}" title="{tr}edit{/tr}"><img border="0" src="img/icons/edit.gif" alt="{tr}edit{/tr}" /></a>
-<a class="link" href="tiki-admin_event_subscriptions.php?evId={$channels[user].evId}" title="{tr}subscriptions{/tr}"><img border="0" src="img/icons2/icn_members.gif" alt="{tr}subscriptions{/tr}" /></a>&nbsp;&nbsp;
-<a class="link" href="tiki-send_events.php?evId={$channels[user].evId}" title="{tr}send event{/tr}"><img border="0" src="img/icons/email.gif" alt="{tr}send event{/tr}" /></a>
+<a class="link" href="tiki-admin_events.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;evId={$channels[user].evId}" title="{tr}edit{/tr}"><img src="img/icons/edit.gif" border="0"  width="20" height="16" alt="{tr}edit{/tr}" /></a>
+<a class="link" href="tiki-admin_event_subscriptions.php?evId={$channels[user].evId}" title="{tr}subscriptions{/tr}"><img src="img/icons2/icn_members.gif" border="0" width="16" height="16" alt='{tr}subscriptions{/tr}'></a>&nbsp;&nbsp;
+<a class="link" href="tiki-send_events.php?evId={$channels[user].evId}" title="{tr}send event{/tr}"><img src="img/icons/email.gif" border="0" width="16" height="14" alt='{tr}send event{/tr}'></a>
 </td>
 </tr>
 {/section}

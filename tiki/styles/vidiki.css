@@ -1,0 +1,191 @@
+body {
+	margin: 0;
+	padding: 0;
+	font: 11px Lucida Grande, Verdana, Arial, Trebuchet, Sans-serif;
+	background: #669;
+}
+h1 {
+	margin: 0 0 15px;
+	padding: 0;
+	font-size: 28px;
+	font-weight: 900;
+	color: #ccc;
+}
+h2 {
+	margin: 0 0 5px;
+	padding: 0;
+}
+p {
+	font: 11px Lucida Grande, Verdana, Arial, Trebuchet, Sans-serif;
+	margin: 0 0 16px;
+	padding: 0;
+}
+.Content>p {
+	margin: 0;
+}
+.Content>p+p {
+	text-indent: 30px;
+}
+a {
+	color: #666;
+	font: Lucida Grande, Verdana, Arial, Trebuchet, Sans-serif;
+	text-decoration: none;
+}
+a:link {
+	color: #666;
+}
+a:visited {
+	color: #333;
+}
+a:hover {
+	text-decoration: underline;
+}
+.content {
+	position: relative;
+	width: auto;
+	min-width: 120px;
+	margin: 65px 230px 50px 210px;
+	border: 1px solid black;
+	color: #333;
+	padding: 20px;
+	z-index: 3;
+	font: 11px Lucida Grande, Verdana, Arial, Trebuchet, Sans-serif;
+	background: #ddd;
+}
+#tiki-left {
+	position: absolute;
+	width: 150px;
+	top: 65px;
+	left: 20px;
+	border: 1px dashed black;
+	color: #333;
+	padding: 10px;
+	z-index: 2;
+	voice-family: inherit;
+	background: #ddd;
+}
+body>#tiki-left {
+	width: 150px;
+}
+#tiki-right {
+	position: absolute;
+	width: 168px;
+	top: 65px;
+	right: 20px;
+	border: 1px dashed black;
+	color: #333;
+	padding: 10px;
+	z-index: 1;
+	voice-family: inherit;
+	text-shadow: 0 0 2px #FFF;
+	background: #ddd;
+}
+body>#tiki-right {
+	width: 168px;
+}
+div.tiki-top {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 0;
+	z-index: 100;
+	voice-family: inherit;
+	width: 100%;
+}
+div.title {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale src='vidiki/title_background.png');
+	text-align: left;
+}
+div.title {
+	background: transparent url("vidiki/title_background.png");
+	text-align: left;
+}
+a.titlefont:link, a.titlefont:hover, a.titlefont:visited, a.titlefont:active {
+	font: 16pt Arial, copperplate gothic light, Verdana, Sans-serif;
+	color: #000;
+	text-shadow: 1px 4px 5px #999;
+	text-decoration: none;
+	padding: 5px;
+}
+a.titlelink:link, a.titlelink:active, a.titlelink:visited {
+	font-size: 8pt;
+	color: #fff;
+	text-decoration: none;
+}
+a.titlelink:hover {
+	text-decoration: none;
+	text-shadow: 0 0 3px #fff;
+}
+#shadow {
+	background: transparent url("vidiki/shadow.png");
+	height: 20px;
+	width: 100%;
+	z-index: 5;
+}
+#page-bar {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+#page-bar ul {
+	width: 100%;
+	display: inline;
+	list-style: none;
+}
+#page-bar ul li {
+	display: inline;
+	list-style: none;
+}
+#page-bar ul li a {
+	color: #333;
+	float: left;
+	text-decoration: none;
+	height: 15px;
+	padding: 0.2em 0.4em;
+	background: #eee;
+}
+#page-bar ul li a:hover {
+	color: #fff;
+	background: #666;
+}
+#page-bar ul li a.active {
+	background: red;
+}
+#treemenu {
+	margin: 0;
+	padding: 0;
+}
+#treemenu ul {
+	list-style: none;
+}
+#treemenu ul li {
+	list-style: none;
+	list-style-type: none;
+	padding-top: .2em;
+	padding-bottom: .2em;
+	margin-left: -35px;
+}
+#treemenu ul li img {
+	vertical-align: middle;
+}
+#treemenu ul li a {
+	height: 15px;
+	padding: 0.2em 0.2em;
+}
+#treemenu ul li a:hover {
+	color: #000;
+}
+.active {
+	background: red;
+}
+.open {
+	display: block;
+}
+.closed {
+	display: none;
+}
+table.wikitable {
+	font: 11px Lucida Grande, Verdana, Arial, Trebuchet, Sans-serif;
+	width: 650px;
+}

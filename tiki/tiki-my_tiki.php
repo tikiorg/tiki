@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.17 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-my_tiki.php,v 1.18 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,13 +11,6 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/messu/messulib.php');
 include_once ('lib/tasks/tasklib.php');
-
-// User preferences screen
-if ($feature_userPreferences != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
-	$smarty->display("error.tpl");
-	die;
-}
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
@@ -51,6 +44,14 @@ $smarty->assign('url_visit', $tikilib->httpPrefix(). $foo2);
 if (isset($_REQUEST['messprefs'])) {
 	check_ticket('my-tiki');
 	$tikilib->set_user_preference($userwatch, 'mess_maxRecords', $_REQUEST['mess_maxRecords']);
+
+	if (isset($_REQUEST['mess_sendReadStatus']) && $_REQUEST['mess_sendReadStatus'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mess_sendReadStatus', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mess_sendReadStatus', 'n');
+	}
+
+	$tikilib->set_user_preference($userwatch, 'mess_archiveAfter', $_REQUEST['mess_archiveAfter']);
 	$tikilib->set_user_preference($userwatch, 'minPrio', $_REQUEST['minPrio']);
 
 	if (isset($_REQUEST['allowMsgs']) && $_REQUEST['allowMsgs'] == 'on') {
@@ -63,23 +64,23 @@ if (isset($_REQUEST['messprefs'])) {
 if (isset($_REQUEST['tasksprefs'])) {
 	check_ticket('my-tiki');
 	$tikilib->set_user_preference($userwatch, 'tasks_maxRecords', $_REQUEST['tasks_maxRecords']);
-
-	if (isset($_REQUEST['tasks_useDates']) && $_REQUEST['tasks_useDates'] == 'on') {
-		$tikilib->set_user_preference($userwatch, 'tasks_useDates', 'y');
-	} else {
-		$tikilib->set_user_preference($userwatch, 'tasks_useDates', 'n');
-	}
 }
 
 $tasks_maxRecords = $tikilib->get_user_preference($userwatch, 'tasks_maxRecords');
-$tasks_useDates = $tikilib->get_user_preference($userwatch, 'tasks_useDates');
 $smarty->assign('tasks_maxRecords', $tasks_maxRecords);
-$smarty->assign('tasks_useDates', $tasks_useDates);
 
 $mess_maxRecords = $tikilib->get_user_preference($userwatch, 'mess_maxRecords', 20);
 $smarty->assign('mess_maxRecords', $mess_maxRecords);
+
+$mess_archiveAfter = $tikilib->get_user_preference($userwatch, 'mess_archiveAfter', 0);
+$smarty->assign('mess_archiveAfter', $mess_archiveAfter);
+
+$mess_sendReadStatus = $tikilib->get_user_preference($userwatch, 'mess_sendReadStatus', 'n');
+$smarty->assign('mess_sendReadStatus', $mess_sendReadStatus);
+
 $allowMsgs = $tikilib->get_user_preference($userwatch, 'allowMsgs', 'y');
 $smarty->assign('allowMsgs', $allowMsgs);
+
 $minPrio = $tikilib->get_user_preference($userwatch, 'minPrio', 6);
 $smarty->assign('minPrio', $minPrio);
 
@@ -165,7 +166,7 @@ $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar', $avatar);
 
 //Get messages
-$msgs = $messulib->list_user_messages($user, 0, -1, 'date_desc', '', 'isRead', 'n');
+$msgs = $messulib->list_user_messages($user, 0, -1, 'date_desc', '', 'isRead', 'n', '', 'messages');
 $smarty->assign('msgs', $msgs['data']);
 
 //Get tasks
@@ -175,8 +176,8 @@ if (isset($_SESSION['thedate'])) {
 	$pdate = date("U");
 }
 
-$tasks_useDates = $tikilib->get_user_preference($user, 'tasks_useDates');
-$tasks = $tasklib->list_tasks($user, 0, -1, 'priority_desc', '', $tasks_useDates, $pdate);
+$tasks = $tasklib->list_tasks($user, 0, 20,NULL,'priority_asc',true,false,true);
+
 $smarty->assign('tasks', $tasks['data']);
 
 $user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');

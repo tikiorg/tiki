@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.14 2005-01-01 00:16:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-mailbox.php,v 1.15 2005-03-12 16:48:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,32 +11,41 @@ include_once ('lib/messu/messulib.php');
 
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($feature_messages != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_messages");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_messages != 'y') {
 	$smarty->assign('msg', tra("Permission denied"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
-$maxRecords = $messulib->get_user_preference($user, 'maxRecords', 20);
+$maxRecords = $messulib->get_user_preference($user, 'mess_maxRecords', 20);
+
+// auto-archiving of read mails?
+$mess_archiveAfter = $messulib->get_user_preference($user, 'mess_archiveAfter', 0);
+$smarty->assign_by_ref('mess_archiveAfter', $mess_archiveAfter);
+if ($mess_archiveAfter>0) {
+	// get date of last check. if not set yet, set it to 'before 10 minutes'
+	$mess_archiveLast = $messulib->get_user_preference($user, 'mess_archiveLast', date("U")-600);
+	// only run auto-archive job every 10 minutes:
+	if (date("U")-$mess_archiveLast>=600) {
+		$messulib->set_user_preference($user, 'mess_archiveLast', date("U"));
+		$messulib->archive_messages($user, $mess_archiveAfter);
+	}
+}
 
 // Mark messages if the mark button was pressed
 if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
 	foreach (array_keys($_REQUEST["msg"])as $msg) {
 		$parts = explode('_', $_REQUEST['action']);
-
 		$messulib->flag_message($user, $msg, $parts[0], $parts[1]);
 	}
 }
@@ -49,6 +58,21 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
 	}
 }
 
+// Archive messages if the archive button was pressed
+if (isset($_REQUEST["archive"]) && isset($_REQUEST["msg"])) {
+	check_ticket('messu-mailbox');
+	$tmp = $messulib->count_messages($user, 'archive');
+	foreach (array_keys($_REQUEST["msg"])as $msg) {
+		if  (($messu_archive_size>0) && ($tmp>=$messu_archive_size)) {
+			$smarty->assign('msg', tra("Archive is full. Delete some messages from archive first."));
+			$smarty->display("error.tpl");
+			die;
+		}
+		$messulib->archive_message($user, $msg);
+		$tmp++;
+	}
+}
+
 if (isset($_REQUEST['filter'])) {
 	if ($_REQUEST['flags'] != '') {
 		$parts = explode('_', $_REQUEST['flags']);
@@ -56,6 +80,15 @@ if (isset($_REQUEST['filter'])) {
 		$_REQUEST['flag'] = $parts[0];
 		$_REQUEST['flagval'] = $parts[1];
 	}
+}
+
+$orig_or_reply="r";
+if (!isset($_REQUEST["replyto"]))
+	$_REQUEST["replyto"] = '';
+
+if (isset($_REQUEST["origto"])) {
+	$_REQUEST["replyto"] = $_REQUEST["origto"];
+	$orig_or_reply="o";
 }
 
 if (!isset($_REQUEST["priority"]))
@@ -93,7 +126,7 @@ $smarty->assign_by_ref('sort_mode', $sort_mode);
 $smarty->assign('find', $find);
 // What are we paginating: items
 $items = $messulib->list_user_messages($user, $offset, $maxRecords, $sort_mode,
-	$find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority']);
+	$find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority'], '', $_REQUEST["replyto"], $orig_or_reply);
 
 $cant_pages = ceil($items["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
@@ -112,6 +145,21 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('items', $items["data"]);
+
+$cellsize = 200;
+$percentage = 1;
+if ($messu_mailbox_size>0) {
+	$current_number = $messulib->count_messages($user);
+	$smarty->assign('messu_mailbox_number', $current_number);
+	$smarty->assign('messu_mailbox_size', $messu_mailbox_size);
+	$percentage = ($current_number / $messu_mailbox_size) * 100;
+	$cellsize = round($percentage / 100 * 200);
+	if ($current_number>$messu_mailbox_size) $cellsize=200;
+	if ($cellsize<1) $cellsize=1;
+	$percentage = round($percentage);
+}
+$smarty->assign('cellsize', $cellsize);
+$smarty->assign('percentage', $percentage);
 
 $section = 'user_messages';
 include_once ('tiki-section_options.php');

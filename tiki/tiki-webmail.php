@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.27 2005-01-01 00:16:35 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-webmail.php,v 1.28 2005-03-12 16:49:03 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -113,11 +113,11 @@ if (!$user) {
 	die;
 }
 
-if (!isset($_REQUEST["section"])) {
-	$_REQUEST["section"] = 'mailbox';
+if (!isset($_REQUEST["locSection"])) {
+	$_REQUEST["locSection"] = 'mailbox';
 }
 
-$smarty->assign('section', $_REQUEST["section"]);
+$smarty->assign('locSection', $_REQUEST["locSection"]);
 
 // Search if we have to add some contacts
 if (isset($_REQUEST["add_contacts"])) {
@@ -131,7 +131,7 @@ if (isset($_REQUEST["add_contacts"])) {
 }
 
 /*************** Read an Email **************************************************************************************/
-if ($_REQUEST["section"] == 'read') {
+if ($_REQUEST["locSection"] == 'read') {
 	if (isset($_REQUEST["fullheaders"])) {
 		$smarty->assign('fullheaders', 'y');
 	} else {
@@ -178,12 +178,9 @@ if ($_REQUEST["section"] == 'read') {
 	$pop3->Close();
 
 	$output = mime::decode($full);
+//echo "<pre>OUTPUT:";print_r($output); echo"</pre>";
 
-	if (isset($output["html"])) {
-		$bodies = $output["html"];
-	} else {
-		$bodies = $output["text"];
-	}
+	$bodies = mime::get_bodies($output);
 
 	$temp_max = count($bodies);
 	for ($i = 0; $i < $temp_max; $i++) {
@@ -191,19 +188,15 @@ if ($_REQUEST["section"] == 'read') {
 			$bodies[$i], "<a><b><i><table><tr><td><th><ul><li><img><hr><ol><br /><h1><h2><h3><h4><h5><h6><div><span><font><form><input><textarea><checkbox><select>");
 	}
 
-	if (isset($output["attachments"])) {
-		$attachs = $output["attachments"];
-	} else {
-		$attachs = array();
-	}
+	$attachments = mime::get_attachments($output);
 
-	$smarty->assign('attachs', $attachs);
+	$smarty->assign('attachs', $attachments);
 	$smarty->assign('bodies', $bodies);
 	$allbodies = join("\n", $bodies);
 	$allbodies = "\n\n------------------------------------------\n" . $allbodies;
 	$smarty->assign('allbodies', htmlspecialchars($allbodies));
 
-	$to_addresses = $output->headers["from"];
+	$to_addresses = $output['header']["from"];
 
 	// Get email addresses from the "from" portion
 	$to_addresses = split(',', $to_addresses);
@@ -217,17 +210,17 @@ if ($_REQUEST["section"] == 'read') {
 		}
 	}
 
-	if (isset($output->headers["cc"]) || ereg(',', $output->headers["to"])) {
+	if (isset($output['header']["cc"]) || ereg(',', $output['header']["to"])) {
 		$cc_addresses = "";
 
-		if (isset($output->headers["cc"]))
-			$cc_addresses .= $output->headers["cc"];
+		if (isset($output['header']["cc"]))
+			$cc_addresses .= $output['header']["cc"];
 
 		//add addresses to cc from "to" field (for 'reply to all')
 		if ($cc_addresses != "")
 			$cc_addresses .= ",";
 
-		$cc_addresses .= $output->headers["to"];
+		$cc_addresses .= $output['header']["to"];
 		$cc_addresses = split(',', $cc_addresses);
 
 		$temp_max = count($cc_addresses);
@@ -245,22 +238,21 @@ if ($_REQUEST["section"] == 'read') {
 	$to_addresses = join(',', $to_addresses);
 	$cc_addresses = join(',', $cc_addresses);
 
-	if (isset($output->headers["reply-to"])) {
-		$output->headers["replyto"] = $output->headers["reply-to"];
+	if (isset($output['header']["reply-to"])) {
+		$output['header']["replyto"] = $output['header']["reply-to"];
 
-		$output->headers["replycc"] = $cc_addresses;
+		$output['header']["replycc"] = $cc_addresses;
 	} else {
-		$output->headers["replycc"] = $cc_addresses;
+		$output['header']["replycc"] = $cc_addresses;
 
-		$output->headers["replyto"] = $to_addresses;
+		$output['header']["replyto"] = $to_addresses;
 	}
-
-	$smarty->assign('headers', $output->headers);
-//print_r($output->headers);
+	$output['header']['timestamp'] = strtotime($output['header']['delivery-date']);
+	$smarty->assign('headers', $output['header']);
 }
 
 /*************** Mailbox *******************************************************************************************/
-if ($_REQUEST["section"] == 'mailbox') {
+if ($_REQUEST["locSection"] == 'mailbox') {
 	$h = opendir("temp/mail_attachs/");
 
 	while ($file = readdir($h)) {
@@ -274,7 +266,7 @@ if ($_REQUEST["section"] == 'mailbox') {
 	$current = $webmaillib->get_current_webmail_account($user);
 
 	if (!$current) {
-		header ("location: tiki-webmail.php?section=settings");
+		header ("location: tiki-webmail.php?locSection=settings");
 
 		die;
 	}
@@ -287,7 +279,7 @@ if ($_REQUEST["section"] == 'mailbox') {
 	$pop3->Open();
 
 	if ($pop3->has_error) { //new
-		echo '<b><br /><center><a href="tiki-webmail.php?section=settings">Click here for settings.</a></center></b>';
+		echo '<b><br /><center><a href="tiki-webmail.php?locSection=settings">Click here for settings.</a></center></b>';
 
 		die;
 	}
@@ -489,7 +481,7 @@ if ($_REQUEST["section"] == 'mailbox') {
 }
 
 /******************** Settings **************************************************************************************/
-if ($_REQUEST["section"] == 'settings') {
+if ($_REQUEST["locSection"] == 'settings') {
 	// Add a new mail account for the user here
 	if (!isset($_REQUEST["accountId"]))
 		$_REQUEST["accountId"] = 0;
@@ -534,11 +526,11 @@ if ($_REQUEST["section"] == 'settings') {
 }
 
 /*************** Compose *********************************************************************************************/
-if ($_REQUEST["section"] == 'compose') {
+if ($_REQUEST["locSection"] == 'compose') {
 	$current = $webmaillib->get_current_webmail_account($user);
 
 	if (!$current) {
-		header ("location: tiki-webmail.php?section=settings");
+		header ("location: tiki-webmail.php?locSection=settings");
 
 		die;
 	}
@@ -772,7 +764,7 @@ if ($_REQUEST["section"] == 'compose') {
 }
 
 /******************** Contacts **************************************************************************************/
-if ($_REQUEST["section"] == 'contacts') {
+if ($_REQUEST["locSection"] == 'contacts') {
 	if (!isset($_REQUEST["contactId"])) {
 		$_REQUEST["contactId"] = 0;
 	}

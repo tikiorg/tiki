@@ -1,13 +1,9 @@
-<span class="pagetitle">{tr}User List{/tr}</span>
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_users.tpl,v 1.7 2005-03-12 16:50:49 mose Exp $ *}
+<h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
-      {if $feature_help eq 'y'}
+{if $feature_help eq 'y'}
 <a href="{$helpurl}UserList" target="tikihelp" class="tikihelp" title="{tr}User List{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-<br /><br />
-{if $tiki_p_create_users eq 'y'}
-<a class="userlink" href="tiki-edit_user.php">{tr}create new user{/tr}</a>
-{/if} 
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}</h1>
 <br /><br />
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -28,7 +24,6 @@
 {if $feature_score eq 'y'}
   <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'score_desc'}score_asc{else}score_desc{/if}">{tr}Score{/tr}</a>&nbsp;</td>
 {/if}
-	<td class="userlistheading">{tr}Gender{/tr}&nbsp;</td>
 	<td class="userlistheading">{tr}Country{/tr}&nbsp;</td>
   <td class="userlistheading">{tr}Distance (km){/tr}&nbsp;</td>
 </tr>
@@ -40,13 +35,12 @@
 {if $feature_score eq 'y'}
   <td class="userlist{cycle advance=false}">&nbsp;{$listusers[changes].score}&nbsp;</td>
 {/if}
-  <td class="userlist{cycle advance=false}">&nbsp;{$listusersgender[changes]}&nbsp;</td>
 	<td class="userlist{cycle advance=false}">&nbsp;
-	{if $listuserscountry[changes] == "None"}
-  <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/Other.gif" />
+	{if $listuserscountry[changes] == "None" || $listuserscountry[changes] == "Other" || $listuserscountry[changes] == ""}
+  <img src="img/flags/Other.gif" border="0" width="20" height="13" alt='' />
   {else}
-  <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$listuserscountry[changes]}.gif" />
-  &nbsp;{$listuserscountry[changes]}
+  <img src="img/flags/{$listuserscountry[changes]}.gif" alt='' />
+  &nbsp;{tr}{$listuserscountry[changes]}{/tr}
   {/if}
 	&nbsp;</td>
 	<td class="userlist{cycle advance=true}">&nbsp;{$listdistance[changes]}&nbsp;</td>

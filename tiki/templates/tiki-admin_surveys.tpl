@@ -1,20 +1,19 @@
-<a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
+<h1><a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
 
 
 
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 <!-- link to tpl and help-->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}administer surveys template{/tr}">
-<img border="0" src="img/icons/info.gif" alt="{tr}edit{/tr}" /></a>{/if}
+<img border="0" src="img/icons/info.gif" alt="{tr}edit{/tr}" /></a>{/if}</h1>
 
 <!-- the two link buttons -->
 
-<br /><br />
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
 
@@ -23,9 +22,8 @@
 
 {if $info.surveyId > 0}
 <h2>{tr}Edit this Survey:{/tr} {$info.name}</h2>
-<a href="tiki-admin_surveys.php">Create new survey</a>
 {else}
-<h2>{tr}Create New Survey{/tr}:</h2>
+<h2>{tr}Create New Survey{/tr}</h2>
 {/if}
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName={$info.name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$info.surveyId}">{tr}There are individual permissions set for this survey{/tr}</a><br /><br />
@@ -112,13 +110,13 @@
 </td>
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions}</td>
 <td  class="{cycle}">
-   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}"><img src='img/icons/config.gif' border='0' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' /></a>
-   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}"><img src='img/icons/question.gif' alt='{tr}question{/tr}' border='0' title='{tr}questions{/tr}' /></a>
-   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;surveyId={$channels[user].surveyId}"><img src="img/icons/config.gif" border="0" width="16" height="16" alt='{tr}edit{/tr}' title='{tr}edit{/tr}'></a>
+   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$channels[user].surveyId}">{html_image file='img/icons/question.gif' alt='{tr}question{/tr}' border='0' title='{tr}questions{/tr}'}</a>
+   <a class="link" href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].surveyId}"><img src="img/icons2/delete.gif" border="0" width="16" height="16"  alt='{tr}remove{/tr}' title='{tr}remove{/tr}'></a>
    {if $channels[user].individual eq 'y'}
 	<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='img/icons/key_active.gif' alt='{tr}active perms{/tr}' border='0' title='{tr}active perms{/tr}' /></a>
    {else}
-	<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src='img/icons/key.gif' alt='{tr}perms{/tr}' border='0' title='{tr}perms{/tr}' /></a>
+	<a class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=survey&amp;permType=surveys&amp;objectId={$channels[user].surveyId}"><img src="img/icons/key.gif" border="0" width="17" height="16" alt='{tr}perms{/tr}' title='{tr}perms{/tr}'></a>
    {/if}
 </td>
 </tr>

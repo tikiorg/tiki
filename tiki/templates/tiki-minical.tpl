@@ -1,14 +1,14 @@
-<a class="pagetitle" href="tiki-minical.php?view={$view}">{tr}Mini Calendar{/tr}</a>
+<h1><a class="pagetitle" href="tiki-minical.php?view={$view}">{tr}Mini Calendar{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Calendar" target="tikihelp" class="tikihelp" title="{tr}User Calendar{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-minical.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Calendar Doc tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
-{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+{/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
 <br />
@@ -202,7 +202,7 @@
 {/if}
 
 <a name="add"></a>
-<h3>{tr}Add or edit event{/tr}</h3>
+<h2>{tr}Add or edit event{/tr}</h2>
 <form action="tiki-minical.php" method="post">
 <input type="hidden" name="eventId" value="{$eventId|escape}" />
 <input type="hidden" name="view" value="{$view|escape}" />

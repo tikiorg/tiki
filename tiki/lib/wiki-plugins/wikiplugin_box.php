@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.14 2005-01-22 22:55:56 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_box.php,v 1.15 2005-03-12 16:50:00 mose Exp $
  *
  * Tiki-Wiki BOX plugin.
  * 
@@ -13,7 +13,7 @@
  */
 
 function wikiplugin_box_help() {
-	return tra("Insert theme styled box on wiki page").":<br />~np~{BOX(title=>Title, bg=>color, width=>num[%], align=>left|right|center)}".tra("text")."{BOX}~/np~";
+	return tra("Insert theme styled box on wiki page").":<br />~np~{BOX(title=>Title, bg=>color, width=>num[%], align=>left|right|center, float=>|left|right)}".tra("text")."{BOX}~/np~";
 }
 
 function wikiplugin_box($data, $params) {
@@ -24,16 +24,27 @@ function wikiplugin_box($data, $params) {
 	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
     
 	extract ($params,EXTR_SKIP);
-	$w    = (isset($width)) ? " width=\"$width\""  : "";
 	$bg   = (isset($bg))    ? " background:$bg;" : "";
-  $al   = (isset($align) && ($align == 'right' || $align == "center")) ? " align=\"$align\"" : "";
+	if (isset($float)) {// box without table 
+		$w = (isset($width)) ? " width:$width"  : "";
+		$f = ($float == "left" || $float == "right")? " float:$float;" : "";
+		$c = (isset($clear))    ? " clear:both;" : "";
+		$begin = "<div class='cbox' style='$bg;$f;$w;$c'>";
+	} else { // box in a table
+		$w = (isset($width)) ? " width=\"$width\""  : "";
+		$al = (isset($align) && ($align == 'right' || $align == "center")) ? " align=\"$align\"" : "";
+		$c = (isset($clear))    ? " style='clear:both;'" : "";
+		$begin  = "<table$al$w$c><tr><td><div class='cbox'".(strlen($bg) > 0 ? " style='$bg'" : "").">";
+	}
     
-	$begin  = "<table$al$w><tr><td><div class='cbox'".(strlen($bg) > 0 ? " style='$bg'" : "").">";
 	if (isset($title)) {
-    $begin .= "<div class='cbox-title'>$title</div>";
+		$begin .= "<div class='cbox-title'>$title</div>";
 	}
 	$begin.= "<div class='cbox-data'".(strlen($bg) > 0 ? " style=\"$bg\"" : "").">";
-	$end = "</div></div></td></tr></table>";
+	$end = "</div></div>";
+	if (!isset($float)) {
+		$end .= "</td></tr></table>";
+	}
 	// Prepend any newline char with br
 	$data = preg_replace("/\\n/", "<br />\n", $data);
 	// Insert "\n" at data begin if absent (so start-of-line-sensitive syntaxes will be parsed OK)

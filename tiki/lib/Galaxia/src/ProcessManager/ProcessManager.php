@@ -83,6 +83,7 @@ class ProcessManager extends BaseManager {
       $out.='      <lastModif>'.date("d/m/Y [h:i:s]",$res['lastModif']).'</lastModif>'."\n";
       $out.='      <isInteractive>'.$res['isInteractive'].'</isInteractive>'."\n";
       $out.='      <isAutoRouted>'.$res['isAutoRouted'].'</isAutoRouted>'."\n";
+      $out.='	   <expirationTime>'.$res['expirationTime'].'</expirationTime>'."\n";
       $out.='      <roles>'."\n";
 
       $roles = $am->get_activity_roles($res['activityId']);
@@ -253,7 +254,8 @@ class ProcessManager extends BaseManager {
         'type' => $activity['type'],
         'lastModif' => $activity['lastModif'],
         'isInteractive' => $activity['isInteractive'],
-        'isAutoRouted' => $activity['isAutoRouted']
+        'isAutoRouted' => $activity['isAutoRouted'],
+        'expirationTime'=> $activity['expirationTime']
       );    
       $actname=$am->_normalize_name($activity['name']);
       

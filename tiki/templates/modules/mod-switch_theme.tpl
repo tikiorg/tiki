@@ -1,4 +1,5 @@
-{tikimodule title="{tr}Style{/tr}: $styleName" name="switch_theme"}
+{tikimodule title="{tr}Style{/tr}: $styleName" name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations}
+{if $change_theme ne 'n' or $user eq ''}
 <form method="get" action="tiki-switch_theme.php" target="_self">
 <select name="theme" size="1" onchange="this.form.submit();">
 {section name=ix loop=$styleslist}
@@ -6,4 +7,7 @@
 {/section}
 </select>
 </form>
+{else}
+{tr}Permission denied{/tr}
+{/if}
 {/tikimodule}

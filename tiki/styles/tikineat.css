@@ -1,5 +1,5 @@
 /*
-$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.2 2005-01-22 22:56:16 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.3 2005-03-12 16:50:02 mose Exp $
 Simple basic theme for generic tiki
 
 IE hacks applied !
@@ -214,6 +214,12 @@ div.box-title {
 }
 div.box-title table {
 	width : 100%;
+	padding: 0px;
+	margin: 0px;
+	border-spacing: 0;
+}
+div.box-title table td {
+  text-align: center;
 }
 div.box-data {
 	overflow : hidden;
@@ -278,6 +284,7 @@ TD.module {
 div.cbox {
 	background-color : white;
 	margin : 3px;
+        margin-bottom : 6px;
 	border : 1px solid #8CACBB;
 	overflow : hidden;
 }
@@ -302,6 +309,43 @@ div.cbox-data {
 	width : 100%;
 }
 
+/** rbox: remarks box (note/warning/tip/comment) */
+.rbox {
+  margin-top: 10px;
+}
+.rbox-data {
+  padding: 2px;
+}
+.rbox-title, .rbox-title[name="warning"] { 
+  border: 0;
+  -moz-border-radius-topright : 1ex;
+  font-size : 10px;
+  padding : 0 10px;   
+  position : relative;
+  display : inline;
+  margin : 0;
+  font-weight : bold;
+  background-color: #eeee99;
+}
+.rbox-data, .rbox-data[name="warning"] {
+  background-color: #eeee99;
+  border: 1px solid #DDDDCC;
+}
+.rbox-title[name="note"] {
+  background-color: #CCCCDD;
+}
+.rbox-data[name="note"] {
+  background-color: #ECECEF;
+  border: 1px solid #CCCCDD;
+}
+.rbox-title[name="comment"], .rbox-title[name="tip"] {
+  background-color: #CCCCDD;
+}
+.rbox-data[name="comment"], .rbox-data[name="tip"] {            
+  background-color: #ECEFEC;
+  border: 1px solid #CCDDCC;
+}
+
 /* Some boxes are identified by an ID, for example the  boxes in the main application menu, we set display to
 	none to make the menu appear collapsed initially, change this to 'block' if you want it to be extended fully */
 
@@ -319,13 +363,12 @@ div.imagerank {
 }
 
 /* A simple box is just a div with a border around and some margin
-	* used for example in the admin screen */
+	* used for example for wiki ^box^ quicktag and in the admin screen */
 div.simplebox {
 	padding : 8px;
 	color : black;
 	border : 1px solid #8CACBB;
 	background-color : white;
-	font-size : 10px;
 }
 
 
@@ -374,6 +417,23 @@ TABLE.normalnoborder {
 .forumform td {
 	border : 1px solid #8CACBB;
 	background-color : #DEE7EC;
+}
+
+table.email {
+ border: 1px solid #8CACBB;
+}
+table.email td.body {
+ border: 1px solid #8CACBB;
+}
+
+table.email td.heading {
+ text-align: left;
+ width: 15px;
+}
+
+table.email td.closeButton {
+ text-align: right;
+ width: 100%;
 }
 
 /* Table headings */
@@ -625,6 +685,11 @@ div.wikitext {
 	clear : both;
 	width : auto;
 }
+div.wikitext div.img {
+        overflow: auto;       /* for Netscape, Firefox, Opera */  
+        overflow-y: auto;     /* for IE */
+        overflow-x: hidden;   /* for IE */
+}
 .wikitext div.box {
 	width : auto;
 }
@@ -695,7 +760,7 @@ div.tocnav {
 /**** coloration for c o d e plugin *****/
 div.code {
 	font-size : 10px;
-	padding : 5px;
+	padding : 3px;
 	border : 1px dashed #CCCCCC;
 	background-color : #F4F4F4;
 	font-family : monospace;
@@ -706,6 +771,10 @@ div.code {
 	background-color : #FFFFFF;
 	margin : 0;
 	border : 1px solid #ADACAF;
+        overflow: auto;       /* for Netscape, Firefox, Opera */
+        overflow-y: auto;     /* for IE */
+        overflow-x: hidden;   /* for IE */
+        width: 100%;
 }
 .codecaption {
 	font-size : 10px;
@@ -833,7 +902,6 @@ div.postbody {
 
 div.articletitle {
 	border-top : 1px solid #46596f;
-	margin-top : 5px;
 	clear : both;
 }
 span.titlea {
@@ -879,7 +947,22 @@ div.articlebody {
 	margin : 10px 0;
 	clear : both;
 }
-
+.articletopline {
+	text-transform : uppercase;
+	color : #666666;
+	font-size : 80%;
+	font-weight : bold;
+	margin : 0 20px;
+}
+.articlesubtitle {
+	color : #666666;
+	margin : 0 20px;
+}
+.articlesource {
+	padding : 0px 20px;
+	margin-bottom : 10px;
+	font-style : italic;
+}
 /******************************************************* CALENDAR **********************************************************/
 .day, .day:visited {
 	font-weight : normal;

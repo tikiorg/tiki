@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.7 2004-07-22 13:09:02 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.8 2005-03-12 16:51:19 mose Exp $ *}
 {* Main template for TikiWiki layout *}
 <div id="main">
   {if $feature_top_bar eq 'y'}
@@ -18,24 +18,24 @@
 			$add_style1=' 75%;';
 			$add_style2=' 80%;';
     {/php}
-    {if $feature_left_column eq 'y' and $feature_right_column eq 'n'}
+    {if $feature_left_column ne 'n' and $feature_right_column eq 'n'}
       {php}
 				$wrapper='leftcolonlywrapper';
 				$maincontent='leftcolonlymaincontent';
 				$add_style1=' 100%;'
 			{/php}
     {/if}
-    {if $feature_left_column eq 'n' and $feature_right_column eq 'y'}
+    {if $feature_left_column eq 'n' and $feature_right_column ne 'n'}
       {php}
 				$wrapper='rightcolonlywrapper';
 				$maincontent='rightcolonlymaincontent';
 				$add_style2=' 100%;'
 			{/php}
     {/if}
-    {if $feature_left_column eq 'y' and count($left_modules) gt 0}
+    {if $feature_left_column ne 'n' and count($left_modules) gt 0}
 	    {php} $add_style2=' 75%;'; {/php}
     {/if}
-    {if $feature_right_column eq 'y' and count($right_modules) gt 0}
+    {if $feature_right_column ne 'n' and count($right_modules) gt 0}
 	    {php} $add_style1=' 80%;'; {/php}
     {/if}    
     {php}
@@ -58,7 +58,7 @@
     {* Display left modules if available *}
     <a name="navigation"></a>
 
-    {if $feature_left_column eq 'y' and count($left_modules) gt 0}
+    {if $feature_left_column ne 'n' and count($left_modules) gt 0}
       <div id="modules1" class="left" style="margin-right:{$add_style2}">
         {section name=homeix loop=$left_modules}
           {$left_modules[homeix].data}
@@ -69,7 +69,7 @@
 
     {* Display right modules if available *}
 
-    {if $feature_right_column eq 'y' and count($right_modules) gt 0}
+    {if $feature_right_column ne 'n' and count($right_modules) gt 0}
       <div id="modules2" class="right" style="margin-left:{$add_style1}">
         {section name=homeix loop=$right_modules}
           {$right_modules[homeix].data}

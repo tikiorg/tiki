@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.267 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.268 2005-03-12 16:49:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,6 +20,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],"tiki-setup.php")!=FALSE) {
 
 // see http://tikiwiki.org/tiki-index.php?page=CharacterEncodingTrouble
 header('Content-Type: text/html; charset=utf-8');
+
 
 // include_once("lib/init/setup_inc.php");
 include_once("lib/init/initlib.php");
@@ -229,6 +230,8 @@ $num_queries=0;
 
 $tikifeedback = array();
 
+$feature_referer_highlight = 'n';
+
 include_once ("tiki-setup_base.php");
 TikiSetup::check($tikidomain);
 //print("tiki-setup: before rest of tiki-setup:".$tiki_timer->elapsed()."<br />");
@@ -341,6 +344,8 @@ $gal_match_regex = '';
 $gal_nmatch_regex = '';
 $fgal_use_dir = '';
 $gal_use_dir = '';
+$gal_batch_dir = '';
+$feature_gal_batch = 'n';
 $feature_integrator = 'n';
 $feature_xmlrpc = 'n';
 $feature_drawings = 'n';
@@ -360,6 +365,7 @@ $shoutbox_autolink = 'n';
 $feature_stats = 'n';
 $feature_games = 'n';
 $user_assigned_modules = 'n';
+$user_flip_modules = 'module';
 $feature_user_bookmarks = 'n';
 $feature_blog_rankings = 'y';
 $feature_cms_rankings = 'y';
@@ -445,6 +451,9 @@ $smarty->assign('feature_help', $feature_help);
 
 $helpurl = "http://doc.tikiwiki.org/tiki-index.php?best_lang&amp;page=";
 $smarty->assign('helpurl', $helpurl);
+
+$feature_usability = 'n';
+$smarty->assign('feature_usability', $feature_usability);
 
 $wiki_feature_copyrights = 'n';
 $wiki_creator_admin = 'n';
@@ -739,6 +748,8 @@ $feature_charts = 'n';
 $smarty->assign('feature_charts', $feature_charts);
 $feature_user_watches = 'n';
 $smarty->assign('feature_user_watches', $feature_user_watches);
+$feature_user_watches_translations = 'y';
+$smarty->assign('feature_user_watches_translations', $feature_user_watches_translations);
 
 $feature_eph = 'n';
 $smarty->assign('feature_eph', $feature_eph);
@@ -923,6 +934,7 @@ $smarty->assign('layout_section', $layout_section);
 $smarty->assign('feature_html_pages', $feature_html_pages);
 $smarty->assign('feature_search_stats', $feature_search_stats);
 $smarty->assign('feature_referer_stats', $feature_referer_stats);
+$smarty->assign('feature_referer_highlight', $feature_referer_highlight);
 $smarty->assign('feature_smileys', $feature_smileys);
 $smarty->assign('feature_comm', $feature_comm);
 $smarty->assign('feature_cms_rankings', $feature_cms_rankings);
@@ -958,6 +970,7 @@ $smarty->assign('shoutbox_autolink', $shoutbox_autolink);
 $smarty->assign('feature_stats', $feature_stats);
 $smarty->assign('feature_games', $feature_games);
 $smarty->assign('user_assigned_modules', $user_assigned_modules);
+$smarty->assign('user_flip_modules', $user_flip_modules);
 $smarty->assign('feature_user_bookmarks', $feature_user_bookmarks);
 $smarty->assign('feature_listPages', $feature_listPages);
 $smarty->assign('feature_history', $feature_history);
@@ -1182,11 +1195,18 @@ $smarty->assign('mods_dir', $mods_dir);
 $mods_server = 'http://tikiwiki.org/mods';
 $smarty->assign('mods_server', $mods_server);
 
+// hmm
+$change_password = 'y';
+$smarty->assign('change_password',$change_password);
+
 /* 
  * Site identity initial default settings 
  */
 $feature_siteidentity='n';
 $smarty->assign('feature_siteidentity', $feature_siteidentity);
+
+$site_crumb_seper='>';
+$smarty->assign('site_crumb_seper', $site_crumb_seper);
 
 $feature_sitemycode='n';
 $sitemycode='<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>'; // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
@@ -1223,6 +1243,10 @@ $smarty->assign('sitead_publish', $sitead_publish);
 
 $feature_sitesearch='y';
 $smarty->assign('feature_sitesearch', $feature_sitesearch);
+$feature_sitetitle='y';
+$smarty->assign('feature_sitetitle', $feature_sitetitle);
+$feature_sitedesc='n';
+$smarty->assign('feature_sitedesc', $feature_sitedesc);
 
 /* 
  * End of Site identity initial default settings
@@ -1257,7 +1281,7 @@ if (!isset($_SERVER['QUERY_STRING']))
     $_SERVER['QUERY_STRING'] = '';
 
 if (!isset($_SERVER['REQUEST_URI']) || empty($_SERVER['REQUEST_URI'])) {
-    $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '/' . $_SERVER['QUERY_STRING'];
+    $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
 }
 
 if (!isset($feature_bidi)) {
@@ -1302,7 +1326,11 @@ $https_prefix = $tikilib->get_preference('https_prefix', '/');
 $smarty->assign('https_prefix', $https_prefix);
 
 $login_url = 'tiki-login.php';
+$login_scr = 'tiki-login_scr.php';
+$error_url = 'tiki-error.php';
 $smarty->assign('login_url', $login_url);
+$smarty->assign('login_scr', $login_scr);
+$smarty->assign('error_url', $error_url);
 
 if ($https_login == 'y' || $https_login_required == 'y') {
     $http_login_url = 'http://' . $http_domain;
@@ -1461,7 +1489,8 @@ $smarty->assign('tikiIndex',$tikiIndex);
 $user_dbl = 'y';
 $diff_versions = 'n';
 
-$user_style = $site_style = $tikilib->get_preference("style", 'moreneat.css');
+$user_style = $site_style = $tikilib->get_preference("style", 'tikineat.css');
+$transition_style = $tikilib->get_preference("transition_style", 'none');
 
 if( isset($_COOKIE['tiki-theme']) )
 {
@@ -1521,6 +1550,11 @@ if ($tikidomain and is_file("styles/$tikidomain/$style")) {
 	$style = "$tikidomain/$style";
 }
 $smarty->assign('style', $style);
+$smarty->assign('transition_style', $transition_style);
+
+$messu_mailbox_size = $tikilib->get_preference('messu_mailbox_size', '0');
+$messu_archive_size = $tikilib->get_preference('messu_archive_size', '200');
+$messu_sent_size = $tikilib->get_preference('messu_sent_size', '200');
 
 $feature_babelfish = $tikilib->get_preference('feature_babelfish', 'y');
 $feature_babelfish_logo = $tikilib->get_preference('feature_babelfish_logo', 'n');
@@ -1618,7 +1652,6 @@ if ($feature_warn_on_edit == 'y') {
     } else {
     	$current_page = NULL;
     }
-
     if ($current_page == 'tiki-editpage' || $current_page == 'tiki-index') {
 		// initiate all the variables
         $smarty->assign('editpageconflict', 'n');
@@ -1632,7 +1665,7 @@ if ($feature_warn_on_edit == 'y') {
 	    } else {
 	    	$chkpage = NULL;
 	    }
-	    if (!empty($chkpage)) {
+	    if (!empty($chkpage) && ($chkpage != "sandbox" || $chkpage == "sandbox" && $tiki_p_admin == 'y')) {
 	        if ($current_page == 'tiki-index' && $tikilib->semaphore_is_set($chkpage, $warn_on_edit_time * 60)) {
 		        $smarty->assign('semUser', $tikilib->get_semaphore_user($chkpage));
 		        $smarty->assign('beingEdited', 'y');
@@ -1716,9 +1749,7 @@ $allowMsgs = 'n';
 if ($user) {
     $allowMsgs = $tikilib->get_user_preference($user, 'allowMsgs', 'y');
 
-    $tasks_useDates = $tikilib->get_user_preference($user, 'tasks_useDates');
     $tasks_maxRecords = $tikilib->get_user_preference($user, 'tasks_maxRecords');
-    $smarty->assign('tasks_useDates', $tasks_useDates);
     $smarty->assign('tasks_maxRecords', $tasks_maxRecords);
     $smarty->assign('allowMsgs', $allowMsgs);
 }
@@ -1863,6 +1894,14 @@ if (is_file('.lastup') and is_readable('.lastup')) {
 	$lastup = file('.lastup');
 	$smarty->assign('lastup',$lastup[0]);
 }
+
+// ------------------------------------------------------
+// setup initial breadcrumb
+$crumbs = array();
+$crumbs[] = new Breadcrumb($siteTitle,"Home",$tikiIndex);
+$smarty->assign_by_ref('crumbs', $crumbs);
+
+
 function getCookie($name, $section=null, $default=null) {
 	if (isset($feature_no_cookie) && $feature_no_cookie == 'y') {
 		if (isset($_SESSION['tiki_cookie_jar'])) {// if cookie jar doesn't work

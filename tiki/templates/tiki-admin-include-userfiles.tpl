@@ -1,7 +1,6 @@
 <div class="cbox">
 	<div class="cbox-title">{tr}User files{/tr}</div>
 		<div class="cbox-data">
-			<div class="simplebox">
 				<form action="tiki-admin.php?page=userfiles" method="post">
 				<table class="admin">
 				<tr><td class="form">{tr}Quota (Mb){/tr}</td><td>
@@ -12,6 +11,5 @@
     			<tr><td colspan="2" class="button"><input type="submit" name="userfilesprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     			</table>
 				</form>
-			</div>
 		</div>
 </div>

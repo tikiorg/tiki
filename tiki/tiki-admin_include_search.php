@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.12 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_search.php,v 1.13 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -18,6 +18,7 @@ if (isset($_REQUEST["searchprefs"])) {
 	simple_set_toggle("feature_search_fulltext");
 	simple_set_toggle("feature_search_mysql4_boolean");
 	simple_set_toggle("feature_search_stats");
+	simple_set_toggle("feature_referer_highlight");
 	simple_set_toggle("feature_search_show_forbidden_obj");
 	simple_set_toggle("feature_search_show_forbidden_cat");
 	simple_set_int("search_refresh_rate");

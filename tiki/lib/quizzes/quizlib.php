@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.36 2005-01-22 22:55:50 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/quizzes/quizlib.php,v 1.37 2005-03-12 16:49:50 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, 
 //                          George G. Geller et. al.
@@ -195,6 +195,38 @@ class QuizLib extends TikiLib {
 		return $ret;
 	}
 
+	function download_answer($answerUploadId) {
+
+		$query = "SELECT filecontent, filetype, filename, filesize FROM tiki_user_answers_uploads WHERE answerUploadId=?";
+
+		$result = $this->query($query,array((int)$answerUploadId));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$data = $res['filecontent'];
+			$name = $res['filename'];
+			$type = $res['filetype'];
+			$size = $res['filesize'];
+		}
+/*
+		print "HERE<br>";
+		print "size: $size<br>";
+		print "type: $type<br>";
+		print "name: $name<br>";
+		print "data: $data<br>";
+*/
+
+		$name = htmlspecialchars($name);
+
+  		header("Content-type: $type");
+  		header("Content-length: $size");
+		header("Content-Disposition: attachment; filename=\"$name\"");
+		header("Content-Description: PHP Generated Data");
+		print $data;
+
+	}
+
+
 	function get_user_quiz_questions($userResultId) {
 		$query = "select distinct(tqs.`questionId`) from `tiki_user_answers` tqs,`tiki_quiz_questions` tqq where tqs.`questionId`=tqq.`questionId` and tqs.`userResultId` = ? order by `position` desc";
 
@@ -204,8 +236,10 @@ class QuizLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$question = $this->getOne("select `question` from `tiki_quiz_questions` where `questionId`=?",array((int)$res["questionId"]));
 
+			$questionId = $res["questionId"];
+
 			$query2 = "select tqq.`optionId`,tqo.`points`,`optionText` from `tiki_user_answers` tqq,`tiki_quiz_question_options` tqo where tqq.`optionId`=tqo.`optionId` and tqq.`userResultId`=? and tqq.`questionId`=?";
-			$result2 = $this->query($query2,array((int)$userResultId,(int)$res["questionId"]));
+			$result2 = $this->query($query2,array((int)$userResultId,(int)$questionId));
 			$options = array();
 
 			while ($res = $result2->fetchRow()) {
@@ -213,14 +247,27 @@ class QuizLib extends TikiLib {
 
 				$opt["optionText"] = $res["optionText"];
 				$opt["points"] = $res["points"];
+
+				$query3 = "select answerUploadId, filename from tiki_user_answers_uploads where userResultId = ? and questionId = ?";
+				$result3 = $this->query($query3,array((int)$userResultId,(int)$questionId));
+
+				while ($res2 = $result3->fetchRow()) {
+					$opt["filename"] = $res2["filename"];
+					$opt["answerUploadId"] = $res2["answerUploadId"];
+				}
+
 				$options[] = $opt;
+
 			}
+
 
 			$ques = array();
 			$ques["options"] = $options;
 			$ques["question"] = $question;
 			$ret[] = $ques;
+
 		}
+
 
 		return $ret;
 	}
@@ -302,6 +349,17 @@ class QuizLib extends TikiLib {
 		$retval["cant"] = $cant;
 		return $retval;
 	}
+
+	// Takes a given uploaded answer and inserts it into the DB. - burley
+	function register_user_quiz_answer_upload($userResultId, $questionId, $filename, $filetype, $filesize,$tmp_name) {
+
+		//$data = addslashes(fread(fopen($tmp_name, "r"), filesize($tmp_name)));
+		$data = fread(fopen($tmp_name, "r"), filesize($tmp_name));
+
+		$query = "insert into `tiki_user_answers_uploads`(`userResultId`,`questionId`,`filename`,`filetype`,`filesize`,`filecontent`) values(?,?,?,?,?,?)";
+		$result = $this->query($query,array((int)$userResultId,(int)$questionId,$filename,$filetype,$filesize,$data));
+	}
+
 
 	function register_user_quiz_answer($userResultId, $quizId, $questionId, $optionId) {
 		$query = "insert into `tiki_user_answers`(`userResultId`,`quizId`,`questionId`,`optionId`) values(?,?,?,?)";
@@ -708,6 +766,11 @@ class QuizLib extends TikiLib {
 
 		return $quizId;
 	}
+
+  function get_upload_dir() {
+	//return TikiInit::tempDir() . "/";
+	return "quiz_uploads/";
+  }
 // Function for Quizzes end ////
 }
 
@@ -1077,6 +1140,7 @@ class Quiz {
   function getAnswerCount(){
     // How many possible answers (i.e. choices in a multiple-choice)
   }
+
 
 }
 

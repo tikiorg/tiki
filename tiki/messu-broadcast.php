@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.21 2005-01-01 00:16:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-broadcast.php,v 1.22 2005-03-12 16:48:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -48,20 +48,20 @@ if (!isset($_REQUEST['body']))
 if (!isset($_REQUEST['priority']))
 	$_REQUEST['priority'] = 3;
 
+if (!isset($_REQUEST['replyto_hash']))
+	$_REQUEST['replyto_hash'] = '';
+
 $smarty->assign('to', $_REQUEST['to']);
 $smarty->assign('cc', $_REQUEST['cc']);
 $smarty->assign('bcc', $_REQUEST['bcc']);
 $smarty->assign('subject', $_REQUEST['subject']);
 $smarty->assign('body', $_REQUEST['body']);
 $smarty->assign('priority', $_REQUEST['priority']);
+$smarty->assign('replyto_hash', $_REQUEST['replyto_hash']);
 
 $smarty->assign('mid', 'messu-broadcast.tpl');
 
 $smarty->assign('sent', 0);
-
-if (isset($_REQUEST['reply']) || isset($_REQUEST['replyall'])) {
-	$messulib->flag_message($user, $_REQUEST['msgId'], 'isReplied', 'y');
-}
 
 if (isset($_REQUEST['group'])) {
 	if ($_REQUEST['group'] == 'all' && $tiki_p_broadcast_all == 'y') {
@@ -126,7 +126,16 @@ if (isset($_REQUEST['send'])) {
 	// Insert the message in the inboxes of each user
 	foreach ($users as $a_user) {
 		$messulib->post_message($a_user, $user, $a_user, '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+		// if this is a reply flag the original messages replied to
+		if ($_REQUEST['replyto_hash']<>'') {	
+			$messulib->mark_replied($a_user, $_REQUEST['replyto_hash']);
+		}
 	}
+
+	// Insert a copy of the message in the sent box of the sender
+	$messulib->save_sent_message(
+		$user, $user, $_REQUEST['to'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'],
+		$_REQUEST['priority'], $_REQUEST['replyto_hash']);
 
 	$smarty->assign('message', $message);
 }

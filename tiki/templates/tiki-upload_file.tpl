@@ -1,4 +1,4 @@
-<a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{tr}{if $editFileId}Edit File: {$fileInfo.filename}{else}Upload File{/if}{/tr}</a><br /><br />
+<h1><a href="tiki-upload_file.php?galleryId={$galleryId}" class="pagetitle">{tr}{if $editFileId}Edit File: {$fileInfo.filename}{else}Upload File{/if}{/tr}</a></h1>
 {if count($galleries) > 0}
 	<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse gallery{/tr}</a><br /><br />
 	<div align="center">
@@ -32,7 +32,7 @@
 	</td></tr>
 	{if !$editFileId}<tr><td class="formcolor">{tr}Batch upload{/tr}</td><td class="formcolor">
 	<input type="checkbox" name="isbatch" /></td></tr>{/if}
-	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}{if $editFileId}edit{else}upload{/if}{/tr}" /></td></tr>
+	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}edit{/tr}{else}{tr}upload{/tr}{/if}" /></td></tr>
 	</table>
 	</form>
 	</div>

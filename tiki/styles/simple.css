@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.31 2005-01-22 22:56:15 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.32 2005-03-12 16:50:02 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -55,6 +55,25 @@ table {
 }
 table.galtable {
 	border-collapse: collapse;
+}
+
+table.normal td.heading {
+ text-align: left;
+ width: 15px;
+}
+
+table.email td.closeButton {
+ width: 100%;
+}
+table.email td.closeButton form {
+ text-align: right;
+}
+
+table.email {
+ border:solid 1px #abcdef;
+}
+table.email td.body {
+ border: dashed 1px #69c;
 }
 
 /* Description on wiki pages */

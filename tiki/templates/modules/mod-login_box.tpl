@@ -1,6 +1,5 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.30 2004-06-13 01:08:19 teedog Exp $ *}
-
-{tikimodule title="{tr}Login{/tr}" name="login_box"}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.31 2005-03-12 16:51:00 mose Exp $ *}
+{tikimodule title="{tr}Login{/tr}" name="login_box" flip=$module_params.flip decorations=$module_params.decorations}
 
     {if $user}
       {tr}logged as{/tr}: {$user}<br />
@@ -70,16 +69,16 @@
           <tr><td class="module"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on"/></td></tr>
           {/if}
           <tr>
-          {if $forgotPass eq 'y' and $allowRegister eq 'y'}
+          {if $forgotPass eq 'y' and $allowRegister eq 'y' and $change_password eq 'y'}
             <td  class="module" valign="bottom">[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</td>
           {/if}
-          {if $forgotPass eq 'y' and $allowRegister ne 'y'}
+          {if $forgotPass eq 'y' and $allowRegister ne 'y' and $change_password eq 'y'}
             <td  class="module" valign="bottom"><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a></td>
           {/if}
-          {if $forgotPass ne 'y' and $allowRegister eq 'y'}
+          {if ($forgotPass ne 'y' or $change_password ne 'y') and $allowRegister eq 'y'}
             <td  class="module" valign="bottom"><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}register{/tr}</a></td>
           {/if}
-          {if $forgotPass ne 'y' and $allowRegister ne 'y'}
+          {if ($forgotPass ne 'y' or $change_password ne 'y')and $allowRegister ne 'y'}
           <td valign="bottom">&nbsp;</td>
           {/if}
           </tr>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.25 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.26 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -67,9 +67,12 @@ $smarty->assign_by_ref('info', $info);
 
 $smarty->assign('source', false);
 if (isset($_REQUEST['source'])) {
-	if ($_REQUEST["source"] == $info["version"]) {
+	if ($_REQUEST["source"] == '' && isset($_REQUEST['version'])) {
+		$_REQUEST["source"] = $_REQUEST['version'];
+	}
+	if ($_REQUEST["source"] == $info["version"] || $_REQUEST["source"] == 0 ) {
 		$smarty->assign('sourced', nl2br($info["data"]));
-		$smarty->assign('source', $_REQUEST['source']);
+		$smarty->assign('source', $info['version']);
 	}
 	else {
 		$version = $histlib->get_version($page, $_REQUEST["source"]);
@@ -78,14 +81,20 @@ if (isset($_REQUEST['source'])) {
 			$smarty->assign('source', $_REQUEST['source']);
 		}
 	}
+	if ($_REQUEST["source"] == 0) {
+		$smarty->assign('noHistory', true);
+	}
 }
 
 $smarty->assign('preview', false);
 if (isset($_REQUEST["preview"])) {
-	if ($_REQUEST["preview"] == $info["version"]) {
+	if ($_REQUEST["preview"] == '' && isset($_REQUEST['version'])) {
+		$_REQUEST["preview"] = $_REQUEST['version'];
+	}
+	if ($_REQUEST["preview"] == $info["version"] || $_REQUEST["preview"] == 0 ) {
 		$previewd = $tikilib->parse_data($info["data"]);
 		$smarty->assign_by_ref('previewd', $previewd);
-		$smarty->assign('preview', $_REQUEST["preview"]);
+		$smarty->assign('preview', $info['version']);
 	}
 	else {
 		$version = $histlib->get_version($page, $_REQUEST["preview"]);
@@ -95,11 +104,24 @@ if (isset($_REQUEST["preview"])) {
 			$smarty->assign('preview', $_REQUEST["preview"]);
 		}
 	}
+	if ($_REQUEST["preview"] == 0) {
+		$smarty->assign('noHistory', true);
+	}
 }
-
 
 $history = $histlib->get_page_history($page);
 $smarty->assign_by_ref('history', $history);
+
+if (isset($_REQUEST["diff2"])) { // previous compatibility
+	if ($_REQUEST["diff2"] == '' && isset($_REQUEST['version'])) {
+		$_REQUEST["diff2"] = $_REQUEST['version'];
+	}
+	$_REQUEST["compare"] = "y";
+	$_REQUEST["oldver"] = $_REQUEST["diff2"];
+}
+if (!isset($_REQUEST["newver"])) {
+	$_REQUEST["newver"] = 0;
+}
 
 if (isset($_REQUEST["compare"])) {
 	foreach ($history as $old) {

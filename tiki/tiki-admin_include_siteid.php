@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.2 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_siteid.php,v 1.3 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,7 +34,6 @@ if (isset($_REQUEST["siteidentityset"])) {
 
  	$pref_toggles = array(
   			"feature_sitemycode",
-				"feature_siteloc",
 				"feature_sitelogo",
 				"feature_sitenav",
 				"feature_sitead",
@@ -48,6 +47,7 @@ if (isset($_REQUEST["siteidentityset"])) {
     }
 
  	$pref_simple_values = array(
+				"site_crumb_seper",
 				"sitelogo_src",
 				"sitelogo_bgcolor",
 				"sitelogo_title",
@@ -60,6 +60,17 @@ if (isset($_REQUEST["siteidentityset"])) {
     foreach ($pref_simple_values as $svitem) {
         simple_set_value ($svitem);
     }
+
+    $pref_byref_values = array(
+        "feature_siteloc",
+        "feature_sitetitle",
+        "feature_sitedesc"
+    );
+
+    foreach ($pref_byref_values as $britem) {
+        byref_set_value ($britem);
+    }
+
 }
 
 ask_ticket('admin-inc-siteid');

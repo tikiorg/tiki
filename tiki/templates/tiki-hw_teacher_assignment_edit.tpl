@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment_edit.tpl,v 1.6 2004-03-11 17:12:32 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignment_edit.tpl,v 1.7 2005-03-12 16:50:47 mose Exp $ *}
 {* tiki-hw_teacher_assignment_edit.tpl *}
 {* George G. Geller *}
 
@@ -14,7 +14,7 @@
 
 {if $feature_help eq 'y'}
   <a href="http://tikiwiki.org/tiki-index.php?page=HWAssignmentEdit" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Assignment{/tr}">
-    <img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' />
+    <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>
   </a>
 {/if}
 

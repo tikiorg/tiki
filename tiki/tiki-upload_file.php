@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.31 2005-01-22 22:54:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-upload_file.php,v 1.32 2005-03-12 16:49:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -246,7 +246,7 @@ if (isset($_REQUEST["upload"])) {
 	
 	if ($editFile && !$didFileReplace) {
 		$filegallib->update_file($editFileId, $_REQUEST["name"], $_REQUEST["description"],$user);
-		$fileChangedMessage = tra('File update was succesful').': '.$_REQUEST['name'];
+		$fileChangedMessage = tra('File update was successful').': '.$_REQUEST['name'];
 		$smarty->assign('fileChangedMessage',$fileChangedMessage);
 	}
 

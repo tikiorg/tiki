@@ -12,9 +12,15 @@ if(empty($instance->instanceId)) {
     die;  
   }
 }
+if ($instance->getActivityStatus($_REQUEST['activityId']) == "completed")
+{
+	$smarty->assign("msg",tra("This instance of activity is already complete"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 // Set the current user for this activity
 if(isset($user) && !empty($instance->instanceId) && !empty($activity->activityId)) {
   $instance->setActivityUser($activity->activityId,$user);
 }
-
 ?>

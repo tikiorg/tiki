@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.108 2005-01-22 22:54:59 mose Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.109 2005-03-12 16:49:05 mose Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -174,6 +174,7 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_usermen
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_userPreferences', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_userVersions', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_user_watches', 'n');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_user_watches_translations', 'y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_warn_on_edit', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_webmail', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_allowhtml', 'n');

@@ -1,5 +1,5 @@
 {if $feature_help eq "y"}
-<div class="simplebox">{tr}Tip{/tr}: {tr}This page is to configure settings of RSS feeds generated/exported by Tiki. To read/import RSS feeds, look for "RSS modules" on the application menu, or{/tr} <a class="link" href="tiki-admin_rssmodules.php">{tr}click here{/tr}</a>.</div><br />
+<div class="highlight">{tr}Tip{/tr}: {tr}This page is to configure settings of RSS feeds generated/exported by Tiki. To read/import RSS feeds, look for "RSS modules" on the application menu, or{/tr} <a class="link" href="tiki-admin_rssmodules.php">{tr}click here{/tr}</a>.</div><br />
 {/if}
 <div class="cbox">
 <div class="cbox-title">{tr}RSS feeds{/tr}</div>
@@ -9,8 +9,8 @@
         <tr><td class="form">{tr}<b>Feed</b>{/tr}</td>
             <td class="form">{tr}<b>enable/disable</b>{/tr}</td>
             <td class="form">{tr}<b>Max number of items</b>{/tr}</td>
-			<td class='form'>{tr}<b>Title</b>{/tr}</td>
-			<td class='form'>{tr}<b>Description</b>{/tr}</td>
+			<td class='form'><b>{tr}Title{/tr}</b></td>
+			<td class='form'><b>{tr}Description{/tr}</b></td>
         </tr>
         <tr><td class="form">{tr}Feed for Articles{/tr}:</td><td><input type="checkbox" name="rss_articles" {if $rss_articles eq 'y'}checked="checked"{/if}/></td><td class="form"><input type="text" name="max_rss_articles" size="5" value="{$max_rss_articles|escape}" /></td><td><input type='text' name='title_rss_articles' size='20' maxlength='255' value='{$title_rss_articles|escape}' /></td><td><textarea name='desc_rss_articles' cols='20'>{$desc_rss_articles|escape}</textarea></td></tr>
         <tr><td class="form">{tr}Feed for Weblogs{/tr}:</td><td><input type="checkbox" name="rss_blogs" {if $rss_blogs eq 'y'}checked="checked"{/if}/></td><td><input type="text" name="max_rss_blogs" size="5" value="{$max_rss_blogs|escape}" /></td><td><input type='text' name='title_rss_blogs' size='20' maxlength='255' value='{$title_rss_blogs|escape}' /></td><td><textarea name='desc_rss_blogs' cols='20'>{$desc_rss_blogs|escape}</textarea></td></tr>

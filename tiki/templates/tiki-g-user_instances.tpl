@@ -5,14 +5,14 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaUserInstances" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Instances{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-user_instances.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia User Instances tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /> {/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
 
@@ -39,9 +39,9 @@
 <td >
 	<small>{tr}status{/tr}</small>
 </td>
-<td >
+{*<td >
 	<small>{tr}act status{/tr}</small>
-</td>
+</td>*}
 <td >
 	<small>{tr}user{/tr}</small>
 </td>
@@ -70,13 +70,13 @@
 	{/section}
 	</select>
 </td>
-<td >
+{*<td >
 	<select name="filter_act_status">
 	<option {if '' eq $smarty.request.filter_act_status}selected="selected"{/if} value="">{tr}All{/tr}</option>
 	<option value="running" {if 'y' eq $smarty.request.filter_act_status}selected="selected"{/if}>{tr}running{/tr}</option>
 	<option value="completed" {if 'n' eq $smarty.request.filter_act_status}selected="selected"{/if}>{tr}completed{/tr}</option>
 	</select>
-</td>
+</td>*}
 <td >
 <select name="filter_user">
 	<option {if '' eq $smarty.request.filter_user}selected="selected"{/if} value="">{tr}All{/tr}</option>
@@ -107,7 +107,8 @@
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'procname_desc'}{sameurl sort_mode='procname_asc'}{else}{sameurl sort_mode='procname_desc'}{/if}">{tr}Process{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='user_desc'}{/if}">{tr}User{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'actstatus_desc'}{sameurl sort_mode='actstatus_asc'}{else}{sameurl sort_mode='actstatus_desc'}{/if}">{tr}Act status{/tr}</a></td>
+{*<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'actstatus_desc'}{sameurl sort_mode='actstatus_asc'}{else}{sameurl sort_mode='actstatus_desc'}{/if}">{tr}Act status{/tr}</a></td>*}
+<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'exptime_desc'}{sameurl sort_mode='exptime_asc'}{else}{sameurl sort_mode='exptime_desc'}{/if}">{tr}Expiration Date{/tr}</a></td>
 <td class="heading" >{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -131,8 +132,15 @@
 	<td class="{cycle advance=false}">
 	  {$items[ix].user}
 	</td>
-	<td class="{cycle advance=false}">
+{*	<td class="{cycle advance=false}">
 	  {$items[ix].actstatus}</a>
+	</td>*}
+	<td class="{cycle advance=false}">
+	{if $items[ix].exptime eq 0}
+	    {tr}Not defined{/tr}
+	{else}
+	  {$items[ix].exptime|date_format:"%A, %B %e, %H:%M:%S"}
+	{/if}
 	</td>
 	<td class="{cycle}">
 	  {*actions*}

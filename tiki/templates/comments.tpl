@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.59 2005-01-22 22:56:17 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.60 2005-03-12 16:50:08 mose Exp $ *}
 
 {if $forum_mode eq 'y'}
     <tr><td>
@@ -66,9 +66,8 @@
 </table>
 		{/if}
 
-
+<h2> {tr}Posted messages{/tr} </h2>
   <table class="normal">
-  <caption> {tr}Posted messages{/tr} </caption>
   <tr>
     <td class="heading"><label for="comments-maxcomm">{tr}Messages{/tr} </label>
         <select name="comments_maxComments" id="comments-maxcomm">
@@ -128,20 +127,20 @@
 
 <br />
 <div style="text-align: center">
-  <small>{$comments_below}&nbsp;{if $comments_below eq 1}{tr}reply{/tr}{else}{tr}replies{/tr}{/if} {tr}below your current threshold{/tr}</small>
+  {if $comments_threshold ne 0}<small>{$comments_below}&nbsp;{if $comments_below eq 1}{tr}reply{/tr}{else}{tr}replies{/tr}{/if} {tr}below your current threshold{/tr}</small>{/if}
   <div class="mini">
   	{if $comments_prev_offset >= 0}
-  		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_prev_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}prev{/tr}</a>]&nbsp;
+  		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_prev_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}prev{/tr}</a>]&nbsp;
   	{/if}
   	{tr}Page{/tr}: {$comments_actual_page}/{$comments_cant_pages}
   	{if $comments_next_offset >= 0}
-  		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_next_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}next{/tr}</a>]
+  		&nbsp;[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$comments_next_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}next{/tr}</a>]
   	{/if}
   	{if $direct_pagination eq 'y'}
 		<br />
 		{section loop=$comments_cant_pages name=foo}
 		{assign var=selector_offset value=$smarty.section.foo.index|times:$comments_maxComments}
-		<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$selector_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">
+		<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_parentId={$comments_parentId}&amp;comments_offset={$selector_offset}{$comments_sort_mode_param}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">
 		{$smarty.section.foo.index_next}</a>&nbsp;
 		{/section}
 	{/if}

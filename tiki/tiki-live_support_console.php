@@ -23,7 +23,7 @@ if ($feature_live_support != 'y') {
 	die;
 }
 
-if ($tiki_p_live_support_admin != 'y' && !$lsadminlib->user_is_operator($user)) {
+if ($tiki_p_live_support_admin != 'y' && !$lsadminlib->is_operator($user)) {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 
 	$smarty->display("error.tpl");

@@ -1,11 +1,10 @@
-<a class="pagetitle" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}Stats for survey{/tr}:{$survey_info.name}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}Stats for survey{/tr}:{$survey_info.name}</a></h1>
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}list surveys{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}survey stats{/tr}</a></span>
 {if $tiki_p_admin_surveys eq 'y'}<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}edit this survey{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-survey_stats_survey.php?surveyId={$surveyId}&amp;clear={$surveyId}">{tr}clear stats{/tr}</a></span>
 <span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}admin surveys{/tr}</a></span>{/if}
 <br /><br />
-<h2>{tr}Survey stats{/tr}</h2>
 
 <h2>{tr}Stats for this survey Questions {/tr}</h2>
 {section name=ix loop=$channels}
@@ -36,7 +35,7 @@
     <tr>
       <td  class="odd">{$channels[ix].qoptions[jx].qoption}</td>
       <td  class="odd">{$channels[ix].qoptions[jx].votes}</td>
-      <td  class="odd">{$channels[ix].qoptions[jx].average|string_format:"%.2f"}</td>
+      <td  class="odd">{$channels[ix].qoptions[jx].average|string_format:"%.2f"}%</td>
       <td  class="odd"><img src="img/leftbar.gif" alt="<" /><img alt="-" src="img/mainbar.gif" height="14" width="{$channels[ix].qoptions[jx].width}" /><img src="img/rightbar.gif" alt=">" /></td>
     </tr>
     {/section}

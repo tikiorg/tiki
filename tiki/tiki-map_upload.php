@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.13 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_upload.php,v 1.14 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -46,14 +46,15 @@ if (isset($_REQUEST["directory"])) {
 if (isset($_REQUEST["dir"])) {
 	$_REQUEST["dir"] = preg_replace('~\~~','',$_REQUEST["dir"]);
 	$_REQUEST["dir"] = preg_replace('~/+~','/',$_REQUEST["dir"]);
-  $directory_path = realpath($map_path.$_REQUEST["dir"]);
-	if (substr($directory_path,0,strlen($map_path)+4)!= $map_path."data") {
-		$dir="/data";
-		$directory_path=$map_path."/data";
+	$directory_path = inpath($map_path.$_REQUEST["dir"],$map_path."data");
+	if ($directory_path) {
+		$dir = "/data".substr($directory_path,strlen($map_path)+4);
 	} else {
-		$dir="/data".substr($directory_path,strlen($map_path)+4);
+	  $dir="/data";
+		$directory_path=$map_path."/data";
 	}
 	$basedir = dirname($_REQUEST["dir"]);
+
   if (substr($dir,0,5) != "/data") {
     $directory_path = $map_path."/data";
     $dir = "/data";
@@ -178,14 +179,24 @@ if (isset($_REQUEST["action"]) && isset($_REQUEST["indexfile"])
         die;      
       }				
       
-      $command=$gdaltindex." ".$directory_path."/".$_REQUEST["indexfile"]." ".$directory_path."/".$_REQUEST["filestoindex"];
-      $output=array();
-      exec($command,$output,$return);
-      if ($return<>0) {
-        $smarty->assign('msg',tra("I could not create the index file"));
-        $smarty->display("error.tpl");
-        die;      
-      }
+      $indexfile=inpath(dirname($directory_path."/".$_REQUEST["indexfile"]),$directory_path);
+      $filestoindex=inpath(dirname($directory_path."/".$_REQUEST["filestoindex"]),$directory_path);
+      if ($indexfile && $filestoindex && is_file($gdaltindex)) {
+        $indexfile=escapeshellarg($indexfile."/".basename($_REQUEST["indexfile"]));
+        $filestoindex=escapeshellarg($filestoindex."/".basename($_REQUEST["filestoindex"]));
+	      $command=$gdaltindex." ".$indexfile." ".$filestoindex;
+  	    $output=array();
+	      exec($command,$output,$return);
+	      if ($return<>0) {
+	        $smarty->assign('msg',tra("I could not create the index file"));
+	        $smarty->display("error.tpl");
+	        die;      
+	      }
+	    } else {
+	    		$smarty->assign('msg',tra("I could not create the index file"));
+	        $smarty->display("error.tpl");
+	        die; 
+	    }
   }
 }  
 

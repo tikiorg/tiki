@@ -1,21 +1,21 @@
 {*Smarty template*}
-<a class="pagetitle" href="tiki-newsreader_servers.php">{tr}Configure news servers{/tr}</a>
+<h1><a class="pagetitle" href="tiki-newsreader_servers.php">{tr}Configure news servers{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}Newsreader" target="tikihelp" class="tikihelp" title="{tr}Configure Newsreader{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-newsreader_servers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}configure newsreader server tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
-{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+{/if}</h1>
 
 
 
 
 {include file=tiki-mytiki_bar.tpl}
-<h3>{tr}Select a news server to browse{/tr}</h3>
+<h2>{tr}Select a news server to browse{/tr}</h2>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -66,7 +66,7 @@
 </div>
 
 
-<h3>{tr}Add or edit a news server{/tr}</h3>
+<h2>{tr}Add or edit a news server{/tr}</h2>
 <form action="tiki-newsreader_servers.php" method="post">
 <input type="hidden" name="serverId" value="{$serverId|escape}" />
 <table class="normal">

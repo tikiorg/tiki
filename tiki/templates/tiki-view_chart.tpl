@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{$chart_info.title}</a><br />
+<h1><a class="pagetitle" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{$chart_info.title}</a></h1>
 {if $chart_info.hits > 0}
 <small>{tr}viewed{/tr} {$chart_info.hits} {tr}times{/tr}</small>
 <br /><br />
@@ -8,6 +8,8 @@
 {/if}
 {if $tiki_p_admin_charts eq 'y'}
 <a href="tiki-admin_charts.php?chartId={$smarty.request.chartId}"><img src='img/icons/config.gif' border='0' alt='{tr}edit chart{/tr}' title='{tr}edit chart{/tr}' /></a>
+{/if}
+{if $tiki_p_admin_charts eq 'y' or $tiki_p_suggest_chart_item eq 'y'}
 <a href="tiki-admin_chart_items.php?chartId={$smarty.request.chartId}"><img src='img/icons/ico_olist.gif' border='0' alt='{tr}edit items{/tr}' title='{tr}edit items{/tr}' /></a>
 {/if}
 <a href="tiki-charts.php"><img src='img/icons/ico_table.gif' border='0' alt='{tr}list charts{/tr}' title='{tr}list charts{/tr}' /></a>
@@ -26,7 +28,7 @@
 <tr>
 	<td style="text-align:right;"  class="heading">{tr}pos{/tr}</td>
 	<td style="text-align:right;"  class="heading">{tr}pre{/tr}</td>
-	<td style="text-align:right;"  class="heading">{tr}perm{/tr}</td>
+	<td style="text-align:right;"  class="heading">{tr}permanency{/tr}</td>
 	<td class="heading">{tr}item{/tr}</td>
 	<td style="text-align:right;"  class="heading">{tr}chg{/tr}</td>
 	{if $chart_info.showVotes eq 'y'}

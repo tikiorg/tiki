@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.40 2005-01-22 22:56:18 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.41 2005-03-12 16:50:11 mose Exp $ *}
 
 <script language="JavaScript">
 {literal}
@@ -22,6 +22,10 @@
 <div class="cbox">
   <div class="cbox-title">
     {tr}General preferences and settings{/tr}
+    {if $feature_help eq 'y'}
+      <a href="{$helpurl}{$sectionhelp}" target="tikihelp" class="tikihelp" title="{tr}General Admin Doc{/tr}">
+      <img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>
+    {/if}
   </div>
   <div class="cbox-data">
     <form action="tiki-admin.php?page=general" method="post">
@@ -40,6 +44,18 @@
             <a class="link" href="javascript:previous_site_style();">&lt;&lt;</a>&nbsp;
             <a class="link" href="javascript:next_site_style();">&gt;&gt;</a>&nbsp;&nbsp;
             <input type="submit" name="style" value="{tr}Change style only{/tr}" />
+        </td>
+      </tr><tr>
+        <td class="form" ><label for="transition-theme">{tr}Also use transition stylesheet{/tr}:</label></td>
+        <td width="67%"><select name="transition_style" id="transition-theme">
+             <option value="none">{tr}none{/tr}</option>
+            {section name=ix loop=$transition_styles}
+              <option value="{$transition_styles[ix]|escape}"
+                {if $transition_style eq $transition_styles[ix]}selected="selected"{/if}>
+                {$transition_styles[ix]}</option>
+            {/section}
+            </select>
+            <!--input type="submit" name="style" value="{tr}Change style only{/tr}" /-->
         </td>
       </tr><tr>
         <td class="form"><label for="general-slideshows">{tr}Slideshows theme{/tr}:</label></td>
@@ -236,7 +252,7 @@
           <br /><div class="highlight">
           {tr}output compression is active.{/tr}<br />
           {tr}compression is handled by{/tr}: {$gzip_handler}
-          {/if}</div>
+          </div>{/if}
         </td>
         <td><input type="checkbox" name="feature_obzip" id="general-gzip"
               {if $feature_obzip eq 'y'}checked="checked"{/if}/>
@@ -267,9 +283,9 @@
         <td class="form" >
           <label for="general-https">{tr}HTTPS Server{/tr}:</label></td>
         <td ><select name="https" id="general-https">
-             <option value="auto" {if $https=="auto"}selected=selected{/if}>{tr}Automatic (uses HTTPS variable){/tr}</option>
-             <option value="http" {if $https=="http"}selected=selected{/if}>{tr}No{/tr}</option>
-             <option value="https" {if $https=="https"}selected=selected{/if}>{tr}Yes{/tr}</option>
+             <option value="auto" {if $https=="auto"}selected="selected"{/if}>{tr}Automatic (uses HTTPS variable){/tr}</option>
+             <option value="http" {if $https=="http"}selected="selected"{/if}>{tr}No{/tr}</option>
+             <option value="https" {if $https=="https"}selected="selected"{/if}>{tr}Yes{/tr}</option>
               </select>
                                </td>
       </tr><tr>
@@ -321,7 +337,7 @@
       </tr><tr>
         <td class="form"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label></td>
         <td><input size="5" type="text" name="maxRecords" id="general-max_records"
-                   value="{$maxRecords|escape}" />
+                   value="{$maxRecords|escape}" /></td>
       </tr><tr>
         <td class="form"><label for="general-helpurl">{tr}Help URL{/tr}:</label></td>
         <td><input type="text" name="helpurl" id="general-helpurl" value="{$helpurl|escape}" size="40" /></td>

@@ -1,18 +1,22 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.44 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.45 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.44 2005-01-01 00:16:33 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.45 2005-03-12 16:49:00 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
 require_once('tiki-setup.php');
 require_once ('lib/userslib/userslib_admin.php');
 
+if (!(isset($_REQUEST['user']) or isset($_REQUEST['username']))) {
+	header("Location: tiki-login_scr.php");
+	die;
+}
 // Alert user if cookies are switched off
 // for some reason, CAS proxy tickets don't work if the following cookie check occurs: help!
 global $auth_ext_xml_cas_proxy;

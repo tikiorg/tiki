@@ -14,7 +14,7 @@
   </td><td class="formcolor" align="right">
     <input type="submit" name="editcopyright" value="{tr}edit{/tr}"/><br />
     <a title="{tr}delete{/tr}" href="copyrights.php?page={$page|escape:"url"}&amp;action=delete&amp;copyrightId={$copyrights[i].copyrightId}" 
-><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>
+><img src="img/icons2/delete.gif" border="0" width="16" height="16" alt='{tr}Remove{/tr}'></a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=up&amp;copyrightId={$copyrights[i].copyrightId}">up</a>
     <a href="copyrights.php?page={$page|escape:"url"}&amp;action=down&amp;copyrightId={$copyrights[i].copyrightId}">down</a>
     </form>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_instances.php,v 1.9 2005-01-01 00:16:33 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-user_instances.php,v 1.10 2005-03-12 16:48:59 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -74,8 +74,11 @@ $wheres = array();
 if (isset($_REQUEST['filter_status']) && $_REQUEST['filter_status'])
 	$wheres[] = "gi.status='" . $_REQUEST['filter_status'] . "'";
 
-if (isset($_REQUEST['filter_act_status']) && $_REQUEST['filter_act_status'])
-	$wheres[] = "actstatus='" . $_REQUEST['filter_act_status'] . "'";
+// This search is fixed to "completed" cause it doesn't make sense to list
+// the instances completed to the users.
+//if (isset($_REQUEST['filter_act_status']) && $_REQUEST['filter_act_status'])
+//	$wheres[] = "gia.status='" . $_REQUEST['filter_act_status'] . "'";
+$wheres[] = "gia.status <> 'completed'";// . $_REQUEST['filter_act_status'] . "'";
 
 if (isset($_REQUEST['filter_process']) && $_REQUEST['filter_process'])
 	$wheres[] = "gi.pId=" . $_REQUEST['filter_process'] . "";
@@ -84,7 +87,7 @@ if (isset($_REQUEST['filter_activity']) && $_REQUEST['filter_activity'])
 	$wheres[] = "gia.activityId=" . $_REQUEST['filter_activity'] . "";
 
 if (isset($_REQUEST['filter_user']) && $_REQUEST['filter_user'])
-	$wheres[] = "user='" . $_REQUEST['filter_user'] . "'";
+	$wheres[] = "gia.user='" . $_REQUEST['filter_user'] . "'";
 
 if (isset($_REQUEST['filter_owner']) && $_REQUEST['filter_owner'])
 	$wheres[] = "owner='" . $_REQUEST['filter_owner'] . "'";
@@ -135,6 +138,7 @@ if ($offset > 0) {
 }
 
 $smarty->assign_by_ref('items', $items["data"]);
+$smarty->assign_by_ref('expiration_time',$items["expiration_time"]);
 
 $processes = $GUI->gui_list_user_processes($user, 0, -1, 'procname_asc', '', '');
 $smarty->assign_by_ref('all_procs', $processes['data']);

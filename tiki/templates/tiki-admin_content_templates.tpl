@@ -1,21 +1,15 @@
-<a class="pagetitle" href="tiki-admin_content_templates.php">{tr}Admin templates{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-admin_content_templates.php">{tr}Admin templates{/tr}</a>
   
       {if $feature_help eq 'y'}
-<a href="{$helpurl}Content+Templates" target="tikihelp" class="tikihelp" title="{tr}admin content templates{/tr}"><img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>
+<a href="{$helpurl}Content+Templates" target="tikihelp" class="tikihelp" title="{tr}admin content templates{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
-
-
 
       {if $feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_content_templates.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin content templates template{/tr}"><img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>
-{/if}
+<a href="tiki-edit_templates.php?template=tiki-admin_content_templates.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}admin content templates template{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>
+{/if}</h1>
 
-
-
-<br />
 {if $preview eq 'y'}
+<h2>{tr}Preview{/tr}</h2>
 <div class="wikitext">{$parsed}</div>
 {/if}
 {if $templateId > 0}
@@ -43,7 +37,11 @@
 {if $feature_html_pages eq 'y'}
 <tr><td class="formcolor">{tr}use in HTML pages{/tr}:</td><td class="formcolor"><input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
-<tr><td class="formcolor">{tr}template{/tr}:</td><td class="formcolor"><textarea name="content" rows="25" cols="60">{$info.content|escape}</textarea></td></tr>
+<tr><td class="formcolor">{tr}template{/tr}:<br /><br />
+{assign var=area_name value="editwiki"}
+{include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
+{include file=tiki-edit_help_tool.tpl}</td>
+<td class="formcolor"><textarea id='editwiki' name="content" rows="25" cols="60">{$info.content|escape}</textarea></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
@@ -78,13 +76,13 @@
 <td class="odd">
 [{section name=ix loop=$channels[user].sections}
 &nbsp;&nbsp;({$channels[user].sections[ix]} <a title="{tr}delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
-><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
+><img src="img/icons2/delete2.gif" border="0" width="8" height="8" alt='{tr}delete{/tr}'></a>)&nbsp;&nbsp;
 {/section}]
 </td>
 <td class="odd">
    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
-><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+   <a title="{tr}edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>
 </td>
 </tr>
 {else}
@@ -94,13 +92,13 @@
 <td class="even">
 [{section name=ix loop=$channels[user].sections}
 ({$channels[user].sections[ix]} &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
-><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete2.gif" /></a>)&nbsp;&nbsp;
+><img src="img/icons2/delete2.gif" border="0" width="8" height="8" alt='{tr}delete{/tr}'></a>)&nbsp;&nbsp;
 {/section}]
 </td>
 <td class="even">
    &nbsp;&nbsp;<a title="{tr}delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" 
-><img border="0" alt="{tr}delete{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;
-   <a edit="{tr}edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img border="0" alt="{tr}edit{/tr}" src="img/icons/edit.gif" /></a>
+><img src="img/icons2/delete.gif" border="0" height="16" width="16" alt='{tr}delete{/tr}'></a>&nbsp;&nbsp;
+   <a edit="{tr}edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}"><img src="img/icons/edit.gif" border="0" width="20" height="16"  alt='{tr}edit{/tr}'></a>
 </td>
 </tr>
 {/if}

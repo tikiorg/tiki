@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.21 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-listpages.php,v 1.22 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -181,23 +181,32 @@ if (!empty($_REQUEST['max_records'])) {
 $smarty->assign_by_ref('offset', $offset);
 
 if (isset($_REQUEST["find"])) {
-	$find = $_REQUEST["find"];
+	$find = strip_tags($_REQUEST["find"]);
 } else {
 	$find = '';
 }
 
 $smarty->assign('find', $find);
 
-if (isset($_REQUEST["initial"])) {                                                                                                                                        
-        $initial = $_REQUEST["initial"];                                                                                                                                  
-} else {                                                                                                                                                                  
-        $initial = '';                                                                                                                                                    
-}                                                                                                                                                                         
-$smarty->assign('initial', $initial);                                                                                                                                     
+if (isset($_REQUEST["initial"])) {
+	$initial = $_REQUEST["initial"];
+} else {
+	$initial = '';
+}
+$smarty->assign('initial', $initial);
+
+if (isset($_REQUEST["exact_match"])) {
+	$exact_match = true;
+	$smarty->assign('exact_match', 'y');
+} else {
+	$exact_match = false;
+	$smarty->assign('exact_match', 'n');
+}                 
+
 $smarty->assign('initials', split(' ','a b c d e f g h i j k l m n o p q r s t u v w x y z'));
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find);
+$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match);
 
 if (!empty($categorize_mode) || !empty($rename_mode)) {
 	$arraylen = count($listpages['data']);

@@ -1,4 +1,7 @@
+{if !( $searchNoResults ) }
 <h1>{tr}Search results{/tr}:</h1>
+{/if}
+{if !( $searchStyle eq "menu" )}
 {tr}Search in{/tr}:<br />
 <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=pages">{tr}All{/tr}</a>
 {if $feature_wiki eq 'y'}
@@ -27,14 +30,49 @@
 
 {if $feature_articles eq 'y'}
  <a class="linkbut" href="tiki-searchresults.php?words={$words}&amp;where=articles">{tr}articles{/tr}</a>
-{/if}
 <br /><br />
+{/if}
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
+{/if}
 <form class="forms" method="get" action="tiki-searchresults.php">
-    {tr}Find{/tr}: <input id="fuser" name="words" size="14" type="text" accesskey="s" />
+    {tr}Find{/tr} <input id="fuser" name="words" size="14" type="text" accesskey="s" value="{$words}"/>
+{if ( $searchStyle eq "menu" )}
+    {tr}in{/tr}
+    <select name="where">
+    <option value="pages">{tr}entire site{/tr}</option>
+    {if $feature_wiki eq 'y'}
+       <option value="wikis">{tr}wiki pages{/tr}</option>
+    {/if}
+    {if $feature_galleries eq 'y'}
+       <option value="galleries">{tr}galleries{/tr}</option>
+       <option value="images">{tr}images{/tr}</option>
+    {/if}
+    {if $feature_file_galleries eq 'y'}
+       <option value="files">{tr}files{/tr}</option>
+    {/if}
+    {if $feature_forums eq 'y'}
+       <option value="forums">{tr}forums{/tr}</option>
+    {/if}
+    {if $feature_faqs eq 'y'}
+       <option value="faqs">{tr}faqs{/tr}</option>
+    {/if}
+    {if $feature_blogs eq 'y'}
+       <option value="blogs">{tr}blogs{/tr}</option>
+       <option value="posts">{tr}blog posts{/tr}</option>
+    {/if}
+    {if $feature_directory eq 'y'}
+       <option value="directory">{tr}directory{/tr}</option>
+    {/if}
+    {if $feature_articles eq 'y'}
+       <option value="articles">{tr}articles{/tr}</option>
+    {/if}
+    </select>
+{else}
     <input type="hidden" name="where" value="{$where|escape}" />
+{/if}
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/>
 </form>
+{if !($searchNoResults) }
 <br /><br />
 {section  name=search loop=$results}
 <a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> ({tr}Hits{/tr}: {$results[search].hits})
@@ -67,4 +105,4 @@
 {/if}
 </div>
 </div>
-
+{/if}

@@ -1,23 +1,16 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.38 2005-01-22 22:56:20 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.39 2005-03-12 16:50:12 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}Categories+Admin" target="tikihelp" class="tikihelp" title="{tr}admin categories{/tr}">
-<img border="0" alt="{tr}Help{/tr}" src="img/icons/help.gif" /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-admin_categories.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin categories tpl{/tr}">
-<img border="0"  alt="{tr}Edit template{/tr}" src="img/icons/info.gif" /></a>{/if}
-<br />
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}'></a>{/if}</h1>
 
-<a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="browse the category system">{tr}browse category{/tr}</a>
-
-
-<br />
-<br />
+<div class="navbar"><a class="linkbut" href="tiki-browse_categories.php?parentId={$parentId}" title="{tr}browse the category system{/tr}">{tr}browse category{/tr}</a></div>
 
 <div class="tree" id="top">
 <div class="treetitle">{tr}Current category{/tr}: 
@@ -38,9 +31,9 @@
 <!-- {$catree[dx].parentId} :: {$catree[dx].categId} :: -->
 {if $catree[dx].children > 0}<i class="mini">{$catree[dx].children} {tr}Child categories{/tr}</i>{/if}
 {if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
-<a title="{tr}delete{/tr}" class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}delete{/tr}"><img  
+<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}delete{/tr}"><img  
 style="margin-right:{$catree[dx].deep*10+10}px;" border="0" src="img/icons2/delete.gif" align="right" height="12" width="12" hspace="5" vspace="1"/></a>
-<a title="{tr}edit{/tr}" class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}edit{/tr}"><img  
+<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}edit{/tr}"><img  
 border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"/></a>
 {if $catree[dx].has_perm eq 'y'}
 <a title="{tr}permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}"><img border="0" alt="{tr}permissions{/tr}" src="img/icons/key_active.gif" /></a>
@@ -57,9 +50,6 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
 {repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
 {/if}
 {/section}
-</div>
-</div>
-</div>
 </div>
 
 <br />
@@ -91,7 +81,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
         <tr><td class="form">{tr}Description{/tr}:</td><td class="form"><textarea rows="2" cols="40" name="description">{$description|escape}</textarea></td></tr>
         {if $categId <= 0}<tr><td class="form"><label for="assign_perms" title="{tr}Perms inherited from closest parent if possible or from global perms{/tr}">{tr}Assign permissions automatically{/tr}:<br /><i>({tr}recommended for best performance{/tr})</i></label></td>
         <td class="form"><input type="checkbox" name="assign_perms" id="assign_perms" checked="{$assign_perms}" /></td></tr>
-        {else}<tr><td class="form" colspan="2"><a href="tiki-categpermissions.php?categId={$categId}">Edit permissions for this category</a></td></tr>
+        {else}<tr><td class="form" colspan="2"><a href="tiki-categpermissions.php?categId={$categId}">{tr}Edit permissions for this category{/tr}</a></td></tr>
         {/if}
         <tr><td class="form" align="center" colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
       </table>
@@ -134,7 +124,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
       {section name=ix loop=$objects}
       <tr>
         <td class="even"><a class="link" href="{$objects[ix].href}" title="{$objects[ix].name}">{$objects[ix].name|truncate:25:"(...)":true}</a></td>
-        <td class="even">{$objects[ix].type}</td>
+        <td class="even">{tr}{$objects[ix].type}{/tr}</td>
         <td class="even"><a class="link" href="tiki-admin_categories.php?parentId={$parentId}&amp;removeObject={$objects[ix].catObjectId}&amp;fromCateg={$parentId}" title="{tr}delete{/tr}"><img alt="{tr}delete{/tr}" src="img/icons2/delete2.gif" border="0" /></a></td>
       </tr>
       {/section}
@@ -246,5 +236,5 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
       </div>
     </div>
   </td>
-<tr>
+</tr>
 </table>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.17 2005-01-05 19:22:42 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-take_quiz.php,v 1.18 2005-03-12 16:49:01 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -171,8 +171,27 @@ if (isset($_REQUEST["timeleft"])) {
 				check_ticket('take-quiz');
 				$quizlib->register_user_quiz_answer($userResultId, $_REQUEST["quizId"], $qid, $_REQUEST["question_$qid"]);
 			}
+
+			// TAKE CARE OF FILE UPLOADS FOR QUESTIONS
+			if($_FILES["question_upload_$qid"]) {
+	
+				$tmp_file = $_FILES["question_upload_$qid"]['tmp_name'];
+				$filename = $_FILES["question_upload_$qid"]['name'];
+				$filetype = $_FILES["question_upload_$qid"]['type'];
+				$filesize = $_FILES["question_upload_$qid"]['size'];
+
+				$binFile = $_FILES["question_upload_$qid"]['tmp_name'];
+    			$data = addslashes(fread(fopen($binFile, "r"), filesize($binFile)));
+				$quizlib->register_user_quiz_answer_upload($userResultId, $qid, $filename, $filetype, $filesize, $tmp_file);
+
+			}
+		
 		}
+
+
+
 	}
+
 //print("points: $points over $max<br />");
 } else {
 	$_SESSION["startQuiz"] = date("U");

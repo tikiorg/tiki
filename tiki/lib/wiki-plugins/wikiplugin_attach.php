@@ -1,6 +1,7 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.8 2005-01-22 22:55:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.9 2005-03-12 16:50:00 mose Exp $
 // Displays an attachment or a list of attachments
+// Currently works with wiki pages and tracker items.
 // Parameters: ln => line numbering (default false)
 // 		inline => puts the stuff between {ATTACH} tags as the link text instead of the file name or description.
 // 		showdesc => shows the description as the link text instead of the file name
@@ -9,13 +10,15 @@
 // 		id => Gives the actual id of the attachment to link in.  Might as well just do a straight link in this case...
 // 		num => Gives the number, in the list of attachments, of the attachment to link to
 // 		name => Gives the name of the attached file to link to.
+// 		file => Same as name.
+// 		page => Gives the name of another page the attached file is on.  The file on that page is linked to instead.  Only works with wiki pages.
 // Example:
 // {ATTACH(name=>foobar.zip)}
 //  comment about attachment, that will be display under attachment informations
 // {ATTACH}
 function wikiplugin_attach_help() {
     $help = tra("Displays an attachment or a list of them").": ";
-    $help.= "~np~{ATTACH(name=file.ext|id=1|num=1,showdesc=0|1,dls=0|1,icon=0|1,inline=0|1)}".tra("comment")."{ATTACH}~/np~ ";
+    $help.= "~np~{ATTACH(name|file=file.ext,id=1|num=1,showdesc=0|1,dls=0|1,icon=0|1,inline=0|1)}".tra("comment")."{ATTACH}~/np~ ";
     $help.= tra("num is optional and is the order number of the attachment in the list. If not provided, a list of all attachments is displayed.  Inline makes the comment be the text of the link.");
     return $help;
 }
@@ -23,13 +26,76 @@ function wikiplugin_attach_help() {
 function wikiplugin_attach($data, $params) {
     global $atts;
     global $mimeextensions;
+    global $wikilib;
+    global $tikilib;
+    global $user;
+
     extract ($params,EXTR_SKIP);
+
     $loop = array();
+		if (!isset($atts)) $atts = array();
+
+    if( ! is_array( $atts ) || ! array_key_exists( "data", $atts ) || count( $atts["data"] ) < 1 )
+    {
+	# We're being called from a preview or something; try to build the atts ourselves.
+
+	# See if we're being called from a tracker page.
+	if( strstr( $_REQUEST["SCRIPT_NAME"], "tiki-view_tracker_item.php" ) )
+	{
+	    $atts_item_name = $_REQUEST["itemId"];
+
+	# Get the tracker info.
+	    $tracker_info = $trklib->get_tracker($atts_item_name);
+	    $tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($atts_item_name));
+
+	    $attextra = 'n';
+
+	    if (strstr($tracker_info["orderAttachments"],'|')) {
+		$attextra = 'y';
+	    }
+
+	    $attfields = split(',',strtok($tracker_info["orderAttachments"],'|'));
+
+	    $atts = $trklib->list_item_attachments($atts_item_name, 0, -1, 'comment_asc', '');
+	}
+
+	# See if we're being called from a wiki page.
+	if( strstr( $_REQUEST["SCRIPT_NAME"], "tiki-index.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], "tiki-editpage.php" ) )
+	{
+	    $atts_item_name = $_REQUEST["page"];
+
+	    $atts = $wikilib->list_wiki_attachments($atts_item_name,0,-1,'created_desc','');
+	}
+    }
+
+    # Save for restoration before this script ends
+    $old_atts = $atts;
+
+    if( isset( $page ) )
+    {
+	if($tikilib->user_has_perm_on_object($user,$page,'wiki page','tiki_p_wiki_view_attachments'))
+	{
+
+	    $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
+	}
+    }
+
+    if( ! array_key_exists( "cant", $atts ) )
+    {
+	$atts['cant'] = count($atts["data"]);
+    }
+
+
     if (!isset($num)) $num = 0;
     if (!isset($id)) {
 	$id = 0;
     } else {
 	$num = 0;
+    }
+
+    if( isset( $file ) )
+    {
+	$name = $file;
     }
 
     if( isset( $name ) )
@@ -101,6 +167,8 @@ function wikiplugin_attach($data, $params) {
     {
 	$data = "<strong>".tra('no such attachment on this page')."</strong>";
     }
+
+    $atts = $old_atts;
 
     return $data;
 }

@@ -1,14 +1,14 @@
-<a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>
+<h1><a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>
 
 {if $feature_help eq 'y'}
 <a href="{$helpurl}User+Preferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences{/tr}">
-<img border='0' src='img/icons/help.gif' alt='{tr}help{/tr}' /></a>
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>
 {/if}
 
 {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-user_preferences.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}UserPreferences tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}edit template{/tr}' /></a>
-{/if}
+<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}edit template{/tr}'></a>
+{/if}</h1>
 
 {include file=tiki-mytiki_bar.tpl}
 <br />
@@ -48,7 +48,7 @@
   <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>
   <tr><td class="form">{tr}Country{/tr}:</td><td class="form">
   {if $country == "None"}
-  <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/Other.gif" />
+  <img src="img/flags/Other.gif" border="0" width="20" height="13" alt='{tr}flag{/tr}' title='{tr}flag{/tr}'>
   {else}
   <img alt="{tr}flag{/tr}" title="{tr}flag{/tr}" src="img/flags/{$country}.gif" />
   {/if}
@@ -214,15 +214,17 @@
   <div class="cbox-title">{tr}Account Information{/tr}</div>
   <div class="cbox-data">
   {if $auth_method neq 'cas' || ($cas_skip_admin eq 'y' && $user eq 'admin')}
-  {tr}Leave "New password" and "Confirm new password" fields blank to keep current password{/tr}
+  {if $change_password neq 'n'}{tr}Leave "New password" and "Confirm new password" fields blank to keep current password{/tr}{/if}
   {/if}
   <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
   <tr><td class="form">{tr}Email address{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td></tr>
 {if $auth_method neq 'cas' || ($cas_skip_admin eq 'y' && $user eq 'admin')}
+  {if $change_password neq 'n'}
   <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
   <tr><td class="form">{tr}Confirm new password{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
+  {/if}
   {if $tiki_p_admin ne 'y' or $userwatch eq $user}
     <tr><td class="form">{tr}Current password (required){/tr}:</td><td class="form"><input type="password" name="pass" /></td></tr>
   {/if}
@@ -263,6 +265,10 @@
   <td class="form"><input type="checkbox" name="allowMsgs" {if $allowMsgs eq 'y'}checked="checked"{/if}/></td>
 </tr>
 <tr>
+  <td class="form">{tr}Note author when reading his mail{/tr}</td>
+  <td class="form"><input type="checkbox" name="mess_sendReadStatus" {if $mess_sendReadStatus eq 'y'}checked="checked"{/if}/></td>
+</tr>
+<tr>
   <td class="form">{tr}Send me an email for messages with priority equal or greater than{/tr}:</td>
   <td class="form">
     <select name="minPrio">
@@ -272,6 +278,23 @@
       <option value="4" {if $minPrio eq 4}selected="selected"{/if}>4</option>
       <option value="5" {if $minPrio eq 5}selected="selected"{/if}>5</option>
       <option value="6" {if $minPrio eq 6}selected="selected"{/if}>{tr}none{/tr}</option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td class="form">{tr}Auto-archive read messages after x days{/tr}</td>
+  <td class="form">
+    <select name="mess_archiveAfter">
+      <option value="0" {if $mess_archiveAfter eq 0}selected="selected"{/if}>{tr}never{/tr}</option>
+      <option value="1" {if $mess_archiveAfter eq 1}selected="selected"{/if}>1</option>
+      <option value="2" {if $mess_archiveAfter eq 2}selected="selected"{/if}>2</option>
+      <option value="5" {if $mess_archiveAfter eq 5}selected="selected"{/if}>5</option>
+      <option value="10" {if $mess_archiveAfter eq 10}selected="selected"{/if}>10</option>
+      <option value="20" {if $mess_archiveAfter eq 20}selected="selected"{/if}>20</option>
+      <option value="30" {if $mess_archiveAfter eq 30}selected="selected"{/if}>30</option>
+      <option value="40" {if $mess_archiveAfter eq 40}selected="selected"{/if}>40</option>
+      <option value="50" {if $mess_archiveAfter eq 50}selected="selected"{/if}>50</option>
+      <option value="60" {if $mess_archiveAfter eq 60}selected="selected"{/if}>60</option>
     </select>
   </td>
 </tr>

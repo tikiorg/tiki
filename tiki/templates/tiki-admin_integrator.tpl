@@ -1,5 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.22 2004-03-31 07:38:44 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.23 2005-03-12 16:50:30 mose Exp $ *}
 
+<h1>{tr}Integrator{/tr}<h1>
 {if $repID > 0}
     <h2>{tr}Edit Repository:{/tr} {$name}</h2>
 {else}

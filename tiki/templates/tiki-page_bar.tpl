@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.40 2005-01-22 22:56:24 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.41 2005-03-12 16:50:50 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -6,7 +6,7 @@
     <tr>
 
 {* Check that page is not locked and edit permission granted. SandBox can be adited w/o perm *}
-{if (!$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox')) or $tiki_p_admin_wiki eq 'y'}
+{if (!$lock and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y'}
     <td>
       <div class="button2" >
       <a title="{$semUser}" href="tiki-editpage.php?page={$page|escape:"url"}{if $page_ref_id}&amp;page_ref_id={$page_ref_id}{/if}" class="linkbut">
@@ -18,9 +18,17 @@
       </a>
       </div>
     </td>
+{else}
+    <td>
+      <div class="button2" >
+      <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source=0" class="linkbut">
+        {tr}source{/tr}
+      </a>
+      </div>
+    </td>
 {/if}
 
-{if $page ne 'SandBox'}
+{if $page|lower ne 'sandbox'}
 
 {if $tiki_p_remove eq 'y' && $editable}
 <td><div class="button2"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="linkbut">{tr}remove{/tr}</a></div></td>
@@ -56,7 +64,7 @@
 <td><div class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="linkbut">{tr}slides{/tr}</a></div></td>
 {/if}
 {/if}
-{if $feature_wiki_export eq 'y'}
+{if $feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}
 <td><div class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}export{/tr}</a></div></td>
 {/if}
 {if $feature_wiki_discuss eq 'y'}

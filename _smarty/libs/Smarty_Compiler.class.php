@@ -26,7 +26,7 @@
  * @package Smarty
  */
 
-/* $Id: Smarty_Compiler.class.php,v 1.5 2005-03-07 20:04:29 damosoft Exp $ */
+/* $Id: Smarty_Compiler.class.php,v 1.6 2005-03-12 16:49:52 mose Exp $ */
 
 /**
  * Template compiling class
@@ -139,7 +139,7 @@ class Smarty_Compiler extends Smarty {
         // #foo#
         // "text"
         // "text"
-        $this->_var_regexp = '(?:' . $this->_avar_regexp . '|' . $this->_qstr_regexp . ')';
+        $this->_var_regexp = '(?:' . $this->_avar_regexp . '|' . $this->_num_const_regexp . '|' . $this->_qstr_regexp . ')';
 
         // matches valid object call (one level of object nesting allowed in parameters):
         // $foo->bar

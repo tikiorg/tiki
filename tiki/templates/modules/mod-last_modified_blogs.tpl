@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modified_blogs.tpl,v 1.9 2003-11-24 01:33:46 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_modified_blogs.tpl,v 1.10 2005-03-12 16:51:00 mose Exp $ *}
 
 {if $feature_blogs eq 'y'}
 {if $nonums eq 'y'}
@@ -6,7 +6,7 @@
 {else}
 {eval var="{tr}Last Modified blogs{/tr}" assign="tpl_module_title"}
 {/if}
-{tikimodule title=$tpl_module_title name="last_modified_blogs"}
+{tikimodule title=$tpl_module_title name="last_modified_blogs" flip=$module_params.flip decorations=$module_params.decorations}
   <table  border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modLastModifiedBlogs}
       <tr>

@@ -40,7 +40,7 @@ class SearchLib extends TikiLib {
 	function &find($where,$words,$offset, $maxRecords) {
 	  $exact=$this->find_exact($where,$words,$offset, $maxRecords);
 	  $part=$this->find_part($where,$words,$offset, $maxRecords);
-          foreach ($part["data"] as $p) {
+          if (count($part)) foreach ($part["data"] as $p) {
             $same = false;
             foreach ($exact["data"] as $e) {
               if ($p["pageName"] == $e["pageName"]) {

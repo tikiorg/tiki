@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.20 2005-01-22 22:56:24 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-stats.tpl,v 1.21 2005-03-12 16:50:53 mose Exp $ *}
 
-<a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a><br /><br />
+<h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
 
 <div id="page-bar">
 <p>

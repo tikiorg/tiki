@@ -1,4 +1,4 @@
-<a href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}" class="pagetitle">{tr}Edit Image{/tr}</a><br /><br />
+<h1><a href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}" class="pagetitle">{tr}Edit Image{/tr}</a></h1>
 <a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}">{tr}return to gallery{/tr}</a>
 <a class="linkbut" href="tiki-browse_image.php?imageId={$imageId}">{tr}browse image{/tr}</a>
 <br /><br />
@@ -11,7 +11,7 @@
 <hr/>
 <br />
 {/if}
-<img alt="image" src="show_image.php?id={$imageId}" /><br /><br />
+<img src="show_image.php?id={$imageId}" alt="{tr}image{/tr}" /><br /><br />
 <form enctype="multipart/form-data" action="tiki-edit_image.php" method="post">
 <input type="hidden" name="edit" value="{$imageId|escape}">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}">

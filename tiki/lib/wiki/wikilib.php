@@ -77,6 +77,31 @@ class WikiLib extends TikiLib {
     function get_creator($name) {
 	return $this->getOne("select `creator` from `tiki_pages` where `pageName`=?", array($name));
     }
+
+    /**
+     *  Get the contributors for page
+     *  the returned array does not contain the last editor/contributor
+     */
+    function get_contributors($page, $last) {
+        $notus = "`user` not like \"admin\" and `user` not like \"system\" and `user` not like \"$last\"";
+        $query = "select `user` from `tiki_history` where ($notus) and `pageName`=? order by `version` desc";
+        // $result = $this->query($query,array($page));
+        $result = $this->db->CacheSelectLimit($query,10,-1,array($page)); // return 10 rows max.
+        $ret = array();
+        $seen = array();
+        //$seen = array("system", "admin", $last); // would it be more efficient to put admin and system in here rather than in the where clause, above?
+
+        while ($res = $result->fetchRow()) {
+            if ( isset($seen[$res["user"]] )) {
+                continue;
+            } else {
+                $seen[$res["user"]] = $res["user"];
+            }
+            $ret[] = $res["user"];
+        }
+        return $ret;
+    }
+
     // Returns all pages that links from here or to here, without distinction
     // This is used by wiki3d, to make the graph
     function wiki_get_neighbours($page) {

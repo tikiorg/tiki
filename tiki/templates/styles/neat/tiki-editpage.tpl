@@ -15,7 +15,7 @@
 {/if}
 <h1>{tr}Edit{/tr}: {$page}</h1>
 {assign var=area_name value="editwiki"}
-{if $page eq 'SandBox'}
+{if $page|lower eq 'sandbox'}
 <div class="wikitext">
 {tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
 </div>
@@ -23,7 +23,7 @@
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
 <div style="margin-bottom:1px;">
 {if !$lock}
-  {if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
+  {if $tiki_p_edit eq 'y' or $page|lower eq 'sandbox'}
     {if $beingEdited eq 'y'}
       <span class="tabbut"><a title="{$semUser}" class="highlight" href="tiki-editpage.php?page={$page|escape:"url"}" class="tablink">{tr}edit{/tr}</a></span>
     {else}
@@ -32,7 +32,7 @@
   {/if}
 {/if}
 
-{if $page ne 'SandBox'}
+{if $page|lower ne 'sandbox'}
   {if $tiki_p_remove eq 'y'}
     <span class="tabbut"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="tablink">{tr}remove{/tr}</a></span>
   {/if}
@@ -41,7 +41,7 @@
   {/if}
 {/if}
 
-{if $page ne 'SandBox'}
+{if $page|lower ne 'sandbox'}
   {if $tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user) and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y'))}
     {if $lock}
       <span class="tabbut"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="tablink">{tr}unlock{/tr}</a></span>
@@ -54,7 +54,7 @@
   {/if}
 {/if}
 
-{if $page ne 'SandBox'}
+{if $page|lower ne 'sandbox'}
   {if $feature_history eq 'y'}
     <span class="tabbut"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="tablink">{tr}history{/tr}</a></span>
   {/if}
@@ -159,7 +159,7 @@
 {/if}
 {/if}
 
-{if $page ne 'SandBox'}
+{if $page|lower ne 'sandbox'}
 <tr><td class="formcolor">{tr}Comment{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td>
 {/if}
 {if $wiki_feature_copyrights  eq 'y'}

@@ -1,24 +1,14 @@
-<a class="pagetitle" href="tiki-list_contents.php">{tr}Dynamic content system{/tr}</a>
-
+<h1><a class="pagetitle" href="tiki-list_contents.php">{tr}Dynamic content system{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}DynamicContent" target="tikihelp" class="tikihelp" title="{tr}admin DynamicContent{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
-
-
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_contents.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin DynamicContent tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
-
-
-
-
-
-
-<br /><br />
-<h3>{tr}Create or edit content block{/tr}</h3><a class="linkbut" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
+<h2>{tr}Create or edit content block{/tr}</h2><a class="linkbut" href="tiki-list_contents.php">{tr}create new block{/tr}</a>
 <form action="tiki-list_contents.php" method="post">
 <input type="hidden" name="contentId" value="{$contentId|escape}" />
 <table class="normal">
@@ -31,7 +21,7 @@
 </td></tr>
 </table>
 </form>
-<h3>{tr}Available content blocks{/tr}</h3>
+<h2>{tr}Available content blocks{/tr}</h2>
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">

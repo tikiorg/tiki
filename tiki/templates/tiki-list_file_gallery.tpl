@@ -1,6 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.22 2005-01-22 22:56:24 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.23 2005-03-12 16:50:47 mose Exp $ *}
 
-<a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a></h1>
+<span class="button2"><a href="tiki-file_galleries.php" class="linkbut" title="{tr}list galleries{/tr}">{tr}list galleries{/tr}</a></span>
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $owner}
   <a href="tiki-file_galleries.php?edit_mode=1&amp;galleryId={$galleryId}" class="linkbut">{tr}edit gallery{/tr}</a>
 {/if}
@@ -12,7 +13,7 @@
 {/if}<br /><br />
 {if $tiki_p_create_file_galleries eq 'y'}
 {if $edit_mode eq 'y'}
-<h3>{tr}Edit a file using this form{/tr}</h3>
+<h2>{tr}Edit a file using this form{/tr}</h2>
 <div  align="center">
 <form action="tiki-list_file_gallery.php" method="post">
 <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
@@ -35,7 +36,7 @@
     <br />
 {/if}
 
-  <h3>{tr}Gallery Files{/tr}</h3>
+  <h2>{tr}Gallery Files{/tr}</h2>
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

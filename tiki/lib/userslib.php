@@ -515,6 +515,8 @@ function get_included_groups($group) {
 			$this->query("update `tiki_user_watches` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_user_votings` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_user_tasks` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_user_tasks` set `creator`=? where `creator`=?", array($to,$from));
+			$this->query("update `tiki_user_tasks_history` set `lasteditor`=? where `lasteditor`=?", array($to,$from));
 			$this->query("update `tiki_user_taken_quizzes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_user_quizzes` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_user_preferences` set `user`=? where `user`=?", array($to,$from));
@@ -586,6 +588,7 @@ function get_included_groups($group) {
 			$this->query("update `galaxia_instances` set `nextUser`=? where `nextUser`=?", array($to,$from));
 			$this->query("update `galaxia_instance_comments` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `galaxia_instance_activities` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_newsletter_subscriptions` set `email`=? where `email`=? and `isUser`=?", array($to,$from, 'y'));
 
 			$cachelib->invalidate('userslist');
 			return true;
@@ -991,15 +994,18 @@ function get_included_groups($group) {
 
     function assign_user_to_group($user, $group) {
 
+	$group_ret = false;
 	$userid = $this->get_user_id($user);
 
-	$query = "insert into `users_usergroups`(`userId`,`groupName`) values(?,?)";
-	$result = $this->query($query, array(
+	if ( $userid > 0 ){
+	    $query = "insert into `users_usergroups`(`userId`,`groupName`) values(?,?)";
+	    $result = $this->query($query, array(
 		    $userid,
 		    $group
 		    ), -1, -1, false);
-
-	return true;
+	    $group_ret = true;
+	}
+	return $group_ret;
     }
 
     function confirm_user($user) {
@@ -1085,9 +1091,9 @@ function get_included_groups($group) {
     }
     
     function is_due($user) {
-    	
+    	global $change_password;
     	// if CAS auth is enabled, don't check if password is due since CAS does not use local Tiki passwords
-    	if ($this->get_preference('auth_method', 'tiki') == 'cas') {
+    	if ($this->get_preference('auth_method', 'tiki') == 'cas' || $change_password != 'y') {
     		return false;
     	}
     	
@@ -1100,15 +1106,27 @@ function get_included_groups($group) {
     }
 
     function renew_user_password($user) {
-	$pass = $this->genPass();
-	//$hash = md5($user . $pass . $email);
-	$hash = md5($user . $pass);
-	// Note that tiki-generated passwords are due inmediatley
-	$now = date("U");
-	$query = "update `users_users` set `password` = ?, `hash` = ?,
-		`pass_due` = ? where ".$this->convert_binary()." `login` = ?";
-	$result = $this->query($query, array($pass, $hash, (int)$now, $user));
-	return $pass;
+		$pass = $this->genPass();
+		// Note that tiki-generated passwords are due inmediatley
+		// Note: ^ not anymore. old pw is usable until the URL in the password reminder mail is clicked
+		$now = date("U");
+		$query = "update `users_users` set `provpass` = ? where " . $this->convert_binary() . " `login`=?";
+		$result = $this->query($query, array($pass, $user));
+		return $pass;
+    }
+
+    function activate_password($user, $actpass) {
+		// move provpass to password and generate new hash, afterwards clean provpass
+		$query = "select `provpass`  from `users_users` where " . $this->convert_binary() . " `login`=?";
+		$pass = $this->getOne($query, array($user));
+		if (($pass <> '') && ($actpass == md5($pass))) {
+			$hash = md5($user . $pass);
+			$now = date("U");
+			$query = "update `users_users` set `password`=?, `hash`=?, `provpass`=?, `pass_due`=? where " . $this->convert_binary() . " `login`=?";
+			$result = $this->query($query, array("", $hash, "", (int)$now, $user));
+			return true;
+		}
+		return false;
     }
 
     function change_user_password($user, $pass) {
@@ -1136,7 +1154,6 @@ function get_included_groups($group) {
 		    ));
 			return true;
     }
-
 
     function remove_all_inclusions($group) {
 	if (!$this->group_exists($group))
@@ -1172,25 +1189,22 @@ function get_included_groups($group) {
 	    $bindvars[] = strip_tags($u['email']);
 	}
 
-	if (@$u['realname']) {
-	    $q[] = "`realname` = ?";
-	    $bindvars[] = strip_tags($u['realname']);
-	}
-
-	if (@$u['homePage']) {
-	    $q[] = "`homePage` = ?";
-	    $bindvars[] = strip_tags($u['homepage']);
-	}
-
-	if (@$u['country']) {
-	    $q[] = "`country` = ?";
-	    $bindvars[] = strip_tags($u['country']);
-	}
-
 	$query = "update `users_users` set " . implode(",", $q). " where " .
 		$this->convert_binary(). " `login` = ?";
 	$bindvars[] = $u['login'];
 	$result = $this->query($query, $bindvars);
+
+	$aUserPrefs = array('realName','homePage','country');
+	foreach ($aUserPrefs as $pref){
+		if (@$u[$pref]) {
+		    $bindvars = array();
+			$query = "INSERT INTO`tiki_user_preferences` (user,prefName,value) VALUES (?,?,?)";
+			$bindvars[] = $u['login'];
+			$bindvars[] = $pref;
+			$bindvars[] = strip_tags($u[$pref]);
+		}
+	}
+
 	return $result;
     }
 

@@ -5,8 +5,12 @@
 <form action="tiki-admin.php?page=calendar" method="post">
 <table class="admin">
 <tr class="form">
-<td><label>{tr}Users see and add events in their timezone{/tr}</label></td>
-<td><input type="checkbox" name="calendar_timezone" {if $calendar_timezone eq 'y'}checked="checked"{/if}/></td>
+<td><label>{tr}Group calendar sticky popup{/tr}</label></td>
+<td><input type="checkbox" name="calendar_sticky_popup" {if $calendar_sticky_popup eq 'y'}checked="checked"{/if}/></td>
+</tr>
+<tr class="form">
+<td><label>{tr}Group calendar item view tab{/tr}</label></td>
+<td><input type="checkbox" name="calendar_view_tab" {if $calendar_view_tab eq 'y'}checked="checked"{/if}/></td>
 </tr>
 <tr>
 <td colspan="2" class="button"><input type="submit" name="calprefs" value="{tr}Change preferences{/tr}" /></td>

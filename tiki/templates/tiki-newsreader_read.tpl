@@ -17,7 +17,7 @@
 </td>
 <td style="text-align:right;">
 	{if $user and $feature_notepad eq 'y'}
-	<a title="{tr}Save to notepad{/tr}" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$id}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
+	<a title="{tr}Save to notepad{/tr}" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$id}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;username={$username}&amp;password={$password}&amp;group={$group}&amp;savenotepad=1">{html_image file='img/icons/ico_save.gif' border='0' alt='{tr}save{/tr}'}</a>
 	{/if}
 </td></tr></table>
 </td></tr>

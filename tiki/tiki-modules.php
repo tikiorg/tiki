@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.46 2005-01-22 22:54:55 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.47 2005-03-12 16:49:00 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,16 +54,16 @@ foreach ( array('left_modules', 'right_modules') as $these_modules_name ) {
 // note indent missing to preserve CVS history
 $these_modules =& $$these_modules_name;
 $temp_max = count($these_modules);
-for ($i = 0; $i < $temp_max; $i++) {
-	$r = &$these_modules[$i];
-	parse_str($r["params"], $module_params);
+for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
+	$mod_reference = &$these_modules[$mod_counter];
+	parse_str($mod_reference["params"], $module_params);
 	$pass = 'y';
 	if (isset($module_params["lang"]) && ((gettype($module_params["lang"]) == "array" && !in_array($language, $module_params["lang"])) ||  (gettype($module_params["lang"]) == "string" && $module_params["lang"] != $language))) {
 		$pass="n";
 	}
 	elseif ($modallgroups != 'y') {
-		if ($r["groups"]) {
-			$module_groups = unserialize($r["groups"]);
+		if ($mod_reference["groups"]) {
+			$module_groups = unserialize($mod_reference["groups"]);
 		} else {
 			$module_groups = array();
 		}
@@ -96,17 +96,17 @@ for ($i = 0; $i < $temp_max; $i++) {
 	if ($pass == 'y') {
 		$cachefile = 'modules/cache/';
 		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
-		$cachefile.= 'mod-' . $r["name"] . '.tpl.'.$language.'.cache';
-		$phpfile = 'modules/mod-' . $r["name"] . '.php';
-		$template = 'modules/mod-' . $r["name"] . '.tpl';
-		$nocache = 'templates/modules/mod-' . $r["name"] . '.tpl.nocache';
-		if (!$r["rows"]) {
-			$r["rows"] = 10;
+		$cachefile.= 'mod-' . $mod_reference["name"] . '.tpl.'.$language.'.cache';
+		$phpfile = 'modules/mod-' . $mod_reference["name"] . '.php';
+		$template = 'modules/mod-' . $mod_reference["name"] . '.tpl';
+		$nocache = 'templates/modules/mod-' . $mod_reference["name"] . '.tpl.nocache';
+		if (!$mod_reference["rows"]) {
+			$mod_reference["rows"] = 10;
 		}
-		$module_rows = $r["rows"];
-		$smarty->assign_by_ref('module_rows',$r["rows"]);
-		if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) > $r["cache_time"])) {
-			$r["data"] = '';
+		$module_rows = $mod_reference["rows"];
+		$smarty->assign_by_ref('module_rows',$mod_reference["rows"]);
+		if ((!file_exists($cachefile)) || (file_exists($nocache)) || (($now - filemtime($cachefile)) > $mod_reference["cache_time"])) {
+			$mod_reference["data"] = '';
             $smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 			if (file_exists($phpfile)) {
 				include ($phpfile);
@@ -114,8 +114,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 			if (file_exists("templates/".$template)) {
 				$data = $smarty->fetch($template);
 			} else {
-				if ($tikilib->is_user_module($r["name"])) {
-					$info = $tikilib->get_user_module($r["name"]);
+				if ($tikilib->is_user_module($mod_reference["name"])) {
+					$info = $tikilib->get_user_module($mod_reference["name"]);
 					$smarty->assign_by_ref('user_title', $info["title"]);
 					if (isset($info['parse']) && $info["parse"] == 'y')
 						$info["data"] = $tikilib->parse_data($info["data"]);
@@ -127,7 +127,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 				}
 			}
             $smarty->assign('module_params',array()); // ensure params not available outside current module
-			$r["data"] = $data;
+            unset($info); // clean up when done
+			$mod_reference["data"] = $data;
 			if (!file_exists($nocache)) {
 				$fp = fopen($cachefile, "w+");
 				fwrite($fp, $data, strlen($data));
@@ -137,11 +138,14 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$fp = fopen($cachefile, "r");
 			$data = @fread($fp, filesize($cachefile));
 			fclose ($fp);
-			$r["data"] = $data;
+			$mod_reference["data"] = $data;
 		}
 	}
 } // end for
 $smarty->assign_by_ref($these_modules_name, $these_modules);
 } // end foreach
-
+$module_nodecorations = array('decorations' => 'n');
+$module_isflippable = array('flip' => 'y');
+$smarty->assign('module_nodecorations', $module_nodecorations);
+$smarty->assign('module_isflippable', $module_isflippable);
 ?>

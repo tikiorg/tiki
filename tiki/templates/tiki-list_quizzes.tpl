@@ -1,6 +1,4 @@
-<a class="pagetitle" href="tiki-list_quizzes.php">{tr}Quizzes{/tr}</a>
-
-
+<h1><a class="pagetitle" href="tiki-list_quizzes.php">{tr}Quizzes{/tr}</a>
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id222862" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
@@ -8,14 +6,9 @@
 </a>
 {/if}
 
-
-
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-list_quizzes.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}list quizzes tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
-<br />
-<br />
-
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}</h1>
 
 {if $tiki_p_view_quiz_stats eq 'y'}
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>

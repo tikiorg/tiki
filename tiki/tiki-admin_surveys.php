@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_surveys.php,v 1.15 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_surveys.php,v 1.16 2005-03-12 16:48:58 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -190,6 +190,8 @@ $smarty->assign('mins', $mins);
 $cat_type = 'survey';
 $cat_objid = $_REQUEST["surveyId"];
 include_once ("categorize_list.php");
+$section='surveys';
+include_once('tiki-section_options.php');
 ask_ticket('admin-surveys');
 
 // Display the template

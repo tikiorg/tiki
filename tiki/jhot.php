@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.9 2005-01-01 00:16:15 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.10 2005-03-12 16:48:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.9 2005-01-01 00:16:15 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.10 2005-03-12 16:48:56 mose Exp $
 include_once ('tiki-setup.php');
 
 include_once ('lib/drawings/drawlib.php');
@@ -46,9 +46,10 @@ if (isset($_FILES['filepath']) && is_uploaded_file($_FILES['filepath']['tmp_name
 
 	if ($tikidomain) {
 		$hash = "$tikidomain/$hash";
+		$name = "$tikidomain/$name";
 	}
 	@$fw = fopen("img/wiki/$hash", "wb");
-	@$fw2 = fopen($name, "wb");
+	@$fw2 = fopen("img/wiki/$name", "wb");
 	@$fp = fopen($_FILES['filepath']['tmp_name'], "rb");
 
 	while (!feof($fp)) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_last_sites.tpl,v 1.7 2003-11-24 01:33:46 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-directory_last_sites.tpl,v 1.8 2005-03-12 16:50:59 mose Exp $ *}
 
 {if $feature_directory eq 'y'}
 {if $nonums eq 'y'}
@@ -6,7 +6,7 @@
 {else}
 {eval var="{tr}Last Sites{/tr}" assign="tpl_module_title"}
 {/if}
-{tikimodule title=$tpl_module_title name="directory_last_sites"}
+{tikimodule title=$tpl_module_title name="directory_last_sites" flip=$module_params.flip decorations=$module_params.decorations}
   <table  border="0" cellpadding="0" cellspacing="0">
   {section name=ix loop=$modLastdirSites}
     <tr>

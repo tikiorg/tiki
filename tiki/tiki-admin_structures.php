@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.20 2005-01-05 19:22:41 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.21 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -155,6 +155,8 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 ask_ticket('admin-structures');
+$section = 'wiki';
+include_once ('tiki-section_options.php');
 
 // Display the template
 $smarty->assign('mid', 'tiki-admin_structures.tpl');

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.11 2005-01-01 00:16:31 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_newsletters.php,v 1.12 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -57,6 +57,7 @@ if ($tiki_p_admin_newsletters != 'y') {
 
 if ($_REQUEST["nlId"]) {
 	$info = $nllib->get_newsletter($_REQUEST["nlId"]);
+	$update = "";
 } else {
 	$info = array();
 
@@ -66,6 +67,7 @@ if ($_REQUEST["nlId"]) {
 	$info["allowAnySub"] = 'n';
 	$info["unsubMsg"] = 'y';
 	$info["validateAddr"] = 'y';
+	$update = "y";
 }
 
 $smarty->assign('info', $info);
@@ -149,7 +151,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
-$channels = $nllib->list_newsletters($offset, $maxRecords, $sort_mode, $find);
+$channels = $nllib->list_newsletters($offset, $maxRecords, $sort_mode, $find, $update);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
@@ -188,6 +190,9 @@ $cat_type='newsletter';
 $cat_objid = $_REQUEST["nlId"];
 include_once("categorize_list.php");
 */
+$section = 'newsletters';
+include_once ('tiki-section_options.php');
+
 ask_ticket('admin-nl');
 
 // Display the template

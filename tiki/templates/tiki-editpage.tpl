@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.62 2005-01-22 22:56:22 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.63 2005-03-12 16:50:44 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -11,20 +11,19 @@
 </script>
 {/if}
 
-{if $preview}
-{include file="tiki-preview.tpl"}
-{/if}
 <h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
-{assign var=area_name value="editwiki"}
-{if $page eq 'SandBox'}
+{if $page|lower eq 'sandbox'}
 <div class="wikitext">
 {tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
 </div>
 {/if}
+{if $preview}
+{include file="tiki-preview.tpl"}
+{/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
 {if $preview}
 <input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
-{if $page neq 'SandBox'}
+{if $page|lower neq 'sandbox'}
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
@@ -128,7 +127,7 @@ or use
 {/if}
 <tr class="formcolor"><td>{tr}Edit{/tr}:<br /><br />
 {include file="textareasize.tpl" area_name='editwiki' formId='editpageform'}<br /><br />
-{include file=tiki-edit_help_tool.tpl}
+{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
 </td>
 <td>
 <textarea id='editwiki' class="wikiedit" name="edit" rows="{$rows}" cols="{$cols}">{$pagedata|escape}</textarea>
@@ -141,9 +140,8 @@ or use
 {/if}
 {/if}
 
-{if $page ne 'SandBox'}
+{if $page|lower neq 'sandbox'}
 <tr class="formcolor"><td>{tr}Comment{/tr}:</td><td><input style="width:90%;" class="wikitext" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
-{/if}
 {if $wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">
@@ -152,6 +150,7 @@ or use
 <tr class="formcolor"><td>{tr}Authors:{/tr}</td><td><input size="40" class="wikitext" name="copyrightAuthors" type="text" value="{$copyrightAuthors|escape}" /></td></tr>
 </table>
 </td></tr>
+{/if}
 {/if}
 {if $feature_wiki_allowhtml eq 'y' and $tiki_p_use_HTML eq 'y'}
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}: </td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
@@ -220,13 +219,13 @@ or use
 <tr class="formcolor"><td>{tr}Important{/tr}:</td><td><b>{tr}{$wikiSubmitNotice}{/tr}</b></td>
 {/if}
 {/if}
-{if $page neq 'SandBox' or $tiki_p_admin eq 'y'}
+{if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 <tr class="formcolor"><td>&nbsp;</td><td>
-{if $tiki_p_minor eq 'y' && $page neq 'SandBox'}
+{if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
 <input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp;
-{if $page neq 'SandBox'}
+{if $page|lower ne 'sandbox'}
 <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" />
 {/if}
 {/if}

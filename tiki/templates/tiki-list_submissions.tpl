@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-list_submissions.php">{tr}Submissions{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-list_submissions.php">{tr}Submissions{/tr}</a></h1>
 <a class="linkbut" href="tiki-edit_submission.php">{tr}edit new submission{/tr}</a>
 <br /><br />
 <div align="center">

@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sub.php,v 1.4 2005-01-22 22:55:56 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sub.php,v 1.5 2005-03-12 16:50:00 mose Exp $
 
 // Wiki plugin to output <sub>...</sub>
 // - rlpowell
 
 function wikiplugin_sub_help() {
-        return tra("Displays text in subscript.").":<br :>~np~{SUB()}text{SUB}~/np~";
+        return tra("Displays text in subscript.").":<br />~np~{SUB()}text{SUB}~/np~";
 }
 
 function wikiplugin_sub($data, $params)

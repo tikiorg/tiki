@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.21 2005-01-22 22:56:21 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-assignuser.tpl,v 1.22 2005-03-12 16:50:34 mose Exp $ *}
 
 <a href="tiki-assignuser.php?assign_user={$assign_user}" class="pagetitle">{tr}Assign user{/tr} {$assign_user} {tr}to groups{/tr}</a><br /><br />
 <a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a>
@@ -8,8 +8,8 @@
 <tr><td class="even">{tr}Login{/tr}:</td><td class="odd">{$user_info.login}</td></tr>
 <tr><td class="even">{tr}Email{/tr}:</td><td class="odd">{$user_info.email}</td></tr>
 <tr><td class="even">{tr}Groups{/tr}:</td><td class="odd">
-{foreach from=$user_info.groups item=grp}
-{$grp}
+{foreach from=$user_info.groups item=what key=grp}
+{if $what eq 'included'}<i>{/if}{$grp}{if $what eq 'included'}</i>{/if}
 {if $grp != "Anonymous"}
 (<a class="link" href="tiki-assignuser.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;assign_user={$assign_user}&amp;action=removegroup&amp;group={$grp}" title="remove">x</a>)
 {/if}&nbsp;&nbsp;

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.42 2005-01-22 22:54:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.43 2005-03-12 16:48:56 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -194,10 +194,13 @@ if (isset ($_REQUEST["lang"])) {
 else {
   $handle=opendir ('lang');
   while (false !== ($lang = readdir ($handle))) {
-    if($lang == '.' || $lang == '..') 
+    if($lang == '.' || $lang == '..')
       continue;
-    print("$lang ");  
-    $languages[] = $lang;
+    if( is_dir( "lang/$lang" ) && is_file( "lang/$lang/language.php" ) )
+    {
+	print("$lang ");  
+	$languages[] = $lang;
+    }
   }
   closedir ($handle);
 }    	

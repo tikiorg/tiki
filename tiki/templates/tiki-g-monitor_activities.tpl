@@ -5,14 +5,14 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}GalaxiaMonitorActivities" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Activities{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'>{/if}
                         {if $feature_help eq 'y'}</a>{/if}
 
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-monitor_activities.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Monitor Activities tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /> {/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'> {/if}
 {if $feature_view_tpl eq 'y'}</a>{/if}
 
 
@@ -140,7 +140,7 @@
 	  <a href="tiki-g-run_activity.php?activityId={$act.activityId}"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>
 	  {/if}
 	  {if $act.type eq 'start'}
-	  <a href="tiki-g-run_activity.php?activityId={$act.activityId}&amp;createInstance=1"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>
+	  <a onClick="var answer = prompt('{tr}Enter the name of this instance{/tr}:','');while(answer == '')answer = prompt('{tr}The name is not valid. Please, enter the name again{/tr}:','');if (answer != null)window.location = 'tiki-g-run_activity.php?activityId={$act.activityId}&createInstance=1&name='+answer;"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>{*<a href="tiki-g-run_activity.php?activityId={$act.activityId}&amp;createInstance=1"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>*}
 	  {/if}
 	</td>
   
@@ -161,10 +161,10 @@
 	<td class="{cycle}" style="text-align:right;">
 		<table >
 		<tr>
- 		 <td style="text-align:right;"><a style="color:green;" href="tiki-g-monitor_instances.php?filter_process={$act.pId}&amp;filter_status=active&amp;filter_activity={$act.activityId}">{$act.active_instances}</a></td>
-		 <td style="text-align:right;"><a style="color:black;" href="tiki-g-monitor_instances.php?filter_process={$act.pId}&amp;filter_status=completed&amp;filter_activity={$act.activityId}">{$act.completed_instances}</a></td>
-		 <td style="text-align:right;"><a style="color:grey;" href="tiki-g-monitor_instances.php?filter_process={$act.pId}&amp;filter_status=aborted&amp;filter_activity={$act.activityId}">{$act.aborted_instances}</a></td>
-		 <td style="text-align:right;"><a style="color:red;" href="tiki-g-monitor_instances.php?filter_process={$act.pId}&amp;filter_status=exception&amp;filter_activity={$act.activityId}">{$act.exception_instances}</a></td>
+ 		 <td style="text-align:right;"><a style="color:green;">{$act.active_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:black;">{$act.completed_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:grey;">{$act.aborted_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:red;">{$act.exception_instances}</a></td>
 
 		</tr>
 		</table>

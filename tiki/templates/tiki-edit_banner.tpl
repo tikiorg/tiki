@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-edit_banner.php">{tr}Edit or create banners{/tr}</a><br /><br />
+<h1><a class="pagetitle" href="tiki-edit_banner.php">{tr}Edit or create banners{/tr}</a></h1>
 <a class="linkbut" href="tiki-list_banners.php">{tr}List banners{/tr}</a><br /><br />
 <form action="tiki-edit_banner.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="bannerId" value="{$bannerId|escape}" />

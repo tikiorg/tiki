@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.32 2005-01-05 19:22:40 jburleyebuilt Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_forums.php,v 1.33 2005-03-12 16:48:57 mose Exp $
 
 // Copyright (c) 2002-2005, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -183,7 +183,10 @@ if ($_REQUEST["forumId"]) {
 $smarty->assign('forumId', $_REQUEST["forumId"]);
 
 foreach ($info as $key => $value) {
-	$smarty->assign($key, $value);
+	if ($key == "section") /* conflict with section management */
+		$smarty->assign("forumSection", $value);
+	else
+		$smarty->assign($key, $value);
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -255,6 +258,9 @@ $smarty->assign_by_ref('groups', $groups);
 
 $sections = $tikilib->get_forum_sections();
 $smarty->assign_by_ref('sections', $sections);
+$section = 'forums';
+include_once ('tiki-section_options.php');
+
 ask_ticket('admin-forums');
 
 // Display the template

@@ -1,7 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks_public.tpl,v 1.2 2005-01-22 22:56:27 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks_public.tpl,v 1.3 2005-03-12 16:51:00 mose Exp $ *}
 {if $feature_tasks eq 'y' and $user}
-{tikimodule title="<a class='cboxtlink' href='tiki-user_tasks_public.php'>{tr}Public tasks{/tr}</a>" name="user_tasks_public"}
-<table  border="0" cellpadding="0" cellspacing="0" width="100%">
+{tikimodule title="<a class='cboxtlink' href='tiki-user_tasks.php'>{tr}Public tasks{/tr}</a>" name="user_tasks_public" flip=$module_params.flip decorations=$module_params.decorations}
+<table class="normal">
 <tr><td width="100%">
  <form class="forms" method="post" action="{$ownurl}">
     <select name="user_group">
@@ -22,7 +22,7 @@
 {* <tr><td class="module"> *}
 ({$public_tasks[iix].percentage}%)
 {$public_tasks[iix].taskId|tasklink:linkmodule}
-<br>{$public_tasks[iix].user}</td></tr>
+<br />{$public_tasks[iix].user}</td></tr>
 {sectionelse}
 <tr><td class="module">&nbsp;</td></tr>
 {/section}

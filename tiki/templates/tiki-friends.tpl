@@ -2,19 +2,13 @@
   
       {if $feature_help eq 'y'}
 <a href="{$helpurl}FriendshipNetwork" target="tikihelp" class="tikihelp" title="{tr}Friendship Network{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
+<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}'></a>{/if}
 
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-friends.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}friends tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" /></a>{/if}
+<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}edit tpl{/tr}'></a>{/if}
 
-<br /><br />
-
-
-{if $tiki_p_create_users eq 'y'}
-<a class="userlink" href="tiki-edit_user.php">{tr}create new user{/tr}</a>
-{/if}
 <br /><br />
 
 {if $msg}

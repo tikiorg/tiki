@@ -68,6 +68,7 @@ function smarty_function_phplayers($params, &$smarty) {
 		$intended = false;
 		$output = '';
 		foreach ($channels["data"] as $cd) {
+		        $cd["name"] = tra($cd["name"]);
 			if ($cd["type"] == 'o' and $indented) {
 				$output.= ".";
 			} elseif ($cd["type"] == 's') {

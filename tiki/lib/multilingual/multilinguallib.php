@@ -51,7 +51,7 @@ class MultilingualLib extends TikiLib {
 				if ($this->exist($objTrads, $t['lang'], 'lang'))
 					return "alreadyTrad";
 			}
-			$query = "update `tiki_translated_objects`set `traId`=? where `tradId`=?";
+			$query = "update `tiki_translated_objects`set `traId`=? where `traId`=?";
 			$this->query = $this->query($query, array($srcTrads[0]['traId'], $objTrads[0]['traId']));
 			return null;
 		}

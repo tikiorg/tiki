@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.67 2005-01-22 22:55:44 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.68 2005-03-12 16:49:42 mose Exp $
  *
  * \brief Categories support class
  *
@@ -217,7 +217,7 @@ class CategLib extends TikiLib {
 			 //
 			 // by now they're not showing, list_category_objects needs support for ignoring permissions
 			 // for a type.
-			 'article' => '',
+			 'article' => 'tiki_p_read_article',
 			 'image' => '',
 			 
 			 // newsletters can't be categorized, although there's some code in tiki-admin_newsletters.php
@@ -387,7 +387,10 @@ class CategLib extends TikiLib {
 										break 2;
 										// break out of one FOR loop and one FOREACH loop
 									}
+								} else { /* no special perm on cat  so general perm: (to see the categ panel as anonymous */ 
+									$return_perms["$perm"] = 'y';
 								}
+
 							}
 						}
 					}
@@ -828,7 +831,8 @@ class CategLib extends TikiLib {
 			"tracker" => "tracker",
 			"wiki" => "wiki page",
 			"img" => "image"
-		);
+		);	//get_strings tra("article");tra("blog");tra("directory");tra("faq");tra("file gallery");tra("forum");tra("image gallery");tra("newsletter");
+			//get_strings tra("poll");tra("quiz");tra("survey");tra("tracker");tra("wiki page");tra("image")
 			
 		$typetitles = array(
 			"article" => "Articles",

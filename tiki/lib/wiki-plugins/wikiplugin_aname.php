@@ -18,7 +18,7 @@
 
 
 function wikiplugin_aname_help() {
-        return tra("Puts an anchor into a wiki page. Use in conjunction with the ALINK plugin, which makes links to the anchor").":<br :>~np~{ANAME()}anchorname{ANAME}~/np~";
+        return tra("Puts an anchor into a wiki page. Use in conjunction with the ALINK plugin, which makes links to the anchor").":<br />~np~{ANAME()}anchorname{ANAME}~/np~";
 }
 
 function wikiplugin_aname($data, $params)
