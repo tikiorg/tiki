@@ -1,11 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.10 2003-11-20 23:49:04 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-user_tasks.tpl,v 1.11 2003-11-23 04:01:53 gmuslera Exp $ *}
 
 {if $feature_tasks eq 'y' and $user}
-<div class="box">
-<div class="box-title">
-{include file="module-title.tpl" module_title="<a class='cboxtlink' href='tiki-user_tasks.php'>{tr}User tasks{/tr}</a>" module_name="user_tasks"}
-</div>
-<div class="box-data">
+
+{tikimodule title="<a class='cboxtlink' href='tiki-user_tasks.php'>{tr}User tasks{/tr}</a>" name="user_tasks"}
 <form action="{$ownurl}" method="post">
 <input style="font-size: 9px;" type="text" name="modTasksTitle" />
 <input style="font-size: 9px;" type="submit" name="modTasksSave" value="{tr}add{/tr}" />
@@ -23,6 +20,5 @@
 <input style="font-size: 9px;" type="submit" name="modTasksCom" value="{tr}done{/tr}" />
 <input style="font-size: 9px;" type="submit" name="modTasksDel" value="{tr}del{/tr}" />
 </form>
-</div>
-</div>
+{/tikimodule}
 {/if}
