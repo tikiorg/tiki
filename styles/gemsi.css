@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.30 2004-04-09 03:55:06 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.31 2004-04-29 13:23:22 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -1816,3 +1816,57 @@ a.phplm	{
 a.phplm:hover	{
 	background-color: #dedede;
 }
+
+/* tiki tabs */
+
+.tabmark {
+	display: inline;
+	font-size: 85%;
+	background-color: #ddd7c6;
+	border: 1px solid #666666;
+	margin: 0px;
+	margin-right: 5px;
+	padding: 1px 0px 1px 0px;
+	-moz-border-radius : 5px 5px 0 0;  
+}
+.tabmark a { 
+	-moz-border-radius : 5px 5px 0 0; 
+	border-bottom : 0; 
+	color: #666666;
+	font-weight: 700 !important;
+	padding: 1px 5px 1px 5px;
+}
+.tabmark a:active {
+	background-color: white;
+	color: red;
+}
+.tabmark a:hover {
+	color: black;
+	background-color: #CCCCCC;
+}
+
+.tabcontent {
+	position: relative;
+	border: 1px solid #999999;
+	padding: 6px 2px 2px 2px;
+	margin-bottom: 25px;
+	background-color: #eee7d6;
+	-moz-border-radius: 0px 4px 4px 4px;
+}
+.tabcontent h3 {
+	margin-left: 3px;
+}
+.tabcontent table tr td:first-child {
+	width: 100px;
+}
+.tabcontent table tr td.thin:first-child {
+	width: 20px;
+}
+.tabcontent table tr td.auto:first-child {
+	width: auto;
+}
+.tabcontent input[type=text],
+.tabcontent textarea {
+	width: 100%;
+}
+

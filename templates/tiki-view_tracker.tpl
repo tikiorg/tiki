@@ -22,10 +22,10 @@
 {cycle name=tabs values="1,2,3" print=false advance=false}
 <div id="page-bar">
 {if $tiki_p_view_trackers eq 'y'}
-<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Tracker{/tr} <i>{$tracker_info.name}</i></a></span>
 {/if}
 {if $tiki_p_create_tracker_items eq 'y'}
-<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},3);" class="linkbut">{tr}Insert new item{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Insert new item{/tr}</a></span>
 {/if}
 </div>
 {/if}
@@ -33,7 +33,7 @@
 {cycle name=content values="1,2,3" print=false advance=false}
 {* -------------------------------------------------- tab with list --- *}
 {if $tiki_p_view_trackers eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
 <form action="tiki-view_tracker.php" method="post">
@@ -49,12 +49,30 @@ class="statusimg">{html_image file=$stdata.image title=$stdata.label alt=$stdata
 {/foreach}
 {/if}
 {if $show_filters eq 'y'}
-<td class="formcolor" style="width:100%;"><input type="text" name="filtervalue" value="{$filtervalue}" /></td>
+<td class="formcolor" style="width:100%;">
+{assign var=disp value='n'}
+{foreach key=fid item=field from=$listfields}
+{if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
+{if $field.type eq 'c'}
+<div style="display:{if $disp eq 'n'}block{else}none{/if};"><select name="filtervalue"><option value="y">{tr}Yes{/tr}</option><option value="n">{tr}No{/tr}</option></select></div>
+{elseif $field.type eq 'd'}
+<div style="display:{if $disp eq 'n'}block{else}none{/if};"><select name="filtervalue">
+{section name=jx loop=$field.options_array}
+<option value="{$field.options_array[jx]|escape}" {if $defaultvalues.$fid eq $field.options_array[jx]}selected="selected"{/if}>{$field.options_array[jx]}</option>
+{/section}
+</select></div>
+{else}
+<div style="display:{if $disp eq 'n'}block{else}none{/if};"><input type="text" name="filtervalue" value="{$filtervalue}" /></div>
+{/if}
+{assign var=disp value='y'}
+{/if}
+{/foreach}
+</td>
 <td>
 <select name="filterfield">
 {foreach key=fid item=field from=$listfields}
 {if $field.isSearchable eq 'y' and $field.type ne 'f' and $field.type ne 'j' and $field.type ne 'i'}
-<option value="{$fid}"{if $fid eq $filterfield} selected="selected"{/if}>{$field.name|truncate:255:"..."}</option>
+<option value="{$fid}"{if $fid eq $filterfield} selected="selected"{/if}>{$field.name|truncate:65:"..."}</option>
 {/if}
 {/foreach}
 </select>
@@ -229,7 +247,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 
 {* --------------------------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_create_tracker_items eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="wikitext"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
 <form action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 

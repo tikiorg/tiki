@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.13 2004-03-27 21:24:51 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.14 2004-04-29 13:23:23 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -208,66 +208,6 @@ div.box-title table {
     display: none;
 }
 
-/* for tabs */
-div.tabs {
-	font-size: 11px;
-	white-space: nowrap;
-	cursor: default !important;
-	font-weight: 700 !important;
-	z-index: 100;
-	}
-
-.content {
-	position: relative;
-	border: 1px solid #666;
-	width: 600px;
-	padding: 10px;
-	margin-bottom: 25px;
-	z-index: 80;
-	background-color: #f3f6f9;
-	-moz-border-radius: 0px 4px 4px 4px;
-	}
-	
-.tab {
-	border: 1px solid #347;
-	padding: 2px 5px 1px 5px;
-	background-color: #bcd;
-	color: #303036;
-	z-index: 100;
-	border-bottom-width: 0;
-	-moz-border-radius: 4px 4px 0px 0px;
-	}
-
-.tabHover {
-	background-color: #46596f;
-	color:#fff;
-	z-index: 90;
-	border-bottom-width: 0;
-	cursor: pointer;
-	}
-
-.tabActive { 
-	padding: 3px 5px 2px 5px;
-	color: #060610 ;
-	background-color: #f3f6f9;
-	z-index: 100;
-	}
-      
-div.tabsClone .tab, div.tabsClone .tabActive {
-	border-top-width: 0 !important;
-	border-bottom-width: 1px !important;
-	}
-
-div.tabsClone .tabActive{
-	top: -2px;
-	}
-
-a.removeTab{
-	font-size: smaller;
-	text-decoration: none;
-	}
-
-
 /* ASSORTED  */
 
 #clear {
@@ -281,4 +221,41 @@ a.removeTab{
 
 TABLE.admin {
   width: 100%;
+}
+
+/* tiki tabs */
+
+.tabmark {
+	display: inline;
+	font-size: 85%;
+	background-color: #dddddd;
+	border: 1px solid #666666;
+	margin: 0px;
+	margin-right: 5px;
+	padding: 1px 0px 1px 0px;
+	-moz-border-radius : 5px 5px 0 0;  
+}
+.tabmark a { 
+	-moz-border-radius : 5px 5px 0 0; 
+	border-bottom : 0; 
+	color: #666666;
+	font-weight: 700 !important;
+	padding: 1px 5px 1px 5px;
+}
+.tabmark a:active {
+	background-color: white;
+	color: red;
+}
+.tabmark a:hover {
+	color: black;
+	background-color: #cccccc;
+}
+
+.tabcontent {
+	position: relative;
+	border: 1px solid #999999;
+	padding: 6px 2px 2px 2px;
+	margin-bottom: 25px;
+	background-color: #eeeeee;
+	-moz-border-radius: 0px 4px 4px 4px;
 }

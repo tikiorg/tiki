@@ -1,5 +1,5 @@
 /* 
-$Id: trollparty.css,v 1.26 2004-04-09 03:55:09 mose Exp $
+$Id: trollparty.css,v 1.27 2004-04-29 13:23:23 mose Exp $
 made by mose@trollparty.org
 
 background: #000000;
@@ -3019,3 +3019,40 @@ div#rules-copy-panel {
 TABLE.admin {
   width: 100%;
 }
+
+/* tiki tabs */
+
+.tabmark {
+	display: inline;
+	font-size: 85%;
+	background-color: #dddddd;
+	border: 1px solid #666666;
+	margin: 0px;
+	margin-right: 5px;
+	padding: 1px 0px 1px 0px;
+	-moz-border-radius : 5px 5px 0 0;  
+}
+.tabmark a { 
+	-moz-border-radius : 5px 5px 0 0; 
+	border-bottom : 0; 
+	color: #666666;
+	font-weight: 700 !important;
+	padding: 1px 5px 1px 5px;
+}
+.tabmark a:active {
+	background-color: white;
+	color: red;
+}
+.tabmark a:hover {
+	color: black;
+	background-color: #CCCCCC;
+}
+.tabcontent {
+	position: relative;
+	border: 1px solid #999999;
+	padding: 6px 2px 2px 2px;
+	margin-bottom: 25px;
+	background-color: #eeeeee;
+	-moz-border-radius: 0px 4px 4px 4px;
+}
+
