@@ -129,21 +129,29 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 </td>
 {elseif $items[user].field_values[ix].isMain eq 'y' or ($items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId)}
 <td class="auto">
+
 {if $items[user].field_values[ix].linkId and $items[user].field_values[ix].trackerId}
 <a href="tiki-view_tracker_item.php?trackerId={$items[user].field_values[ix].trackerId}&amp;itemId={$items[user].field_values[ix].linkId}" class="link">
+
 {elseif $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}
 <a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}{section name=mix loop=$fields}{if 
-$fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}&amp;show=comm">
+$fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}&amp;show=view">
 {/if}
+
 {if $items[user].field_values[ix].type eq 'f'}
 {$items[user].field_values[ix].value|tiki_short_datetime|default:"&nbsp;"}
+
 {elseif $items[user].field_values[ix].type eq 'c'}
 {$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"}
+
 {elseif $items[user].field_values[ix].type eq 'i'}
 <img src="{$items[user].field_values[ix].value}" alt="" />
+
 {else}
 {$items[user].field_values[ix].value|default:"&nbsp;"}
+
 {/if}
+
 {if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y' or $items[user].field_values[ix].linkId}</a>{/if}
 </td>
 {else}
@@ -220,6 +228,8 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 
 <h3>{tr}Insert new item{/tr}</h3>
 <table class="normal">
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}save{/tr}" /></td></tr>
+
 {section name=ix loop=$fields}
 {assign var=fid value=$fields[ix].fieldId}
 
@@ -245,16 +255,20 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 {/if}
 
 {if $fields[ix].type eq 'u'}
+{if $fields[ix].options and $user}
+{$user}
+{else}
 <select name="{$fields[ix].ins_id}">
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
-{if $dvals.fields[ix].fieldId}
-<option value="{$one|escape}"{if $one eq $dvals.fields[ix].fieldId} selected="selected"{/if}>{$one}</option>
+{if $fields[ix].value}
+<option value="{$one|escape}"{if $one eq $fields[ix].value} selected="selected"{/if}>{$one}</option>
 {else}
 <option value="{$one|escape}">{$one}</option>
 {/if}
 {/foreach}
 </select>
+{/if}
 
 {elseif $fields[ix].type eq 'g'}
 <select name="{$fields[ix].ins_id}">
@@ -266,9 +280,10 @@ name=ix loop=$fields}{if $fields[ix].value}&amp;{$fields[ix].name}={$fields[ix].
 
 {elseif $fields[ix].type eq 'e'}
 {assign var=fca value=$fields[ix].options}
-<table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
-{foreach key=ku item=iu from=$ins_fields[ix].$fca}
-<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$ku}[]" value="{$iu.categId}">{$iu.name}</td>{cycle name=$fca}
+<table width="100%"><tr>{cycle name=2_$fca values=",</tr><tr>" advance=false print=false}
+{foreach key=ku item=iu from=$fields[ix].$fca}
+{assign var=fcat value=$iu.categId }
+<td width="50%" nowrap="nowrap"><input type="checkbox" name="ins_cat_{$ku}[]" value="{$iu.categId}">{$iu.name}</td>{cycle name=2_$fca}
 {/foreach}
 </table>
 
