@@ -1,0 +1,9 @@
+sdl_menu
+--------
+
+Revised menu with plus/minus image toggle (similar to folder icon toggle), instead of [-]MenuItem[+] menu.
+
+Id advise the templates/module/*.tpl file goes into a 
+/templates/styles/themename/modules/. on your Tiki system.
+
+sdl
