@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.2 2003-08-14 01:46:12 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/Babelfish.php,v 1.3 2003-08-14 03:35:28 rossta Exp $
 
 // Tiki is copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -77,7 +77,7 @@ class Babelfish {
 			$url .= 's';
 		}
 		$url .= '://' . Babelfish::host() . $_SERVER['REQUEST_URI'] .
-			(strpos('?', $_SERVER['REQUEST_URI']) ? '?' : '&amp;') .
+			(strpos('?', $_SERVER['REQUEST_URI']) ? '&amp;' : '?') .
 			'babelfish=' . $lang_from . '_' . $lang_to;
 
 		return $url;
