@@ -15,85 +15,59 @@ class Newslib extends Tikilib {
     $this->nntp = new Net_NNTP;
     $this->db = $db;
   }
-    
-  function user_exists($user)
+
+  function get_server($user, $serverId)
   {
-    global $userlib;
-    return $userlib->user_exists($user);
+    $query = "select * from tiki_newsreader_servers where user='$user' and serverId='$serverId'";
+    $result = $this->query($query);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;	
   }
- /* 
-  function post_message($user,$from,$to,$cc,$subject,$body,$priority)
+  
+  function replace_server($user,$serverId,$server,$port,$username,$password)
   {
-    global $smarty,$userlib;
-    
-    $from = addslashes($from);
-    $to = addslashes($to);
-    $cc = addslashes($cc);
-    $subject = strip_tags(addslashes($subject));
-    $body = strip_tags(addslashes($body),'<a><b><img><i>');
-    // Prevent duplicates
-    $hash = md5($subject.$body);
-    if($this->getOne("select count(*) from messu_messages where user='$user' and user_from='$from' and hash='$hash'")) {
-      return false;
+    $server = addslashes($server);	
+    $username = addslashes($username);	
+    $password = addslashes($password);	
+    if($serverId) {
+      $query = "update tiki_newsreader_servers set
+      server = '$server',
+      port = $port,
+      username = '$username',
+      password = '$password'
+      where user='$user' and serverId=$serverId";	
+      $this->query($query);
+      return $serverId;
+    } else {
+      $query = "insert into tiki_newsreader_servers(user,serverId,server,port,username,password)
+      values('$user',$serverId,'$server',$port,'$username','$password')";	
+      $this->query($query);
+      $serverId = $this->getOne("select max(serverId) from tiki_newsreader_servers where user='$user' and server='$server'");
+      return $serverId;
     }
-    
-    $now = date('U');
-    
-    $query = "insert into messu_messages(user,user_from,user_to,user_cc,subject,body,date,isRead,isReplied,isFlagged,priority,hash)
-              values('$user','$from','$to','$cc','$subject','$body',$now,'n','n','n',$priority,'$hash')";
-    $this->query($query);
-    
-    // Now check if the user should be notified by email
-    if($this->get_user_preference($user,'minPrio',6)<=$priority) {
-      $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
-      $smarty->assign('mail_date',date("U"));
-      $smarty->assign('mail_user',$user);
-      $smarty->assign('mail_from',$from);
-      $smarty->assign('mail_subject',$subject);
-      $smarty->assign('mail_body',$body);
-      $mail_data = $smarty->fetch('mail/messu_message_notification.tpl');
-      $email = $userlib->get_user_email($user);
-      if($email) {
-        @mail($email, 'New message arrived from '.$_SERVER["SERVER_NAME"], $mail_data);
-      }
-    }
-    
-    return true;          
+  }
+  
+  function remove_server($user,$serverId)
+  {
+    $query = "delete from tiki_newsreader_servers where user='$user' and serverId=$serverId";
+    $this->query($query);  	
   }
 
-  function validate_user($user,$pass)
+  function list_servers($user,$offset,$maxRecords,$sort_mode,$find)
   {
-    global $userlib;
-    $cant = $userlib->validate_user($user,$pass,'','');
-    return $cant;
-  }
-  
-  
-  
-  function list_user_messages($user,$offset,$maxRecords,$sort_mode,$find,$flag='',$flagval='',$prio='')
-  {
-    if($prio) {
-     $prio = " and priority=$prio ";
-    }
-    if($flag) {
-      // Process the flags
-      $flag = " and $flag='$flagval' ";
-    } 
     $sort_mode = str_replace("_desc"," desc",$sort_mode);
     $sort_mode = str_replace("_asc"," asc",$sort_mode);
     if($find) {
-      $mid=" and (subject like '%".$find."%' or body like '%".$find."%')".$flag.$prio;  
+      $mid=" and (title like '%".$find."%' or description like '%".$find."%')";  
     } else {
-      $mid="".$flag.$prio; 
+      $mid=""; 
     }
-    $query = "select * from messu_messages where user='$user' $mid order by $sort_mode,msgId desc limit $offset,$maxRecords";
-    $query_cant = "select count(*) from messu_messages where user='$user' $mid";
+    $query = "select * from tiki_newsreader_servers where user='$user' $mid order by $sort_mode,serverId desc limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_newsreader_servers where user='$user' $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $res["len"]=strlen($res["body"]);
-      if(empty($res['subject'])) $res['subject']=tra('NONE');
       $ret[] = $res;
     }
     $retval = Array();
@@ -101,73 +75,28 @@ class Newslib extends Tikilib {
     $retval["cant"] = $cant;
     return $retval;
   }
-
-  function flag_message($user, $msgId, $flag, $val)
+  
+  function news_select_group($group) 
   {
-    $query = "update messu_messages set $flag='$val' where user='$user' and msgId=$msgId";
-    $this->query($query);
+    return $this->nntp->selectGroup($group);
   }
   
-  function delete_message($user, $msgId)
+  function news_set_server($server,$port,$user,$pass)
   {
-    $query = "delete from messu_messages where user='$user' and msgId=$msgId";
-    $this->query($query);
-  }
-  
-  function get_next_message($user,$msgId, $sort_mode, $find, $flag, $flagval,$prio)
-  {
-    if($prio) {
-     $prio = " and priority=$prio ";
-    }
-    if($flag) {
-      // Process the flags
-      $flag = " and $flag='$flagval' ";
-    } 
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" and (subject like '%".$find."%' or body like '%".$find."%')".$flag.$prio;  
+    
+    $ret = $this->nntp->connect($server,$port,$user,$pass);
+       
+    if( PEAR::isError($ret)) {
+      return false;
     } else {
-      $mid="".$flag.$prio; 
-    } 
-    $query = "select min(msgId) from messu_messages where user='$user' and msgId>$msgId $mid order by $sort_mode,msgId desc limit 0,1";
-    $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    if(!$res) return false;
-    return $res['min(msgId)'];
-  }
-  
-  function get_prev_message($user,$msgId, $sort_mode, $find, $flag, $flagval,$prio)
-  {
-    if($prio) {
-     $prio = " and priority=$prio ";
+      return true;
     }
-    if($flag) {
-      // Process the flags
-      $flag = " and $flag='$flagval' ";
-    } 
-    $sort_mode = str_replace("_"," ",$sort_mode);
-    if($find) {
-      $mid=" and (subject like '%".$find."%' or body like '%".$find."%')".$flag.$prio;  
-    } else {
-      $mid="".$flag.$prio; 
-    } 
-    $query = "select max(msgId) from messu_messages where user='$user' and msgId<$msgId $mid order by $sort_mode,msgId desc limit 0,1";
-    $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    if(!$res) return false;
-    return $res['max(msgId)'];    
   }
   
-  function get_message($user,$msgId)
+  function news_get_groups()
   {
-    $query = "select * from messu_messages where user='$user' and msgId='$msgId'";
-    $result = $this->query($query);
-    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
-    $res['parsed']=$this->parse_data($res['body']);
-    if(empty($res['subject'])) $res['subject']=tra('NONE');
-    return $res;
+    return $this->nntp->getGroups();
   }
- */
 }
 
 $newslib = new Newslib($dbTiki);
