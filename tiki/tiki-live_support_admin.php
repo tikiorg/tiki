@@ -65,7 +65,8 @@ $users = $userlib->get_users(0, -1, 'login_asc', $_REQUEST['find_users']);
 
 $ok_users = array();
 
-for ($i = 0; $i < count($users['data']); $i++) {
+$temp_max = count($users['data']);
+for ($i = 0; $i < $temp_max; $i++) {
 	foreach ($online_operators as $op) {
 		if ($op['user'] == $users['data'][$i]['user']) {
 			unset ($users[$i]);
