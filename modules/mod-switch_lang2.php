@@ -1,37 +1,34 @@
 <?php
 // tiki-setup has already set the $language variable
 $languages = array();
+$languages2 = array();
 $languages = $tikilib->list_languages();
-
-$langs = array();
 foreach($languages as $lingua) {
-    switch($lingua["value"]) {
-        case 'cs': $flag = "img/flags/Czech_Republic.gif"; break;
-        case 'da': $flag = "img/flags/Denmark.gif"; break;
-        //case 'de': $flag = "img/flags/Germany.gif"; break;
-        case 'de': $flag = "img/flags/German.gif"; break; // special flag
-        //case 'en': $flag = "img/flags/United_Kingdom.gif"; break;
-        case 'en': $flag = "img/flags/English.gif"; break; // special flag
-        case 'es': $flag = "img/flags/Spain.gif"; break;
-        //case 'el': $flag = "img/flags/Greek.gif"; break;
-        case 'fr': $flag = "img/flags/France.gif"; break;
-        case 'he': $flag = "img/flags/Israel.gif"; break;
-        case 'it': $flag = "img/flags/Italy.gif"; break;
-        case 'ja': $flag = "img/flags/Japan.gif"; break;
-        case 'nl': $flag = "img/flags/Netherlands.gif"; break;
-        case 'no': $flag = "img/flags/Norway.gif"; break;
-        case 'pl': $flag = "img/flags/Poland.gif"; break;
-        case 'ru': $flag = "img/flags/Russia.gif"; break;
-        case 'sv': $flag = "img/flags/Sweden.gif"; break;
-        case 'tw': $flag = "img/flags/Taiwan.gif"; break;
-        case 'cn': $flag = "img/flags/China.gif"; break;
-        default: $flag = "img/flags/Other.gif";
+    // if a language name in the language's native tongue is provided,
+    // use that for display; if none is provided,
+    // use the two-letter code for display
+
+    // LocalName (NativeName, code)
+    if(preg_match("/\((.*)\,/", $lingua["name"], $tmp) === 1) {
+        $disp = $tmp[1];
+    } else { // no native language name provided
+        // LocalName (code) or Unknown (code)
+        $disp = $lingua["value"]; // get two-letter code
+
+        // currently displayed language's entry has it's native/local name
+        // in front of the brackets, not inside; get it from there
+        // NativeName (code)
+        if($disp === $language) {
+            $tmp = explode (" ", $lingua["name"]);
+            $disp = $tmp[0];
+        }
     }
+
     $tmp = array();
+    $tmp["display"] = $disp;
     $tmp["value"] = $lingua["value"];
     $tmp["name"] = $lingua["name"];
-    $tmp["flag"] = $flag;
-    $langs[] = $tmp;
+    $languages2[] = $tmp;
 }
-$smarty->assign_by_ref('languages', $langs);
+$smarty->assign_by_ref('languages', $languages2);
 ?>
