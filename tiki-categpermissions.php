@@ -13,6 +13,11 @@ if ($feature_categories != 'y') {
 	die;
 }
 
+global $categlib;
+if (!is_object($categlib)) {
+	include_once('lib/categories/categlib.php');
+}
+
 // Get the category from the request var
 if (!isset($_REQUEST['categId'])) {
 	$smarty->assign('msg', tra('No category indicated'));
