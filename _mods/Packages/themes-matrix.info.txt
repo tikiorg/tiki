@@ -1,0 +1,59 @@
+contributor:
+$Author: damosoft $
+
+revision:
+$Revision: 1.1 $
+
+lastmodif:
+$Date: 2004-10-29 19:26:31 $
+
+files: 
+themes/matrix/styles/matrix/img/dark.png   styles/matrix/img/dark.png
+themes/matrix/styles/matrix/img/grey.png   styles/matrix/img/grey.png
+themes/matrix/styles/matrix/img/index.php   styles/matrix/img/index.php
+themes/matrix/styles/matrix/img/ltgreen.png   styles/matrix/img/ltgreen.png
+themes/matrix/styles/matrix/img/matrix.jpg   styles/matrix/img/matrix.jpg
+themes/matrix/styles/matrix/img/red.png   styles/matrix/img/red.png
+themes/matrix/styles/matrix/index.php  styles/matrix/index.php
+themes/matrix/styles/matrix/matrix-box.css  styles/matrix/matrix-box.css
+themes/matrix/styles/matrix/matrix-box.f.css  styles/matrix/matrix-box.f.css
+themes/matrix/styles/matrix/matrix-box.l.css  styles/matrix/matrix-box.l.css
+themes/matrix/styles/matrix/matrix-calendar.css  styles/matrix/matrix-calendar.css
+themes/matrix/styles/matrix/matrix-categories.css  styles/matrix/matrix-categories.css
+themes/matrix/styles/matrix/matrix-categories.f.css  styles/matrix/matrix-categories.f.css
+themes/matrix/styles/matrix/matrix-categories.l.css   styles/matrix/matrix-categories.l.css
+themes/matrix/styles/matrix/matrix-debug.css  styles/matrix/matrix-debug.css
+themes/matrix/styles/matrix/matrix-dir.css  styles/matrix/matrix-dir.css
+themes/matrix/styles/matrix/matrix-dir.f.css  styles/matrix/matrix-dir.f.css
+themes/matrix/styles/matrix/matrix-dir.l.css  styles/matrix/matrix-dir.l.css
+themes/matrix/styles/matrix/matrix-general.css  styles/matrix/matrix-general.css
+themes/matrix/styles/matrix/matrix-other.css  styles/matrix/matrix-other.css
+themes/matrix/styles/matrix/matrix-other.f.css  styles/matrix/matrix-other.f.css
+themes/matrix/styles/matrix/matrix-other.l.css  styles/matrix/matrix-other.l.css
+themes/matrix/styles/matrix/matrix-table.css  styles/matrix/matrix-table.css
+themes/matrix/styles/matrix/matrix-table.f.css   styles/matrix/matrix-table.f.css
+themes/matrix/styles/matrix/matrix-table.l.css  styles/matrix/matrix-table.l.css
+themes/matrix/styles/matrix/matrix-tc.css   styles/matrix/matrix-tc.css
+themes/matrix/styles/matrix/matrix-wiki.css   styles/matrix/matrix-wiki.css
+themes/matrix/styles/matrix/matrix-wiki.f.css  styles/matrix/matrix-wiki.f.css
+themes/matrix/styles/matrix/matrix-wiki.l.css  styles/matrix/matrix-wiki.l.css
+themes/matrix/styles/matrix.css  styles/matrix.css
+themes/matrix/styles/matrix.light.css  styles/matrix.light.css
+themes/matrix/templates/error.tpl   templates/styles/matrix/error.tpl
+themes/matrix/templates/index.php  templates/styles/matrix/index.php
+themes/matrix/templates/tiki-bot_bar.tpl  templates/styles/matrix/tiki-bot_bar.tpl
+themes/matrix/templates/tiki-my_tiki.tpl  templates/styles/matrix/tiki-my_tiki.tpl
+themes/matrix/templates/tiki-top_bar.tpl  templates/styles/matrix/tiki-top_bar.tpl
+themes/matrix/templates/tiki.tpl  templates/styles/matrix/tiki.tpl
+
+author:
+zaufi
+
+licence:
+GNU/LGPL
+
+Description: 
+Requires a high powered workstation, light version also included.
+
+Changelog:
+1 initial package

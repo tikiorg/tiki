@@ -12,6 +12,7 @@
 'themes','greenjelly','1.1','Bristish taste','GNU/LGPL'
 'themes','greenmetal','1.1','Theme borrowed to another cms.','GNU/GPL'
 'themes','isabelsworld','1.1','The theme of Isabel.','GNU/LGPL'
+'themes','matrix','1.0','Matrix theme, comes with a light version too','GNU/LGPL'
 'themes','nhs','1.1','A style sheet by sdl of the Tiki Community conforming to the NHS colour schemes','GNU/LGPL'
 'themes','purplemetal','1.1','Theme borrowed to another cms.','GNU/GPL'
 'themes','redgrey','1.0','Theme based on Fedora* sites','Unknown'
