@@ -19,8 +19,8 @@ if(!isset($_REQUEST["forumId"])) {
 
 $feed = "forum";
 $tmp = $tikilib->get_forum($_REQUEST["forumId"]);
-$title = "Tiki RSS feed for forum: ".$tmp["name"]; // TODO: make configurable
-$desc = $tmp["description"]; // TODO: make configurable
+$title = tra("Tiki RSS feed for forum: ").$tmp["name"];
+$desc = $tmp["description"];
 $now = date("U");
 $id = "forumId";
 $descId = "data";

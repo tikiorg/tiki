@@ -79,13 +79,13 @@ class RSSLib extends TikiLib {
 	function startElementHandler($parser, $name, $attribs) {
 		if ($this->flag) {
 			// for Atom <link>s: ignore those with no HREF
-			if ($name == 'link') {
-			  if ((array_key_exists("href",$attribs)) && 
-			     (array_key_exists("rel",$attribs)) &&
-			  	 ($attribs["rel"] == "alternate")) {
+			if (($name == 'link') &&
+					(array_key_exists("href",$attribs)) && 
+					(array_key_exists("rel",$attribs)) &&
+					($attribs["rel"] == "alternate"))
+			{
 			  	   $this->buffer .= '<' . $name . '>';
 						 $this->buffer .= $attribs["href"];
-				}
 				// all tags except <link>:
 			} else $this->buffer .= '<' . $name . '>';
 		}

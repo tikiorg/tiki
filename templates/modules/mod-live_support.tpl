@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.9 2003-11-23 03:53:04 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-live_support.tpl,v 1.10 2004-03-15 21:27:35 mose Exp $ *}
 
 {if $feature_live_support eq 'y'}
 {tikimodule title="{tr}Live support{/tr}" name="live_support"}
 {if $modsupport > 0}
-<a href="#" onClick='javascript:window.open("tiki-live_support_client.php","","menubar=,scrollbars=yes,resizable=yes,height=450,width=300");'><img border="0" src="tiki-live_support_server.php?operators_online=1" alt="image" /></a>
+<a href="#" onclick='javascript:window.open("tiki-live_support_client.php","","menubar=,scrollbars=yes,resizable=yes,height=450,width=300");'><img border="0" src="tiki-live_support_server.php?operators_online=1" alt="image" /></a>
 {else}
 <img border="0" src="tiki-live_support_server.php?operators_online=0" alt="image" />
 {/if}

@@ -323,7 +323,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
     <input type="hidden" name="attach3type" value="{$attach3type|escape}" />
     <input type="submit" name="send" value="{tr}send{/tr}" />
     <table >
-    <tr class="formcolor"><td><a title="{tr}select from address book{/tr}" class="link" href="#" onClick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:</td><td colspan="3"><input size="69" type="text" id="to" name="to" value="{$to|escape}" /></td></tr>
+    <tr class="formcolor"><td><a title="{tr}select from address book{/tr}" class="link" href="#" onclick="javascript:window.open('tiki-webmail_contacts.php?element=to','','menubar=no,width=452,height=550');">{tr}To{/tr}</a>:</td><td colspan="3"><input size="69" type="text" id="to" name="to" value="{$to|escape}" /></td></tr>
     <tr class="formcolor"><td>{tr}cc{/tr}</td><td><input id="cc" type="text" name="cc" value="{$cc|escape}" /></td><td>{tr}bcc{/tr}</td><td><input type="text" name="bcc" value="{$bcc}" id="bcc" /></td></tr>
     <tr class="formcolor"><td>{tr}Subject{/tr}</td><td colspan="3"><input size="69" type="text" name="subject" value="{$subject|escape}" /></td></tr>
     <tr class="formcolor"><td>{tr}Attachments{/tr}</td><td colspan="3">

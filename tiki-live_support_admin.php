@@ -29,7 +29,7 @@ if ($tiki_p_live_support_admin != 'y' && !$lsadminlib->user_is_operator($user)) 
 $smarty->assign('html', false);
 
 if (isset($_REQUEST['show_html'])) {
-	$html = '<a href="#" onClick=\'javascript:window.open("tiki-live_support_client.php","","menubar=,scrollbars=yes,resizable=yes,height=450,width=300");\'><img border="0" src="tiki-live_support_server.php?operators_online" alt="image" /></a>';
+	$html = '<a href="#" onclick=\'javascript:window.open("tiki-live_support_client.php","","menubar=,scrollbars=yes,resizable=yes,height=450,width=300");\'><img border="0" src="tiki-live_support_server.php?operators_online" alt="image" /></a>';
 
 	$smarty->assign('html', $html);
 }

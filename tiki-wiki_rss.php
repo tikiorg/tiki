@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.27 2004-03-07 23:12:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-wiki_rss.php,v 1.28 2004-03-15 21:27:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,8 +20,8 @@ if ($tiki_p_view != 'y') {
 }
 
 $feed = "wiki";
-$title = "Tiki RSS feed for the wiki pages"; // TODO: make configurable
-$desc = "Last modifications to the Wiki."; // TODO: make configurable
+$title = tra("Tiki RSS feed for the wiki pages");
+$desc = tra("Last modifications to the Wiki.");
 $now = date("U");
 $id = "pageName";
 $titleId = "pageName";

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.51 2004-03-07 23:12:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.52 2004-03-15 21:27:34 mose Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -13,7 +13,7 @@
 a moderator approves it.{/tr}</small>
 </div>
 {/if}
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>-><a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
+<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>-&gt;<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>-><a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>
 <div align="right">
 [{if $prev_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_prev_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$prev_topic}" class="link">{tr}prev topic{/tr}</a>{if $next_topic} | {/if}{/if}
 {if $next_topic}<a href="tiki-view_forum_thread.php?topics_offset={$topics_next_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forumId}&amp;comments_parentId={$next_topic}" class="link">{tr}next topic{/tr}</a>{/if}] 
@@ -100,7 +100,7 @@ a moderator approves it.{/tr}</small>
   <td class="odd" style="text-align:center;">
   	&nbsp;
   	{if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
-	  <a class="admlink" href="messu-compose.php?to={$thread_info.userName}&amp;subject=Re:{$thread_info.title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
+	  <a class="admlink" href="messu-compose.php?to={$thread_info.userName}&amp;subject={tr}Re:{/tr}%20{$thread_info.title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
     {/if}
 	{if $thread_info.userName and $forum_info.ui_email eq 'y' and strlen($thread_info.user_email) > 0}  
 	  <a href="mailto:{$thread_info.user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
@@ -117,9 +117,9 @@ a moderator approves it.{/tr}</small>
   <td class="odd">  
   <table class="commentinfo">
   <tr>
-    <td style="font-size:8pt;">{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
+    <td style="font-size:8pt;"><b>{tr}on{/tr}</b>: {$thread_info.commentDate|tiki_short_datetime}</td>
     {if $forum_info.vote_threads eq 'y'}
-    <td style="font-size:8pt;">{tr}score{/tr}</b>: {$thread_info.points}</td>
+    <td style="font-size:8pt;"><b>{tr}score{/tr}</b>: {$thread_info.points}</td>
     {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}<td style="font-size:8pt;">
 	  <b>{tr}Vote{/tr}</b>: 
 	  <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$comments_parentId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_threadId={$thread_info.threadId}&amp;comments_vote=1&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}">1</a>
@@ -433,7 +433,7 @@ a moderator approves it.{/tr}</small>
   <td style="text-align:center;" class="{cycle advance=false}">
     &nbsp;
     {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
-	  <a class="admlink" href="messu-compose.php?to={$comments_coms[ix].userName}&amp;subject=Re:{$comments_coms[ix].title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
+	  <a class="admlink" href="messu-compose.php?to={$comments_coms[ix].userName}&amp;subject={tr}Re:{/tr}%20{$comments_coms[ix].title}"><img src='img/icons/myinfo.gif' border='0' alt='{tr}private message{/tr}' title='{tr}private message{/tr}' /></a>
     {/if}
     {if $comments_coms[ix].userName and $forum_info.ui_email eq 'y' and strlen($comments_coms[ix].user_email) > 0}  
 		  <a href="mailto:{$comments_coms[ix].user_email|escape:'hex'}"><img src='img/icons/email.gif' alt='{tr}send email to user{/tr}' title='{tr}send email to user{/tr}' border='0' /></a>
@@ -451,11 +451,11 @@ a moderator approves it.{/tr}</small>
   <table class="commentinfo">
   <tr>
     <td style="font-size:8pt;">
-    {tr}on{/tr}: {$comments_coms[ix].commentDate|tiki_short_datetime}  
+    <b>{tr}on{/tr}</b>: {$comments_coms[ix].commentDate|tiki_short_datetime}  
     </td>
     {if $forum_info.vote_threads eq 'y'}
     <td style="font-size:8pt;">
-    {tr}score{/tr}</b>: {$comments_coms[ix].points}
+    <b>{tr}score{/tr}</b>: {$comments_coms[ix].points}
     </td>
     {if $tiki_p_admin_forum eq 'y' or $tiki_p_forum_vote eq 'y'}
     <td align="right" style="font-size:8pt;">
@@ -501,9 +501,9 @@ a moderator approves it.{/tr}</small>
 {/section}
 {/if}
   </div>
+</div>
 {/if}
-  <br />
-  </div>
+
 <small>{$comments_below} {tr}Comments below your current threshold{/tr}</small>
 
 <table >

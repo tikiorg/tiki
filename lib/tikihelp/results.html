@@ -20,7 +20,7 @@ for(i=0;i<parent.docs.length;i++) {
   var parts = parent.docs[i].split('|');
   document.write("<a id='"+
                  parts[1]+
-                 "' onClick='parent.his[parent.his.length]=\""+parts[0]+"|"+"pages/"+parts[1]+".html"+"\";paint(\""+  parts[1]+"\");' class='result' target='content' href='pages/"+ parts[1]+".html'>" + parts[0] + "</a><br/>");	
+                 "' onclick='parent.his[parent.his.length]=\""+parts[0]+"|"+"pages/"+parts[1]+".html"+"\";paint(\""+  parts[1]+"\");' class='result' target='content' href='pages/"+ parts[1]+".html'>" + parts[0] + "</a><br/>");	
 }
 </script>
 </body>

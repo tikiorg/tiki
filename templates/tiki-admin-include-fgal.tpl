@@ -45,7 +45,7 @@
           <td class="form">{tr}Uploaded filenames cannot match regex{/tr}:</td>
           <td><input type="text" name="fgal_nmatch_regex"
               value="{$fgal_nmatch_regex|escape}"/><a class="link" {popup sticky="true"
-              trigger="onClick" caption="Storing files in a directory"
+              trigger="onclick" caption="Storing files in a directory"
               text="If you decide to store files in a directory you must ensure
 that the user cannot access directly to the directory. You have two options to
 accomplish this:<br />

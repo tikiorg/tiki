@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.45 2004-03-07 23:12:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.46 2004-03-15 21:27:34 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -11,7 +11,7 @@
 </script>
 {/if}
 
-<!--<a {popup sticky="true" trigger="onClick" caption="Special characters help" text="kj"}>foo</a><br />-->
+<!--<a {popup sticky="true" trigger="onclick" caption="Special characters help" text="kj"}>foo</a><br />-->
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}

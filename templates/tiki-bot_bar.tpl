@@ -1,13 +1,13 @@
 
 	<div id="power" style="text-align: center">
-		<a href="http://tikiwiki.org" title="TikiWiki"><img style="border: 0" alt="{tr}Powered by{/tr} TikiWiki" src="img/tiki/tikibutton2.png" /></a>
-		<a href="http://www.w3.org/Style/CSS/"><img style="border: 0" alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
-		<a href="http://validator.w3.org/check/referer"><img style="border: 0" alt="{tr}Valid{/tr} XHTML 1.0!" src="img/valid-xhtml10.png" /></a>
-		<a href="http://pear.php.net/"><img style="border: 0" alt="{tr}powered by{/tr} pear" src="img/pear.png" /></a>
-		<a href="http://php.weblogs.com/adodb"><img style="border: 0" alt="{tr}powered by{/tr} adodb" src="img/adodb.png" /></a>
-		<a href="http://www.php.net"><img style="border: 0" alt="{tr}powered by{/tr} PHP" src="img/php.png" /></a>
-		<a href="http://smarty.php.net/"><img style="border: 0" alt="{tr}powered by{/tr} smarty" src="img/smarty.gif"  /></a>
-		<a href="http://www.w3.org/RDF/"><img style="border: 0" alt="{tr}powered by{/tr} RDF" src="img/rdf.gif"  /></a>
+		<a href="http://freshmeat.net/projects/tiki" title="TikiWiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} TikiWiki" src="img/tiki/tikibutton2.png" /></a>
+		<a href="http://www.w3.org/Style/CSS/"><img style="border: 0; vertical-align: middle" alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
+		<a href="http://validator.w3.org/check/referer"><img style="border: 0; vertical-align: middle" alt="{tr}Valid{/tr} XHTML 1.0!" src="img/valid-xhtml10.png" /></a>
+		<a href="http://pear.php.net/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} pear" src="img/pear.png" /></a>
+		<a href="http://php.weblogs.com/adodb"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} adodb" src="img/adodb.png" /></a>
+		<a href="http://www.php.net"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} PHP" src="img/php.png" /></a>
+		<a href="http://smarty.php.net/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} smarty" src="img/smarty.gif"  /></a>
+		<a href="http://www.w3.org/RDF/"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} RDF" src="img/rdf.gif"  /></a>
 	</div>
 
 	<div id="rss" style="text-align: center">

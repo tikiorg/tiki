@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.20 2004-03-07 23:12:10 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-list_file_gallery.tpl,v 1.21 2004-03-15 21:27:34 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-list_file_gallery.php?galleryId={$galleryId}">{tr}Listing Gallery{/tr}: {$name}</a><br /><br />
 {if $tiki_p_admin_file_galleries eq 'y' or $user eq $owner}
@@ -207,9 +207,7 @@
 <table>
 <tr><td>
 <div class="button2">
-      <a title="View/post comments"
-         href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
-         class="linkbut">
+      <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">
 	{if $comments_cant == 0}
           {tr}add comment{/tr}
         {elseif $comments_cant == 1}

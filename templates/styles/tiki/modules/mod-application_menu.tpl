@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.19 2004-03-07 23:12:13 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.20 2004-03-15 21:27:51 mose Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 <div id="mainmenu" style="display: block">
@@ -29,6 +29,57 @@
 
 {if $feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
 <div class="separated"><a href="tiki-calendar.php" class="linkmenu">{tr}calendar{/tr}</a></div>
+{/if}
+{if $user}
+  <div class="separator">
+  {if $feature_menusfolderstyle eq 'y'}
+  <a class="separator" href="javascript:icntoggle('mymenu');"><img src="img/icons/fo.gif" style="border: 0" name="mymenuicn" class="fldicn" alt="{tr}MyMenu{/tr}"/></a>&nbsp;
+  {else}<a class="separator" href="javascript:toggle('mymenu');">.:</a>{/if}
+  {if $feature_userPreferences eq 'y'}
+  <a href="tiki-my_tiki.php" class="separator">{tr}MyTiki (click!){/tr}</a>
+  {else}
+  <span class="separator">{tr}MyTiki{/tr}</span>
+  {/if}
+  </div>
+  <div id="mymenu" style="{$mnu_mymenu}">
+  {if $feature_userPreferences eq 'y'}
+      <div class="separated"><a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a></div>
+  {/if}
+  {if $feature_messages eq 'y' and $tiki_p_messages eq 'y'}
+     <div class="separated"><a href="messu-mailbox.php" class="linkmenu">{tr}Messages{/tr}</a></div>
+  {/if}
+  {if $feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
+      <div class="separated"><a href="tiki-user_tasks.php" class="linkmenu">{tr}Tasks{/tr}</a></div>
+  {/if}
+
+  {if $feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
+      <div class="separated"><a href="tiki-user_bookmarks.php" class="linkmenu">{tr}Bookmarks{/tr}</a></div>
+  {/if}
+  {if $user_assigned_modules eq 'y' and $tiki_p_configure_modules eq 'y'}
+      <div class="separated"><a href="tiki-user_assigned_modules.php" class="linkmenu">{tr}Modules{/tr}</a></div>
+  {/if}
+  {if $feature_newsreader eq 'y' and $tiki_p_newsreader eq 'y'}
+    <div class="separated"><a href="tiki-newsreader_servers.php" class="linkmenu">{tr}Newsreader{/tr}</a></div>
+  {/if}
+  {if $feature_webmail eq 'y' and $tiki_p_use_webmail eq 'y'}
+    <div class="separated"><a href="tiki-webmail.php" class="linkmenu">{tr}Webmail{/tr}</a></div>
+  {/if}
+  {if $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
+    <div class="separated"><a href="tiki-notepad_list.php" class="linkmenu">{tr}Notepad{/tr}</a></div>
+  {/if}
+  {if $feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}
+    <div class="separated"><a href="tiki-userfiles.php" class="linkmenu">{tr}My files{/tr}</a></div>
+  {/if}
+  {if $feature_usermenu eq 'y'}
+     <div class="separated"><a href="tiki-usermenu.php" class="linkmenu">{tr}User menu{/tr}</a></div>
+  {/if}
+  {if $feature_minical eq 'y'}
+     <div class="separated"><a href="tiki-minical.php" class="linkmenu">{tr}Mini calendar{/tr}</a></div>
+  {/if}
+  {if $feature_user_watches eq 'y'}
+    <div class="separated"><a href="tiki-user_watches.php" class="linkmenu">{tr}My watches{/tr}</a></div>
+  {/if}
+  </div>
 {/if}
 
 {if $feature_workflow eq 'y' and $tiki_p_use_workflow eq 'y'}

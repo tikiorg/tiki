@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.24 2004-03-07 23:12:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blogs_rss.php,v 1.25 2004-03-15 21:27:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,8 +20,8 @@ if ($tiki_p_read_blog != 'y') {
 }
 
 $feed = "blogs";
-$title = "Tiki RSS feed for weblogs"; // TODO: make configurable
-$desc = "Last posts to weblogs."; // TODO: make configurable
+$title = tra("Tiki RSS feed for weblogs");
+$desc = tra("Last posts to weblogs.");
 $now = date("U");
 $id = "blogId";
 $descId = "data";

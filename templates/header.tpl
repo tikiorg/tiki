@@ -28,7 +28,7 @@
 {include file="bidi.tpl"}
 <title>
 {$siteTitle}
-{if $page ne ''} : {$page}
+{if $page ne ''} : {$page|escape}
 {elseif $headtitle} : {$headtitle}
 {elseif $title ne ''} : {$title}
 {elseif $thread_info.title ne ''} : {$thread_info.title}

@@ -1,6 +1,6 @@
 Tiki Copyright
 ----------------
-$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.3 2003-10-20 09:27:52 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.4 2004-03-15 21:27:27 mose Exp $
 
 The following list gathers the copyrights holders for tikiwiki 
 at the state of 1.7 version. Each member of that list wrote at 
@@ -13,6 +13,9 @@ http://tikiwiki.org/TikiWikiSocialContract
 
 
 List of members of the Community
+Total on 2004-03-12 : 
+* 211 registered contributors
+* 87 have used cvs commit at least once
 
 If you are not on that list and are member of the tikiwiki community,
 please contact an admin to be added. Operation is manual for now,
@@ -22,447 +25,797 @@ That list is accessible on http://tikiwiki.org/whois for members only
 (soon public, the time to sort private from public data).
 
 
-
-BeastRider
-Country: Other
-
-Chealer9
-Country: Canada
-Role: TikiWiki bug Trackers Organizer
-Name: Philippe Cloutier
-  Community  >  Tiki Teams  >  TeamDevelopment  
-
-
-Damian
-Country: United_Kingdom
-Name: Damian Parker
-  Feature  >  Mobile/wap/voiceXML  
-
-
-DanielX
-Country: Canada
-Name: Daniel Descheneaux
-
-DaveSanders
-Country: Other
-Name: Dave Sanders
-
-DavorCengija
-Country: Croatia
-
-DennisDaniels
-Country: United_States
-
-Franck
-Country: Other
-Role: mapserver expert
-Name: Franck Martin
-  Feature  >  Drawings, maps, charts & visualization  >  Maps  
-
-
-Karneevor
-Country: Denmark
-Name: Michael B. Sørensen
-
-MLimburg
-Country: Australia
-Name: Mark Limburg
-  Community  >  Tiki Teams  >  Team Usability  
-  Community  >  Tiki Teams  >  TeamDevelopment  >  ReleaseTeam  
-
-
-MagicFab
-Country: Colombia
-Name: Fabián Rodríguez
-
-MartinGeisler
-Country: Denmark
-Name: Martin Geisler
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
-
-
-Mixolyde
-Country: United_States
-Name: Brian Williams
-
-NorbertHuffschmid
-Country: Germany
-  Feature  >  Mobile/wap/voiceXML  
-
-
-PrezKennedy
-Country: United_States
-Name: Matt Kennedy
-
-Stryker
-Country: Canada
-Name: Chris Austin
-  Community  >  Tiki Teams  >  Team Community  
-
-
-Terence
-Country: United_States
-Admin on tw.o
-Role: SpiderDog
-  Community  >  Tiki Teams  >  Team Community  
-  Community  >  Tiki Teams  >  Team Usability  
-
-
-TonyColley
-Country: United_States
-Name: Tony Colley
-
-Traivor
-Country: United_States
-
-ZZamboni
-Country: Other
-
 albrown
 Country: United_States
-Admin on tw.o
 Name: Al Brown
-  Community  >  Tiki Teams  >  Team Community  
-  Community  >  Tiki Teams  >  Team Usability  
-  Community  >  Tiki Teams  >  Team Communication  
-
-
-anarkim
-Country: Denmark
-Name: Kim Christopher Nielsen
-
-aw
-Country: United_Kingdom
-Name: Abdul-Wahid
-
-bligneri
-Country: Canada
-
-btallman
-Country: Other
-
-chris.holman
-Country: United_Kingdom
-Name: Chris
-
-clbustos
-Country: Other
-
-connermo
-Country: Other
-
-dheltzel
-Country: United_States
-Name: Dennis Heltzel
-  Feature  >  Performance & database  
-  Community  >  Tiki Teams  >  Team Getting Started  
-  Community  >  Tiki Teams  >  TeamDevelopment  >  DBAbstractionTeam  
-
-
-djamel
-Country: France
-Name: djamel
-
-einstine
-Country: United_States
-
-freephile
-Country: Other
-Name: Greg Rundlett
-
-freevic
-Country: Canada
-Name: alain Vicet
-
-fukuchi
-Country: Japan
-Name: Kentaro Fukuchi
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
-
-
-gclift
-Country: Other
-Name: Gary Clift
-
-gmuslera
-Country: Uruguay
-Admin on tw.o
-Name: Gustavo Muslera
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
-
-
-gongo
-Country: Belgium
-Name: Smits Dimitri
-
-grom
-  Feature  >  Major future features  >  Spreadsheet  
-
-
-guidewebmaster
-Country: Canada
-Name: Samuel Denis
-
-ibtubed
-Country: United_States
-
-ingesol
-
-isotopp
-
-jahlewis
-Country: United_States
-Name: John lewis
-
-jenolan
-Country: Australia
-Role: Dogsbody
-Name: Larry Lewis
-
-jjongsma
-Country: United_States
-Name: Jer
-
-jkring
-Country: United_States
-Name: Jim Kring
-
-jpg
-Country: Argentina
-Name: Juan Pablo Giménez
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
-
-
-kodewulf
-Country: Australia
-Name: Kodewulf
-
-leehongfay
-
-loic
-Country: France
-Name: Loïc Monthorin
-  Community  >  Tiki Teams  >  Team Community  
-
-
-luca
-Country: Italy
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
-
-
-luci
-Country: Czech_Republic
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
-
-
-lueders
-
-luis
-Country: Argentina
-Admin on tw.o
-Name: Luis Argerich
-
-marclaporte
-Country: Canada
-Admin on tw.o
-Name: Marc Laporte
-
-mariana
-Country: Argentina
-Name: Mariana
-
-markusvk
-Country: Japan
-Name: Markus Gunske von Kölln
-
-maymann
-
-mchurchward
-Country: Canada
-Name: Mike Churchward
-
-mgfeller
-Country: Switzerland
-Name: Michael Gfeller
-
-michiel
-
-mikespub
-Country: Belgium
-  Feature  >  Workflow, trackers & tasks  
-
-
-mitchmurphy
-Country: Other
-
-mortenson
-Country: Japan
-Name: Leif Mortenson
-
-mose
-Country: France
-Admin on tw.o
-Role: misc technical lead and community support
-Name: mose
-  Feature  >  Calendar  
-  Feature  >  Theme & templates  >  Styles  
-  Feature  >  Workflow, trackers & tasks  
-  Community  >  tikiwiki.org  
-  Community  >  Tiki Teams  >  Team Community  
-  Community  >  Tiki Teams  >  TeamDevelopment  >  ReleaseTeam  
-  Community  >  Tiki Teams  >  Team Communication  
-  Feature  >  Major future features  >  Learning Management System (LMS)  
-  Contribution  >  Coding  
-
-
-mwexler
-Country: United_States
-
-natster
-Country: Other
-Name: Nathan Waterhouse
+Url: http://thetinfoilhat.com
+Registered on tw.o : Thu 03 Jul, 2003
+Last login on tw.o : Mon 15 Sep, 2003
 
 ohertel
 Country: Germany
 Role: Developer, Translator de
 Name: Oliver Hertel
-  Feature  >  RSS & XML-RPC  
-  Community  >  Tiki Teams  >  TeamDevelopment  
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+Registered on tw.o : Thu 03 Jul, 2003
+Last login on tw.o : Thu 11 Mar, 2004
 
+zaufi
+Country: Russia
+Registered on tw.o : Thu 03 Jul, 2003
+Last login on tw.o : Sun 29 Feb, 2004
 
-pacoit
-  Feature  >  Major future features  >  Topic Maps / Faceted Classification  
-
-
-paradime
-Country: Other
-Name: mike
+mose
+Country: France
+Role: misc technical lead and community support
+Name: mose
+Registered on tw.o : Thu 03 Jul, 2003
+Last login on tw.o : Thu 11 Mar, 2004
 
 patvdv
 Country: Belgium
-Admin on tw.o
 Name: Patrick Van der Veken
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Thu 12 Feb, 2004
 
+marclaporte
+Country: Canada
+Name: Marc Laporte
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Fri 12 Mar, 2004
 
-phil
-Country: France
-  Community  >  Tiki Teams  >  Team Community  
-  Community  >  Tiki Teams  >  Team Communication  
-
-
-rasa
+Terence
 Country: United_States
-  Community  >  Tiki Teams  >  TeamDevelopment  >  DBAbstractionTeam  
+Role: SpiderDog
+Name: Terence?
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Fri 24 Oct, 2003
 
-
-redflo
-Country: Germany
-  Community  >  Tiki Teams  >  TeamDevelopment  >  DBAbstractionTeam  
-
-
-reid
+PrezKennedy
 Country: United_States
-Name: Reid Spence
-
-ricardo
-
-richtl
-Country: United_States
-Name: Richard Tango-Lowy
-
-rlpowell
-Country: United_States
-
-shinhan
-Country: Yugoslavia
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
-
-
-siridhar
-Country: India
-Role: Documentation (video tutorials)
-  Contribution  >  Documentation  
-
-
-spaztica
-Country: Turkey
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
-
-
-sting
-Country: Taiwan
-
-swythan
-Country: United_Kingdom
-Name: James Chaldecott
-
-sylvie
-Country: United_States
-Name: sylvie greverend
-  Community  >  Tiki Teams  >  TeamDevelopment  >  Translation Team  
-
-
-terris
+Registered on tw.o : Fri 04 Jul, 2003
+Last login on tw.o : Sun 29 Feb, 2004
 
 tex
 Country: Germany
 Name: Christoph Drieschner
-  Community  >  Tiki Teams  >  Team Getting Started  
+Url: http://texorama.de
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Sat 20 Dec, 2003
 
+DennisDaniels
+Country: United_States
+Name: Dennis Daniels
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Mon 08 Mar, 2004
+
+gmuslera
+Country: Uruguay
+Name: Gustavo Muslera
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Mon 08 Mar, 2004
+
+MLimburg
+Country: Australia
+Name: Mark Limburg
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Mon 08 Mar, 2004
+
+redflo
+Country: Germany
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Thu 26 Feb, 2004
+
+sylvie
+Country: United_States
+Name: sylvie greverend
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Wed 10 Mar, 2004
+
+Damian
+Country: United_Kingdom
+Role: project admin, developer
+Name: Damian Parker
+Url: http://www.damosoft.co.uk
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Wed 10 Mar, 2004
+
+jpg
+Country: Argentina
+Name: Juan Pablo Giménez
+Url: UserPagejpg
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Wed 18 Feb, 2004
+
+NorbertHuffschmid
+Country: Germany
+Registered on tw.o : Sat 05 Jul, 2003
+Last login on tw.o : Wed 25 Feb, 2004
+
+ang
+Country: Hungary
+Registered on tw.o : Sun 06 Jul, 2003
+Last login on tw.o : Thu 26 Feb, 2004
+
+DaveSanders
+Country: United_States
+Role: Anything
+Name: Dave Sanders
+Url: http://www.steelsphere.com
+Registered on tw.o : Sun 06 Jul, 2003
+Last login on tw.o : Sat 06 Dec, 2003
+
+rasa
+Country: United_States
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Sat 17 Jan, 2004
+
+ricardo
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Fri 25 Jul, 2003
 
 tom
 Country: France
 Role: developer
 Name: Tom Bouillut
-  Community  >  Tiki Teams  >  Team Community  
-  Community  >  Tiki Teams  >  Team Communication  
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Sun 22 Feb, 2004
 
+dheltzel
+Country: United_States
+Name: Dennis Heltzel
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Sun 22 Feb, 2004
+
+TonyColley
+Country: United_States
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Tue 10 Feb, 2004
+
+luis
+Country: Argentina
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Tue 24 Feb, 2004
 
 van_woods
 Country: United_States
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Mon 01 Mar, 2004
 
-vikas
+mariana
+Country: Argentina
+Registered on tw.o : Mon 07 Jul, 2003
+Last login on tw.o : Tue 08 Jul, 2003
+
+jahlewis
+Country: United_States
+Registered on tw.o : Tue 08 Jul, 2003
+Last login on tw.o : Fri 27 Feb, 2004
+
+freephile
+Country: Other
+Registered on tw.o : Tue 08 Jul, 2003
+Last login on tw.o : Wed 18 Feb, 2004
+
+btallman
+Country: Other
+Registered on tw.o : Wed 09 Jul, 2003
+Last login on tw.o : Sun 03 Aug, 2003
+
+djamel
+Country: France
+Name: djamel
+Registered on tw.o : Wed 09 Jul, 2003
+Last login on tw.o : Wed 26 Nov, 2003
+
+chris.holman
+Country: United_Kingdom
+Registered on tw.o : Thu 10 Jul, 2003
+Last login on tw.o : Tue 20 Jan, 2004
+
+jjongsma
+Country: United_States
+Registered on tw.o : Fri 11 Jul, 2003
+Last login on tw.o : Fri 01 Aug, 2003
+
+einstine
+Country: United_States
+Registered on tw.o : Fri 11 Jul, 2003
+Last login on tw.o : Thu 04 Mar, 2004
+
+loic
+Country: France
+Name: Loïc Monthorin
+Registered on tw.o : Mon 14 Jul, 2003
+Last login on tw.o : Mon 09 Feb, 2004
+
+paradime
+Country: Other
+Registered on tw.o : Mon 14 Jul, 2003
+Last login on tw.o : Sun 21 Dec, 2003
+
+phil
+Country: France
+Url: http://perso.wanadoo.fr/philippe.baret/
+Registered on tw.o : Tue 15 Jul, 2003
+Last login on tw.o : Thu 05 Feb, 2004
+
+Stryker
+Country: Canada
+Name: Chris Austin
+Registered on tw.o : Tue 15 Jul, 2003
+Last login on tw.o : Fri 02 Jan, 2004
+
+kodewulf
+Country: Australia
+Registered on tw.o : Tue 15 Jul, 2003
+Last login on tw.o : Thu 24 Jul, 2003
+
+ZZamboni
+Country: Other
+Registered on tw.o : Tue 15 Jul, 2003
+Last login on tw.o : Mon 11 Aug, 2003
+
+anarkim
+Country: Denmark
+Registered on tw.o : Wed 16 Jul, 2003
+Last login on tw.o : Mon 20 Oct, 2003
+
+swythan
+Country: United_Kingdom
+Registered on tw.o : Sat 19 Jul, 2003
+Last login on tw.o : Mon 16 Feb, 2004
+
+natster
+Country: Other
+Registered on tw.o : Thu 24 Jul, 2003
+Last login on tw.o : Wed 12 Nov, 2003
+
+sting
+Country: Taiwan
+Registered on tw.o : Thu 24 Jul, 2003
+Last login on tw.o : Thu 20 Nov, 2003
+
+MartinGeisler
+Country: Denmark
+Name: Martin Geisler
+Url: http://gimpster.com/
+Registered on tw.o : Mon 28 Jul, 2003
+Last login on tw.o : Sat 23 Aug, 2003
+
+shinhan
+Country: Yugoslavia
+Registered on tw.o : Mon 28 Jul, 2003
+Last login on tw.o : Thu 11 Mar, 2004
+
+connermo
+Country: Other
+Registered on tw.o : Tue 29 Jul, 2003
+Last login on tw.o : Mon 17 Nov, 2003
 
 wolff_borg
 Country: Australia
-  Community  >  Tiki Teams  >  TeamDevelopment  >  DBAbstractionTeam  
+Registered on tw.o : Tue 29 Jul, 2003
+Last login on tw.o : Wed 03 Mar, 2004
 
+mwexler
+Country: United_States
+Registered on tw.o : Tue 29 Jul, 2003
+Last login on tw.o : Tue 17 Feb, 2004
+
+reid
+Country: United_States
+Registered on tw.o : Tue 29 Jul, 2003
+Last login on tw.o : Fri 13 Feb, 2004
+
+zcecil
+Country: Taiwan
+Registered on tw.o : Wed 30 Jul, 2003
+Last login on tw.o : Thu 26 Feb, 2004
+
+luci
+Country: Czech_Republic
+Registered on tw.o : Wed 30 Jul, 2003
+Last login on tw.o : Tue 09 Mar, 2004
+
+mortenson
+Country: Japan
+Registered on tw.o : Thu 31 Jul, 2003
+Last login on tw.o : Sun 03 Aug, 2003
+
+Chealer9
+Country: Canada
+Role: Mascot
+Name: Philippe Cloutier
+Registered on tw.o : Fri 01 Aug, 2003
+Last login on tw.o : Thu 11 Mar, 2004
+
+lueders
+Country: Germany
+Registered on tw.o : Sat 02 Aug, 2003
+Last login on tw.o : Thu 04 Mar, 2004
+
+Franck
+Country: Fiji
+Role: mapserver expert
+Name: Franck Martin
+Registered on tw.o : Tue 05 Aug, 2003
+Last login on tw.o : Tue 02 Mar, 2004
+
+fukuchi
+Country: Japan
+Name: Kentaro Fukuchi
+Url: http://matsu-www.is.titech.ac.jp/~fukuchi/index.en.html
+Registered on tw.o : Tue 05 Aug, 2003
+Last login on tw.o : Sun 07 Mar, 2004
+
+marcius
+Country: Italy
+Registered on tw.o : Wed 06 Aug, 2003
+Last login on tw.o : Sun 15 Feb, 2004
+
+dthacker
+Registered on tw.o : Wed 06 Aug, 2003
+Last login on tw.o : Thu 06 Nov, 2003
+
+Mixolyde
+Country: United_States
+Registered on tw.o : Thu 07 Aug, 2003
+Last login on tw.o : Mon 01 Mar, 2004
+
+gclift
+Country: Other
+Registered on tw.o : Fri 08 Aug, 2003
+Last login on tw.o : Mon 29 Dec, 2003
+
+mgfeller
+Country: Switzerland
+Registered on tw.o : Sun 10 Aug, 2003
+Last login on tw.o : Sat 29 Nov, 2003
+
+guidewebmaster
+Country: Canada
+Registered on tw.o : Mon 11 Aug, 2003
+Last login on tw.o : Wed 07 Jan, 2004
+
+bluybrink
+Country: Slovakia
+Registered on tw.o : Thu 14 Aug, 2003
+Last login on tw.o : Sun 07 Mar, 2004
+
+terris
+Country: Other
+Registered on tw.o : Thu 14 Aug, 2003
+Last login on tw.o : Tue 09 Mar, 2004
+
+jkring
+Country: United_States
+Name: Jim Kring
+Registered on tw.o : Wed 20 Aug, 2003
+Last login on tw.o : Tue 02 Mar, 2004
+
+pacoit
+Registered on tw.o : Thu 21 Aug, 2003
+Last login on tw.o : Fri 30 Jan, 2004
+
+DavidBright
+Country: United_States
+Registered on tw.o : Thu 21 Aug, 2003
+Last login on tw.o : Wed 10 Mar, 2004
+
+DanielX
+Country: Canada
+Registered on tw.o : Thu 21 Aug, 2003
+Last login on tw.o : Tue 09 Dec, 2003
+
+mchurchward
+Country: Canada
+Registered on tw.o : Mon 25 Aug, 2003
+Last login on tw.o : Wed 26 Nov, 2003
+
+mitchmurphy
+Country: Other
+Registered on tw.o : Tue 26 Aug, 2003
+Last login on tw.o : Thu 23 Oct, 2003
+
+massimoi
+Registered on tw.o : Tue 26 Aug, 2003
+Last login on tw.o : Sat 21 Feb, 2004
+
+jenolan
+Country: Australia
+Role: Dogsbody
+Name: Larry
+Url: http://www.jenolan.org
+Registered on tw.o : Tue 26 Aug, 2003
+Last login on tw.o : Sat 28 Feb, 2004
+
+michiel
+Registered on tw.o : Wed 27 Aug, 2003
+Last login on tw.o : Wed 27 Aug, 2003
 
 wvdploeg
+Registered on tw.o : Wed 27 Aug, 2003
+Last login on tw.o : Wed 27 Aug, 2003
+
+phunkymunky
+Country: United_Kingdom
+Registered on tw.o : Thu 28 Aug, 2003
+Last login on tw.o : Sat 14 Feb, 2004
+
+BeastRider
+Country: Other
+Registered on tw.o : Fri 29 Aug, 2003
+Last login on tw.o : Sat 14 Feb, 2004
+
+Karneevor
+Country: Denmark
+Registered on tw.o : Mon 01 Sep, 2003
+Last login on tw.o : Thu 04 Dec, 2003
+
+Traivor
+Country: United_States
+Registered on tw.o : Tue 02 Sep, 2003
+Last login on tw.o : Thu 15 Jan, 2004
+
+bligneri
+Country: Canada
+Registered on tw.o : Sat 06 Sep, 2003
+Last login on tw.o : Mon 13 Oct, 2003
+
+aw
+Country: United_Kingdom
+Registered on tw.o : Sat 06 Sep, 2003
+Last login on tw.o : Wed 03 Mar, 2004
 
 ysoya
 Country: South_Korea
-Name: Yongha Kim
+Registered on tw.o : Mon 08 Sep, 2003
+Last login on tw.o : Mon 08 Mar, 2004
 
-zaufi
-Country: Russia
-
-swf
-Country: United_States
-Admin on tw.o
-Name: Scott W Fischer
-
-ang
-Country: Hungary
-Admin on tw.o
-
-soshea
+clbustos
 Country: Other
+Registered on tw.o : Tue 09 Sep, 2003
+Last login on tw.o : Wed 15 Oct, 2003
 
-jasko
+ibtubed
 Country: United_States
+Registered on tw.o : Thu 11 Sep, 2003
+Last login on tw.o : Fri 05 Dec, 2003
 
-oliver
+elecnix
+Registered on tw.o : Thu 11 Sep, 2003
+Last login on tw.o : Tue 02 Mar, 2004
 
-bpfaffenberger
+richtl
 Country: United_States
-Name: Bryan Pfaffenberger
+Name: Richard Tango-Lowy
+Registered on tw.o : Sun 14 Sep, 2003
+Last login on tw.o : Fri 14 Nov, 2003
+
+DavorCengija
+Country: Croatia
+Registered on tw.o : Sun 14 Sep, 2003
+Last login on tw.o : Mon 02 Feb, 2004
+
+gongo
+Country: Belgium
+Registered on tw.o : Sun 14 Sep, 2003
+Last login on tw.o : Fri 27 Feb, 2004
+
+kadams54
+Registered on tw.o : Sun 14 Sep, 2003
+Last login on tw.o : Thu 23 Oct, 2003
+
+spaztica
+Country: Turkey
+Registered on tw.o : Mon 15 Sep, 2003
+Last login on tw.o : Mon 16 Feb, 2004
+
+wu-lee
+Country: Other
+Registered on tw.o : Mon 15 Sep, 2003
+Last login on tw.o : Wed 07 Jan, 2004
+
+markusvk
+Country: Japan
+Registered on tw.o : Wed 17 Sep, 2003
+Last login on tw.o : Wed 03 Dec, 2003
+
+grom
+Name: Cameron Zemek
+Url: http://jeppers.sourceforge.net/
+Registered on tw.o : Wed 17 Sep, 2003
+Last login on tw.o : Wed 01 Oct, 2003
+
+rlpowell
+Country: United_States
+Name: Robin Lee Powell
+Registered on tw.o : Thu 18 Sep, 2003
+Last login on tw.o : Wed 07 Jan, 2004
+
+leehongfay
+Registered on tw.o : Fri 19 Sep, 2003
+Last login on tw.o : Fri 19 Sep, 2003
+
+freevic
+Country: Canada
+Registered on tw.o : Fri 19 Sep, 2003
+Last login on tw.o : Wed 24 Sep, 2003
+
+maymann
+Registered on tw.o : Sun 21 Sep, 2003
+Last login on tw.o : Fri 31 Oct, 2003
+
+docekal
+Country: Sweden
+Registered on tw.o : Thu 25 Sep, 2003
+Last login on tw.o : Mon 02 Feb, 2004
+
+luca
+Country: Italy
+Registered on tw.o : Fri 26 Sep, 2003
+Last login on tw.o : Tue 24 Feb, 2004
+
+lfagundes
+Registered on tw.o : Sat 27 Sep, 2003
+Last login on tw.o : Fri 05 Mar, 2004
+
+mikespub
+Country: Belgium
+Registered on tw.o : Sun 28 Sep, 2003
+Last login on tw.o : Sun 16 Nov, 2003
+
+ingesol
+Registered on tw.o : Tue 30 Sep, 2003
+Last login on tw.o : Tue 30 Sep, 2003
 
 andrzej
 Country: Poland
-Name: Andrzej
+Registered on tw.o : Wed 01 Oct, 2003
+Last login on tw.o : Sun 22 Feb, 2004
+
+vikas
+Registered on tw.o : Thu 02 Oct, 2003
+Last login on tw.o : Mon 10 Nov, 2003
+
+isotopp
+Registered on tw.o : Fri 03 Oct, 2003
+Last login on tw.o : Thu 09 Oct, 2003
+
+siridhar
+Country: India
+Role: Documentation (video tutorials)
+Name: Sridhar
+Url: http://www.srikat.com
+Registered on tw.o : Sun 05 Oct, 2003
+Last login on tw.o : Mon 19 Jan, 2004
+
+beerlounge.de
+Country: Germany
+Registered on tw.o : Mon 06 Oct, 2003
+Last login on tw.o : Sat 06 Mar, 2004
+
+roysinn
+Country: Canada
+Registered on tw.o : Thu 09 Oct, 2003
+Last login on tw.o : Sun 22 Feb, 2004
+
+xenfasa
+Country: Other
+Registered on tw.o : Mon 13 Oct, 2003
+Last login on tw.o : Tue 13 Jan, 2004
+
+colorado
+Country: United_States
+Registered on tw.o : Wed 15 Oct, 2003
+Last login on tw.o : Wed 10 Mar, 2004
+
+MagicFab
+Country: Colombia
+Registered on tw.o : Fri 17 Oct, 2003
+Last login on tw.o : Wed 17 Dec, 2003
+
+Buiu
+Country: Brazil
+Registered on tw.o : Thu 23 Oct, 2003
+Last login on tw.o : Wed 25 Feb, 2004
+
+swayambhu
+Registered on tw.o : Sat 25 Oct, 2003
+Last login on tw.o : Thu 11 Mar, 2004
+
+halon
+Country: Belgium
+Registered on tw.o : Sat 25 Oct, 2003
+Last login on tw.o : Sat 14 Feb, 2004
+
+thraxisp
+Registered on tw.o : Mon 27 Oct, 2003
+Last login on tw.o : Tue 03 Feb, 2004
+
+george.geller
+Registered on tw.o : Wed 29 Oct, 2003
+Last login on tw.o : Wed 10 Mar, 2004
+
+die
+Registered on tw.o : Thu 30 Oct, 2003
+Last login on tw.o : Tue 17 Feb, 2004
+
+gillesm
+Registered on tw.o : Mon 03 Nov, 2003
+Last login on tw.o : Tue 11 Nov, 2003
+
+ipso
+Registered on tw.o : Thu 06 Nov, 2003
+Last login on tw.o : Thu 06 Nov, 2003
+
+StarRider
+Country: United_States
+Registered on tw.o : Sat 15 Nov, 2003
+Last login on tw.o : Tue 09 Mar, 2004
+
+pyrotknix
+Registered on tw.o : Sun 23 Nov, 2003
+Last login on tw.o : Wed 10 Dec, 2003
+
+bulldogtor
+Registered on tw.o : Mon 24 Nov, 2003
+
+cube
+Registered on tw.o : Sat 29 Nov, 2003
+Last login on tw.o : Sat 29 Nov, 2003
+
+JFNoubel
+Registered on tw.o : Sun 30 Nov, 2003
+Last login on tw.o : Tue 02 Dec, 2003
+
+aneuhaus
+Country: Germany
+Registered on tw.o : Wed 03 Dec, 2003
+Last login on tw.o : Mon 19 Jan, 2004
+
+millette
+Country: Canada
+Registered on tw.o : Thu 04 Dec, 2003
+Last login on tw.o : Wed 25 Feb, 2004
+
+bburgaud
+Registered on tw.o : Thu 04 Dec, 2003
+Last login on tw.o : Fri 16 Jan, 2004
+
+eduardo
+Registered on tw.o : Thu 04 Dec, 2003
+Last login on tw.o : Thu 08 Jan, 2004
+
+Squee-D
+Country: New_Zealand
+Registered on tw.o : Sun 07 Dec, 2003
+Last login on tw.o : Thu 18 Dec, 2003
+
+sQuare
+Country: Austria
+Registered on tw.o : Sun 07 Dec, 2003
+Last login on tw.o : Thu 04 Mar, 2004
+
+techtonik
+Country: Belarus
+Registered on tw.o : Wed 10 Dec, 2003
+Last login on tw.o : Wed 10 Mar, 2004
+
+mbravo
+Registered on tw.o : Fri 12 Dec, 2003
+Last login on tw.o : Thu 08 Jan, 2004
+
+btodoroff
+Country: Other
+Registered on tw.o : Fri 19 Dec, 2003
+Last login on tw.o : Tue 10 Feb, 2004
+
+RussWilde
+Registered on tw.o : Sat 20 Dec, 2003
+Last login on tw.o : Thu 11 Mar, 2004
+
+koobla
+Country: Austria
+Registered on tw.o : Mon 29 Dec, 2003
+Last login on tw.o : Sat 21 Feb, 2004
+
+spider99
+Registered on tw.o : Tue 30 Dec, 2003
+
+DevNiv
+Country: Germany
+Registered on tw.o : Wed 31 Dec, 2003
+Last login on tw.o : Sun 07 Mar, 2004
+
+broubrou
+Registered on tw.o : Wed 31 Dec, 2003
+Last login on tw.o : Thu 26 Feb, 2004
+
+spider
+Country: United_States
+Registered on tw.o : Sun 04 Jan, 2004
+Last login on tw.o : Sat 28 Feb, 2004
+
+rcogley
+Country: Japan
+Registered on tw.o : Fri 09 Jan, 2004
+Last login on tw.o : Sat 14 Feb, 2004
+
+rockpaper
+Registered on tw.o : Fri 16 Jan, 2004
+
+florianlink
+Country: Germany
+Registered on tw.o : Sat 17 Jan, 2004
+Last login on tw.o : Wed 03 Mar, 2004
+
+schmitta
+Registered on tw.o : Thu 22 Jan, 2004
+Last login on tw.o : Sat 21 Feb, 2004
+
+OneOfMany
+Registered on tw.o : Fri 23 Jan, 2004
+Last login on tw.o : Mon 08 Mar, 2004
+
+deragon
+Country: Canada
+Registered on tw.o : Mon 02 Feb, 2004
+Last login on tw.o : Tue 24 Feb, 2004
+
+jomar
+Country: United_States
+Registered on tw.o : Wed 04 Feb, 2004
+Last login on tw.o : Wed 03 Mar, 2004
+
+derisavi
+Country: Other
+Registered on tw.o : Wed 04 Feb, 2004
+Last login on tw.o : Fri 27 Feb, 2004
+
+baci
+Registered on tw.o : Sun 08 Feb, 2004
+Last login on tw.o : Mon 01 Mar, 2004
+
+mikelcu
+Registered on tw.o : Tue 10 Feb, 2004
+Last login on tw.o : Fri 13 Feb, 2004
+
+lsces
+Country: United_Kingdom
+Registered on tw.o : Wed 11 Feb, 2004
+Last login on tw.o : Thu 26 Feb, 2004
+
+pmichelazzo
+Country: Brazil
+Registered on tw.o : Sun 15 Feb, 2004
+Last login on tw.o : Wed 25 Feb, 2004
+
+swf
+Country: United_States
+Name: Scott W Fischer
+Registered on tw.o : Thu 03 Jul, 2003
+Last login on tw.o : Mon 26 Jan, 2004
+
+jasko
+Country: United_States
+Registered on tw.o : Mon 14 Jul, 2003
+Last login on tw.o : Mon 12 Jan, 2004
+
+soshea
+Country: Other
+Registered on tw.o : Tue 08 Jul, 2003
+Last login on tw.o : Wed 24 Sep, 2003
+
+oliver
+Country: Other
+Registered on tw.o : Mon 18 Aug, 2003
+Last login on tw.o : Fri 09 Jan, 2004
+
+bpfaffenberger
+Country: United_States
+Registered on tw.o : Tue 09 Sep, 2003
+Last login on tw.o : Sun 29 Feb, 2004
 
 amotl
 
@@ -470,11 +823,13 @@ andreas_bac
 
 anenga
 
+aurel42
+
 avanderbilt
 
-broubrou
-
 carolg
+
+chuck
 
 dabase
 
@@ -482,25 +837,55 @@ damienmckenna
 
 dgreen34
 
-docekal
+eraserhd
 
-epolidor
+essele
+
+garem
+
+gertdewit
 
 gilshwartz
 
-ipso
+hfwang
+
+hsaelens
+
+javaguru1729
+
+jcwinnie
+
+jlgordo
+
+jpowys
+
+jujusl
 
 jwigdahl
+
+kehoe
 
 krose
 
 lechuckdapirate
 
+llunax
+
+lnewby
+
 lonelyp
+
+lphuberdeau
+
+marcop13
 
 marp2901
 
 mcgucken
+
+melmut
+
+musus
 
 natig
 
@@ -516,7 +901,9 @@ pippone
 
 plungerman
 
-pyrotknix
+pratesi
+
+ptydotcc
 
 ramiro_v
 
@@ -526,12 +913,19 @@ ronchon
 
 rsaugier
 
+rubaiyat
+
+scarle
+
+swillie
+
 todd_here
 
 vaguery
 
-xbtheria
+vinsz
 
+xbtheria
 
 
 --
@@ -544,8 +938,6 @@ contributor can have been omitted, and some of above
 information can be inadequate or outdated.
 
 In case of need for modification, please contact 
-any of the following coordinator :
+admin@tikiwiki.org
 
-Marc Laporte <marc@marclaporte.com>
-Mose <mose@mose.fr>
 

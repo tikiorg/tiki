@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-page_loader.php,v 1.6 2003-08-07 04:33:57 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-page_loader.php,v 1.7 2004-03-15 21:27:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,7 @@ $refresh = 1000 * $_REQUEST["refresh"];
 		</script>
 	</head>
 
-	<body onLoad = "window.setInterval('location.reload()','<?php echo $refresh ?>');">
+	<body onload = "window.setInterval('location.reload()','<?php echo $refresh ?>');">
 		<?php
 
 		//print_r($cmds);

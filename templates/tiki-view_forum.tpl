@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.56 2004-02-27 09:52:25 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum.tpl,v 1.57 2004-03-15 21:27:34 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-view_forum.php?forumId={$forum_info.forumId}">{$forum_info.name}</a><br /><br />
 {if $forum_info.show_description eq 'y'}
@@ -294,7 +294,7 @@ a moderator approves it.{/tr}</small>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$comments_coms}
-{if $comments_coms[ix].commentDate > $last_forum_visit}
+{if $userinfo && $comments_coms[ix].lastPost > $userinfo.lastLogin}
 {assign var="newtopic" value="_new"}
 {else}
 {assign var="newtopic" value=""}
@@ -324,7 +324,7 @@ a moderator approves it.{/tr}</small>
   {/if}  
   
   <td class="{cycle advance=false}">
-  <table width=100%"><tr><td>
+  <table width="100%"><tr><td>
   <a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if}  href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$comments_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
   {if $forum_info.topic_summary eq 'y'}
   <br /><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     

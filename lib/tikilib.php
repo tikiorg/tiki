@@ -42,7 +42,7 @@ class TikiLib extends TikiDB {
 function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
 	  global $use_proxy,$proxy_host,$proxy_port;
 		// test url :
-		if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+]*$/",$url)) return false;
+		if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%]*$/",$url)) return false;
 	  // rewrite url if sloppy # added a case for https urls
 	  if ( (substr($url,0,7) <> "http://") and
 	       (substr($url,0,8) <> "https://")
@@ -52,7 +52,7 @@ function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
 	  // (cdx) params for HTTP_Request.
 	  // The timeout may be defined by a DEFINE("HTTP_TIMEOUT",5) in some file...
 	  $aSettingsRequest=array("method"=>$reqmethod,"timeout"=>5);
-	
+
 	  if (substr_count($url, "/") < 3) {
 			$url .= "/";
 	  }
@@ -2146,7 +2146,16 @@ function fetchtopicId($topic) {
 }
 
 /*shared*/
-function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '') {
+# Returns a topicname from passed topicid
+function fetchtopicId($topic) {
+    $topicId = '';
+    $query = "select `topicId`  from `tiki_topics` where `name` = ?";
+    $topicId = $this->getOne($query, array($topic) );
+    return $topicId;
+}
+
+/*shared*/
+function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_desc', $find = '', $date = '', $user, $type = '', $topicId = '', $visible_only = '') {
     global $userlib;
 
     $mid = " where `tiki_articles`.`type` = `tiki_article_types`.`type` and `tiki_articles`.`author` = `users_users`.`login` ";
@@ -2173,6 +2182,17 @@ function list_articles($offset = 0, $maxRecords = -1, $sort_mode = 'publishDate_
       $mid = " where `topicId`=? ";
   }
 
+    }
+
+    if ($visible_only) {
+	$now = date('U');
+	$bindvars[]=$now;
+	$bindvars[]=$now;
+	if ($mid) {
+	    $mid .= " and (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+	} else {
+	    $mid .= " where (`tiki_articles`.`publishDate`<? or `tiki_article_types`.`show_pre_publ`='y') and (`tiki_articles`.`expireDate`>? or `tiki_article_types`.`show_post_expire`='y')";
+	}
     }
 
     $query = "select `tiki_articles`.*,
@@ -4547,7 +4567,7 @@ function parse_data($data) {
 
 	    // NOTE: That strict math formula (split into 3 areas) gives
 	    //	   bad visual effects...
-	    // $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left" 
+	    // $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left"
 	    //		: (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
 	    //
 	    // Going to introduce some heuristic here :)
@@ -4574,7 +4594,7 @@ function parse_data($data) {
 	    continue;
 	}
 
-	// Replace old styled titlebars 
+	// Replace old styled titlebars
 	if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
 	    $data .= $line;
 

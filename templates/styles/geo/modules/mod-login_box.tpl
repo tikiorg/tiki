@@ -11,7 +11,7 @@
         </form>
       {/if}
     {else}
-     <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onSubmit="doChallengeResponse()"{/if}> 
+     <form name="loginbox" action="{$login_url}" method="post" {if $feature_challenge eq 'y'}onsubmit="doChallengeResponse()"{/if}> 
      {if $feature_challenge eq 'y'}
      <script language="javascript" type='text/javascript' src="lib/md5.js"></script>   
      {literal}

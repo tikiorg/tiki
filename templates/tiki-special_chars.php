@@ -1,12 +1,12 @@
 <?php // -*- coding:utf-8 -*-
 echo  '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Special Character Input</title>
 </head>
 <body style="background:#101070; color:white;">
@@ -53,7 +53,7 @@ onchange="handleListChange(this)">
               <option value="å"> å </option>
             </select>
           </td>
-          <td align="center"> 
+          <td align="center">
             <select name="e"
 onchange="handleListChange(this)">
               <option value="e" selected> e </option>
@@ -67,7 +67,7 @@ onchange="handleListChange(this)">
               <option value="ë"> ë </option>
             </select>
           </td>
-          <td align="center"> 
+          <td align="center">
             <select name="i"
 onchange="handleListChange(this)">
               <option value="i" selected> i </option>
@@ -81,7 +81,7 @@ onchange="handleListChange(this)">
               <option value="ï"> Ï </option>
             </select>
           </td>
-          <td align="center"> 
+          <td align="center">
             <select name="o"
 onchange="handleListChange(this)">
               <option value="o" selected> o </option>
@@ -97,7 +97,7 @@ onchange="handleListChange(this)">
               <option value="ö"> ö </option>
             </select>
           </td>
-          <td align="center"> 
+          <td align="center">
             <select name="u"
 onchange="handleListChange(this)">
               <option value="u" selected> u </option>
@@ -111,7 +111,7 @@ onchange="handleListChange(this)">
               <option value="ü"> ü </option>
             </select>
           </td>
-          <td align="center"> 
+          <td align="center">
             <select name="Other"
 onchange="handleListChange(this)">
               <option value="misc" selected> Other
@@ -132,6 +132,24 @@ onchange="handleListChange(this)">
               <option value="ý"> ý </option>
               <option value="ÿ"> ÿ </option>
               <option value="¿"> ¿ </option>
+              <option value="&lt;"> < </option>
+              <option value="&gt;"> > </option>
+              <option value="["> [ </option>
+              <option value="]"> ] </option>
+              <option value="|"> | </option>
+              <option value="("> ) </option>
+              <option value=")"> ( </option>
+              <option value="{"> { </option>
+              <option value="}"> } </option>
+              <option value="'"> ' </option>
+              <option value="&quot;"> " </option>
+              <option value="_"> _ </option>
+              <option value="-"> - </option>
+              <option value="*"> * </option>
+              <option value="#"> # </option>
+              <option value=";"> ; </option>
+              <option value=":"> : </option>
+              <option value="&amp;"> & </option>
              </select>
           </td>
         </tr>

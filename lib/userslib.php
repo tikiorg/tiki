@@ -418,27 +418,27 @@ class UsersLib extends TikiLib {
 			));
 
 	    if ($result->numRows()) {
-		$t = date("U");
-
+//		$t = date("U");
+//
 		// Check
-		$current = $this->getOne("select `currentLogin` from `users_users` where `login`=?", array($user));
+//		$current = $this->getOne("select `currentLogin` from `users_users` where `login`=?", array($user));
+//
+//		if (is_null($current)) {
+//		    // First time
+//		    $current = $t;
+//		}
 
-		if (is_null($current)) {
-		    // First time
-		    $current = $t;
-		}
-
-		$query = "update `users_users` set `lastLogin`=? where `login`=?";
-		$result = $this->query($query, array(
-			    (int)$current,
-			    $user
-			    ));
+//		$query = "update `users_users` set `lastLogin`=? where `login`=?";
+//		$result = $this->query($query, array(
+//			    (int)$current,
+//			    $user
+//			    ));
 		// check
-		$query = "update `users_users` set `currentLogin`=? where `login`=?";
-		$result = $this->query($query, array(
-			    (int)$t,
-			    $user
-			    ));
+//		$query = "update `users_users` set `currentLogin`=? where `login`=?";
+//		$result = $this->query($query, array(
+//			    (int)$t,
+//			    $user
+//			    ));
 
 		return true;
 	    }

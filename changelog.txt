@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.149 2004-03-07 23:12:00 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.150 2004-03-15 21:27:27 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -21,6 +21,87 @@ Version 1.9
 * [NEW] plugin ATTACH to list attachements on a wiki page
 * [MOD] Avoid sending user back to registration page on first login 
 
+
+Version 1.8.1 - Polaris-
+<http://tikiwiki.org/ReleaseProcess181>
+* [FIX] File and Image Galleries: Directory value shouldn't need "/"
+* [MOD] Wiki Forum Discuss Broken with dropdown on Wiki Admin page 
+* [FIX] Forums : Show posts by age sorting broken
+* [FIX] Wiki Split! (both the @@@ and the line breaks in columns)
+* [FIX] forum attachment doesn't work
+* [FIX] Taglines uploaded display with escapes
+* [FIX] Shoutbox module's delete link doesn't work everywhere
+* [FIX] WikiSyntax : Center- if colon in-line, centering breaks
+* [FIX] search_box with Fulltext Search
+* [FIX] Misspelled link in file /lib/calendarlib.php
+* [FIX] Incorrectly specified wiki 'h4' heading
+* [FIX] Blog Pagination links were out of sync
+* [FIX] moreneat debug console has hard to see colours
+* [FIX] Forums : individual RSS feeds not working
+* [FIX] RSS not properly processing blogId
+* [FIX] FANCYTABLE plugin generates wrong TD format
+* [FIX] RSS feeds are sent with Wiki Formatting instead of HTML
+* [FIX] RSS feed brakes in 1.8 RC3 - httprequest() in tikilib didnt return
+  any data
+* [FIX] Newsletters: Subscribers get same unsubscribe code
+* [NEW] topic filtering in wikiplugin_articles
+* [FIX] File Gals:IIS REQUEST_URI not set in file download
+* [FIX] lastLogin was the same as currentLogin
+* [MOD] forums' new icon to show for topics new since last login
+* [FIX] ARTICLES plugin wasnt showing the topic images.
+* [FIX] mod-who_is_there Fixed missing quote marker
+* [FIX] commzone/attzone area JS flip link fixed for all themes (comments and
+  attachments weren't staying to show in Konqueror) with more accessible
+  solution
+* [FIX] Contact Anonymous fixed
+  remember to enabled the Contact Us and user Messaging features, set a
+  contact name on Admin->General and let anonymous use the messaging system
+  permission
+* [FIX] Integrator that was unable to save new repository
+* [FIX] iframe width in featured-link feature
+* [FIX] Wiki quick help SQL plugin documentation
+* [MOD] translation of 'by' and displaying of 'Anonymous' in
+  last_modif_pages module
+* [MOD] translation of 'by' in wiki_last_comments module
+* [FIX] breaks in the BOX plug-in
+* [NEW] dropdown navigation for backlinks and structures in wiki pages
+* [MOD] the module last_modif_pages so it don't display minor changes
+* [NEW] Javascript added to shoutbox forms to limit
+  input to the 255 character table column width
+* [MOD] diff to ignore newline characters
+* [FIX] missing ?forumId= in tiki-forum(s)_rss.php
+* [FIX] SPLIT and BOX plugins to render all wiki syntax properly 
+* [FIX] diff and source view to display special characters properly 
+* [FIX] external RSS feeds: first entry was not shown
+* [FIX] more XHTML fixes (some ported from 1.7.x branch)
+* [NEW] ARTICLES now includes Topic Filtering
+* [NEW] new module last_category_items
+* [MOD] Spelling Mistakes corrected
+  also modified the language files to reflect those changes, so not to
+  break the language translations
+* [NEW] Added a check on Tiki Backup to remind you if your file and image
+  galleries are set to file system storage
+  German translation
+* [NEW] RSS 2.0 output feeds support the author tag now
+* [MOD] RSS: better looking stylesheet
+* [MOD] RSS: Blogs now show title instead of a timestamp 
+* [MOD] RSS: if there is an empty item title, it gets replaced with a creation
+  timestamp of that item
+* [MOD] RSS: forums rss shows author names now
+* [NEW] avatars: user can choose to have no avatar if he has one currently
+* [NEW] Added <>[]|)({}'"_-*#;:& to special character input marclaporte
+* [MOD] Replaced the powered by RDF button with better quality one and aligned
+  all buttons vertically to middle
+* [NEW] Belarus now has a tiki flag!
+* [NEW] en-uk Language file, mainly because we british love our colour
+* [NEW] adding a powered by Tiki logo on bottom bar
+* [NEW] Added support for Atom output feeds, details see
+  http://bitworking.org/rfc/draft-gregorio-07.html
+* [NEW] Added support for external Atom feeds, just add them on the rss feeds
+  page!
+* [NEW] Added new module forums_last_posts, that shows the newest posts in
+  forums. prefixes like Re: or Aw: are removed prior to output
+* [FIX] Corrected the alignment in neat theme for wiki page icons
 
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>

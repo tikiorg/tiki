@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.4 2003-10-14 09:46:09 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/notheme/tiki-my_tiki.tpl,v 1.5 2004-03-15 21:27:44 mose Exp $ *}
 
 <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a><br/><br/>
 {include file=tiki-mytiki_bar.tpl}
@@ -8,9 +8,9 @@
 {if $mytiki_pages eq 'y'}
   <div class="cbox">
   <div class="cbox-title">
-    <table width=100%>
+    <table width="100%">
     <tr>
-      <td width=70%>{tr}User Pages{/tr}</td>
+      <td width="70%">{tr}User Pages{/tr}</td>
       <td><div class="button2"><a href="tiki-my_tiki.php?by=creator" title="{tr}List pages where I am a creator{/tr}">{tr}by creator{/tr}</a></div></td>
       <td><div class="button2"><a href="tiki-my_tiki.php?by=modificator" title="{tr}List pages where I am a modificator{/tr}">{tr}by modificator{/tr}</a></div></td>
     </tr>

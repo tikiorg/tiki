@@ -50,7 +50,19 @@ if($tiki_p_download_files != 'y') {
   die;
 }
 
-
+if (!IsSet($_SERVER['REQUEST_URI'])) { 
+	$_SERVER['REQUEST_URI'] = ''; 
+	
+	if (IsSet($_SERVER['PHP_SELF'])) { 
+	$_SERVER['REQUEST_URI'] = $_SERVER 
+	['REQUEST_URI'].$_SERVER['PHP_SELF']; 
+	} 
+	
+	if (IsSet($_SERVER['QUERY_STRING'])) { 
+	$_SERVER['REQUEST_URI'] = $_SERVER 
+	['REQUEST_URI'].'?'.$_SERVER['QUERY_STRING']; 
+	} 
+}
 
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-browse_image","tiki-browse_image",$foo["path"]);

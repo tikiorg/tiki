@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-image_galleries_rss.php,v 1.21 2004-03-07 23:12:01 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-image_galleries_rss.php,v 1.22 2004-03-15 21:27:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -20,8 +20,8 @@ if ($tiki_p_view_image_gallery != 'y') {
 }
 
 $feed = "imggal";
-$title = "Tiki RSS feed for image galleries"; // TODO: make configurable
-$desc = "Last images uploaded to the image galleries."; // TODO: make configurable
+$title = tra("Tiki RSS feed for image galleries");
+$desc = tra("Last images uploaded to the image galleries.");
 $now = date("U");
 $id = "imageId";
 $titleId = "name";

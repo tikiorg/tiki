@@ -14,7 +14,7 @@
 	{/literal}
 	{$trl}
   </head>
-  <body onUnload="javascript:chat_close(document.getElementById('role').value,document.getElementById('username').value);">
+  <body onunload="javascript:chat_close(document.getElementById('role').value,document.getElementById('username').value);">
   	<input type="hidden" id="reqId" value="{$reqId|escape}" />
   	<input type="hidden" id="senderId" value="{$senderId|escape}" />
   	<input type="hidden" id="role" value="{$role|escape}" />
@@ -90,7 +90,7 @@
   	</iframe>
   	{literal}
   	<input type="text" id="data" onKeyPress="javascript:if(event.keyCode == 13) {write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);}" />
-  	<input type="button" value="send" onClick="javascript:write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);" />
+  	<input type="button" value="send" onclick="javascript:write_msg(document.getElementById('data').value,document.getElementById('role').value,document.getElementById('username').value);" />
   	{/literal}
   	<script language='Javascript' type='text/javascript'>
         /* Activate polling of requests */
