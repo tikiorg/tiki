@@ -265,13 +265,14 @@ class TrackerLib extends TikiLib {
 	function get_all_items($trackerId,$fieldId,$status='o') {
 		global $cachelib;
 		$sort_mode = "value_asc";
-		$cache = md5('trackerfield'.$fieldId);
+		$cache = md5('trackerfield'.$fieldId.$status);
 		if (!$cachelib->isCached($cache)) {
-			//$query = "select distinct ttif.`itemid`, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
-			//$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and tti.`status`=? order by ".$this->convert_sortmode($sort_mode);
+			$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
+			$mid = " and (".implode('=? or ',array_fill(0,count($sts),'tti.`status`'))."=?) ";
+			$bindvars = array_merge(array((int)$fieldId),$sts);
 			$query = "select ttif.`itemId` , ttif.`value` FROM `tiki_tracker_items` tti,`tiki_tracker_item_fields` ttif ";
-			$query.= " WHERE ttif.`fieldId` =? and tti.`status` = ? and  tti.`itemId` = ttif.`itemId` order by ".$this->convert_sortmode($sort_mode);
-			$result = $this->query($query,array((int)$fieldId,$status));
+			$query.= " WHERE ttif.`fieldId` =? $mid and  tti.`itemId` = ttif.`itemId` order by ".$this->convert_sortmode($sort_mode);
+			$result = $this->query($query,$bindvars);
 			$ret = array();
 			while ($res = $result->fetchRow()) {
 				$k = $res['itemId'];
