@@ -12,12 +12,18 @@ class ProcessMonitor extends Base {
     $res['active_processes'] = $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."processes` where `isActive`=?",array('y'));
     $res['processes'] = $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."processes`");
     $result = $this->query("select distinct(`pId`) from `".GALAXIA_TABLE_PREFIX."instances` where `status`=?",array('active'));
-		// echo"<pre>";print_r($result);echo"</pre>";
     $res['running_processes'] = $result->numRows();
-    $res['active_instances'] = $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."instances` where `status`=?",array("active"));
-    $res['completed_instances'] = $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."instances` where `status`=?",array("completed"));
-    $res['exception_instances'] = $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."instances` where `status`=?",array("exception"));
-    $res['aborted_instances'] = $this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."instances` where `status`=?",array("aborted"));
+    // get the number of instances per status
+    $query = "select status, count(*) as num_instances from ".GALAXIA_TABLE_PREFIX."instances group by status";
+    $result = $this->query($query);
+    $status = array();
+    while($info = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+        $status[$info['status']] = $info['num_instances'];
+    }
+    $res['active_instances'] = isset($status['active']) ? $status['active'] : 0;
+    $res['completed_instances'] = isset($status['completed']) ? $status['completed'] : 0;
+    $res['exception_instances'] = isset($status['exception']) ? $status['exception'] : 0;
+    $res['aborted_instances'] = isset($status['aborted']) ? $status['aborted'] : 0;
     return $res;
   }
   
@@ -75,7 +81,7 @@ class ProcessMonitor extends Base {
   function monitor_list_processes($offset,$maxRecords,$sort_mode,$find,$where='') {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-			$findesc = $this->qstr('%'.$find.'%');
+	$findesc = $this->qstr('%'.$find.'%');
       $mid=" where ((name like $findesc) or (description like $findesc))";
     } else {
       $mid="";
@@ -87,24 +93,71 @@ class ProcessMonitor extends Base {
         $mid.= " where ($where) ";
       }
     }
+    // get the requested processes
     $query = "select * from ".GALAXIA_TABLE_PREFIX."processes $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."processes $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $pId = $res['pId'];
       // Number of active instances
-      $res['active_instances']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instances where status='active' and pId=".$res['pId']);
+      $res['active_instances'] = 0;
       // Number of exception instances
-      $res['exception_instances']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instances where status='exception' and pId=".$res['pId']);
+      $res['exception_instances'] = 0;
       // Number of completed instances
-      $res['completed_instances']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instances where status='completed' and pId=".$res['pId']);
+      $res['completed_instances'] = 0;
       // Number of aborted instances
-      $res['aborted_instances']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instances where status='aborted' and pId=".$res['pId']);
-      $res['all_instances']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instances where pId=".$res['pId']);
+      $res['aborted_instances'] = 0;
+      $res['all_instances'] = 0;
       // Number of activities
-      $res['activities']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activities where pId=".$res['pId']);
-      $ret[] = $res;
+      $res['activities'] = 0;
+      $ret[$pId] = $res;
+    }
+    if (count($ret) < 1) {
+        $retval = Array();
+        $retval["data"] = $ret;
+        $retval["cant"] = $cant;
+        return $retval;
+    }
+    // get number of instances and timing statistics per process and status
+    $query = "select pId, status, count(*) as num_instances,
+              min(ended - started) as min_time, avg(ended - started) as avg_time, max(ended - started) as max_time
+              from ".GALAXIA_TABLE_PREFIX."instances where pId in (" . join(', ', array_keys($ret)) . ") group by pId, status";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $pId = $res['pId'];
+      if (!isset($ret[$pId])) continue;
+      switch ($res['status']) {
+        case 'active':
+          $ret[$pId]['active_instances'] = $res['num_instances'];
+          $ret[$pId]['all_instances'] += $res['num_instances'];
+          break;
+        case 'completed':
+          $ret[$pId]['completed_instances'] = $res['num_instances'];
+          $ret[$pId]['all_instances'] += $res['num_instances'];
+          $ret[$pId]['duration'] = array('min' => $res['min_time'], 'avg' => $res['avg_time'], 'max' => $res['max_time']);
+          break;
+        case 'exception':
+          $ret[$pId]['exception_instances'] = $res['num_instances'];
+          $ret[$pId]['all_instances'] += $res['num_instances'];
+          break;
+        case 'aborted':
+          $ret[$pId]['aborted_instances'] = $res['num_instances'];
+          $ret[$pId]['all_instances'] += $res['num_instances'];
+          break;
+      }
+    }
+    // get number of activities per process
+    $query = "select pId, count(*) as num_activities
+              from ".GALAXIA_TABLE_PREFIX."activities
+              where pId in (" . join(', ', array_keys($ret)) . ")
+              group by pId";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $pId = $res['pId'];
+      if (!isset($ret[$pId])) continue;
+      $ret[$pId]['activities'] = $res['num_activities'];
     }
     $retval = Array();
     $retval["data"] = $ret;
@@ -121,14 +174,15 @@ class ProcessMonitor extends Base {
       $mid="";
     }
     if($where) {
+      $where = preg_replace('/pId/', 'ga.pId', $where);
       if($mid) {
         $mid.= " and ($where) ";
       } else {
         $mid.= " where ($where) ";
       }
     }
-    $query = "select * from ".GALAXIA_TABLE_PREFIX."activities $mid order by $sort_mode limit $offset,$maxRecords";
-    $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."activities $mid";
+    $query = "select gp.`name` as `procname`, gp.`version`, ga.* from ".GALAXIA_TABLE_PREFIX."activities ga left join ".GALAXIA_TABLE_PREFIX."processes gp on gp.pId=ga.pId $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from ".GALAXIA_TABLE_PREFIX."activities ga $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
@@ -136,12 +190,33 @@ class ProcessMonitor extends Base {
       // Number of active instances
       $aid = $res['activityId'];
       $res['active_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activitYId=$aid and gi.status='active' and pId=".$res['pId']);
-      $res['completed_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gi.status='completed' and pId=".$res['pId']);
+    // activities of completed instances are all removed from the instance_activities table for some reason, so we need to look at workitems
+      $res['completed_instances']=$this->getOne("select count(distinct gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."workitems gw where gi.instanceId=gw.instanceId and gw.activityId=$aid and gi.status='completed' and pId=".$res['pId']);
       $res['aborted_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gi.status='aborted' and pId=".$res['pId']);
       $res['exception_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gi.status='exception' and pId=".$res['pId']);
 	  $res['act_running_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='running' and pId=".$res['pId']);      
-      $res['act_completed_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='completed' and pId=".$res['pId']);
-      $ret[] = $res;
+    // completed activities are removed from the instance_activities table unless they're part of a split for some reason, so this won't work
+    //  $res['act_completed_instances']=$this->getOne("select count(gi.instanceId) from ".GALAXIA_TABLE_PREFIX."instances gi,".GALAXIA_TABLE_PREFIX."instance_activities gia where gi.instanceId=gia.instanceId and gia.activityId=$aid and gia.status='completed' and pId=".$res['pId']);      
+      $res['act_completed_instances'] = 0;
+      $ret[$aid] = $res;
+    }
+    if (count($ret) < 1) {
+      $retval = Array();
+      $retval["data"] = $ret;
+      $retval["cant"] = $cant;
+      return $retval;
+    }
+    $query = "select activityId, count(distinct instanceId) as num_instances, min(ended - started) as min_time, avg(ended - started) as avg_time, max(ended - started) as max_time
+              from ".GALAXIA_TABLE_PREFIX."workitems
+              where activityId in (" . join(', ', array_keys($ret)) . ")
+              group by activityId";
+    $result = $this->query($query);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      // Number of active instances
+      $aid = $res['activityId'];
+      if (!isset($ret[$aid])) continue;
+      $ret[$aid]['act_completed_instances'] = $res['num_instances'];
+      $ret[$aid]['duration'] = array('min' => $res['min_time'], 'avg' => $res['avg_time'], 'max' => $res['max_time']);
     }
     $retval = Array();
     $retval["data"] = $ret;
@@ -151,9 +226,8 @@ class ProcessMonitor extends Base {
 
   function monitor_list_instances($offset,$maxRecords,$sort_mode,$find,$where='',$wherevars) {
     if($find) {
-			$findesc = $this->qstr('%'.$find.'%');
-      $mid=" where ((`properties` like ?)";
-			$wherevars[] = $findesc;
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid=" where (`properties` like $findesc)";
     } else {
       $mid="";
     }
@@ -165,7 +239,7 @@ class ProcessMonitor extends Base {
       }
     }
     $query = "select gp.`pId`, ga.`isInteractive`, gi.`owner`, gp.`name` as `procname`, gp.`version`, ga.`type`,";
-		$query.= " ga.`activityId`, ga.`name`, gi.`instanceId`, gi.`status`, gia.`activityId`, gia.`user`, gi.`started`, gia.`status` as actstatus ";
+		$query.= " ga.`activityId`, ga.`name`, gi.`instanceId`, gi.`status`, gia.`activityId`, gia.`user`, gi.`started`, gi.`ended`, gia.`status` as actstatus ";
 		$query.=" from `".GALAXIA_TABLE_PREFIX."instances` gi LEFT JOIN `".GALAXIA_TABLE_PREFIX."instance_activities` gia ON gi.`instanceId`=gia.`instanceId` ";
 		$query.= "LEFT JOIN `".GALAXIA_TABLE_PREFIX."activities` ga ON gia.`activityId` = ga.`activityId` ";
 		$query.= "LEFT JOIN `".GALAXIA_TABLE_PREFIX."processes` gp ON gp.`pId`=gi.`pId` $mid order by ".$this->convert_sortmode($sort_mode);   
@@ -178,7 +252,7 @@ class ProcessMonitor extends Base {
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $iid = $res['instanceId'];
       $res['workitems']=$this->getOne("select count(*) from `".GALAXIA_TABLE_PREFIX."workitems` where `instanceId`=?",array($iid));
-      $ret[] = $res;
+      $ret[$iid] = $res;
     }
     $retval = Array();
     $retval["data"] = $ret;
@@ -187,12 +261,30 @@ class ProcessMonitor extends Base {
   }
 
 
-  function monitor_list_all_processes($sort_mode) {
-    $query = "select distinct(`name`),`pId` from `".GALAXIA_TABLE_PREFIX."processes` order by ".$this->convert_sortmode($sort_mode);
+  function monitor_list_all_processes($sort_mode = 'name_asc', $where = '') {
+    if (!empty($where)) {
+        $where = " where ($where) ";
+    }
+    $query = "select `name`,`version`,`pId` from `".GALAXIA_TABLE_PREFIX."processes` $where order by ".$this->convert_sortmode($sort_mode);
     $result = $this->query($query);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
+      $pId = $res['pId'];
+      $ret[$pId] = $res;
+    }
+    return $ret;
+  }
+  
+  function monitor_list_all_activities($sort_mode = 'name_asc', $where = '') {
+    if (!empty($where)) {
+        $where = " where ($where) ";
+    }
+    $query = "select `name`,`activityId` from `".GALAXIA_TABLE_PREFIX."activities` $where order by ".$this->convert_sortmode($sort_mode);
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $aid = $res['activityId'];
+      $ret[$aid] = $res;
     }
     return $ret;
   }
@@ -266,20 +358,19 @@ class ProcessMonitor extends Base {
 			$mid.= " and ($where) ";
     }
     if($find) {
-			$findesc = $this->qstr('%'.$find.'%');
-      $mid.=" and ((`properties` like ?) or (`name` like ?))";
-			$wherevars[] = $findesc;
-			$wherevars[] = $findesc;
+	$findesc = $this->qstr('%'.$find.'%');
+      $mid.=" and (`properties` like $findesc)";
     }
     $query = "select `itemId`,`ended`-`started` as duration,ga.`isInteractive`, ga.`type`,gp.`name` as procname,gp.`version`,ga.`name` as actname,";
-		$query.= "ga.`activityId`,`instanceId`,`orderId`,`properties`,`started`,`ended`,`user` from `".GALAXIA_TABLE_PREFIX."workitems` gw,`".GALAXIA_TABLE_PREFIX."activities` ga,`".GALAXIA_TABLE_PREFIX."processes` gp ";
-		$query.= "where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid order by gp.`pId` desc,".$this->convert_sortmode($sort_mode);
+    $query.= "ga.`activityId`,`instanceId`,`orderId`,`properties`,`started`,`ended`,`user` from `".GALAXIA_TABLE_PREFIX."workitems` gw,`".GALAXIA_TABLE_PREFIX."activities` ga,`".GALAXIA_TABLE_PREFIX."processes` gp ";
+    $query.= "where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid order by gp.`pId` desc,".$this->convert_sortmode($sort_mode);
     $query_cant = "select count(*) from `".GALAXIA_TABLE_PREFIX."workitems` gw,`".GALAXIA_TABLE_PREFIX."activities` ga,`".GALAXIA_TABLE_PREFIX."processes` gp where gw.`activityId`=ga.`activityId` and ga.`pId`=gp.`pId` $mid";
     $result = $this->query($query,$wherevars,$maxRecords,$offset);
     $cant = $this->getOne($query_cant,$wherevars);
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $ret[] = $res;
+      $itemId = $res['itemId'];
+      $ret[$itemId] = $res;
     }
     $retval = Array();
     $retval["data"] = $ret;

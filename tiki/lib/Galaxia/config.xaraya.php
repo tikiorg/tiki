@@ -18,7 +18,7 @@ if (!defined('GALAXIA_LIBRARY')) {
 if (!defined('GALAXIA_PROCESSES')) {
     // Note: this directory must be writeable by the webserver !
     //define('GALAXIA_PROCESSES', GALAXIA_LIBRARY . '/processes');
-    define('GALAXIA_PROCESSES', 'var/cache/processes');
+    define('GALAXIA_PROCESSES', 'var/processes');
 }
 
 // Directory where a *copy* of the Galaxia activity templates will be stored, e.g. templates
@@ -55,6 +55,7 @@ if (!defined('GRAPHVIZ_BIN_DIR')) {
  */
 
 // Database handler
+global $dbGalaxia;
 if (!isset($dbGalaxia)) {
     list($dbGalaxia) = xarDBGetConn();
 }

@@ -117,6 +117,13 @@ class Base extends Observable {
 		}
 	}
 
+	function qstr($string, $quoted = null)
+	{
+		if (!isset($quoted)) {
+			$quoted = get_magic_quotes_gpc();
+		}
+		return $this->db->qstr($string,$quoted);
+	}
 
 } //end of class
 
