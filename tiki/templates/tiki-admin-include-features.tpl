@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.19 2003-09-25 01:05:20 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.20 2003-10-12 21:25:36 ohertel Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with {tr} which means translate...
@@ -137,7 +137,7 @@
 			<tr>
         <td class="form">
 				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Newsreader" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Newsreader{/tr}">{/if}
-				{tr}Newsreader{/tr}:
+				{tr}Newsreader{/tr} :
 				{if $feature_help eq 'y'}</a>{/if}
 				</td>
         <td><input type="checkbox" name="feature_newsreader"
@@ -146,7 +146,7 @@
         
 				<td class="form">
 				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Webmail" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Webmail{/tr}">{/if}
-				{tr}Webmail{/tr}:
+				{tr}Webmail{/tr} :
 				{if $feature_help eq 'y'}</a>{/if}
 				</td>
         <td><input type="checkbox" name="feature_webmail"
@@ -633,27 +633,27 @@
         <td class="heading" colspan=5 
             align="center">{tr}General Layout options{/tr}</td>
       </tr><tr>
-        <td class="form">{tr}Left column{/tr}:</td>
+        <td class="form">{tr}Left column{/tr} :</td>
         <td><input type="checkbox" name="feature_left_column"
             {if $feature_left_column eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-        <td class="form">{tr}Layout per section{/tr}:</td>
+        <td class="form">{tr}Layout per section{/tr} :</td>
         <td><input type="checkbox" name="layout_section"
             {if $layout_section eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
-        <td class="form">{tr}Right column{/tr}:</td>
+        <td class="form">{tr}Right column{/tr} :</td>
         <td><input type="checkbox" name="feature_right_column"
             {if $feature_right_column eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
         <td align="center" colspan="2"><a href="tiki-admin_layout.php" 
             class="link">{tr}Admin layout per section{/tr}</a></td>
       </tr><tr>
-        <td class="form">{tr}Top bar{/tr}:</td>
+        <td class="form">{tr}Top bar{/tr} :</td>
         <td><input type="checkbox" name="feature_top_bar"
             {if $feature_top_bar eq 'y'}checked="checked"{/if}/></td>
         <td colspan=3>&nbsp;</td>
       </tr><tr>
-        <td class="form">{tr}Bottom bar{/tr}:</td>
+        <td class="form">{tr}Bottom bar{/tr} :</td>
         <td><input type="checkbox" name="feature_bot_bar"
             {if $feature_bot_bar eq 'y'}checked="checked"{/if}/></td>
         <td colspan=3>&nbsp;</td>
