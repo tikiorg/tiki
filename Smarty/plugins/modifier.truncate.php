@@ -18,9 +18,12 @@ function smarty_modifier_truncate($string, $length = 80, $etc = '...',
 
     if (strlen($string) > $length) {
         $length -= strlen($etc);
-        $fragment = mb_substr($string, 0, $length);
-        if (!$break_words) // don't break the word
+        if ($break_words) // break the word
+        	$fragment = mb_substr($string, 0, $length);
+        else {
+            $fragment = mb_substr($string, 0, $length + 1);
             $fragment = preg_replace('/\s+(\S+)?$/', '', $fragment);
+        }
         return $fragment.$etc;
     } else
         return $string;
