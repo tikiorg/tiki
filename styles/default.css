@@ -102,6 +102,9 @@ div.boxnm {
    boxes in the main application menu, we set display to
    none to make the menu appear collapsed initially, change
    this to 'block' if you want it to be extended fully */
+#admmnu {
+ display: none;
+}   
 #wikimenu {
  display: none;
 }
@@ -215,6 +218,28 @@ font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
  color : White;
  text-decoration: none;
 }
+
+
+/* TEXT ADDS */
+.bannertext {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+ color : Black;
+text-decoration: none;
+}
+.bannertext:active {
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+ color : Black;
+ text-decoration: none;
+}
+.bannertext:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+ color : Black;
+ text-decoration: none;
+}
+
 
 
 /* Some boxes uses thumbnails this is the image style */

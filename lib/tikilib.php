@@ -16,6 +16,442 @@ class TikiLib {
     die;
   }
   
+  /* Dynamic content generation system */
+  function remove_contents($contentId) 
+  {
+    $query = "delete from tiki_programmed_content where contentId=$contentId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $query = "delete from tiki_content where contentId=$contentId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
+  function list_content($offset = 0,$maxRecords = -1,$sort_mode = 'contentId_desc', $find='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where description like '%".$find."%' ";  
+    } else {
+      $mid=''; 
+    }
+    $query = "select * from tiki_content $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_content";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      // Add actual version
+      // Add number of programmed versions
+      // Add next programmed version
+      // Add number of old versions
+      $now = date("U");
+      $id = $res["contentId"];
+      $query = "select count(*) from tiki_programmed_content where publishDate>$now and contentId=$id";
+      $res["future"] = $this->db->getOne($query);
+      $query = "select max(publishDate) from tiki_programmed_content where contentId=$id and publishDate<=$now";
+      $res["actual"] = $this->db->getOne($query);
+      $query = "select min(publishDate) from tiki_programmed_content where contentId=$id and publishDate:$now";
+      $res["next"] = $this->db->getOne($query);
+      $query = "select count(*) from tiki_programmed_content where contentId = $id and publishdate<$now";
+      $res["old"] = $this->db->getOne($query);
+      if($res["old"]>0) $res["old"]--;
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;  	
+  }
+  
+  function get_actual_content_date($contentId)
+  {
+    $now = date("U");
+    $query = "select max(publishDate) from tiki_programmed_content where contentId=$contentId and publishDate<=$now";
+    $res = $this->db->getOne($query);
+    return $res;
+  }
+
+  function get_actual_content($contentId)
+  {
+    $data ='';
+    $now = date("U");
+    $query = "select max(publishDate) from tiki_programmed_content where contentId=$contentId and publishDate<=$now";
+    $res = $this->db->getOne($query);
+    $query = "select data from tiki_programmed_content where contentId=$contentId and publishDate=$res";
+    $data = $this->db->getOne($query);
+    return $data;
+  }
+  
+
+  
+  function get_next_content($contentId)
+  {
+    $now = date("U");
+    $query = "select min(publishDate) from tiki_programmed_content where contentId=$contentId and publishDate>$now";
+    $res = $this->db->getOne($query);
+    return $res;
+  }
+
+  function list_programmed_content($contentId,$offset = 0,$maxRecords = -1,$sort_mode = 'publishDate_desc', $find='')
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where contentId=$contentId and data like '%".$find."%' ";  
+    } else {
+      $mid="where contentId=$contentId"; 
+    }
+    $query = "select * from tiki_programmed_content $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_programmed_content where contentId=$contentId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;  	
+  }
+  
+  function replace_programmed_content($pId,$contentId,$publishDate, $data)
+  {
+    $data = addslashes($data);
+    if(!$pId) {
+      $query = "replace into tiki_programmed_content(contentId,publishDate,data) values($contentId,$publishDate, '$data')";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);
+      $query = "select max(pId) from tiki_programmed_content where publishDate=$publishDate and data='$data'";
+      $id = $this->db->getOne($query);
+      
+    } else {
+      $query = "update tiki_programmed_content set contentId=$contentId, publishDate=$publishDate, data='$data' where pId=$pId";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);
+      $id = $pId;
+    }
+    return $id;
+  }
+  
+  
+  
+  function remove_programmed_content($id)
+  {
+    $query = "delete from tiki_programmed_content where pId=$id";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    return true;
+  }
+  
+  function get_content($id) 
+  {
+    $query = "select * from tiki_content where contentId=$id";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
+  function get_programmed_content($id) 
+  {
+    $query = "select * from tiki_programmed_content where pId=$id";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  
+  function replace_content($contentId,$description)
+  {
+    $description = addslashes($description);
+    if($contentId>0) {
+      $query = "update tiki_content set description='$description' where contentId=$contentId";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);
+      return $contentId;
+    } else {
+      $query = "insert into tiki_content(description) values('$description')";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);
+      $query = "select max(contentId) from tiki_content where description = '$description'";
+      $id = $this->db->getOne($query);
+      return $id;
+    }
+  }
+  
+  
+
+  function remove_orphan_images()
+  {
+    $merge  = Array();
+    
+    // Find images in tiki_pages
+    $query = "select data from tiki_pages";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      preg_match_all("/src=\"([^\"]+)\"/",$res["data"],$reqs1);
+      preg_match_all("/src=\'([^\']+)\'/",$res["data"],$reqs2);
+      preg_match_all("/src=([A-Za-z0-9:\?\=\/\.\-\_]+)\}/",$res["data"],$reqs3);
+      $merge = array_merge($merge, $reqs1[1],$reqs2[1],$reqs3[1]);
+      $merge = array_unique($merge);
+    }  
+
+    // Find images in Tiki articles    
+    $query = "select body from tiki_articles";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      preg_match_all("/src=\"([^\"]+)\"/",$res["body"],$reqs1);
+      preg_match_all("/src=\'([^\']+)\'/",$res["body"],$reqs2);
+      preg_match_all("/src=([A-Za-z0-9:\?\=\/\.\-\_]+)\}/",$res["body"],$reqs3);
+      $merge = array_merge($merge, $reqs1[1],$reqs2[1],$reqs3[1]);
+      $merge = array_unique($merge);
+    }  
+    
+    // Find images in tiki_submissions
+    $query = "select body from tiki_submissions";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      preg_match_all("/src=\"([^\"]+)\"/",$res["body"],$reqs1);
+      preg_match_all("/src=\'([^\']+)\'/",$res["body"],$reqs2);
+      preg_match_all("/src=([A-Za-z0-9:\?\=\/\.\-\_]+)\}/",$res["body"],$reqs3);
+      $merge = array_merge($merge, $reqs1[1],$reqs2[1],$reqs3[1]);
+      $merge = array_unique($merge);
+    }
+
+    // Find images in tiki_blog_posts    
+    $query = "select data from tiki_blog_posts";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      preg_match_all("/src=\"([^\"]+)\"/",$res["data"],$reqs1);
+      preg_match_all("/src=\'([^\']+)\'/",$res["data"],$reqs2);
+      preg_match_all("/src=([A-Za-z0-9:\?\=\/\.\-\_]+)\}/",$res["data"],$reqs3);
+      $merge = array_merge($merge, $reqs1[1],$reqs2[1],$reqs3[1]);
+      $merge = array_unique($merge);
+    }  
+    
+    $positives = Array();
+    foreach($merge as $img) {
+      if(strstr($img,'show_image')) {
+        preg_match("/id=([0-9]+)/",$img,$rq);
+        $positives[] = $rq[1];
+      }
+    }
+    
+    $query = "select imageId from tiki_images where galleryId=0";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $id = $res["imageId"];
+      if(!in_array($id,$positives)) {
+        $this->remove_image($id);
+      }
+    }
+    
+  }
+
+  // Banner functions
+  function select_banner($zone)
+  {
+    // Things to check
+    // UseDates and dates
+    // Hours
+    // weekdays
+    // zone
+    // maxImpressions and impressions
+    $dw = strtolower(date("D"));
+    $hour = date("H").date("i");
+    $now = date("U");
+    // 
+    // 
+    $query = "select * from tiki_banners where $dw = 'y' and  hourFrom<=$hour and hourTo>=$hour and
+    ( ((useDates = 'y') and (fromDate<=$now and toDate>=$now)) or (useDates = 'n') ) and
+    impressions<maxImpressions and zone='$zone'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $rows = $result->numRows();
+    if(!$rows) return false;
+    $bid = rand(0,$rows-1);
+    //print("Rows: $rows bid: $bid");
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC,$bid);
+    $id= $res["bannerId"];
+    
+    switch($res["which"]) {
+    case 'useHTML':
+      $raw = $res["HTMLData"];
+      break;
+    case 'useImage':
+      $raw = "<a target='_blank' href='banner_click.php?id=".$res["bannerId"]."&amp;url=".urlencode($res["url"])."'><img border='0' src=\"banner_image.php?id=".$id."\" /></a>";
+      break;
+    case 'useFixedURL':
+      $fp = fopen($res["fixedURLData"],"r");
+      if ($fp) {
+        $raw = fread($fp,999999);
+      }
+      fclose($fp);
+      break;
+    case 'useText':
+      $raw = "<a target='_blank' class='bannertext' href='banner_click.php?id=".$res["bannerId"]."&amp;url=".urlencode($res["url"])."'>".$res["textData"]."</a>";
+      break;
+    } 
+    // Increment banner impressions here
+    $id = $res["bannerId"];
+    $query = "update tiki_banners set impressions = impressions + 1 where bannerId = $id";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    return $raw;
+  }
+
+  function add_click($bannerId) 
+  {
+    $query = "update tiki_banners set clicks = clicks + 1 where bannerId=$bannerId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }  
+    
+  function list_banners($offset = 0,$maxRecords = -1,$sort_mode = 'created_desc', $find='', $user)
+  {
+    if($user == 'admin') {
+      $mid = '';
+    } else {
+      $mid = "where client = '$user'";
+    }
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      if($mid) {
+        $mid.=" and url like '%".$find."%' ";  
+      } else {
+        $mid.=" where url like '%".$find."%' ";  
+      }
+    } 
+    $query = "select * from tiki_banners $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_banners";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $cant = $this->db->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;  	
+  }
+  
+  function remove_banner($bannerId)
+  {
+    $query = "delete from tiki_banners where bannerId=$bannerId";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
+  function get_banner($bannerId) 
+  {
+    $query = "select * from tiki_banners where bannerId=$bannerId";
+    $result = $this->db->query($query);
+    if(!$result->numRows()) return false;
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+    return $res;
+  }
+  function replace_banner($bannerId, $client, $url, $title='', $alt='', $use, $imageData,$imageType,$imageName,
+                          $HTMLData, $fixedURLData, $textData, $fromDate, $toDate, $useDates, 
+                          $mon, $tue, $wed, $thu, $fri, $sat, $sun,
+                          $hourFrom, $hourTo, $maxImpressions, $zone)
+  {
+    $url = addslashes($url);
+    $title = addslashes($title);
+    $alt = addslashes($alt);
+    $imageData = addslashes(urldecode($imageData));
+    //$imageData = '';
+    $imageName = addslashes($imageName);
+    $HTMLData = addslashes($HTMLData);
+    $fixedURLData = addslashes($fixedURLData);
+    $textData = addslashes($textData);
+    $zone = addslashes($zone);
+    
+    $now = date("U");
+    if($bannerId) {
+      $query = "update tiki_banners set 
+                client = '$client',
+                url = '$url',
+                title = '$title',
+                alt = '$alt',
+                which = '$use',
+                imageData = '$imageData',
+                imageType = '$imageType',
+                imageName = '$imageName',
+                HTMLData = '$HTMLData',
+                fixedURLData = '$fixedURLData',
+                textData = '$textData',
+                fromDate = $fromDate,
+                toDate = $toDate,
+                useDates = '$useDates',
+                created = $now,
+                zone = '$zone',
+                hourFrom = '$hourFrom',
+                hourTo = '$hourTo',
+                maxImpressions = $maxImpressions where bannerId=$bannerId";
+       $result = $this->db->query($query);
+       if(DB::isError($result)) $this->sql_error($query, $result);
+    } else {
+      $query = "insert into tiki_banners(client, url, title, alt, which, imageData, imageType, HTMLData, 
+                fixedURLData, textData, fromDate, toDate, useDates, mon, tue, wed, thu, fri, sat, sun,
+                hourFrom, hourTo, maxImpressions,created,zone,imageName,impressions,clicks) 
+                values('$client','$url','$title','$alt','$use','$imageData','$imageType','$HTMLData',
+                '$fixedURLData', '$textData', $fromDate, $toDate, '$useDates', '$mon','$tue','$wed','$thu',
+                '$fri','$sat','$sun','$hourFrom','$hourTo',$maxImpressions,$now,'$zone','$imageName',0,0)";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);
+      $query = "select max(bannerId) from tiki_banners where created=$now";
+      $bannerId = $this->db->getOne($query);
+    }
+    return $bannerId;
+    
+  }
+                          
+  
+  function banner_add_zone($zone)
+  {
+    $zone = addslashes($zone);
+    $query = "replace into tiki_zones(zone) values('$zone')";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    return true;
+  }
+  
+  function banner_get_zones()
+  {
+    $query = "select * from tiki_zones";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $ret= Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+    	$ret[]=$res;
+    }	
+    return $ret;
+  }
+  
+  function banner_remove_zone($zone)
+  {
+    $query = "delete from tiki_zones where zone='$zone'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    /*
+    $query = "delete from tiki_banner_zones where zoneName='$zone'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    */
+    return true;
+  }
+  
   /* Hot words methods */
   function get_hotwords()
   {
@@ -692,7 +1128,8 @@ class TikiLib {
     // internal image
     $page_data = $data;
     foreach($merge as $img) {
-      if(!strstr($img,"show_image.php")) {
+      // This prevents caching images
+      if(!strstr($img,"show_image.php") && !strstr($img,"nocache")) {
       //print("Procesando: $img<br/>");
       $fp = fopen($img,"r");
       if($fp) {
@@ -707,7 +1144,7 @@ class TikiLib {
           $size = strlen($data);
           $url = $img;
           
-          if(fcuntion_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
+          if(function_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
             // Now create image and thumbnail
             $img = imagecreatefromstring($data);
             $size_x = imagesx($img);
@@ -945,8 +1382,36 @@ class TikiLib {
     return $links;
   }
   
+  function get_links_nocache($data)
+  {
+    $links = Array();
+    if(preg_match_all("/\[([^\]]+)/",$data,$r1)) {
+      $res = Array();
+      foreach($r1[1] as $alink) {
+        $parts = explode('|',$alink);
+        if(isset($parts[1])&& $parts[1] == 'nocache' ) {
+          $res[] = $parts[0];
+        } else {
+          if(isset($parts[2]) && $parts[2] == 'nocache') {
+            $res[] = $parts[0];
+          }
+        }
+      }
+
+      $links = array_unique($res);
+    }
+    
+    return $links;
+  }
+  
   function is_cached($url)
   {
+    if(strstr($url,"tiki-index")) {
+      return true;
+    }
+    if(strstr($url,"tiki-edit")) {
+      return true;
+    }
     $query = "select cacheId from tiki_link_cache where url='$url'";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query,$result);
@@ -2057,6 +2522,18 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $retval; 
   }
 
+  function get_all_preferences()
+  {
+    $query = "select name,value from tiki_preferences";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query,$result);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[$res["name"]] = $res["value"];
+    }
+    return $ret;
+  }
+
   function get_preference($name, $default='') 
   {
     $query = "select value from tiki_preferences where name='$name'";
@@ -2541,7 +3018,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $data = str_replace($page, $repl, $data);
     }
     // Links to internal pages
-    preg_match_all("/\b([A-Z][a-z]+[A-Z][a-z]+[A-Za-z]*)\b/",$data,$pages);
+    preg_match_all("/[ \n\t\r]([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)[ \n\t\r]/",$data,$pages);
     foreach(array_unique($pages[1]) as $page) {
       if($this->page_exists($page)) {
         $repl = "<a href='tiki-index.php?page=$page' class='wiki'>$page</a>";
@@ -2596,13 +3073,17 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     
     $links = $this->get_links($data);
         
+    // Note that there're links that are replaced 
+        
     foreach($links as $link) {
-      if($this->is_cached($link) && $cachepages == 'y') {
+      if( $this->is_cached($link) && $cachepages == 'y') {
         $cosa="<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=$link\">(cache)</a>";
         $link2 = str_replace("/","\/",$link);
         $link2 = str_replace("?","\?",$link2);
         $link2 = str_replace("&","\&",$link2);
-        $pattern = "/\[$link2\|([^\]]+)\]/";
+        $pattern = "/\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+        $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a>",$data);
+        $pattern = "/\[$link2\|([^\]\|]+)\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a> $cosa",$data);
         $pattern = "/\[$link2\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$link</a> $cosa",$data);
@@ -2610,7 +3091,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         $link2 = str_replace("/","\/",$link);
         $link2 = str_replace("?","\?",$link2);
         $link2 = str_replace("&","\&",$link2);
-        $pattern = "/\[$link2\|([^\]]+)\]/";
+        $pattern = "/\[$link2\|([^\]\|]+)([^\]])*\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$1</a>",$data);
         $pattern = "/\[$link2\]/";
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$link</a>",$data);

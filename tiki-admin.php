@@ -2,18 +2,8 @@
 // Initialization
 require_once('tiki-setup.php');
 
-// Only an admin can use this script
-if($user != 'admin') {
-  if($tiki_p_admin != 'y') {
-    $smarty->assign('msg',tra("You dont have permission to use this feature"));
-    $smarty->display('error.tpl');
-    die;
-  }
-}
-
-if((!isset($_SESSION["user"])) || ($_SESSION["user"]!='admin')) {
-  header("location: tiki-index.php");
-  die; 
+if(isset($_REQUEST["rmvorphimg"])) {
+  $tikilib->remove_orphan_images();
 }
 
 // Change preferences
@@ -222,6 +212,14 @@ if(isset($_REQUEST["features"])) {
     $tikilib->set_preference("feature_wiki",'n');
     $smarty->assign("feature_wiki",'n');
   }
+  if(isset($_REQUEST["feature_banners"]) && $_REQUEST["feature_banners"]=="on") {
+    $tikilib->set_preference("feature_banners",'y'); 
+    $smarty->assign("feature_banners",'y');
+  } else {
+    $tikilib->set_preference("feature_banners",'n');
+    $smarty->assign("feature_banners",'n');
+  }
+  
   if(isset($_REQUEST["feature_xmlrpc"]) && $_REQUEST["feature_xmlrpc"]=="on") {
     $tikilib->set_preference("feature_xmlrpc",'y'); 
     $smarty->assign("feature_xmlrpc",'y');
@@ -236,6 +234,22 @@ if(isset($_REQUEST["features"])) {
   } else {
     $tikilib->set_preference("feature_search",'n');
     $smarty->assign("feature_search",'n');
+  }
+
+  if(isset($_REQUEST["feature_edit_templates"]) && $_REQUEST["feature_edit_templates"]=="on") {
+    $tikilib->set_preference("feature_edit_templates",'y'); 
+    $smarty->assign("feature_edit_templates",'y');
+  } else {
+    $tikilib->set_preference("feature_edit_templates",'n');
+    $smarty->assign("feature_edit_templates",'n');
+  }
+
+  if(isset($_REQUEST["feature_dynamic_content"]) && $_REQUEST["feature_dynamic_content"]=="on") {
+    $tikilib->set_preference("feature_dynamic_content",'y'); 
+    $smarty->assign("feature_dynamic_content",'y');
+  } else {
+    $tikilib->set_preference("feature_dynamic_content",'n');
+    $smarty->assign("feature_dynamic_content",'n');
   }
 
   if(isset($_REQUEST["feature_articles"]) && $_REQUEST["feature_articles"]=="on") {

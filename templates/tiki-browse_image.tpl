@@ -36,6 +36,6 @@
   
   <div class="linksinfo">
     {tr}You can view this image in your browser using{tr}: <a class="imglink" href="http://{$url_browse}?imageId={$imageId}">http://{$url_browse}?imageId={$imageId}</a><br/>
-    {tr}You can include the image in an HTML or Tiki page using{/tr} &lt;img src="http://{$url_show}?imageId={$imageId}"&gt;
+    {tr}You can include the image in an HTML or Tiki page using{/tr} &lt;img src="http://{$url_show}?id={$imageId}" /&gt;
   </div>
 </div>
