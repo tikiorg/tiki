@@ -35,8 +35,8 @@
 </div>
 {/section}
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
-[<a href="javascript:show('faqsugg');" class="opencomlink">{tr}Show suggested questions/suggest a question{/tr}</a>|
-<a href="javascript:hide('faqsugg');" class="opencomlink">{tr}Hide suggested questions{/tr}</a>]<br /><br />
+[&nbsp;<a href="javascript:show('faqsugg');" class="opencomlink">{tr}Show suggested questions/suggest a question{/tr}</a>&nbsp;|&nbsp;
+<a href="javascript:hide('faqsugg');" class="opencomlink">{tr}Hide suggested questions{/tr}</a>&nbsp;]<br /><br />
 <div class="faq_suggestions" id="faqsugg" style="display:none;">
 <form action="tiki-view_faq.php" method="post">
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
