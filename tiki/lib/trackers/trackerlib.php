@@ -539,7 +539,6 @@ class TrackerLib extends TikiLib {
 		$query = "delete from `tiki_tracker_items` where `trackerId`=?";
 		$result = $this->query($query,$bindvars);
 		$this->remove_object('tracker', $trackerId);
-		$cachelib->invalidate("trackerfields$trackerId");
 		return true;
 	}
 
@@ -549,7 +548,6 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,$bindvars);
 		$query = "delete from `tiki_tracker_item_fields` where `fieldId`=?";
 		$result = $this->query($query,$bindvars);
-		$cachelib->invalidate("trackerfields$trackerId");
 		return true;
 	}
 
