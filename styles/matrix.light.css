@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.light.css,v 1.14 2004-04-29 22:31:46 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix.light.css,v 1.15 2004-06-20 21:19:38 dgdaniels Exp $
  *
  * My first TIKI theme :)
  *
@@ -208,3 +208,8 @@ div#loadstats {
   vertcal-align: middle;
 }
 
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace; padding : 2ex;
+background-color : #32CD32;
+margin : 1ex; border : 1px dashed #adacaf; }
