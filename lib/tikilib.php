@@ -6,6 +6,8 @@ require_once ('lib/pear/Date.php');
 include_once ('lib/pear/HTTP/Request.php');
 require_once ('lib/tikidate.php');
 require_once ('lib/tikidblib.php');
+//performance collecting:
+//require_once ('lib/tikidblib-debug.php');
 
 // This class is included by all the Tiki php scripts, so it's important
 // to keep the class as small as possible to improve performance.

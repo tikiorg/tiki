@@ -39,7 +39,7 @@
 </form>
 <br /><br />
 {section  name=search loop=$results}
-<a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> ({tr}Hits{/tr}: {$results[search].hits})
+{tr}{$results[search].location}{/tr}:&nbsp<a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> ({tr}Hits{/tr}: {$results[search].hits})
 {if $feature_search_fulltext eq 'y'}
 	{if $results[search].relevance <= 0}
 		&nbsp;({tr}Simple search{/tr})
