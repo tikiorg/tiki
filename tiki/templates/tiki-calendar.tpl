@@ -121,13 +121,13 @@ onmouseover="this.style.textDecoration='underline';"
 {cycle values="odddark" print=false advance=false}
 {/if}
 <td class="{cycle}">
-<div align="center" class="menu" style="font-size:7px;background-color:{if $cell[w][d].day eq $focusdate}#f3e498{else}none{/if};">
+<div align="center" class="calfocus{if $cell[w][d].day eq $focusdate}on{/if}">
 <span style="float:left;">
-<a href="tiki-calendar.php?todate={$cell[w][d].day}" class="linkmenu" style="color:#666666;font-size:7px;">{$cell[w][d].day|date_format:"%d/%m"}</a>
+<a href="tiki-calendar.php?todate={$cell[w][d].day}">{$cell[w][d].day|date_format:"%d/%m"}</a>
 </span>
-<span style="float:right;margin-right:3px;">
+<span style="float:right;margin-right:3px;padding-right:4px;">
 {if count($listcals) > 0}
-<a href="tiki-calendar.php?todate={$cell[w][d].day}&editmode=add" class="linkmenu" style="color:#666666;font-size:7px;">{tr}+{/tr}</a>
+<a href="tiki-calendar.php?todate={$cell[w][d].day}&editmode=add">{tr}+{/tr}</a>
 {/if}
 </span>
 .<br/>
