@@ -1130,6 +1130,9 @@ function get_included_groups($group) {
 	}
 
 	function get_user_default_group($user) {
+  	        if (!isset($user)) {
+		    return 'Anonymous';
+		}  
 		$query = "select `default_group` from `users_users` where `login` = ?";
 		$result = $this->getOne($query, array($user));
 		$ret = '';
@@ -1714,8 +1717,20 @@ function get_included_groups($group) {
 		$result = $this->query($query, array($group, $olgroup));
 		$query = "update `tiki_newsreader_marks` set `groupName`=? where `groupName`=?";
 		$result = $this->query($query, array($group, $olgroup));
-		$query = "update `tiki_modules` set `groups`=replace(`groups`,?,?) where `groups` like ?";
-		$result = $this->query($query, array($olgroup, $group, '%'.$olgroup.'%'));
+		
+		// must unserialize before replacing the groups
+		$query = "select `name`, `groups` from `tiki_modules` where `groups` like ?";
+		$result = $this->query($query, array('%'.$olgroup.'%'));
+		while ($res = $result->fetchRow()) {
+			$aux = array();
+			$aux["name"] = $res["name"];
+			$aux["groups"] = unserialize($res["groups"]);
+			$aux["groups"] = str_replace($olgroup, $group, $aux["groups"]);
+			$aux["groups"] = serialize($aux["groups"]);
+			$query = "update `tiki_modules` set `groups`=? where `name`=?";
+			$this->query($query, array($aux["groups"],$aux["name"]));
+		}
+
 		$cachelib->invalidate('grouplist');
 		return true;
 	}
@@ -1795,18 +1810,20 @@ function get_included_groups($group) {
     }
 
     // Friends methods
+    // TODO: if there's already a friendship request from friend to user, accept it
     function request_friendship($user, $friend)
     {
 	global $messulib;
 
-	if (empty($user) || empty($friend)) {
+	if (empty($user) || empty($friend) || $user == $friend) {
 	    return false;
 	}
 
-	$user = "'".addslashes($user)."'";
-	$friend = "'".addslashes($friend)."'";
+	$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
+	$this->query($query, array($user, $friend));
 
-	$result = $this->query("replace into tiki_friendship_requests (userFrom, userTo) values ($user, $friend)");
+	$query = "insert into `tiki_friendship_requests` (`userFrom`, `userTo`) values (?, ?)";
+	$result = $this->query($query, array($user, $friend));
 
 	if (!$result)
 	    return false;
@@ -1818,10 +1835,8 @@ function get_included_groups($group) {
     {
 	global $messulib;
 
-	$user = addslashes($user);
-	$friend = addslashes($friend);
-
-	$exists = $this->getOne("select count(*) from tiki_friendship_requests where userTo='$user' and userFrom='$friend'");
+	$exists = $this->getOne("select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?",
+				array($user, $friend));
 
 	if (!$exists)
 	    return false;
@@ -1830,10 +1845,17 @@ function get_included_groups($group) {
 	    return false;
 	}
 
-	$this->query("replace into tiki_friends values ('$user', '$friend')");
-	$this->query("replace into tiki_friends values ('$friend', '$user')");
-	$this->query("delete from tiki_friendship_requests where userTo='$user' and userFrom='$friend'");
-	$this->query("delete from tiki_friendship_requests where userTo='$friend' and userFrom='$user'");
+	$query = "delete from `tiki_friends` where `user`=? and `friend`=?";
+	$this->query($query, array($user, $friend));
+	$this->query($query, array($friend, $user));
+
+	$query = "insert into `tiki_friends` (`user`, `friend`) values (?,?)";
+	$this->query($query, array($user, $friend));
+	$this->query($query, array($friend, $user));
+
+	$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
+	$this->query($query, array($user, $friend));
+	$this->query($query, array($friend, $user));
 
 	$this->score_event($user,'friend_new',$friend);
 	$this->score_event($friend,'friend_new',$user);
@@ -1853,16 +1875,15 @@ function get_included_groups($group) {
     {
 	global $messulib;
 
-	$user = "'".addslashes($user)."'";
-	$friend = "'".addslashes($friend)."'";
-
-	$exists = $this->getOne("select count(*) from tiki_friendship_requests where userTo=$user and userFrom=$friend");
+	$exists = $this->getOne("select count(*) from `tiki_friendship_requests` where `userTo`=? and `userFrom`=?",
+				array($user, $friend));
 
 	if (!$exists)
 	    return false;
 
-	$this->query("delete from tiki_friendship_requests where userTo=$user and userFrom=$friend");
-	$this->query("delete from tiki_friendship_requests where userTo=$friend and userFrom=$user");
+	$query = "delete from `tiki_friendship_requests` where `userFrom`=? and `userTo`=?";
+	$this->query($query, array($user, $friend));
+	$this->query($query, array($friend, $user));
 
 	$messulib->post_message($friend,
 				$user,
@@ -1878,11 +1899,9 @@ function get_included_groups($group) {
 
     function list_pending_friendship_requests($user)
     {
-	$user = "'".addslashes($user)."'";
 
-	$query = "select * from tiki_friendship_requests where userTo=$user order by tstamp";
-
-	$result = $this->query($query);
+	$query = "select * from `tiki_friendship_requests` where `userTo`=? order by tstamp";
+	$result = $this->query($query, array($user));
 
 	$requests = array();
 	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1894,9 +1913,8 @@ function get_included_groups($group) {
 
     function list_waiting_friendship_requests($user)
     {
-	$user = "'".addslashes($user)."'";
-
-	$result = $this->query("select * from tiki_friendship_requests where userFrom=$user order by tstamp");
+	$query = "select * from `tiki_friendship_requests` where `userFrom`=? order by tstamp";
+	$result = $this->query($query, array($user));
 
 	$requests = array();
 	while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -1912,11 +1930,9 @@ function get_included_groups($group) {
     {
 	global $messulib;
 
-	$user = "'".addslashes($user)."'";
-	$friend = "'".addslashes($friend)."'";
-
-	$this->query("delete from tiki_friends where user=$user and friend=$friend");
-	$this->query("delete from tiki_friends where user=$friend and friend=$user");
+	$query = "delete from `tiki_friends` where `user`=? and `friend`=?";
+	$this->query($query, array($user, $friend));
+	$this->query($query, array($friend, $user));
 
 	$messulib->post_message($friend,
 				$user,

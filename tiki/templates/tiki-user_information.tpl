@@ -23,16 +23,14 @@
   <tr><td class="form">{tr}HomePage{/tr}:</td><td>{$homePage}</td></tr>
   <tr><td class="form">{tr}Personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a></td></tr>
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td><td>{$display_timezone}</td></tr>
-{if $feature_friends && $user ne $userwatch}
+{if $feature_friends eq 'y' && $user ne $userwatch}
   {if $friend}
-  <tr><td class="form" colspan="2">
-    <img src="img/icons/ico_friend.png">{tr}This user is your friend{/tr}
+  <tr><td class="form">&nbsp;</td><td class="form">
+    <img src="img/icons/ico_friend.gif" width="7" height="10"> {tr}This user is your friend{/tr}
   </td></tr>  
   {else}
-  <tr><td class="form">
-    <img src="img/icons/ico_not_friend.png">{tr}This user is not your friend{/tr}
-  </td><td>
-    <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Add as friend{/tr}</a>
+  <tr><td class="form">&nbsp;</td><td class="form">
+    <img src="img/icons/ico_not_friend.png">{tr}This user is not your friend{/tr} <a class="link" href="tiki-friends.php?request_friendship={$userinfo.login}">{tr}Request friendship{/tr}</a>
   </td></tr>  
   {/if}
 {/if}

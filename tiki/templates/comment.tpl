@@ -9,9 +9,9 @@
   			<tr>
 			  	<td>
 
-	  {if $tiki_p_admin_forum eq 'y'}
-		<input type="checkbox" name="forumthread[]" value="{$comment.threadId|escape}"  {if $smarty.request.forumthread and in_array($comment.threadId,$smarty.request.forumthread)}checked="checked"{/if} />
-	  {/if}	
+	{if $tiki_p_admin_forum eq 'y'}
+		<input type="checkbox" name="forumthread[]" value="{$comment.threadId|escape}" {if $smarty.request.forumthread and in_array($comment.threadId,$smarty.request.forumthread)}checked="checked"{/if} />
+	{/if}
 			    	<span class="commentstitle">{if $comments_reply_threadId == $comment.threadId}<img src="img/flagged.gif" /><span class="highlight">
 <a class="link" href="{$comments_complete_father}comments_parentId={$comment.threadId}&amp;comments_maxComments=1&amp;comments_style={$comments_style}">{$comment.title}</a>
 </span>

@@ -162,7 +162,20 @@ div.box {
 	padding-bottom:   10px;
 	overflow:   hidden;
 	width:   170px;
-	-moz-border-radius: .5em;
+	-moz-border-radius: .5em .5em 2.5em 0.5em;
+}
+
+div.box_right {
+        background-color:    white;
+        margin-left:   4px;
+        margin-right:   4px;
+        margin-top:   4px;
+        margin-bottom:   10px;
+        border:   1px solid #9F9F9F;
+        padding-bottom:   10px;
+        overflow:   hidden;
+	-moz-border-radius: .5em .5em .5em 2.5em;
+        width:   170px;
 }
 
 /* Boxes are divided in title and data, this is the title */
@@ -270,19 +283,19 @@ div.separator {
 /* Links to collapse menus for example the main menu can be completely collapsed*/
 .flip {
 	font-size:   10px;
-	color:   black;
+	color: #FFFFFF;
 	text-decoration:   none;
 }
 
 .flip:active {
 	font-size:   10px;
-	color:   black;
+	color: #FFFFFF;
 	text-decoration:   none;
 }
 
 .flip:hover {
 	font-size:   10px;
-	color:   black;
+	color: #FFFFFF;
 	text-decoration:   none;
 }
 
@@ -797,6 +810,20 @@ div.wikitext {
 .wiki:hover {
 	color:    #436976;
 	text-decoration:   underline;
+}
+
+/* Wiki ? links */
+
+.wikinew {
+	color:#CC0000;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.wikinew:hover {
+	color: #CC0000;
+	text-decoration: none;
+	font-weight: bold;
 }
 
 /* Date displayed for last modification date of pages */

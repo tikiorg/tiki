@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.46 2004-06-24 23:01:47 rlpowell Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.47 2004-06-27 03:05:53 mose Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -19,11 +19,11 @@
   <input type="hidden" name="comments_grandParentId" value="{$comments_grandParentId|escape}" />    
   <input type="hidden" name="comments_reply_threadId" value="{$comments_reply_threadId|escape}" />    
   <input type="hidden" name="comments_offset" value="0" />
-    <input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
-    <input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
-    <input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />
-    <input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />
-    <input type="hidden" name="forumId" value="{$forumId|escape}" />
+	<input type="hidden" name="topics_offset" value="{$smarty.request.topics_offset|escape}" />
+	<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />
+	<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />
+	<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />
+	<input type="hidden" name="forumId" value="{$forumId|escape}" />
 
 
 {if $tiki_p_admin_forum eq 'y'}
@@ -57,10 +57,11 @@
 </table>
 {/if}
 
+
   <table class="normal">
-  <caption> {tr}Posted comments{/tr} </caption>
+  <caption> {tr}Posted replies{/tr} </caption>
   <tr>
-    <td class="heading"><label for="comments-maxcomm">{tr}Comments{/tr} </label>
+    <td class="heading"><label for="comments-maxcomm">{tr}Replies{/tr} </label>
         <select name="comments_maxComments" id="comments-maxcomm">
         <option value="10" {if $comments_maxComments eq 10 }selected="selected"{/if}>10</option>
         <option value="20" {if $comments_maxComments eq 20 }selected="selected"{/if}>20</option>
@@ -113,11 +114,11 @@
 </td>
 </tr>
     </table>
-  </form>
+</form>
 
 <br />
 <div align="center">   
-    <small>{$comments_below}&nbsp;{tr}Comments below your current threshold{/tr}</small>
+    <small>{$comments_below}&nbsp;{tr}Replies below your current threshold{/tr}</small>
   <div class="mini">
   	{if $comments_prev_offset >= 0}
   		[<a class="prevnext" href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_offset={$comments_prev_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_style={$comments_style}">{tr}prev{/tr}</a>]&nbsp;
@@ -147,11 +148,15 @@
  <a name="form"></a>
 <table style="width:100%;"><tr><td>
     <h2>
-    {if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Comment the selected comment{/tr}{else}{tr}Post new comment{/tr}{/if}
+    {if $forum_mode eq 'y'}
+    {if $comments_threadId > 0}{tr}Editing reply{/tr}{elseif $parent_com}{tr}Reply to the selected post{/tr}{else}{tr}Post new reply{/tr}{/if}
+    {else}
+    {if $comments_threadId > 0}{tr}Editing comment{/tr}{elseif $parent_com}{tr}Comment on the selected post{/tr}{else}{tr}Post new comment{/tr}{/if}
+    {/if}
     </h2>
     {if $comments_threadId > 0 || $parent_com}
 </td><td align="right">
-<a class="linkbut" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}">{tr}post new comment{/tr}</a>
+<a class="linkbut" href="{$comments_complete_father}comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}&amp;comments_parentId={$comments_parentId}&amp;comments_style={$comments_style}">{tr}post new reply{/tr}</a>
     {/if}
 </td></tr></table>
 
@@ -188,9 +193,15 @@
     <table class="normal">
     <tr>
       {if $parent_coms}
-	<td class="formcolor">{tr}Reply to parent comment{/tr}</td>
+	<td class="formcolor">{tr}Reply to parent post{/tr}</td>
       {else}
-	<td class="formcolor">{tr}Post new comment{/tr}</td>
+	<td class="formcolor">
+		{if $forum_mode eq 'y'}
+		{tr}Post new reply{/tr}
+		{else}
+		{tr}Post new comment{/tr}
+		{/if}
+	</td>
       {/if}
       <td class="formcolor">
       <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
@@ -229,23 +240,38 @@
     {if $feature_smileys eq 'y'}
     <tr>
       <td class="formcolor"><label>{tr}Smileys{/tr}</label></td>
-      <td class="formcolor">{include file="tiki-smileys.tpl" area_name="editpost"}</td>
+      <td class="formcolor">{include file="tiki-smileys.tpl" area_name="editpost2"}</td>
     </tr>
     {/if}
     <tr>
-      <td class="formcolor"><label for="editpost">{tr}Comment{/tr}</label><br /><br />{include file="textareasize.tpl" area_name='editpost' formId='editpostform'}<br /><br /></td>
-      <td class="formcolor"><textarea id="editpost" name="comments_data" rows="6" cols="80">{$comment_data|escape}</textarea></td>
+      <td class="formcolor"><label for="editpost2">
+      	{if $forum_mode eq 'y'}
+      	{tr}Reply{/tr}
+      	{else}
+      	{tr}Comment{/tr}
+      	{/if}
+      </label><br /><br />{include file="textareasize.tpl" area_name='editpost2' formId='editpostform'}<br /><br /></td>
+      <td class="formcolor"><textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
+	<input type="hidden" name="rows" value="{$rows}"/>
+	<input type="hidden" name="cols" value="{$cols}"/>
+      </td>
     </tr>
     </table>
     </form>
   <br />
   <table class="normal" id="commentshelp">
   <tr><td class="even">
-  <b>{tr}Posting comments{/tr}:</b>
+  <b>
+  	{if $forum_mode eq 'y'}
+  	{tr}Posting replies{/tr}:
+  	{else}
+  	{tr}Posting comments{/tr}:
+  	{/if}
+  </b>
   <br />
   <br />
   {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|{tr}description{/tr}] {tr}for links{/tr}.<br />
-  {tr}HTML tags are not allowed inside comments{/tr}.<br />
+  {tr}HTML tags are not allowed inside posts{/tr}.<br />
   </td>
   </tr>
   </table>

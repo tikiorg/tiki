@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.5 2004-03-28 07:32:24 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-xmlrpc_services.php,v 1.6 2004-06-27 03:05:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -179,7 +179,7 @@ function editPost($params) {
 	}
 
 	$now = date("U");
-	$id = $bloglib->update_post($postid, $content, $username);
+	$id = $bloglib->update_post($postid, $blogid, $content, $username);
 	return new xmlrpcresp(new xmlrpcval(1, "boolean"));
 }
 

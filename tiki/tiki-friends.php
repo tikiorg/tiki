@@ -12,24 +12,31 @@ if($feature_friends != 'y') {
 }
 
 if (isset($_REQUEST['request_friendship'])) {
-    if (!$tikilib->verify_friendship($_REQUEST['request_friendship'],$user)) {
-    	$userlib->request_friendship($user,$_REQUEST['request_friendship']);
-	$smarty->assign('request_friendship',$_REQUEST['request_friendship']);
+    $friend = $_REQUEST['request_friendship'];
+    
+    if ($userlib->user_exists($friend)) {
+	if (!$tikilib->verify_friendship($friend,$user)) {
+	    $userlib->request_friendship($user,$friend);
+	    $smarty->assign('msg',sprintf(tra("Frienship request sent to %s"), $friend));
+	    
+	} else {
+	    $smarty->assign('msg',sprintf(tra("You're already friend of %s"), $_REQUEST['request_friendship']));
+	    $smarty->display("error.tpl");
+	    die;
+	}
     } else {
-	$smarty->assign('msg',sprintf(tra("You're already friend of %s"), $_REQUEST['request_friendship']));
-	$smarty->display("error.tpl");
-	die;
+	$smarty->assign('msg',tra("Invalid username"));
+	    $smarty->display("error.tpl");
+	    die;
     }
-}
 
-if (isset($_REQUEST['accept'])) {
+} elseif (isset($_REQUEST['accept'])) {
     $userlib->accept_friendship($user,$_REQUEST['accept']);
-    $smarty->assign('friendship_accepted', sprintf(tra('FriendshipAccepted_%s'),$_REQUEST['accept']));
-}
+    $smarty->assign('msg', sprintf(tra('Accepted friendship request from %s'),$_REQUEST['accept']));
 
-if (isset($_REQUEST['refuse'])) {
+} elseif (isset($_REQUEST['refuse'])) {
     $userlib->refuse_friendship($user,$_REQUEST['refuse']);
-    $smarty->assign('friendship_refused', sprintf(tra('FriendshipRefused_%s'),$_REQUEST['refuse']));
+    $smarty->assign('msg', sprintf(tra('Refused friendship request from %s'),$_REQUEST['refuse']));
 }
 
 if(!isset($_REQUEST["sort_mode"])) {

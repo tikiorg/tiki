@@ -1,4 +1,6 @@
+{if $feature_help eq 'y'}
 <div class="simplebox">{tr}Tip{/tr}: {tr}to add/remove forums, look for "Admin forums" under "Forums" on the left menu, or{/tr} <a class="link" href="tiki-admin_forums.php">{tr}click here{/tr}</a>.</div><br />
+{/if}
 <div class="cbox">
   <div class="cbox-title">{tr}Forums{/tr}</div>
   <div class="cbox-data">
@@ -8,6 +10,7 @@
         <table class="admin"><tr class="form">
           <td><label>{tr}Home Forum (main forum){/tr}</label></td>
           <td><select name="homeForum">
+          		<option value="">-</option>
               {section name=ix loop=$forums}
                 <option value="{$forums[ix].forumId|escape}" {if $forums[ix].forumId eq $home_forum}selected="selected"{/if}>{$forums[ix].name|truncate:20:"...":true}</option>
               {/section}

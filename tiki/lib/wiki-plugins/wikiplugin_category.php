@@ -1,7 +1,7 @@
 <?php
 
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.5 2004-01-15 09:56:28 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_category.php,v 1.6 2004-06-27 03:05:53 mose Exp $
  *
  * Tiki-Wiki CATEGORY plugin.
  * 
@@ -9,7 +9,7 @@
  * 
  * {CATEGORY(
  *	id=>1+2+3,	 # defaults to current
- *	types=>article+blog+faq+fgal+igal+newsletter+poll+quiz+survey+tracker+wiki # list of types of objects, default * (all),
+ *	types=>article+blog+directory+faq+fgal+forum+igal+newsletter+poll+quiz+survey+tracker+wiki # list of types of objects, default * (all),
  *	sort=>[type|created|name|hits]_[asc|desc]	# default name_asc,
  *	sub=>true|false		# display items of subcategories # default is 'true';
  *	split=>y|n		# when displaying multiple categories, whether they should be split or not; defaults to yes
@@ -63,8 +63,10 @@ function wikiplugin_category($data, $params) {
 	$typetokens = array(
 		"article" => "article",
 		"blog" => "blog",
+		"directory" => "directory",
 		"faq" => "faq",
 		"file gallery" => "fgal",
+		"forum" => "forum",
 		"image gallery" => "igal",
 		"newsletter" => "newsletter",
 		"poll" => "poll",

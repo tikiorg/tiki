@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.38 2004-06-23 22:34:31 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.39 2004-06-27 03:05:55 mose Exp $ *}
 
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 <div id="mainmenu" style="display: block">
@@ -441,7 +441,9 @@
       &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br />
       &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br />
       &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br />
+    {if $feature_theme_control eq 'y'}
       &nbsp;<a href="tiki-theme_control.php" class="linkmenu">{tr}Theme control{/tr}</a><br />
+    {/if}
 			&nbsp;<a href="tiki-admin_quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
     {/if}
     {if $tiki_p_admin_chat eq 'y'}
@@ -450,7 +452,7 @@
     {if $tiki_p_admin_categories eq 'y'}
       &nbsp;<a href="tiki-admin_categories.php" class="linkmenu">{tr}Categories{/tr}</a><br />
     {/if}   
-    {if $tiki_p_admin_banners eq 'y'}
+    {if $tiki_p_admin_banners eq 'y' && $feature_banners eq 'y'}
       &nbsp;<a href="tiki-list_banners.php" class="linkmenu">{tr}Banners{/tr}</a><br />
     {/if}
     {if $tiki_p_edit_templates eq 'y'}

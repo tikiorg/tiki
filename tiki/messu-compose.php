@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.18 2004-03-28 07:32:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/messu-compose.php,v 1.19 2004-06-27 03:05:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -152,6 +152,11 @@ if (isset($_REQUEST['send'])) {
 		$messulib->post_message(
 			$a_user, $user, $_REQUEST['to'], $_REQUEST['cc'], $_REQUEST['subject'], $_REQUEST['body'],
 			$_REQUEST['priority']);
+        		if ($feature_score == 'y') {
+		            $tikilib->score_event($user, 'message_send');
+			    $tikilib->score_event($a_user, 'message_receive');
+		        }
+
 	}
 
 	$smarty->assign('message', $message);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.39 2004-06-16 19:33:57 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_blog.php,v 1.40 2004-06-27 03:05:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -173,20 +173,6 @@ $smarty->assign_by_ref('offset', $offset);
 
 $now = date("U");
 
-if (isset($_SESSION["thedate"])) {
-	if ($_SESSION["thedate"] < $now) {
-		$pdate = $_SESSION["thedate"];
-	} else {
-		if ($tiki_p_blog_admin == 'y') {
-			$pdate = $_SESSION["thedate"];
-		} else {
-			$pdate = $now;
-		}
-	}
-} else {
-	$pdate = $now;
-}
-
 if (isset($_REQUEST["find"])) {
 	$find = $_REQUEST["find"];
 } else {
@@ -195,8 +181,8 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
-// Get a list of last changes to the Wiki database
-$listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data["maxPosts"], $sort_mode, $find, $pdate);
+// Get a list of last changes to the blog database
+$listpages = $bloglib->list_blog_posts($_REQUEST["blogId"], $offset, $blog_data["maxPosts"], $sort_mode, $find, $now);
 
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.55 2004-06-23 22:34:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.56 2004-06-27 03:05:54 mose Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -174,7 +174,7 @@ a moderator approves it.{/tr}</small>
 <div id='{$postclass}' class="threadpost">
   <br />
   {if $comments_threadId > 0}
-    {tr}Editing comment{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$smarty.request.comments_parentId}&amp;forumId={$forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new comment{/tr}</a>)
+    {tr}Editing reply{/tr}: {$comments_threadId} (<a class="forumbutlink" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;comments_parentId={$smarty.request.comments_parentId}&amp;forumId={$forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}">{tr}post new reply{/tr}</a>)
     {/if}
     <form enctype="multipart/form-data" method="post" action="tiki-view_forum_thread.php" id="editpageform">
     <input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
@@ -190,7 +190,7 @@ a moderator approves it.{/tr}</small>
     <input type="hidden" name="forumId" value="{$forumId|escape}" />
     <table class="normal">
     <tr class="formcolor">
-      <td>{tr}Title{/tr}</td>
+      <td><label for="comments-title">{tr}Title{/tr}: </label><div class="attention">{tr}Required{/tr}</div></td>
       <td><input type="text" name="comments_title" value="{$comment_title|escape}" /></td>
     </tr>
     {if $forum_info.forum_use_password eq 'a'}
@@ -205,17 +205,17 @@ a moderator approves it.{/tr}</small>
     {if $feature_smileys eq 'y'}
     <tr class="formcolor">
       <td>{tr}Smileys{/tr}</td>
-      <td>{assign var=area_name value="editpost"}{include file="tiki-smileys.tpl" area_name='editpost'}</td>
+      <td>{assign var=area_name value="editpost1"}{include file="tiki-smileys.tpl" area_name='editpost1'}</td>
      </tr>
     {/if}
     <tr class="formcolor">
       <td>{tr}Comment{/tr}<br /><br />
-			{include file="textareasize.tpl" area_name='editpost' formId='editpageform'}
+			{include file="textareasize.tpl" area_name='editpost1' formId='editpageform'}
 			{if $feature_forum_parse eq 'y'}
-			{include file=tiki-edit_help_tool.tpl area_name="editpost"}
+			{include file=tiki-edit_help_tool.tpl area_name="editpost1"}
 			{/if}
 			</td>
-      <td><textarea id='editpost' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
+      <td><textarea id='editpost1' name="comments_data" rows="{$rows}" cols="{$cols}">{$comment_data|escape}</textarea>
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
 </td>
@@ -239,9 +239,9 @@ a moderator approves it.{/tr}</small>
     </form>
     
    <br />    
-  <div class="commentsedithelp"><b>{tr}Posting comments{/tr}:</b><br /><br />
+  <div class="commentsedithelp"><b>{tr}Posting replies{/tr}:</b><br /><br />
   {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|description] {tr}for links{/tr}<br />
-  {tr}HTML tags are not allowed inside comments{/tr}
+  {tr}HTML tags are not allowed inside posts{/tr}
   </div>
   <br />
     

@@ -461,6 +461,14 @@ class ImageGalsLib extends TikiLib {
 			$result = $this->query($query,array((int)$id));
 		}
 
+		global $feature_score;
+		if ($feature_score == 'y') {
+		    $this->score_event($user, 'igallery_see_img', $id);
+		    $query = "select `user` from `tiki_images` where `imageId`=?";
+		    $owner = $this->getOne($query, array((int)$id));
+		    $this->score_event($owner, 'igallery_img_seen', "$user:$id");
+		}
+
 		return true;
 	}
 
@@ -473,6 +481,14 @@ class ImageGalsLib extends TikiLib {
 			$query = "update `tiki_galleries` set `hits`=`hits`+1 where `galleryId`=?";
 
 			$result = $this->query($query,array((int) $id));
+		}
+
+		global $feature_score;
+		if ($feature_score == 'y') {
+		    $this->score_event($user, 'igallery_see', $id);
+		    $query = "select `user` from `tiki_galleries` where `galleryId`=?";
+		    $owner = $this->getOne($query, array((int)$id));
+		    $this->score_event($owner, 'igallery_seen', "$user:$id");
 		}
 
 		return true;
@@ -786,6 +802,12 @@ class ImageGalsLib extends TikiLib {
 
 		$query = "update `tiki_galleries` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query,array((int)$now,(int)$galleryId));
+
+		global $feature_score;
+		if ($feature_score == 'y') {
+		    $this->score_event($user, 'igallery_new_img');
+		}
+
 		return $imageId;
 	}
 
@@ -1172,6 +1194,11 @@ class ImageGalsLib extends TikiLib {
 			$bindvars=array($name,$description,$theme,(int) $now,$user,(int) $now,(int) $maxRows,(int) $rowImages,(int) $thumbSizeX,(int) $thumbSizeY,$public,0,$visible);
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries` where `name`=? and `created`=?",array($name,(int) $now));
+
+			global $feature_score;
+			if ($feature_score == 'y') {
+			    $this->score_event($user, 'igallery_new');
+			}
 		}
 
 		return $galleryId;

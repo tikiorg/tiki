@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.5 2004-06-23 22:34:32 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/redgrey/tiki-show_page.tpl,v 1.6 2004-06-27 03:05:55 mose Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -160,7 +160,7 @@
   {tr}Last modification{/tr}: {$lastModif|tiki_long_datetime} {tr}by{/tr} {$lastUser|userlink}
 </p>
 {/if}
-
+{include file=tiki-page_bar.tpl}
 {if $wiki_feature_copyrights  eq 'y' and $wikiLicensePage}
   {if $wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}

@@ -315,6 +315,11 @@ class WikiLib extends TikiLib {
 		$now = date("U");
 		$query = "insert into `tiki_wiki_attachments`(`page`,`filename`,`filesize`,`filetype`,`data`,`created`,`downloads`,`user`,`comment`,`path`) values(?,?,?,?,?,?,0,?,?,?)";
 		$result = $this->query($query,array("$page","$name", (int) $size,"$type","$data", (int) $now,"$user","$comment","$fhash"));
+
+		global $feature_score;
+	        if ($feature_score == 'y') {
+        	    $this->score_event($user, 'wiki_attach_file');
+	        }
 	}
 
 	function list_wiki_attachments($page, $offset, $maxRecords, $sort_mode, $find) {

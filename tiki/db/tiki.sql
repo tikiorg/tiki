@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2004-06-19 08:00:28 $
+# $Date: 2004-06-27 03:05:48 $
 # $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2039,22 +2039,22 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Charts','tiki-charts.php',1000,'feature_charts','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','');
 
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_chat','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_categories','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_banners','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_templates','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_cookies','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_dynamic','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_mailin','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_content_templates','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_html_pages','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_view_referer_stats','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_drawings','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_live_support','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'','user_is_operator','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Admin (click!)','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_chat','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_categories','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_banners','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_templates','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_cookies','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_dynamic','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_mailin','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_content_templates','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_edit_html_pages','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_view_referer_stats','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_drawings','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_shoutbox','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','tiki_p_admin_live_support','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'','user_is_operator','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'r','Admin (click!)','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','user_is_operator','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Banning','tiki-admin_banning.php',1060,'feature_banning','tiki_p_admin_banning','');
@@ -4401,7 +4401,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_languages','a
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_styles','a:0:{}');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_friends','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_score','n');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','login_asc');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','score_desc');
 
 # Dynamic variables
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
@@ -4682,7 +4682,7 @@ CREATE TABLE tiki_users_score (
   user char(40) NOT NULL default '',
   event_id char(40) NOT NULL default '',
   score int(11) NOT NULL default '0',
-  expire datetime NOT NULL default '0000-00-00 00:00:00',
+  expire int(14) NOT NULL default '0',
   tstamp timestamp(14) NOT NULL,
   PRIMARY KEY  (user,event_id),
   KEY user (user,event_id,expire)

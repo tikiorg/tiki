@@ -67,7 +67,7 @@
 {elseif $blog_list_user eq 'avatar'}
 	<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user|avatarize}&nbsp;<br />
 	&nbsp;{$listpages[changes].user|userlink}&nbsp;</td>
-{elseif $blog_list_user eq 'text'}
+{else}
 	<td class="bloglistuser{cycle advance=false}">&nbsp;{$listpages[changes].user}&nbsp;</td>
 {/if}
 {/if}
@@ -109,8 +109,8 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td colspan="6">
-<b>{tr}No records found{/tr}</b>
+<tr><td colspan="9" class="odd">
+{tr}No records found{/tr}
 </td></tr>
 {/section}
 </table>

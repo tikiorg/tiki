@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.15 2004-06-09 20:37:09 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-logout.php,v 1.16 2004-06-27 03:05:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -27,7 +27,14 @@ $logslib->add_log('login','logged out');
 session_unregister ('user');
 unset ($_SESSION[$user_cookie_site]);
 session_destroy();
-$tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php'); /* desactive group home page */
+
+/* change group home page or desactivate if no page is set */
+$groupHome = $userlib->get_group_home('Anonymous');
+if ($groupHome) {
+    $tikiIndex = strpos($groupHome,'http://')===0 ? $groupHome : "tiki-index.php?page=".$groupHome;
+} else {
+    $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php'); 
+}
 if ($tikilib->get_preference('auth_method', 'tiki') == 'cas' && $user != 'admin') {
 	unset ($user);
 	$userlib->user_logout_cas();

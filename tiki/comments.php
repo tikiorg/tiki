@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.35 2004-06-24 23:01:43 rlpowell Exp $
+// $Header: /cvsroot/tikiwiki/tiki/comments.php,v 1.36 2004-06-27 03:05:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -171,8 +171,7 @@ if ($tiki_p_post_comments == 'y') {
 		if( $object[0] == 'forum' && 
 		    isset( $_REQUEST["comments_grandParentId"] ) && 
 		    !empty( $_REQUEST["comments_grandParentId"] ) && 
-		    $_REQUEST["comments_grandParentId"] != 0 
-		)
+		    $_REQUEST["comments_grandParentId"] != 0 )
 		{
 		    $parent_id = $_REQUEST["comments_grandParentId"];
 		} else {
@@ -277,7 +276,9 @@ if ($_REQUEST["comments_threadId"] > 0) {
     // Replies to comments.
     $comment_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
     // Add the replied-to text, with >.
-    $smarty->assign('comment_data', preg_replace( '/\n/', '> ', '> ' . $comment_info["data"] ) );
+// Disabled by damian
+//    $smarty->assign('comment_data', preg_replace( '/\n/', '> ', '> ' . $comment_info["data"] ) );
+	$smarty->assign('comment_data', '');
 
     $smarty->assign('comment_title', tra('Re:').' '.$comment_info["title"]);
     $smarty->assign('comments_reply_threadId', $_REQUEST["comments_reply_threadId"]);
@@ -361,10 +362,9 @@ if (!isset($_REQUEST["comments_parentId"])) {
 
 $smarty->assign('comments_parentId', $_REQUEST["comments_parentId"]);
 
-$forum_check = explode(':', $comments_objectId );
-if( $forum_check[0] == 'forum' )
-{
-    $smarty->assign('forumId', $forum_check[1]);
+$forum_check = explode(':', $comments_objectId);
+if ($forum_check[0] == 'forum' ) {
+	$smarty->assign('forumId', $forum_check[1]);
 }
 
 if( isset( $_REQUEST["comments_grandParentId"] ) )
@@ -406,6 +406,20 @@ if ($comments_offset > 0) {
 } else {
     $smarty->assign('comments_prev_offset', -1);
 }
+
+if (isset($_REQUEST['rows'])) {
+	$rows = $_REQUEST['rows'];
+} else {
+	$rows = 6;
+}
+$smarty->assign('rows', $rows );
+
+if (isset($_REQUEST['cols'])) {
+	$cols = $_REQUEST['cols'];
+} else {
+	$cols = 60;
+}
+$smarty->assign('cols', $cols );
 
 $smarty->assign('comments_coms', $comments_coms["data"] );
 

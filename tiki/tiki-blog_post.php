@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.34 2004-05-12 03:58:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.35 2004-06-27 03:05:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -217,7 +217,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) {
 	$title = isset($_REQUEST['title']) ? $_REQUEST['title'] : '';
 
 	if ($_REQUEST["postId"] > 0) {
-		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["data"], $user, $title, $_REQUEST['trackback']);
+		$bloglib->update_post($_REQUEST["postId"], $_REQUEST["blogId"], $_REQUEST["data"], $user, $title, $_REQUEST['trackback']);
 	} else {
 		$postid = $bloglib->blog_post($_REQUEST["blogId"], $_REQUEST["data"], $user, $title, $_REQUEST['trackback']);
 

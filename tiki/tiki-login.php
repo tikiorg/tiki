@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.29 2004-06-09 19:59:19 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.30 2004-06-27 03:05:41 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.29 2004-06-09 19:59:19 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.30 2004-06-27 03:05:41 mose Exp $
 
 // Initialization
 $bypass_siteclose_check = 'y';
@@ -31,10 +31,14 @@ if (ini_get('session.use_cookies') == 1) {
 //Remember where user is logging in from and send them back later; using session variable for those of us who use WebISO services
 if (!(isset($_SESSION['loginfrom']))) {
 	if (isset($_SERVER['HTTP_REFERER'])) {
-		$_SESSION['loginfrom'] = basename($_SERVER['HTTP_REFERER']);
+//		$_SESSION['loginfrom'] = basename($_SERVER['HTTP_REFERER']);
+		$_url = parse_url($_SERVER['HTTP_REFERER']);
+		$_SESSION['loginfrom'] = $_url['path'];
 	} else {
 		//Oh well, back to tikiIndex
-		$_SESSION['loginfrom'] = basename($tikiIndex);
+//		$_SESSION['loginfrom'] = basename($tikiIndex);
+		$_url = parse_url($tikiIndex);
+		$_SESSION['loginfrom'] = $_url['path'];
 	}
 }
 
@@ -117,8 +121,9 @@ if ($isvalid) {
 
 		$smarty->assign_by_ref('user', $user);
 		$url = $_SESSION['loginfrom'];
-		$logslib->add_log('login','logged from '.$url);		
-		if ($url == $tikiIndex && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
+		$logslib->add_log('login','logged from '.$url);
+                if (($url == $tikiIndex || substr($tikiIndex, strlen($tikiIndex)-strlen($url)-1) == '/'.$url) 
+		     && $useGroupHome == 'y') { /* go to the group page only if the loginfrom is the default page */
 			$group = $userlib->get_user_default_group($user);
     			$groupHome = $userlib->get_group_home($group);
     			if ($groupHome) {

@@ -62,7 +62,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 </tr>
 {/if}
 {sectionelse}
-<tr><td colspan="2" class="odd">{tr}No records found{/tr}</td></tr>
+<tr><td colspan="3" class="odd">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 <div class="mini">

@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.79 2004-06-18 22:29:12 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.80 2004-06-27 03:05:48 mose Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -552,7 +552,7 @@ CREATE TABLE tiki_translated_objects (
 # Added on June 8th 2004 by lfagundes; Friendship Network
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_friends','n');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community');
-INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','login_asc');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('user_list_order','score_desc');
 
 CREATE TABLE tiki_friends (
   user char(40) NOT NULL default '',
@@ -587,3 +587,9 @@ ALTER TABLE `tiki_submissions` ADD `bibliographical_references` TEXT DEFAULT NUL
 
 # Added June 17th terence (added "article-put" mail-in account type)
 ALTER TABLE `tiki_mailin_accounts` ADD `article_topicId` int(4) DEFAULT NULL , ADD `article_type` varchar(50) DEFAULT NULL;
+
+#Added June 23th lfagundes aka batawata, sorting section
+update `tiki_menu_options` set type='r' where `menuId`=42 and `name`='Admin (click!)';
+
+#Added June 26th lfagundes aka batawata, making score db independent
+alter table `tiki_users_score` modify `expire` int(14) not null;

@@ -43,7 +43,7 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td colspan="2">
+<tr><td colspan="6">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}

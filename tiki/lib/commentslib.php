@@ -1398,11 +1398,10 @@ class Comments extends TikiLib {
 		$mid 
 		and (`in_reply_to` = ?
 		or (`in_reply_to` = \"\" or `in_reply_to` is null or temp_tk.message_id is null))
-		$time_cond 
-		order by " . $this->convert_sortmode($sort_mode).",`threadId`";
-	    $bind_mid = array_merge( $bind_mid, array( $parent_message_id ) );
+		$time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";
+		$bind_mid = array_merge($bind_mid, array($parent_message_id));
 
-	    $query_cant = "select count(*) from `tiki_comments` $mid and `in_reply_to` = ? $time_cond";
+		$query_cant = "select count(*) from `tiki_comments` $mid and `in_reply_to` = ? $time_cond";
 	} else {
 	    $query_cant = "select count(*) from `tiki_comments` $mid $time_cond";
 	    $query = "select * from `tiki_comments` $mid $time_cond order by ".$this->convert_sortmode($sort_mode).",`threadId`";

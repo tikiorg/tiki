@@ -44,7 +44,7 @@ class StatsLib extends TikiLib {
 		}
 		$bindvars = array();
 		if ($find) {
-			$mid = " where `pageName` like $findesc ";
+			$mid = " where `pageName` like ? ";
 			$bindvars[] = "%$find%";
 		} else {
 			$mid = "";

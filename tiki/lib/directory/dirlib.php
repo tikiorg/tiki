@@ -457,31 +457,33 @@ class DirLib extends TikiLib {
 	}
 
 	function dir_remove_category($categId) {
+		$parent_categId = $categId;
 		$query = "select * from `tiki_directory_categories` where `parent`=?";
 		$result = $this->query($query,array((int)$categId));
 
 		while ($res = $result->fetchRow()) {
 			$categId = $res["categId"];
 			$this->dir_remove_category($res["categId"]);
-		}
-		$query = "select * from `tiki_category_sites` where `categId`=?";
-		$result = $this->query($query,array((int)$categId));
 
-		while ($res = $result->fetchRow()) {
-			$siteId = $res["siteId"];
-			$query2 = "delete from `tiki_category_sites` where `siteId`=? and `categId`=?";
-			$result2 = $this->query($query2,array((int)$siteId,(int)$categId));
-			$cant = $this->db->getOne("select count(*) from `tiki_category_sites` where `siteId`=?",array((int)$siteId));
-			if (!$cant) {
-				$this->dir_remove_site($siteId);
+			$query2 = "select * from `tiki_category_sites` where `categId`=?";
+			$result2 = $this->query($query2,array((int)$categId));
+
+			while ($res2 = $result2->fetchRow()) {
+				$siteId = $res2["siteId"];
+				$query3 = "delete from `tiki_category_sites` where `siteId`=? and `categId`=?";
+				$result3 = $this->query($query3,array((int)$siteId,(int)$categId));
+				$cant = $this->db->getOne("select count(*) from `tiki_category_sites` where `siteId`=?",array((int)$siteId));
+				if (!$cant) {
+					$this->dir_remove_site($siteId);
+				}
 			}
+			$query4 = "delete from `tiki_related_categories` where `categId`=? or `relatedTo`=?";
+			$result4 = $this->query($query4,array((int)$categId,(int)$categId));
 		}
-		$query = "delete from `tiki_related_categories` where `categId`=? or `relatedTo`=?";
-		$result = $this->query($query,array((int)$categId,(int)$categId));
 		$query = "delete from `tiki_directory_categories` where `categId`=?";
-		$result = $this->query($query,array((int)$categId));
+		$result = $this->query($query,array((int)$parent_categId));
 		$query = "delete from `tiki_category_sites` where `categId`=?";
-		$result = $this->query($query,array((int)$categId));
+		$result = $this->query($query,array((int)$parent_categId));
 	}
 
 	function dir_remove_related($parent, $related) {

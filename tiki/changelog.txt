@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.158 2004-06-21 13:36:25 damosoft Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.159 2004-06-27 03:05:41 mose Exp $
 
 All developers are invited to add relevant changes to this file as they
 apply them to the CVS source. You can optionally indicate an identifier
@@ -20,6 +20,112 @@ Version 1.10
 
 Version 1.9 
 <http://tikiwiki.org/ReleaseProcess19>
+- (rc2) ---------------------------------------------------------------------
+* [FIX] tiki-install.php don't spits out many errors anymore
+* [FIX] Restoration of Forum moderator controls
+* [FIX] Replies to replies to forum topics are hidden when viewing forum 
+  topics
+* [FIX] Blogs posts appear when posted instead of at session expiry
+* [MOD] Removed avatars and packaged seperately available from 
+  http://mods.tikiwiki.org/project6
+* [MOD] cross-linking in Admin pages to ease navigation
+* [MOD] action feedback/confirmation messages (aka TikiFeedback)
+* [MOD] less ambiguity in pages that handle both object creation 
+  and editing/removal
+* [MOD] Make help tips optional with the $feature_help
+* [MOD] Improved damian.css even more making right hand modules a different
+  colour
+* [MOD] added score events to wiki edit page
+* [FIX] fixed dbabstraction on score sql queries
+- (rc1) ---------------------------------------------------------------------
+* [NEW] java plugin for wiki-3d display
+* [NEW] member activity scoring new feature
+* [NEW] Friends network integration
+* [NEW] Site Logo and Identity feature
+* [NEW] Experimental BLOGLIST wiki plugin that list the entries of a blog 
+  in a wiki page
+* [NEW] New CAS (Central Authentication Service) authentication option
+  using phpCAS
+* [NEW] Online Spreadsheet manipulation : TikiSheet !
+* [NEW] New experimental formula plugin by gmuslera to include a LaTeX-style 
+  math formula in wiki pages (inhibited in wiki-plugin-dist)
+* [NEW] rss feeds for last links and last links in a specific directory
+* [NEW] Use of $category in templates to make templates based on 
+  categorised pages if theme control is enabled
+* [NEW] smarty function tikicon to support icon themes
+* [NEW] Filtering of words for shoutboxes
+* [NEW] experimental TRACKER plugin to include a tracker form in a wiki page
+* [NEW] themes TarynsWorld, gemsi, olive-red, olive-blue, redgrey, 3dblue
+* [NEW] Admin Screen for managing Meta Tag details and geo url information
+* [MOD] multitiki : full separation of content from virtual tikis 
+  (stylesheets and templates too)
+* [MOD] multitiki : The installer (tiki-install.php) now includes 
+  the management of multi-tiki
+* [MOD] Wiki : New option to place an icon next to external links
+* [MOD] Wiki : New option which requires anonymous editors to input an
+  anti-bot code
+* [MOD] Webmail : Can receive mail in iso-8859-1 and utf8 . If the multibyte
+  php extension is installed, other encoding are accepted
+* [MOD] The php error reporting can be set globally for the site
+* [MOD] Subcomments texts are always displayed with a reply button
+  in a <ul class="subcomment"> tag. 
+* [MOD] Games section usability improved greatly
+* [MOD] Galaxia : if a process graph exists it gets show in the process 
+  overview with an imagemap, so you can click-start any activity you've got 
+  permission to. It's also a bit easier to visualise a process by a user.
+* [MOD] Galaxia : dded some handy smarty-function-quicktags to the template 
+  code editor
+* [MOD] Polls can now be configured to ignore anonymous votes, and this
+  is the default. 
+* [MOD] RSS: New 'refresh' button on admin page for external rss feeds
+* [MOD] Maps : icon based navigation interface 
+* [MOD] Maps : quicktags for mapfile edition 
+* [MOD] Maps : the name of the map appears on the browser title 
+* [MOD] Maps : MyTiki preferences now contains lon/lat entry for upcoming 
+  user map
+* [MOD] Articles : Added topic=>topicname parameter to the ARTICLES plugin,
+  to filter to a topic if wanted 
+* [MOD] Articles : adding toplink, subtitle, link, image caption and language 
+* [MOD] Categories : included optional use of phplayers in browse categs 
+  page. reworked the layout for more usability
+* [MOD] Permissions can be assigned to categories
+* [MOD] User menus : new item in user menus: separator
+* [MOD] User menus : Added Horizontal menu support to the phplayers menu 
+* [MOD] User menus : Added vertical menu support too in some themes
+* [FIX] Calendar : major debug
+* [FIX] Calendar : use of jscalendar is that feature is checked 
+* [FIX] Calendar : enabling of group calendar with perms checking.
+* [MOD] major trackers evolution
+* [MOD] trackers : possibility to display a direct link to comments or to
+  attachment in view list, optionnaly 
+* [MOD] trackers : options are now available to choose the fields of 
+  attachements as well as display order
+* [MOD] trackers : look and friendliness with use of tabs.
+* [MOD] trackers : jscalendar, an alternative to date field 
+* [MOD] trackers : action, a web request builder to automate actions from 
+  tracker items.
+* [MOD] trackers : image to include an image in an item 
+* [MOD] trackers : header, to display passive field with a subtitle in forms 
+* [MOD] trackers : category, with optional parent id to include categorization 
+  inside the stream of the form 
+* [MOD] trackers : tracker item, to auto-link a 1 to 1 relationship to
+  another tracker item
+* [MOD] trackers : tracker links, to link to several tracker items matching
+  on a field content
+* [FIX] fixes in display of charts
+* [MOD] added a rss feed per image gallery
+* [FIX] Search: user input is now checked for unwanted chars
+* [FIX] HTML enabled wiki pages : Capital <TABLE> caused many lines
+* [FIX] RSS feeds : Display bullets out of page fixed
+* [FIX]  fixed diff - merge from 1.8.1 branch and flipped colors for added 
+  (green) and removed (red) stuff
+* [FIX]  fixed pagination bugs in Galaxia
+* [FIX]  no more .tmp files generated in the system root dir
+* [FIX]  XHTML :   tiki-show_page - fixed stray table cell marker and added alt tags
+* [FIX]  XHTML :  smarty function: jspopup (onclick tweakd)
+* [FIX]  XHTML :  backlinks on wiki page (form)
+* [FIX]  Fixed the repeated Re's in the tiki forums when use reply to post
+* [FIX]  Fixed case of missing end quotes in the admin menus tpl file
 * [FIX] Remove a hardcoded courier font selection for monospaced Wiki text
   and just use a tt tag pair.
 * [FIX] Change parse_data to properly recognize a .. .page. .. marker. Without
