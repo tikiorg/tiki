@@ -53,6 +53,7 @@ function wikiplugin_tracker($data, $params) {
 				$outf[] = $l;
 			}
 		}
+		var_dump($);
 		$back = '~np~<form><input type="hidden" name="trackit" value="1" />';
 		$back.= '<input type="hidden" name="page" value="'.$_REQUEST["page"].'" />';
 		$back.= '<div class="titlebar">'.$tracker["name"].'</div>';
