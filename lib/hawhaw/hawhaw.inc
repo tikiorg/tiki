@@ -3,7 +3,7 @@
 // HAWHAW: HTML and WML hybrid adapted webserver
 // PHP class library
 // Copyright (C) 2003 Norbert Huffschmid
-// Last modified: 21. October 2003
+// Last modified: 31. October 2003
 //
 // This library is free software; you can redistribute it and/or modify it under the
 // terms of the GNU Library General Public License as published by the Free Software
@@ -22,7 +22,7 @@
 // http://www.hawhaw.de/
 //
 // changes against V5.2:
-// - enhanced browser detection: OpenVXI voice browser
+// - enhanced browser detection: PublicVoiceXML voice browser
 // - new method in HAW_deck: smooth_voice()
 // - bugfix: added <prompt> element in various VoiceXML output scenarios
 // - optimization: inhibit <break> tag for PVX voice browser
@@ -638,7 +638,7 @@ class HAW_deck
       }
       elseif ($this->debug == "pvx")
       {
-        $HTTP_USER_AGENT = "OpenVXI"; // default user agent header of PublicVoiceXML
+        $HTTP_USER_AGENT = "publicVoiceXML"; // user agent header of PublicVoiceXML browser
       }
 
       $this->output = HAW_OUTPUT_AUTOMATIC; // turn off forced output for debugging
@@ -676,16 +676,17 @@ class HAW_deck
     elseif (($this->output == HAW_OUTPUT_HDML) ||                  // forced HDML output
             (strstr(strtolower($HTTP_ACCEPT), "hdml;version=3."))) // HDML 3.0 and 3.1 
       $this->ml = HAW_HDML; // create HDML
-    elseif (($this->output == HAW_OUTPUT_VOICEXML) ||       // forced VoiceXML output
-            strstr(strtolower($HTTP_ACCEPT), "vxml") ||     // VoiceXML signalled in accept header
-            strstr(strtolower($HTTP_ACCEPT), "voicexml") || // alternative accept header
-            strstr($HTTP_USER_AGENT, "OpenVXI") ||          // Speechworks/PublicVoiceXML browser
-            strstr($HTTP_USER_AGENT, "Tellme"))             // Tellme studio voice browser
+    elseif (($this->output == HAW_OUTPUT_VOICEXML) ||                 // forced VoiceXML output
+            strstr(strtolower($HTTP_ACCEPT), "vxml") ||               // VoiceXML signalled in accept header
+            strstr(strtolower($HTTP_ACCEPT), "voicexml") ||           // alternative accept header
+            strstr($HTTP_USER_AGENT, "OpenVXI") ||                    // Speechworks OpenVXI
+            strstr(strtolower($HTTP_USER_AGENT), "publicvoicexml") || // PublicVoiceXML voice browser
+            strstr($HTTP_USER_AGENT, "Tellme"))                       // Tellme studio voice browser
     {
       $this->ml = HAW_VXML; // create VoiceXML
 
       // PublicVoiceXML browser cannot handle <break> elements!!!
-      if (strstr($HTTP_USER_AGENT, "OpenVXI"))
+      if (strstr(strtolower($HTTP_USER_AGENT), "publicvoicexml"))
         $this->supportsVXMLBreakTag = false;
     }
     else
