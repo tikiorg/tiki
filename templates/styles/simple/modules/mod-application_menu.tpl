@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.6 2003-11-08 19:51:54 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/modules/mod-application_menu.tpl,v 1.7 2003-11-11 23:17:58 zaufi Exp $ *}
 
 <div class="box">
   <div class="box-title">
@@ -552,7 +552,7 @@
     {if $tiki_p_edit_languages eq 'y' && $lang_use_db eq 'y'}
       <a href="tiki-edit_languages.php" class="linkmenu">{tr}Edit languages{/tr}</a><br />
     {/if}
-    {if $tiki_p_admin_integrator eq 'y'}
+    {if $tiki_p_admin_integrator eq 'y' && $feature_integrator eq 'y'}
       &nbsp;<a href="tiki-admin_integrator.php" class="linkmenu">{tr}Integrator{/tr}</a><br />
     {/if}
     {if $tiki_p_admin eq 'y'}

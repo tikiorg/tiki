@@ -1,6 +1,8 @@
+{$ *Header: $ *}
+
 <div class="box">
 <div class="box-title">
-<a class='flip' href="javascript:flip('mainmenu');">{tr}Menu{/tr}</a>
+{include file="modules/module-title.tpl" module_title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" module_name="application_menu"}
 </div>
 <div id='mainmenu' class="box-data">
 
@@ -411,7 +413,7 @@
     {if $tiki_p_edit_languages eq 'y' && $lang_use_db eq 'y'}
       <div class="separated"><a href="tiki-edit_languages.php" class="linkmenu">{tr}Edit languages{/tr}</a></div>
     {/if}
-    {if $tiki_p_admin_integrator eq 'y'}
+    {if $tiki_p_admin_integrator eq 'y' && $feature_integrator eq 'y'}
       &nbsp;<a href="tiki-admin_integrator.php" class="linkmenu">{tr}Integrator{/tr}</a><br />
     {/if}
     {if $tiki_p_admin eq 'y'}
