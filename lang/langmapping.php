@@ -1,4 +1,4 @@
-<?php // -*- coding:utf-8 -*-
+﻿<?php // -*- coding:utf-8 -*-
 /** \brief this table associates language extension and language name in the current language and language name in the native language
 * CAUTION: it is utf-8 encoding used here too
 * PLEASE : translators, please, update this file with your language name in your own language
@@ -27,6 +27,7 @@ $langmapping = array(
     'nl' => array(  'Dutch',        tra("Dutch")        ),
     'no' => array(  'Norwegian',    tra("Norwegian")    ),
     'pl' => array(  'Polish',       tra("Polish")       ),
+    'pt' => array(  'Portuguese',       tra("Português")       ),
     'ru' => array(  'Russian',      tra("Russian")      ),
     'sk' => array(   'Slovenský',  tra("Slovak")       ),
     'sr' => array(   'Српски',  tra("Serbian")       ),
