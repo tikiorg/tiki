@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignment_edit.php,v 1.2 2004-02-22 14:28:28 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignment_edit.php,v 1.3 2004-02-29 06:32:02 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -10,7 +10,8 @@
 // Adapted from tiki-edit_article.php
 
 // Todo:
-//   When editing a pre-existing article, use the due date.  Maybe it already does?
+//   Preview has to have the assignmentID stored internally somewhere.
+//   When editing an existing assignment, overwrite it instead of creating a new one.
 
 error_reporting (E_ALL);
 require_once("doc/devtools/ggg-trace.php");
@@ -23,13 +24,9 @@ $ggg_tracer->outln(__FILE__." line: ".__LINE__);
 // Bugs:
 //   This feature should be known as Writers' Workshop rather than homework.
 
-// Todo:
-//   When editing an existing assignment, overwrite it instead of creating a new one.
-
 // Initialization
 require_once ('tiki-setup.php');
 
-include_once ('lib/articles/artlib.php'); // GGG Remove later
 require_once ('lib/homework/homeworklib.php');
 
 if ($feature_homework != 'y') {
@@ -407,13 +404,6 @@ if (isset($_REQUEST["save"])) {
 
 // Set date to today before it's too late
 $_SESSION["thedate"] = date("U");
-
-$topics = $artlib->list_topics();
-$smarty->assign_by_ref('topics', $topics);
-
-// get list of valid types
-$types = $artlib->list_types();
-$smarty->assign_by_ref('types', $types);
 
 if ($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {
 	$templates = $tikilib->list_templates('cms', 0, -1, 'name_asc', '');
