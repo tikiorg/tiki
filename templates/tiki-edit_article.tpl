@@ -3,6 +3,7 @@
 {include file="tiki-preview_article.tpl"}
 {/if}
 <a class="pagetitle" href="tiki-edit_article.php">{tr}Edit{/tr}: {$title}</a><br /><br />
+{assign var=area_name value="body"}
 
 {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Article" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Article{/tr}">
@@ -20,7 +21,7 @@
 <a class="link" href="tiki-view_articles.php">{tr}view articles{/tr}</a>
 ]
 <br /><br />
-<form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='tikieditarticle'>
+<form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='editpageform'>
 <input type="hidden" name="articleId" value="{$articleId|escape}" />
 <input type="hidden" name="image_data" value="{$image_data|escape}" />
 <input type="hidden" name="useImage" value="{$useImage|escape}" />
@@ -91,7 +92,7 @@
 
 {if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
 <tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
-<select name="templateId" onchange="javascript:document.getElementById('tikieditarticle').submit();">
+<select name="templateId" onchange="javascript:document.getElementById('editpageform').submit();">
 <option value="0">{tr}none{/tr}</option>
 {section name=ix loop=$templates}
 <option value="{$templates[ix].templateId|escape}">{tr}{$templates[ix].name}{/tr}</option>
@@ -104,13 +105,15 @@
 
 <tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
-{assign var=area_name value="body"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
 </tr>
-<tr><td class="formcolor">{tr}Body{/tr}</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Body{/tr}<br/><br />{include file="textareaSize.tpl"}</td><td class="formcolor">
 <b>{tr}Use ...page... to separate pages in a multi-page article{/tr}</b><br />
-<textarea class="wikiedit" id="body" name="body" rows="25" cols="80" id='subbody' wrap="virtual">{$body|escape}</textarea></td></tr>
+<textarea class="wikiedit" id="body" name="body" rows="{$rows}" cols="{$cols}" wrap="virtual">{$body|escape}</textarea>
+<input type="hidden" name="rows" value="{$rows}"/>
+<input type="hidden" name="cols" value="{$cols}"/>
+</td></tr>
 {if $cms_spellcheck eq 'y'}
 <tr><td class="formcolor">{tr}Spellcheck{/tr}: </td><td class="formcolor"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
