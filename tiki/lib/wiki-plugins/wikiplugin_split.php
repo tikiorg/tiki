@@ -1,12 +1,12 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.17 2004-04-27 04:21:17 franck Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.18 2004-04-27 04:27:36 franck Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
  *
- *  {SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1])}
+ *  {SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1],colsize=>size1|size2|...)}
  *
  * If `joincols' eq true (yes) 'colspan' attribute will be generated if column missed.
  * If `fixedsize' eq true (yes) 'width' attribute will be generated for TDs.
@@ -15,7 +15,7 @@
  */
 
 function wikiplugin_split_help() {
-	return tra("Split a page into rows and columns").":<br />~np~{SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1],colsize=>80|20)}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
+	return tra("Split a page into rows and columns").":<br />~np~{SPLIT(joincols=>[y|n|0|1],fixedsize=>[y|n|0|1],colsize=>size1|size2|...)}".tra("row1col1")."---".tra("row1col2")."@@@".tra("row2col1")."---".tra("row2col2")."{SPLIT}~/np~";
 }
 
 /*
