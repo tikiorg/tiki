@@ -1,5 +1,7 @@
 <?php
 include_once('lib/diff.php');
+require_once('lib/Date.php');
+
 class TikiLib {
   var $db;  // The PEAR db object used to access the database
   var $buffer;
@@ -8229,11 +8231,12 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $retval;
   }
 
+  # TODO move all of these date/time functions to a static class: TikiDate
+
   function get_timezone_list($use_default = false) {
     static $timezone_options;
     
     if (!$timezone_options) {
-		require_once 'lib/Date.php';
 		$timezone_options = array();
 		if ($use_default)
 			$timezone_options['default'] = '-- Use Default Time Zone --';
@@ -8250,18 +8253,30 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $timezone_options;
   }
 
+  function get_server_timezone() {
+    static $server_timezone;
+    
+    if (!$server_timezone) {
+      $server_time = new Date();
+      $server_timezone = $server_time->tz->getID();
+    }
+    
+    return $server_timezone;
+  }
+
+  # TODO rename get_site_timezone()
   function get_display_timezone($user = null) {
   	static $display_timezone = false;
   	
     if (!$display_timezone) {
-      $server_time = new Date();
+      $server_time = $this->get_server_timezone();
       if ($user) {
         $display_timezone = $this->get_user_preference($user, 'display_timezone');
         if (!$display_timezone || $display_timezone == 'default') {
-          $display_timezone = $this->get_preference('display_timezone', $server_time->tz->getID());
+          $display_timezone = $this->get_preference('display_timezone', $server_time);
         }
       } else {
-        $display_timezone = $this->get_preference('display_timezone', $server_time->tz->getID());
+        $display_timezone = $this->get_preference('display_timezone', $server_time);
       }
     }
 
@@ -8316,7 +8331,17 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     return $short_datetime_format;
   }
 
-  function date_format($format, $timestamp, $user = null) {
+  function server_time_to_site_time($timestamp, $user = null) {
+	$date = new Date($timestamp);
+	$date->setTZbyID($this->get_server_timezone());
+	$date->convertTZbyID($this->get_display_timezone($user));
+  	return $date->getTime();
+  }
+
+  /**
+  
+  */
+  function get_site_date($timestamp, $user = null) {
 	static $localed = false;
 
 	if (!$localed) {
@@ -8324,54 +8349,135 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 		$localed = true;
 	}
 
-	require_once('lib/Date.php');
-
 	$original_tz = date('T', $timestamp);
 	
-$rv = "\n<pre>\n";
-$rv .= strftime($format, $timestamp);
-$rv .= " =timestamp\n";
-$rv .= strftime('%Z', $timestamp);
-$rv .= " =strftime('%Z')\n";
-$rv .= date('T', $timestamp);
-$rv .= " =date('T')\n";
+#$rv = "\n<pre>\n";
+#$rv .= strftime($format, $timestamp);
+#$rv .= " =timestamp\n";
+#$rv .= strftime('%Z', $timestamp);
+#$rv .= " =strftime('%Z')\n";
+#$rv .= date('T', $timestamp);
+#$rv .= " =date('T')\n";
 
-	$date = new Date($timestamp);
+	$date =& new Date($timestamp);
 
 # Calling new Date() changes the timezone of the $timestamp var!
 # so we only change the timezone to UTC if the original TZ wasn't UTC
 # to begin with.
 # This seems really buggy, but I don't have time to delve into right now.
 
-$rv .= date('T', $timestamp);
-$rv .= " =date('T')\n";
+#$rv .= date('T', $timestamp);
+#$rv .= " =date('T')\n";
 
-$rv .= $date->format($format);
-$rv .= " =new Date()\n";
+#$rv .= $date->format($format);
+#$rv .= " =new Date()\n";
 
-$rv .= date('T', $timestamp);
-$rv .= " =date('T')\n";
+#$rv .= date('T', $timestamp);
+#$rv .= " =date('T')\n";
 	
 	if ($original_tz == 'UTC') {
 		$date->setTZbyID('UTC');
-$rv .= $date->format($format);
-$rv .= " =setTZbyID('UTC')\n";
+#$rv .= $date->format($format);
+#$rv .= " =setTZbyID('UTC')\n";
 	}
 	
 	$tz_id = $this->get_display_timezone($user);
 	if ($date->tz->getID() != $tz_id) {
 		# let's convert to the displayed timezone
 		$date->convertTZbyID($tz_id);
-$rv .= $date->format($format);
-$rv .= " =convertTZbyID($tz_id)\n";
+#$rv .= $date->format($format);
+#$rv .= " =convertTZbyID($tz_id)\n";
 	}
 
 #return $rv;
 
 #	if ($format == "%b %e, %Y")
 #		$format = $tikilib->get_short_date_format();
+   	return $date;
+  }
+
+  # TODO rename to server_time_to_site_time()
+  
+  function get_site_time($timestamp, $user = null) {
+    $date = $this->get_site_date($timestamp, $user);
+    return $date->getTime();
+  }
+
+  function date_format($format, $timestamp, $user = null) {
+    $date = $this->get_site_date($timestamp, $user);
    	return $date->format($format);
   }
+
+  function get_site_timezone_shortname($user = null) {
+    static $timezone_shortname;
+    
+    if (!$timezone_shortname) {
+      $date = $this->get_site_date(date('U'), $user);
+      $timezone_shortname = $date->format('%Z');
+    }
+    
+    return $timezone_shortname;
+  }
+
+  /**
+    Timezone saavy replacement for mktime()
+  */
+  function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = null) {
+  	global $user; # ugh!
+
+	if ($year <= 69)
+		$year += 2000;
+	if ($year <= 99)
+		$year += 1900;
+		
+	$date = new Date();
+  	$date->setHour($hour);
+  	$date->setMinute($minute);
+  	$date->setSecond($second);
+  	$date->setMonth($month);
+  	$date->setDay($day);
+  	$date->setYear($year);
+#$rv = sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
+print "<pre> make_time() start";
+print_r($date);
+  	if ($timezone_id)
+  		$date->setTZbyID($timezone_id);
+print_r($date);
+#$rv .= sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
+#print $rv;
+  	return $date->getTime();
+  }
+
+  /**
+    Timezone saavy replacement for mktime()
+  */
+  function make_server_time($hour, $minute, $second, $month, $day, $year, $timezone_id = null) {
+  	global $user; # ugh!
+
+	if ($year <= 69)
+		$year += 2000;
+	if ($year <= 99)
+		$year += 1900;
+		
+	$date = new Date();
+  	$date->setHour($hour);
+  	$date->setMinute($minute);
+  	$date->setSecond($second);
+  	$date->setMonth($month);
+  	$date->setDay($day);
+  	$date->setYear($year);
+#print "<pre> make_server_time() start\n";
+#print_r($date);
+  	if ($timezone_id)
+  		$date->setTZbyID($timezone_id);
+#print_r($date);
+	$date->convertTZbyID($this->get_server_timezone());
+#print_r($date);
+#print "make_server_time() end\n</pre>";
+
+  	return $date->getTime();
+  }
+
 
   function get_language($user = null) {
   	static $language = false;
