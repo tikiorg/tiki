@@ -80,7 +80,7 @@ class StatsLib extends TikiLib {
 				$aux["len"] = $res["len"];
 				$aux["comment"] = $res["comment"];
 				$aux["version"] = $res["version"];
-				$aux["flag"] = $res["flag"] == 'y' ? tra('locked') : tra('unlocked');
+				$aux["flag"] = $res["flag"] == 'L' ? 'locked' : 'unlocked';
 				$aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page_as));
 				$aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page_as));
 				$aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page_as));

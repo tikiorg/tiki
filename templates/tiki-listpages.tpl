@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.20 2004-01-31 19:41:46 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.21 2004-03-27 22:23:24 sylvieg Exp $ *}
 
 <a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}
@@ -106,7 +106,7 @@
 {/if}
 {if $wiki_list_status eq 'y'}
 	<td style="text-align:center;" class="{cycle advance=false}">
-	{if $listpages[changes].flag eq tra('locked')}
+	{if $listpages[changes].flag eq 'locked'}
 		<img src='img/icons/lock_topic.gif' alt='{tr}locked{/tr}' />
 	{else}
 		<img src='img/icons/unlock_topic.gif' alt='{tr}unlocked{/tr}' />
