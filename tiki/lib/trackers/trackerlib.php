@@ -328,8 +328,7 @@ class TrackerLib extends TikiLib {
 		$fields = array();
 
 		while ($res2 = $result->fetchRow()) {
-			$name = $res2["name"];
-
+			$name = ereg_replace("[^a-zA-Z0-9]","",$res2["name"]);
 			$res["$name"] = $res2["value"];
 		}
 

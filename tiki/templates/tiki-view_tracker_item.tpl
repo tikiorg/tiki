@@ -35,10 +35,10 @@
 {section name=ix loop=$ins_fields}
 {if $ins_fields[ix].type eq 'h'}
 </table>
-<h3>{$ins_fields[ix].name}</h3>
+<h3>{$ins_fields[ix].label}</h3>
 <table class="normal">
 {elseif $ins_fields[ix].type ne 'x'}
-<tr class="formcolor"><td>{$ins_fields[ix].name}</td>
+<tr class="formcolor"><td>{$ins_fields[ix].label}</td>
 <td>
 {if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
 {$ins_fields[ix].value|date_format:$daformat}
@@ -247,7 +247,7 @@ align       : "bR"
 <input type="hidden" name="{$ins_fields[ix].options_array[tl]|regex_replace:"/:.*$/":""|escape}" value="{$item_info.$valvar|escape}" />
 {/if}
 {/section}
-<tr class="formcolor"><td>{$ins_fields[ix].name}</td><td><input type="submit" class="submit" name="trck_act" value="{$ins_fields[ix].options_array[0]|escape}" /></td><tr>
+<tr class="formcolor"><td>{$ins_fields[ix].label}</td><td><input type="submit" class="submit" name="trck_act" value="{$ins_fields[ix].options_array[0]|escape}" /></td><tr>
 </table>
 </form>
 {/capture}
