@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.40 2004-02-04 08:47:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.41 2004-02-05 07:58:25 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -104,8 +104,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$ins_categs = array_merge($ins_categs,$_REQUEST[$categId]);
 		}
 		$ins_fields["data"][$i]["value"] = '';
-		$ins_fields["data"][$i]["type"] = 'e';
-		
+	
 	} elseif ($fields["data"][$i]["type"] == 'c') {
 		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
 			$ins_fields["data"][$i]["value"] = 'y';
@@ -118,6 +117,18 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$fields["data"][$i]["value"] = '';
 		}
 
+	} elseif ($fields["data"][$i]["type"] == 'u' and isset($fields["data"][$i]["options"]))	{
+		if ($fields["data"][$i]["options"] == 2) {
+			$ins_fields["data"][$i]["value"] = $user;
+		} else {
+			$ins_fields["data"][$i]["value"] = '';
+		}
+		if (isset($_REQUEST["$filter_id"])) {
+			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+		} else {
+			$fields["data"][$i]["value"] = '';
+		}
+		
 	} else {
 		if (isset($_REQUEST["$ins_id"])) {
 			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
@@ -178,12 +189,13 @@ if ($tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["save"])) {
 		check_ticket('view-trackers-items');
 		if (!isset($_REQUEST["status"])) {
-			if (isset($tracker_info["newItemStatus"])) {
-				$_REQUEST["status"] = $tracker_info["newItemStatus"];
+			if (isset($tracker_info["modItemStatus"])) {
+				$_REQUEST["status"] = $tracker_info["modItemStatus"];
 			} else {
 				$_REQUEST["status"] = 'o';
 			}
 		}
+		
 		$trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST["status"]);
 		for ($i = 0; $i < count($fields["data"]); $i++) {
 			$fid = $fields["data"][$i]["fieldId"];
@@ -268,7 +280,7 @@ if ($_REQUEST["itemId"]) {
 }
 
 $smarty->assign_by_ref('fields', $fields["data"]);
-$smarty->assign('ins_fields', $ins_fields["data"]);
+$smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
@@ -435,7 +447,9 @@ if ($tracker_info["useAttachments"] == 'y') {
 
 $tabi = 2;
 if (isset($_REQUEST['show'])) {
-	if ($tracker_info["useAttachments"] == 'y' and $_REQUEST['show'] == 'com') {
+	if ($_REQUEST['show'] == 'view') {
+		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");	
+	} elseif ($tracker_info["useAttachments"] == 'y' and $_REQUEST['show'] == 'com') {
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab$tabi");	
 	} elseif ($tracker_info["useComments"] == 'y' and $_REQUEST['show'] == 'att') {
 		if ($tracker_info["useAttachments"] == 'y') $tabi++;

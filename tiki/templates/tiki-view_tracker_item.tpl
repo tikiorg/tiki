@@ -63,6 +63,9 @@
 <div><a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].trackerId}&amp;itemId={$tid}" class="link">{$tlabel}</a></div>
 {/foreach}
 
+{elseif $ins_fields[ix].type eq 'u'}
+<a href="tiki-user_information.php?user={$ins_fields[ix].value|escape:"url"}">{$ins_fields[ix].value}</a>
+
 {elseif $ins_fields[ix].type eq 'a'}
 {$ins_fields[ix].pvalue|default:"&nbsp;"}
 
@@ -111,13 +114,8 @@
 
 {else}
 {$ins_fields[ix].value|default:"&nbsp;"}
-{if $ins_fields[ix].options_array[0] eq '1' and $stick ne 'y'}
-</td>
-{assign var=stick value="y"}
-{else}
 </td></tr>
 {assign var=stick value="n"}
-{/if}
 {/if}
 {/if}
 {/if}
@@ -269,12 +267,16 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 
 {if $ins_fields[ix].type eq 'u'}
+{if $ins_fields[ix].options}
+<a href="tiki-user_information.php?user={$ins_fields[ix].value|escape:"url"}" class="link">{$ins_fields[ix].value}</a>
+{else}
 <select name="ins_{$ins_fields[ix].id}">
 <option value="">{tr}None{/tr}</option>
 {foreach key=id item=one from=$users}
 <option value="{$one|escape}" {if $ins_fields[ix].value eq $one}selected="selected"{/if}>{$one}</option>
 {/foreach}
 </select>
+{/if}
 
 {elseif $ins_fields[ix].type eq 'g'}
 <select name="ins_{$ins_fields[ix].id}">

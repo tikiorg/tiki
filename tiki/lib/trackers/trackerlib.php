@@ -500,19 +500,19 @@ class TrackerLib extends TikiLib {
 	}
 
 	function field_types() {
-		$type['c'] = array('label'=>tra('checkbox'),      'opt'=>true,  'help'=>tra('Checkbox options: put 1 if you need that next field is on the same row'));
+		$type['c'] = array('label'=>tra('checkbox'),      'opt'=>true,  'help'=>tra('Checkbox options: put 1 if you need that next field is on the same row.'));
 		$type['t'] = array('label'=>tra('text field'),    'opt'=>true,  'help'=>tra('Text options: size,unit,1 with size in chars, unit is the symbol that append the field, and optionaly next text field or checkbox is in same row, if you indicate only 1 it means next field is in same row too.'));
-		$type['a'] = array('label'=>tra('textarea'),      'opt'=>true,  'help'=>tra('Textarea options: options,width,height with option is 1 or 0, rest is size indicated in chars and lines'));
-		$type['d'] = array('label'=>tra('drop down'),     'opt'=>true,  'help'=>tra('Dropdown options: list of items separated with commas') );
-		$type['u'] = array('label'=>tra('user selector'), 'opt'=>false);
+		$type['a'] = array('label'=>tra('textarea'),      'opt'=>true,  'help'=>tra('Textarea options: options,width,height with option is 1 or 0, rest is size indicated in chars and lines.'));
+		$type['d'] = array('label'=>tra('drop down'),     'opt'=>true,  'help'=>tra('Dropdown options: list of items separated with commas.') );
+		$type['u'] = array('label'=>tra('user selector'), 'opt'=>true,  'help'=>tra('User Selector: use options for automatic field feeding : you can use 1 for author login or 2 for modificator login.'));
 		$type['g'] = array('label'=>tra('group selector'),'opt'=>false);
 		$type['f'] = array('label'=>tra('date and time'), 'opt'=>false);
 		$type['j'] = array('label'=>tra('jscalendar'),    'opt'=>false);
-		$type['i'] = array('label'=>tra('image'),         'opt'=>true, 'help'=>tra('Image options: xSize,ySize indicated in pixels')  );
+		$type['i'] = array('label'=>tra('image'),         'opt'=>true, 'help'=>tra('Image options: xSize,ySize indicated in pixelsi.')  );
 		$type['x'] = array('label'=>tra('action'),        'opt'=>true, 'help'=>tra('Action options: Label,post,tiki-index.php,page:fieldname,highlight=test') );
 		$type['h'] = array('label'=>tra('header'),        'opt'=>false);
 		$type['e'] = array('label'=>tra('category'),      'opt'=>true, 'help'=>tra('Category options: parentId') );
-		$type['r'] = array('label'=>tra('tracker item'),  'opt'=>true, 'help'=>tra('Tracker Item options: trackerId,itemId links to ') );
+		$type['r'] = array('label'=>tra('tracker item'),  'opt'=>true, 'help'=>tra('Tracker Item options: trackerId,fieldId links to item from trackerId which fieldId matches the content of that field.') );
 		$type['l'] = array('label'=>tra('tracker links'), 'opt'=>true, 'help'=>tra('Tracker Links options: trackerId,fieldIdThere, fieldIdHere, displayFieldIdThere displays the list of displayFieldIdThere from item in tracker trackerId where fieldIdThere matches fieldIdHere.') );
 		return $type;
 	}
