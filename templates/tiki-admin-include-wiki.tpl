@@ -117,7 +117,7 @@
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin"><tr>
     <td colspan="2" class="form">{tr}Real-time Static Wiki Pages{/tr}</td></tr><tr><td class="form">
-    {tr}If enabled, wiki pages will be created as static HTML pages in /static/ in addition to the normal tiki-index.php pages. (Do not use; work in progress){/tr}
+    {tr}If enabled, wiki pages will be created as static HTML pages in addition to the normal tiki-index.php pages{/tr}:
     </td></tr><tr><td>
     <select name="feature_wiki_realtime_static">
     <option value='disabled' {if $feature_wiki_realtime_static neq 'y'}selected="selected"{/if}>{tr}disabled{/tr}</option>
