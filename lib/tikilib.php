@@ -3687,10 +3687,10 @@ function parse_data($data) {
 
     //If there are instances of {toc} on this page
     if (count($tocs[0]) > 0) {
+ 	    include_once ("lib/structures/structlib.php");
       //And we are currently viewing a structure
       $page_info = $structlib->s_get_page_info($page_ref_id);
       if (isset($page_info)) {
-  	    include_once ("lib/structures/structlib.php");
 				$html = $structlib->get_toc($page_ref_id);
 
     	  // Loop over all the case-specific versions of {toc} used
