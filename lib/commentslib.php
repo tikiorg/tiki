@@ -757,37 +757,65 @@ class Comments extends TikiLib {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $forum_age = ceil(($now - $res["created"]) / (24 * 3600));
 
-	    $res["age"] = $forum_age;
+	    $add = TRUE;
+	    global $feature_categories;
+	    global $userlib;
+	    global $user;
+	    global $tiki_p_admin;
 
-	    if ($forum_age) {
-		$res["posts_per_day"] = $res["comments"] / $forum_age;
-	    } else {
-		$res["posts_per_day"] = 0;
+	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['forumId'], 'forum')) {
+	    // blog permissions override category permissions
+			if (!$userlib->object_has_permission($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
+			    $add = FALSE;
+			}
+	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	    	// no blog permissions so now we check category permissions
+	    	global $categlib;
+	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+	    	$perms_array = $categlib->get_object_categories_perms($user, 'forum', $res['forumId']);
+	    	if ($perms_array) {
+		    	foreach ($perms_array as $perm => $value) {
+		    		$$perm = $value;
+		    	}
+	    	}
+
+	    	if (isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    		$add = FALSE;
+	    	}
 	    }
+		if ($add) {
+		    $forum_age = ceil(($now - $res["created"]) / (24 * 3600));
 
-	    // Now select users
-	    $query = "select distinct `userName` from
-		`tiki_comments` where `object`=? and `objectType` =
-		'forum'";
-	    $result2 = $this->query($query,array((string) $res["forumId"]));
-	    $res["users"] = $result2->numRows();
+		    $res["age"] = $forum_age;
 
-	    if ($forum_age) {
-		$res["users_per_day"] = $res["users"] / $forum_age;
-	    } else {
-		$res["users_per_day"] = 0;
-	    }
+		    if ($forum_age) {
+				$res["posts_per_day"] = $res["comments"] / $forum_age;
+		    } else {
+				$res["posts_per_day"] = 0;
+		    }
 
+		    // Now select users
+		    $query = "select distinct `userName` from
+					`tiki_comments` where `object`=? and `objectType` =
+					'forum'";
+		    $result2 = $this->query($query,array((string) $res["forumId"]));
+		    $res["users"] = $result2->numRows();
 
-	    $query2 = "select * from `tiki_comments`,`tiki_forums`
-		where `object`=".$this->sql_cast('`forumId`','string')." and `objectType` = ?
-		and `commentDate`=?";
-	    $result2 = $this->query($query2,array('forum',(int) $res["lastPost"]));
-	    $res2 = $result2->fetchRow();
-	    $res["lastPostData"] = $res2;
-	    $ret[] = $res;
+		    if ($forum_age) {
+				$res["users_per_day"] = $res["users"] / $forum_age;
+		    } else {
+				$res["users_per_day"] = 0;
+		    }
+
+		    $query2 = "select * from `tiki_comments`,`tiki_forums`
+					where `object`=".$this->sql_cast('`forumId`','string')." and `objectType` = ?
+					and `commentDate`=?";
+		    $result2 = $this->query($query2,array('forum',(int) $res["lastPost"]));
+		    $res2 = $result2->fetchRow();
+		    $res["lastPostData"] = $res2;
+		    $ret[] = $res;
+		}
 	}
 
 	$retval = array();

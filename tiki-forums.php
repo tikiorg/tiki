@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.9 2004-03-28 07:32:23 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-forums.php,v 1.10 2004-06-13 22:53:57 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -56,11 +56,8 @@ for ($i = 0; $i < count($channels["data"]); $i++) {
 	if ($userlib->object_has_one_permission($channels["data"][$i]["forumId"], 'forum')) {
 		$channels["data"][$i]["individual"] = 'y';
 
-		if ($userlib->object_has_permission($user, $channels["data"][$i]["forumId"], 'forum', 'tiki_p_forum_read')) {
-			$channels["data"][$i]["individual_tiki_p_forum_read"] = 'y';
-		} else {
-			$channels["data"][$i]["individual_tiki_p_forum_read"] = 'n';
-		}
+		// forums that user cannot read are not displayed at all
+		$channels["data"][$i]["individual_tiki_p_forum_read"] = 'y';
 
 		if ($userlib->object_has_permission($user, $channels["data"][$i]["forumId"], 'forum', 'tiki_p_forum_post')) {
 			$channels["data"][$i]["individual_tiki_p_forum_post"] = 'y';
