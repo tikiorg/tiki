@@ -17,7 +17,7 @@
       <td id="leftcolumn">
       {section name=homeix loop=$left_modules}
       {$left_modules[homeix].data}
-      {if $left_modules[homeix].data ne ''}<table cellspacing="0" width="100%" cellpadding="0" ><tr><td width="100%"><img hspace="4" src="styles/3dblue/modl.gif" /></td></tr></table>{/if}
+      {if $left_modules[homeix].data ne ''}<table cellspacing="0" width="100%" cellpadding="0" ><tr><td width="100%"><img hspace="4" alt="left shadow" src="styles/3dblue/modl.gif" /></td></tr></table>{/if}
       {/section}
       </td>
       {/if}
@@ -39,7 +39,7 @@
       <td id="rightcolumn">
       {section name=homeix loop=$right_modules}
       {$right_modules[homeix].data}
-      {if $right_modules[homeix].data ne ''}<table cellspacing="0" cellpadding="0" width="100%" ><tr><td width="100%"><div align="right"><img hspace="4" src="styles/3dblue/modr.gif" /></div></td></tr></table>{/if}
+      {if $right_modules[homeix].data ne ''}<table cellspacing="0" cellpadding="0" width="100%" ><tr><td width="100%"><div align="right"><img hspace="4" alt="right shadow" src="styles/3dblue/modr.gif" /></div></td></tr></table>{/if}
       {/section}
       </td>
       {/if}
