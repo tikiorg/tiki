@@ -30,7 +30,7 @@
 <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page}&amp;refresh=1"><img border="0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
 {/if}
 
-<a title="{tr}print{/tr}" href="tiki-print.php?page={$page}"><img border="0" src="img/icons/print.gif" alt='{tr}print{/tr}' /></a>
+<a title="{tr}print{/tr}" href="tiki-print.php?page={$page}"><img border="0" src="img/icons/ico_print.gif" alt='{tr}print{/tr}' /></a>
 
 {if $user and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>

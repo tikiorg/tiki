@@ -42,7 +42,39 @@ Errors:<br/>
 </tr>
 <tr>
   <td class="formcolor" colspan="4">
-  	<textarea name="source" rows="20" cols="80">{$data}</textarea>
+    <table>
+    <tr>
+    <td>
+  	<textarea id='src' name="source" rows="20" cols="80">{$data}</textarea>
+  	</td>
+  	<td>
+  	{if $template eq 'y'}
+  		templ
+  	{else}
+  		{literal}
+  		<a class="link" href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');">{tr}Set next user{/tr}</a><hr/>
+		<a class="link" href="javascript:setSomeElement('src','$instance->get(\'\');');">{tr}Get property{/tr}</a><hr/>
+		<a class="link" href="javascript:setSomeElement('src','$instance->set(\'\',\'\');');">{tr}Set property{/tr}</a><hr />
+		{/literal}
+  		{if $act_info.isInteractive eq 'y'}
+			{literal}
+  			<a class="link" href="javascript:setSomeElement('src','$instance->complete();');">{tr}Complete{/tr}</a><hr/>
+  			<a class="link" href="javascript:setSomeElement('src','if(isset($_REQUEST[\'save\']){\n  $instance->complete();\n}');">{tr}Process form{/tr}</a><hr/>
+			{/literal}
+  		{/if}
+  		{if $act_info.type eq 'switch'}
+  			{literal}
+			<a class="link" href="javascript:setSomeElement('src','$instance->setNextActivity(\'\');');">{tr}Set Next act{/tr}</a><hr />  		    
+			<a class="link" href="javascript:setSomeElement('src','if() {\n  $instance->setNextActivity(\'\');\n}');">{tr}If:SetNextact{/tr}</a><hr />  		    
+			<a class="link" href="javascript:setSomeElement('src','switch($instance->get(\'\')){\n  case:\'\':\n  $instance->setNextActivity(\'\');\n  break;\n}');">{tr}Swicth construct{/tr}</a><hr />
+			{/literal}
+  		{/if}
+  	{/if}
+  	
+    
+  	</td>
+  	</tr>
+  	</table>
   </td>
 </tr>
 </table>  

@@ -102,17 +102,23 @@ class TikiLib {
     }
   }
   
-  /*shared*/ function add_user_watch($user,$event,$object)
+  /*shared*/ function add_user_watch($user,$event,$object,$type,$title,$url)
   {
     global $userlib;
   	$object=addslashes($object);
   	$hash=md5(uniqid('.'));
   	$email = $userlib->get_user_email($user);
-  	$query = "replace into tiki_user_watches(user,event,object,email,hash)
-  	values('$user','$event','$object','$email','$hash')";
+  	$query = "replace into tiki_user_watches(user,event,object,email,hash,type,title,url)
+  	values('$user','$event','$object','$email','$hash','$type','$title','$url')";
   	$this->query($query);
   	return true;
   }
+  
+  /*shared*/ function remove_user_watch_by_hash($hash) {
+  	$query = "delete from tiki_user_watches where hash='$hash'";
+  	$this->query($query);
+  }
+
   
   /*shared*/ function remove_user_watch($user,$event,$object)
   {
@@ -123,6 +129,7 @@ class TikiLib {
   
   /*shared*/ function get_user_watches($user,$event='')
   {
+    $mid='';
     if($event) {
       $mid = " and event='$event' ";
     }
@@ -131,6 +138,17 @@ class TikiLib {
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res;
+    }
+	return $ret;    
+  }
+  
+  /*shared*/ function get_watches_events()
+  {
+    $query = "select distinct(event) from tiki_user_watches";
+    $result = $this->query($query);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res['event'];
     }
 	return $ret;    
   }
@@ -4270,7 +4288,9 @@ class TikiLib {
 	        $foo = parse_url($_SERVER["REQUEST_URI"]);
 		    $machine =httpPrefix().$foo["path"];
 	        $smarty->assign('mail_machine',$machine);
-	        $smarty->assign('mail_machine_raw',str_replace('tiki-editpage.php','',$machine));
+	        $parts = explode($foo['path']);
+	        if(count($parts)>1) unset($parts[count($parts)-1]);
+	        $smarty->assign('mail_machine_raw',implode('/',$parts));
 	        $smarty->assign('mail_pagedata',$edit_data);
 	        $mail_data = $smarty->fetch('mail/user_watch_wiki_page_changed.tpl');
 	        mail($not['email'], tra('Wiki page').' '.$pageName.' '.tra('changed'), $mail_data);          

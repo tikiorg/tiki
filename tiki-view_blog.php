@@ -192,6 +192,21 @@ if($user
   $tikilib->replace_note($user,0,$post_info['title']?$post_info['title']:date("d/m/Y [h:i]",$post_info['created']),$post_info['data']);
 }
 
+if($feature_user_watches == 'y') {
+	if($user && isset($_REQUEST['watch_event'])) {
+	  if($_REQUEST['watch_action']=='add') {
+	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],tra('blog'),$info['title'],"tiki-view_blog?blogId=".$_REQUEST['blogId']);
+	  } else {
+	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+	  }
+	}
+	$smarty->assign('user_watching_blog','n');
+	if($user && $watch = $tikilib->get_user_event_watches($user,'blog_post',$_REQUEST['blogId'])) {
+		$smarty->assign('user_watching_blog','y');
+	}
+}
+
+
 
 // Display the template
 $smarty->assign('mid','tiki-view_blog.tpl');
