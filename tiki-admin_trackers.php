@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.29 2004-04-10 07:24:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.30 2004-04-16 05:28:28 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,6 +122,9 @@ if (isset($_REQUEST["remove"])) {
 		key_get($area);
 	}
 }
+
+$cat_type = 'tracker';
+$cat_objid = $_REQUEST["trackerId"];
 
 if (isset($_REQUEST["save"])) {
 
@@ -285,6 +288,11 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('name', '');
 	$smarty->assign('description', '');
 	$smarty->assign('ui',array());
+
+	$cat_desc = $_REQUEST["description"];
+	$cat_name = $_REQUEST["name"];
+	$cat_href = "tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"];
+	include_once("categorize.php");
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -328,8 +336,6 @@ $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign('uses_tabs', 'y');
 
 // block for categorization
-$cat_type = 'tracker';
-$cat_objid = $_REQUEST["trackerId"];
 include_once ("categorize_list.php");
 ask_ticket('admin-trackers');
 
