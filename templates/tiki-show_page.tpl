@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.71 2004-06-07 19:43:54 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.72 2004-06-08 17:45:19 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -27,7 +27,11 @@
 	<td style="text-align:right;">
 	{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
 	  <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img style="border: 0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
-	{/if}
+	{/if}       
+	{if $wiki_feature_3d eq 'y'}
+          <a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img border="0" src="img/icons/ico_wiki3d.gif" alt='{tr}3d browser{/tr}' /></a>
+        {/if}
+
 	{if $cached_page eq 'y'}
 	  <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page|escape:"url"}&amp;refresh=1"><img style="border: 0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
 	{/if}
@@ -63,9 +67,6 @@
       </td>
 	{/if}
 
-        {if $wiki_feature_3d eq 'y'}
-          <a title="{tr}3d browser{/tr}" href="javascript:wiki3d_open('{$page|escape}',{$wiki_3d_width}, {$wiki_3d_height})"><img border="0" src="img/icons/ico_wiki3d.gif" alt='{tr}3d browser{/tr}' /></a>
-        {/if}
 
         {* If not displaying structure but page is member of 
 	** one or more structures display a list of structures 
@@ -96,12 +97,12 @@
 			{section name=i loop=$trads}
 			<option value="{$trads[i].objId}">{$trads[i].langName}</option>
 			{/section}
+			</select>
 			</form>
 			</td>
 		{else}
 		<td style="text-align:right;">{$trads[0].langName}</td>
 		{/if}
-		</td>
 	{/if}
 {*	</td>  *}
   {else}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.42 2004-04-17 23:08:14 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.43 2004-06-08 17:45:20 sylvieg Exp $ *}
 
 <a name="comments"></a>
 <br />
@@ -173,7 +173,7 @@
 
     {if $feature_smileys eq 'y'}
     <tr>
-      <td class="formcolor"><label for="comments-smileys">{tr}Smileys{/tr}</label></td>
+      <td class="formcolor"><label>{tr}Smileys{/tr}</label></td>
       <td class="formcolor">{include file="tiki-smileys.tpl" area_name="editpost"}</td>
     </tr>
     {/if}
@@ -186,7 +186,7 @@
   <br />
   <table class="normal" id="commentshelp">
   <tr><td class="even">
-  <b><label for="comments-posting">{tr}Posting comments{/tr}:</label></b>
+  <b>{tr}Posting comments{/tr}:</b>
   <br />
   <br />
   {tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|{tr}description{/tr}] {tr}for links{/tr}.<br />
