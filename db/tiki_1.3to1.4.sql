@@ -34,7 +34,8 @@ create table tiki_wiki_attachments(
 
 alter table tiki_semaphores add timestamp integer(14);
 
-alter table tiki_images add paINSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_upload_images','image galleries','Can upload zip files with images');th varchar(255);
+alter table tiki_images add path varchar(255);
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_upload_images','image galleries','Can upload zip files with images');th varchar(255);
 
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_drawings','drawings','Can admin drawings');
 INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_edit_drawings','drawings','Can edit drawings');
