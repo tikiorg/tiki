@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.9 2003-12-01 14:45:45 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.10 2003-12-02 16:00:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -23,7 +23,6 @@ if (!isset($_REQUEST["calendarId"])) {
 
 if (isset($_REQUEST["drop"])) {
 	$calendarlib->drop_calendar($_REQUEST["drop"]);
-
 	$_REQUEST["calendarId"] = 0;
 }
 
@@ -37,9 +36,9 @@ if (isset($_REQUEST["save"])) {
 
 if ($_REQUEST["calendarId"]) {
 	$info = $calendarlib->get_calendar($_REQUEST["calendarId"]);
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
 } else {
 	$info = array();
-
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["customlanguages"] = 'n';
