@@ -162,7 +162,7 @@ class NlLib extends TikiLib {
 	}
 
 	function update_users($nlId) {
-		$users = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `nlId`=$nlId",array((int)$nlId));
+		$users = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `nlId`=?",array((int)$nlId));
 		$query = "update `tiki_newsletters` set `users`=? where `nlId`=?";
 		$result = $this->query($query,array($users,(int)$nlId));
 	}

@@ -73,7 +73,7 @@ class MenuLib extends TikiLib {
 		} else {
 			// was: replace into ...
 			$query = "insert into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`)
-                values($menuId,'$name','$url','$type',$position)";
+                values(?,?,?,?,?)";
 			$bindvars=array($menuId,$name,$url,$type,$position);
 		}
 
