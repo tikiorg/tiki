@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.25 2004-01-28 10:45:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.26 2004-01-28 12:17:48 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -156,32 +156,36 @@ if (isset($_REQUEST["group"])and $_REQUEST["group"]) {
 			$groupitemId = $info["itemId"];
 			$smarty->assign('groupitemId', $groupitemId);
 			for ($i = 0; $i < count($fields["data"]); $i++) {
-				$name = $fields["data"][$i]["fieldId"];
-				if ($fields["data"][$i]["type"] != 'h') {
-					if ($fields["data"][$i]["type"] == 'c') {
-						if (!isset($info["$name"])) $info["$name"] = 'n';
-					} else {
-						if (!isset($info["$name"])) $info["$name"] = '';
-					}
-					if ($fields["data"][$i]["type"] == 'e') {
-						include_once('lib/categories/categlib.php');
-						$k = $fields["data"][$i]["options"];
-						$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
-						if (!isset($cat)) {
-							$cat = $categlib->get_object_categories("tracker ".$grouptrackerid,$groupitemId);
+				if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin) {
+					$name = $fields["data"][$i]["fieldId"];
+					if ($fields["data"][$i]["type"] != 'h') {
+						if ($fields["data"][$i]["type"] == 'c') {
+							if (!isset($info["$name"])) $info["$name"] = 'n';
+						} else {
+							if (!isset($info["$name"])) $info["$name"] = '';
 						}
-						foreach ($cat as $c) {
-							$fields["data"][$i]["cat"]["$c"] = 'y';
+						if ($fields["data"][$i]["type"] == 'e') {
+							include_once('lib/categories/categlib.php');
+							$k = $fields["data"][$i]["options"];
+							$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+							if (!isset($cat)) {
+								$cat = $categlib->get_object_categories("tracker ".$grouptrackerid,$groupitemId);
+							}
+							foreach ($cat as $c) {
+								$fields["data"][$i]["cat"]["$c"] = 'y';
+							}
+						} elseif  ($fields["data"][$i]["type"] == 'r') {
+							$fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info["$name"]);
+							$fields["data"][$i]["value"] = $info["$name"];
+							$fields["data"][$i]["type"] = 't';
+						} elseif ($fields["data"][$i]["type"] == 'a') {
+							$fields["data"][$i]["value"] = $info["$name"];
+							$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+						} else {
+							$fields["data"][$i]["value"] = $info["$name"];
 						}
-					} elseif  ($fields["data"][$i]["type"] == 'r') {
-						$fields["data"][$i]["linkId"] = $trklib->get_item_id($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$info["$name"]);
-						$fields["data"][$i]["value"] = $info["$name"];
-						$fields["data"][$i]["type"] = 't';
-					} elseif ($fields["data"][$i]["type"] == 'a') {
-						$fields["data"][$i]["value"] = $info["$name"];
-						$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
 					} else {
-						$fields["data"][$i]["value"] = $info["$name"];
+						unset($fields["data"][$i]);
 					}
 				}
 			}

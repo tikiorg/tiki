@@ -35,6 +35,7 @@
 <tr><td class="formcolor">{tr}Is column visible when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column links to edit/view item?{/tr}</td><td class="formcolor"><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column is searchable?{/tr}</td><td class="formcolor"><input type="checkbox" name="isSearchable" {if $isSearchable eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Field is visible to non-admin?{/tr}</td><td class="formcolor"><input type="checkbox" name="isPublic" {if $isPublic eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor"><input type="text" size="5" name="position" value="{$position}" /></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
@@ -62,6 +63,7 @@
 <td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isMain_desc'}isMain_asc{else}isMain_desc{/if}">{tr}isMain{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isTblVisible_desc'}isTblVisible_asc{else}isTblVisible_desc{/if}">{tr}Tbl vis{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isSearchable_desc'}isSearchable_asc{else}isSearchable_desc{/if}">{tr}Searchable{/tr}</a></td>
+<td class="heading"><a class="tableheading" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'isPublic_desc'}isPublic_asc{else}isPublic_desc{/if}">{tr}Public{/tr}</a></td>
 <td class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
@@ -75,6 +77,7 @@
 <td>{$channels[user].isMain}</td>
 <td>{$channels[user].isTblVisible}</td>
 <td>{$channels[user].isSearchable}</td>
+<td>{$channels[user].isPublic}</td>
 <td><a class="link" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].fieldId}">{tr}remove{/tr}</a></td>
 </tr>
 {/section}

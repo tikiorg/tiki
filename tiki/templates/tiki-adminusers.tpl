@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.38 2004-01-28 10:45:08 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.39 2004-01-28 12:17:49 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -170,6 +170,7 @@ title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/de
 
 {* copypaste from templates/tiki-view_tracker_item.tpl s/ins_fields/fields/g *}
 {section name=ix loop=$fields}
+{if $fields[ix].isPublic eq 'y' or $tiki_p_admin_trackers eq 'y'}
 
 {if $fields[ix].type eq 'h'}
 </table>
@@ -242,6 +243,7 @@ title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/de
 {else}
 </td></tr>
 {assign var=stick value="n"}
+{/if}
 {/if}
 {/if}
 {/if}

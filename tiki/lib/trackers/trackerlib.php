@@ -181,7 +181,7 @@ class TrackerLib extends TikiLib {
 			$fields = array();
 
 			$itid = $res["itemId"];
-			$query2 = "select ttif.`fieldId`,`value`,`isTblVisible`,`isMain`,`position` from `tiki_tracker_item_fields` ttif,
+			$query2 = "select ttif.`fieldId`,`value`,`isTblVisible`,`isPublic`,`isMain`,`position` from `tiki_tracker_item_fields` ttif,
 			`tiki_tracker_fields` ttf where ttif.`fieldId`=ttf.`fieldId` and `itemId`=? order by `position` asc";
 			$result2 = $this->query($query2,array((int) $res["itemId"]));
 			$pass = true;
@@ -389,21 +389,21 @@ class TrackerLib extends TikiLib {
 	}
 
 	// Adds a new field to a tracker or modifies an existing field for a tracker
-	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $position, $options) {
+	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $position, $options) {
 		// Check the name
 		if ($fieldId) {
 			$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
-				`isTblVisible`=?,`position`=?,`options`=? where `fieldId`=?";
-			$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,(int)$position,$options,(int) $fieldId);
+				`isTblVisible`=?,`isPublic`=?,`position`=?,`options`=? where `fieldId`=?";
+			$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,(int)$position,$options,(int) $fieldId);
 
 			$result = $this->query($query, $bindvars);
 		} else {
 			$this->getOne("delete from `tiki_tracker_fields` where `trackerId`=? and `name`=?",
 				array((int) $trackerId,$name),false);
-			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`position`,`options`)
-                values(?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`position`,`options`)
+                values(?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$position,$options));
+			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$position,$options));
 			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 			// Now add the field to all the existing items
 			$query = "select `itemId` from `tiki_tracker_items` where `trackerId`=?";

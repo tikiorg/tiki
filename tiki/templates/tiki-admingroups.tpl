@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.36 2004-01-28 10:45:08 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.37 2004-01-28 12:17:49 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -189,6 +189,7 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 
 {* copypaste from templates/tiki-view_tracker_item.tpl s/ins_fields/fields/g *}
 {section name=ix loop=$fields}
+{if $fields[ix].isPublic eq 'y' or $tiki_p_admin_trackers eq 'y'}
 
 {if $fields[ix].type eq 'h'}
 </table>
@@ -258,6 +259,7 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 {else}
 </td></tr>
 {assign var=stick value="n"}
+{/if}
 {/if}
 {/if}
 {/if}

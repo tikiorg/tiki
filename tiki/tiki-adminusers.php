@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.20 2004-01-28 10:45:06 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.21 2004-01-28 12:17:48 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -190,6 +190,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			$useritemId = $info["itemId"];
 			$smarty->assign('useritemId', $useritemId);
 			for ($i = 0; $i < count($fields["data"]); $i++) {
+				if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin) {
 				$name = $fields["data"][$i]["fieldId"];
 				if ($fields["data"][$i]["type"] == 'c') {
 					if (!isset($info["$name"])) $info["$name"] = 'n';
@@ -215,6 +216,9 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 					$fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
 				} else {
 					$fields["data"][$i]["value"] = $info["$name"];
+				}
+				} else {
+					unset($fields["data"][$i]);
 				}
 			}
 			$smarty->assign('fields', $fields["data"]);
