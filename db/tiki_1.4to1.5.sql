@@ -1,16 +1,18 @@
+# $Id: tiki_1.4to1.5.sql,v 1.10 2002-12-31 04:23:24 rossta Exp $
+
 alter table users_users add avatarName varchar(80);
 alter table users_users add avatarSize integer(14);
 alter table users_users add avatarFileType varchar(250);
 alter table users_users add avatarData longblob;
 alter table users_users add avatarLibName varchar(200);
 alter table users_users add avatarType char(1);
-update tiki_users_users set avatarType='n';
+update users_users set avatarType='n';
 
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_use_webmail','webmail','Can use webmail');
+INSERT /*! IGNORE */ INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_use_webmail','webmail','Can use webmail');
 ### SURVEYS
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_surveys','surveys','Can admin surveys');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_take_survey','surveys','Can take surveys');
-INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_survey_stats','surveys','Can view survey stats');
+INSERT /*! IGNORE */ INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_surveys','surveys','Can admin surveys');
+INSERT /*! IGNORE */ INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_take_survey','surveys','Can take surveys');
+INSERT /*! IGNORE */ INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_view_survey_stats','surveys','Can view survey stats');
 
 drop table if exists tiki_surveys;
 create table tiki_surveys (
