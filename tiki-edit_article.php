@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.41 2004-05-13 19:02:28 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.42 2004-06-10 09:46:48 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -391,9 +391,11 @@ if ($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {
 }
 $smarty->assign_by_ref('templates', $templates["data"]);
 
-$languages = array();
-$languages = $tikilib->list_languages();
-$smarty->assign_by_ref('languages', $languages);
+if ($feature_multilingual == 'y') {
+	$languages = array();
+	$languages = $tikilib->list_languages();
+	$smarty->assign_by_ref('languages', $languages);
+}
 
 $cat_type = 'article';
 $cat_objid = $articleId;

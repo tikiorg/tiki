@@ -3718,7 +3718,7 @@ function add_pageview() {
     function get_page_info_from_id($page_id) {
 	$query = "select * from `tiki_pages` where `page_id`=?";
 
-	$result = $this->query($query, array($pageName));
+	$result = $this->query($query, array($page_id));
 
 	if (!$result->numRows())
 	    return false;

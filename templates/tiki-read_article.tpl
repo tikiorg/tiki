@@ -5,12 +5,23 @@
 {if $show_topline eq 'y' and $topline}<div class="articletopline">{$topline}</div>{/if}
 <div class="articletitle">
 <span class="titlea">
-{if $show_lang and $lang}
-<img src="img/flags/{$lang}.gif" width="18" height="10" border="1" align="right" style="float:right;font-size:10px;" alt="{$lang}"> 
-{/if}
-{$arttitle}</span><br />
+{$arttitle}</span>
+<br />
 {if $show_subtitle eq 'y' and $subtitle}<div class="articlesubtitle">{$subtitle}</div>{/if}
-<span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})</span><br />
+<span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} ({$reads} {tr}reads{/tr})
+{if $feature_multilingual and $show_lang and $lang} - 
+		{if count($trads) > 1}
+			<form action="tiki-read_article.php" method="post">
+			<select name="articleId" onchange="articleId.form.submit()">
+			{section name=i loop=$trads}
+			<option value="{$trads[i].objId}">{$trads[i].langName}</option>
+			{/section}
+			</form>
+		{elseif $trads[0].langName}
+			{$trads[0].langName}
+		{/if}
+{/if}
+</span><br />
 </div>
 
 {if $type eq 'Review'}
@@ -63,6 +74,9 @@ alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
 <a class="trailer" href="tiki-edit_article.php?articleId={$articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
 {/if}
 <a class="trailer" href="tiki-print_article.php?articleId={$articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
+{if $feature_multilingual eq 'y'}
+<a class="trailer" href="tiki-edit_translation.php?id={$articleId}&amp;type=article"><img src='img/icons2/translation.gif' border='0' alt='{tr}Translation{/tr}' title='{tr}Translation{/tr}' /></a>
+{/if}
 {if $tiki_p_remove_article eq 'y'}
 <a class="trailer" href="tiki-list_articles.php?remove={$articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
 {/if}

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.72 2004-06-08 17:45:19 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-show_page.tpl,v 1.73 2004-06-10 09:46:48 sylvieg Exp $ *}
 
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page|escape:"url"}" class="pagetitle">
   {if $structure eq 'y' and $page_info.page_alias ne ''}
@@ -100,7 +100,7 @@
 			</select>
 			</form>
 			</td>
-		{else}
+		{elseif $trads[0].langName}
 		<td style="text-align:right;">{$trads[0].langName}</td>
 		{/if}
 	{/if}
