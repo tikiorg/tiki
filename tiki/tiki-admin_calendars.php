@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.6 2003-08-15 21:12:57 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_calendars.php,v 1.7 2003-11-07 23:12:11 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -11,9 +11,8 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/calendar/calendarlib.php');
 
-if ($tiki_p_admin != 'y') {
+if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You dont have permission to use this feature"));
-
 	$smarty->display("styles/$style_base/error.tpl");
 	die;
 }
@@ -30,7 +29,6 @@ if (isset($_REQUEST["drop"])) {
 
 if (isset($_REQUEST["save"])) {
 	$customflags["customlanguages"] = $_REQUEST["customlanguages"];
-
 	$customflags["customlocations"] = $_REQUEST["customlocations"];
 	$customflags["customcategories"] = $_REQUEST["customcategories"];
 	$customflags["custompriorities"] = $_REQUEST["custompriorities"];
