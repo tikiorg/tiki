@@ -1,5 +1,5 @@
 <?php 
-// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.13 2004-06-15 21:22:55 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.14 2004-06-16 01:16:25 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -51,7 +51,8 @@ if ($feature_categories == 'y') {
 	
 	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 	$categories = $categlib->list_categs();
-	for ($i = 0; $i < count($categories); $i++) {
+	$num_categories = count($categories);
+	for ($i = 0; $i < $num_categories; $i++) {
 		if (in_array($categories[$i]["categId"], $cats)) {
 			$categories[$i]["incat"] = 'y';
 		} else {
