@@ -201,7 +201,7 @@ Errors:<br/>
 	  {/if}
 	</td>
 	<td style="text-align:center;" class="{cycle advance=false}">
-	  {$items[ix].type|act_icon:"$items[ix].isInteractive"}
+	  {$items[ix].type|act_icon:$items[ix].isInteractive}
 	</td>
 	<td style="text-align:center;" class="{cycle advance=false}">
 	  <input type="checkbox" name="activity_inter[{$items[ix].activityId}]" {if $items[ix].isInteractive eq 'y'}checked="checked"{/if} />

@@ -99,7 +99,7 @@
 		{$workitem.procname} {$workitem.version}
 	</td>
 	<td class="{cycle advance=false}" style="text-align:left;">
-		{$workitem.type|act_icon:"$workitem.isInteractive"} {$workitem.actname} 
+		{$workitem.type|act_icon:$workitem.isInteractive} {$workitem.actname} 
 	</td>
 	<td class="{cycle advance=false}">
 	  <a class="link" href="tiki-g-admin_instance.php?iid={$workitem.instanceId}">{$workitem.instanceId}</a>
