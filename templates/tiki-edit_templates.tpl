@@ -1,4 +1,31 @@
-<a class="pagetitle" href="tiki-edit_templates.php?mode=listing">{tr}Edit templates{/tr}</a><br /><br />
+<a class="pagetitle" href="tiki-edit_templates.php?mode=listing">{tr}Edit templates{/tr}</a>
+
+<!-- the help link info --->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=EditTemplates" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}EditTemplates{/tr}">
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}
+                        {if $feature_help eq 'y'}</a>{/if}
+
+<!-- link to tpl -->
+
+      {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?template=templates/tiki-edit_templates.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}EditTemplates tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
+{if $feature_view_tpl eq 'y'}</a>{/if}
+
+<!-- begin -->
+
+
+
+
+
+
+
+
+
+
+<br /><br />
 {if $template}<h2>{tr}Template{/tr}: {$template}</h2>{/if}
 {if $mode eq 'listing'}
 <h3>{tr}Available templates{/tr}:</h3>
