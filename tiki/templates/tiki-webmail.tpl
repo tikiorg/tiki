@@ -40,7 +40,7 @@
 <tr><td class="formcolor">{tr}Username{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username}" /></td></tr>
 <tr><td class="formcolor">{tr}Password{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="pass" value="{$info.pass}" /></td></tr>
 <tr><td class="formcolor">{tr}Messages per page{/tr}</td><td  colspan="3" class="formcolor"><input type="text" name="msgs" size="7" value="{$info.msgs}" /></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="new_acc" value="add" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="new_acc" value="{tr}add{/tr}" /></td></tr>
 </table>
 </form>
 <h3>{tr}User accounts{/tr}</h3>

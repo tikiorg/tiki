@@ -8,7 +8,7 @@
 <div align="center">
 <form action="tiki-directory_search.php" method="post">
 <input type="hidden" name="parent" value="{$parent}" />
-{tr}Search{/tr}: 
+{tr}Find{/tr}: 
 <select name="how">
 <option value="or">{tr}any{/tr}</option>
 <option value="and">{tr}all{/tr}</option>
@@ -18,7 +18,7 @@
 <option value="all">{tr}in entire directory{/tr}</option>
 <option value="cat">{tr}in current category{/tr}</option>
 </select>
-<input type="submit" value="search" />
+<input type="submit" value="{tr}search{/tr}" />
 </form>
 </div>
 
