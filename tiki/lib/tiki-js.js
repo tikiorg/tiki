@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.46 2004-05-03 04:21:08 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.47 2004-05-05 20:09:52 sylvieg Exp $
 
 function getElementById(id) {
     if (document.all) {
@@ -257,15 +257,12 @@ function tikitabs(focus,max) {
 }
 
 function setfoldericonstate(foo) {
-	pic = new Image();
-
 	if (getCookie(foo) == "o") {
-		pic.src = "img/icons/ofo.gif";
+		src = "ofo.gif";
 	} else {
-		pic.src = "img/icons/fo.gif";
+		src = "fo.gif";
 	}
-
-	document.getElementsByName(foo + 'icn')[0].src = pic.src;
+	document.getElementsByName(foo + 'icn')[0].src = document.getElementsByName(foo + 'icn')[0].src.replace(/[^\\\/]*$/, src);
 }
 /* foo: name of the menu
  * def: menu type (e:extended, c:collapsed, f:fixed)
