@@ -22,7 +22,7 @@
 	<input type="hidden" name="postId" value="{$postId}" />
 	<table class="normal">
 	<tr>
-		<td class="formcolor">{tr}List of email addresses sepparated by commas{/tr}</td>
+		<td class="formcolor">{tr}List of email addresses separated by commas{/tr}</td>
 		<td class="formcolor"><textarea cols="60" rows="5" name="addresses">{$addresses}</textarea></td>
 	</tr>
 	<tr>
