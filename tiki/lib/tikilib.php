@@ -6091,7 +6091,7 @@ class TikiLib {
     $emails = $this->get_mail_events('article_submitted','*');
     
     $foo = parse_url($_SERVER["REQUEST_URI"]);
-    $machine ='http://'.$_SERVER["SERVER_NAME"].$foo["path"];
+    $machine =httpPrefix().$foo["path"];
     
     foreach ($emails as $email) 
     {
@@ -9244,6 +9244,19 @@ function chkgd2() {
 
 function httpScheme() {
 	return 'http' . ((isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 's' : '');
+}
+
+function httpPrefix() {
+	if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) {
+		$rv = 'https://' . $_SERVER['SERVER_NAME'];
+		if ($_SERVER['SERVER_PORT'] != 443)
+			$rv .= ':' . $_SERVER['SERVER_PORT'];
+	} else {
+		$rv = 'http://' . $_SERVER['SERVER_NAME'];
+		if ($_SERVER['SERVER_PORT'] != 80)
+			$rv .= ':' . $_SERVER['SERVER_PORT'];
+	}
+	return $rv;
 }
 
 ?>

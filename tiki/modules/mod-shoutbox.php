@@ -8,7 +8,7 @@ if(isset($setup_parsed_uri["query"]) ) {
 } else {
   $sht_query=Array();
 }
-$shout_father=httpScheme().'://'.$_SERVER["SERVER_NAME"].$setup_parsed_uri["path"];
+$shout_father=httpPrefix().$setup_parsed_uri["path"];
 if(isset($sht_query) && count($sht_query)>0) {
   $sht_first=1;
   foreach($sht_query as $sht_name => $sht_val) {

@@ -14,9 +14,9 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-forum_rss.php",$tikiIndex,$foo["path"]);
 $foo2=str_replace("tiki-forum_rss.php","img/tiki.jpg",$foo["path"]);
 $foo3=str_replace("tiki-forum_rss","tiki-view_forum_thread",$foo["path"]);
-$home = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo1;
-$img = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo2;
-$read = httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo3;
+$home = httpPrefix().$foo1;
+$img = httpPrefix().$foo2;
+$read = httpPrefix().$foo3;
 
 $now = date("U");
 $changes = $tikilib->list_forum_topics($_REQUEST["forumId"],0,$max_rss_forum,'commentDate_desc', '');

@@ -84,7 +84,7 @@ $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-view_banner","display_banner",$foo["path"]);
 
 
-$fp=fopen(httpScheme().'://'.$_SERVER["SERVER_NAME"].$foo1."?id=$bannerId","r");
+$fp=fopen(httpPrefix().$foo1."?id=$bannerId","r");
 $raw='';
 while(!feof($fp)) {
 $raw .= fread($fp,8192);

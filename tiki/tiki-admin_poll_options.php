@@ -80,7 +80,7 @@ if($offset>0) {
 } else {
   $smarty->assign('prev_offset',-1); 
 }
-$smarty->assign('ownurl',httpScheme().'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]);
+$smarty->assign('ownurl',httpPrefix().$_SERVER["REQUEST_URI"]);
 $smarty->assign_by_ref('channels',$channels["data"]);
 
 
