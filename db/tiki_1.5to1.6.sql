@@ -5,6 +5,7 @@ create table tiki_user_notes(
   user varchar(200) not null,
   noteId integer(12) not null auto_increment,
   created integer(14),
+  name varchar(255),
   lastModif integer(14),
   data text,
   primary key(noteId)
