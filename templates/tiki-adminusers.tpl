@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.60 2004-07-16 19:35:50 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.61 2004-08-02 20:45:32 teedog Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -134,6 +134,8 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
   <br /><input type="submit" value="{tr}ok{/tr}" />
   {/if}
   </p>
+<input type="hidden" name="find" value="{$find|escape}" />
+<input type="hidden" name="numrows" value="{$numrows|escape}">
 </form>
 
 {if $cant_pages > 1}
