@@ -187,7 +187,6 @@
 {else}
 	<span class="highlight">{tr}{$atts_cnt} files attached{/tr}</span>
 {/if}</a></span>
-{/if}
 
 {if $feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
      <span class="tabbut"><a href="tiki-edit_translation.php?page={$page|escape:'url'}" class="tablink">{tr}translation{/tr}</a></span>
