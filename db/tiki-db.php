@@ -70,10 +70,14 @@ if (preg_match('/^adodb$/i', $api_tiki)) {
 	define('ADODB_ASSOC_CASE', 2);
 	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
 	include_once ('adodb.inc.php');
+	if( !empty( $error_handler_file ) && is_file( $error_handler_file ) ) {
+		include_once($error_handler_file);
+	} else {
+		include_once ('adodb-pear.inc.php');
+	}
 	//include_once('adodb-error.inc.php');
 	//include_once('adodb-errorhandler.inc.php');
 	//include_once('adodb-errorpear.inc.php');
-	include_once ('adodb-pear.inc.php');
 
 	if ($db_tiki == 'pgsql') {
 		$db_tiki = 'postgres7';

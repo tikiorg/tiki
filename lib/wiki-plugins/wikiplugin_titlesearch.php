@@ -2,7 +2,7 @@
     /**
     * Include the library {@link PluginsLib}
     */
-    require_once "lib/wiki/pluginslib.php";
+    require_once TIKI_LIB_PATH."/wiki/pluginslib.php";
     /**
     * Title Search Plugin
     * Search the titles of all pages in this wiki
@@ -17,7 +17,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.14 $
+    * @version $Revision: 1.15 $
     */
     class WikiPluginTitleSearch extends PluginsLib {
         var $expanded_params = array("exclude", "info");
@@ -35,7 +35,7 @@
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.14 $");
+                "\$Revision: 1.15 $");
         }
         function run ($data, $params) {
             global $wikilib;

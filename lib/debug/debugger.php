@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger.php,v 1.4 2003-08-07 02:31:58 rossta Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debugger.php,v 1.5 2004-01-06 20:46:55 gravesweeper Exp $
  *
  * \brief Tiki internal debugger 
  *
@@ -8,7 +8,7 @@
  *
  */
 
-require_once('lib/debug/debugger-common.php');
+require_once(TIKI_LIB_PATH.'/debug/debugger-common.php');
 
 /// Path to debugger's external commands
 define('DBG_PLUGINS_DIR', 'lib/debug');

@@ -7,9 +7,10 @@ usage is simple and feel free to improve it
 
 class Cachelib {
 
-  var $folder = "temp/cache";
+  var $folder;
 
   function Cachelib() {
+	$this->folder = TIKI_PATH."/temp/cache";
     if(!file_exists($this->folder)) {
   	    mkdir($this->folder);
     }
