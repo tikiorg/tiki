@@ -67,6 +67,9 @@
       <td style="text-align:center;"><a href="tiki-admin.php?page=search"
           class="link"><img border='0' src='img/icons/admin_search.png'
           alt='icon' /><br/>{tr}Search{/tr}</a></td>
+      <td style="text-align:center;"><a href="tiki-admin.php?page=jukebox"
+          class="link"><img border='0' src='img/icons/admin_jukebox.png'
+          alt='icon' /><br/>{tr}Jukebox{/tr}</a></td>
     </tr></table>
   </div>
 </div>
