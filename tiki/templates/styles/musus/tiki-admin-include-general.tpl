@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin-include-general.tpl,v 1.4 2004-01-29 03:36:41 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/tiki-admin-include-general.tpl,v 1.5 2004-01-30 07:52:48 btodoroff Exp $ *}
 <div class="tiki">
   <div class="tiki-title">{tr}General preferences and settings{/tr}</div>
   <div class="tiki-content">
@@ -21,6 +21,15 @@
               <option value="{$slide_styles[ix]|escape}"
                 {if $slide_style eq $slide_styles[ix]}selected="selected"{/if}>
                 {$slide_styles[ix]}</option>
+            {/section}
+        </select></td>
+      </tr><tr>
+        <td><label for="general-icontheme">{tr}Icon Theme{/tr}: </label></td>
+        <td><select name="icon_style" id="general-icontheme">
+            {section name=ix loop=$icon_styles}
+              <option value="{$icon_styles[ix]|escape}"
+                {if $icon_style eq $icon_styles[ix]}selected="selected"{/if}>
+                {$icon_styles[ix]}</option>
             {/section}
         </select></td>
       </tr><tr><td colspan="2"><hr /></td></tr>
