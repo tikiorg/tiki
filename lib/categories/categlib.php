@@ -100,7 +100,7 @@ class CategLib extends TikiLib {
     function update_category($categId,$name,$description)
   {
     $name = addslashes($name);
-    $descrption = addslashes($description);
+    $description = addslashes($description);
     $query = "update tiki_categories set name='$name', description='$description' where categId=$categId";
     $result = $this->query($query);
   }
