@@ -95,6 +95,11 @@ class TikiLib {
 
   /*shared*/ function httprequest($url,$reqmethod=HTTP_REQUEST_METHOD_GET)
   {
+    // rewrite url if sloppy 
+    if (strpos($url,"http://")!==0)
+      $url = "http://".$url;
+    if (substr_count($url,"/")<3)
+      $url .= "/";
     global $use_proxy;
     if ($use_proxy == 'y') {
       global $proxy_host;
@@ -1942,13 +1947,7 @@ class TikiLib {
   {
     $query = "select url from tiki_link_cache where cacheId=$cacheId";
     $url = $this->getOne($query);
-    @$fp = fopen($url,"r");
-    if(!$fp) return false;
-    $data = '';
-    while(!feof($fp)) {
-      $data .= fread($fp,4096);
-    }
-    fclose($fp);
+    $data = $this->httprequest($url);
     $data = addslashes($data);
     $refresh = date("U");
     $query = "update tiki_link_cache set data='$data', refresh=$refresh where cacheId=$cacheId";
@@ -2047,13 +2046,7 @@ class TikiLib {
     // This function stores a cached representation of a page in the cache
     // Check if the URL is not already cached
     //if($this->is_cached($url)) return false;
-    @$fp = fopen($url,"r");
-    if(!$fp) return false;
-    $data = '';
-    while(!feof($fp)) {
-      $data .= fread($fp,4096);
-    }
-    fclose($fp);
+    $data=$this->httprequest($url);
     $data = addslashes($data);
     $refresh = date("U");
     $query = "insert into tiki_link_cache(url,data,refresh) values('$url','$data',$refresh)";
