@@ -81,7 +81,8 @@ $body = nl2br(htmlentities($newslib->news_get_body($_REQUEST['id'])));
 $smarty->assign('headers',$headers);
 $smarty->assign('body',$body);
 
-
+$section='newsreader';
+include_once('tiki-section_options.php');
 
 include_once('tiki-mytiki_shared.php');
 

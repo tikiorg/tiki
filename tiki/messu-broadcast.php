@@ -105,6 +105,9 @@ if(isset($_REQUEST['send'])) {
 $groups = $userlib->get_groups(0,-1,'groupName_asc','');
 $smarty->assign_by_ref('groups',$groups["data"]);
 
+$section='user_messages';
+include_once('tiki-section_options.php');
+
 include_once('tiki-mytiki_shared.php');
 $smarty->display('tiki.tpl');
 

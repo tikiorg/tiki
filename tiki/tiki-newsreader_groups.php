@@ -46,6 +46,9 @@ $smarty->assign_by_ref('groups',$groups);
 
 include_once('tiki-mytiki_shared.php');
 
+$section='newsreader';
+include_once('tiki-section_options.php');
+
 $smarty->assign('mid','tiki-newsreader_groups.tpl');
 $smarty->display('tiki.tpl');
 ?>
