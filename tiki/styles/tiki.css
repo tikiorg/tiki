@@ -2060,7 +2060,6 @@ background-color : #ffffff;
 margin : 0;
 border : 1px solid #adacaf; 
 }
-
 .codecaption {
 font-size : smaller;
 padding : 0ex 1ex;
@@ -2076,6 +2075,8 @@ background-color: #E9ECEF;
 font-weight : bold;
 -moz-border-radius-topright : 1ex;
 }
+/* patch temporaire to see the edit comment textarea */
+textarea#editpost2 { width: 100%} 
 
 /* wiki diff styles */
 

@@ -2949,54 +2949,9 @@ class TikiLib extends TikiDB {
 	$data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
     }
 
-/*
-    Removed by Robin Powell.  Functions moved in to replace_preparse.  Left for
-    reference; should be removed eventually.  Date: 11 Aug 2004.
-
-    // AWC ADDITION
-    // This function replaces pre- and no-parsed sections with unique keys
-    // and saves the section contents for later reinsertion.
-    function parse_pp_np(&$data, &$preparsed, &$noparsed) {
-	// Find all sections delimited by ~pp~ ... ~/pp~
-	// and replace them in the data stream with a unique key
-	preg_match_all("/~pp~([^~]*)~\/pp~/m", $data, $preparse);
-
-	foreach ($preparse[1] as $pp) {
-	    $key = md5($this->genPass());
-	    $preparsed["key"][] = "/". preg_quote($key)."/";
-	    $preparsed["data"][] = "<pre>$pp</pre>";
-	    $data = str_replace("~pp~". $pp. "~/pp~", $key, $data);
-	}
-
-	// TODO: Is this a problem if user insert <PRE> but after parsing
-	//     will get <pre> (lowercase)?? :)
-	preg_match_all("/(<[Pp][Rr][Ee]>)((.|\n)*?)(<\/[Pp][Rr][Ee]>)/", $data, $ppreparse);
-	$idx = 0;
-
-	foreach ($ppreparse[2] as $ppp) {
-	    $key = md5($this->genPass());
-	    $preparsed["key"][] = "/". preg_quote($key)."/";
-	    $preparsed["data"][] = "<pre>$ppp</pre>";
-	    $data = str_replace($ppreparse[1][$idx] . $ppp . $ppreparse[4][$idx], $key, $data);
-	    $idx++;
-	}
-
-
-	    // Find all sections delimited by ~np~ ... ~/np~
-	    // and replace them in the data stream with a unique key
-	    preg_match_all("/\~np\~((.|\n)*?)\~\/np\~/", $data, $noparse);
-
-	foreach ($noparse[1] as $np) {
-	    $key = md5($this->genPass());
-	    $noparsed["key"][] = "/". preg_quote($key)."/";
-	    $noparsed["data"][] = $np;
-	    $data = str_replace("~np~". $np."~/np~", $key, $data);
-	}
-    }
-*/
-
     // Reverses parse_pp_np.
-    function replace_preparse(&$data, &$preparsed, &$noparsed) {
+    function replace_preparse(&$data, &$preparsed, &$noparsed)
+    {
 	$data1 = $data;
 	$data2 = "";
 
@@ -3017,18 +2972,101 @@ class TikiLib extends TikiDB {
 	}
     }
 
+    function plugin_match(&$data, &$plugins)
+    {
+	$matcher = "/\{([A-Z]+)\(|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
+
+	preg_match( $matcher, $data, $plugins, PREG_OFFSET_CAPTURE );
+
+	/*
+	   print "<pre>Plugin match begin:";
+	   print_r( $plugins );
+	   print "</pre>";
+	 */
+
+	// Check to make sure there was a match.
+	if(
+		count( $plugins ) > 0 &&
+		count( $plugins[0] )  > 0 &&
+		count( $plugins[0][0] ) > 0
+	  )
+	{
+	    // If it is a true plugin
+	    if( $plugins[0][0][0] == "{" )
+	    {
+		$pos = $plugins[0][1]; // where plugin starts
+
+		$pos_end = $pos+strlen($plugins[0][0]); // where character after ( is
+
+		// Here we're going to look for the end of the arguments for the plugin.
+
+		$i = $pos_end;
+		$last_data = strlen($data);
+
+		// We start with one open curly brace, and one open paren.
+		$curlies = 1;
+		$parens = 1;
+
+		// While we're not at the end of the string, and we still haven't found both closers
+		while( $i < $last_data )
+		{
+		    //print "<pre>Data char: $data[$i], $curlies, $parens\n.</pre>\n";
+		    if( $data[$i] == "{" )
+		    {
+			$curlies++;
+		    } else if( $data[$i] == "(" ) {
+			$parens++;
+		    } else if( $data[$i] == "}" ) {
+			$curlies--;
+		    } else if( $data[$i] == ")" ) {
+			$parens--;
+		    }
+
+		    // If we found the end of the match...
+		    if( $curlies == 0 && $parens == 0 )
+		    {
+			break;
+		    }
+
+		    $i++;
+		}
+
+		if( $curlies == 0 && $parens == 0 )
+		{
+		    $plugins[2][0] = (string) substr($data, $pos_end, $i - $pos_end - 1);
+		    $plugins[2][1] = $i + 1;
+		    $plugins[0][0] = $plugins[0][0] . (string) substr($data, $pos_end, $i - $pos_end + 1);
+		    /*
+		       print "<pre>Match found: ";
+		       print( $plugins[2][0] );
+		       print "</pre>";
+		     */
+		}
+	    } else {
+		$plugins[1][0] = $plugins[0][0];
+		$plugins[1][1] = $plugins[0][1];
+		$plugins[2][0] = "";
+		$plugins[2][1] = 1;
+	    }
+	}
+
+	/*
+	   print "<pre>Plugin match end:";
+	   print_r( $plugins );
+	   print "</pre>";
+	 */
+
+    }
+
     // This recursive function handles pre- and no-parse sections and plugins
     function parse_first(&$data, &$preparsed, &$noparsed) {
 	global $dbTiki;
-
-	$matcher = "/\{([A-Z]+)\(([^\)]*)\)( *\/ *)?\}|~(pp)~|~(np)~|&lt;[pP][rR][eE]&gt;/";
 
 	// Handle pre- and no-parse sections
 	//$this->parse_pp_np($data, $preparsed, $noparsed);
 
 	// Find the plugins
-	// note: [1] is plugin name, [2] is plugin arguments
-	preg_match( $matcher, $data, $plugins );
+	$this->plugin_match( $data, $plugins );
 
 	$data1 = $data;
 	$data2 = "";
@@ -3037,7 +3075,7 @@ class TikiLib extends TikiDB {
 	while( count($plugins) > 0 && ( $data1 != $data2 ) )
 	{
 	    $data1 = $data;
-	    $plugin_start = $plugins[0];
+	    $plugin_start = $plugins[0][0];
 
 	    /*
 	       print "<pre>real data: :".htmlspecialchars( $data ) .":</pre>";
@@ -3050,32 +3088,39 @@ class TikiLib extends TikiDB {
 
 	    if( count($plugins) > 1 )
 	    {
-		$plugin = $plugins[1];
-		$plugin_start_base = '{' . $plugins[1] . '(';
+		$plugin = $plugins[1][0];
+		$plugin_start_base = '{' . $plugins[1][0] . '(';
 	    }
 
-	    $pos = strpos($data, $plugin_start); // where plugin starts
+	    // print "<pre>plugin: :".htmlspecialchars( $plugin ) .":</pre>";
+
+	    $pos = $plugins[0][1]; // where the plugin starts
+	    $pos_middle = $plugins[2][1]; // where the part after the plugin arguments starts
 
 	    // process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
 	    if( preg_match("/\/ *\}$/",$plugin_start) )
 	    {
 		$plugin_end='';
-		$pos_end=$pos+strlen($plugin_start);
-	    } else if( preg_match( "/~pp~|~np~/", $plugin_start ) ) {
+		$pos_end=$pos_start+strlen($plugin_start);
+	    } else if( preg_match( "/^ *~pp~|^ *~np~/", $plugin_start ) ) {
 		$plugin_end = preg_replace( '/^(.)/', '$1/', $plugin_start );
 		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
-	    } else if( preg_match( "/&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
+	    } else if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
 		preg_match("/&lt;\/[pP][rR][eE]&gt;/", $data, $plugin_ends, 0, $pos); // where plugin data ends
 		$plugin_end = $plugin_ends[0];
 		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
 	    } else {
 		$plugin_end = '{' . $plugin . '}';
-		$pos_end = strpos($data, $plugin_end, $pos); // where plugin data ends
+		$pos_end = strpos($data, $plugin_end, $pos_middle); // where plugin data ends
 	    }
 
+	    /*
+	       print "<pre>plugin_end: :".htmlspecialchars( $plugin_end ) .":</pre>";
+	       print "<pre>pos's: :$pos, $pos_middle, $pos_end:</pre>";
+	     */
 
 	    // Extract the plugin data
-	    $plugin_data_len = $pos_end - $pos - strlen($plugins[0]);
+	    $plugin_data_len = $pos_end - $pos - strlen($plugins[0][0]);
 	    $plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
 
 	    /*
@@ -3083,7 +3128,7 @@ class TikiLib extends TikiDB {
 	       print "<pre>end: :".htmlspecialchars( $plugin_end ) .":</pre>";
 	     */
 
-	    if( preg_match( "/&lt;[pP][rR][eE]&gt;|~pp~|~np~/", $plugin_start ) )
+	    if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;|^ *~pp~|^ *~np~/", $plugin_start ) )
 		// ~pp~ type "plugins"
 	    {
 		$key = md5($this->genPass());
@@ -3092,11 +3137,11 @@ class TikiLib extends TikiDB {
 		if( $plugin_start == "~pp~" )
 		{
 		    $noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
-		} else if( preg_match( "/&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
-		    preg_match( "/&lt;([pP][rR][eE])&gt;/", $plugin_start, $plugins );
-		    $plugin_start2 = $plugins[1];
-		    preg_match( "/&lt;\/([pP][rR][eE])&gt;/", $plugin_end, $plugins );
-		    $plugin_end2 = $plugins[1];
+		} else if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
+		    preg_match( "/^ *&lt;([pP][rR][eE])&gt;/", $plugin_start, $plugins );
+		    $plugin_start2 = $plugins[1][0];
+		    preg_match( "/^ *&lt;\/([pP][rR][eE])&gt;/", $plugin_end, $plugins );
+		    $plugin_end2 = $plugins[1][0];
 		    $noparsed["data"][] = "<" . $plugin_start2 . ">" . $plugin_data . "</" . $plugin_end2 . ">";
 		} else {
 		    $noparsed["data"][] = $plugin_data;
@@ -3105,28 +3150,22 @@ class TikiLib extends TikiDB {
 		// Replace plugin section with its output in data
 		$data = substr_replace($data, $key, $pos, $pos_end - $pos + strlen($plugin_end));
 	    } else {
-
-		// We store CODE stuff out of the way too, but then process it as a plugin as well.
-		if( $plugin_start == "{CODE()}" )
-		{
-		    $key = md5($this->genPass());
-		    $noparsed["key"][] = "/". preg_quote($key)."/";
-		    $noparsed["data"][] = $plugin_data;
-
-		    $plugin_data = $key;
-		}
+		// print "<pre>args1: :".htmlspecialchars( $plugins[2][0] ) .":</pre>";
+		// Handle nested plugins in the arguments.
+		$this->parse_first($plugins[2][0], $preparsed, $noparsed);
+		// print "<pre>args2: :".htmlspecialchars( $plugins[2][0] ) .":</pre>";
 
 		// Normal plugins
 
 		// Construct plugin file pathname
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
-		$php_name .= strtolower($plugins[1]). '.php';
+		$php_name .= strtolower($plugins[1][0]). '.php';
 
 		// Construct plugin function name
-		$func_name = 'wikiplugin_' . strtolower($plugins[1]);
+		$func_name = 'wikiplugin_' . strtolower($plugins[1][0]);
 
 		// Construct argument list array
-		$params = split(',', trim($plugins[2]));
+		$params = split(',', trim($plugins[2][0]));
 		$arguments = array();
 
 		foreach ($params as $param) {
@@ -3146,23 +3185,45 @@ class TikiLib extends TikiDB {
 		if (file_exists($php_name)) {
 		    include_once ($php_name);
 
+		    // We store CODE stuff out of the way too, but then process it as a plugin as well.
+		    if( preg_match( '/^ *\{CODE\(/', $plugin_start ) )
+		    {
+			$ret = $func_name($plugin_data, $arguments);
+
+			// Pull the np out.
+			preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
+
+			$key = md5($this->genPass());
+			$noparsed["key"][] = "/". preg_quote($key)."/";
+			$noparsed["data"][] = $stuff[1];
+
+			$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
+
+		    } else {
+			// Handle nested plugins.
+			$this->parse_first($plugin_data, $preparsed, $noparsed);
+
+			$ret = $func_name($plugin_data, $arguments);
+		    }
+		} else {
 		    // Handle nested plugins.
-		    $this->parse_first($ret, $preparsed, $noparsed);
+		    $this->parse_first($plugin_data, $preparsed, $noparsed);
 
-		    $ret = $func_name($plugin_data, $arguments);
-
-		    // Handle pre- & no-parse sections and plugins inserted by this plugin
-		    $this->parse_first($ret, $preparsed, $noparsed);
-		    //$ret = $this->parse_data($ret);
-
-		    // Replace plugin section with its output in data
-		    $data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
+		    $ret = tra( "__WARNING__: No such module $plugin! " ) . $plugin_data;
 		}
+
+		// Handle pre- & no-parse sections and plugins inserted by this plugin
+		$this->parse_first($ret, $preparsed, $noparsed);
+		//$ret = $this->parse_data($ret);
+
+		// Replace plugin section with its output in data
+		$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
+
 	    }
 
 	    // Find the plugins
 	    // note: [1] is plugin name, [2] is plugin arguments
-	    preg_match( $matcher, $data, $plugins );
+	    $this->plugin_match( $data, $plugins );
 
 	    $data2 = $data;
 
@@ -3215,14 +3276,14 @@ class TikiLib extends TikiDB {
     }
 
 
-	//Updates a dynamic variable found in some object
-	/*Shared*/ function update_dynamic_variable($name,$value) {
-	    $query = "delete from `tiki_dynamic_variables` where `name`=?";
-	    $this->query($query,array($name),-1,-1,false);
-	    $query = "insert into `tiki_dynamic_variables`(`name`,`data`) values(?,?)";
-	    $this->query($query,Array($name,$value));
-	    return true;
-	}
+    //Updates a dynamic variable found in some object
+    /*Shared*/ function update_dynamic_variable($name,$value) {
+	$query = "delete from `tiki_dynamic_variables` where `name`=?";
+	$this->query($query,array($name),-1,-1,false);
+	$query = "insert into `tiki_dynamic_variables`(`name`,`data`) values(?,?)";
+	$this->query($query,Array($name,$value));
+	return true;
+    }
 
 
     // split string into a list of
@@ -3325,52 +3386,53 @@ class TikiLib extends TikiDB {
 	return $closed;
     }
 
-	//PARSEDATA
-	function parse_data($data) {
-	    global $page_regex;
+    //PARSEDATA
+    function parse_data($data) {
+	global $page_regex;
 
-	    global $slidemode;
-	    //	global $feature_hotwords; // doesn't seem to be used in this function
-	    global $feature_autolinks;
-	    global $cachepages;
-	    global $ownurl_father;
-	    global $feature_drawings;
-	    global $tiki_p_admin_drawings;
-	    global $tiki_p_edit_drawings;
-	    global $tiki_p_edit_dynvar;
-	    global $feature_wiki_pictures;
-	    global $tiki_p_upload_picture;
-	    global $feature_wiki_plurals;
-	    global $feature_wiki_tables;
-	    global $page;
-	    global $page_ref_id;
-	    global $rsslib;
-	    global $dbTiki;
-	    global $structlib;
-	    global $user;
-	    global $tikidomain;
-	    global $feature_wikiwords;
-	    global $feature_wiki_paragraph_formatting;
-	    global $feature_wikiwords_usedash;
+	global $slidemode;
+//	global $feature_hotwords; // doesn't seem to be used in this function
+	global $feature_autolinks;
+	global $cachepages;
+	global $ownurl_father;
+	global $feature_drawings;
+	global $tiki_p_admin_drawings;
+	global $tiki_p_edit_drawings;
+	global $tiki_p_edit_dynvar;
+	global $feature_wiki_pictures;
+	global $tiki_p_upload_picture;
+	global $feature_wiki_plurals;
+	global $feature_wiki_tables;
+	global $page;
+	global $page_ref_id;
+	global $rsslib;
+	global $dbTiki;
+	global $structlib;
+	global $user;
+	global $tikidomain;
+	global $feature_wikiwords;
+	global $feature_wiki_paragraph_formatting;
+	global $feature_wikiwords_usedash;
+	global $feature_multilingual;
 
-	    // Process pre_handlers here
-	    if (is_array($this->pre_handlers)) {
-		foreach ($this->pre_handlers as $handler) {
-		    $data = $handler($data);
-		}
+	// Process pre_handlers here
+	if (is_array($this->pre_handlers)) {
+	    foreach ($this->pre_handlers as $handler) {
+		$data = $handler($data);
 	    }
+	}
 
-	    // Handle pre- and no-parse sections and plugins
-	    $preparsed = array();
-	    $noparsed = array();
-	    $this->parse_first($data, $preparsed, $noparsed);
+	// Handle pre- and no-parse sections and plugins
+	$preparsed = array('data'=>array(),'key'=>array());
+	$noparsed = array('data'=>array(),'key'=>array());
+	$this->parse_first($data, $preparsed, $noparsed);
 
-	    // Extract [link] sections (to be re-inserted later)
-	    $noparsedlinks = array();
+	// Extract [link] sections (to be re-inserted later)
+	$noparsedlinks = array();
 
-	    // This section matches [...].
-	    // Added handling for [[foo] sections.  -rlpowell
-	    preg_match_all("/(?<!\[)\[([^\[][^\]]+)\]/", $data, $noparseurl);
+	// This section matches [...].
+	// Added handling for [[foo] sections.  -rlpowell
+	preg_match_all("/(?<!\[)\[([^\[][^\]]+)\]/", $data, $noparseurl);
 
 	    foreach (array_unique($noparseurl[1])as $np) {
 		$key = md5($this->genPass());
@@ -3729,19 +3791,19 @@ class TikiLib extends TikiDB {
 		    $page_parse_pq = preg_quote($page_parse, "/");
 		    $data = preg_replace("/\(\($page_parse_pq\)\)/", "$repl", $data);
 		}
-	    }
+	}
 
-	    // Links to internal pages
-	    // If they are parenthesized then don't treat as links
-	    // Prevent ))PageName(( from being expanded \"\'
-	    //[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
-	    if ($feature_wikiwords == 'y') {
-		// The first part is now mandatory to prevent [Foo|MyPage] from being converted!
-		if ($feature_wikiwords_usedash == 'y') {
-		    preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-		} else {
-		    preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9]+[A-Z][a-z0-9]+[A-Za-z0-9]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-		}
+	// Links to internal pages
+	// If they are parenthesized then don't treat as links
+	// Prevent ))PageName(( from being expanded \"\'
+	//[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
+	if ($feature_wikiwords == 'y') {
+	    // The first part is now mandatory to prevent [Foo|MyPage] from being converted!
+	    if ($feature_wikiwords_usedash == 'y') {
+		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+	    } else {
+		preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9]+[A-Z][a-z0-9]+[A-Za-z0-9]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
+	    }
 		$words = $this->get_hotwords();
 		foreach (array_unique($pages[2])as $page_parse) {
 		    if (!array_key_exists($page_parse, $words)) {
@@ -3897,16 +3959,16 @@ class TikiLib extends TikiDB {
 		    }
 		}
 
-		if (!strstr($link, '//'))
-		{
-		    $target = '';
-		}
+	    if (!strstr($link, '//'))
+	    {
+		$target = '';
+	    }
+	
+	    // The (?<!\[) stuff below is to give users an easy way to
+	    // enter square brackets in their output; things like [[foo]
+	    // get rendered as [foo]. -rlpowell
 
-		// The (?<!\[) stuff below is to give users an easy way to
-		// enter square brackets in their output; things like [[foo]
-		// get rendered as [foo]. -rlpowell
-
-		if ($cachepages == 'y' && $this->is_cached($link))
+	if ($cachepages == 'y' && $this->is_cached($link))
 		{
 		    //use of urlencode for using cached versions of dynamic sites
 		    $cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
@@ -4368,39 +4430,44 @@ class TikiLib extends TikiDB {
 	    if (count($anch))
 		$html = $this->parse_data($html);
 
-	    $data = str_replace("{maketoc}", $html, $data);
+	$data = str_replace("{maketoc}", $html, $data);
 
-	    // Replace rss modules
-	    if (preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/", $data, $rsss)) {
-		if (!isset($rsslib)) {
-		    include ('lib/rss/rsslib.php');
-		}
-
-		$temp_max = count($rsss[0]);
-		for ($i = 0; $i < $temp_max; $i++) {
-		    $id = $rsss[1][$i];
-
-		    $max = $rsss[3][$i];
-
-		    if (empty($max))
-			$max = 99;
-
-		    $rssdata = $rsslib->get_rss_module_content($id);
-		    $items = $rsslib->parse_rss_data($rssdata, $id);
-
-		    $repl = '<ul class="rsslist">';
-
-		    $temp_max2 = count($items);
-		    for ($j = 1; $j < $temp_max2 && $j < $max; $j++) {
-			$repl .= '<li class="rssitem"><a target="_blank" href="' . $items[$j]["link"] . '" class="rsslink">' . $items[$j]["title"] . '</a>';
-			if ($items[$j]["pubdate"] <> '') { $repl .= ' <span class="rssdate">('.$items[$j]["pubdate"].')</span>'; }
-			$repl .= '</li>';
-		    }
-
-		    $repl .= '</ul>';
-		    $data = str_replace($rsss[0][$i], $repl, $data);
-		}
+	// Replace rss modules
+	if (preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/", $data, $rsss)) {
+	    if (!isset($rsslib)) {
+		include ('lib/rss/rsslib.php');
 	    }
+
+	    $temp_max = count($rsss[0]);
+	    for ($i = 0; $i < $temp_max; $i++) {
+		$id = $rsss[1][$i];
+
+		$max = $rsss[3][$i];
+
+		if (empty($max))
+		    $max = 99;
+
+		$rssdata = $rsslib->get_rss_module_content($id);
+		$items = $rsslib->parse_rss_data($rssdata, $id);
+
+		$repl="";		
+		if ($items[0]["isTitle"]=="y") {
+			$repl .= '<div class="wiki"><a target="_blank" href="'.$items[0]["link"].'">'.$items[0]["title"].'</a></div>'; 
+			$items = array_slice ($items, 1);
+		}
+
+		$repl .= '<ul class="rsslist">';
+		$temp_max2 = count($items);
+		for ($j = 0; $j < $temp_max2 && $j < $max; $j++) {
+		    $repl .= '<li class="rssitem"><a target="_blank" href="' . $items[$j]["link"] . '" class="rsslink">' . $items[$j]["title"] . '</a>';
+		    if (isset($items[$j]["pubDate"]) && $items[$j]["pubDate"] <> '') { $repl .= ' <span class="rssdate">('.$items[$j]["pubDate"].')</span>'; }
+		    $repl .= '</li>';
+		}
+
+		$repl .= '</ul>';
+		$data = str_replace($rsss[0][$i], $repl, $data);
+	    }
+	}
 
 	// linebreaks using %%%
 	$data = str_replace("%%%", "<br />", $data);

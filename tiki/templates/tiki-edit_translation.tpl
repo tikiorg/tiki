@@ -60,7 +60,7 @@
 
 {if count($trads) > 1}
 	<table class="normal">
-	<tr><td class="heading">{tr}Language{/tr}</td><td class="heading">{$title}</td><td class="heading">Actions</td></tr>
+	<tr><td class="heading">{tr}Language{/tr}</td><td class="heading">{tr}Page{/tr}</td><td class="heading">{tr}Actions{/tr}</td></tr>
 	{cycle values="odd,even" print=false}
 	{section name=i loop=$trads}
 	<tr class="{cycle}">

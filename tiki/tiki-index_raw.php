@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.17 2004-08-12 22:31:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_raw.php,v 1.18 2004-08-13 19:16:52 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -122,7 +122,7 @@ if ($tiki_p_admin_wiki == 'y') {
 // Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
 $preparsed = array();
 $noparsed = array();
-$tikilib->parse_pp_np( $info["data"], $preparsed, $noparsed );
+$tikilib->parse_first( $info["data"], $preparsed, $noparsed );
 
 $pdata = $tikilib->parse_data_raw($info["data"]);
 
