@@ -2,7 +2,7 @@ set quoted_identifier on
 go
 
 -- $Rev$
--- $Date: 2004-07-15 19:30:54 $
+-- $Date: 2004-07-16 20:54:57 $
 -- $Author: teedog $
 -- $Name: not supported by cvs2svn $
 -- phpMyAdmin MySQL-Dump
@@ -8253,6 +8253,8 @@ go
 -- Community tables end
 --
 
+
+
 --
 -- Tables of the Opinion-Network
 --
@@ -8278,6 +8280,7 @@ go
 CREATE TABLE "tiki_opnet_formtype" (
 id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 name VARCHAR( 30 ) NOT NULL ,
+timestamp DATE NOT NULL,
 PRIMARY KEY ( id ) 
 )
 go
@@ -8292,7 +8295,7 @@ CREATE TABLE "tiki_opnet_answer" (
 id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 id_question INT( 10 ) NOT NULL ,
 id_filledform INT( 10 ) NOT NULL ,
-value INT( 10 ) NOT NULL ,
+value TEXT NOT NULL ,
 PRIMARY KEY ( id ) 
 )
 go
@@ -8308,6 +8311,7 @@ id INT( 10 ) NOT NULL AUTO_INCREMENT ,
 who INT( 10 ) NOT NULL ,
 about_who INT( 10 ) NOT NULL ,
 which_form INT( 10 ) NOT NULL ,
+timestamp DATE NOT NULL,
 PRIMARY KEY ( id ) 
 )
 go
@@ -8317,7 +8321,6 @@ go
 --
 -- Opinion-Network tables END
 --
-
 go
 
 
