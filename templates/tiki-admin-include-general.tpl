@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.22 2003-11-13 10:39:55 ohertel Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.23 2003-11-18 03:22:00 chealer Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -159,7 +159,9 @@
         <td class="form" >
           {tr}Display modules to all groups always{/tr}:</td>
         <td ><input type="checkbox" name="modallgroups"
-              {if $modallgroups eq 'y'}checked="checked"{/if}/>
+              {if $modallgroups eq 'y'}checked="checked"{/if} {popup text="Warning! New admins, there is currently a bug
+that should remove your login module if you disable this, making you unable to get back in Tiki. Use tiki-login_scr.php to 
+get back in if this happens to you. The corresponding SF bug tracker is 835233." textcolor=red}/>
         </td>
       </tr><tr>
         <td class="form">{tr}Use cache for external pages{/tr}:</td>
