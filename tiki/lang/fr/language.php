@@ -2539,8 +2539,8 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Height of top Heading" => "Hauteur de l'en-tête du haut",
 "Height of mid Heading" => "Height of mid Heading",//??
 "Height of inner Heading" => "Height of inner Heading",//??
-"tbheight" => "tbheight",
-"imagescale" => "échelleImages",
+"tbheight" => "tbheight",//??
+"imagescale" => "échelleImages",//??
 "Select Wiki Pages" => "Sélectionner les pages Wiki",
 "reset" => "réinitialiser",
 "Create PDF" => "Créer un PDF",
@@ -2674,11 +2674,11 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Most active blogs" => "Blogues les plus actifs",
 "Blogs last posts" => "Derniéres publications de blogue",
 "Post date" => "Date de publication",
-"Wiki top authors" => "Wiki top authors",//??
-"Top article authors" => "Top article authors",//??
+"Wiki top authors" => "Auteurs Wiki les plus actifs",
+"Top article authors" => "Auteurs d'articles les plus actifs",
 "Tracker was modified at " => "Le traqueur a été modifié à ",
-"Missing db param" => "Missing db param",//??
-"There is an error in the plugin data" => "There is an error in the plugin data",//??
+"Missing db param" => "Le paramètre db manque",
+"There is an error in the plugin data" => "Il y a une erreur dans la requête passé au plugin",
 "Welcome to our newsletter!" => "Bienvenue sur notre newsletter!",
 "This email address has been added to the list of subscriptors of:" => "Cet email a été ajouté à la liste des inscrits sur :",
 "This email address has been removed to the list of subscriptors of:" => "Cet email a été retiré de la la liste des inscrits à :",
@@ -2724,10 +2724,10 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "\n for rows" => "\n pour rangées",
 "Admin Calendars" => "Administrer les calendriers",
 "Create/edit Calendars" => "Ajouter/modifier un calendrier",
-"Custom Locations" => "Personaliser Locations",//??
-"Custom Categories" => "Custom Categories",//??
-"Custom Languages" => "Custom Languages",//??
-"Custom Priorities" => "Custom Priorities",//??
+"Custom Locations" => "Locations configurables",
+"Custom Categories" => "Categories configurables",
+"Custom Languages" => "Langues configurables",
+"Custom Priorities" => "Priorités configurables",
 "List of Calendars" => "Liste des calendriers",
 "loc" => "loc",
 "cat" => "cat",
@@ -2736,8 +2736,8 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Use {literal}{{/literal}ed id=name} or {literal}{{/literal}ted id=name} to insert dynamic zones" => "Utilisez {literal}{{/literal}ed id=name} ou {literal}{{/literal}ted id=name} pour insérer une zone dynamique",
 "Number of displayed rows" => "Nombre de rangées affichées",
 "Refresh" => "Réactualiser",
-"Group Calendars" => "Groupes",//??
-"Tools Calendars" => "Sections",//??
+"Group Calendars" => "Groupes de calendriers",
+"Tools Calendars" => "Sections de calendriers",
 "hide from display" => "masqué à l'affichage",
 "Tiki Calendars" => "Calendriers Tiki",
 "+1d" => "+1j",
@@ -2748,7 +2748,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "+" => "+",
 "Edit Calendar Item" => "Modifier un item de calendrier",
 "Calendrier" => "Calendrier",
-"If you change the calendar selection, please refresh to get the appropriated list in Category, Location and people (if applicable to the calendar you choose)." => "If you change the calendar selection, please refresh to get the appropriated list in Category, Location and people (if applicable to the calendar you choose).",//??
+"If you change the calendar selection, please refresh to get the appropriated list in Category, Location and people (if applicable to the calendar you choose)." => "Si vous changez le calendrier sélectionné, SVP réactualisez la page pour avoir les informations correctes: catégorie, location et gens (si pertinentes pour ce calendrier).",
 "or create a new category" => "ou créer une nouvelle catégorie",
 "Location" => "Location",
 "or create a new location" => "ou créer une nouvelle location",
@@ -2756,15 +2756,15 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "comma separated usernames" => "noms utilisateurs séparés par des virgules",
 "choose" => "choisir",
 "Participants" => "Participants",
-"comma separated username:role" => "comma separated username:role",//??
+"comma separated username:role" => "username:role séparé par des virgules",//??
 "from the list" => "de la liste",
 "Chair" => "Président",
-"with roles" => "avec des rôles",
+"with roles" => "avec les rôles",
 "Required" => "Requis",
 "Optional" => "Optionnel",
 "End" => "Fin",
 "Url" => "Url",
-"Tentative" => "Tentative",
+"Tentative" => "Proposé",
 "Confirmed" => "Confirmé",
 "Cancelled" => "Annulé",
 "duplicate" => "dupliquer",
@@ -2774,9 +2774,9 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Cancel" => "Annuler",
 "choose a stylesheet" => "choisissez une feuille de style",
 "try" => "essayer",
-"File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model.",//??
+"File with names appended by -{\$user} are modifiable, others are only duplicable and be used as model." => "Seuls les fichiers avec un nom se terminant par -{\$user} sont modifiables. Les autres sont seulement duplicables et peuvent être utilisés comme modèle.",
 "Gallery Images" => "Gallerie d'images",
-"with checked" => "with checked",//??
+"with checked" => "sur ceux cochés",
 "merge selected notes into" => "fusionner les notes sélectionnées dans",
 "The newsletter was sent to {\$sent} email addresses" => "Cette newsletter a été envoyée à {\$sent} adresses email",
 "This newsletter will be sent to {\$subscribers} email addresses." => "Cette newsletter va être envoyée à {\$subscribers} adresses email.",
@@ -2789,7 +2789,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Please create a category first" => "SVP, créer une catégorie d'abord",
 "no such file" => "fuchier inexistant",
 "No image yet, sorry." => "Pas encore d'images, désolé.",
-"continued" => "continued",//??
+"continued" => "se continue",
 "click to edit" => "cliquer pour modifier",
 "new image uploaded by" => "nouvelle image téléchargé par",
 "uploaded by" => "téléchargé par",
@@ -2810,7 +2810,7 @@ $lang=Array( //le fichier language.php doit être en charset=utf-8 pour fonction
 "Hide Panels" => "Cacher les tableaux de bord",
 "today" => "aujourd'hui",
 "You should first ask that a calendar is created, so you can create events attached to it." => "Vous devez d'abord demandé qu'un calendrier soit créé pour pouvoir y attacher des événements.",
-"IRC log" => "Trace des discussions",
+"IRC log" => "Trace des IRCs",
 "Select" => "Sélectionner",
 "Submit a new link" => "Publier un nouveau lien",
 "Your Tiki account information for" => "Les informations de votre compte Tiki pour ",
@@ -2847,5 +2847,16 @@ from MyTiki->modules.<br/>\n<b>Note 2</b>: If you assign modules to groups make 
 "View the blog at:" => "Le blogue peut être vu à :",
 "If you don't want to receive these notifications follow this link:" => "Si vous ne voulez pas recevoir ces notifications, suivez le lien :",
 "The new page content is:" => "Le nouveau contenu de la page est :",
+"Select something to vote on" => "Voter en sélectionnant",
+"Show All" => "Montrer tout",
+"Maximum Rows" => "Nombre maximum de rangées",//??
+"Refresh Every" => "Réactualiser chaque",
+"Seconds" => "Secondes",
+"Search File" => "Search File",//??
+"online user" => "utilisateur connecté",
+"Send a message to" => "Envoyer un message à",
+"Send message" => "Envoyer un message",
+"More info about" => "Plus d'infos sur",
+"idle" => "libre",
 "##end###" => "###end###");
 ?>
