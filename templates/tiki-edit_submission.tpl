@@ -94,6 +94,7 @@
 </td></tr>
 {/if}
 
+{include file=categorize.tpl}
 
 <tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" id='subheading' name="heading" rows="5" cols="80" wrap="virtual">{$heading|escape}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
