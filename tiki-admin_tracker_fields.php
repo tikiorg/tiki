@@ -36,6 +36,10 @@ if(!isset($_REQUEST["fieldId"])) {
 $smarty->assign('fieldId',$_REQUEST["fieldId"]);
 
 
+if(!isset($_REQUEST['options'])) {
+  $_REQUEST['options']='';
+}
+
 if($_REQUEST["fieldId"]) {
   $info = $trklib->get_tracker_field($_REQUEST["fieldId"]);
 } else {

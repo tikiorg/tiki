@@ -10,7 +10,7 @@ if($feature_file_galleries != 'y') {
 }
 
 if($tiki_p_view_file_gallery != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cant view this section"));
+  $smarty->assign('msg',tra("Permission denied you can not view this section"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }

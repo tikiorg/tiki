@@ -16,7 +16,7 @@ if(isset($_REQUEST["change"])) {
   }
   
   if($_REQUEST["pass"]==$_REQUEST["oldpass"]) {
-    $smarty->assign('msg',tra("You cant use the same password again"));
+    $smarty->assign('msg',tra("You can not use the same password again"));
     $smarty->display("styles/$style_base/error.tpl");
     die;
   }

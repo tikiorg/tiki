@@ -238,6 +238,9 @@ $smarty->assign('feature_blogposts_comments',$feature_blogposts_comments);
 $feature_messages = 'n';
 $smarty->assign('feature_messages',$feature_messages);
 
+$system_os = $tikilib->get_preference('system_os','unknown');
+$smarty->assign('system_os',$system_os);
+
 $rememberme = $tikilib->get_preference('rememberme','disabled');
 $smarty->assign('rememberme',$rememberme);
 $remembertime = $tikilib->get_preference('remembertime',7200);

@@ -182,6 +182,10 @@ if(isset($_REQUEST["prefs"])) {
     $tikilib->set_preference("tikiIndex",$_REQUEST["tikiIndex"]); 
     $smarty->assign_by_ref('tikiIndex',$_REQUEST["tikiIndex"]);
   }
+  
+  $tikilib->set_preference('system_os',$_REQUEST['system_os']);
+  $smarty->assign('system_os',$_REQUEST['system_os']);
+  
   if(!empty($_REQUEST["urlIndex"])&&isset($_REQUEST["useUrlIndex"])&&$_REQUEST["useUrlIndex"]=='on') {
     $_REQUEST["tikiIndex"]=$_REQUEST["urlIndex"];	
     $tikilib->set_preference("tikiIndex",$_REQUEST["tikiIndex"]); 
@@ -1472,6 +1476,8 @@ $maxVersions = $tikilib->get_preference("maxVersions", 20);
 $maxRecords = $tikilib->get_preference("maxRecords",10);
 $title = $tikilib->get_preference("title","");
 $popupLinks = $tikilib->get_preference("popupLinks",'n');
+$gal_match_regex = $tikilib->get_preference('gal_match_regex','');
+$smarty->assign('gal_match_regex',$gal_match_regex);
 $smarty->assign_by_ref('popupLinks',$popupLinks);
 $smarty->assign_by_ref('anonCanEdit',$anonCanEdit);
 $smarty->assign_by_ref('allowRegister',$allowRegister);

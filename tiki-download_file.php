@@ -44,7 +44,7 @@ if($tiki_p_admin_file_galleries == 'y') {
 
 
 if($tiki_p_download_files != 'y') {
-  $smarty->assign('msg',tra("You cant download files"));
+  $smarty->assign('msg',tra("You can not download files"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }

@@ -31,9 +31,20 @@ class Smarty_Sterling extends Smarty {
     //$this->debugging = true;
     //$this->debug_tpl = 'debug.tpl';
   }
+  
+  
+
+  function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
+    global $language;
+    $_smarty_cache_id = $language.$_smarty_cache_id;
+    $_smarty_compile_id = $language.$_smarty_compile_id;
+    return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
+  }
+  
 }
 
 $smarty = new Smarty_Sterling();
+$smarty->load_filter('pre','tr');
 
 // Count number of online users using:
 // print($GLOBALS["PHPSESSID"]);

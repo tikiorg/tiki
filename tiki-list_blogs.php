@@ -10,7 +10,7 @@ if($feature_blogs != 'y') {
 
 
 if($tiki_p_read_blog != 'y') {
-  $smarty->assign('msg',tra("Permission denied you cant view this section"));
+  $smarty->assign('msg',tra("Permission denied you can not view this section"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }

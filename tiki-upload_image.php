@@ -155,7 +155,7 @@ if(isset($_REQUEST["upload"])) {
     die;  
   }
 
-  if( $_REQUEST["use_filename"] == 'on' ) {
+  if( isset($_REQUEST["use_filename"]) && $_REQUEST["use_filename"] == 'on' ) {
     $name=$filename;
   } else {
     $name=$_REQUEST["name"];

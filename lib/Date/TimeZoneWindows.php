@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: TimeZoneWindows.php,v 1.1 2003-02-25 23:25:12 rossta Exp $
+// $Id: TimeZoneWindows.php,v 1.2 2003-03-07 20:16:52 lrargerich Exp $
 //
 // Date_TimeZone Class Windows Support File
 //
