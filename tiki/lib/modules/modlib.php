@@ -12,31 +12,26 @@ class ModLib extends TikiLib {
 	}
 
 	function replace_user_module($name, $title, $data) {
-		$name = addslashes($name);
-
-		$title = addslashes($title);
-		$data = addslashes($data);
 
 		if ((!empty($name)) && (!empty($title)) && (!empty($data))) {
-			$query = "replace into tiki_user_modules(name,title,data) values('$name','$title','$data')";
+			$query = "delete from `tiki_user_modules` where `name`=?";
+			$result = $this->query($query,array($name),-1,-1,false);
+			$query = "insert into `tiki_user_modules`(`name`,`title`,`data`) values(?,?,?)";
 
-			$result = $this->query($query);
+			$result = $this->query($query,array($name,$title,$data));
 			return true;
 		}
 	}
 
 	function assign_module($name, $title, $position, $order, $cache_time = 0, $rows = 10, $groups, $params,$type) {
-		$params = addslashes($params);
 
-		$name = addslashes($name);
-		$groups = addslashes($groups);
-		$query = "delete from tiki_modules where name='$name'";
-		$result = $this->query($query);
+		$query = "delete from `tiki_modules` where `name`=?";
+		$result = $this->query($query,array($name));
 		//check for valid values
 		$cache_time = is_numeric($cache_time) ? $cache_time : 0;
 		$rows = is_numeric($rows) ? $rows : 10;
-		$query = "insert into tiki_modules(name,title,position,ord,cache_time,rows,groups,params,type) values('$name','$title','$position',$order,$cache_time,$rows,'$groups','$params','$type')";
-		$result = $this->query($query);
+		$query = "insert into `tiki_modules`(`name`,`title`,`position`,`ord`,`cache_time`,`rows`,`groups`,`params`,`type`) values(?,?,?,?,?,?,?,?,?)";
+		$result = $this->query($query,array($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type));
 		if ($type == "D" || $type == "P") {
 			global $usermoduleslib;
 			$usermoduleslib->add_module_users($name,$title,$position,$order,$cache_time,$rows,$groups,$params,$type);
@@ -45,10 +40,10 @@ class ModLib extends TikiLib {
 	}
 
 	function get_assigned_module($name) {
-		$query = "select * from tiki_modules where name='$name'";
+		$query = "select * from `tiki_modules` where `name`=?";
 
-		$result = $this->query($query);
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$result = $this->query($query,array($name));
+		$res = $result->fetchRow();
 
 		if ($res["groups"]) {
 			$grps = unserialize($res["groups"]);
@@ -64,18 +59,18 @@ class ModLib extends TikiLib {
 	}
 
 	function unassign_module($name) {
-		$query = "delete from tiki_modules where name='$name'";
+		$query = "delete from `tiki_modules` where `name`=?";
 
-		$result = $this->query($query);
-		$query = "delete from tiki_user_assigned_modules where name='$name'";
-		$result = $this->query($query);
+		$result = $this->query($query,array($name));
+		$query = "delete from `tiki_user_assigned_modules` where `name`=?";
+		$result = $this->query($query,array($name));
 		return true;
 	}
 
 	function get_rows($name) {
-		$query = "select rows from tiki_modules where name='$name'";
+		$query = "select `rows` from `tiki_modules` where `name`=?";
 
-		$rows = $this->getOne($query);
+		$rows = $this->getOne($query,array($name));
 
 		if ($rows == 0)
 			$rows = 10;
@@ -84,16 +79,16 @@ class ModLib extends TikiLib {
 	}
 
 	function module_up($name) {
-		$query = "update tiki_modules set ord=ord-1 where name='$name'";
+		$query = "update `tiki_modules` set `ord`=`ord`-1 where `name`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($name));
 		return true;
 	}
 
 	function module_down($name) {
-		$query = "update tiki_modules set ord=ord+1 where name='$name'";
+		$query = "update `tiki_modules` set `ord`=`ord`+1 where `name`=?";
 
-		$result = $this->query($query);
+		$result = $this->query($query,array($name));
 		return true;
 	}
 
@@ -124,23 +119,22 @@ class ModLib extends TikiLib {
 	}
 
 	function remove_user_module($name) {
-		$name = addslashes($name);
 
 		$this->unassign_module($name);
-		$query = " delete from tiki_user_modules where name='$name'";
-		$result = $this->query($query);
+		$query = " delete from `tiki_user_modules` where `name`=?";
+		$result = $this->query($query,array($name));
 		return true;
 	}
 
 	function list_user_modules() {
-		$query = "select * from tiki_user_modules";
+		$query = "select * from `tiki_user_modules`";
 
-		$result = $this->query($query);
-		$query_cant = "select count(*) from tiki_user_modules";
-		$cant = $this->getOne($query_cant);
+		$result = $this->query($query,array());
+		$query_cant = "select count(*) from `tiki_user_modules`";
+		$cant = $this->getOne($query_cant,array());
 		$ret = array();
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
 
