@@ -1,0 +1,12 @@
+$Header: /cvsroot/tikiwiki/_mods/themes/ztheme/README,v 1.1 2004-05-09 21:36:20 damosoft Exp $
+
+ztheme
+------
+
+Simple theme - conservative colors - designed for easy "readability" and use. 
+
+You can copy any of the "edit page" tpl files into a template\styles\ztheme to make it a little friendlier. 
+
+Works with 1.7.5 and 1.8 (IE and Moz). 
+
+bobzim
