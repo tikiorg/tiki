@@ -61,7 +61,7 @@ if($count_admin_pvs == 'y' || $user!='admin') {
 
 // Get page data
 $info = $tikilib->get_page_info($page);
-if($wiki_feature_copyrights == 'y' && isset($wikiLicensePage)) {
+if(isset($wiki_feature_copyrights) && $wiki_feature_copyrights == 'y' && isset($wikiLicensePage)) {
   // insert license if wiki copyrights enabled
   $license_info = $tikilib->get_page_info($wikiLicensePage);
   $tikilib->add_hit($wikiLicensePage);
