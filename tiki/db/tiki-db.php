@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // Otherwise you will be ok.
 $api_tiki       = 'adodb';
 $db_tiki     = 'mysql';
-$dbversion_tiki = '1.8';
+$dbversion_tiki = '1.9';
 $host_tiki   = 'localhost';
 $user_tiki   = 'root';
 $pass_tiki   = '';
@@ -41,35 +41,20 @@ cat >local.php <<EOF
 ?>
 EOF
 
-Site admins: you can use multiple virtualhosts with the same documentroot
-just changing database and $tikidomain that is used to split cache directories
-(template_c and modules/cache). For example a local.php file :
-
-$host_tiki   = 'localhost';
-$user_tiki   = 'root';
-$pass_tiki   = '';
-
-$host_map = array(
-	'feu.org' = array(
-		'dbs_tiki'    => 'tiki_cvs',
-		'tikidomain'  => 'feu',
-	),
-	
-	'localis.org' = array(
-		'dbs_tiki'    => 'tiki_localis',
-		'tikidomain'  => 'localis',
-	),
-);
-
-if (isset($host_map[$HTTP_HOST])) {
-	extract($host_map[$HTTP_HOST]);
-}
+** Multi-tiki
+**************************************
+read comments in local_multi.php
 
 */
-$file = dirname(__FILE__). '/local.php';
 
-if (file_exists($file)) {
-	require_once ($file);
+$file_local_php = dirname(__FILE__). '/local.php';
+$file_local_php_multi = dirname(__FILE__). '/local_multi.php';
+
+if (file_exists($file_local_php_multi)) {
+	require_once ($file_local_php_multi);
+}
+if (file_exists($file_local_php)) {
+  require_once ($file_local_php);
 }
 
 if (preg_match('/^adodb$/i', $api_tiki)) {
