@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.26 2003-11-11 12:02:58 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.27 2003-11-13 10:32:28 ohertel Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -16,8 +16,8 @@
     </div>
 {* the heading of the  box *}
     <div class="cbox-data">
-      <table ><tr>
-        <td class="heading" colspan=5 align="center">{tr}Tiki sections and features{/tr}</td>
+      <table class="admin"><tr>
+        <td class="heading" colspan="5" align="center">{tr}Tiki sections and features{/tr}</td>
       </tr>
 {* top left wiki ck box ... each of the function option boxes here begin with  td class form *}
 			<tr>
@@ -432,7 +432,7 @@
 
       <tr>
 
-        <td class="heading" colspan=5 
+        <td class="heading" colspan="5"
             align="center">{tr}Content Features{/tr}</td>
 
       </tr><tr>
@@ -508,10 +508,10 @@
         <td><input type="checkbox" name="feature_charts"
             {if $feature_charts eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-        <td class="form" colspan=2>&nbsp;</td>
+        <td class="form" colspan="2">&nbsp;</td>
       </tr><tr>
 
-        <td class="heading" colspan=5 
+        <td class="heading" colspan="5" 
             align="center">{tr}Administration Features{/tr}</td>
       </tr><tr>
         <td class="form">
@@ -586,10 +586,10 @@
         <td><input type="checkbox" name="feature_theme_control"
             {if $feature_theme_control eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-        <td class="form" colspan=2>&nbsp;</td>
+        <td class="form" colspan="2">&nbsp;</td>
       </tr><tr>
 
-        <td class="heading" colspan=5 
+        <td class="heading" colspan="5"
             align="center">{tr}User Features{/tr}</td>
       </tr><tr>
         <td class="form">
@@ -664,10 +664,10 @@
         <td><input type="checkbox" name="feature_userfiles"
             {if $feature_userfiles eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-        <td class="form" colspan=2>&nbsp;</td>
+        <td class="form" colspan="2">&nbsp;</td>
       </tr><tr>
 
-        <td class="heading" colspan=5 
+        <td class="heading" colspan="5" 
             align="center">{tr}General Layout options{/tr}</td>
       </tr><tr>
         <td class="form">{tr}Left column{/tr} :</td>
@@ -688,15 +688,15 @@
         <td class="form">{tr}Top bar{/tr} :</td>
         <td><input type="checkbox" name="feature_top_bar"
             {if $feature_top_bar eq 'y'}checked="checked"{/if}/></td>
-        <td colspan=3>&nbsp;</td>
+        <td colspan="3">&nbsp;</td>
       </tr><tr>
         <td class="form">{tr}Bottom bar{/tr} :</td>
         <td><input type="checkbox" name="feature_bot_bar"
             {if $feature_bot_bar eq 'y'}checked="checked"{/if}/></td>
-        <td colspan=3>&nbsp;</td>
+        <td colspan="3">&nbsp;</td>
       </tr><tr>
-        <td colspan=5 class="button">
-          <input type="submit" name="features" value="{tr}Update{/tr}" />
+        <td colspan="5" class="button">
+          <input type="submit" name="features" value="{tr}Change preferences{/tr}" />
         </td>
       </tr></table>
     </div>
