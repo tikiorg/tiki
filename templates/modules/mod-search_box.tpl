@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.9 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-search_box.tpl,v 1.10 2003-08-07 21:35:11 zaufi Exp $ *}
 
-rch eq 'y'}
+{if $feature_search eq 'y'}
 <div class="box">
 <div class="box-title">
 {include file="modules/module-title.tpl" module_title="{tr}Search{/tr}" module_name="search_box"}
