@@ -268,6 +268,8 @@ class UsersLib extends TikiDB {
 	// first attempt a login via the standard Tiki system
 	if (!$auth_cas || $user == 'admin') {
 		$result = $this->validate_user_tiki($user, $pass, $challenge, $response);
+	} else {
+		$result = NULL;
 	}
 
 	switch ($result) {
