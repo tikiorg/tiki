@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.2 2003-09-04 10:20:17 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/setup_smarty.php,v 1.3 2003-09-14 05:24:57 bligneri Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -9,6 +9,10 @@
 require_once ("db/tiki-db.php");
 
 error_reporting (E_ALL);
+// Set the separator for PHP generated tags to be &amp; instead of &
+// This is necessary for XHTML compliance
+ini_set("arg_separator.output","&amp;");
+
 //ini_set('register_globals','off');
 
 // Remove automatic quotes added to POST/COOKIE by PHP
