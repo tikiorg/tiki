@@ -49,7 +49,14 @@ Errors:<br/>
   	</td>
   	<td>
   	{if $template eq 'y'}
-  		templ
+      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}if{rdelim}\n{ldelim}elseif{rdelim}\n{ldelim}else{rdelim}\n{ldelim}/if{rdelim}\n');">{ldelim}if{rdelim}{ldelim}/if{rdelim}</a><hr/>
+      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}section name= loop={rdelim}\n{ldelim}sectionelse{rdelim}\n{ldelim}/section{rdelim}\n');">{ldelim}section{rdelim}{ldelim}/section{rdelim}</a><hr/>
+      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}foreach from= item={rdelim}\n{ldelim}foreachelse{rdelim}\n{ldelim}/foreach&{rdelim}\n');">{ldelim}foreach{rdelim}{ldelim}/foreach{rdelim}</a><hr/>
+      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}tr{rdelim}{ldelim}/tr{rdelim}\n');">{ldelim}tr{rdelim}{ldelim}/tr{rdelim}</a><hr/>
+      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}literal{rdelim}\n{ldelim}/literal{rdelim}\n');">{ldelim}literal{rdelim}{ldelim}/literal{rdelim}</a><hr/>
+      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}* *{rdelim}\n');">{ldelim}* *{rdelim}</a><hr/>
+      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}{literal}strip{/literal}{rdelim}{ldelim}{literal}/strip{/literal}{rdelim}\n');">{ldelim}{literal}strip{/literal}{rdelim}{ldelim}{literal}/strip{/literal}{rdelim}</a><hr/>
+      <a class="link" href="javascript:setSomeElement('src','\n{ldelim}include file={rdelim}\n');">{ldelim}include{rdelim}</a><hr/>
   	{else}
   		{literal}
   		<a class="link" href="javascript:setSomeElement('src','$instance->setNextUser(\'\');');">{tr}Set next user{/tr}</a><hr/>
