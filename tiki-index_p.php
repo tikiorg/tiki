@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.15 2004-08-12 22:31:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index_p.php,v 1.16 2004-08-13 19:16:52 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -162,7 +162,7 @@ $smarty->assign('cached_page', 'n');
 // Get ~pp~, ~np~ and <pre> out of the way. --rlpowell, 24 May 2004
 $preparsed = array();
 $noparsed = array();
-$tikilib->parse_pp_np( $info["data"], $preparsed, $noparsed );
+$tikilib->parse_first( $info["data"], $preparsed, $noparsed );
 
 if ($wiki_cache > 0) {
 	$cache_info = $wikilib->get_cache_info($page);

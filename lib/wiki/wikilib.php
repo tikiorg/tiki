@@ -282,7 +282,7 @@ class WikiLib extends TikiLib {
 		//breadcrumb
 		if (isset($_SESSION["breadCrumb"]) && in_array($oldName, $_SESSION["breadCrumb"])) {
 			$pos = array_search($oldName, $_SESSION["breadCrumb"]);
-			unset($_SESSION["breadCrumb"][$pos]);
+			$_SESSION["breadCrumb"][$pos] = $newName;
 		}
 
 		return true;
@@ -544,15 +544,13 @@ class WikiLib extends TikiLib {
 	return $ret;
     }
 
-    function is_locked($page) {
-	$query = "select `flag` from `tiki_pages` where `pageName`=?";
-	$result = $this->query($query, array( $page ) );
-	$res = $result->fetchRow();
-
-	if ($res["flag"] == 'L')
-	    return true;
-
-	return false;
+    function is_locked($page, $info=null) {
+	if ($info) {
+		$query = "select `flag`, `user` from `tiki_pages` where `pageName`=?";
+		$result = $this->query($query, array( $page ) );
+		$info = $result->fetchRow();
+	}
+	return ($info["flag"] == 'L')? $info["user"] : null; 
     }
 
     function lock_page($page) {
