@@ -284,4 +284,9 @@ if (!isset($tikidomain)) {
 }
 $smarty->assign("tikidomain",$tikidomain);
 
+// Debug console open/close
+$smarty->assign('debugconsole_style',
+                isset($_COOKIE["debugconsole"]) && ($_COOKIE["debugconsole"]=='o')
+              ? 'display:block;' : 'display:none;');
+
 ?>
