@@ -16,7 +16,7 @@
 <tr><td class="formcolor">{tr}Frequency{/tr}</td><td class="formcolor">
 <select name="frequency">
 {section name=ix loop=$freqs}
-<option value="{$freqs[ix].t}" {if $info.frequency eq $freqs[ix].t}selected="selected"{/if}>{$freqs[ix].i} days</option>
+<option value="{$freqs[ix].t}" {if $info.frequency eq $freqs[ix].t}selected="selected"{/if}>{$freqs[ix].i} {tr}days{/tr}</option>
 {/section}
 </select>
 </td></tr>

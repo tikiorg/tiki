@@ -1,5 +1,5 @@
 <a class="pagetitle" href="tiki-edit_blog.php">{tr}Edit Blog{/tr}: {$title}</a><br/><br/>
-<a class="bloglink" href="tiki-list_blogs.php">list blogs</a>
+<a class="bloglink" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
 <br/><br/>
 {if $individual eq 'y'}
 <a class="link" href="tiki-objectpermissions.php?objectName=blog%20{$title}&amp;objectType=blog&amp;permType=blogs&amp;objectId={$blogId}">{tr}There are individual permissions set for this blog{/tr}</a>

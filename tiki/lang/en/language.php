@@ -2088,6 +2088,7 @@ from Admin->General
 "Create user if not in Tiki?" => "Create user if not in Tiki?",
 "Create user if not in Auth?" => "Create user if not in Auth?",
 "Just use Tiki auth for admin?" => "Just use Tiki auth for admin?",
+"Top active blogs" => "Top active blogs",
 "LDAP Host" => "LDAP Host",
 "LDAP Port" => "LDAP Port",
 "LDAP Scope" => "LDAP Scope",

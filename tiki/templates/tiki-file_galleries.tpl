@@ -36,7 +36,7 @@
 {/if}
 {/if}
 <h2>{tr}Available File Galleries{/tr}</h2>
-<a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">create new gallery</a><br/><br/>
+<a class="fgallink" href="tiki-file_galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br/><br/>
 <div align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -58,7 +58,7 @@
 <td class="listfgalheading"><a class="llisfgalheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 <td class="listfgalheading"><a class="llisfgalheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'files_desc'}files_asc{else}files_desc{/if}">{tr}Files{/tr}</a></td>
 <td class="listfgalheading"><a class="llisfgalheading" href="tiki-file_galleries.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></td>
-<td class="listfgalheading">Actions</td>
+<td class="listfgalheading">{tr}Actions{/tr}</td>
 </tr>
 {section name=changes loop=$galleries}
 <tr>
