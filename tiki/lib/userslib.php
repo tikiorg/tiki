@@ -604,6 +604,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 	    $aux = array();
 
 	    $aux["user"] = $res["login"];
+	    $aux["userId"] = $res["userId"];
 	    $user = $aux["user"];
 	    $aux["email"] = $res["email"];
 	    $aux["lastLogin"] = $res["lastLogin"];
@@ -869,18 +870,24 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 
     function get_userid_info($user) {
 	$query = "select * from `users_users` where `userId` = ?";
-	$result = $this->query($query, array($user));
+	$result = $this->query($query, array((int)$user));
 	$res = $result->fetchRow();
-	$aux = array();
-
-	foreach ($res as $key => $val) {
-	    $aux[$key] = $val;
-	}
-
-	$groups = $this->get_user_groups($user);
-	$res["groups"] = $groups;
+	$res["groups"] = $this->get_user_groups($res['login']);
 	return $res;
     }
+
+	function get_usertracker($uid) {
+		$utr = $this->get_userid_info($uid);
+		$utr["usersTrackerId"] = '';
+		foreach ($utr['groups'] as $gr) {
+			$utrid = $this->getOne("select `usersTrackerId` from `users_groups` where `groupname`=?",array($gr));
+			if ($utrid > 0) {
+				$utr["usersTrackerId"] = $utrid;
+				break;
+			}
+		}
+		return $utr;
+	}
 
   function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_desc', $find = '', $type = '', $group = '') {
 	$values = array();

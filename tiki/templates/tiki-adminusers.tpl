@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.30 2004-01-14 01:13:29 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.31 2004-01-15 08:56:28 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -19,6 +19,9 @@
 <div class="tabs">
 <span id="tab{cycle name=tabs}" class="tab tabActive">{tr}Users{/tr}</span>
 <span id="tab{cycle name=tabs}" class="tab">{tr}Add a new user{/tr}</span>
+{if $ins_fields}
+<span id="tab{cycle name=tabs}" class="tab">{tr}More info{/tr}</span>
+{/if}
 </div>
 
 {cycle name=content values="1,2,3" print=false advance=false}
@@ -52,29 +55,33 @@ class="prevnext">{tr}All{/tr}</a>
 
 <table class="normal">
 <tr>
+<td class="heading" style="width: 20px;">&nbsp;</td>
+<td class="heading" style="width: 20px;">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'currentLogin_desc'}currentLogin_asc{else}currentLogin_desc{/if}">{tr}Last login{/tr}</a></td>
+<td class="heading" style="width: 20px;">&nbsp;</td>
 <td class="heading">{tr}Groups{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<td class="heading" style="width: 20px;">&nbsp;</td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$users}
 <tr class="{cycle}">
-<td>{$users[user].user}</td>
+<td><a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Configure/Options{/tr}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a></td>
+<td><a class="link" href="tiki-adminusers.php?user={$users[user].userId}"  title="{tr}Click here to edit this user{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a></td>
+<td><a class="link" href="tiki-adminusers.php?user={$users[user].userId}"  title="{tr}Click here to edit this user{/tr}">{$users[user].user}</a></td>
 <td>{$users[user].email}</td>
 <td>{if $users[user].currentLogin eq ''}{tr}Never{/tr}{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
+<td style="width: 20px;"><a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a></td>
 <td>
 {foreach from=$users[user].groups item=grs}
 {if $grs != "Anonymous"}
-{$grs}
-(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs}">x</a>)
-{/if}<br />
+<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}">{$grs}</a>
+(<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs}">x</a>)<br />
+{/if}
 {/foreach}
-<td nowrap="nowrap">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}"
-title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>&nbsp;&nbsp;{/if}<a 
-class="link" href="tiki-assignuser.php?assign_user={$users[user].user}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a>&nbsp;&nbsp;<a 
-class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Configure/Options{/tr}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a>
+<td nowrap="nowrap">&nbsp;{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}"
+title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>{/if}
 </td>
 </tr>
 {/section}
@@ -106,13 +113,15 @@ class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" titl
 
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
-<tr class="formcolor"><td>{tr}User{/tr}:</td><td><input type="text" name="name" /></td></tr>
+<tr class="formcolor"><td>{tr}User{/tr}:</td><td><input type="text" name="name"  value="{$username|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Pass{/tr}:</td><td><input type="password" name="pass" /></td></tr>
 <tr class="formcolor"><td>{tr}Again{/tr}:</td><td><input type="password" name="pass2" /></td></tr>
-<tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30" /></td></tr>
+<tr class="formcolor"><td>{tr}Email{/tr}:</td><td><input type="text" name="email" size="30"  value="{$usermail|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Batch upload (CSV file){/tr}:</td><td><input type="file" name="csvlist"
 /><br/>{tr}Overwrite{/tr}: <input type="checkbox" name="overwrite" checked="checked" /></td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="newuser" value="{tr}Add{/tr}" /></td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td>
+<input type="hidden" name="oluser" value="{$user|escape}">
+<input type="submit" name="newuser" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
 <br/>
@@ -137,4 +146,28 @@ class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" titl
 {/if}
 </div>
 
-
+{if $ins_fields}
+<div id="content{cycle name=content}" class="content">
+<table class="normal">
+{section name=ix loop=$ins_fields}
+{if $fields[ix].type eq 'h'}
+</table>
+<h3>{$fields[ix].label}</h3>
+<table class="normal">
+{elseif $fields[ix].type ne 'x'}
+<tr class="formcolor"><td>{$fields[ix].label}</td>
+<td>
+{if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
+{$ins_fields[ix].value|date_format:$daformat}
+{elseif $ins_fields[ix].type eq 'a'}
+{$ins_fields[ix].pvalue}
+{else}
+{$ins_fields[ix].value}
+{/if}
+</td>
+</tr>
+{/if}
+{/section}
+</table>
+</div>
+{/if}

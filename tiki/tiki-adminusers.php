@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.14 2004-01-14 01:13:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-adminusers.php,v 1.15 2004-01-15 08:56:27 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -85,6 +85,11 @@ function batchImportUsers() {
 	@$smarty->assign('discardlist', $discarded);
 }
 
+if ($groupTracker == 'y') {
+	include_once('lib/trackers/trackerlib.php');
+}
+
+
 // Process the form to add a user here
 if (isset($_REQUEST["newuser"])) {
 	check_ticket('admin-users');
@@ -158,6 +163,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial);
+$smarty->assign_by_ref('users', $users["data"]);
 $cant_pages = ceil($users["cant"] / $numrows);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
 $smarty->assign('actual_page', 1 + ($offset / $numrows));
@@ -173,7 +179,50 @@ if ($offset > 0) {
 	$smarty->assign('prev_offset', -1);
 }
 
-$smarty->assign_by_ref('users', $users["data"]);
+list($username,$usermail,$usersTrackerId) = array('','','');
+if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
+	$re = $userlib->get_usertracker($_REQUEST["user"]);
+	$username = $re['login'];
+	$usermail = $re['email'];
+	
+	//	var_dump($re);
+	if ($userTracker == 'y') {
+		if ($re['usersTrackerId']) {
+			$usersTrackerId = $re["usersTrackerId"];
+			$fields = $trklib->list_tracker_fields($usersTrackerId, 0, -1, 'position_asc', '');
+			$info = $trklib->get_item($usersTrackerId,'Login',$username);
+			for ($i = 0; $i < count($fields["data"]); $i++) {
+				if ($fields["data"][$i]["type"] != 'h') {
+					$name = ereg_replace("[^a-zA-Z0-9]","",$fields["data"][$i]["name"]);
+					$ins_name = 'ins_' . $name;
+					if ($fields["data"][$i]["type"] == 'c') {
+						if (!isset($info["$name"])) $info["$name"] = 'n';
+					} else {
+						if (!isset($info["$name"])) $info["$name"] = '';
+					}
+					$ins_fields["data"][$i]["value"] = $info["$name"];
+					if ($fields["data"][$i]["type"] == 'a') {
+						$ins_fields["data"][$i]["pvalue"] = $tikilib->parse_data($info["$name"]);
+					}
+				}
+			}
+			$smarty->assign_by_ref('fields', $fields["data"]);
+			$smarty->assign_by_ref('ins_fields', $ins_fields["data"]);
+		}
+	}
+	if (!isset($_REQUEST["action"])) {
+		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	}
+} else {
+	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");	
+	$_REQUEST["user"] = 0;
+}
+
+$smarty->assign('user', $_REQUEST["user"]);
+$smarty->assign('username', $username);
+$smarty->assign('usermail', $usermail);
+$smarty->assign('usersTrackerId', $usersTrackerId);
+
 ask_ticket('admin-users');
 
 $smarty->assign('uses_tabs', 'y');
