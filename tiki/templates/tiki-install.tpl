@@ -1,11 +1,11 @@
 <div style="margin-left:180px;margin-right:180px;">
 <h1>Tiki installer v{$tiki_version} <a title='help' href='http://tikiwiki.org/InstallTiki' target="help"><img
 border='0' src='img/icons/help.gif' alt='help' /></a></h1>
-<a href="tiki-install-dh.php?restart=1" class="link">reload</a><br/><br/>
+<a href="tiki-install.php?restart=1" class="link">reload</a><br/><br/>
 	{if $dbcon eq 'n' or $resetdb eq 'y'}
 	  <b>Tiki cannot find a database connection</b><br/>
 	  Please enter your database connection info<br/><br/>
-	  <form action="tiki-install-dh.php" method="post">
+	  <form action="tiki-install.php" method="post">
 	  <table class="normal">
 	  	<tr>
 	  		<td class="formcolor">Database type:</td>
@@ -86,7 +86,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		    {* we are logged if no admin account is found or if he user logged in*}
 		    <b>Welcome to the installation script!</b><br/>
 		    You can now create a new database or update your current database<br/><br/>
-		    <form method="post" action="tiki-install-dh.php">
+		    <form method="post" action="tiki-install.php">
 		    <table>
 		    <tr><td>
 			Create database with profile:
@@ -116,13 +116,13 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		    </table>
 		    </form><br/>
 			<a href="tiki-index.php" class="link">Do nothing and enter Tiki</a><br />
-			<a href="tiki-install-dh.php?reset=yes" class="link">Reset database connection settings</a>
+			<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
 		  {else}
 			{* we are not logged then no admin account found and user not logged*}
 			<b>This site has an admin account configured</b><br/>
 		    Please enter your admin password to continue<br/><br/>
 
-     <form name="loginbox" action="tiki-install-dh.php" method="post"> 
+     <form name="loginbox" action="tiki-install.php" method="post"> 
           <table>
           <tr><td class="module">{tr}user{/tr}:</td></tr>
           <tr><td>admin</td></tr>
@@ -133,7 +133,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
       </form>
 
 {*
-		  	<form action="tiki-install-dh.php" method="post">
+		  	<form action="tiki-install.php" method="post">
 		  	<table class="normal">
 		  		<tr>
 		  			<td class="formcolor">Admin password</td>
@@ -167,14 +167,14 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
     		Note: This install script may be potentially harmful so we strongly
     		recommend you to remove the script and then proceed into Tiki. If
     		you decide to remove the script it will be renamed to tiki-install.done<br/><br/>
-    		<a href="tiki-install-dh.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br/>
+    		<a href="tiki-install.php?kill=1" class="link">Click here to remove the install script and proceed into tiki</a><br/>
     		<a href="tiki-index.php" class="link">Click here to proceed into tiki without removing the script</a><br />
-    		<a href="tiki-install-dh.php?reset=yes" class="link">Reset database connection settings</a>
+    		<a href="tiki-install.php?reset=yes" class="link">Reset database connection settings</a>
     	{/if}
 	{/if}
 {*
 	<p><p>
-	<form method="post" action="tiki-install-dh.php">
+	<form method="post" action="tiki-install.php">
 	<h1>Tiki Applications</h1>
 	<table>
 		<tr><td>
