@@ -12,6 +12,7 @@ while ($file = readdir($h)) {
   }
 }
 closedir($h);
+sort($styleslist);
 $smarty->assign('styleslist',$styleslist);
 if(isset($style)){
 	$smarty->assign('style', $style);
