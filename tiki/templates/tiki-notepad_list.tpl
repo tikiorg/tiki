@@ -42,7 +42,7 @@
 <form action="tiki-notepad_list.php" method="post">
 <table class="normal">
 <tr>
-<td class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
+<td style="text-align:center;" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a></td>
 <td style="text-align:right;" class="heading" >{tr}Size{/tr}</td>
@@ -50,7 +50,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle advance=false}">
+<td style="text-align:center;" class="{cycle advance=false}">
 <input type="checkbox" name="note[{$channels[user].noteId}]" />
 </td>
 <td class="{cycle advance=false}"><a class="link" href="tiki-notepad_read.php?noteId={$channels[user].noteId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{$channels[user].name}</a>
@@ -64,7 +64,7 @@
 </tr>
 {/section}
 <tr>
-	<td class="heading" colspan="4"><input type="submit" name="merge" value="{tr}merge notes into{/tr}" /><input type="text" name="merge_name" size="20" /></td>
+	<td class="heading" colspan="4"><input type="submit" name="merge" value="{tr}merge selected notes into{/tr}" /><input type="text" name="merge_name" size="20" /></td>
 </tr>
 </table>
 </form>
