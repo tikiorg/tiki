@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.31 2005-03-12 16:50:49 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.32 2005-03-13 11:17:24 ohertel Exp $ *}
 
 <h1><a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a></h1>
 
@@ -28,7 +28,7 @@
 </tr>
 
 <tr><td colspan="2"><form method="post" action="tiki-listpages.php">
-Show
+{tr}Show{/tr}
 <select name="max_records" onchange="this.form.submit();">
 <option value="10" {if $maxRecords eq 10}selected {/if}>10</option>
 <option value="20" {if $maxRecords eq 20}selected {/if}>20</option>
@@ -40,7 +40,7 @@ Show
 <option value="1000" {if $maxRecords eq 500}selected {/if}>1000</option>
 {/if}
 </select>
-per page
+{tr}per page{/tr}
 <input type="hidden" name="find" value="{$find|escape}" /></form>
 </td></tr>
 
