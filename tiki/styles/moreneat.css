@@ -104,7 +104,7 @@ font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 10px;
 DIV#tiki-mid {  background: #E9ECEF;  height: auto;  padding-bottom: 0px; }
 
 /* And this is the footer */
-DIV#tiki-bot {  padding-top: 10px;  margin-top: 0px;  background: #C7D0D9; border-top: 1px solid #87ACBB; border-bottom: 1px solid #87ACBB; margin-bottom: 10px; padding-bottom: 5px; }
+DIV#tiki-bot {  padding-top: 10px;  margin-top: 5px;  background: #C7D0D9; border-top: 1px solid #87ACBB; border-bottom: 1px solid #87ACBB; margin-bottom: 10px; padding-bottom: 5px; }
 
 /* The three columns */
 TD#leftcolumn {  padding-left: 2px; padding-right: 2px; vertical-align: top;  width: 180px;}
@@ -146,7 +146,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+.box-title {
   /*background-image: url(dblue/dbluetop.jpg);  */
   background-repeat: no-repeat;
   background-color: #C7D0D9;
@@ -1617,3 +1617,6 @@ text-decoration: inherit;
 div#rules-copy-panel {
     display: none;
 }
+
+/* format tables on admin pages */
+TABLE.admin { width: 100%; }

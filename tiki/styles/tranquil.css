@@ -138,7 +138,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+.box-title {
 	background-color:    #00CC99;
 	border:   #FFFFCC;
 	border-style:   solid;

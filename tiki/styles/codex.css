@@ -193,7 +193,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+.box-title {
 	background-color:    #333366;
 	border-bottom:   1px solid black;
 	color:   white;
@@ -2609,3 +2609,6 @@ a.tikihelp:hover {
 div#rules-copy-panel {
     display: none;
 }
+
+/* format tables on admin pages */
+TABLE.admin { width: 100%; }

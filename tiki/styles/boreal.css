@@ -126,7 +126,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+.box-title {
 	background-image:    url(boreal/menucap.png);
 	border-bottom:   1px solid #444444;
 	color:   white;

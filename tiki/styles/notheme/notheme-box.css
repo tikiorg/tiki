@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.12 2003-11-07 23:51:16 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.13 2003-11-13 10:49:03 ohertel Exp $
  *
  */
 
@@ -47,7 +47,7 @@ div#rightcolumn > div.box:first-child
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+.box-title {
 	color: HighlightText;
 	background-color: Highlight;
 	margin-top: 2px;

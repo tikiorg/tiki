@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.22 2003-11-07 23:00:36 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.23 2003-11-13 10:49:01 ohertel Exp $
 2003 - created and maintained by mose@feu.org
 */
 
@@ -172,7 +172,7 @@ div.box {
 /* 
 Boxes are divided in title and data, this is the title 
 */
-div.box-title {
+.box-title {
 	background-color:    #6A5A49;
 	color:   #ffffff;
 	font-size:   10px;

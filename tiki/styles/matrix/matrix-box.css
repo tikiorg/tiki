@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.9 2003-08-09 22:24:59 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/matrix/matrix-box.css,v 1.10 2003-11-13 10:49:03 ohertel Exp $
  *
  */
 
@@ -44,7 +44,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+.box-title {
 	margin-top: 4px;
 	margin-bottom: 6px;
 	font-family: "Matrix_vs_miltown", Verdana, Geneva, Arial, Helvetica, sans-serif;

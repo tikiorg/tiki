@@ -255,7 +255,7 @@ div.box {
 }
 
 /* Boxes are divided in title and data, this is the title */
-div.box-title {
+.box-title {
   background-image: url(/styles/tiki/mozilla-menubar.png);
 	padding: 0px 10px 1px 10px;
 	display: inline;
