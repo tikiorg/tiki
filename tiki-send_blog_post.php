@@ -130,7 +130,7 @@ if(isset($_REQUEST['send'])) {
    $smarty->assign('mail_title',$post_info['title']?$post_info['title']:date("d/m/Y [h:i]",$post_info['created']));
    $smarty->assign('mail_machine',$machine);
    $mail_data=$smarty->fetch('mail/blogs_send_link.tpl');
-   @mail($email, tra('Post recommendation at').$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email");
+   @mail($email, tra('Post recommendation at').' '.$_SERVER["SERVER_NAME"],$mail_data, "From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
   }
   $smarty->assign('sent','y');
 }
