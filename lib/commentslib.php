@@ -1053,6 +1053,22 @@ class Comments extends TikiLib {
 	    = -1, $sort_mode = 'commentDate_asc', $find = '', $threshold =
 	    0, $id = 0)
     {
+	$r1 = $this->_get_comments($objectId, $parentId, $offset, $maxRecords,
+			$sort_mode, $find, $threshold, $id, true, true);
+	$r2 = $this->_get_comments($objectId, $parentId, $offset, $maxRecords,
+			$sort_mode, $find, $threshold, $id, false, true);
+
+	$retval = array();
+	$retval["data"] = array_merge($r1["data"], $r2["data"]);
+	$retval["below"] = $r1["below"];
+	$retval["cant"] = $r1["cant"];
+	return $retval;
+    }
+
+    function _get_comments($objectId, $parentId, $offset = 0, $maxRecords
+	    = -1, $sort_mode = 'commentDate_asc', $find = '', $threshold =
+	    0, $id, $sticky, $get_replies)
+    {
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
 	}
@@ -1100,16 +1116,22 @@ class Comments extends TikiLib {
 	$below = $this->getOne($query, array_merge(
 	array($object[0], $object[1], $threshold), $bind_time) );
 
+	if ($sticky) {
+		$typetest = '=';
+	} else {
+		$typetest = '<>';
+	}
+
 	if ($find) {
 	    $findesc = '%' . $find . '%';
 
 	    $mid = " where `objectType` = ? and `object`=? and
-	    `parentId`=? and `type`=? and `average`>=? and (`title`
+	    `parentId`=? and `type`".$typetest."? and `average`>=? and (`title`
 	    like ? or `data` like ?) ";
 	    $bind_mid=array($object[0],  $object[1],  $parentId,
 	    's', $threshold, $findesc, $findesc);
 	} else {
-	    $mid = " where `objectType` = ? and `object`=? and `parentId`=? and `type`=? and `average`>=? ";
+	    $mid = " where `objectType` = ? and `object`=? and `parentId`=? and `type`".$typetest."? and `average`>=? ";
 	    $bind_mid=array($object[0], $object[1], $parentId, 's', $threshold);
 	}
 
@@ -1120,7 +1142,7 @@ class Comments extends TikiLib {
 	$query_cant = "select count(*) from `tiki_comments` $mid $extra $time_cond";
 	$result = $this->query($query,array_merge($bind_mid,$bind_extra,$bind_time),$maxRecords,$offset);
 	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_extra,$bind_time));
-	$ret1 = array();
+	$ret = array();
 
 	while ($res = $result->fetchRow()) {
 	    // Get the last reply
@@ -1145,128 +1167,60 @@ class Comments extends TikiLib {
 
 	    $res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
 	    $query = "select max(`commentDate`) from `tiki_comments` where `parentId`=?";
-	    $res["lastPost"] = $this->getOne($queryi,array($tid));
-
-	    if (!$res["lastPost"])
-		$res["lastPost"] = $res["commentDate"];
-
-	    // Get the grandfather
-	    if ($res["parentId"] > 0) {
-		$res["grandFather"] = $this->get_comment_father($res["parentId"]);
-	    } else {
-		$res["grandFather"] = 0;
-	    }
-
-	    $res["parsed"] = $this->parse_comment_data($res["data"]);
-	    // Get the replies
-	    $replies = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
-	    $res["replies"] = $replies;
-
-	    if (empty($res["data"])) {
-		$res["isEmpty"] = 'y';
-	    } else {
-		$res["isEmpty"] = 'n';
-	    }
-
-	    //$res["average"]=$res["points"]/$res["votes"];
-	    $res["average"] = $res["average"];
-	    $ret1[] = $res;
-	}
-
-	// Now the non-sticky
-	$ret = array();
-
-	if ($find) {
-	    $findesc = '%' . $find . '%';
-	    $mid = " where `objectType` = ? and `object`=? and
-	    `parentId`=? and `type`<>? and `average`>=? and (`title`
-	    like ? or `data` like ?) ";
-	} else {
-	    $mid = " where `objectType` = ? and `object`=? and
-	    `parentId`=? and `type`<>? and `average`>=? ";
-	}
-
-	$query = "select * from `tiki_comments` $mid $extra $time_cond order by ".$this->convert_sortmode($sort_mode);
-	//print("$query<br/>");
-	$query_cant = "select count(*) from `tiki_comments` $mid $extra $time_cond";
-	$result = $this->query($query,array_merge($bind_mid,$bind_extra,$bind_time),$maxRecords,$offset);
-	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_extra,$bind_time));
-
-	while ($res = $result->fetchRow()) {
-	    // Get the last reply
-	    $tid = $res["threadId"];
-
-	    $res['user_posts'] = $this->getOne("select `posts` from `tiki_user_postings` where `user`=?",array($res['userName']));
-	    $res['user_level'] = $this->getOne("select `level` from `tiki_user_postings` where `user`=?",array($res['userName']));
-	    $res['user_email'] = $this->getOne("select `email` from `users_users` where `login`=?",array($res['userName']));
-	    $res['user_online'] = 'n';
-	    $res['is_marked'] = $this->is_marked($res['threadId']);
-	    $res['is_reported'] = $this->is_reported($res['threadId']);
-
-	    if ($res['userName']) {
-		$res['user_online'] = $this->getOne("select count(*) from `tiki_sessions` where `user`=?",array($res['userName'])) ? 'y' : 'n';
-	    }
-
-	    $res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
-	    $query = "select max(`commentDate`) from `tiki_comments` where `parentId`=?";
 	    $res["lastPost"] = $this->getOne($query,array($tid));
 
 	    if (!$res["lastPost"])
 		$res["lastPost"] = $res["commentDate"];
 
-	    $query2 = "select * from `tiki_comments` where `parentId`=? and `commentDate`=?";
-	    $result2 = $this->query($query2,array($tid,$res["lastPost"]));
-	    $res2 = $result2->fetchRow();
-	    $res["lastPostData"] = $res2;
-
 	    // Get the grandfather
 	    if ($res["parentId"] > 0) {
 		$res["grandFather"] = $this->get_comment_father($res["parentId"]);
 	    } else {
 		$res["grandFather"] = 0;
 	    }
+
 	    $res["parsed"] = $this->parse_comment_data($res["data"]);
 	    // Get the replies
-	    $replies = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
-	    $res["replies"] = $replies;
+	    if ($get_replies) {
+		    $replies = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
+		    $res["replies"] = $replies;
 
-	    if (empty($res["data"])) {
-		$res["isEmpty"] = 'y';
-	    } else {
-		$res["isEmpty"] = 'n';
+		    if (empty($res["data"])) {
+			$res["isEmpty"] = 'y';
+		    } else {
+			$res["isEmpty"] = 'n';
+		    }
 	    }
 
-	    //$res["average"]=$res["points"]/$res["votes"];
-	    $res["average"] = $res["average"];
 	    $ret[] = $res;
 	}
 
-	if ($old_sort_mode == 'replies asc') {
-	    usort($ret, 'compare_replies');
-	}
+	if (!$sticky) {
+		if ($old_sort_mode == 'replies asc') {
+		    usort($ret, 'compare_replies');
+		}
 
-	if ($old_sort_mode == 'replies desc') {
-	    usort($ret, 'r_compare_replies');
-	}
+		if ($old_sort_mode == 'replies desc') {
+		    usort($ret, 'r_compare_replies');
+		}
 
-	if ($old_sort_mode == 'lastPost asc') {
-	    usort($ret, 'compare_lastPost');
-	}
+		if ($old_sort_mode == 'lastPost asc') {
+		    usort($ret, 'compare_lastPost');
+		}
 
-	if ($old_sort_mode == 'lastPost desc') {
-	    usort($ret, 'r_compare_lastPost');
-	}
+		if ($old_sort_mode == 'lastPost desc') {
+		    usort($ret, 'r_compare_lastPost');
+		}
 
-	if (in_array($old_sort_mode, array(
-			'replies desc',
-			'replies asc',
-			'lastPost desc',
-			'lastPost asc'
-			))) {
-	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
+		if (in_array($old_sort_mode, array(
+				'replies desc',
+				'replies asc',
+				'lastPost desc',
+				'lastPost asc'
+				))) {
+		    $ret = array_slice($ret, $old_offset, $old_maxRecords);
+		}
 	}
-
-	$ret = array_merge($ret1, $ret);
 
 	$retval = array();
 	$retval["data"] = $ret;
