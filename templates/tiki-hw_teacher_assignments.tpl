@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignments.tpl,v 1.4 2004-03-12 20:58:25 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignments.tpl,v 1.5 2004-03-19 18:09:59 ggeller Exp $ *}
 {* George G. Geller *}
 
 <!-- templates/tiki-hw_teacher_assignments.tpl start -->
@@ -28,15 +28,16 @@
           <td>
             <a href="tiki-hw_teacher_assignment.php?assignmentId={$listassignments[ix].assignmentId}" class="trailer">{tr}Details{/tr}</a>
           </td>
-          <td style="text-align:center;">
-            {tr}Grading Queue (empty){/tr}
-          </td>
+          {if $listassignments[ix].iGradingQueue eq 0}
+            <td style="text-align:center;"><a class="trailer" href="tiki-hw_grading_queue.php?assignmentId={$listassignments[ix].assignmentId}">{tr}Grading Queue {/tr}({tr}empty{/tr})</a></td>
+          {elseif $listassignments[ix].iGradingQueue eq 1}
+            <td style="text-align:center;"><a class="trailer" href="tiki-hw_grading_queue.php?assignmentId={$listassignments[ix].assignmentId}">{tr}Grading Queue {/tr}(1 {tr}paper{/tr})</a></td>
+          {else}
+            <td style="text-align:center;"><a class="trailer" href="tiki-hw_grading_queue.php?assignmentId={$listassignments[ix].assignmentId}">{tr}Grading Queue {/tr}({$listassignments[ix].iGradingQueue} {tr}papers{/tr})</a></td>
+          {/if}
           <td style="text-align:right;">
             {if $tiki_p_hw_teacher eq 'y'}
               <a class="trailer" href="tiki-hw_teacher_assignment_edit.php?assignmentId={$listassignments[ix].assignmentId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
-            {/if}
-{* GGG            <a class="trailer" href="tiki-hw_teacher_assignment_print.php?assignmentId={$listassignments[ix].assignmentId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a> *}
-            {if $tiki_p_hw_teacher eq 'y'}
               <a class="trailer" href="tiki-hw_teacher_assignments.php?remove={$listassignments[ix].assignmentId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
             {/if}
           </td>

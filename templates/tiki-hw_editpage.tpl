@@ -1,4 +1,7 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_editpage.tpl,v 1.2 2004-02-05 19:10:00 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_editpage.tpl,v 1.3 2004-03-19 18:09:59 ggeller Exp $ *}
+{* Copyright 2004 George G. Geller *}
+
+<!-- templates/tiki-hw_editpage.tpl start -->
 
 {* {if $preview}
   <h2>{tr}Preview{/tr}: {$homeworkTitle}</h2>
@@ -16,7 +19,7 @@
   <span class="tabbut"><a href="javascript:flip('edithelpzone');" class="linkbut">{tr}Wiki quick help{/tr}</a></span>
 </div>
 
-{* {assign var=area_name value="editwiki"} *}
+{assign var=area_name value="editwiki"}
 <form  enctype="multipart/form-data" method="post" action="tiki-hw_editpage.php?id={$pageId}" id='editpageform'>
   <table class="normal">
     {if $feature_smileys eq 'y'}
@@ -60,7 +63,11 @@
       </td>
       <td class="formcolor">
         <input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
-        <a class="link" href="tiki-hw_page.php?assignmentId={$assignmentId|escape:"url"}">{tr}cancel edit{/tr}</a>
+        {if $grader}
+          <a class="link" href="tiki-hw_grading_queue.php?assignmentId={$assignmentId|escape:"url"}">{tr}cancel edit{/tr}</a>
+		{else}
+          <a class="link" href="tiki-hw_page.php?assignmentId={$assignmentId|escape:"url"}">{tr}cancel edit{/tr}</a>
+		{/if}
       </td class="formcolor">
     </tr>
   </table>
@@ -68,3 +75,5 @@
 {* <br />
 <!--<a href="javascript:replaceSome('editwiki','foo','bar');">foo2bar</a>--> *}
 {include file=tiki-edit_help.tpl}
+
+<!-- templates/tiki-hw_editpage.tpl start -->

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignment.php,v 1.3 2004-03-12 20:58:26 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_teacher_assignment.php,v 1.4 2004-03-19 18:09:59 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -42,6 +42,9 @@ if(!$homeworklib->hw_assignment_fetch(&$assignment_data, $assignmentId)){
   $smarty->display("error.tpl");
   die;
 }
+
+$nGradingQueue = $homeworklib->hw_assignment_iGradingQue($assignmentId);
+$smarty->assign('nGradingQueue', $nGradingQueue);
 
 $smarty->assign('title', $assignment_data["title"]);
 
