@@ -19,6 +19,11 @@ if [ -f /etc/debian_version ]; then
 	AGROUP=www-data
 fi
 
+if [ -f /etc/redhat-release ]; then
+	AUSER=apache
+	AGROUP=apache
+fi
+
 if [ "$UNAME" = "CYGWIN" ]; then
 	AUSER=SYSTEM
 	AGROUP=SYSTEM
