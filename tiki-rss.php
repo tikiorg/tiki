@@ -73,7 +73,7 @@ if ($rss_version < 2) {
 	// LOOP collecting last changes (index)
 	foreach ($changes["data"] as $chg) {
 		$resource=$read.$chg["$id"];
-		if ($id == "blodId") { $resource .= "&postId=".$chg["postId"]; }
+		if ($id == "blogId") { $resource .= "&postId=".$chg["postId"]; }
 		$resource = htmlspecialchars($resource);		
 		print ('        <rdf:li rdf:resource="'.$resource.'" />'."\n");
 	}
