@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.16 2004-04-29 20:06:18 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.17 2004-05-01 16:22:25 ggeller Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3815,7 +3815,7 @@ go
 -- Table structure for table `tiki_quizzes`
 --
 -- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
+-- Last update: April 29, 2004
 --
 
 -- DROP TABLE "tiki_quizzes"
@@ -3833,6 +3833,12 @@ quizId numeric(10 ,0) identity,
   "timeLimit" numeric(14,0) default NULL NULL,
   "created" numeric(14,0) default NULL NULL,
   "taken" numeric(10,0) default NULL NULL,
+  "immediateFeedback" char(1) default NULL NULL,
+  "showAnswers" char(1) default NULL NULL,
+  "shuffleQuestions" char(1) default NULL NULL,
+  "shuffleAnswers" char(1) default NULL NULL,
+  "publishDate" numeric(14,0) default NULL NULL,
+  "expireDate"` numeric(14,0) default NULL NULL,
   PRIMARY KEY ("quizId")
 )   
 go
@@ -4115,6 +4121,21 @@ go
 -- --------------------------------------------------------
 
 -- Tables for TikiSheet
+CREATE TABLE "tiki_sheet_layout" (
+  "sheetId" numeric(8,0) default '0' NOT NULL,
+  "begin" numeric(10,0) default '0' NOT NULL,
+  "end" numeric(10,0) default NULL NULL,
+  "headerRow" numeric(4,0) default '0' NOT NULL,
+  "footerRow" numeric(4,0) default '0' NOT NULL,
+  "className" varchar(64) default NULL NULL,
+
+) 
+go
+
+
+CREATE UNIQUE INDEX "tiki_sheet_layout_sheetId" ON "tiki_sheet_layout"("sheetId","begin")
+go
+
 CREATE TABLE "tiki_sheet_values" (
   "sheetId" numeric(8,0) default '0' NOT NULL,
   "begin" numeric(10,0) default '0' NOT NULL,
@@ -7130,6 +7151,10 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('maxRecords','10')
 go
 
 
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_directories','10')
+go
+
+
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('max_rss_articles','10')
 go
 
@@ -7231,6 +7256,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('rnd_num_reg','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('rss_directories','y')
 go
 
 
