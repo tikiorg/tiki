@@ -4,12 +4,11 @@ All Rights Reserved. See copyright.txt for details and a complete list of author
 Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 *}
 
-<a class="pagetitle" href="tiki-list_blogs.php">
-{tr}IRC logs{/tr}
+<a class="pagetitle" href="tiki-view_irc.php">
+{tr}IRC log{/tr} {$irc_log_channel} {$irc_log_time|tiki_long_date}
 </a>
 <br/><br/>
-<br/><br/>
-<div align="center">
+<div>
 <table>
 <tr>
    <td valign='bottom'>{tr}Select{/tr}</td>
