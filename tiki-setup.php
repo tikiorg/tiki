@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.218 2004-05-05 23:56:42 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.219 2004-05-06 02:09:33 mose Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -1238,11 +1238,7 @@ if ($feature_userPreferences == 'y') {
             $user_style = $tikilib->get_user_preference($user, 'theme', $style);
 
             if ($user_style) {
-								if ($tikidomain and is_file("styles/$tikidomain/$user_style")) {
-									$style = "$tikidomain/$user_style";
-								} else {
-									$style = "$user_style";
-								}
+									$style = $user_style;
             }
         }
 
@@ -1258,9 +1254,15 @@ if ($feature_userPreferences == 'y') {
         $language = $_SESSION['language'];
     }
 
-    $smarty->assign('style', $style);
     $smarty->assign('language', $language);
+} 	
+$stlstl = split("-|\.", $style);
+$style_base = $stlstl[0];
+
+if ($tikidomain and is_file("styles/$tikidomain/$style")) {
+	$style = "$tikidomain/$style";
 }
+$smarty->assign('style', $style);
 
 $feature_babelfish = $tikilib->get_preference('feature_babelfish', 'y');
 $feature_babelfish_logo = $tikilib->get_preference('feature_babelfish_logo', 'n');
@@ -1286,9 +1288,6 @@ if ($feature_babelfish_logo == 'y') {
 }
 
 $smarty->assign('user_dbl', $user_dbl);
-
-$stlstl = split("-|\.", $style);
-$style_base = $stlstl[0];
 
 $smarty->assign('user', $user);
 $smarty->assign('group', $group);
