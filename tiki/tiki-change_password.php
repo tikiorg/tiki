@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.6 2003-08-24 20:34:24 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-change_password.php,v 1.7 2003-10-19 14:12:51 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,7 +62,7 @@ if (isset($_REQUEST["change"])) {
 
 	$userlib->change_user_password($_REQUEST["user"], $_REQUEST["pass"]);
 	// Login the user
-	$_SESSION["user"] = $_REQUEST["user"];
+	$_SESSION["$user_cookie_site"] = $_REQUEST["user"];
 	$user = $_REQUEST["user"];
 	$smarty->assign_by_ref('user', $user);
 	header ("location: $tikiIndex");
