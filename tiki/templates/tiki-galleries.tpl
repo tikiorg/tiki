@@ -3,35 +3,29 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=ImageGallery" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Image Gallery{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}{if $feature_help eq 'y'}</a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}galleries tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}{if $feature_view_tpl eq 'y'}</a>{/if}
 
 <!--- beginning of next bit --->
 
-
-
-
-
-
-
-
-
-
 <br /><br />
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=gal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<br /><br />
+{/if}
+
 {if $tiki_p_create_galleries eq 'y'}
 {if $edit_mode eq 'y'}
 {if $galleryId eq 0}
 <h3>{tr}Create a gallery{/tr}</h3>
 {else}
 <h3>{tr}Edit this gallery:{/tr} {$name}</h3>
-<a class="gallink" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>
+[&nbsp;<a class="gallink" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>&nbsp;]
 {/if}
 <div align="center">
 {if $individual eq 'y'}
@@ -80,7 +74,7 @@
 {/if}
 <h2>{tr}Available Galleries{/tr}</h2>
 {if $tiki_p_create_galleries eq 'y'}
-<a class="gallink" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a><br /><br />
+[&nbsp;<a class="gallink" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}create new gallery{/tr}</a>&nbsp;]<br /><br />
 {/if}
 <div align="center">
 <table class="findtable">
@@ -194,7 +188,3 @@
 {/if}
 </div>
 </div>
-{if $tiki_p_admin eq 'y'}
-<br /><br />
-<a href="tiki-admin.php?page=gal"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-{/if}

@@ -3,31 +3,21 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=BlogDoc" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Blog{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' />{/if}{if $feature_help eq 'y'}</a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-edit_blog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit blog tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}{if $feature_view_tpl eq 'y'}</a>{/if}
 
 <!--- beginning of next bit --->
 
 
 
 
-
-
-
-
-
-
-
-
 <br/><br/>
-<a class="bloglink" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>
+[&nbsp;<a class="bloglink" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>&nbsp;]
 <br/><br/>
 <h3>{tr}Current heading{/tr}</h3>
 {if strlen($heading) > 0}

@@ -1,6 +1,10 @@
 <div class="forumspagetitle">
 <a class="forumspagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
 </div>
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=forums"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
+<br /><br />
+{/if}
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
@@ -95,8 +99,4 @@
 {/if}
 </div>
 </div>
-{if $tiki_p_admin eq 'y'}
-<br /><br />
-<a href="tiki-admin.php?page=forums"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
-{/if}
 
