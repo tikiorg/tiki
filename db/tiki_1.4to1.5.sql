@@ -1,3 +1,5 @@
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_batch_upload_files','file galleries','Can upload zip files with files');
+
 alter table tiki_pages add description varchar(200);
 alter table tiki_tags add description varchar(200);
 alter table tiki_history add description varchar(200);
@@ -53,7 +55,7 @@ alter table tiki_history modify pageName varchar(160) NOT NULL;
 alter table tiki_actionlog modify pageName varchar(160) NOT NULL;
 alter table tiki_received_pages modify pageName varchar(160);
 
-# $Id: tiki_1.4to1.5.sql,v 1.13 2003-01-02 17:23:38 lrargerich Exp $
+# $Id: tiki_1.4to1.5.sql,v 1.14 2003-01-03 18:15:40 lrargerich Exp $
 
 alter table users_users add avatarName varchar(80);
 alter table users_users add avatarSize integer(14);
