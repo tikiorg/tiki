@@ -1,6 +1,10 @@
 {* $Header:  *}
 
-<h2>{tr}Assign permissions to category{/tr}: <a href="tiki-browse_categories.php?parentId={$categId}">{$categId}</a></h2>
+<h2>{tr}Assign permissions to category{/tr}: &nbsp;<a href="tiki-admin_categories.php?parentId=0">{tr}Top{/tr}</a>
+{section name=x loop=$path}
+::
+<a href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
+{/section}</h2>
 <h3>{tr}Current permissions for this category{/tr}:</h3>
 <table class="normal">
 <tr><td class="heading">{tr}group{/tr}</td><td class="heading">{tr}permission{/tr}</td><td class="heading">{tr}action{/tr}</td></tr>
