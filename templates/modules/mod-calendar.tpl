@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.33 2004-02-23 02:28:49 chealer Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-calendar.tpl,v 1.34 2004-03-04 18:42:08 sylvieg Exp $ *}
 
 {php}
 include_once("lib/class_calendar.php");
@@ -32,9 +32,10 @@ $_SESSION["thedate"] = $thedate;
 $c = new Calendar("en");
 $v = mb_substr(tra($c->nameOfMonth($mon)),0,3);
 $dayofweek = tra($c->dayOfWeekStr($day,$mon,$year));
-if (false) { // to have the months collected by get_strings.php
-	tra("January"); tra("February"); tra("March"); tra("April"); tra("May");tra("June"); tra("July"); tra("August"); tra("September"); tra("October"); tra("November"); tra("December" );
-}
+{/php}
+{*get_strings {tr}January{/tr} {tr}February{/tr} {tr}March{/tr} {tr}April{/tr} {tr}May");tra("June{/tr} {tr}July{/tr} {tr}August{/tr} {tr}September{/tr} {tr}October{/tr} {tr}November{/tr} {tr}December{/tr}
+{tr}Monday{/tr} {tr}Tuesday{/tr} {tr}Wednesday{/tr} {tr}Thursday{/tr} {tr}Friday{/tr} {tr}Saturday{/tr} {tr}Sunday{/tr}-  only tr tags are collected by get_strings in tpl*}
+{php}
 
 $parsed = parse_url($_SERVER["REQUEST_URI"]);
 if (!isset($parsed["query"])) {
@@ -134,6 +135,7 @@ $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y")
     </tr>
     <tr>
       <td align="center">
+{*get_strings {tr}Today{/tr} -  only tr tags are collected by get_strings in tpl*}
 {php}
          print( "<a class=\"today\" href=\"".$todaylink."\">".tra("Today")."</a>" );
 {/php}
