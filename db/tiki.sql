@@ -1284,6 +1284,7 @@ CREATE TABLE tiki_forums (
   topics_list_lastpost char(1) default NULL,
   topics_list_author char(1) default NULL,
   vote_threads char(1) default NULL,
+  forum_last_n int(2) default 0,
   PRIMARY KEY  (forumId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------

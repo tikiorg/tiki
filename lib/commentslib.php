@@ -462,7 +462,7 @@ class Comments extends TikiLib {
 	    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
 	    $approval_type, $moderator_group, $forum_password,
 	    $forum_use_password, $att, $att_store, $att_store_dir,
-	    $att_max_size)
+	    $att_max_size,$forum_last_n)
     {
 
 	if ($forumId)
@@ -504,16 +504,16 @@ class Comments extends TikiLib {
 	    att = ?,
 	    att_store = ?,
 	    att_store_dir = ?,
-	    att_max_size = ?,
+	    att_max_size = ?, 
 	    topics_list_pts = ?,
 	    topics_list_lastpost = ?,
 	    topics_list_author = ?,
 	    topicsPerPage = ?,
 	    topicOrdering = ?,
 	    threadOrdering = ?,
-	    pruneMaxAge = ?
+	    pruneMaxAge = ?,
+	    forum_last_n = ?
 		where `forumId` = ?";
-
 	    $result = $this->query(
 		    $query,
 		    array(
@@ -561,6 +561,7 @@ class Comments extends TikiLib {
 			$topicOrdering,
 			$threadOrdering,
 			$pruneMaxAge,
+			$forum_last_n,
 			$forumId
 			    )
 			    );
@@ -582,12 +583,12 @@ class Comments extends TikiLib {
 	    `ui_avatar`, `ui_flag`, `ui_posts`, `ui_level`, `ui_email`,
 	    `ui_online`, `approval_type`, `moderator_group`,
 	    `forum_password`, `forum_use_password`, `att`, `att_store`,
-	    `att_store_dir`, `att_max_size`) 
+	    `att_store_dir`, `att_max_size`,`forum_last_n`) 
 		values (?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,
-			?,?,?,?,?,?,?,?,?)";
+			?,?,?,?,?,?,?,?,?,?)";
 	    $bindvars=array($name, $description, $now, $now, 0, 0,
 		    $controlFlood, $floodInterval, $moderator, 0, $mail,
 		    $useMail, $usePruneUnreplied, $pruneUnrepliedAge,
@@ -601,7 +602,7 @@ class Comments extends TikiLib {
 		    $ui_flag, $ui_posts, $ui_level, $ui_email, $ui_online,
 		    $approval_type, $moderator_group, $forum_password,
 		    $forum_use_password, $att, $att_store, $att_store_dir,
-		    $att_max_size);
+		    $att_max_size,$forum_last_n);
 
 	    $result = $this->query($query,$bindvars);
 	    $forumId = $this->getOne("select max(`forumId`)
@@ -1199,7 +1200,6 @@ class Comments extends TikiLib {
 	    } else {
 		$res["grandFather"] = 0;
 	    }
-
 	    $res["parsed"] = $this->parse_comment_data($res["data"]);
 	    // Get the replies
 	    $replies = $this->get_comment_replies($res["threadId"], $sort_mode, 0, -1, $threshold);
@@ -1249,6 +1249,101 @@ class Comments extends TikiLib {
 	$retval["cant"] = $cant;
 	return $retval;
     }
+
+
+    function get_all_comments($objectId, $offset = 0, $maxRecords
+	    = -1, $sort_mode = 'commentDate_asc')
+    {
+	if ($sort_mode == 'points_asc') {
+	    $sort_mode = 'average_asc';
+	}
+
+    $time_cond = '';
+    $bind_time = array();
+
+	$old_sort_mode = '';
+
+	if (in_array($sort_mode, array(
+			'replies desc',
+			'replies asc',
+			'lastPost desc',
+			'lastPost asc'
+			))) {
+	    $old_offset = $offset;
+
+	    $old_maxRecords = $maxRecords;
+	    $old_sort_mode = $sort_mode;
+	    $sort_mode = 'title desc';
+	    $offset = 0;
+	    $maxRecords = -1;
+	}
+
+    $extra = '';
+    $bind_extra=array();
+
+	$query = "select count(*) from `tiki_comments` where `object`=? $time_cond";
+	$below = $this->getOne($query,array_merge(array($objectId),$bind_time));
+
+    $mid = " where `object`=? ";
+    $bind_mid=array($objectId,);
+
+	$query = "select * from `tiki_comments` $mid $extra $time_cond order by ".$this->convert_sortmode($sort_mode);
+	$query_cant = "select count(*) from `tiki_comments` $mid $extra $time_cond";
+	$result = $this->query($query,array_merge($bind_mid,$bind_extra,$bind_time),$maxRecords,$offset);
+	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_extra,$bind_time));
+
+	while ($res = $result->fetchRow()) {
+	    // Get the last reply
+	    $tid = $res["threadId"];
+
+	    $res['is_marked'] = $this->is_marked($res['threadId']);
+
+	    if (empty($res["data"])) {
+		$res["isEmpty"] = 'y';
+	    } else {
+		$res["isEmpty"] = 'n';
+	    }
+
+	    //$res["average"]=$res["points"]/$res["votes"];
+	    $res["average"] = $res["average"];
+	    $ret[] = $res;
+	}
+
+	if ($old_sort_mode == 'replies asc') {
+	    usort($ret, 'compare_replies');
+	}
+
+	if ($old_sort_mode == 'replies desc') {
+	    usort($ret, 'r_compare_replies');
+	}
+
+	if ($old_sort_mode == 'lastPost asc') {
+	    usort($ret, 'compare_lastPost');
+	}
+
+	if ($old_sort_mode == 'lastPost desc') {
+	    usort($ret, 'r_compare_lastPost');
+	}
+
+	if (in_array($old_sort_mode, array(
+			'replies desc',
+			'replies asc',
+			'lastPost desc',
+			'lastPost asc'
+			))) {
+	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
+	}
+
+
+
+	$retval = array();
+	$retval["data"] = $ret;
+	$retval["below"] = $below;
+	$retval["cant"] = $cant;
+	return $retval;
+    }
+
+
 
     function lock_comment($threadId) {
 	$query = "update `tiki_comments`

@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.109 2003-09-24 18:16:26 lrargerich Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.110 2003-10-01 14:10:18 lrargerich Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -18,6 +18,10 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 Version 1.8 --
 <http://tikiwiki.org/ReleaseProcess18>
 
+* [NEW] Last n messages posted in a forum can be displayed when listing forum topics
+  to provide a quick access to the last posts in the forum regardless if they are
+  new topics or replies to an existing thread. This is optional and the number of 
+  post titles to display can be configured.
 * [NEW] Wiki pages can be cached or not cached individually, this setting overrides
   the global setting for caching wiki pages. (Allows to have all pages cached but
   one or no pages cached but some, refresh times can differ too)

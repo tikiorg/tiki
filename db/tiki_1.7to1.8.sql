@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.22 2003-10-01 01:24:18 rlpowell Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.23 2003-10-01 14:10:17 lrargerich Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -676,3 +676,6 @@ tc.message_id,
 tc.in_reply_to
 from old_tiki_comments tc, tiki_polls tp
 where tc.object = md5(concat('poll', tp.pollId));
+
+alter table tiki_forums add forum_last_n int(2);
+update tiki_forums set forum_last_n = 0;
