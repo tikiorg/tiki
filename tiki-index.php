@@ -112,6 +112,11 @@ if(empty($info)) {
 
 // Now check permissions to access this page
 if($tiki_p_view != 'y') {
+  if (!isset($user)){
+    $smarty->assign('msg',tra("Please login."));
+    $smarty->display("pleaselogin.tpl");
+    die;  
+  }
   $smarty->assign('msg',tra("Permission denied you cannot view this page"));
   $smarty->display("error.tpl");
   die;  
