@@ -1,6 +1,6 @@
 <a class="pagetitle" href="tiki-jukebox_albums.php">{tr}Jukebox Albums{/tr}</a><br /><br />
 {if $tiki_p_jukebox_tracks eq 'y'}
-<a class="linkbut" href="tiki-jukebox_albums.php?edit_mode=1?albumId=0">{tr}create new album{/tr}</a>
+<a class="linkbut" href="tiki-jukebox_albums.php?edit_mode=1&amp;albumId=0">{tr}create new album{/tr}</a>
 {/if}
 {if $tiki_p_jukebox_genres eq 'y'}
  <a class="linkbut" href="tiki-jukebox_genres.php">{tr}Admin Genres{/tr}</a>
