@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.21 2004-01-20 06:33:14 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker.php,v 1.22 2004-01-20 09:03:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -55,6 +55,9 @@ if ($tiki_p_view_trackers != 'y') {
 
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);
+
+$field_types = $trklib->field_types();
+$smarty->assign('field_types', $field_types);
 
 $fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
 $ins_fields = $fields;
@@ -115,7 +118,11 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$ins_fields["data"][$i]["value"] = date("U");
 		}
 	}
-
+	if ($fields["data"][$i]["type"] == 'e') {
+		include_once('lib/categories/categlib.php');
+		$k = $ins_fields["data"][$i]["options"];
+		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+	}
 	if ($fields["data"][$i]["type"] == 'c') {
 		if (isset($_REQUEST["$name"])) {
 			$fields["data"][$i]["value"] = $_REQUEST["$name"];
@@ -130,7 +137,7 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 		}
 	}
 }
-
+//var_dump($ins_fields);
 if ($tiki_p_admin_trackers == 'y') {
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('view-trackers');

@@ -46,6 +46,16 @@
 {$ins_fields[ix].value|date_format:$daformat}
 {elseif $ins_fields[ix].type eq 'a'}
 {$ins_fields[ix].pvalue}
+{elseif $ins_fields[ix].type eq 'e'}
+{assign var=fca value=$ins_fields[ix].options}
+<table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
+{foreach key=ku item=iu from=$fields[ix].$fca}
+<td width="50%" nowrap="nowrap">{$iu.name}</td>{cycle name=$fca}
+{/foreach}
+</table>
+{$ins_fields[ix].pvalue}
+{elseif $ins_fields[ix].type eq 'c'}
+{$ins_fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
 {else}
 {$ins_fields[ix].value}
 {/if}
@@ -192,6 +202,14 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 <option value="{$groups[ux].groupName|escape}" {if $ins_fields[ix].value eq $groups[ux].groupName}selected="selected"{/if}>{$groups[ux].groupName}</option>
 {/section}
 </select>
+
+{elseif $ins_fields[ix].type eq 'e'}
+{assign var=fca value=$ins_fields[ix].options}
+<table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
+{foreach key=ku item=iu from=$fields[ix].$fca}
+<td width="50%" nowrap="nowrap"><input type="checkbox" name="{$ku}[]" value="{$iu.categId}">{$iu.name}</td>{cycle name=$fca}
+{/foreach}
+</table>
 
 {elseif $ins_fields[ix].type eq 't'}
 <input type="text" name="ins_{$ins_fields[ix].name}" value="{$ins_fields[ix].value|escape}" />

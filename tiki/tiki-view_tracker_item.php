@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.24 2004-01-20 06:33:14 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.25 2004-01-20 09:03:13 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -88,6 +88,12 @@ for ($i = 0; $i < count($fields["data"]); $i++) {
 			$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_name" . "Hour"], $_REQUEST["$ins_name" . "Minute"],
 				0, $_REQUEST["$ins_name" . "Month"], $_REQUEST["$ins_name" . "Day"], $_REQUEST["$ins_name" . "Year"]);
 		}
+	}
+
+	if ($fields["data"][$i]["type"] == 'e') {
+		include_once('lib/categories/categlib.php');
+		$k = $ins_fields["data"][$i]["options"];
+		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
 	}
 
 	if ($fields["data"][$i]["type"] == 'c') {

@@ -83,6 +83,8 @@ loop=$fields}{if $fields[x].value}&amp;{$fields[x].name}={$fields[x].value}{/if}
 <td>{if $tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'}<a class="tablename" href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}&amp;itemId={$items[user].itemId}">{/if}
 {if $items[user].field_values[ix].type eq 'f'}
 {$items[user].field_values[ix].value|tiki_short_datetime}
+{elseif $items[user].field_values[ix].type eq 'c'}
+{$items[user].field_values[ix].value|replace:"y":"Yes"|replace:"n":"No"}
 {elseif $items[user].field_values[ix].type eq 'i'}
 <img src="{$items[user].field_values[ix].value}"/>
 {else}
@@ -258,6 +260,14 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 </table>
 <h3>{$ins_fields[ix].label}</h3>
 <table class="normal">
+
+{elseif $ins_fields[ix].type eq 'e'}
+{assign var=fca value=$ins_fields[ix].options}
+<table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
+{foreach key=ku item=iu from=$fields[ix].$fca}
+<td width="50%" nowrap="nowrap"><input type="checkbox" name="{$ku}[]" value="{$iu.categId}">{$iu.name}</td>{cycle name=$fca}
+{/foreach}
+</table>
 
 {elseif $ins_fields[ix].type eq 'i'}
 <input type="file" name="ins_{$ins_fields[ix].name}"/>
