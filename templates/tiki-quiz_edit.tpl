@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.8 2004-05-14 17:05:42 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.9 2004-05-17 16:05:37 ggeller Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -21,19 +21,43 @@
 <form enctype="multipart/form-data" method="post" action="tiki-quiz_edit.php?quizId={$quiz.quizId}">
 	<table class="normal">
 		<tr class="formcolor">
+			<td>{tr}Status{/tr}</td>
+			<td width="85%" {if $cols} colspan="{$cols}"{/if}>
+        [ <a class="link" href="javascript:show('status');">{tr}show{/tr}</a>
+ 				| <a class="link" href="javascript:hide('status');">{tr}hide{/tr}</a> ]
+ 				<div id="status" style="display:none;">
+					<table class="normal">
+						<tr>
+							{if $quiz.online eq 'y'}
+								<td class="formcolor" colspan=2><strong>{tr}This quiz is currently published (online).{/tr}</strong>&nbsp&nbsp&nbsp<input type="checkbox" name="offline" id="offline" /><label for="offline">{tr}Unpublish this quiz. (Take it offline.){/tr}</td>
+							{else}
+								<td class="formcolor" colspan=2><strong>{tr}This quiz is currently unpublished (offline).{/tr}</strong>&nbsp&nbsp&nbsp<input type="checkbox" name="online" id="online" /><label for="online">{tr}Publish this quiz. (Take it online.){/tr}</td>
+							{/if}
+						</tr>
+						{if $quiz.taken eq 'y'}
+							<tr>
+								<td class="formcolor" colspan=2>{tr}Current Version{/tr}: {$quiz.version}
+								</td>
+							</tr>
+							{foreach from=$quiz.history item=history}
+								<tr>
+									<td class="formcolor" colspan=2>{$history}
+									</td>
+								</tr>
+							{/foreach}
+						{/if}
+					</table>
+			  </div>
+			</td>
+		</tr>
+
+		<tr class="formcolor">
 			<td>{tr}General Options{/tr}</td>
 			<td width="85%" {if $cols} colspan="{$cols}"{/if}>
         [ <a class="link" href="javascript:show('general');">{tr}show{/tr}</a>
  				| <a class="link" href="javascript:hide('general');">{tr}hide{/tr}</a> ]
  				<div id="general" style="display:none;">
 					<table class="normal">
-						<tr>
-							<td class="formcolor" colspan=2>{tr}This quiz is:{/tr}
-    							<input type="radio" value="online" name="online" {if $quiz.online eq 'y'}checked="checked"{/if}>{tr}online{/tr}
-    							<input type="radio" value="offline" name="online" {if $quiz.online eq 'n'}checked="checked"{/if}>{tr}offline{/tr}
-							</td>
-						</tr>
-
 						<tr class="formcolor">
 							<td><label for="quiz-name">Name:</label></td>
 							<td><input type="text" name="name" id="quiz-name" value="{$quiz.name|escape}" size="60"></td>
