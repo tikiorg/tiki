@@ -2415,7 +2415,7 @@ $lang=Array(
 "Create/edit Menus" => "建立/編輯 選單",//perhaps not used
 
 
-"dynamic colapsed" => "動態折疊",//perhaps not used
+"dynamic collapsed" => "動態折疊",//perhaps not used
 
 
 "dynamic extended" => "動態延伸",
