@@ -1,5 +1,7 @@
 Version 1.7 -Eta Carinae-
 
+* [NEW] WYSIWYG editor added for blog posts, you can now edit an HTML post
+  for a blog using a full-featured Wysiwyg editor (IE only in 1.7)
 * [NEW] Workflow engine added. Create processes, monitor processes and
   execute processes. Processes are mapped to PHP scripts. Please read
   the workflow documentation for a detailed overview of the Workflow engine.

@@ -12,6 +12,7 @@ if($feature_wiki != 'y') {
   die;  
 }
 
+
 //print($GLOBALS["HTTP_REFERER"]);
 
 // Create the HomePage if it doesn't exist
@@ -38,10 +39,10 @@ if(!$tikilib->page_exists($wikiHomePage)) {
   $tikilib->create_page($wikiHomePage,0,'',date("U"),'Tiki initialization'); 
 }
 
-
-
 require_once('tiki-pagesetup.php');
 
+$creator = $wikilib->get_creator($page);
+$smarty->assign('creator',$creator);
 
 
 
