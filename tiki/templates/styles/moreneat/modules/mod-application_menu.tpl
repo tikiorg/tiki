@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.19 2003-12-16 14:29:56 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/moreneat/modules/mod-application_menu.tpl,v 1.20 2003-12-19 04:13:39 wolff_borg Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 
@@ -45,6 +45,19 @@
 &nbsp;<a href="tiki-g-user_processes.php" class="linkmenu">{tr}User processes{/tr}</a><br/>  
 &nbsp;<a href="tiki-g-user_activities.php" class="linkmenu">{tr}User activities{/tr}</a><br/>  
 &nbsp;<a href="tiki-g-user_instances.php" class="linkmenu">{tr}User instances{/tr}</a><br/>  
+</div>
+{/if}
+
+{if $feature_mantis eq 'y' and $tiki_p_view_mantis eq 'y'}
+<div class="separator">
+<a class='separator' href="javascript:toggle('mantismenu');">::</a>
+<a href="tiki-mantis-main.php" class="separator">{tr}MantisBT{/tr}</a>
+</div>
+<div id='mantismenu' style="{$mnu_mantis}">
+{if $tiki_p_admin_mantis eq 'y'}
+&nbsp;<a href="tiki-mantis-admin.php" class="linkmenu">{tr}Admin{/tr}</a><br/>  
+{/if}
+&nbsp;<a href="tiki-mantis-view_bugs.php" class="linkmenu">{tr}View Bugs{/tr}</a><br/>  
 </div>
 {/if}
 
