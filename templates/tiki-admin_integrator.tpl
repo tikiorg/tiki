@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.17 2003-11-19 16:01:16 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.18 2003-11-24 01:18:23 gongo Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit Repository:{/tr} {$name}</h2>
@@ -46,7 +46,7 @@
       <input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Are files from repository can be cached{/tr}" />
       {if isset($repID) and $repID ne '0'}
         &nbsp;&nbsp;
-        <a href="tiki-admin_integrator.php?action=clear&repID={$repID|escape}" title="{tr}Clear all cached pages of this repository{/tr}">
+        <a href="tiki-admin_integrator.php?action=clear&amp;repID={$repID|escape}" title="{tr}Clear all cached pages of this repository{/tr}">
           {tr}Clear cache{/tr}
         </a>
       {/if}
@@ -88,10 +88,10 @@
       <td class="{cycle advance=false}">{$repositories[rep].start_page}</td>
       <td class="{cycle advance=false}">{$repositories[rep].css_file}</td>
       <td class="{if (strlen($repositories[rep].description) > 0)}{cycle advance=false}{else}{cycle}{/if}">
-        <a href="tiki-admin_integrator.php?action=edit&repID={$repositories[rep].repID|escape}" title="{tr}edit{/tr}">
+        <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repositories[rep].repID|escape}" title="{tr}edit{/tr}">
             <img src="img/icons/config.gif" alt="{tr}edit{/tr}" border="0" />
         </a>
-        <a href="tiki-admin_integrator.php?action=rm&repID={$repositories[rep].repID|escape}" title="{tr}remove{/tr}">
+        <a href="tiki-admin_integrator.php?action=rm&amp;repID={$repositories[rep].repID|escape}" title="{tr}remove{/tr}">
             <img src="img/icons2/delete.gif" alt="{tr}remove{/tr}" border="0" />
         </a>
       </td>
