@@ -7678,23 +7678,14 @@ function parse_data($data)
     //$page='';
 
     // Now search for plugins
-    $smc = new Smarty_Compiler();
+    //$smc = new Smarty_Compiler();
     preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
-    
-    for($i=0;$i<count($plugins[0]);$i++) {
+    for($i=count($plugins[0])-1;$i>=0;$i--) {
       $plugin_start = $plugins[0][$i];
-      $plugin_start_base = '{'.$plugins[1][$i].'(';
       $plugin_end = '{'.$plugins[1][$i].'}';
-      // Find first occurrence of start tag
-      // Build start tag using 
-
-
+      $plugin_start_base = '{'.$plugins[1][$i].'(';
       $pos = strpos($data,$plugin_start);
-      // And now find the LAST occurrence of the end tag
       $pos_end = strpos($data,$plugin_end,$pos);
-      
-      
-      
       if($pos_end>$pos) {
         $plugin_data_len=$pos_end-$pos-strlen($plugins[0][$i]);
         $plugin_data = substr($data,$pos+strlen($plugin_start),$plugin_data_len);
@@ -7719,7 +7710,8 @@ function parse_data($data)
         }
       }
     }
-    unset($smc);
+    
+    //unset($smc);
 
 
     // Now search for images uploaded by users
@@ -8239,14 +8231,26 @@ function parse_data($data)
     }
     //$page='';
 
+
     // Now search for plugins
     preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
     //print_r($plugins);
     for($i=0;$i<count($plugins[0]);$i++) {
       $plugin_start = $plugins[0][$i];
       $plugin_end = '{'.$plugins[1][$i].'}';
+      $plugin_start_base = '{'.$plugins[1][$i].'(';
       $pos = strpos($data,$plugin_start);
       $pos_end = strpos($data,$plugin_end);
+      
+      $pos_base_new = strpos($data,$plugin_start_base);
+      $pos_base = $pos_base_new;
+      while($pos_base_new) {
+        $pos_base = $pos_base_new;
+        $pos_base_new = strpos($data,$plugin_start_base,$pos_base+1);	
+      }
+      print("akjhdkjhdkahkdhas");
+      print("Posbase: $pos_base<br/>");
+      
       if($pos_end>$pos) {
         $plugin_data_len=$pos_end-$pos-strlen($plugins[0][$i]);
         $plugin_data = substr($data,$pos+strlen($plugin_start),$plugin_data_len);

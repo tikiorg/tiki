@@ -1,5 +1,8 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Plugins can be nested
+* [NEW] Plugins are re-entrant, a plugin can generate another plugin code. 
+* [NEW] Wiki structures can be used to generate slide shows
 * [NEW] Changed translation routines to a Smarty prefilter, the first time the screen is
   generated it will be slower but then all the pages will be rendered very fast. Performance
   improvement.
