@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.17 2004-08-12 16:04:47 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-pagehistory.tpl,v 1.18 2004-08-12 20:43:31 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a><br /><br />
 {if $preview}
@@ -90,7 +90,7 @@
 </td>
 </tr>
 {sectionelse}
-<tr><td colspan="{if $feature_wiki_history_ip ne 'n'}8{else}7{/if}">
+<tr><td colspan="{if $feature_wiki_history_ip ne 'n'}9{else}8{/if}">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
