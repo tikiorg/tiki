@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.13 2003-03-21 14:42:44 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/xmlrpc.php,v 1.14 2003-03-28 17:53:38 lrargerich Exp $
 
 require_once('db/tiki-db.php');
 require_once('lib/tikilib.php');
@@ -68,7 +68,7 @@ function getUserInfo($params) {
  
 /* Posts a new submission to the CMS */
 function newPost($params) {
-  global $tikilib,$userlib;
+  global $tikilib,$userlib,$bloglib;
   $appkeyp=$params->getParam(0); $appkey=$appkeyp->scalarval();
   $blogidp=$params->getParam(1); $blogid=$blogidp->scalarval();
   $usernamep=$params->getParam(2); $username=$usernamep->scalarval();
@@ -109,7 +109,7 @@ function newPost($params) {
 
 // :TODO: editPost
 function editPost($params) {
-  global $tikilib,$userlib;
+  global $tikilib,$userlib,$bloglib;
   $appkeyp=$params->getParam(0); $appkey=$appkeyp->scalarval();
   $blogidp=$params->getParam(1); $postid=$blogidp->scalarval();
   $usernamep=$params->getParam(2); $username=$usernamep->scalarval();
@@ -149,7 +149,7 @@ function editPost($params) {
 
 // :TODO: deletePost
 function deletePost($params) {
-  global $tikilib,$userlib;
+  global $tikilib,$userlib,$bloglib;
   $appkeyp=$params->getParam(0); $appkey=$appkeyp->scalarval();
   $blogidp=$params->getParam(1); $postid=$blogidp->scalarval();
   $usernamep=$params->getParam(2); $username=$usernamep->scalarval();
@@ -187,7 +187,7 @@ function deletePost($params) {
 
 // :TODO: getPost
 function getPost($params) {
-  global $tikilib,$userlib;
+  global $tikilib,$userlib,$bloglib;
   $appkeyp=$params->getParam(0); $appkey=$appkeyp->scalarval();
   $blogidp=$params->getParam(1); $postid=$blogidp->scalarval();
   $usernamep=$params->getParam(2); $username=$usernamep->scalarval();
@@ -233,7 +233,7 @@ function getPost($params) {
 
 // :TODO: getRecentPosts
 function getRecentPosts($params) {
-  global $tikilib,$userlib;
+  global $tikilib,$userlib,$bloglib;
   $appkeyp=$params->getParam(0); $appkey=$appkeyp->scalarval();
   $blogidp=$params->getParam(1); $blogid=$blogidp->scalarval();
   $usernamep=$params->getParam(2); $username=$usernamep->scalarval();
@@ -283,7 +283,7 @@ function getRecentPosts($params) {
 
 /* Get the topics where the user can post a new */
 function getUserBlogs($params) {
- global $tikilib,$userlib;
+ global $tikilib,$userlib,$bloglib;
  $appkeyp=$params->getParam(0); $appkey=$appkeyp->scalarval();
  $usernamep=$params->getParam(1); $username=$usernamep->scalarval();
  $passwordp=$params->getParam(2); $password=$passwordp->scalarval();

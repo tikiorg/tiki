@@ -2,7 +2,7 @@
 <a class="pagetitle" href="tiki-minical_prefs.php">{tr}Mini Calendar: Preferences{/tr}</a><br/><br/>
 {include file=tiki-mytiki_bar.tpl}
 <br/>
-[<a class="link" href="tiki-minocal.php#add">{tr}Add{/tr}</a>]
+[<a class="link" href="tiki-minical.php#add">{tr}Add{/tr}</a>]
 [<a class="link" href="tiki-minical_prefs.php">{tr}Prefs{/tr}</a>]
 [<a class="link" href="tiki-minical.php?view=daily">{tr}Daily{/tr}</a> | 
 <a class="link" href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a> |
@@ -70,7 +70,7 @@
 </tr>	
 </table>
 </form>
-
+<a name="import"></a>
 <h3>{tr}Import CSV file{/tr}</h3>
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
 <table class="normal">
