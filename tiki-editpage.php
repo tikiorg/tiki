@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.86 2004-06-11 13:57:25 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.87 2004-06-11 14:21:21 sylvieg Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -557,9 +557,9 @@ if (isset($_REQUEST["lang"])) {
 		$smarty->assign('msg', tra("The language can't be changed as its set of translations has already this language"));
 		$smarty->display("error.tpl");
 		die;
-  	} else
-		$pageLang = $_REQUEST["lang"];
-  }
+  	}
+   }
+	$pageLang = $_REQUEST["lang"];
 } elseif (isset($info["lang"])) {
   $pageLang = $info["lang"];
 } else {
