@@ -258,7 +258,7 @@ class SearchLib extends TikiLib {
 			'id' => array('f.forumId', 'c.threadId'),
 			'pageName' => 'CONCAT(name, ": ", title)',
 			'search' => array('c.title', 'c.data'),
-			'filter' => 'c.objectType = "forum" AND f.forumId=c.object',
+			'filter' => 'c.objectType = "forum" AND f.forumId = c.object',
 		);
 
 		return $this->_find($search_forums, $words, $offset, $maxRecords, $fulltext);
@@ -291,6 +291,7 @@ class SearchLib extends TikiLib {
 			'id' => array('blogId'),
 			'pageName' => 'title',
 			'search' => array('title', 'description'),
+			'filter' => 'use_find = "y"',
 		);
 
 		return $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext);
@@ -332,6 +333,7 @@ class SearchLib extends TikiLib {
 			'id' => array('p.blogId'),
 			'pageName' => $pagename,
 			'search' => array('p.data'),
+			'filter' => 'b.use_find = "y"',
 		);
 
 		return $this->_find($search_posts, $words, $offset, $maxRecords, $fulltext);
