@@ -4,8 +4,6 @@ require_once("db/tiki-db.php");
 
 error_reporting(E_ALL);
 
-
-
 // Remove automatic quotes added to POST/COOKIE by PHP
 if (get_magic_quotes_gpc ()) {
   foreach($_REQUEST as $k=>$v) {

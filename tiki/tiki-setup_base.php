@@ -1,6 +1,4 @@
 <?php 
-
-
 require_once("setup.php");
 require_once("lib/tikilib.php");
 $tikilib = new TikiLib($dbTiki);
