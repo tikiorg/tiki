@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.17 2003-10-14 13:21:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.18 2003-10-16 18:23:05 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.17 2003-10-14 13:21:10 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.18 2003-10-16 18:23:05 dheltzel Exp $
 session_start();
 
 // Define and load Smarty components
@@ -49,6 +49,71 @@ function process_sql_file($file,$db_tiki) {
 	}
 
 	$smarty->assign('commands', $commands);
+}
+
+function deldir($dir){
+   $current_dir = opendir($dir);
+   while($entryname = readdir($current_dir)){
+      if(is_dir("$dir/$entryname") and ($entryname != "." and $entryname!="..")){
+         deldir("${dir}/${entryname}");
+      }elseif($entryname != "." and $entryname!=".."){
+         unlink("${dir}/${entryname}");
+      }
+   }
+   closedir($current_dir);
+   rmdir(${dir});
+}
+
+function clean_cache(){
+   $dir = 'templates_c';
+   $current_dir = opendir($dir);
+   while($entryname = readdir($current_dir)){
+      if(is_dir("$dir/$entryname") and ($entryname != "." and $entryname!="..")){
+         deldir("${dir}/${entryname}");
+      }elseif($entryname != "." and $entryname!=".."){
+         unlink("${dir}/${entryname}");
+      }
+   }
+   closedir($current_dir);
+}
+
+function setup_help(){
+	// show what user/group id the webserver is running as
+	$uid = shell_exec('id -un');
+	$gid = shell_exec('id -gn');
+	print "userid: <b>$uid</b>  groupid: <b>$gid</b><br>If you experience problems with the install, please run the following command as root:<br>";
+	print "<i>./setup.sh $uid $gid 02775</i><br>";
+}
+
+function create_dirs(){
+	// Create directories as needed
+	$dirs=array(
+		"backups",
+		"db",
+		"dump",
+		"img/wiki",
+		"img/wiki_up",
+		"modules/cache",
+		"temp",
+		"templates_c",
+		"var",
+		"var/log",
+		"var/log/irc",
+		"templates",
+		"styles",
+		"lib/Galaxia/processes");
+
+	print "Checking directories:<br>";
+	foreach ($dirs as $dir) {
+		if (!is_dir($dir)) {
+			echo "Creating $dir directory.<br>";
+			@mkdir($dir,02775);
+		}
+		@chmod($dir,02775);
+		if (!is_dir($dir)) {
+			print "problem with $dir<br>";
+		}
+	}
 }
 
 function isWindows() {
@@ -108,6 +173,9 @@ class Smarty_Sterling extends Smarty {
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
 	}
 }
+
+// Added to clear the Smarty cache before the install
+clean_cache();
 
 if (isset($_REQUEST['kill'])) {
 	@$removed = rename('tiki-install.php', 'tiki-install.done');
@@ -561,5 +629,12 @@ if (isset($_SESSION['install-logged']) && $_SESSION['install-logged'] == 'y') {
 }
 
 $smarty->display("tiki.tpl");
+
+print "<hr>";
+setup_help();
+print "<hr>";
+create_dirs();
+// Added to clear the Smarty cache after the install
+clean_cache();
 
 ?>
