@@ -181,7 +181,7 @@
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
   <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
-{if $auth_method neq 'cas'}
+{if $auth_method neq 'cas' || ($cas_skip_admin eq 'y' && $user eq 'admin')}
   <tr><td class="form">{tr}New password{/tr}:</td><td class="form"><input type="password" name="pass1" /></td></tr>
   <tr><td class="form">{tr}Again please{/tr}:</td><td class="form"><input type="password" name="pass2" /></td></tr>
   {if $tiki_p_admin ne 'y' or $userwatch eq $user}
