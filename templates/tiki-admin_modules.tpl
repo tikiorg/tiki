@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.21 2003-11-17 14:12:38 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_modules.tpl,v 1.22 2003-11-17 15:01:32 sylvieg Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
 <!-- the help link info --->
@@ -65,7 +65,7 @@ from Admin->General
 <a href="tiki-admin_modules.php" class="linkbut">{tr}Assign new module{/tr}</a>
 {/if}
 {if $preview eq 'y'}
-{tr}Preview{/tr}<br/>
+<br/>{tr}Preview{/tr}<br/>
 {$preview_data}
 {/if}
 <form method="post" action="tiki-admin_modules.php#assign">
@@ -192,12 +192,12 @@ from Admin->General
 {else}
 <h3>{tr}Edit this user module:{/tr} {$um_name}
 {/if}
-	{if $wysiwyg eq 'n'}
-		<a class="link" href="tiki-admin_modules.php?wysiwyg=y#editcreate">{tr}Use wysiwyg editor{/tr}</a>
-	{else}
-		<a class="link" href="tiki-admin_modules.php?wysiwyg=n#editcreate">{tr}Use normal editor{/tr}</a>
-	{/if}
 </h3>
+	{if $wysiwyg eq 'n'}
+		<a class="linkbut" href="tiki-admin_modules.php?wysiwyg=y#editcreate">{tr}Use wysiwyg editor{/tr}</a>
+	{else}
+		<a class="linkbut" href="tiki-admin_modules.php?wysiwyg=n#editcreate">{tr}Use normal editor{/tr}</a>
+	{/if}
 {if $um_name ne ''}
 <a href="tiki-admin_modules.php#editcreate">{tr}Create new user module{/tr}</a>
 {/if}
@@ -298,7 +298,7 @@ from Admin->General
   <td>
     <select name="menus" id='list_menus'>
     {section name=ix loop=$menus}
-    <option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].menuId}</option>   
+    <option value="{literal}{{/literal}menu id={$menus[ix].menuId}{literal}}{/literal}">{$menus[ix].name}</option>   
     {/section}
     </select>
   </td>
