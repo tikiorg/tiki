@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.5 2004-01-04 06:22:08 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.6 2004-01-04 08:26:31 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -282,6 +282,7 @@ div.simplebox {
 TABLE.normal, table.listgallery, table.creategalform, table.gallerylisting, table.bloglist, table.editblogform, table.editfgalform,
 	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread {
 	border: 1px solid #ccc7b6;
+	border-spacing: 0;
 	width: 100%;
 }
 TABLE.normalnoborder {
@@ -335,6 +336,23 @@ tr.formcolor {
 }
 tr.formcolor:hover { 
 	background-color: #eee7d6;
+}
+tr.formcolor td {
+	border-top: 1px solid #ddd7c6;
+	padding: 1px 20px 6px 3px;
+}
+tr.formcolor table td {
+	font-size: 90%;
+	color: #424242;
+	border-top: 0;
+	padding: 1px 20px 1px 3px;
+}
+.normal tr.formcolor:first-child td {
+	border-top: 0;
+}
+tr.formcolor td:first-child {
+	font-size: 90%;
+	color: #424242;
 }
 
 TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.gallistlastModifodd, td.gallistuserodd, td.gallistimagesodd, td.gallisthitsodd, td.gallistactionsodd, td.listgalidodd, td.listgalnameodd, td.listgalcreatedodd,
@@ -1666,32 +1684,31 @@ div.tabs {
 	cursor: default !important;
 	font-weight: 700 !important;
 	z-index: 100;
-	}
+}
 
 .content {
 	position: relative;
-	border: 1px solid #666;
-	width: 600px;
-	padding: 10px;
+	border: 1px solid #999999;
+	width: 600px  !important;
+	padding: 6px 2px 2px 2px;
 	margin-bottom: 25px;
 	z-index: 80;
-	background-color: #f3f6f9;
+	background-color: #eee7d6;
 	-moz-border-radius: 0px 4px 4px 4px;
-	}
-	
+}
 .tab {
-	border: 1px solid #347;
+	border: 1px solid #999999;
 	padding: 2px 5px 1px 5px;
-	background-color: #bcd;
-	color: #303036;
+	background-color: #ddd7c6;
+	color: #666666;
 	z-index: 100;
-	border-bottom-width: 0;
+	border-bottom: 1px solid #ddd7c6;
 	-moz-border-radius: 4px 4px 0px 0px;
-	}
+}
 
 .tabHover {
-	background-color: #46596f;
-	color:#fff;
+	background-color: #FFF7E6;
+	color: #1c60a8;
 	z-index: 90;
 	border-bottom-width: 0;
 	cursor: pointer;
@@ -1699,8 +1716,8 @@ div.tabs {
 
 .tabActive { 
 	padding: 3px 5px 2px 5px;
-	color: #060610 ;
-	background-color: #f3f6f9;
+	color: #000000;
+	background-color: #eee7d6;
 	z-index: 100;
 	}
       
@@ -1724,72 +1741,4 @@ a.removeTab{
 #clear {
 	clear:both;
 	}
-	
-
-/* for tabs */
-div.tabs {
-	font-size: 11px;
-	white-space: nowrap;
-	cursor: default !important;
-	font-weight: 700 !important;
-	z-index: 100;
-	}
-
-.content {
-	position: relative;
-	border: 1px solid #666;
-	width: 600px;
-	padding: 10px;
-	margin-bottom: 25px;
-	z-index: 80;
-	background-color: #f3f6f9;
-	-moz-border-radius: 0px 4px 4px 4px;
-	}
-	
-.tab {
-	border: 1px solid #347;
-	padding: 2px 5px 1px 5px;
-	background-color: #bcd;
-	color: #303036;
-	z-index: 100;
-	border-bottom-width: 0;
-	-moz-border-radius: 4px 4px 0px 0px;
-	}
-
-.tabHover {
-	background-color: #46596f;
-	color:#fff;
-	z-index: 90;
-	border-bottom-width: 0;
-	cursor: pointer;
-	}
-
-.tabActive { 
-	padding: 3px 5px 2px 5px;
-	color: #060610 ;
-	background-color: #f3f6f9;
-	z-index: 100;
-	}
-      
-div.tabsClone .tab, div.tabsClone .tabActive {
-	border-top-width: 0 !important;
-	border-bottom-width: 1px !important;
-	}
-
-div.tabsClone .tabActive{
-	top: -2px;
-	}
-
-a.removeTab{
-	font-size: smaller;
-	text-decoration: none;
-	}
-
-
-/* ASSORTED  */
-
-#clear {
-	clear:both;
-	}
-	
 
