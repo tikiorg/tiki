@@ -1,5 +1,5 @@
 #!/bin/sh
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.20 2003-12-28 06:48:04 wolff_borg Exp $
+# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.21 2003-12-30 01:06:39 ggeller Exp $
 
 # Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -12,7 +12,6 @@ if [ -d 'lib/Galaxia' ]; then
 fi
 
 echo $DIRS
-exit
 AUSER=nobody
 AGROUP=nobody
 RIGHTS=02775
