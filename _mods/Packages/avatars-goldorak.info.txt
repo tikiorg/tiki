@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision:
-$Rev: 1.1$
+$Revision: 1.3 $
 
 lastmodif:
-$Date: 2004-09-29 19:41:54 $
+$Date: 2004-09-29 19:45:00 $
 
 files: 
 avatars/tikiavatars/exploded/256.gif img/avatars/256.gif

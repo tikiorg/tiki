@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision: 
-$Rev$
+$Revision: 1.3 $
 
 lastmodif:
-$Date: 2004-09-29 19:41:54 $
+$Date: 2004-09-29 19:45:00 $
 
 files: 
 wiki-plugins/svg/wiki-plugins/wikiplugin_svg.php lib/wiki-plugins/wikiplugin_svg.php
