@@ -1,8 +1,8 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-articles.tpl,v 1.2 2004-01-16 17:59:36 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-articles.tpl,v 1.3 2004-01-16 18:34:03 musus Exp $ *}
 
 {if $feature_articles eq 'y'}
 {tikimodule title=$title name="articles"}
-  <table  border="0" cellpadding="0" cellspacing="0">
+  <table border="0" cellpadding="0" cellspacing="0">
     {section name=ix loop=$modArticles}
     <tr class="module">
       {if $nonums != 'y'}
