@@ -283,7 +283,6 @@ if($_REQUEST["calitemId"]) {
 	$info["calitemId"] = "";
 	$info["calendarId"] = $defaultcalId;
 	$info["user"] = "";
-	$info["groupname"] = "";
 	$info["calname"] = "";
 	$info["organizers"] = $user.",";
 	$info["participants"] = $user.":0,";
@@ -314,7 +313,6 @@ $smarty->assign('calitemId',$info["calitemId"]);
 $smarty->assign('calendarId',$_REQUEST["calendarId"]);
 $smarty->assign('organizers',$info["organizers"]);
 $smarty->assign('participants',$info["participants"]);
-$smarty->assign('groupname',$info["groupname"]);
 $smarty->assign('calname',$info["calname"]);
 $smarty->assign('start',$info["start"]);
 $smarty->assign('end',$info["end"]);
