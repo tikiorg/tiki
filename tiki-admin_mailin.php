@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.6 2003-12-21 17:47:21 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_mailin.php,v 1.7 2004-01-02 23:19:26 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,6 +32,7 @@ if (!isset($_REQUEST["accountId"]))
 $smarty->assign('accountId', $_REQUEST["accountId"]);
 
 if (isset($_REQUEST["new_acc"])) {
+	check_ticket('admin-mailin');
 	$mailinlib->replace_mailin_account($_REQUEST["accountId"], $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"],
 		$_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["type"],
 		$_REQUEST["active"], $_REQUEST["anonymous"]);
@@ -40,6 +41,7 @@ if (isset($_REQUEST["new_acc"])) {
 }
 
 if (isset($_REQUEST["remove"])) {
+	check_ticket('admin-mailin');
 	$mailinlib->remove_mailin_account($_REQUEST["remove"]);
 }
 
@@ -79,6 +81,8 @@ if (isset($_REQUEST["mailin_autocheck"]) ) {
 }
 $smarty->assign('mailin_autocheck',$mailin_autocheck);
 $smarty->assign('mailin_autocheckFreq',$mailin_autocheckFreq);
+
+ask_ticket('admin-mailin');
 
 $smarty->assign('mid', 'tiki-admin_mailin.tpl');
 $smarty->display("tiki.tpl");

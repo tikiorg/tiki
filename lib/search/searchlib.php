@@ -346,8 +346,8 @@ class SearchLib extends TikiLib {
 		$offset=0;
 	      }
 
-	      $query="select s.`page`, s.`location`, s.`last_update`, s.`count`,
-	          t.`lastModif`,t.`trackerId` from 
+	      $query="select s.`page` pa, s.`location`, s.`last_update`, s.`count`,
+	          t.`lastModif`,t.`trackerId` tr from 
 	  	  `tiki_searchindex` s, `tiki_tracker_items` t where `searchword` in
 	  	  (".implode(',',array_fill(0,count($words),'?')).") and
 		  s.`location`='trackeritem' and
@@ -359,9 +359,9 @@ class SearchLib extends TikiLib {
 		  s.`page`=t.`itemId`";
 	      $cant2=$this->getOne($querycant,$words);
 	      while ($res = $result->fetchRow()) {
-	        $href = "tiki-view_tracker_item-php?trackerId=".urlencode($res["trackerId"])."&itemId=".urlencode($res["itemId"]);
+	        $href = "tiki-view_tracker_item.php?trackerId=".urlencode($res["tr"])."&amp;itemId=".urlencode($res["pa"]);
 	        $ret2[] = array(
-	          'pageName' => $res["name"],
+	          'pageName' => $res["pa"],
 		  'location' => tra("Trackeritem"),
 		  'data' => tra("Unknown"),
 		  'hits' => tra("Unknown"),

@@ -2198,6 +2198,9 @@ function get_submission($subId) {
 
 function replace_article($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, $body, $publishDate, $expireDate, $user, $articleId, $image_x, $image_y, $type, $rating = 0, $isfloat = 'n') {
 
+    if ($expireDate < $publishDate) {
+       $expireDate = $publishDate;
+    }
     $hash = md5($title . $heading . $body);
     $now = date("U");
     if(empty($imgdata)) $imgdata='';
