@@ -1,9 +1,9 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.11 2003-11-07 23:41:40 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.12 2003-11-10 05:00:41 zaufi Exp $ *}
 
 {if $repID > 0}
-    <h2>{tr}Edit this Repository:{/tr} {$name}</h2>
+    <h2>{tr}Edit Repository:{/tr} {$name}</h2>
 {else}
-    <h2>{tr}Create New Repository:{/tr}</h2>
+    <h2>{tr}Create New Repository{/tr}</h2>
 {/if}
 <div id="page-bar">
   <table><tr>
@@ -77,7 +77,7 @@
   {section name=rep loop=$repositories}
     <tr>
       <td class="{cycle advance=false}"{if (strlen($repositories[rep].description) > 0)} rowspan="2"{/if}>
-        <a href="tiki-admin_integrator_rules.php?repID={$repositories[rep].repID|escape}" title={tr}Edit rules{/tr}>
+        <a href="tiki-admin_integrator_rules.php?repID={$repositories[rep].repID|escape}" title="{tr}Edit rules{/tr}">
           {$repositories[rep].name}
         </a>
       </td>
@@ -85,11 +85,11 @@
       <td class="{cycle advance=false}">{$repositories[rep].start_page}</td>
       <td class="{cycle advance=false}">{$repositories[rep].css_file}</td>
       <td class="{if (strlen($repositories[rep].description) > 0)}{cycle advance=false}{else}{cycle}{/if}">
-        <a href="tiki-admin_integrator.php?action=edit&repID={$repositories[rep].repID|escape}" title='{tr}edit{/tr}' >
-            <img src='img/icons/config.gif' alt='{tr}edit{/tr}' border='0' />
+        <a href="tiki-admin_integrator.php?action=edit&repID={$repositories[rep].repID|escape}" title="{tr}edit{/tr}">
+            <img src="img/icons/config.gif" alt="{tr}edit{/tr}" border="0" />
         </a>
-        <a href="tiki-admin_integrator.php?action=rm&repID={$repositories[rep].repID|escape}" title='{tr}remove{/tr}' >
-            <img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' border='0' />
+        <a href="tiki-admin_integrator.php?action=rm&repID={$repositories[rep].repID|escape}" title="{tr}remove{/tr}">
+            <img src="img/icons2/delete.gif" alt="{tr}remove{/tr}" border="0" />
         </a>
       </td>
 
