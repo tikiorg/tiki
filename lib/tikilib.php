@@ -2737,7 +2737,25 @@ class TikiLib {
       }
     }
   }
-  
+  // Replace hotwords in given line
+  function replace_hotwords($line, $words)
+  {
+    global $feature_hotwords;
+    global $feature_hotwords_nw;
+    $hotw_nw = ($feature_hotwords_nw == 'y') ? "target='_blank'" : '';
+    // Replace Hotwords
+    if ($feature_hotwords == 'y')
+    {
+      foreach($words as $word=>$url)
+      {
+        $line  = preg_replace("/ $word /i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$line);
+        $line  = preg_replace("/([^A-Za-z0-9])$word /i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$line);
+        $line  = preg_replace("/ $word([^A-Za-z0-9])/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$line);
+      }
+    }
+    return $line;
+  }
+
   //PARSEDATA
   function parse_data($data)
   {
@@ -2749,7 +2767,6 @@ class TikiLib {
     global $feature_drawings;
     global $tiki_p_admin_drawings;
     global $tiki_p_edit_drawings;
-    global $feature_hotwords_nw;
     global $feature_wiki_pictures;
     global $tiki_p_upload_picture;
     global $feature_wiki_tables;
@@ -2760,11 +2777,6 @@ class TikiLib {
     global $user;
     global $tikidomain;
 
-    if($feature_hotwords_nw == 'y') {
-      $hotw_nw = "target='_blank'";
-    } else {
-      $hotw_nw = '';
-    }
 
     // Process pre_handlers here
     foreach ($this->pre_handlers as $handler) {
@@ -2901,20 +2913,6 @@ class TikiLib {
 
 
 	
-	// Replace Hotwords
-    //$data = stripslashes($data);
-    if($feature_hotwords == 'y') {
-      $words = $this->get_hotwords();
-      foreach($words as $word=>$url) {
-        //print("Replace $word by $url<br/>");
-
-        $data  = preg_replace("/ $word /i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$data);
-        $data  = preg_replace("/([^A-Za-z0-9])$word /i","$1<a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a> ",$data);
-        $data  = preg_replace("/ $word([^A-Za-z0-9])/i"," <a class=\"wiki\" href=\"$url\" $hotw_nw>$word</a>$1",$data);
-
-      }
-    }
-
 	
     //$data = strip_tags($data);
     // BiDi markers
@@ -2999,7 +2997,8 @@ class TikiLib {
     // Underlined text
     $data = preg_replace("/===([^\=]+)===/","<span style='text-decoration:underline;'>$1</span>",$data);
     // Center text
-    $data = preg_replace("/::([^\:]+)::/","<div align='center'>$1</div>",$data);
+    // NOTE: Do not remove \n in replace -- possible -=title=- inside
+    $data = preg_replace("/::([^\:]+)::/","<div align='center'>\n$1\n</div>",$data);
 
     // Links to internal pages
     // If they are parenthesized then don't treat as links
@@ -3190,9 +3189,6 @@ class TikiLib {
         $data = preg_replace($pattern,"<a class='wiki' $target href='$link'>$link</a>",$data);
       }
     }
-    // Title bars
-    //$data = preg_replace("/-=([^=]+)=-/","<div class='titlebar'>$1</div>",$data);
-    $data = preg_replace("/-=(.+?)=-/","<div class='titlebar'>$1</div>",$data);
 
 
 
@@ -3225,6 +3221,13 @@ class TikiLib {
     preg_match_all("/\{maketoc\}/",$data,$tocs);
     $anch=array();
 
+    // 08-Jul-2003, by zaufi
+    // HotWords will be replace only in ordinal text
+    // It looks __realy__ goofy in Headers or Titles
+
+    // Get list of HotWords
+    $words = $this->get_hotwords();
+
     // Now tokenize the expression and process the tokens
     // Use tab and newline as tokenizing characters as well  ////
     $lines = explode("\n",$data);
@@ -3233,6 +3236,46 @@ class TikiLib {
     $divdepth=array();
     foreach ($lines as $line) {
 
+      // Check for titlebars...
+      // NOTE: that title bar should be start from begining of line and be alone on that line!
+      if (substr(ltrim($line), 0, 2) == '-='
+       && substr(rtrim($line), -2, 2) == '=-')
+      {
+        // This is not list item -- must close lists currently opened
+	while(count($listbeg)) $data.=array_shift($listbeg);
+	//
+	$align_len = strlen($line) - strlen(ltrim($line));
+
+	// My textarea size is about 120 space chars.
+        //define('TEXTAREA_SZ', 120);
+
+	// NOTE: That strict math formula (split into 3 areas) gives
+	//       bad visual effects...
+	// $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left" 
+        //        : (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
+	//
+	// Going to introduce some heuristic here :)
+        // Visualy (remember that space char is thin) center starts at 25 pos
+	// and 'right' from 60 (HALF of full width!) -- thats all :)
+	//
+	// NOTE: Guess align only if more than 10 spaces before -=title=-
+	if ($align_len > 10)
+	{
+	    $align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
+	    $align = ' style="text-align: '.$align.';"';
+	}
+	else $align='';	
+	//
+	$line = trim($line);
+	$line = '<div class="titlebar"'.$align.'>'.substr($line, 2, strlen($line) - 4).'</div>';
+	$data .= $line;
+	// TODO: Case is handled ...  no need to check other conditions
+	//       (it is apriory known all they false, moreover sometimes
+	//       check procedure need > O(0) of compexity)
+	//       -- continue to next line...
+	//       MUST replace all remaining parse blocks to the same logic...
+	continue;
+      }
       // If the first character is ' ' and we are not in pre then we are in pre
       if(substr($line,0,1)==' ') {
         // This is not list item -- must close lists currently opened
@@ -3242,6 +3285,8 @@ class TikiLib {
         $line = '<font face="courier" size="2">'.str_replace(' ','&nbsp;',substr($line,1)).'</font>';
         $line.='<br/>';
       } else {
+        // Replace Hotwords before begin
+        $line = $this->replace_hotwords($line, $words);
         // Replace monospaced text
         $line = preg_replace("/-\+(.*?)\+-/","<code>$1</code>",$line);
         // Replace bold text
@@ -3326,6 +3371,8 @@ class TikiLib {
             $hdrlevel=$this->how_many_at_start($line,'!');
             // If 1st char on line is '!' and its count less than 6 (max in HTML)
             if($litype=='!'&&$hdrlevel>0&&$hdrlevel<=6) {
+              // Remove possible hotwords replaced :)
+              $line = strip_tags($line);
               // OK. Parse headers here...
               $anchor=''; $aclose=''; $addremove=0;
               // Close lower level divs if opened
@@ -3358,7 +3405,10 @@ class TikiLib {
                 }
                 // Leave line unchanged... tiki-index.php will split wiki here
                 $line="\n...page...\n";
-              } else $line.='<br/>';	// Usual paragraph.
+              } else {
+                // Usual paragraph.
+                $line.='<br/>';
+	      }
 	    }
           }
         }
