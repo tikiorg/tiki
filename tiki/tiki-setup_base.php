@@ -1,18 +1,18 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.27 2003-08-20 20:44:56 jwigdahl Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.28 2003-08-21 23:11:48 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-//print("tiki-setup_base 1:".$tiki_timer->elapsed()."<br/>");
+//print("tiki-setup_base 1: before include setup.php: ".$tiki_timer->elapsed()."<br />");
 require_once("setup.php");
 
-//print("tiki-setup_base 2:".$tiki_timer->elapsed()."<br/>");
+//print("tiki-setup_base 2: before include tikilib.php: ".$tiki_timer->elapsed()."<br />");
 require_once("lib/tikilib.php");
 
-//print("tiki-setup_base 3:".$tiki_timer->elapsed()."<br/>");
+//print("tiki-setup_base 3: before rest of tiki-setup_base: ".$tiki_timer->elapsed()."<br />");
 $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
