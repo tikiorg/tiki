@@ -21,7 +21,7 @@
 
 {/if}
 {if $page ne 'SandBox'}
-{if $tiki_p_admin_wiki eq 'y'}
+{if $tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user) and ($tiki_p_lock eq 'y') and ($feature_wiki_usrlock eq 'y'))}
 {if $lock}
 <td><div class="button2"><a href="tiki-index.php?page={$page}&amp;action=unlock" class="linkbut">{tr}unlock{/tr}</a></div></td>
 {else}
@@ -34,9 +34,6 @@
 {if $feature_history eq 'y'}
 <td><div class="button2"><a href="tiki-pagehistory.php?page={$page}" class="linkbut">{tr}history{/tr}</a></div></td>
 {/if}
-{/if}
-{if $feature_backlinks eq 'y'}
-<td><div class="button2"><a href="tiki-backlinks.php?page={$page}" class="linkbut">{tr}backlinks{/tr}</a></div></td>
 {/if}
 {if $feature_likePages eq 'y'}
 <td><div class="button2"><a href="tiki-likepages.php?page={$page}" class="linkbut">{tr}similar{/tr}</a></div></td>

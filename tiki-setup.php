@@ -345,6 +345,9 @@ $smarty->assign('feature_theme_control',$feature_theme_control);
 $feature_eph = 'n';
 $smarty->assign('feature_eph',$feature_eph);
 
+$feature_wiki_usrlock = 'n';
+$smarty->assign('feature_wiki_usrlock',$feature_wiki_usrlock);
+
 
 $feature_contact = 'n';
 $smarty->assign('feature_contact',$feature_contact);

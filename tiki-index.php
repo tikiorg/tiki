@@ -41,17 +41,7 @@ if(!$tikilib->page_exists($wikiHomePage)) {
 
 require_once('tiki-pagesetup.php');
 
-// Check if we have to perform an action for this page
-// for example lock/unlock
-if($tiki_p_admin_wiki == 'y') {
-if(isset($_REQUEST["action"])) {
-  if($_REQUEST["action"]=='lock') {
-    $tikilib->lock_page($page);
-  } elseif ($_REQUEST["action"]=='unlock') {
-    $tikilib->unlock_page($page);
-  }  
-}
-}
+
 
 
 // If the page doesn't exist then display an error
@@ -100,6 +90,25 @@ $tikilib->add_hit($page);
 
 // Get page data
 $info = $tikilib->get_page_info($page);
+
+
+$smarty->assign('page_user',$info['user']);
+
+// Check if we have to perform an action for this page
+// for example lock/unlock
+if( 
+    ($tiki_p_admin_wiki == 'y') 
+    || 
+    ($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($feature_wiki_userlock == 'y'))
+   ) {
+if(isset($_REQUEST["action"])) {
+  if($_REQUEST["action"]=='lock') {
+    $tikilib->lock_page($page);
+  } elseif ($_REQUEST["action"]=='unlock') {
+    $tikilib->unlock_page($page);
+  }  
+}
+}
 
 // Save to notepad if user wants to
 if($user 

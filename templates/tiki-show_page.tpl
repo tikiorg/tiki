@@ -1,30 +1,41 @@
-{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page}" class="pagetitle">{$page}</a></h1>{/if}
+{if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page}" class="pagetitle">{$page}</a>
+{if $lock}
+<img src="img/icons/lock_topic" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+{/if}
+</h1>{/if}
 <table width="100%">
 <tr>
 <td>
 {if $feature_wiki_description}
 <small>{$description}</small>
+{/if}
 {if $cached_page eq 'y'}
 <small>(cached)</small>
-{/if}
 {/if}
 </td>
 <td style="text-align:right;">
 
 
 
+{if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
+<a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page}"><img border="0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
+{/if}
 
 
+{if $feature_backlinks eq 'y'}
 <a title="{tr}backlinks{/tr}" href="tiki-backlinks.php?page={$page}"><img border="0" src="img/icons/ico_link.gif" alt='{tr}backlinks{/tr}' /></a>
+{/if}
 
 {if $cached_page eq 'y'}
 <a title="{tr}refresh{/tr}" href="tiki-index.php?page={$page}&amp;refresh=1"><img border="0" src="img/icons/ico_redo.gif" alt='{tr}refresh{/tr}' /></a>
 {/if}
 
 <a title="{tr}print{/tr}" href="tiki-print.php?page={$page}"><img border="0" src="img/icons/print.gif" alt='{tr}print{/tr}' /></a>
+
 {if $user and $feature_wiki_notepad eq 'y' and $feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-index.php?page={$page}&amp;savenotepad=1"><img border="0" src="img/icons/ico_save.gif" alt="{tr}save{/tr}" /></a>
 {/if}
+
 </td>
 </tr>
 </table>

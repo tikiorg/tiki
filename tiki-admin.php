@@ -779,6 +779,14 @@ if(isset($_REQUEST["wikifeatures"])) {
     $smarty->assign("feature_wiki_notepad",'n');
   }
 
+  if(isset($_REQUEST["feature_wiki_usrlock"]) && $_REQUEST["feature_wiki_usrlock"]=="on") {
+    $tikilib->set_preference("feature_wiki_usrlock",'y'); 
+    $smarty->assign("feature_wiki_usrlock",'y');
+  } else {
+    $tikilib->set_preference("feature_wiki_usrlock",'n');
+    $smarty->assign("feature_wiki_usrlock",'n');
+  }
+
   
   $tikilib->set_preference('feature_wiki_tables',$_REQUEST['feature_wiki_tables']);
   $smarty->assign('feature_wiki_tables',$_REQUEST['feature_wiki_tables']);
