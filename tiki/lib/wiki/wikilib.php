@@ -229,7 +229,11 @@ class WikiLib extends TikiLib {
 		// in tiki_mail_events by object
 		$query = "update `tiki_mail_events` set `object`=? where `object`=?";
 		$this->query($query, array( $newId, $oldId ) );
-	
+
+		// user watches
+		$query = "update `tiki_user_watches` set `object`=?, `title`=? where `object`=? and `type` = 'Page Wiki'";
+		$this->query($query, array( $newName, $newName, $oldName ) );
+
 		// theme_control_objects(objId,name)
 		$query = "update `tiki_theme_control_objects` set `objId`=?, `name`=? where `objId`=?";
 		$this->query($query, array( $newId, $newName, $oldId ) );
