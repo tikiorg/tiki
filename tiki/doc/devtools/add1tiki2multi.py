@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.1 2004-04-23 20:06:27 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.2 2004-04-23 23:15:10 ggeller Exp $
 
-// Copyright (c) 2004 George G. Geller
-// All Rights Reserved. See copyright.txt for details and a complete list of au\thors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for de\tails.
+# Copyright (c) 2004 George G. Geller
+# All Rights Reserved. See copyright.txt for details and a complete list of au\thors.
+# Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for de\tails.
 
-# invoke as sudo ./clikitiki.py <new-tiki-url>
+# invoke as sudo ./clikitiki.py <mysql-root-password> <new-tiki-url>
 
 # NOTICE:
 # 1. This script is intended to be run as root.
@@ -23,14 +23,13 @@ import re
 
 # YOU MUST COMMENT OUT THE FOLLOWING LINE FOR THIS SCRIPT TO FUNCTION!!!!
 # THIS SCRIPT IS DISABLED BY DEFAULT TO MINIMIZE THE SECURITY RISK FOR NAIVE TIKI ADMINS!
-sys.exit(0)
+# sys.exit(0)
 
-# NOTE: YOU MUST PROVIDE YOUR MYSQL ROOT PASSWORD HERE
-sMySQLPassword = "password"
+# Invoke as something like: ./newTiki.py password new.wikiplanet.com
 
-# Invoke as something like: ./newTiki.py new.wikiplanet.com
+sMySQLPassword = sys.argv[1]
 
-sNewDomain = sys.argv[1]
+sNewDomain = sys.argv[2]
 sNewDomain = sNewDomain.lower()
 
 # This script must be run as root
@@ -92,7 +91,7 @@ sTmpErrFileName = "/tmp/clikitiki-"+str(os.getpid())+".err"
 status = os.system("mysqlshow -uroot -p" + sMySQLPassword  + " > "+sTmpOutFileName+" 2>"+sTmpErrFileName)
 if status:
     os.system("rm -f " + sTmpOutFileName + " " + sTmpErrFileName)
-    print sys.argv[0]+":", "mysqlshow failed.  Maybe you need to set your mysql root password in", sys.argv[0]+ "? Exiting."
+    print sys.argv[0]+":", "mysqlshow failed.  Maybe you used the wrong mysql root password? Exiting."
     sys.exit(status)
 
 os.system("rm -f " + sTmpErrFileName)
