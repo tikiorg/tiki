@@ -19,6 +19,7 @@ if(isset($_REQUEST["mon"])) {
 if(isset($_REQUEST["year"])) {
  $year = $_REQUEST["year"];
 }
+
 $thedate = mktime(23,59,59,$mon,$day,$year);
 $_SESSION["thedate"] = $thedate;
 // Calculate number of days in month
@@ -26,8 +27,35 @@ $_SESSION["thedate"] = $thedate;
 $c=new Calendar("en");
 $v=substr($c->nameOfMonth($mon),0,3);
 $dayofweek=$c->dayOfWeekStr($day,$mon,$year);
-$father="tiki-index.php";
-$todaylink=$father."?day=".date("d")."&amp;amp;mon=".date("m")."&amp;amp;year=".date("Y")
+
+
+$server = $_SERVER["SERVER_NAME"];
+$parsed=parse_url($_SERVER["REQUEST_URI"]);
+parse_str($parsed["query"],$query);
+unset($query["day"]);
+unset($query["mon"]);
+unset($query["year"]);
+$father='http://'.$server.$parsed["path"];
+if(count($query)>0) {
+  $first=1;
+  foreach($query as $name => $val) {
+    if($first) {
+      $first=false;
+      $father.='?'.$name.'='.$val;
+    } else {
+      $father.='&amp;'.$name.'='.$val;
+    }
+  }
+  $father.='&amp;';
+} else {
+  $father.='?';
+}
+
+if(!strstr($father,"?")) {
+  $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y");
+} else {
+  $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y");
+}
 ?>
 <div class="boxnm">
 <div class="box-title">
@@ -43,9 +71,9 @@ Calendar
 	  <td colspan="7">
        	    <table width="100%" cellspacing="0" cellpadding="0" border="0">
               <tr class="changedate" bgcolor="#FFFFFF"> <!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
-                <td align="left"><a class="link" href="<?$mong=$year-1;print("$father?day=$day&amp;amp;mon=$mon&amp;year=$mong");?>">&lt;</a><?=$year?><a class="link" href="<?$mong=$year+1;print("$father?day=$day&amp;mon=$mon&amp;year=$mong");?>">&gt;</a></td>
-                <td align="center"><a class="link" href="<?=$todaylink?>">Today</a></td>
-                <td align="right"><a class="link" href="<?$mong=$mon-1;print("$father?day=$day&amp;mon=$mong&amp;year=$year");?>">&lt;</a><?=$v?><a class="link" href="<?$mong=$mon+1;print("$father?day=$day&amp;mon=$mong&amp;year=$year");?>">&gt;</a></td>
+                <td align="left"><a class="nav" href="<?$mong=$year-1;print("$father"."day=$day&amp;mon=$mon&amp;year=$mong");?>">&lt;</a><?=$year?><a class="nav" href="<?$mong=$year+1;print("$father?day=$day&amp;mon=$mon&amp;year=$mong");?>">&gt;</a></td>
+                <td align="center"><a class="nav" href="<?=$todaylink?>">Today</a></td>
+                <td align="right"><a class="nav" href="<?$mong=$mon-1;print("$father"."day=$day&amp;mon=$mong&amp;year=$year");?>">&lt;</a><?=$v?><a class="nav" href="<?$mong=$mon+1;print("$father?day=$day&amp;mon=$mong&amp;year=$year");?>">&gt;</a></td>
               </tr> <!-- ROW WITH YEAR AND MONTH ENDS -->
             </table>
           </td>
@@ -75,7 +103,7 @@ Calendar
               } else {
                 $classval="day";
               }
-              print("<td class='fc' align='right'><a class='$classval' href='$father?day=$pval&amp;mon=$mon&amp;year=$year'>$val</a></td>");
+              print("<td class='fc' align='right'><a class='$classval' href='$father"."day=$pval&amp;mon=$mon&amp;year=$year'>$val</a></td>");
             }
             print("</tr>");
           }

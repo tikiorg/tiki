@@ -1,3 +1,4 @@
+{if $feature_galleries eq 'y'}
 <div class="box">
 <div class="box-title">
 {tr}Top Images{/tr}
@@ -20,3 +21,4 @@
 {/section}
 </div>
 </div>
+{/if}

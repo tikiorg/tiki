@@ -1,3 +1,4 @@
+{if $feature_galleries eq 'y'}
 <div class="box">
 <div class="box-title">
 {tr}Last galleries{/tr}
@@ -8,3 +9,4 @@
 {/section}
 </div>
 </div>
+{/if}

@@ -1,3 +1,4 @@
+{if $feature_wiki}
 <div class="box">
 <div class="box-title">
 {tr}Last changes{/tr}
@@ -8,3 +9,4 @@
 {/section}
 </div>
 </div>
+{/if}

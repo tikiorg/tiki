@@ -1,5 +1,5 @@
 BODY {
-	background: white;
+	background: #738C9C;
 }
 
 /* GENERAL LAYOUT PROPERTIES 
@@ -16,14 +16,14 @@ BODY {
 
 /* This div encloses the whole Tiki application */
 DIV#tiki-main {
-	background: white;
+	background: #738C9C;
 	height: 100%;
 	width: 100%;
 }
 
 /* This is the header */
 DIV#tiki-top {
-	background: #5A4A39;
+	background: #000000;
 	color: white;
 	height: 22px;
 	padding-right: 1px;
@@ -32,7 +32,7 @@ DIV#tiki-top {
 
 /* This is the middle */
 DIV#tiki-mid {
-  background: white;	
+  background: #738C9C;
   height: auto;
   padding-bottom: 0px;
 }
@@ -41,7 +41,7 @@ DIV#tiki-mid {
 DIV#tiki-bot {
   padding-top: 10px;
   margin-top: 0px;
-  background: #E7DECE;
+  background: #738C9C;
   padding-bottom: 15px;
 }
 
@@ -50,52 +50,60 @@ DIV#tiki-bot {
 /* The columns */
 TD#leftcolumn {
   vertical-align: top;
-  background: #DED6C6;
+  background: #738C9C;
   width: 150px;
 }
 TD#rightcolumn {
   vertical-align: top;
-  background: #DED6C6;
+  background: #738C9C;
   width: 150px;
 }
 TD#centercolumn {
-  background: #EFEFE7;
+  background: #738C9C;
   vertical-align: top;
   width: auto;
+  
 }
 
 /* And this is what lies inside the centercolumn */
 DIV#tiki-center {
+  border: 0px solid black;
   margin-left: 5px;
-  padding-left: 5px;
+  margin-right: 8px;
+  margin-top: 8px;
+  margin-bottom: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 10px;
+  background: #738c9C;
 }
 
 /* LAYOUT ENDS AND STYLE BEGINS*/
 
 /* BOXES (Those little boxes in the left and right bar) */
 div.box {
-  margin-left: 8px;
-  margin-right: 8px;
+  margin-left: 2px;
+  margin-right: 2px;
   margin-top: 8px;
   margin-bottom: 0px;
   border: 1px solid black;
   background: #FFFFFF;
   padding-bottom: 10px;
   overflow: hidden;
-  width: 130px;
+  width: 140px;
 }
 
 /* Boxes but without margins */
 div.boxnm {
-  margin-left: 8px;
-  margin-right: 8px;
+  margin-left: 2px;
+  margin-right: 2px;
   margin-top: 8px;
   margin-bottom: 0px;
   border: 1px solid black;
   background: #FFFFFF;
   padding-bottom: 0px;
   overflow: hidden;
-  width: 130px;
+  width: 140px;
 }
 
 /* Some boxes are identified by an ID, for example the
@@ -117,14 +125,14 @@ div.boxnm {
 
 /* Boxes are divided in title and data, this is the title */
 div.box-title {
-  background: #B5A58C;
+  background: #CECECE;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 13px;
-  color: white;  
+  color: black;  
   font-weight: bold;
   border-bottom: 1px solid black;
   overflow: hidden;
-  width: 130px;
+  width: 140px;
   padding-left: 5px;
   padding-right: 5px;
   margin-bottom: 2px;
@@ -132,14 +140,14 @@ div.box-title {
 
 /* The title without a margin */
 div.box-titlenm {
-  background: #B5A58C;
+  background: #CECECE;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 13px;
-  color: white;  
+  color: black;  
   font-weight: bold;
   border-bottom: 1px solid black;
   overflow: hidden;
-  width: 130px;
+  width: 140px;
   padding-left: 0px;
   padding-right: 0px;
   margin-bottom: 0px;
@@ -151,7 +159,7 @@ div.box-data {
   overflow: hidden;
   margin-left: 5px;
   margin-right: 5px;
-  width: 130px;
+  width: 140px;
 }
 
 /* And the data without a margin */
@@ -159,7 +167,7 @@ div.box-datanm {
   overflow: hidden;
   margin-left: 0px;
   margin-right: 0px;
-  width: 130px;
+  width: 140px;
 }
 
 /* Separators are used to sepparate menu areas */
@@ -200,19 +208,19 @@ font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 .flip {
 font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 13px;
- color : White;
+ color : Black;
 text-decoration: none;
 }
 .flip:active {
 font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 13px;
- color : White;
+ color : Black;
  text-decoration: none;
 }
 .flip:hover {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 13px;
- color : White;
+ color : Black;
  text-decoration: none;
 }
 
@@ -257,8 +265,8 @@ div.cbox {
 
 /* Cboxes are compunded by a cbox-title div followed by a cbox-data div */
 div.cbox-title {
-  background: #B5A58C;
-  color: white;  
+  background: #CECECE;
+  color: black;  
   font-weight: bold;
   border-bottom: 1px solid black;
   overflow: hidden;
@@ -284,9 +292,9 @@ div.cbox-data {
 /* Buttons (LINKS IN BOXES) */
 div.button {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   color : Black;
-  font-weight : bold;
+  /*font-weight : bold;*/
   background: white;
   /* for NS4 */
   /*
@@ -307,9 +315,9 @@ div.button {
 
 div.button2 {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   color : Black;
-  font-weight : bold;
+  /*font-weight : bold;*/
   background: white;
   /* for NS4 */
   
@@ -333,25 +341,25 @@ div.button2 {
 
 .linkbut {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 	color : Black;
 	background: white;
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
 
 .linkbut:active {
     font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-    font-size: 10px;
+    font-size: 12px;
     color : Black;
 	background: white;
-	font-weight: bold;
+	/*font-weight: bold;*/
 }
 .linkbut:hover {
     font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-    font-size: 10px;
+    font-size: 12px;
     color : Black;
-    background-color : #dddddd;
-	font-weight: bold;
+    /*background-color : #dddddd;*/
+	/*font-weight: bold;*/
 }
 
 /* Search results display a date*/
@@ -417,20 +425,16 @@ div.text {
 
 div.wikitext {
   background: white;
-  border: 1px solid black;
-  border-top:    1px solid #7c7c7c;
-  border-left:   1px solid #c3c3c3;
-  border-bottom: 1px solid #dddddd;
-  border-right:  1px solid #c3c3c3;
-  padding-left: 1px; 
+  border: 2px solid black;
+  padding-left: 3px; 
   padding-right: 1px; 
   padding-top: 1px;
   padding-bottom: 1px;
-  marging-left: 1px;
+  margin-left: 0px;
   margin-right: 1px;
   margin-top: 5px;
   margin-bottom: 5px;
-  width: 98%;
+  width: 99%;
   clear: both;
 }
 
@@ -453,14 +457,6 @@ a.wiki { text-decoration: none; }
 /* This is obscene in NS4
 b .wiki, STRONG .wiki { font-size: larger; }
 */
-
-/* Wiki Links used also as the class for links to itself in pages */
-a.page { text-decoration: none; }
-.page, .named-wiki  { font-weight: bold; color:#1d42be; } /*blue*/
-/* This is obscene in NS4
-b .page, STRONG .wiki { font-size: larger; }
-*/
-
 
 /* Date displayed for last modification date of pages */
 p.editdate { font-size: smaller; margin-bottom: -1ex; font-family: "Lucida Grande", Helvetica, Arial, sans-serif; }
@@ -643,6 +639,9 @@ font-size: 12px;
 /* Container for the whole gallery */
 div.browsegallery {
   background: White;
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 2px solid black;
 }
 
 /* You can set a different background color for odd and even rows in the thumbnails table */
@@ -773,7 +772,9 @@ font-size: 12px;
 
 div.browseimage {
   background: White;
-  
+  padding-left: 6px;
+  padding-right: 6px;
+  border: 2px solid black;
 }
 
 div.imagetitle {
@@ -928,7 +929,7 @@ font-weight : bold;
 
 /* CMS STYLES */
 div.articletitle {
-  background: white;
+  background: #CECECE;
   border: 1px solid black;
   border-bottom: 0px;
   padding-left: 0.8em; 
@@ -938,7 +939,7 @@ div.articletitle {
   margin-top: 10px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  width: 94%;
+  width: 97%;
   clear: both;
 }
 
@@ -948,26 +949,26 @@ div.articleheading {
   border: 1px solid black;
   padding-left: 0.8em; 
   padding-right: 0.8em; 
-  padding-top: 0.5em;
+  padding-top: 0.4em;
   padding-bottom: 0.5em;
   border-bottom: 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  width: 94%;
+  width: 97%;
   clear: both;
 }
 
 div.articletrailer {
-  background: white;
+  background: #CECECE;
   border: 1px solid black;
   padding-left: 0.8em; 
   padding-right: 0.8em; 
   padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  margin-bottom: 10px;
+  padding-bottom: 0.3em;
+  margin-bottom: 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  width: 94%;
+  width: 97%;
   clear: both;
 }
 
@@ -979,14 +980,15 @@ span.articleheading {
 div.articlebody {
   background: white;
   border: 1px solid black;
+  border-top: 0px;
   padding-left: 0.8em; 
   padding-right: 0.8em; 
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  margin: 10px 0px;
+  margin: 0px 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  width: 94%;
+  font-size: 10px;
+  width: 97%;
   clear: both;
 }
 span.titlea {
@@ -1027,7 +1029,7 @@ font-weight : bold;
 
 /* BLOGS */
 div.posthead {
-  background: white;
+  background: #CECECE;
   border: 1px solid black;
   border-bottom: 0px;
   padding-left: 0.8em; 
@@ -1037,7 +1039,7 @@ div.posthead {
   margin-top: 10px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  width: 94%;
+  width: 97%;
   clear: both;
 }
 span.posthead {
@@ -1055,7 +1057,7 @@ div.postbody {
   padding-bottom: 0.5em;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  width: 94%;
+  width: 97%;
   clear: both;
 }
 
@@ -1065,7 +1067,7 @@ div.blogtitle {
   padding-top: 0.0em;
   padding-bottom: 0.0em;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   font-family: Times,Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 24px;
   font-weight: bold;
@@ -1079,10 +1081,10 @@ div.bloginfo {
   padding-right: 0.8em; 
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
-  width: 94%;
+  width: 97%;
   clear: both;
 }
 
@@ -1093,10 +1095,10 @@ div.blogdesc {
   padding-right: 0.8em; 
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
-  width: 94%;
+  width: 97%;
   clear: both;
 }
 
@@ -1105,12 +1107,12 @@ div.blogtools {
   border: 1px solid black;
   padding-left: 0.8em; 
   padding-right: 0.8em; 
-  padding-top: 0.5em;
+  padding-top: 0.0em;
   padding-bottom: 0.5em;
   margin-bottom: 10px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-  font-size: 10px;
-  width: 94%;
+  font-size: 12px;
+  width: 97%;
   clear: both;
 }
 
@@ -1129,8 +1131,8 @@ font-size: 10px;
 font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 font-size: 10px;
 color : Black;
-text-decoration: none; 
-background-color : #CCCCCC;
+/*text-decoration: none; */
+/*background-color : #CCCCCC;*/
 }
 
 

@@ -1,3 +1,4 @@
+{if $feature_featuredLinks eq 'y'}
 <div class="box">
 <div class="box-title">
 {tr}Featured links{/tr}
@@ -8,3 +9,4 @@
 {/section}
 </div>
 </div>
+{/if}
