@@ -106,7 +106,7 @@
 {/if}
 {if $wiki_list_status eq 'y'}
 	<td style="text-align:center;" class="{cycle advance=false}">
-	{if $listpages[changes].flag eq 'locked'}
+	{if $listpages[changes].flag eq tra('locked')}
 		<img src='img/icons/lock_topic.gif' alt='{tr}locked{/tr}' />
 	{else}
 		<img src='img/icons/unlock_topic.gif' alt='{tr}unlocked{/tr}' />
