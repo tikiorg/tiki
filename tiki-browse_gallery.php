@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.25 2004-08-22 22:49:29 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-browse_gallery.php,v 1.26 2004-08-23 22:18:23 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -276,7 +276,6 @@ $newoffset = $offset -$subgals['cant'];
 $images = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
 $smarty->assign('num_objects',count($subgals['data'])+count($images['data']));
 $smarty->assign('num_subgals',count($subgals['data']));
-echo "num_subgals: ".count($subgals['data']);
 $smarty->assign('num_images',count($images['data']));
 $cant_pages = ceil(($subgals['cant']+$images['cant']) / $maxImages);
 $smarty->assign_by_ref('cant_pages', $cant_pages);
