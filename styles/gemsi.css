@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.29 2004-02-25 06:28:28 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.30 2004-04-09 03:55:06 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -483,7 +483,7 @@ table.wikitopline {
 DIV#page-bar {
 	margin-top: 5px;
 }
-.button2 {
+.button2, .button3 {
 	display: inline;
 	font-size: 85%;
 	background-color: white;
@@ -492,6 +492,9 @@ DIV#page-bar {
 	margin-right: 5px;
 	padding: 1px 0px 1px 0px;
 }
+.button3 { -moz-border-radius : 5px 5px 0 0;  }
+.button3 .linkbut { -moz-border-radius : 5px 5px 0 0; padding-bottom : 2px; border-bottom : 0; }
+
 .linkbut {
 	color: #999999;
 	padding: 1px 5px 1px 5px;
@@ -1720,7 +1723,7 @@ div#loadstats {
 .calendar {
 	z-index: 200;
 }
-/* for tabs */
+/* for tabs 
 div.tabs {
 	white-space: nowrap;
 	cursor: default !important;
@@ -1793,7 +1796,7 @@ a.removeTab{
 	font-size: smaller;
 	text-decoration: none;
 	}
-
+*/
 
 /* ASSORTED  */
 

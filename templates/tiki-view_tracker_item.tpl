@@ -18,15 +18,15 @@
 {if $feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false}
 <div id="page-bar">
-<span id="tab{cycle name=tabs advance=false}" class="button2"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}View{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}View{/tr}</a></span>
 {if $tracker_info.useComments eq 'y'}
-<span id="tab{cycle name=tabs advance=false}" class="button2"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}Comments{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}Comments{/tr}</a></span>
 {/if}
 {if $tracker_info.useAttachments eq 'y'}
-<span id="tab{cycle name=tabs advance=false}" class="button2"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}Attachments{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}Attachments{/tr}</a></span>
 {/if}
 {if $tiki_p_modify_tracker_items eq 'y'}
-<span id="tab{cycle name=tabs advance=false}" class="button2"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}Edit{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false}" class="button3"><a href="javascript:tikitabs({cycle name=tabs},5);" class="linkbut">{tr}Edit{/tr}</a></span>
 {/if}
 </div>
 {/if}

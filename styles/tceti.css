@@ -653,7 +653,7 @@ DIV#page-bar {
 }
 
 /* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
-.button2 {
+.button2, .button3 {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   10px;
 	color:   white;
@@ -666,6 +666,8 @@ DIV#page-bar {
 	padding-bottom:   1px;
 	margin:   0.0ex 0px;
 }
+.button3 { -moz-border-radius : 5px 5px 0 0;  }
+.button3 .linkbut { -moz-border-radius : 5px 5px 0 0; padding-bottom : 2px; border-bottom : 0; }
 
 /* Links in buttons */
 .linkbut {
