@@ -1,5 +1,10 @@
 Version 1.6 -Tau Ceti-
 
+* [NEW] Wiki plugin added: SQL can be used to display the result of an SQL query to the
+  tiki database, useful for reports and others. If you don't use tiki as an intranet you
+  may want to remove this plugin for security reasons (!!).
+* [NEW] User tasks, users can set-up tasks and mark tasks as completed or remove tasks, 
+  a user module is provided. This can be used as a simple to-do list for users.
 * [NEW] Wiki page footnotes, wiki pages can have footnotes, footnotes are kept at user
   level (each user only sees his footnotes for each page). This allow users to keep his
   private comments and notes for Wiki pages. 

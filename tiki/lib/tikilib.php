@@ -7750,6 +7750,7 @@ function parse_data($data)
     // Now search for plugins
     //$smc = new Smarty_Compiler();
     preg_match_all("/\{([A-Z]+)\(([^\)]*)\)\}/",$data,$plugins);
+    
     for($i=count($plugins[0])-1;$i>=0;$i--) {
       $plugin_start = $plugins[0][$i];
       $plugin_end = '{'.$plugins[1][$i].'}';
