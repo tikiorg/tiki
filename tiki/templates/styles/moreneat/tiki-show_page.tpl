@@ -21,6 +21,8 @@
 <small>(cached)</small>
 {/if}
 </td>
+{if $print_page ne 'y'}
+
 <td style="text-align:right;">
 
 {if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
@@ -56,8 +58,10 @@
 
 </td>
 </tr>
+{/if}
 </table>
 
+{if $print_page ne 'y'}
 {if !$lock}
 	{if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
 		{if $beingEdited eq 'y'}
@@ -131,6 +135,7 @@
 {/if}
 {if $feature_wiki_attachments eq 'y' and $show_page eq 'y'}
 <span class="tabbut"><a href="javascript:document.location='#attachments';flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
+{/if}
 {/if}
 
 <div class="wikitext">{if $structure eq 'y'}
