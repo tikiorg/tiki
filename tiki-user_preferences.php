@@ -50,7 +50,11 @@ if(isset($_REQUEST["prefs"])) {
   if (isset($_REQUEST["userbreadCrumb"])) $tikilib->set_user_preference($userwatch,'userbreadCrumb',$_REQUEST["userbreadCrumb"]);
   if (isset($_REQUEST["homePage"])) $tikilib->set_user_preference($userwatch,'homePage',$_REQUEST["homePage"]);
   if($change_language == 'y') {
-  if (isset($_REQUEST["language"])) $tikilib->set_user_preference($userwatch,'language',$_REQUEST["language"]);
+    if (isset($_REQUEST["language"])) {
+      $tikilib->set_user_preference($userwatch,'language',$_REQUEST["language"]);
+      $smarty->assign('language',$_REQUEST["language"]);
+      include('lang/'.$_REQUEST["language"].'/language.php');
+    }
   }
   if (isset($_REQUEST["style"])) $smarty->assign('style',$_REQUEST["style"]);
   if (isset($_REQUEST["language"]))$smarty->assign('language',$_REQUEST["language"]);
