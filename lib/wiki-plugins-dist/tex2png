@@ -2,5 +2,5 @@
 
 cd temp
 latex $1 
-dvips -E $1.dvi
+dvips -E -f $1.dvi > $1.ps
 convert -density 110 $1.ps $1.png
