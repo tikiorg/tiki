@@ -50,7 +50,7 @@ class StructLib extends TikiLib {
 	function s_populate_structure_pages($parent_info) {
 		$ret = array($parent_info);
 
-        $children = $this->get_pages($parent_info["page_ref_id"]);
+        $children = $this->s_get_pages($parent_info["page_ref_id"]);
         foreach ($children as $child) {
 			$sub_tree = $this->s_populate_structure_pages($child);
 			if (count($sub_tree) > 0) {
@@ -592,7 +592,7 @@ class StructLib extends TikiLib {
 	/** Return an array of subpages
       Used by the 'After Page' select box 
   */
-	function get_pages($parent_id) {
+	function s_get_pages($parent_id) {
 		$ret = array();
 		$query  = "select `page_ref_id` ";
 		$query .= "from `tiki_structures` ts, `tiki_pages` tp ";
