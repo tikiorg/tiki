@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.111 2004-06-15 15:49:58 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.112 2004-06-18 02:41:19 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -96,12 +96,11 @@ $smarty->assign('page_ref_id', $page_ref_id);
 
 require_once('tiki-pagesetup.php');
 
+$objId = urldecode($page);
 if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 	// Check to see if page is categorized
-	$objId = urldecode($page);
-
 	$perms_array = $categlib->get_object_categories_perms($user, 'wiki page', $objId);
-   	if ($perms_array) {
+   	if (is_array($perms_array)) {
    		$is_categorized = TRUE;
     	foreach ($perms_array as $perm => $value) {
     		$$perm = $value;
@@ -119,6 +118,8 @@ if ($tiki_p_admin != 'y' && $feature_categories == 'y' && !$object_has_perms) {
 	    $smarty->display("error.tpl");
 		die;
 	}
+} else {
+	$is_categorized = $categlib->is_categorized('wiki page',$objId);
 }
 
 $creator = $wikilib->get_creator($page);
