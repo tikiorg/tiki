@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.17 2003-08-15 21:13:41 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-login_box.tpl,v 1.18 2003-08-17 21:05:30 teedog Exp $ *}
 
 <div class="box">
 <div class="box-title">
@@ -23,9 +23,11 @@
      <script language='Javascript' type='text/javascript'>
      <!--
      function doChallengeResponse() {
-       document.loginbox.zoofoo.value=MD5(document.loginbox.pass.value);
+       hashstr = document.loginbox.user.value +
+       document.loginbox.pass.value +
+       document.loginbox.email.value;
        str = document.loginbox.user.value + 
-       MD5(document.loginbox.pass.value) +
+       MD5(hashstr) +
        document.loginbox.challenge.value;
        document.loginbox.response.value = MD5(str);
        document.loginbox.pass.value='';
@@ -42,7 +44,6 @@
     </script>
     {/literal}
      <input type="hidden" name="challenge" value="{$challenge|escape}" />
-     <input type="hidden" name="zoofoo" value="" />
      <input type="hidden" name="response" value="" />
      {/if}
       <table border="0">
@@ -51,6 +52,10 @@
           <table>
           <tr><td class="module">{tr}user{/tr}:</td></tr>
           <tr><td><input type="text" name="user"  size="20" /></td></tr>
+          {if $feature_challenge eq 'y'} <!-- quick hack to make challenge/response work until 1.8 tiki auth overhaul -->
+          <tr><td class="module">{tr}email{/tr}:</td></tr>
+          <tr><td><input type="text" name="email"  size="20" /></td></tr>
+          {/if}
           <tr><td class="module">{tr}pass{/tr}:</td></tr>
           <tr><td><input type="password" name="pass" size="20" /></td></tr>
           <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
