@@ -686,6 +686,5 @@ INSERT INTO tiki_preferences(name,value) VALUES ('feature_editcss','n');
 # for copyrights
 INSERT INTO tiki_preferences(name,value) VALUES ('wiki_feature_copyrights','n');
 
-
-
-
+# for wiki automonospaced text
+INSERT INTO tiki_preferences(name,value) VALUES ('feature_wiki_monosp','y');
