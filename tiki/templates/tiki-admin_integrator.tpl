@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.13 2003-11-10 14:43:38 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator.tpl,v 1.14 2003-11-10 14:50:31 sylvieg Exp $ *}
 
 {if $repID > 0}
     <h2>{tr}Edit Repository:{/tr} {$name}</h2>
@@ -41,7 +41,7 @@
     <td class="formcolor"><span title="{tr}Is repository visible to users{/tr}">{tr}Visible{/tr}</td>
     <td class="formcolor"><input type="checkbox" name="vis" {if $vis eq 'y'}checked="checked"{/if} title="{tr}Is repository visible to users{/tr}" /></td>
   </tr><tr>
-    <td class="formcolor"><span title="{tr}Is files from repository can be cached{/tr}">{tr}Cacheable{/tr}</td>
+    <td class="formcolor"><span title="{tr}Can files from repository be cached{/tr}">{tr}Cacheable{/tr}</td>
     <td class="formcolor">
       <input type="checkbox" name="cacheable" {if $cacheable eq 'y'}checked="checked"{/if} title="{tr}Is files from repository can be cached{/tr}" />
       {if isset($repID) and $repID ne '0'}
