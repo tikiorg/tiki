@@ -115,6 +115,11 @@ if(isset($_REQUEST["upload"])) {
       }
        
        $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+       if(!$fp) {
+         $smarty->assign('msg',tra('Cannot read file'));
+         $smarty->display("styles/$style_base/error.tpl");
+         die;
+       }
        $data = '';
        $fhash='';
        if($fgal_use_db == 'n') {

@@ -1988,7 +1988,7 @@ class TikiLib {
     $result = $this->query($query);
     //check for valid values
     $cache_time=is_int($cache_time) ? $cache_time : 0 ;
-    $rows=is_int($rows) ? $rows : 10 ;
+    $rows=is_numeric($rows) ? floor($rows) : 10 ;
     $query = "insert into tiki_modules(name,title,position,ord,cache_time,rows,groups,params) values('$name','$title','$position',$order,$cache_time,$rows,'$groups','$params')";
     $result = $this->query($query);
     return true;
@@ -3392,7 +3392,7 @@ class TikiLib {
     $page = addslashes($page);
     $query = "update tiki_pages set flag='L' where pageName='$page'";
     $result = $this->query($query);
-    if($user) {
+    if(isset($user)) {
     	$query = "update tiki_pages set user='$user' where pageName='$page'";
     	$result = $this->query($query);
     }
