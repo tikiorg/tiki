@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.2 2003-10-28 20:00:51 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_sf.php,v 1.3 2003-11-23 22:03:14 gongo Exp $
  *
  * TikiWiki SF auto-links.
  * 
@@ -25,7 +25,7 @@ function get_artifact_label($gid,$atid,$aid,$reload=false) {
 	$agent = $_SERVER['HTTP_USER_AGENT'];
 	$cachefile = "temp/sftrackers.cache.$gid.$atid.$aid";
 	$cachelimit = time() - 60*60*SF_CACHE;
-	$url = "http://sourceforge.net/tracker/index.php?func=detail&aid=$aid&group_id=$gid&atid=$atid";
+	$url = "http://sourceforge.net/tracker/index.php?func=detail&amp;aid=$aid&amp;group_id=$gid&amp;atid=$atid";
 	if (!is_file($cachefile)) $reload = true;
 	$back = false;
 	if ($reload or (filemtime($cachefile) < $cachelimit)) {
@@ -77,8 +77,8 @@ function wikiplugin_sf($data, $params) {
 		return "<b>please use (aid=>xxx) as parameters</b>";
 	}
 	$label = get_artifact_label($sf_group_id,$sf_atid,$aid);
-	//$back = "[http://sf.net/tracker/index.php?func=detail&aid=$aid&group_id=$sf_group_id&atid=$sf_atid|$tag:#$aid: $label|nocache]";
-	$back = "<a href='http://sf.net/tracker/index.php?func=detail&aid=$aid&group_id=$sf_group_id&atid=$sf_atid' target='_blank' title='$tag:#$aid' class='wiki'>$label</a>";
+	//$back = "[http://sf.net/tracker/index.php?func=detail&amp;aid=$aid&amp;group_id=$sf_group_id&amp;atid=$sf_atid|$tag:#$aid: $label|nocache]";
+	$back = "<a href='http://sf.net/tracker/index.php?func=detail&amp;aid=$aid&amp;group_id=$sf_group_id&amp;atid=$sf_atid' target='_blank' title='$tag:#$aid' class='wiki'>$label</a>";
 
 	return $back;
 }
