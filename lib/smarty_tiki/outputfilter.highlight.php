@@ -24,7 +24,7 @@
  	
     $highlight = $_REQUEST['highlight']; 
     $words = $highlight;
-    if (!isset($highlight)) {
+    if (!isset($highlight) || empty($highlight)) {
 			return $source;
     }
 
