@@ -2,17 +2,29 @@
 {if $mapfile}<h2>{tr}Mapfile{/tr}: {$mapfile}</h2>{/if}
 {if $mode eq 'listing'}
 <h3>{tr}Available mapfiles{/tr}:</h3>
-<table border="1" cellpadding="0" cellspacing="0" >
+<table class="normal">
 <tr>
-<td class="heading">{tr}Mapfile{/tr}</a></td>
+<td class="heading">{tr}Mapfile{/tr}</td>
+<td class="heading">{tr}Actions{/tr}</td>
 </tr>
 {section name=user loop=$files}
 {if $smarty.section.user.index % 2}
 <tr>
 <td class="odd">
 <a class="link" href="tiki-map.phtml?mapfile={$files[user]}">{$files[user]}</a>
+</td>
+<td class="odd">
 {if $tiki_p_map_edit eq 'y'}
-(<a class="link" href="tiki-map_edit.php?mapfile={$files[user]}&mode=editing">{tr}edit{/tr}</a>)
+<a class="link" href="tiki-map_edit.php?mapfile={$files[user]}&mode=editing">
+<img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
+</a>
+{/if}
+{if $user and $feature_user_watches eq 'y'}
+ {if $user_watching_map[user] eq 'n'}
+  	<a href="tiki-map_edit.php?watch_event=map_changed&watch_object={$files[user]}&watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='img/icons/icon_watch.png' /></a>
+	{else}
+		<a href="tiki-map_edit.php?watch_event=map_changed&watch_object={$files[user]}&watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='img/icons/icon_unwatch.png' /></a>
+	{/if}
 {/if}
 </td>
 </tr>
@@ -20,8 +32,19 @@
 <tr>
 <td class="even">
 <a class="link" href="tiki-map.phtml?mapfile={$files[user]}">{$files[user]}</a>
+</td>
+<td class="even">
 {if $tiki_p_map_edit eq 'y'}
-(<a class="link" href="tiki-map_edit.php?mapfile={$files[user]}&mode=editing">{tr}edit{/tr}</a>)
+<a class="link" href="tiki-map_edit.php?mapfile={$files[user]}&mode=editing">
+<img src="img/icons/config.gif" border="0" alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
+</a>
+{if $user and $feature_user_watches eq 'y'}
+ {if $user_watching_map[user] eq 'n'}
+  	<a href="tiki-map_edit.php?watch_event=map_changed&watch_object={$files[user]}&watch_action=add"><img border='0' alt='{tr}monitor this map{/tr}' title='{tr}monitor this map{/tr}' src='img/icons/icon_watch.png' /></a>
+	{else}
+		<a href="tiki-map_edit.php?watch_event=map_changed&watch_object={$files[user]}&watch_action=remove"><img border='0' alt='{tr}stop monitoring this map{/tr}' title='{tr}stop monitoring this map{/tr}' src='img/icons/icon_unwatch.png' /></a>
+	{/if}
+{/if}	
 </td>
 {/if}
 </tr>

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.1 2003-08-25 09:21:52 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-map_download.phtml,v 1.2 2003-10-12 19:49:14 franck Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -107,7 +107,7 @@ closedir ($h);
 
 // record that the user wanted to download some files
 $userid = $userlib->get_user_id($user);
-$query = "insert into tiki_download (object,userid,type,date,IP) values ('$file_name',$userid,'maps',".date("U").",'".$_SERVER["HTTP_HOST"]."')";
+$query = "insert into tiki_download (object,userid,type,date,IP) values ('$file_name',$userid,'maps',".date("U").",'".$_SERVER["REMOTE_ADDR"]."')";
 $result = $userlib->query($query);
 
 
