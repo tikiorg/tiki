@@ -40,15 +40,30 @@ if ($tiki_p_admin_categories != 'y' && $tiki_p_admin != 'y') {
 	die;
 }
 
-// Process the form to assign a new permission to this page
+// Process the form to assign a new permission to this category
 if (isset($_REQUEST['assign'])) {
 	$userlib->assign_object_permission($_REQUEST['group'], $categId, 'category', $_REQUEST['perm']);
 }
 
-// Process the form to remove a permission from the page
+// Process the form to assign a new permission to this category and all children
+if (isset($_REQUEST['assign_all'])) {
+	$userlib->assign_object_permission($_REQUEST['group'], $categId, 'category', $_REQUEST['perm']);
+	$children = $categlib->get_child_categories($categId);
+	foreach ($children as $child) {
+		$userlib->assign_object_permission($_REQUEST['group'], $child['categId'], 'category', $_REQUEST['perm']);
+	}
+}
+
+// Process the form to remove a permission from the category
 if (isset($_REQUEST['action'])) {
 	if ($_REQUEST['action'] == 'remove') {
 		$userlib->remove_object_permission($_REQUEST['group'], $categId, 'category', $_REQUEST['perm']);
+	} elseif ($_REQUEST['action'] == 'remove_all') {
+		$userlib->remove_object_permission($_REQUEST['group'], $categId, 'category', $_REQUEST['perm']);
+		$children = $categlib->get_child_categories($categId);
+		foreach ($children as $child) {
+			$userlib->remove_object_permission($_REQUEST['group'], $child['categId'], 'category', $_REQUEST['perm']);
+		}
 	}
 }
 

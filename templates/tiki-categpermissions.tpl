@@ -14,7 +14,8 @@
   <td class="{cycle advance=false}">{$category_perms[pg].groupName}</td>
   <td class="{cycle advance=false}">{$category_perms[pg].permName}</td>
   <td class="{cycle}">
-    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$categId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}remove from this category{/tr}</a>)
+    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove_all&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$categId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}remove from this category &amp; all its children{/tr}</a>)
+    (<a class="link" href="tiki-categpermissions.php?referer={$referer}&amp;action=remove&amp;objectName={$objectName}&amp;objectId={$objectId}&amp;objectType={$objectType}&amp;permType={$permType}&amp;categId={$categId}&amp;perm={$category_perms[pg].permName}&amp;group={$category_perms[pg].groupName}">{tr}remove from this category only{/tr}</a>)
   </td></tr>
 {sectionelse}
 <tr><td>{tr}No individual permissions global permissions apply{/tr}</td></tr>
@@ -36,5 +37,8 @@
 {/section}
 </select>
 {tr}for{/tr}
-<input type="submit" name="assign" value="{tr}this category{/tr}" />
+<input type="submit" name="assign_all" value="{tr}this category &amp; all its children{/tr}" />
+or
+<input type="submit" name="assign" value="{tr}this category only{/tr}" />
 </form>
+<div class="simplebox highlight">Assigning permissions for <b>all children</b> is recommended for best performance.</div>
