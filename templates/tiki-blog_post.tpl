@@ -111,7 +111,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 		</td></tr>
 	{/if}
 {/if}
-<tr><td class="editblogform">{tr}Send trackback pings to:{/tr}<small>{tr}(comma sepparated list of URIs){/tr}</small></td><td class="editblogform">
+<tr><td class="editblogform">{tr}Send trackback pings to:{/tr}<small>{tr}(comma separated list of URIs){/tr}</small></td><td class="editblogform">
 <textarea name="trackback" rows="3" cols="60">{section name=ix loop=$trackbacks_to}{if not $smarty.section.ix.first},{/if}{$trackbacks_to[ix]}{/section}</textarea>
 </td>
 {if $blog_spellcheck eq 'y'}

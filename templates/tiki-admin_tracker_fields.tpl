@@ -23,7 +23,7 @@
 <option value="f" {if $type eq 'f'}selected="selected"{/if}>{tr}date and time{/tr}</option>
 </select>
 </td></tr>
-<tr id='trkfldoptions' {if $type eq 'd'}style="display:block;"{else}style="display:none;"{/if}><td class="formcolor">{tr}Options (sepparated by commas used in dropdowns only){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$options}" /></td></tr>
+<tr id='trkfldoptions' {if $type eq 'd'}style="display:block;"{else}style="display:none;"{/if}><td class="formcolor">{tr}Options (separated by commas used in dropdowns only){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$options}" /></td></tr>
 <tr><td class="formcolor">{tr}Is column visible when listing tracker items?{/tr}</td><td class="formcolor"><input type="checkbox" name="isTblVisible" {if $isTblVisible eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Column links to edit/view item?{/tr}</td><td class="formcolor"><input type="checkbox" name="isMain" {if $isMain eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>

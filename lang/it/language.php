@@ -1391,7 +1391,7 @@ In questo caso è necessario aumentare il massimo tempo di esecuzione dello scri
 "user selector" => "selettore utenti",
 "group selector" => "selettore gruppi",
 "date and time" => "data e ora",
-"Options (sepparated by commas used in dropdowns only)" => "Opzioni (separate da virgole usate solo nei dropdown)",
+"Options (separated by commas used in dropdowns only)" => "Opzioni (separate da virgole usate solo nei dropdown)",
 "Is column visible when listing tracker items?" => "colonna visible nella lista degli elementi del tracker?",
 "Column links to edit/view item?" => "La colonna è link alla visualizzazione/modifica dell'elemento?",
 "Tracker fields" => "Campi del Tracker",

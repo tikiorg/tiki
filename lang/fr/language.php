@@ -1720,7 +1720,7 @@ from Admin->General
 "Topic Name" => "Topic Name",
 "List of topics" => "List of topics",
 "Admin tracker" => "Admin tracker",
-"Options (sepparated by commas used in dropdowns only)" => "Options (sepparated by commas used in dropdowns only)",
+"Options (separated by commas used in dropdowns only)" => "Options (separated by commas used in dropdowns only)",
 "trackers" => "trackers",
 "assign_perms" => "assign_perms",
 "Create level" => "Create level",
