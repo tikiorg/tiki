@@ -207,6 +207,9 @@ if($feature_wiki_footnotes == 'y') {
     $smarty->assign('parsed_footnote',$tikilib->parse_data($footnote));
 
  if(isset($_REQUEST['footnote'])) {
+      $smarty->assign('parsed_footnote',$tikilib->parse_data($_REQUEST['footnote']));
+      $smarty->assign('footnote',$_REQUEST['footnote']);
+      $smarty->assign('has_footnote','y');
 
       if(empty($_REQUEST['footnote'])) {
         $tikilib->remove_footnote($user,$page);
