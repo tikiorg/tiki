@@ -6,38 +6,32 @@ class HtmlPagesLib extends TikiLib {
 		if (!$db) {
 			die ("Invalid db object passed to HTMLpagesLib constructor");
 		}
-
 		$this->db = $db;
 	}
 
 	function remove_html_page($pageName) {
-		$query = "delete from tiki_html_pages where pageName='$pageName'";
-
-		$result = $this->query($query);
+		$query = "delete from `tiki_html_pages` where `pageName`=?";
+		$result = $this->query($query,array($pageName));
 		return true;
 	}
 
 	function list_html_pages($offset, $maxRecords, $sort_mode, $find) {
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array();
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where (name like $findesc or content like $findesc)";
+			$mid = " where (`name` like ? or `content` like ?)";
+			$bindvars[] = "%$find%";
+			$bindvars[] = "%$find%";
 		} else {
 			$mid = "";
 		}
-
-		$query = "select pageName,refresh,created,type from tiki_html_pages $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_html_pages $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select `pageName`,`refresh`,`created`,`type` from `tiki_html_pages` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_html_pages` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
-
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
-
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
@@ -45,28 +39,21 @@ class HtmlPagesLib extends TikiLib {
 	}
 
 	function list_html_page_content($pageName, $offset, $maxRecords, $sort_mode, $find) {
-		$pageName = addslashes($pageName);
-
-		$sort_mode = str_replace("_", " ", $sort_mode);
-
+		$bindvars = array($pageName);
+		$mid = " where `pageName`=? ";
 		if ($find) {
-			$findesc = $this->qstr('%' . $find . '%');
-
-			$mid = " where pageName='$pageName' and (name like $findesc or content like $findesc)";
-		} else {
-			$mid = " where pageName='$pageName'";
+			$mid = " and (`name` like ? or `content` like ?)";
+			$bindvars[] = "%$find%";
+			$bindvars[] = "%$find%";
 		}
-
-		$query = "select * from tiki_html_pages_dynamic_zones $mid order by $sort_mode limit $offset,$maxRecords";
-		$query_cant = "select count(*) from tiki_html_pages_dynamic_zones $mid";
-		$result = $this->query($query);
-		$cant = $this->getOne($query_cant);
+		$query = "select * from `tiki_html_pages_dynamic_zones` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_html_pages_dynamic_zones` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
-
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
 		}
-
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
@@ -79,105 +66,75 @@ class HtmlPagesLib extends TikiLib {
 
 		for ($i = 0; $i < count($eds[0]); $i++) {
 			$cosa = $this->get_html_page_content($pageName, $eds[1][$i]);
-
 			$data = str_replace($eds[0][$i], '<span id="' . $eds[1][$i] . '">' . $cosa["content"] . '</span>', $data);
 		}
-
-		//$data=nl2br($data);
 		return $data;
 	}
 
 	function replace_html_page($pageName, $type, $content, $refresh) {
-		$pageName = addslashes($pageName);
-
-		$content = addslashes($content);
-		// Check the name
 		$now = date("U");
-
-		$query = "replace into tiki_html_pages(pageName,content,type,created,refresh)
-              values('$pageName','$content','$type',$now,$refresh)";
-		$result = $this->query($query);
+		$query = "delete from `tiki_html_pages` where `pageName`=?";
+		$this->query($query,array($pageName),-1,-1,false);
+		$query = "insert into `tiki_html_pages`(`pageName`,`content`,`type`,`created`,`refresh`) values(?,?,?,?,?)";
+		$result = $this->query($query,array($pageName,$content,$type,(int)$now,(int)$refresh));
 		// For dynamic pages update the zones into the dynamic pages zone
 		preg_match_all("/\{ed id=([^\}]+)\}/", $content, $eds);
 		preg_match_all("/\{ted id=([^\}]+)\}/", $content, $teds);
 		$all_eds = array_merge($eds[1], $teds[1]);
 
-		$query = "select zone from tiki_html_pages_dynamic_zones where pageName='$pageName'";
-		$result = $this->query($query);
+		$query = "select `zone` from `tiki_html_pages_dynamic_zones` where `pageName`=?";
+		$result = $this->query($query,array($pageName));
 
-		while ($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+		while ($res = $result->fetchRow()) {
 			if (!in_array($res["zone"], $all_eds)) {
-				$query2 = "delete from tiki_html_pages_dynamic_zones where pageName='$pageName' and zone='" . $res["zone"] . "'";
-
-				$result2 = $this->query($query2);
+				$query2 = "delete from `tiki_html_pages_dynamic_zones` where `pageName`=? and `zone`=?";
+				$result2 = $this->query($query2,array($pageName,$zone));
 			}
 		}
 
 		for ($i = 0; $i < count($eds[0]); $i++) {
-			if (!$this->getOne(
-				"select count(*) from tiki_html_pages_dynamic_zones where pageName='$pageName' and zone='" . $eds[1][$i] . "'")) {
-				$query = "replace into tiki_html_pages_dynamic_zones(pageName,zone,type) values('$pageName','" . $eds[1][$i] . "','tx')";
-
-				$result = $this->query($query);
+			if (!$this->getOne( "select count(*) from `tiki_html_pages_dynamic_zones` where `pageName`=? and `zone`=?",array($pageName,$eds[1][$i]))) {
+				$this->query("delete from `tiki_html_pages_dynamic_zones` where `pageName`=? and `zone`=?",array($pageName,$eds[1][$i]));
+				$query = "insert into `tiki_html_pages_dynamic_zones`(`pageName`,`zone`,`type`) values(?,?,?)";
+				$result = $this->query($query,array($pageName,$eds[1][$i],'tx'));
 			}
 		}
 
 		for ($i = 0; $i < count($teds[0]); $i++) {
-			if (!$this->getOne(
-				"select count(*) from tiki_html_pages_dynamic_zones where pageName='$pageName' and zone='" . $teds[1][$i] . "'")) {
-				$query = "replace into tiki_html_pages_dynamic_zones(pageName,zone,type) values('$pageName','" . $teds[1][$i] . "','ta')";
-
-				$result = $this->query($query);
+			if (!$this->getOne( "select count(*) from `tiki_html_pages_dynamic_zones` where `pageName`=? and zone=?",array($pageName,$teds[1][$i]))) {
+				$this->query("delete from `tiki_html_pages_dynamic_zones` where `pageName`=? and `zone`=?",array($pageName,$teds[1][$i]));
+				$query = "insert into `tiki_html_pages_dynamic_zones`(`pageName`,`zone`,`type`) values(?,?,?)";
+				$result = $this->query($query,array($pageName,$teds[1][$i],'ta'));
 			}
 		}
-
 		return $pageName;
 	}
 
 	function replace_html_page_content($pageName, $zone, $content) {
-		$pageName = addslashes($pageName);
-
-		$content = addslashes($content);
-		// Check the name
-		$now = date("U");
-
-		$query = "update tiki_html_pages_dynamic_zones set content='$content' where pageName='$pageName' and zone='$zone'";
-
-		$result = $this->query($query);
+		$query = "update `tiki_html_pages_dynamic_zones` set `content`=? where `pageName`=? and `zone`=?";
+		$result = $this->query($query,array($content,$pageName,$zone));
 		return $zone;
 	}
 
 	function remove_html_page_content($pageName, $zone) {
-		$pageName = addslashes($pageName);
-
-		$query = "delete from tiki_html_pages_dynamic_zones where pageName='$pageName' and zone='$zone'";
-		$result = $this->query($query);
+		$query = "delete from `tiki_html_pages_dynamic_zones` where `pageName`=? and `zone`=?";
+		$result = $this->query($query,array($pageName,$zone));
 		return true;
 	}
 
 	function get_html_page($pageName) {
-		$pageName = addslashes($pageName);
-
-		$query = "select * from tiki_html_pages where pageName='$pageName'";
-		$result = $this->query($query);
-
-		if (!$result->numRows())
-			return false;
-
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select * from `tiki_html_pages` where `pageName`=?";
+		$result = $this->query($query,array($pageName));
+		if (!$result->numRows()) return false;
+		$res = $result->fetchRow();
 		return $res;
 	}
 
 	function get_html_page_content($pageName, $zone) {
-		$pageName = addslashes($pageName);
-
-		$query = "select * from tiki_html_pages_dynamic_zones where pageName='$pageName' and zone='$zone'";
-		$result = $this->query($query);
-
-		if (!$result->numRows())
-			return false;
-
-		$res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+		$query = "select * from `tiki_html_pages_dynamic_zones` where `pageName`=? and `zone`=?";
+		$result = $this->query($query,array($pageName,$zone));
+		if (!$result->numRows()) return false;
+		$res = $result->fetchRow();
 		return $res;
 	}
 }
