@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.125 2004-08-12 22:31:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.126 2004-08-16 02:26:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -54,7 +54,7 @@ if (!isset($_REQUEST["page"])) {
 $page = $_REQUEST["page"];
 
 $info = null;
-if ($feature_multilingual == 'y' && isset($_REQUEST["bl"])) { // chose the best language page
+if ($feature_multilingual == 'y' && (isset($_REQUEST["bl"]) || isset($_REQUEST["best_lang"]))) { // chose the best language page
 	global $multilinguallib;
 	include_once("lib/multilingual/multilinguallib.php");
 	$info = $tikilib->get_page_info($page);
@@ -65,7 +65,6 @@ if ($feature_multilingual == 'y' && isset($_REQUEST["bl"])) { // chose the best 
 		$info = null;
 	}
 }
-
 
 
 $smarty->assign('structure','n');
@@ -122,6 +121,7 @@ if(isset($page_ref_id)) {
 }
 $smarty->assign_by_ref('page',$page);
 $smarty->assign('page_ref_id', $page_ref_id);
+
 
 // Get page data, if available
 if (!$info)
@@ -203,6 +203,7 @@ if ($feature_multilingual == 'y' && $info['lang'] && $info['lang'] != "NULL") { 
 	include_once("lib/multilingual/multilinguallib.php");
 	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
 	$smarty->assign('trads', $trads);
+	$pageLang = $info['lang'];
 }
 
 if(isset($_REQUEST["copyrightpage"])) {

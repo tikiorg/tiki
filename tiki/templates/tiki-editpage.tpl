@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.58 2004-08-12 22:31:57 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.59 2004-08-16 02:27:03 teedog Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -22,6 +22,15 @@
 </div>
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
+{if $preview}
+<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+{if $page neq 'SandBox'}
+{if $tiki_p_minor eq 'y'}
+<input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
+{/if}
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" />
+{/if}
+{/if}
 {if $page_ref_id}
 <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 {/if}
@@ -165,10 +174,11 @@
 {/if}
 {/if}
 <tr class="formcolor"><td>&nbsp;</td><td>
+{if $page neq 'SandBox'}
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" /></td>
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp; {/if}<input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" /></td>
 </tr>
 </table>
 </form>

@@ -21,7 +21,7 @@
     * @package TikiWiki
     * @subpackage Plugins
     * @author Claudio Bustos
-    * @version $Revision: 1.6 $
+    * @version $Revision: 1.7 $
     */
 
 //this script may only be included - so its better to die if called directly.
@@ -121,7 +121,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
         function getVersion() {
             return tra("No version indicated");
             //return preg_replace("/[Revision: $]/", '',
-            //                    "\$Revision: 1.6 $");
+            //                    "\$Revision: 1.7 $");
         }
         /**
         * Returns the default arguments for the plugin
@@ -144,7 +144,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
             return $this->error("PluginsLib::run: pure virtual function. Don't be so lazy!");
         }
         function error ($message) {
-            return "~np~<span class='warn'>Plugin ".$this->getName()." ".tra("failed")." : ".tra($message)."</span>~/np~";
+            return "~np~<span class='warn'>".tra("Plugin ").$this->getName()." ".tra("failed")." : ".tra($message)."</span>~/np~";
         }
         function getErrorDetail() {
             return $this->_errors;

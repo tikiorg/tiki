@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.41 2004-07-30 21:59:31 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-modules.php,v 1.42 2004-08-16 02:26:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -115,6 +115,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 					$smarty->assign_by_ref('user_data', $info["data"]);
 					$smarty->assign_by_ref('user_module_name', $info["name"]);
 					$data = $smarty->fetch('modules/user_module.tpl');
+				} else {
+					$data = '';
 				}
 			}
             $smarty->assign('module_params',array()); // ensure params not available outside current module

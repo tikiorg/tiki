@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.36 2004-06-23 22:34:28 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.37 2004-08-16 02:27:03 teedog Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -131,7 +131,14 @@
 		<option value="1" {if $error_reporting_level eq 1}selected="selected"{/if}>{tr}Report PHP errors only for admin{/tr}</option>
             </select>
       </td>
-      </tr>
+      </tr><tr>
+      <td class="form"><label for="general-charset">{tr}Default charset for sending mail:{/tr}</label></td>
+      <td><select name="default_mail_charset" id="general-charset">
+            <option value="utf-8" {if $default_mail_charset eq "utf-8"}selected="selected"{/if}>utf-8</option>
+            <option value="iso-8859-1" {if $default_mail_charset eq "iso-8859-1"}selected="selected"{/if}>iso-8859-1</option>
+            </select>
+      </td>
+	</tr>
       </table>
       <table class="admin"><tr>
         <td class="heading" colspan="5"

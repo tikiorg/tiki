@@ -153,6 +153,17 @@ if(isset($_REQUEST["register"])) {
     $smarty->assign('showmsg','y');
   }
 
+  if($email_valid != 'no') {
+    $emails = $notificationlib->get_mail_events('user_registers','*');
+    foreach($emails as $email) {
+      $smarty->assign('mail_user',$_REQUEST["name"]);
+      $smarty->assign('mail_date',date("U"));
+      $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+      $mail_data = $smarty->fetch('mail/new_user_notification.tpl');
+      mail($email, tra('New user registration'),$mail_data,"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+    }
+  }
+
 }
 
 

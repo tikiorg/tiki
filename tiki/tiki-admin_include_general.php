@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.33 2004-07-22 13:08:26 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.34 2004-08-16 02:26:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,6 +50,7 @@ if (isset($_REQUEST["prefs"])) {
         "email_encoding",
         "system_os",
         "error_reporting_level",
+        "default_mail_charset",
         "urlIndex",
         "proxy_host",
         "proxy_port",

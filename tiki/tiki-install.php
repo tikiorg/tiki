@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.66 2004-08-12 22:31:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.67 2004-08-16 02:26:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -130,7 +130,8 @@ function create_dirs($domain=''){
 		'temp/cache',
 		'templates_c',
 		'templates',
-		'styles');
+		'styles',
+		'whelp');
 
   if (file_exists('lib/Galaxia'))
     array_push($dirs, 'lib/Galaxia/processes');

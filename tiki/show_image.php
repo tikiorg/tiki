@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.22 2004-08-12 22:31:21 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.23 2004-08-16 02:26:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.22 2004-08-12 22:31:21 teedog Exp $
+# $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.23 2004-08-16 02:26:40 teedog Exp $
 if (!isset($_REQUEST["nocache"]))
 	session_cache_limiter ('private_no_expire');
 
@@ -127,8 +127,4 @@ echo $imagegallib->image;
 //}
 // ????? echo $data;
 
-  echo $imagegallib->image;
-} else {
-  header("HTTP/1.0 404 Not Found");
-}
 ?>

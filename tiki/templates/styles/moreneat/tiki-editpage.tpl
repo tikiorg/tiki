@@ -21,6 +21,15 @@
 </div>
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>
+{if $preview}
+<input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
+{if $page neq 'SandBox'}
+{if $tiki_p_minor eq 'y'}
+<input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
+{/if}
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> &nbsp;&nbsp; <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" />
+{/if}
+{/if}
 {if $page_ref_id}
 <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
 {/if}
@@ -240,10 +249,13 @@
 {/if}
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor">
+{if $page neq 'SandBox'}
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" value="on" />{tr}Minor{/tr}
 {/if}
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" /></td>
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
+{/if}
+<input type="submit" class="wikiaction" name="cancel_edit" value="{tr}cancel edit{/tr}" /></td>
 </tr>
 </table>
 </form>

@@ -2981,7 +2981,7 @@ class TikiLib extends TikiDB {
     	$matcher = "/\{([A-Z]+)\(|~pp~|~np~|&lt;[pP][rR][eE]&gt;/i";
     }
 
-	preg_match( $matcher, $data, $plugins, PREG_OFFSET_CAPTURE );
+	preg_match( $matcher, $data, $plugins );
 
 	/*
 	   print "<pre>Plugin match begin:";
@@ -2992,16 +2992,15 @@ class TikiLib extends TikiDB {
 	// Check to make sure there was a match.
 	if(
 		count( $plugins ) > 0 &&
-		count( $plugins[0] )  > 0 &&
-		count( $plugins[0][0] ) > 0
+		count( $plugins[0] )  > 0
 	  )
 	{
 	    // If it is a true plugin
-	    if( $plugins[0][0][0] == "{" )
+	    if( $plugins[0][0] == "{" )
 	    {
-		$pos = $plugins[0][1]; // where plugin starts
+		$pos = strpos( $data, $plugins[0] ); // where plugin starts
 
-		$pos_end = $pos+strlen($plugins[0][0]); // where character after ( is
+		$pos_end = $pos+strlen($plugins[0]); // where character after ( is
 
 		// Here we're going to look for the end of the arguments for the plugin.
 
@@ -3038,20 +3037,17 @@ class TikiLib extends TikiDB {
 
 		if( $curlies == 0 && $parens == 0 )
 		{
-		    $plugins[2][0] = (string) substr($data, $pos_end, $i - $pos_end - 1);
-		    $plugins[2][1] = $i + 1;
-		    $plugins[0][0] = $plugins[0][0] . (string) substr($data, $pos_end, $i - $pos_end + 1);
+		    $plugins[2] = (string) substr($data, $pos_end, $i - $pos_end - 1);
+		    $plugins[0] = $plugins[0] . (string) substr($data, $pos_end, $i - $pos_end + 1);
 		    /*
 		       print "<pre>Match found: ";
-		       print( $plugins[2][0] );
+		       print( $plugins[2] );
 		       print "</pre>";
 		     */
 		}
 	    } else {
-		$plugins[1][0] = $plugins[0][0];
-		$plugins[1][1] = $plugins[0][1];
-		$plugins[2][0] = "";
-		$plugins[2][1] = 1;
+		$plugins[1] = $plugins[0];
+		$plugins[2] = "";
 	    }
 	}
 
@@ -3067,6 +3063,11 @@ class TikiLib extends TikiDB {
     function parse_first(&$data, &$preparsed, &$noparsed) {
 	global $dbTiki;
 
+	if( strlen( $data ) <= 1 )
+	{
+	    return;
+	}
+
 	// Handle pre- and no-parse sections
 	//$this->parse_pp_np($data, $preparsed, $noparsed);
 
@@ -3080,7 +3081,7 @@ class TikiLib extends TikiDB {
 	while( count($plugins) > 0 && ( $data1 != $data2 ) )
 	{
 	    $data1 = $data;
-	    $plugin_start = $plugins[0][0];
+	    $plugin_start = $plugins[0];
 
 	    /*
 	       print "<pre>real data: :".htmlspecialchars( $data ) .":</pre>";
@@ -3093,14 +3094,23 @@ class TikiLib extends TikiDB {
 
 	    if( count($plugins) > 1 )
 	    {
-		$plugin = $plugins[1][0];
-		$plugin_start_base = '{' . $plugins[1][0] . '(';
+		$plugin = $plugins[1];
+		$plugin_start_base = '{' . $plugins[1] . '(';
 	    }
 
 	    // print "<pre>plugin: :".htmlspecialchars( $plugin ) .":</pre>";
 
-	    $pos = $plugins[0][1]; // where the plugin starts
-	    $pos_middle = $plugins[2][1]; // where the part after the plugin arguments starts
+	    $pos = strpos( $data, $plugins[0] ); // where the plugin starts
+
+	    if( $plugins[2] )
+	    {
+		// where the part after the plugin arguments starts
+		$pos_middle = strpos( $data, $plugins[2] ) + strlen( $plugins[2] ) ;
+	    } else {
+		$pos_middle = $pos + strlen( $plugins[0] );
+	    }	
+
+	    // print "<pre>pos's: :$pos, $pos_middle:</pre>";
 
 	    // process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
 	    if( preg_match("/\/ *\}$/",$plugin_start) )
@@ -3120,12 +3130,12 @@ class TikiLib extends TikiDB {
 	    }
 
 	    /*
+	       print "<pre>pos's2: :$pos, $pos_middle, $pos_end:</pre>";
 	       print "<pre>plugin_end: :".htmlspecialchars( $plugin_end ) .":</pre>";
-	       print "<pre>pos's: :$pos, $pos_middle, $pos_end:</pre>";
 	     */
 
 	    // Extract the plugin data
-	    $plugin_data_len = $pos_end - $pos - strlen($plugins[0][0]);
+	    $plugin_data_len = $pos_end - $pos - strlen($plugins[0]);
 	    $plugin_data = substr($data, $pos + strlen($plugin_start), $plugin_data_len);
 
 	    /*
@@ -3133,7 +3143,7 @@ class TikiLib extends TikiDB {
 	       print "<pre>end: :".htmlspecialchars( $plugin_end ) .":</pre>";
 	     */
 
-	    if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;|^ *~pp~|^ *~np~/", $plugin_start ) )
+	    if( $plugin_data && preg_match( "/^ *&lt;[pP][rR][eE]&gt;|^ *~pp~|^ *~np~/", $plugin_start ) )
 		// ~pp~ type "plugins"
 	    {
 		$key = md5($this->genPass());
@@ -3144,9 +3154,9 @@ class TikiLib extends TikiDB {
 		    $noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
 		} else if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
 		    preg_match( "/^ *&lt;([pP][rR][eE])&gt;/", $plugin_start, $plugins );
-		    $plugin_start2 = $plugins[1][0];
+		    $plugin_start2 = $plugins[1];
 		    preg_match( "/^ *&lt;\/([pP][rR][eE])&gt;/", $plugin_end, $plugins );
-		    $plugin_end2 = $plugins[1][0];
+		    $plugin_end2 = $plugins[1];
 		    $noparsed["data"][] = "<" . $plugin_start2 . ">" . $plugin_data . "</" . $plugin_end2 . ">";
 		} else {
 		    $noparsed["data"][] = $plugin_data;
@@ -3155,22 +3165,22 @@ class TikiLib extends TikiDB {
 		// Replace plugin section with its output in data
 		$data = substr_replace($data, $key, $pos, $pos_end - $pos + strlen($plugin_end));
 	    } else {
-		// print "<pre>args1: :".htmlspecialchars( $plugins[2][0] ) .":</pre>";
+		// print "<pre>args1: :".htmlspecialchars( $plugins[2] ) .":</pre>";
 		// Handle nested plugins in the arguments.
-		$this->parse_first($plugins[2][0], $preparsed, $noparsed);
-		// print "<pre>args2: :".htmlspecialchars( $plugins[2][0] ) .":</pre>";
+		$this->parse_first($plugins[2], $preparsed, $noparsed);
+		// print "<pre>args2: :".htmlspecialchars( $plugins[2] ) .":</pre>";
 
 		// Normal plugins
 
 		// Construct plugin file pathname
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
-		$php_name .= strtolower($plugins[1][0]). '.php';
+		$php_name .= strtolower($plugins[1]). '.php';
 
 		// Construct plugin function name
-		$func_name = 'wikiplugin_' . strtolower($plugins[1][0]);
+		$func_name = 'wikiplugin_' . strtolower($plugins[1]);
 
 		// Construct argument list array
-		$params = split(',', trim($plugins[2][0]));
+		$params = split(',', trim($plugins[2]));
 		$arguments = array();
 
 		foreach ($params as $param) {
@@ -3419,6 +3429,7 @@ class TikiLib extends TikiDB {
 	global $feature_wiki_paragraph_formatting;
 	global $feature_wikiwords_usedash;
 	global $feature_multilingual;
+	global $feature_best_language;
 
 	// Process pre_handlers here
 	if (is_array($this->pre_handlers)) {
@@ -3769,33 +3780,29 @@ class TikiLib extends TikiDB {
 		    }
 		}
 
-		if ($repl2) {
-		    if ($desc = $this->page_exists_desc($page_parse)) {
-			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+	    if ($repl2) {
+		if ($desc = $this->page_exists_desc($page_parse)) {
+		    $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 		    global $feature_wiki_jstooltips;
-		    $bestLang = ($feature_multilingual == 'y')? "&amp;bl" : ""; // to choose the best page language
+		    $bestLang = ($feature_multilingual == 'y' && $feature_best_language == 'y')? "&amp;bl" : ""; // to choose the best page language
 		    if ($desc != tra('no description')) {
-			if (!empty($feature_wiki_jstooltips) && $feature_wiki_jstooltips == 'y') {
-				$repl = '<a href="tiki-index.php?page=' . urlencode($page_parse).$bestLang. '" class="wiki"  onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $page_parse. '</a>';
-			} else {
-			$repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
-			}
+		    	if (!empty($feature_wiki_jstooltips) && $feature_wiki_jstooltips == 'y') {
+		    		$repl = '<a href="tiki-index.php?page=' . urlencode($page_parse).$bestLang. '" class="wiki"  onmouseover="return overlib(\''.htmlspecialchars($desc).'\',WIDTH,-1);" onmouseout="nd();">' . $page_parse. '</a>';
+		    	} else {
+		    $repl = "<a title=\"$desc\" href='tiki-index.php?page=" . urlencode($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
+		    	}
 		    } else {
 		    	$repl = "<a href='tiki-index.php?page=" . urlencode($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
 		    }
+		} else {
+		    global $tiki_p_edit;
+		    if ($tiki_p_edit == 'y') {
+		    $repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
 		    } else {
-				global $tiki_p_edit;
-				if ($tiki_p_edit == 'y') {
-					$create_page_link = '<a href="tiki-editpage.php?page=' . urlencode($page_parse). '" title="'.tra("Create page:").' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
-				} else {
-					$create_page_link = '';
-				}
-		  $repl = $page_parse.$create_page_link;
+		    	$create_page_link = '';
 		    }
-
-		    $page_parse_pq = preg_quote($page_parse, "/");
-		    $data = preg_replace("/\(\($page_parse_pq\)\)/", "$repl", $data);
 		}
+	    }
 	}
 
 	// Links to internal pages

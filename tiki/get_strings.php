@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.38 2004-07-08 12:50:32 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/get_strings.php,v 1.39 2004-08-16 02:26:40 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -453,7 +453,7 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "// ### Please remove manually!\n");
     writeFile_and_User ($fw, "// ### N.B. Legitimate strings may be marked");
     writeFile_and_User ($fw, "// ### as unused!\n");
-    writeFile_and_User ($fw, "// ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for furhter info.\n");
+    writeFile_and_User ($fw, "// ### Please see http://tikiwiki.org/tiki-index.php?page=UnusedWords for further info.\n");
     foreach ($unused as $key => $val) {
       writeTranslationPair ($fw, $key, $val);
       addToWordlist ($wordlist, $val);

@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.59 2004-08-12 22:31:23 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.60 2004-08-16 02:26:41 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -357,7 +357,7 @@ $scramblingEmails = array(tra("no"), scrambleEmail($userinfo['email'], 'strtr'),
 $smarty->assign_by_ref('scramblingEmails', $scramblingEmails);
 $avatar = $tikilib->get_user_avatar($userwatch);
 $smarty->assign('avatar', $avatar);
-$smarty->assign('mailCharset', $tikilib->get_user_preference($userwatch, 'mailCharset', 'utf-8'));
+$smarty->assign('mailCharset', $tikilib->get_user_preference($userwatch, 'mailCharset', $tikilib->get_preference('default_mail_charset', 'utf-8')));
 $mailCharsets = array('utf-8', 'iso-8859-1');
 $smarty->assign_by_ref('mailCharsets', $mailCharsets);
 
