@@ -130,6 +130,7 @@ if(isset($_REQUEST["register"])) {
     $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
     $machine =httpPrefix().$foo1;
     $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
+		$logslib->add_log('register','created account '.$_REQUEST["name"]);
     // Send the mail
     $smarty->assign('msg',tra('You will receive an email with information to login for the first time into this site'));
     $smarty->assign('mail_machine',$machine);
@@ -142,6 +143,7 @@ if(isset($_REQUEST["register"])) {
     $smarty->assign('showmsg','y');
   } elseif ($email_valid != 'no') {
     $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');
+		$logslib->add_log('register','created account '.$_REQUEST["name"]);
     $smarty->assign('msg',tra("Thank you for you registration. You may log in now."));
     $smarty->assign('showmsg','y');
   }

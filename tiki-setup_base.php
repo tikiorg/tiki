@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.60 2004-03-29 21:26:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.61 2004-03-31 10:06:50 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -19,6 +19,7 @@ require_once("setup_smarty.php"); // smarty 2.6.0rc1
 //print("tiki-setup_base 2: before include tikilib.php: ".$tiki_timer->elapsed()."<br />");
 require_once("lib/tikilib.php");
 require_once("lib/cache/cachelib.php");
+require_once("lib/logs/logslib.php");
 
 //print("tiki-setup_base 3: before rest of tiki-setup_base: ".$tiki_timer->elapsed()."<br />");
 $tikilib = new TikiLib($dbTiki);
