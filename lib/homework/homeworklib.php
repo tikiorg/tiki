@@ -1,11 +1,8 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.7 2004-02-22 17:22:37 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/homework/homeworklib.php,v 1.8 2004-03-01 04:49:00 ggeller Exp $
 
 // 20040207 - added function hw_assignment_fetch
-
-// require_once("doc/devtools/ggg-trace.php");
-// $ggg_tracer->outln(__FILE__." line: ".__LINE__);
 
 /*
     The idea here is that all access to the hw tables goes through this
@@ -662,33 +659,34 @@ class HomeworkLib extends TikiLib {
 	return true;
   }
 
-	// Called by:
-	//   tiki-hw_student_assignments.php
-	//   tiki-hw_teacher_assignments.php
-	// Data:
-	//   hw_assignments table - read only
-	// Arguments:
-	//   offset     - read only - starting point in the vector
+  // Called by:
+  //   tiki-hw_student_assignments.php
+  //   tiki-hw_teacher_assignments.php
+  // Data:
+  //   hw_assignments table - read only
+  // Arguments:
+  //   offset     - read only - starting point in the vector
   //   maxRecords - read only - maximum number of records to return
-	// Returns:
-	//   Array with count of results and a data vector, sorted by the due date
-	// TODO: Test with a lot of rows in the table and different values of offset and maxRecords
+  // Returns:
+  //   Array with count of results and a data vector, sorted by the due date
+  // TODO: Test with a lot of rows in the table and different values of offset and maxRecords
   function hw_assignments_list($offset = 0, $maxRecords = -1) {
     $bindvars=array();
-		$cant = "select count(*) from `hw_assignments`";
-		$query = 'select `hw_assignments`.* from `hw_assignments` ORDER BY `expireDate`';
+    $query = 'select `hw_assignments`.* from `hw_assignments` ORDER BY `dueDate`';
     $result = $this->query($query,$bindvars,$maxRecords,$offset);
     $ret = array();
-
+    
+    $cant = 0;
     while ($res = $result->fetchRow()) {
-			$ret[] = $res;
+      $ret[] = $res;
+      $cant++;
     }
-		
+    
     $retval = array();
-		$retval["data"] = $ret;
+    $retval["data"] = $ret;
     $retval["cant"] = $cant;
     return $retval;
-	}
+  }
   
   function assignment_store($id,$dueDate,$data,$user,$ip,$description){
 	//	global $ggg_tracer;

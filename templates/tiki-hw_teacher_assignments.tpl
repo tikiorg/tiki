@@ -1,18 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignments.tpl,v 1.2 2004-02-22 17:10:04 ggeller Exp $ *}
-{* tiki-hw_teacher_assignments.tpl *}
-{* Adapted from tiki-view_articles.tpl *}
-{* January 21, 2004 *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-hw_teacher_assignments.tpl,v 1.3 2004-03-01 04:49:00 ggeller Exp $ *}
 {* George G. Geller *}
 
-<!-- templates/tiki-hw_teacher_assignments start -->
+<!-- templates/tiki-hw_teacher_assignments.tpl start -->
 
-{section name=ix loop=$listpages}
+{section name=ix loop=$listassignments}
   <div class="article">
     <div class="articletitle">
-      <span class="titlea">{$listpages[ix].title}</span><br />
+      <span class="titlea">{$listassignments[ix].title}</span><br />
       <span class="titleb">
         <span style="color: rgb(0, 0, 255);">
-          {tr}Due Date:{/tr} {$listpages[ix].expireDate|tiki_short_datetime}
+          {tr}Due Date:{/tr} {$listassignments[ix].dueDate|tiki_short_datetime}
         </span>
       </span><br />
     </div>
@@ -20,7 +17,7 @@
       <table  cellpadding="0" cellspacing="0">
         <tr>
           <td valign="top">
-            <div class="articleheadingtext">{$listpages[ix].parsed_heading}</div>
+            <div class="articleheadingtext">{$listassignments[ix].parsed_heading}</div>
           </td>
         </tr>
       </table>
@@ -28,21 +25,19 @@
     <div class="articletrailer">
       <table class="wikitopline">
         <tr>
-          {if $listpages[ix].size > 0 }
-            <td>
-              <a href="tiki-hw_teacher_assignment.php?assignmentId={$listpages[ix].articleId}" class="trailer">{tr}Details{/tr}</a>
-            </td>
-            <td style="text-align:center;">
-              {tr}Grading Queue (Empty){/tr}
-            </td>
-          {/if}
+          <td>
+            <a href="tiki-hw_teacher_assignment.php?assignmentId={$listassignments[ix].assignmentId}" class="trailer">{tr}Details{/tr}</a>
+          </td>
+          <td style="text-align:center;">
+            {tr}Grading Queue (empty){/tr}
+          </td>
           <td style="text-align:right;">
             {if $tiki_p_hw_teacher eq 'y'}
-              <a class="trailer" href="tiki-hw_teacher_assignment_edit.php?assignmentId={$listpages[ix].articleId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+              <a class="trailer" href="tiki-hw_teacher_assignment_edit.php?assignmentId={$listassignments[ix].assignmentId}"><img src='img/icons/edit.gif' border='0' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
             {/if}
-            <a class="trailer" href="tiki-hw_teacher_assignment_print.php?assignmentId={$listpages[ix].articleId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
+            <a class="trailer" href="tiki-hw_teacher_assignment_print.php?assignmentId={$listassignments[ix].assignmentId}"><img src='img/icons/ico_print.gif' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' /></a>
             {if $tiki_p_hw_teacher eq 'y'}
-              <a class="trailer" href="tiki-hw_teacher_assignments.php?remove={$listpages[ix].articleId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
+              <a class="trailer" href="tiki-hw_teacher_assignments.php?remove={$listassignments[ix].assignmentId}"><img src='img/icons2/delete.gif' border='0' alt='{tr}Remove{/tr}' title='{tr}Remove{/tr}' /></a>
             {/if}
           </td>
         </tr>
@@ -53,4 +48,4 @@
 
 <a class="linkbut" href="tiki-hw_teacher_assignment_edit.php">{tr}create assignment{/tr}</a>
 
-<!-- templates/tiki-hw_teacher_assignments end -->
+<!-- templates/tiki-hw_teacher_assignments.tpl end -->
