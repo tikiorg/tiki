@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.155 2003-11-06 15:59:42 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.156 2003-11-11 12:02:58 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1666,7 +1666,9 @@ if ($feature_obzip == 'y') {
 /* Include debugger class declaration. So use loggin facility in
  * php files become much easier :)
  */
-include_once ('lib/debug/debugger.php');
+if ($feature_debug_console == 'y') {
+	include_once ('lib/debug/debugger.php');
+}
 //print("tiki-setup: after include debugger.php:".$tiki_timer->elapsed()."<br />");
 
 $smarty->assign_by_ref('num_queries',$tikilib->num_queries);
@@ -1674,11 +1676,12 @@ $smarty->assign_by_ref('num_queries',$tikilib->num_queries);
 /*
  * Check location for Tiki Integrator script and setup aux CSS file if needed by repository
  */
-include_once('lib/integrator/integrator.php');
-if ((strpos($_SERVER['REQUEST_URI'], 'tiki-integrator.php') != 0) && isset($_REQUEST['repID']))
-{
-    $integrator_css_file = $integrator->get_rep_css($integrator->get_repository($_REQUEST['repID']));
-    $smarty->assign('integrator_css_file', $integrator_css_file);
+if ($feature_integrator == 'y') {
+   include_once('lib/integrator/integrator.php');
+   if ((strpos($_SERVER['REQUEST_URI'], 'tiki-integrator.php') != 0) && isset($_REQUEST['repID'])) {
+      $integrator_css_file = $integrator->get_rep_css($integrator->get_repository($_REQUEST['repID']));
+      $smarty->assign('integrator_css_file', $integrator_css_file);
+   }
 }
 
 /*

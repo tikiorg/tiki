@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.25 2003-11-02 17:10:33 dgdaniels Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.26 2003-11-11 12:02:58 sylvieg Exp $ *}
 
 {* this the very top most box of the feature section in tiki-admin.php?page=features,
  * each td is a cell,each tr is a row, not to be confused with tr-smarty-tag which means translate...
@@ -408,7 +408,21 @@
         <td><input type="checkbox" name="feature_view_tpl"
             {if $feature_view_tpl eq 'y'}checked="checked"{/if}/></td>
         
-        </td>
+      </tr>
+
+            <tr>
+        
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=TikiIntegrator" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Integrator{/tr}">{/if}
+        		{tr}Integrator{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_integrator"
+            {if $feature_integrator eq 'y'}checked="checked"{/if}/></td>
+
+        <td>&nbsp;</td>
+        <td class="form">&nbsp;</td>
+        <td>&nbsp;</td>
 
       </tr>
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.10 2003-11-10 13:40:38 sylvieg Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.11 2003-11-11 12:05:27 sylvieg Exp $
  *
  * Admin interface for repositories management
  *
@@ -8,7 +8,11 @@
 
 require_once('tiki-setup.php');
 require_once('lib/integrator/integrator.php');
-
+if ($feature_integrator != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_integrator");
+	$smarty->display("styles/$style_base/error.tpl");
+	die;
+}
 // Check permissions
 if (($tiki_p_admin_integrator != 'y') && ($tiki_p_admin != 'y'))
 {
