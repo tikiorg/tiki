@@ -327,7 +327,7 @@ if(isset($_REQUEST["wikiattprefs"])) {
 
 
 
-if(isset($_REQUEST["homeforumprefs"])) {
+if(isset($_REQUEST["homeforumprefs"])&&isset($_REQUEST["homeForum"])) {
   $tikilib->set_preference("home_forum",$_REQUEST["homeForum"]);
   $smarty->assign('home_forum',$_REQUEST["homeForum"]);
 }  
@@ -710,12 +710,12 @@ if(isset($_REQUEST["blogfeatures"])) {
   $smarty->assign('blog_list_order',$_REQUEST["blog_list_order"]);
 }
 
-if(isset($_REQUEST["blogset"])) {
+if(isset($_REQUEST["blogset"])&&isset($_REQUEST["homeBlog"])) {
   $tikilib->set_preference("home_blog",$_REQUEST["homeBlog"]);
   $smarty->assign('home_blog',$_REQUEST["homeBlog"]);
 }
 
-if(isset($_REQUEST["galset"])) {
+if(isset($_REQUEST["galset"])&&isset($_REQUEST["homeGallery"])) {
   $tikilib->set_preference("home_gallery",$_REQUEST["homeGallery"]);
   $smarty->assign('home_gallery',$_REQUEST["homeGallery"]);
 }
