@@ -15,8 +15,8 @@
 
 {if $is_categorized eq 'y' and $feature_categories eq 'y' and $feature_categorypath eq 'y'}
 <tr>
-<td align="right" colspan="{if $feature_multilingual eq "y"}3{else}2{/if}">
-{$display_catpath}
+<td align="right" colspan="{if $feature_multilingual eq "y"}5{else}4{/if}">
+<span style="text-align:right;">{$display_catpath}</span>
 </td>
 </tr>
 {/if}
@@ -69,7 +69,7 @@
   {/if}
 {/if}
 </td>
-<td  style="text-align:right;">
+<td style="text-align:right; width: 1px;">
 {if $feature_backlinks eq 'y' and $backlinks}
 <form action="tiki-index.php" method="post">
   <select name="page" onchange="page.form.submit()">
@@ -80,7 +80,8 @@
   </select>
 </form>
 {/if}
-</td><td>
+</td>
+<td>
 {if !$page_ref_id and count($showstructs) ne 0}
 <form action="tiki-index.php" method="post">
   <select name="page_ref_id" onchange="page_ref_id.form.submit()">
