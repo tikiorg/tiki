@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.8 2003-12-18 06:08:29 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gmsih.css,v 1.9 2003-12-18 09:16:42 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -208,7 +208,7 @@ div.cbox-data {
   padding: 10px;
 }
 /* Menus */
-div.separator {
+div.separator, div.separatorline {
 	color: black;
 	font-weight: bold;
 	font-size: 110%;
@@ -218,28 +218,11 @@ div.separator {
 	color: #1c60a8;
 	margin-left: 15px;
 }
-.linkmenuadh {
-	color: #327252;
-	margin-left: 15px;
-}
-.linkmenuadm {
-	color: #725232;
-	margin-left: 15px;
-}
-.linkmenuadm:before {
-	content: 'A: ';
-}
-
 .linkmenu:active, 
-.linkmenuadh:active, 
-.linkmenuadm:active, 
 .rsslink:active {
 	color: black;
 }
-
 .linkmenu:hover, 
-.linkmenuadh:hover, 
-.linkmenuadm:hover, 
 .rsslink:hover {
 	background-color: #ffffff;
 	color: black;
@@ -249,26 +232,20 @@ div.separator {
 .separator {
 	color: #1c60a8;
 }
-.separatoradh {
-	color: #327252;
-}
-.separatoradm {
-	color: #725232;
-}
-
-.separator:active,
-.separatoradh:active,
-.separatoradm:active {
+.separator:active {
 	color: red;
 }
 
-.separator:hover,
-.separatoradh:hover,
-.separatoradm:hover {
+.separator:hover {
 	background-color: #FFFFFF;
 	color: black;
 }
 
+.separatorline, .optionline {
+	border-top: 1px solid #dedede;
+	margin-top: 3px;
+	padding-top: 3px;
+}
 /* Links to collapse menus for example the main menu can be completely collapsed*/
 .flip {
 	color: #999999;
