@@ -29,7 +29,8 @@ class GUI extends Base {
       }
     }
     
-    $query = "select distinct(gp.pId),                     
+    $query = "select distinct(gp.pId), 
+    				 gp.isActive,                    
                      gp.name as procname, 
                      gp.version as version
               from
@@ -37,14 +38,14 @@ class GUI extends Base {
               	INNER JOIN galaxia_activity_roles gar ON gar.activityId=ga.activityId
               	INNER JOIN galaxia_roles gr ON gr.roleId=gar.roleId
               	INNER JOIN galaxia_user_roles gur ON gur.roleId=gr.roleId
-              where user='$user'
+              where gp.isActive='y' and user='$user'
 		            $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(distinct(gp.pId)) from
               	galaxia_processes gp INNER JOIN galaxia_activities ga ON gp.pId=ga.pId
               	INNER JOIN galaxia_activity_roles gar ON gar.activityId=ga.activityId
               	INNER JOIN galaxia_roles gr ON gr.roleId=gar.roleId
               	INNER JOIN galaxia_user_roles gur ON gur.roleId=gr.roleId
-              where gur.user='$user' $mid";
+              where gp.isActive='y' and gur.user='$user' $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();
@@ -89,20 +90,21 @@ class GUI extends Base {
                      ga.isAutoRouted,
                      ga.activityId,
                      gp.version as version,
-                     gp.pId
+                     gp.pId,
+                     gp.isActive
               from
               	galaxia_processes gp INNER JOIN galaxia_activities ga ON gp.pId=ga.pId
               	INNER JOIN galaxia_activity_roles gar ON gar.activityId=ga.activityId
               	INNER JOIN galaxia_roles gr ON gr.roleId=gar.roleId
               	INNER JOIN galaxia_user_roles gur ON gur.roleId=gr.roleId
-              where user='$user'
+              where gp.isActive='y' and user='$user'
 		            $mid order by $sort_mode limit $offset,$maxRecords";
     $query_cant = "select count(distinct(gp.pId)) from
               	galaxia_processes gp INNER JOIN galaxia_activities ga ON gp.pId=ga.pId
               	INNER JOIN galaxia_activity_roles gar ON gar.activityId=ga.activityId
               	INNER JOIN galaxia_roles gr ON gr.roleId=gar.roleId
               	INNER JOIN galaxia_user_roles gur ON gur.roleId=gr.roleId
-              where gur.user='$user' $mid";
+              where gp.isActive='y' and gur.user='$user' $mid";
     $result = $this->query($query);
     $cant = $this->getOne($query_cant);
     $ret = Array();

@@ -19,21 +19,21 @@ class Base extends Observable {
   }
 
 
-  // Queries the database reporting an error if detected
+  /*! Queries the database reporting an error if detected */
   function query($query,$reporterrors=true) {
     $result = $this->db->query($query);
     if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
     return $result;
   }
 
-  // Gets one column for the database.
+  /*! Gets one column for the database. */
   function getOne($query,$reporterrors=true) {
     $result = $this->db->getOne($query);
     if(DB::isError($result) && $reporterrors) $this->sql_error($query,$result);
     return $result;
   }
   
-  // Reports SQL error from PEAR::db object.
+  /*! Reports SQL error from PEAR::db object. */
   function sql_error($query, $result)
   {
     trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);

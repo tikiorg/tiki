@@ -47,7 +47,7 @@ Errors:<br/>
 <input type="hidden" name="offset" value="{$offset}" />
 <table class="normal">
 <tr>
-<td width="5%" class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td width="5%" class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td width="20%" class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td width="75%" class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
 </tr>
@@ -101,6 +101,7 @@ Errors:<br/>
 		  	<tr>
 		  		<td class="formcolor" width="50%">
 					<select name="user[]" multiple="multiple" size="10">
+					<option value="">"{tr}Anonymous{/tr}"</option>
 					{section name=ix loop=$users}
 					<option value="{$users[ix].user}">{$users[ix].user|adjust:30}</option>
 					{/section}
@@ -127,6 +128,63 @@ Errors:<br/>
 	</tr>
 	</table>
 	</form>
+	
+	{* GROUPS *}
+	<h3>{tr}Map groups to roles{/tr}</h3>
+	<form method="post" action="tiki-g-admin_roles.php">
+	<input type="hidden" name="pid" value="{$pid}" />
+	<input type="hidden" name="offset" value="{$offset}" />
+	<input type="hidden" name="sort_mode" value="{$sort_mode}" />
+	<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
+	<input type="hidden" name="find" value="{$find}" />
+	<table class="normal">
+	<tr>
+		<td class="formcolor">
+		{tr}Operation{/tr}
+		</td>
+		<td class="formcolor">
+		{tr}Group{/tr}
+		</td>
+		<td class="formcolor">
+		{tr}Role{/tr}
+		</td>
+		<td class="formcolor">
+		&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td class="formcolor">
+			<select name="op">
+			<option value="add">{tr}add{/tr}</option>
+			<option value="remove">{tr}remove{/tr}</option>
+			</select>
+		</td>
+		
+		<td class="formcolor">
+			<select name="group">
+			{section name=ix loop=$groups}
+			<option value="{$groups[ix].groupName}">{$groups[ix].groupName}</option>
+			{/section}
+			</select>
+		</td>
+		
+		<td class="formcolor">
+			<select name="role">
+			{section name=ix loop=$roles}
+			<option value="{$roles[ix].roleId}">{$roles[ix].name|adjust:30}</option>
+			{/section}
+			</select>	  		
+		</td>
+		<td class="formcolor">
+			<input type="submit" name="mapg" value="{tr}go{/tr}" />
+		</td>
+		
+	</tr>
+	</table>
+	</form>
+
+	
+	
 {else}
 	<h3>{tr}Warning{/tr}</h3>
 	{tr}No roles are defined yet so no roles can be mapped{/tr}<br/>
@@ -149,7 +207,7 @@ Errors:<br/>
 <input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
 <table class="normal">
 <tr>
-<td width="4%" class="heading"><input type="submit" name="delete_map" value="{tr}del{/tr}" /></td>
+<td width="4%" class="heading"><input type="submit" name="delete_map" value="{tr}x{/tr} " /></td>
 <td width="48%" class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Role{/tr}</a></td>
 <td width="48%" class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 </tr>
@@ -163,7 +221,11 @@ Errors:<br/>
 	  {$mapitems[ix].name}
 	</td>
 	<td class="{cycle}">
+	  {if $mapitems[ix].user eq ''}
+	  "{tr}Anonymous{/tr}"
+	  {else}
 	  {$mapitems[ix].user}
+	  {/if}
 	</td>
 </tr>
 {sectionelse}

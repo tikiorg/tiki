@@ -112,31 +112,59 @@ Errors:<br/>
 <input type="hidden" name="activityId" value="{$info.activityId}" />
 <input type="hidden" name="where2" value="{$where2}" />
 <input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
-{tr}Find{/tr}:<input size="8" type="text" name="find" value="{$find}" />
-{tr}Type{/tr}:
-<select name="filter_type">
-  <option value="">{tr}all{/tr}</option>
-  <option value="start">{tr}start{/tr}</option>
-  <option value="end" >{tr}end{/tr}</option>		  
-  <option value="activity" >{tr}activity{/tr}</option>		  
-  <option value="switch" >{tr}switch{/tr}</option>		  
-  <option value="split" >{tr}split{/tr}</option>		  
-  <option value="join" >{tr}join{/tr}</option>		  
-  <option value="standalone" >{tr}standalone{/tr}</option>		  
-</select>
-
-<select name="filter_interactive">
-<option value="">{tr}all{/tr}</option>
-<option value="y">{tr}Interactive{/tr}</option>
-<option value="n">{tr}Automatic{/tr}</option>
-</select>
-
-<select name="filter_autoroute">
-<option value="">{tr}all{/tr}</option>
-<option value="y">{tr}Auto routed{/tr}</option>
-<option value="n">{tr}Manual{/tr}</option>
-</select>
-<input type="submit" name="filter" value="{tr}filter{/tr}" />
+<table>
+<tr>
+	<td>
+		{tr}Find{/tr}
+	</td>	
+	<td>
+		{tr}Type{/tr}
+	</td>
+	<td>
+		{tr}Int{/tr}
+	</td>
+	<td>
+		{tr}Routing{/tr}
+	</td>
+	<td>
+		&nbsp;
+	</td>
+</tr>			
+<tr>
+	<td>	
+		<input size="8" type="text" name="find" value="{$find}" />
+	</td>
+	<td>
+		<select name="filter_type">
+		  <option value="">{tr}all{/tr}</option>
+		  <option value="start">{tr}start{/tr}</option>
+		  <option value="end" >{tr}end{/tr}</option>		  
+		  <option value="activity" >{tr}activity{/tr}</option>		  
+		  <option value="switch" >{tr}switch{/tr}</option>		  
+		  <option value="split" >{tr}split{/tr}</option>		  
+		  <option value="join" >{tr}join{/tr}</option>		  
+		  <option value="standalone" >{tr}standalone{/tr}</option>		  
+		</select>
+	</td>
+	<td>
+		<select name="filter_interactive">
+		<option value="">{tr}all{/tr}</option>
+		<option value="y">{tr}Interactive{/tr}</option>
+		<option value="n">{tr}Automatic{/tr}</option>
+		</select>
+	</td>
+	<td>
+		<select name="filter_autoroute">
+		<option value="">{tr}all{/tr}</option>
+		<option value="y">{tr}Auto routed{/tr}</option>
+		<option value="n">{tr}Manual{/tr}</option>
+		</select>
+	</td>
+	<td>
+		<input type="submit" name="filter" value="{tr}filter{/tr}" />
+	</td>
+</tr>
+</table>	
 </form>
 <form action="tiki-g-admin_activities.php" method="post">
 <input type="hidden" name="find" value="{$find}" />
@@ -234,7 +262,7 @@ Errors:<br/>
 			<input type="hidden" name="sort_mode2" value="{$sort_mode2}" />
 			<table class="normal">
 			<tr>
-			<td class="heading" width="5%"><input type="submit" name="delete_tran" value="{tr}del{/tr}" /></td>
+			<td class="heading" width="5%"><input type="submit" name="delete_tran" value="{tr}x{/tr} " /></td>
 			<td class="heading" width="95%"><a class="tableheading" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'actFromName_desc'}actFromName_asc{else}actFromName_desc{/if}">{tr}Origin{/tr}</a></td>
 			<!--<td class="heading" width="45%"><a class="tableheading" href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'actToName_desc'}actToName_asc{else}actToName_desc{/if}">{tr}To{/tr}</a></td>-->
 			</tr>

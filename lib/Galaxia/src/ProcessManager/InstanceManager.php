@@ -80,6 +80,7 @@ class InstanceManager extends BaseManager {
 	$this->query($query);  
   }
   
+  
 
 }    
 

@@ -1,6 +1,7 @@
 <?php
 require_once('tiki-setup.php');
 include_once('lib/Galaxia/ProcessManager.php');
+include_once('lib/Galaxia/API.php');
 
 if($feature_workflow != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -14,16 +15,14 @@ if($tiki_p_admin_workflow != 'y') {
   die;  
 }
 
-
-
-
-
 if(!isset($_REQUEST['iid'])) {
   $smarty->assign('msg',tra("No instance indicated"));
   $smarty->display("styles/$style_base/error.tpl");
   die;  
 }
 $smarty->assign('iid',$_REQUEST['iid']);
+
+
 
 
 // Get workitems and list the workitems with an option to edit workitems for
@@ -88,6 +87,24 @@ if(isset($_REQUEST['saveprops'])) {
 
 $acts = $instanceManager->get_instance_activities($_REQUEST['iid']);
 $smarty->assign_by_ref('acts',$acts);
+
+$instance->getInstance($_REQUEST['iid']);
+// Process comments
+if(isset($_REQUEST['__removecomment'])) {
+  
+  $__comment = $instance->get_instance_comment($_REQUEST['__removecomment']);
+  if($__comment['user'] == $user or $tiki_p_admin_workflow == 'y') {
+    $instance->remove_instance_comment($_REQUEST['__removecomment']);
+  }
+}
+$smarty->assign_by_ref('__comments',$__comments);
+if(!isset($_REQUEST['__cid'])) $_REQUEST['__cid']=0;
+if(isset($_REQUEST['__post'])) {
+  $instance->replace_instance_comment($_REQUEST['__cid'], 0, '', $user, $_REQUEST['__title'], $_REQUEST['__comment']);
+}
+$__comments = $instance->get_instance_comments();
+
+
 
 $smarty->assign('mid','tiki-g-admin_instance.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

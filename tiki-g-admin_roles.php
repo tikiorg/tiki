@@ -76,6 +76,9 @@ $smarty->assign('find_users',$_REQUEST['find_users']);
 $users = $userlib->get_users(0,-1,'login_asc', $_REQUEST['find_users']);
 $smarty->assign_by_ref('users',$users['data']);
 
+$groups = $userlib->get_groups(0,-1,'groupName_asc','');
+$smarty->assign_by_ref('groups',$groups['data']);
+
 $roles = $roleManager->list_roles($_REQUEST['pid'],0,-1,'name_asc','');
 $smarty->assign_by_ref('roles',$roles['data']);
 
@@ -86,12 +89,26 @@ if(isset($_REQUEST["delete_map"])) {
   }
 }
 
+if(isset($_REQUEST['mapg'])) {
+	if($_REQUEST['op']=='add') {
+		$users = $userlib->get_group_users($_REQUEST['group']);
+		foreach($users as $a_user) {
+			$roleManager->map_user_to_role($_REQUEST['pid'],$a_user,$_REQUEST['role']);    		  
+		}
+	} else {
+		$users = $userlib->get_group_users($_REQUEST['group']);
+		foreach($users as $a_user) {
+			$roleManager->remove_mapping($a_user,$_REQUEST['role']);    		  
+		}
+	}
+}
+
 
 if(isset($_REQUEST['save_map'])) {
   if(isset($_REQUEST['user'])  && isset($_REQUEST['role'])) {
-    foreach($_REQUEST['user'] as $user) {
+    foreach($_REQUEST['user'] as $a_user) {
       foreach($_REQUEST['role'] as $role) {
-  		$roleManager->map_user_to_role($_REQUEST['pid'],$user,$role);    
+  		$roleManager->map_user_to_role($_REQUEST['pid'],$a_user,$role);    
       }
     }
   }
