@@ -1,0 +1,175 @@
+<head>
+<title>Migrating from MySQL to PostgreSQL</title>
+</head>
+
+<body bgcolor=white text=black>
+<table>
+<tr>
+<td><a
+href="http://www.xach.com/photos/gallery/vj/2000-05-30-textures/rtexture07-med.html"><img
+src="http://www.xach.com/photos/gallery/2000-05-30-textures/rtexture07-small.jpg"></a></td>
+<td><h1>Migrating from MySQL to PostgreSQL</h1>
+by <a href="/">Zach Beane</a></td>
+</tr>
+</table>
+
+<hr>
+
+<!-- <p>I'm <a href="index.html">moving from Apache to AOLserver</a>, and
+part of that transition will involve converting my MySQL tables and
+queries to something PostgreSQL likes. -->
+
+<h3>The Most Important Thing</h3>
+
+<p>Know SQL. If your only experience with SQL is through MySQL, many
+things in PostgreSQL (and indeed, any other database system) will seem
+alien and strange. The idioms you may have developed to work with
+MySQL may not be the ideal approach when using PostgreSQL. In
+particular, you have a set of new tools (views, triggers, stored
+procedures, consistency checks, and more) that you should try to take
+advantage of.
+
+<p>Get a good book on SQL. <a
+href="http://www.amazon.com/exec/obidos/ASIN/0201447878/gimpnews/">The
+Practical SQL Handbook</a> is pretty handy. The free online book <a
+href="http://www.arsdigita.com/books/sql/">SQL for Web Nerds</a>,
+though Oracle-specific, will give you ideas for good idioms.
+
+<h3>Converting Dumps</h3>
+
+<p>So far I've written a <a href="mysql2psql.pl">Perl
+script</a> that converts the data model pretty well. It handles enums
+(it converts them to varchars with check constraints on the possible
+values) and auto_increment fields. It also converts MySQL's integer
+and time types to compatible PostgreSQL types.
+
+<p>The script outputs SQL statements that seem to work with CVS
+PostgreSQL. The CVS version will eventually become PostgreSQL 7.1.
+
+
+<p>
+<table bgcolor="#CCCCCC" cellspacing=1 cellpadding=3 border=0>
+<tr>
+ <th>MySQL</th>
+ <th>PostgreSQL</th>
+</tr>
+<tr>
+<td valign=top>
+<pre>
+create table foo (
+   id     int not null auto_increment primary key,
+   state  enum('enabled', 'disabled')
+);
+
+<i>foo's data</i>
+</pre>
+</td>
+<td valign=top>
+<pre>
+create table foo (
+   id     int not null primary key default nextval('foo_id_seq'),
+   state  varchar(8) check (state in ('enabled', 'disabled'))
+);
+
+<i>foo's data</i>
+
+create sequence foo_id_seq;
+select setval('foo_id_seq', (select max(id) from foo));
+</pre>
+</td>
+</tr>
+</table>
+
+<p>To be handled:
+
+<ul>
+<li> timestamp fields, instead of <tt>not null default now()</tt>,
+     could be handled by a trigger
+<li> Secondary key definitions in MySQL to create indexes in
+     PostgreSQL
+</ul>
+
+<p><a href="http://www.rot13.org/~dpavlin/projects.html">Dobrica
+Pavlinusic</a> has also written a <a
+href="http://www.rot13.org/~dpavlin/projects/sql/mysql2pgsql">mysql2pgsql
+Perl script</a>, but it seems to target an older version of
+PostgreSQL.
+
+
+<h3>'Legacy' Statements</h3>
+
+<p>MySQL has some interesting functions that are either unavailable in
+PostgreSQL, or supported by functions of slightly different
+syntax. For example, <tt>ifnull()</tt> in MySQL is similar to
+<tt>coalesce()</tt> in PostgreSQL.
+
+<p>To ease the transition from the MySQL that's embedded in all my
+pages, I've created a <a href="mysql-functions.sql">set of SQL
+functions</a> that recreate the MySQL functions.
+
+<p>Converted:
+
+<ul>
+<li> ifnull
+<li> from_unixtime
+<li> unix_timestamp
+<li> date_format
+<li> if
+<li> to_days
+<li> from_days
+</ul>
+
+
+<h3>Other Stuff</h3>
+
+Some stuff looks like it just can't be handled by implementing MySQL
+functions in PostgreSQL. Fundamental differences exist, mainly where
+PostgreSQL adheres to the SQL standard and MySQL diverges.
+
+<p>This list isn't an endorsement of MySQL; these examples mainly come
+up because MySQL is much less conformant with SQL standards in general.
+
+<ul>
+<li> PostgreSQL won't let you use expression aliases in
+HAVING in queries. In MySQL it's legal to have something
+like this:
+
+<pre>
+   select name, count(*) as score
+   from mytable
+   group by name
+   having score > 10
+</pre>
+
+<p>For PostgreSQL, you have to write out the expression again:
+
+<pre>
+   select name, count(*) as score
+   from mytable
+   group by name
+   having count(*) > 10
+</pre>
+
+<p>It doesn't mind having aliases in ORDER BY, but you can't use it in
+HAVING. <a href="mail/names-in-having.txt">Tom Lane explains</a>.
+
+
+<p><li> PostgreSQL has a compile-time limit of 31 characters for names
+(for tables, columns, sequences, functions, etc). If you get a bit
+verbose when naming your tables, you have to either truncate them or
+build PostgreSQL with a longer name limit.
+
+<p><tt>NAMEDATALEN</tt> is defined in src/include/postgres_ext.h. The
+name length is <tt>NAMEDATALEN - 1</tt>.
+
+
+<p><li> PostgreSQL has something similar to MySQL's auto_increment;
+this is in the <a
+href="http://www.postgresql.org/docs/faq-english.html#4.16.1">FAQ
+under SERIAL</a>.
+
+
+</ul>
+
+<p><hr>
+<a href="mailto:xach@xach.com"><address>xach@xach.com</address></a>
