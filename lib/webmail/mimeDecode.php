@@ -48,7 +48,7 @@
 *    perhaps even message/partial.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.1 $
+* @version $Revision: 1.2 $
 * @package Mail
 */
 
