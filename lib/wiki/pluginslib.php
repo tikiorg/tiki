@@ -21,7 +21,7 @@
     * @package TikiWiki
     * @subpackage Plugins
     * @author Claudio Bustos
-    * @version $Revision: 1.3 $
+    * @version $Revision: 1.4 $
     */
     class PluginsLib extends TikiLib {
         var $_errors;
@@ -115,7 +115,7 @@
         function getVersion() {
             return tra("No version indicated");
             //return preg_replace("/[Revision: $]/", '',
-            //                    "\$Revision: 1.3 $");
+            //                    "\$Revision: 1.4 $");
         }
         /**
         * Returns the default arguments for the plugin
@@ -200,11 +200,6 @@
                     $sOutput  .= "</table>";
                 }
         return $sOutput;
-        }
-        function isPage($page) {
-            global $tikilib;
-            $rs=$tikilib->getOne("select `pageName` from `tiki_pages` where `pageName`=?", array($page));
-            return ($rs?true:false);
         }
     }
 ?>
