@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.1 2004-08-31 13:04:29 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-last_visitors.tpl,v 1.2 2004-08-31 13:25:37 redflo Exp $ *}
 
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` visitors{/tr}" assign="tpl_module_title"}
@@ -10,7 +10,7 @@
     {foreach from=$modLastVisitors key=key item=item}
      <tr>
       {if $nonums != 'y'}
-        <td class="module" valign="top">{$key})</td>
+        <td class="module" valign="top">{$key+1})</td>
       {/if}
       <td class="module">&nbsp;
        <a class="linkmodule" href="tiki-user_information.php?view_user={$item.user|escape:"url"}">
