@@ -286,25 +286,28 @@ class QuizLib extends TikiLib {
 		return $retval;
 	}
 
-	function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults, $immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers, $questionsPerPage, $timeLimited, $timeLimit) {
+	function replace_quiz($quizId, $name, $description, $canRepeat, $storeResults, $immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers, $questionsPerPage, $timeLimited, $timeLimit, $publishDate, $expireDate) {
 		if ($quizId) {
 			// update an existing quiz
- 			$query = "update `tiki_quizzes` set `name` = ?, `description` = ?, `canRepeat` = ?, `storeResults` = ?, `immediateFeedback` = ?, `showAnswers` = ?,	`shuffleQuestions` = ?, `shuffleAnswers` = ?, `questionsPerPage` = ?, ";
- 			$query.= "`timeLimited` = ?, `timeLimit` =?  where `quizId` = ?";
- 			$bindvars=array($name,$description,$canRepeat,$storeResults,$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,(int)$questionsPerPage,$timeLimited,(int)$timeLimit,(int)$quizId);
-
-//                         $query = "update `tiki_quizzes` set `name` = ?, `description` = ?, `canRepeat` = ?, `storeResults` = ?, `questionsPerPage` = ?, ";
-//                         $query.= "`timeLimited` = ?, `timeLimit` =?  where `quizId` = ?";
-//                         $bindvars=array($name,$description,$canRepeat,$storeResults,(int)$questionsPerPage,$timeLimited,(int)$timeLimit,(int)$quizId);
-
+ 			$query = "update `tiki_quizzes` set `name` = ?, `description` = ?, `canRepeat` = ?, `storeResults` = ?,";
+      $query.= "`immediateFeedback` = ?, `showAnswers` = ?,	`shuffleQuestions` = ?, `shuffleAnswers` = ?, ";
+			$query.= "`publishDate` = ?, `expireDate` = ?, ";
+ 			$query.= "`questionsPerPage` = ?, `timeLimited` = ?, `timeLimit` =?  where `quizId` = ?";
+ 			$bindvars=array($name,$description,$canRepeat,$storeResults,$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,$publishDate,$expireDate,(int)$questionsPerPage,$timeLimited,(int)$timeLimit,(int)$quizId);
 
 			$result = $this->query($query,$bindvars);
 		} else {
 			// insert a new quiz
 			$now = date("U");
 
-			$query = "insert into `tiki_quizzes`(`name`,`description`,`canRepeat`,`storeResults`,`questionsPerPage`,`timeLimited`,`timeLimit`,`created`,`taken`) values(?,?,?,?,?,?,?,?,?)";
-			$bindvars=array($name,$description,$canRepeat,$storeResults,(int) $questionsPerPage,$timeLimited,(int) $timeLimit,(int) $now,0);
+			$query = "insert into `tiki_quizzes`(`name`,`description`,`canRepeat`,`storeResults`,";
+      $query.= "`immediateFeedback`, `showAnswers`,	`shuffleQuestions`, `shuffleAnswers`,";
+			$query.= "`publishDate`, `expireDate`,";
+      $query.="`questionsPerPage`,`timeLimited`,`timeLimit`,`created`,`taken`) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars=array($name,$description,$canRepeat,$storeResults,
+											$immediateFeedback, $showAnswers,	$shuffleQuestions, $shuffleAnswers,
+											$publishDate,$expireDate,
+											(int)$questionsPerPage,$timeLimited,(int) $timeLimit,(int) $now,0);
 			$result = $this->query($query,$bindvars);
 			$queryid = "select max(`quizId`) from `tiki_quizzes` where `created`=?";
 			$quizId = $this->getOne($queryid,array((int) $now));
