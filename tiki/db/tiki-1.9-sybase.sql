@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.17 2004-05-01 16:22:25 ggeller Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.18 2004-05-05 13:55:08 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -3838,7 +3838,7 @@ quizId numeric(10 ,0) identity,
   "shuffleQuestions" char(1) default NULL NULL,
   "shuffleAnswers" char(1) default NULL NULL,
   "publishDate" numeric(14,0) default NULL NULL,
-  "expireDate"` numeric(14,0) default NULL NULL,
+  "expireDate" numeric(14,0) default NULL NULL,
   PRIMARY KEY ("quizId")
 )   
 go
@@ -6080,7 +6080,7 @@ go
 
 
 -- Homework permissions - ggeller
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_admin','Can adminsiter homework','admin','homework')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework')
 go
 
 
@@ -6724,6 +6724,10 @@ go
 
 
 INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_comments','n')
+go
+
+
+INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_poll_anonymous','n')
 go
 
 
@@ -7857,14 +7861,18 @@ go
 -- Homework tables start
 --
 -- Created Feb 22, 2004
--- Revised Mar 19, 2004
+-- Revised May 04, 2004
 --
 
 -- DROP TABLE "hw_actionlog"
 go
 
 
-CREATE TABLE "hw_actionlog" (
+-- DROP TABLE "tiki_hw_actionlog"
+go
+
+
+CREATE TABLE "tiki_hw_actionlog" (
   "action" varchar(255) default '' NOT NULL,
   "lastModif" numeric(14,0) default '0' NOT NULL,
   "pageId" numeric(14,0) default NULL NULL,
@@ -7881,7 +7889,11 @@ go
 go
 
 
-CREATE TABLE "hw_assignments" (
+-- DROP TABLE "tiki_hw_assignments"
+go
+
+
+CREATE TABLE "tiki_hw_assignments" (
 assignmentId numeric(8 ,0) identity,
   "title" varchar(80) default NULL NULL,
   "teacherName" varchar(40) default '' NOT NULL,
@@ -7897,34 +7909,18 @@ assignmentId numeric(8 ,0) identity,
 go
 
 
-CREATE  INDEX "hw_assignments_dueDate" ON "hw_assignments"("dueDate")
+CREATE  INDEX "tiki_hw_assignments_dueDate" ON "tiki_hw_assignments"("dueDate")
 go
 
 -- DROP TABLE "hw_grading_queue"
 go
 
 
-CREATE TABLE "hw_grading_queue" (
-id numeric(14 ,0) identity,
-  "status" numeric(4,0) default NULL NULL,
-  "submissionDate" numeric(14,0) default NULL NULL,
-  "userLogin" varchar(40) default '' NOT NULL,
-  "userIp" varchar(15) default NULL NULL,
-  "pageId" numeric(14,0) default NULL NULL,
-  "pageDate" numeric(14,0) default NULL NULL,
-  "pageVersion" numeric(14,0) default NULL NULL,
-  "assignmentId" numeric(14,0) default NULL NULL,
-  PRIMARY KEY ("id")
-) 
+-- DROP TABLE "tiki_hw_grading_queue"
 go
 
 
-
--- DROP TABLE "hw_grading_queue"
-go
-
-
-CREATE TABLE "hw_grading_queue" (
+CREATE TABLE "tiki_hw_grading_queue" (
 id numeric(14 ,0) identity,
   "status" numeric(4,0) default NULL NULL,
   "submissionDate" numeric(14,0) default NULL NULL,
@@ -7944,7 +7940,11 @@ go
 go
 
 
-CREATE TABLE "hw_history" (
+-- DROP TABLE "tiki_hw_history"
+go
+
+
+CREATE TABLE "tiki_hw_history" (
   "id" numeric(14,0) default '0' NOT NULL,
   "version" numeric(8,0) default '0' NOT NULL,
   "lastModif" numeric(14,0) default '0' NOT NULL,
@@ -7962,7 +7962,11 @@ go
 go
 
 
-CREATE TABLE "hw_pages" (
+-- DROP TABLE "tiki_hw_pages"
+go
+
+
+CREATE TABLE "tiki_hw_pages" (
 id numeric(14 ,0) identity,
   "assignmentId" numeric(14,0) default '0' NOT NULL,
   "studentName" varchar(200) default '' NOT NULL,
@@ -7990,11 +7994,11 @@ id numeric(14 ,0) identity,
 go
 
 
-CREATE  INDEX "hw_pages_id" ON "hw_pages"("id")
+CREATE  INDEX "tiki_hw_pages_id" ON "tiki_hw_pages"("id")
 go
-CREATE  INDEX "hw_pages_assignmentId" ON "hw_pages"("assignmentId")
+CREATE  INDEX "tiki_hw_pages_assignmentId" ON "tiki_hw_pages"("assignmentId")
 go
-CREATE  INDEX "hw_pages_studentName" ON "hw_pages"("studentName")
+CREATE  INDEX "tiki_hw_pages_studentName" ON "tiki_hw_pages"("studentName")
 go
 
 --
