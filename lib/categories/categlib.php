@@ -1,11 +1,16 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.18 2003-10-31 01:38:10 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/categories/categlib.php,v 1.19 2003-11-04 09:25:15 gillesm Exp $
  *
  * \brief Categiries support class
  *
  */
+ 
+require_once('lib/trackers/trackerlib.php');
+
 class CategLib extends TikiLib {
+
+
 	function CategLib($db) {
 		# this is probably unneeded now
 		if (!$db) {
@@ -323,6 +328,22 @@ class CategLib extends TikiLib {
 		}
 
 		$this->categorize($catObjectId, $categId);
+	}
+	
+	function categorize_tracker($trackerId, $categId) {
+		// Check if we already have this object in the tiki_categorized_objects page
+
+		$catObjectId = $this->is_categorized('tracker', $trackerId);
+
+		if (!$catObjectId) {
+			// The page is not cateorized
+			$info = $this->get_tracker($trackerId);
+
+			$href = 'tiki-view_tracker.php?trackerId=' . $trackerId;
+				$catObjectId = $this->add_categorized_object('tracker', $trackerId, substr($info["description"], 0, 200),$info["name"] , $href);
+		}
+
+		$this->categorize($catObjectId, $trackerId);
 	}
 
 	function categorize_quiz($quizId, $categId) {

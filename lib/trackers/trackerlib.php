@@ -419,35 +419,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	// List the available trackers
-	function list_trackers($offset, $maxRecords, $sort_mode, $find) {
-
-		if ($find) {
-			$findesc = '%' . $find . '%';
-
-			$mid = " where (`name` like ? or `description` like ?)";
-			$bindvars=array($findesc,$findesc);
-		} else {
-			$mid = "";
-			$bindvars=array();
-		}
-
-		$query = "select * from `tiki_trackers` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_trackers` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-
-		while ($res = $result->fetchRow()) {
-			// Tracker fields are automatically counted when adding/removing fields to trackers
-			$ret[] = $res;
-		}
-
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
-	}
-
+	
 	// Lists all the fields for an existing tracker
 	function list_tracker_fields($trackerId, $offset, $maxRecords, $sort_mode, $find) {
 
@@ -577,17 +549,7 @@ class TrackerLib extends TikiLib {
 		return true;
 	}
 
-	function get_tracker($trackerId) {
-		$query = "select * from `tiki_trackers` where `trackerId`=?";
-
-		$result = $this->query($query,array((int) $trackerId));
-
-		if (!$result->numRows())
-			return false;
-
-		$res = $result->fetchRow();
-		return $res;
-	}
+	
 
 	function get_tracker_field($fieldId) {
 		$query = "select * from `tiki_tracker_fields` where `fieldId`=?";

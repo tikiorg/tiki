@@ -445,7 +445,7 @@ function get_quiz($quizId) {
     return $res;
 }
 
-/*shared*/
+
 function compute_quiz_stats() {
     $query = "select `quizId`  from `tiki_user_quizzes`";
 
@@ -467,6 +467,7 @@ function compute_quiz_stats() {
 	$result2 = $this->query($query2,array((int)$quizId,$quizName,(int)$timesTaken,(float)$avgpoints,$avgtime,$avgavg));
     }
 }
+
 
 /*shared*/
 function list_quizzes($offset, $maxRecords, $sort_mode, $find) {
@@ -530,6 +531,48 @@ function list_quiz_sum_stats($offset, $maxRecords, $sort_mode, $find) {
     return $retval;
 }
 
+function get_tracker($trackerId) {
+		$query = "select * from `tiki_trackers` where `trackerId`=?";
+
+		$result = $this->query($query,array((int) $trackerId));
+
+		if (!$result->numRows())
+			return false;
+
+		$res = $result->fetchRow();
+		return $res;
+	}
+/*shared*/
+
+
+function list_trackers($offset, $maxRecords, $sort_mode, $find) {
+
+		if ($find) {
+			$findesc = '%' . $find . '%';
+
+			$mid = " where (`name` like ? or `description` like ?)";
+			$bindvars=array($findesc,$findesc);
+		} else {
+			$mid = "";
+			$bindvars=array();
+		}
+
+		$query = "select * from `tiki_trackers` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_trackers` $mid";
+		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->getOne($query_cant,$bindvars);
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			// Tracker fields are automatically counted when adding/removing fields to trackers
+			$ret[] = $res;
+		}
+
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
+	}
 
 /*shared*/
 function list_surveys($offset, $maxRecords, $sort_mode, $find) {
