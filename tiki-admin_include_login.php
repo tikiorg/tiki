@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.22 2004-08-04 22:42:11 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.23 2004-08-05 21:42:58 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -440,15 +440,8 @@ if (isset($_REQUEST['auth_ext_xml'])) {
         $tikilib->set_preference('auth_ext_xml_enabled', 'y');
         $smarty->assign('auth_ext_xml_enabled', 'y');
     } else {
-        $tikilib->set_preference('feature_auth_ext_xml', 'n');
-        $smarty->assign('feature_auth_ext_xml', 'n');
-    }
-    if (isset($_REQUEST['auth_ext_xml_create_user_tiki']) && $_REQUEST['auth_ext_xml_create_user_tiki'] ==  'on') {
-        $tikilib->set_preference('auth_ext_xml_create_user_tiki', 'y');
-        $smarty->assign('auth_ext_xml_create_user_tiki', 'y');
-    } else {
-        $tikilib->set_preference('auth_ext_xml_create_user_tiki', 'n');
-        $smarty->assign('auth_ext_xml_create_user_tiki', 'n');
+        $tikilib->set_preference('auth_ext_xml_enabled', 'n');
+        $smarty->assign('auth_ext_xml_enabled', 'n');
     }
     if (isset($_REQUEST['auth_ext_xml_delete_user_tiki']) && $_REQUEST['auth_ext_xml_delete_user_tiki'] ==  'on') {
         $tikilib->set_preference('auth_ext_xml_delete_user_tiki', 'y');
@@ -470,6 +463,13 @@ if (isset($_REQUEST['auth_ext_xml'])) {
     } else {
         $tikilib->set_preference('auth_ext_xml_skip_admin', 'n');
         $smarty->assign('auth_ext_xml_skip_admin', 'n');
+    }
+    if (isset($_REQUEST['auth_ext_xml_cas_proxy']) && $_REQUEST['auth_ext_xml_cas_proxy'] == 'on') {
+        $tikilib->set_preference('auth_ext_xml_cas_proxy', 'y');
+        $smarty->assign('auth_ext_xml_cas_proxy', 'y');
+    } else {
+        $tikilib->set_preference('auth_ext_xml_cas_proxy', 'n');
+        $smarty->assign('auth_ext_xml_cas_proxy', 'n');
     }
 	if (isset($_REQUEST['auth_ext_xml_url'])) {
 		$tikilib->set_preference('auth_ext_xml_url', $_REQUEST['auth_ext_xml_url']);
