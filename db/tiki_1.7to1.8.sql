@@ -322,14 +322,16 @@ INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_create', 'Can create new mapfile', 'admin', 'maps');
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_delete', 'Can delete mapfiles', 'admin', 'maps');
 INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view', 'Can view mapfiles', 'basic', 'maps');
+INSERT IGNORE INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_access_closed_site', 'Can access site when closed', 'admin', 'tiki');
+
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.map');
 
 # adding field for group HomePage feature
-ALTER TABLE `users_groups` ADD `groupHome` VARCHAR( 255 ) AFTER `groupDesc` ;
-ALTER TABLE `users_users` ADD `default_group` VARCHAR( 255 ) AFTER `realname` ;
+ALTER IGNORE TABLE `users_groups` ADD `groupHome` VARCHAR( 255 ) AFTER `groupDesc` ;
+ALTER IGNORE TABLE `users_users` ADD `default_group` VARCHAR( 255 ) AFTER `realname` ;
 
- create table sessions (
+create table sessions (
        SESSKEY char(32) not null,
        EXPIRY int(11) unsigned not null,
        DATA text not null,
