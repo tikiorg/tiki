@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.18 2004-04-27 04:27:36 franck Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.19 2004-04-27 23:30:48 franck Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -34,24 +34,24 @@ function wikiplugin_split($data, $params) {
 	if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
 	
 	extract ($params);
-    $fixedsize = (!isset($fixedsize) || $fixedsize == 'y' || $fixedsize == 1 ? true : false);
-    $joincols  = (!isset($joincols)  || $joincols  == 'y' || $joincols  == 1 ? true : false);
-    // Split data by rows and cells
-//	$sections = preg_split("/\@{3,}+/", $data);
-	$sections = preg_split("/@@@+/", $data);
-    $rows = array();
-    $maxcols = 0;
-    foreach ($sections as $i)
-    {
-//        $rows[] = preg_split("/-{3,}+/", $i);
-	$rows[] = preg_split("/---+/", $i);
-        $maxcols = max($maxcols, count(end($rows)));
-    }
+   $fixedsize = (!isset($fixedsize) || $fixedsize == 'y' || $fixedsize == 1 ? true : false);
+   $joincols  = (!isset($joincols)  || $joincols  == 'y' || $joincols  == 1 ? true : false);
+   // Split data by rows and cells
 
-    // Is there split sections present?
-    // Do not touch anything if no... even don't generate <table>
-    if (count($rows) <= 1 && count($rows[0]) <= 1)
-        return $data;
+	$sections = preg_split("/@@@+/", $data);
+   $rows = array();
+   $maxcols = 0;
+   foreach ($sections as $i)
+   {
+   	// split by --- but not by ----
+		$rows[] = preg_split("/([^\-]---[^\-]|^---[^\-]|[^\-]---$|^---$)+/", $i);
+      $maxcols = max($maxcols, count(end($rows)));
+   }
+
+   // Is there split sections present?
+   // Do not touch anything if no... even don't generate <table>
+   if (count($rows) <= 1 && count($rows[0]) <= 1)
+      return $data;
 
 	$columnSize = floor(100 / $maxcols);
 	
