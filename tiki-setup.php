@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.194 2004-01-22 00:26:10 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.195 2004-01-29 00:12:45 rlpowell Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1549,10 +1549,11 @@ if ($feature_warn_on_edit == 'y') {
 }
 
 if (isset($_REQUEST["pollVote"])) {
-    if ($tiki_p_vote_poll == 'y' && !$tikilib->user_has_voted($user, 'poll' . $_REQUEST["polls_pollId"]) && isset($_REQUEST["polls_optionId"])) {
-        $tikilib->register_user_vote($user, 'poll' . $_REQUEST["polls_pollId"]);
+    if ($tiki_p_vote_poll == 'y' && isset($_REQUEST["polls_optionId"])) {
+	// Poll vote must happen first!
+        $tikilib->poll_vote($user, $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
 
-        $tikilib->poll_vote($_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
+        $tikilib->register_user_vote($user, 'poll' . $_REQUEST["polls_pollId"], $_REQUEST["polls_optionId"]);
     }
 
     $pollId = $_REQUEST["polls_pollId"];
