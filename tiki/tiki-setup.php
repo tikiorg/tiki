@@ -462,7 +462,9 @@ $feature_server_name=$tikilib->get_preference('feature_server_name',$_SERVER["SE
 $smarty->assign('feature_server_name',$feature_server_name);
 $_SERVER["SERVER_NAME"] = $feature_server_name;
 
-$feature_bidi='n';
+if (!isset($feature_bidi)) {
+	$feature_bidi='n';
+}
 $smarty->assign('feature_bidi',$feature_bidi);
 
 /* # not implemented
