@@ -1,7 +1,7 @@
 <a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
 <!-- the help link info --->
   
-      {if $feature_help eq 'y'}
+	{if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=Structures" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Structures{/tr}">
 <img border='0' src='img/icons/help.gif' alt='help' />{/if}
                         {if $feature_help eq 'y'}</a>{/if}
@@ -29,12 +29,20 @@
 <form action="tiki-admin_structures.php" method="post">
 <table class="normal">
 <tr>
-   <td class="formcolor">{tr}name{/tr}:</td>
+   <td class="formcolor">{tr}Structure ID{/tr}:</td>
+   <td class="formcolor"><input type="text" name="structID" /></td>
+   <td colspan=2 class="formcolor"></td>
+</tr>
+<tr>
+   <td class="formcolor">{tr}First page in structure{/tr}:</td>
    <td class="formcolor"><input type="text" name="name" /></td>
+   <td class="formcolor">{tr}Alias{/tr}:</td>
+   <td class="formcolor"><input type="text" name="alias" /></td>
 </tr>    
 <tr>
    <td class="formcolor">&nbsp;</td>
-   <td class="formcolor"><input type="submit" value="{tr}create new empty structure{/tr}" name="create" /></td>
+   <td class="formcolor"><input type="submit" value="{tr}Create new Structure{/tr}" name="create" /></td>
+	<td colspan=2 class="formcolor"></td>
 </tr>
 </table>
 </form>
@@ -47,14 +55,14 @@
 {/if}
 <table class="normal">
 <tr>
-  <td class="heading">{tr}Structure{/tr}</td>
+  <td class="heading">{tr}Structure ID{/tr}</td>
   <td  class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}
 {section loop=$channels name=ix}
 <tr>
   <td class="{cycle advance=false}">
-  <a class="tablename" href="tiki-edit_structure.php?structure={$channels[ix].page|escape:"url"}">{$channels[ix].page}</a>
+  <a class="tablename" href="tiki-edit_structure.php?structID={$channels[ix].structID|escape:"url"}">{$channels[ix].structID}</a>
   </td>
   <td class="{cycle}">
   <a class="link" href="tiki-admin_structures.php?export={$channels[ix].page|escape:"url"}"><img src='img/icons/export.gif' alt="{tr}export pages{/tr}" title="{tr}export pages{/tr}" border='0' /></a>
@@ -69,6 +77,11 @@
 <small>{tr}Use single spaces to indent structure levels{/tr}</small>
 <form action="tiki-admin_structures.php" method="post">
 <table class="normal">
+<tr>
+   <td class="formcolor">{tr}Structure ID{/tr}:</td>
+   <td class="formcolor"><input type="text" name="structID" /></td>
+   <td colspan=2 class="formcolor"></td>
+</tr>
 <tr>
    <td class="formcolor">{tr}tree{/tr}:</td>
    <td class="formcolor"><textarea rows="5" cols="60" name="tree"></textarea></td>

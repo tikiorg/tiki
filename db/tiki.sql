@@ -2498,6 +2498,7 @@ CREATE TABLE tiki_shoutbox (
 
 DROP TABLE IF EXISTS tiki_structures;
 CREATE TABLE tiki_structures (
+  structID varchar(40) NOT NULL default '',
   page varchar(240) NOT NULL default '',
   page_alias varchar(240) NOT NULL default '',
   parent varchar(240) NOT NULL default '',
@@ -3702,6 +3703,7 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_user_watches','
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_view_tpl','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_warn_on_edit','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_webmail','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_showstructs','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_attachments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_comments','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_wiki_description','n');

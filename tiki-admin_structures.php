@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.9 2003-10-16 20:17:56 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_structures.php,v 1.10 2003-11-04 10:03:03 caustin_ats Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -47,7 +47,19 @@ if (isset($_REQUEST['remove'])) {
 }
 
 if (isset($_REQUEST["create"])) {
-	$structlib->s_create_page('', '', $_REQUEST["name"]);
+	if ((empty($_REQUEST['structID']))) {
+		$smarty->assign('msg', tra("No structure ID indicated"));
+
+		$smarty->display("styles/$style_base/error.tpl");
+		die;
+	}
+	if ((empty($_REQUEST['name']))) {
+		$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
+
+		$smarty->display("styles/$style_base/error.tpl");
+		die;
+	}
+	$structlib->s_create_page('', '', $_REQUEST["name"], $_REQUEST["structID"], $_REQUEST["alias"]);
 }
 
 //
@@ -60,6 +72,12 @@ if (isset($_REQUEST["create"])) {
 //       I.e. level depth parser too stupid... :()
 //
 if (isset($_REQUEST["create_from_tree"])) {
+	if ((empty($_REQUEST['structID']))) {
+		$smarty->assign('msg', tra("No structure ID indicated"));
+
+		$smarty->display("styles/$style_base/error.tpl");
+		die;
+	}
 	$tree_lines = explode("\n", $_REQUEST["tree"]);
 
 	$parents = array('');
@@ -83,7 +101,7 @@ if (isset($_REQUEST["create_from_tree"])) {
 			else
 				$prev = '';
 
-			$structlib->s_create_page($parent, $prev, trim($line));
+			$structlib->s_create_page($parent, $prev, trim($line),$_REQUEST["structID"], '');
 			$previous[$tabs] = $line;
 		}
 	}

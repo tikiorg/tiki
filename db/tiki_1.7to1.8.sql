@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.53 2003-11-04 01:05:22 zaufi Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.54 2003-11-04 10:03:06 caustin_ats Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -181,6 +181,7 @@ INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_de
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_discuss', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_footnotes', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_monosp', 'y');
+INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_showstructs','y');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_multiprint', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_notepad', 'n');
 INSERT /* IGNORE */ INTO tiki_preferences (name, value) VALUES ('feature_wiki_pdf', 'n');
@@ -358,6 +359,7 @@ ALTER TABLE `users_groups` ADD `groupHome` VARCHAR( 255 ) AFTER `groupDesc` ;
 ALTER TABLE `users_users` ADD `default_group` VARCHAR( 255 ) AFTER `realname` ;
 
 ALTER TABLE `tiki_structures` ADD `page_alias` VARCHAR( 240 ) DEFAULT '' NOT NULL AFTER `page` ;
+ALTER TABLE `tiki_structures` ADD `structID` VARCHAR( 40 ) DEFAULT '' NOT NULL AFTER `page` ;
 
 # Per-forum from address.  -rlpowell
 ALTER TABLE `tiki_forums` ADD `outbound_from` VARCHAR( 250 ) AFTER `outbound_address` ;

@@ -46,7 +46,43 @@
 
 <div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">
-<table width='100%'><tr><td width='33%'>{if $struct_prev}<a class="tocnavlink" href="tiki-index.php?page={$struct_prev}">&lt;&lt; {$struct_prev}</a>{else}&nbsp;{/if}</td><td align='center' width='33%'><a class="tocnavlink" href="tiki-index.php?page={$struct_struct}">{$struct_struct}</a></td><td align='right' width='33%'>{if $struct_next}<a class="tocnavlink" href="tiki-index.php?page={$struct_next}">{$struct_next} &gt;&gt;</a>{else}&nbsp;{/if}</td></tr></table>
+<table width='100%'>
+{foreach from=$struct_prev_next item=struct name=str key=key}
+	<tr>
+		<td width='33%'>
+			{if $struct.prev_page}
+				<a class="tocnavlink" href="tiki-index.php?page={$struct.prev_page}&structID={$key}">&lt;&lt; 
+					{if $struct.prev_page_alias}
+						{$struct.prev_page_alias}
+					{else}
+						{$struct.prev_page}
+					{/if} 
+				</a>
+
+			{else}
+				&nbsp;
+			{/if}
+		</td>
+		<td align='center' width='33%'>
+{*			<a class="tocnavlink" href="tiki-index.php?page=">{$key}</a> *}
+			{$key}
+		</td>
+		<td align='right' width='33%'>
+			{if $struct.next_page}
+				<a class="tocnavlink" href="tiki-index.php?page={$struct.next_page}&structID={$key}">
+					{if $struct.next_page_alias}
+						{$struct.next_page_alias}
+					{else}
+						{$struct.next_page}
+					{/if} 
+					&gt;&gt;
+				</a>
+			{else}
+				&nbsp;
+			{/if}</td>
+	</tr>
+{/foreach}
+</table>
 </div>
 {/if}{$parsed}
 {if $pages > 1}

@@ -1,22 +1,19 @@
 <a class="pagetitle" href="tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;page={$page|escape:"url"}">
-  {tr}Structure{/tr}: {$structure}
+  {tr}Structure{/tr}: {$structID}
 </a><br/><br/>
+
 <a class="link" href="tiki-admin_structures.php">{tr}Admin structures{/tr}</a><br/><br/>
 <form action="tiki-edit_structure.php" method="post">
 <input type="hidden" name="page" value="{$page|escape}" />
-<input type="hidden" name="structure" value="{$structure|escape}" />
+<input type="hidden" name="structID" value="{$structID|escape}" />
+
+<h2>{tr}Modify Structure{/tr}</h2>
+<br/>
 <table class="normal">
   <tr>
   <td class="formcolor">{tr}In parent page{/tr}</td>
   <td class="formcolor">
-  <!--
-  <select id='page' name="page" onChange="alert('tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;page=' + document.getElementById('page').selectedIndex);">
-  {section name=ix loop=$pages}
-  <option value="{$pages[ix]|escape}" {if $page eq $pages[ix]}selected="selected"{/if}>{$pages[ix]}</option>
-  {/section}
-  </select>
-  -->
-  {$page}
+	{$page}
   </td>
   </tr>
   <tr>
@@ -76,17 +73,13 @@
 <li><a class="link" href="tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;sremove={$removepage|escape:"url"}">{tr}Remove from structure and remove page too{/tr}</a></li>
 </ul>
 {/if}
-<h2>{tr}Structure{/tr}</h2>
-<a class="link" href="tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;page={$structure|escape:"url"}">
-  {$structure} {if $structAlias ne ''} ({$structAlias}) {/if}
-</a>
-[
- <a class="link" href="tiki-index.php?page={$structure|escape:"url"}">
-  {tr}view{/tr}
- </a>
-|
- <a class="link" href="tiki-editpage.php?page={$structure|escape:"url"}">
-  {tr}edit{/tr}
- </a>
-]<br/>
+
+<br/>
+<h2>{tr}Modify Structure Layout{/tr}</h2>
+<table class="normal">
+  <tr><td class="formcolor">Coming Soon</td></tr>
+</table>
+<br/>
+<h2>{tr}Structure Layout{/tr}</h2>
+
 {$html}
