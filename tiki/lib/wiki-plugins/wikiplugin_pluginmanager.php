@@ -16,7 +16,7 @@
     * @package TikiWiki
     * @subpackage TikiPlugins
     * @author Claudio Bustos
-    * @version $Revision: 1.1 $
+    * @version $Revision: 1.2 $
     */
     class WikiPluginPluginManager extends PluginsLib {
         var $expanded_params = array("info");
@@ -24,11 +24,11 @@
             return array('info' => "version|description|arguments");
         }
         function getName() {
-            return tra("PluginManager");
+            return "PluginManager";
         }
         function getVersion() {
             return preg_replace("/[Revision: $]/", '',
-                "\$Revision: 1.1 $");
+                "\$Revision: 1.2 $");
         }
         function getDescription() {
             return tra("Provides a list of plugins on this wiki.").":<br />~np~{PLUGINMANAGER(info=>version|description|arguments)}{PLUGINMANAGER}~/np~";
@@ -81,7 +81,7 @@
                         $aData[$sPlugin]["version"] = tra("No version indicated");
                         $aData[$sPlugin]["arguments"] = tra("No arguments indicated");
                     }
-                    $aData[$sPlugin]["plugin"] = "[http://tikiwiki.org/tiki-index.php?page=Plugin".ucfirst($sPlugin)."|Plugin". ucfirst($sPlugin)."]";
+                    $aData[$sPlugin]["plugin"] = "[http://tikiwiki.org/tiki-index.php?page=Plugin".ucfirst($sPlugin)."|". strtoupper($sPlugin)."]";
                 } // Plugins Loop
             return PluginsLibUtil::createTable($aData,$info,array("field"=>"plugin","name"=>"Plugin"));
         }
