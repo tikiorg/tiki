@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.51 2004-07-08 12:50:39 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/comments.tpl,v 1.52 2004-07-13 18:24:23 teedog Exp $ *}
 
 {if $forum_mode eq 'y'}
     <td>
@@ -11,7 +11,7 @@
 	<div id="comzone">
     {/if}
 {/if}
-  
+
 {if $tiki_p_read_comments eq 'y'}
 
   {* This section (comment) is only displayed * }
@@ -19,7 +19,7 @@
   {* The $parent_com is only set in this case *}
 
   {if $comments_cant gt 0}
- 
+
  <form method="post" action="{$comments_father}">
   {section name=i loop=$comments_request_data}
   <input type="hidden" name="{$comments_request_data[i].name|escape}" value="{$comments_request_data[i].value|escape}" />
@@ -154,10 +154,13 @@
 {* Post dialog *}	
 
 {if $tiki_p_post_comments eq 'y'}
-
     {if $forum_mode eq 'y'}
-	<input type="button" name="comments_postComment" value="{tr}new reply{/tr}" onclick="show('{$postclass}');"/>
-	<div id='{$postclass}' class="threadpost">
+	{if $thread_info.parentId > 0} // it is a reply
+		<div id='{$postclass}open' class="threadpost">
+	{else}
+		<input type="button" name="comments_postComment" value="{tr}new reply{/tr}" onclick="flip('{$postclass}');"/>
+		<div id='{$postclass}' class="threadpost">
+	{/if}
     {/if}
 
 	<a name="form"></a>

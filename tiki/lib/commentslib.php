@@ -168,7 +168,8 @@ class Comments extends TikiLib {
 
 	$this->query($query,array($attId));
     }
-
+/*
+loop included in lib/mail/mimlib.php
     function parse_output(&$obj, &$parts, $i) {
 	if (!empty($obj->parts)) {
 	    $temp_max = count($obj->parts);
@@ -226,11 +227,12 @@ class Comments extends TikiLib {
 	    }
 	}
     }
-
+*/
     function process_inbound_mail($forumId) {
 	require_once ("lib/webmail/pop3.php");
 
-	require_once ("lib/webmail/mimeDecode.php");
+	require_once ("lib/mail/mimelib.php");
+	//require_once ("lib/webmail/mimeDecode.php");
 	include_once ("lib/webmail/class.rc4crypt.php");
 	include_once ("lib/webmail/htmlMimeMail.php");
 	$info = $this->get_forum($forumId);
@@ -264,26 +266,17 @@ class Comments extends TikiLib {
 	    $email = $aux["sender"]["email"];
 	    $message = $pop3->GetMessage($i);
 	    $full = $message["full"];
-	    $params = array(
-		    'input' => $full,
-		    'crlf' => "\r\n",
-		    'include_bodies' => TRUE,
-		    'decode_headers' => TRUE,
-		    'decode_bodies' => TRUE
-		    );
 
-	    $decoder = new Mail_mimeDecode($full);
-	    $output = $decoder->decode($params);
-	    unset ($parts);
-	    $this->parse_output($output, $parts, 0);
+	    $output = mime::dedecode($full);
+	    //unset ($parts);
+	    //$this->parse_output($output, $parts, 0);
 
-	    if (isset($parts["text"][0]))
-	    {
-		$body = $parts["text"][0];
-	    }
-	    else
-	    {
-		$body = "";
+	    if (isset($output["text"][0])) {
+				$body = $output["text"][0];
+	    } elseif (isset($output['parts'][0]["text"][0])) {
+				$body = $output['parts'][0]["text"][0];
+	    } else {
+				$body = "";
 	    }
 
 	    // Remove 're:' and [forum]. -rlpowell
@@ -1495,15 +1488,20 @@ class Comments extends TikiLib {
 	    $query = "select threadId from `tiki_comments` as tc1 $mid $time_cond order by tc1.".$this->convert_sortmode($sort_mode).",`threadId`";
 	}
 
-	$result = $this->query($query,array_merge($bind_mid,$bind_time));
-	$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
 	$ret = array();
 	$logins = array();
 	$threadIds = array();
 
-	while ( $row = $result->fetchRow() )
-	{
-	    $ret[] = $this->get_comment( $row['threadId'] );
+	if ($parentId > 0 && $style == 'commentStyle_threaded' && $object[0] != "forum") {
+		$ret[] = $this->get_comments_fathers($parentId, $ret);
+		$cant = 1;
+	}
+	else {
+		$result = $this->query($query,array_merge($bind_mid,$bind_time));
+		$cant = $this->getOne($query_cant,array_merge($bind_mid,$bind_time));
+		while ( $row = $result->fetchRow() ) {
+			$ret[] = $this->get_comment( $row['threadId'] );
+		}
 	}
 
 	foreach ( $ret as $key=>$res )
@@ -1536,6 +1534,7 @@ class Comments extends TikiLib {
 	    if( !( $maxRecords <= 0  && $orig_maxRecords != 0 ) )
 	    {
 		// Get the replies
+		if ($parentId == 0 || $style != 'commentStyle_threaded' || $object[0] == "forum") {
 		if( $object[0] == "forum" )
 		{
 		    // For plain style, don't handle replies at all.
@@ -1557,6 +1556,7 @@ class Comments extends TikiLib {
 		}
 		$maxRecords = $maxRecords - $ret[$key]['replies_info']['totalReplies'];
 	    }
+		}
 
 	    if (empty($res["data"])) {
 		$ret[$key]["isEmpty"] = 'y';
@@ -1595,6 +1595,23 @@ class Comments extends TikiLib {
 
 	return $retval;
     }
+
+	/* @brief: gets the comments of the thread and of all its fathers
+ 	*/
+	function get_comments_fathers($threadId, $ret = null) {
+		$com = $this->get_comment($threadId);
+		if ($ret) {
+			$com['replies_info']['replies'][0] = $ret;
+			$com['replies_info']['numReplies'] = 1;
+			$com['replies_info']['totalReplies'] = 1;
+		}
+		if ($com['parentId'] > 0) {
+			return $this->get_comments_fathers($com['parentId'], $com);
+		}
+		else{
+			return $com;
+		}
+	}
 
     function lock_comment($threadId) {
 	$query = "update `tiki_comments`
