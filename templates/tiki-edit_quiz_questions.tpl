@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.14 2004-05-03 04:39:20 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-edit_quiz_questions.tpl,v 1.15 2004-05-05 00:57:13 ggeller Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -32,7 +32,12 @@
 </table>
 </form>
 
-<h2>{tr}Import questions from text{/tr}</h2>
+<h2>{tr}Import questions from text{/tr}
+ {if $feature_help eq 'y'}
+  <a href="http://tikiwiki.org/tiki-index.php?page=QuizQuestionImport" target="tikihelp" class="tikihelp">
+  <img border="0" src="img/icons/help.gif" alt="{tr}help{/tr}" /></a>
+ {/if}
+</h2>
 <form enctype="multipart/form-data" method="post" action="tiki-edit_quiz_questions.php?quizId={$quiz_info.quizId}">
   <table class="normal">
     <tr>
