@@ -2,13 +2,13 @@
 <div class="bloginfo">
 {tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|date_format:"%a %d of %b, %Y [%H:%M:%S]"}<br/>
 {tr}Last modified{/tr} {$lastModif|date_format:"%a %d of %b, %Y [%H:%M:%S]"}<br/><br/>
-({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity})
+({$posts} {tr}posts{/tr} | {$hits} {tr}visits{/tr} | {tr}Activity={/tr}{$activity|string_format:"%.2f"})
 {if $tiki_p_blog_post eq 'y'}
-{if $creator eq $user or $tiki_p_blog_admin eq 'y' or $public eq 'y'}
+{if ($user and $creator eq $user) or $tiki_p_blog_admin eq 'y' or $public eq 'y'}
 [<a class="blog" href="tiki-blog_post.php?blogId={$blogId}">{tr}Post{/tr}</a>]
 {/if}
 {/if}
-{if $creator eq $user or $tiki_p_blog_admin eq 'y'}
+{if ($user and $creator eq $user) or $tiki_p_blog_admin eq 'y'}
 [<a class="blog" href="tiki-edit_blog.php?blogId={$blogId}">{tr}Edit{/tr}</a>]
 {/if}
 </div>
@@ -30,7 +30,7 @@
 <table width="100%"><tr><td align="left">
 <span class="posthead">{$listpages[ix].created|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</span>
 </td><td align="right">
-{if $listpages[ix].user eq $user or $tiki_p_blog_admin eq 'y'}
+{if ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
 [<a class="blog" href="tiki-blog_post.php?postId={$listpages[ix].postId}">{tr}Edit{/tr}</a>]
 [<a class="blog" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}">{tr}Remove{/tr}</a>]
 {/if}

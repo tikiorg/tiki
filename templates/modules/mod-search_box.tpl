@@ -11,8 +11,11 @@
     <option value="pages">Wiki Pages</option>
     {/if}
     {if $feature_galleries eq 'y'}
-    <option value="galleries">Galleries</option>
+    <option value="galleries">Image Gallss</option>
     <option value="images">Images</option>
+    {/if}
+    {if $feature_file_galleries eq 'y'}
+    <option value="files">Files</option>
     {/if}
     {if $feature_articles eq 'y'}
     <option value="articles">Articles</option>

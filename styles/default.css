@@ -102,6 +102,10 @@ div.boxnm {
    boxes in the main application menu, we set display to
    none to make the menu appear collapsed initially, change
    this to 'block' if you want it to be extended fully */
+
+
+
+/* Boxes */
 #admmnu {
  display: none;
 }   
@@ -115,6 +119,9 @@ div.boxnm {
  display: none;
 }
 #blogmenu {
+ display: none;
+}
+#filegalmenu {
  display: none;
 }
 
@@ -460,7 +467,7 @@ div.wikitext {
 }
 
 div.titlebar {
-  background: blue;
+  background: #B5A58C;
   color: white;
   border: 1px solid white;
   padding-left: 1px; 
@@ -468,7 +475,7 @@ div.titlebar {
   padding-top: 1px;
   padding-bottom: 1px;
   margin: 1px 1px;
-  width: 94%;
+  width: 99%;
   clear: both;
 }
 
@@ -537,6 +544,7 @@ TD.form {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
   vertical-align: top;
+  text-align: left;
 }
 
 
@@ -547,6 +555,7 @@ TD.heading {
 	color : Black;
 	background: #BBBBBB;
 	font-weight : bold;
+	text-align: left;
 }
 
 /* Tables odd rows */
@@ -556,6 +565,7 @@ TD.odd {
 	color : Black;
 	background: white;
 	vertical-align: top;
+	text-align: left;
 }
 
 /* Tables even rows */
@@ -565,6 +575,7 @@ font-size: 12px;
 background: #EEEEEE;
 color : Black;
 vertical-align: top;
+text-align: left;
 }
 
 
@@ -1178,6 +1189,114 @@ font-size: 10px;
 color : Black;
 text-decoration: none; 
 background-color : #CCCCCC;
+}
+
+/* COMMENTS */
+/* This sets the styles for the comments used in several Tiki sections */
+
+#comzone {
+  display: none;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+#comzoneopen {
+  display: block;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 2px;
+  padding-right: 2px;
+
+}
+
+/* Post comment form */
+div.commentspost {
+ display: inherit;
+ border: 1px solid black;
+ margin-top: 10px;
+ margin-right: 10px;
+ padding-right: 10px;
+ padding-top: 5px;
+ padding-bottom: 5px;
+ margin-bottom: 10px;
+ border: 1px solid black;
+}
+
+/* Help box*/
+div.commentsedithelp {
+  background: white;
+  border: 1px solid black;
+  font-size: smaller;
+}
+
+
+
+/* The toolbar where the ordering number of comments and find box are found */
+div.commentstoolbar {
+  background: #D5C5AC;
+  color: white;
+  margin-bottom: 20px;
+}
+/* The comment title */
+span.commentstitle {
+  font-weight: bold;
+  font-size: 14px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+/* The comment */
+div.commentscomment {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  margin-bottom: 20px;
+}
+/* The header for a comment */
+div.commentheader {
+  background: #E4E4E4;
+  font-size: 10px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+
+/* The text */
+div.commenttext {
+  font-size: 12px;
+  margin-left: 5px;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+/* Links inside comment text */
+.commentslink {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  color: black;
+}
+.commentslink:active {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  color: black;
+}
+.commentslink:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  color: black;
+}
+/* Links in the comment header (votes, remove) */
+.commentshlink {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: black;
+}
+.commentshlink:active {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: black;
+}
+.commentshlink:hover {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  color: black;
 }
 
 

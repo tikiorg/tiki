@@ -8,6 +8,9 @@
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=galleries">{tr}galleries{/tr}</a> |
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=images">{tr}images{/tr}</a> |
 {/if}
+{if $feature_file_galleries eq 'y'}
+<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=files">{tr}files{/tr}</a> |
+{/if}
 {if $feature_blogs eq 'y'}
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=blogs">{tr}blogs{/tr}</a> |
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=posts">{tr}blog posts{/tr}</a> |

@@ -56,7 +56,7 @@ function hide(foo) {
 {/if}
 {if $feature_galleries eq 'y'}
   <div class="separator"><a class='separator' href="javascript:hide('galmenu');">[-]</a> 
-  {if $home_gallery > 0}<a class='separator' href="tiki-browse_gallery?galleryId={$home_gallery}">{/if}{tr}Galleries{/tr}{if $home_gallery > 0}</a>{/if} 
+  {if $home_gallery > 0}<a class='separator' href="tiki-browse_gallery.php?galleryId={$home_gallery}">{/if}{tr}Image Gals{/tr}{if $home_gallery > 0}</a>{/if} 
   <a class='separator' href="javascript:show('galmenu');">[+]</a></div>
   <div id='galmenu'>
   <div class="button">&nbsp;<a href="tiki-galleries.php" class="linkbut">{tr}Galleries{/tr}</a></div>
@@ -102,6 +102,22 @@ function hide(foo) {
   {/if}
   </div>
 {/if}
+{if $feature_file_galleries eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:hide('filegalmenu');">[-]</a> 
+  {if $home_file_gallery > 0}<a class='separator' href="tiki-list_file_gallery.php?galleryId={$home_file_gallery}">{/if}{tr}File Galleries{/tr}{if $home_file_gallery > 0}</a>{/if}
+  <a class='separator' href="javascript:show('filegalmenu');">[+]</a></div>
+  <div id='filegalmenu'>
+  <div class="button">&nbsp;<a href="tiki-file_galleries.php" class="linkbut">{tr}List galleries{/tr}</a></div>
+  {if $feature_file_galleries_rankings eq 'y'}
+  <div class="button">&nbsp;<a href="tiki-file_galleries_rankings.php" class="linkbut">{tr}Rankings{/tr}</a></div>
+  {/if}
+  {if $tiki_p_upload_files eq 'y'}
+  <div class="button">&nbsp;<a href="tiki-upload_file.php" class="linkbut">{tr}Upload file{/tr}</a></div>
+  {/if}
+  
+  </div>
+{/if}
+
 {if $tiki_p_admin eq 'y' or $tiki_p_edit_articles eq 'y'
  or $tiki_p_edit_submission eq 'y' 
  or $tiki_p_remove_submission eq 'y'

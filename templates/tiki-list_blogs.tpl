@@ -42,14 +42,14 @@
 <td class="odd">&nbsp;{$listpages[changes].activity}&nbsp;</td>
 <td class="odd">
 {if $tiki_p_blog_post eq 'y'}
-{if ($listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y') or ($listpages[changes].public eq 'y')}
+{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y') or ($listpages[changes].public eq 'y')}
 <a class="link" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}">{tr}Post{/tr}</a>
 {/if}
 {/if}
-{if ($listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
+{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 <a class="link" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">{tr}Edit{/tr}</a>
 {/if}
-{if ($listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
+{if ($user and $listpages[changes].user eq $user) or ($tiki_p_blog_admin eq 'y')}
 <a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}">{tr}Remove{/tr}</a>
 {/if}
 <a class="link" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}">{tr}Read{/tr}</a>
@@ -66,14 +66,14 @@
 <td class="even">&nbsp;{$listpages[changes].activity}&nbsp;</td>
 <td class="even">
 {if $tiki_p_blog_post eq 'y'}
-{if $listpages[changes].user eq $user or $tiki_p_blog_admin eq 'y' or $listpages[changes].public eq 'y'}
+{if ($user and $listpages[changes].user eq $user) or $tiki_p_blog_admin eq 'y' or $listpages[changes].public eq 'y'}
 <a class="link" href="tiki-blog_post.php?blogId={$listpages[changes].blogId}">{tr}Post{/tr}</a>
 {/if}
 {/if}
-{if $listpages[changes].user eq $user or $tiki_p_blog_admin eq 'y'}
+{if ($user and $listpages[changes].user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="link" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}">{tr}Edit{/tr}</a>
 {/if}
-{if $listpages[changes].user eq $user or $tiki_p_blog_admin eq 'y'}
+{if ($user and $listpages[changes].user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="link" href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].blogId}">{tr}Remove{/tr}</a>
 {/if}
 <a class="link" href="tiki-view_blog.php?blogId={$listpages[changes].blogId}">{tr}Read{/tr}</a>

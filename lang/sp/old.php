@@ -535,7 +535,7 @@ to preview the appeareance of the page, no versions are stored for this page." =
 "You dont have permission to write the template" => "No tiene permiso para escribir el template",
 "You dont have permission to read the template" => "No tiene permiso para leer el template",
 "No content id indicated" => "No se indica bloque de contenido a editar",
-"List" => "List",
+"List" => "Listar",
 "Last mod" => "Last mod",
 "Last ver" => "Last ver",
 "Com" => "Com",
@@ -543,6 +543,6 @@ to preview the appeareance of the page, no versions are stored for this page." =
 "The SandBox is a page where you can practice your editing skills, use the preview feature
 to preview the appeareance of the page, no versions are stored for this page." => "The SandBox is a page where you can practice your editing skills, use the preview feature
 to preview the appeareance of the page, no versions are stored for this page.",
-"Create or edit content" => "Create or edit content",
+"Create or edit content" => "Crear or editar contenido",
 "##end###" => "###end###");
 ?>

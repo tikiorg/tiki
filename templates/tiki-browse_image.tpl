@@ -18,7 +18,7 @@
       <tr><td class="imageinfo">{tr}Created{/tr}:</td><td class="imageinfo">{$created|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</td></tr>
       <tr><td class="imageinfo">{tr}Hits{/tr}:</td><td class="imageinfo">{$hits}</td></tr>
       <tr><td class="imageinfo">{tr}Description{/tr}:</td><td class="imageinfo">{$description}</td></tr>
-      {if $user eq 'admin' or $tiki_p_admin eq 'y' or $user eq $owner}
+      {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
         <tr><td class="imageinfo">{tr}Move image{/tr}:</td><td class="imageinfo">
         <form action="tiki-browse_image.php" method="post">
         <input type="hidden" name="imageId" value="{$imageId}"/>
