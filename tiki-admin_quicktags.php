@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.1 2003-11-19 05:08:18 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_quicktags.php,v 1.2 2003-12-04 13:09:54 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,6 @@ if ($_REQUEST["tagId"]) {
 	$info['tagicon'] = '';
 }
 
-$smarty->assign('info', $info);
 
 if (isset($_REQUEST["remove"])) {
 	$quicktagslib->remove_quicktag($_REQUEST["remove"]);
@@ -46,9 +45,10 @@ if (isset($_REQUEST["save"])) {
 	$info["taglabel"] = '';
 	$info['taginsert'] = '';
 	$info['tagicon'] = '';
-	$smarty->assign('info', $info);
 	$smarty->assign('name', '');
 }
+
+$smarty->assign('info', $info);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'tagId_desc';
