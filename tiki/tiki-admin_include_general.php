@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.17 2003-12-28 20:12:51 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_general.php,v 1.18 2004-01-30 07:45:00 btodoroff Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -64,6 +64,7 @@ if (isset($_REQUEST["prefs"])) {
         "short_time_format",
         "siteTitle",
         "slide_style",
+        "icon_style",
         "tikiIndex"
     );
 
@@ -150,6 +151,20 @@ while ($file = readdir($h)) {
 closedir ($h);
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
+// Get list of available icon styles
+$icon_styles = array();
+$h = opendir("img/icons/");
+
+while ($file = readdir($h)) {
+    if (is_dir("img/icons/".$file) && !('.'==$file || '..'==$file)) {
+        $icon_styles[] = $file;
+    }
+}
+closedir( $h );
+sort($icon_styles);
+$smarty->assign_by_ref( "icon_styles", $icon_styles );
+
+
 // Get list of available languages
 $languages = array();
 $languages = $tikilib->list_languages();
@@ -176,6 +191,7 @@ $smarty->assign("maxRecords", $tikilib->get_preference("maxRecords", 10));
 $smarty->assign("title", $tikilib->get_preference("title", ""));
 $smarty->assign("popupLinks", $tikilib->get_preference("popupLinks", 'n'));
 $smarty->assign("style_site", $tikilib->get_preference("style", "default.css"));
+$smarty->assign("icon_style", $tikilib->get_preference("icon_style", "default"));
 $smarty->assign("site_closed", $tikilib->get_preference("site_closed", "n"));
 $smarty->assign('site_closed_msg', $tikilib->get_preference('site_closed_msg', 'Site is closed for maintainance; please come back later.'));
 $smarty->assign('use_load_threshold', $tikilib->get_preference('use_load_threshold', 'n'));

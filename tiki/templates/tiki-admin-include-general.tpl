@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.28 2004-01-26 23:11:31 redflo Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-general.tpl,v 1.29 2004-01-30 07:45:00 btodoroff Exp $ *}
 
 <div class="cbox">
   <div class="cbox-title">
@@ -26,6 +26,16 @@
               <option value="{$slide_styles[ix]|escape}"
                 {if $slide_style eq $slide_styles[ix]}selected="selected"{/if}>
                 {$slide_styles[ix]}</option>
+            {/section}
+            </select>
+        </td>
+      </tr><tr>
+        <td class="form" ><label for="general-icontheme">{tr}Icon Theme{/tr}:</label></td>
+        <td width="%67%"><select name="icon_style" id="general-icontheme">
+            {section name=ix loop=$icon_styles}
+              <option value="{$icon_styles[ix]|escape}"
+                {if $icon_style eq $icon_styles[ix]}selected="selected"{/if}>
+                {$icon_styles[ix]}</option>
             {/section}
             </select>
         </td>
