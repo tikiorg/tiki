@@ -379,13 +379,6 @@ class UsersLib extends TikiLib {
 	else
 	    $status = $a->getStatus();
 
-	if ($this->debug != false) {
-	    $msg = "Status: " . $status . "\n";
-
-	    foreach ($options as $key => $val)
-		$msg .= "$key = $val\n";
-
-	    mail($this->debug, "testing auth", $msg, "From: $sender_email");
 	}
 
 	return $status;
@@ -555,15 +548,6 @@ class UsersLib extends TikiLib {
 	else
 	    $status = $a->getStatus();
 
-	// if we're in debug mode, send an email
-	if ($this->debug) {
-	    $msg = "Status: " . $status . "\n";
-
-	    foreach ($options as $key => $val)
-		$msg .= "$key = $val\n";
-
-	    if ($this->debug != false)
-		mail($this->debug, "create_user_auth", $msg, "From: $sender_email");
 	}
 
 	return $status;
