@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.10 2004-07-30 21:59:30 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/static/staticlib.php,v 1.11 2004-07-30 22:08:26 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -62,6 +62,14 @@ class StaticLib extends TikiLib {
 		$static_group = "Registered";
 		$user = NULL;
 		$smarty->assign('user', $user);
+		// reset all perms
+		$allperms = $userlib->get_permissions();
+		foreach ($allperms['data'] as $perm) {
+			$perm = $perm['permName'];
+			$smarty->assign("$perm", 'n');
+			$$perm = 'n';
+		}
+		// set perms from the chosen group
 		$perms = $userlib->get_group_permissions($static_group);
 		foreach ($perms as $perm) {
 			$smarty->assign("$perm", 'y');
