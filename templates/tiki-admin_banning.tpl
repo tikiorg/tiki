@@ -3,21 +3,18 @@
   
       {if $feature_help eq 'y'}
 <a href="http://tikiwiki.org/tiki-index.php?page=BanningSystem" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Banning{/tr}">
-<img border='0' src='img/icons/help.gif' alt='help' />{/if}
-                        {if $feature_help eq 'y'}</a>{/if}
+<img border='0' src='img/icons/help.gif' alt='help' /></a>{/if}
 
 <!-- link to tpl -->
 
       {if $feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=templates/tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin banning tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='edit tpl' /> {/if}
-{if $feature_view_tpl eq 'y'}</a>{/if}
+<img border='0' src='img/icons/info.gif' alt='edit tpl' /></a>{/if}
 
 <!--- beginning of next bit --->
 
-
 <br /><br />
-<h3>{tr}Add or edit a rule{/tr}</h3>
+<h2>{tr}Add or edit a rule{/tr}</h2>
 <form action="tiki-admin_banning.php" method="post">
 <input type="hidden" name="banId" value="{$banId|escape}" />
 <table class="normal">
@@ -113,7 +110,7 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 {tr}Find{/tr}:<input type="text" name="find" value="{$find|escape}" />
 </form>
-<h3>{tr}Rules{/tr}:</h3>
+<h2>{tr}Rules{/tr}:</h2>
 <form method="post" action="tiki-admin_banning.php">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />

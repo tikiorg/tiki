@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.30 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_article.php,v 1.31 2003-11-23 23:30:55 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -355,8 +355,7 @@ $smarty->assign('expireDate', $expireDate);
 $smarty->assign('expireDateSite', $dc->getDisplayDateFromServerDate($expireDate));
 $smarty->assign('siteTimeZone', $dc->getTzName());
 
-$smarty->assign('rows', isset($_REQUEST['rows'])? $_REQUEST['rows']: '22');
-$smarty->assign('cols', isset($_REQUEST['cols'])? $_REQUEST['cols']: '80');
+include_once("textareaSize.php");
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_article.tpl');

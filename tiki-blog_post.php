@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.24 2003-11-17 15:44:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-blog_post.php,v 1.25 2003-11-23 23:30:55 sylvieg Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -257,8 +257,9 @@ $sameurl_elements = array(
 $smarty->assign_by_ref('blogs', $blogs);
 $section = 'blogs';
 include_once ('tiki-section_options.php');
-$smarty->assign('rows', isset($_REQUEST['rows'])? $_REQUEST['rows']: '20');
-$smarty->assign('cols', isset($_REQUEST['cols'])? $_REQUEST['cols']: '80');
+
+include_once("textareaSize.php");
+
 // Display the Index Template
 $smarty->assign('mid', 'tiki-blog_post.tpl');
 $smarty->assign('show_page_bar', 'n');
