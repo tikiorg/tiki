@@ -33,7 +33,7 @@
 {cycle name=content values="1,2,3" print=false advance=false}
 {* -------------------------------------------------- tab with list --- *}
 {if $tiki_p_view_trackers eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
 <form action="tiki-view_tracker.php" method="post">
@@ -247,7 +247,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
 
 {* --------------------------------------------------------------------------------- tab with edit --- *}
 {if $tiki_p_create_tracker_items eq 'y'}
-<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $smarty.cookies.tab}block{else}none{/if};"{/if}>
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <form action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 
