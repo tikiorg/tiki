@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.59 2004-07-16 18:30:28 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.60 2004-07-16 19:35:50 teedog Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -129,7 +129,7 @@ title="{tr}delete{/tr}"><img border="0" alt="{tr}delete{/tr}" src="img/icons2/de
   </select>
   {tr}the following groups:{/tr}
   {section name=ix loop=$groups}
-  	<br /><input type="checkbox" name="checked_groups[]" value="{$groups[ix].groupName}" /> {$groups[ix].groupName}
+  	<br /><input type="checkbox" name="checked_groups[]" value="{$groups[ix].groupName}" /> <a class="link" href="tiki-admingroups.php?group={$groups[ix].groupName|escape:"url"}" title="{tr}edit{/tr}">{$groups[ix].groupName}</a>
   {/section}
   <br /><input type="submit" value="{tr}ok{/tr}" />
   {/if}
