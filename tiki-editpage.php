@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.39 2003-08-15 22:03:56 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-editpage.php,v 1.40 2003-08-18 23:57:54 lueders Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -208,7 +208,7 @@ if ($page != 'SandBox') {
 
 if ($tiki_p_admin != 'y') {
 	if ($tiki_p_use_HTML != 'y') {
-		$_REQUEST["allowhtml"] = 'off';
+		$_REQUEST["allowhtml"] = 'on';
 	}
 }
 
@@ -216,7 +216,7 @@ $smarty->assign('allowhtml', 'y');
 
 /*
 if(!$user && $anonCanEdit<>'y') {
-  
+
   header("location: tiki-index.php");
   die;
   //$smarty->assign('msg',tra("Anonymous users cannot edit pages"));
