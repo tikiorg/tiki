@@ -64,7 +64,7 @@
 <td class="auto"><a title="{tr}edit{/tr}" href="tiki-admin_trackers.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;trackerId={$channels[user].trackerId}"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' border='0' /></a></td>
 <td><a class="tablename" href="tiki-view_tracker.php?trackerId={$channels[user].trackerId}">{$channels[user].name}</a></td>
 <td nowrap="nowrap">{if $channels[user].individual eq 'y'}({/if}<a 
-title="{tr}permissions{/tr} class="link" href="tiki-objectpermissions.php?objectName={"{tr}Tracker{/tr} "|cat:$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}"><img 
+title="{tr}permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={"{tr}Tracker{/tr} "|cat:$channels[user].name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$channels[user].trackerId}"><img 
 src='img/icons/key.gif' border='0' alt='{tr}permissions{/tr}' /></a>{if $channels[user].individual eq 'y'}){/if}</td>
 <td>{$channels[user].description}</td>
 <td><a title="{tr}fields{/tr}" class="link" href="tiki-admin_tracker_fields.php?trackerId={$channels[user].trackerId}"><img src='img/icons/ico_table.gif' alt='{tr}fields{/tr}' border='0' /></a></td>
