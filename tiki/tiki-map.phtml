@@ -108,14 +108,15 @@ $layerbol=FALSE;
 if (isset($_REQUEST['Redraw'])) {
 	$_REQUEST['x'] = floor($map->width / 2);
 	$_REQUEST['y'] = floor($map->height / 2);
+	
 }
 
-if (isset($_REQUEST['size'])&&(is_numeric($_REQUEST['size']))&& ($_REQUEST['size']>0)){//check for a non negative numeric 
+if (isset($_REQUEST['size'])&&(is_numeric($_REQUEST['size']))&& ($_REQUEST['size']>0) &&($_REQUEST['size']<2000)){//check a non negative numeric less than 2000 
        $xsize=floor($_REQUEST['size']);
        $ysize=floor(($_REQUEST['size']*$map->height/$map->width));
        $layerbol=TRUE;
-	$size = $_REQUEST['size'];
-}
+ 	 $size = $_REQUEST['size'];
+} 
 else {
 	$xsize = $map->width;
 	$ysize = $map->height;

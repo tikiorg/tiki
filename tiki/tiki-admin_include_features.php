@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.31 2004-07-02 22:07:40 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_features.php,v 1.32 2004-07-22 13:08:26 mose Exp $
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -91,7 +91,8 @@ $features_toggles = array(
 	"feature_xmlrpc",
 	"layout_section",
 	"user_assigned_modules",
-	"feature_multilingual"
+	"feature_multilingual",
+	"contact_anon"
 );
 
 // Process Features form(s)

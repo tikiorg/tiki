@@ -23,7 +23,7 @@
 {/if}
 
 {* --- tikiwiki block --- *}
-<script type="text/javascript" src="lib/tiki-dynamic-js.php"></script>
+{php} include("lib/tiki-dynamic-js.php"); {/php}
 <script type="text/javascript" src="lib/tiki-js.js"></script>
 {if $feature_wiki_jstooltips eq 'y'}
 	{popup_init src="lib/overlib.js"}

@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.53 2004-07-17 12:49:30 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.54 2004-07-22 13:08:39 mose Exp $
 
 function getElementById(id) {
     if (document.all) {
@@ -402,7 +402,7 @@ function getHttpRequest( method, url )
 	if( !request )
 		return false;
 
-	request.open( method, url );
+	request.open( method, url, false );
 
 	return request;
 }
@@ -424,6 +424,8 @@ function setCookie(name, value, expires, path, domain, secure) {
 	try
 	{
 		request.send('');
+//		alert(request.readyState+request.responseText);
+		tiki_cookie_jar[name] = value;
 		return true;
 	}
 	catch( ex )
@@ -440,7 +442,7 @@ function setCookie(name, value, expires, path, domain, secure) {
 // * return string containing value of specified cookie or null if cookie does not exist
 function getCookie(name) {
 	// If XMLHttpRequest is supported
-	if( window.XMLHttpRequest || ( window.ActiveXObject && tiki_cookie_jar[name] != null ) )
+	if( window.XMLHttpRequest || ( window.ActiveXObject && typeof tiki_cookie_jar != "undefined" ) )
 	{
 		return tiki_cookie_jar[name];
 	}

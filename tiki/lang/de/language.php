@@ -1018,6 +1018,7 @@ $lang=Array(
 "Vote" => "Stimme",
 "reply to this" => "Diesem antworten",
 "Comments below your current threshold" => "Kommentar unterhalb Ihres aktuellen Schwellenwerts",
+"below your current threshold" => "unterhalb Ihres aktuellen Schwellenwerts",
 "Page" => "Seite",
 "Preview" => "Vorschau",
 "Editing comment" => "Bearbeitungskommentar",
@@ -3847,6 +3848,7 @@ $lang=Array(
 "ShowUrls" => "URLs anzeigen",
 "click here to send us an email" => "Hier klicken um uns eine EMail zu schicken",
 "Post new reply" => "Neue Anwort schreiben",
+"post new reply" => "Neue Anwort schreiben",
 "Posted replies" => "bisherige Anworten",
 "Reply" => "Antwort",
 "Replies below your current threshold" => "Antworten unter dem eingestellten Schwellenwert",
@@ -3854,6 +3856,7 @@ $lang=Array(
 "HTML tags are not allowed inside posts" => "HTML-Tags sind in Posts nicht erlaubt",
 "Tip: hold down CTRL to select multiple categories" => "Tip: Strg halten um mehrere Kategorien auszuw&auml;hlen",
 "Tip: uncheck the above checkbox to uncategorize this page/object" => "Tip: die Checkbox deaktivieren um die Kategorien dieser Seite/dieses Objekts zu entfernen",
+"Posted messages" => "gepostete Beitr&auml;ge",
 /*
 "*=optional, Topline=small line above Title, Subtitle=small line below Title, Source=URL to article source" => "",
 "assign xxxxx to groups" => "",

@@ -1,30 +1,29 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.1 2004-02-29 17:09:35 luciash Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_div.php,v 1.2 2004-07-22 13:08:44 mose Exp $
  *
- * DIV plugin. Creates a division block for the content.
+ * DIV plugin. Creates a division block for the content. Forces the content 
+ * to be aligned (left by deafault).
  * 
  * Syntax:
  * 
- *  {DIV([bg=color],[width=>num[%]],[align=>left|right|center])}
- *   Content inside
+ *  {DIV([align=>left|right|center][, bg=color][, width=>num[%]])}
+ *   some content
  *  {DIV}
  * 
  */
 function wikiplugin_div_help() {
-	return tra("Insert a division block on wiki page").":<br />~np~{DIV(bg=>,width=>,align=>)}".tra("text")."{DIV}~/np~";
+	return tra("Insert a division block on wiki page").":<br />~np~{DIV([align=>left|right|center][, bg=color][, width=>num[%]])}".tra("text")."{DIV}~/np~";
 }
 
 function wikiplugin_div($data, $params) {
-	/* set default values for some args */
-	$align = "left";
 
 	extract ($params);
 	$w    = (isset($width)) ? " width: $width;"  : "";
 	$bg   = (isset($bg))    ? " background: $bg;" : "";
-	$al   = (isset($align) && ($align == 'right' || $align == "center")) ? " text-align: $align;" : "";
+	$al   = (isset($align) && ($align == 'right' || $align == "center")) ? " text-align: $align;" : " text-align: left;";
 
-	$begin  = "<div".(strlen($bg) > 0 ? " style='$bg$al$w'" : "").">";
+	$begin  = "<div style=\"$bg$al$w\">";
 	$end = "</div>";
 	return $begin . $data . $end;
 }

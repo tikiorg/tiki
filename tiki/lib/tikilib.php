@@ -1138,7 +1138,44 @@ class TikiLib extends TikiDB {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
+
+	    $add = TRUE;
+	    global $feature_categories;
+	    global $userlib;
+	    global $user;
+	    global $tiki_p_admin;
+
+	    if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($res['forumId'], 'forums')) {
+	    // quiz permissions override category permissions
+			if (!$userlib->object_has_permission($user, $res['forumId'], 'forums', 'tiki_p_forum_read'))
+			{
+			    $add = FALSE;
+			}
+	    } elseif ($tiki_p_admin != 'y' && $feature_categories == 'y') {
+	    	// no quiz permissions so now we check category permissions
+	    	global $categlib;
+			if (!is_object($categlib)) {
+				include_once('lib/categories/categlib.php');
+			}
+	    	unset($tiki_p_view_categories); // unset this var in case it was set previously
+	    	$perms_array = $categlib->get_object_categories_perms($user, 'forums', $res['forumId']);
+	    	if ($perms_array) {
+	    		$is_categorized = TRUE;
+		    	foreach ($perms_array as $perm => $value) {
+		    		$$perm = $value;
+		    	}
+	    	} else {
+	    		$is_categorized = FALSE;
+	    	}
+
+	    	if ($is_categorized && isset($tiki_p_view_categories) && $tiki_p_view_categories != 'y') {
+	    		$add = FALSE;
+	    	}
+	    }
+
+		if ($add) {
+		    $ret[] = $res;
+		}
 	}
 
 	$retval = array();
@@ -2721,14 +2758,6 @@ class TikiLib extends TikiDB {
 	    // Collect pages before modifying data
 	    $pages = $this->get_pages($data);
 
-	    // This *really* shouldn't be necessary now that the
-	    // query itself has been fixed up, and it causes much
-	    // badness to the phpwiki import.  -rlpowell
-	    //  $name = addslashes($name);
-	    //  $description = addslashes($description);
-	    //  $data = addslashes($data);
-	    //  $comment = addslashes($comment);
-
 	    if (!isset($_SERVER["SERVER_NAME"])) {
 		$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 	    }
@@ -2838,7 +2867,6 @@ class TikiLib extends TikiDB {
 
 	function how_many_at_start($str, $car) {
 	    $cant = 0;
-
 	    $i = 0;
 
 	    while (($i < strlen($str)) && (isset($str{$i})) && ($str{$i}== $car)) {

@@ -29,14 +29,14 @@ class MultilingualLib extends TikiLib {
 			return  null;
 		}
 		elseif (!$srcTrads) {
-			if ($this->exist($objTrads, $srcLang))
+			if ($this->exist($objTrads, $srcLang, 'lang'))
 					return "alreadyTrad";
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,?,?)";
 			$this->query($query, array($type, $srcId, $objTrads[0]['traId'], $srcLang));
 			return null;
 		}
 		elseif (!$objTrads) {
-			if ($this->exist($srcTrads, $objLang))
+			if ($this->exist($srcTrads, $objLang, 'lang'))
 					return "alreadyTrad";
 			$query = "insert into `tiki_translated_objects` (`type`,`objId`,`traId`,`lang`) values (?,?,?,?)";
 			$this->query($query, array($type, $objId, $srcTrads[0]['traId'], $objLang));
@@ -47,7 +47,7 @@ class MultilingualLib extends TikiLib {
 		}
 		else {
 			foreach ($srcTrads as $t) {
-				if ($this->exist($objTrads, $t['lang']))
+				if ($this->exist($objTrads, $t['lang'], 'lang'))
 					return "alreadyTrad";
 			}
 			$query = "update `tiki_translated_objects`set `traId`=? where `tradId`=?";
@@ -153,14 +153,106 @@ class MultilingualLib extends TikiLib {
 //@@TODO: delete the set if only one remaining object - not necesary but will clean the table
 	}
 	
-	/* @brief : test if lang exists in a list of langs
+	/* @brief : test if val exists in a list of objects
 	 */
-	function exist($tab, $lang) {
+	function exist($tab, $val, $col) {
 		foreach ($tab as $t) {
-			if ($t['lang'] == $lang)
+			if ($t[$col] == $val)
 				return true;
 		}
 		return false;
+	}
+
+	/* @brief : returns an ordered list of prefered languages
+	 * @param $langContext: optional the language the user comes from
+	 */
+	function preferedLangs($langContext = null) {
+		global $user, $language, $tikilib;
+		$langs = array();
+		$langs[] = $language;
+		if (strchr($language, "-")) // add en if en-uk
+			$langs[] = $this->rootLang($language);
+
+		if ($langContext && !in_array($langContext, $langs)) {
+			$langs[] = $langContext;
+			$l = $this->rootLang($langContext);
+			if (!in_array($l, $langs))
+				$langs[] = $l;
+		}
+
+		$ls = array_merge($langs, preg_split('/\s*,\s*/', preg_replace('/;q=[0-9.]+/','',$_SERVER['HTTP_ACCEPT_LANGUAGE']))); // browser
+		foreach ($ls as $l) {
+			if (!in_array($l, $langs)) {
+				$langs[] = $l;
+				$l = $this->rootLang($l);
+				if (!in_array($l, $langs))
+					$langs[] = $l;
+			}
+		}
+		$l = $tikilib->get_preference("language", "en");
+		if (!in_array($l, $langs)) {
+			$langs[] = $language; // site language
+			$l = $this->rootLang($language);
+			if (!in_array($l, $langs))
+				$langs[] = $l;
+		}
+		return $langs;	
+	}
+	/* @brief : return the root language ex: en-uk returns en
+	 */
+	function rootLang($lang) {
+		return ereg_replace("(.*)-(.*)", "\\1", $lang);
+	}
+
+	/* @brief : fitler a list of object to have only one objet in the set of translations with the best language
+	 */
+	function selectLangList($type, $listObjs, $langContext = null) {
+		$langs = $this->preferedLangs($langContext);
+//echo "<pre>";print_r($langs);echo "</pre>";
+		for ($i = 0; $i < count($listObjs); ++$i) {
+			if (!isset($listObjs[$i]) || !isset($listObjs[$i]['lang']))
+				continue; // previously withdrawn or no language
+			if ($type == 'wiki page')
+				$objId = $listObjs[$i]['page_id'];
+			else
+				$objId = $listObjs[$i]['articleId'];
+			$trads = $this->getTrads($type, $objId);
+			if (!$trads)
+				continue;
+			for ($j = $i + 1; $j < count($listObjs); ++$j) {
+				if (!isset($listObjs[$j]))
+					continue;
+				if ($type == 'wiki page')
+					$objId2 = $listObjs[$j]['page_id'];
+				else
+					$objId2 = $listObjs[$j]['articleId'];
+				if ($this->exist($trads, $objId2, 'objId')) {
+					$iord = array_search($listObjs[$i]['lang'] , $langs);
+					if (!$iord && strchr($listObjs[$i]['lang'], "-"))
+						$iord = array_search($this->rootLang($listObjs[$i]['lang']), $langs);
+					$jord = array_search($listObjs[$j]['lang'] , $langs);
+					if (!$jord && strchr($listObjs[$j]['lang'], "-"))
+						$jord = array_search($this->rootLang($listObjs[$j]['lang']), $langs);
+					if ($jord === false) {
+						unset($listObjs[$j]); // not in the pref langs
+					}
+					else if ($iord === false) {
+						unset($listObjs[$i]);
+						break;
+					}
+					else if ($iord > $jord) {
+						unset($listObjs[$i]);
+						break;
+					}
+					else {
+						unset($listObjs[$j]);
+					}
+					// if none in the pref lang, pick the first (sorted by date)
+				}
+			}
+		}
+		$listObjs = array_merge($listObjs);// take away the unset row
+		return $listObjs;
 	}
 }
 $multilinguallib = new MultilingualLib($dbTiki);

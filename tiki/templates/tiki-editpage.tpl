@@ -1,13 +1,13 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.56 2004-07-11 10:27:48 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.57 2004-07-22 13:08:47 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
 <!--Check to see if there is an editing conflict-->
 {if $editpageconflict == 'y'}
 <script language='Javascript' type='text/javascript'>
-<!-- Hide Script
+<!-- //Hide Script
 	alert("{tr}This page is being edited by{/tr} {$semUser}. {tr}Proceed at your own peril{/tr}.")
-//End Hide Script-->
+//End Hide Script -->
 </script>
 {/if}
 
@@ -15,7 +15,7 @@
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}
-<h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp({$pageAlias|escape}){/if}</h1>
+<h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}</h1>
 {assign var=area_name value="editwiki"}
 {if $page eq 'SandBox'}
 <div class="wikitext">
@@ -33,9 +33,6 @@
 <input type="hidden" name="add_child" value="true" />
 {/if}
 <table class="normal">
-<tr><td class="formcolor">{tr}Quicklinks{/tr}:</td><td class="formcolor">
-{include file=tiki-edit_help_tool.tpl}
-</td></tr>
 
 {if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}

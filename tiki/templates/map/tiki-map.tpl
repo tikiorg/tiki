@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.19 2004-07-21 00:34:25 tna Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/map/tiki-map.tpl,v 1.20 2004-07-22 13:08:48 mose Exp $ *}
 
 <script src="lib/map/map.js"></script>
 
@@ -76,7 +76,7 @@
 		<tr><td align="center">
 		  <input name="Redraw" value="{tr}Redraw{/tr}" type="Submit" />
 		  {if $tiki_p_map_edit eq 'y'}
-     &nbsp;
+     &nbsp; 
      <a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
      <img src="img/icons/config.gif" border="0"  alt="{tr}edit{/tr}" title="{tr}edit{/tr}" />
      </a>

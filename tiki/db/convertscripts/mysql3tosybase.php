@@ -102,6 +102,8 @@ function parse($stmt)
   // the update
   $stmt=preg_replace("/update ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
   $stmt=preg_replace("/UPDATE ([a-zA-Z0-9_]+) set (.*)/e","do_updates('$1','$2')",$stmt);
+	// clean cases where UNIQUE was alone at the end
+  $stmt=preg_replace("/,(\s*)\)/","$1)",$stmt);
   return $prestmt.$stmt."\ngo\n".$poststmt;
 }
 

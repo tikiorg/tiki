@@ -40,8 +40,8 @@
 <div class="articleheading">
 <table  cellpadding="0" cellspacing="0">
 <tr>
-{if $listpages[ix].show_image eq 'y'}
 <td valign="top">
+{if $listpages[ix].show_image eq 'y'}
 {if $listpages[ix].useImage eq 'y'}
 {if $listpages[ix].hasImage eq 'y'}
 <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
@@ -68,14 +68,12 @@ src="topic_image.php?id={$listpages[ix].topicId}" class="articletypeimage" /></a
 {/if}
 {/section}
 {/if}
+{/if}
 {if ($listpages[ix].show_avatar eq 'y')}
-  <td valign="top"><a href="tiki-user_information.php?view_user={$listpages[ix].author}">
-  <img alt="{$listpages[ix].author}" border="1" src="tiki-show_user_avatar.php?user={$listpages[ix].author}" />
-  </a></td>
+{$listpages[ix].author|avatarize}
 {/if}
 {if $listpages[ix].isfloat eq 'n'}
 </td><td  valign="top">
-{/if}
 {/if}
 <div class="articleheadingtext">{$listpages[ix].parsed_heading}</div>
 </td></tr>

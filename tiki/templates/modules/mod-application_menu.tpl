@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.106 2004-07-11 10:27:49 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-application_menu.tpl,v 1.107 2004-07-22 13:08:48 mose Exp $ *}
 {tikimodule title="{tr}Menu{/tr}" name="application_menu" flip="y"}
 &nbsp;<a href="{$tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 {if $feature_chat eq 'y' and $tiki_p_chat eq 'y'}
@@ -749,6 +749,9 @@
 {/if}
 {if $feature_usermenu eq 'y'}
   setfoldericonstate('usrmenu');
+{/if}
+{if $feature_friends eq 'y'}
+ setfoldericonstate('friendsmenu');
 {/if}
 </script>
 {/if}

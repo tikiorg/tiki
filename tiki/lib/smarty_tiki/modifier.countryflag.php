@@ -17,7 +17,7 @@ function smarty_modifier_countryflag($user)
 {
   global $tikilib;
   $flag = $tikilib->get_user_preference($user,'country','Other');
-  return "<img alt='flag' src='img/flags/".$flag.".gif' />";
+  return "<img alt='".tra($flag)."' src='img/flags/".$flag.".gif' />";
 }
 
 ?>

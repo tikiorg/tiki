@@ -1,5 +1,5 @@
 <div class="quicktag">
-<a href="#" onclick="toggleBlock('quicktags{$qtnum}');" class="link"><img src="img/icons/plus.gif" border='0' alt='+' />&nbsp;{tr}Quicktags{/tr} ...</a><br /><br />
+<a href="javascript:toggleBlock('quicktags{$qtnum}');" class="link"><img src="img/icons/plus.gif" border='0' alt='+' />&nbsp;{tr}Quicktags{/tr} ...</a><br /><br />
 <div id='quicktags{$qtnum}' {if $showtags}style="display:block;"{else}style="display:none;"{/if}>
 <div>
 {cycle name='cycle'|cat:$qtnum values=$qtcycle|default:",,,</div><div>" advance=false print=false}

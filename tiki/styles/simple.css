@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.25 2004-07-11 14:11:41 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.26 2004-07-22 13:08:44 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -79,20 +79,36 @@ form {
  display: none;
 }
 /*
- ** This can be floated left or right **
+ ** These are classes for main parts of the layout, depending what's switched on/off **
  */
-.float-wrapper {
- /*float: left; *//*width: 80%;*/
- }
-/*  This gets margined the same direction as #maincontent gets floated */
-.left {
- /*margin-right: 75%;*/
- /*float: left;*/
+div.wrapper {
+ float: left; width: 80%;
 }
-/* This gets margined the same direction as .float-wrapper gets floated */
-.right {
+div.maincontent {
+ float: right; width: 75%;
+}
+
+div.leftcolonlywrapper {
+ float: none; width: 100%;
+}
+div.leftcolonlymaincontent {
+ float: right; width: 80%;
+}
+
+div.rightcolonlywrapper {
+ float: left; width: 75%;
+}
+div.rightcolonlymaincontent {
+ float: none; width: 100%;
+}
+
+/*  This gets margined the same direction as *maincontent gets floated */
+div.left {
+ /*margin-right: 75%;*/
+}
+/* This gets margined the same direction as *wrapper gets floated */
+div.right {
  /*margin-left: 80%;*/
- /*float: right;*/
 }
 
 
@@ -194,20 +210,12 @@ div.box-title table {
 /*
  ***** Here we define IDs *****
  */
-/*** This can be floated left or right ***/
+/*** These are main parts of the layout ***/
 #maincontent {
- /*float: right;*/
- /*width: 70%;*/
- /*position: relative;
- margin: auto;*/
- /*position: absolute;
- top: 2em;*/
 }
 #modules1 {
- /*width: 24%;*/
 }
 #modules2 {
- /*width: 24%;*/
 }
 /* hide comments and the form */
 #comzone {

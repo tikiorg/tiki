@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.69 2004-06-16 19:40:52 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_tracker_item.php,v 1.70 2004-07-22 13:08:27 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -17,7 +17,6 @@ if ($feature_trackers != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
 
 if ($userTracker == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' user') {
@@ -43,7 +42,7 @@ if ($groupTracker == 'y') {
 		$_REQUEST["itemId"] = $trklib->get_item_id($_REQUEST['trackerId'],$gtid['groupFieldId'],$_REQUEST["grouptracker"]);
 	}
 }
-if (!isset($_REQUEST["trackerId"]) or !$_REQUEST["trackerId"]) {
+if (!isset($_REQUEST["trackerId"]) || !$_REQUEST["trackerId"]) {
 	$smarty->assign('msg', tra("No tracker indicated"));
 	$smarty->display("error.tpl");
 	die;
@@ -103,153 +102,159 @@ if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
-$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
-$ins_fields = $fields;
+$xfields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
+$fields = array();
+$ins_fields = array();
 
 $usecategs = false;
 $ins_categs = array();
 $textarea_options = false;
 
-$temp_max = count($fields["data"]);
+$temp_max = count($xfields["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	$fid = $fields["data"][$i]["fieldId"];
+	$fid = $xfields["data"][$i]["fieldId"];
 	
 	$ins_id = 'ins_' . $fid;
-	$fields["data"][$i]["ins_id"] = $ins_id;
+	$xfields["data"][$i]["ins_id"] = $ins_id;
 	
 	$filter_id = 'filter_' . $fid;
-	$fields["data"][$i]["filter_id"] = $filter_id;
+	$xfields["data"][$i]["filter_id"] = $filter_id;
 
-	if (!isset($mainfield) and $fields["data"][$i]['isMain'] == 'y') {
-		$mainfield = $ins_fields["data"][$i]["name"];
+	if (!isset($mainfield) and $xfields["data"][$i]['isMain'] == 'y') {
+		$mainfield = $xfields["data"][$i]["name"];
 	}
 
-	if ($fields["data"][$i]["type"] == 'f') {
-		$fields["data"][$i]["value"] = '';
-		$ins_fields["data"][$i]["value"] = '';
-		if (isset($_REQUEST["$ins_id" . "Day"])) {
-			$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
-			0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
-		} else {
-			$ins_fields["data"][$i]["value"] = date("U");
-		}
-	
-	} elseif ($fields["data"][$i]["type"] == 'e') {
-		include_once('lib/categories/categlib.php');
-		$k = $ins_fields["data"][$i]["options"];
-		$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
-		$categId = "ins_cat_$k";
-		if (isset($_REQUEST[$categId]) and is_array($_REQUEST[$categId])) {
-			$ins_categs = array_merge($ins_categs,$_REQUEST[$categId]);
-		}
-		$ins_fields["data"][$i]["value"] = '';
-	
-	} elseif ($fields["data"][$i]["type"] == 'c') {
-		if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
-			$ins_fields["data"][$i]["value"] = 'y';
-		} else {
-			$ins_fields["data"][$i]["value"] = 'n';
-		}
-		if (isset($_REQUEST["$filter_id"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-		} else {
-			$fields["data"][$i]["value"] = '';
-		}
+	if ($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') {
+		$ins_fields["data"][$i] = $xfields["data"][$i];
+		$fields["data"][$i] = $xfields["data"][$i];
 
-	} elseif ($fields["data"][$i]["type"] == 'u' and isset($fields["data"][$i]["options"]) and $user)	{
-		if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]["options"] < 1 or $tiki_p_admin_trackers == 'y')) {
-			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-		} else {
-			if ($fields["data"][$i]["options"] == 2) {
-				$ins_fields["data"][$i]["value"] = $user;
-			} elseif ($fields["data"][$i]["options"] == 1) {
-				if (isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
-					$tracker_info["authorfield"] = $fid;
-				}
-				unset($ins_fields["data"][$i]["fieldId"]);
-			} else {
-				$ins_fields["data"][$i]["value"] = '';
-			}
-		}
-		if (isset($_REQUEST["$filter_id"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-		} else {
+		if ($fields["data"][$i]["type"] == 'f') {
 			$fields["data"][$i]["value"] = '';
-		}
-	
-	} elseif ($fields["data"][$i]["type"] == 'g' and isset($fields["data"][$i]["options"]) and $group)	{
-		if (isset($_REQUEST["$ins_id"])) {
-			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-		} else {
-			if ($fields["data"][$i]["options"] == 2) {
-				$ins_fields["data"][$i]["value"] = $group;
-			} elseif ($fields["data"][$i]["options"] == 1)  {
-				if (isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
-					$tracker_info["authorgroupfield"] = $fid;
-				}
-				unset($ins_fields["data"][$i]["fieldId"]);
+			$ins_fields["data"][$i]["value"] = '';
+			if (isset($_REQUEST["$ins_id" . "Day"])) {
+				$ins_fields["data"][$i]["value"] = mktime($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
+				0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]);
 			} else {
-				$ins_fields["data"][$i]["value"] = '';
+				$ins_fields["data"][$i]["value"] = date("U");
 			}
-		}
-		if (isset($_REQUEST["$filter_id"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-		} else {
-			$fields["data"][$i]["value"] = '';
-		}
 		
-	} elseif ($fields["data"][$i]["type"] == 'a' and isset($fields["data"][$i]["options_array"][2]))	{
-		if (isset($_REQUEST["$ins_id"])) {
-			if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
-				$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
-			} else {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+		} elseif ($fields["data"][$i]["type"] == 'e') {
+			include_once('lib/categories/categlib.php');
+			$k = $ins_fields["data"][$i]["options"];
+			$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
+			$categId = "ins_cat_$k";
+			if (isset($_REQUEST[$categId]) and is_array($_REQUEST[$categId])) {
+				$ins_categs = array_merge($ins_categs,$_REQUEST[$categId]);
 			}
-		} else {
 			$ins_fields["data"][$i]["value"] = '';
-		}
-		if (isset($_REQUEST["$filter_id"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-		} else {
-			$fields["data"][$i]["value"] = '';
-		}
-		if (1 or $fields["data"][$i]["options_array"][0])	{
-			$textarea_options = true;
-		} 
+		
+		} elseif ($fields["data"][$i]["type"] == 'c') {
+			if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
+				$ins_fields["data"][$i]["value"] = 'y';
+			} else {
+				$ins_fields["data"][$i]["value"] = 'n';
+			}
+			if (isset($_REQUEST["$filter_id"])) {
+				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+			} else {
+				$fields["data"][$i]["value"] = '';
+			}
 
-	} else {
-		if (isset($_REQUEST["$ins_id"])) {
-			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-		} else {
-			$ins_fields["data"][$i]["value"] = '';
-		}
-		if (isset($_REQUEST["$filter_id"])) {
-			$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
-		} else {
-			$fields["data"][$i]["value"] = '';
-		}
-		if ($fields["data"][$i]["type"] == 'i')	{
-			if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
-				if (!empty($gal_match_regex)) {
-					if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
-						$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-						$smarty->display("error.tpl");
-						die;
+		} elseif ($fields["data"][$i]["type"] == 'u' and isset($fields["data"][$i]["options"]) and $user)	{
+			if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]["options"] < 1 or $tiki_p_admin_trackers == 'y')) {
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+			} else {
+				if ($fields["data"][$i]["options"] == 2) {
+					$ins_fields["data"][$i]["value"] = $user;
+				} elseif ($fields["data"][$i]["options"] == 1) {
+					if (isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
+						$tracker_info["authorfield"] = $fid;
 					}
+					unset($ins_fields["data"][$i]["fieldId"]);
+				} else {
+					$ins_fields["data"][$i]["value"] = '';
 				}
-				if (!empty($gal_nmatch_regex)) {
-					if (preg_match("/$gal_nmatch_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
-						$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
-						$smarty->display("error.tpl");
-						die;
+			}
+			if (isset($_REQUEST["$filter_id"])) {
+				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+			} else {
+				$fields["data"][$i]["value"] = '';
+			}
+		
+		} elseif ($fields["data"][$i]["type"] == 'g' and isset($fields["data"][$i]["options"]) and $group)	{
+			if (isset($_REQUEST["$ins_id"])) {
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+			} else {
+				if ($fields["data"][$i]["options"] == 2) {
+					$ins_fields["data"][$i]["value"] = $group;
+				} elseif ($fields["data"][$i]["options"] == 1)  {
+					if (isset($tracker_info["writerGroupCanModify"]) and $tracker_info["writerGroupCanModify"] == 'y') {
+						$tracker_info["authorgroupfield"] = $fid;
 					}
+					unset($ins_fields["data"][$i]["fieldId"]);
+				} else {
+					$ins_fields["data"][$i]["value"] = '';
 				}
-				$type = $_FILES["$ins_id"]['type'];
-				$size = $_FILES["$ins_id"]['size'];
-				$filename = $_FILES["$ins_id"]['name'];
-				$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
-				$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
-				$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
+			}
+			if (isset($_REQUEST["$filter_id"])) {
+				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+			} else {
+				$fields["data"][$i]["value"] = '';
+			}
+			
+		} elseif ($fields["data"][$i]["type"] == 'a' and isset($fields["data"][$i]["options_array"][2]))	{
+			if (isset($_REQUEST["$ins_id"])) {
+				if (isset($fields["data"][$i]["options_array"][3]) and $fields["data"][$i]["options_array"][3] > 0 and strlen($_REQUEST["$ins_id"]) > $fields["data"][$i]["options_array"][3]) {
+					$ins_fields["data"][$i]["value"] = substr($_REQUEST["$ins_id"],0,$fields["data"][$i]["options_array"][3])." (...)";
+				} else {
+					$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+				}
+			} else {
+				$ins_fields["data"][$i]["value"] = '';
+			}
+			if (isset($_REQUEST["$filter_id"])) {
+				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+			} else {
+				$fields["data"][$i]["value"] = '';
+			}
+			if (1 or $fields["data"][$i]["options_array"][0])	{
+				$textarea_options = true;
+			} 
+
+		} else {
+			if (isset($_REQUEST["$ins_id"])) {
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
+			} else {
+				$ins_fields["data"][$i]["value"] = '';
+			}
+			if (isset($_REQUEST["$filter_id"])) {
+				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+			} else {
+				$fields["data"][$i]["value"] = '';
+			}
+			if ($fields["data"][$i]["type"] == 'i')	{
+				if (isset($_FILES["$ins_id"]) && is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
+					if (!empty($gal_match_regex)) {
+						if (!preg_match("/$gal_match_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+							$smarty->display("error.tpl");
+							die;
+						}
+					}
+					if (!empty($gal_nmatch_regex)) {
+						if (preg_match("/$gal_nmatch_regex/", $_FILES["$ins_id"]['name'], $reqs)) {
+							$smarty->assign('msg', tra('Invalid imagename (using filters for filenames)'));
+							$smarty->display("error.tpl");
+							die;
+						}
+					}
+					$type = $_FILES["$ins_id"]['type'];
+					$size = $_FILES["$ins_id"]['size'];
+					$filename = $_FILES["$ins_id"]['name'];
+					$ins_fields["data"][$i]["value"] = $_FILES["$ins_id"]['name'];
+					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
+					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
+				}
 			}
 		}
 	}
@@ -343,9 +348,12 @@ if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	$last = array();
 	$lst = '';
-	$temp_max = count($fields["data"]);
+	$temp_max = count($xfields["data"]);
 	for ($i = 0; $i < $temp_max; $i++) {
-		if ($fields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin_trackers) {
+		if (($xfields["data"][$i]["isPublic"] == 'y' or $tiki_p_admin_trackers == 'y') and
+			($xfields["data"][$i]['isHidden'] == 'n' or $tiki_p_admin_trackers == 'y') 
+		) {
+			$fields["data"][$i] = $xfields["data"][$i];
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];
 				$ins_fields["data"][$i]["id"] = $fid;

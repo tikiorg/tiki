@@ -1,5 +1,5 @@
 {include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.6 2004-02-23 21:35:10 techtonik Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/simple/tiki.tpl,v 1.7 2004-07-22 13:09:02 mose Exp $ *}
 {* Main template for TikiWiki layout *}
 <div id="main">
   {if $feature_top_bar eq 'y'}
@@ -13,18 +13,24 @@
     {* Calculate size of center div (this is really needed! luci) *}
 
     {php}
-     $add_style=' 100%;';
-     $add_style1=' 75%;';
-     $add_style2=' 80%;';
-     $float='none';
-     $float1='left';
-     $float2='right';
+			$wrapper='wrapper';
+			$maincontent='maincontent';
+			$add_style1=' 75%;';
+			$add_style2=' 80%;';
     {/php}
     {if $feature_left_column eq 'y' and $feature_right_column eq 'n'}
-      {php} $float1='none'; $float2='right'; $add_style1=' 100%;';{/php}
+      {php}
+				$wrapper='leftcolonlywrapper';
+				$maincontent='leftcolonlymaincontent';
+				$add_style1=' 100%;'
+			{/php}
     {/if}
     {if $feature_left_column eq 'n' and $feature_right_column eq 'y'}
-      {php} $float1='left'; $float2='none'; $add_style2=' 100%;' {/php}
+      {php}
+				$wrapper='rightcolonlywrapper';
+				$maincontent='rightcolonlymaincontent';
+				$add_style2=' 100%;'
+			{/php}
     {/if}
     {if $feature_left_column eq 'y' and count($left_modules) gt 0}
 	    {php} $add_style2=' 75%;'; {/php}
@@ -33,23 +39,21 @@
 	    {php} $add_style1=' 80%;'; {/php}
     {/if}    
     {php}
-	  {*$add_style = strlen($add_style1) ? ' style="'.$add_style1.'"' : '';*}
-    {*$add_style2 = strlen($add_style2) ? ' style="'.$add_style2.'"' : '';*}
 	  global $smarty;
 	  $smarty->assign('add_style1', $add_style1);
     $smarty->assign('add_style2', $add_style2);
-    $smarty->assign('float1', $float1);
-    $smarty->assign('float2', $float2);
+    $smarty->assign('wrapper', $wrapper);
+    $smarty->assign('maincontent', $maincontent);
     {/php}
 
     {* Display main content in center column *}    
-    <div class="float-wrapper" style="float: {$float1}; width:{$add_style1}">
-      <div id="maincontent" style="float: {$float2}; width:{$add_style2}">
+    <div class="{$wrapper}">
+      <div id="maincontent" class="{$maincontent}">
         {include file=$mid}
         {if $show_page_bar eq 'y'}
           {include file="tiki-page_bar.tpl"}
         {/if}
-      </div><!-- center -->
+      </div><!-- maincontent, used to be center -->
     
     {* Display left modules if available *}
     <a name="navigation"></a>
@@ -59,7 +63,7 @@
         {section name=homeix loop=$left_modules}
           {$left_modules[homeix].data}
         {/section}
-      </div><!-- used to be left -->
+      </div><!-- modules1, used to be left -->
     {/if}
     </div>
 
@@ -70,7 +74,7 @@
         {section name=homeix loop=$right_modules}
           {$right_modules[homeix].data}
         {/section}
-      </div><!-- used to be right -->
+      </div><!-- modules2, used to be right -->
     {/if}
     
     {if $feature_bot_bar eq 'y'}
@@ -79,9 +83,9 @@
       {include file="tiki-bot_bar.tpl"}
     </div><!-- bottom -->
     {/if}
-  </div><!-- div id="tiki-mid" -->
+  </div><!-- middle -->
 
   
 
-</div><!-- tiki-main -->
+</div><!-- main -->
 {include file="footer.tpl"}

@@ -1,4 +1,10 @@
-<?
+<?php
+// $Header $
+
+// Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 // Each element of $events is an array with (dependent features, category, event name, translated description, default score, default expiration)
 $events = array(
 //array("","General","login",tra("Login"),1,0),
@@ -34,5 +40,4 @@ array("feature_wiki","Wiki","wiki_new",tra("Create a new wiki page"),10,0),
 array("feature_wiki","Wiki","wiki_edit",tra("Edit an existing page"),5,0),
 array("feature_wiki","Wiki","wiki_attach_file",tra("Attach file"),3,0)
 );
-
-
+?>

@@ -13,7 +13,7 @@
 {if $chdata.url}
 {if $feature_menusfolderstyle eq 'y'}
 <a class='separator' href="javascript:icntoggle('menu{$cname}');"><img src="img/icons/fo.gif" border="0" name="menu{$cname}icn" alt=''/></a>&nbsp;
-{else}<a class='separator' href="javascript:toggle('menu{$cname}');">:: </a>{/if} 
+{else}<a class='separator' href="javascript:toggle('menu{$cname}');" title="{tr}Click{/tr}">::&nbsp;</a>{/if} 
 <a href="{$chdata.url|escape}" class="separator">{tr}{$chdata.name}{/tr}</a>
 {else}
 {if $feature_menusfolderstyle eq 'y'}

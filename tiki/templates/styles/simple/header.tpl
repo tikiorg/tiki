@@ -30,6 +30,7 @@
 {elseif $forum_info.name ne ''} : {$forum_info.name}
 {/if}</title>
 
+{php} include("lib/tiki-dynamic-js.php"); {/php}
 <script type="text/javascript" src="lib/tiki-js.js"></script>
 {* --- jscalendar block --- *}
 {if $feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
