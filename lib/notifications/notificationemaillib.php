@@ -98,16 +98,18 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	}
 
 	// admin notifications
-	$emails = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $pageName); // look for pageName and any page
-	foreach ($emails as $email) {
-		if ($wiki_watch_editor != "y" && $email == $edit_user)
-			continue;
-		$not['email'] =  $email;
-		if ($not['user'] = $userlib->get_user_by_email($email))
-			$not['language'] = $tikilib->get_user_preference($not['user'], "language", $defaultLanguage);
-		else
-			$not['language'] = $defaultLanguage;
-		$nots[] = $not;
+	if ($notificationlib) {
+		$emails = $notificationlib->get_mail_events('wiki_page_changes', 'wikipage' . $pageName); // look for pageName and any page
+		foreach ($emails as $email) {
+			if ($wiki_watch_editor != "y" && $email == $edit_user)
+				continue;
+			$not['email'] =  $email;
+			if ($not['user'] = $userlib->get_user_by_email($email))
+				$not['language'] = $tikilib->get_user_preference($not['user'], "language", $defaultLanguage);
+			else
+				$not['language'] = $defaultLanguage;
+			$nots[] = $not;
+		}
 	}
 
 	if (count($nots)) {
