@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.54 2004-04-30 23:53:01 lphuberdeau Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.55 2004-05-01 16:08:11 ggeller Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -458,6 +458,8 @@ ALTER TABLE `tiki_quizzes` ADD `immediateFeedback` char(1) ;
 ALTER TABLE `tiki_quizzes` ADD `showAnswers` char(1) ;
 ALTER TABLE `tiki_quizzes` ADD `shuffleQuestions` char(1) ;
 ALTER TABLE `tiki_quizzes` ADD `shuffleAnswers` char(1) ;
+ALTER TABLE `tiki_quizzes` ADD `publishDate` int(14) ;
+ALTER TABLE `tiki_quizzes` ADD `expireDate` int(14) ;
 
 #
 # Improved Quizzes end
