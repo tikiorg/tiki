@@ -3952,3 +3952,9 @@ INSERT INTO tiki_integrator_rules VALUES (4,1,4,'</body>','','y','n','i','Remove
 INSERT INTO tiki_integrator_rules VALUES (5,1,5,'img src=\"(?!http://)','img src=\"{path}/','y','n','i','Fix images path');
 INSERT INTO tiki_integrator_rules VALUES (6,1,6,'href=\"(?!(#|(http|ftp)://))','href=\"tiki-integrator.php?repID={repID}&file=','y','n','i','Relace internal links to integrator. Dont touch an external links.');
 
+#
+# Integrator permissions
+#
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_integrator', 'Can admin integrator repositories and rules', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_integrator', 'Can view integrated repositories', 'basic', 'tiki');
+

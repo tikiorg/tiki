@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.9 2003-10-19 15:09:07 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_integrator_rules.tpl,v 1.10 2003-11-08 19:50:33 zaufi Exp $ *}
 
 <h2>{tr}Edit Rules for Repository:{/tr} {$name}</h2>
 <div id="page-bar">
@@ -9,8 +9,14 @@
     <td><div class="button2">
       <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}list repositories{/tr}</a>
     </div></td>
+
+    <td>&nbsp;</td>
+
     <td><div class="button2">
-      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view repository{/tr}</a>
+      <a href="tiki-admin_integrator.php?action=edit&repID={$repID|escape}" class="linkbut">{tr}configure this repository{/tr}</a>
+    </div></td>
+    <td><div class="button2">
+      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}view this repository{/tr}</a>
     </div></td>
     
     <td>&nbsp;</td>
