@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.17 2004-04-03 08:00:06 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-mysql.sql,v 1.18 2004-04-10 04:44:30 mose Exp $
 # phpMyAdmin MySQL-Dump
 # version 2.5.1
 # http://www.phpmyadmin.net/ (download page)
@@ -274,6 +274,7 @@ CREATE TABLE tiki_articles (
   title varchar(80) default NULL,
   subtitle varchar(255) default NULL,
   linkto varchar(255) default NULL,
+  lang varchar(16) default NULL,
   state char(1) default 's',
   authorName varchar(60) default NULL,
   topicId int(14) default NULL,
@@ -324,6 +325,11 @@ CREATE TABLE tiki_article_types (
   show_expdate varchar(1) default NULL,
   show_reads varchar(1) default 'y',
   show_size varchar(1) default 'y',
+  show_topline varchar(1) default 'n',
+  show_subtitle varchar(1) default 'n',
+  show_linkto varchar(1) default 'n',
+  show_image_caption varchar(1) default 'n',
+  show_lang varchar(1) default 'n',
   creator_edit varchar(1) default NULL,
   comment_can_rate_article char(1) default NULL,
   PRIMARY KEY  (type)
@@ -4007,7 +4013,10 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_smileys','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_stats','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_submissions','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_surveys','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_tabs','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_tasks','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ticketlib','n');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_ticketlib2','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_theme_control','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_top_bar','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_trackers','n');
