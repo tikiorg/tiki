@@ -57,6 +57,7 @@
       <td style="text-align:center;"><a href="tiki-admin.php?page=userfiles"
           class="link"><img border='0' src='img/icons/admin_userfiles.png'
           alt='icon' /><br/>{tr}User files{/tr}</a></td>
+   </tr><tr>
       <td style="text-align:center;"><a href="tiki-admin.php?page=maps"
           class="link"><img border='0' src='img/icons/admin_maps.png'
           alt='icon' /><br/>{tr}Maps{/tr}</a></td>
