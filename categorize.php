@@ -1,6 +1,6 @@
 <?php 
 
-// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.7 2004-01-28 03:50:48 musus Exp $
+// $Header: /cvsroot/tikiwiki/tiki/categorize.php,v 1.8 2004-01-29 11:22:45 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -40,4 +40,3 @@ if ($feature_categories == 'y') {
 }
 
 ?>
-
