@@ -207,26 +207,8 @@ if($feature_user_watches == 'y') {
 }
 
 if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
-  require_once("lib/hawhaw/hawhaw.inc");
-  error_reporting(E_ALL & ~E_NOTICE);
-  $BlogPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
-  $title = new HAW_text("Tiki Blogs", HAW_TEXTFORMAT_BOLD);
-  $BlogPage->add_text($title);
-  $linkset = new HAW_linkset();
-  for($i=0;$i<count($listpages['data']);$i++) {
-    $blog = $listpages['data'][$i];
-    // check for tiki_p_read_blog here
-    if (isset($blog['title']) && strlen($blog['title'])>0)
-      $label = $blog['title'];
-    else
-      $label = date("d/m/Y [h:i]",$blog['created']);
-
-    $link = new HAW_link($label,"tiki-view_blog_post.php?mode=mobile&blogId=".$_REQUEST['blogId']."&postId=".$blog['postId']);
-    $linkset->add_link($link);
-  }
-  $BlogPage->add_linkset($linkset);
-  $BlogPage->create_page();
-  die;
+  include_once("lib/hawhaw/hawtikilib.php");
+  HAWTIKI_view_blog($listpages, $_REQUEST['blogId']);
 }
 
 

@@ -137,24 +137,8 @@ $section='blogs';
 include_once('tiki-section_options.php');
 
 if(isset($_REQUEST['mode']) && $_REQUEST['mode']=='mobile') {
-  require_once("lib/hawhaw/hawhaw.inc");
-  error_reporting(E_ALL & ~E_NOTICE);
-  $BlogPage = new HAW_deck("Tiki", HAW_ALIGN_CENTER);
-  $title = new HAW_text("Tiki Blogs", HAW_TEXTFORMAT_BOLD);
-  $BlogPage->add_text($title);
-  $linkset = new HAW_linkset();
-  for($i=0;$i<count($listpages['data']);$i++) {
-    $blog = $listpages['data'][$i];
-    // check for tiki_p_read_blog here
-    if($blog['individual'] == 'n' && $tiki_p_read_blog == 'y' ||
-    $blog['individual_tiki_p_read_blog'] == 'y') {
-      $link2 = new HAW_link($blog['title'],"tiki-view_blog.php?mode=mobile&blogId=".$blog['blogId']);
-      $linkset->add_link($link2);
-    }
-  }
-  $BlogPage->add_linkset($linkset);
-  $BlogPage->create_page();
-  die;
+  include_once("lib/hawhaw/hawtikilib.php");
+  HAWTIKI_list_blogs($listpages, $tiki_p_read_blog);
 }
 
 
