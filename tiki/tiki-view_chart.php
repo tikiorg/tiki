@@ -60,6 +60,8 @@ $smarty->assign('user_voted_chart',$user_voted_chart?'y':'n');
 $items = $chartlib->get_ranking($chart_info['chartId'],$_REQUEST['period']);
 $smarty->assign_by_ref('items',$items);
 
+$sameurl_elements = Array('offset','sort_mode','where','find','chartId');
+
 $smarty->assign('mid','tiki-view_chart.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 ?> 

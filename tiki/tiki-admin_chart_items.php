@@ -87,6 +87,7 @@ if($items["cant"] > ($offset+$maxRecords)) {  $smarty->assign('next_offset',$off
 if($offset>0) {  $smarty->assign('prev_offset',$offset - $maxRecords);  } else {  $smarty->assign('prev_offset',-1); }
 $smarty->assign_by_ref('items',$items["data"]);
 
+$sameurl_elements = Array('offset','sort_mode','where','find','chartId','itemId');
 
 $smarty->assign('mid','tiki-admin_chart_items.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");

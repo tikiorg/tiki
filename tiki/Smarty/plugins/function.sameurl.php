@@ -1,12 +1,12 @@
 <?php
-
+// Do NOT change this plugin under any circunstances!
 
 function smarty_function_sameurl($params, &$smarty)
 {
+    global $sameurl_elements;
     $data = $_SERVER['SCRIPT_NAME'];
     $first=true;
     $sets=Array();
-    if(isset($_REQUEST['save'])) unset($_REQUEST['save']);
     foreach($params as $name=>$val) {
     	if(isset($_REQUEST[$name])) {
     	  $_REQUEST[$name]=$val;
@@ -17,7 +17,7 @@ function smarty_function_sameurl($params, &$smarty)
       		} else {
         		$sep='&amp;';
       		}	
-      		if(!is_array($name)&&!is_array($val)) {
+      		if(in_array($name,$sameurl_elements)&&!is_array($name)&&!is_array($val)) {
  	        if(!in_array($name,$sets)) {
         		$data.=$sep.urlencode($name).'='.urlencode($val);
         		$sets[]=$name;
@@ -37,7 +37,7 @@ function smarty_function_sameurl($params, &$smarty)
       if(isset($$name)) {
         $val = $$name;
       }
-      if(!is_array($name)&&!is_array($val)) {
+      if(in_array($name,$sameurl_elements)&&!is_array($name)&&!is_array($val)) {
       if(!in_array($name,$sets)) {
         $data.=$sep.urlencode($name).'='.urlencode($val);
         $sets[]=$name;
