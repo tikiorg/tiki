@@ -22,14 +22,14 @@ if ($user) {
 	$smarty->assign_by_ref("ccuser", $ccuser);
 
 	// ----------------- LEDGERS ----------------------------------------------
-	if ($page == 'ledgers' or $page == 'my_ledgers') {
+	if ($page == 'ledgers') {
 		if (!isset($_REQUEST["sort_mode"])) {
 			$sort_mode = 'last_tr_date_desc';
 			$_REQUEST["sort_mode"] = $sort_mode;
 		} else {
 			$sort_mode = $_REQUEST["sort_mode"];
 		}
-		if ($page == 'ledgers' and $tiki_p_cc_admin == 'y') {
+		if ($_SESSION['viewrange'] = 'all' and $tiki_p_cc_admin == 'y') {
 			if (isset($_REQUEST['cc_id'])) {
 				$thelist = $cclib->get_ledgers(0,-1,$sort_mode,false,$_REQUEST['cc_id']);
 				$smarty->assign("ccid",$_REQUEST['cc_id']);

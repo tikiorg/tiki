@@ -159,24 +159,24 @@ class CcLib extends UsersLib {
 		return $retval;
 	}
 
-	function is_currency($id) {
-		return $this->getOne('select count(*) from `cc_cc` where `id`=?',array($id));
+	function is_currency($id,$cpun='') {
+		return $this->getOne('select count(*) from `cc_cc` where `id`=? and `cpun`=?',array($id));
 	}
 
-	function replace_currency($owner,$id,$name,$description,$approval='n',$listed='y',$seq=false) {
+	function replace_currency($owner,$id,$name,$description,$approval='n',$listed='y',$seq=false,$cpun='') {
 		global $user;
 		if ($seq) {
-			$query = "update `cc_cc` set `cc_name`=?,`cc_description`=?,`owner_id`=?,`requires_approval`=?,`listed`=? where `seq`=?";
-			$this->query($query,array($name,$description,$owner,$approval,$listed,$seq));
+			$query = "update `cc_cc` set `cc_name`=?,`cc_description`=?,`owner_id`=?,`requires_approval`=?,`listed`=?,`cpun`=? where `seq`=?";
+			$this->query($query,array($name,$description,$owner,$approval,$listed,$seq,$cpun));
 			$this->tracklog("$user changed $id");
 			return true;
 		} else {
-			if ($this->is_currency($id)) {
+			if ($this->is_currency($id,$cpun)) {
 				$this->msg = "That currency already exists.";
 				return false;
 			} else {
-				$query = "insert into `cc_cc`(`id`,`cc_name`,`cc_description`,`owner_id`,`requires_approval`,`listed`) values(?,?,?,?,?,?)";
-				$this->query($query,array($id,$name,$description,$owner,$approval,$listed));
+				$query = "insert into `cc_cc`(`id`,`cc_name`,`cc_description`,`owner_id`,`requires_approval`,`listed`,`cpun`) values(?,?,?,?,?,?,?)";
+				$this->query($query,array($id,$name,$description,$owner,$approval,$listed,$cpun));
 				return true;
 			}
 		}
@@ -301,8 +301,78 @@ class CcLib extends UsersLib {
 			$this->update_ledger($cc,$type,$from_user,$amount,$from_ledger,$date);
 			$this->update_ledger($cc,$type,$to_user,-$amount,$to_ledger,$date);
 		}
+	}
 
+	function decsv($str) {
+		$ar = split('","',substr($str,1,-1));
+	}
 
+	function list_providers($url,$refresh=false) {
+		global $cc_cpun;
+		if ($refresh) {
+			if (!checkdnsrr($url)) {
+				$this->msg = sprintf(tra('DNS check failed for %s'),$url);
+			} else {
+				$fp = @ fsockopen($url, 80, $errno, $errstr, 30);	
+				if (!$fp) {
+					$this->msg = sprintf(tra('Request failed for %s'),$url)."<br />".$errstr;
+				} else {
+					$req = "GET /ccsp.txt HTTP/1.1\r\rHost: $url\r\nConnection: Close\r\n";
+					fwrite($fp,$req);
+					while (!feof($fp)) {
+						$pr[] = split(',',fgets($fp,1024));
+						if ($pr[0] != $cc_cpun and count($pr) == 3) {
+							$pr[3] = time();
+							$pr[4] = 'y';
+							$data[2] = preg_replace(array('/:/','/\//'),array('@','.'),$data[2]);
+							$prov["{$pr[0]}"] = $pr;
+						}
+					}
+					fclose($fp);
+					$result = $this->query('select `cpun`,`email`,`url`,`lastupdate`,`status` from `cc_providers`',array());
+					while ($res = $result->fetchRow()) {
+						if (isset($prov["{$res['cpun']}"])) {
+							$dr = $prov["{$res['cpun']}"];
+							$query = "update `cc_providers` set `url`=?,`email`=?,`lastupdate`=?,`status`=? where `cpun`=?";
+							$this->query($query,array($dr[1],$dr[2],$dr[3],'y',$dr[0]));
+							$prov["{$res['cpun']}"] = array();
+						} else {
+							$query = "update `cc_providers` set `status`=?,`lastupdate`=? where `cpun`=?";
+							$this->query($query,array('n',$now,$res['cpun']));
+						}
+					}
+					foreach ($prov as $proo) {
+						if (count($prov)) {
+							$query = "insert into `cc_providers`(`cpun`,`email`,`url`,`lastupdate`,`status`) values (?,?,?,?,?)";
+							$this->query($query,$prov);
+						}
+					}
+					$allp = array();
+					foreach ($prov as $p) {
+						$fp = @ fsockopen($p[1], 80, $errno, $errstr, 30);
+						if ($fp) {
+							$req = "GET /ccsp.php HTTP/1.1\r\rHost: ".$p[1]."\r\nConnection: Close\r\n";
+							fwrite($fp,$req);
+							while (!feof($fp)) {
+								$a = split('","',substr(fgets($fp,1025),1,-1));
+								$this->replace_currency($a[0],$a[1],$a[2],stripslashes($a[3]),$a[4],'y',false,$p[0]);
+							}
+							fclose($fp);
+						}
+					}
+				}
+			}
+			if (count($allp)) {
+				foreach ($allp as $url=>$data) {
+					$data[2] = preg_replace(array('/:/','/\//'),array('@','.'),$data[2]);
+				}
+			}
+		}
+		$result = $this->query('select `cpun`,`email`,`url`,`lastupdate`,`status` from `cc_providers`',array());
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		return $ret;
 	}
 	
 }
