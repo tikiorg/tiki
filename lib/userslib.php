@@ -791,12 +791,19 @@ class UsersLib extends TikiLib {
     }
 
     function change_permission_level($perm, $level) {
+    global $cachelib;
+    
+    $cachelib->invalidate("allperms");
+    
 	$query = "update `users_permissions` set `level` = ?
 		where `permName` = ?";
 	$this->query($query, array($level, $perm));
     }
 
     function assign_level_permissions($group, $level) {
+    global $cachelib;
+    $cachelib->invalidate("allperms");
+
 	$query = "select `permName` from `users_permissions` where `level` = ?";
 	$result = $this->query($query, array($level));
 	$ret = array();
@@ -807,6 +814,10 @@ class UsersLib extends TikiLib {
     }
 
     function remove_level_permissions($group, $level) {
+    global $cachelib;
+    
+    $cachelib->invalidate("allperms");
+
 	$query = "select `permName` from `users_permissions` where `level` = ?";
 
 	$result = $this->query($query, array($level));
@@ -818,6 +829,10 @@ class UsersLib extends TikiLib {
     }
 
     function create_dummy_level($level) {
+    global $cachelib;
+    
+    $cachelib->invalidate("allperms");
+
 	$query = "delete from `users_permissions` where `permName` = ?";
 	$result = $this->query($query, array(''));
 	$query = "insert into `users_permissions`(`permName`, `permDesc`,
@@ -853,7 +868,7 @@ class UsersLib extends TikiLib {
 	return $res;
     }
 
-    function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_desc', $find = '', $type = '', $group = '') {
+  function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_desc', $find = '', $type = '', $group = '') {
 	$values = array();
 
 	$sort_mode = $this->convert_sortmode($sort_mode);
@@ -923,6 +938,10 @@ class UsersLib extends TikiLib {
     }
 
     function assign_permission_to_group($perm, $group) {
+    global $cachelib;
+    
+    $cachelib->invalidate("allperms");
+
 	$query = "delete from `users_grouppermissions` where `groupName` = ?
 		and `permName` = ?";
 	$result = $this->query($query, array($group, $perm));
@@ -984,6 +1003,10 @@ class UsersLib extends TikiLib {
     }
 
     function remove_permission_from_group($perm, $group) {
+    global $cachelib;
+    
+    $cachelib->invalidate("allperms");
+
 	$query = "delete from `users_grouppermissions` where `permName` = ?
 		and groupName = ?";
 	$result = $this->query($query, array($perm, $group));
@@ -1001,6 +1024,7 @@ class UsersLib extends TikiLib {
     }
 
     function assign_user_to_group($user, $group) {
+    
 	$userid = $this->get_user_id($user);
 
 	$query = "insert into `users_usergroups`(`userId`,`groupName`) values(?,?)";
@@ -1169,6 +1193,7 @@ class UsersLib extends TikiLib {
     }
 
     function add_group($group, $desc, $home) {
+    
 	if ($this->group_exists($group))
 	    return false;
 
