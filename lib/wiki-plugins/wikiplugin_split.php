@@ -1,7 +1,7 @@
 <?php
 /**
  * \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.11 2003-11-02 02:50:01 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_split.php,v 1.12 2003-11-02 03:08:22 zaufi Exp $
  * 
  * \brief {SPLIT} wiki plugin implementation
  * Usage:
@@ -72,7 +72,6 @@ function wikiplugin_split($data, $params) {
         $idx = 1;
 	    foreach ($r as $i)
         {
-            var_dump($maxcols - $idx);
             // Generate colspan for last element if needed
             $colspan = ((count($r) == $idx) && (($maxcols - $idx) > 0) ? ' colspan="'.($maxcols - $idx + 1).'"' : '');
             $idx++;
