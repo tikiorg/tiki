@@ -14,6 +14,7 @@
 {include file="tiki-preview.tpl"}
 {/if}
 <h1>{tr}Edit{/tr}: {$page}</h1>
+{assign var=area_name value="editwiki"}
 {if $page eq 'SandBox'}
 <div class="wikitext">
 {tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appeareance of the page, no versions are stored for this page.{/tr}
@@ -86,7 +87,6 @@
 
 <table class="normal">
 <tr><td class="formcolor">{tr}Quicklinks{/tr}:</td><td class="formcolor">
-{assign var=area_name value="editwiki"}
 {include file=tiki-edit_help_tool.tpl}
 </td></tr>
 
@@ -138,8 +138,7 @@
 {if $feature_wiki_description}
 <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><input size="80" class="wikitext" type="text" name="description" value="{$description|escape}" /></td>
 {/if}
-<tr><td class="formcolor">{tr}Edit{/tr}:<br/><br />[<a class="link" href="javascript:textareaSize('editwiki', +20, 0)">{tr}bigger area{/tr}</a>]
-<br/>[<a class="link" href="javascript:textareaSize('editwiki', -20, 0)">{tr}smaller area{/tr}</a>]</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Edit{/tr}:<br/><br />{include file="textareaSize.tpl"}</td><td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="22" wrap="virtual" cols="80">{$pagedata|escape}</textarea>
 </td>
 {if $feature_wiki_footnotes eq 'y'}

@@ -1,0 +1,5 @@
+{* $Header: /cvsroot/tikiwiki/tiki/templates/textareaSize.tpl,v 1.1 2003-10-28 15:57:25 sylvieg Exp $ *}
+<a href="javascript:textareaSize('{$area_name}', +10, 0)" alt="{tr}Enlarge area height{/tr}" title="{tr}Enlarge area height{/tr}"><img src="img/icons2/enlargeH.gif" border="0"></a>
+<a href="javascript:textareaSize('{$area_name}', -10, 0)" alt="{tr}Reduce area height{/tr}" title="{tr}Reduce area height{/tr}"><img src="img/icons2/reduceH.gif" border="0"></a>
+<a href="javascript:textareaSize('{$area_name}', 0, +10)" alt="{tr}Enlarge area width{/tr}" title="{tr}Enlarge area width{/tr}"><img src="img/icons2/enlargeW.gif" border="0"></a>
+<a href="javascript:textareaSize('{$area_name}', 0, -10)" alt="{tr}Reduce area width{/tr}" title="{tr}Reduce area width{/tr}"><img src="img/icons2/reduceW.gif" border="0"></a>
