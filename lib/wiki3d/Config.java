@@ -9,7 +9,7 @@ static Color facecolorblack=new Color(0,0,0);
 static Color colorface1=new Color(255,0,0);//color of the navigator
 static Color colorface2=new Color(0,255,255);//-do- reverse side
 static Color graphcolor=new Color(255,255,0);
-static Color graphstringcolor =new Color(10,10,10);
+static Color graphstringcolor =new Color(80,80,80);
 
 static Color linkballcolor=new Color(255,0,0);//The link node color
 static int  ballsize=30; //size of the nodes
@@ -23,7 +23,7 @@ static int facesize=30;//size of the navigator
 
 static int fieldOfView=200;//field of view
 static int faceadjust=50;//to adjust the position of the navigator box
-static int controlwidth=100;//width of the navigator box
+static int controlwidth=0;//width of the navigator box
 static int windowwidth=600;//
 static int gearing=1;//ratio movement of the navigator to the graph to slow down with increase
 static int textsize = 40;

@@ -62,7 +62,7 @@ public class Node extends Vertex {
 
 		SpeedVector sp = new SpeedVector(x - node.x, y - node.y, z - node.z);
 
-		float distance = 2f;
+		float distance = 2.5f;
 		float module = sp.module();
 		float d;
 
