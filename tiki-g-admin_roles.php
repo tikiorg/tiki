@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_roles.php,v 1.9 2004-01-21 13:56:00 halon Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_roles.php,v 1.10 2004-01-29 02:31:50 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -90,8 +90,8 @@ $smarty->assign('find_users', $_REQUEST['find_users']);
 $users = $userlib->get_users(0, -1, 'login_asc', $_REQUEST['find_users']);
 $smarty->assign_by_ref('users', $users['data']);
 
-$groups = $userlib->get_groups(0, -1, 'groupName_asc', '');
-$smarty->assign_by_ref('groups', $groups['data']);
+$groups = $userlib->list_all_groups();
+$smarty->assign_by_ref('groups', $groups);
 
 $roles = $roleManager->list_roles($_REQUEST['pid'], 0, -1, 'name_asc', '');
 $smarty->assign_by_ref('roles', $roles['data']);
