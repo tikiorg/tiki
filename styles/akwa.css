@@ -1126,6 +1126,10 @@ div.messureadbody {
 .readlink:hover {   font-size: 10px;  color : #636363; text-decoration: underline;}
 
 /* calendar styles */
+#calendar
+{
+width:100%;
+}
 .Cal0, 
 .Cal1, 
 .Cal2

@@ -43,14 +43,8 @@ DIV#tiki-main {  margin: 0px;  }
 font-family: "Trebuchet MS", Arial, sans-serif;
 font-size: .9em;
 background-color: #C7D0D9; 
-height: 40px;
+height: 41px;
 border-bottom: 1px solid #8CACBB;
-voice-family: "\"}\"";
-voice-family: inherit;
-height: 41px;
-}
-html>body #tiki-top {
-height: 41px;
 }
 #tiki-top img {
 border: 0;
@@ -91,10 +85,13 @@ text-align: center;
 height: 40px;
 }
 
-
+.topform {
+	display: inline;
+}
 
 /* This is the middle */
-#tiki-mid { 
+#tiki-mid {
+clear: both;
 }
 
 /* And this is the footer */
@@ -106,15 +103,16 @@ margin-bottom: 10px;
 }
 
 #topmenu {  
-background-image: url(/styles/tiki/mozilla-menubar.png);
+float: right;
+background-image: url(styles/tiki/mozilla-menubar.png);
 border-bottom: 1px solid #8CACBB;
-margin-bottom: 5px;
+margin: 5px;
 height: 22px;
 padding-left: 10px;
 z-index: 10;
+clear: both;
 }
 #topmenu #usermenu {
-position: absolute;
 background-color: #E9ECEF;
 height: 20px;
 margin-top: 9px;
@@ -122,12 +120,9 @@ border: 1px solid #8CACBB;
 -moz-border-radius: 6px 6px 0px 0px;
 border-bottom: 0;
 right: 10px;
-top: 36px;
 padding: 3px 10px 0px 10px;
 }
 #topmenu #toplinks {
-position: absolute;
-top: 39px;
 height: 20px;
 margin-top: 9px;
 z-index: 1;
@@ -149,7 +144,7 @@ background-color: #E9ECEF;
 #leftcolumn {  
 position: absolute;
 left: 10px;
-top: 80px;
+margin-top: 10px;
 width: 190px;
 }
 #centercolumn { 
@@ -168,7 +163,7 @@ margin-right: 190px;
 #rightcolumn {  
 position: absolute;
 right: 10px;
-top: 80px;
+margin-top: 10px;
 width: 190px;
 }
 
@@ -1247,6 +1242,11 @@ div.messureadbody {
 
 
 /* calendar styles */
+#calendar
+{
+width:100%;
+}
+
 .Cal0, 
 .Cal1, 
 .Cal2
