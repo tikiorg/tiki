@@ -2607,6 +2607,14 @@ function cache_url($url, $data = '') {
 /*shared*/
 function remove_all_versions($page, $comment = '') {
 	$this->invalidate_cache($page);
+  //Delete structure references before we delete the page
+  $query  = "select `page_ref_id` ";
+  $query .= "from `tiki_structures` ts, `tiki_pages` tp ";
+  $query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
+  $result = $this->query($query, array( $page ) );
+  while ($res = $result->fetchRow()) {
+    $this->remove_from_structure($res["page_ref_id"]);
+  }
 	$query = "delete from `tiki_pages` where `pageName` = ?";
 	$result = $this->query($query, array( $page ) );
 	$query = "delete from `tiki_history` where `pageName` = ?";
@@ -2615,29 +2623,21 @@ function remove_all_versions($page, $comment = '') {
 	$result = $this->query($query, array( $page ) );
 	$action = "Removed";
 	$t = date("U");
-	$query = "insert into
-	`tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`)
-	values(?,?,?,?,?,?)";
+	$query = "insert into ";
+	$query .= "`tiki_actionlog`(`action`,`pageName`,`lastModif`,`user`,`ip`,`comment`) ";
+	$query .= "values(?,?,?,?,?,?)";
 	$result = $this->query($query, array(
 		$action,$page,(int) $t,'admin',$_SERVER["REMOTE_ADDR"],$comment
 		) );
-    $this->remove_object('wiki page', $page);
+  $this->remove_object('wiki page', $page);
     
-    //Get a list of structure references for this page
-    $query  = "select `page_ref_id` ";
-    $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
-	  $query .= "where ts.`page_id`=tp.`page_id` and `pageName`=?";
-    $result = $this->query($query, array( $page ) );
-    while ($res = $result->fetchRow()) {
-      $this->remove_from_structure($res["page_ref_id"]);
-    }
-    return true;
+  return true;
 }
 
 /*shared*/
 function remove_from_structure($page_ref_id) {
     // Now recursively remove
-    $query  = "select `page_ref_id`";
+    $query  = "select `page_ref_id` ";
     $query .= "from `tiki_structures` as ts, `tiki_pages` as tp ";
 	  $query .= "where ts.`page_id`=tp.`page_id` and `parent_id`=?";
     $result = $this->query($query, array( $page_ref_id ) );
