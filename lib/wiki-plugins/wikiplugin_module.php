@@ -1,5 +1,5 @@
 <?php
-/* $Id: wikiplugin_module.php,v 1.19 2004-02-17 01:42:43 mose Exp $
+/* $Id: wikiplugin_module.php,v 1.20 2004-05-06 00:18:14 mose Exp $
 Displays a module inlined in page
 
 Parameters
@@ -71,7 +71,9 @@ function wikiplugin_module($data, $params) {
 			$args = '';
 		}
 
-		$cachefile = 'modules/cache/' . $tikidomain . 'mod-' . $module . '.tpl.'.$language.'.cache';
+		$cachefile = 'modules/cache/';
+		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
+		$cachefile.= 'mod-' . $module . '.tpl.'.$language.'.cache';
 		$phpfile = 'modules/mod-' . $module . '.php';
 		$template = 'modules/mod-' . $module . '.tpl';
 		$nocache = 'templates/modules/mod-' . $module . '.tpl.nocache';
