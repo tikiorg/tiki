@@ -23,6 +23,11 @@ if(!isset($polllib)) {
   $polllib = new PollLib($dbTiki);
 }
 
+$smarty->assign('wysiwyg','n');
+if(isset($_REQUEST['wysiwyg'])&&$_REQUEST['wysiwyg']=='y') {
+  $smarty->assign('wysiwyg','y');
+}
+
 // PERMISSIONS: NEEDS p_admin
 if($user != 'admin') {
   if($tiki_p_admin != 'y') {
