@@ -160,7 +160,7 @@ class RSSLib extends TikiLib {
 			$data = $this->rss_iconv($this->httpRequest($info['url']));
 			$now = date("U");
 			$query = "update `tiki_rss_modules` set `content`=?, `lastUpdated`=? where `rssId`=?";
-			$result = $this->query($query,array($data,(int) $now, (int) $rssId));
+			$result = $this->query($query,array((string)$data,(int) $now, (int) $rssId));
 			return $data;
 		} else {
 			return false;
