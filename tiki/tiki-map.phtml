@@ -11,13 +11,12 @@ if(@$feature_maps != 'y') {
 if (isset($_REQUEST['mapfile']))
 {
   $mapfile = $_REQUEST['mapfile'];
-  $map = ms_newMapObj($map_path.$mapfile);
 } else
 {
-  $mapfile = "pacific.map";
-  $map = ms_newMapObj($map_path.$default_map);
+  $mapfile = $default_map;
 }
-
+$map = ms_newMapObj($map_path.$mapfile);
+  
 $layerbol=FALSE;
 if (isset($_REQUEST['size']))
 {

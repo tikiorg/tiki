@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.14 2003-08-15 00:04:46 zaufi Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.15 2003-08-25 09:21:52 franck Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -360,3 +360,17 @@ CREATE TABLE /* IF NOT EXISTS */ sessions (
        PRIMARY KEY (SESSKEY),  
        KEY (EXPIRY) 
 );
+
+CREATE TABLE /* IF NOT EXISTS */ tiki_download (
+  id int(11) NOT NULL auto_increment,
+  object varchar(255) NOT NULL default '',
+  userId int(8) NOT NULL default '0',
+  type varchar(20) NOT NULL default '',
+  date int(14) NOT NULL default '0',
+  IP varchar(50) NOT NULL default '',
+  PRIMARY KEY  (id),
+  KEY object (object,userId,type),
+  KEY userId (userId),
+  KEY type (type),
+  KEY date (date)
+);  

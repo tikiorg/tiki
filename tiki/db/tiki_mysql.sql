@@ -2485,3 +2485,20 @@ CREATE TABLE users_users (
   PRIMARY KEY (userId)
 );
 
+--
+-- Table: tiki_download
+--
+DROP TABLE IF EXISTS tiki_download;
+CREATE TABLE tiki_download (
+  id int(11) NOT NULL auto_increment,
+  object varchar(255) NOT NULL default '',
+  userId int(8) NOT NULL default '0',
+  type varchar(20) NOT NULL default '',
+  date int(14) NOT NULL default '0',
+  IP varchar(50) NOT NULL default '',
+  PRIMARY KEY  (id),
+  KEY object (object,userId,type),
+  KEY userId (userId),
+  KEY type (type),
+  KEY date (date)
+);

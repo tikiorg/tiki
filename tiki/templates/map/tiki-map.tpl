@@ -71,7 +71,7 @@
 		  </td><td>
 		  {if $layer_download[j] eq "T"}
 		  <small>
-		  <a href="tiki-map_download.php?mapfile={$mapfile}&layer={$my_layers[j]->name}">D</a>
+		  <a href="tiki-map_download.phtml?mapfile={$mapfile}&layer={$my_layers[j]->name}">D</a>
 		  </small>
 		  {/if}
 		  </td></tr>
