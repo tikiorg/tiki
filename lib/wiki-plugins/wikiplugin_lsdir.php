@@ -1,6 +1,6 @@
 <?php
 /*
- * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lsdir.php,v 1.2 2004-07-02 18:48:40 teedog Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_lsdir.php,v 1.3 2004-07-02 19:08:26 teedog Exp $
  *
  * TikiWiki LSDIR plugin: lists files in a directory
  * 
@@ -28,13 +28,21 @@ function wikiplugin_lsdir($data, $params) {
 
 	extract ($params);
 	
+	// make sure urlprefix has a trailing slash
+	if (!empty($urlprefix)) {
+		$tail = strlen($urlprefix) - 1;
+		if (substr($urlprefix, $tail) != '/') {
+			$urlprefix .= '/';
+		}
+	}
+	
 	if ($limit>0) {
 		$count = 0;
 	} else {
 		$count = -1;
 	}
 	
-	// fileatime, filectime, filemtime are PHP functions
+	// fileatime, filectime, filemtime, filesize are PHP functions
 	if ($sort == 'atime') {
 		$getkey = 'fileatime';
 	} elseif ($sort == 'ctime') {
@@ -44,16 +52,17 @@ function wikiplugin_lsdir($data, $params) {
 	} elseif ($sort == 'size') {
 		$getkey = 'filesize';
 	}
-
+	
+	// supress the PHP error because that causes Tiki to crash
 	$dh = @opendir($dir);
 	
 	if (!$dh) {
-		$error = "<span class='attention'>". tra('Permission denied when opening') . " <b>$dir</b></span>";
+		$error = "<span class='attention'><b>$dir</b> ". tra("could not be opened because it doesn't exist or permission was denied") ."</span>";
 		return $error;
 	}
 	
 	while ($file = readdir($dh)) {
-		if (empty($filter) || strpos($file,$filter)) {
+		if (empty($filter) || stristr($file,$filter)) {
 			//Don't list subdirectories
 			if (!is_dir("$dir/$file")) {
 				if ($sort == 'name') {
