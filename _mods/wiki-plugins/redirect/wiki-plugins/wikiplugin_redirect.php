@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/redirect/wiki-plugins/wikiplugin_redirect.php,v 1.1 2004-10-18 11:24:20 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/redirect/wiki-plugins/wikiplugin_redirect.php,v 1.2 2005-02-08 22:17:16 mhausi Exp $
 
 // Wiki plugin to redirect to another page.
 // damian aka damosoft 30 March 2004
@@ -10,17 +10,20 @@ function wikiplugin_redirect_help() {
 }
 
 function wikiplugin_redirect($data, $params) {
-	
+
 	extract ($params);
+	$areturn = '';
 
 	if (!isset($page)) {
 
 		$areturn = "REDIRECT plugin: No page specified!";
 	
 	} else {
-
-		header("Location: tiki-index.php?page=$page");
-	
+		if ((isset($_REQUEST['redirectpage'])) && ($page == $_REQUEST['redirectpage'])){
+			$areturn = "REDIRECT plugin: redirect loop dedected!";
+		}else{
+			header("Location: tiki-index.php?page=$page&redirectpage=".$_REQUEST['page']);
+		}
 	}
 
 	return $areturn;
