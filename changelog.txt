@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.150 2004-03-15 21:27:27 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.151 2004-03-25 06:19:08 dabright Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -17,6 +17,15 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 
 Version 1.9 
 <http://tikiwiki.org/ReleaseProcess19>
+* [FIX] Remove a hardcoded courier font selection for monospaced Wiki text
+  and just use a tt tag pair.
+* [FIX] Change parse_data to properly recognize a .. .page. .. marker. Without
+  this change, lists and div's were not being properly closed out.
+* [FIX] Change some hardcoded <br> and <hr> tags to be the XHTML compatible
+  form (<br /> and <hr />).
+* [MOD] Add a Wiki formatting mode that will put consecutive lines of plain
+  text into a block surrounded by HTML paragraph tags. This behavior is
+  conditioned on the $feature_wiki_paragraph_formatting flag.
 * [MOD] Parse absolute URI correctly in group home page setting
 * [NEW] plugin ATTACH to list attachements on a wiki page
 * [MOD] Avoid sending user back to registration page on first login 

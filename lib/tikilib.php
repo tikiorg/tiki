@@ -30,11 +30,11 @@ class TikiLib extends TikiDB {
 
     // Constructor receiving a PEAR::Db database object.
     function TikiLib($db) {
-  if (!$db) {
-      die ("Invalid db object passed to TikiLib constructor");
-  }
+	if (!$db) {
+	    die ("Invalid db object passed to TikiLib constructor");
+	}
 
-  $this->db = $db;
+	$this->db = $db;
     }
 
 
@@ -1259,8 +1259,8 @@ function spellcheckreplace($what, $where, $language, $element) {
       $sug = $asugs[$i];
 
       // If you want to use the commented out line below, please remove the \ in <\/script>; it was breaking vim highlighting.  -rlpowell
-      // $repl.="<script language='Javascript' type='text/javascript'>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");<\/script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br/>";
-      $repl .= "<a href=\\\"javascript:param=doo_${word}_$i();replaceLimon(param);\\\">$sug</a><br/>";
+      // $repl.="<script language='Javascript' type='text/javascript'>param_${word}_$i = new Array(\\\"$element\\\",\\\"$word\\\",\\\"$sug\\\");<\/script><a href=\\\"javascript:replaceLimon(param_${word}_$i);\\"."\">$sug</a><br />";
+      $repl .= "<a href=\\\"javascript:param=doo_${word}_$i();replaceLimon(param);\\\">$sug</a><br />";
       $trl .= "<script language='Javascript' type='text/javascript'>function doo_${word}_$i(){ aux = new Array(\"$element\",\"$word\",\"$sug\"); return aux;}</script>";
         }
 
@@ -1268,7 +1268,7 @@ function spellcheckreplace($what, $where, $language, $element) {
         $popup_text = " <a title='$sug' style='text-decoration:none; color:red;' onClick='return overlib(\"" . $repl . "\",STICKY,CAPTION,\"Spellchecker suggestions\");'>$word</a> ";
     }
 
-    //print("popup: <pre>".htmlentities($popup_text)."</pre><br/>");
+    //print("popup: <pre>".htmlentities($popup_text)."</pre><br />");
     if ($popup_text) {
         $where = preg_replace("/\s$word\s/", $popup_text, $where);
     } else {
@@ -1299,7 +1299,7 @@ function diff2($page1, $page2) {
     $page2 = split("\n", $page2);
     $z = new WikiDiff($page1, $page2);
     if ($z->isEmpty()) {
-  $html = '<hr><br/>[' . tra("Versions are identical"). ']<br/><br/>';
+  $html = '<hr><br />[' . tra("Versions are identical"). ']<br /><br />';
     } else {
   //$fmt = new WikiDiffFormatter;
   $fmt = new WikiUnifiedDiffFormatter;
@@ -1479,7 +1479,7 @@ function get_categorypath($cats) {
       $info = $categlib->get_category($info["parentId"]);
       $path = '<a class="categpath" href="tiki-browse_categories.php?parentId=' . $info["categId"] . '">' . $info["name"] . '</a> > ' . $path;
   }
-  $catpath .= $path . '</span><br/>';
+  $catpath .= $path . '</span><br />';
     }
     return $catpath;
 }
@@ -3890,6 +3890,60 @@ function split_assoc_array($parts, $assoc) {
     return $assoc;
 }
 
+/**
+ * close_blocks - Close out open paragraph, lists, and div's
+ *
+ * During parse_data, information is kept on blocks of text (paragraphs, lists, divs)
+ * that need to be closed out. This function does that, rather than duplicating the
+ * code inline.
+ *
+ * @param	$data			- Output data
+ * @param	$in_paragraph		- TRUE if there is an open paragraph
+ * @param	$listbeg		- array of open list terminators
+ * @param	$divdepth		- array indicating how many div's are open
+ * @param	$close_paragraph	- TRUE if open paragraph should be closed.
+ * @param	$close_lists		- TRUE if open lists should be closed.
+ * @param	$close_divs		- TRUE if open div's should be closed.
+*/
+/* private */
+function close_blocks(&$data,
+		      &$in_paragraph,
+		      &$listbeg,
+		      &$divdepth,
+		      $close_paragraph,
+		      $close_lists,
+		      $close_divs)
+{
+    $closed = 0;	// Set to non-zero if something has been closed out
+    // Close the paragraph if inside one.
+    if ($close_paragraph && $in_paragraph) {
+        $data .= "</p>";	
+	$in_paragraph = 0;
+	$closed++;
+    }
+    // Close open lists
+    if ($close_lists) {
+        while (count($listbeg)) {
+	    $data .= array_shift($listbeg);
+	    $closed++;
+	}
+    }
+    
+    // Close open divs
+    if ($close_divs) {
+        for ($i = 1; $i <= count($divdepth); $i++) {
+	    $data .= '</div>';
+	    $closed++;
+	}
+    }
+
+    if ($closed) {
+        $data .= "\n";
+    }
+
+    return $closed;
+}
+
 //PARSEDATA
 function parse_data($data) {
     global $page_regex;
@@ -3914,6 +3968,7 @@ function parse_data($data) {
     global $user;
     global $tikidomain;
     global $feature_wikiwords;
+    global $feature_wiki_paragraph_formatting;
 
     // Process pre_handlers here
     if (is_array($this->pre_handlers)) {
@@ -4518,17 +4573,16 @@ function parse_data($data) {
     $inTable = 0;
 
     // loop: process all lines
+    $in_paragraph = 0;
     foreach ($lines as $line) {
-
+	$line = rtrim($line); // Trim off trailing white space
 	// Check for titlebars...
-	// NOTE: that title bar should be start from begining of line and
-	//	   be alone on that line to be autoaligned... else it is old styled
+	// NOTE: that title bar should start at the beginning of the line and
+	//	   be alone on that line to be autoaligned... otherwise, it is an old 
 	//	   styled title bar...
-	if (substr(ltrim($line), 0, 2) == '-=' && substr(rtrim($line), -2, 2) == '=-') {
-	    // This is not list item -- must close lists currently opened
-	    while (count($listbeg))
-		$data .= array_shift($listbeg);
-
+	if (substr(ltrim($line), 0, 2) == '-=' && substr($line, -2, 2) == '=-') {
+	    // Close open paragraph and lists, but not div's
+	    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
 	    //
 	    $align_len = strlen($line) - strlen(ltrim($line));
 
@@ -4555,9 +4609,9 @@ function parse_data($data) {
 	    //
 	    $line = trim($line);
 	    $line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
-	    $data .= $line;
+	    $data .= $line . "\n";
 	    // TODO: Case is handled ...  no need to check other conditions
-	    //	   (it is apriory known all they false, moreover sometimes
+	    //	   (it is apriori known that they are all false, moreover sometimes
 	    //	   check procedure need > O(0) of compexity)
 	    //	   -- continue to next line...
 	    //	   MUST replace all remaining parse blocks to the same logic...
@@ -4566,13 +4620,15 @@ function parse_data($data) {
 
 	// Replace old styled titlebars
 	if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
-	    $data .= $line;
+	    // Close open paragraph, but not lists (why not?) or div's
+	    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+	    $data .= $line . "\n";
 
 	    continue;
 	}
 
 	// check if we are inside a table, if so, ignore monospaced and do
-	// not insert <br/>
+	// not insert <br />
 	$inTable += substr_count($line, "<table");
 	$inTable -= substr_count($line, "</table");
 
@@ -4580,13 +4636,12 @@ function parse_data($data) {
 	global $feature_wiki_monosp;
 
 	if (substr($line, 0, 1) == ' ' && $feature_wiki_monosp == 'y' && $inTable == 0) {
-	    // This is not list item -- must close lists currently opened
-	    while (count($listbeg))
-		$data .= array_shift($listbeg);
+	    // Close open paragraph and lists, but not div's
+	    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
 
 	    // If the first character is space then
 	    // change spaces for &nbsp;
-	    $line = '<font face="courier">' . str_replace(' ', '&nbsp;', substr($line, 1)). '</font>';
+	    $line = '<tt>' . str_replace(' ', '&nbsp;', substr($line, 1)). '</tt>';
 	}
 
 	// Replace Hotwords before begin
@@ -4610,12 +4665,14 @@ function parse_data($data) {
 
 	// This line is parseable then we have to see what we have
 	if (substr($line, 0, 3) == '---') {
-		// This is not list item -- must close lists currently opened
-		while (count($listbeg)) $data .= array_shift($listbeg);
-		$line = '<hr/>';
+		// This is not a list item --- close open paragraph and lists, but not div's
+		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
+		$line = '<hr />';
 	} else {
 		$litype = substr($line, 0, 1);
 		if ($litype == '*' || $litype == '#') {
+			// Close open paragraph, but not lists or div's
+			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
 			$listlevel = $this->how_many_at_start($line, $litype);
 			$liclose = '</li>';
 			$addremove = 0;
@@ -4630,7 +4687,7 @@ function parse_data($data) {
 						$listate = substr($line, $listlevel, 1);
 						if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
 							$thisid = 'id' . microtime() * 1000000;
-							$data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+							$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
 							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
 							$addremove = 1;
 						}
@@ -4645,7 +4702,7 @@ function parse_data($data) {
 				$listate = substr($line, $listlevel, 1);
 				if (($listate == '+' || $listate == '-')) {
 					$thisid = 'id' . microtime() * 1000000;
-					$data .= '<br/><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+					$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
 					$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
 					$addremove = 1;
 				}
@@ -4656,25 +4713,35 @@ function parse_data($data) {
 			$line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
 			if (substr(current($listbeg), 0, 5) != '</li>') array_unshift($listbeg, '</li>' . array_shift($listbeg));
 		} elseif ($litype == '+') {
-			// Must append paragraph for list item of given depth...
-			$listlevel = $this->how_many_at_start($line, $litype);
+		        // Close open paragraph, but not list or div's
+		        $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
 			// Close lists down to requested level
 			while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
+
+			// Must append paragraph for list item of given depth...
+			$listlevel = $this->how_many_at_start($line, $litype);
 			if (count($listbeg)) {
 				if (substr(current($listbeg), 0, 5) != '</li>') {
 					array_unshift($listbeg, '</li>' . array_shift($listbeg));
 					$liclose = '<li>';
-				} else $liclose = '<br/>';
+				} else $liclose = '<br />';
 			} else $liclose = '';
 			$line = $liclose . substr($line, count($listbeg));
 		} else {
-			// This is not list item -- must close lists currently opened
-			while (count($listbeg))
-				$data .= array_shift($listbeg);
+		        // This is not a list item - close open lists,
+			// but not paragraph or div's. If we are
+			// closing a list, there really shouldn't be a
+			// paragraph open anyway.
+	        	$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 0, 1, 0);
 				// Get count of (possible) header signs at start
 				$hdrlevel = $this->how_many_at_start($line, '!');
 				// If 1st char on line is '!' and its count less than 6 (max in HTML)
 				if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
+			    	    // Close open paragraph (lists already closed above)
+	        		    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 1);
+				    // Close lower level divs if opened
+				    for (;current($divdepth) >= $hdrlevel; array_shift($divdepth)) $data .= '</div>';
+
 				// Remove possible hotwords replaced :)
 				//   Umm, *why*?  Taking this out lets page
 				//   links in headers work, which can be nice.
@@ -4686,9 +4753,7 @@ function parse_data($data) {
 				$aclose = '';
 				$addremove = 0;
 
-				// Close lower level divs if opened
-				for (;current($divdepth) >= $hdrlevel; array_shift($divdepth)) $data .= '</div>';
-				// May be spesial signs present after '!'s?
+				// May be special signs present after '!'s?
 				$divstate = substr($line, $hdrlevel, 1);
 				if ($divstate == '+' || $divstate == '-') {
 				// OK. Must insert flipper after HEADER, and then open new div...
@@ -4708,32 +4773,56 @@ function parse_data($data) {
 				}
 				$line = $anchor . "<h$hdrlevel>" . substr($line, $hdrlevel + $addremove). "</h$hdrlevel>" . $aclose;
 			} elseif (!strcmp($line, "...page...")) {
-				// Close lists and divs currently opened
-				while (count($listbeg)) $data .= array_shift($listbeg);
-				while (count($divdepth)) {
-					$data .= '</div>';
-					array_shift ($divdepth);
-				}
-				// Leave line unchanged... tiki-index.php will split wiki here
-				$line = "...page...";
+			  // Close open paragraph, lists, and div's
+			  $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
+			  // Leave line unchanged... tiki-index.php will split wiki here
+			  $line = "...page...";
 			} else {
-				// Usual paragraph.
+			  	/** Usual paragraph.  
+				 *
+				 * If the
+				 * $feature_wiki_paragraph_formatting
+				 * is on, then consecutive lines of
+				 * text will be gathered into a block
+				 * that is surrounded by HTML
+				 * paragraph tags. One or more blank
+				 * lines, or another special Wiki line
+				 * (e.g., heading, titlebar, etc.)
+				 * signifies the end of the
+				 * paragraph. If the paragraph
+				 * formatting feature is off, the
+				 * original TikiWiki behavior is used,
+				 * in which each line in the source is
+				 * terminated by an explicit line
+				 * break (br tag).
+			  	 *
+			  	 * @since Version 1.9
+				 */
 				if ($inTable == 0) {
-					$line .= '<br/>';
+				  if ($feature_wiki_paragraph_formatting == 'y') {
+				    if ($in_paragraph && (0 == strcmp("", trim($line)))) {
+				      // Blank line; end the paragraph
+				      $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+				    } elseif (!$in_paragraph && (0 != strcmp("", trim($line)))) {
+				      // First non-blank line; start a paragraph
+				      $data .= "<p>";
+				      $in_paragraph = 1;
+				    } else {
+				      // A normal in-paragraph line or a consecutive blank line.
+				      // Leave it as is.
+				    }
+				  } else {
+				    $line .= '<br />';
+				  }
 				}
 			}
 		}
 	}
-	$data .= $line;
-}
+	$data .= $line . "\n";
+    }
 
-    // Close lists may remains opened
-    while (count($listbeg))
-  $data .= array_shift($listbeg);
-
-    // Close header divs may remains opened
-    for ($i = 1; $i <= count($divdepth); $i++)
-  $data .= '</div>';
+    // Close open paragraph, lists, and div's
+    $this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
 
     // 26-Jun-2003, by zaufi
     // Replace {maketoc} from collected list of headers
@@ -4816,8 +4905,8 @@ function parse_comment_data($data) {
     $data = preg_replace("/\[([^\]\|]+)\]/", "<a class=\"commentslink\" href=\"$1\">$1</a>", $data);
     // Llamar aqui a parse smileys
     $data = $this->parse_smileys($data);
-    $data = preg_replace("/---/", "<hr/>", $data);
-    // Reemplazar --- por <hr/>
+    $data = preg_replace("/---/", "<hr />", $data);
+    // Reemplazar --- por <hr />
     return $data;
 }
 
@@ -4978,7 +5067,7 @@ function update_page_version($pageName, $version, $edit_data, $edit_comment, $ed
     $result = $this->query($query, array($pageName,(int)$version,(int)$lastModif, $edit_user,$edit_ip,$edit_comment, $edit_data,$description)
       );
 
-    //print("version: $version<br/>");
+    //print("version: $version<br />");
     // Get this page information
     $info = $this->get_page_info($pageName);
 
@@ -5305,14 +5394,14 @@ function make_time($hour, $minute, $second, $month, $day, $year, $timezone_id = 
     $date->setDay($day);
     $date->setYear($year);
 
-#$rv = sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
+#$rv = sprintf("make_time(): $date->format(%D %T %Z)=%s<br />\n", $date->format('%D %T %Z'));
 #print "<pre> make_time() start";
 #print_r($date);
     if ($timezone_id)
   $date->setTZbyID($timezone_id);
 
 #print_r($date);
-#$rv .= sprintf("make_time(): $date->format(%D %T %Z)=%s<br/>\n", $date->format('%D %T %Z'));
+#$rv .= sprintf("make_time(): $date->format(%D %T %Z)=%s<br />\n", $date->format('%D %T %Z'));
 #print $rv;
     return $date->getTime();
 }
