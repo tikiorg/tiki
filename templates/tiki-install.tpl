@@ -149,13 +149,13 @@ border='0' src='img/icons/help.gif' alt='help' /></a></h1>
 		  {/if}
     	{else}
     		<b>Print operations executed successfully</b><br/>
-    		<textarea rows="5" cols="80">
+    		<textarea rows="15" cols="80">
     		{section loop=$succcommands name=ix}
     		{$succcommands[ix]}
     		{/section}
     		</textarea><br/><br/>
     		<b>Print operations failed</b><br/>
-    		<textarea rows="5" cols="80">
+    		<textarea rows="15" cols="80">
     		{section loop=$failedcommands name=ix}
     		{$failedcommands[ix]}
     		{/section}
