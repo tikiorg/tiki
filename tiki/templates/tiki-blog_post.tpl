@@ -29,37 +29,8 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 </select>
 </td></tr>
 {if $feature_smileys eq 'y'}
-<tr><td class="editblogform">&nbsp;</td><td class="editblogform">
-   
-     <table>
-     <tr>
-          <td><a href="javascript:setSomeElement('blogedit','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="big grin" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:confused:)');"><img src="img/smiles/icon_confused.gif" alt="confused" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:cool:)');"><img src="img/smiles/icon_cool.gif" alt="cool" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:cry:)');"><img src="img/smiles/icon_cry.gif" alt="cry" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:eek:)');"><img src="img/smiles/icon_eek.gif" alt="eek" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:evil:)');"><img src="img/smiles/icon_evil.gif" alt="evil" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:exclaim:)');"><img src="img/smiles/icon_exclaim.gif" alt="exclaim" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:frown:)');"><img src="img/smiles/icon_frown.gif" alt="frown" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:idea:)');"><img src="img/smiles/icon_idea.gif" alt="idea" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:lol:)');"><img src="img/smiles/icon_lol.gif" alt="lol" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:mad:)');"><img src="img/smiles/icon_mad.gif" alt="mad" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:mrgreen:)');"><img src="img/smiles/icon_mrgreen.gif" alt="mr green" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:neutral:)');"><img src="img/smiles/icon_neutral.gif" alt="neutral" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:question:)');"><img src="img/smiles/icon_question.gif" alt="question" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:razz:)');"><img src="img/smiles/icon_razz.gif" alt="razz" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:redface:)');"><img src="img/smiles/icon_redface.gif" alt="redface" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:rolleyes:)');"><img src="img/smiles/icon_rolleyes.gif" alt="rolleyes" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:sad:)');"><img src="img/smiles/icon_sad.gif" alt="sad" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:smile:)');"><img src="img/smiles/icon_smile.gif" alt="smile" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:surprised:)');"><img src="img/smiles/icon_surprised.gif" alt="surprised" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:twisted:)');"><img src="img/smiles/icon_twisted.gif" alt="twisted" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:wink:)');"><img src="img/smiles/icon_wink.gif" alt="wink" border="0" /></a></td>
-          <td><a href="javascript:setSomeElement('blogedit','(:arrow:)');"><img src="img/smiles/icon_arrow.gif" alt="arrow" border="0" /></a></td>
-      </tr>    
-      </table>
-
-
+<tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">
+   {assign var=area_name value="blogedit"}{include file="tiki-smileys.tpl"}
 </td></tr>
 {/if}
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
@@ -73,7 +44,7 @@ or use the image URL to include images using the WYSIWYG editor. {/tr}</small></
 {/if}
 <tr><td class="editblogform">{tr}Data{/tr}</td><td class="editblogform">
 <b>{tr}Use ...page... to separate pages in a multi-page post{/tr}</b><br />
-<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="60" wrap="virtual">{$data|escape}</textarea>
+<textarea id='blogedit' class="wikiedit" name="data" rows="20" cols="80" wrap="virtual">{$data|escape}</textarea>
 {if $wysiwyg eq 'y'}
 	<script type="text/javascript" src="lib/htmlarea/htmlarea.js"></script>
 	<script type="text/javascript" src="lib/htmlarea/htmlarea-lang-en.js"></script>
