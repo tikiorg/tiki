@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.30 2003-11-11 18:14:45 dheltzel Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-edit_submission.php,v 1.31 2003-11-11 22:12:00 dheltzel Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -39,6 +39,7 @@ if (isset($_REQUEST["subId"])) {
 }
 
 $smarty->assign('subId', $subId);
+$smarty->assign('articleId', $subId);
 $smarty->assign('allowhtml', 'y');
 $publishDate = date('U');
 $expireDate = mktime (0,0,0,date("m"),  date("d"),  date("Y")+1);
