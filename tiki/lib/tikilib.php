@@ -3545,6 +3545,7 @@ function parse_data($data) {
     global $feature_wiki_plurals;
     global $feature_wiki_tables;
     global $page;
+    global $page_ref_id;
     global $rsslib;
     global $dbTiki;
     global $structlib;
@@ -3585,27 +3586,36 @@ function parse_data($data) {
     // Now replace a TOC
     preg_match_all("/\{toc\}/i", $data, $tocs);
 
+    //If there are instances of {toc} on this page
     if (count($tocs[0]) > 0) {
-	include_once ("lib/structures/structlib.php");
+      //And we are currently viewing a structure
+      $page_info = $structlib->get_page_info($page_ref_id);
+      if (isset($page_info)) {
+  	    include_once ("lib/structures/structlib.php");
+    	  $html = '';
 
-	if ($structlib->page_is_in_structure($page)) {
-	    $html = '';
+        //construct a html instance of the structures toc using 
+        //the current page as the head
+    	  if ($slidemode) {
+    	  	$toc = $structlib->get_subtree_toc_slide($page, $page, $html);
+    	  } 
+        else {
+    		  $toc = $structlib->get_subtree_toc($page_ref_id, $html);
+    	  }
 
-	    if ($slidemode) {
-		$toc = $structlib->get_subtree_toc_slide($page, $page, $html);
-	    } else {
-		$toc = $structlib->get_subtree_toc($page, $page, $html);
+    	  // Loop over all the case-specific versions of {toc} used
+    	  // (if the user is consistent, this is a loop of count 1)
+    	  for ($i = 0; $i < count($tocs[0]); $i++) {
+    		  $data = str_replace($tocs[0], $html, $data);
+    	  }
 	    }
-
-	    // Loop over all the case-specific versions of {toc} used
-	    // (if the user is consistent, this is a loop of count 1)
-	    for ($i = 0; $i < count($tocs[0]); $i++) {
-		$data = str_replace($tocs[0], $html, $data);
-	    }
-	}
+      //Dont display the {toc} string for non structure pages
+      else {
+    	  for ($i = 0; $i < count($tocs[0]); $i++) {
+    		  $data = str_replace($tocs[0], '', $data);
+    	  }
+      }
     }
-
-    //unset($smc);
 
     // Now search for images uploaded by users
     if ($feature_wiki_pictures == 'y') {
