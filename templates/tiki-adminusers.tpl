@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.33 2004-01-16 03:27:35 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-adminusers.tpl,v 1.34 2004-01-16 04:49:49 mose Exp $ *}
 
 <a href="tiki-adminusers.php" class="pagetitle">{tr}Admin users{/tr}</a>
   
@@ -55,24 +55,24 @@ class="prevnext">{tr}All{/tr}</a>
 
 <table class="normal">
 <tr>
-<td class="heading" style="width: 20px;">&nbsp;</td>
-<td class="heading" style="width: 20px;">&nbsp;</td>
+<td class="heading thin"></td>
+<td class="heading thin"></td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'currentLogin_desc'}currentLogin_asc{else}currentLogin_desc{/if}">{tr}Last login{/tr}</a></td>
-<td class="heading" style="width: 20px;">&nbsp;</td>
+<td class="heading thin">&nbsp;</td>
 <td class="heading">{tr}Groups{/tr}</td>
-<td class="heading" style="width: 20px;">&nbsp;</td>
+<td class="heading thin"></td>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$users}
 <tr class="{cycle}">
-<td><a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Configure/Options{/tr}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a></td>
-<td><a class="link" href="tiki-adminusers.php?user={$users[user].userId}"  title="{tr}Click here to edit this user{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a></td>
+<td class="thin"><a class="link" href="tiki-user_preferences.php?view_user={$users[user].user}" title="{tr}Configure/Options{/tr}"><img border="0" alt="{tr}Configure/Options{/tr}" src="img/icons/config.gif" /></a></td>
+<td class="thin"><a class="link" href="tiki-adminusers.php?user={$users[user].userId}"  title="{tr}Click here to edit this user{/tr}"><img border="0" alt="{tr}Edit{/tr}" src="img/icons/edit.gif" /></a></td>
 <td><a class="link" href="tiki-adminusers.php?user={$users[user].userId}"  title="{tr}Click here to edit this user{/tr}">{$users[user].user}</a></td>
 <td>{$users[user].email}</td>
 <td>{if $users[user].currentLogin eq ''}{tr}Never{/tr}{else}{$users[user].currentLogin|dbg|tiki_long_datetime}{/if}</td>
-<td style="width: 20px;"><a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a></td>
+<td class="thin"><a class="link" href="tiki-assignuser.php?assign_user={$users[user].user}" title="{tr}Assign Group{/tr}"><img border="0" alt="{tr}Assign Group{/tr}" src="img/icons/key.gif" /></a></td>
 <td>
 {foreach from=$users[user].groups item=grs}
 {if $grs != "Anonymous"}
@@ -80,7 +80,7 @@ class="prevnext">{tr}All{/tr}</a>
 (<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs|escape:"url"}">x</a>)<br />
 {/if}
 {/foreach}
-<td nowrap="nowrap">&nbsp;{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}"
+<td  class="thin">{if $users[user].user ne 'admin'}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user}"
 title="{tr}Remove{/tr}"><img border="0" alt="{tr}Remove{/tr}" src="img/icons2/delete.gif" /></a>{/if}
 </td>
 </tr>
