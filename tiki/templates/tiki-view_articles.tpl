@@ -43,7 +43,7 @@
 <table >
 <tr>
 <td>
-(<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a> - {if $listpages[ix].comments_cant eq 1}{tr}1 Comment{/tr}{else}{$listpages[ix].comments_cant} {tr}comments{/tr}{/if})
+(<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a> {$listpages[ix].size} {tr}bytes{/tr} - {if $listpages[ix].comments_cant eq 1}{tr}1 Comment{/tr}{else}{$listpages[ix].comments_cant} {tr}comments{/tr}{/if})
 </td>
 <td style="text-align:right;">
 {if $tiki_p_edit_article eq 'y'}
