@@ -1150,6 +1150,7 @@ class UsersLib extends TikiLib {
 	global $feature_clear_passwords;
 	$query = "select `email` from `users_users` where `login` = ?";
 	$email = $this->getOne($query, array($user));
+	$email=trim($email);
 	$hash = md5($user . $pass . $email);
 	$now = date("U");
 	$new_pass_due = $now + (60 * 60 * 24 * $pass_due);
