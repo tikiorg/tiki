@@ -3142,7 +3142,7 @@ function list_pages($offset = 0, $maxRecords = -1, $sort_mode = 'pageName_desc',
   $aux["comment"] = $res["comment"];
   $aux["creator"] = $res["creator"];
   $aux["version"] = $res["version"];
-  $aux["flag"] = $res["flag"] == 'L' ? tra('locked') : tra('unlocked');
+  $aux["flag"] = $res["flag"] == 'L' ? 'locked' : 'unlocked';
   $aux["versions"] = $this->getOne("select count(*) from `tiki_history` where `pageName`=?",array($page));
   $aux["links"] = $this->getOne("select count(*) from `tiki_links` where `fromPage`=?",array($page));
   $aux["backlinks"] = $this->getOne("select count(*) from `tiki_links` where `toPage`=?",array($page));
