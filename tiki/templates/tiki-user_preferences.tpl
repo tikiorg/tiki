@@ -137,7 +137,7 @@
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
   <table class="admin">
   <tr><td class="form">{tr}Email{/tr}:</td><td class="form"><input type="text" name="email" value="{$userinfo.email|escape}" /></td>
-  <tr><td class="form">{tr}Password{/tr}:</td class="form"><td><input type="password" name="pass" /></td></tr>
+  <tr><td class="form">{tr}Password{/tr}:</td class="form"><td class="form"><input type="password" name="pass" /></td></tr>
   <tr><td colspan="2" class="button"><input type="submit" name="chgemail" value="{tr}change email{/tr}"></td></tr>
   </table>
   </form>
