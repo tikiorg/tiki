@@ -73,7 +73,9 @@ include_once($source);
 
 // This goes to the end part of all activities
 // If this activity is interactive then we have to display the template
+
 if($__activity_completed ) {
+
 	$smarty->assign('procname',$process->getName());
 	$smarty->assign('procversion',$process->getVersion());
 	$smarty->assign('actname',$activity->getName());
