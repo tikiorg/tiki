@@ -55,7 +55,7 @@
 </td></tr>
 {/if}
 {section name=ix loop=$fields}
-{if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'f'}
+{if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'f' and $fields[ix].type ne 'j'}
 {if $fields[ix].type ne 'i'}
 <tr class="formcolor"><td>{$fields[ix].name}</td>
 {/if}
@@ -256,7 +256,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {if $fields[ix].type ne 'x'}
 {if $fields[ix].type eq 'h'}
 </table>
-<h3>{$ins_fields[ix].name}</h3>
+<h3>{$fields[ix].name}</h3>
 <table class="normal">
 {else}
 {if ($fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0] eq '1'}
@@ -269,7 +269,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 {/if}
 
 {if $fields[ix].type eq 'u'}
-<select name="{$fields[ix].id}">
+<select name="{$fields[ix].ins_id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$users}
 <option value="{$users[ux]|escape}">{$users[ux]}</option>
@@ -277,7 +277,7 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 </select>
 
 {elseif $fields[ix].type eq 'g'}
-<select name="{$fields[ix].id}">
+<select name="{$fields[ix].ins_id}">
 <option value="">{tr}None{/tr}</option>
 {section name=ux loop=$groups}
 <option value="{$groups[ux].groupName|escape}">{$groups[ux].groupName}</option>
@@ -298,17 +298,17 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 </table>
 
 {elseif $fields[ix].type eq 'i'}
-<input type="file" name="{$fields[ix].id}"/>
+<input type="file" name="{$fields[ix].ins_id}"/>
 
 {elseif $fields[ix].type eq 't'}
-<input type="text" name="{$fields[ix].id}"{if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}"{/if} />
+<input type="text" name="{$fields[ix].ins_id}"{if $fields[ix].options_array[1]}size="{$fields[ix].options_array[1]}"{/if} />
 {if $fields[ix].options_array[2]}<span class="formunit">&nbsp;{$fields[ix].options_array[2]}</span>{/if}
 
 {elseif $fields[ix].type eq 'a'}
-<textarea name="{$fields[ix].id}" rows="4" cols="50"></textarea>
+<textarea name="{$fields[ix].ins_id}" rows="4" cols="50"></textarea>
 
 {elseif $fields[ix].type eq 'f'}
-{html_select_date prefix=$fields[ix].id time=$fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$fields[ix].id time=$fields[ix].value display_seconds=false}
+{html_select_date prefix=$fields[ix].ins_id time=$fields[ix].value end_year="+1"} {tr}at{/tr} {html_select_time prefix=$fields[ix].ins_id time=$fields[ix].value display_seconds=false}
 
 {elseif $fields[ix].type eq 'd'}
 <select name="{$fields[ix].name}">
@@ -318,17 +318,17 @@ title="{tr}Click here to delete this tracker{/tr}"><img border="0" alt="{tr}Remo
 </select>
 
 {elseif $fields[ix].type eq 'c'}
-<input type="checkbox" name="{$fields[ix].name}" {if $fields[ix].value eq 'y'}checked="checked"{/if}/>
+<input type="checkbox" name="{$fields[ix].ins_id}" {if $fields[ix].value eq 'y'}checked="checked"{/if}/>
 
 {elseif $fields[ix].type eq 'j'}
-<input type="hidden" name="ins_{$fields[ix].name}" value="" id="{$fields[ix].id}" />
-<span id="disp_{$fields[ix].id}" class="daterow">{$fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
+<input type="hidden" name="ins_{$fields[ix].ins_id}" value="" id="{$fields[ix].ins_id}" />
+<span id="disp_{$fields[ix].ins_id}" class="daterow">{$fields[ix].value|default:$smarty.now|date_format:$daformat}</span>
 <script type="text/javascript">
 {literal}Calendar.setup( { {/literal}
 date        : "{$fields[ix].value|default:$now|date_format:"%B %e, %Y %H:%M"}",      // initial date
-inputField  : "{$fields[ix].id}",      // ID of the input field
+inputField  : "{$fields[ix].ins_id}",      // ID of the input field
 ifFormat    : "%s",    // the date format
-displayArea : "disp_{$fields[ix].id}",       // ID of the span where the date is to be shown
+displayArea : "disp_{$fields[ix].ins_id}",       // ID of the span where the date is to be shown
 daFormat    : "{$daformat}",  // format of the displayed date
 showsTime   : true,
 singleClick : true,
@@ -337,14 +337,12 @@ align       : "bR"
 </script>
 
 {elseif $fields[ix].type eq 'r'}
-<input type="text" name="{$fields[ix].id}"{if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
+<input type="text" name="{$fields[ix].ins_id}"{if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
 
 {elseif $fields[ix].type eq 'l'}
-<input type="text" name="{$fields[ix].id}"{if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
-
+<input type="text" name="{$fields[ix].ins_id}"{if $fields[ix].options_array[3]}size="{$fields[ix].options_array[3]}"{/if} />
 
 {/if}
-
 
 
 {if (($fields[ix].type eq 'c' or $fields[ix].type eq 't') and $fields[ix].options_array[0]) eq '1' and $stick ne 'y'}
