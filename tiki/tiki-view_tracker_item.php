@@ -170,8 +170,8 @@ $smarty->assign_by_ref('items',$items["data"]);
 */
 
 $users = $userlib->get_users(0,-1,'login_asc', '');
-$groups = $userlib->get_groups(0,-1,'groupName_asc','');
 $smarty->assign_by_ref('users',$users["data"]);
+$groups = $userlib->get_groups(0,-1,'groupName_asc','');
 $smarty->assign_by_ref('groups',$groups["data"]);
 
 
