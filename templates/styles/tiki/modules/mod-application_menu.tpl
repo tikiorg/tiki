@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.20 2004-03-15 21:27:51 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/tiki/modules/mod-application_menu.tpl,v 1.21 2004-05-06 00:24:22 mose Exp $ *}
 
 {tikimodule title="<a class=\"flip\" href=\"javascript:flip('mainmenu');\">{tr}Menu{/tr}</a>" name="application_menu"}
 <div id="mainmenu" style="display: block">
@@ -113,7 +113,7 @@
     <div class="separated"><a href="tiki-lastchanges.php" class="linkmenu">{tr}last changes{/tr}</a></div>
   {/if}
   {if $feature_dump eq 'y' and $tiki_p_view eq 'y'}
-    <div class="separated"><a href="dump/{$tikidomain}new.tar" class="linkmenu">{tr}dump{/tr}</a></div>
+    <div class="separated"><a href="dump/{if $tikidomain}{$tikidomain}/{/if}new.tar" class="linkmenu">{tr}dump{/tr}</a></div>
   {/if}
   {if $feature_wiki_rankings eq 'y' and $tiki_p_view eq 'y'}
     <div class="separated"><a href="tiki-wiki_rankings.php" class="linkmenu">{tr}rankings{/tr}</a></div>

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.50 2004-04-30 14:34:38 sylvieg Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.51 2004-05-06 00:24:21 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -122,7 +122,7 @@
 <tr class="formcolor"><td>{tr}Upload picture{/tr}</td><td>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
 <input type="hidden" name="hasAlreadyInserted" value="" />
-<input type="hidden" name="prefix" value="/img/wiki_up/{$tikidomain}" />
+<input type="hidden" name="prefix" value="/img/wiki_up/{if $tikidomain}{$tikidomain}/{/if}" />
 <input name="picfile1" type="file" onchange="javascript:insertImg('editwiki','picfile1','hasAlreadyInserted')"/>
 </td></tr>
 {/if}
