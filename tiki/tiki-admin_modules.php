@@ -225,6 +225,8 @@ $right = $tikilib->get_assigned_modules('r');
 $smarty->assign_by_ref('left',$left);
 $smarty->assign_by_ref('right',$right);
 
+$sameurl_elements = Array('offset','sort_mode','where','find');
+
 $smarty->assign('mid','tiki-admin_modules.tpl');
 $smarty->display("styles/$style_base/tiki.tpl");
 

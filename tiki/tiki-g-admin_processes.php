@@ -146,6 +146,7 @@ if($_REQUEST['pid']) {
   $smarty->assign('errors',$errors);
 }
 
+$sameurl_elements = Array('offset','sort_mode','where','find','filter_name','filter_active');
 
 $all_procs = $items = $processManager->list_processes(0,-1,'name_desc','','');
 $smarty->assign_by_ref('all_procs',$all_procs['data']);
