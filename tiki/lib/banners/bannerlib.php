@@ -210,7 +210,7 @@ class BannerLib extends TikiLib {
                 `hourFrom`, `hourTo`, `maxImpressions`,`created`,`zone`,`imageName`,`impressions`,`clicks`)
                 values(?,?,?,?,?,?,?,?,
                 ?,?,?,?,?,?,?,?,?,
-                ?,?,?,?,?,?,?,?,?,0,0)";
+                ?,?,?,?,?,?,?,?,?,?,?)";
 
                 $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$HTMLData,
                                 $fixedURLData, $textData, $fromDate, $toDate, $useDates, $mon,$tue,$wed,$thu,
@@ -218,8 +218,8 @@ class BannerLib extends TikiLib {
 
 
 			$result = $this->query($query,$bindvars);
-			$query = "select max(bannerId) from `tiki_banners` where `created`=$now";
-			$bannerId = $this->getOne($query,array($now));
+			$query = "select max(`bannerId`) from `tiki_banners` where `created`=?";
+			$bannerId = $this->getOne($query,array((int)$now));
 		}
 
 		return $bannerId;
