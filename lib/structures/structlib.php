@@ -135,7 +135,7 @@ class StructLib extends TikiLib {
     	$sublevel++;
 	$upage=urlencode($res["page"]);
     	if($level) {$plevel=$level.'.'.$sublevel;} else {$plevel=$sublevel;}
-    	$html.="<li style='list-style:disc outside;'><a class='link' href='tiki-edit_structure.php?structure=$structure&amp;page=$upage'>$plevel&nbsp;".$res["page"]."</a>&nbsp;[<a class='link' href='tiki-edit_structure.php?structure=$structure&amp;remove=$upage'>x</a>]";
+    	$html.="<li style='list-style:disc outside;'><a class='link' href='tiki-edit_structure.php?structure=".urlencode($structure)."&amp;page=$upage'>$plevel&nbsp;".$res["page"]."</a>&nbsp;[<a class='link' href='tiki-edit_structure.php?structure=".urlencode($structure)."&amp;remove=$upage'>x</a>]";
     	$html.="&nbsp;[<a class='link' href='tiki-index.php?page=$upage'>view</a>|<a  class='link' href='tiki-editpage.php?page=$upage'>edit</a>]";
     	//$prev = $this->get_prev_page($res["page"]);
     	//$next = $this->get_next_page($res["page"]);

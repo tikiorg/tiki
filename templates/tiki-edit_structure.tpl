@@ -1,4 +1,6 @@
-<a class="pagetitle" href="tiki-edit_structure.php?structure={$structure}&amp;page={$page}">{tr}Structure{/tr}: {$structure}</a><br/><br/>
+<a class="pagetitle" href="tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;page={$page|escape:"url"}">
+  {tr}Structure{/tr}: {$structure}
+</a><br/><br/>
 <a class="link" href="tiki-admin_structures.php">Admin structures</a><br/><br/>
 <form action="tiki-edit_structure.php" method="post">
 <input type="hidden" name="page" value="{$page}" />
@@ -8,10 +10,10 @@
   <td class="formcolor">{tr}In parent page{/tr}</td>
   <td class="formcolor">
   <!--
-  <select id='page' name="page" onChange="alert('tiki-edit_structure.php?structure={$structure}&amp;page=' + document.getElementById('page').selectedIndex);">
+  <select id='page' name="page" onChange="alert('tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;page=' + document.getElementById('page').selectedIndex);">
   {section name=ix loop=$pages}
   <option value="{$pages[ix]}" {if $page eq $pages[ix]}selected="selected"{/if}>{$pages[ix]}</option>
-  {/section}  
+  {/section}
   </select>
   -->
   {$page}
@@ -50,10 +52,21 @@
 <br/>
 {tr}You will remove{/tr} {$removepage} {tr}and its subpages from the structure, now you have two options:{/tr}
 <ul>
-<li><a class="link" href="tiki-edit_structure.php?structure={$structure}&amp;rremove={$removepage}">{tr}Remove only from structure{/tr}</a></li>
-<li><a class="link" href="tiki-edit_structure.php?structure={$structure}&amp;sremove={$removepage}">{tr}Remove from structure and remove page too{/tr}</a></li>
+<li><a class="link" href="tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;rremove={$removepage|escape:"url"}">{tr}Remove only from structure{/tr}</a></li>
+<li><a class="link" href="tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;sremove={$removepage|escape:"url"}">{tr}Remove from structure and remove page too{/tr}</a></li>
 </ul>
 {/if}
 <h2>{tr}Structure{/tr}</h2>
-<a class="link" href="tiki-edit_structure.php?structure={$structure}&amp;page={$structure}">{$structure}</a> [<a class="link" href="tiki-index.php?page={$structure}">{tr}view{/tr}</a>|<a class="link" href="tiki-editpage.php?page={$structure}">{tr}edit{/tr}</a>]<br/>
+<a class="link" href="tiki-edit_structure.php?structure={$structure|escape:"url"}&amp;page={$structure|escape:"url"}">
+  {$structure}
+</a>
+[
+ <a class="link" href="tiki-index.php?page={$structure|escape:"url"}">
+  {tr}view{/tr}
+ </a>
+|
+ <a class="link" href="tiki-editpage.php?page={$structure|escape:"url"}">
+  {tr}edit{/tr}
+ </a>
+]<br/>
 {$html}

@@ -38,27 +38,33 @@ if(isset($_REQUEST["create"])) {
   $structlib->s_create_page('','',$_REQUEST["name"]);
 }
 
+//
+// Thu 03 Jul 2003 10:06:01 PM MSD, by zaufi
+// TODO: Even after my fixes for invalid page names
+//       this code still too buggy... Try to add 
+//       " NewStruct" as tree... with leading space
+//       or line with 3 leading spaces followed by 
+//       line with one leading space... 
+//       I.e. level depth parser too stupid... :()
+//
 if(isset($_REQUEST["create_from_tree"])) {
-	$tree_lines = explode("\n",$_REQUEST["tree"]);
-	$parents = Array('');
-	$previous = Array('');
-	foreach($tree_lines as $line) {
-		// count the tabs
-		$tabs = 0;
-		while(substr($line,0,1)==" ") {
-			$tabs++;
-			$line=substr($line,1);
-		}
-		$parents[$tabs+1]=$line;
-		$parent = $parents[$tabs];
-		if(isset($previous[$tabs])) {
-			$prev=$previous[$tabs];
-		} else {
-			$prev = '';
-		}
-		$structlib->s_create_page($parent,$prev,$line);
-		$previous[$tabs]=$line;
-	}
+    $tree_lines = explode("\n",$_REQUEST["tree"]);
+    $parents = Array('');
+    $previous = Array('');
+    foreach($tree_lines as $line) {
+        $line=rtrim($line);
+        // count the depth level (leading spaces indicate it)
+        $tabs=strlen($line) - strlen(ltrim($line));
+        // Is there smth else 'cept spaces?
+        if (strlen($line=trim($line))) { var_dump($tabs);
+          $parents[$tabs+1]=$line;
+	  $parent = $parents[$tabs];
+          if(isset($previous[$tabs])) $prev=$previous[$tabs];
+          else $prev = '';
+          $structlib->s_create_page($parent,$prev,trim($line));
+          $previous[$tabs]=$line;
+        }
+    }
 }
 
 if(!isset($_REQUEST["sort_mode"])) {

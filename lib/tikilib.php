@@ -2762,7 +2762,7 @@ class TikiLib {
         $toc=$structlib->get_subtree_toc_slide($page,$page,$html);
         } else {
         $toc=$structlib->get_subtree_toc($page,$page,$html);
-        } 
+        }
         $data=str_replace('{toc}',$html,$data);
       }
     }
@@ -2912,13 +2912,13 @@ class TikiLib {
         $name=$id.'.gif';
         if(file_exists("img/wiki/$tikidomain$name")) {
           if($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-            $repl="<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=$page&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$tikidomain$name' alt='click to edit' /></a>";
+            $repl="<a href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=".urlencode($page)."&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$tikidomain$name' alt='click to edit' /></a>";
           } else {
             $repl="<img border='0' src='img/wiki/$tikidomain$name' alt='a drawing' />";
           }
         } else {
           if($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-            $repl="<a class='wiki' href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=$page&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
+            $repl="<a class='wiki' href='#' onClick=\"javascript:window.open('tiki-editdrawing.php?page=".urlencode($page)."&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
           } else {
             $repl=tra('drawing not found');
           }
@@ -2971,9 +2971,9 @@ class TikiLib {
     preg_match_all("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/",$data,$pages);
     foreach(array_unique($pages[2]) as $page_parse) {
       if($desc = $this->page_exists_desc($page_parse)) {
-        $repl = "<a title='".$desc."' href='tiki-index.php?page=$page_parse' class='wiki'>$page_parse</a>";
+        $repl = "<a title='".$desc."' href='tiki-index.php?page=".urlencode($page_parse)."' class='wiki'>$page_parse</a>";
       } else {
-        $repl = "$page_parse<a href='tiki-editpage.php?page=$page_parse' class='wiki'>?</a>";
+        $repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
       }
       $data = preg_replace("/([ \n\t\r\,\;]|^)$page_parse($|[ \n\t\r\,\;\.])/","$1"."$repl"."$2",$data);
       //$data = str_replace($page_parse,$repl,$data);
@@ -3000,10 +3000,10 @@ class TikiLib {
           $wkname = $wexs[0];       
 
           if($this->db->getOne("select count(*) from tiki_extwiki where name='$wkname'")==1) {
-			$wkurl = $this->db->getOne("select extwiki from tiki_extwiki where name='$wkname'");
-			$wkurl = '<a href="'.str_replace('$page',$wexs[1],$wkurl).'" class="wiki">'.$wexs[1].'</a>';
-			$data = preg_replace($pattern,"$wkurl",$data);
-			$repl2=false;
+	    $wkurl = $this->db->getOne("select extwiki from tiki_extwiki where name='$wkname'");
+	    $wkurl = '<a href="'.str_replace('$page',urlencode($wexs[1]),$wkurl).'" class="wiki">'.$wexs[1].'</a>';
+	    $data = preg_replace($pattern,"$wkurl",$data);
+	    $repl2=false;
           }
         }
       }
@@ -3041,7 +3041,7 @@ class TikiLib {
           $wkname = $wexs[0];        
           if($this->db->getOne("select count(*) from tiki_extwiki where name='$wkname'")==1) {
 			$wkurl = $this->db->getOne("select extwiki from tiki_extwiki where name='$wkname'");
-			$wkurl = '<a href="'.str_replace('$page',$wexs[1],$wkurl).'" class="wiki">'.$wexs[1].'</a>';
+			$wkurl = '<a href="'.str_replace('$page',urlencode($wexs[1]),$wkurl).'" class="wiki">'.$wexs[1].'</a>';
 			$data = preg_replace("/\(\($page_parse\)\)/","$wkurl",$data);
 			$repl2=false;
           }
@@ -3049,9 +3049,9 @@ class TikiLib {
       }
       if($repl2) {
 	      if($desc = $this->page_exists_desc($page_parse)) {
-	        $repl = "<a title='$desc' href='tiki-index.php?page=$page_parse' class='wiki'>$page_parse</a>";
+	        $repl = "<a title='$desc' href='tiki-index.php?page=".urlencode($page_parse)."' class='wiki'>$page_parse</a>";
 	      } else {
-	        $repl = "$page_parse<a href='tiki-editpage.php?page=$page_parse' class='wiki'>?</a>";
+	        $repl = "$page_parse<a href='tiki-editpage.php?page=".urlencode($page_parse)."' class='wiki'>?</a>";
 	      }
 	      $data = preg_replace("/\(\($page_parse\)\)/","$repl",$data);
       }

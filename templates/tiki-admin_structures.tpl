@@ -16,8 +16,8 @@
 
 <h3>{tr}Structures{/tr}</h3>
 {if $askremove eq 'y'}
-<a class="link" href="tiki-admin_structures.php?rremove={$remove}">{tr}Destroy the structure leaving the wiki pages{/tr}</a><br/>
-<a class="link" href="tiki-admin_structures.php?rremovex={$remove}">{tr}Destroy the structure and remove the pages{/tr}</a>
+<a class="link" href="tiki-admin_structures.php?rremove={$remove|escape:"url"}">{tr}Destroy the structure leaving the wiki pages{/tr}</a><br/>
+<a class="link" href="tiki-admin_structures.php?rremovex={$remove|escape:"url"}">{tr}Destroy the structure and remove the pages{/tr}</a>
 <br/><br>
 {/if}
 <table class="normal">
@@ -29,12 +29,12 @@
 {section loop=$channels name=ix}
 <tr>
   <td class="{cycle advance=false}">
-  <a class="tablename" href="tiki-edit_structure.php?structure={$channels[ix].page}">{$channels[ix].page}</a>
+  <a class="tablename" href="tiki-edit_structure.php?structure={$channels[ix].page|escape:"url"}">{$channels[ix].page}</a>
   </td>
   <td class="{cycle}">
-  <a class="link" href="tiki-admin_structures.php?export={$channels[ix].page}"><img src='img/icons/export.gif' alt='{tr}export pages{/tr}' title='{tr}export pages{/tr}' border='0' /></a>
-  <a class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page}"><img src='img/icons/expand.gif' alt='{tr}dump tree{/tr}' title='{tr}dump tree{/tr}' border='0' /></a>
-  <a class="link" href="tiki-admin_structures.php?remove={$channels[ix].page}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
+  <a class="link" href="tiki-admin_structures.php?export={$channels[ix].page|escape:"url"}"><img src='img/icons/export.gif' alt='{tr}export pages{/tr}' title='{tr}export pages{/tr}' border='0' /></a>
+  <a class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page|escape:"url"}"><img src='img/icons/expand.gif' alt='{tr}dump tree{/tr}' title='{tr}dump tree{/tr}' border='0' /></a>
+  <a class="link" href="tiki-admin_structures.php?remove={$channels[ix].page|escape:"url"}"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
   </td>
 </tr>
 {/section}
