@@ -347,33 +347,31 @@ function convert_binary() {
 
 /*shared*/
 function httprequest($url, $reqmethod = HTTP_REQUEST_METHOD_GET) {
+    global $use_proxy,$proxy_host,$proxy_port;
     // rewrite url if sloppy 
-    if (strpos($url, "http://") !== 0)
-	$url = "http://" . $url;
-
-    if (substr_count($url, "/") < 3)
-	$url .= "/";
-
-    global $use_proxy;
-
-    if ($use_proxy == 'y') {
-	global $proxy_host;
-
-	global $proxy_port;
-	$reqpar = array(
-		"proxy_host" => $proxy_host,
-		"proxy_port" => $proxy_port
-		);
-
-	$req = &new HTTP_Request($url, $reqpar);
-    } else {
-	$req = &new HTTP_Request($url);
+    if (strpos($url, "http://") !== 0) {
+        $url = "http://" . $url;
     }
-
-    $req->setMethod($reqmethod);
-    $req->sendRequest(); // need error checking here
-    $data = $req->getResponseBody();
-    return $data;
+    // (cdx) params for HTTP_Request.
+    // The timeout may be defined by a DEFINE("HTTP_TIMEOUT",5) in some file...
+    $aSettingsRequest=array("method"=>$reqmethod,"timeout"=>5);
+    
+    if (substr_count($url, "/") < 3) {
+	    $url .= "/";
+    }
+    // Proxy settings
+    if ($use_proxy == 'y') {
+        $aSettingsRequest["proxy_host"]=$proxy_host;
+        $aSettingsRequest["proxy_port"]=$proxy_port;
+    }
+	$req = &new HTTP_Request($url, $aSettingsRequest);
+    // (cdx) return false when can't connect
+    // I prefer throw a PEAR_Error. You decide ;)
+    if (PEAR::isError($oError=$req->sendRequest())) {
+        return false;
+    } 
+        $data = $req->getResponseBody();
+        return $data;
 }
 
 /*shared*/
@@ -3072,9 +3070,12 @@ function get_random_pages($n) {
 function cache_url($url) {
     // Avoid caching internal references...
     if (strstr($url, 'tiki-') || strstr($url, 'messu-')) {
-	return false;
+	    return false;
     }
-
+    // (cdx) And avoid other protocols than http...
+    if (preg_match("_^(mailto:|ftp:|gopher:|file:|smb:|news:|telnet:|javascript:|nntp:)_",$url)) {
+        return false;
+    }
     // This function stores a cached representation of a page in the cache
     // Check if the URL is not already cached
     //if($this->is_cached($url)) return false;
