@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.40 2004-03-12 00:01:03 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-calendar.tpl,v 1.41 2004-04-19 12:38:42 franck Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <h1><a class="pagetitle" href="tiki-calendar.php">{tr}Calendar{/tr}</a></h1>
@@ -56,10 +56,11 @@ onUpdate     : gotocal
 <td style="text-align:center;" width="100%" class="middle">
 <div><a href="tiki-calendar.php?todate={$now}" class="linkmodule" title="{$now|tiki_short_date}"><b>{tr}today{/tr}:</b> {$now|tiki_short_date}</a></div>
 </td>
-<td align="right" class="middle" nowrap="nowrap" width="90">
-<a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" align="top" /></a><a 
-href="tiki-calendar.php?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" align="top" /></a><a 
-href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" align="top" /></a>
+<td align="right" class="middle" nowrap="nowrap" width="130">
+<a href="tiki-calendar.php?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}day{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}week{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}month{/tr}" align="top" /></a>
+<a href="tiki-calendar.php?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}quarter{/tr}" align="top" /></a>
 </td></tr></table>
 </div>
 
@@ -89,7 +90,7 @@ href="tiki-calendar.php?viewmode=month" class="viewmode{if $viewmode eq 'month'}
 {section name=w loop=$cell}
 <tr><td width="2%" class="heading">{$weeks[w]}</td>
 {section name=d loop=$weekdays}
-{if $cell[w][d].day|date_format:"%m" eq $focusmonth}
+{if $cell[w][d].focus}
 {cycle values="odd,even" print=false advance=false}
 {else}
 {cycle values="odddark" print=false advance=false}
