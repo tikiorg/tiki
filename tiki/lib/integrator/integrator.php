@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.20 2003-11-12 01:00:57 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/integrator/integrator.php,v 1.21 2003-11-17 00:35:02 zaufi Exp $
  * 
  * \brief Tiki integrator support class
  *
@@ -18,10 +18,16 @@ class TikiIntegrator
     function list_repositories($visible_only)
     {
         global $tikilib;
-        $cond = ($visible_only == true) ? "where visibility='y'" : '';
-        $query = "select * from tiki_integrator_reps ".$cond." order by 'name'";
-        $result = $tikilib->query($query);
-        $ret = Array();
+        $values = array();
+        $cond = '';
+        if ($visible_only == true)
+        {
+            $cond = "where `visibility`=?";
+            $values[] = 'y';
+        }
+        $query = "select * from `tiki_integrator_reps` ".$cond." order by `name`";
+        $result = $tikilib->query($query, $values);
+        $ret = array();
         while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) $ret[] = $res;
         return $ret;
     }
@@ -35,15 +41,14 @@ class TikiIntegrator
         $css   = addslashes($css);
         $descr = addslashes($descr);
         if (strlen($repID) == 0 || $repID == 0)
-            $query = "insert into tiki_integrator_reps(name,path,start_page,css_file,
-                      visibility,cacheable,expiration,description)
-                      values('$name','$path','$start','$css','$vis','$cacheable','$exp','$descr')";
+            $query = "insert into `tiki_integrator_reps` (`name`,`path`,`start_page`,`css_file`,
+                      `visibility`,`cacheable`,`expiration`,`description`)
+                      values(?,?,?,?,?,?,?,?)";
         else
-            $query = "update tiki_integrator_reps 
-                      set name='$name',path='$path',start_page='$start',
-                      css_file='$css',visibility='$vis',cacheable='$cacheable',
-                      expiration='$exp',description='$descr' where repID='$repID'";
-        $result = $tikilib->query($query);
+            $query = "update `tiki_integrator_reps` set `name`=?,path=?,`start_page`=?,
+                      `css_file`=?,`visibility`=?,`cacheable`=?,`expiration`=?,
+                      `description`=? where `repID`=?";
+        $result = $tikilib->query($query, array($name, $path, $start, $css, $vis, $cacheable, $exp, $descr));
         // Invalidate cached repository if needed
         if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID))
             unset($this->c_rep);
@@ -57,8 +62,8 @@ class TikiIntegrator
             return $this->c_rep;
         else
         {   // Need to select it...
-            $query = "select * from tiki_integrator_reps where repID='$repID'";
-            $result = $tikilib->query($query);
+            $query = "select * from `tiki_integrator_reps` where `repID`=?";
+            $result = $tikilib->query($query, array($repID));
             if (!$result->numRows()) return false;
             $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
             $c_rep = $res;
@@ -69,10 +74,10 @@ class TikiIntegrator
     function remove_repository($repID)
     {
         global $tikilib;
-        $query = "delete from tiki_integrator_rules where repID=$repID";
-        $result = $tikilib->query($query);
-        $query = "delete from tiki_integrator_reps where repID=$repID";
-        $result = $tikilib->query($query);
+        $query = "delete from `tiki_integrator_rules` where `repID`=?";
+        $result = $tikilib->query($query, array($repID));
+        $query = "delete from `tiki_integrator_reps` where `repID`=?";
+        $result = $tikilib->query($query, array($repID));
         // Check if we remove cached repository
         if (isset($this->c_rep["repID"]) && ($this->c_rep["repID"] == $repID))
             unset($this->c_rep);
@@ -86,9 +91,9 @@ class TikiIntegrator
     function list_rules($repID)
     {
         global $tikilib;
-        $query = "select * from tiki_integrator_rules where repID='$repID' order by 'ord'";
-        $result = $tikilib->query($query);
-        $ret = Array();
+        $query = "select * from `tiki_integrator_rules` where `repID`=? order by `ord`";
+        $result = $tikilib->query($query, array($repID));
+        $ret = array();
         while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) $ret[] = $res;
         return $ret;
     }
@@ -103,19 +108,18 @@ class TikiIntegrator
 
         if ($ord == 0)
         {
-            $query = "select max(ord) from tiki_integrator_rules where repID='$repID'";
-            $ord = $tikilib->getOne($query) + 1;
+            $query = "select max(`ord`) from `tiki_integrator_rules` where `repID`=?";
+            $ord = $tikilib->getOne($query, array($repID)) + 1;
         }
         if (strlen($ruleID) == 0 || $ruleID == 0)
-            $query = "insert into tiki_integrator_rules(repID,ord,srch,repl,type,casesense,rxmod,enabled,description)
-                      values('$repID','$ord','$srch','$repl','$type','$case','$rxmod','$en','$descr')";
+            $query = "insert into `tiki_integrator_rules`
+                     (`repID`,`ord`,`srch`,`repl`,`type`,`casesense`,`rxmod`,`enabled`,`description`)
+                      values(?,?,?,?,?,?,?,?,?)";
         else
-            $query = "update tiki_integrator_rules 
-                      set repID='$repID',ord='$ord',srch='$srch',repl='$repl',
-                      type='$type',casesense='$case',rxmod='$rxmod',enabled='$en',
-                      description='$descr'
-                      where ruleID='$ruleID'";
-        $result = $tikilib->query($query);
+            $query = "update `tiki_integrator_rules` 
+                      set `repID`=?,`ord`=?,`srch`=?,`repl`=?,`type`=?,`casesense`=?,
+                      rxmod`=?,`enabled`=?,`description`=? where `ruleID`=?";
+        $result = $tikilib->query($query, array($repID, $ord, $srch, $repl, $type, $case, $rxmod, $en, $descr));
         // Clear cached pages for this repository
         $this->clear_cache($repID);
     }
@@ -123,8 +127,8 @@ class TikiIntegrator
     function get_rule($ruleID)
     {
         global $tikilib;
-        $query = "select * from tiki_integrator_rules where ruleID='$ruleID'";
-        $result = $tikilib->query($query);
+        $query = "select * from `tiki_integrator_rules` where `ruleID`=?";
+        $result = $tikilib->query($query, array($ruleID));
         if (!$result->numRows()) return false;
         $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
         return $res;
@@ -137,8 +141,8 @@ class TikiIntegrator
         $rule = $this->get_rule($ruleID);
         $this->clear_cache($rule["repID"]);
         // Remove rule
-        $query = "delete from tiki_integrator_rules where ruleID=$ruleID";
-        $result = $tikilib->query($query);
+        $query = "delete from `tiki_integrator_rules` where `ruleID`=?";
+        $result = $tikilib->query($query, array($ruleID));
     }
     /// Apply rule to string
     function apply_rule(&$rep, &$rule, $data)
@@ -333,8 +337,9 @@ class TikiIntegrator
         global $tikilib;
         // Delete all cached URLs with word 'integrator' in a script
         // name and 'repID' parameter equal to function arg...
-        $query = "delete from tiki_link_cache where url like '".httpPrefix()."/%integrator%.php?%repID=".$repID."%'";
-        $result = $tikilib->query($query);
+        $query = "delete from `tiki_link_cache` where `url` like ?";
+        $result = $tikilib->query($query,
+            array(httpPrefix()."/%integrator%.php?%repID=".$repID."%"));
     }
     /// Clear cache of given file for given repository
     function clear_cached_file($repID, $file)
@@ -342,8 +347,9 @@ class TikiIntegrator
         global $tikilib;
         // Delete all cached URLs with word 'integrator' in a script
         // name and 'repID' parameter equal to function arg...
-        $query = "delete from tiki_link_cache where url like '".httpPrefix()."/%integrator%.php?repID=".$repID.(strlen($file) > 0 ? "&file=".$file : '')."'";
-        $result = $tikilib->query($query);
+        $query = "delete from `tiki_link_cache` where `url` like ?";
+        $result = $tikilib->query($query,
+            array(httpPrefix()."/%integrator%.php?repID=".$repID.(strlen($file) > 0 ? "&file=".$file : '')));
     }
 }
 
