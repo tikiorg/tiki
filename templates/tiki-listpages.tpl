@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.23 2004-07-15 16:39:03 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-listpages.tpl,v 1.24 2004-07-15 19:21:12 teedog Exp $ *}
 
-<a href="tiki-listpages.php" class="pagetitle">{tr}Pages{/tr}</a><br /><br />
+<a href="tiki-listpages.php" class="pagetitle">{tr}List Wiki Pages{/tr}</a><br /><br />
 {if $tiki_p_admin eq 'y'}
 <a href="tiki-admin.php?page=wiki"><img src='img/icons/config.gif' border='0'  alt="{tr}configure listing{/tr}" title="{tr}configure listing{/tr}" /></a>
 <br /><br />
@@ -92,7 +92,7 @@ per page</td></tr>
 {section name=changes loop=$listpages}
 <tr>
 {if $checkboxes_on eq 'y'}
-<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}"/></td>
+<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$listpages[changes].pageName|escape}" {if $listpages[changes].checked eq 'y'}checked="checked" {/if}/></td>
 {/if}
 {if $wiki_list_name eq 'y'}
 	<td class="{cycle advance=false}"><a href="tiki-index.php?page={$listpages[changes].pageName|escape:"url"}" class="link" title="{$listpages[changes].pageName}">{$listpages[changes].pageName|truncate:20:"...":true}</a>
@@ -163,39 +163,57 @@ per page</td></tr>
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
   // for now those people just have to check every single box
   document.write("<tr><td><input name=\"switcher\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/></td>");
-  document.write("<td colspan=\"15\"><label for=\"clickall\">{tr}all{/tr}</label></td></tr>");
+  document.write("<td colspan=\"15\"><label for=\"clickall\">{tr}select all{/tr}</label></td></tr>");
   //-->                     
   </script>
 {/if}
 </table>
 {if $checkboxes_on eq 'y'} {* what happens to the checked items? *}
   <p align="left"> {*on the left to have it close to the checkboxes*}
-  <select name="submit_mult" onchange="this.form.submit();">
-    <option value="" selected="selected">{tr}with checked{/tr}:</option>
+  {if $categorize_mode neq 'y'}
+  {tr}Perform action with checked:{/tr}
+  <select name="submit_mult">
+    <option value="" selected>-</option>
     {if $tiki_p_remove eq 'y'} 
       <option value="remove_pages" >{tr}remove{/tr}</option>
     {/if}
     {* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
-  </select>                
+      <option value="categorize" >{tr}add to or remove from categories{/tr}</option>
+  </select>
+{*
   <script language='Javascript' type='text/javascript'>
   <!--
   // Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)
-  //-->
+  //
+  -->
   </script>
   <noscript>
-    <input type="submit" value="{tr}ok{/tr}" />
-  </noscript>
+*}
+<input type="submit" value="{tr}ok{/tr}" />
+{*</noscript>*}
+  {else}
+  <select name="categorization">
+  	<option value="add">{tr}Add selected to{/tr}</option>
+  	<option value="remove">{tr}Remove selected from{/tr}</option>
+  </select>
+  {tr}the following categories:{/tr}
+  {section name=ix loop=$categories}
+  	<br /><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" /> {$categories[ix].categpath}
+  {/section}
+  <br /><input type="submit" value="{tr}ok{/tr}" />
+  {/if}
+
   </p>
 {/if}
 </form>
 <br />
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-listpages.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]
+[<a class="prevnext" href="tiki-listpages.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;max_records={$maxRecords}">{tr}prev{/tr}</a>]
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-[<a class="prevnext" href="tiki-listpages.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+[<a class="prevnext" href="tiki-listpages.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;max_records={$maxRecords}">{tr}next{/tr}</a>]
 {/if}
 {if $direct_pagination eq 'y'}
 <br />
