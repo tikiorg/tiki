@@ -7,8 +7,19 @@ $tikilib = new TikiLib($dbTiki);
 require_once("lib/userslib.php");
 $userlib = new UsersLib($dbTiki);
 
+$rememberme = $tikilib->get_preference('rememberme','disabled');
+if($rememberme != 'disabled') {
+if(isset($_COOKIE['tiki-user'])) {
+  if(!isset($user) || !$user) {
+    $user = $userlib->get_user_by_hash($_COOKIE['tiki-user']);
+    $_SESSION['user']=$user;
+  }
+}
+}
+
 if(isset($_SESSION["user"])) {
   $user = $_SESSION["user"];  
+  
 } else {
   $user = false;
 }

@@ -118,6 +118,11 @@ class UsersLib extends TikiLib {
     return $val;
   }
   
+  function validate_hash($user,$hash)
+  {
+    return $this->db->getOne("select count(*) from users_users where binary login = '$user' and hash='$hash'");
+  }
+  
   function validate_user($user,$pass,$challenge,$response)
   {
     global $feature_challenge;
@@ -489,6 +494,20 @@ class UsersLib extends TikiLib {
   function get_user_password($user) 
   {
     $query = "select password from users_users where login='$user'";
+    $pass = $this->getOne($query);
+    return $pass;
+  }
+  
+  function get_user_hash($user) 
+  {
+    $query = "select hash from users_users where binary login='$user'";
+    $pass = $this->getOne($query);
+    return $pass;
+  }
+  
+  function get_user_by_hash($hash) 
+  {
+    $query = "select login from users_users where hash='$hash'";
     $pass = $this->getOne($query);
     return $pass;
   }

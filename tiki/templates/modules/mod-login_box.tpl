@@ -45,11 +45,14 @@
       <tr>
         <td>
           <table>
-          <tr><td>{tr}user{/tr}:</td></tr>
+          <tr><td class="module">{tr}user{/tr}:</td></tr>
           <tr><td><input type="text" name="user"  size="20" /></td></tr>
-          <tr><td>{tr}pass{/tr}:</td></tr>
+          <tr><td class="module">{tr}pass{/tr}:</td></tr>
           <tr><td><input type="password" name="pass" size="20" /></td></tr>
           <tr><td><input type="submit" name="login" value="{tr}login{/tr}" /></td></tr>
+          {if $rememberme ne 'disabled'}
+          <tr><td class="module">{tr}Remember me{/tr} <input type="checkbox" name="rme" /></td></tr>
+          {/if}
           <tr>
           {if $allowRegister eq 'y' and $forgotPass eq 'y'}
             <td valign="bottom">[<a class="linkmodule" href="tiki-register.php">{tr}register{/tr}</a>|<a class="linkmodule" href="tiki-remind_password.php">{tr}I forgot my pass{/tr}</a>]</td>

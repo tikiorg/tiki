@@ -65,11 +65,7 @@ class Messu extends Tikilib {
     return $cant;
   }
   
-  function user_unread_messages($user)
-  {
-    $cant = $this->getOne("select count(*) from messu_messages where user='$user' and isRead='n'");
-    return $cant;
-  }
+  
   
   function list_user_messages($user,$offset,$maxRecords,$sort_mode,$find,$flag='',$flagval='',$prio='')
   {

@@ -32,6 +32,47 @@ class TikiLib {
     trigger_error("MYSQL error:  ".$result->getMessage()." in query:<br/>".$query."<br/>",E_USER_WARNING);
     die;
   }
+  
+  function dir_stats()
+  {
+    $aux=Array();
+    $aux["valid"] = $this->db->getOne("select count(*) from tiki_directory_sites where isValid='y'");
+    $aux["invalid"] = $this->db->getOne("select count(*) from tiki_directory_sites where isValid='n'");
+    $aux["categs"] = $this->db->getOne("select count(*) from tiki_directory_categories");
+    $aux["searches"] = $this->db->getOne("select sum(hits) from tiki_directory_search");
+    $aux["visits"] = $this->db->getOne("select sum(hits) from tiki_directory_sites");
+    return $aux;
+  }
+  
+  function dir_list_all_valid_sites2($offset,$maxRecords,$sort_mode,$find)
+  {
+    $sort_mode = str_replace("_"," ",$sort_mode);
+    if($find) {
+      $mid=" where isValid='y' and (name like '%".$find."%' or description like '%".$find."%')";  
+    } else {
+      $mid=" where isValid='y' "; 
+    }
+    
+    $query = "select * from tiki_directory_sites $mid order by $sort_mode limit $offset,$maxRecords";
+    $query_cant = "select count(*) from tiki_directory_sites $mid";
+    $result = $this->query($query);
+    $cant = $this->getOne($query_cant);
+    $ret = Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[] = $res;
+    }
+    $retval = Array();
+    $retval["data"] = $ret;
+    $retval["cant"] = $cant;
+    return $retval;
+  }
+  
+  
+  function user_unread_messages($user)
+  {
+    $cant = $this->getOne("select count(*) from messu_messages where user='$user' and isRead='n'");
+    return $cant;
+  }
 
   // Get online users
   function get_online_users()
