@@ -137,6 +137,8 @@ $lang=Array(
 
 // ### start of untranslated words
 // ### uncomment value pairs as you translate
+"Welcome to %s at %s" => "Bienvenue sur %s de %s",
+"Bye bye from %s at %s" => "Désinscription à %s de %s",
 // "You couldn't exception a instance" => "You couldn't exception a instance",
 // "~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage" => "~np~{~/np~ARTICLES(max=>3,topic=>topicId)}{ARTICLES} Insert articles into a wikipage",
 // "Insert a division block on wiki page" => "Insert a division block on wiki page",
@@ -403,10 +405,6 @@ $lang=Array(
 // ### end of possibly untranslated words
 // ###
 
-"filename" => "Fichier",
-"filetype" => "Type",
-"filesize" => "Taille",
-"longdesc" => "Description",
 "Wiki page" => "Page Wiki",
 "changed" => "modifié",
 "Re:" => "Re :",
@@ -1134,7 +1132,7 @@ $lang=Array(
 "Flagged" => "Avec drapeau",
 "Unflagged" => "Pas de drapeau",
 "Containing" => "Contient",
-"filter" => "rechercher",
+"filter" => "filtrer",
 "Mark as unread" => "Marquer non-lu",
 "Mark as read" => "Marquer lu",
 "Mark as unflagged" => "Ne pas mettre de drapeau",
@@ -1671,8 +1669,8 @@ $lang=Array(
 "active" => "activé",
 "Are you sure you want to delete this channel?" => "Etes vous sûr de vouloir détruire ce salon de discussion?",
 "Admin templates" => "Administrer les gabarits",
-"admin content templates" => "administrer les gabarits de contenu",
-"admin content templates template" => "gabarit de l'administration des gabarits de contenu",
+"admin content templates" => "administrer les gabarits",
+"admin content templates template" => "gabarit de l'administration des gabarits",
 "Edit this template:" => "Modifier ce gabarit :",
 "Create new template" => "Créer un nouveau gabarit",
 "use in cms" => "utilisé dans les articles",
@@ -2010,7 +2008,7 @@ $lang=Array(
 "Add all your site users to this newsletter (broadcast)" => "Ajouter tous les utilisateurs du site à une newsletter",
 "Add all users" => "Ajouter tous les utilisateurs",
 "Subscribe group" => "Inscrire un groupe",
-"Group subscription also subscribes included groups" => "L'inscription de groupe inscrit aussi les groupes inclus.",
+"Group subscription also subscribes included groups" => "L'inscription d'un groupe inscrit aussi les groupes inclus.",
 "Subscriptions" => "Inscriptions",
 "valid" => "valide",
 "subscribed" => "inscrit",
@@ -2018,7 +2016,7 @@ $lang=Array(
 "admin newsletters template" => "gabarit de l'administration des newsletters",
 "Create/edit newsletters" => "Ajouter/modifier une newsletter",
 "There are individual permissions set for this newsletter" => "Des droits individuels ont été mis sur cette newsletter",
-"Users can subscribe/unsubscribe to this list" => "Les utilisateurs peuvent s'inscrire/se d'inscrire à cette liste",
+"Users can subscribe/unsubscribe to this list" => "Les utilisateurs peuvent s'inscrire/se désinscrire à cette liste",
 "Users can subscribe any email address" => "Les utilisateurs peuvent s'inscrire avec une adresse électronique différente",
 "Add unsubscribe instructions to each newsletter" => "Ajouter les instructions pour se désinscrire à chaque newsletter",
 "Validate email addresses" => "Les inscriptions sont validées après réponse à un email",
@@ -3733,8 +3731,8 @@ $lang=Array(
 "Hi {\$mail_user} has sent you this link:" => "Bonjour, {\$mail_user} vous signale ce lien :",
 "Blog post:" => "Article de blogue :",
 "at:" => "sur :",
-"Somebody or you tried to subscribe this email address at our site:" => "Vous ou quelqu'un d'autre a essayé d'inscrire cette adresse électronique à notre site :",
-"To the newsletter:" => "A la newsletter :",
+"Somebody or you tried to subscribe this email address at our site:" => "Vous ou quelqu'un d'autre a essayé d'inscrire votre adresse électronique de notre site :",
+"To the newsletter:" => "à la newsletter :",
 "In order to confirm your subscription you must access the following URL:" => "Pour confirmer votre inscription, vous devez aller à l'adresse suivante :",
 "A new message was posted to forum" => "Un nouvel article a été posté sur le forum",
 "Hi," => "Bonjour,",
