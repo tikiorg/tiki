@@ -1,20 +1,5 @@
 <?php
 
-$separator = '';
-
-$current_path = ini_get('include_path');
-
-if (strstr($current_path, ';')) {
-	$separator = ';';
-} else {
-	$separator = ':';
-}
-
-if ($separator == '')
-	$separator = ':'; // guess
-
-ini_set('include_path', dirname(dirname(__FILE__)). '/lib/pear' . $separator . '/lib/adodb' . $separator . $current_path);
-
 //$api_tiki        = 'pear';
 $api_tiki       = 'adodb';
 $db_tiki     = 'mysql';
@@ -74,12 +59,12 @@ if (isset($host_map[$HTTP_HOST])) {
 */
 $file = dirname(__FILE__). '/local.php';
 
-if (file_exists($file))
+if (file_exists($file)) {
 	require_once ($file);
+}
 
 if (preg_match('/^adodb$/i', $api_tiki)) {
-	ini_set('include_path', $current_path . $separator . 'lib/adodb');
-
+	TikiSetup::prependIncludePath('lib/adodb');
 	error_reporting (E_ALL);       # show any error messages triggered
 	define('ADODB_FORCE_NULLS', 1);
 	define('ADODB_ASSOC_CASE', 2);
