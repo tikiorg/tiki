@@ -1,9 +1,7 @@
-<!--
 {popup_init src="lib/overlib.js"}
-<a href="tiki-special_chars.html" {popup sticky="true" trigger="onClick" caption="Special characters help" 
-   text="kj"}>foo
-</a><br/>
--->
+
+<a {popup sticky="true" trigger="onClick" caption="Special characters help" text="kj"}>foo</a><br/>
+
 
 {if $preview}
 {include file="tiki-preview.tpl"}
@@ -15,12 +13,26 @@
 to preview the appeareance of the page, no versions are stored for this page.{/tr}
 </div>
 {/if}
-<form  method="post" action="tiki-editpage.php">
+<form  method="post" action="tiki-editpage.php" id='editpageform'>
 <table class="normal">
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
 {assign var=area_name value="editwiki"}
 {include file=tiki-edit_help_tool.tpl}
 </td>
+
+{include file=categorize.tpl}
+
+{if $feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
+<tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
+<select name="templateId" onChange="javascript:document.getElementById('editpageform').submit();">
+<option value="0">{tr}none{/tr}</option>
+{section name=ix loop=$templates}
+<option value="{$templates[ix].templateId}">{tr}{$templates[ix].name}{/tr}</option>
+{/section}
+</select>
+</td></tr>
+{/if}
+{if $feature_smileys eq 'y'}
 <tr><td class="formcolor">{tr}Smileys{/tr}</td><td class="formcolor">
 <table>
      <tr>
@@ -50,6 +62,8 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
       </tr>    
       </table>
 </td>
+</tr>
+{/if}
 <!--<a class="link" href="javascript:setSomeElement('editwiki',"''text here''");">i</a>-->
 <tr><td class="formcolor">{tr}edit{/tr}</td><td class="formcolor">
 <textarea id='editwiki' class="wikiedit" name="edit" rows="22" cols="80" wrap="virtual">{$pagedata}</textarea>
@@ -65,7 +79,7 @@ to preview the appeareance of the page, no versions are stored for this page.{/t
 {/if}
 <input type="hidden" name="page" value="{$page}" />
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" /></td>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /></td>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /><input type="submit" class="wikiaction" name="cancel" value="{tr}cancel{/tr}" /></td>
 </tr>
 </table>
 </form>

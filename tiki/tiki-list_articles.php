@@ -83,8 +83,18 @@ if(isset($_REQUEST["find"])) {
 }
 $smarty->assign('find',$find);
 
+if(!isset($_REQUEST["type"])) {
+  $_REQUEST["type"]='';
+}
+if(!isset($_REQUEST["topic"])) {
+  $_REQUEST["topic"]='';
+}
+$smarty->assign('find_topic',$_REQUEST["topic"]);
+$smarty->assign('find_type',$_REQUEST["type"]);
+
+
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset,$maxRecords,$sort_mode,$find,$pdate,$user);
+$listpages = $tikilib->list_articles($offset,$maxRecords,$sort_mode,$find,$pdate,$user,$_REQUEST["type"],$_REQUEST["topic"]);
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);
@@ -104,6 +114,9 @@ if($offset>0) {
 
 $smarty->assign_by_ref('listpages',$listpages["data"]);
 //print_r($listpages["data"]);
+
+$topics = $tikilib->list_topics();
+$smarty->assign_by_ref('topics',$topics);
 
 // Display the template
 $smarty->assign('mid','tiki-list_articles.tpl');

@@ -45,7 +45,14 @@ if(isset($_REQUEST["save"])) {
   
   $publishDate = mktime($_REQUEST["Time_Hour"],$_REQUEST["Time_Minute"],0,
                         $_REQUEST["Date_Month"],$_REQUEST["Date_Day"],$_REQUEST["Date_Year"]);
-  $tikilib->replace_poll($_REQUEST["pollId"], $_REQUEST["title"], $_REQUEST["active"], $publishDate);
+  $pid = $tikilib->replace_poll($_REQUEST["pollId"], $_REQUEST["title"], $_REQUEST["active"], $publishDate);
+  
+  $cat_type='poll';
+  $cat_objid = $pid;
+  $cat_desc = substr($_REQUEST["title"],0,200);
+  $cat_name = $_REQUEST["title"];
+  $cat_href="tiki-poll_results.php?pollId=".$cat_objid;
+  include_once("categorize.php");
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -87,6 +94,10 @@ if($offset>0) {
 }
 
 $smarty->assign_by_ref('channels',$channels["data"]);
+
+$cat_type='poll';
+$cat_objid = $_REQUEST["pollId"];
+include_once("categorize_list.php");
 
 
 // Display the template

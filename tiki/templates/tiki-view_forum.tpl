@@ -59,12 +59,13 @@
       <input type="submit" name="comments_previewComment" value="{tr}preview{/tr}"/>
       <input type="submit" name="comments_postComment" value="{tr}post{/tr}"/>
       </td>
-      <td class="forumform">{tr}smileys{/tr}</td>
+      {if $feature_smileys eq 'y'}<td class="forumform">{tr}smileys{/tr}</td>{/if}
     </tr>
     <tr>
       <td class="forumform">{tr}Title{/tr}</td>
       <td class="forumform"><input type="text" name="comments_title" value="{$comment_title}" /></td>
-      <td rowspan="3" class="forumform">
+      
+      {if $feature_smileys eq 'y'}<td rowspan="3" class="forumform">
       <table>
       <tr><td><a href="javascript:setSomeElement('editpost','(:biggrin:)');"><img src="img/smiles/icon_biggrin.gif" alt="big grin" border="0" /></a></td>
           <td><a href="javascript:setSomeElement('editpost','(:confused:)');"><img src="img/smiles/icon_confused.gif" alt="confused" border="0" /></a></td>
@@ -98,6 +99,7 @@
        </tr>
       </table>
       </td>
+      {/if}
     </tr>
     <tr>
       <td class="forumform">{tr}Type{/tr}</td>

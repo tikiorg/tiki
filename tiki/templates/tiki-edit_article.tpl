@@ -5,7 +5,7 @@
 [<a class="link" href="tiki-list_articles.php">list articles</a>|
 <a class="link" href="tiki-view_articles.php">view articles</a>]
 <br/><br/>
-<form enctype="multipart/form-data" method="post" action="tiki-edit_article.php">
+<form enctype="multipart/form-data" method="post" action="tiki-edit_article.php" id='tikieditarticle'>
 <input type="hidden" name="articleId" value="{$articleId}" />
 <input type="hidden" name="image_data" value="{$image_data}" />
 <input type="hidden" name="useImage" value="{$useImage}" />
@@ -66,6 +66,20 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Own image size x{/tr}</td><td class="formcolor"><input type="text" name="image_x" value="{$image_x}" /></td></tr>
 <tr><td class="formcolor">{tr}Own image size y{/tr}</td><td class="formcolor"><input type="text" name="image_y" value="{$image_y}" /></td></tr>
+
+{if $feature_cms_templates eq 'y' and $tiki_p_use_content_templates eq 'y'}
+<tr><td class="formcolor">{tr}Apply template{/tr}</td><td class="formcolor">
+<select name="templateId" onChange="javascript:document.getElementById('tikieditarticle').submit();">
+<option value="0">{tr}none{/tr}</option>
+{section name=ix loop=$templates}
+<option value="{$templates[ix].templateId}">{tr}{$templates[ix].name}{/tr}</option>
+{/section}
+</select>
+</td></tr>
+{/if}
+
+{include file=categorize.tpl}
+
 <tr><td class="formcolor">{tr}Heading{/tr}</td><td class="formcolor"><textarea class="wikiedit" name="heading" rows="5" cols="80" id='subheading' wrap="virtual">{$heading}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Quicklinks{/tr}</td><td class="formcolor">
 {assign var=area_name value="body"}

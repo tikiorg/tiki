@@ -1,3 +1,4 @@
+{popup_init src="lib/overlib.js"}
 <h2><a class="pagetitle" href="tiki-admin.php">{tr}Administration{/tr}</a></h2>
 [ <a href="#features" class="link">{tr}features{/tr}</a> |
 <a href="#general" class="link">{tr}general{/tr}</a> |
@@ -15,7 +16,7 @@
 <div class="cbox">
 <div class="cbox-title">{tr}Features{/tr}</div>
 <div class="cbox-data">
-<table>
+<table width="100%">
 <tr><td valign="top">
 <div class="simplebox">
 {tr}Tiki sections and features{/tr}
@@ -46,6 +47,9 @@
 <tr><td class="form">{tr}User bookmarks{/tr}:</td><td><input type="checkbox" name="feature_user_bookmarks" {if $feature_user_bookmarks eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Stats{/tr}:</td><td><input type="checkbox" name="feature_stats" {if $feature_stats eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Games{/tr}:</td><td><input type="checkbox" name="feature_games" {if $feature_games eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Quizzes{/tr}:</td><td><input type="checkbox" name="feature_quizzes" {if $feature_quizzes eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Allow smileys{/tr}:</td><td><input type="checkbox" name="feature_smileys" {if $feature_smileys eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Shoutbox{/tr}:</td><td><input type="checkbox" name="feature_shoutbox" {if $feature_shoutbox eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>
@@ -100,6 +104,7 @@
 </select>
 </td></tr>
 <tr><td class="form">{tr}Users can register{/tr}:</td><td><input type="checkbox" name="allowRegister" {if $allowRegister eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$registerPasscode}"/></td></tr>
 <tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Remind passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Open external links in new window{/tr}:</td><td><input type="checkbox" name="popupLinks" {if $popupLinks eq 'y'}checked="checked"{/if}/></td></tr>
@@ -240,6 +245,7 @@
     <tr><td class="form">{tr}MultiPrint{/tr}:</td><td><input type="checkbox" name="feature_wiki_multiprint" {if $feature_wiki_multiprint eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_wiki_comments" {if $feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Spellchecking{/tr}:</td><td><input type="checkbox" name="wiki_spellcheck" {if $wiki_spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use templates{/tr}:</td><td><input type="checkbox" name="feature_wiki_templates" {if $feature_wiki_templates eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Warn on edit{/tr}:</td><td><input type="checkbox" name="feature_warn_on_edit" {if $feature_warn_on_edit eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
@@ -362,6 +368,9 @@
     <table width="100%">
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_rankings" {if $feature_file_galleries_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_file_galleries_comments" {if $feature_file_galleries_comments eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use database to store files{/tr}:</td><td><input type="radio" name="fgal_use_db" value="y" {if $fgal_use_db eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use a directory to store files{/tr}:</td><td><input type="radio" name="fgal_use_db" value="n" {if $fgal_use_db eq 'n'}checked="checked"{/if}/> {tr}Directory path{/tr}:<input type="text" name="fgal_use_dir" value="{$fgal_use_dir}" /> 
+    <a class="link" {popup sticky="true" trigger="onClick" caption="Storing files in a directory" text="If you decide to store files in a directory you must ensure that the user cannot access directly to the directory. You have two options to accomplish this:<br/><ul><li>Use a directory ourside your document root, make sure your php script can read and write to that directory</li><li>Use a directory inside the document root and use and .htaccess to prevent the user from listing the directory contents</li></ul>To configure the directory path use UNIX like paths for example files/ or c:/foo/files or /www/files/"}>please read</a></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="filegalfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>
@@ -411,6 +420,7 @@
     <tr><td class="form">{tr}Rankings{/tr}:</td><td><input type="checkbox" name="feature_cms_rankings" {if $feature_cms_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_article_comments" {if $feature_article_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Spellchecking{/tr}:</td><td><input type="checkbox" name="cms_spellcheck" {if $cms_spellcheck eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use templates{/tr}:</td><td><input type="checkbox" name="feature_cms_templates" {if $feature_cms_templates eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td align="center" colspan="2"><input type="submit" name="cmsfeatures" value="{tr}Set features{/tr}" /></td></tr>    
     </table>
 </form>

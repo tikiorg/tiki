@@ -103,6 +103,36 @@ if($tiki_p_admin_wiki == 'y') {
   }
 }
 
+if($tiki_p_admin_faqs == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','faqs');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+}
+
+if($tiki_p_admin_shoutbox == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','shoutbox');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+}
+
+
+if($tiki_p_admin_quizzes == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','quizzes');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+}
+
+
+
 if($tiki_p_admin_cms == 'y') {
   $perms = $userlib->get_permissions(0,-1,'permName_desc','','cms');
   foreach($perms["data"] as $perm) {
@@ -116,7 +146,6 @@ if($tiki_p_admin_cms == 'y') {
     $smarty->assign("$perm",'y');  
     $$perm='y';
   }
-
 }
 
  
@@ -152,10 +181,15 @@ $home_blog = 0;
 $home_gallery = 0;
 $home_file_gallery = 0;
 $home_forum = 0;
+$fgal_use_db = 'y';
+$fgal_use_dir = '';
 $feature_xmlrpc = 'n';
+$feature_smileys = 'y';
+$feature_quizzes = 'n';
 $feature_comm = 'n';
 $feature_categories = 'n';
 $feature_faqs = 'n';
+$feature_shoutbox = 'n';
 $feature_stats = 'n';
 $feature_games = 'n';
 $user_assigned_modules = 'n';
@@ -228,7 +262,8 @@ $feature_article_comments = 'n';
 $article_comments_default_ordering = 'points_desc';
 $article_comments_per_page = 10;
 
-
+$feature_wiki_templates = 'n';
+$feature_cms_templates = 'n';
 
 $feature_warn_on_edit ='n';
 $feature_file_galleries = 'n';
@@ -277,6 +312,7 @@ $smarty->assign('blog_spellcheck',$cms_spellcheck);
 
 $smarty->assign('userbreadCrumb',$userbreadCrumb);
 $smarty->assign('feature_polls',$feature_polls);
+$smarty->assign('feature_quizzes',$feature_quizzes);
 $smarty->assign('feature_chat',$feature_chat);
 $smarty->assign('rss_articles',$rss_articles);
 $smarty->assign('rss_forum',$rss_forum);
@@ -299,6 +335,8 @@ $smarty->assign('max_rss_image_gallery',$max_rss_image_gallery);
 $smarty->assign('max_rss_file_gallery',$max_rss_file_gallery);
 $smarty->assign('max_rss_blog',$max_rss_blog);
 
+$smarty->assign('fgal_use_db',$fgal_use_db);
+$smarty->assign('fgal_use_dir',$fgal_use_dir);
 
 $smarty->assign('feature_left_column',$feature_left_column);
 $smarty->assign('feature_right_column',$feature_right_column);
@@ -316,18 +354,24 @@ $smarty->assign('feature_edit_templates',$feature_edit_templates);
 $smarty->assign('feature_top_banner',$feature_top_banner);
 $smarty->assign('feature_banners',$feature_banners);
 $smarty->assign('feature_xmlrpc',$feature_xmlrpc);
+$smarty->assign('feature_smileys',$feature_smileys);
 $smarty->assign('feature_comm',$feature_comm);
 $smarty->assign('feature_cms_rankings',$feature_cms_rankings);
 $smarty->assign('feature_blog_rankings',$feature_blog_rankings);
 $smarty->assign('feature_gal_rankings',$feature_gal_rankings);
 $smarty->assign('feature_wiki_rankings',$feature_wiki_rankings);
 $smarty->assign('feature_wiki_undo',$feature_wiki_undo);
+
+$smarty->assign('feature_wiki_templates',$feature_wiki_templates);
+$smarty->assign('feature_cms_templates',$feature_cms_templates);
+
 $smarty->assign('feature_forum_rankings',$feature_forum_rankings);
 $smarty->assign('feature_hotwords',$feature_hotwords);
 $smarty->assign('feature_lastChanges',$feature_lastChanges);
 $smarty->assign('feature_dump',$feature_dump);
 $smarty->assign('feature_categories',$feature_categories);
 $smarty->assign('feature_faqs',$feature_faqs);
+$smarty->assign('feature_shoutbox',$feature_shoutbox);
 $smarty->assign('feature_stats',$feature_stats);
 $smarty->assign('feature_games',$feature_games);
 $smarty->assign('user_assigned_modules',$user_assigned_modules);
@@ -396,6 +440,7 @@ $tikiIndex = $tikilib->get_preference("tikiIndex",'tiki-index.php');
 $cachepages = $tikilib->get_preference("cachepages",'y');
 $cacheimages = $tikilib->get_preference("cacheimages",'y');
 $allowRegister = $tikilib->get_preference("allowRegister",'n');
+$useRegisterPasscode = $tikilib->get_preference("useRegisterPasscode",'n');
 $validateUsers = $tikilib->get_preference("validateUsers",'n');
 $forgotPass = $tikilib->get_preference("forgotPass",'n');
 $title = $tikilib->get_preference("title","");

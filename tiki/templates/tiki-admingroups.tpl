@@ -4,6 +4,13 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Group{/tr}:</td><td class="formcolor"><input type="text" name="name" /></td></tr>
 <tr><td class="formcolor">{tr}Desc{/tr}:</td><td class="formcolor"><textarea rows="5" cols="20" name="desc"></textarea></td></tr>
+<tr><td class="formcolor">{tr}Include{/tr}:</td><td class="formcolor">
+<select name="include_groups[]" multiple="multiple" size="4">
+{section name=ix loop=$users}
+<option value="{$users[ix].groupName}">{$users[ix].groupName}</option>
+{/section}
+</select>
+</td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td  class="formcolor"><input type="submit" name="newgroup" value="{tr}Add{/tr}" /></td></tr>
 </table>
 </form>
@@ -25,6 +32,7 @@
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}name{/tr}</a></td>
 <td class="heading"><a class="tableheading" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}desc{/tr}</a></td>
+<td class="heading">{tr}Includes{/tr}</td>
 <td class="heading">{tr}Permissions{/tr}</td>
 <td class="heading">{tr}action{/tr}</td>
 </tr>
@@ -33,6 +41,11 @@
 <tr>
 <td class="odd">{$users[user].groupName}</td>
 <td class="odd">{$users[user].groupDesc}</td>
+<td class="odd">
+{section name=ix loop=$users[user].included}
+{$users[user].included[ix]}<br/>
+{/section}
+</td>
 <td class="odd">
 {section name=grs loop=$users[user].perms}
 {$users[user].perms[grs]}(<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)&nbsp;
@@ -45,6 +58,12 @@
 <tr>
 <td class="even">{$users[user].groupName}</td>
 <td class="even">{$users[user].groupDesc}</td>
+<td class="even">
+{section name=ix loop=$users[user].included}
+{$users[user].included[ix]}<br/>
+{/section}
+</td>
+
 <td class="even">
 {section name=grs loop=$users[user].perms}
 {$users[user].perms[grs]}(<a class="link" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;permission={$users[user].perms[grs]}&amp;group={$users[user].groupName}&amp;action=remove">x</a>)&nbsp;

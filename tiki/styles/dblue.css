@@ -873,3 +873,72 @@ div.faqanswer {
   font-size: 12px;
   width: 97%;
 }
+
+/***************************************************** QUIZZES **************************************************************/
+
+#quizmenu { display: none;}
+
+div.questionblock {
+  border: 1px solid black;
+  background: white;
+  margin-bottom: 10px;
+}
+
+div.quizquestion {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+div.quizoptions {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+div.quizdescription {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  border: 1px solid black;
+  background: white;
+  margin-bottom: 10px;
+}
+
+div.quizanswer {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  border: 1px solid black;
+  background: white;
+  margin-bottom: 10px;
+}
+
+/***************************************************** SHOUTBOX **************************************************************/
+div.shoutboxmsg {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  border: 1px solid black;
+  background: white;
+  margin-bottom: 0px;
+  padding-left: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+div.shoutboxmodmsg {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  margin-bottom: 4px;
+  padding-left: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+textarea.tshoutbox{
+	background-color: white;
+	border-bottom: #5e5d63 1px solid;
+	border-left: #5e5d63 1px solid;
+	border-right: #5e5d63 1px solid;
+	border-top: #5e5d63 1px solid;
+	color: #000000;
+	font-family: verdana, tahoma, arial, helvetica, sans-serif;
+	font-size: 10px;
+}

@@ -29,6 +29,13 @@ if(isset($_REQUEST["articleId"])) {
 }
 $smarty->assign('articleId',$articleId);
 
+if(isset($_REQUEST["templateId"])&&$_REQUEST["templateId"]>0) {
+  $template_data = $tikilib->get_template($_REQUEST["templateId"]);
+  $_REQUEST["preview"]=1;
+  $_REQUEST["body"]=$template_data["content"];
+}
+
+
 $smarty->assign('allowhtml','y');
 $publishDate=date("U");
 $smarty->assign('title','');
@@ -200,6 +207,10 @@ if(isset($_REQUEST["preview"])) {
 
 // Pro
 if(isset($_REQUEST["save"])) {
+
+  
+
+
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
     $body = $_REQUEST["body"];  
     $heading  = $_REQUEST["heading"];
@@ -238,7 +249,7 @@ if(isset($_REQUEST["save"])) {
   $body = $tikilib->capture_images($body);
   $heading = $tikilib->capture_images($heading);
   // If page exists
-  $tikilib->replace_article(strip_tags($_REQUEST["title"],'<a><pre><p><img><hr><b><i>'),
+  $artid = $tikilib->replace_article(strip_tags($_REQUEST["title"],'<a><pre><p><img><hr><b><i>'),
                             $_REQUEST["authorName"],
                             $_REQUEST["topicId"],
                             $useImage,
@@ -259,12 +270,39 @@ if(isset($_REQUEST["save"])) {
   $tikilib->cache_links($links);
   $links = $tikilib->get_links($heading);
   $tikilib->cache_links($links);
+  
+  $cat_type='article';
+  $cat_objid = $artid;
+  $cat_desc = substr($_REQUEST["heading"],0,200);
+  $cat_name = $_REQUEST["title"];
+  $cat_href="tiki-view_article.php?articleId=".$cat_objid;
+  include_once("categorize.php");
+  
+  
   header("location: tiki-list_articles.php");
 }
 
 // Armar un select con los topics
 $topics = $tikilib->list_topics();
 $smarty->assign_by_ref('topics',$topics);
+
+if($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {
+  $templates = $tikilib->list_templates('cms',0,-1,'name_asc','');
+}
+$smarty->assign_by_ref('templates',$templates["data"]);
+
+
+$cat_type='article';
+$cat_objid = $articleId;
+include_once("categorize_list.php");
+
+
+  
+  
+
+
+
+
 
 
 // Display the Index Template

@@ -18,6 +18,7 @@ if($user != 'admin') {
 }
 
 $smarty->assign('title','');
+$smarty->assign('type','f');
 $smarty->assign('position',1);
 
 if(isset($_REQUEST["generate"])) {
@@ -36,6 +37,7 @@ if($_REQUEST["editurl"]!='n') {
   }
   $smarty->assign('title',$info["title"]);
   $smarty->assign('position',$info["position"]);
+  $smarty->assign('type',$info["type"]);
   
 }
 $smarty->assign('editurl',$_REQUEST["editurl"]);
@@ -43,9 +45,9 @@ $smarty->assign('editurl',$_REQUEST["editurl"]);
 if(isset($_REQUEST["add"])) {
   if(!empty($_REQUEST["url"]) && !empty($_REQUEST["url"])) {
     if($_REQUEST["editurl"]==0) {
-      $tikilib->add_featured_link($_REQUEST["url"],$_REQUEST["title"],'',$_REQUEST["position"]);
+      $tikilib->add_featured_link($_REQUEST["url"],$_REQUEST["title"],'',$_REQUEST["position"],$_REQUEST["type"]);
     } else {
-      $tikilib->update_featured_link($_REQUEST["url"], $_REQUEST["$title"], '', $_REQUEST["position"]);
+      $tikilib->update_featured_link($_REQUEST["url"], $_REQUEST["$title"], '', $_REQUEST["position"],$_REQUEST["type"]);
     }
   }
 }

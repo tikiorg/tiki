@@ -1,1 +1,1 @@
-This is Tiki v1.3 -Pollux- (c)2002 by Fwazonga Industries. 
+This is Tiki v1.4 -Mira- (c)2002 by Fwazonga Industries. {showdate mode="d/m/Y [h:i]"}

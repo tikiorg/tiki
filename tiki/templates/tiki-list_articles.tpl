@@ -10,21 +10,33 @@
      <input type="text" name="find" value="{$find}" />
      <input type="submit" value="{tr}find{/tr}" name="search" />
      <input type="hidden" name="sort_mode" value="{$sort_mode}" />
+     <select name="type">
+     <option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
+     <option value='Article' {if $find_type eq 'Article'}selected="selected"{/if}>{tr}Article{/tr}</option>
+     <option value='Review' {if $find_type eq 'Review'}selected="selected"{/if}>{tr}Review{/tr}</option>
+     </select>
+     <select name="topic">
+     <option value='' {if $find_topic eq ''}selected="selected"{/if}>{tr}all{/tr}</option>
+     {section name=ix loop=$topics}
+     <option value="{$topics[ix].topicId}" {if $find_topic eq $topics[ix].topicId}selected="selected"{/if}>{tr}{$topics[ix].name}{/tr}</option>
+     {/section}
+     </select>
    </form>
    </td>
 </tr>
 </table>
+
 <table class="listarticles">
 <tr>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}AuthorName{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'reads_desc'}reads_asc{else}reads_desc{/if}">{tr}Reads{/tr}</a></td>
-<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
+<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
+<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'topicName_desc'}topicName_asc{else}topicName_desc{/if}">{tr}Topic{/tr}</a></td>
+<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}PublishDate{/tr}</a></td>
+<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'authorName_desc'}authorName_asc{else}authorName_desc{/if}">{tr}AuthorName{/tr}</a></td>
+<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'reads_desc'}reads_asc{else}reads_desc{/if}">{tr}Reads{/tr}</a></td>
+<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'size_desc'}size_asc{else}size_desc{/if}">{tr}Size{/tr}</a></td>
 <td class="listartheading">{tr}Img{/tr}</td>
-<!--<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'useImage_desc'}useImage_asc{else}useImage_desc{/if}">{tr}UseImg{/tr}</a></td>-->
-<!--<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}User{/tr}</a></td>-->
+<!--<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'useImage_desc'}useImage_asc{else}useImage_desc{/if}">{tr}UseImg{/tr}</a></td>-->
+<!--<td class="listartheading"><a class="llistart" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'author_desc'}author_asc{else}author_desc{/if}">{tr}User{/tr}</a></td>-->
 <td class="listartheading">{tr}Action{/tr}</td>
 </tr>
 {section name=changes loop=$listpages}
@@ -94,11 +106,11 @@
 <br/>
 <div class="mini">
 {if $prev_offset >= 0}
-[<a class="artprevnext" href="tiki-list_articles.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
+[<a class="artprevnext" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}prev{/tr}</a>]&nbsp;
 {/if}
 {tr}Page{/tr}: {$actual_page}/{$cant_pages}
 {if $next_offset >= 0}
-&nbsp;[<a class="artprevnext" href="tiki-list_articles.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
+&nbsp;[<a class="artprevnext" href="tiki-list_articles.php?topic={$find_topic}&amp;type={$find_type}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}next{/tr}</a>]
 {/if}
 </div>
 </div>

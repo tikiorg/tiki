@@ -42,18 +42,38 @@ if(isset($_REQUEST["register"])) {
   }
   
   // Check the mode
+  if($useRegisterPasscode == 'y') {
+    if(($_REQUEST["passcode"]!=$tikilib->get_preference("registerPasscode",md5($tikilib->genPass()))))
+    {
+      $smarty->assign('msg',tra("Wrong passcode you need to know the passcode to register in this site"));
+      $smarty->display('error.tpl');
+      die;
+    }
+  }
+  
   if($validateUsers == 'y') {
     $apass = addslashes(substr(md5($tikilib->genPass()),0,25));
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $foo1=str_replace("tiki-register","tiki-login_validate",$foo["path"]);
     $machine ='http://'.$_SERVER["SERVER_NAME"].$foo1;
-    $message = tra('Hi')." ".$_REQUEST["name"]." ".tra('you are about to be a registered user in')." ".$_SERVER["SERVER_NAME"]." \n";
-    $message .= tra('use this link to login for the first time')."\n";
-    $message .=$machine."?user=".$_REQUEST["name"]."&pass=".$apass;
     $userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"]);
+    $emails = $tikilib->get_mail_events('user_registers','*');
+    foreach($emails as $email) {
+      $smarty->assign('mail_user',$_REQUEST["name"]);
+      $smarty->assign('mail_date',date("U"));
+      $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+      $mail_data = $smarty->fetch('mail/new_user_notification.tpl');
+      mail($email, tra('New user registration'),$mail_data);
+    }
     // Send the mail
-    @mail($_REQUEST["email"], tra('your registration information for')." ".$_SERVER["SERVER_NAME"],$message);
     $smarty->assign('msg',tra('You will receive an email with information to login for the first time into this site'));
+    $smarty->assign('mail_machine',$machine);
+    $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+    $smarty->assign('mail_user',$_REQUEST["name"]);
+    $smarty->assign('mail_apass',$apass);
+    $mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
+    mail($_REQUEST["email"], tra('Your Tiki information registration'),$mail_data);
+    
     $smarty->assign('showmsg','y');
   } else {
     $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"],'');

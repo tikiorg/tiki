@@ -20,6 +20,11 @@ if(isset($_REQUEST["newgroup"])) {
     die;
   } else {
     $userlib->add_group($_REQUEST["name"],$_REQUEST["desc"]);
+    if (isset($_REQUEST["include_groups"])) {
+      foreach($_REQUEST["include_groups"] as $include) {
+        $userlib->group_inclusion($_REQUEST["name"],$include);
+      }
+    }
   }
 }
 
@@ -75,9 +80,6 @@ if($offset>0) {
 } else {
   $smarty->assign('prev_offset',-1); 
 }
-
-
-
 // Assign the list of groups
 $smarty->assign_by_ref('users',$users["data"]);
 // Display the template for group administration

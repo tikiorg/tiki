@@ -64,7 +64,7 @@
 {/if}
 {if $feature_galleries eq 'y'}
   <div class="separator"><a class='separator' href="javascript:hide('galmenu');">[-]</a> 
-  {if $home_gallery > 0}<a class='separator' href="tiki-browse_gallery.php?galleryId={$home_gallery}">{/if}{tr}Image Gals{/tr}{if $home_gallery > 0}</a>{/if} 
+  <a class='separator' href="tiki-galleries.php">{tr}Image Gals{/tr}</a> 
   <a class='separator' href="javascript:show('galmenu');">[+]</a></div>
   <div id='galmenu'>
   {if $tiki_p_view_image_gallery eq 'y'}
@@ -75,6 +75,9 @@
   {/if}
   {if $tiki_p_upload_images eq 'y'}
     &nbsp;<a href="tiki-upload_image.php" class="linkmenu">{tr}Upload image{/tr}</a><br/>
+  {/if}
+  {if $tiki_p_admin_galleries eq 'y'}
+  &nbsp;<a href="tiki-list_gallery.php?galleryId=0" class="linkmenu">{tr}System gallery{/tr}</a><br/>
   {/if}
   </div>
 {/if}
@@ -93,21 +96,28 @@
     {if $tiki_p_submit_article eq 'y'}
     &nbsp;<a href="tiki-edit_submission.php" class="linkmenu">{tr}Submit article{/tr}</a><br/>
     {/if}
-    {if $tiki_p_read_article eq 'y' and $tiki_p_submit_article eq 'y'}
+    {if $tiki_p_submit_article eq 'y' or $tiki_p_approve_submission eq 'y' or $tiki_p_remove_submission eq 'y'}
     &nbsp;<a href="tiki-list_submissions.php" class="linkmenu">{tr}View submissions{/tr}</a><br/>
     {/if}
   {/if}
+  {if $tiki_p_edit_article eq 'y'}
+      &nbsp;<a href="tiki-edit_article.php" class="linkmenu">{tr}Edit article{/tr}</a><br/>
+  {/if}
   {if $tiki_p_send_articles eq 'y' and $feature_comm eq 'y'}
-    &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}send{/tr}</a><br/>
+    &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}Send articles{/tr}</a><br/>
   {/if}
   {if $tiki_p_admin_received_articles eq 'y'}
-    &nbsp;<a href="tiki-received_articles.php" class="linkmenu">{tr}received articles{/tr}</a><br/>
+    &nbsp;<a href="tiki-received_articles.php" class="linkmenu">{tr}Received articles{/tr}</a><br/>
   {/if}
+  {if $tiki_p_admin_cms eq 'y'}
+      &nbsp;<a href="tiki-admin_topics.php" class="linkmenu">{tr}Admin topics{/tr}</a><br/>
+  {/if}  
   </div>
 {/if}
+
 {if $feature_blogs eq 'y'}
   <div class="separator"><a class='separator' href="javascript:hide('blogmenu');">[-]</a> 
-  {if $home_blog > 0}<a class='separator' href="tiki-view_blog.php?blogId={$home_blog}">{/if}{tr}Blogs{/tr}{if $home_blog > 0}</a>{/if}
+  <a class='separator' href="tiki-list_blogs.php">{tr}Blogs{/tr}</a>
   <a class='separator' href="javascript:show('blogmenu');">[+]</a></div>
   <div id='blogmenu'>
   {if $tiki_p_read_blog eq 'y'}
@@ -122,12 +132,15 @@
   {if $tiki_p_blog_post eq 'y'}
   &nbsp;<a href="tiki-blog_post.php" class="linkmenu">{tr}Post{/tr}</a><br/>
   {/if}
+  {if $tiki_p_blog_admin eq 'y'}
+  &nbsp;<a href="tiki-list_posts.php" class="linkmenu">{tr}Admin posts{/tr}</a><br/>
+  {/if}
   </div>
 {/if}
 
 {if $feature_forums eq 'y'}
   <div class="separator"><a class='separator' href="javascript:hide('formenu');">[-]</a> 
-  {if $home_forum > 0}<a class='separator' href="tiki-view_forum.php?forumId={$home_forum}">{/if}{tr}Forums{/tr}{if $home_forum > 0}</a>{/if}
+  <a class='separator' href="tiki-forums.php">{tr}Forums{/tr}</a>
   <a class='separator' href="javascript:show('formenu');">[+]</a></div>
   <div id='formenu'>
   {if $tiki_p_forum_read eq 'y'}
@@ -136,12 +149,15 @@
   {if $feature_forum_rankings eq 'y' and $tiki_p_forum_read eq 'y'}
   &nbsp;<a href="tiki-forum_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br/>
   {/if}
+  {if $tiki_p_admin_forum eq 'y'}
+  &nbsp;<a href="tiki-admin_forums.php" class="linkmenu">{tr}Admin forums{/tr}</a><br/>
+  {/if}
   </div>
 {/if}
 
 {if $feature_file_galleries eq 'y'}
   <div class="separator"><a class='separator' href="javascript:hide('filegalmenu');">[-]</a> 
-  {if $home_file_gallery > 0}<a class='separator' href="tiki-list_file_gallery.php?galleryId={$home_file_gallery}">{/if}{tr}File Galleries{/tr}{if $home_file_gallery > 0}</a>{/if}
+  <a class='separator' href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
   <a class='separator' href="javascript:show('filegalmenu');">[+]</a></div>
   <div id='filegalmenu'>
   {if $tiki_p_view_file_gallery eq 'y'}
@@ -153,43 +169,54 @@
   {if $tiki_p_upload_files eq 'y'}
   &nbsp;<a href="tiki-upload_file.php" class="linkmenu">{tr}Upload file{/tr}</a><br/>
   {/if}
-  
   </div>
 {/if}
 
 {if $feature_faqs eq 'y'}
   <div class="separator"><a class='separator' href="javascript:hide('faqsmenu');">[-]</a> 
-  {tr}FAQs{/tr}
+  <a href="tiki-list_faqs.php" class="separator">{tr}FAQs{/tr}</a>
   <a class='separator' href="javascript:show('faqsmenu');">[+]</a></div>
   <div id='faqsmenu'>
   {if $tiki_p_view_faqs eq 'y'}
   &nbsp;<a href="tiki-list_faqs.php" class="linkmenu">{tr}List FAQs{/tr}</a><br/>
   {/if}
+  {if $tiki_p_admin_faqs eq 'y'}
+  &nbsp;<a href="tiki-list_faqs.php" class="linkmenu">{tr}Admin FAQs{/tr}</a><br/>
+  {/if}
+  </div>
+{/if}
+
+{if $feature_quizzes eq 'y'}
+  <div class="separator"><a class='separator' href="javascript:hide('quizmenu');">[-]</a> 
+  <a href="tiki-list_quizzes.php" class="separator">{tr}Quizzes{/tr}</a>
+  <a class='separator' href="javascript:show('quizmenu');">[+]</a></div>
+  <div id='quizmenu'>
+  &nbsp;<a href="tiki-list_quizzes.php" class="linkmenu">{tr}List Quizzes{/tr}</a><br/>
+  {if $tiki_p_view_quiz_stats eq 'y'}
+  &nbsp;<a href="tiki-quiz_stats.php" class="linkmenu">{tr}Quiz stats{/tr}</a><br/>
+  {/if}
+  {if $tiki_p_admin_quizzes eq 'y'}
+  &nbsp;<a href="tiki-edit_quiz.php" class="linkmenu">{tr}Admin{/tr}</a><br/>
+  {/if}
   </div>
 {/if}
 
 
-{if $tiki_p_admin eq 'y' or $tiki_p_edit_articles eq 'y'
- or $tiki_p_edit_submission eq 'y' 
- or $tiki_p_remove_submission eq 'y'
- or $tiki_p_remove_article eq 'y'
- or $tiki_p_approve_submission eq 'y'
- or $tiki_p_blog_admin eq 'y'
- or $tiki_p_edit_templates eq 'y'
- or $tiki_p_admin_dynamic eq 'y'
- or $tiki_p_admin_banners eq 'y'
- or $tiki_p_admin_chat eq 'y'
- or $tiki_p_admin_forum eq 'y'
- or $tiki_p_admin_categories eq 'y'
- or $tiki_p_admin_faqs eq 'y'
- or $tiki_p_edit_cookies eq 'y'
+{if $tiki_p_admin eq 'y' or 
+ $tiki_p_admin_chat eq 'y' or
+ $tiki_p_admin_categories eq 'y' or
+ $tiki_p_admin_banners eq 'y' or
+ $tiki_p_edit_templates eq 'y' or
+ $tiki_p_admin_dynamic eq 'y' or
+ $tiki_p_admin_dynamic eq 'y' or
+ $tiki_p_edit_content_templates eq 'y' or
+ $tiki_p_admin_shoutbox eq 'y'
  }
  
   <div class="separator"><a class='separator' href="javascript:hide('admmnu');">[-]</a>{if $tiki_p_admin eq 'y'}<a class='separator' href='tiki-admin.php'>{/if} {tr}Admin{/tr}{if $tiki_p_admin eq 'y'}</a>{/if} <a class='separator' href="javascript:show('admmnu');">[+]</a></div>
   <div id='admmnu'>
-    
+
     {if $tiki_p_admin eq 'y'}
-    <div class="separator">{tr}General{/tr}</div>
       &nbsp;<a href="tiki-adminusers.php" class="linkmenu">{tr}Users{/tr}</a><br/>
       &nbsp;<a href="tiki-admingroups.php" class="linkmenu">{tr}Groups{/tr}</a><br/>
       &nbsp;<a href="tiki-list_cache.php" class="linkmenu">{tr}Cache{/tr}</a><br/>
@@ -200,65 +227,31 @@
       &nbsp;<a href="tiki-admin_menus.php" class="linkmenu">{tr}Menus{/tr}</a><br/>
       &nbsp;<a href="tiki-admin_polls.php" class="linkmenu">{tr}Polls{/tr}</a><br/>
       &nbsp;<a href="tiki-backup.php" class="linkmenu">{tr}Backups{/tr}</a><br/>
-    <div class="separator">Galleries</div>
-      &nbsp;<a href="tiki-galleries.php" class="linkmenu">{tr}Galleries{/tr}</a><br/>
-      &nbsp;<a href="tiki-list_gallery.php?galleryId=0" class="linkmenu">{tr}System gallery{/tr}</a><br/>
-    <div class="separator">Wiki</div>
-      &nbsp;<a href="tiki-listpages.php" class="linkmenu">{tr}Pages{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br/>
     {/if}
     {if $tiki_p_admin_chat eq 'y'}
-    <div class="separator">{tr}Chat{/tr}</div>
-    &nbsp;<a href="tiki-admin_chat.php" class="linkmenu">{tr}Admin chat{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_chat.php" class="linkmenu">{tr}Chat{/tr}</a><br/>
     {/if}
-    {if $tiki_p_edit_article eq 'y' or 
-        $tiki_p_edit_submission eq 'y' or 
-        $tiki_p_remove_submission eq 'y' or  
-        $tiki_p_remove_article eq 'y' or
-        $tiki_p_approve_submission eq 'y'}
-    <div class="separator">CMS</div>
-    {/if}
-      {if $tiki_p_admin eq 'y'}
-      &nbsp;<a href="tiki-admin_topics.php" class="linkmenu">{tr}Topics{/tr}</a><br/>
-      {/if}
-      {if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y'}
-      &nbsp;<a href="tiki-list_articles.php" class="linkmenu">{tr}Articles{/tr}</a><br/>
-      &nbsp;<a href="tiki-edit_article.php" class="linkmenu">{tr}Edit article{/tr}</a><br/>
-      {/if}
-      {if $tiki_p_edit_submission eq 'y' or $tiki_p_approve_submission eq 'y' or $tiki_p_remove_submission eq 'y'}
-      &nbsp;<a href="tiki-list_submissions.php" class="linkmenu">{tr}Submissions{/tr}</a><br/>
-      {/if}
-    {if $tiki_p_blog_admin eq 'y'}
-    <div class="separator">{tr}Blogs{/tr}</div>
-      &nbsp;<a href="tiki-list_blogs.php" class="linkmenu">{tr}Blogs{/tr}</a><br/>
-      &nbsp;<a href="tiki-list_posts.php" class="linkmenu">{tr}Posts{/tr}</a><br/>
-    {/if}
-    {if $tiki_p_admin_forum eq 'y'}
-    <div class="separator">{tr}Forums{/tr}</div>
-      &nbsp;<a href="tiki-admin_forums.php" class="linkmenu">{tr}Admin forums{/tr}</a><br/>
-    {/if}
-    {if $feature_categories eq 'y' and $tiki_p_admin_categories eq 'y'}
-    <div class="separator">{tr}Categories{/tr}</div>
+    {if $tiki_p_admin_categories eq 'y'}
       &nbsp;<a href="tiki-admin_categories.php" class="linkmenu">{tr}Categories{/tr}</a><br/>
     {/if}   
     {if $tiki_p_admin_banners eq 'y'}
-    <div class="separator">{tr}Banners{/tr}</div>
       &nbsp;<a href="tiki-list_banners.php" class="linkmenu">{tr}Banners{/tr}</a><br/>
     {/if}
     {if $tiki_p_edit_templates eq 'y'}
-    <div class="separator">{tr}Templates{/tr}</div>
       &nbsp;<a href="tiki-edit_templates.php" class="linkmenu">{tr}Edit templates{/tr}</a><br/>
     {/if}
     {if $tiki_p_admin_dynamic eq 'y'}
-    <div class="separator">{tr}Dynamic content system{/tr}</div>
-      &nbsp;<a href="tiki-list_contents.php" class="linkmenu">{tr}Admin content{/tr}</a><br/>
-    {/if}
-    {if $tiki_p_admin_faqs eq 'y'}
-    <div class="separator">{tr}FAQs{/tr}</div>
-      &nbsp;<a href="tiki-list_faqs.php" class="linkmenu">{tr}Admin FAQs{/tr}</a><br/>
+      &nbsp;<a href="tiki-list_contents.php" class="linkmenu">{tr}Dynamic content{/tr}</a><br/>
     {/if}
     {if $tiki_p_edit_cookies eq 'y'}
-    <div class="separator">{tr}Cookies{/tr}</div>
-      &nbsp;<a href="tiki-admin_cookies.php" class="linkmenu">{tr}Admin Cookies{/tr}</a><br/>
+      &nbsp;<a href="tiki-admin_cookies.php" class="linkmenu">{tr}Cookies{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_edit_content_templates eq 'y'}
+      &nbsp;<a href="tiki-admin_content_templates.php" class="linkmenu">{tr}Content templates{/tr}</a><br/>
+    {/if}
+    {if $tiki_p_admin_shoutbox eq 'y'}
+      &nbsp;<a href="tiki-shoutbox.php" class="linkmenu">{tr}Shoutbox{/tr}</a><br/>
     {/if}
   </div>
 {/if}

@@ -142,7 +142,15 @@ if(isset($_REQUEST["edit"])) {
     $public ='n';
   }
   $smarty->assign_by_ref('public',$public);
-  $tikilib->replace_gallery($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],'',$user,$_REQUEST["maxRows"],$_REQUEST["rowImages"],$_REQUEST["thumbSizeX"],$_REQUEST["thumbSizeY"],$public,$visible);
+  $gid = $tikilib->replace_gallery($_REQUEST["galleryId"],$_REQUEST["name"],$_REQUEST["description"],'',$user,$_REQUEST["maxRows"],$_REQUEST["rowImages"],$_REQUEST["thumbSizeX"],$_REQUEST["thumbSizeY"],$public,$visible);
+  
+  $cat_type='image gallery';
+  $cat_objid = $gid;
+  $cat_desc = substr($_REQUEST["description"],0,200);
+  $cat_name = $_REQUEST["name"];
+  $cat_href="tiki-browse_gallery.php?galleryId=".$cat_objid;
+  include_once("categorize.php");
+  
   $smarty->assign('edit_mode','n');
 }
 
@@ -230,6 +238,11 @@ if($offset>0) {
 
 $smarty->assign_by_ref('galleries',$galleries["data"]);
 //print_r($galleries["data"]);
+
+$cat_type='image gallery';
+$cat_objid = $_REQUEST["galleryId"];
+include_once("categorize_list.php");
+
 
 // Display the template
 $smarty->assign('mid','tiki-galleries.tpl');

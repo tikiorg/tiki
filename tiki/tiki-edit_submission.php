@@ -61,6 +61,13 @@ if($_REQUEST["subId"]>0) {
 }
 }
 
+if(isset($_REQUEST["templateId"])&&$_REQUEST["templateId"]>0) {
+  $template_data = $tikilib->get_template($_REQUEST["templateId"]);
+  $_REQUEST["preview"]=1;
+  $_REQUEST["body"]=$template_data["content"];
+}
+
+
 // If the submissionId is passed then get the submission data
 if(isset($_REQUEST["subId"])) {
   $article_data = $tikilib->get_submission($_REQUEST["subId"]);
@@ -286,6 +293,12 @@ if(isset($_REQUEST["save"])) {
 // Armar un select con los topics
 $topics = $tikilib->list_topics();
 $smarty->assign_by_ref('topics',$topics);
+
+if($feature_cms_templates == 'y' && $tiki_p_use_content_templates == 'y') {
+  $templates = $tikilib->list_templates('cms',0,-1,'name_asc','');
+}
+$smarty->assign_by_ref('templates',$templates["data"]);
+
 
 
 // Display the Index Template

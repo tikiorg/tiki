@@ -147,6 +147,27 @@ class UsersLib {
     return $retval;
   }
   
+  function group_inclusion($group,$include)
+  {
+    $query = "replace into tiki_group_inclusion(groupName,includeGroup) values('$group','$include')";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+  }
+  
+  function get_included_groups($group)
+  {
+    $query = "select includeGroup from tiki_group_inclusion where groupName='$group'";
+    $result = $this->db->query($query);
+    if(DB::isError($result)) $this->sql_error($query, $result);
+    $ret=Array();
+    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+      $ret[]=$res["includeGroup"];
+      $ret2 = $this->get_included_groups($res["includeGroup"]);
+      $ret = array_merge($ret,$ret2);
+    }
+    return array_unique($ret);
+  }
+  
   function remove_user_from_group($user,$group) 
   {
     $userid = $this->get_user_id($user);
@@ -176,6 +197,8 @@ class UsersLib {
       $aux["groupDesc"] = $res["groupDesc"];
       $perms = $this->get_group_permissions($aux["groupName"]);
       $aux["perms"] = $perms;
+      $groups = $this->get_included_groups($aux["groupName"]);
+      $aux["included"]=$groups;
       $ret[] = $aux;
     }
     $retval = Array();
@@ -216,8 +239,11 @@ class UsersLib {
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       $ret[] = $res["groupName"];  
+      $included = $this->get_included_groups($res["groupName"]);
+      $ret = array_merge($ret,$included);
     }
     $ret[] = "Anonymous";
+    $ret=array_unique($ret);
     return $ret;
   }
 

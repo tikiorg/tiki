@@ -14,8 +14,12 @@ if(isset($_REQUEST["remind"])) {
   if($tikilib->user_exists($_REQUEST["username"])) {
     $pass = $tikilib->get_user_password($_REQUEST["username"]);
     $email = $tikilib->get_user_email($_REQUEST["username"]);
-    $msg = tra('Someone from ').$_SERVER["SERVER_NAME"].tra(' requested to send the password for ').$_REQUEST["username"].tra(' by email to our registered email address')."\n".tra(' and the requested password is ').$pass;
-    @mail($email,tra('your account information for ').$_SERVER["SERVER_NAME"],$msg);
+    //$msg = tra('Someone from ').$_SERVER["SERVER_NAME"].tra(' requested to send the password for ').$_REQUEST["username"].tra(' by email to our registered email address')."\n".tra(' and the requested password is ').$pass;
+    $smarty->assign('mail_site',$_SERVER["SERVER_NAME"]);
+    $smarty->assign('mail_user',$_REQUEST["username"]);
+    $smarty->assign('mail_pass',$pass);
+    $mail_data = $smarty->fetch('mail/password_reminder.tpl');
+    @mail($email,tra('Your tikiaccount information for ').$_SERVER["SERVER_NAME"],$mail_data);
     $smarty->assign('showmsg','y');
     $smarty->assign('msg',tra('You will receive an email with your password soon'));
   }

@@ -10,6 +10,7 @@ CREATE TABLE tiki_featured_links (
   description text,
   hits integer(8),
   position integer(6),
+  type char(1),
   primary key(url)
 );
 
@@ -523,6 +524,7 @@ CREATE TABLE tiki_files (
   downloads integer(14),
   votes integer(8),
   points decimal(8,2),
+  path varchar(255),
   primary key(fileId)
 );
 # END FILE GALLERIES AND FILES
@@ -895,6 +897,7 @@ create table tiki_faqs(
   created integer(14),
   questions integer(5),
   hits integer(8),
+  canSuggest char(1),
   primary key(faqId)
 );
 

@@ -77,6 +77,14 @@ if(isset($_REQUEST["find"])) {
 }
 $smarty->assign('find',$find);
 
+if(isset($_REQUEST["remove_suggested"])) {
+  $tikilib->remove_suggested_question($_REQUEST["remove_suggested"]);
+}
+if(isset($_REQUEST["approve_suggested"])) {
+  $tikilib->approve_suggested_question($_REQUEST["approve_suggested"]);
+}
+
+
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 $channels = $tikilib->list_faq_questions($_REQUEST["faqId"],0,-1,$sort_mode,$find);
 $allq = $tikilib->list_all_faq_questions(0,-1,'question_asc',$_REQUEST["filter"]);
@@ -98,6 +106,11 @@ if($offset>0) {
 }
 
 $smarty->assign_by_ref('channels',$channels["data"]);
+
+
+$suggested = $tikilib->list_suggested_questions(0,-1,'created_desc','');
+$smarty->assign_by_ref('suggested',$suggested["data"]);
+
 
 
 // Display the template

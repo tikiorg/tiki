@@ -19,6 +19,7 @@
 <tr><td class="editfgalform">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="editfgalform"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
 {/if}
 <tr><td class="editfgalform">{tr}Max Rows per page{/tr}:</td><td class="editfgalform"><input type="text" name="maxRows" value="{$maxRows}" /></td></tr>
+{include file=categorize.tpl}
 <tr><td class="editfgalform">{tr}Other users can upload files to this gallery{/tr}:</td><td class="editfgalform"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="editfgalform">&nbsp;</td><td class="editfgalform"><input type="submit" value="{tr}edit/create{/tr}" name="edit" /></td></tr>
 </table>

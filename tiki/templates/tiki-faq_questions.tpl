@@ -52,17 +52,16 @@
 {section name=user loop=$channels}
 {if $smarty.section.user.index % 2}
 <tr>
-<td class="odd">{$channels[user].faqId}</td>
+<td class="odd">{$channels[user].questionId}</td>
 <td class="odd">{$channels[user].question}</td>
 <td class="odd">
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{tr}remove{/tr}</a>
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{tr}edit{/tr}</a>
-   
 </td>
 </tr>
 {else}
 <tr>
-<td class="even">{$channels[user].faqId}</td>
+<td class="even">{$channels[user].questionId}</td>
 <td class="even">{$channels[user].question}</td>
 <td class="even">
    <a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{tr}remove{/tr}</a>
@@ -83,4 +82,20 @@
 {/if}
 </div>
 </div>
+<h2>{tr}Suggested questions{/tr}</h2>
+<table class="normal">
+<tr>
+  <td class="heading">{tr}question{/tr}</td>
+  <td class="heading">{tr}answer{/tr}</td>
+</tr>
+{cycle values="odd,even" print=false}
+{section name=ix loop=$suggested}
+<tr>
+  <td class="{cycle advance=false}">{$suggested[ix].question} (<a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove_suggested={$suggested[ix].sfqId}"><small>{tr}remove{/tr}</small></a>)
+  (<a class="link" href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;approve_suggested={$suggested[ix].sfqId}"><small>{tr}approve{/tr}</small></a>)
+  </td>
+  <td class="{cycle}">{$suggested[ix].answer}</td>
+</tr>
+{/section}
 
+</table>

@@ -25,6 +25,7 @@
 {/section}
 </select>
 </td></tr>
+{include file=categorize.tpl}
 <tr><td class="formcolor">{tr}Default ordering for topics{/tr}:</td><td class="formcolor">
 <select name="topicOrdering">
 <option value="commentDate_desc" {if $topicOrdering eq 'commentDate_desc'}selected="selected"{/if}>{tr}Date (desc){/tr}</option>

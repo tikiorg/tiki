@@ -118,6 +118,12 @@ if(!$user && $anonCanEdit<>'y') {
 
 $smarty->assign_by_ref('data',$info);
 
+if(isset($_REQUEST["templateId"])&&$_REQUEST["templateId"]>0) {
+  $template_data = $tikilib->get_template($_REQUEST["templateId"]);
+  $_REQUEST["edit"]=$template_data["content"];
+  $_REQUEST["preview"]=1;
+}
+
 if(isset($_REQUEST["edit"])) {
   
   if(isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"]=="on") {
@@ -166,6 +172,10 @@ if(isset($_REQUEST["preview"])) {
   $smarty->assign('preview',1); 
 } 
 
+if(isset($_REQUEST["cancel"])) {
+  header("location: tiki-index.php?page=$page");
+}
+
 // Pro
 if(isset($_REQUEST["save"])) {
   
@@ -191,9 +201,29 @@ if(isset($_REQUEST["save"])) {
     $tikilib->cache_links($links);
     $tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"]);
   }
+  
+  $cat_type='wiki page';
+  $cat_objid = $_REQUEST["page"];
+  $cat_desc = substr($_REQUEST["edit"],0,200);
+  $cat_name = $_REQUEST["page"];
+  $cat_href="tiki-index.php?page=".$cat_objid;
+  include_once("categorize.php");
+  
   header("location: tiki-index.php?page=$page");
   die;
 }
+
+if($feature_wiki_templates == 'y' && $tiki_p_use_content_templates == 'y') {
+  $templates = $tikilib->list_templates('wiki',0,-1,'name_asc','');
+}
+$smarty->assign_by_ref('templates',$templates["data"]);
+
+$cat_type='wiki page';
+$cat_objid = $_REQUEST["page"];
+include_once("categorize_list.php");
+
+
+
 
 
 // Display the Index Template
