@@ -14,14 +14,15 @@
 <!-- begin -->
 
 <br /><br />
-<a href="tiki-admin_polls.php?setlast=1" class="linkbut">{tr}Set last poll as current{/tr}</a>
-<a href="tiki-admin_polls.php?closeall=1" class="linkbut">{tr}Close all polls but last{/tr}</a>
-<a href="tiki-admin_polls.php?activeall=1" class="linkbut">{tr}Activate all polls{/tr}</a>
+<span class="button2"><a href="tiki-admin_polls.php?setlast=1" class="linkbut">{tr}Set last poll as current{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_polls.php?closeall=1" class="linkbut">{tr}Close all polls but last{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_polls.php?activeall=1" class="linkbut">{tr}Activate all polls{/tr}</a></span>
 <h2>{tr}Create/edit Polls{/tr}</h2>
 <form action="tiki-admin_polls.php" method="post">
 <input type="hidden" name="pollId" value="{$pollId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea name="description" rows="8" cols="42">{$description}</textarea></td></tr>
 <tr><td class="formcolor">{tr}Active{/tr}:</td><td class="formcolor">
 <select name="active">
 <option value='a' {if $active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
@@ -30,8 +31,11 @@
 </select>
 </td></tr>
 {include file=categorize.tpl}
-<tr><td class="formcolor">{tr}PublishDate{/tr}:</td><td class="formcolor">
+<tr><td class="formcolor">{tr}Publication Date{/tr}:</td><td class="formcolor">
 {html_select_date time=$publishDate end_year="+1"} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}
+</td></tr>
+<tr><td class="formcolor">{tr}Release Date{/tr}:</td><td class="formcolor">
+{html_select_date prefix='r_Date_' time=$releaseDate end_year="+1"} {tr}at{/tr} {html_select_time prefix='r_Time_' time=$releaseDate display_seconds=false}
 </td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2004-09-14 10:37:53 $
+# $Date: 2004-09-15 03:05:48 $
 # $Author: mose $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2383,10 +2383,15 @@ DROP TABLE IF EXISTS tiki_polls;
 CREATE TABLE tiki_polls (
   pollId int(8) NOT NULL auto_increment,
   title varchar(200) default NULL,
+  description text,
   votes int(8) default NULL,
   active char(1) default NULL,
   publishDate int(14) default NULL,
-  PRIMARY KEY  (pollId)
+  releaseDate int(14) default NULL,
+  PRIMARY KEY  (pollId),
+	KEY pubdate (publishDate),
+  KEY reldate (releaseDate),
+  KEY active (active)		
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 
@@ -4496,7 +4501,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','images/fontfamily.gif','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic variable','%text%','images/book.gif','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','images/ed_image.gif','wiki');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n		"wms_name" "myname"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'img/icons/admin_metatags.png','maps');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New wms Metadata','METADATA\r\n    "wms_name" "myname"\r\n   "wms_srs" "EPSG:4326"\r\n   "wms_server_version" " "\r\n   "wms_layers" "mylayers"\r\n   "wms_request" "myrequest"\r\n   "wms_format" " "\r\n   "wms_time" " "\r\n END', 'img/icons/admin_metatags.png','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Class', 'CLASS\r\n EXPRESSION ()\r\n SYMBOL 0\r\n OUTLINECOLOR\r\n COLOR\r\n NAME "myclass" \r\nEND #end of class', 'img/icons/mini_triangle.gif','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Projection','PROJECTION\r\n "init=epsg:4326"\r\nEND','images/ico_mode.gif','maps');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('New Query','#\r\n# Start of query definitions\r\n#\r\n QUERYMAP\r\n STATUS ON\r\n STYLE HILITE\r\nEND','img/icons/questions.gif','maps');
@@ -4711,37 +4716,37 @@ CREATE TABLE tiki_users_score (
 
 DROP TABLE IF EXISTS tiki_opnet_question;
 CREATE TABLE tiki_opnet_question (
-	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-	formtype INT(10) NOT NULL,
-	question VARCHAR( 100 ) NOT NULL ,
-PRIMARY KEY ( id ) 
+  id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+  formtype INT(10) NOT NULL,
+  question VARCHAR( 100 ) NOT NULL ,
+  PRIMARY KEY ( id ) 
 );
 
 DROP TABLE IF EXISTS tiki_opnet_formtype;
 CREATE TABLE tiki_opnet_formtype (
-	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-	name VARCHAR( 30 ) NOT NULL ,
-	timestamp INT( 14 ) NOT NULL,
-PRIMARY KEY ( id ) 
+  id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+  name VARCHAR( 30 ) NOT NULL ,
+  timestamp INT( 14 ) NOT NULL,
+  PRIMARY KEY ( id ) 
 );
 
 DROP TABLE IF EXISTS tiki_opnet_answer;
 CREATE TABLE tiki_opnet_answer (
-	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-	question_id INT( 10 ) NOT NULL ,
-	filledform_id INT( 10 ) NOT NULL ,
-	value TEXT NOT NULL ,
-PRIMARY KEY ( id ) 
+  id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+  question_id INT( 10 ) NOT NULL ,
+  filledform_id INT( 10 ) NOT NULL ,
+  value TEXT NOT NULL ,
+  PRIMARY KEY ( id ) 
 );
 
 DROP TABLE IF EXISTS tiki_opnet_filledform;
 CREATE TABLE tiki_opnet_filledform (
-	id INT( 10 ) NOT NULL AUTO_INCREMENT ,
-	who VARCHAR( 40 ) NOT NULL ,
-	about_who VARCHAR( 40 ) NOT NULL ,
-	formtype INT( 10 ) NOT NULL ,
-	timestamp INT( 14 ) NOT NULL,
-PRIMARY KEY ( id ) 
+  id INT( 10 ) NOT NULL AUTO_INCREMENT ,
+  who VARCHAR( 40 ) NOT NULL ,
+  about_who VARCHAR( 40 ) NOT NULL ,
+  formtype INT( 10 ) NOT NULL ,
+  timestamp INT( 14 ) NOT NULL,
+  PRIMARY KEY ( id ) 
 );
 
 #
