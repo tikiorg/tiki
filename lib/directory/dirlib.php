@@ -470,7 +470,7 @@ class DirLib extends TikiLib {
 	function dir_add_categ_rel($parent, $categ) {
 		$query = "delete from `tiki_related_categories` where `categId`=? and `relatedTo`=?";
 		$this->query($query,array((int)$parent,(int)$categ));
-		$query = "replace into `tiki_related_categories`(`categId`,`relatedTo`) values(?,?)";
+		$query = "insert into `tiki_related_categories`(`categId`,`relatedTo`) values(?,?)";
 		$this->query($query,array((int)$parent,(int)$categ));
 	}
 
