@@ -159,6 +159,51 @@
   
 
 <br/>
+
+
+{if $feature_tasks eq 'y'}
+    <div class="cbox">
+      <div class="cbox-title">{tr}User Tasks{/tr}</div>
+      <div class="cbox-data">
+        <div class="simplebox">
+        <form action="tiki-user_preferences.php" method="post">
+<table class="normal">
+<tr>
+  <td class="form">Tasks per page</td>
+  <td class="form">
+    <select name="tasks_maxRecords">
+      <option value="2" {if $mess_maxRecords eq 2}selected="selected"{/if}>2</option>
+      <option value="5" {if $mess_maxRecords eq 5}selected="selected"{/if}>5</option>
+      <option value="10" {if $mess_maxRecords eq 10}selected="selected"{/if}>10</option>
+      <option value="20" {if $mess_maxRecords eq 20}selected="selected"{/if}>20</option>
+      <option value="30" {if $mess_maxRecords eq 30}selected="selected"{/if}>30</option>
+      <option value="40" {if $mess_maxRecords eq 40}selected="selected"{/if}>40</option>
+      <option value="50" {if $mess_maxRecords eq 50}selected="selected"{/if}>50</option>
+    </select>
+  </td>
+</tr>
+
+<tr>
+  <td class="form">Use dates</td>
+  <td class="form"><input type="checkbox" name="tasks_useDates" {if $tasks_useDates eq 'y'}checked="checked"{/if}/></td>
+</tr>
+
+
+<tr>
+  <td class="form">&nbsp;</td>
+  <td class="form"><input type="submit" name="tasksprefs" value="set" /></td>
+</tr>
+</table>
+</form>
+
+        </div>
+      </div>
+    </div>
+  
+  {/if}
+
+<br/>
+
   <div class="cbox">
   <div class="cbox-title">{tr}User Pages{/tr}</div>
   <div class="cbox-data">

@@ -237,6 +237,8 @@ $smarty->assign('feature_blogposts_comments',$feature_blogposts_comments);
 
 $feature_messages = 'n';
 $smarty->assign('feature_messages',$feature_messages);
+$feature_tasks = 'n';
+$smarty->assign('feature_tasks',$feature_tasks);
 
 $system_os = $tikilib->get_preference('system_os','unknown');
 $smarty->assign('system_os',$system_os);
