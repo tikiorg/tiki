@@ -102,6 +102,9 @@ if(isset($_REQUEST['save'])) {
 }
 $smarty->assign('taskId',$_REQUEST["taskId"]);
 $smarty->assign('info',$info);
+$smarty->assign('Date_Month',date("m",$info['date']));
+$smarty->assign('Date_Day',date("d",$info['date']));
+$smarty->assign('Date_Year',date("Y",$info['date']));
 
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'priority_desc'; 

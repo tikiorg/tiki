@@ -67,6 +67,9 @@
 <form action="tiki-user_tasks.php" method="post">
 <input type="hidden" name="taskId" value="{$taskId}" />
 <input type="hidden" name="tasks_useDates" value="{$tasks_useDates}" />
+<input type="hidden" name="Date_Day" value="{$Date_Day}" />
+<input type="hidden" name="Date_Month" value="{$Date_Month}" />
+<input type="hidden" name="Date_Year" value="{$Date_Year}" />
 <table class="normal">
   <tr><td class="formcolor">{tr}Title{/tr}</td>
       <td class="formcolor"><input type="text" name="title" value="{$info.title}" /></td>
