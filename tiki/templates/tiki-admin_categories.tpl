@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.28 2004-06-13 21:50:44 teedog Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin_categories.tpl,v 1.29 2004-06-13 22:03:14 teedog Exp $ *}
 
 <a class="pagetitle" href="tiki-admin_categories.php">{tr}Admin categories{/tr}</a>
 
@@ -111,7 +111,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
   <td valign="top">
     <div class="cbox">
       <div class="cbox-title">
-      {tr}Objects in category{/tr}  
+      {tr}Objects in category{/tr} <b>{$categ_name}</b>  
       </div>
       <div class="cbox-data">
       
@@ -168,7 +168,7 @@ border="0" src="img/icons/edit.gif" height="12" width="12" hspace="5" vspace="1"
   <td valign="top">
     <div class="cbox">
       <div class="cbox-title">
-      {tr}Add objects to category{/tr}
+      {tr}Add objects to category{/tr} <b>{$categ_name}</b>
       </div>
       <div class="cbox-data">
       <table class="findtable">
