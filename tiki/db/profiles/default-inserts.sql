@@ -1,5 +1,3 @@
-# here will come sql modifs until 1.8 is released
-#
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('allowRegister','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('anonCanEdit','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('article_comments_default_ordering','points_desc');
