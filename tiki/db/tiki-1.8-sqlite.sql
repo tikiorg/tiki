@@ -515,7 +515,7 @@ CREATE TABLE "tiki_blog_posts" (
   "postId" serial,
   "blogId" integer NOT NULL default '0',
   "data" text,
-	data_size bigint NOT NULL unsigned default '0',
+  "data_size" bigint unsigned NOT NULL default '0',
   "created" bigint default NULL,
   "user" varchar(200) default NULL,
   "trackbacks_to" text,
@@ -1259,6 +1259,15 @@ CREATE TABLE "tiki_dsn" (
 
 
 -- --------------------------------------------------------
+
+
+CREATE TABLE "tiki_dynamic_variables" (
+  "name" varchar(40) NOT NULL,
+  "DATA" text,
+  PRIMARY KEY ("name")
+);
+
+
 
 --
 -- Table structure for table `tiki_eph`
@@ -5569,9 +5578,6 @@ INSERT INTO "tiki_preferences" ("name","value") VALUES ('feature_modulecontrols'
 
 
 -- Dynamic variables
-CREATE  "TABLE" tiki_dynamic_variables( name varchar( 40  ) not null,  "DATA" text,  PRIMARY  KEY ( name )  );
-
-
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_edit_dynvar', 'Can edit dynamic variables', 'editors', 'wiki');
 
 
