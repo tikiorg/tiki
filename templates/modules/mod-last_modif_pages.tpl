@@ -11,7 +11,8 @@
        {$smarty.section.ix.index_next})
       </td>
       <td class="module">&nbsp;
-       <a class="linkmodule" href="tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}">
+       <a class="linkmodule" href="tiki-index.php?page={$modLastModif[ix].pageName|escape:"url"}"
+       {if strlen($modLastModif[ix].pageName) gt $maxlen}title="{$modLastModif[ix].pageName}"{/if}>
         {$modLastModif[ix].pageName|truncate:$maxlen:"...":true}
        </a>
       </td>
