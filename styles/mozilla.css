@@ -1839,7 +1839,7 @@ div.faqanswer {
 	width:   97%;
 }
 
-/***************************************************** QUIZZES **************************************************************/
+/***************************************** QUIZZES **************************************************************/
 div.questionblock {
 	border:    1px solid black;
 	background:   white;
@@ -1930,6 +1930,15 @@ div.code {
 	border-color:   #CCCCCC;
 	background-color:   #F4F4F4;
 	font-family:   courier;
+}
+/*****the {CODE} tag ***************/
+
+.codelisting {
+font-family : monospace;
+padding : 2ex;
+background-color : #edeeef;
+margin : 1ex;
+border : 1px dashed #adacaf;
 }
 
 pre {
@@ -2770,4 +2779,5 @@ TABLE.admin {
   margin: 2px;
   vertcal-align: middle;
 }
+
 
