@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.103 2004-06-08 18:31:22 teedog Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.104 2004-06-11 20:49:17 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -10,7 +10,6 @@
 require_once('tiki-setup.php');
 include_once('lib/structures/structlib.php');
 include_once('lib/wiki/wikilib.php');
-include_once('lib/wiki/histlib.php');
 include_once('lib/categories/categlib.php');
 
 if($feature_wiki != 'y') {
