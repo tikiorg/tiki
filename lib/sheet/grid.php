@@ -1,18 +1,18 @@
 <?php
 
 require_once( "PEAR.php" );
-require_once( "lib/sheet/Excel/reader_ole.php" );
-require_once( "lib/sheet/Excel/reader.php" );
-require_once( "lib/sheet/Excel/Writer/Format.php" );
-require_once( "lib/sheet/Excel/Writer/BIFFwriter.php" );
-require_once( "lib/sheet/Excel/Writer/Worksheet.php" );
-require_once( "lib/sheet/Excel/Writer/Workbook.php" );
-require_once( "lib/sheet/Excel/Writer/Parser.php" );
-require_once( "lib/sheet/OLE/PPS.php" );
-require_once( "lib/sheet/OLE/PPS/Root.php" );
-require_once( "lib/sheet/OLE/PPS/File.php" );
-require_once( "lib/sheet/OLE.php" );
-require_once( "lib/sheet/Excel/Writer.php" );
+require_once( "lib/sheet/excel/reader_ole.php" );
+require_once( "lib/sheet/excel/reader.php" );
+require_once( "lib/sheet/excel/writer/format.php" );
+require_once( "lib/sheet/excel/writer/biffwriter.php" );
+require_once( "lib/sheet/excel/writer/worksheet.php" );
+require_once( "lib/sheet/excel/writer/workbook.php" );
+require_once( "lib/sheet/excel/writer/parser.php" );
+require_once( "lib/sheet/ole/pps.php" );
+require_once( "lib/sheet/ole/pps/root.php" );
+require_once( "lib/sheet/ole/pps/file.php" );
+require_once( "lib/sheet/ole.php" );
+require_once( "lib/sheet/excel/writer.php" );
 
 // Constants {{{1
 
