@@ -20,6 +20,9 @@ class RegistrationLib extends TikiLib {
   function SnowCheckMail($Email,$sender_email,$novalidation,$Debug=false)
   {
 	global $validateEmail;
+	if (!isset($_SERVER["SERVER_NAME"])) {
+		$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+	}	
     $HTTP_HOST=$_SERVER['SERVER_NAME']; 
     $Return =array();
     // $Debug = true;

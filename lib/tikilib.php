@@ -3433,6 +3433,10 @@ function add_pageview() {
 	//  $data = addslashes($data);
 	//  $comment = addslashes($comment);
 
+	if (!isset($_SERVER["SERVER_NAME"])) {
+		$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
+	}
+
 	if ($this->page_exists($name))
 	    return false;
 

@@ -126,7 +126,7 @@ if ($rss_version >= 5)
 		  if ($rss_version < 2) {
 				$date = htmlspecialchars($tikilib->iso_8601($chg["$dateId"]));
 		  }
-	  	$about = $read.$chg["$id"];
+	  	$about = $read.urlencode($chg["$id"]);
 	  	// blogs have posts, add those to the url:
 	  	if ($id == "blogId") { $about .= "&postId=".$chg["postId"]; }		
 	  	// forums have threads, add those to the url:

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.19 2004-05-21 09:18:37 damosoft Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.20 2004-06-20 09:33:38 mose Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -14,7 +14,7 @@
 
 body {
  /* setting up the background. the color, then bg image and its form of repeating. */
- background: #ffffff url('background.png') repeat-y;
+ background: #ffffff; /* url('background.png') repeat-y; Someone forgot to upload that pic? */
  /* shorthand for default font setting. size in percentage and font-family here */
  font: 75% 'Trebuchet MS', 'Luxi Sans', 'Lucida Grande', Tahoma, helvetica, sans-serif;
  /* size of 75% here prevents unreadable microscopic font size in MSIE when using em for further elements sizes */
