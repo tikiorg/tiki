@@ -25,8 +25,55 @@ name="eponymousGroups" {if $eponymousGroups eq 'y'}checked="checked"{/if}/></td>
 <tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $validateUsers eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Validate email address (may not work){/tr}:</td><td><input type="checkbox" name="validateEmail" {if $validateEmail eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Remind passwords by email{/tr}:</td><td><input type="checkbox" name="forgotPass" {if $forgotPass eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Reg users can change theme{/tr}:</td><td><input type="checkbox" name="change_theme" {if $change_theme eq 'y'}checked="checked"{/if}/></td></tr>
-<tr><td class="form">{tr}Reg users can change language{/tr}:</td><td><input type="checkbox" name="change_language" {if $change_language eq 'y'}checked="checked"{/if}/></td></tr>
+<tr>
+  <td class="form">{tr}Reg users can change theme{/tr}:</td>
+  <td>
+    <table><tr>
+    <td><input type="checkbox" name="change_theme" {if $change_theme eq 'y'}checked="checked"{/if}/></td>
+    <td>
+      <div id="select_available_styles" {if count($available_styles) > 0}style="display:none;"{else}style="display:block;"{/if}>
+        <a class="link" href="javascript:show('available_styles');hide('select_available_styles');">Restrict available themes</a>
+      </div>
+      <div id="available_styles" {if count($available_styles) == 0}style="display:none;"{else}style="display:block;"{/if}>
+        {tr}Available styles:{/tr}<br>
+        <select name="available_styles[]" multiple="multiple" size="5">
+          {section name=ix loop=$styles}
+            <option value="{$styles[ix]|escape}"
+              {if in_array($styles[ix], $available_styles)}selected="selected"{/if}>
+              {$styles[ix]}
+            </option>
+          {/section}
+        </select>
+      </div>
+    </td>
+    </tr></table>
+  </td>
+</tr>
+<tr>
+  <td class="form">{tr}Reg users can change language{/tr}:</td>
+  <td>
+    <table><tr>
+    <td><input type="checkbox" name="change_language" {if $change_language eq 'y'}checked="checked"{/if}/></td>
+    <td>
+      <div id="select_available_languages" {if count($available_languages) > 0}style="display:none;"{else}style="display:block;"{/if}>
+        <a class="link" href="javascript:show('available_languages');hide('select_available_languages');">Restrict available languages</a>
+      </div>
+      <div id="available_languages" {if count($available_languages) == 0}style="display:none;"{else}style="display:block;"{/if}>
+        {tr}Available languages:{/tr}<br>
+        <select name="available_languages[]" multiple="multiple" size="5">
+          {section name=ix loop=$languages}
+            <option value="{$languages[ix].value|escape}"
+              {if in_array($languages[ix].value, $available_languages)}selected="selected"{/if}>
+              {$languages[ix].name}
+            </option>
+          {/section}
+        </select>
+      </div>
+    </td>
+    </tr></table>
+  </td>
+</tr>
+
 <tr><td class="form">{tr}Store plaintext passwords{/tr}:</td><td><input type="checkbox" name="feature_clear_passwords" {if $feature_clear_passwords eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Use challenge/response authentication{/tr}:</td><td><input type="checkbox" name="feature_challenge" {if $feature_challenge eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Force to use chars and nums in passwords{/tr}:</td><td><input type="checkbox" name="pass_chr_num" {if $pass_chr_num eq 'y'}checked="checked"{/if}/></td></tr>

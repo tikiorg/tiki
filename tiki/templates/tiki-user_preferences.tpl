@@ -55,24 +55,28 @@
   </td></tr>
   {if $change_theme eq 'y'}
   <tr><td class="form">{tr}Theme{/tr}:</td><td class="form"><select name="mystyle">
-        {section name=ix loop=$styles}
+    {section name=ix loop=$styles}
+      {if count($available_styles) == 0 || in_array($styles[ix], $available_styles)}
         <option value="{$styles[ix]|escape}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
-        {/section}
+      {/if}
+    {/section}
         </select>
 		{if $feature_editcss and $tiki_p_create_css}
 			<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>
 		{/if}
 				</td></tr>
   {/if}
-  {if $change_language eq 'y'}      
+  {if $change_language eq 'y'}
   <tr><td  class="form">{tr}Language{/tr}:</td><td class="form">
         <select name="language">
-        {section name=ix loop=$languages}
+    {section name=ix loop=$languages}
+      {if count($available_languages) == 0 || in_array($languages[ix].value, $available_languages)}
         <option value="{$languages[ix].value|escape}"
           {if $language eq $languages[ix].value}selected="selected"{/if}>
           {$languages[ix].name}
         </option>
-        {/section}
+      {/if}
+    {/section}
         </select></td></tr>
   {/if}      
   <tr><td class="form">{tr}Real Name{/tr}:</td><td class="form"><input type="text" name="realName" value="{$realName|escape}" /></td></tr>

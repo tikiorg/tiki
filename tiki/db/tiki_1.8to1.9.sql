@@ -1,4 +1,4 @@
-# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.63 2004-05-30 02:52:59 lfagundes Exp $
+# $Header: /cvsroot/tikiwiki/tiki/db/tiki_1.8to1.9.sql,v 1.64 2004-05-30 04:38:15 lfagundes Exp $
 
 # The following script will update a tiki database from verion 1.8 to 1.9
 # 
@@ -508,3 +508,6 @@ UPDATE tiki_user_preferences SET value = 'pt-br' WHERE value='br' and prefName='
 # Added 29 May 2004 by lfagundes; new feature
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_detect_language','y');
 
+# Added 30 May 2004 by lfagundes; serialized empty array
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_languages','a:0:{}');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('available_styles','a:0:{}');
