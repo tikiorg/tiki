@@ -3937,12 +3937,12 @@ function split_tag($string) {
 function split_assoc_array($parts, $assoc) {
     //$assoc = array();
     foreach($parts as $part) {
-  if ( (strpos($part, "=") == FALSE) ) {
+      $res=array();
       $assoc[$part] = '';
-  } else {
-      list($key, $val) = split("=", $part);
-      $assoc[$key] = $val;
-  }
+      preg_match("/(\w+)\s*=\s*(.*)/", $part, $res);
+      if ($res) {
+        $assoc[$res[1]] = $res[2];
+      }
     }
     return $assoc;
 }
