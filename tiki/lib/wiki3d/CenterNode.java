@@ -2,15 +2,15 @@ package wiki3d;
 import java.util.*;
 import java.awt.*;
 public class CenterNode extends CanvaxVertex {
-	String node;
+	String nodeName;
 
 	Vector links = new Vector();
 	int i = 0;
 	int count = 0;
 
-	public CenterNode(String node) {
+	public CenterNode(String name) {
 		super();
-		this.node = node;
+		this.nodeName = name;
 		x = 0;
 		y = 0;
 		z = 0;
@@ -55,17 +55,17 @@ public class CenterNode extends CanvaxVertex {
 		}
 	}
 	public String getNode() {
-		return node;
+		return nodeName;
 
 	}
 
 	public void paint(Graphics g) {
 
 		g.setColor(new Color(255, 255, 0));
-		g.fillArc(U, V, b, b, 0, 360);
+		g.fillArc(U, V, relativeBallSize, relativeBallSize, 0, 360);
 
 		g.setColor(new Color(10, 10, 10));
-		g.drawString(node, u, v);
+		g.drawString(nodeName, u, v);
 
 	}
 

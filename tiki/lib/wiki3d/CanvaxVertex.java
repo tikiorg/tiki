@@ -2,36 +2,42 @@ package wiki3d;
 import java.awt.*;
 public class CanvaxVertex extends Vertex {
 	String name;
-	int b, B;
-	static AnimationThread animator;
+
+	int relativeBallSize, ballSize;
+
+	static BalanceThread animator;
 	public static Vertex origin;
 	public static Matrix3D mat;
 	public boolean mouseover = false;
-	public static int zmax = Config.zmax,
+	private static int zmax = Config.zmax,
 		zmin = Config.zmin,
 		xmax = Config.xmax,
 		xmin = Config.xmin,
 		ymax = Config.ymax,
 		ymin = Config.xmin;
-	public static int pbias = 3, nbias = 8, biax = 8, biay = 8, biaz = 8;
+	
 	boolean transformed = false;
 	boolean focussed = true;
 	boolean makereturn = false,
 		makereturnx = false,
 		makereturnz = false,
 		makereturny = false;
-	Rectangle r = new Rectangle();
+	Rectangle boundRectangle = new Rectangle();
 	int U, V;
 	int i, j;
 	int xpos, ypos, zpos;
+	public int id;
+	public static int idCounter = 0;
 
 	SpeedVector speed = new SpeedVector(0, 0, 0);
 
 	public Vertex parent;
-	public CanvaxVertex(int x, int y, int z) {
 
+	private boolean positionFixed;
+	public CanvaxVertex(int x, int y, int z) {
+		id = ++idCounter;
 	}
-	public static void setanimator(AnimationThread a) {
+	public static void setanimator(BalanceThread a) {
 		animator = a;
 	}
 	public void initpos(float theta) {
@@ -51,99 +57,48 @@ public class CanvaxVertex extends Vertex {
 		float distance = 2;
 		float module = sp.module();
 		float d;
-		
-		sp.resize(1/module);
-		
-		module /= 50;		
+
+		sp.resize(1 / module);
+
+		module /= 50;
 
 		if (this.type() == 'g' || node.type() == 'g') {
 			module -= distance;
-			if (module > 0) {				
-				sp.resize(-1*module*module);
+			if (module > 0) {
+				sp.resize(-1 * module * module);
 			} else {
-				sp.resize(1*module*module);
+				sp.resize(1 * module * module);
 			}
-		} else {			
-			sp.resize(10*(float)(Math.pow(Math.E,1/module)-1));
+		} else {
+			sp.resize(10 * (float) (Math.pow(Math.E, 1 / Math.sqrt(module)) - 1));
 		}
-		//sp.clear();
+		
 		return sp;
 	}
 
 	public void clearSpeed() {
 		speed.clear();
 	}
-	
-	
-	public void addSpeed(SpeedVector s) {
-		if (this.type() == 'l') {
-			speed.add(s);
-			//speed.print(this.name);
-		}
 
+	public void addSpeed(SpeedVector s) {
+			speed.add(s);			
 	}
 
 	public void balance() {
-		if (this.type() == 'l') {
-			//speed.print(name);
+		if (!this.positionFixed()) {			
 			change(speed.x, speed.y, speed.z);
 		}
 	}
 
-	public void tracepath() {
-		int dx = 0, dy = 0, dz = 0;
-
-		if (Math.abs(xpos - x) <= Config.xstep)
-			makereturnx = false;
-		else if (xpos - x > Config.xstep)
-			dx = Config.xstep;
-		else
-			dx = -Config.xstep;
-		if (Math.abs(y - ypos) <= Config.ystep) {
-			makereturny = false;
-		} else if (ypos - y > Config.ystep)
-			dy = Config.ystep;
-		else
-			dy = -Config.ystep;
-		if (Math.abs(z - zpos) <= Config.zstep) {
-			makereturnz = false;
-
-		} else if (zpos - z > Config.zstep)
-			dz = Config.zstep;
-		else
-			dz = -Config.zstep;
-
-		if (!makereturnx && !makereturny && !makereturnz) {
-			makereturn = false;
-			animator.remove(this);
-		} else {
-			change(dx, dy, dz);
-		}
-
+	public boolean positionFixed() {
+		return positionFixed || this.type() == 'g';
 	}
-
-	public void addParent(Vertex p) {
-		parent = p;
-
-		double ii = Math.random();
-		if (ii > 0.5)
-			ii = -ii + 0.5;
-		z = p.z + (int) (length() * ii) / 2;
-		ii = Math.random();
-		if (ii > 0.5)
-			ii = -ii + 0.5;
-		z = max(min(z, zmax), zmin);
-
-		y = p.y + new Double(length() * ii).intValue();
-		y = max(min(y, ymax), ymin);
-
-		ii = Math.random();
-		if (ii > 0.5)
-			ii = -ii + 0.5;
-		x = p.x + new Double(length() * ii).intValue();
-		x = max(min(x, xmax), xmin);
-
+	
+	public void releasePosition() {
+		positionFixed = false;
 	}
+	
+	
 	public CanvaxVertex() {
 
 		super();
@@ -151,8 +106,8 @@ public class CanvaxVertex extends Vertex {
 
 		parent = new Vertex(origin.x, origin.y, origin.z);
 
-		b = Config.ballsize;
-		B = Config.ballsize;
+		relativeBallSize = Config.ballsize;
+		ballSize = Config.ballsize;
 
 		y = length();
 		x = length();
@@ -167,8 +122,8 @@ public class CanvaxVertex extends Vertex {
 		super();
 		mat = new Matrix3D();
 		this.parent = parent;
-		b = Config.ballsize;
-		B = Config.ballsize;
+		relativeBallSize = Config.ballsize;
+		ballSize = Config.ballsize;
 		//y=length();
 		//x=length();
 		//z=0;
@@ -178,8 +133,8 @@ public class CanvaxVertex extends Vertex {
 		super();
 		mat = new Matrix3D();
 
-		b = size;
-		B = size;
+		relativeBallSize = size;
+		ballSize = size;
 		//y=length();
 		//x=length();
 		//z=0;
@@ -195,8 +150,8 @@ public class CanvaxVertex extends Vertex {
 		this.y = y;
 		this.z = z;
 
-		b = size;
-		B = b;
+		relativeBallSize = size;
+		ballSize = relativeBallSize;
 
 		this.name = name;
 	}
@@ -214,16 +169,17 @@ public class CanvaxVertex extends Vertex {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		b = size;
-		B = b;
+		relativeBallSize = size;
+		ballSize = relativeBallSize;
 		this.name = name;
 	}
-	public void fixpos() {
+	
+	public void fixPosition() {
+		positionFixed = true;
 		xpos = x;
 		ypos = y;
 		zpos = z;
-		//System.out.println("posfixed"+xpos+" "+ypos+" " +zpos );
-
+		
 		makereturn = true;
 		makereturnx = true;
 		makereturny = true;
@@ -232,36 +188,30 @@ public class CanvaxVertex extends Vertex {
 
 	//function for changing the object space coordinates,
 	public void change(int dx, int dy, int dz) {
-		x = x + (dx); //-biax);
-		y = y + (dy); //-biay);
-		z = z + (dz); //-biaz);
-		if (x > Config.xmax) //minmax checks
+		x = x + (dx);
+		y = y + (dy);
+		z = z + (dz);
+		
+		if (x > Config.xmax) 
 			{
-			x = Config.xmax;
-			biax = nbias;
+			x = Config.xmax;			
 		}
 		if (x < Config.xmin) {
 			x = Config.xmin;
-			biax = pbias;
 		}
 		if (z > Config.zmax) {
 			z = Config.zmax;
-			biaz = nbias;
 		}
 		if (z < Config.zmin) {
 			z = Config.zmin;
-			biaz = pbias;
 		}
 		if (y > Config.ymax) {
 			y = 500;
-			biay = nbias;
 		}
 		if (y < Config.ymin) {
 			y = Config.ymin;
-			biay = pbias;
 		}
-		//System.out.println("x"+x+"y"+y+"z"+z);
-
+		
 	}
 
 	synchronized public void paint(Graphics g) {
@@ -283,33 +233,37 @@ public class CanvaxVertex extends Vertex {
 	}
 
 	synchronized public void proj() {
-		b = (int) Math.round((double) B * FOV / (-Z + ZC));
+		relativeBallSize =
+			(int) Math.round((double) ballSize * FOV / (-Z + ZC));
 		//diameter reduced to projection
 		//System.out.println("ZC"+ZC+"Z"+Z+"b"+b);
-		if (b < 2)
-			b = 2;
-		//minimum
-		proj2();
-		/*
-		 * if(u-this.parent.x>0) i=-1; else i=1; if(v-this.parent.y
-		 * <0) j=-1; else j=1;
-		 */
-		int c = b / 2;
+		if (relativeBallSize < Config.minimumBallSize)
+			relativeBallSize = Config.minimumBallSize;
+
+		//projection for X,and Y of 3d to u,v of 2d;
+		int k = Z - ZC;
+		int ZZ = Z - ZC;
+		if (Math.abs(ZZ) < 1)
+			ZZ = 1;
+		u = new Float(origin.x + (FOV * (X - origin.x)) / (ZZ)).intValue();
+		v = new Float(origin.y + (FOV * (Y - origin.y)) / (ZZ)).intValue();
+
+		int c = relativeBallSize / 2;
 
 		U = u - c;
 		V = v - c;
-		r = new Rectangle(U, V, b, b); //bounds for the
-		// circle
-
+		boundRectangle = new Rectangle(U, V, relativeBallSize, relativeBallSize);
+		
 	}
+	
 	public void setOrigin(int x, int y, int z) {
 		origin = new Vertex(x, y, z);
 		mat.translate(x, y, z); //origin changed and transformed
 		transform();
-
 	}
+	
 	public boolean contains(int x, int y) {
-		if (r.contains(x, y)) {
+		if (boundRectangle.contains(x, y)) {
 			mouseover = true;
 			return true;
 		} else {
@@ -317,58 +271,20 @@ public class CanvaxVertex extends Vertex {
 			return false;
 		}
 	}
+	
 	public CanvaxVertex getElement() {
 
 		return this;
 
 	}
-	public boolean containsd(int x, int y) {
-
-		if (r.contains(x, y)) {
-			mouseover = true;
-			if (!focussed) {
-				focussed = true;
-			}
-		} else {
-			mouseover = false;
-			if (focussed) {
-				focussed = false;
-			}
-		}
-		return focussed;
-
-	}
+	
 	public void transform(Matrix3D m) {
 		//if(makereturn)
 		//tracepath();
 		m.transform(this);
 	}
 	synchronized public void transform() {
-		//System.out.println("x "+x+" y "+Y+" z"+z);
-		//if(makereturn)
-		//tracepath();
 		mat.transform(this);
-		//change the object coordinates to cameracodinates by operating
-		// with
-		// the change accumulation matrix
-
-	}
-
-	public void proj2() //projection for X,and Y of 3d to u,v of
-	// 2d;
-	{
-		//int xo=X;
-		//int yo=origin.Y;
-		int k = Z - ZC;
-		// System.out.println("x "+x+"y "+y);
-		// u=X;
-		// v=Y;
-		int ZZ = Z - ZC;
-		if (Math.abs(ZZ) < 1)
-			ZZ = 1;
-		u = new Float(origin.x + (FOV * (X - origin.x)) / (ZZ)).intValue();
-		v = new Float(origin.y + (FOV * (Y - origin.y)) / (ZZ)).intValue();
-
 	}
 
 	public int length() {
@@ -376,11 +292,11 @@ public class CanvaxVertex extends Vertex {
 			- Config.lengthmedian;
 
 	}
+
 	void setBounds() {
 		x = min(max(x, xmin), xmax);
 		y = min(max(y, ymin), ymax);
 		z = min(max(z, zmin), zmax);
-
 	}
 
 	int max(int x, int y) {

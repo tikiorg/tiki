@@ -28,16 +28,11 @@ public class Vertex {
 		ZC = z;
 
 	}
-	public void rotate(Matrix3D m) {
-
-		//c.rotate(this);
-
-	}
-
+	
 	public void paint(Graphics g) {
 		g.drawOval(u, v, 13, 13);
-
 	}
+	
 	public void setCamerapos(int x, int y, int z) {
 		XC = x;
 		YC = y;

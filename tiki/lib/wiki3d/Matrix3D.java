@@ -6,17 +6,20 @@ public class Matrix3D {
 	public float prevx, prevy, prevz;
 	int xstep = 1, ystep = 1, zstep = 1;
 
-	public static int FOV = Config.FOV; //field of view
+	public static int fieldOfView = Config.fieldOfView;
+	
 	public static float xf = 1, yf = 1, zf = 1, f = 1;
+	
 	public static int xmax = Config.xmax,
 		ymax = Config.ymax,
 		zmax = Config.zmax,
 		xmin = Config.xmin,
 		ymin = Config.ymin,
 		zmin = Config.zmin;
+	
 	boolean makereturnx = false, makereturny = false, makereturnz = false;
 	//xo,yo,zo position of the camera with respect of world coordinate
-	static final double pi = 3.14159265;
+	
 	/** Create a new unit matrix */
 
 	public Matrix3D() {
@@ -44,7 +47,7 @@ public class Matrix3D {
 		float scaley,
 		float scale,
 		boolean autoscale) {
-		FOV = iFOV;
+		fieldOfView = iFOV;
 		xo = initposcamerax;
 		yo = initposcameray;
 		zo = initposcameraz;
@@ -164,7 +167,7 @@ public class Matrix3D {
 	}
 	/** rotate theta degrees about the y axis */
 	public void yrot(double theta) {
-		theta *= (pi / 180);
+		theta *= (Math.PI / 180);
 		double ct = Math.cos(theta);
 		double st = Math.sin(theta);
 
@@ -189,7 +192,7 @@ public class Matrix3D {
 	}
 	/** rotate theta degrees about the x axis */
 	public void xrot(double theta) {
-		theta *= (pi / 180);
+		theta *= (Math.PI / 180);
 		double ct = Math.cos(theta);
 		double st = Math.sin(theta);
 
@@ -214,7 +217,7 @@ public class Matrix3D {
 	}
 	/** rotate theta degrees about the z axis */
 	public void zrot(double theta) {
-		theta *= (pi / 180);
+		theta *= (Math.PI / 180);
 		double ct = Math.cos(theta);
 		double st = Math.sin(theta);
 

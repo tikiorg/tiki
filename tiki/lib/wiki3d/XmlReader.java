@@ -2,24 +2,24 @@ package wiki3d;
 import java.util.*;
 public class XmlReader {
 	Vector links = new Vector();
-	CenterNode g;
+	CenterNode parentNode;
 	Vector actions = new Vector();
-	public XmlReader(String s, Vertexes v) {
+	public XmlReader(String s, Vertexes vertexList) {
 		int i = s.indexOf("graph");
 		int j = s.indexOf("\"", i + 4);
 		int k = s.indexOf("\"", j + 2);
 		String s2 = s.substring(++j, k);
-		g = new CenterNode(s2);
-		v.add(g);
+		parentNode = new CenterNode(s2);
+		vertexList.add(parentNode);
 		System.out.print("graph node=" + s2);
 		while ((i = s.indexOf("link", ++j)) > 0) {
 			j = s.indexOf("\"", i + 4);
 			k = s.indexOf("\"", j + 2);
 			String name = s.substring(++j, k);
 			System.out.println("link name " + name);
-			Node l = new Node(name, g);
+			Node childNode = new Node(name, parentNode);
 			//g.addLink(l);
-			v.add(l);
+			vertexList.add(childNode);
 			int lastlink = s.indexOf("</link>", j);
 			while (k < lastlink - 1) //process actions
 				{
@@ -35,8 +35,8 @@ public class XmlReader {
 				j = s.indexOf("\"", k + 3); //start of url
 				k = s.indexOf("\"", j + 1); //end
 				String url = s.substring(j + 1, k);
-				Action a = new Action(label, url, l);
-				l.addAction(a);
+				Action a = new Action(label, url, childNode);
+				childNode.addAction(a);
 				//  v.add(a);
 
 				j = k;
