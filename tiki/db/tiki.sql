@@ -1911,7 +1911,7 @@ CREATE TABLE tiki_modules (
   position char(1) default NULL,
   ord int(4) default NULL,
   type char(1) default NULL,
-  title varchar(40) default NULL,
+  title varchar(255) default NULL,
   cache_time int(14) default NULL,
   rows int(4) default NULL,
   params varchar(255) default NULL,
