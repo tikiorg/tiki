@@ -1,4 +1,8 @@
+{if strlen($heading) > 0}
 {eval var=$heading}
+{else}
+<br/>
+{/if}
 {if $use_find eq 'y'}
 <div class="blogtools">
 <table><tr><td>
@@ -22,28 +26,34 @@
 <span class="posthead">
 {if $use_title eq 'y'}
 	{$listpages[ix].title}<br/>
-	<small>{tr}posted by{/tr} {$listpages[ix].user} on {$listpages[ix].created|tiki_short_datetime}</small>
+	<small> {tr}posted by{/tr} {$listpages[ix].user} on {$listpages[ix].created|tiki_short_datetime}</small>
 {else}
-	{$listpages[ix].created|tiki_short_datetime}<small>{tr}posted by{/tr} {$listpages[ix].user}</small>
+	{$listpages[ix].created|tiki_short_datetime}<small> {tr}posted by{/tr} {$listpages[ix].user}</small>
 {/if}
 </span>
 </td><td align="right">
 {if ($ownsblog eq 'y') or ($user and $listpages[ix].user eq $user) or $tiki_p_blog_admin eq 'y'}
-<a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}">{tr}Edit{/tr}</a>
-<a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}">{tr}Remove{/tr}</a>
+<a class="blogt" href="tiki-blog_post.php?blogId={$listpages[ix].blogId}&amp;postId={$listpages[ix].postId}"><img border='0' src='img/icons/edit.gif' alt='{tr}Edit{/tr}' title='{tr}Edit{/tr}' /></a>
+<a class="blogt" href="tiki-view_blog.php?blogId={$blogId}&amp;remove={$listpages[ix].postId}"><img src='img/icons/trash.gif' alt='{tr}Remove{/tr}' border='0' title='{tr}Remove{/tr}' /></a>
 {/if}
 </td></tr></table>
 </div>
 <div class="postbody">
 {$listpages[ix].parsed_data}
 <hr/>
+<table width="100%"><tr><td>
 <small>
 <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}Permalink{/tr}</a>
+ ({tr}referenced by{/tr}: {$listpages[ix].trackbacks_from_count} {tr}posts{tr}  {tr}refereces{/tr}: {$listpages[ix].trackbacks_to_count} {tr}posts{/tr})
 {if $allow_comments eq 'y' and $feature_blogposts_comments eq 'y'}
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}view comments{/tr}</a>]
 {/if}
 </small>
+</td><td style='text-align:right'>
+<a href='tiki-print_blog_post.php?listpages[ix].postId={$postId}'><img src='img/icons/print.gif' border='0' alt='{tr}print{/tr}' title='{tr}print{/tr}' /></a>
+<a href='tiki-send_blog_post.php?listpages[ix].postId={$postId}'><img src='img/icons/email.gif' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' /></a>
+</td></tr></table>
 </div>
 </div>
 {/section}

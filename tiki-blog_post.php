@@ -52,7 +52,6 @@ if(isset($_REQUEST['remove_image'])) {
 if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
   // Check permission
   $data = $bloglib->get_post($_REQUEST["postId"]);
-  
   // If the user owns the weblog then he can edit
   if($user && $user==$blog_data["user"]) {
     $data["user"] = $user;
@@ -65,9 +64,9 @@ if(isset($_REQUEST["postId"]) && $_REQUEST["postId"]>0) {
     }
   }
   if(empty($data["data"])) $data["data"]=' ';
-
   $smarty->assign('data',$data["data"]);
   $smarty->assign('title',$data["title"]);
+  $smarty->assign('trackbacks_to',$data["trackbacks_to"]);
   $smarty->assign('created',$data["created"]);
   $smarty->assign('parsed_data',$tikilib->parse_data($data["data"]));
 }
@@ -115,7 +114,7 @@ if(isset($_REQUEST["preview"])) {
 // remove images (permissions!)
 
 
-if(isset($_REQUEST["save"])) {
+if(isset($_REQUEST["save"])||isset($_REQUEST['save_exit'])) {
   include_once("lib/imagegals/imagegallib.php");
   $smarty->assign('individual','n');
   if($userlib->object_has_one_permission($_REQUEST["blogId"],'blog')) {
@@ -168,13 +167,25 @@ if(isset($_REQUEST["save"])) {
   $_REQUEST["data"] = $imagegallib->capture_images($_REQUEST["data"]);
   $title = isset($_REQUEST['title'])?$_REQUEST['title'] : '';
   if($_REQUEST["postId"]>0) {
-    $bloglib->update_post($_REQUEST["postId"],$_REQUEST["data"],$user,$title);
+    $bloglib->update_post($_REQUEST["postId"],$_REQUEST["data"],$user,$title,$_REQUEST['trackback']);
   } else {
-    $bloglib->blog_post($_REQUEST["blogId"],$_REQUEST["data"],$user,$title);
+    $postid = $bloglib->blog_post($_REQUEST["blogId"],$_REQUEST["data"],$user,$title,$_REQUEST['trackback']);
+    $smarty->assign('postId',$postid);
   }
   
-  header("location: tiki-view_blog.php?blogId=".$_REQUEST["blogId"]);
-  die;
+  if(isset($_REQUEST['save_exit'])) {
+    header("location: tiki-view_blog.php?blogId=$blogId");
+    die;
+  }
+  
+  $data = $_REQUEST["data"];
+  $parsed_data = $tikilib->parse_data($_REQUEST["data"]);
+
+  if(empty($data)) $data=' ';
+  $smarty->assign('data',$data);
+  $smarty->assign('title',$_REQUEST["title"]);
+  $smarty->assign('trackbacks_to',explode(',',$_REQUEST['trackback']));
+  $smarty->assign('parsed_data',$parsed_data);
 }
 $blogs = $tikilib->list_user_blogs($user,1);
 if(count($blogs)==0) {
@@ -185,8 +196,6 @@ if(count($blogs)==0) {
 $smarty->assign_by_ref('blogs',$blogs);
 $section='blogs';
 include_once('tiki-section_options.php');
-
-
 // Display the Index Template
 $smarty->assign('mid','tiki-blog_post.tpl');
 $smarty->assign('show_page_bar','n');

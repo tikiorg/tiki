@@ -13,8 +13,9 @@
 {/if}
 <a class="bloglink" href="tiki-list_blogs.php">{tr}list blogs{/tr}</a>]
 <br/><br/>
-<div class="wikitext">{tr}Note: if you want to use images please save the post first and you
-will be able to edit/post images (you can only upload images to an existing post){/tr}</div>
+<div class="wikitext"><small>{tr}Note: if you want to use images please save the post first and you
+will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor
+or use the image URL to include images using the WYSIWYG editor. {/tr}</small></div>
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php">
 <input type="hidden" name="wysiwyg" value="{$wysiwyg}" />
 <input type="hidden" name="postId" value="{$postId}" />
@@ -97,11 +98,11 @@ will be able to edit/post images (you can only upload images to an existing post
 				<a class="link" href="tiki-view_blog_post_image.php?imgId={$post_images[ix].imgId}">{$post_images[ix].filename}</a> 
 			</td>
 			<td>
-				<small>{$post_images[ix].link|escape}<br/>
-				{$post_images[ix].absolute}</small>
+				<textarea rows="2" cols="40">{$post_images[ix].link|escape}</textarea><br/>
+				<textarea rows="1" cols="40">{$post_images[ix].absolute}</textarea>
 			</td>
 			<td>
-				<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img border='0' src='img/icons/del.gif' /></a>
+				<a href="tiki-blog_post.php?postId={$postId}&amp;remove_image={$post_images[ix].imgId}"><img border='0' src='img/icons/trash.gif' /></a>
 			</td>
 		</tr>
 		{/section}
@@ -109,11 +110,16 @@ will be able to edit/post images (you can only upload images to an existing post
 		</td></tr>
 	{/if}
 {/if}
+<tr><td class="editblogform">{tr}Send trackback pings to:{/tr}<small>{tr}(comma sepparated list of URIs){/tr}</small></td><td class="editblogform">
+<textarea name="trackback" rows="3" cols="60">{section name=ix loop=$trackbacks_to}{if not $smarty.section.ix.first},{/if}{$trackbacks_to[ix]}{/section}</textarea>
+</td>
 {if $blog_spellcheck eq 'y'}
 <tr><td class="editblogform">{tr}Spellcheck{/tr}: </td><td class="editblogform"><input type="checkbox" name="spellcheck" {if $spellcheck eq 'y'}checked="checked"{/if}/></td>
 {/if}
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="preview" value="{tr}preview{/tr}" />
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /></td></tr>
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" />
+<input type="submit" class="wikiaction" name="save_exit" value="{tr}save and exit{/tr}" />
+</td></tr>
 </table>
 </form>
 <br/>

@@ -10,6 +10,89 @@ class BlogLib extends TikiLib {
     $this->db = $db;  
   }
   
+
+  function send_trackbacks($id,$trackbacks)
+  {
+  	// Split to get each URI
+	$tracks = explode(',',$trackbacks);  	
+	$ret = Array();
+  	// Foreach URI
+    $post_info=$this->get_post($id);	
+    $blog_info=$this->get_blog($post_info['blogId']);
+    //Build uri for post
+    $parts=parse_url($_SERVER['REQUEST_URI']);
+    $uri = httpPrefix().str_replace('tiki-blog_post','tiki-view_blog_post',$parts['path']).'?postId='.$id.'&blogId='.$post_info['blogId'];
+    include ("lib/snoopy/Snoopy.class.inc");
+    $snoopy = new Snoopy;
+
+  	foreach($tracks as $track) {
+  		@$fp=fopen($track,'r');
+  		if($fp) {	
+  		    $data = '';
+  			while(!feof($fp)) {
+			  $data.=fread($fp,32767);  			  
+  			}
+  			fclose($fp);
+  			preg_match("/trackback:ping=(\"|\'|\s*)(.+)(\"|\'\s)/",$data,$reqs);
+  			if(!isset($reqs[2])) return $ret;
+  			@$fp=fopen($reqs[2],'r');
+  			if($fp) {
+ 			  fclose($fp);  		
+
+			  $submit_url = $reqs[2];
+		  	  $submit_vars["url"] = $uri;
+			  $submit_vars["blog_name"] = $blog_info['title'];
+			  $submit_vars["title"] = $post_info['title']?$post_info['title']:date("d/m/Y [h:i]",$post_info['created']);
+			  $submit_vars["title"].= ' '.tra('by').' '.$post_info['user'];
+			  $submit_vars["excerpt"] = substr($post_info['data'],0,200);
+			  $snoopy->submit($submit_url,$submit_vars);
+			  $back = $snoopy->results;
+			  if(!strstr('<error>1</error>',$back)) {
+			 	$ret[]=$track;    
+			  }
+  			}
+  		}						
+  	}						
+    return $ret;
+  }
+  
+  function add_trackback_from($postId,$url,$title='',$excerpt='',$blog_name='')
+  {
+    if(!$this->getOne("select count(*) from tiki_blog_posts where postId=$postId")) return false;
+    $tbs = $this->get_trackbacks_from($postId);
+    $aux = Array( 'title'=>$title,'excerpt'=>$excerpt,'blog_name'=>$blog_name);
+    $tbs[$url]=$aux;
+    $st = addslashes(serialize($tbs));
+    $query = "update tiki_blog_posts set trackbacks_from='$st' where postId=$postId";
+    $this->query($query);
+    return true;
+  }
+
+  function get_trackbacks_from($postId)
+  {
+    $st = $this->db->getOne("select trackbacks_from from tiki_blog_posts where postId=$postId");
+    return unserialize($st); 
+  }
+
+  function get_trackbacks_to($postId)
+  {
+    $st = $this->db->getOne("select trackbacks_to from tiki_blog_posts where postId=$postId");
+    return unserialize($st); 
+  }
+
+  function clear_trackbacks_from($postId)
+  {
+    $empty = addslashes(serialize(Array()));
+    $query = "update tiki_blog_posts set trackbacks_from = '$empty' where postId=$postId";
+    $this->query($query);
+  }
+
+  function clear_trackbacks_to($postId)
+  {
+    $empty = addslashes(serialize(Array()));
+    $query = "update tiki_blog_posts set trackbacks_to = '$empty' where postId=$postId";
+    $this->query($query);
+  }
   
   function add_blog_hit($blogId)
   {
@@ -98,6 +181,11 @@ class BlogLib extends TikiLib {
       $hash=md5('post'.$res["postId"]);
       $cant_com = $this->getOne("select count(*) from tiki_comments where object='$hash'");
       $res["comments"]=$cant_com;
+      $res['trackbacks_from']=unserialize($res['trackbacks_from']);
+      if(!is_array($res['trackbacks_from'])) $res['trackbacks_from']=Array();
+      $res['trackbacks_from_count']=count(array_keys($res['trackbacks_from']));
+      $res['trackbacks_to']=unserialize($res['trackbacks_to']);
+      $res['trackbacks_to_count']=count($res['trackbacks_to']);
       $ret[] = $res;
     }
     $retval = Array();
@@ -138,9 +226,11 @@ class BlogLib extends TikiLib {
     return $retval;
   }
 
-  function blog_post($blogId,$data,$user,$title='')
+  function blog_post($blogId,$data,$user,$title='',$trackbacks='')
   {
     // update tiki_blogs and call activity functions
+
+    $tracks=addslashes(serialize(explode(',',$trackbacks)));
     $title=addslashes($title);
     $data = strip_tags($data, '<a><b><i><h1><h2><h3><h4><h5><h6><ul><li><ol><br><p><table><tr><td><img><pre>');
     $data=addslashes($data);
@@ -149,6 +239,11 @@ class BlogLib extends TikiLib {
     $result = $this->query($query);
     $query = "select max(postId) from tiki_blog_posts where created=$now and user='$user'";
     $id = $this->getOne($query);
+    // Send trackbacks recovering only succesful trackbacks
+    $trackbacks = addslashes(serialize($this->send_trackbacks($id,$trackbacks)));
+    // Update post with trackbacks succesfully sent
+    $query = "update tiki_blog_posts set trackbacks_from='', trackbacks_to = '$trackbacks' where postId=$id";
+    $this->query($query);
     $query = "update tiki_blogs set lastModif=$now,posts=posts+1 where blogId=$blogId";
     $result = $this->query($query);
     $this->add_blog_activity($blogId);
@@ -188,19 +283,25 @@ class BlogLib extends TikiLib {
 
     if($result->numRows()) {
       $res = $result->fetchRow(DB_FETCHMODE_ASSOC);
+	  if(!$res['trackbacks_from']) $res['trackbacks_from'] = serialize(Array());
+	  if(!$res['trackbacks_to']) $res['trackbacks_to'] = serialize(Array());
+      $res['trackbacks_from_count']=count(array_keys(unserialize($res['trackbacks_from'])));
+      $res['trackbacks_from']=unserialize($res['trackbacks_from']);
+      $res['trackbacks_to']=unserialize($res['trackbacks_to']);  
+      $res['trackbacks_to_count']=count($res['trackbacks_to']);
     } else {
       return false;
     }
     return $res;
   }
 
-  function update_post($postId,$data,$user,$title='')
+  function update_post($postId,$data,$user,$title='',$trackbacks='')
   {
     $data = addslashes($data);
+	$trackbacks=addslashes(serialize($this->send_trackbacks($postId,$trackbacks)));
     $title= addslashes($title);
-    $query = "update tiki_blog_posts set data='$data',user='$user',title='$title' where postId=$postId";
+    $query = "update tiki_blog_posts set trackbacks_to='$trackbacks',data='$data',user='$user',title='$title' where postId=$postId";
     $result = $this->query($query);
-
   }
 
 

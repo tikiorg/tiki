@@ -268,6 +268,7 @@ class Snoopy
 		$postdata = $this->_prepare_post_body($formvars, $formfiles);
 			
 		$URI_PARTS = parse_url($URI);
+		if(!isset($URI_PARTS['query'])) $URI_PARTS['query']='';
 		if (!empty($URI_PARTS["user"]))
 			$this->user = $URI_PARTS["user"];
 		if (!empty($URI_PARTS["pass"]))
@@ -1110,7 +1111,7 @@ class Snoopy
 	{
 		settype($formvars, "array");
 		settype($formfiles, "array");
-
+	    $postdata= '';
 		if (count($formvars) == 0 && count($formfiles) == 0)
 			return;
 		
