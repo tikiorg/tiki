@@ -82,7 +82,14 @@
   {if $feature_wiki eq 'y'}
   <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$userinfo.login}">UserPage{$userinfo.login}</a> (<a class="link" href="tiki-editpage.php?page=UserPage{$userinfo.login}">{tr}edit{/tr}</a>)</td></tr>
   {/if}
-  
+	{if $userTracker eq 'y'}
+  <tr><td class="form">{tr}Your personnal tracker information{/tr}:</td><td>
+	{if $useritemId}
+	<a class="link" href="tiki-view_tracker_item.php?trackerId={$usertrackerId}&amp;itemId={$useritemId}">{tr}Edit informations{/tr}</a>
+	{else}
+	<a class="link" href="tiki-view_tracker.php?trackerId={$usertrackerId}&amp;vals[Login]={$userwatch|escape:"url"}&amp;view=mod">{tr}Add informations{/tr}</a>
+	{/if}
+	{/if}
   <tr><td class="form">{tr}Displayed time zone{/tr}:</td>
   <td>
   <input type="radio" name="display_timezone" value="UTC" {if $display_timezone eq 'UTC'}checked="checked"{/if}/> {tr}UTC{/tr}
@@ -253,6 +260,7 @@
   
   {/if}
 
+{if $feature_mytiki eq 'y'}
 <br />
 
     <div class="cbox">
@@ -280,3 +288,4 @@
       </div>
     </div>
  </div>
+{/if}

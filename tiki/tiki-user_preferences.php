@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.42 2004-02-12 19:18:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.43 2004-02-13 05:29:54 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -269,7 +269,7 @@ $styles = array();
 $h = opendir("styles/");
 
 while ($file = readdir($h)) {
-	if (strstr($file, "css")) {
+	if (strstr($file, ".css") and substr($file,0,1) != '.') {
 		$styles[] = $file;
 	}
 }
@@ -332,6 +332,20 @@ $smarty->assign('avatar', $avatar);
 
 $user_information = $tikilib->get_user_preference($userwatch, 'user_information', 'public');
 $smarty->assign('user_information', $user_information);
+
+$usertrackerId = false;
+$useritemId= false;
+if ($userTracker == 'y') {
+	$re = $userlib->get_user_tracker($userinfo['groups']);
+	if (isset($re['usersTrackerId']) and $re['usersTrackerId']) {
+		include_once('lib/trackers/trackerlib.php');
+		$info = $trklib->get_item($re['usersTrackerId'],'Login',$userwatch);
+		$usertrackerId = $re['usersTrackerId'];
+		$useritemId = $info['itemId'];
+	}
+}
+$smarty->assign('usertrackerId', $usertrackerId);
+$smarty->assign('useritemId', $useritemId);
 
 // Custom fields
 foreach ($customfields as $custpref=>$prefvalue ) {

@@ -33,11 +33,13 @@
 {if (($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y') or $show_filters eq 'y'}
 <form action="tiki-view_tracker.php" method="post">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
+{if $status}<input type="hidden" name="status" value="{$status}" />{/if}
+{if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode}" />{/if}
 <table class="normal"><tr>
 {if ($tracker_info.showStatus eq 'y' and $tracker_info.showStatusAdminOnly ne 'y') or $tiki_p_admin_trackers eq 'y'}
 {foreach key=st item=stdata from=$status_types}
 <td><div class="{$stdata.class}">
-<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" 
+<a href="tiki-view_tracker.php?trackerId={$trackerId}{if $filtervalue}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filtervalue}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" 
 class="statusimg">{html_image file=$stdata.image title=$stdata.label alt=$stdata.label align=top}</a></div></td>
 {/foreach}
 {/if}
