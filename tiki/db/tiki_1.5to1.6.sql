@@ -63,3 +63,19 @@ create table tiki_directory_search(
 
 ### DIRECTORIES END
 
+### FULLTEXT SEARCH BEGIN
+
+alter table tiki_pages modify data text;
+create fulltext index ft on tiki_pages (pagename,data);
+create fulltext index ft on tiki_galleries (name,description);
+create fulltext index ft on tiki_faqs (title,description);
+create fulltext index ft on tiki_faq_questions (question,answer);
+create fulltext index ft on tiki_images (name,description);
+create fulltext index ft on tiki_comments (title,data);
+create fulltext index ft on tiki_files (name,description);
+create fulltext index ft on tiki_blogs (title,description);
+alter table tiki_articles modify body text;
+create fulltext index ft on tiki_articles (title,heading,body);
+create fulltext index ft on tiki_blog_posts (data);
+
+### FULLTEXT SEARCH END
