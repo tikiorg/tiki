@@ -1,6 +1,6 @@
 <?php
 
-$tikiId =  $tikilib->get_preference("tiki_id","Tiki CMS/Groupware");
+$tikiId =  "Tiki CMS/Groupware";
 $rsslang = $tikilib->get_preference("rssfeed_language","en-us");
 $rsseditor = $tikilib->get_preference("rssfeed_editor","");
 $rsspublisher = $tikilib->get_preference("rssfeed_publisher","");
