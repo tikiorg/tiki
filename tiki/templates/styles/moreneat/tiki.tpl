@@ -47,11 +47,10 @@
     <tr>
       {if $feature_left_column eq 'y'}
       <td id="leftcolumn">
-      <table border="0" cellspacing="0" cellpadding="0"><!-- seems to elimate left col bug : a simple table -->
       {section name=homeix loop=$left_modules}
-      <tr><td>{$left_modules[homeix].data}</td></tr>
+      {$left_modules[homeix].data}
       {/section}
-      </table>
+      
       </td>
       {/if}
       <td id="centercolumn"><div id="tiki-center">
