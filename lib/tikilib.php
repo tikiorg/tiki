@@ -2960,6 +2960,21 @@ class TikiLib extends TikiDB {
 
 	    return $ret;
 	}
+	
+    // Returns the name of all pages
+    function get_all_pages() {
+    	
+		$query = "select `pageName` from `tiki_pages`";
+		$result = $this->query($query,array());
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+
+		return $ret;
+    }
+    
 	/**
 	 * \brief Cache given url
 	 * If \c $data present (passed) it is just associated \c $url and \c $data.

@@ -23,7 +23,16 @@
         <td><input type="checkbox" name="feature_search_stats"
             {if $feature_search_stats eq 'y'}checked="checked"{/if}/>
 	</td>
-	</tr><tr>
+	</tr>
+	{if $refresh_index_now neq 'y'}
+	<tr>
+	<td>
+<a href="tiki-admin.php?page=search&refresh_index_now=y" class="link" title="{tr}Refresh wiki search index now{/tr}">
+                        {tr}Refresh wiki search index now{/tr}</a></td>
+    <td></td>
+	</tr>
+	{/if}
+	<tr>
 
           <td class="heading" colspan="2">{tr}Settings for searching content{/tr}</td>
         </tr><tr>
