@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.28 2003-11-02 00:31:16 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.29 2003-11-10 15:35:27 chris_holman Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.28 2003-11-02 00:31:16 mose Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.29 2003-11-10 15:35:27 chris_holman Exp $
 session_start();
 
 // Define and load Smarty components
@@ -146,7 +146,8 @@ $dirs = array(
 		'styles',
 		'lib/Galaxia/processes');
 
-	foreach ($dirs as $dir) {
+	$ret = "";
+  foreach ($dirs as $dir) {
 		// Create directories as needed
 		if (!is_dir($dir)) {
 			@mkdir($dir,02775);
