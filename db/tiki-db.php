@@ -7,14 +7,16 @@ $pass_tiki   = '';
 $dbs_tiki    = 'tiki14b1';
 
 /*
-To prevent others from discovering the above information,
-create a php file containing the above four lines and name the file
-using a cryptographically secure name (do not use randomcharshere.php!).
+To prevent others from discovering the above information, 
+do not enter your username/password above.
+Instead, create a php file containing the above four lines
+and name the file using a cryptographically secure name
+(do not use randomcharshere.php!).
 Then remove read/write rights to the db/ directory.
 
-This method also allows developers to change the username/password for 
-their development system without having to change this file
-(and potentially committing their username/password to CVS!).
+Developers: This method allows you to change the username/password
+without having to change this file 
+(and potentially committing your username/password to CVS!).
 
 For example:
 
@@ -29,7 +31,8 @@ cat >randomcharshere.php <<EOF
 EOF
 chmod go-rw+x .
 
-Finally, change the following name to match the random filename you selected:
+Finally, change the following name to match the random filename 
+you selected:
 */
 
 $file = dirname(__FILE__) . '/randomcharshere.php';
