@@ -32,24 +32,34 @@ class UsersLib extends TikiLib {
 	function set_admin_pass($pass) {
 		global $feature_clear_passwords;
 
-		$query = "select email from users_users where login='admin'";
-		$email = $this->getOne($query);
+		$query = "select `email` from `users_users` where `login` = ?";
+		$email = $this->getOne($query, array('admin'));
 		$hash = md5("admin" . $pass . $email);
 
 		if ($feature_clear_passwords == 'n')
 			$pass = '';
 
-		$query = "update `users_users` set `password`='$pass',hash='$hash' where `login`='admin'";
-		$result = $this->query($query);
+		$query = "update `users_users` set `password` = ?, hash = ?
+			where `login` = ?";
+		$result = $this->query($query, array($pass, $hash, 'admin'));
 		return true;
 	}
 
 	function assign_object_permission($groupName, $objectId, $objectType, $permName) {
-		$groupName = addslashes($groupName);
-
 		$objectId = md5($objectType . $objectId);
-		$query = "replace into users_objectpermissions(groupName,objectId,objectType,permName) values('$groupName','$objectId','$objectType','$permName')";
-		$result = $this->query($query);
+
+		$query = "delete from `users_objectpermissions`
+			where `groupName` = ? and
+			`permName` = ? and
+			`objectId` = ?";
+		$result = $this->query($query, array($groupName, $permName,
+					$objectId), -1, -1, false);
+
+		$query = "insert into `users_objectpermissions`(`groupName`,
+					`objectId`, `objectType`, `permName`)
+				values(?, ?, ?, ?)";
+		$result = $this->query($query, array($groupName, $objectId,
+					$objectType, $permName));
 		return true;
 	}
 
@@ -59,9 +69,14 @@ class UsersLib extends TikiLib {
 		$objectId = md5($objectType . $objectId);
 
 		foreach ($groups as $groupName) {
-			$query = "select `permName`  from `users_objectpermissions` where `groupName`='$groupName' and objectId='$objectId' and objectType='$objectType' and permName = '$permName'";
+			$query = "select `permName`
+				from `users_objectpermissions`
+				where `groupName` = ? and objectId = ?
+				and objectType = ? and permName = ?";
 
-			$result = $this->query($query);
+			$bindvars = array($groupName, $objectId, $objectType,
+				$permName);
+			$result = $this->query($query, $bindvars);
 
 			if ($result->numRows())
 				return true;
@@ -73,16 +88,24 @@ class UsersLib extends TikiLib {
 	function remove_object_permission($groupName, $objectId, $objectType, $permName) {
 		$objectId = md5($objectType . $objectId);
 
-		$query = "delete from `users_objectpermissions` where `groupName`='$groupName' and objectId='$objectId' and objectType='$objectType' and permName='$permName'";
-		$result = $this->query($query);
+		$query = "delete from `users_objectpermissions`
+				where `groupName` = ? and `objectId` = ?
+				and `objectType` = ? and `permName` = ?";
+		$bindvars = array($groupName, $objectId, $objectType,
+				$permName);
+		$result = $this->query($query, $bindvars);
 		return true;
 	}
 
 	function copy_object_permissions($objectId,$destinationObjectId,$objectType) {
 		$objectId = md5($objectType.$objectId);
 
-		$query = "select permName, groupName from users_objectpermissions where objectId='$objectId' and  objectType='$objectType'";
-    		$result = $this->query($query);
+		$query = "select `permName`, `groupName`
+				from `users_objectpermissions`
+				where `objectId` ='$objectId' and
+				`objectType` = ?";
+		$bindvars = array($objectId, $objectType);
+    		$result = $this->query($query, $bindvars);
     		while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       			$this->assign_object_permission($res["groupName"],$destinationObjectId,$objectType,$res["permName"]);
     		}
@@ -92,8 +115,12 @@ class UsersLib extends TikiLib {
 	function get_object_permissions($objectId, $objectType) {
 		$objectId = md5($objectType . $objectId);
 
-		$query = "select `groupName` ,permName from `users_objectpermissions` where `objectId`='$objectId' and objectType='$objectType'";
-		$result = $this->query($query);
+		$query = "select `groupName`, `permName`
+				from `users_objectpermissions`
+				where `objectId` = '$objectId' and
+				`objectType` = ?";
+		$bindvars($objectId, $objectType);
+		$result = $this->query($query, $bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
