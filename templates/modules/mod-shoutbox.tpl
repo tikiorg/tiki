@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.22 2004-02-18 16:30:21 hsaelens Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-shoutbox.tpl,v 1.23 2004-02-18 16:41:28 damosoft Exp $ *}
 
 {if $feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {tikimodule title="{tr}Shoutbox{/tr}" name="shoutbox"}
@@ -6,9 +6,9 @@
       <form action="{$shout_ownurl}" method="post">
       <div align="center">
         <textarea rows="3" cols="16" class="tshoutbox" name="shout_msg"></textarea>
-	<br/>
+	<br />
 	<input type="submit" name="shout_send" value="{tr}send{/tr}" />
-      </div><br/>
+      </div><br />
       </form>
     {/if}
 
@@ -34,7 +34,7 @@
         {/if}
         {$shout_msgs[ix].message}
         {if $tiki_p_admin_shoutbox eq 'y'}
-          [<a href="{$shout_ownurl}?shout_remove={$shout_msgs[ix].msgId}" class="linkmodule">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule">e</a>]
+          [<a href="{$shout_ownurl}shout_remove={$shout_msgs[ix].msgId}" class="linkmodule">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule">e</a>]
         {/if}
       </div>
     {/section}
