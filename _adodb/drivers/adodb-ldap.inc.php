@@ -1,6 +1,6 @@
 <?php
 /*
-  V4.23 16 June 2004  (c) 2000-2004 John Lim (jlim#natsoft.com.my). All rights reserved.
+  V4.55 3 Jan 2005  (c) 2000-2005 John Lim (jlim#natsoft.com.my). All rights reserved.
    Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -193,9 +193,9 @@ class ADORecordSet_ldap extends ADORecordSet{
 		case ADODB_FETCH_ASSOC: 
 		  $this->fetchMode = LDAP_ASSOC; 
 		break;
-		default:
 		case ADODB_FETCH_DEFAULT:
 		case ADODB_FETCH_BOTH: 
+		default:
 		  $this->fetchMode = LDAP_BOTH; 
 		break;
 		}
