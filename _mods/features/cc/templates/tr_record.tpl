@@ -1,25 +1,42 @@
-<FORM>
-<INPUT TYPE='hidden' name='page' value='tr_recorded'>
-<TABLE>
+<a href="cc.php?page=tr_record" class="pagetitle">Record a transaction</a>
+<br /><br />
 
-<TR>
-<TD colspan='2' bgcolor='#CCCCCC'>Record transaction</TD>
-</TR>
+{if $msg}<div class="simplebox">{$msg}</div>{/if}
 
-<TR>
-<TD bgcolor='#EEEECC'>To account</TD>	
-<TD bgcolor='#EEEEEE'>Description</TD>
-<TD bgcolor='#EEEEEE'>Amount</TD>
-<TD bgcolor='#EEEEEE'>cc id</TD>
-</TR>
+<form action="cc.php?page=tr_record" method="post">
+<table class="formcolor">
 
-<TR>
-<TD bgcolor='#EEEECC'><input type='text' name='other_id'></TD>
-<TD><input type='text' name='tr_item'>
-<TD><input type='text' name='tr_amount'></TD>
-<TD>{$regcc}</TD>
-<TD colspan='2'><input type='submit' value='record'></TD>
-</TR>
+<tr class="formrow">
+<td>Currency</td>
+<td><select name="cc_id" style="font-style:italic;">
+<option value="">Select a Currency</option>
+{section name=i loop=$currencies}
+<option value="{$currencies[i].id}" style="font-style:normal;"{if $currencies[i].id eq $smarty.request.cc_id} selected="selected"{/if}>{$currencies[i].cc_name}</option>
+{/section}
+</select></td>
+</tr>
+<tr class="formrow">
+{if $tiki_p_cc_admin eq 'y'}
+<tr class="formrow">
+<td>From account</td>	
+<td><input type='text' name='from_id' size="24" value="{$smarty.request.from_id|default:$user}" /></td>
+</tr>
+{/if}
+<tr class="formrow">
+<td>To account</td>	
+<td><input type='text' name='to_id' size="24" value="{$smarty.request.to_id}" /></td>
+</tr>
+<tr class="formrow">
+<td>Amount</td>
+<td><input type='text' name='tr_amount' size="8" value="{$smarty.request.tr_amount}" /></td>
+</tr>
+<tr class="formrow">
+<td>Description</td>
+<td><input type='text' name='tr_item' size="24" value="{$smarty.request.tr_item}" />
+</tr>
+<tr class="formrow">
+<td></td><td><input type='submit' value='record' /></td>
+</tr>
 
-</TABLE>
-</FORM>
+</table>
+</form>
