@@ -44,7 +44,7 @@
         <tr><td class="imageinfo">{tr}Move image{/tr}:</td><td class="imageinfo">
         <form action="tiki-browse_image.php" method="post">
         <input type="hidden" name="imageId" value="{$imageId}"/>
-        <select name="galleryId">
+        <select name="newgalleryId">
           {section name=idx loop=$galleries}
             <option value="{$galleries[idx].id}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
           {/section}

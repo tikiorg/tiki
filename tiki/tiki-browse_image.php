@@ -161,7 +161,7 @@ if(isset($_REQUEST["move_image"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;  
   }
-  $imagegallib->move_image($_REQUEST["imageId"],$_REQUEST["galleryId"]);
+  $imagegallib->move_image($_REQUEST["imageId"],$_REQUEST["newgalleryId"]);
 }
 
 
