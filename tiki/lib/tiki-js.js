@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.41 2004-04-12 03:05:28 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.42 2004-04-29 21:35:32 mose Exp $
 
 function getElementById(id) {
     if (document.all) {
@@ -57,6 +57,18 @@ function chgTrkFld(f,o) {
 				document.getElementById('z').style.display = "inline";
 			} else {
 				document.getElementById(f[i]).style.display = "none";
+			}
+		}
+	}
+}
+
+function multitoggle(f,o) {
+	for (var i = 0; i < f.length; i++) {
+		if (document.getElementById('fid'+f[i])) { 
+			if (f[i] == o) {
+				document.getElementById('fid'+f[i]).style.display = "block";
+			} else {
+				document.getElementById('fid'+f[i]).style.display = "none";
 			}
 		}
 	}
