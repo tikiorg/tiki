@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.20 2004-06-20 09:33:38 mose Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.21 2004-06-21 02:39:17 dgdaniels Exp $
  *
  * 'Simple' style for TikiWiki - simple and easy to understand yet pleasant for your eye
  * Enables font re-sizing in all browsers, aims to be WCAG 1.0 compatible (not yet), one simple css file.
@@ -287,4 +287,10 @@ TABLE.admin {
   vertcal-align: middle;
 }
 
-.normal { border:solid 1px #abcdef;}
+.normal { border:solid 1px #abcdef;}/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace;
+ padding : 2ex;
+  background-color : #ddeeff;
+  margin : 1ex;
+   border : 1px dashed #adacaf; }
