@@ -213,11 +213,13 @@ class TrackerLib extends TikiLib {
 	function get_all_items($trackerId,$fieldId,$status='o') {
 		global $cachelib;
 		$sort_mode = "value_asc";
-		$cache = md5($trackerId.'.'.$fieldId);
+		$cache = md5('trackerfield'.$fieldId);
 		if (!$cachelib->isCached($cache)) {
-			$query = "select distinct ttif.`itemid`, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
-			$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and tti.`status`=? order by ".$this->convert_sortmode($sort_mode);
-			$result = $this->query($query,array((int) $trackerId,(int)$fieldId,$status));
+			//$query = "select distinct ttif.`itemid`, ttif.`value` from `tiki_tracker_items` tti, `tiki_tracker_fields` ttf, `tiki_tracker_item_fields` ttif ";
+			//$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and tti.`status`=? order by ".$this->convert_sortmode($sort_mode);
+			$query = "select ttif.`itemid` , ttif.`value` FROM `tiki_tracker_items` tti,`tiki_tracker_item_fields` ttif ";
+			$query.= " WHERE ttif.`fieldId` =? and tti.`status` = ? and  tti.`itemId` = ttif.`itemId` order by ".$this->convert_sortmode($sort_mode);
+			$result = $this->query($query,array((int)$fieldId,$status));
 			$ret = array();
 			while ($res = $result->fetchRow()) {
 				$k = $res['itemid'];
@@ -368,6 +370,7 @@ class TrackerLib extends TikiLib {
 		global $smarty;
 		global $notificationlib;
 		global $sender_email;
+		global $cachelib;
 		$now = date("U");
 		
 		if ($itemId) {
@@ -407,6 +410,7 @@ class TrackerLib extends TikiLib {
 					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 					$this->query($query,array((int) $new_itemId,(int) $fieldId,$value));
 				}
+				$cachelib->invalidate(md5('trackerfield'.$fieldId));
 			}
 		}
 		include_once('lib/notifications/notificationlib.php');	
@@ -507,7 +511,6 @@ class TrackerLib extends TikiLib {
 
 
 	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $position, $options) {
-	
 		if ($fieldId) {
 			$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
 				`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`position`=?,`options`=? where `fieldId`=?";
@@ -565,11 +568,13 @@ class TrackerLib extends TikiLib {
 	}
 
 	function remove_tracker_field($fieldId,$trackerId) {
+		global $cachelib;
 		$query = "delete from `tiki_tracker_fields` where `fieldId`=?";
 		$bindvars=array((int) $fieldId);
 		$result = $this->query($query,$bindvars);
 		$query = "delete from `tiki_tracker_item_fields` where `fieldId`=?";
 		$result = $this->query($query,$bindvars);
+		$cachelib->invalidate(md5('trackerfield'.$fieldId));
 		return true;
 	}
 
