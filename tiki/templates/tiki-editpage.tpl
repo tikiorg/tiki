@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.44 2004-02-22 20:45:36 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-editpage.tpl,v 1.45 2004-03-07 23:12:10 mose Exp $ *}
 
 {popup_init src="lib/overlib.js"}
 
@@ -15,11 +15,11 @@
 {if $preview}
 {include file="tiki-preview.tpl"}
 {/if}
-<h1>{tr}Edit{/tr}: {$page}{if $pageAlias ne ''}&nbsp({$pageAlias}){/if}</h1>
+<h1>{tr}Edit{/tr}: {$page|escape}{if $pageAlias ne ''}&nbsp({$pageAlias|escape}){/if}</h1>
 {assign var=area_name value="editwiki"}
 {if $page eq 'SandBox'}
 <div class="wikitext">
-{tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appeareance of the page, no versions are stored for this page.{/tr}
+{tr}The SandBox is a page where you can practice your editing skills, use the preview feature to preview the appearance of the page, no versions are stored for this page.{/tr}
 </div>
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform'>

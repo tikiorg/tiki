@@ -67,7 +67,7 @@ function wikiplugin_fancytable($data, $params) {
 
 			foreach ($parts as $column) {
 				if (strcmp(trim($column), "~blank~") == 0) {
-					$row .= $tdhdr . "&nbsp;" . $tdend;
+					$row .= $tdbeg . "&nbsp;" . $tdend;
 				} else {
 					$row .= $tdbeg . $column . $tdend;
 				}

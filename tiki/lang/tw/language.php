@@ -361,7 +361,7 @@ $lang=Array(
 "Cache Time" => "快取時間",
 "Rows" => "列",
 "The SandBox is a page where you can practice your editing skills, use the preview feature
-\nto preview the appeareance of the page, no versions are stored for this page." => "沙池是一個用來讓你練習編輯技巧的頁面, 使用預覽功能
+\nto preview the appearance of the page, no versions are stored for this page." => "沙池是一個用來讓你練習編輯技巧的頁面, 使用預覽功能
 \n可以觀看頁面的外觀, 但是不會儲存任何版本變動.",//perhaps not used
 "User Preferences" => "使用者偏好",
 "User Information" => "使用者資訊",

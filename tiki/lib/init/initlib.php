@@ -12,7 +12,7 @@ class TikiInit {
 	function os() {
 		static $os;
 		if (!isset($os)) {
-			if (substr(PHP_OS, 0, 3) == 'WIN') {
+			if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
 				$os = 'windows';
 			} else {
 				$os = 'unix';
@@ -28,7 +28,7 @@ class TikiInit {
 	function isWindows() {
 		static $windows;
 		if (!isset($windows)) {
-			$windows = substr(PHP_OS, 0, 3) == 'WIN';
+			$windows = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';
 		}
 		return $windows;
 	}
@@ -40,7 +40,7 @@ class TikiInit {
 	function pathSeparator() {
 		static $separator;
 		if (!isset($separator)) {
-			if (substr(PHP_OS, 0, 3) == 'WIN') {
+			if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
 				$separator = ';';
 			} else {
 				$separator = ':';

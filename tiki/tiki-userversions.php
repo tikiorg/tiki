@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-userversions.php,v 1.9 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-userversions.php,v 1.10 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -37,7 +37,7 @@ if (!isset($_REQUEST["ruser"])) {
 }
 
 if (!user_exists($_REQUEST["ruser"])) {
-	$smarty->assign('msg', tra("Unexistant user"));
+	$smarty->assign('msg', tra("Non-existent user"));
 
 	$smarty->display("error.tpl");
 	die;

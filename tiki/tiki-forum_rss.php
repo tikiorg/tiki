@@ -26,7 +26,8 @@ $id = "forumId";
 $descId = "data";
 $dateId = "commentDate";
 $titleId = "title";
-$readrepl = "tiki-view_forum_thread.php";
+$readrepl = "tiki-view_forum_thread.php?$id=";
+$uniqueid = "$feed.$id=".$_REQUEST["$id"];
 
 require ("tiki-rss_readcache.php");
 

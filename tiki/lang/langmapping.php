@@ -5,12 +5,13 @@
 **/
 
 $langmapping = array(
-    'cn' => array(  '简体中文',      tra("Simplified Chinese")        ),
+    'br' => array(  'Português Brasileiro',  tra("Brazilian Portuguese")  ),
+    'cn' => array(  '中文(簡体字)',      tra("Simplified Chinese")        ),
     'cs' => array(  'Český',      tra("Czech")        ),
     'da' => array(  'Dansk',        tra("Danish")       ),
     'de' => array(  'Deutsch',      tra("German")       ),
     'en' => array(  'English',      tra("English")      ),
-    'en-uk' => array(  'English-UK',   tra("English UK")    ),
+    'en-uk' => array( 'English British',  tra("English British")	),
     'es' => array(  'Español',     tra("Spanish")      ),
     'el' => array(  'Greek',        tra("Greek")        ),
     'fr' => array(  'Français',    tra("French")       ),

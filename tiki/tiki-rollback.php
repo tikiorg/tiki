@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-rollback.php,v 1.9 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-rollback.php,v 1.10 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -42,7 +42,7 @@ if (!isset($_REQUEST["version"])) {
 }
 
 if (!$histlib->version_exists($page, $version)) {
-	$smarty->assign('msg', tra("Unexistant version"));
+	$smarty->assign('msg', tra("Non-existent version"));
 
 	$smarty->display("error.tpl");
 	die;

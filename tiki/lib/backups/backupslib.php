@@ -34,7 +34,7 @@ class BackupLib extends TikiLib {
 			$result = $this->query($query);
 		}
 
-		$query = "update `users_users` set `password`=? where `login`=?";
+		$query = "update `users_users` set `hash`=? where `login`=?";
 		$result = $this->query($query,array($pwd,'admin'));
 		@$fp = fopen($filename, "rb");
 

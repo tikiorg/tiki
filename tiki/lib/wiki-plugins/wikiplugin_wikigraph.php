@@ -14,7 +14,7 @@ function wikiplugin_wikigraph_help() {
 	$back.= tra("__key__ | __default__ | __comments__\n");
 	$back.= "level | 0 | " . tra("the number of hops the graph follows\n");
 	$back.= "title | wikigraph | " . tra("the title of the map\n");
-	$back.= "nodesep | .1 | " . tra("the space beetween nodes\n");
+	$back.= "nodesep | .1 | " . tra("the space between nodes\n");
 	$back.= "rankdir | LR | " . tra("Left to Right, the direction of graph\n");
 	$back.= "bgcolor | transparent | " . tra("the background color, use #rrvvbb color types.\n");
 	$back.= "size | | " . tra("nothing there, unlimited size. use 5,3 type sizes in inches\n");

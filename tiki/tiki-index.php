@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.89 2004-02-19 05:19:22 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.90 2004-03-07 23:12:01 mose Exp $
 
 // Initialization
 
@@ -258,7 +258,17 @@ if($feature_wiki_attachments == 'y') {
 		check_ticket('index');
     // Process an attachment here
     if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-      $fp = fopen($_FILES['userfile1']['tmp_name'],"rb");
+	
+      $file_name = $_FILES['userfile1']['name'];	
+      $file_tmp_name = $_FILES['userfile1']['tmp_name'];
+      $tmp_dest = $tmpDir . "/" . $file_name;
+      if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+      		$smarty->assign('msg', tra('Errors detected'));
+		$smarty->display("error.tpl");
+		die();
+      }
+
+      $fp = fopen($tmp_dest, "rb");
       $data = '';
       $fhash='';
       if($w_use_db == 'n') {
@@ -289,10 +299,12 @@ if($feature_wiki_attachments == 'y') {
       $wikilib->wiki_attach_file($page,$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
     }
   }
-  $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_asc','');
+
+  $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
   $smarty->assign('atts',$atts["data"]);
   $smarty->assign('atts_count',count($atts["data"]));
 }
+
 
 if(isset($_REQUEST['refresh'])) {
 	check_ticket('index');

@@ -1,11 +1,11 @@
-/* RSS Stylesheet TikiWiki */
+/* Atom Stylesheet TikiWiki */
 
-/* Add it to your RSS feed with 
+/* Add it to your Atom feed with 
 
-<?xml-stylesheet href="http://YOURDOMAIN/lib/rss/rss-style.css" type="text/css"?>
+<?xml-stylesheet href="http://YOURDOMAIN/lib/rss/atom-style.css" type="text/css"?>
 
 */
-channel {
+feed {
   display:block;
   font-family:verdana, sans-serif;
   margin:2%;
@@ -23,34 +23,33 @@ title {
   color:#0000ff;
 }
 
-channel link {
+tagline, link {
   display:block;
   font-size:0.9em;
-  padding:10px 10px 0px 10px;
 }
 
-description {
-  display:block;
-  font-size:0.9em;
-  color:inherit;
-  background:inherit;
-  padding:10px 10px 10px 10px;
-  margin:10px 10px 10px 10px;
-  border:solid 1px #dddddd;
-  line-height:1.5em;
-}
-
-language, image, id, guid, docs {
+id, modified {
   display:none;
 }
 
-generator, pubDate {
+generator {
   display:block;
   font-size:0.9em;
-  padding:10px 10px 0px 10px;
 }
 
-item {
+info {
+  display:block;
+  margin:3em 4em 3em 4em;
+  color:#CC3333;
+  background:#FFFF66;
+  border:solid #CCCC66 2px;
+  text-align:center;
+  padding:1.5em;
+  font-family:mono;
+  font-size:0.8em;
+}
+
+entry {
   display:block;
   color:inherit;
   background:inherit;
@@ -58,7 +57,7 @@ item {
   margin:10px 10px 40px 10px;
 }
 
-item pubDate, item author {
+entry modified, entry name {
   display:inline;
   color:#999999;
   background:inherit;
@@ -66,36 +65,28 @@ item pubDate, item author {
   padding:0px 0px 0px 10px;
 }
 
-item link {
-  display:inline;
-  color:#999999;
-  background:inherit;
-  font-size:0.7em;
-  padding:10px 10px 0px 10px;
-}
-
-item created, item issued, item id {
+entry created, entry issued, entry id {
   display:none;
 }
 
-item title {
+entry title {
   display:block;
   font-size:1em;
   font-weight:bold;
   color:inherit;
   background:inherit;
-  padding:10px 10px 10px 10px;
+  padding:1px 1px 0px 1px;
   margin:0;
   border-top:solid 1px #dddddd;
 }
 
-item description {
+content {
   display:block;
   font-size:0.9em;
   color:inherit;
   background:inherit;
   padding:10px 10px 10px 10px;
   margin:10px 10px 10px 10px;
-  border:dotted 1px #dddddd;
   line-height:1.5em;
+  border:dotted 1px #dddddd;
 }

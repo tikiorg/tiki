@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-download_forum_attachment.php,v 1.6 2004-02-09 18:20:19 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-download_forum_attachment.php,v 1.7 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -29,6 +29,11 @@ $content = &$info["data"];
 
 header ("Content-type: $type");
 header ("Content-Disposition: inline; filename=\"$file\"");
+
+// Added Damian March04 request of Akira123
+header ("Expires: 0");
+header ("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header ("Pragma: Public");
 
 if ($info["dir"]) {
 	readfile ($info["dir"] . $info["path"]);

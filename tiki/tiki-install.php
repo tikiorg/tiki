@@ -1,12 +1,12 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.53 2004-03-01 10:59:53 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.54 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.53 2004-03-01 10:59:53 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.54 2004-03-07 23:12:01 mose Exp $
 error_reporting (E_ERROR);
 session_start();
 
@@ -290,10 +290,6 @@ $PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
 Once you have executed these commands, this message will disappear!
 
-Note: If you cannot become root, you will not be able to delete certain
-files created by apache, and will need to ask your system administrator
-to delete them for you if needed.
-
 <a href='http://tikiwiki.org/InstallTiki' target='_blank'>Consult the tikiwiki.org installation guide</a> if you need more help.
 
 <b><a href='tiki-install.php'>Execute the Tiki installer again</a></b> if you have completed the steps above.";
@@ -401,7 +397,7 @@ function check_password() {
 
                 $hash = md5('admin' . $pass . $res['email']);
                 $hash2 = md5($pass);
-                // next verify the password with 2 hashes methods, the old one (passà)) and the new one (login.pass;email)
+                // next verify the password with 2 hashes methods, the old one (passï¿½)) and the new one (login.pass;email)
                 $query = "select login from users_users where lower(login) = 'admin' and hash in ('$hash', '$hash2')";
                 $result = $dbTiki->Execute($query);
 

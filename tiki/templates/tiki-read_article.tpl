@@ -73,14 +73,28 @@
 	</div>
 {/if}
 </div>
-{if $feature_article_comments eq 'y'}
-{if $tiki_p_read_comments eq 'y'}
+{if $feature_article_comments == 'y'
+  && (($tiki_p_read_comments  == 'y'
+  && $comments_cant != 0)
+  ||  $tiki_p_post_comments  == 'y'
+  ||  $tiki_p_edit_comments  == 'y')}
 <div id="page-bar">
 <table>
 <tr><td>
-<div class="button2"><a href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">{if $comments_cant eq 0}{tr}comment{/tr}{elseif $comments_cant eq 1}1 {tr}comment{/tr}{else}{$comments_cant} {tr}comments{/tr}{/if}</a></div>
+<div class="button2">
+      <a title="View/post comments"
+         href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
+         class="linkbut">
+	{if $comments_cant == 0}
+          {tr}add comment{/tr}
+        {elseif $comments_cant == 1}
+          <span class="highlight">{tr}1 comment{/tr}</span>
+        {else}
+          <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
+        {/if}
+      </a>
+</div>
 </td></tr></table>
 </div>
 {include file=comments.tpl}
-{/if}
 {/if}

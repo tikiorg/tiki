@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.50 2004-02-22 23:55:52 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-view_forum_thread.tpl,v 1.51 2004-03-07 23:12:10 mose Exp $ *}
 
 <a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}&amp;topics_sort_mode={$smarty.request.topics_sort_mode}&amp;topics_threshold={$smarty.request.topics_threshold}&amp;topics_find={$smarty.request.topics_find}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>
 
@@ -29,17 +29,17 @@ a moderator approves it.{/tr}</small>
 <tr>
   <td class="odd" >
   <div align="center">
-  {if $forum_info.ui_avatar eq 'y'}
-  {$thread_info.userName|avatarize}<br />
+  {if $forum_info.ui_avatar eq 'y' and $thread_info.userName|avatarize}
+  {$thread_info.userName|avatarize}<br/>
   {/if}
   {$thread_info.userName|userlink}
-  {if $forum_info.ui_flag eq 'y'}
+  {if $forum_info.ui_flag eq 'y' and $thread_info.userName|countryflag}
   <br />{$thread_info.userName|countryflag}
   {/if}
-  {if $thread_info.userName and $forum_info.ui_posts eq 'y'}
+  {if $forum_info.ui_posts eq 'y' and $thread_info.user_posts}
   <br /><small>posts:{$thread_info.user_posts}</small>
   {/if}
-  {if $thread_info.userName and $forum_info.ui_level eq 'y'}
+  {if $forum_info.ui_level eq 'y' and $thread_info.user_level}
   <br /><img src="img/icons/{$thread_info.user_level}stars.gif" alt='{$thread_info.user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
   {/if}
   </div>
@@ -108,7 +108,7 @@ a moderator approves it.{/tr}</small>
     {if $thread_info.userName and $forum_info.ui_online eq 'y'}
     	{if $thread_info.user_online eq 'y'}
   			<img src='img/icons/online.gif' alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
-  		{else}
+  		{elseif $thread_info.user_online eq 'n'}
   			<img src='img/icons/offline.gif' alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
   		{/if}
   	{/if}
@@ -359,18 +359,18 @@ a moderator approves it.{/tr}</small>
 <tr>
   <td  class="{cycle advance=false}" >
   <div align="center">
-  {if $forum_info.ui_avatar eq 'y'}
-  {$comments_coms[ix].userName|avatarize}<br />
+  {if $forum_info.ui_avatar eq 'y' and $comments_coms[ix].userName|avatarize}
+  {$comments_coms[ix].userName|avatarize}<br/>
   {/if}
   <br />{$comments_coms[ix].userName|userlink}
-  {if $forum_info.ui_flag eq 'y'}
+  {if $forum_info.ui_flag eq 'y' and $comments_coms[ix].userName|countryflag}
   <br />{$comments_coms[ix].userName|countryflag}
   {/if}
-  {if $comments_coms[ix].userName and $forum_info.ui_posts eq 'y'}
+  {if $forum_info.ui_posts eq 'y' and $comments_coms[ix].user_posts}
   <br /><small>posts:{$comments_coms[ix].user_posts}</small>
   {/if}
-  {if $comments_coms[ix].userName and $forum_info.ui_level eq 'y'}
-  <br /><img src="img/icons/{$comments_coms[ix].user_level}stars.gif" alt='{$comments_coms[ix].user_level} {tr}stars{/tr}' />
+  {if $forum_info.ui_level eq 'y' and $comments_coms[ix].user_level}
+  <br /><img src="img/icons/{$comments_coms[ix].user_level}stars.gif" alt='{$comments_coms[ix].user_level} {tr}stars{/tr}' title='{tr}user level{/tr}' />
   {/if}
 
   </div>
@@ -441,7 +441,7 @@ a moderator approves it.{/tr}</small>
     {if $comments_coms[ix].userName and $forum_info.ui_online eq 'y' }
     	{if $comments_coms[ix].user_online eq 'y'}
   			<img src='img/icons/online.gif' alt='{tr}user online{/tr}' title='{tr}user online{/tr}' />
-  		{else}
+  		{elseif $comments_coms[ix].user_online eq 'n'}
   			<img src='img/icons/offline.gif' alt='{tr}user offline{/tr}' title='{tr}user offline{/tr}' />
   		{/if}
   	{/if}

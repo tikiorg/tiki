@@ -8,6 +8,8 @@ $descId = "description";
 $id = "errorMessage";
 $home ="";
 $output="";
+$uniqueid=$feed;
+
 $now = date("U");
 // get default rss feed version from database or set to 1.0 if none in there
 $rss_version = $tikilib->get_preference("rssfeed_default_version",1);

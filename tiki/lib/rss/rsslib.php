@@ -78,16 +78,25 @@ class RSSLib extends TikiLib {
 
 	function startElementHandler($parser, $name, $attribs) {
 		if ($this->flag) {
-			$this->buffer .= '<' . $name . '>';
+			// for Atom <link>s: ignore those with no HREF
+			if ($name == 'link') {
+			  if ((array_key_exists("href",$attribs)) && 
+			     (array_key_exists("rel",$attribs)) &&
+			  	 ($attribs["rel"] == "alternate")) {
+			  	   $this->buffer .= '<' . $name . '>';
+						 $this->buffer .= $attribs["href"];
+				}
+				// all tags except <link>:
+			} else $this->buffer .= '<' . $name . '>';
 		}
 
-		if ($name == 'item' || $name == 'items') {
+		if ($name == 'item' || $name == 'items' || $name == 'entry') {
 			$this->flag = 1;
 		}
 	}
 
 	function endElementHandler($parser, $name) {
-		if ($name == 'item' || $name == 'items') {
+		if ($name == 'item' || $name == 'items' || $name == 'entry') {
 			$this->flag = 0;
 		}
 
@@ -123,12 +132,14 @@ class RSSLib extends TikiLib {
 
 		xml_parser_free ($this->parser);
 		preg_match_all("/<title>(.*?)<\/title>/i", $this->buffer, $titles);
-		preg_match_all("/<link>(.*?)<\/link>/i", $this->buffer, $links);
+ 		preg_match_all("/<link>(.*?)<\/link>/i", $this->buffer, $links);
 
 		$pubdate = array();
 		preg_match_all("/<dc:date>(.*?)<\/dc:date>/i", $this->buffer, $pubdate);
 		if (count($pubdate[1])<1)				
 		preg_match_all("/<pubDate>(.*?)<\/pubDate>/i", $this->buffer, $pubdate);
+		if (count($pubdate[1])<1)				
+		preg_match_all("/<issued>(.*?)<\/issued>/i", $this->buffer, $pubdate);
 
 		for ($i = 0; $i < count($titles[1]); $i++) {
 			$anew["title"] = $titles[1][$i];
@@ -155,7 +166,6 @@ class RSSLib extends TikiLib {
 
 	function refresh_rss_module($rssId) {
 		$info = $this->get_rss_module($rssId);
-
 		if ($info) {
 			$data = $this->rss_iconv($this->httpRequest($info['url']));
 			$now = date("U");
@@ -197,13 +207,14 @@ class RSSLib extends TikiLib {
 
 	function get_rss_module_content($rssId) {
 		$info = $this->get_rss_module($rssId);
-
 		$now = date("U");
 
-		if ($info["lastUpdated"] + $info["refresh"] < $now) {
+		// cache too old, get data from feed and update cache
+		if (($info["lastUpdated"] + $info["refresh"] < $now) || ($info["content"]=="")) {
 			$data = $this->refresh_rss_module($rssId);
 		}
 
+		// get from cache
 		$info = $this->get_rss_module($rssId);
 		return $info["content"];
 	}

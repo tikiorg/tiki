@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.12 2003-12-28 20:12:52 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-pagehistory.php,v 1.13 2004-03-07 23:12:01 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -69,7 +69,7 @@ if (isset($_REQUEST['source'])) {
 	$smarty->assign('source', $_REQUEST['source']);
 
 	$version = $histlib->get_version($page, $_REQUEST["source"]);
-	$smarty->assign('sourcev', nl2br(htmlentities($version["data"])));
+	$smarty->assign('sourcev', nl2br($version["data"]));
 }
 
 // If we have to include a preview please show it

@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.148 2004-03-02 10:27:18 djnz Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.149 2004-03-07 23:12:00 mose Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -24,6 +24,8 @@ Version 1.9
 
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
+* [FIX] removed invalid maxlength attribute and added js_maxlength to shoutbox
+* [MOD] added js_maxlength smarty function
 * [FIX] fixed a bug where the lastLogin wasn't updated when using
   Pear::Auth (LDAP) and no passwords are in Tiki DB
 * [FIX] fixed installer: structures upgrade
