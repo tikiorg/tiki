@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.25 2004-02-12 14:00:28 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.26 2004-02-18 22:07:28 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -53,12 +53,11 @@ input[type=submit]:hover {
 H1 {
 	padding-left: 35px;
 	padding-top: 3px;
-	height: 35px;
 	background-image: url("/img/wiki_up/fleche.jpg");
 	background-repeat: no-repeat;
-	
+	height=50px;
 	font-weight: bold;
-	font-size: 180%;
+	font-size: 26px;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #1c60a8;
 	margin: 0;
@@ -67,7 +66,7 @@ H1 {
 
 H2 {
 	font-weight: bold;
-	font-size: 140%;
+	font-size: 19px;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #1c60a8;
 	margin: 0;
@@ -75,7 +74,7 @@ H2 {
 }
 H3 {
 	font-weight: bold;
-	font-size: 120%;
+	font-size: 20px;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	color: #1c60a8;
 	margin: 0;
@@ -95,16 +94,13 @@ div#tiki-clean {
 	padding: 20px;
 	border: 1px solid #666666;
 }
-DIV#tiki-main {
-	margin: 0px;
-}
-DIV#tiki-top {
+#tiki-top {
 	background-color: #2161A5;
 	color: white;
 	font-size: 90%;
 }
-DIV#tiki-top a {
-	color: white;
+#tiki-top a {
+color: white;
 }
 DIV#tiki-mid {
 	padding-bottom: 0px;
@@ -482,9 +478,11 @@ span.warn {
 div.titlebar {
 	padding: 1px;
 	margin: 1px;
+	color: #1c60a8;
+	font-size: 12px;
 	clear: both;
 	font-weight: bold;
-	border-bottom: 1px solid #999999;
+	border-bottom: 1px solid #1c60a8;
 }
 table.wikitopline {
 	width: 100%;
@@ -568,6 +566,8 @@ td.wikicell:first-child {
 }
 div.wikitext {
 	padding-left: 1px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
 	min-width: 400px;
 	max-width: 700px;
 	right: 20px;
