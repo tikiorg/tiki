@@ -3591,7 +3591,7 @@ class TikiLib {
  	      $maxcols = 1;
 	      $cols = array();
 	      for($i = 0; $i < count($tables[0]); $i++) {
-	        $rows = explode("\n", $tables[0][$i]);
+	        $rows = split("\n|\<br\/\>", $tables[0][$i]);
 	        $col[$i] = array();
 	        for ($j = 0; $j < count($rows); $j++) {
 	          $rows[$j]=str_replace('||','',$rows[$j]);
