@@ -14,7 +14,7 @@
 {if $smarty.section.user.index % 2}
 <tr>
 <td class="odd"><a class="tablename" href="tiki-take_quiz.php?quizId={$channels[user].quizId}">{$channels[user].name}</a>
-{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_quizzes eq 'y') or ($channels[user].individual_tiki_p_admin_quizzes eq 'y')} (<a class="link" href="tiki-edit_quiz.php?quidIz={$channels[user].quizId}"><small>adm</small></a>){/if}
+{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_quizzes eq 'y') or ($channels[user].individual_tiki_p_admin_quizzes eq 'y')} (<a class="link" href="tiki-edit_quiz.php?quizId={$channels[user].quizId}"><small>adm</small></a>){/if}
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_quiz_stats eq 'y') or ($channels[user].individual_tiki_p_view_quiz_stats eq 'y')} (<a class="link" href="tiki-quiz_stats_quiz.php?quizId={$channels[user].quizId}"><small>stats</small></a>){/if}
 </td>
 <td class="odd">{$channels[user].description}</td>
