@@ -61,6 +61,7 @@
 <tr><td class="form">{tr}Trackers{/tr}:</td><td><input type="checkbox" name="feature_trackers" {if $feature_trackers eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Surveys{/tr}:</td><td><input type="checkbox" name="feature_surveys" {if $feature_surveys eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Webmail{/tr}:</td><td><input type="checkbox" name="feature_webmail" {if $feature_webmail eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Newsletters{/tr}:</td><td><input type="checkbox" name="feature_newsletters" {if $feature_newsletters eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td align="center" class="form" colspan="2"><input type="submit" name="features" value="{tr}Set features{/tr}" /></td></tr>
 </table>
 </form>

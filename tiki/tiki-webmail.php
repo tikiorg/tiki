@@ -209,11 +209,15 @@ if($_REQUEST["section"]=='mailbox') {
       }    
     }  
   }  
+  
   if(isset($_REQUEST["delete_one"])) {    
     $realmsgid = $pop3->GetMessageID($_REQUEST["msgdel"]);  
     $tikilib->remove_webmail_message($current["accountId"],$user,$realmsgid);
     $pop3->DeleteMessage($_REQUEST["msgdel"]);  
   }  
+  // Now delete the messages and reopen the mailbox to renumber messages
+  $pop3->close();
+  $pop3->Open();  
   if(isset($_REQUEST["operate"])) {    
     if(isset($_REQUEST["msg"])) {      
       // Now we can operate the messages      
