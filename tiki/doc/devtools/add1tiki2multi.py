@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.5 2004-04-25 17:17:58 ggeller Exp $
+# $Header: /cvsroot/tikiwiki/tiki/doc/devtools/add1tiki2multi.py,v 1.6 2004-04-25 17:21:01 ggeller Exp $
 
 # Copyright (c) 2004 George G. Geller
 # All Rights Reserved. See copyright.txt for details and a complete list of au\thors.
@@ -21,9 +21,10 @@ import sys
 import re
 
 
-# YOU MUST COMMENT OUT THE FOLLOWING LINE FOR THIS SCRIPT TO FUNCTION!!!!
-# THIS SCRIPT IS DISABLED BY DEFAULT TO MINIMIZE THE SECURITY RISK FOR NAIVE TIKI ADMINS!
-sys.exit(0)
+# THIS SCRIPT IS DISABLED BY DEFAULT TO MINIMIZE THE SECURITY RISK FOR NAIVE
+#  TIKI ADMINS!
+# YOU MUST UNCOMMENT THE FOLLOWING LINE FOR THIS SCRIPT TO FUNCTION!!!!
+# sys.exit(0)
 
 # Invoke as something like: ./add1tiki2multi.py.py password new.wikiplanet.com
 
