@@ -20,7 +20,7 @@
         </tr><tr>
           <td><label for="directory-validate">{tr}Validate URLs{/tr}</label></td>
           <td><input type="checkbox" name="directory_validate_urls" id="directory-validate"
-              {if $directory_validate_urls eq 'y'}checked="checked"{/if}></td>
+              {if $directory_validate_urls eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
           <td><label for="directory-openlinks">{tr}Method to open directory links{/tr}</label></td>
           <td><select name="directory_open_links" id="directory-openlinks">
