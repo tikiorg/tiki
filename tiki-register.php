@@ -138,7 +138,11 @@ if(isset($_REQUEST["register"])) {
     $smarty->assign('mail_user',$_REQUEST["name"]);
     $smarty->assign('mail_apass',$apass);
     $mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
-    mail($_REQUEST["email"], tra('Your Tiki information registration'),$mail_data,"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+    include_once("lib/notifications/notificationemaillib.php");
+    $mail = new TikiMail();
+    $mail->setSubject(tra('Your Tiki information registration'));
+    $mail->setText($mail_data);
+    $mail->send(array($_REQUEST["email"]));
     
     $smarty->assign('showmsg','y');
   } elseif ($email_valid != 'no') {
