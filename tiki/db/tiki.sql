@@ -1456,9 +1456,9 @@ CREATE TABLE tiki_games (
 
 DROP TABLE IF EXISTS tiki_group_inclusion;
 CREATE TABLE tiki_group_inclusion (
-  groupName varchar(30) NOT NULL default '',
-  includeGroup varchar(30) NOT NULL default '',
-  PRIMARY KEY  (groupName,includeGroup)
+  groupName varchar(255) NOT NULL default '',
+  includeGroup varchar(255) NOT NULL default '',
+  PRIMARY KEY  (groupName(30),includeGroup(30))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3498,10 +3498,10 @@ CREATE TABLE tiki_zones (
 
 DROP TABLE IF EXISTS users_grouppermissions;
 CREATE TABLE users_grouppermissions (
-  groupName varchar(30) NOT NULL default '',
+  groupName varchar(255) NOT NULL default '',
   permName varchar(30) NOT NULL default '',
   value char(1) default '',
-  PRIMARY KEY  (groupName,permName)
+  PRIMARY KEY  (groupName(30),permName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3514,12 +3514,12 @@ CREATE TABLE users_grouppermissions (
 
 DROP TABLE IF EXISTS users_groups;
 CREATE TABLE users_groups (
-  groupName varchar(30) NOT NULL default '',
+  groupName varchar(255) NOT NULL default '',
   groupDesc varchar(255) default NULL,
   groupHome varchar(255),
 	usersTrackerId int(11),
 	groupTrackerId int(11),
-  PRIMARY KEY  (groupName)
+  PRIMARY KEY  (groupName(30))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3532,11 +3532,11 @@ CREATE TABLE users_groups (
 
 DROP TABLE IF EXISTS users_objectpermissions;
 CREATE TABLE users_objectpermissions (
-  groupName varchar(30) NOT NULL default '',
+  groupName varchar(255) NOT NULL default '',
   permName varchar(30) NOT NULL default '',
   objectType varchar(20) NOT NULL default '',
   objectId varchar(32) NOT NULL default '',
-  PRIMARY KEY  (objectId,groupName,permName)
+  PRIMARY KEY  (objectId,groupName(30),permName)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -3719,8 +3719,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 DROP TABLE IF EXISTS users_usergroups;
 CREATE TABLE users_usergroups (
   userId int(8) NOT NULL default '0',
-  groupName varchar(30) NOT NULL default '',
-  PRIMARY KEY  (userId,groupName)
+  groupName varchar(255) NOT NULL default '',
+  PRIMARY KEY  (userId,groupName(30))
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 INSERT INTO users_groups (groupName,groupDesc) VALUES ('Anonymous','Public users not logged');
