@@ -405,6 +405,7 @@ class Comments {
   }    
   
   /*****************/
+    
   function get_comments($objectId, $parentId, $offset = 0,$maxRecords = -1,$sort_mode = 'commentDate_desc', $find='', $threshold=0)
   {
     $hash = md5($objectId);   

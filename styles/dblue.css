@@ -457,7 +457,6 @@ div.posthead {
   text-align: center;
   padding-left: 0px;  padding-right: 0px;
   margin-bottom: 0px;
-  width: 98%;
 }
 
 /* The font used in the heading of the weblog */
@@ -475,7 +474,6 @@ div.postbody {
   background: white;
   border: 1px solid black;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  font-size: 11px;  color: black;
-  width: 98%;
   padding-left: 5px;padding-top: 5px; padding-bottom: 5px; 
   margin-bottom: 10px;
 }
@@ -491,7 +489,6 @@ div.blogtitle {
   margin-top: 10px;
   border: 1px solid black;
   border-bottom: 0px;
-  width: 98%;
 }
 
 /* The weblog information */
@@ -505,7 +502,6 @@ div.bloginfo {
   margin-bottom: 10px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  width: 98%;
   clear: both;
 }
 
@@ -520,7 +516,6 @@ div.blogdesc {
   margin-bottom: 10px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  width: 98%;
   clear: both;
 }
 
@@ -535,7 +530,6 @@ div.blogtools {
   margin-bottom: 10px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 10px;
-  width: 98%;
   clear: both;
 }
 
@@ -560,7 +554,6 @@ div.articletitle {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   margin-top: 5px;
-  width: 98%;
   clear: both;
 }
 
@@ -575,7 +568,6 @@ div.articleheading {
   border-bottom: 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  width: 98%;
   clear: both;
 }
 
@@ -591,7 +583,6 @@ div.articletrailer {
   margin-bottom: 20px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 11px;
-  width: 98%;
   clear: both;
 }
 
@@ -610,7 +601,6 @@ div.articlebody {
   margin: 10px 0px;
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-size: 12px;
-  width: 98%;
   clear: both;
 }
 

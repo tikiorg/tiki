@@ -80,7 +80,7 @@ class NlLib extends TikiLib {
     // URL to confirm the subscription put valid as 'n'
     $foo = parse_url($_SERVER["REQUEST_URI"]);
     $url_subscribe = httpPrefix().$foo["path"];
-    $code = md5($this->tikilib->genPass());
+    $code = md5($this->genPass());
     $now = date("U");
     $query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed)
     values($nlId,'$email','$code','n',$now)";
@@ -271,7 +271,7 @@ class NlLib extends TikiLib {
     $query = "delete from tiki_newsletter_subscriptions where nlId=$nlId";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
-    $this->tikilib->remove_object('newsletter',$nlId);
+    $this->remove_object('newsletter',$nlId);
     return true;    
   }
   

@@ -293,7 +293,7 @@ class SurveyLib extends TikiLib {
     $query = "delete from tiki_survey_questions where surveyId=$surveyId";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
-    $this->tikilib->remove_object('survey',$surveyId);
+    $this->remove_object('survey',$surveyId);
     return true;    
   }
   /* Surveys */

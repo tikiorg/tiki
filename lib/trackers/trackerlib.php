@@ -12,59 +12,6 @@ class TrackerLib extends TikiLib {
   
   /* Tiki tracker construction options */
   // Return an array with items assigned to the user or a user group
-  function get_user_items($user)
-  {
-    $items = Array();
-    $query = "select ttf.trackerId, tti.itemId from tiki_tracker_fields ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='u' and tti.status='o' and value='$user'";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query,$result);
-    $ret = Array();
-    while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-      $itemId=$res["itemId"];
-      $trackerId=$res["trackerId"];
-      // Now get the isMain field for this tracker
-      $fieldId=$this->db->getOne("select fieldId from tiki_tracker_fields ttf where isMain='y' and trackerId=$trackerId");
-      // Now get the field value
-      $value = $this->db->getOne("select value from tiki_tracker_item_fields where fieldId=$fieldId and itemId=$itemId");
-      $tracker = $this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
-      $aux["trackerId"]=$trackerId;
-      $aux["itemId"]=$itemId;
-      $aux["value"]=$value;
-      $aux["name"]=$tracker;
-      if(!in_array($itemId,$items)) {
-        $ret[]=$aux;
-        $items[]=$itemId;
-      }
-    }
-    
-    $groups = $this->tikilib->get_user_groups($user);
-    
-    foreach($groups as $group) {
-      $query = "select ttf.trackerId, tti.itemId from tiki_tracker_fields ttf, tiki_tracker_items tti, tiki_tracker_item_fields ttif where ttf.fieldId=ttif.fieldId and ttif.itemId=tti.itemId and type='g' and tti.status='o' and value='$group'";
-      $result = $this->db->query($query);
-      if(DB::isError($result)) $this->sql_error($query,$result);
-      while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-        $itemId=$res["itemId"];
-        $trackerId=$res["trackerId"];
-        // Now get the isMain field for this tracker
-        $fieldId=$this->db->getOne("select fieldId from tiki_tracker_fields ttf where isMain='y' and trackerId=$trackerId");
-        // Now get the field value
-        $value = $this->db->getOne("select value from tiki_tracker_item_fields where fieldId=$fieldId and itemId=$itemId");
-        $tracker = $this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
-        $aux["trackerId"]=$trackerId;
-        $aux["itemId"]=$itemId;
-        $aux["value"]=$value;
-        $aux["name"]=$tracker;
-        if(!in_array($itemId,$items)) {
-          $ret[]=$aux;
-          $items[]=$itemId;
-        }
-      }
-    
-    }
-    
-    return $ret;
-  }
   
   function list_tracker_items($trackerId,$offset,$maxRecords,$sort_mode,$fields,$status='')
   {
@@ -213,8 +160,8 @@ class TrackerLib extends TikiLib {
     }
     $trackerId=$this->db->getOne("select trackerId from tiki_tracker_items where itemId=$itemId");
     $trackerName=$this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
-    $emails = $this->tikilib->get_mail_events('tracker_modified',$trackerId);
-    $emails2 = $this->tikilib->get_mail_events('tracker_item_modified',$itemId);
+    $emails = $this->get_mail_events('tracker_modified',$trackerId);
+    $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
     $emails=array_merge($emails,$emails2);
     $smarty->assign('mail_date',date("U"));
     $smarty->assign('mail_user',$user);
@@ -379,8 +326,8 @@ class TrackerLib extends TikiLib {
       }
     }
     $trackerName=$this->db->getOne("select name from tiki_trackers where trackerId=$trackerId");
-    $emails = $this->tikilib->get_mail_events('tracker_modified',$trackerId);
-    $emails2 = $this->tikilib->get_mail_events('tracker_item_modified',$itemId);
+    $emails = $this->get_mail_events('tracker_modified',$trackerId);
+    $emails2 = $this->get_mail_events('tracker_item_modified',$itemId);
     $emails=array_merge($emails,$emails2);
     $smarty->assign('mail_date',date("U"));
     $smarty->assign('mail_user',$user);
@@ -541,7 +488,7 @@ class TrackerLib extends TikiLib {
     $query = "delete from tiki_tracker_items where trackerId=$trackerId";
     $result = $this->db->query($query);
     if(DB::isError($result)) $this->sql_error($query, $result);
-    $this->tikilib->remove_object('tracker',$trackerId);
+    $this->remove_object('tracker',$trackerId);
     return true;
   }
   
