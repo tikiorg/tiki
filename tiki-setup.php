@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.133 2003-08-19 00:15:26 franck Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.134 2003-08-21 22:40:00 teedog Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -305,6 +305,23 @@ if ($site_closed == 'y' and $tiki_p_access_closed_site != 'y'
 	header('location: ' . $url);
 	exit;
 }
+
+// get average server load in the last minute
+if ($load = @file('/proc/loadavg')) {
+	list($server_load) = explode(' ', $load[0]);
+	$smarty->assign('server_load',$server_load);
+}
+
+/*
+if (file_exists('/proc/loadavg')) {
+	if ($fh = @fopen('/proc/loadavg', 'r')) {
+		$data = @fread( $fh, 6 );
+		@fclose( $fh );
+		$load_avg = explode( " ", $data );
+		$server_load = trim($load_avg[0]);
+	}
+}
+*/
 
 //print("profile: include tiki-setup_base:".$tiki_timer->elapsed()."<br/>");
 

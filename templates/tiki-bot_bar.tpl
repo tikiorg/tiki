@@ -58,5 +58,5 @@
 {include file="babelfish.tpl"}
 
 <div align="center">
-<small>{tr}Page generated in{/tr}: {elapsed} {tr}seconds{/tr}</small>
+<small>{tr}Page generated in{/tr}: {elapsed} {tr}seconds{/tr} | {tr}Server load{/tr}: {$server_load}</small>
 </div>
