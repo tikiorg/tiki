@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.253 2004-07-22 13:08:27 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.254 2004-07-23 22:05:47 teedog Exp $
 
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -352,6 +352,7 @@ $feature_wiki_icache = 'n';
 $feature_wiki_undo = 'n';
 $feature_wiki_multiprint = 'n';
 $feature_wiki_pdf = 'n';
+$feature_wiki_realtime_static = 'n';
 $feature_forum_rankings = 'y';
 $feature_forum_parse = 'n';
 $feature_forum_quickjump = 'n';

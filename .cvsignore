@@ -1,4 +1,5 @@
 .htaccess
+static
 templates_c
 var
 .project
