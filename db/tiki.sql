@@ -3791,6 +3791,13 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rnd_num_reg','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_articles','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blog','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_blogs','y');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_default_version','2');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_language','en-us');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_editor','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_webmaster','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_file_galleries','y');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_file_gallery','n');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('rss_forums','y');
@@ -3857,6 +3864,8 @@ INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('w_use_dir','');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('map_path','/var/www/html/map/');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('default_map','pacific.map');
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_modulecontrols', 'y');
+# used as recognizable tag for rss feeds, maybe for other things too
+INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('tiki_id', 'Tiki CMS/Groupware');
 
 # Dynamic variables
 CREATE  TABLE tiki_dynamic_variables( name varchar( 40  ) not null,  DATA text,  PRIMARY  KEY ( name )  );

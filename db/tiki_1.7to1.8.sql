@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.45 2003-10-24 14:14:39 ohertel Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.46 2003-10-24 23:16:47 ohertel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -478,3 +478,12 @@ ALTER TABLE tiki_received_articles ADD COLUMN expireDate int(14) default NULL AF
 ALTER TABLE tiki_submissions ADD COLUMN expireDate int(14) default NULL AFTER `publishDate`;
 
 ALTER TABLE `tiki_modules` CHANGE `title` `title` VARCHAR( 255 ) DEFAULT NULL;
+
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_default_version','2');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_language','en-us');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_editor','');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_publisher','');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_webmaster','');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_creator','');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('rssfeed_css','y');
+INSERT /* IGNORE */ INTO tiki_preferences(name,value) VALUES ('tiki_id', 'Tiki CMS/Groupware');
