@@ -20,6 +20,7 @@ class UsersLib extends TikiLib {
 
     var $usergroups_cache;
     var $groupperm_cache;
+    var $groupinclude_cache;
 
     function UsersLib($db) {
 	$this->db = $db;
@@ -27,6 +28,7 @@ class UsersLib extends TikiLib {
 	// Initialize caches
 	$this->usergroups_cache = array();
 	$this->groupperm_cache = array(array());
+	$this->groupinclude_cache = array();
     }
 
     function set_admin_pass($pass) {
@@ -618,7 +620,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 	$retval["data"] = $ret;
 	$retval["cant"] = $cant;
 	return $retval;
-    }
+}
 
     function group_inclusion($group, $include) {
 	$query = "insert into `tiki_group_inclusion`(`groupName`,`includeGroup`)
@@ -627,21 +629,24 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 	$result = $this->query($query, array($group, $include));
     }
 
-    function get_included_groups($group) {
-	$query = "select `includeGroup`  from `tiki_group_inclusion` where `groupName`=?";
-
-	$result = $this->query($query, array($group));
-	$ret = array();
-
-	while ($res = $result->fetchRow()) {
-	    $ret[] = $res["includeGroup"];
-
-	    $ret2 = $this->get_included_groups($res["includeGroup"]);
-	    $ret = array_merge($ret, $ret2);
+function get_included_groups($group) {
+	$engroup = urlencode($group);
+	if (!isset($this->groupinclude_cache[$engroup])) {
+		$query = "select `includeGroup`  from `tiki_group_inclusion` where `groupName`=?";
+		$result = $this->query($query, array($group));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res["includeGroup"];
+			$ret2 = $this->get_included_groups($res["includeGroup"]);
+			$ret = array_merge($ret, $ret2);
+		}
+		$back = array_unique($ret);
+		$this->groupinclude_cache[$engroup] = $back;
+		return $back; 
+	} else {
+		return $this->groupinclude_cache[$engroup];
 	}
-
-	return array_unique($ret);
-    }
+}
 
     function remove_user_from_group($user, $group) {
 	$userid = $this->get_user_id($user);
@@ -686,12 +691,28 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 	    $aux["included"] = $groups;
 	    $ret[] = $aux;
 	}
-
+	
 	$retval = array();
 	$retval["data"] = $ret;
 	$retval["cant"] = $cant;
 	return $retval;
     }
+	
+	function list_all_groups() {
+		global $cachelib;
+		if (!$cachelib->isCached("groupslist")) {
+			$groups = array();
+			$result = $this->query("select `groupName` from `users_groups` order by `groupName`", array());
+			while ($res = $result->fetchRow()) {
+				$groups[] = $res['groupName'];
+			}
+			$cachelib->cacheItem("groupslist",serialize($groups));
+			return $groups;
+		} else {
+			return unserialize($cachelib->getCached("groupslist"));
+		}
+	}
+
 
     function get_user_id($user) {
 	$id = $this->getOne("select `userId` from `users_users` where `login`=?", array($user));
@@ -724,30 +745,27 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 	return true;
     }
 
-    function get_user_groups($user) {
-	if (!isset($this->usergroups_cache[$user])) {
-	    $userid = $this->get_user_id($user);
-
+	function get_user_groups($user) {
+		$enuser = urlencode($user);
+		if (!isset($this->usergroups_cache[$enuser])) {
+			$userid = $this->get_user_id($user);
 	    $query = "select `groupName` from `users_usergroups` where `userId`=?";
 	    $result = $this->query($query, array((int)$userid));
 	    $ret = array();
-
 	    while ($res = $result->fetchRow()) {
-		$ret[] = $res["groupName"];
-
-		$included = $this->get_included_groups($res["groupName"]);
-		$ret = array_merge($ret, $included);
+				$ret[] = $res["groupName"];
+				$included = $this->get_included_groups($res["groupName"]);
+				$ret = array_merge($ret, $included);
 	    }
-
 	    $ret[] = "Anonymous";
 	    $ret = array_unique($ret);
 	    // cache it
-	    $this->usergroups_cache[$user] = $ret;
+	    $this->usergroups_cache[$enuser] = $ret;
 	    return $ret;
-	} else {
-	    return $this->usergroups_cache[$user];
+		} else {
+			return $this->usergroups_cache[$enuser];
+		}
 	}
-    }
 
     function get_user_default_group($user) {
 	$query = "select `default_group` from `users_users` where `login` = ?";
@@ -879,7 +897,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 	function get_usertracker($uid) {
 		$utr = $this->get_userid_info($uid);
 		$utr["usersTrackerId"] = '';
-		foreach ($utr['groups'] as $gr) {
+		foreach ($utr['groups']  as $gr) {
 			$utrid = $this->getOne("select `usersTrackerId` from `users_groups` where `groupname`=?",array($gr));
 			if ($utrid > 0) {
 				$utr["usersTrackerId"] = $utrid;
@@ -1008,18 +1026,14 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
     }
 
     function group_has_permission($group, $perm) {
-	if (!isset($perm, $this->groupperm_cache[$group][$perm])) {
+		$engroup = urlencode($group);
+	if (!isset($perm, $this->groupperm_cache[$engroup][$perm])) {
 	    $query = "select count(*) from `users_grouppermissions` where `groupName`=? and `permName`=?";
-
-	    $result = $this->getOne($query, array(
-			$group,
-			$perm
-			));
-
-	    $this->groupperm_cache[$group][$perm] = $result;
+	    $result = $this->getOne($query, array( $group, $perm));
+	    $this->groupperm_cache[$engroup][$perm] = $result;
 	    return $result;
 	} else {
-	    return $this->groupperm_cache[$group][$perm];
+	    return $this->groupperm_cache[$engroup][$perm];
 	}
     }
 
