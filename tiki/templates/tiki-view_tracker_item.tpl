@@ -95,7 +95,7 @@
 {assign var=stick value="n"}
 {/if}
 
-{elseif $ins_fields[ix].type eq 't' or $ins_fields[ix].type eq 'r' or$ins_fields[ix].type eq 'n'}
+{elseif $ins_fields[ix].type eq 't' or $ins_fields[ix].type eq 'r' or $ins_fields[ix].type eq 'n'}
 {if $ins_fields[ix].options_array[2]}<span class="formunit">{$ins_fields[ix].options_array[2]|escape}&nbsp;</span>{/if}
 {if $ins_fields[ix].linkId}
 <a href="tiki-view_tracker_item.php?trackerId={$ins_fields[ix].options_array[0]}&amp;itemId={$ins_fields[ix].linkId}" class="link">{$ins_fields[ix].value|default:"&nbsp;"}</a>
