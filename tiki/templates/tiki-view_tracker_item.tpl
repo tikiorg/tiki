@@ -9,7 +9,7 @@
 &nbsp;&nbsp;
 <span class="button2"><a href="tiki-admin_trackers.php" class="linkbut">{tr}Admin trackers{/tr}</a></span>
 <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}" class="linkbut">{tr}Edit this tracker{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_tracker_items.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}" class="linkbut">{tr}Edit fields{/tr}</a></span>
 {/if}
 </div>
 <br/><br/>
@@ -40,26 +40,44 @@
 <h3>{$ins_fields[ix].label}</h3>
 <table class="normal">
 {elseif $ins_fields[ix].type ne 'x'}
+{if $ins_fields[ix].type eq 'c' and $fields[ix].options eq '1'}
+<tr class="formcolor"><td>{$ins_fields[ix].label}</td><td>
+{elseif $stick eq 'y'}
+<td>{$ins_fields[ix].label}</td><td>
+{else}
 <tr class="formcolor"><td>{$ins_fields[ix].label}</td>
-<td>
+<td colspan="3">
+{/if}
 {if $ins_fields[ix].type eq 'f' or $ins_fields[ix].type eq 'j'}
-{$ins_fields[ix].value|date_format:$daformat}
+{$ins_fields[ix].value|date_format:$daformat}</td></tr>
 {elseif $ins_fields[ix].type eq 'a'}
-{$ins_fields[ix].pvalue}
+{$ins_fields[ix].pvalue}</td></tr>
 {elseif $ins_fields[ix].type eq 'e'}
 {assign var=fca value=$ins_fields[ix].options}
 <table width="100%"><tr>{cycle name=$fca values=",</tr><tr>" advance=false print=false}
 {foreach key=ku item=iu from=$fields[ix].$fca}
 <td width="50%" nowrap="nowrap"><tt>{if $ins_fields[ix].value.$ku eq 'y'}X&nbsp;{else}&nbsp;&nbsp;{/if}</tt>{$iu.name}</td>{cycle name=$fca}
 {/foreach}
-</table>
+</table></td></tr>
 {elseif $ins_fields[ix].type eq 'c'}
 {$ins_fields[ix].value|replace:"y":"{tr}Yes{/tr}"|replace:"n":"{tr}No{/tr}"}
+{if $fields[ix].options eq '1' and $stick ne 'y'}
+</td>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
 {else}
 {$ins_fields[ix].value}
-{/if}
+{if $fields[ix].options eq '1' and $stick ne 'y'}
 </td>
-</tr>
+{assign var=stick value="y"}
+{else}
+</td></tr>
+{assign var=stick value="n"}
+{/if}
+{/if}
 {/if}
 {/section}
 </table>
@@ -183,7 +201,13 @@ title="{tr}Click here to delete this comment{/tr}"><img border="0" alt="{tr}Remo
 <h3>{$ins_fields[ix].label}</h3>
 <table class="normal">
 {else}
+{if $ins_fields[ix].type eq 'c' and $fields[ix].options eq '1'}
 <tr class="formcolor"><td>{$ins_fields[ix].label}</td><td>
+{elseif $stick eq 'y'}
+<td>{$ins_fields[ix].label}</td><td>
+{else}
+<tr class="formcolor"><td>{$ins_fields[ix].label}</td><td colspan="3">
+{/if}
 {/if}
 
 {if $ins_fields[ix].type eq 'u'}
@@ -245,8 +269,11 @@ align       : "bR"
 {literal} } );{/literal}
 </script>
 {/if}
-
-</td></tr>
+{if $ins_fields[ix].type eq 'c' and $fields[ix].options eq '1' and $stick ne 'y'}
+</td>{assign var=stick value="y"}
+{else}
+</td></tr>{assign var=stick value="n"}
+{/if}
 
 {else}
 
