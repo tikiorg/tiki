@@ -4474,7 +4474,7 @@ function add_pageview() {
 	    	global $feature_wiki_ext_icon;
 	    	if ($feature_wiki_ext_icon == 'y') {
 		    	$class = 'class="wiki external"';
-		    	$ext_icon = "<img border=\"0\" hspace=\"2\" src=\"img/icons/external_link.gif\" />";
+		    	$ext_icon = "<img border=\"0\" hspace=\"2\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
 	    	}
 	    }
 
