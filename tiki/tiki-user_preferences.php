@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.53 2004-06-17 16:28:14 lfagundes Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.54 2004-06-18 22:17:21 teedog Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -164,7 +164,8 @@ if (isset($_REQUEST['chgadmin'])) {
 	}
 	
 	if (!empty($_REQUEST['email'])) {
-	    $userlib->change_user_email($userwatch, $_REQUEST['email'], $pass);
+		$userlib->change_user_email($userwatch, $_REQUEST['email'], $pass);
+		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Email is set to %s"),$_REQUEST['email']));
 	}
 
 	// If user has provided new password, let's try to change
@@ -392,6 +393,7 @@ if ($display_timezone != "UTC")
 	$display_timezone = "Local";
 
 $smarty->assign_by_ref('display_timezone', $display_timezone);
+$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 ask_ticket('user-prefs');
 
