@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.11 2003-02-21 22:32:37 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/tiki-login.php,v 1.12 2003-06-05 11:35:29 lrargerich Exp $
 
 // Initialization
 require_once('tiki-setup.php');
@@ -47,7 +47,10 @@ if ($user == 'admin' && !$userlib->user_exists('admin')) {
      $userlib->add_user('admin', 'admin', 'none');
   }  
 } else {
+
+  // Verify user is valid
   $isvalid = $userlib->validate_user($user, $pass, $challenge, $response);
+  
   // If the password is valid but it is due then force the user to change the password by
   // sending the user to the new password change screen without letting him use tiki
   // The user must re-nter the old password so no secutiry risk here
@@ -63,11 +66,22 @@ if ($isvalid) {
     // The user must re-enter his old password so no secutiry risk involved
     $url = 'tiki-change_password.php?user='. urlencode($user) . '&amp;oldpass=' . urlencode($pass);
   } else {
+	// User is valid and not due to change pass.. start session
     //session_register('user',$user);
     $_SESSION['user'] = $user;
     $smarty->assign_by_ref('user', $user);
     $url = $tikiIndex;
+
+  // Now if the remember me feature is on and the user checked the rememberme checkbox then ...
+	if($rememberme != 'disabled') {
+		if(isset($_REQUEST['rme'])&&$_REQUEST['rme']=='on') {
+		  $hash = $userlib->get_user_hash($_REQUEST['user']);
+		  setcookie('tiki-user',$hash,$remembertime);
+		}
+	}
+
   }
+
 } else {
   $url = 'tiki-error.php?error=' . urlencode(tra('Invalid username or password'));
 }
@@ -92,13 +106,6 @@ if ($https_mode) {
 	}
 }
 
-// Now if the remember me feature is on and the user checked the rememberme checkbox then ...
-if($rememberme != 'disabled') {
-if(isset($_REQUEST['rme'])&&$_REQUEST['rme']=='on') {
-  $hash = $userlib->get_user_hash($_REQUEST['user']);
-  setcookie('tiki-user',$hash,$remembertime);
-}
-}
 
 
 header('location: ' . $url);
