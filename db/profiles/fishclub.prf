@@ -1,3 +1,4 @@
+# Fishclub profile
 REPLACE INTO tiki_preferences VALUES ('allowRegister','y');
 REPLACE INTO tiki_preferences VALUES ('feature_article_comments','y');
 REPLACE INTO tiki_preferences VALUES ('feature_articles','y');
