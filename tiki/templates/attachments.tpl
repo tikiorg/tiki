@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.19 2004-03-01 18:45:02 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.20 2004-03-15 07:55:51 mose Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -18,6 +18,7 @@
  <table class="normal">
  <caption> {tr}List of attached files{/tr} </caption>
  <tr>
+  <td class="heading">&nbsp;</td>
   <td class="heading">
    <a class="tableheading" href="tiki-index.php?page={$page|escape:"url"}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filename_desc'}filename_asc{else}filename_desc{/if}">{tr}name{/tr}</a>
   </td><td class="heading">
@@ -33,7 +34,7 @@
 {cycle values="odd,even" print=false advance=false}
 {section name=ix loop=$atts}
 <tr>
-<td class="{cycle advance=false}"><span class="mini">{$smarty.section.ix.index_next}</span></td>
+<td class="{cycle advance=false}"><span class="mini">{$smarty.section.ix.index_next} : {$atts[ix].attId}</span></td>
 <td class="{cycle advance=false}">
  {$atts[ix].filename|iconify}
  <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}">{$atts[ix].filename}</a>

@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.5 2004-02-21 16:30:15 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.6 2004-03-15 07:55:49 mose Exp $
 // Displays an attachment or a list of attachments
 // Parameters: ln => line numbering (default false)
 // Example:
@@ -19,6 +19,11 @@ function wikiplugin_attach($data, $params) {
 	extract ($params);
 	$loop = array();
 	if (!isset($num)) $num = 0;
+	if (!isset($id)) {
+		$id = 0;
+	} else {
+		$num = 0;
+	}
 	if (!$atts['cant']) {
 		return "''".tra('no attachment on this page.')."''";
 	} elseif ($num > 0 and $num < ($atts['cant']+1)) {
@@ -34,35 +39,37 @@ function wikiplugin_attach($data, $params) {
 	}
 	foreach ($loop as $n) {
 		$n--;
-		$link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="link"';
-		$link.= ' title="';
-		if (isset($showdesc)) {
-			$link.= $atts['data'][$n]['filename'];
-		} else {
-			$link.= $atts['data'][$n]['comment'];
-		}
-		if (isset($dls)) {
-			$link.= " ".$atts['data'][$n]['downloads'];
-		}
-		$link.= '">';
-		if (isset($icon)) {
-			if (!isset($mimeextensions)) {
-				require("lib/mime/mimeextensions.php");
-			}
-			$ext = $atts['data'][$n]['filetype'];
-			if (isset($mimeextensions["$ext"]) and (is_file("img/icn/".$mimeextensions["$ext"].".gif"))) {
-				$link.= '<img src="img/icn/'.$mimeextensions["$ext"].'.gif" border="0" />&nbsp;';
+		if (!$id or $id == $atts['data'][$n]['attId']) {
+			$link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].'" class="link"';
+			$link.= ' title="';
+			if (isset($showdesc)) {
+				$link.= $atts['data'][$n]['filename'];
 			} else {
-				$link.= '<img src="img/icn/else.gif" border="0" />&nbsp;';
+				$link.= $atts['data'][$n]['comment'];
 			}
+			if (isset($dls)) {
+				$link.= " ".$atts['data'][$n]['downloads'];
+			}
+			$link.= '">';
+			if (isset($icon)) {
+				if (!isset($mimeextensions)) {
+					require("lib/mime/mimeextensions.php");
+				}
+				$ext = $atts['data'][$n]['filetype'];
+				if (isset($mimeextensions["$ext"]) and (is_file("img/icn/".$mimeextensions["$ext"].".gif"))) {
+					$link.= '<img src="img/icn/'.$mimeextensions["$ext"].'.gif" border="0" />&nbsp;';
+				} else {
+					$link.= '<img src="img/icn/else.gif" border="0" />&nbsp;';
+				}
+			}
+			if (isset($showdesc)) {
+				$link.= strip_tags($atts['data'][$n]['comment']);
+			} else {
+				$link.= strip_tags($atts['data'][$n]['filename']);
+			}
+			$link.= '</a>';
+			$out[] = $link;
 		}
-		if (isset($showdesc)) {
-			$link.= strip_tags($atts['data'][$n]['comment']);
-		} else {
-			$link.= strip_tags($atts['data'][$n]['filename']);
-		}
-		$link.= '</a>';
-		$out[] = $link;
 	}
 	$data = implode($separator,$out);
 	return $data;
