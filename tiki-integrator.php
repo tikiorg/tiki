@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.1 2003-10-13 17:17:49 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-integrator.php,v 1.2 2003-10-15 16:04:45 zaufi Exp $
  *
  * Doxygened files viewer (wrapper)
  *
@@ -8,6 +8,14 @@
 
 require_once('tiki-setup.php');
 require_once('lib/integrator/integrator.php');
+
+// Check permissions
+if ($tiki_p_view != 'y')
+{
+    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;
+}
 
 $repID = isset($_REQUEST["repID"]) ? $_REQUEST["repID"] : 0;
 

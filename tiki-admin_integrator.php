@@ -1,6 +1,6 @@
 <?php
 /**
- * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.2 2003-10-14 22:49:10 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/tiki-admin_integrator.php,v 1.3 2003-10-15 16:04:45 zaufi Exp $
  *
  * Admin interface for repositories management
  *
@@ -8,6 +8,14 @@
 
 require_once('tiki-setup.php');
 require_once('lib/integrator/integrator.php');
+
+// Check permissions
+if ($tiki_p_admin != 'y')
+{
+    $smarty->assign('msg',tra("You dont have permission to use this feature"));
+    $smarty->display("styles/$style_base/error.tpl");
+    die;
+}
 
 // Setup local variables from request or set default values
 $repID       = isset($_REQUEST["repID"])       ? $_REQUEST["repID"]       :  0;
@@ -17,6 +25,7 @@ $start       = isset($_REQUEST["start"])       ? $_REQUEST["start"]       : '';
 $cssfile     = isset($_REQUEST["cssfile"])     ? $_REQUEST["cssfile"]     : '';
 $description = isset($_REQUEST["description"]) ? $_REQUEST["description"] : '';
 $vis         = isset($_REQUEST["vis"])         ? ($_REQUEST["vis"] == 'on' ? 'y' : 'n')  : 'n';
+
 
 // Check if 'submit' pressed ...
 if (isset($_REQUEST["save"]))
