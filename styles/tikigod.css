@@ -500,6 +500,17 @@ TD.heading, td.gallistheading, td.listgalheading, td.jukeboxlistheading, td.blog
 	padding-right:   5px;
 }
 
+th, th.gallistheading, th.listgalheading, th.jukeboxlistheading, th.bloglistheading, th.listfgalheading, th.listfilesheading, th.listartheading,
+	th.forumheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   black;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #CCCCCC;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
 TD.button {
 	font-family:    Verdana, Arial, Helvetica, sans-serif;
 	color:   black;
