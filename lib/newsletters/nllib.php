@@ -5,7 +5,7 @@ class NlLib extends TikiLib {
 		parent::TikiLib($db);
 	}
 
-	function replace_newsletter($nlId, $name, $description, $allowAnySub, $frequency) {
+	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr) {
 		$name = addslashes($name);
 
 		$description = addslashes($description);
@@ -15,8 +15,10 @@ class NlLib extends TikiLib {
 			$query = "update tiki_newsletters set 
       name = '$name',
       description = '$description',
+      allowUserSub = '$allowUserSub',
       allowAnySub = '$allowAnySub',
-      frequency = $frequency
+      unsubMsg = '$unsubMsg',
+      validateAddr = '$validateAddr'
       where nlId = $nlId";
 
 			$result = $this->query($query);
@@ -24,8 +26,8 @@ class NlLib extends TikiLib {
 			// insert a new quiz
 			$now = date("U");
 
-			$query = "insert into tiki_newsletters(name,description,allowAnySub,frequency,lastSent,editions,users,created)
-      values('$name','$description','$allowAnySub',$frequency,$now,0,0,$now)";
+			$query = "insert into tiki_newsletters(name,description,allowUserSub,allowAnySub,unsubMsg,validateAddr,lastSent,editions,users,created)
+      values('$name','$description','$allowUserSub',$allowAnySub,$unsubMsg,$validateAddr,$now,0,0,$now)";
 			$result = $this->query($query);
 			$queryid = "select max(nlId) from tiki_newsletters where created=$now";
 			$nlId = $this->getOne($queryid);
@@ -71,28 +73,31 @@ class NlLib extends TikiLib {
 
 		global $user;
 		global $sender_email;
-		$email = addslashes($email);
-		// Generate a code and store it and send an email  with the
-		// URL to confirm the subscription put valid as 'n'
-		$foo = parse_url($_SERVER["REQUEST_URI"]);
-		$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
-		$url_subscribe = httpPrefix(). $foopath;
-		$code = md5($this->genPass());
-		$now = date("U");
-		$query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed)
-    values($nlId,'$email','$code','n',$now)";
-		$result = $this->query($query);
 		$info = $this->get_newsletter($nlId);
 		$smarty->assign('info', $info);
-		// Now send an email to the address with the confirmation instructions
-		$smarty->assign('mail_date', date("U"));
-		$smarty->assign('mail_user', $user);
-		$smarty->assign('code', $code);
-		$smarty->assign('url_subscribe', $url_subscribe);
-		$smarty->assign('server_name', $_SERVER["SERVER_NAME"]);
-		$mail_data = $smarty->fetch('mail/confirm_newsletter_subscription.tpl');
-		@mail($email, tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"], $mail_data,
-			"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+		$code = md5($this->genPass());
+		$now = date("U");
+		if ($info.validateAddr == 'y') {
+			$email = addslashes($email);
+			// Generate a code and store it and send an email  with the
+			// URL to confirm the subscription put valid as 'n'
+			$foo = parse_url($_SERVER["REQUEST_URI"]);
+			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
+			$url_subscribe = httpPrefix(). $foopath;
+			$query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed) values($nlId,'$email','$code','n',$now)";
+			$result = $this->query($query);
+			// Now send an email to the address with the confirmation instructions
+			$smarty->assign('mail_date', date("U"));
+			$smarty->assign('mail_user', $user);
+			$smarty->assign('code', $code);
+			$smarty->assign('url_subscribe', $url_subscribe);
+			$smarty->assign('server_name', $_SERVER["SERVER_NAME"]);
+			$mail_data = $smarty->fetch('mail/confirm_newsletter_subscription.tpl');
+			@mail($email, tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"], $mail_data,
+				"From: $sender_email\r\nContent-type: text/plain;charset=utf-8\r\n");
+		} else
+			$query = "replace into tiki_newsletter_subscriptions(nlId,email,code,valid,subscribed) values($nlId,'$email','$code','y',$now)";
+		}
 		$this->update_users($nlId);
 	}
 
