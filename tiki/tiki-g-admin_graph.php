@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.2 2004-01-20 19:09:09 halon Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-g-admin_graph.php,v 1.3 2004-02-14 23:48:29 halon Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -33,7 +33,7 @@ if (!isset($_REQUEST['pid']))
 
 if ($_REQUEST["pid"]) {
 	$info = $processManager->get_process($_REQUEST["pid"]);
-	$info['graph'] = "lib/Galaxia/processes/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
+	$info['graph'] = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".png";
 	$mapfile = GALAXIA_PROCESSES."/" . $info['normalized_name'] . "/graph/" . $info['normalized_name'] . ".map";
         if (file_exists($info['graph']) && file_exists($mapfile)) {
             $map = join('',file($mapfile));
