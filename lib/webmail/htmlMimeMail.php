@@ -2,10 +2,11 @@
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2003-12-21 17:47:28 $
-* CVS Revision...: $Revision: 1.7 $
+* Last Modified..: $Date: 2004-03-11 23:13:43 $
+* CVS Revision...: $Revision: 1.8 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
+/* + patch for space in the header */ 
 
 //require_once(dirname(__FILE__) . '/mimePart.php');
 class htmlMimeMail {
@@ -636,15 +637,12 @@ class htmlMimeMail {
 * according to RFC2047
 */
 	function _encodeHeader($input, $charset = 'ISO-8859-1') {
-		preg_match_all('/(\w*[\x80-\xFF]+\w*)/', $input, $matches);
-
-		foreach ($matches[1] as $value) {
-			$replacement = preg_replace('/([\x80-\xFF])/e', '"=" . strtoupper(dechex(ord("\1")))', $value);
-
-			$input = str_replace($value, '=?' . $charset . '?Q?' . $replacement . '?=', $input);
+		if (ereg('/[\x80-\xFF]/', $input)) {
+			$input = preg_replace('/([\x80-\xFF]= )/e', '"=" . strtoupper(dechex(ord("\1")))', $input);
+			return '=?'.$charset .'?Q?'.$input.'?=';
 		}
-
-		return $input;
+		else
+			return $input;
 	}
 
 	/**
@@ -878,7 +876,7 @@ class htmlMimeMail {
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.7 $
+* @version $Revision: 1.8 $
 * @package Mail
 */
 class Mail_mimePart {
@@ -1168,7 +1166,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.7 $
+* @version $Revision: 1.8 $
 * @package Mail
 */
 class Mail_RFC822 {
