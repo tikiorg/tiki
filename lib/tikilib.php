@@ -5251,7 +5251,7 @@ class TikiLib extends TikiDB {
 	    // (I commented it out so it can be further examined by CVS change control)
 	    //$pageName=addslashes($pageName);
 	    // But this should work (comment added by redflo):
-	    $version += 1;
+	$version = $old_version + 1;
 
 	    if (!$minor) {
 		if ($pageName != 'SandBox') {
