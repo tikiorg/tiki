@@ -1,6 +1,6 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_multi_pages.tpl,v 1.4 2003-11-18 21:25:17 zaufi Exp $ *}
+{include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-print_multi_pages.tpl,v 1.5 2004-02-23 21:35:01 techtonik Exp $ *}
 
-{include file="header.tpl"}
 <div id="tiki-clean">
   <h1>Wiki Pages</h1>
   {section name=ix loop=$pages}

@@ -1,4 +1,5 @@
-{* Index we display a wiki page here *} {include file="header.tpl"} <br />
+{include file="header.tpl"}{* This must be included as the first thing in a document to be XML compliant *}
+{* Index we display a wiki page here *} <br />
 <div id="tiki-main">
 {if $feature_top_bar eq 'y'}
 <div id="tiki-top">

@@ -1,5 +1,5 @@
-{* Index we display a wiki page here *}
 {include file="header.tpl"}
+{* Index we display a wiki page here *}
 <div id="tiki-main">
 <div class="articletitle">
 <span class="titlea">{$title}</span><br/>
