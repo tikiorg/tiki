@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.9 2004-05-17 08:50:22 chealer Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_gal.php,v 1.10 2004-06-14 19:30:11 redflo Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -70,6 +70,20 @@ if (isset($_REQUEST["imagegalcomprefs"])) {
 	simple_set_value ("image_galleries_comments_per_page");
 	simple_set_value ("image_galleries_comments_default_order");
 }
+
+if($imagegallib->havegd) {
+	$gdlib=tra('Detected, Version:').' '.$imagegallib->gdversion;
+} else {
+	$gdlib=tra('Not detected. Use at own risk!');
+}
+if($imagegallib->haveimagick) {
+	$imagicklib=tra('Detected, Version:').' '.tra('Unknown');
+} else {
+	$imagicklib=tra('Not detected. Use at own risk!').' Imagick '.tra('can be downloaded from:').' <a href=\'http://pecl.php.net/\'>http://pecl.php.net/</a>';
+}
+
+$smarty->assign('gdlib',$gdlib);
+$smarty->assign('imagicklib',$imagicklib);
 
 $galleries = $tikilib->list_visible_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('galleries', $galleries["data"]);

@@ -13,9 +13,10 @@ class ImageGalsLib extends TikiLib {
 		}
 
 		$this->db = $db;
+		$exts=get_loaded_extensions();
 
 		// Which GD Version do we have?
-		if (function_exists("imagecreatefromstring")) {
+		if (in_array('gd',$exts)) {
 			$this->havegd = true;
 
 			if (function_exists("gd_info")) {
@@ -49,7 +50,7 @@ class ImageGalsLib extends TikiLib {
 
 		// Do we have the imagick PEAR module?
 		// Module can be downloaded at http://pear.php.net/package-info.php?pacid=76
-		if (function_exists("imagick_read")) {
+		if (in_array('imagick',$exts)) {
 			$this->haveimagick = true;
 		} else {
 			$this->haveimagick = false;
