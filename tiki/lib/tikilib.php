@@ -1690,11 +1690,14 @@ class TikiLib extends TikiDB {
 	if ( isset($cache_hotwords) ) {
 	    return $cache_hotwords;
 	}
+	$ret = array();
+	global $feature_hotwords;
+	if ($feature_hotwords == 'y') {
 	$query = "select * from `tiki_hotwords`";
 	$result = $this->query($query, array(),-1,-1, false);
-	$ret = array();
 	while ($res = $result->fetchRow()) {
 	    $ret[$res["word"]] = $res["url"];
+	}
 	}
 	$cache_hotwords = $ret;
 	return $ret;
