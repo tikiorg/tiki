@@ -8,7 +8,7 @@ border='0' src='img/icons/help.gif' alt='help' /></a>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
 {if in_array($smarty.get.page, array("features", "general", "login", "wiki", "gal", "fgal", "cms", 
-"polls", "polls", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps"))}
+"polls", "polls", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags"))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}

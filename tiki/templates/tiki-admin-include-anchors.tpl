@@ -32,3 +32,5 @@
    src='img/icons/admin_userfiles.png' alt='{tr}User files{/tr}' /></a>
 <a href="tiki-admin.php?page=maps" title="{tr}Maps{/tr}" class="link"><img border='0'
    src='img/icons/admin_maps.png' alt='{tr}Maps{/tr}' /></a>
+<a href="tiki-admin.php?page=metatags" title="{tr}Meta Tags{/tr}" class="link"><img border='0'
+   src='img/icons/admin_metatags.png' alt='{tr}Meta Tags{/tr}' /></a>
