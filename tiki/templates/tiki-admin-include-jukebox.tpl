@@ -70,6 +70,10 @@
           <td class="form"><input type="checkbox" name="jukebox_album_list_visits" id="jukebox-album-visits"
               {if $jukebox_album_list_visits eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
+	  <td class="form"><label for="jukebox-album-genre">{tr}Genre{/tr}</label></td>
+	  <td class="form"><input type="checkbox" name="jukebox_album_list_genre" id="jukebox-album-genre"
+	      {if $jukebox_album_list_genre eq 'y'}checked="checked"{/if} /></td>
+	</tr><tr>
           <td colspan="2" class="button"><input type="submit" name="jukeboxalbumlistconf"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
