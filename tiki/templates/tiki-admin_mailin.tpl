@@ -42,7 +42,7 @@
 </table>
 <br /><br />
 
-<h3>{tr}Edit{/tr}/{tr}Add new mail account{/tr}</h3>
+<h3>{if $accountId eq 0}{tr}Add new Mail-in account{/tr}{else}{tr}Edit Mail-in account{/tr}: <i>{$info.account}</i>{/if}</h3>
 <form action="tiki-admin_mailin.php" method="post">
   <input type="hidden" name="accountId" value="{$accountId|escape}" />
   <table class="normal">
@@ -140,7 +140,7 @@
     </tr>
     <tr class="formcolor">
       <td>&nbsp;</td>
-      <td colspan="3"><input type="submit" name="new_acc" value="{tr}add{/tr}" /></td>
+      <td colspan="3"><input type="submit" name="new_acc" value="{if $accountId eq 0}{tr}add{/tr}{else}{tr}edit{/tr}{/if}" /></td>
     </tr>
   </table>
 </form>
