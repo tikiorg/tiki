@@ -276,5 +276,12 @@ global $lang;
 include_once('lang/'.$language.'/language.php');
 //}
 
+// added for wirtual hosting suport
+if (!isset($tikidomain)) {
+	$tikidomain = "";
+} else {
+	$tikidomain.= "/";
+}
+$smarty->assign("tikidomain",$tikidomain);
 
 ?>

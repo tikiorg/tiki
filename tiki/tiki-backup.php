@@ -12,7 +12,7 @@ if($tiki_p_admin != 'y') {
 
 if(isset($_REQUEST["generate"])) {
   $filename = md5($tikilib->genPass()).'.sql';
-  $backuplib->backup_database("backups/$filename");
+  $backuplib->backup_database("backups/$tikidomain$filename");
 }
 
 $smarty->assign('restore','n');
@@ -22,18 +22,18 @@ if(isset($_REQUEST["restore"])) {
 }
 
 if(isset($_REQUEST["rrestore"])) {
-  $backuplib->restore_database("backups/".$_REQUEST["rrestore"]);	
+  $backuplib->restore_database("backups/$tikidomain".$_REQUEST["rrestore"]);	
 }
 
 if(isset($_REQUEST["remove"])) {
-  $filename = "backups/".$_REQUEST["remove"];
+  $filename = "backups/$tikidomain".$_REQUEST["remove"];
   unlink($filename);
 }
 
 if(isset($_REQUEST["upload"])) {
   if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
      $fp = fopen($_FILES['userfile1']['tmp_name'],"r");
-     $fw = fopen('backups/'.$_FILES['userfile1']['name'],"w");
+     $fw = fopen("backups/$tikidomain".$_FILES['userfile1']['name'],"w");
      while(!feof($fp)) {
        $data = fread($fp,4096);
        fwrite($fw,$data);
@@ -53,12 +53,12 @@ if(isset($_REQUEST["upload"])) {
 // each file activated
 
 $backups=Array();
-$h=opendir("backups/");
+$h=opendir("backups/$tikidomain");
 while($file=readdir($h)) {
   if(strstr($file,"sql")) {
     $row["filename"]=$file;
-    $row["created"]=filemtime("backups/$file");
-    $row["size"]=filesize("backups/$file")/1000000;
+    $row["created"]=filemtime("backups/$tikidomain$file");
+    $row["size"]=filesize("backups/$tikidomain$file")/1000000;
     $backups[]=$row;
   }
 }

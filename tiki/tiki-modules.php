@@ -41,7 +41,7 @@ for($i=0;$i<count($left_modules);$i++) {
     }
 
     if($pass == 'y') {
-    $cachefile = 'modules/cache/mod-'.$r["name"].'.tpl.cache';       
+    $cachefile = 'modules/cache/'.$tikidomain.'mod-'.$r["name"].'.tpl.cache';       
     $phpfile = 'modules/mod-'.$r["name"].'.php';
     $template= 'modules/mod-'.$r["name"].'.tpl';
     $nocache= 'templates/modules/mod-'.$r["name"].'.tpl.nocache';
@@ -110,7 +110,7 @@ for($i=0;$i<count($right_modules);$i++) {
     }
     
     if($pass == 'y'){
-    $cachefile = 'modules/cache/mod-'.$r["name"].'.tpl.cache';       
+    $cachefile = 'modules/cache/'.$tikidomain.'mod-'.$r["name"].'.tpl.cache';       
     $phpfile = 'modules/mod-'.$r["name"].'.php';
     $template= 'modules/mod-'.$r["name"].'.tpl';
     $nocache= 'templates/modules/mod-'.$r["name"].'.tpl.nocache';

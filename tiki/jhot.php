@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.4 2003-05-14 15:40:32 lrargerich Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/jhot.php,v 1.5 2003-06-24 21:04:46 mose Exp $
 
 include_once('tiki-setup.php');
 include_once('lib/drawings/drawlib.php');
@@ -11,7 +11,7 @@ if(isset($_FILES['filepath'])&&is_uploaded_file($_FILES['filepath']['tmp_name'])
  $pos=strpos($name,'img/wiki/');
  $name=substr($name,$pos);
  
- $absolute_name = str_replace('img/wiki/','',$name); 
+ $absolute_name = str_replace("img/wiki/$tikidomain",'',$name); 
  $absolute_name = str_replace('.gif','',$absolute_name); 
  $absolute_name = str_replace('.pad_xml','',$absolute_name); 
 
@@ -36,7 +36,7 @@ if(isset($_FILES['filepath'])&&is_uploaded_file($_FILES['filepath']['tmp_name'])
  
  
  
- @$fw=fopen("img/wiki/$hash","wb");
+ @$fw=fopen("img/wiki/$tikidomain$hash","wb");
  @$fw2=fopen($name,"wb");
  @$fp = fopen($_FILES['filepath']['tmp_name'],"rb");
  

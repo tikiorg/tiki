@@ -12,7 +12,7 @@
 
 function wikiplugin_module($data,$params) {
   global $tikilib, $cache_time, $smarty, $dbTiki, $feature_directory, $ranklib, $feature_trackers, 
-		$user, $feature_tasks, $feature_user_bookmarks, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib;
+		$user, $feature_tasks, $feature_user_bookmarks, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib, $tikidomain;
 	$out = '';
   extract($params);
 	if(!isset($align)) {$align='left';}
@@ -33,7 +33,7 @@ function wikiplugin_module($data,$params) {
 		$out.= '</select></form>';
 	} else {
 		if(!isset($args)) {$args='';}
-		$cachefile = 'modules/cache/mod-'.$module.'.tpl.cache';
+		$cachefile = 'modules/cache/'.$tikidomain.'mod-'.$module.'.tpl.cache';
 		$phpfile = 'modules/mod-'.$module.'.php';
 		$template= 'modules/mod-'.$module.'.tpl';
 		$nocache= 'templates/modules/mod-'.$module.'.tpl.nocache';

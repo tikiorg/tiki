@@ -15,6 +15,7 @@ $host_tiki   = 'localhost';
 $user_tiki   = 'root';
 $pass_tiki   = '';
 $dbs_tiki    = 'tiki';
+$tikidomain  = '';
 
 /*
 CVS Developers: Do not change any of the above.
@@ -34,6 +35,27 @@ cat >local.php <<EOF
 \$dbs_tiki    = 'mytiki';
 ?>
 EOF
+
+Site admins: you can use multiple virtualhosts with the same documentroot
+just changing database and $tikidomain that is used to split cache directories
+(template_c and modules/cache). For example a local.php file :
+$host_tiki   = 'localhost';
+$user_tiki   = 'root';
+$pass_tiki   = '';
+if ($HTTP_HOST == "feu.org") {
+	$dbs_tiki    = 'tiki_cvs';
+	$tikidomain  = 'feu';
+} elseif ($HTTP_HOST == "localis.org") {
+	$dbs_tiki    = 'tiki_localis';
+	$tikidomain  = 'localis';
+
+} elseif ( ... ) {
+
+...
+
+} else {
+	// default case, your choice is to block or open to a default domain
+}
 */
 
 $file = dirname(__FILE__) . '/local.php';

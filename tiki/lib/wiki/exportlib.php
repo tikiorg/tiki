@@ -12,6 +12,7 @@ class ExportLib extends TikiLib {
   
   function MakeWikiZip()
   {
+		global $tikidomain;
     $zipname         = "wikidb.zip";
     include_once("lib/tar.class.php");
     $tar = new tar();
@@ -22,7 +23,7 @@ class ExportLib extends TikiLib {
       $content = $this->export_wiki_page($page, 0);
       $tar->addData($page,$content,date("U"));
     }
-    $tar->toTar("dump/export.tar",FALSE);
+    $tar->toTar("dump/".$tikidomain."/export.tar",FALSE);
     return '';
   }
 

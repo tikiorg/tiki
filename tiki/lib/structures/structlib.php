@@ -14,7 +14,7 @@ class StructLib extends TikiLib {
   
   function s_export_structure($structure)
   {
-	global $exportlib;
+	global $exportlib, $tikidomain;
 	global $dbTiki;
   	include_once('lib/wiki/exportlib.php');
   	$zipname         = "$structure.zip";
@@ -25,8 +25,8 @@ class StructLib extends TikiLib {
     	$data = $exportlib->export_wiki_page($page,0);
     	$tar->addData($page,$data,date("U"));
     }	
-	$tar->toTar("dump/$structure.tar",FALSE);
-    header("location: dump/$structure.tar");
+	$tar->toTar("dump/$tikidomain".$structure.".tar",FALSE);
+    header("location: dump/$tikidomain$structure.tar");
     return '';    
   }
   
