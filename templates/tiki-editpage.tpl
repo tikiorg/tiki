@@ -95,7 +95,7 @@
 <tr><td class="formcolor">{tr}Import page{/tr}:</td><td class="formcolor">
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
 <input name="userfile1" type="file">
-<a href="tiki-export_wiki_pages.php?page={$page}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
+<a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}&amp;all=1" class="link">{tr}export all versions{/tr}</a>
 </td></tr>
 {/if}
 {if $feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
@@ -118,7 +118,7 @@
 {if $tiki_p_minor eq 'y'}
 <input type="checkbox" name="isminor" />{tr}Minor{/tr}
 {/if}
-<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <a class="link" href="tiki-index.php?page={$page}">{tr}cancel edit{/tr}</a></td>
+<input type="submit" class="wikiaction" name="save" value="{tr}save{/tr}" /> <a class="link" href="tiki-index.php?page={$page|escape:"url"}">{tr}cancel edit{/tr}</a></td>
 </tr>
 </table>
 </form>

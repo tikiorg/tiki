@@ -1,4 +1,4 @@
-<a class="pagetitle" href="tiki-pagehistory?page={$page}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page}">{$page}</a><br/><br/>
+<a class="pagetitle" href="tiki-pagehistory?page={$page|escape:"url"}">{tr}History{/tr}</a> {tr}of{/tr}: <a class="pagetitle" href="tiki-index.php?page={$page|escape:"url"}">{$page}</a><br/><br/>
 {if $preview}
 <h2>{tr}Version{/tr}: {$version}</h2>
 <div  class="wikitext">{$preview.data}</div>
@@ -60,17 +60,17 @@
 <td class="{cycle advance=false}">&nbsp;{$history[hist].user}&nbsp;</td>
 <td class="{cycle advance=false}">&nbsp;{$history[hist].ip}&nbsp;</td>
 <td class="{cycle advance=false}">&nbsp;{$history[hist].comment}&nbsp;</td>
-<td class="{cycle advance=false}">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page}&amp;preview={$history[hist].version}">{tr}view{/tr}</a>&nbsp;
+<td class="{cycle advance=false}">&nbsp;<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;preview={$history[hist].version}">{tr}view{/tr}</a>&nbsp;
 <!--{if $tiki_p_remove eq 'y'}
-<a class="link" href="tiki-removepage.php?page={$page}&amp;version={$history[hist].version}">{tr}remove{/tr}</a>&nbsp;
+<a class="link" href="tiki-removepage.php?page={$page|escape:"url"}&amp;version={$history[hist].version}">{tr}remove{/tr}</a>&nbsp;
 {/if}
 -->
 {if $tiki_p_rollback eq 'y'}
-<a class="link" href="tiki-rollback.php?page={$page}&amp;version={$history[hist].version}">{tr}rollback{/tr}</a>&nbsp;
+<a class="link" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$history[hist].version}">{tr}rollback{/tr}</a>&nbsp;
 {/if}
-<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff={$history[hist].version}">{tr}compare{/tr}</a>&nbsp;
-<a class="link" href="tiki-pagehistory.php?page={$page}&amp;diff2={$history[hist].version}">{tr}diff{/tr}</a>&nbsp;
-<a class="link" href="tiki-pagehistory.php?page={$page}&amp;source={$history[hist].version}">{tr}source{/tr}</a>&nbsp;
+<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff={$history[hist].version}">{tr}compare{/tr}</a>&nbsp;
+<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;diff2={$history[hist].version}">{tr}diff{/tr}</a>&nbsp;
+<a class="link" href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source={$history[hist].version}">{tr}source{/tr}</a>&nbsp;
 </td>
 {sectionelse}
 <tr><td colspan="6">
