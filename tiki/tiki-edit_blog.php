@@ -50,7 +50,7 @@ $smarty->assign('use_find','y');
 $smarty->assign('use_title','y');
 $smarty->assign('allow_comments', 'y');
 $smarty->assign('maxPosts',10);
-$heading='<div class="blogtitle">Blog: {$title}</div>'."\n";
+$heading='<div class="blogtitle">{tr}Blog{/tr}: {$title}</div>'."\n";
 $heading.='<div class="bloginfo">'."\n";
 $heading.='{tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br/>'."\n";
 $heading.='{tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br/><br/>'."\n";
