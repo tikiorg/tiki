@@ -310,8 +310,8 @@ class AdminLib extends TikiLib {
       $dat = $this->parse_data($res["data"]);
       // Now change index.php?page=foo to foo.html
       // and index.php to HomePage.html
-      $dat = preg_replace("/tiki-index.php\?page=([^\'\" ]+)/","$1.html",$dat);
-      $dat = preg_replace("/tiki-editpage.php\?page=([^\'\" ]+)/","",$dat);
+      $dat = preg_replace("/tiki-index.php\?page=([^\'\"\$]+)/","$1.html",$dat);
+      $dat = preg_replace("/tiki-editpage.php\?page=([^\'\"\$]+)/","",$dat);
       //preg_match_all("/tiki-index.php\?page=([^ ]+)/",$dat,$cosas);
       //print_r($cosas);
       $data = "<html><head><title>".$res["pageName"]."</title><link rel='StyleSheet' href='styles/main.css' type='text/css'></head><body><a class='wiki' href='HomePage.html'>home</a><br/><h1>".$res["pageName"]."</h1><div class='wikitext'>".$dat.'</div></body></html>';
