@@ -1239,27 +1239,27 @@ class Comments extends TikiLib {
 	}
 
 	if (!$sticky) {
-		if ($old_sort_mode == 'replies asc') {
+		if ($old_sort_mode == 'replies_asc') {
 		    usort($ret, 'compare_replies');
 		}
 
-		if ($old_sort_mode == 'replies desc') {
+		if ($old_sort_mode == 'replies_desc') {
 		    usort($ret, 'r_compare_replies');
 		}
 
-		if ($old_sort_mode == 'lastPost asc') {
+		if ($old_sort_mode == 'lastPost_asc') {
 		    usort($ret, 'compare_lastPost');
 		}
 
-		if ($old_sort_mode == 'lastPost desc') {
+		if ($old_sort_mode == 'lastPost_desc') {
 		    usort($ret, 'r_compare_lastPost');
 		}
 
 		if (in_array($old_sort_mode, array(
-				'replies desc',
-				'replies asc',
-				'lastPost desc',
-				'lastPost asc'
+				'replies_desc',
+				'replies_asc',
+				'lastPost_desc',
+				'lastPost_asc'
 				))) {
 		    $ret = array_slice($ret, $old_offset, $old_maxRecords);
 		}
@@ -1286,16 +1286,16 @@ class Comments extends TikiLib {
 	$old_sort_mode = '';
 
 	if (in_array($sort_mode, array(
-			'replies desc',
-			'replies asc',
-			'lastPost desc',
-			'lastPost asc'
+			'replies_desc',
+			'replies_asc',
+			'lastPost_desc',
+			'lastPost_asc'
 			))) {
 	    $old_offset = $offset;
 
 	    $old_maxRecords = $maxRecords;
 	    $old_sort_mode = $sort_mode;
-	    $sort_mode = 'title desc';
+	    $sort_mode = 'title_desc';
 	    $offset = 0;
 	    $maxRecords = -1;
 	}
@@ -1332,27 +1332,27 @@ class Comments extends TikiLib {
 	    $ret[] = $res;
 	}
 
-	if ($old_sort_mode == 'replies asc') {
+	if ($old_sort_mode == 'replies_asc') {
 	    usort($ret, 'compare_replies');
 	}
 
-	if ($old_sort_mode == 'replies desc') {
+	if ($old_sort_mode == 'replies_desc') {
 	    usort($ret, 'r_compare_replies');
 	}
 
-	if ($old_sort_mode == 'lastPost asc') {
+	if ($old_sort_mode == 'lastPost_asc') {
 	    usort($ret, 'compare_lastPost');
 	}
 
-	if ($old_sort_mode == 'lastPost desc') {
+	if ($old_sort_mode == 'lastPost_desc') {
 	    usort($ret, 'r_compare_lastPost');
 	}
 
 	if (in_array($old_sort_mode, array(
-			'replies desc',
-			'replies asc',
-			'lastPost desc',
-			'lastPost asc'
+			'replies_desc',
+			'replies_asc',
+			'lastPost_desc',
+			'lastPost_asc'
 			))) {
 	    $ret = array_slice($ret, $old_offset, $old_maxRecords);
 	}
