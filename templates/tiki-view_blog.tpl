@@ -1,7 +1,7 @@
 {if strlen($heading) > 0}
 {eval var=$heading}
 {else}
-<div class="blogtitle">Blog: {$title}</div>
+<div class="blogtitle">{tr}Blog{/tr}: {$title}</div>
 <div class="bloginfo">
 {tr}Created by{/tr} {$creator}{tr} on {/tr}{$created|tiki_short_datetime}<br/>
 {tr}Last modified{/tr} {$lastModif|tiki_short_datetime}<br/><br/>
