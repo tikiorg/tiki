@@ -183,8 +183,29 @@ class ImageGalsLib extends TikiLib {
   // bbx and bby give the boundary box
   function rescaleImage($bbx,$bby)
   {
-
+    if($this->xsize > $this->ysize)
+    {
+      $tscale = ((int)$this->xsize / $bbx);
+    } else {
+      $tscale = ((int)$this->ysize / $bby);
+    }
+    $newx=((int)($this->xsize / $tscale));
+    $newy=((int)($this->ysize / $tscale));
+    return $this->resizeImage($newx,$newy);
   }
+
+  function rotateimage($angle)
+  {
+    if ($this->uselib == "imagick") {
+    } else if ($this->uselib == "gd") {
+      if ($this->gdversion>2.0){ //I know, it's PHP <= 4.3.0. It destroys images if u try to rotate them
+        $this->imagehandle=imagerotate($this->imagehandle,$angle,0);
+      }
+    }
+    // update the $this->image
+    $this->writeimagetostring();
+  }
+
 
   // Batch image uploads ////
   function process_batch_image_upload($galleryId,$file,$user)
@@ -324,7 +345,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
 }
 }
 
-  function store_image_data()
+  function store_image_data($overwrite=false)
   {
 
     global $gal_use_dir;
@@ -363,10 +384,19 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }
     $this->filename=$this->xsize."x".$this->ysize."_".$this->filename; // rebuild filename for downloading images
     // insert data
-    $query = "insert into tiki_images_data(imageId,xsize,ysize,
+    if ($overwrite) {
+        //overwrites all except the colums of the primary key
+        $query = "update tiki_images_data set filetype='$this->filetype',
+				filename='$this->filename',data='$data',
+				filesize=$size where
+			imageId=$this->imageId and type='$this->type' and
+			xsize=$this->xsize and ysize=$this->ysize";
+    } else {
+    	$query = "insert into tiki_images_data(imageId,xsize,ysize,
                                 type,filesize,filetype,filename,data)
                         values ($this->imageId,$this->xsize,$this->ysize,'$this->type',$size,
                                 '$this->filetype','$this->filename','$data')";
+    }
     $result = $this->query($query);
     return true;
   }
@@ -406,17 +436,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       $newx=$galinfo["thumbSizeX"];
       $newy=$galinfo["thumbSizeY"];
     }
-
-    if($this->xsize > $this->ysize)
-    {
-      $tscale = ((int)$this->xsize / $newx);
-    } else {
-      $tscale = ((int)$this->ysize / $newy);
-    }
-    $xsize=((int)($this->xsize / $tscale));
-    $ysize=((int)($this->ysize / $tscale));
-
-    if(!$this->resizeImage($xsize,$ysize))
+    
+    // do it
+    if(!$this->rescaleImage($newx,$newy))
     {
       die;
     }
@@ -544,17 +566,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     //get image
     global $gal_use_dir;
     global $gal_use_db;
-    $data=$this->getOne("select data from tiki_images_data where imageId=$id and type='o'");
-    //$data = $this->get_image($id);
-    $data = imagecreatefromstring($data);
+    $this->get_image($id);
 
-    $sx=imagesx($data);
-    $sy=imagesy($data);
-    $data=imagerotate($data,$angle,0);
-    ob_start();
-    imagejpeg($data);
-    $data = ob_get_contents();
-    ob_end_clean();
+    $this->rotateimage();
     // Prepare to store data in database
     $data= addslashes($data);
     $query = "update tiki_images_data set data='$data' where imageId=$id and type='o'";

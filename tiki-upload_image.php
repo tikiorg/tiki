@@ -147,7 +147,8 @@ if(isset($_REQUEST["upload"])) {
       $thumb_name = $_FILES['userfile2']['name'];
       $up_thumb = 1;
   } 
-  if(empty($_REQUEST["name"]) && $_REQUEST["use_filename"] == 'off' ) {
+  if(empty($_REQUEST["name"]) && 
+  	(!isset($_REQUEST["use_filename"]) || $_REQUEST["use_filename"] == 'off' )) {
     $error_msg=tra("You have to provide a name to the image");
   }
   if($error_msg) {
