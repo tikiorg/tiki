@@ -12,7 +12,7 @@ if($feature_search != 'y') {
 }
 
 if($feature_search_stats == 'y') {
-  $tikilib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');
+  $searchlib->register_search(isset($_REQUEST["words"]) ? $_REQUEST["words"] : '');
 }
 
 if(!isset($_REQUEST["where"])) {
