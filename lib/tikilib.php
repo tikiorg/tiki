@@ -1449,7 +1449,7 @@ function add_pageview() {
 	return true;
     }
 
-/* moving to categlib.php
+/* moved to categlib.php; will delete this code if no problems arise
     // shared
     function uncategorize_object($type, $id) {
 	// Fixed query. -rlpowell
@@ -1465,7 +1465,8 @@ function add_pageview() {
     }
 */
 
-    /*shared*/
+/*
+    // shared
     // \todo remove hardcoded html from get_categorypath()
     function get_categorypath($cats) {
 	global $dbTiki;
@@ -1493,6 +1494,7 @@ function add_pageview() {
 	}
 	return $catpath;
     }
+*/
 
     function get_categorypath_array($cats,$focus=0) {
 	global $dbTiki, $smarty, $tikilib, $feature_categories, $categlib;
