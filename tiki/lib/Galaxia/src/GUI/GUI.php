@@ -23,7 +23,8 @@ class GUI extends Base {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and ((gp.name like '%".$find."%') or (gp.description like '%".$find."%'))";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" and ((gp.name like $findesc) or (gp.description like $findesc))";
     } else {
       $mid="";
     }
@@ -63,7 +64,7 @@ class GUI extends Base {
               	INNER JOIN ".GALAXIA_TABLE_PREFIX."roles gr ON gr.roleId=gar.roleId
               	INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gur.roleId=gr.roleId
               	where gp.pId=$pId and gur.user='$user'");
-	  $res['instances']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instances gi INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId where gi.pId=$pId and ((gia.user='$user') or (gia.user='*' and gur.user='$user'))");              	
+	  $res['instances']=$this->getOne("select count(distinct(gi.instanceId)) from ".GALAXIA_TABLE_PREFIX."instances gi INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId where gi.pId=$pId and ((gia.user='$user') or (gia.user='*' and gur.user='$user'))");              	
       $ret[] = $res;
     }
     $retval = Array();
@@ -77,7 +78,8 @@ class GUI extends Base {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and ((name like '%".$find."%') or (description like '%".$find."%'))";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" and ((ga.name like $findesc) or (ga.description like $findesc))";
     } else {
       $mid="";
     }
@@ -117,7 +119,7 @@ class GUI extends Base {
     $ret = Array();
     while($res = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
       // Get instances per activity
-	  $res['instances']=$this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."instances gi INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId where gia.activityId=".$res['activityId']." and ((gia.user='$user') or (gia.user='*' and gur.user='$user'))");              	
+	  $res['instances']=$this->getOne("select count(distinct(gi.instanceId)) from ".GALAXIA_TABLE_PREFIX."instances gi INNER JOIN ".GALAXIA_TABLE_PREFIX."instance_activities gia ON gi.instanceId=gia.instanceId INNER JOIN ".GALAXIA_TABLE_PREFIX."activity_roles gar ON gia.activityId=gar.activityId INNER JOIN ".GALAXIA_TABLE_PREFIX."user_roles gur ON gar.roleId=gur.roleId where gia.activityId=".$res['activityId']." and ((gia.user='$user') or (gia.user='*' and gur.user='$user'))");              	
       $ret[] = $res;
     }
     $retval = Array();
@@ -131,7 +133,8 @@ class GUI extends Base {
   {
     $sort_mode = str_replace("_"," ",$sort_mode);
     if($find) {
-      $mid=" and ((name like '%".$find."%') or (description like '%".$find."%'))";
+      $findesc = $this->qstr('%'.$find.'%');
+      $mid=" and ((ga.name like $findesc) or (ga.description like $findesc))";
     } else {
       $mid="";
     }
@@ -186,6 +189,7 @@ class GUI extends Base {
     return $retval;
   }
 
+// TODO: shouldn't this stop the whole instance, including all activities ?
   function gui_abort_instance($user,$activityId,$instanceId)
   {
     // Users can only abort instances belonging to them
