@@ -1,7 +1,7 @@
 set quoted_identifier on
 go
 
--- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.10 2004-03-10 13:49:13 mose Exp $
+-- $Header: /cvsroot/tikiwiki/tiki/db/tiki-1.9-sybase.sql,v 1.11 2004-03-12 01:36:24 mose Exp $
 -- phpMyAdmin MySQL-Dump
 -- version 2.5.1
 -- http://www.phpmyadmin.net/ (download page)
@@ -4105,10 +4105,10 @@ go
 go
 
 
-CREATE TABLE `tiki_shoutbox_words` (
+CREATE TABLE "tiki_shoutbox_words" (
   "word" VARCHAR( 40 ) NOT NULL ,
   "qty" INT DEFAULT '0' NOT NULL ,
-  PRIMARY KEY ( `word` )
+  PRIMARY KEY ("word")
 ) 
 go
 
@@ -4560,7 +4560,7 @@ CREATE TABLE "tiki_tracker_options" (
   "trackerId" numeric(12,0) default '0' NOT NULL,
   "name" varchar(80) default '' NOT NULL,
   "value" text default NULL NULL,
-  PRIMARY KEY (trackerId,name(30))
+  PRIMARY KEY ("trackerId","name")
 )  
 go
 
@@ -5904,7 +5904,7 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
-INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editor','homework')
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework')
 go
 
 
@@ -7591,7 +7591,7 @@ CREATE TABLE "tiki_jukebox_genres" (
 genreId numeric(14 ,0) identity,
   "genreName" varchar(80) default '',
   "genreDescription" text default '',
-  PRIMARY KEY (genreId)
+  PRIMARY KEY ("genreId")
 )   
 go
 
@@ -7611,7 +7611,7 @@ albumId numeric(14 ,0) identity,
   "visits" numeric(14,0) default NULL NULL,
   "public" char(1),
   "genreId" numeric(14,0) default NULL NULL,
-  PRIMARY KEY(albumId)
+  PRIMARY KEY ("albumId")
 )   
 go
 
@@ -7633,7 +7633,7 @@ trackId numeric(14 ,0) identity,
   "filetype" varchar(250) default '',
   "genreId" numeric(14,0) default NULL NULL,
   "plays" numeric(14,0) default NULL NULL,
-  PRIMARY KEY(trackId)
+  PRIMARY KEY ("trackId")
 )  
 go
 
