@@ -35,7 +35,7 @@ function sendPage($params) {
  $pp=$params->getParam(5); $comment=$pp->scalarval();
  
  // 
- if(!$userlib->validate_user($username,$password)) {
+ if(!$userlib->validate_user($username,$password,'','')) {
    return new xmlrpcresp(0, 101, "Invalid username or password");
  }
  
@@ -82,7 +82,7 @@ function sendArticle($params) {
  $pp=$params->getParam(19);$type =$pp->scalarval(); 
  $pp=$params->getParam(20);$rating =$pp->scalarval(); 
  // 
- if(!$userlib->validate_user($username,$password)) {
+ if(!$userlib->validate_user($username,$password,'','')) {
    return new xmlrpcresp(0, 101, "Invalid username or password");
  }
  

@@ -50,7 +50,7 @@ function getUserInfo($params) {
  $appkeyp=$params->getParam(0); $appkey=$appkeyp->scalarval();
  $usernamep=$params->getParam(1); $username=$usernamep->scalarval();
  $passwordp=$params->getParam(2); $password=$passwordp->scalarval();
- if($userlib->validate_user($username,$password)) {
+ if($userlib->validate_user($username,$password,'','')) {
    $myStruct=new xmlrpcval(array("nickname" => new xmlrpcval($username),
                                  "firstname" => new xmlrpcval("none"),
                                  "lastname" => new xmlrpcval("none"),
@@ -75,7 +75,7 @@ function newPost($params) {
   $passp=$params->getParam(5); $publish=$passp->scalarval();
 
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password)) {
+  if(!$userlib->validate_user($username,$password,'','')) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
  
@@ -116,7 +116,7 @@ function editPost($params) {
   $passp=$params->getParam(5); $publish=$passp->scalarval();
 
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password)) {
+  if(!$userlib->validate_user($username,$password,'','')) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
  
@@ -155,7 +155,7 @@ function deletePost($params) {
   $passp=$params->getParam(4); $publish=$passp->scalarval();
 
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password)) {
+  if(!$userlib->validate_user($username,$password,'','')) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
  
@@ -192,7 +192,7 @@ function getPost($params) {
   $passwordp=$params->getParam(3); $password=$passwordp->scalarval();
 
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password)) {
+  if(!$userlib->validate_user($username,$password,'','')) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
 
@@ -238,7 +238,7 @@ function getRecentPosts($params) {
   $passp=$params->getParam(4); $number=$passp->scalarval();
 
   // Now check if the user is valid and if the user can post a submission
-  if(!$userlib->validate_user($username,$password)) {
+  if(!$userlib->validate_user($username,$password,'','')) {
     return new xmlrpcresp(0, 101, "Invalid username or password");
   }
   
