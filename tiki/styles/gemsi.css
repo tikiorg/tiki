@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.31 2004-04-29 13:23:22 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/gemsi.css,v 1.32 2004-04-29 13:55:17 mose Exp $
 That style is made for http://gmsih.fr by mose@mose.fr
 and is contributed to the tikiwiki project by the  GMSIH,
 (Groupement pour la Modernisation du Système d'Information Hospitalier)
@@ -590,20 +590,6 @@ div.wiki-edithelp {
 	border: 1px solid #cccccc;
 	font-size: smaller;
 	padding: 6px;
-}
-/* ********************* TRACKERS *********************************** */
-.statuson {
-	padding: 1px;
-	margin: 1px;
-	border: 1px inset #666666;
-	-moz-border-radius: 20px;
-	vertcal-align: middle;
-	background-color: #bbaa99;
-}
-.statusoff {
-	padding: 1px;
-	margin: 2px;
-	vertcal-align: middle;
 }
 /* ********************* IMAGE GALLERIES *********************************** */
 div.galdesc {
@@ -1723,80 +1709,6 @@ div#loadstats {
 .calendar {
 	z-index: 200;
 }
-/* for tabs 
-div.tabs {
-	white-space: nowrap;
-	cursor: default !important;
-	font-weight: 700 !important;
-	z-index: 100;
-}
-
-.content {
-	position: relative;
-	border: 1px solid #999999;
-	min-width: 400px;
-	max-width: 700px;
-	padding: 6px 2px 2px 2px;
-	margin-bottom: 25px;
-	z-index: 80;
-	background-color: #eee7d6;
-	-moz-border-radius: 0px 4px 4px 4px;
-}
-.content h3 {
-	margin-left: 3px;
-}
-.content table tr td:first-child {
-	width: 100px;
-}
-.content table tr td.thin:first-child {
-	width: 20px;
-}
-.content table tr td.auto:first-child {
-	width: auto;
-}
-.content input[type=text],
-.content textarea {
-	width: 100%;
-}
-.tab {
-	border: 1px solid #999999;
-	padding: 2px 5px 1px 5px;
-	background-color: #ddd7c6;
-	color: #666666;
-	z-index: 100;
-	border-bottom: 1px solid #ddd7c6;
-	-moz-border-radius: 4px 4px 0px 0px;
-}
-
-.tabHover {
-	background-color: #FFF7E6;
-	color: #1c60a8;
-	z-index: 90;
-	border-bottom-width: 0;
-	cursor: pointer;
-	}
-
-.tabActive { 
-	padding: 3px 5px 2px 5px;
-	color: #000000;
-	background-color: #eee7d6;
-	z-index: 100;
-	}
-      
-div.tabsClone .tab, div.tabsClone .tabActive {
-	border-top-width: 0 !important;
-	border-bottom-width: 1px !important;
-	}
-
-div.tabsClone .tabActive{
-	top: -2px;
-	}
-
-a.removeTab{
-	font-size: smaller;
-	text-decoration: none;
-	}
-*/
 
 /* ASSORTED  */
 
@@ -1868,5 +1780,22 @@ a.phplm:hover	{
 .tabcontent input[type=text],
 .tabcontent textarea {
 	width: 100%;
+}
+
+
+/* trackers specific style */
+
+.statuson {
+  padding: 1px;
+  margin: 1px;
+  border: 1px inset #666666;
+  -moz-border-radius: 20px;
+  vertcal-align: middle;
+  background-color: #bbaa99;
+}
+.statusoff {
+  padding: 1px;
+  margin: 2px;
+  vertcal-align: middle;
 }
 

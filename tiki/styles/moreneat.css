@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.45 2004-04-29 13:23:22 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/moreneat.css,v 1.46 2004-04-29 13:55:19 mose Exp $
 
 MoreNeat theme
 */
@@ -1868,3 +1868,20 @@ TABLE.admin { width: 100%; }
 	background-color: #eeeeee;
 	-moz-border-radius: 0px 4px 4px 4px;
 }
+
+/* trackers specific style */
+
+.statuson {
+  padding: 1px;
+  margin: 1px;
+  border: 1px inset #666666;
+  -moz-border-radius: 20px;
+  vertcal-align: middle;
+  background-color: #bbaa99;
+}
+.statusoff {
+  padding: 1px;
+  margin: 2px;
+  vertcal-align: middle;
+}
+
