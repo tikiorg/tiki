@@ -354,7 +354,7 @@ td.imageinfo, TD.formcolor, td.galform, td.editblogform, td.editfgalform, TD.com
 /* The table */
 table.imageinfo, table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.bloglist, table.editblogform,
 	table.editfgalform, table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable,
-	table.viewthread {
+	table.viewthread, table.jukeboxlist {
 	border-color:    black;
 	border-style:   solid;
 	border-width:   1px;
@@ -366,7 +366,7 @@ TABLE.normalnoborder {
 }
 
 /* Table headings */
-TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.listfilesheading, td.listartheading,
+TD.heading, td.gallistheading, td.jukeboxlistheading, td.listgalheading, td.bloglistheading, td.listfgalheading, td.listfilesheading, td.listartheading,
 	td.forumheading, td.thead {
 	background-image:    url(jalist/fcap.png);
 	font-family:   Tahoma, Verdana, Arial, Helvetica, sans-serif;
@@ -390,7 +390,7 @@ TD.button {
 }
 
 /* Links to view an object from a table listing objects can be generalized to this link */
-a.tablename, a.galname, a.imagename, a.blogname, a.fgalname, a.artname, a.forumname {
+a.tablename, a.galname, a.imagename, a.jukeboxname, a.blogname, a.fgalname, a.artname, a.forumname {
 	font-weight:    bold;
 	font-size:   12px;
 	letter-spacing:   0px;
@@ -398,7 +398,7 @@ a.tablename, a.galname, a.imagename, a.blogname, a.fgalname, a.artname, a.forumn
 	text-decoration:   none;
 }
 
-a.tablename:hover, a.galname:hover, a.imagename:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover {
+a.tablename:hover, a.galname:hover, a.imagename:hover, a.jukeboxname:hover, a.blogname:hover, a.fgalname:hover, a.artname:hover, a.forumname:hover {
 	text-decoration:    none;
 	color:   #636363;
 }
@@ -482,7 +482,8 @@ TD.odd, td.gallistnameodd, td.gallistdescriptionodd, td.gallistcreatedodd, td.ga
 	td.listfilesactionsodd, td.listarttitleodd, td.listarttopicodd, td.listartpublishDateodd, td.listartauthorodd,
 	td.listartreadsodd, td.listarthasimageodd, td.listartuseimageodd, td.listartactionsodd, td.listartsizeodd, td.forumstableodd,
 	td.forumstableinfoodd, td.topictitleodd, td.topicrepliesodd, td.topicreadsodd, td.topicscoreodd, td.topiclastpostodd,
-	td.topicauthorodd {
+	td.topicauthorodd, td.jukeboxlistnameodd, td.jukeboxdescriptionodd, td.jukeboxcreatedodd, td.jukeboxlastmodifodd, 
+	td.jukeboxlistuserodd, td.jukeboxlisttracksodd, td.jukeboxlistvisitsodd {
 	border-color:    black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
@@ -498,7 +499,7 @@ TD.even, td.gallistnameeven, td.gallistdescriptioneven, td.gallistcreatedeven, t
 	td.listgalhitseven, td.listgalusereven, td.listgalfilesizeeven, td.bloglistnameeven, td.bloglistdescriptioneven,
 	td.bloglistcreatedeven, td.bloglistlastModifeven, td.bloglistusereven, td.bloglistpubliceven, td.bloglistpostseven,
 	td.bloglistvisitseven, td.bloglistactivityeven, td.bloglistactionseven, td.listfgalnameeven, td.listfgaldescriptioneven,
-	td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven, td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven, td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven, td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven, td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven, td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven, td.topiclastposteven, td.topicauthoreven {
+	td.listfgalcreatedeven, td.listfgallastModifeven, td.listfgalusereven, td.listfgalfileseven, td.listfgalvisitseven, td.listfgalactionseven, td.listfilesnameeven, td.listfilesdescriptioneven, td.listfilesideven, td.listfilesfilenameeven, td.listfilesfilesizeeven, td.listfilescreatedeven, td.listfilesdlseven, td.listfilesnameeven, td.listfilesusereven, td.listfilesactionseven, td.listarttitleeven, td.listarttopiceven, td.listartpublishDateeven, td.listartauthoreven, td.listartreadseven, td.listarthasimageeven, td.listartuseimageeven, td.listartactionseven, td.listartsizeeven, td.forumstableeven, td.forumstableinfoeven, td.topictitleeven, td.topicreplieseven, td.topicreadseven, td.topicscoreeven, td.topiclastposteven, td.topicauthoreven, td.jukeboxlistnameeven, td.jukeboxdescriptioneven, td.jukeboxcreatedeven, td.jukeboxlastmodifeven, td.jukeboxlistusereven, td.jukeboxlisttrackseven, td.jukeboxlistvisitseven {
 	border-color:    black;
 	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
@@ -558,14 +559,14 @@ H3 {
 }
 
 /* Links where no special link style apply (usually with the general application background) */
-.link, .gallink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink, .admlink, .forumbutlink {
+.link, .gallink, .jukeboxlink, .bloglink, .fgallink, .trailer, .opencomlink, .commentslink, .admlink, .forumbutlink {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   black;
 	text-decoration:   none;
 }
 
-.link:hover, .gallink:hover, .bloglink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover, .commentslink:hover, .admlink:hover, .forumbutlink:hover {
+.link:hover, .gallink:hover, .jukeboxlink:hover, .bloglink:hover, .fgallink:hover, .trailer:hover, .opencomlink:hover, .commentslink:hover, .admlink:hover, .forumbutlink:hover {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   11px;
 	color:   #636363;
@@ -587,14 +588,14 @@ div.searchdate {
 }
 
 /* prev & next buttons in pagination */
-.prevnext, .galprevnext, .blogprevnext, .fgalprevnext, .artprevnext, .forumprevnext {
+.prevnext, .galprevnext, .blogprevnext, .fgalprevnext, .artprevnext, .forumprevnext, .jukeboxprevnext {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	color:   black;
 	text-decoration:   none;
 }
 
-.prevnext:hover, .galprevnext:hover, .blogprevnext:hover, .fgalprevnext:hover, .artprevnext:hover, .forumprevnext:hover {
+.prevnext:hover, .galprevnext:hover, .blogprevnext:hover, .fgalprevnext:hover, .artprevnext:hover, .jukeboxprevnext:hover, .forumprevnext:hover {
 	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:   12px;
 	color:   #636363;
