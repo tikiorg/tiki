@@ -1,21 +1,21 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.52 2004-02-09 12:50:34 damosoft Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.53 2004-03-01 10:59:53 damosoft Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.52 2004-02-09 12:50:34 damosoft Exp $
+# $Header: /cvsroot/tikiwiki/tiki/tiki-install.php,v 1.53 2004-03-01 10:59:53 damosoft Exp $
 error_reporting (E_ERROR);
 session_start();
 
 include_once("lib/init/initlib.php");
 
 // Define and load Smarty components
-define('SMARTY_DIR', "lib/smarty/");
-require_once (SMARTY_DIR . 'Smarty.class.php');
+define('SMARTY_DIR', "lib/smarty/libs/");
 
+require_once (SMARTY_DIR . 'Smarty.class.php');
 $commands = array();
 
 function process_sql_file($file,$db_tiki) {
@@ -160,7 +160,7 @@ class Smarty_TikiWiki extends Smarty {
 		$this->caching = false;
 		$this->assign('app_name', 'TikiWiki');
 		$this->plugins_dir = array(
-			dirname(SMARTY_DIR)."/smarty_tiki",
+			dirname(dirname(SMARTY_DIR))."/smarty_tiki",
 			SMARTY_DIR."plugins"
 		);
 	//$this->debugging = true;
