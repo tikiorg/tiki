@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.25 2003-12-04 19:12:56 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.26 2003-12-07 15:48:43 mose Exp $
 2003 - created and maintained by mose@feu.org
 */
 
@@ -1291,8 +1291,9 @@ div.articletrailer {
 }
 
 /* Text in the article heading */
-span.articleheading {
+div.articleheadingtext {
 	font-size: 12px;
+	display: inline;
 }
 
 /* The body */

@@ -821,7 +821,8 @@ div.articleheading {
   clear: both;
 }
 /* Text in the article heading */
-span.articleheading {    
+div.articleheadingtext {    
+	display: inline;
 }
 
 

@@ -942,9 +942,10 @@ div.articletrailer {
 }
 
 /* Text in the article heading */
-span.articleheading {
+div.articleheadingtext {
 	font-family:    Verdana, Helvetica;
 	font-size:   12px;
+	display: inline;
 }
 
 /* The body */
