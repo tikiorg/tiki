@@ -2391,9 +2391,7 @@ INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","sectio
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
 
 
-INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\');
-
-',40,'feature_debug_console','tiki_p_admin','');
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'o','(debug)','javascript:toggle(\'debugconsole\')',40,'feature_debug_console','tiki_p_admin','');
 
 
 INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname") VALUES (42,'s','MyTiki (click!)','tiki-my_tiki.php',50,'','','Registered');
@@ -3560,7 +3558,7 @@ CREATE TABLE "tiki_rss_feeds" (
   "refresh" number(8) default '300',
   "lastUpdated" number(14) default NULL,
   "cache" blob,
-  PRIMARY KEY ("name"," rssVer")
+  PRIMARY KEY ("name","rssVer")
 ) ;
 
 
@@ -6381,12 +6379,12 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 DROP TABLE "tiki_quicktags";
 
 
-CREATE TABLE `tiki_quicktags` (
-  `tagId` number(4) NOT NULL auto_increment,
-  `taglabel` varchar(255) default NULL,
-  `taginsert` varchar(255) default NULL,
-  `tagicon` varchar(255) default NULL,
-  PRIMARY KEY ("`tagId`")
+CREATE TABLE "tiki_quicktags" (
+  "tagId" number(4) NOT NULL auto_increment,
+  "taglabel" varchar(255) default NULL,
+  "taginsert" varchar(255) default NULL,
+  "tagicon" varchar(255) default NULL,
+  PRIMARY KEY ("tagId")
 )   ;
 
 

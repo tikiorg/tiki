@@ -2596,7 +2596,7 @@ CREATE TABLE tiki_rss_feeds (
   refresh int(8) default '300',
   lastUpdated int(14) default NULL,
   cache longblob,
-  PRIMARY KEY  (name, rssVer)
+  PRIMARY KEY  (name,rssVer)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -4150,12 +4150,12 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 # Table structures for table 'tiki_quicktags'
 # 
 DROP TABLE IF EXISTS tiki_quicktags;
-CREATE TABLE `tiki_quicktags` (
-  `tagId` int(4) unsigned NOT NULL auto_increment,
-  `taglabel` varchar(255) default NULL,
-  `taginsert` varchar(255) default NULL,
-  `tagicon` varchar(255) default NULL,
-  PRIMARY KEY  (`tagId`)
+CREATE TABLE tiki_quicktags (
+  tagId int(4) unsigned NOT NULL auto_increment,
+  taglabel varchar(255) default NULL,
+  taginsert varchar(255) default NULL,
+  tagicon varchar(255) default NULL,
+  PRIMARY KEY  (tagId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon) VALUES ('bold','__text__','images/ed_format_bold.gif');
