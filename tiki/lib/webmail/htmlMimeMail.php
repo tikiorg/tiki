@@ -2,8 +2,8 @@
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2003-05-04 21:10:43 $
-* CVS Revision...: $Revision: 1.4 $
+* Last Modified..: $Date: 2003-08-07 02:46:59 $
+* CVS Revision...: $Revision: 1.5 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -333,7 +333,7 @@ class htmlMimeMail
 	function _findHtmlImages($images_dir)
 	{
 		// Build the list of image extensions
-		while (list($key,) = each($this->image_types)) {
+		while (list($key) = each($this->image_types)) {
 			$extensions[] = $key;
 		}
 
@@ -855,7 +855,7 @@ class htmlMimeMail
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.4 $
+* @version $Revision: 1.5 $
 * @package Mail
 */
 
@@ -1134,7 +1134,7 @@ class Mail_mimePart {
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.4 $
+* @version $Revision: 1.5 $
 * @package Mail
 */
 
