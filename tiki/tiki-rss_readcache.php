@@ -28,7 +28,7 @@ else
   $output = $res["cache"];
   $lastUpdated = $res["lastUpdated"];
   // up to date? if not, then set trigger to reload data:
-  if ($lastUpdated + 2*60 < $now) { $output="EMPTY"; } // TODO: make timeout configurable (is 2 minutes now)
+  if ($lastUpdated + 7*60 < $now) { $output="EMPTY"; } // TODO: make timeout configurable (is 7 minutes now)
 }
 
 ?>
