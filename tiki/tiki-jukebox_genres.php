@@ -68,6 +68,12 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
 	}
 }
 
+if (isset($_REQUEST["remove"])) {
+        check_ticket('jukebox-genres');
+
+        $jukeboxlib->remove_genre($_REQUEST["remove"]);
+}
+
 $listgenres = $jukeboxlib->list_genres($offset, $maxRecords, $sort_mode, $find);
 
 $cant_pages = ceil($listgenres["cant"] / $maxRecords);
