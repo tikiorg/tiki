@@ -1,6 +1,7 @@
 <?php
     /**
     * Plugin Lib
+    *
     * A port of PhpWiki WikiPlugin class
     * Principal use is port PhpWiki plugins, but can be used to make new ones.
     * Use:
@@ -17,7 +18,8 @@
     *    $plugin = new BackLinks();
     *    return $plugin->getDescription();
     * }    * </code>
-    *
+    * @package TikiWiki
+    * @subpackage Plugins
     * @author Claudio Bustos
     * @version 1.0
     */
@@ -26,15 +28,38 @@
         var $_data;
         var $_params;
         /**
-        * Array of params to be expanded as arrays. Explode the string with {@link $this->separator}
+        * Array of params to be expanded as arrays. Explode the string with {@link $separator}
+        * @var array
         */
         var $expanded_params = array();
+        /**
+        * Separator used to explote params listed on {@link $expanded_params}
+        * @var string
+        */
         var $separator = "|";
+        /**
+        * List of fields retrieved from {@link TikiLib::list_pages()}
+        * Keys are the name of the fields and values the names for tra();
+        * @var array
+        */
         var $aInfoPresetNames = array(
         "hits" => "Hits", "lastModif" => "Last mod", "user" => "Last author", "len" => "Size", "comment" => "Com", "creator" => "Creator", "version" => "Last ver", "flag" => "Status", "versions" => "Vers", "links" => "Links", "backlinks" => "Backlinks");
+        /**
+        * Constructor
+        */
         function PluginsLib() {
             $this->db = $GLOBALS["dbTiki"];
         }
+        /**
+        * Process the params, in this order:
+        * - default values, asigned on {@link PluginsLib::getDefaultArguments()}
+        * - request values, sended by GET or POST method, if $request is put to true
+        * - explicit values, asigned on the Wiki
+        * @param array sended to wikiplugin_name($data, $params)
+        * @param bool if set to true, accept values from $_REQUEST
+        * @param bool if set to true, assign default values from {@link PluginsLib::getDefaultArguments()}
+        * @return array list of params
+        */
         function getParams($params, $request = false, $defaults = false) {
             if ($defaults === false) {
                 $defaults = $this->getDefaultArguments();
@@ -50,24 +75,54 @@
                 }
                 if (in_array($arg, $this->expanded_params) and $args[$arg]) {
                     $args[$arg] = explode($this->separator, $args[$arg]);
+                    foreach($args[$arg] as $id=>$value) {
+                        $args[$arg][$id]=trim($value);
+                    }
                 }
             }
             return $args;
         }
+        /**
+        * Returns the name of the Plugin
+        * By default, erase the first 'WikiPlugin'
+        * Made for overload it.
+        * @return string
+        */
         function getName() {
-            return preg_replace('/^.*_/', '', get_class($this));
+            return preg_replace('/^WikiPlugin/', '', get_class($this));
         }
+        /**
+        * Returns a description of the Plugin
+        * Made for overload it.
+        * @return string
+        */
         function getDescription() {
             return $this->getName();
         }
+        /**
+        * Returns the version of the version
+        * Made for overload it.
+        * @return string
+        */
         function getVersion() {
             return tra("No version indicated");
             //return preg_replace("/[Revision: $]/", '',
-            //                    "\$Revision: 1.1 $");
+            //                    "\$Revision: 1.2 $");
         }
+        /**
+        * Returns the default arguments for the plugin
+        * Use keys as the arguments and values as ... the default values
+        * @return array
+        */
         function getDefaultArguments() {
             return array('description' => $this->getDescription());
         }
+        /**
+        * Run the plugin
+        * For sake of God, overload it!
+        * @param string
+        * @param array
+        */
         function run ($data, $params) {
             /**
             * UGLY ERROR!.
@@ -84,6 +139,48 @@
         function _error($message) {
             $this->_errors = $message;
             return false;
+        }
+    }
+    /**
+    * Class with utilities for Plugins
+    */
+    class PluginsLibUtil {
+        /**
+        * Create a table with information from pages
+        * @param array key ["data"] from one of the functions that retrieve información about pages
+        * @param array list of keys to show.
+        * @return string
+        */
+        function createTablePages($aData,$aInfo=false) {
+            $sOutput="";
+            if ($aInfo) {
+                // Header for info
+                $sOutput  .= "<table class='normal'><tr><td class='heading'>".tra("Page")."</td>";
+                foreach($aInfo as $iInfo => $sHeader) {
+                    $sOutput  .= "<td class='heading'>".tra($sHeader)."</td>";
+                }
+                $sOutput  .= "</tr>";
+            }
+            $iCounter=1;
+            foreach($aData as $aPage) {
+                $sClass=($iCounter%2)?"odd":"even";
+                if (!$aInfo) {
+                    $sOutput  .= "*((".$aPage["pageName"]."))\n";
+                } else {
+                    $sOutput  .= "<tr><td class='$sClass'>((".$aPage["pageName"]."))</td>";
+                    foreach($aInfo as $sInfo) {
+                        if (isset($aPage[$sInfo])) {
+                            $sOutput  .= "<td class='$sClass'>".$aPage[$sInfo]."</td>";
+                        }
+                    }
+                }
+                
+            $iCounter++;
+            }
+                if ($aInfo) {
+                    $sOutput  .= "</table>";
+                }
+        return $sOutput;
         }
     }
 ?>
