@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.39 2003-10-14 14:43:40 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup_base.php,v 1.40 2003-10-20 04:35:30 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -44,17 +44,21 @@ if ($session_db == 'y') {
 }
 session_start();
 
+// in the case of tikis on same domain we have to distinguish the realm
+// changed cookie and session variable name by a name made with siteTitle 
+$cookie_site = urlencode($tikilib->get_preference('siteTitle','tikiwiki'));
+$user_cookie_site = 'tiki-user-'.$cookie_site;
+
 // check if the remember me feature is enabled
 $rememberme = $tikilib->get_preference('rememberme', 'disabled');
 
 // if remember me is enabled, check for cookie where auth hash is stored
 // user gets logged in as the first user in the db with a matching hash
 if ($rememberme != 'disabled') {
-    if (isset($_COOKIE['tiki-user'])) {
-        if (!isset($user)and !isset($_SESSION['user'])) {
-            $user = $userlib->get_user_by_hash($_COOKIE['tiki-user']);
-
-            $_SESSION['user'] = $user;
+    if (isset($_COOKIE["$user_cookie_site"])) {
+        if (!isset($user)and !isset($_SESSION["$user_cookie_site"])) {
+            $user = $userlib->get_user_by_hash($_COOKIE["$user_cookie_site"]);
+            $_SESSION["$user_cookie_site"] = $user;
         }
     }
 }
@@ -66,14 +70,14 @@ $auth_method = $tikilib->get_preference('auth_method', 'tiki');
 if ($auth_method == 'ws') {
     if (isset($_SERVER['REMOTE_USER'])) {
         if ($userlib->user_exists($_SERVER['REMOTE_USER'])) {
-            $_SESSION["user"] = $_SERVER['REMOTE_USER'];
+            $_SESSION["$user_cookie_site"] = $_SERVER['REMOTE_USER'];
         }
     }
 }
 
 // if the username is already saved in the session, pull it from there
-if (isset($_SESSION["user"])) {
-    $user = $_SESSION["user"];
+if (isset($_SESSION["$user_cookie_site"])) {
+    $user = $_SESSION["$user_cookie_site"];
 } else {
     $user = NULL;
 }
