@@ -1,5 +1,7 @@
+# Command to build: rpmbuild -ba --target noarch tikiwiki.spec
+
 %define name tikiwiki
-%define version 1.8.RC1
+%define version 1.8.RC2
 %define release 1
 
 Summary: A PHP-based CMS/Groupware web application with a full Wiki environment
@@ -13,12 +15,9 @@ AutoReqProv: no
 Requires: php-mysql 
 Group: Applications/Internet
 Source: http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
-#Source: http://prdownloads.sourceforge.net/%{name}/%{name}-%{version}%{release}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-root
 Prefix: /var/www/html
-Vendor: The TikiWiki Team
-
-# Command to build: rpmbuild -ba --target noarch tikiwiki.spec
+Vendor: The TikiWiki Community
 
 %description
 TikiWiki is an open source CMS/Groupware web application which provides a full Wiki environment, as well as Articles, Sections/Categories, User/Group Management (including optional LDAP), Polls and Quizzes, File and Image Galleries, Forums, Weblogs, Calendars, Chat and much more.
