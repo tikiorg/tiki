@@ -43,7 +43,7 @@
 </table>
 <table class="jukeboxlist">
 <tr>
-	<td class="jukeboxlistheading"><a class="jukeboxlistheading" href="tiki-jukebox_genres.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'genreName_desc'}genreName_asc{else}genreName_desc{/if}">{tr}Title{/tr}</a></td>
+	<td class="jukeboxlistheading"><a class="jukeboxlistheading" href="tiki-jukebox_genres.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'genreName_desc'}genreName_asc{else}genreName_desc{/if}">{tr}Title{/tr} <img border="0" src="img/icons2/{if $sort_mode eq 'genreName_desc'}down{else}up{/if}_active.gif" alt="{tr}sort order{/tr}" /></a></td>
 	<td class="jukeboxlistheading">{tr}Description{/tr}</td>
 	<td class="jukeboxlistheading">{tr}Action{/tr}</td>
 </tr>
