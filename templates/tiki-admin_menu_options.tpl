@@ -18,7 +18,7 @@
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table>
 <tr><td class="form">{tr}Name{/tr}:</td><td><input id="menu_name" type="text" name="name" value="{$name|escape}" /></td></tr>
-<tr><td class="form">{tr}URL{/tr}:</td><td><input id="menu_url" type="text" name="url" value="{$url|escape}" /></td></tr>
+<tr><td class="form">{tr}URL{/tr}:</td><td><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" /></td></tr>
 <tr><td class="form">{tr}Sections{/tr}:</td><td><input id="menu_section" type="text" name="section" value="{$section|escape}" /></td></tr>
 <tr><td class="form">{tr}Permissions{/tr}:</td><td><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" /></td></tr>
 <tr><td class="form">{tr}Groups{/tr}:</td><td><input id="menu_groupname" type="text" name="groupname" value="{$groupname|escape}" /></td></tr>
@@ -34,54 +34,77 @@
 </form>
 </td><td valign="top" class="even">
 <h2>{tr}Some useful URLs{/tr}</h2>
-[<a class="link" href="javascript:setMenuCon('{$tikiIndex}','{tr}Home Page{/tr}');">{tr}Home Page{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-view_blog.php?blogId={$home_blog}','{tr}Home Blog{/tr}');">{tr}Home Blog{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-browse_gallery.php?galleryId={$home_gallery}','{tr}Home Image Gal{/tr}');">{tr}Home Image Gallery{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-list_file_gallery?galleryId={$home_file_gallery}','{tr}Home File Gal{/tr}');">{tr}Home File Gallery{/tr}</a>]
-<br />
-[<a class="link" href="javascript:setMenuCon('tiki-chat.php','{tr}Chat{/tr}');">{tr}Chat{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-stats.php','{tr}Stats{/tr}');">{tr}Stats{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-games.php','{tr}Games{/tr}');">{tr}Games{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-browse_categories.php','{tr}Categories{/tr}');">{tr}Categories{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-user_preferences.php','{tr}User preferences{/tr}');">{tr}User prefs{/tr}</a>]
-<br />
-[<a class="link" href="javascript:setMenuCon('tiki-index.php','{tr}Wiki Home{/tr}');">{tr}Wiki Home{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-lastchanges.php','{tr}Last changes{/tr}');">{tr}Last changes{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-wiki_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-listpages.php','{tr}List pages{/tr}');">{tr}List pages{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-index.php?page=SandBox','{tr}Sandbox{/tr}');">{tr}Sandbox{/tr}</a>]
-<br />
-[<a class="link" href="javascript:setMenuCon('tiki-galleries.php','{tr}List galleries{/tr}');">{tr}List image galleries{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-upload_image.php','{tr}Upload image{/tr}');">{tr}Upload{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-galleries_rankings.php','{tr}Gallery Rankings{/tr}');">{tr}Rankings{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-browse_gallery.php?galleryId=','');">{tr}Browse a gallery{/tr}</a>]
-<br />
-[<a class="link" href="javascript:setMenuCon('tiki-articles_home.php','{tr}Articles{/tr}');">{tr}Articles home{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-list_articles.php','{tr}All articles{/tr}');">{tr}List articles{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-cms_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-edit_submission.php','{tr}Submit{/tr}');">{tr}Submit{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-list_submissions.php','{tr}Submissions{/tr}');">{tr}Submissions{/tr}</a>]
-<br />
-[<a class="link" href="javascript:setMenuCon('tiki-list_blogs.php','{tr}List Blogs{/tr}');">{tr}List Blogs{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-blog_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-edit_blog.php','{tr}Create blog{/tr}');">{tr}Create blog{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-blog_post.php','{tr}Post{/tr}');">{tr}Post{/tr}</a>]
-<br />
-[<a class="link" href="javascript:setMenuCon('tiki-file_galleries.php','{tr}File galleries{/tr}');">{tr}File galleries{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-upload_file.php','{tr}Upload file{/tr}');">{tr}Upload file{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-file_galleries_rankings.php','{tr}Rankings{/tr}');">{tr}Rankings{/tr}</a>]
-<br />
-[<a class="link" href="javascript:setMenuCon('tiki-forums.php','{tr}Forums{/tr}');">{tr}Forums{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-view_forum.php?forumId=','');">{tr}View a forum{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-view_forum_thread.php?forumId=&amp;comments_parentId=','');">{tr}View a thread{/tr}</a>]
-<br />
-[<a class="link" href="javascript:setMenuCon('tiki-list_faqs.php','{tr}FAQs{/tr}');">{tr}FAQs{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-view_faq.php?faqId=','');">{tr}View a FAQ{/tr}</a>]
-<br />
-[<a class="link" href="javascript:setMenuCon('tiki-list_quizzes.php','{tr}Quizzes{/tr}');">{tr}Quizzes{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-take_quiz.php?quizId=','');">{tr}Take a quiz{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-quiz_stats.php','{tr}Quiz stats{/tr}');">{tr}Quiz stats{/tr}</a>
-|<a class="link" href="javascript:setMenuCon('tiki-quiz_stats_quiz.php?quizId=','');">{tr}Stats for a Quiz{/tr}</a>]
+<table>
+<tr><td>{tr}Home{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</option>
+<option value="{$tikiIndex},{tr}Home Page{/tr}">{tr}Home Page{/tr}</option>
+<option value="tiki-view_blog.php?blogId={$home_blog},{tr}Home Blog{/tr},feature_blogs,tiki_p_view_blogs">{tr}Home Blog{/tr}</option>
+<option value="tiki-browse_gallery.php?galleryId={$home_gallery},{tr}Home Image Gal{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}Home Image Gallery{/tr}</option>
+<option value="tiki-list_file_gallery?galleryId={$home_file_gallery},{tr}Home File Gal{/tr},feature_file_galleries,tiki_p_view_file_gallery">{tr}Home File Gallery{/tr}</option>]
+</select></td></tr>
+<tr><td>{tr}General{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</optio4n>
+<option value="tiki-chat.php,{tr}Chat{/tr},feature_chat,tiki_p_chat">{tr}Chat{/tr}</option>
+<option value="tiki-stats.php,{tr}Stats{/tr},feature_stats,tiki_p_view_stats">{tr}Stats{/tr}</option>
+<option value="tiki-games.php,{tr}Games{/tr},feature_games,tiki_p_play_games">{tr}Games{/tr}</option>
+<option value="tiki-browse_categories.php,{tr}Categories{/tr},feature_categories,tiki_p_view_categories">{tr}Categories{/tr}</option>
+<option value="tiki-user_preferences.php,{tr}User preferences{/tr}">{tr}User prefs{/tr}</option>
+</select></td></tr>
+<tr><td>{tr}Wiki{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</option>
+<option value="tiki-index.php,{tr}Wiki Home{/tr},feature_wiki,tiki_p_view">{tr}Wiki Home{/tr}</option>
+<option value="tiki-lastchanges.php,{tr}Last changes{/tr},feature_lastChanges,tiki_p_view">{tr}Last changes{/tr}</option>
+<option value="tiki-wiki_rankings.php,{tr}Rankings{/tr},feature_wiki_rankings,tiki_p_view">{tr}Rankings{/tr}</option>
+<option value="tiki-listpages.php,{tr}List pages{/tr},feature_listPages,tiki_p_view">{tr}List pages{/tr}</option>
+<option value="tiki-index.php?page=SandBox,{tr}Sandbox{/tr},feature_sandbox,tiki_p_view">{tr}Sandbox{/tr}</option>
+</select></td></tr>
+<tr><td>{tr}Images{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</option>
+<option value="tiki-galleries.php,{tr}List galleries{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}List image galleries{/tr}</option>
+<option value="tiki-upload_image.php,{tr}Upload image{/tr},feature_galleries,tiki_p_upload_images">{tr}Upload{/tr}</option>
+<option value="tiki-galleries_rankings.php,{tr}Gallery Rankings{/tr},feature_gal_rankings,tiki_p_view_image_gallery">{tr}Rankings{/tr}</option>
+<option value="tiki-browse_gallery.php?galleryId=,{tr}Browse a gallery{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}Browse a gallery{/tr}</option>
+</select></td></tr>
+<tr><td>{tr}CMS{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</option>
+<option value="tiki-articles_home.php,{tr}Articles{/tr},feature_articles,tiki_p_read_article">{tr}Articles home{/tr}</option>
+<option value="tiki-list_articles.php,{tr}All articles{/tr},feature_articles,tiki_p_read_article">{tr}List articles{/tr}</option>
+<option value="tiki-cms_rankings.php,{tr}Rankings{/tr},feature_cms_ranking,tiki_p_read_article">{tr}Rankings{/tr}</option>
+<option value="tiki-edit_submission.php,{tr}Submit{/tr},feature_submissions,tiki_p_submit_article">{tr}Submit{/tr}</option>
+<option value="tiki-list_submissions.php,{tr}Submissions{/tr},feature_submissions,tiki_p_approve_submission">{tr}Submissions{/tr}</option>
+</select></td></tr>
+<tr><td>{tr}Blogs{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</option>
+<option value="tiki-list_blogs.php,{tr}List Blogs{/tr},feature_blogs,tiki_p_read_blog">{tr}List Blogs{/tr}</option>
+<option value="tiki-blog_rankings.php,{tr}Rankings{/tr},feature_blog_rankings,tiki_p_read_blog">{tr}Rankings{/tr}</option>
+<option value="tiki-edit_blog.php,{tr}Create blog{/tr},feature_blogs,tiki_p_create_blogs">{tr}Create blog{/tr}</option>
+<option value="tiki-blog_post.php,{tr}Post{/tr},feature_blogs,tiki_p_blog_post">{tr}Post{/tr}</option>
+</select></td></tr>
+<tr><td>{tr}Files{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</option>
+<option value="tiki-file_galleries.php,{tr}File galleries{/tr},feature_file_galleries,tiki_p_view_file_gallery">{tr}File galleries{/tr}</option>
+<option value="tiki-upload_file.php,{tr}Upload file{/tr},feature_file_galleries,tiki_p_upload_files">{tr}Upload file{/tr}</option>
+<option value="tiki-file_galleries_rankings.php,{tr}Rankings{/tr},feature_file_galleries_rankings,tiki_p_view_file_gallery">{tr}Rankings{/tr}</option>
+</select></td></tr>
+<tr><td>{tr}Forums{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</option>
+<option value="tiki-forums.php,{tr}Forums{/tr},feature_forums,tiki_p_forum_read">{tr}Forums{/tr}</option>
+<option value="tiki-view_forum.php?forumId=,{tr}View a forum{/tr},feature_forums,tiki_p_forum_read">{tr}View a forum{/tr}</option>
+<option value="tiki-view_forum_thread.php?forumId=&amp;comments_parentId=,{tr}View a thread{/tr},feature_forums,tiki_p_forum_read">{tr}View a thread{/tr}</option>8
+</select></td></tr>
+<tr><td>{tr}FAQs{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</option>
+<option value="tiki-list_faqs.php,{tr}FAQs{/tr},feature_faqs,tiki_p_view_faqs">{tr}FAQs{/tr}</option>
+<option value="tiki-view_faq.php?faqId=,{tr}View a FAQ{/tr},feature_faqs,tiki_p_view_faqs">{tr}View a FAQ{/tr}</option>
+</select></td></tr>
+<tr><td>{tr}Quizzes{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<option value=",,,">{tr}Choose{/tr} ...</option>
+<option value="tiki-list_quizzes.php,{tr}Quizzes{/tr},feature_quizzes">{tr}Quizzes{/tr}</option>
+<option value="tiki-take_quiz.php?quizId=,{tr}Take a quiz{/tr},feature_quizzes">{tr}Take a quiz{/tr}</option>
+<option value="tiki-quiz_stats.php,{tr}Quiz stats{/tr},feature_quizzes,tiki_p_view_quiz_stats">{tr}Quiz stats{/tr}</option>
+<option value="tiki-quiz_stats_quiz.php?quizId=,{tr}Stats for a Quiz{/tr},feature_quizzes,tiki_p_view_quiz_stats">{tr}Stats for a Quiz{/tr}</option>
+</select>
+</td></tr></table>
 </td></tr></table>
 </td></tr></table>
 <h2>{tr}Menu options{/tr}</h2>
