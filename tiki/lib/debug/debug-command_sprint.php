@@ -1,0 +1,65 @@
+<?php
+/** \file
+ * $Header: /cvsroot/tikiwiki/tiki/lib/debug/debug-command_sprint.php,v 1.1 2003-07-13 00:35:40 zaufi Exp $
+ *
+ * \brief Print Smarty vars
+ *
+ * \author zaufi <zaufi@sendmail.ru>
+ *
+ */
+require_once('lib/debug/debugger-ext.php');
+
+/**
+ * \brief Debugger command to print smatry vars
+ */
+class DbgSPrint extends DebuggerCommand
+{
+  /// \b Must have function to announce command name in debugger console
+  function name()
+  {
+    return 'sprint';
+  }
+  /// \b Must have function to provide help to debugger console
+  function description()
+  {
+    return 'Print Smatry variable';
+  }
+  /// \b Must have function to provide help to debugger console
+  function syntax()
+  {
+    return 'sprint $var1 $var2 var3 ...';
+  }
+  /// \b Must have functio to show exampla of usage of given command
+  function example()
+  {
+    return 'sprint $user $feature_left_column';
+  }
+  /// Execute command with given set of arguments. Must return string of result.
+  function execute($params)
+  {
+    global $smarty;
+    $this->set_result_type(HTML_RESULT);
+    $result = '';
+    $vars = explode(" ", $params);
+    foreach ($vars as $v)
+    {
+      $v = trim(str_replace("$", "", $v));
+      if (strlen($v) != 0)
+      {
+	$tmp = $smarty->get_template_vars();
+	if (is_array($tmp) &&  isset($tmp[$v]))
+	  $result .= $v.' = '.print_r($tmp[$v], true)."\n";
+	else
+	  $result .= 'Smarty variable "'.$v.'" not found';
+      }
+    }
+    return $result;
+  }
+}
+/// Class factory to create instances of defined commands
+function dbg_command_factory_sprint()
+{
+  return new DbgSPrint();
+}
+
+?>
