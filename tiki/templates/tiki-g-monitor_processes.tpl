@@ -56,9 +56,9 @@
 <td >
 	<select name="filter_process">
 	<option {if '' eq $smarty.request.filter_process}selected="selected"{/if} value="">{tr}All{/tr}</option>
-	{section loop=$all_procs name=ix}
-	<option {if $all_procs[ix].pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$all_procs[ix].pId|escape}">{$all_procs[ix].name}</option>
-	{/section}
+	{foreach from=$all_procs item=proc}
+	<option {if $proc.pId eq $smarty.request.filter_process}selected="selected"{/if} value="{$proc.pId|escape}">{$proc.name}</option>
+	{/foreach}
 	</select>
 </td>
 <td >
@@ -99,27 +99,27 @@
 </td>
 </tr>
 {cycle values="odd,even" print=false}
-{section name=ix loop=$items}
+{foreach from=$items item=proc}
 <tr>
 	<td class="{cycle advance=false}">
-	  <a class="link" href="tiki-g-admin_processes.php?pid={$items[ix].pId}">{$items[ix].name} {$items[ix].version}</a>
+	  <a class="link" href="tiki-g-admin_processes.php?pid={$proc.pId}">{$proc.name} {$proc.version}</a>
 	</td>
 	<td class="{cycle advance=false}" style="text-align:right;">
-		<a href="tiki-g-monitor_activities.php?filter_process={$items[ix].pId}" class="link">{$items[ix].activities}</a>
+		<a href="tiki-g-monitor_activities.php?filter_process={$proc.pId}" class="link">{$proc.activities}</a>
 	</td>
 
 
 	  
 
 	<td class="{cycle advance=false}" style="text-align:center;">
-	  {if $items[ix].isActive eq 'y'}
+	  {if $proc.isActive eq 'y'}
 	  <img src='lib/Galaxia/img/icons/refresh2.gif' alt=' ({tr}active{/tr}) ' title='{tr}active process{/tr}' />
 	  {else}
 	  &nbsp;
 	  {/if}
 	</td>
 	<td class="{cycle advance=false}" style="text-align:center;">
-	  {if $items[ix].isValid eq 'n'}
+	  {if $proc.isValid eq 'n'}
 	  <img src='lib/Galaxia/img/icons/red_dot.gif' alt=' ({tr}invalid{/tr}) ' title='{tr}invalid process{/tr}' />
 	  {else}
 	  <img src='lib/Galaxia/img/icons/green_dot.gif' alt=' ({tr}valid{/tr}) ' title='{tr}valid process{/tr}' />
@@ -130,21 +130,21 @@
 	<td class="{cycle}" style="text-align:right;">
 		<table >
 		<tr>
-		 <td style="text-align:right;"><a style="color:green;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=active">{$items[ix].active_instances}</a></td>
-		 <td style="text-align:right;"><a style="color:black;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=completed">{$items[ix].completed_instances}</a></td>
-		 <td style="text-align:right;"><a style="color:grey;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=aborted">{$items[ix].aborted_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:green;" href="tiki-g-monitor_instances.php?filter_process={$proc.pId}&amp;filter_status=active">{$proc.active_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:black;" href="tiki-g-monitor_instances.php?filter_process={$proc.pId}&amp;filter_status=completed">{$proc.completed_instances}</a></td>
+		 <td style="text-align:right;"><a style="color:grey;" href="tiki-g-monitor_instances.php?filter_process={$proc.pId}&amp;filter_status=aborted">{$proc.aborted_instances}</a></td>
 		 <td style="text-align:right;"><a style="color:red;" href="tiki-g-monitor_instances.php?filter_process={$items[ix].pId}&amp;filter_status=exception">{$items[ix].exception_instances}</a></td>
 		</tr>
 		</table>
 	</td>
 </tr>
-{sectionelse}
+{foreachelse}
 <tr>
 	<td class="{cycle advance=false}" colspan="6">
 	{tr}No processes defined yet{/tr}
 	</td>
 </tr>	
-{/section}
+{/foreach}
 </table>
 </form>
 {* END OF LISTING *}
