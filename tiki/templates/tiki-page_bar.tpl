@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.23 2003-10-03 23:08:12 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-page_bar.tpl,v 1.24 2003-10-12 05:00:32 mose Exp $ *}
 
 <hr/>
 <div id="page-bar">
@@ -80,7 +80,7 @@
    <td>
     <div class="button2">
       <a title="View/post comments"
-         href="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');"
+         href="javascript:document.location='#comments';flip('comzone{if $comments_show eq 'y'}open{/if}');"
          class="linkbut">
 	{if $comments_cant == 0}
           {tr}add comment{/tr}
@@ -106,7 +106,7 @@
   <td>
     
     <div class="button2">
-      <a title="Manage attachments for this page" href="javascript:flip('attzone');" class="linkbut">
+      <a title="Manage attachments for this page" href="javascript:document.location='#attachments';flip('attzone');" class="linkbut">
 
         {* display 'attach file' only if no attached files or 
          * only $tiki_p_wiki_attach_files perm
