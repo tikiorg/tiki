@@ -23,7 +23,7 @@ function smarty_function_poll($params, &$smarty) {
 				$comments_count = $commentslib->count_comments("poll:".$menu_info["pollId"]);
 			}
 			$smarty->assign('comments', $comments_count);
-      $smarty->assign('ownurl',/*httpPrefix().*/$_SERVER["REQUEST_URI"]);
+      $smarty->assign('ownurl','tiki-poll_results.php?pollId='.$id);
       $smarty->assign('menu_info',$menu_info);
       $smarty->assign('channels',$channels["data"]);
       $smarty->display('tiki-poll.tpl');
