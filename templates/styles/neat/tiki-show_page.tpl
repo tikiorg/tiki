@@ -29,16 +29,14 @@
 {/if}
 </td>
 <td>
-</tr>
 </td>
+</tr>
 {/if}
 <tr>
 <td>
 </td>
 <td style="text-align:right;">
-
-
-
+{if $print_page ne 'y'}
 {if !$lock and ($tiki_p_edit eq 'y' or $page eq 'SandBox') and $beingEdited ne 'y'}
 <a title="{tr}edit{/tr}" href="tiki-editpage.php?page={$page|escape:"url"}"><img border="0" src="img/icons/edit.gif" alt='{tr}edit{/tr}' /></a>
 {/if}
@@ -70,10 +68,13 @@
   {/if}
 {/if}
 
+{/if}
 </td>
+
 </tr>
 </table>
 
+{if $print_page ne 'y'}
 {if !$lock}
 	{if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
 		{if $beingEdited eq 'y'}
@@ -143,7 +144,7 @@
 <span class="tabbut"><a href="javascript:flip('attzone{if $atts_show eq 'y'}open{/if}');" class="tablink">{if $atts_count eq 0}{tr}attach file{/tr}{elseif $atts_count eq 1}1 {tr}attachment{/tr}{else}{$atts_count} {tr}attachments{/tr}{/if}</a></span>
 {/if} 
 
-
+{/if}
 
 <div class="wikitext">{if $structure eq 'y'}
 <div class="tocnav">
