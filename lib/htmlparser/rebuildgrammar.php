@@ -1,6 +1,6 @@
 <?
 
-include ("common.inc");
+//include ("common.inc");
 
 include ("htmlgrammarparser.inc");
 $p = new HtmlGrammarParser("htmlgrammar.dat");
