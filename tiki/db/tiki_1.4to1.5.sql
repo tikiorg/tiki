@@ -1,3 +1,39 @@
+### Newsletters
+drop table if exists tiki_newsletters;
+create table tiki_newsletters(
+  nlId integer(12) not null auto_increment,
+  name varchar(200),
+  description text,
+  created integer(14),
+  lastSent integer(14),
+  editions integer(10),
+  users integer(10),
+  allowAnySub char(1),
+  frequency integer(14),
+  primary key(nlId)
+);
+
+drop table if exists tiki_newsletter_subscriptions;
+create table tiki_newsletter_subscriptions (
+  nlId integer(12) not null,
+  email varchar(255) not null,
+  code char(32),
+  valid char(1),
+  subscribed integer(14),
+  primary key(nlId,email)
+);
+
+drop table if exists tiki_sent_newsletters;
+create table tiki_sent_newsletters (
+  
+);
+
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_admin_newsletters','newsletters','Can admin newsletters');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_subscribe_newsletters','newsletters','Can subscribe to newsletters');
+INSERT INTO users_permissions(permName,type,permDesc) VALUES ('tiki_p_subscribe_email_newsletters','newsletters','Can subscribe any email to newsletters');
+
+### Newsletters
+
 alter table tiki_links modify fromPage varchar(160) NOT NULL;
 alter table tiki_links modify toPage varchar(160) NOT NULL;
 alter table tiki_pages modify pageName varchar(160) NOT NULL;
@@ -6,7 +42,7 @@ alter table tiki_history modify pageName varchar(160) NOT NULL;
 alter table tiki_actionlog modify pageName varchar(160) NOT NULL;
 alter table tiki_received_pages modify pageName varchar(160);
 
-# $Id: tiki_1.4to1.5.sql,v 1.11 2003-01-01 17:34:47 lrargerich Exp $
+# $Id: tiki_1.4to1.5.sql,v 1.12 2003-01-01 22:37:06 lrargerich Exp $
 
 alter table users_users add avatarName varchar(80);
 alter table users_users add avatarSize integer(14);
