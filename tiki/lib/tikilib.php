@@ -3948,6 +3948,7 @@ class TikiLib {
 	global $feature_drawings;
 	global $tiki_p_admin_drawings;
 	global $tiki_p_edit_drawings;
+	global $tiki_p_edit_dynvar;
 	global $feature_wiki_pictures;
 	global $tiki_p_upload_picture;
 	global $feature_wiki_plurals;
@@ -4118,8 +4119,14 @@ class TikiLib {
 			}
 			// Now build 2 divs
 			$id = 'dyn_'.$dvar;
-			$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'><a onClick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable').": $dvar'>$value</a></span>";
-			$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' /></span>";
+
+			if(isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
+				$span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onClick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable').": $dvar'>$value</a></span>";
+				$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' /></span>";
+			} else {
+				$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
+				$span2 = '';							
+			}
 			$html = $span1.$span2;
 			//It's important to replace only once
 			$data = preg_replace("/%$dvar%/",$html,$data,1);

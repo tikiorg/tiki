@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.145 2003-10-02 14:18:08 lrargerich Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.146 2003-10-02 14:23:46 lrargerich Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1586,10 +1586,12 @@ if ($feature_referer_stats == 'y') {
 }
 
 //Check for an update of dynamic vars
-if(isset($_REQUEST['_dyn_update'])) {
-	foreach($_REQUEST as $name => $value) {
-		if(substr($name,0,4)=='dyn_' and $name!='_dyn_update') {
-			$tikilib->update_dynamic_variable(substr($name,4),$_REQUEST[$name]);
+if(isset($tiki_p_edit_dynvar) && $tiki_p_edit_dynvar == 'y') {
+	if(isset($_REQUEST['_dyn_update'])) {
+		foreach($_REQUEST as $name => $value) {
+			if(substr($name,0,4)=='dyn_' and $name!='_dyn_update') {
+				$tikilib->update_dynamic_variable(substr($name,4),$_REQUEST[$name]);
+			}
 		}
 	}
 }
