@@ -1,3 +1,511 @@
+2004-06-09  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      libs/plugins/modifier.escape.php:
+      added escapement of '</' to javascript escaping
+
+2004-06-08  gerald croes  <gerald@phpside.org>
+
+    * docs/fr/translation.xml:
+      Add other translators.
+
+2004-06-08  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      made the correct value of "use_sub_dirs" available to the compiler.
+      (not worth a NEWS-entry, i think)
+
+2004-06-01  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/function.fetch.php:
+      fix: proper initialistaion of $content.
+      thanks to Dmitry Koteroff for pointing this out.
+
+2004-05-29  Mehdi Achour  <didou@keliglia.com>
+
+    * docs/fr/translation.xml:
+      oups :)
+
+    * docs/fr/translation.xml:
+      added translation file
+
+2004-05-28  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/Makefile.in:
+      clean also file-entities.php
+
+2004-05-28  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/plugins/function.mailto.php:
+      added obfuscation of protocol-string in {mailto} when using
+      hex-encoding (thanks to bharat)
+
+2004-05-26  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty.class.php:
+      enhanced auto-generated filenames for templates_c and cache
+      
+      incremented Smarty::_version because the tempfiles' structure changed
+      a little
+
+2004-05-23  Mehdi Achour  <didou@keliglia.com>
+
+    * docs/fr/bookinfo.xml
+      docs/fr/getting-started.xml
+      docs/fr/preface.xml:
+      WS and added revcheck
+
+2004-05-21  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty_Compiler.class.php:
+      fixed typo in error-messages
+
+    * docs/de/language-snippets.ent
+      docs/fr/language-snippets.ent:
+      added empty language-snippets.ent to fix "make web"
+
+2004-05-12  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      libs/plugins/modifier.escape.php:
+      add 'nonstd' escape modifier
+
+2004-05-07  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      libs/plugins/block.textformat.php:
+      update textformat to not output wrap chars after last para
+
+2004-05-06  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/core/core.write_file.php:
+      use tempnam() instead of unqid() to create better temporary files in
+      smarty_core_write_file().
+      
+      (thanks to xces for finding this race-condition and his work on
+      fixing it)
+
+2004-05-04  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      added check if for file_exists() to Smarty::_read_file()
+
+2004-04-30  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS
+      libs/plugins/modifier.escape.php:
+      add 'mail' attribute to escape modifier
+
+2004-04-20  Mehdi Achour  <didou@keliglia.com>
+
+    * docs/manual.xml.in:
+      added the language-snippets.ent file and started using entities for notes
+      under en/programmers/api-functions
+
+2004-04-18  Mehdi Achour  <didou@keliglia.com>
+
+    * docs/de/getting-started.xml
+      docs/fr/getting-started.xml:
+      new global entity for zend and php-accelerator
+
+    * docs/fr/bookinfo.xml
+      docs/fr/getting-started.xml
+      docs/fr/preface.xml:
+      added myself as translator and added vim comments and xml tags
+
+2004-04-16  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS:
+      added entry for numeric constants
+
+    * libs/Smarty_Compiler.class.php:
+      removed unused 2nd param in call to _parse_var()
+
+    * libs/Smarty_Compiler.class.php:
+      added explanation for $this->_num_const_regexp
+
+    * NEWS
+      libs/plugins/modifier.escape.php:
+      added escape type "decentity" to smarty_modifier_escape()
+
+    * libs/Smarty_Compiler.class.php:
+      enabled numerical constants be parsed as statements.
+      (like {10} or {10|@range:12} )
+
+    * libs/Smarty_Compiler.class.php:
+      removed unused $smarty_compiler->_dvar_num_var_regexp
+
+    * libs/Smarty.class.php:
+      reverted Stuff
+
+    * libs/debug.tpl
+      libs/core/core.assemble_plugin_filepath.php
+      libs/core/core.read_cache_file.php
+      libs/core/core.write_file.php
+      libs/plugins/function.eval.php
+      libs/plugins/function.popup.php
+      libs/plugins/modifier.escape.php
+      libs/plugins/shared.make_timestamp.php:
+      reverted stuff
+
+    * libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php
+      libs/debug.tpl
+      libs/core/core.assemble_plugin_filepath.php
+      libs/core/core.read_cache_file.php
+      libs/core/core.write_file.php
+      libs/plugins/function.eval.php
+      libs/plugins/function.popup.php
+      libs/plugins/modifier.escape.php
+      libs/plugins/shared.make_timestamp.php:
+      Smarty_Compiler.class.php
+
+2004-04-15  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/core/core.write_compiled_include.php:
+      made smarty_core_write_compiled_include() php5-aware
+      
+      if someone knows a better way than patching the source with the
+      tokenizer, please stand up!
+
+2004-04-14  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/Makefile.in:
+      remove file-entities.ent also
+
+    * docs/.cvsignore
+      docs/Makefile.in
+      docs/README:
+      allow make revcheck
+
+2004-04-13  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/configure.in:
+      do not need inipath
+
+2004-04-13  Mehdi Achour  <didou@keliglia.com>
+
+    * docs/TODO:
+      done
+
+    * docs/configure.in
+      docs/manual.xml.in:
+      now the files entites are generated dynamically
+
+2004-04-12  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Config_File.class.php
+      libs/Smarty.class.php:
+      removed unused functionality to load a subset of lines from a file in
+      Smarty::_read_file()
+      
+      additionally removed a warning that is emitted since php-4.3.5 when
+      fread() is called on an empty file (with filesize()==0). thanks to
+      Andreas Streichardt who pointed this out.
+
+    * NEWS
+      libs/core/core.is_secure.php:
+      smarty_core_is_secure() only checks the file for readability now, not
+      the directory where is in.
+
+    * libs/Smarty.class.php:
+      removed unused security_setting 'ALLOW_CONSTANTS'
+
+2004-04-07  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/function.assign_debug_info.php
+      libs/plugins/function.cycle.php
+      libs/plugins/function.mailto.php:
+      removed trailing spaces
+
+    * libs/Smarty.class.php:
+      removed unused $smarty->_error_msg
+
+2004-04-04  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/configure.in:
+      fixing my crap
+      put build_date back on-line
+
+2004-04-03  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/Makefile.in
+      docs/configure.in
+      docs/manual.xml.in:
+      trying to fix ru problems
+
+2004-03-30  Monte Ohrt  <monte@ispi.net>
+
+    * libs/core/core.display_debug_console.php:
+      fix problem with debug_tpl path and security
+
+    * NEWS
+      libs/core/core.display_debug_console.php:
+      fix problem displaying debug console when $default_resource_type is not
+      "file:"
+
+2004-03-29  Mehdi Achour  <didou@keliglia.com>
+
+    * docs/TODO:
+      and finally, add a TODO here
+
+    * docs/de/bookinfo.xml
+      docs/de/manual.sgml
+      docs/fr/bookinfo.xml
+      docs/fr/manual.xml:
+      translate bookinfo.xml and put back the translators
+
+2004-03-28  Mehdi Achour  <didou@keliglia.com>
+
+    * docs/manual.xml.in:
+      add global.ent and define some general entities
+
+    * docs/de/bookinfo.xml
+      docs/de/getting-started.xml
+      docs/de/language-defs.ent
+      docs/de/preface.xml:
+      add new de files
+
+    * docs/de/appendixes.sgml
+      docs/de/designers.sgml
+      docs/de/getting-started.sgml
+      docs/de/html-common.dsl
+      docs/de/preface.sgml
+      docs/de/programmers.sgml:
+      drop old de files
+
+    * docs/fr/bookinfo.xml
+      docs/fr/getting-started.xml
+      docs/fr/manual.xml
+      docs/fr/preface.xml:
+      add ommited files
+
+    * docs/fr/language-defs.ent:
+      split the french dir
+
+    * docs/fr/appendixes.sgml
+      docs/fr/designers.sgml
+      docs/fr/getting-started.sgml
+      docs/fr/html-common.dsl
+      docs/fr/manual.sgml
+      docs/fr/preface.sgml
+      docs/fr/programmers.sgml:
+      drop old french files
+
+    * docs/manual.xml.in:
+      let's put the new build system
+
+2004-03-26  Mehdi Achour  <didou@keliglia.com>
+
+    * docs/de/common.dsl
+      docs/de/html.dsl
+      docs/fr/common.dsl
+      docs/fr/html.dsl
+      docs/fr/php.dsl:
+      not needed anymore
+
+2004-03-24  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/Makefile.in:
+      updated stylesheets
+      highlight PHP automatically
+
+    * docs/Makefile.in
+      docs/html.dsl:
+      remove unneeded file
+
+2004-03-23  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/version.ent.in:
+      remove this also
+
+    * docs/getting-started.sgml:
+      remove this one too
+
+    * docs/appendixes.sgml
+      docs/common.dsl
+      docs/designers.sgml
+      docs/html-common.dsl
+      docs/manual.sgml
+      docs/php.dsl
+      docs/preface.sgml
+      docs/programmers.sgml:
+      removing uneeded files
+
+    * docs/.cvsignore:
+      commiting missing files for docbook
+
+    * docs/.cvsignore
+      docs/Makefile.in
+      docs/configure.in
+      docs/manual.xml.in:
+      bundling docbook 4
+      now make and make web works
+
+2004-03-23  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/plugins/function.config_load.php:
+      unrolled call to the is_compiled()-check to be able to supply the
+      correct resource_base_path for config_load. this avoids errors when
+      config-files are accessed where security is enabled.
+      
+      thanks to shuther for pointing out this bug.
+
+2004-03-20  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/manual.xml.in:
+      fix build date
+
+2004-03-18  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/core/core.is_secure.php:
+      removed merging of $smarty->template_dir into $smarty->secure_dir
+      
+      the resource_base_path is considerd secure instead. this change should
+      have absolutely no impact on smarty's security's behaviour
+
+2004-03-18  Nuno Lopes  <nunoplopes@sapo.pt>
+
+    * docs/configure.in:
+      correcting non-existent var
+
+    * docs/.cvsignore
+      docs/Makefile.in
+      docs/configure.in
+      docs/manual.xml.in
+      docs/version.ent.in:
+      generate build date
+
+    * docs/.cvsignore
+      docs/Makefile.in
+      docs/README
+      docs/configure.in
+      docs/manual.xml.in:
+      new build/test system
+
+2004-03-18  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      moved setting of a default resource_base_path from
+      Smarty::_parse_resource_name() to Smarty::_fetch_resource_info()
+      
+      this shouldn't affect anything, since all calls to
+      _parse_resource_name() that are not done from within
+      _fetch_resource_info() all pass their own resource_base_path
+
+2004-03-17  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty.class.php:
+      removed '.' from the list of default resource_base_paths in
+      _parse_resource_name()
+      
+      this should only affect _parse_resource_name() for templates, not for
+      php-resources and not for config_files. the latter pass two their own
+      resource_base_path.
+
+2004-03-16  Mehdi Achour  <didou@keliglia.com>
+
+    * docs/appendixes.sgml
+      docs/getting-started.sgml
+      docs/preface.sgml:
+      adding editor comments
+
+    * docs/appendixes.sgml
+      docs/getting-started.sgml:
+      cleaning words spacing, killing tabulations, using roles for
+      programlisting..
+
+2004-03-15  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/Smarty.class.php:
+      simplified Smarty::clear_all_cache();
+
+2004-03-12  boots  <jayboots@yahoo.com>
+
+    * docs/programmers.sgml:
+      Updated is_cached prototype to indicate proper return type. (thanks to
+      Geoffrey Hoffman)
+
+2004-03-11  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/core/core.assemble_plugin_filepath.php:
+      fixed little bug that prevented plugins filepaths that are found in
+      php's include_path (and not in one of the plugins_dirs) from being
+      cached in the internal plugins-filepath-cache
+
+2004-03-01  Monte Ohrt  <monte@ispi.net>
+
+    * docs/designers.sgml:
+      update include_php docs:wq
+      :q
+
+    * docs/appendixes.sgml:
+      update componentized template example to something useful
+
+2004-02-24  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/Smarty.class.php:
+      _parse_resource_name() returned true on non-existant absolute
+      paths. This caused a warning on _fetch_resource_info() when used in
+      conjunction with template_exists(). It should be fixed now without
+      negative effects.
+
+2004-02-24  Monte Ohrt  <monte@ispi.net>
+
+    * docs/designers.sgml:
+      one more typo
+
+    * docs/designers.sgml:
+      fix typo
+
+2004-02-24  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS
+      libs/core/core.is_secure.php:
+      smarty_resource_*_secure got &$smarty passed errornously as 3rd
+      parameter and not as 2nd. this is fixed.
+
+2004-02-23  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * NEWS:
+      fix handling of integer values like width and delay im
+      smarty_function_popup()
+
+    * libs/plugins/function.popup.php:
+      fixed handling of integer-attributes
+
+    * libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      updated version to 2.6.3-dev
+
+2004-02-22  Messju Mohr  <messju@lammfellpuschen.de>
+
+    * libs/plugins/function.html_select_date.php:
+      removed notice on html_select_date with the month_empty-attribute
+
+    * libs/plugins/function.mailto.php:
+      removed 2 notices of undefined vars (thanks Cit)
+
+2004-02-17  Monte Ohrt  <monte@ispi.net>
+
+    * NEWS:
+      add header
+
+    * (Smarty_2_6_2)
+      libs/Config_File.class.php
+      libs/Smarty.class.php
+      libs/Smarty_Compiler.class.php:
+      change some info in headers, remove fluff
+
 2004-02-13  Messju Mohr  <messju@lammfellpuschen.de>
 
     * NEWS
@@ -2013,7 +2521,7 @@
 
     * libs/Smarty.class.php
       libs/Smarty_Compiler.class.php:
-      added CVS $Id: ChangeLog,v 1.3 2004-02-27 01:26:41 mose Exp $
+      added CVS Id
 
 2003-03-31  Messju Mohr  <messju@lammfellpuschen.de>
 
