@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.3 2004-05-11 20:13:38 ggeller Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-quiz_edit.tpl,v 1.4 2004-05-12 13:08:01 ggeller Exp $ *}
 
 {* Copyright (c) 2004 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -16,6 +16,7 @@
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_edit.php?quizId={$quizId}?view=XML">{tr}View/Edit as XML{/tr}</a>
+<a class="linkbut" href="tiki-quiz_edit.php?quizId={$quizId}?view=ini">{tr}View/Edit as text{/tr}</a>
 <br />
 <br />
 
