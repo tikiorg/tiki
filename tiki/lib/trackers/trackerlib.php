@@ -360,7 +360,6 @@ class TrackerLib extends TikiLib {
 				$inid = $res1['fieldId'];
 				$fil[$inid] = $res1['value'];
 			}
-			var_dump($fil);
 			foreach ($listfields as $fieldId=>$fopt) {
 				if (isset($fil[$fieldId])) {
 					$fopt['value'] = $fil[$fieldId];
