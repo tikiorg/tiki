@@ -9,18 +9,24 @@
   <div class="simplebox">
   <form action="tiki-user_preferences.php" method="post">
   <table>
-  <tr><td>{tr}Name{/tr}:</td><td>{$user}</td></tr>
-  <tr><td>{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td></tr>
-  <tr><td>{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email}" /></td></tr>
-  <tr><td>{tr}Theme{/tr}:</td><td><select name="style">
+  <tr><td class="form">{tr}Name{/tr}:</td><td>{$user}</td></tr>
+  <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|date_format:"%a %d of %b, %Y [%H:%M:%S]"}</td></tr>
+  <tr><td class="form">{tr}Email{/tr}:</td><td><input type="text" name="email" value="{$userinfo.email}" /></td></tr>
+  <tr><td class="form">{tr}Theme{/tr}:</td><td><select name="style">
         {section name=ix loop=$styles}
         <option value="{$styles[ix]}" {if $style eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
         {/section}
         </select></td></tr>
-  <tr><td>{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName}" /></td></tr>
-  <tr><td>{tr}HomePage{/tr}:</td><td><input type="text" name="homePage" value="{$homePage}" /></td></tr>
+  <tr><td  class="form">{tr}Language{/tr}:</td><td>
+        <select name="language">
+        {section name=ix loop=$languages}
+        <option value="{$languages[ix]}" {if $language eq $languages[ix]}selected="selected"{/if}>{$languages[ix]}</option>
+        {/section}
+        </select></td></tr>
+  <tr><td class="form">{tr}Real Name{/tr}:</td><td><input type="text" name="realName" value="{$realName}" /></td></tr>
+  <tr><td class="form">{tr}HomePage{/tr}:</td><td><input type="text" name="homePage" value="{$homePage}" /></td></tr>
   {if $feature_wiki eq 'y'}
-  <tr><td>{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$user}">UserPage{$user}</a>({tr}<a class="link" href="tiki-editpage.php?page=UserPage{$user}">{tr}edit{/tr}</a>{/tr})</td></tr>
+  <tr><td class="form">{tr}Your personal Wiki Page{/tr}:</td><td><a class="link" href="tiki-index.php?page=UserPage{$user}">UserPage{$user}</a>({tr}<a class="link" href="tiki-editpage.php?page=UserPage{$user}">{tr}edit{/tr}</a>{/tr})</td></tr>
   {/if}
   <tr><td align="center" colspan="2"><input type="submit" name="prefs" value="{tr}set{/tr}" /></td></tr>
   </table>
@@ -52,7 +58,7 @@
   </td>
 </tr>
 </table>
-
+<br/>
   <div class="cbox">
   <div class="cbox-title">{tr}User Pages{/tr}</div>
   <div class="cbox-data">
@@ -67,8 +73,7 @@
   </table>
   </div>
   </div>
-  
-
+<br/>  
   <div class="cbox">
   <div class="cbox-title">{tr}User Blogs{/tr}</div>
   <table width="100%">
@@ -81,9 +86,7 @@
   {/section}
   </table>
   </div>
-
-  
-
+<br/>
   <div class="cbox">
   <div class="cbox-title">User Galleries</div>
   <div class="cbox-data">

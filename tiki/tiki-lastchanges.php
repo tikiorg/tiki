@@ -15,6 +15,16 @@ if($feature_lastChanges != 'y') {
   die;  
 }
 
+// lines added by ramiro_v on 11/03/2002 begins here
+// if there is no request to find something, look for everything :)
+if(!isset($_REQUEST["find"])) {
+  $findwhat = ''; 
+} else {
+  $findwhat = $_REQUEST["find"]; 
+}
+// lines added by ramiro_v on 11/03/2002 ends here
+
+
 // This script can receive the thresold
 // for the information as the number of
 // days to get in the log 1,3,4,etc
@@ -24,6 +34,7 @@ if(!isset($_REQUEST["days"])) {
 } else {
   $days = $_REQUEST["days"]; 
 }
+
 if(!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'lastModif_desc'; 
 } else {
@@ -31,6 +42,8 @@ if(!isset($_REQUEST["sort_mode"])) {
 } 
 
 $smarty->assign_by_ref('days',$days);
+// next line added by ramiro_v on 11/03/2002 
+$smarty->assign_by_ref('findwhat',$findwhat);
 $smarty->assign_by_ref('sort_mode',$sort_mode);
 
 // If offset is set use it if not then use offset =0
@@ -46,7 +59,11 @@ $smarty->assign_by_ref('offset',$offset);
 
 // Get a list of last changes to the Wiki database
 $more=0;
-$lastchanges = $tikilib->get_last_changes($days,$offset,$maxRecords,$sort_mode);
+// the following line has been modified by ramiro_v on 11/03/2002
+$lastchanges = $tikilib->get_last_changes($days,$offset,$maxRecords,$sort_mode,$findwhat);
+// next line added by ramiro_v on 11/03/2002 
+$smarty->assign_by_ref('cant_records',$lastchanges["cant"]);
+
 // If there're more records then assign next_offset
 $cant_pages = ceil($lastchanges["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

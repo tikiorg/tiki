@@ -8,21 +8,24 @@
     <input id="fuser" name="words" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br/>
     <select name="where">
     {if $feature_wiki eq 'y'}
-    <option value="pages">Wiki Pages</option>
+    <option value="pages">{tr}Wiki Pages{/tr}</option>
     {/if}
     {if $feature_galleries eq 'y'}
-    <option value="galleries">Image Gallss</option>
-    <option value="images">Images</option>
+    <option value="galleries">{tr}Image Gals{/tr}</option>
+    <option value="images">{tr}Images{/tr}</option>
     {/if}
     {if $feature_file_galleries eq 'y'}
-    <option value="files">Files</option>
+    <option value="files">{tr}Files{/tr}</option>
     {/if}
     {if $feature_articles eq 'y'}
-    <option value="articles">Articles</option>
+    <option value="articles">{tr}Articles{/tr}</option>
+    {/if}
+    {if $feature_forums eq 'y'}
+    <option value="forums">{tr}Forums{/tr}</option>
     {/if}
     {if $feature_blogs eq 'y'}
-    <option value="blogs">Blogs</option>
-    <option value="posts">Blog Posts</option>
+    <option value="blogs">{tr}Blogs{/tr}</option>
+    <option value="posts">{tr}Blog Posts{/tr}</option>
     {/if}
     </select>
     <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/> 

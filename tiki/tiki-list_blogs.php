@@ -9,6 +9,14 @@ if($feature_blogs != 'y') {
 }
 
 
+if($tiki_p_read_blog != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cant view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
+
 /*
 if($feature_listPages != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -70,6 +78,39 @@ if(isset($_REQUEST["find"])) {
 
 // Get a list of last changes to the Wiki database
 $listpages = $tikilib->list_blogs($offset,$maxRecords,$sort_mode,$find);
+for($i=0;$i<count($listpages["data"]);$i++) {
+  if($userlib->object_has_one_permission($listpages["data"][$i]["blogId"],'blog')) {
+    $listpages["data"][$i]["individual"]='y';
+    
+    if($userlib->object_has_permission($user,$listpages["data"][$i]["blogId"],'blog','tiki_p_read_blog')) {
+      $listpages["data"][$i]["individual_tiki_p_read_blog"]='y';
+    } else {
+      $listpages["data"][$i]["individual_tiki_p_read_blog"]='n';
+    }
+    if($userlib->object_has_permission($user,$listpages["data"][$i]["blogId"],'blog','tiki_p_blog_post')) {
+      $listpages["data"][$i]["individual_tiki_p_blog_post"]='y';
+    } else {
+      $listpages["data"][$i]["individual_tiki_p_blog_post"]='n';
+    }
+    if($userlib->object_has_permission($user,$listpages["data"][$i]["blogId"],'blog','tiki_p_create_blogs')) {
+      $listpages["data"][$i]["individual_tiki_p_create_blogs"]='y';
+    } else {
+      $listpages["data"][$i]["individual_tiki_p_create_blogs"]='n';
+    }
+    if($tiki_p_admin=='y' || $userlib->object_has_permission($user,$listpages["data"][$i]["blogId"],'file gallery','tiki_p_blog_admin')) {
+      $listpages["data"][$i]["individual_tiki_p_create_blogs"]='y';
+      $listpages["data"][$i]["individual_tiki_p_blog_post"]='y';
+      $listpages["data"][$i]["individual_tiki_p_read_blog"]='y';
+    } 
+    
+  } else {
+    $listpages["data"][$i]["individual"]='n';
+  }
+}
+
+
+
+
 // If there're more records then assign next_offset
 $cant_pages = ceil($listpages["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

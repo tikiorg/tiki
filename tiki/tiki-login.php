@@ -19,7 +19,7 @@ if($isvalid) {
   session_register("user",$_REQUEST["user"]);
   $user = $_REQUEST["user"];
   $smarty->assign_by_ref('user',$user);
-  header("location: tiki-index.php");
+  header("location: $tikiIndex");
   die;
 } else {
   $smarty->assign('msg',tra("Invalid username or password"));

@@ -1,17 +1,16 @@
-<h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a></h1>
-
+<a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a><br/><br/>
 <h3>Create a new topic</h3>
 <form enctype="multipart/form-data" action="tiki-admin_topics.php" method="post">
-<table>
-<tr><td>Name</td><td><input type="text" name="name" /></td></tr>
-<tr><td>Upload Image</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+<table class="normal">
+<tr><td class="formcolor">Name</td><td class="formcolor"><input type="text" name="name" /></td></tr>
+<tr><td class="formcolor">Upload Image</td><td class="formcolor"><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 <input name="userfile1" type="file"></td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="addtopic" value="add" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="addtopic" value="add" /></td></tr>
 </table>
 </form>
 
 <h3>List of topics</h3>
-<table border="1" cellpadding="0" cellspacing="0" width="97%">
+<table class="normal">
 <tr>
 <td class="heading">{tr}name{/tr}</td>
 <td class="heading">{tr}Image{/tr}</td>

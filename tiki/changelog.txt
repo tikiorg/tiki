@@ -1,3 +1,84 @@
+Version 1.2 -Antares-
+
+* [THANKS] Special thanks to AlBrown,MarcLaporte,Yakumo,Ramiro,Tom,Tesla2k and others ! for submitting many bugs 
+  that  are now fixed and for suggesting many features that are now implemented. If some feature is not yet
+  included don't worry it will be addressed in a future version. Thanks!
+* [NEW] Added a find feature to the lastchanges section in the Wiki (Ramiro)
+* [NEW] Categories: You can create categories and subcategories building a category tree, objects (pages, forums,
+  blogs, image galleries, file galleries, etc) can be assigned to one/many categories, the user can browse
+  categories finding objects for each specific category.
+* [NEW] Communication center: Now you can send/receive Wiki pages from/to other Tiki-enabled sites using a simple
+  XMLRPC API, received pages are stored in an "ibox" where an admin can view,edit,remove,accept the pages. 
+  This new feature can be used to send a Tiki page from one site to another one!   
+* [NEW] Consolidated CSS file, there're two CSS files in this distribution: subSilver and default2, if you want
+  to produce a new theme you can change any of these, subSilver is longer and uses an individual style for every
+  element in Tiki while default2 applies the same style to multiple elements (ie: tables) and thus is a faster
+  way to get a theme ready.
+* [FIXED] Fixed bugs in the registration screen and now the username is validated.
+* [NEW] Forums!, now you can set-up mesage forums, forums are organized by topics and topics by threads, users
+  can post, reply and quote messages in forums, messages can be voted using the same karma system used in
+  comments. Many features are "copied" from phpBB since it is the best forum software for PHP, we copied those
+  features and integrated the forums with the Tiki permission system, rankings, modules and search engine.
+  There's a lot about forums so I guess it's best to stop the description here, the documentation will introduce
+  all the features in forums.
+* [NEW] Now you can upload th thumbnail of an image when uploading an image, this will prevent automatic
+  thumbnail generation. Some users wanted this feature because thumbnail generation didn't work or they
+  wanted to upload their own thumbnails. Maybe you want to have a thumbnail that is not the same as the
+  full image so you can use this feature. Thumbnails will be displayed using the size assignated for thumbnails
+  to the image gallery.   
+* [NEW] Now you can set up how old must a version be at least to be removed from the history, this can prevent
+  a user from saving a page "n" times destroying a previous version. (Thanks to tesla2k for the tip)
+* [NEW] Links to help including objects in user modules where added to the admin_modules screen.
+* [NEW] Next and prev buttons where added to view the next/prev image when browsing images from a gallery
+* [NEW] Now you can control which groups can view image galleries and filegalleries
+* [NEW] Individual permissions for image galleries, as an admin you can control which groups can view,
+  admin, upload to a specific gallery overriding global permissions.
+* [NEW] Individual permissions for file galleries, as an admin you can control which groups can view,
+  admin, upload and download to a specific gallery overriding global permissions.  
+* [NEW] Individual permissions can be set up by admins to weblogs, so you can control which groups can read,
+  admin and post to specific weblogs.  
+* [NEW] Module: last blog posts listing the last "n" posts to any weblog.
+* [NEW] From the page-permissions screen admins can set up email addresses that will receive an email when
+  the page changes. If you want to remotely monitor some page this is for you. 
+* [NEW] Chatrooms feature (experimental), you can create chatrooms and the users can enter chatrooms and chat,
+  the refreshing time for each chatroom can be configured and the page is not reloaded, only an invisible frame
+  with size 0 is reloaded to get fresh chat messages.
+* [NEW] RSS modules, create RSS modules to display news/events from other sites,  you can display RSS feeds in 
+  user modules using {rss id=n}, you can set up which feeds can be displayed and the refreshing time for each feed. 
+  RSS 0.91 and 1.0 are supported.
+* [NEW] Polls, you can create polls, set polls to be "active,closed,current". Polls can be displayed in modules
+  using {poll id=n} or {poll} to select a random poll from the "current" polls. There's a page to view poll results
+  and old poll results and old polls not closed can be voted. A mechanism to prevent a user from voting many times is
+  also included.
+* [NEW] Menu builder section, you can build menus using sections and options, menus can be static (no javascript) or
+  dynamic. Menus can be displayed in user modules using {menu id=n}
+* [NEW] If you give a group the tiki_p_edit_comments permission then the group can edit comments (useful for admins
+  to fix bad comments or if you want someone to censor comments)
+* [NEW] Comments can now be filtered by threshold
+* [NEW] Comments for weblogs and you can enable/disable weblog comments from the admin screen
+* [NEW] Comments for articles, you can enable/disable article commenting from the admin screen
+* [NEW] Comments for image galleries you can enable/disable comments for image galleries from the admin screen
+* [NEW] Comments for file galleries you can enable/disable comments for file galleries from the admin screen
+* [NEW] A selected file gallery can be used as the home page for the site
+* [NEW] Now you can enable/disble RSS feeds from the admin screen and limit the maximum number of items 
+  for any feed
+* [NEW] RSS feed for individual file galleries listing the last images uploaded to a given gallery
+* [NEW] RSS feed for individual image galleries listing the last images uploaded to a given gallery
+* [NEW] RSS feed for weblogs listing last posts to any weblog
+* [NEW] RSS feed for file galleries listing last files uploaded
+* [NEW] RSS feed for image galleries listing last images uploaded
+* [NEW] Random pages module
+* [NEW] Now you can include dynamic content blocks in wiki pages using {content id=n} or {rcontent id=n}
+* [NEW] Now you can use {rcontent id=n} to select a random content from a dynamic block content, the {content id=3}
+  syntax can also be used to select the last current content for a block
+* [FIX] Fixed typos in the editing rules for Wiki pages
+* [NEW] New Wiki element: ^some^ will render "some" inside a simple box
+* [NEW] The layout can be configured from the admin screen you can enable disable the columns, top bar and footer
+* [NEW] Added a new theme: classic based on white-blue simple colors similar to Kuro5hin.org
+* [FIX] Fixed a wrong link in the weblogs
+* [FIX] Fixed wrong links for images in the image galleries
+* [FIX] Fixed a bug that broke image uploads
+
 Version 1.1 -Capella-
 
 * [NEW FEATURE] The edit button now shows on red if someone may be editing the page, this helps preventing

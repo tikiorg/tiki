@@ -72,9 +72,17 @@ if(strstr($comments_complete_father,"?")) {
 $smarty->assign('comments_father',$comments_father);
 $smarty->assign('comments_complete_father',$comments_complete_father);
 
-// Include the library for comments (if not included)
+if(!isset($_REQUEST["comments_threadId"])) {
+  $_REQUEST["comments_threadId"]=0;
+}
+$smarty->assign("comments_threadId",$_REQUEST["comments_threadId"]);
+
 include_once("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
+
+
+// Include the library for comments (if not included)
+
 if(!isset($comments_prefix_var)) {
    $comments_prefix_var='';
 }
@@ -92,10 +100,13 @@ if($tiki_p_post_comments == 'y') {
       }
       //Replace things between square brackets by links
       $_REQUEST["comments_data"]=strip_tags($_REQUEST["comments_data"]);
-      $_REQUEST["comments_data"] = preg_replace("/\[([^\|]+)\|([^\]]+)\]/","<a class='commentslink' href='$1'>$2</a>",$_REQUEST["comments_data"]);
-      // Segundo intento reemplazar los [link] comunes
-      $_REQUEST["comments_data"] = preg_replace("/\[([^\]]+)\]/","<a class='commentslink' href='$1'>$1</a>",$_REQUEST["comments_data"]);
-      $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"], $user, $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]));
+      if($_REQUEST["comments_threadId"]==0) {
+        $commentslib->post_new_comment($comments_objectId, $_REQUEST["comments_parentId"], $user, $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]));
+      } else {
+        if($tiki_p_edit_comments == 'y') {
+          $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], nl2br($_REQUEST["comments_data"]));
+        }
+      }
     }
   }
 }
@@ -108,8 +119,21 @@ if($tiki_p_vote_comments == 'y') {
     $commentslib->vote_comment($_REQUEST["comments_threadId"],$user,$_REQUEST["comments_vote"]);
     $tikilib->register_user_vote($user,'comment'.$_REQUEST["comments_threadId"]);
    }
+   $_REQUEST["comments_threadId"]=0;
+   $smarty->assign('comments_threadId',0);
   }
 }
+
+if($_REQUEST["comments_threadId"]>0) {
+  $comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
+  $smarty->assign('comment_title',$comment_info["title"]);
+  $smarty->assign('comment_data',$comment_info["data"]);
+} else {
+  $smarty->assign('comment_title','');
+  $smarty->assign('comment_data','');
+}
+
+
 
 if($tiki_p_remove_comments == 'y') {
   if(isset($_REQUEST["comments_remove"])&&isset($_REQUEST["comments_threadId"])) {

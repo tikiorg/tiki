@@ -38,10 +38,13 @@ $smarty->assign('url_visit',$_SERVER["SERVER_NAME"].$foo2);
 
 if(isset($_REQUEST["prefs"])) {
   // setting preferences
-  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
-  $tikilib->set_user_preference($userwatch,'theme',$_REQUEST["style"]);
-  $tikilib->set_user_preference($userwatch,'realName',$_REQUEST["realName"]);
-  $tikilib->set_user_preference($userwatch,'homePage',$_REQUEST["homePage"]);
+  if (isset($_REQUEST["email"]))  $userlib->change_user_email($userwatch,$_REQUEST["email"]);
+  if (isset($_REQUEST["style"])) $tikilib->set_user_preference($userwatch,'theme',$_REQUEST["style"]);
+  if (isset($_REQUEST["realName"])) $tikilib->set_user_preference($userwatch,'realName',$_REQUEST["realName"]);
+  if (isset($_REQUEST["homePage"])) $tikilib->set_user_preference($userwatch,'homePage',$_REQUEST["homePage"]);
+  if (isset($_REQUEST["language"])) $tikilib->set_user_preference($userwatch,'language',$_REQUEST["language"]);
+  if (isset($_REQUEST["style"])) $smarty->assign('style',$_REQUEST["style"]);
+  if (isset($_REQUEST["language"]))$smarty->assign('language',$_REQUEST["language"]);
 }
 
 if(isset($_REQUEST["chgpswd"])) {
@@ -72,6 +75,16 @@ while($file=readdir($h)) {
 closedir($h);
 $smarty->assign_by_ref('styles',$styles);
 
+$languages=Array();
+$h=opendir("lang/");
+while($file=readdir($h)) {
+  if($file!='.' && $file!='..' && is_dir('lang/'.$file) && strlen($file)==2) {
+    $languages[]=$file;
+  }
+}
+closedir($h);
+$smarty->assign_by_ref('languages',$languages);
+
 // Get user pages
 $user_pages = $tikilib->get_user_pages($userwatch,-1);
 $user_blogs = $tikilib->list_user_blogs($userwatch,false);
@@ -86,7 +99,8 @@ $smarty->assign_by_ref('user_galleries',$user_galleries);
 // Get user galleries
 
 // Get preferences
-$style = $tikilib->get_user_preference($userwatch,'theme','default.css');
+$style = $tikilib->get_user_preference($userwatch,'theme',$style);
+$language = $tikilib->get_user_preference($userwatch,'language',$language);
 $smarty->assign_by_ref('style',$style);
 $realName = $tikilib->get_user_preference($userwatch,'realName','');
 $smarty->assign_by_ref('realName',$realName);

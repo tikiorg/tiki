@@ -19,6 +19,20 @@ if(isset($_REQUEST["register"])) {
     $smarty->display('error.tpl');
     die;
   }
+  
+  // VALIDATE NAME HERE
+  if(strlen($_REQUEST["name"])>37) {
+    $smarty->assign('msg',tra("Username is too long"));
+    $smarty->display('error.tpl');
+    die;
+  }
+  
+  if(!preg_match_all("/[A-Z0-9a-z_-]+/",$_REQUEST["name"],$matches)) {
+    $smarty->assign('msg',tra("Invalid username"));
+    $smarty->display('error.tpl');
+    die;
+  }
+  
   $userlib->add_user($_REQUEST["name"],$_REQUEST["pass"],$_REQUEST["email"]);
   header("location: index.php");
   die;

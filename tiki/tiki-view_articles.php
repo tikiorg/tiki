@@ -16,6 +16,12 @@ if($feature_articles != 'y') {
   die;  
 }
 
+if($tiki_p_read_article != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
 
 /*
 // Now check permissions to access this page

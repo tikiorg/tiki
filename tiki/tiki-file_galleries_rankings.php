@@ -14,6 +14,12 @@ if($feature_file_galleries_rankings != 'y') {
   die;  
 }
 
+if($tiki_p_view_file_gallery != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
 $allrankings = Array(
   Array( 'name'=> 'Top visited file galleries', 'value'=> tra('filegal_ranking_top_galleries')),
   Array( 'name'=> 'Most downloaded files', 'value'=>tra('filegal_ranking_top_files')),

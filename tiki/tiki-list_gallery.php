@@ -14,6 +14,48 @@ if($_REQUEST["galleryId"]==0 && $tiki_p_admin_galleries != 'y') {
   die;  
 }
 
+if(!isset($_REQUEST["galleryId"])) {
+  $smarty->assign('msg',tra("No gallery indicated"));
+  $smarty->display('error.tpl');
+  die;
+}
+
+$smarty->assign('individual','n');
+if($userlib->object_has_one_permission($_REQUEST["galleryId"],'image gallery')) {
+  $smarty->assign('individual','y');
+  if($tiki_p_admin != 'y') {
+    // Now get all the permissions that are set for this type of permissions 'image gallery'
+    $perms = $userlib->get_permissions(0,-1,'permName_desc','','image galleries');
+    foreach($perms["data"] as $perm) {
+      $permName=$perm["permName"];
+      if($userlib->object_has_permission($user,$_REQUEST["galleryId"],'image gallery',$permName)) {
+        $$permName = 'y';
+        $smarty->assign("$permName",'y');
+      } else {
+        $$permName = 'n';
+        $smarty->assign("$permName",'n');
+      }
+    }
+  }
+}
+if($tiki_p_admin_galleries == 'y') {
+  $tiki_p_view_image_gallery = 'y';
+  $smarty->assign("tiki_p_view_image_gallery",'y');
+  $tiki_p_upload_images = 'y';
+  $smarty->assign("tiki_p_upload_images",'y');
+  $tiki_p_create_galleries = 'y';
+  $smarty->assign("tiki_p_create_galleries",'y');
+}
+
+
+if($tiki_p_view_image_gallery != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cant view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+
+
 /*
 if($tiki_p_upload_images != 'y') {
   $smarty->assign('msg',tra("Permission denied you cannot upload images"));
@@ -22,11 +64,6 @@ if($tiki_p_upload_images != 'y') {
 }
 */
 
-if(!isset($_REQUEST["galleryId"])) {
-  $smarty->assign('msg',tra("No gallery indicated"));
-  $smarty->display('error.tpl');
-  die;
-}
 
 if($_REQUEST["galleryId"]!=0) {
 // To browse the gallery the user has to be admin, the owner or the gallery has to be public

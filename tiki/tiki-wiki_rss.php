@@ -1,5 +1,8 @@
 <?
 require_once('tiki-setup.php');
+if($rss_wiki != 'y') {
+ die;
+}
 header("content-type: text/xml");
 $foo = parse_url($_SERVER["REQUEST_URI"]);
 $foo1=str_replace("tiki-wiki_rss","tiki-index",$foo["path"]);
@@ -16,7 +19,7 @@ print('>');
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
          xmlns="http://purl.org/rss/1.0/">
 <channel rdf:about="<?=$home?>">
-  <title><?=$title?></title>
+  <title>Tiki RSS feed for the Wiki</title>
   <link><?=$home?></link>
   <description>
     Last modifications to the Wiki.

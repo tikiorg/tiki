@@ -32,11 +32,13 @@ if(!isset($_SESSION["votes"])) {
   session_register("votes");
 }
 
+// function user_has_permission($user,$perm) 
+
 $allperms = $userlib->get_permissions(0,-1,'permName_desc','','');
 $allperms = $allperms["data"];
 foreach($allperms as $vperm) {
   $perm=$vperm["permName"];
-  if($user != 'admin') {
+  if($user != 'admin' && (!$user || !$userlib->user_has_permission($user,'tiki_p_admin'))) {
     $$perm = 'n';
     $smarty->assign("$perm",'n');  
   } else {
@@ -44,6 +46,7 @@ foreach($allperms as $vperm) {
     $smarty->assign("$perm",'y');    
   }
 }
+
 
 // Permissions
 // Get group permissions here
@@ -54,13 +57,63 @@ foreach($perms as $perm) {
   $$perm='y';
 }
 
+// If the user can admin file galleries then assign all the file galleries permissions
+if($tiki_p_admin_file_galleries == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','file galleries');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+}
+ 
+if($tiki_p_blog_admin == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','blogs');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+} 
 
-// Constants for permissions here
-define('TIKI_PAGE_RESOURCE','tiki-page');
-define('TIKI_P_EDIT','tiki_p_edit');
-define('TIKI_P_VIEW','tiki_p_view');
+if($tiki_p_admin_galleries == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','image galleries');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+}
 
+if($tiki_p_admin_forum == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','forums');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+}
 
+if($tiki_p_admin_wiki == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','wiki');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+}
+
+if($tiki_p_admin_cms == 'y') {
+  $perms = $userlib->get_permissions(0,-1,'permName_desc','','cms');
+  foreach($perms["data"] as $perm) {
+    $perm=$perm["permName"];
+    $smarty->assign("$perm",'y');  
+    $$perm='y';
+  }
+}
+
+ 
+  
 $appname="tiki";
 if(!isset($_SESSION["appname"])) {
   session_register("appname");
@@ -73,14 +126,30 @@ if(isset($GLOBALS["PHPSESSID"])) {
   $tikilib->update_session($GLOBALS["PHPSESSID"]);
 }
 
+if(!isset($_SESSION["last_forum_visit"])) {
+  $now = date("U");
+  if($user) {
+    $last_forum_visit = $tikilib->get_user_preference($user,'last_forum_visit',0);
+    $tikilib->set_user_preference($user,'last_forum_visit',$now);
+  } else {
+    $last_forum_visit = $now;
+  }
+  $_SESSION["last_forum_visit"]=$last_forum_visit;
+}
+
+
 $home_blog = 0;
 $home_gallery = 0;
 $home_file_gallery = 0;
+$home_forum = 0;
 $feature_xmlrpc = 'n';
+$feature_comm = 'n';
+$feature_categories = 'n';
 $feature_blog_rankings = 'y';
 $feature_cms_rankings = 'y';
 $feature_gal_rankings = 'y';
 $feature_wiki_rankings = 'y';
+$feature_forum_rankings = 'y';
 $feature_lastChanges =  'y';
 $feature_dump =  'y';
 $feature_ranking = 'y';
@@ -104,17 +173,107 @@ $feature_blogs = 'n';
 $feature_xmlrpc = 'n';
 $feature_edit_templates = 'n';
 $feature_dynamic_content = 'n';
+$feature_chat = 'n';
+$feature_polls = 'n';
+
 $feature_wiki_comments = 'n';
 $wiki_comments_default_ordering = 'points_desc';
 $wiki_comments_per_page = 10;
+
+$feature_forums = 'n';
+$forums_ordering = 'created_desc';
+$forums_comments_per_page = 10;
+
+
+$feature_image_galleries_comments = 'n';
+$image_galleries_comments_default_ordering = 'points_desc';
+$image_galleries_comments_per_page = 10;
+
+$feature_file_galleries_comments = 'n';
+$file_galleries_comments_default_ordering = 'points_desc';
+$file_galleries_comments_per_page = 10;
+
+
+$feature_poll_comments = 'n';
+$poll_comments_default_ordering = 'points_desc';
+$poll_comments_per_page = 10;
+
+
+$feature_blog_comments = 'n';
+$blog_comments_default_ordering = 'points_desc';
+$blog_comments_per_page = 10;
+
+$feature_article_comments = 'n';
+$article_comments_default_ordering = 'points_desc';
+$article_comments_per_page = 10;
+
+
+
 $feature_warn_on_edit ='n';
 $feature_file_galleries = 'n';
 $feature_file_galleries_rankings = 'n';
 $language = 'en';
+$feature_left_column = 'y';
+$feature_right_column = 'y';
+$feature_top_bar = 'y';
+$feature_bot_bar = 'y';
+
+$rss_articles = 'y';
+$rss_blogs = 'y';
+$rss_image_galleries = 'y';
+$rss_file_galleries = 'y';
+$rss_wiki = 'y';
+$rss_image_gallery = 'n';
+$rss_file_gallery = 'n';
+$rss_blog = 'n';
+
+$max_rss_articles = 10;
+$max_rss_blogs = 10;
+$max_rss_image_galleries = 10;
+$max_rss_file_galleries = 10;
+$max_rss_wiki = 10;
+$max_rss_image_gallery = 10;
+$max_rss_file_gallery = 10;
+$max_rss_blog = 10;
+
+$keep_versions = 1;
+
+$feature_custom_home = 'n';
+
+$smarty->assign('feature_custom_home',$feature_custom_home);
+
+$smarty->assign('keep_versions',$keep_versions);
+
+$smarty->assign('feature_polls',$feature_polls);
+$smarty->assign('feature_chat',$feature_chat);
+$smarty->assign('rss_articles',$rss_articles);
+$smarty->assign('rss_blogs',$rss_blogs);
+$smarty->assign('rss_image_galleries',$rss_image_galleries);
+$smarty->assign('rss_file_galleries',$rss_file_galleries);
+$smarty->assign('rss_wiki',$rss_wiki);
+$smarty->assign('rss_image_gallery',$rss_image_gallery);
+$smarty->assign('rss_file_gallery',$rss_file_gallery);
+$smarty->assign('rss_blog',$rss_blog);
+
+$smarty->assign('max_rss_articles',$max_rss_articles);
+$smarty->assign('max_rss_blogs',$max_rss_blogs);
+$smarty->assign('max_rss_image_galleries',$max_rss_image_galleries);
+$smarty->assign('max_rss_file_galleries',$max_rss_file_galleries);
+$smarty->assign('max_rss_wiki',$max_rss_wiki);
+$smarty->assign('max_rss_image_gallery',$max_rss_image_gallery);
+$smarty->assign('max_rss_file_gallery',$max_rss_file_gallery);
+$smarty->assign('max_rss_blog',$max_rss_blog);
+
+
+$smarty->assign('feature_left_column',$feature_left_column);
+$smarty->assign('feature_right_column',$feature_right_column);
+$smarty->assign('feature_top_bar',$feature_top_bar);
+$smarty->assign('feature_bot_bar',$feature_bot_bar);
 $smarty->assign('feature_file_galleries',$feature_file_galleries);
 $smarty->assign('feature_file_galleries_rankings',$feature_file_galleries_rankings);
 $smarty->assign('language',$language);
 $smarty->assign('home_blog',$home_blog);
+$smarty->assign('home_forum',$home_forum);
 $smarty->assign('home_gallery',$home_gallery);
 $smarty->assign('home_file_gallery',$home_file_gallery);
 $smarty->assign('feature_dynamic_content',$feature_dynamic_content);
@@ -122,13 +281,16 @@ $smarty->assign('feature_edit_templates',$feature_edit_templates);
 $smarty->assign('feature_top_banner',$feature_top_banner);
 $smarty->assign('feature_banners',$feature_banners);
 $smarty->assign('feature_xmlrpc',$feature_xmlrpc);
+$smarty->assign('feature_comm',$feature_comm);
 $smarty->assign('feature_cms_rankings',$feature_cms_rankings);
 $smarty->assign('feature_blog_rankings',$feature_blog_rankings);
 $smarty->assign('feature_gal_rankings',$feature_gal_rankings);
 $smarty->assign('feature_wiki_rankings',$feature_wiki_rankings);
+$smarty->assign('feature_forum_rankings',$feature_forum_rankings);
 $smarty->assign('feature_hotwords',$feature_hotwords);
 $smarty->assign('feature_lastChanges',$feature_lastChanges);
 $smarty->assign('feature_dump',$feature_dump);
+$smarty->assign('feature_categories',$feature_categories);
 $smarty->assign('feature_ranking',$feature_ranking);
 $smarty->assign('feature_listPages', $feature_listPages);
 $smarty->assign('feature_history', $feature_history);
@@ -145,9 +307,39 @@ $smarty->assign('feature_articles',$feature_articles);
 $smarty->assign('feature_submissions',$feature_submissions);
 $smarty->assign('feature_blogs',$feature_blogs);
 $smarty->assign('feature_xmlrpc',$feature_xmlrpc);
+
 $smarty->assign('feature_wiki_comments',$feature_wiki_comments);
 $smarty->assign('wiki_comments_default_ordering',$wiki_comments_default_ordering);
 $smarty->assign('wiki_comments_per_page',$wiki_comments_per_page);
+
+$smarty->assign('feature_forums',$feature_forums);
+$smarty->assign('forums_ordering',$forums_ordering);
+$smarty->assign('forums_comments_per_page',$forums_comments_per_page);
+
+
+$smarty->assign('feature_image_galleries_comments',$feature_image_galleries_comments);
+$smarty->assign('image_galleries_comments_default_ordering',$image_galleries_comments_default_ordering);
+$smarty->assign('image_galleries_comments_per_page',$image_galleries_comments_per_page);
+
+$smarty->assign('feature_file_galleries_comments',$feature_file_galleries_comments);
+$smarty->assign('file_galleries_comments_default_ordering',$file_galleries_comments_default_ordering);
+$smarty->assign('file_galleries_comments_per_page',$file_galleries_comments_per_page);
+
+
+$smarty->assign('feature_poll_comments',$feature_poll_comments);
+$smarty->assign('poll_comments_default_ordering',$poll_comments_default_ordering);
+$smarty->assign('poll_comments_per_page',$poll_comments_per_page);
+
+
+$smarty->assign('feature_blog_comments',$feature_blog_comments);
+$smarty->assign('blog_comments_default_ordering',$blog_comments_default_ordering);
+$smarty->assign('blog_comments_per_page',$blog_comments_per_page);
+
+$smarty->assign('feature_article_comments',$feature_article_comments);
+$smarty->assign('article_comments_default_ordering',$article_comments_default_ordering);
+$smarty->assign('article_comments_per_page',$article_comments_per_page);
+
+
 $smarty->assign('feature_warn_on_edit',$feature_warn_on_edit);
 
 // Other preferences
@@ -177,6 +369,26 @@ foreach($prefs as $name => $val) {
   $smarty->assign("$name",$val);
 }
 
+$style = $tikilib->get_preference("style", 'subsilver.css');
+$smarty->assign('style',$style);
+
+
+if($feature_userPreferences == 'y') {
+  // Check for FEATURES for the user
+  $user_style = $tikilib->get_preference("style", 'subsilver.css');
+  if($user) {
+    $user_style = $tikilib->get_user_preference($user,'theme',$style);
+    if($user_style) {
+      $style = $user_style;
+    }
+    $user_language = $tikilib->get_user_preference($user,'language',$language);
+    if($user_language) {
+      $language = $user_language;
+    }
+  }
+  $smarty->assign('style',$style);
+  $smarty->assign('language',$language);
+}
 
 global $lang;
 include_once('lang/'.$language.'/language.php');
@@ -194,15 +406,7 @@ function tra($content)
 
 
 
-// Check for FEATURES
-$user_style = $tikilib->get_preference("style", 'default.css');
-if($user) {
-  $user_style = $tikilib->get_user_preference($user,'theme','default.css');
-  if($user_style) {
-    $style = $user_style;
-  }
-}
-$smarty->assign('style',$user_style);
+
 
 
 $smarty->assign('user',$user);
@@ -256,6 +460,15 @@ if($tikilib->semaphore_is_set($chkpage)) {
   $beingedited='n';
 }
 
+}
+
+if(isset($_REQUEST["pollVote"])) {
+  if($tiki_p_vote_poll == 'y' && !$tikilib->user_has_voted($user,'poll'.$_REQUEST["polls_pollId"]) && isset($_REQUEST["polls_optionId"])) {
+    $tikilib->register_user_vote($user,'poll'.$_REQUEST["polls_pollId"]);
+    $tikilib->poll_vote($_REQUEST["polls_pollId"],$_REQUEST["polls_optionId"]);
+  }
+  $pollId=$_REQUEST["polls_pollId"];
+  header("location: tiki-poll_results.php?pollId=$pollId");
 }
 
 ?>

@@ -3,13 +3,39 @@
 require_once('tiki-setup.php');
 
 
-/*
 if($feature_file_galleries != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display('error.tpl');
   die;  
 }
-*/
+
+if($tiki_p_view_file_gallery != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cant view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
+if(!isset($_REQUEST["galleryId"])) {
+  $_REQUEST["galleryId"]=0;
+}
+$smarty->assign('individual','n');
+if($userlib->object_has_one_permission($_REQUEST["galleryId"],'file gallery')) {
+  $smarty->assign('individual','y');
+  if($tiki_p_admin != 'y') {
+    // Now get all the permissions that are set for this type of permissions 'file gallery'
+    $perms = $userlib->get_permissions(0,-1,'permName_desc','','file galleries');
+    foreach($perms["data"] as $perm) {
+      $permName=$perm["permName"];
+      if($userlib->object_has_permission($user,$_REQUEST["galleryId"],'file gallery',$permName)) {
+        $$permName = 'y';
+        $smarty->assign("$permName",'y');
+      } else {
+        $$permName = 'n';
+        $smarty->assign("$permName",'n');
+      }
+    }
+  }
+}
 
 
 if(isset($_REQUEST["find"])) {
@@ -35,6 +61,7 @@ $smarty->assign('maxRows',10);
 $smarty->assign('public','n');
 $smarty->assign('edited','n');
 $smarty->assign('edit_mode','n');
+$smarty->assign('visible','y');
 
 // If we are editing an existing gallery prepare smarty variables
 if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
@@ -48,6 +75,7 @@ if(isset($_REQUEST["edit_mode"])&&$_REQUEST["edit_mode"]) {
     $smarty->assign_by_ref('description',$info["description"]);
     $smarty->assign_by_ref('maxRows',$info["maxRows"]);
     $smarty->assign_by_ref('public',$info["public"]);
+    $smarty->assign_by_ref('visible',$info["visible"]);
   }
 }
 
@@ -82,13 +110,21 @@ if(isset($_REQUEST["edit"])) {
   $smarty->assign_by_ref('rowImages',$_REQUEST["rowImages"]);
   $smarty->assign_by_ref('thumbSizeX',$_REQUEST["thumbSizeX"]);
   $smarty->assign_by_ref('thumbSizeY',$_REQUEST["thumbSizeY"]);
+  if(isset($_REQUEST["visible"]) && $_REQUEST["visible"]=="on") {
+    $smarty->assign('visible','y');
+    $visible ='y';
+  } else {
+    $visible ='n';
+  }
   if(isset($_REQUEST["public"]) && $_REQUEST["public"]=="on") {
     $smarty->assign('public','y');
     $public ='y';
   } else {
     $public ='n';
   }
-  $tikilib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public);
+  $smarty->assign('public',$public);
+  $smarty->assign('visible',$visible);
+  $tikilib->replace_file_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"], $user, $_REQUEST["maxRows"], $public, $visible);
   $smarty->assign('edit_mode','n');
 }
 
@@ -125,6 +161,44 @@ $smarty->assign_by_ref('offset',$offset);
 // Get the list of libraries available for this user (or public galleries)
 // GET ALL GALLERIES SINCE ALL GALLERIES ARE BROWSEABLE
 $galleries = $tikilib->list_file_galleries($offset,$maxRecords,$sort_mode, 'admin',$find);
+// Now traverse the galleries and check if there're individual permissions preventing the
+// user from browsing/editing/removing/listing/uploading to the gallery
+for($i=0;$i<count($galleries["data"]);$i++) {
+  if($userlib->object_has_one_permission($galleries["data"][$i]["galleryId"],'file gallery')) {
+    $galleries["data"][$i]["individual"]='y';
+    
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_view_file_gallery')) {
+      $galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='n';
+    }
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_upload_files')) {
+      $galleries["data"][$i]["individual_tiki_p_upload_files"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_upload_files"]='n';
+    }
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_download_files')) {
+      $galleries["data"][$i]["individual_tiki_p_download_files"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_download_files"]='n';
+    }
+    if($userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_create_file_galleries')) {
+      $galleries["data"][$i]["individual_tiki_p_create_file_galleries"]='y';
+    } else {
+      $galleries["data"][$i]["individual_tiki_p_create_file_galleries"]='n';
+    }
+    if($tiki_p_admin=='y' || $userlib->object_has_permission($user,$galleries["data"][$i]["galleryId"],'file gallery','tiki_p_admin_file_galleries')) {
+      $galleries["data"][$i]["individual_tiki_p_create_file_galleries"]='y';
+      $galleries["data"][$i]["individual_tiki_p_download_files"]='y';
+      $galleries["data"][$i]["individual_tiki_p_upload_files"]='y';
+      $galleries["data"][$i]["individual_tiki_p_view_file_gallery"]='y';
+    } 
+    
+  } else {
+    $galleries["data"][$i]["individual"]='n';
+  }
+}
+
 // If there're more records then assign next_offset
 $cant_pages = ceil($galleries["cant"] / $maxRecords);
 $smarty->assign_by_ref('cant_pages',$cant_pages);

@@ -5,15 +5,23 @@
   </div>
   
   <div class="gallerylink">
-    <a class="imglink" href="tiki-browse_gallery.php?galleryId={$galleryId}">{tr}return to gallery{/tr}</a>
+    <a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}">{tr}return to gallery{/tr}</a>
   </div>
   
   <div class="showimage">
     <img alt="image" src="show_image.php?id={$imageId}" />
   </div>
   
+  <div align="center">
+    [{if $previmg}
+    <a href="tiki-browse_image?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$prevdesp}&amp;galleryId={$galleryId}&amp;imageId={$previmg}" class="gallink"> {tr}prev image{/tr}</a>{/if}{if $previmg and $nextimg} | {/if}
+    {if $nextimg}
+    <a href="tiki-browse_image?offset={$offset}&amp;sort_mode={$sort_mode}&amp;desp={$nextdesp}&amp;galleryId={$galleryId}&amp;imageId={$nextimg}" class="gallink">{tr}next image{/tr}</a> {/if}]
+  </div>
+
+  
   <div class="imageinfo">
-      <table align="center" border="1" cellpadding="3" cellspacing="0">
+      <table class="imageinfo">
       <tr><td class="imageinfo">{tr}Image Name{/tr}:</td><td class="imageinfo">{$name}</td></tr>
       <tr><td class="imageinfo">{tr}Created{/tr}:</td><td class="imageinfo">{$created|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</td></tr>
       <tr><td class="imageinfo">{tr}Hits{/tr}:</td><td class="imageinfo">{$hits}</td></tr>
@@ -35,7 +43,7 @@
   </div>
   
   <div class="linksinfo">
-    {tr}You can view this image in your browser using{tr}: <a class="imglink" href="http://{$url_browse}?imageId={$imageId}">http://{$url_browse}?imageId={$imageId}</a><br/>
+    {tr}You can view this image in your browser using{tr}: <a class="gallink" href="http://{$url_browse}?imageId={$imageId}">http://{$url_browse}?imageId={$imageId}</a><br/>
     {tr}You can include the image in an HTML or Tiki page using{/tr} &lt;img src="http://{$url_show}?id={$imageId}" /&gt;
   </div>
 </div>

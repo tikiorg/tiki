@@ -137,6 +137,14 @@ for($i=0;$i<count($groups["data"]);$i++) {
 }
 $smarty->assign_by_ref("groups",$groups["data"]);
 
+$polls = $tikilib->list_active_polls(0,-1,'publishDate_desc','');
+$smarty->assign('polls',$polls["data"]);
+$contents = $tikilib->list_content(0,-1,'contentId_desc','');
+$smarty->assign('contents',$contents["data"]);
+$rsss = $tikilib->list_rss_modules(0,-1,'name_desc','');
+$smarty->assign('rsss',$rsss["data"]);
+$banners = $tikilib->list_zones();
+$smarty->assign('banners',$banners["data"]);
 $left = $tikilib->get_assigned_modules('l');
 $right = $tikilib->get_assigned_modules('r');
 $smarty->assign_by_ref('left',$left);

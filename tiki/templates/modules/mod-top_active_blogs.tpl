@@ -4,9 +4,11 @@
 {tr}Most Active blogs{/tr}
 </div>
 <div class="box-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modTopActiveBlogs}
-<div class="button">{$smarty.section.ix.index_next})&nbsp;<a class="linkbut" href="tiki-view_blog.php?blogId={$modTopActiveBlogs[ix].blogId}">{$modTopActiveBlogs[ix].title}</a></div>
+<tr><td  width="5%" class="module" valign="top">{$smarty.section.ix.index_next})&nbsp;</td><td class="module"><a class="linkmodule" href="tiki-view_blog.php?blogId={$modTopActiveBlogs[ix].blogId}">{$modTopActiveBlogs[ix].title}</a></td></tr>
 {/section}
+</table>
 </div>
 </div>
 {/if}

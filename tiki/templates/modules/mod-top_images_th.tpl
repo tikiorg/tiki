@@ -7,11 +7,11 @@
 {section name=ix loop=$modTopImages}
 {if $smarty.section.ix.index < 5}
 <div align="center" class="imagerank">
-<table cellpadding="0" cellspacing="0">
+<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-<td valign="middle"><span class="user-box-text">{$smarty.section.ix.index_next})</span></td>
-<td>
-<a class="linkbut" href="tiki-browse_image.php?imageId={$modTopImages[ix].imageId}">
+<!--<td  class="module" width="5%" valign="middle"><span class="user-box-text">{$smarty.section.ix.index_next})</span></td>-->
+<td align="center">
+<a class="linkmodule" href="tiki-browse_image.php?imageId={$modTopImages[ix].imageId}">
 <img alt="image" src="show_image.php?id={$modTopImages[ix].imageId}" height="50" width="90" />
 </a>
 </td></tr>

@@ -4,14 +4,14 @@
 {tr}Last Files{/tr}
 </div>
 <div class="box-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
 {section name=ix loop=$modLastFiles}
-<div class="button">
-{$smarty.section.ix.index_next})
-<a class="linkbut" href="tiki-download_file.php?fileId={$modLastFiles[ix].fileId}">
+<tr><td class="module">{$smarty.section.ix.index_next})</td><td class="module">
+<a class="linkmodule" href="tiki-download_file.php?fileId={$modLastFiles[ix].fileId}">
 {$modLastFiles[ix].filename}
-</a>
-</div>
+</a></td></tr>
 {/section}
+</table>
 </div>
 </div>
 {/if}

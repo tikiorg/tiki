@@ -14,8 +14,15 @@
       </td>
       <td id="centercolumn"><div id="tiki-center">
       <br/>
-	<h2>Error! <a href="{$tikiIndex}" class="wiki">(return to home page)</a></h2>
-	<div class="wikitext">{$msg}</div>
+        <div class="cbox">
+        <div class="cbox-title">
+        {tr}Error{/tr}
+        </div>
+        <div class="cbox-data">
+        {$msg}<br/><br/>
+        <a href="{$tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
+        </div>
+        </div>
       </div></td>
       <td id="rightcolumn">
       {section name=homeix loop=$right_modules}

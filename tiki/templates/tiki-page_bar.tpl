@@ -6,7 +6,7 @@
 
 <td><div  class="button2"><a href="tiki-print.php?page={$page}" class="linkbut">{tr}printable{/tr}</a></div></td>
 
-{if $tiki_p_edit eq 'y'}
+{if $tiki_p_edit eq 'y' or $page eq 'SandBox'}
 {if $beingEdited eq 'y'}
 <td><div class="button2" ><a style="background: #FFAAAA;" href="tiki-editpage.php?page={$page}" class="linkbut">{tr}edit{/tr}</a></div></td>
 {else}

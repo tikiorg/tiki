@@ -11,6 +11,9 @@
 {if $feature_file_galleries eq 'y'}
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=files">{tr}files{/tr}</a> |
 {/if}
+{if $feature_forums eq 'y'}
+<a class="link" href="tiki-searchresults.php?words={$words}&amp;where=forums">{tr}forums{/tr}</a> |
+{/if}
 {if $feature_blogs eq 'y'}
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=blogs">{tr}blogs{/tr}</a> |
 <a class="link" href="tiki-searchresults.php?words={$words}&amp;where=posts">{tr}blog posts{/tr}</a> |
@@ -21,10 +24,15 @@
 ]
 <br/><br/>
 {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where}
+<form class="forms" method="post" action="tiki-searchresults.php">
+    {tr}Find{/tr}: <input id="fuser" name="words" size="14" type="text" accesskey="s" /> 
+    <input type="hidden" name="where" value="{$where}" />
+    <input type="submit" class="wikiaction" name="search" value="{tr}go{/tr}"/> 
+</form>
 <br/><br/>
 {section  name=search loop=$results}
 <a href="{$results[search].href}" class="wiki">{$results[search].pageName|strip_tags}</a> ({$results[search].hits})<br/>
-<div class="text">{$results[search].data|strip_tags}</div>
+<div class="searchdesc">{$results[search].data|strip_tags}</div>
 <div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|date_format:"%A %d of %B, %Y [%H:%M:%S]"}</div><br/>
 {sectionelse}
 {tr}No pages matched the search criteria{/tr}

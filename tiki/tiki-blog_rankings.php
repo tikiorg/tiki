@@ -14,6 +14,12 @@ if($feature_blog_rankings != 'y') {
   die;  
 }
 
+if($tiki_p_read_blog != 'y') {
+  $smarty->assign('msg',tra("Permission denied you cannot view this section"));
+  $smarty->display('error.tpl');
+  die;  
+}
+
 $allrankings = Array(
   Array( 'name'=> 'Top visited blogs', 'value'=> tra('blog_ranking_top_blogs')),
   Array( 'name'=> 'Last posts', 'value'=> tra('blog_ranking_last_posts')),
