@@ -4680,6 +4680,7 @@ class TikiLib {
     $dw = strtolower(date("D"));
     $hour = date("H").date("i");
     $now = date("U");
+    $raw='';
     // 
     // 
     $query = "select * from tiki_banners where $dw = 'y' and  hourFrom<=$hour and hourTo>=$hour and
@@ -4723,9 +4724,11 @@ class TikiLib {
     } 
     // Increment banner impressions here
     $id = $res["bannerId"];
-    $query = "update tiki_banners set impressions = impressions + 1 where bannerId = $id";
-    $result = $this->db->query($query);
-    if(DB::isError($result)) $this->sql_error($query, $result);
+    if($id) {
+      $query = "update tiki_banners set impressions = impressions + 1 where bannerId = $id";
+      $result = $this->db->query($query);
+      if(DB::isError($result)) $this->sql_error($query, $result);
+    }
     return $raw;
   }
 
