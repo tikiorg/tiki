@@ -899,7 +899,7 @@ class UsersLib extends TikiLib {
 		    'permDesc' => $res['permDesc'],
 		    'type' => $res['type'],
 		    'level' => $res['level'],
-		    'hashPerm' => $hasPerm,
+		    'hasPerm' => $hasPerm,
 		    );
 	}
 
