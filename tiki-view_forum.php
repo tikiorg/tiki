@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.48 2003-11-24 05:52:20 sylvieg Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-view_forum.php,v 1.49 2003-12-04 09:05:44 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -780,6 +780,10 @@ if ($tiki_p_admin_forum == 'y') {
 }
 
 include_once("textareasize.php");
+
+include_once ('lib/quicktags/quicktagslib.php');
+$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','');
+$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-view_forum.tpl');
