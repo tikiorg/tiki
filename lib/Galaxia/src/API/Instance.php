@@ -422,7 +422,7 @@ class Instance extends Base {
           if (in_array($this->nextActivity,$candidates)) {
             $this->sendTo($activityId,$this->nextActivity);
           } else {
-            trigger_error(tra('Fatal error: nextActivity doesn match any candidate in autoruting switch activity'),E_USER_WARNING);
+            trigger_error(tra('Fatal error: nextActivity does not match any candidate in autorouting switch activity'),E_USER_WARNING);
           }
         } else {
           if (count($candidates)>1) {

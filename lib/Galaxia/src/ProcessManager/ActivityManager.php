@@ -233,7 +233,7 @@ class ActivityManager extends BaseManager {
     // Pre rule no cricular activities
     $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."transitions where pId=$pId and actFromId=actToId");
     if($cant) {
-      $errors[] = tra('Circular reference found some activty has a transition leading to itself');
+      $errors[] = tra('Circular reference found some activity has a transition leading to itself');
     }
 
     // Rule 1 must have exactly one start and end activity
