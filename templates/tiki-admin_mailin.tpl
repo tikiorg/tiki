@@ -77,12 +77,13 @@
     </tr>
     <tr class="formcolor">
       <td>{tr}Password{/tr}</td>
-      <td colspan="3"><input type="text" name="pass" value="{$info.pass|escape}" /></td>
+      <td colspan="3"><input type="password" name="pass" value="{$info.pass|escape}" /></td>
     </tr>
     <tr class="formcolor">
       <td>{tr}Type{/tr}</td>
       <td colspan="3">
         <select name="type">
+          <option value="article-put" {if $info.type eq 'article-put'}selected="selected"{/if}>{tr}article-put{/tr}</option>
           <option value="wiki-get" {if $info.type eq 'wiki-get'}selected="selected"{/if}>{tr}wiki-get{/tr}</option>
           <option value="wiki-put" {if $info.type eq 'wiki-put'}selected="selected"{/if}>{tr}wiki-put{/tr}</option>
           <option value="wiki-append" {if $info.type eq 'wiki-append'}selected="selected"{/if}>{tr}wiki-append{/tr}</option>
@@ -90,6 +91,26 @@
         </select>
       </td>
     </tr>
+
+<tr class="formcolor"><td>{tr}Article Topic{/tr}</td><td>
+<select name="article_topicId">
+{section name=t loop=$topics}
+<option value="{$topics[t].topicId|escape}" {if $info.article_topicId eq $topics[t].topicId}selected="selected"{/if}>{$topics[t].name}</option>
+{/section}
+<option value="" {if $info.article_topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
+</select>
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin topics{/tr}</a>{/if}
+</td><td></td><td></td></tr>
+<tr class="formcolor"><td>{tr}Article Type{/tr}</td><td>
+<select id='articletype' name='article_type' onchange='javascript:chgArtType();'>
+<option value="">-</option>
+{section name=t loop=$types}
+<option value="{$types[t].type|escape}" {if $info.article_type eq $types[t].type}selected="selected"{/if}>{tr}{$types[t].type}{/tr}</option>
+{/section}
+</select>
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
+</td><td></td><td></td></tr>
+
     <tr class="formcolor">
       <td>{tr}Active{/tr}</td>
       <td colspan="3">

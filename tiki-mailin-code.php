@@ -120,8 +120,8 @@ foreach ($accs['data'] as $acc) {
         $aux["sender"]["name"] = $aux["sender"]["email"];
   
       // Now determine account type
-      if ($acc['type'] == 'article') {
-        // This is used to UPDATE wiki pages
+      if ($acc['type'] == 'article-put') {
+        // This is used to CREATE articles
         $title = trim($aux['subject']);
   
         $full = $message['full'];
@@ -141,13 +141,14 @@ foreach ($accs['data'] as $acc) {
         }
         
         $heading = $msgbody;
+        $topicId = $acc['article_topicId'];
         $user = $aux['sender']['user'];
         $authorName = $user;
         $body = '';
         $publishDate = date('U');
         $expireDate = mktime (0,0,0,date("m"),  date("d"),  date("Y")+1);
         $subId = 0;
-        $type = 'Article';
+        $type = $acc['article_type'];
         $useImage = 'n';
         $image_x = '';
         $image_y = '';
@@ -163,12 +164,21 @@ foreach ($accs['data'] as $acc) {
 		$rating = 7;
 		$isfloat = 'n';
         
+		global $artlib;
+		if (!is_object($artlib)) {
+			include_once('lib/articles/artlib.php');
+		}
 		$subid = $artlib->replace_submission($title, $authorName, $topicId, $useImage, $imgname, $imgsize, $imgtype, $imgdata, $heading, 
 											$body, $publishDate, $expireDate, $user, $subId, $image_x, $image_y, $type, 
 											$topline, $subtitle, $linkto, $image_caption, $lang, $rating, $isfloat);
 
-		$artlib->approve_submission($subid);
-		$content .= "Article: $title has been created<br />";
+		global $tiki_p_autoapprove_submission;
+		if ($tiki_p_autoapprove_submission == 'y') {
+			$artlib->approve_submission($subid);
+			$content .= "Article: $title has been submitted<br />";
+		} else {
+			$content .= "Article: $title has been created<br />";
+		}
 
       }
   

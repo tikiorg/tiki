@@ -97,7 +97,10 @@ class ArtLib extends TikiLib {
          $expireDate = $publishDate;
       }
 		if(empty($imgdata)) $imgdata='';
-		include_once ('lib/notifications/notificationlib.php');
+		global $notificationlib;
+		if (!is_object($notificationlib)) {
+			require_once('lib/notifications/notificationlib.php');
+		}
 		$hash = md5($title . $heading . $body);
 		$now = date("U");
 		$query = "select `name` from `tiki_topics` where `topicId` = ?";
@@ -427,6 +430,7 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 	}
 }
 
+global $dbTiki;
 $artlib = new ArtLib($dbTiki);
 
 ?>
