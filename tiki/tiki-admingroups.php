@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.14 2004-01-14 01:12:48 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admingroups.php,v 1.15 2004-01-14 06:12:44 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -13,7 +13,6 @@ require_once ('tiki-setup.php');
 if ($user != 'admin') {
 	if ($tiki_p_admin != 'y') {
 		$smarty->assign('msg', tra("You dont have permission to use this feature"));
-
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -21,6 +20,8 @@ if ($user != 'admin') {
 
 $trackerlist = $tikilib->list_trackers(0, -1, 'name_asc', '');
 $trackers = $trackerlist['list'];
+$smarty->assign('eligibleUserTrackers', array_flip(split(',',','.$tikilib->get_preference("eligibleUserTrackers", ""))));
+$smarty->assign("eligibleGroupTrackers", array_flip(split(',',','.$tikilib->get_preference("eligibleGroupTrackers", ""))));
 $smarty->assign('trackers', $trackers);
 
 list($ag_home,$ag_utracker,$ag_gtracker) = array('',0,0);
@@ -28,8 +29,8 @@ if (isset($_REQUEST["home"])) $ag_home = $_REQUEST["home"];
 if (isset($_REQUEST["userstracker"]) and isset($trackers[$_REQUEST["userstracker"]])) {
 	$ag_utracker = $_REQUEST["userstracker"];
 }
-if (isset($_REQUEST["grouptracker"]) and isset($trackers[$_REQUEST["grouptracker"]])) {
-	$ag_gtracker = $_REQUEST["grouptracker"];
+if (isset($_REQUEST["groupstracker"]) and isset($trackers[$_REQUEST["groupstracker"]])) {
+	$ag_gtracker = $_REQUEST["groupstracker"];
 }
 
 // Process the form to add a group
@@ -38,7 +39,6 @@ if (isset($_REQUEST["newgroup"])) {
 	// Check if the user already exists
 	if ($userlib->group_exists($_REQUEST["name"])) {
 		$smarty->assign('msg', tra("Group already exists"));
-
 		$smarty->display("error.tpl");
 		die;
 	} else {
@@ -51,17 +51,14 @@ if (isset($_REQUEST["newgroup"])) {
 			}
 		}
 	}
-
 	$_REQUEST["group"] = $_REQUEST["name"];
 }
 
 // modification
-if (isset($_REQUEST["save"])and isset($_REQUEST["olgroup"])) {
+if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"])) {
 	check_ticket('admin-groups');
 	$userlib->change_group($_REQUEST["olgroup"],$_REQUEST["name"],$_REQUEST["desc"],$ag_home,$ag_utracker,$ag_gtracker);
-
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
-
 	if (isset($_REQUEST["include_groups"])) {
 		foreach ($_REQUEST["include_groups"] as $include) {
 			if ($_REQUEST["name"] != $include) {
@@ -81,12 +78,10 @@ if (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete') {
 		$userlib->remove_group($_REQUEST["group"]);
 	}
-
 	if ($_REQUEST["action"] == 'remove') {
 		$userlib->remove_permission_from_group($_REQUEST["permission"], $_REQUEST["group"]);
 	}
 }
-
 
 if (!isset($_REQUEST["numrows"])) {
 	$numrows = $maxRecords;

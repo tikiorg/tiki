@@ -1,30 +1,23 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.8 2004-01-09 19:47:45 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_include_login.php,v 1.9 2004-01-14 06:12:44 mose Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
 if (isset($_REQUEST["loginprefs"])) {
 	check_ticket('admin-inc-login');
     if (isset($_REQUEST["change_theme"]) && $_REQUEST["change_theme"] == "on") {
 	$tikilib->set_preference("change_theme", 'y');
-
-	$smarty->assign('change_theme', 'y');
     } else {
 	$tikilib->set_preference("change_theme", 'n');
-
-	$smarty->assign('change_theme', 'n');
     }
 
     if (isset($_REQUEST["change_language"]) && $_REQUEST["change_language"] == "on") {
 	$tikilib->set_preference("change_language", 'y');
-
-	$smarty->assign('change_language', 'y');
     } else {
 	$tikilib->set_preference("change_language", 'n');
-
-	$smarty->assign('change_language', 'n');
     }
 
     if (isset($_REQUEST["eponymousGroups"]) &&
@@ -38,6 +31,22 @@ if (isset($_REQUEST["loginprefs"])) {
 
 	$smarty->assign('eponymousGroups', 'n');
     }
+		
+	if (isset($_REQUEST["userTracker"]) && $_REQUEST["userTracker"] == "on") {
+		$tikilib->set_preference("userTracker", 'y');
+		$tikilib->set_preference("eligibleUserTrackers", implode(',',$_REQUEST["eligibleUserTrackers"]));
+	} else {
+		$tikilib->set_preference("userTracker", 'n');
+		$tikilib->set_preference("eligibleUserTrackers", '');
+	}
+
+	if (isset($_REQUEST["groupTracker"]) && $_REQUEST["groupTracker"] == "on") {
+		$tikilib->set_preference("groupTracker", 'y');
+		$tikilib->set_preference("eligibleGroupTrackers", implode(',',$_REQUEST["eligibleGroupTrackers"]));
+	} else {
+		$tikilib->set_preference("groupTracker", 'n');
+		$tikilib->set_preference("eligibleGroupTrackers", '');
+	}
 
     if (isset($_REQUEST["allowRegister"]) && $_REQUEST["allowRegister"] == "on") {
 	$tikilib->set_preference("allowRegister", 'y');
@@ -331,6 +340,16 @@ if (isset($_REQUEST["auth_pear"])) {
     }
 }
 
+$smarty->assign("userTracker", $tikilib->get_preference("userTracker", "n"));
+$smarty->assign("eligibleUserTrackers", array_flip(split(',',','.$tikilib->get_preference("eligibleUserTrackers", ""))));
+$smarty->assign("groupTracker", $tikilib->get_preference("groupTracker", "n"));
+$smarty->assign("eligibleGroupTrackers", array_flip(split(',',','.$tikilib->get_preference("eligibleGroupTrackers", ""))));
+
+$listTrackers = $tikilib->list_trackers(0,-1,"name_desc","");
+$smarty->assign("listTrackers",$listTrackers['list']);
+
+$smarty->assign("change_theme", $tikilib->get_preference("change_theme", "n"));
+$smarty->assign("change_language", $tikilib->get_preference("change_language", "n"));
 $smarty->assign("rememberme", $tikilib->get_preference("rememberme", "disabled"));
 $smarty->assign("remembertime", $tikilib->get_preference("remembertime", 7200));
 $smarty->assign("allowRegister", $tikilib->get_preference("allowRegister", 'n'));

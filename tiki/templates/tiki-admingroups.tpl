@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.23 2004-01-14 01:12:48 mose Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admingroups.tpl,v 1.24 2004-01-14 06:12:44 mose Exp $ *}
 {popup_init src="lib/overlib.js"}
 
 <a class="pagetitle" href="tiki-admingroups.php">{tr}Admin groups{/tr}</a>
@@ -126,24 +126,28 @@ title="Click here to delete this group"><img border="0" alt="{tr}Remove{/tr}" sr
 </select>
 </td></tr>
 <tr class="formcolor"><td><label for="groups_home">{tr}Home page{/tr}</label></td><td><input type="text" name="home" id="groups_home" value="{$grouphome|escape}" /></td></tr>
-{if $groupTracker eq 'y'}
-<tr class="formcolor"><td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td><td class="formcolor">
-<select name="grouptracker" id="groupTracker">
+{if $groupTracker eq 'y' and $eligibleGroupTrackers}
+<tr class="formcolor"><td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td><td>
+<select name="groupstracker" id="groupsTracker">
 <option value="0">{tr}choose a group tracker ...{/tr}</option>
 {foreach key=tid item=tit from=$trackers}
+{if $eligibleGroupTrackers.$tid}
 <option value="{$tid}"{if $tid eq $grouptrackerid} {assign var="ggr" value="$tit"}selected="selected"{/if}>{$tit}</option>
+{/if}
 {/foreach}
-</select> <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$grouptrackerid}" class="linkbut">{tr}admin{/tr} {$ggr}</a>
+</select> <span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$grouptrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}admin{/tr} {$ggr}</a>
 </td></tr>
 {/if}
 {if $userTracker eq 'y'}
-<tr class="formcolor"><td><label for="userstracker">{tr}Users Information Tracker{/tr}</label></td><td class="formcolor">
+<tr class="formcolor"><td><label for="userstracker">{tr}Users Information Tracker{/tr}</label></td><td>
 <select name="userstracker" id="usersTracker">
 <option value="0">{tr}choose a users tracker ...{/tr}</option>
 {foreach key=tid item=tit from=$trackers}
+{if $eligibleUserTrackers.$tid}
 <option value="{$tid}"{if $tid eq $userstrackerid} {assign var="ugr" value="$tit"}selected="selected"{/if}>{$tit}</option>
+{/if}
 {/foreach}
-</select> <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$userstrackerid}" class="linkbut">{tr}admin{/tr} {$ugr}</a>
+</select> <span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$userstrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}admin{/tr} {$ugr}</a>
 </td></tr>
 {/if}
 {if $group ne ''}

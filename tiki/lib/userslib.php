@@ -1217,7 +1217,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 	    return false;
 
 	$query = "insert into `users_groups`(`groupName`, `groupDesc`,
-		`groupHome`,`usersTrackerId``groupTrackerId`) values( ?, ?, ?, ?)";
+		`groupHome`,`usersTrackerId`,`groupTrackerId`) values(?,?,?,?,?)";
 	$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker) );
 	return true;
     }
@@ -1230,30 +1230,23 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_desc', $fi
 		`groupHome` = ?, `usersTrackerId`=?, `groupTrackerId`=? where `groupName` = ?";
 	$result = $this->query($query, array($group, $desc, $home, (int)$utracker, (int)$gtracker, $olgroup));
 
-	$query = "update `users_usergroups` set `groupName` = ? where
-		`groupName` = ?";
+	$query = "update `users_usergroups` set `groupName` = ? where `groupName` = ?";
 	$result = $this->query($query, array($group, $olgroup));
 
-	$query = "update `users_grouppermissions` set `groupName` = ? where
-		`groupName` = ?";
+	$query = "update `users_grouppermissions` set `groupName` = ? where `groupName` = ?";
 	$result = $this->query($query, array($group, $olgroup));
 
-	$query = "update `users_objectpermissions` set `groupName` = ?
-		where `groupName` = ?";
+	$query = "update `users_objectpermissions` set `groupName` = ?  where `groupName` = ?";
 	$result = $this->query($query, array($group, $olgroup));
 
-	$query = "update `tiki_group_inclusion` set `groupName` = ?
-		where `groupName` = ?";
+	$query = "update `tiki_group_inclusion` set `groupName` = ?  where `groupName` = ?";
 	$result = $this->query($query, array($group, $olgroup));
 
-	$query = "update `tiki_newsreader_marks` set `groupName` = ?
-		where `groupName` = ?";
+	$query = "update `tiki_newsreader_marks` set `groupName` = ?  where `groupName` = ?";
 	$result = $this->query($query, array($group, $olgroup));
 
-	$query = "update `tiki_modules` set `groups`=replace(`groups`, ?, ?)
-		where `groups` like ?";
-	$result = $this->query($query, array($olgroup, $group,
-				'%'.$olgroup.'%'));
+	$query = "update `tiki_modules` set `groups`=replace(`groups`, ?, ?) where `groups` like ?";
+	$result = $this->query($query, array($olgroup, $group, '%'.$olgroup.'%'));
 	return true;
     }
 
