@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.53 2004-05-07 15:46:33 sylvieg Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.54 2004-05-24 15:07:24 sylvieg Exp $
 2003 - created and maintained by mose@tikiwiki.org
 
 colorset:
@@ -198,6 +198,7 @@ TD#centercolumn {
 	vertical-align:   top;
 	border-top:   1px solid #5A4A39;
 	padding: 10px 25px 0px 25px;
+	width: 100%;
 }
 
 /* 
@@ -248,7 +249,7 @@ div.box {
 	background:    white;
 	border:   1px solid black;
 	overflow:   hidden;
-	width: 100%;
+	width: 180px;
 }
 
 /* 
@@ -486,7 +487,7 @@ div.simplebox {
 /*
 MSIE inheritence pb
 */
-.form {
+.form, #tiki-center table {
 	font-size: 11px;
 }
 
