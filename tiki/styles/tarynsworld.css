@@ -46,6 +46,37 @@ DIV#tiki-top a {
 	text-decoration:   none;
 }
 
+DIV#tiki-topbanner {
+background-color: #ffc0c8;
+border: 0px;
+color: white;
+height: 12px;
+text-align: left;
+padding-left: 10px;
+padding-bottom: 2px;
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10px;
+}
+.bannertext {
+        font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+        color:   black;
+	font-size: 9px;
+        text-decoration:   none;
+}
+
+.bannertext:active {
+        font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+        color:   yellow;
+	font-size: 9px;
+        text-decoration:   none;
+}
+
+.bannertext:hover {
+        font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+        color:   red;
+	font-size: 9px;
+        text-decoration:   none;
+}
 /* This is the middle */
 DIV#tiki-mid {
 	height:   auto;
@@ -383,26 +414,6 @@ div.separator {
 }
 
 /* Banners of type text (textadds) are displayed as links using the following style */
-.bannertext {
-	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   11px;
-	color:   black;
-	text-decoration:   none;
-}
-
-.bannertext:active {
-	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   11px;
-	color:   black;
-	text-decoration:   none;
-}
-
-.bannertext:hover {
-	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:   11px;
-	color:   black;
-	text-decoration:   none;
-}
 
 /* Some boxes uses thumbnails this is the image style */
 div.imagerank {
