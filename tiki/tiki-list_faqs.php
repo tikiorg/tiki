@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/faqs/faqlib.php');
 
 if($feature_faqs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -39,7 +40,7 @@ if(isset($_REQUEST["remove"])) {
     $smarty->display("styles/$style_base/error.tpl");
     die;
   }
-  $tikilib->remove_faq($_REQUEST["remove"]);
+  $faqlib->remove_faq($_REQUEST["remove"]);
 }
 
 if(isset($_REQUEST["save"])) {
@@ -53,7 +54,7 @@ if(isset($_REQUEST["save"])) {
   } else {
     $canSuggest='n';
   }
-  $fid = $tikilib->replace_faq($_REQUEST["faqId"], $_REQUEST["title"], $_REQUEST["description"],$canSuggest);
+  $fid = $faqlib->replace_faq($_REQUEST["faqId"], $_REQUEST["title"], $_REQUEST["description"],$canSuggest);
   
   $cat_type='faq';
   $cat_objid = $fid;

@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/faqs/faqlib.php');
 
 if($feature_faqs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -32,7 +33,7 @@ $smarty->assign('questionId',$_REQUEST["questionId"]);
 
 
 if($_REQUEST["questionId"]) {
-  $info = $tikilib->get_faq_question($_REQUEST["questionId"]);
+  $info = $faqlib->get_faq_question($_REQUEST["questionId"]);
 } else {
   $info = Array();
   $info["question"]='';
@@ -42,19 +43,19 @@ $smarty->assign('question',$info["question"]);
 $smarty->assign('answer',$info["answer"]);
 
 if(isset($_REQUEST["remove"])) {
-  $tikilib->remove_faq_question($_REQUEST["remove"]);
+  $faqlib->remove_faq_question($_REQUEST["remove"]);
 }
 
 if(!isset($_REQUEST["filter"])) {$_REQUEST["filter"]='';}
 $smarty->assign('filter',$_REQUEST["filter"]);
 
 if(isset($_REQUEST["useq"])) {
-  $quse = $tikilib->get_faq_question($_REQUEST["usequestionId"]);
-  $tikilib->replace_faq_question($_REQUEST["faqId"], 0, $quse["question"], $quse["answer"]);
+  $quse = $faqlib->get_faq_question($_REQUEST["usequestionId"]);
+  $faqlib->replace_faq_question($_REQUEST["faqId"], 0, $quse["question"], $quse["answer"]);
 }
 
 if(isset($_REQUEST["save"])) {
-   $tikilib->replace_faq_question($_REQUEST["faqId"], $_REQUEST["questionId"], $_REQUEST["question"], $_REQUEST["answer"]);
+   $faqlib->replace_faq_question($_REQUEST["faqId"], $_REQUEST["questionId"], $_REQUEST["question"], $_REQUEST["answer"]);
 }
 
 if(!isset($_REQUEST["sort_mode"])) {
@@ -78,16 +79,16 @@ if(isset($_REQUEST["find"])) {
 $smarty->assign('find',$find);
 
 if(isset($_REQUEST["remove_suggested"])) {
-  $tikilib->remove_suggested_question($_REQUEST["remove_suggested"]);
+  $faqlib->remove_suggested_question($_REQUEST["remove_suggested"]);
 }
 if(isset($_REQUEST["approve_suggested"])) {
-  $tikilib->approve_suggested_question($_REQUEST["approve_suggested"]);
+  $faqlib->approve_suggested_question($_REQUEST["approve_suggested"]);
 }
 
 
 $smarty->assign_by_ref('sort_mode',$sort_mode);
-$channels = $tikilib->list_faq_questions($_REQUEST["faqId"],0,-1,$sort_mode,$find);
-$allq = $tikilib->list_all_faq_questions(0,-1,'question_asc',$_REQUEST["filter"]);
+$channels = $faqlib->list_faq_questions($_REQUEST["faqId"],0,-1,$sort_mode,$find);
+$allq = $faqlib->list_all_faq_questions(0,-1,'question_asc',$_REQUEST["filter"]);
 $smarty->assign_by_ref('allq',$allq["data"]);
 
 $cant_pages = ceil($channels["cant"] / $maxRecords);
@@ -108,7 +109,7 @@ if($offset>0) {
 $smarty->assign_by_ref('channels',$channels["data"]);
 
 
-$suggested = $tikilib->list_suggested_questions(0,-1,'created_desc','');
+$suggested = $faqlib->list_suggested_questions(0,-1,'created_desc','');
 $smarty->assign_by_ref('suggested',$suggested["data"]);
 
 

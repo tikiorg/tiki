@@ -196,9 +196,9 @@ include_once('tiki-section_options.php');
 
 if($feature_wiki_attachments == 'y') {
   if(isset($_REQUEST["removeattach"])) {
-    $owner = $tikilib->get_attachment_owner($_REQUEST["removeattach"]);
+    $owner = $wikilib->get_attachment_owner($_REQUEST["removeattach"]);
     if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
-      $tikilib->remove_wiki_attachment($_REQUEST["removeattach"]);
+      $wikilib->remove_wiki_attachment($_REQUEST["removeattach"]);
     }
   }
   if(isset($_REQUEST["attach"]) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
@@ -232,11 +232,11 @@ if($feature_wiki_attachments == 'y') {
       $size = $_FILES['userfile1']['size'];
       $name = $_FILES['userfile1']['name'];
       $type = $_FILES['userfile1']['type'];
-      $tikilib->wiki_attach_file($page,$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
+      $wikilib->wiki_attach_file($page,$name,$type,$size, $data, $_REQUEST["attach_comment"], $user,$fhash);
     }
   }
 
-  $atts = $tikilib->list_wiki_attachments($page,0,-1,'created_desc','');
+  $atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
   $smarty->assign('atts',$atts["data"]);
 }
 

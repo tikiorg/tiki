@@ -1,6 +1,7 @@
 <?php
 // Initialization
 require_once('tiki-setup.php');
+include_once('lib/faqs/faqlib.php');
 
 if($feature_faqs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
@@ -20,7 +21,7 @@ if(!isset($_REQUEST["faqId"])) {
     die;
 }
 
-$tikilib->add_faq_hit($_REQUEST["faqId"]);
+$faqlib->add_faq_hit($_REQUEST["faqId"]);
 
 $smarty->assign('faqId',$_REQUEST["faqId"]);
 $faq_info = $tikilib->get_faq($_REQUEST["faqId"]);
@@ -34,18 +35,18 @@ if(isset($_REQUEST["find"])) {
 }
 $smarty->assign('find',$find);
 
-$channels = $tikilib->list_faq_questions($_REQUEST["faqId"],0,-1,'question_asc',$find);
+$channels = $faqlib->list_faq_questions($_REQUEST["faqId"],0,-1,'question_asc',$find);
 
 
 $smarty->assign_by_ref('channels',$channels["data"]);
 
 if(isset($_REQUEST["sugg"])) {
   if($tiki_p_suggest_faq == 'y')  {
-    $tikilib->add_suggested_faq_question($_REQUEST["faqId"],$_REQUEST["suggested_question"],$_REQUEST["suggested_answer"],$user);
+    $faqlib->add_suggested_faq_question($_REQUEST["faqId"],$_REQUEST["suggested_question"],$_REQUEST["suggested_answer"],$user);
   }
 }
 
-$suggested = $tikilib->list_suggested_questions(0,-1,'created_desc','');
+$suggested = $faqlib->list_suggested_questions(0,-1,'created_desc','');
 $smarty->assign_by_ref('suggested',$suggested["data"]);
 
 if($feature_faq_comments == 'y') {
