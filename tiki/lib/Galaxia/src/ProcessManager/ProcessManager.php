@@ -606,7 +606,7 @@ class ProcessManager extends BaseManager {
      $h = opendir($dir);
      while(($file = readdir($h)) != false) {
        if(is_file($dir.'/'.$file)) {
-         unlink($dir.'/'.$file);
+         @unlink($dir.'/'.$file);
        } else {
          if($rec && $file != '.' && $file != '..') {
            $this->_remove_directory($dir.'/'.$file, true);
