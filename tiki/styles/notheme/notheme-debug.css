@@ -1,11 +1,11 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.5 2003-08-09 18:47:12 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-debug.css,v 1.6 2003-08-09 23:21:12 zaufi Exp $
  *
  * Debug console used styles.
  *
  */
 
-div#debugconsole {
+div.debugconsole {
 	position: absolute;
 	background-color: ThreeDShadow;
 	color: ThreeDHighlight;
@@ -120,20 +120,20 @@ span.dbgerror:hover {
 }
 
 /* make all text fields full sized */
-div#debugconsole * input[type = text] {
+div.debugconsole * input[type = text] {
 	width: 99%;
 	font: normal 12px courier, Fixed, monospace;
 }
 
 /* Close link */
-div#debugconsole.separator,
-div#debugconsole.separator:visited,
-div#debugconsole.separator:hover,
-div#debugconsole.separator:visited:hover {
+div.debugconsole .separator,
+div.debugconsole .separator:visited,
+div.debugconsole .separator:hover,
+div.debugconsole .separator:visited:hover {
 	color: ThreeDLightShadow;
 	text-decoration: none;
 }
 
-div#debugconsole td.formcolor {
+div.debugconsole td.formcolor {
 	background-color: Window;
 }
