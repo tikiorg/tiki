@@ -310,7 +310,7 @@ class TrackerLib extends TikiLib {
     for($i=0;$i<count($ins_fields["data"]);$i++) {
       $name=$ins_fields["data"][$i]["name"];
       $fieldId=$ins_fields["data"][$i]["fieldId"];
-      $value=$ins_fields["data"][$i]["value"];
+      $value=addslashes($ins_fields["data"][$i]["value"]);
       // Now check if the item is 0 or not
       $the_data.="$name = $value\n";
       if($itemId) {
