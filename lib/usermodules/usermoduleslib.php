@@ -1,6 +1,6 @@
 <?php
 /** \file
- * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.15 2003-08-28 11:08:16 redflo Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/lib/usermodules/usermoduleslib.php,v 1.16 2003-10-14 19:34:30 dheltzel Exp $
  *
  * \brief Manage user assigned modules
  */
@@ -56,6 +56,7 @@ class UserModulesLib extends TikiLib {
 		$res = $result->fetchRow();
 		$query1="delete from `tiki_user_assigned_modules` where `name`=? and `user`=?";
 		$result1=$this->query($query1,array($module,$user),-1,-1,false);
+//DH Fix
 		$query2 = '
     	insert INTO
     		`tiki_user_assigned_modules`
@@ -64,24 +65,16 @@ class UserModulesLib extends TikiLib {
     		`name`,
     		`position`,
     		`ord`,
-    		`type`,
-    		`title`,
-    		`cache_time`,
-    		`rows`,
-    		`groups`
+    		`type`
     	) VALUES
-    		(?,?,?,?,?,?,?,?,?)
+    		(?,?,?,?,?)
     ';
 		$fields = array(
 			$user,
 			$module,
 			$position,
 			$order,
-			$res['type'],
-			$res['title'],
-			$res['cache_time'],
-			$res['rows'],
-			$res['groups'],
+			$res['type']
 		);
 
 		$result2 = $this->query($query2, $fields);
@@ -114,7 +107,13 @@ class UserModulesLib extends TikiLib {
 	}
 
 	function get_assigned_modules_user($user, $position) {
-		$query = "select * from `tiki_user_assigned_modules` where `user`=? and `position`=? order by `ord` asc";
+                //changed 10/14/03 by dheltzel to use the tiki_modules table for non-customizable fields.
+		//$query = "select * from `tiki_user_assigned_modules` where `user`=? and `position`=? order by `ord` asc";
+		$query = "select `umod`.`name` `name`, `umod`.`position` `position`, `umod`.`ord` `ord`, `umod`.`type` `type`,
+                  `mod`.`title` `title`, `mod`.`cache_time` `cache_time`, `mod`.`rows` `rows`, `mod`.`params` `params`,
+                  `mod`.`groups` `groups`, `umod`.`user` `user` 
+                  from `tiki_user_assigned_modules` `umod`, `tiki_modules` `mod`
+                  where `umod`.`name`=`mod`.`name` and `umod`.`user`=? and `umod`.`position`=? order by `umod`.`ord` asc";
 
 		$result = $this->query($query,array($user, $position));
 		$ret = array();
@@ -163,6 +162,7 @@ class UserModulesLib extends TikiLib {
 				$query1="delete from `tiki_user_assigned_modules` where `name`=? and `user`=?";
 				$result1=$this->query($query1,array($res['name'],$user),-1,-1,false);	
 
+//DH Fix
 				$query2 = "
 			insert INTO
 				`tiki_user_assigned_modules`
@@ -171,14 +171,9 @@ class UserModulesLib extends TikiLib {
 				`name`,
 				`position`,
 				`ord`,
-				`type`,
-				`title`,
-				`cache_time`,
-				`rows`,
-				`groups`,
-				`params`
+				`type`
 			) VALUES (
-				?,?,?,?,?,?,?,?,?,?
+				?,?,?,?,?
 			)
 		";
 
@@ -187,12 +182,7 @@ class UserModulesLib extends TikiLib {
 					$res['name'],
 					$res['position'],
 					$res['ord'],
-					$res['type'],
-					$res['title'],
-					$res['cache_time'],
-					$res['rows'],
-					$res['groups'],
-					$res['params'],
+					$res['type']
 				);
 
 				$result2 = $this->query($query2, $fields);
@@ -285,9 +275,10 @@ class UserModulesLib extends TikiLib {
 		$result = $this->query($query,array($name));
 		while ($res = $result->fetchRow()) {
  			$user = $res["user"];
-			$query = "insert into `tiki_user_assigned_modules`(`user`,`name`,`position`,`ord`,`type`,`title`,`cache_time`,`rows`,`groups`)
+//DH Fix
+			$query = "insert into `tiki_user_assigned_modules`(`user`,`name`,`position`,`ord`,`type`)
 			values(?,?,?,?,?,?,?,?,?)";
- 			$this->query($query,array($user,$name,$position,$order,$type,$title,$cache_time,$rows,$groups));
+ 			$this->query($query,array($user,$name,$position,$order,$type));
 		}
 	} 
 }

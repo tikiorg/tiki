@@ -1,4 +1,4 @@
-# $Id: tiki_1.7to1.8.sql,v 1.33 2003-10-14 08:51:01 chris_holman Exp $
+# $Id: tiki_1.7to1.8.sql,v 1.34 2003-10-14 19:34:29 dheltzel Exp $
 
 # The following script will update a tiki database from verion 1.7 to 1.8
 # 
@@ -418,5 +418,10 @@ UPDATE tiki_newsletters SET allowUserSub = 'y', unsubMsg = 'y', validateAddr = '
 ALTER TABLE tiki_rss_modules ADD showTitle char(1) DEFAULT 'n' AFTER `lastUpdated`;
 ALTER TABLE tiki_rss_modules ADD showPubDate char(1) DEFAULT 'n' AFTER `showTitle`;
 
-
+# remove unused columns from tiki_user_assigned_modules
+ALTER TABLE tiki_user_assigned_modules DROP COLUMN title;
+ALTER TABLE tiki_user_assigned_modules DROP COLUMN cache_time;
+ALTER TABLE tiki_user_assigned_modules DROP COLUMN rows;
+ALTER TABLE tiki_user_assigned_modules DROP COLUMN groups;
+ALTER TABLE tiki_user_assigned_modules DROP COLUMN params;
 
