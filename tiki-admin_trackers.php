@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.30 2004-04-16 05:28:28 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-admin_trackers.php,v 1.31 2004-04-16 06:25:36 mose Exp $
 
 // Copyright (c) 2002-2004, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,83 +34,6 @@ if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
 }
 
 setcookie("tab",1);
-
-$status_types = $trklib->status_types();
-$smarty->assign('status_types', $status_types);
-
-$info = array();
-$fields = array('data'=>array());
-$info["name"] = '';
-$info["description"] = '';
-$info["showCreated"] = '';
-$info["showStatus"] = '';
-$info["showStatusAdminOnly"] = '';
-$info["newItemStatus"] = '';
-$info["showLastModif"] = '';
-$info["useComments"] = '';
-$info["useAttachments"] = '';
-$info["showComments"] = '';
-$info["showAttachments"] = '';
-$info["defaultOrderKey"] = '';
-$info["defaultOrderDir"] = 'asc';
-$info["newItemStatus"] = 'o';
-$info["modItemStatus"] = '';
-$info["writerCanModify"] = '';
-$info["writerGroupCanModify"] = '';
-$info["defaultStatus"] = 'o';
-$info["defaultStatusList"] = array();
-$info["orderAttachments"] = 'name,created,filesize,downloads,desc';
-
-if ($_REQUEST["trackerId"]) {
-	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
-	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
-	setcookie("tab",2);
-	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
-}
-$dstatus = preg_split('//', $info['defaultStatus'], -1, PREG_SPLIT_NO_EMPTY);
-foreach ($dstatus as $ds) {
-	$info["defaultStatusList"][$ds] = true;
-}
-
-$smarty->assign('fields', $fields['data']);
-$smarty->assign('name', $info["name"]);
-$smarty->assign('description', $info["description"]);
-$smarty->assign('showCreated', $info["showCreated"]);
-$smarty->assign('showStatus', $info["showStatus"]);
-$smarty->assign('showStatusAdminOnly', $info["showStatusAdminOnly"]);
-$smarty->assign('newItemStatus', $info["newItemStatus"]);
-$smarty->assign('showLastModif', $info["showLastModif"]);
-$smarty->assign('useComments', $info["useComments"]);
-$smarty->assign('useAttachments', $info["useAttachments"]);
-$smarty->assign('showComments', $info["showComments"]);
-$smarty->assign('showAttachments', $info["showAttachments"]);
-$smarty->assign('defaultOrderKey', $info["defaultOrderKey"]);
-$smarty->assign('defaultOrderDir', $info["defaultOrderDir"]);
-$smarty->assign('newItemStatus', $info["newItemStatus"]);
-$smarty->assign('modItemStatus', $info["modItemStatus"]);
-$smarty->assign('writerCanModify', $info["writerCanModify"]);
-$smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
-$smarty->assign('defaultStatus', $info["defaultStatus"]);
-$smarty->assign('defaultStatusList', $info["defaultStatusList"]);
-
-$outatt = array();
-$info["orderPopup"] = '';
-if (strstr($info["orderAttachments"],'|')) {
-	$part = split("\|",$info["orderAttachments"]);
-	$info["orderAttachments"] = $part[0];
-	$info["orderPopup"] = $part[1];
-}
-$i = 1;
-foreach (split(',',$info["orderAttachments"]) as $it) {
-	$outatt["$it"] = $i;
-	$i++;
-}
-$i = -1;
-foreach (split(',',$info["orderPopup"]) as $it) {
-	$outatt["$it"] = $i;
-	$i--;
-}
-$smarty->assign('ui', $outatt);
 
 if (isset($_REQUEST["remove"])) {
   $area = 'deltracker';
@@ -284,16 +207,90 @@ if (isset($_REQUEST["save"])) {
 	}
 	$trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options);
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
-	$smarty->assign('trackerId', 0);
-	$smarty->assign('name', '');
-	$smarty->assign('description', '');
-	$smarty->assign('ui',array());
 
 	$cat_desc = $_REQUEST["description"];
 	$cat_name = $_REQUEST["name"];
 	$cat_href = "tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"];
 	include_once("categorize.php");
 }
+
+
+$status_types = $trklib->status_types();
+$smarty->assign('status_types', $status_types);
+
+$info = array();
+$fields = array('data'=>array());
+$info["name"] = '';
+$info["description"] = '';
+$info["showCreated"] = '';
+$info["showStatus"] = '';
+$info["showStatusAdminOnly"] = '';
+$info["newItemStatus"] = '';
+$info["showLastModif"] = '';
+$info["useComments"] = '';
+$info["useAttachments"] = '';
+$info["showComments"] = '';
+$info["showAttachments"] = '';
+$info["defaultOrderKey"] = '';
+$info["defaultOrderDir"] = 'asc';
+$info["newItemStatus"] = 'o';
+$info["modItemStatus"] = '';
+$info["writerCanModify"] = '';
+$info["writerGroupCanModify"] = '';
+$info["defaultStatus"] = 'o';
+$info["defaultStatusList"] = array();
+$info["orderAttachments"] = 'name,created,filesize,downloads,desc';
+
+if ($_REQUEST["trackerId"]) {
+	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
+	$info = array_merge($info,$trklib->get_tracker_options($_REQUEST["trackerId"]));
+	setcookie("tab",2);
+	$fields = $trklib->list_tracker_fields($_REQUEST["trackerId"], 0, -1, 'position_asc', '');
+}
+$dstatus = preg_split('//', $info['defaultStatus'], -1, PREG_SPLIT_NO_EMPTY);
+foreach ($dstatus as $ds) {
+	$info["defaultStatusList"][$ds] = true;
+}
+
+$smarty->assign('fields', $fields['data']);
+$smarty->assign('name', $info["name"]);
+$smarty->assign('description', $info["description"]);
+$smarty->assign('showCreated', $info["showCreated"]);
+$smarty->assign('showStatus', $info["showStatus"]);
+$smarty->assign('showStatusAdminOnly', $info["showStatusAdminOnly"]);
+$smarty->assign('newItemStatus', $info["newItemStatus"]);
+$smarty->assign('showLastModif', $info["showLastModif"]);
+$smarty->assign('useComments', $info["useComments"]);
+$smarty->assign('useAttachments', $info["useAttachments"]);
+$smarty->assign('showComments', $info["showComments"]);
+$smarty->assign('showAttachments', $info["showAttachments"]);
+$smarty->assign('defaultOrderKey', $info["defaultOrderKey"]);
+$smarty->assign('defaultOrderDir', $info["defaultOrderDir"]);
+$smarty->assign('newItemStatus', $info["newItemStatus"]);
+$smarty->assign('modItemStatus', $info["modItemStatus"]);
+$smarty->assign('writerCanModify', $info["writerCanModify"]);
+$smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
+$smarty->assign('defaultStatus', $info["defaultStatus"]);
+$smarty->assign('defaultStatusList', $info["defaultStatusList"]);
+
+$outatt = array();
+$info["orderPopup"] = '';
+if (strstr($info["orderAttachments"],'|')) {
+	$part = split("\|",$info["orderAttachments"]);
+	$info["orderAttachments"] = $part[0];
+	$info["orderPopup"] = $part[1];
+}
+$i = 1;
+foreach (split(',',$info["orderAttachments"]) as $it) {
+	$outatt["$it"] = $i;
+	$i++;
+}
+$i = -1;
+foreach (split(',',$info["orderPopup"]) as $it) {
+	$outatt["$it"] = $i;
+	$i--;
+}
+$smarty->assign('ui', $outatt);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
