@@ -1,6 +1,6 @@
 {if $feature_page_title eq 'y'}<h1><a  href="tiki-index.php?page={$page}" class="pagetitle">{$page}</a>
 {if $lock}
-<img src="img/icons/lock_topic" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
+<img src="img/icons/lock_topic.gif" alt="{tr}locked{/tr}" title="{tr}locked by{/tr} {$page_user}" />
 {/if}
 </h1>{/if}
 <table width="100%">

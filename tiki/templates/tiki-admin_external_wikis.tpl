@@ -5,7 +5,7 @@
 <input type="hidden" name="extwikiId" value="{$extwikiId}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="10" name="name" value="{$info.name}" /></td></tr>
-<tr><td class="formcolor">{tr}extwiki{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="extwiki" value="{$info.extwiki}" /></td></tr>
+<tr><td class="formcolor">{tr}URL (use $page to be replaced by the page name in the URL example: http://www.example.com/tiki-index.php?page=$page){/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="extwiki" value="{$info.extwiki}" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>

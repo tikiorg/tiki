@@ -1,5 +1,7 @@
 ## THIS FILE IS JUST A HELP FOR DEVELOPERS IT SHOULDNT BE USED IN A 1.5 DISTRIBUTION
 
+alter table users_permissions add level varchar(80);
+
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_rename','wiki','Can rename pages','editor');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_lock','wiki','Can lock pages','editor');
 
@@ -108,7 +110,7 @@ create table tiki_eph(
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_eph_admin','tiki','Can admin ephemerides','editor');
 
 
-alter table users_permissions add level varchar(80);
+
 
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_userfiles','user','Can upload personal files','registered');
 INSERT INTO users_permissions(permName,type,permDesc,level) VALUES ('tiki_p_tasks','user','Can use tasks','registered');
