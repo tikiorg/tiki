@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_quiz_import.php,v 1.3 2004-04-28 16:44:21 ggeller Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-hw_quiz_import.php,v 1.4 2004-04-30 06:05:30 ggeller Exp $
 
 // Copyright (c) 2004 George G. Geller
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -34,6 +34,14 @@ error_reporting (E_ALL);
 // Initialization
 require_once('tiki-setup.php');
 require_once('lib/homework/homeworklib.php');
+
+$homeworklib = new HomeworkLib($dbTiki);
+
+if (1) {
+  $smarty->assign('msg', tra("This function is deprecated in favor of the improved quizzes outside of the Homework feature."));
+  $smarty->display("error.tpl");
+  die;
+}
 
 require_once('doc/devtools/ggg-trace.php');
 $ggg_tracer->outln(__FILE__." line: ".__LINE__);
