@@ -1,0 +1,66 @@
+/*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-doxygen.css,v 1.1 2003-10-06 22:48:29 zaufi Exp $
+ *
+ */
+
+/* Div with inlined doxygened documentation file */
+div.doxydoc {
+    color: WindowText;
+    background-color: ThreeDHighlight;
+    border: 2px ridge WindowFrame;
+    padding: 4px;
+}
+
+/* Main (on page top) index */
+div.doxydoc div.qindex {
+    font-size: small;
+    text-align: center;
+    margin-bottom: 2px;
+}
+
+/* Links in main index */
+div.doxydoc div.qindex a.qindex {
+    text-decoration: none;
+}
+div.doxydoc div.qindex a.qindexHL {
+    color: InfoText;
+    background-color: InfoBackground;
+    text-decoration: none;
+}
+/* Hilight links on mouse over */
+div.doxydoc div.qindex a.qindex:hover,
+div.doxydoc div.qindex a.qindexHL:hover {
+    color: HighlightText;
+    background-color: Highlight;
+    text-decoration: none;
+}
+
+div.doxydoc td.indexkey {
+    color: WindowText;
+    background-color: Window;
+    font-weight: bold;
+    padding: 2px 10px 2px 10px;
+    margin: 2px 0px 2px 0px;
+}
+div.doxydoc td.indexvalue {
+    color: WindowText;
+    background-color: Window;
+    font-style: italic;
+    padding: 2px 10px 2px 10px;
+    margin: 2px 0px 2px 0px;
+}
+
+div.doxydoc td.memItemLeft,
+div.doxydoc td.memItemRight,
+div.doxydoc td.mdescLeft,
+div.doxydoc td.mdescRight {
+    font-size: small;
+}
+
+div.doxydoc span.keyword       { color: #008000 }
+div.doxydoc span.keywordtype   { color: #604020 }
+div.doxydoc span.keywordflow   { color: #e08000 }
+div.doxydoc span.comment       { color: #800000 }
+div.doxydoc span.preprocessor  { color: #806020 }
+div.doxydoc span.stringliteral { color: #002080 }
+div.doxydoc span.charliteral   { color: #008080 }

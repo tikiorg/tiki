@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.5 2003-08-14 00:46:57 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-general.css,v 1.6 2003-10-06 22:48:29 zaufi Exp $
  *
  */
 
@@ -23,9 +23,10 @@ body {
 }
 
 hr {
-	border: 1px outset ThreeDShadow;
-/*  width: 100%;
-  height: 2px;*/
+    background-color: ThreeDShadow;
+    border-style: none;
+    width: 100%;
+    height: 1px;
 }
 
 /* Headers */
@@ -53,12 +54,12 @@ form {
 }
 
 /* Code fragments */
-pre, code {
-	font: normal 12px courier, monospace;
-}
-
 pre {
+	font-size: 12px;
 	white-space: pre;
+}
+code {
+	font-size: 14px;
 }
 
 /* No borders for images */

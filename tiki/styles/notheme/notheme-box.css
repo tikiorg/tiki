@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.8 2003-09-20 18:39:30 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-box.css,v 1.9 2003-10-06 22:48:29 zaufi Exp $
  *
  */
 
@@ -142,13 +142,13 @@ div.separator + div[id] {
 }
 
 div.box-title img {
-    visibility: hidden; 
-/*	display: none;*/
+	/*  visibility: hidden; */
+	display: none;
 }
 
 div.box-title:hover img {
-	visibility: visible;
-/*	display: inline;*/
+	/*  visibility: visible; */
+	display: inline;
 }
 
 div.box-title td {
@@ -158,15 +158,17 @@ div.box-title td {
 
 /* Repaint module placed on wiki page */
 div.wikitext * div.box {
+    margin: 0px;
     color: WindowText;
     background-color: ThreeDHighlight;
     border: none;
+    width: 250px;
 }
 div.wikitext * div.box-title {
-    margin-bottom: 0px;
+    margin: 0px;
     border: 2px ridge WindowFrame;
 }
 div.wikitext * div.box-data {
-    margin-top: 0px;
+    margin: 0px;
     border: 2px ridge WindowFrame;
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.6 2003-08-14 00:46:57 zaufi Exp $
+ * $Header: /cvsroot/tikiwiki/tiki/styles/notheme/notheme-wiki.css,v 1.7 2003-10-06 22:48:29 zaufi Exp $
  *
  */
 
@@ -43,7 +43,15 @@ div.titlebar {
 div.wikitext > div.titlebar:first-child {
 	margin-top: 5px;
 }
-
+/ * Links in -=titlebar=- */
+div.titlebar a.wiki:link {
+    color: HighlightText;
+}
+div.titlebar a.wiki:visited,
+div.titlebar a.wiki:hover,
+div.titlebar a.wiki:visited:hover {
+    color: HighlightText;
+}
 /* The bar where the actions for a page are displayed */
 div#page-bar {
 	margin-left: 5px;
