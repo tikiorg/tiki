@@ -1,7 +1,5 @@
 package wiki3d;
 
-//test
-
 import javax.vecmath.Tuple3f;
 
 public class Vertex extends Tuple3f {
