@@ -1,7 +1,7 @@
 <?php
 
 /* 
-V2.50 14 Nov 2002  (c) 2000-2002 John Lim (jlim@natsoft.com.my). All rights reserved.
+V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. See License.txt. 
@@ -47,7 +47,7 @@ V2.50 14 Nov 2002  (c) 2000-2002 John Lim (jlim@natsoft.com.my). All rights rese
 		// column definitions
 		for($i=0; $i < $max; $i++) {
 			$o = $rs->FetchField($i);
-			$line .= urlencode($o->name).':'.$rs->MetaType($o->type,$o->max_length).":$o->max_length,";
+			$line .= urlencode($o->name).':'.$rs->MetaType($o->type,$o->max_length,$o).":$o->max_length,";
 		}
 		$text = substr($line,0,strlen($line)-1)."\n";
 		
@@ -84,7 +84,7 @@ V2.50 14 Nov 2002  (c) 2000-2002 John Lim (jlim@natsoft.com.my). All rights rese
 		$fp = @fopen($url,'r');
 		$err = false;
 		if (!$fp) {
-			$err = $url.'file/URL not found';
+			$err = $url.' file/URL not found';
 			return false;
 		}
 		flock($fp, LOCK_SH);

@@ -1,6 +1,6 @@
 <?php
 /*
- V3.60 16 June 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
+ V3.70 29 July 2003  (c) 2000-2003 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -17,6 +17,7 @@ class ADODB_postgres7 extends ADODB_postgres64 {
 	var $databaseType = 'postgres7';	
 	var $hasLimit = true;	// set to true for pgsql 6.5+ only. support pgsql/mysql SELECT * FROM TABLE LIMIT 10
 	var $ansiOuter = true;
+	var $charSet = true; //set to true for Postgres 7 and above - PG client supports encodings
 	
 	function ADODB_postgres7() 
 	{
@@ -35,6 +36,35 @@ class ADODB_postgres7 extends ADODB_postgres64 {
 	   $this->Execute($sql."$limitStr$offsetStr",$inputarr,$arg3);
 	 }
  
+ 	 // this is a set of functions for managing client encoding - very important if the encodings
+	// of your database and your output target (i.e. HTML) don't match
+	//for instance, you may have UNICODE database and server it on-site as WIN1251 etc.
+	// GetCharSet - get the name of the character set the client is using now
+	// the functions should work with Postgres 7.0 and above, the set of charsets supported
+	// depends on compile flags of postgres distribution - if no charsets were compiled into the server
+	// it will return 'SQL_ANSI' always
+	function GetCharSet()
+	{
+		//we will use ADO's builtin property charSet
+		$this->charSet = @pg_client_encoding($this->_connectionID);
+		if (!$this->charSet) {
+			return false;
+		} else {
+			return $this->charSet;
+		}
+	}
+	
+	// SetCharSet - switch the client encoding
+	function SetCharSet($charset_name)
+	{
+		$this->GetCharSet();
+		if ($this->charSet !== $charset_name) {
+			$if = pg_set_client_encoding($this->_connectionID, $charset_name);
+			if ($if == "0" & $this->GetCharSet() == $charset_name) {
+				return true;
+			} else return false;
+		} else return true;
+	}
 
 }
 	
@@ -45,7 +75,8 @@ class ADODB_postgres7 extends ADODB_postgres64 {
 class ADORecordSet_postgres7 extends ADORecordSet_postgres64{
 
 	var $databaseType = "postgres7";
-
+	
+	
 	function ADORecordSet_postgres7($queryID,$mode=false) 
 	{
 		$this->ADORecordSet_postgres64($queryID,$mode);

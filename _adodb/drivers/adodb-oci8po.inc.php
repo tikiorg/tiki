@@ -1,6 +1,6 @@
 <?php
 /*
-V3.60 16 June 2003  (c) 2000-2003 John Lim. All rights reserved.
+V3.70 29 July 2003  (c) 2000-2003 John Lim. All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -23,7 +23,7 @@ class ADODB_oci8po extends ADODB_oci8 {
 	var $databaseType = 'oci8po';
 	var $dataProvider = 'oci8';
 	var $metaColumnsSQL = "select lower(cname),coltype,width, SCALE, PRECISION, NULLS, DEFAULTVAL from col where tname='%s' order by colno"; //changed by smondino@users.sourceforge. net
-	var $metaTablesSQL = "select lower(table_name) from cat where table_type in ('TABLE','VIEW')";
+	var $metaTablesSQL = "select lower(table_name),table_type from cat where table_type in ('TABLE','VIEW')";
 	
 	function Prepare($sql)
 	{
