@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.125 2003-08-13 11:52:14 redflo Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.126 2003-08-14 01:33:34 rossta Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -1163,6 +1163,29 @@ if ($lang_use_db != 'y') {
 	global $lang;
 
 	include_once ('lang/' . $language . '/language.php');
+}
+
+$feature_babelfish = $tikilib->get_preference('feature_babelfish', 'y');
+$feature_babelfish_logo = $tikilib->get_preference('feature_babelfish_logo', 'n');
+
+ /* \todo if this page is not viewable by anonymous, then don't display the babelfish stuff */
+if (0) {
+	$feature_babelfish = 'n';
+	$feature_babelfish_logo = 'n';
+}
+
+if ($feature_babelfish == 'y') {
+	require_once('lib/Babelfish.php');
+	$smarty->assign('babelfish_links', Babelfish::links($language));
+} else {
+	$smarty->assign('babelfish_links', '');
+}
+
+if ($feature_babelfish_logo == 'y') {
+	require_once('lib/Babelfish.php');
+	$smarty->assign('babelfish_logo', Babelfish::logo($language));
+} else {
+	$smarty->assign('babelfish_logo', '');
 }
 
 $smarty->assign('user_dbl', $user_dbl);
