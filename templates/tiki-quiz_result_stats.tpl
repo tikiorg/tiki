@@ -1,9 +1,31 @@
-<a class="pagetitle" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$resultId}&amp;userResultId={$userResultId}">{tr}Quiz result stats{/tr}:</a><br /><br />
+<a class="pagetitle" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;resultId={$resultId}&amp;userResultId={$userResultId}">{tr}Quiz result stats{/tr}:</a>
+
+<! -- the help link info -->
+  
+      {if $feature_help eq 'y'}
+<a href="http://tikiwiki.org/tiki-index.php?page=QuizzesDoc#id960083" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}edit quiz questions{/tr}">
+<img border='0' src='img/icons/help.gif' alt="{tr}help{/tr}" /></a>{/if}
+
+<! -- link to tpl -->
+
+     {if $feature_view_tpl eq 'y'}
+<a href="tiki-edit_templates.php?=tiki-quiz_result_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}edit quiz stats tpl{/tr}">
+<img border='0' src='img/icons/info.gif' alt="{tr}edit tpl{/tr}" />
+</a>
+{/if}
+
+
+<br /><br />
+<! -- linkbuttons, they'd be better if they had rollover info -->
+
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}list quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}this quiz stats{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}edit this quiz{/tr}</a>
 <a class="linkbut" href="tiki-edit_quiz.php">{tr}admin quizzes{/tr}</a><br /><br />
+
+<! -- begin table/ it has no internal linking... that needs fixing -->
+
 <table class="normal">
 <tr> 
   <td colspan="2" class="heading">{tr}Quiz stats{/tr}</td>
@@ -29,16 +51,48 @@
   <td class="even">{$ur_info.timeTaken} secs</td>
 </tr>
 </table>
-<br /><br />
-Answer:<br />
+
+<! -- I'm not sure why this is here -->
+
+</br> 
+Answer: </br> 
+{*
+what is this supposed to be doing? isn't it already in the table below?
+*}
+
 <div class="quizanswer">{$result.answer}</div>
 <br />
+
 <h2>{tr}User answers{/tr}</h2>
-  <table class="normal">
+<! -- table displaying user results -->
+<p>sorting doesn't work here but should</p>
+<table class="normal">
   <tr>
+{*
    <td  class="heading">{tr}Question{/tr}</td>
+*}
+<td class="heading">
+<a class="tableheading" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Questions{/tr}</a>
+</td>
+
+{*
    <td  class="heading">{tr}Answer{/tr}</td>
+*}
+
+<td class="heading">
+<a class="tableheading" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionText_desc'}optionText_asc{else}optionText_desc{/if}">{tr}Answer{/tr}</a>
+</td>
+
+
+{*
    <td  class="heading">{tr}Points{/tr}</td>
+*}
+<td class="heading">
+<a class="tableheading" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}Points{/tr}</a>
+</td>
+
+
+
   </tr>
 {cycle print=false values="odd,even"}
 {section name=ix loop=$questions}
