@@ -1,5 +1,8 @@
 #!/usr/bin/perl -w
-# $Id: mysql2pgsql.pl,v 1.1 2003-07-15 09:53:28 rossta Exp $
+# $Id: mysql2pgsql.pl,v 1.2 2003-07-15 20:21:26 rossta Exp $
+
+# see http://www.xach.com/aolserver/mysql-to-postgresql.html
+# and http://www.xach.com/aolserver/mysql2psql.pl
 
 use strict;
 $| = 1;
@@ -12,10 +15,12 @@ my $outputfile = $ARGV[1] || "output.sql";
 my $table_substitutions_re = "";
 my %table_substitutions = ();
 
-open(IN, "<$ARGV[0]") || die("couldn't open input: $!");
+print "Reading '$ARGV[0]'\n";
 
-print "Writing $outputfile ...";
-open(OUTPUT, ">$outputfile") || die("coudn't open: $!");
+open(IN, "<$ARGV[0]") || die("Can't open '$ARGV[0]': $!");
+
+print "Creating '$outputfile'\n";
+open(OUTPUT, ">$outputfile") || die("Can't create '$outputfile': $!");
 
 print OUTPUT '--$' . 'Id$' . "\n";
 print OUTPUT "-- Dump of $ARGV[0]\n";
@@ -23,9 +28,11 @@ print OUTPUT "-- Dump of $ARGV[0]\n";
 my @sequences;
 my %sequence_hash;
 my %keys;
+my %fields;
 
 my $output_count = 0;
 my $table_name;
+
 while (my $sql = <IN>) {
     if ($output_count++ % 50 == 0) {
 #		print ".";
@@ -35,12 +42,19 @@ while (my $sql = <IN>) {
 	    print OUTPUT $sql;
 	    next;
 	}
+
+	if ($sql =~ /^--/) {
+	    print OUTPUT "\n";
+	    next;
+	}
 	
     # Convert '#' comments to '--'
     $sql =~ s/^#/--/mg;
 
     if ($sql =~ /create table (\S+)/i) {
 		$table_name = $1;
+		print OUTPUT $sql;
+		next;
 	}
 
 	# Clean up the numeric types
@@ -67,27 +81,20 @@ while (my $sql = <IN>) {
 	    	$sequence_name = $sequence_save . $i++;
 	    }
 	    $sequence_hash{$sequence_name} = 1;
-	    $sql =~ s/auto_increment/default nextval('$sequence_name')/;
+#	    $sql =~ s/auto_increment/serial/;
+	    $sql =~ s/auto_increment/default nextval('$sequence_name') unique not null/;
 	    push(@sequences, [$sequence_name, $table_name, $column_name]);
+	}
+
+	if ($sql =~ /^\s*(\S+)\s+(.*)/i) {
+		if ($sql !~ /KEY/ && $sql !~ /^\)/) {
+			$fields{$table_name}{$1} = $2;
+			$sql = '"' . $1 . '" ' . $2 . "\n";
+		}
 	}
 
 	# Convert enums
 	$sql =~ s/\S+ enum\([^\)]+\)/convert_enums($&)/e;
-
-	if ($sql !~ /PRIMARY/ && $sql =~ /KEY\s+\S+\s+\((.*)\)/) {
-		my $key = $1;
-		while ($key =~ /(.*)\(\d+\)(.*)/) {
-			$key = $1 . $2;
-		}
-		my @keys = split(',', $key);
-		if (@keys) {
-			foreach my $key (@keys) {
-				$keys{$table_name}{$key} = 1;
-			}
-		} else {
-			$keys{$table_name}{$key} = 1;
-		}
-	}
   
 	if ($sql =~ /(.*KEY.*\)),$/i) {
 		$sql = $1."\n";
@@ -95,13 +102,73 @@ while (my $sql = <IN>) {
 
 	if ($sql =~ /KEY/i) {
 		while ($sql =~ /(.*)\(\d+\)(.*)/) {
-			$sql = $1 . $2;
+			$sql = $1 . $2 . "\n";
 		}
+	}
+
+	if ($sql !~ /PRIMARY/ && $sql =~ /KEY\s+\S+\s+\((.*)\)/) {
+		my $key = $1;
+		while ($key =~ /(.*)\(\d+\)(.*)/) {
+			$key = $1 . $2;
+		}
+		my @k = split(',', $key);
+		if (@k) {
+			foreach my $key (@k) {
+				$keys{$table_name}{$key} = '"' . $key . '"';
+			}
+		} else {
+			$keys{$table_name}{$key} = '"' . $key . '"';
+		}
+	}
+
+	if ($sql =~ /PRIMARY\s+KEY\s+\((.*)\)/) {
+		my $key = $1;
+		while ($key =~ /(.*)\(\d+\)(.*)/) {
+			$key = $1 . $2;
+		}
+		my %pkeys;
+		my @k = split(',', $key);
+		
+		if (@k) {
+			foreach my $key (@k) {
+				$pkeys{$key} = '"' . $key . '"';
+			}
+		} else {
+			$pkeys{$key} = '"' . $key . '"';
+		}
+
+  		print OUTPUT "PRIMARY KEY (";
+		print OUTPUT join ',', values %pkeys;
+  		print OUTPUT ")\n";
+  		next;
 	}
 
 	# Mysql dumps have: UNIQUE name (name)
 	# postgres expects just UNIQUE (name)
-	$sql =~ s/UNIQUE KEY \S+ \(/,UNIQUE \(/;
+#	$sql =~ s/UNIQUE KEY \S+ \(/,UNIQUE \(/;
+
+#  UNIQUE KEY catname (calendarId,name)
+	if ($sql =~ /UNIQUE\s+KEY\s+\S+\s+\((.*)\)/) {
+		my $key = $1;
+		while ($key =~ /(.*)\(\d+\)(.*)/) {
+			$key = $1 . $2;
+		}
+		my %pkeys;
+		my @k = split(',', $key);
+		
+		if (@k) {
+			foreach my $key (@k) {
+				$pkeys{$key} = '"' . $key . '"';
+			}
+		} else {
+			$pkeys{$key} = '"' . $key . '"';
+		}
+
+  		print OUTPUT ",UNIQUE (";
+		print OUTPUT join ',', values %pkeys;
+  		print OUTPUT ")\n";
+  		next;
+	}
 
  	$sql =~ s/FULLTEXT//;
 
@@ -116,15 +183,8 @@ while (my $sql = <IN>) {
 	$sql =~ s/\bchar\(/varchar\(/;
 
  	$sql =~ s/TYPE=MyISAM//i;
- 
- 	$sql =~ s/\buser\b/"user"/i;
- 	$sql =~ s/'"user"'/'user'/i;
- 	$sql =~ s/\bpublic\b/"public"/i;
- 	$sql =~ s/'"public"'/'public'/i;
- 	$sql =~ s/\bend\b/"end"/i;
- 	$sql =~ s/'"end"'/'end'/i;
     
-    next unless length($sql) > 1;
+#    next unless length($sql) > 1;
     
     print OUTPUT $sql;
 }
@@ -133,27 +193,37 @@ while (my $sql = <IN>) {
 # Handle all sequences
 #
 
-print OUTPUT "\n-- Sequences\n\n";
-
-foreach my $seqref (@sequences) {
-    my ($seq_name, $tbl_name, $col_name) = @$seqref;
-	print OUTPUT "select setval('$seq_name', (select max($col_name) from $tbl_name));\n";
-}
-
-print OUTPUT "\n-- Indexes\n\n";
+print OUTPUT "\n-- Create Indexes\n\n";
 
 foreach $table_name (sort keys %keys) {
 	my $hash = $keys{$table_name};
 	foreach my $key (sort keys %$hash) {
-		my $k = $key;
- 		$k = '"user"' if $k eq 'user';
- 		$k = '"public"' if $k eq 'public';
- 		$k = '"end"' if $k eq 'end';
+		my $k = '"' . $key . '"';
 		print OUTPUT "CREATE INDEX ${table_name}_$key ON $table_name ($k);\n";
 	}
 }
 
+#=head
+
+print OUTPUT "\n-- Create Sequences\n\n";
+
+foreach my $seqref (@sequences) {
+    my ($seq_name, $tbl_name, $col_name) = @$seqref;
+	print OUTPUT "CREATE SEQUENCE $seq_name;\n";
+}
+
+print OUTPUT "\n-- Populate Sequences\n\n";
+
+foreach my $seqref (@sequences) {
+    my ($seq_name, $tbl_name, $col_name) = @$seqref;
+	print OUTPUT "SELECT SETVAL('$seq_name', (SELECT MAX(\"$col_name\") FROM $tbl_name));\n";
+}
+
+#=cut
+
 print OUTPUT "\n-- EOF\n\n";
+
+close(OUTPUT) || die("Can't close to '$outputfile': $!");
 
 print "done\n";
 
@@ -175,3 +245,5 @@ sub convert_enums {
     
     return $sql;
 }
+
+0;
