@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.3 2003-08-07 20:56:53 zaufi Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/modules/mod-since_last_visit.tpl,v 1.4 2003-08-13 22:46:11 zaufi Exp $ *}
 
 {if $user}
 <div class="box">
@@ -7,7 +7,7 @@
 </div>
 <div class="box-data">
 {tr}Since your last visit on{/tr}<br/>
-<b>{$nvi_info.lastVisit|tiki_short_datetime}</b><br/>
+<b>{$nvi_info.lastVisit|tiki_short_datetime|replace:"[":""|replace:"]":""}</b><br/>
 {$nvi_info.images} {tr}new images{/tr}<br/>
 {$nvi_info.pages} {tr}wiki pages changed{/tr}<br/>
 {$nvi_info.files} {tr}new files{/tr}<br/>
