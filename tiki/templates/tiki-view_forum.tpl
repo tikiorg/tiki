@@ -313,14 +313,14 @@ a moderator approves it.{/tr}</small>
   {/if}  
   
   <td class="topictitle{cycle advance=false}">
-  <table ><tr><td>
+  <table width=100%"><tr><td>
   <a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if}  href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}&amp;topics_threshold={$comments_threshold}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}&amp;topics_sort_mode={$comments_sort_mode}&amp;topics_find={$comments_find}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
   {if $forum_info.topic_summary eq 'y'}
   <br/><small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>     
   {/if}
   </td>
   
-  <td style="text-align:right;">
+  <td style="text-align:right;" nowrap="nowrap">
   {if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}
   {if count($comments_coms[ix].attachments)}
   	<img src='img/icons/attachment.gif' alt='attachments' />
@@ -332,8 +332,8 @@ a moderator approves it.{/tr}</small>
   {if $tiki_p_admin_forum eq 'y'
   or ($tiki_p_forum_post_topic eq 'y' and ($comments_coms[ix].userName == $user)) }
   <a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
-     class="admlink"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a>
-  <a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
+     class="admlink"><img src='img/icons/edit.gif' alt='{tr}edit{/tr}' title='{tr}edit{/tr}' border='0' /></a><a 
+		 href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;comments_sort_mode={$comments_sort_mode}&amp;comments_maxComments={$comments_maxComments}"
      class="admlink"><img src='img/icons2/delete.gif' alt='{tr}remove{/tr}' title='{tr}remove{/tr}' border='0' /></a>
   {/if}
 
