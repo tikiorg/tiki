@@ -69,7 +69,7 @@
     {tr}Export Wiki Pages{/tr}
     <form method="post" action="tiki-admin.php?page=wiki">
     <table class="admin">
-    <tr><td align="center" colspan="2"><a class="link" href="tiki-export_wiki_pages.php">{tr}Export{/tr}</a></tr>
+    <tr><td align="center" colspan="2"><a class="link" href="tiki-export_wiki_pages.php">{tr}Export{/tr}</a></td></tr>
     </table>
     </form>
     </div>
