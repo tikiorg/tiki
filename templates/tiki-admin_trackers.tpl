@@ -125,6 +125,13 @@ src='img/icons/key.gif' border='0' alt='{tr}perms{/tr}' title='{tr}perms{/tr}' /
 {/foreach}
 </select>
 </td></tr>
+<tr class="formcolor"><td class="auto" colspan="2">{tr}Autoritative status for modified items{/tr}</td><td>
+<select name="modItemStatus">
+{foreach key=st item=stdata from=$status_types}
+<option value="{$st}"{if $modItemStatus eq $st} selected="selected"{/if}>{$stdata.label}</option>
+{/foreach}
+</select>
+</td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show creation date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showCreated" {if $showCreated eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}Show lastModif date when listing tracker items?{/tr}</td><td><input type="checkbox" name="showLastModif" {if $showLastModif eq 'y'}checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td class="auto" colspan="2">{tr}What field is used for default sort?{/tr}</td><td><input type="text" name="defaultOrderKey" value="{$defaultOrderKey}" /></td></tr>
