@@ -74,6 +74,15 @@ if(isset($_REQUEST["register"])) {
     }
   }
   
+  if($validateUsers) {
+    $ret = $tikilib->SnowCheckMail($_REQUEST["email"]);
+    if(!$ret[0]) {
+      $smarty->assign('msg',tra("Invalid email address. You must enter a valid email address"));
+      $smarty->display("styles/$style_base/error.tpl");
+      die;
+    }
+  }
+  
   if($validateUsers == 'y') {
     $apass = addslashes(substr(md5($tikilib->genPass()),0,25));
     $foo = parse_url($_SERVER["REQUEST_URI"]);

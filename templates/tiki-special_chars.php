@@ -1,13 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0
-Transitional//EN" "DTD/xhtml1-transitional.dtd">
-<!-- Horde: Copyright 2000, The Horde Project. Horde
-is under the LGPL. -->
-<!--                  Horde Project: http://horde.org/
-                 -->
-<!-- GNU Library Public License:
-http://www.fsf.org/copyleft/lgpl.html  -->
-<html lang="en-US">
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "DTD/xhtml1-transitional.dtd">
+<html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <title>Special Character Input</title>
 </head>
 <body style="background:#101070; color:white;">
