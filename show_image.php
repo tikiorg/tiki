@@ -1,4 +1,4 @@
-<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.5 2003-03-23 12:59:40 redflo Exp $
+<?php # $Header: /cvsroot/tikiwiki/tiki/show_image.php,v 1.6 2003-04-07 00:13:59 redflo Exp $
 
 if (!isset($_REQUEST["nocache"]))
   session_cache_limiter('private_no_expire');
@@ -30,8 +30,8 @@ else {
   $itype='o';
   }
 
-$data = $imagegallib->get_image($_REQUEST["id"],$itype,$sxsize,$sysize);
-$galleryId=$data["galleryId"];
+$imagegallib->get_image($_REQUEST["id"],$itype,$sxsize,$sysize);
+$galleryId=$imagegallib->galleryId;
 
 $smarty->assign('individual','n');
 if($userlib->object_has_one_permission($galleryId,'image gallery')) {
@@ -60,14 +60,13 @@ if(!isset($_REQUEST["thumb"])) {
   $imagegallib->add_image_hit($_REQUEST["id"]);
 } 
 
-$type=$data["filetype"];
-$content = $data["data"];
+$type=$imagegallib->filetype;
 header("Content-type: $type");
-header("Content-Disposition: inline; filename=".$data["filename"]);
+header("Content-Disposition: inline; filename=".$imagegallib->filename);
 //if($data["path"]) {
 //  readfile($gal_use_dir.$data["path"].$ter);
 //} else {
-  echo "$content";    
+  echo "$imagegallib->image";    
 //}
 // ????? echo $data;
 ?>

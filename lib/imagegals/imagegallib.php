@@ -13,8 +13,8 @@ class ImageGalsLib extends TikiLib {
     if (function_exists("imagecreatefromstring")) {
       $this->havegd = true;
       if (function_exists("gd_info")) {
-        $gdinfo=gd_info();
-	preg_match("/[0-9]+\.[0-9]+/",$gdinfo["GD Version"],$gdversiontmp);
+        $this->gdinfo=gd_info();
+	preg_match("/[0-9]+\.[0-9]+/",$this->gdinfo["GD Version"],$gdversiontmp);
 	$this->gdversion=$gdversiontmp[0];
       } else {
         // I have no experience ... maybe someone knows better
@@ -33,16 +33,30 @@ class ImageGalsLib extends TikiLib {
     }
    
    //what shall we use?
-   //will be configurable in admin menu soon
 
-   $this->uselib = "gd";
-   //$this->uselib = "imagick";
+   //$this->uselib = "gd";
+   $this->uselib = $this->get_preference('gal_use_lib', 'gd');
 
   }
   
   //
   // Wrappers
   //
+
+  function validhandle()
+  {
+    if(isset($this->imagehandle)) {
+      if ($this->uselib == "imagick") {
+        // seems not to work in imagick 0.95 aahrgh
+        if ( imagick_iserror( $this->imagehandle ) ) return false;
+        return true;
+      } else if ($this->uselib == "gd") {
+        if (imagesx($this->imagehandle)==0) return false;
+        return true;
+      }
+    }
+    return false;
+  }
 
   function readimagefromstring()
   { 
@@ -67,16 +81,14 @@ class ImageGalsLib extends TikiLib {
 
   function readimagefromfile($fname)
   {
-    if ($this->uselib == "imagick") {
-      $this->image=imagick_readimage($fname);
-    } else if ($this->uselib == "gd") {
-      // read image
-      $fp = fopen($fname,"rb");
+    @$fp = fopen($fname,"rb");
+    if($fp)
+    {
       $size=filesize($fname);
-      $data = fread($fp,$size);
+      $this->image= fread($fp,$size);
       fclose($fp);
-      $this->image=imagecreatefromstring($data);
-    }
+      return true;
+    } else {return false;}
   }
 
   // for piping out a image
@@ -93,13 +105,26 @@ class ImageGalsLib extends TikiLib {
   function getimageinfo()
   {
     if ($this->uselib == "imagick") {
-      $this->mime=imagick_getmimetype($this->imagehandle);
-      $this->sizex=imagick_getwidth($this->imagehandle);
-      $this->sizey=imagick_getheight($this->imagehandle);
+      $this->filetype=imagick_getmimetype($this->imagehandle);
+      $this->xsize=imagick_getwidth($this->imagehandle);
+      $this->ysize=imagick_getheight($this->imagehandle);
     } else if ($this->uselib == "gd") {
-      $this->sizex=imagesx($this->imagehandle);
-      $this->sizey=imagesy($this->imagehandle);
+      $this->xsize=imagesx($this->imagehandle);
+      $this->ysize=imagesy($this->imagehandle);
     }
+  }
+
+  //Repair Image info. Is called if someone inserts unsupported images (like gif)
+  //and switches to imagick
+  function repairimageinfo()
+  {
+    if (!isset($this->imageId)) die();
+    if (!$this->issupported($this->filetype)) die();
+    $this->getimageinfo();
+    //update
+    $query="update tiki_images_data set xsize=$this->xsize , ysize=$this->ysize
+    		where imageId=$this->imageId and type='$this->type'";
+    $this->query($query);
   }
 
   // GD can only get the mimetype from the file
@@ -108,19 +133,20 @@ class ImageGalsLib extends TikiLib {
     $this->filesize=filesize($fname);
 
     if ($this->uselib == "imagick") {
-
+      
     } else if ($this->uselib == "gd") {
+      unset($this->filetype);
       $imageinfo=getimagesize($fname);
       if ($imageinfo["0"] > 0 && $imageinfo["1"] > 0 && $imageinfo["2"] > 0 ) {
         if ($this->gdversion >= 2.0) {
-          $this->mime = $imageinfo["mime"];
+          $this->filetype = $imageinfo["mime"];
         } else {
           $mimetypes=array("1" => "gif", "2" => "jpg", "3" => "png",
                            "4" => "swf", "5" => "psd", "6" => "bmp",
                            "7" => "tiff", "8" => "tiff", "9" => "jpc",
                            "10" => "jp2", "11" => "jpx", "12" => "jb2",
                            "13" => "swc", "14" => "iff");
-          $this->mime="image/".$mimetypes[$imageinfo["2"]];
+          $this->filetype="image/".$mimetypes[$imageinfo["2"]];
         }
       }
     }
@@ -131,43 +157,27 @@ class ImageGalsLib extends TikiLib {
   {
 
     if (!isset($this->imagehandle)) {$this->readimagefromstring();}
-    if (!isset($this->sizex)) {$this->getimageinfo();}
+    if (!isset($this->xsize)) {$this->getimageinfo();}
+    if ($this->xsize * $this->ysize == 0) $this->repairimageinfo();
     if ($this->uselib == "imagick") {
-      //  For 4th parameter, use any of the following:
-      //
-      //      IMAGICK_FILTER_UNDEFINED
-      //      IMAGICK_FILTER_POINT
-      //      IMAGICK_FILTER_BOX
-      //      IMAGICK_FILTER_TRIANGLE
-      //      IMAGICK_FILTER_HERMITE
-      //      IMAGICK_FILTER_HANNING
-      //      IMAGICK_FILTER_HAMMING
-      //      IMAGICK_FILTER_BLACKMAN
-      //      IMAGICK_FILTER_GAUSSIAN
-      //      IMAGICK_FILTER_QUADRATIC
-      //      IMAGICK_FILTER_CUBIC
-      //      IMAGICK_FILTER_CATROM
-      //      IMAGICK_FILTER_MITCHELL
-      //      IMAGICK_FILTER_LANCZOS
-      //      IMAGICK_FILTER_BESSEL
-      //      IMAGICK_FILTER_SINC
-      //      IMAGICK_FILTER_UNKNOWN
-      //
-      //  Use IMAGICK_FILTER_UNKNOWN to defer to whatever filter is defined
-      //  in the image.
-      imagick_resize( $this->imagehandle,$this->sizex,$this->sizey,
-			IMAGICK_FILTER_UNKNOWN, 0, $newx."+".$newy."!" );
+
+      if(!imagick_scale( $this->imagehandle,$newx,$newy,"!")) {
+        $reason      = imagick_failedreason( $handle ) ;
+	$description = imagick_faileddescription( $handle ) ;
+	// todo: Build in error handler in imagegallib
+        exit;
+	}
 
     } else if ($this->uselib == "gd") {
     
       if($this->gdversion>=2.0){
         $t = imagecreatetruecolor($newx,$newy);
         imagecopyresampled($t, $this->imagehandle, 0,0,0,0, $newx,$newy, 
-				$this->sizex, $this->sizey);
+				$this->xsize, $this->ysize);
        } else {
          $t = imagecreate($newx,$newy);
          $this->ImageCopyResampleBicubic( $t, $this->imagehandle, 0,0,0,0, 
-			$newx,$newy, $this->sizex, $this->sizey);
+			$newx,$newy, $this->xsize, $this->ysize);
        }
        $this->imagehandle=$t;
 
@@ -183,6 +193,9 @@ class ImageGalsLib extends TikiLib {
   // bbx and bby give the boundary box
   function rescaleImage($bbx,$bby)
   {
+    if (!isset($this->imagehandle)) {$this->readimagefromstring();}
+    if (!isset($this->xsize)) {$this->getimageinfo();}
+    if ($this->xsize * $this->ysize == 0) $this->repairimageinfo();
     if($this->xsize > $this->ysize)
     {
       $tscale = ((int)$this->xsize / $bbx);
@@ -206,8 +219,61 @@ class ImageGalsLib extends TikiLib {
     $this->writeimagetostring();
   }
 
+  // function to determine supported image types
+  // imagick has no function to get the supported image types
+  function issupported($imagetype)
+  {
+    if ($this->uselib == "imagick") {
+      //imagick can read everything ... we assume
+      return true;
+    } else if ($this->uselib == "gd") {
+      if ($this->gdversion>=2.0) {
+        switch($imagetype) {
+          case 'jpeg':
+	  case 'jpg':
+	  case 'image/jpeg':
+	  case 'image/jpg':
+	    return ($this->gdinfo["JPG Support"]);
+	    break;
+	  case 'png':
+	  case 'image/png':
+	    return ($this->gdinfo["PNG Support"]);
+	    break;
+	  case 'gif':
+	  case 'image/gif':
+	    return ($this->gdinfo["GIF Create Support"]);
+	    break;
+	  case 'bmp':
+	  case 'image/bmp':
+	    return ($this->gdinfo["WBMP Support"]);
+	    break;
+	  case 'xbm':
+	  case 'image/xbm':
+	    return ($this->gdinfo["XBM Support"]);
+	    break;
+	  default:
+	    return false;
+	    break;
+	}
+      } else {
+        //gdversion <2.0 only jpg?
+        switch($imagetype) {
+          case 'jpeg':
+          case 'jpg':
+          case 'image/jpeg':
+          case 'image/jpg':
+            return true;
+            break;
+          default:
+            return false;
+            break;
+        }
+      }
+    }
+  }
 
-  // Batch image uploads ////
+
+  // Batch image uploads todo
   function process_batch_image_upload($galleryId,$file,$user)
   {
     global $gal_match_regex;
@@ -237,63 +303,33 @@ class ImageGalsLib extends TikiLib {
 
         $archive->extractByIndex($ziplist["$i"]["index"],$tmpDir,dirname($file)); //extract and remove (dangerous) pathname
         $file=basename($file);
+
+        //unset variables
+        unset($this->filetype);
+        unset($this->xsize);
+        unset($this->ysize);
+
         //determine filetype and dimensions
-        $imageinfo=getimagesize($tmpDir."/".$file);
-        if ($imageinfo["0"] > 0 && $imageinfo["1"] > 0 && $imageinfo["2"] > 0 ) {
-          if (chkgd2()) {
-            $type = $imageinfo["mime"];
-          } else {
-            $mimetypes=array("1" => "gif", "2" => "jpg", "3" => "png",
-                             "4" => "swf", "5" => "psd", "6" => "bmp",
-                             "7" => "tiff", "8" => "tiff", "9" => "jpc",
-                             "10" => "jp2", "11" => "jpx", "12" => "jb2",
-                             "13" => "swc", "14" => "iff");
-            $type="image/".$mimetypes[$imageinfo["2"]];
+        $this->getfileinfo($tmpDir."/".$file);
+
+        $exp=substr($file,strlen($file)-3,3);
+        // read image and delete it after
+        $this->readimagefromfile($tmpDir."/".$file);
+        unlink($tmpDir."/".$file);
+
+        if($this->issupported($exp)) {
+          // convert to handle
+          $this->readimagefromstring();
+          if($this->validhandle()) {
+            $this->getimageinfo();
           }
-          
-          $exp=substr($file,strlen($file)-3,3);
-          $fp = fopen($tmpDir."/".$file,"rb");
-          $size=filesize($tmpDir."/".$file);
-          $data = fread($fp,$size);
-          fclose($fp);
-          if(function_exists("ImageCreateFromString")&&(!strstr($type,"gif"))) {
-            $img = imagecreatefromstring($data);
-            $size_x = imagesx($img);
-            $size_y = imagesy($img);
-            if ($size_x > $size_y)
-              $tscale = ((int)$size_x / $gal_info["thumbSizeX"]);
-            else
-              $tscale = ((int)$size_y / $gal_info["thumbSizeY"]);
-            $tw = ((int)($size_x / $tscale));
-            $ty = ((int)($size_y / $tscale));
-            if (chkgd2()) {
-              $t = imagecreatetruecolor($tw,$ty);
-              imagecopyresampled($t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
-            } else {
-              $t = imagecreate($tw,$ty);
-              $this->ImageCopyResampleBicubic( $t, $img, 0,0,0,0, $tw,$ty, $size_x, $size_y);
-            }
-            // CHECK IF THIS TEMP IS WRITEABLE OR CHANGE THE PATH TO A WRITEABLE DIRECTORY
-            //$tmpfname = 'temp.jpg';
-            $tmpfname = tempnam ($tmpDir , "FOO").'.jpg';
-            imagejpeg($t,$tmpfname);
-            // Now read the information
-            $fp = fopen($tmpfname,"rb");
-            $t_data = fread($fp, filesize($tmpfname));
-            fclose($fp);
-            unlink($tmpfname);
-            $t_pinfo = pathinfo($tmpfname);
-            $t_type = $t_pinfo["extension"];
-            $t_type='image/'.$t_type;
-            $imageId = $this->insert_image($galleryId,$file,'',$file, $type, $data, $size, $size_x, $size_y, $user,$t_data,$t_type);
-            $numimages++;
-            unlink($tmpDir."/".$file);
-          } else {
-            $tmpfname='';
-            $imageId = $this->insert_image($galleryId,$file,'',$file, $type, $data, $size, 0, 0, $user,'','');
-            $numimages++;
-            unlink($tmpDir."/".$file);
-          }
+        }
+        //if there is no mimetype, we don't got a image
+        if(isset($this->filetype)){
+          if(!isset($this->xsize)) {$this->xsize=$this->ysize=0;}
+          $imageId = $this->insert_image($galleryId,$file,'',$file, $this->filetype, $this->image, $this->filesize, $this->xsize, $this->ysize, $user,'','');
+
+          $numimages++;
         }
       }
     }
@@ -378,7 +414,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       if(!$fw) {
         return false;
       }
-      fwrite($fw,$data);
+      fwrite($fw,$this->image);
       fclose($fw);
       $data='';
     }
@@ -438,9 +474,12 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     }
     
     // do it
-    if(!$this->rescaleImage($newx,$newy))
+    if ($this->issupported($this->filetype))
     {
-      die;
+      if(!$this->rescaleImage($newx,$newy))
+      {
+        die;
+      }
     }
     $this->xsize=$xsize;
     $this->ysize=$ysize;
@@ -525,13 +564,15 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
       }
       fwrite($fw,$data);
       fclose($fw);
-      @$fw = fopen($gal_use_dir.$fhash.'.thumb',"wb");
-      if(!$fw) {
-        return false;
+      if (sizeof($t_data)>0) {
+        @$fw = fopen($gal_use_dir.$fhash.'.thumb',"wb");
+        if(!$fw) {
+          return false;
+        }
+        fwrite($fw,$t_data);
+        fclose($fw);
+        $t_data='';
       }
-      fwrite($fw,$t_data);
-      fclose($fw);
-      $t_data='';
       $data='';
       $path=$fhash;
     }
@@ -547,8 +588,9 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
                                 '$filetype','$filename','$data')";
     $result = $this->query($query);
     // insert thumb
-    if (sizeof($t_data) >0)
+    if (sizeof($t_data) >1)
     {
+
       $query = "insert into tiki_images_data(imageId,xsize,ysize,
                                 type,filesize,filetype,filename,data)
                         values ($imageId,$xsize,$ysize,'t',$size,
@@ -740,6 +782,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
     $this->filetype=$res["filetype"];
     $this->filename=$res["filename"];
 
+
     # build scaled images or thumb if not availible
     if ($itype != 'o' && !isset($this->imageId))
       {
@@ -747,6 +790,7 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
           return $this->get_image($id,$itype,$newsize["xsize"],$newsize["ysize"]);
         }
       }
+
     // get image data from fs
 
     if ($res["data"]=='' )
@@ -767,14 +811,15 @@ ImageSetPixel ($dst_img, $i + $dst_x - $src_x, $j + $dst_y - $src_y, ImageColorC
         }
       // If the image was a .gif then the thumbnail has 0 bytes if the thumbnail
       // is empty then use the full image as thumbnail
-      if($ext==".thumb" && filesize($gal_use_dir.$res["path"].$ext)==0 ) {
-        $ext='';
-      }
+    //  if($ext==".thumb" && filesize($gal_use_dir.$res["path"].$ext)==0 ) {
+     //   $ext='';
+      //}
       $this->readimagefromfile($gal_use_dir.$res["path"].$ext);
     } else {
       $this->image=$res["data"];
-      $this->readimagefromstring($res["data"]);
     }
+
+    if(!isset($this->imagehandle)) $this->readimagefromstring($res["data"]);
     return $res;
   }
 

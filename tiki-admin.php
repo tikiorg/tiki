@@ -1008,6 +1008,8 @@ if(isset($_REQUEST["galfeatures"])) {
   
   $tikilib->set_preference("gal_use_db",$_REQUEST["gal_use_db"]);
   $smarty->assign('gal_use_db',$_REQUEST["gal_use_db"]);
+  $tikilib->set_preference("gal_use_lib",$_REQUEST["gal_use_lib"]);
+  $smarty->assign('gal_use_lib',$_REQUEST["gal_use_lib"]);
   $tikilib->set_preference("gal_use_dir",$_REQUEST["gal_use_dir"]);
   $smarty->assign('gal_use_dir',$_REQUEST["gal_use_dir"]);
   
