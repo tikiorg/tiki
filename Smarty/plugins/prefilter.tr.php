@@ -36,13 +36,14 @@ function _translate_lang($key) {
         $query="insert into tiki_untranslated (source,lang) values('".addslashes($content)."','".$language."')";
         //No eror checking here
         $tikilib->db->query($query);
-        }
+      }
       return $key[1].$content."{/tr}";
     }
-    if ($key[1] == "{tr}")
-        return $res["tran"];// no more possible translation in block.tr.php
-     else
-        return $key[1].$res["tran"]."{/tr}";// perhaps variable substituion to do in block.tr.php
+    if ($key[1] == "{tr}") {
+      return $res["tran"];// no more possible translation in block.tr.php
+    } else {
+      return $key[1].$res["tran"]."{/tr}";// perhaps variable substituion to do in block.tr.php
+		}
   }
 }
 ?>
