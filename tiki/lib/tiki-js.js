@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.11 2003-08-07 04:34:00 rossta Exp $
+// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.12 2003-08-10 04:26:38 teedog Exp $
 
 function chgArtType() {
 	if (document.getElementById('articletype').value == 'Article') {
@@ -63,6 +63,55 @@ function replaceSome(fooel, what, repl) {
 
 function replaceLimon(vec) {
 	document.getElementById(vec[0]).value = document.getElementById(vec[0]).value.replace(vec[1], vec[2]);
+}
+
+function setSelectionRange(textarea, selectionStart, selectionEnd) {
+  if (textarea.setSelectionRange) {
+    textarea.focus();
+    textarea.setSelectionRange(selectionStart, selectionEnd);
+  }
+  else if (textarea.createTextRange) {
+    var range = textarea.createTextRange();
+    textarea.collapse(true);
+    textarea.moveEnd('character', selectionEnd);
+    textarea.moveStart('character', selectionStart);
+    textarea.select();
+  }
+}
+function setCaretToPos (textarea, pos) {
+  setSelectionRange(textarea, pos, pos);
+}
+function insertAt(elementId, replaceString) {
+  //inserts given text at selection or cursor position  
+  textarea = document.getElementById(elementId);
+  if (textarea.setSelectionRange) {
+    //Mozilla    
+    var selectionStart = textarea.selectionStart;
+    var selectionEnd = textarea.selectionEnd;
+    textarea.value = textarea.value.substring(0, selectionStart)
+                  + replaceString
+                  + textarea.value.substring(selectionEnd);
+    if (selectionStart != selectionEnd) // has there been a selection
+      setSelectionRange(textarea, selectionStart, selectionStart + replaceString.length);
+    else // set caret
+      setCaretToPos(textarea, selectionStart + replaceString.length);
+  }
+  else if (document.selection) {
+    //IE    
+    textarea.focus();
+    var range = document.selection.createRange();
+    if (range.parentElement() == textarea) {
+      var isCollapsed = range.text == '';
+      range.text = replaceString;
+      if (! isCollapsed)  { 
+        range.moveStart('character', -replaceString.length);
+        range.select();
+      }
+    }
+  }
+  else {
+    //alert("don't know yet how to handle insert" + document);
+	}  
 }
 
 function setUserModuleFromCombo(id) {
