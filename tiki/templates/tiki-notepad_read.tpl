@@ -2,8 +2,8 @@
 <a class="pagetitle" href="tiki-notepad_read.php?noteId={$noteId}">{tr}Reading note:{/tr} {$info.name}</a><br/><br/>
 {include file=tiki-mytiki_bar.tpl}
 <br/><br/>
-<a class="link" href="tiki-notepad_list.php">{tr}List notes{/tr}</a>
-<a class="link" href="tiki-notepad_write.php">{tr}Write note{/tr}</a>
+[<a class="link" href="tiki-notepad_list.php">{tr}List notes{/tr}</a>]
+[<a class="link" href="tiki-notepad_write.php">{tr}Write note{/tr}</a>]
 <br/><br/>
 <table>
 <tr><td>
@@ -27,7 +27,26 @@
 <input type="hidden" name="noteId" value="{$noteId}" />
 <input type="submit" name="write" value="{tr}edit{/tr}" />
 </form>
-</td></tr></table>
+</td>
+{if $tiki_p_edit eq 'y'}
+<td>
+{if $wiki_exists eq 'n'}
+<form action="tiki-notepad_read.php" method="post">
+<input type="hidden" name="noteId" value="{$noteId}" />
+<input type="submit" name="wikify" value="{tr}wiki create{/tr}"/>
+<input size="20" type="text" name="wiki_name" value="{$info.name}" />
+</form>
+{else}
+<form action="tiki-notepad_read.php" method="post">
+<input type="hidden" name="noteId" value="{$noteId}" />
+<input type="submit" name="wikify" value="{tr}wiki overwrite{/tr}" />
+<input size="20" type="text" name="wiki_name" value="{$info.name}" />
+<input type="checkbox" name="over" />
+</form>
+{/if}
+</td>
+{/if}
+</tr></table>
   <div class="wikitext">
   {$info.parsed}
   </div>

@@ -124,12 +124,10 @@ if(isset($_REQUEST["action"])) {
 
 // Save to notepad if user wants to
 if($user 
-    && $feature_wiki_notepad == 'y' 
 	&& $tiki_p_notepad == 'y' 
 	&& $feature_notepad == 'y' 
 	&& isset($_REQUEST['savenotepad'])) {
-  include_once('lib/notepad/notepadlib.php');	
-  $notepadlib->replace_note($user,0,$_REQUEST['page'],$info['data']);
+  $tikilib->replace_note($user,0,$_REQUEST['page'],$info['data']);
 }
 
 // Verify lock status

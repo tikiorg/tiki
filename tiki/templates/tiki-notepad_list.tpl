@@ -6,7 +6,7 @@
 <table border='0' cellpadding='0' cellspacing='0'>
 	<tr>
 		<td>
-			<table border='0' height='20' cellpadding='0' cellspacing='0' 
+			<table border='0' height='10' cellpadding='0' cellspacing='0' 
 			       width='200' style='background-color:#666666;'>
 				<tr>
 					<td style='background-color:red;' width='{$cellsize}'>&nbsp;</td>
@@ -26,9 +26,9 @@
 </table>
 </div>
 <br/>
+<a class="link" href="tiki-notepad_write.php">[{tr}Write a note{/tr}]</a>
 <table>
 <tr><td class="findtable">
-   <td><a class="link" href="tiki-notepad_write.php">[{tr}Write a note{/tr}]</a></td>
    <td class="findtable">
    <form method="get" action="tiki-notepad_list.php">
      <input type="text" name="find" value="{$find}" />
@@ -41,7 +41,7 @@
 <form action="tiki-notepad_list.php" method="post">
 <table class="normal">
 <tr>
-<td class="heading"><input type="submit" name="delete" value="{tr}del{/tr}" /></td>
+<td class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
 <td class="heading" ><a class="tableheading" href="tiki-notepad_list.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}Last Modified{/tr}</a></td>
 <td class="heading" >{tr}Size{/tr}</td>
@@ -57,7 +57,14 @@
 <td class="{cycle advance=false}">{$channels[user].lastModif|tiki_short_datetime}</td>
 <td class="{cycle}">{$channels[user].size|kbsize}</td>
 </tr>
+{sectionelse}
+<tr>
+	<td class="heading" colspan="4">{tr}No notes yet{/tr}</td>
+</tr>
 {/section}
+<tr>
+	<td class="heading" colspan="4"><input type="submit" name="merge" value="{tr}merge notes into{/tr}" /><input type="text" name="merge_name" size="10" /></td>
+</tr>
 </table>
 </form>
 <div class="mini">

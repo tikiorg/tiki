@@ -4,6 +4,7 @@ require_once('tiki-setup.php');
 include_once('lib/blogs/bloglib.php');
 
 
+
 if($feature_blogs != 'y') {
   $smarty->assign('msg',tra("This feature is disabled"));
   $smarty->display("styles/$style_base/error.tpl");
@@ -172,7 +173,6 @@ if(isset($_REQUEST["save"])||isset($_REQUEST['save_exit'])) {
     $postid = $bloglib->blog_post($_REQUEST["blogId"],$_REQUEST["data"],$user,$title,$_REQUEST['trackback']);
     $smarty->assign('postId',$postid);
   }
-  
   if(isset($_REQUEST['save_exit'])) {
     header("location: tiki-view_blog.php?blogId=$blogId");
     die;
@@ -183,11 +183,16 @@ if(isset($_REQUEST["save"])||isset($_REQUEST['save_exit'])) {
 
   if(empty($data)) $data=' ';
   $smarty->assign('data',$data);
-  $smarty->assign('title',$_REQUEST["title"]);
+  $smarty->assign('title',isset($_REQUEST["title"])?$_REQUEST['title']:'');
   $smarty->assign('trackbacks_to',explode(',',$_REQUEST['trackback']));
   $smarty->assign('parsed_data',$parsed_data);
 }
-$blogs = $tikilib->list_user_blogs($user,1);
+if($tiki_p_blog_admin == 'y') {
+  $blogsd = $bloglib->list_blogs( 0, -1, 'created_desc', '');
+  $blogs=$blogsd['data'];
+} else {
+  $blogs = $bloglib->list_user_blogs($user,1);
+}
 if(count($blogs)==0) {
   $smarty->assign('msg',tra("You can't post in any blog maybe you have to create a blog first"));
   $smarty->display("styles/$style_base/error.tpl");

@@ -29,11 +29,42 @@ if(!isset($_REQUEST["noteId"])) {
 
 
 if(isset($_REQUEST["remove"])) {
-    $notepadlib->remove_note($user, $_REQUEST['remove']);
+    $notepadlib->remove_note($user, $_REQUEST['noteId']);
+    header('location: tiki-notepad_list.php');
+    die;
 }
 
 
 $info = $notepadlib->get_note($user,$_REQUEST["noteId"]);
+
+
+
+if($tiki_p_edit == 'y') {
+	if(isset($_REQUEST['wikify'])) {
+	  if(empty($_REQUEST['wiki_name'])) {
+		$smarty->assign('msg',tra("No name indicated for wiki page"));
+	  	$smarty->display("styles/$style_base/error.tpl");
+		die;  
+	  }
+	  if($tikilib->page_exists($_REQUEST['wiki_name']) && !isset($_REQUEST['over'])) {
+		$smarty->assign('msg',tra("Page already exists"));
+	  	$smarty->display("styles/$style_base/error.tpl");
+		die;  
+	  }  
+  	  if($tikilib->page_exists($_REQUEST['wiki_name'])) {
+	  	$tikilib->update_page($_REQUEST['wiki_name'],$info['data'],tra('created from notepad'), $user, '127.0.1.1',$info['name']);
+	  } else {
+		$tikilib->create_page($_REQUEST['wiki_name'], 0, $info['data'], date("U"), tra('created from notepad'), $user, $ip='0.0.0.0',$info['name']);
+	  }
+	}
+}
+
+if($tikilib->page_exists($info['name'])) {
+  $smarty->assign("wiki_exists","y");
+} else {
+  $smarty->assign("wiki_exists","n");
+}
+
 
 if(!isset($_REQUEST['parse_mode'])) $_REQUEST['parse_mode']='raw';
 if($_REQUEST['parse_mode']=='raw') {
