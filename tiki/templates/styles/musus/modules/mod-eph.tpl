@@ -1,15 +1,15 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-eph.tpl,v 1.1 2004-01-07 04:31:24 musus Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/styles/musus/modules/mod-eph.tpl,v 1.2 2004-01-16 18:01:05 musus Exp $ *}
 
 {tikimodule title="<a class=\"cboxtlink\" href=\"tiki-eph.php\">{tr}Ephemerides{/tr}</a>" name="eph"}
 {if $modephdata}
   <table>
   {if $modephdata.filesize}
-    <tr>
-      <td text-align="center" class="module"><img alt="image" src="tiki-view_eph.php?ephId={$modephdata.ephId}" /></td>
+    <tr class="module">
+      <td text-align="center"><img alt="image" src="tiki-view_eph.php?ephId={$modephdata.ephId}" /></td>
     </tr>
   {/if}
   <tr>
-    <td class="module">{$modephdata.textdata}</td>
+    <td>{$modephdata.textdata}</td>
   </tr>
   </table>
 {/if}
