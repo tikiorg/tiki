@@ -41,7 +41,7 @@
 <td>
 <select name="filterfield">
 {section name=ix loop=$fields}
-{if $fields[ix].isTblVisible eq 'y' and $fields[ix].type ne 'f' and $fields[ix].type ne 'j' and $fields[ix].type ne 'i'}
+{if $fields[ix].isTblVisible eq 'y' and $fields[ix].isSearchable eq 'y' and $fields[ix].type ne 'f' and $fields[ix].type ne 'j' and $fields[ix].type ne 'i'}
 <option value="{$fields[ix].name|escape}">{$fields[ix].name}</option>
 {/if}
 {/section}
