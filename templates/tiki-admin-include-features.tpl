@@ -1,4 +1,9 @@
-<!--- this the very top most box of the feature section in tiki-admin.php?page=features, each td is a cell,each tr is a row, not to be confused with {tr} which means translate... there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate -->
+{* $Header: /cvsroot/tikiwiki/tiki/templates/tiki-admin-include-features.tpl,v 1.15 2003-08-14 23:51:34 zaufi Exp $ *}
+
+{* this the very top most box of the feature section in tiki-admin.php?page=features,
+ * each td is a cell,each tr is a row, not to be confused with {tr} which means translate...
+ * there are five cells for every row, the middle cell is empty to keep feature and ckboxes separate
+ *}
 
 
 <form action="tiki-admin.php?page=features" method="post">
@@ -9,12 +14,12 @@
 			{if $feature_help eq 'y'}</a>{/if}
 			<br />
     </div>
-<!-- the heading of the  box -->
+{* the heading of the  box *}
     <div class="cbox-data">
       <table width="99%"><tr>
         <td class="heading" colspan=5 align="center">{tr}Tiki sections and features{/tr}</td>
       </tr>
-<!-- top left wiki ck box ... each of the function option boxes here begin with  td class form -->			
+{* top left wiki ck box ... each of the function option boxes here begin with  td class form *}
 			<tr>
         <td class="form" width="43%">
 				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Wiki" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Wiki{/tr}">{/if}
@@ -23,9 +28,9 @@
 				:</td>
         <td width="5%"><input type="checkbox" name="feature_wiki"
             {if $feature_wiki eq 'y'}checked="checked"{/if}/></td>
-<!-- here's the blank cell -->
+{* here's the blank cell *}
         <td width="4%">&nbsp;</td>
-<!-- here is the beginning of the new cell for blogs followed by a check box cell-->      
+{* here is the beginning of the new cell for blogs followed by a check box cell *}
 				<td class="form" width="43%">
 				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Blog" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Wiki{/tr}">{/if}
 				{tr}Blogs{/tr}
@@ -34,7 +39,7 @@
         <td><input type="checkbox" name="feature_blogs"
             {if $feature_blogs eq 'y'}checked="checked"{/if}/></td>
       </tr>
-<!-- end of the first row -->			
+{* end of the first row *}
 			<tr>
         <td class="form">
 				{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=ImageGallery" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Image Galleries{/tr}">{/if}
@@ -279,7 +284,7 @@
         <td><input type="checkbox" name="feature_workflow"
             {if $feature_workflow eq 'y'}checked="checked"{/if}/></td>
       </tr><tr>
-<!-- beginning of mini calendar function option -->
+{* beginning of mini calendar function option *}
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=MiniCalendar" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Mini Calendar{/tr}">{/if}
         		{tr}Mini Calendar{/tr}
@@ -288,7 +293,7 @@
         <td><input type="checkbox" name="feature_minical"
             {if $feature_minical eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-<!-- here's the categories option -->
+{* here's the categories option *}
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Categories" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Categories{/tr}">{/if}
         		{tr}Categories{/tr}
@@ -297,7 +302,7 @@
         <td><input type="checkbox" name="feature_categories"
                 {if $feature_categories eq 'y'}checked="checked"{/if}/></td>
       </tr>
-<!-- Calendar option on left side of first row of table-->
+{* Calendar option on left side of first row of table*}
 <tr>
 
                                                                                                        
@@ -309,33 +314,7 @@
         <td><input type="checkbox" name="feature_help"
             {if $feature_help eq 'y'}checked="checked"{/if}/></td>
         <td>&nbsp;</td>
-<!-- blank cell above, start of new cell for Show Category path -->
-        <td class="form">
-	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=ShowCategoryPath" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Category Path{/tr}">{/if}
-        		{tr}Show Category Path{/tr}
-        		{if $feature_help eq 'y'}</a>{/if}
-        		:</td>
-        <td><input type="checkbox" name="feature_categorypath"
-            {if $feature_categorypath eq 'y'}checked="checked"{/if}/></td>
-      </tr>
-<!-- this is where the help_feature will be located -->
-<tr>
-        <td class="form">
 
-<!--- blank cell -->
-<td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-        <td class="form">
-	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=ShowCategoryObjects" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Category Objects{/tr}">{/if}
-        		{tr}Show Category Objects{/tr}
-        		{if $feature_help eq 'y'}</a>{/if}
-        		:</td>
-        <td><input type="checkbox" name="feature_categoryobjects"
-            {if $feature_categoryobjects eq 'y'}checked="checked"{/if}/></td>
-      </tr><tr>
-        <td class="form" colspan=2>&nbsp;</td>
-        <td>&nbsp;</td>
         <td class="form">
 
 	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Maps" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Maps{/tr}">{/if}
@@ -345,27 +324,41 @@
         <td><input type="checkbox" name="feature_maps"
             {if $feature_maps eq 'y'}checked="checked"{/if}/></td>
 
-      </tr><tr>      
+      </tr>
+      <tr>
 
-      </tr><tr>
-        <td class="form" colspan=2>&nbsp;</td>
-        <td>&nbsp;</td>
         <td class="form">
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=ShowCategoryPath" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Category Path{/tr}">{/if}
+        		{tr}Show Category Path{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_categorypath"
+            {if $feature_categorypath eq 'y'}checked="checked"{/if}/></td>
 
+        <td>&nbsp;</td>
+
+        <td class="form">
 	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Babelfish" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Babelfish Translation URLs{/tr}">{/if}
         		{tr}Show Babelfish Translation URLs{/tr}
-        		{if $feature_babelfish eq 'y'}</a>{/if}
+        		{if $feature_help eq 'y'}</a>{/if}
         		:</td>
         <td><input type="checkbox" name="feature_babelfish"
             {if $feature_babelfish eq 'y'}checked="checked"{/if}/></td>
 
-      </tr><tr>      
-
-      </tr><tr>
-        <td class="form" colspan=2>&nbsp;</td>
-        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        
         <td class="form">
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=ShowCategoryObjects" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Category Objects{/tr}">{/if}
+        		{tr}Show Category Objects{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_categoryobjects"
+            {if $feature_categoryobjects eq 'y'}checked="checked"{/if}/></td>
 
+        <td>&nbsp;</td>
+
+        <td class="form">
 	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Babelfish" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Babelfish Translation Logo{/tr}">{/if}
         		{tr}Show Babelfish Translation Logo{/tr}
         		{if $feature_babelfish_logo eq 'y'}</a>{/if}
@@ -373,10 +366,34 @@
         <td><input type="checkbox" name="feature_babelfish_logo"
             {if $feature_babelfish_logo eq 'y'}checked="checked"{/if}/></td>
 
-      </tr><tr>      
+      </tr>
+      <tr>
+        
+        <td class="form">
+	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=ShowModuleControls" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Show Module Controls{/tr}">{/if}
+        		{tr}Show Module Controls{/tr}
+        		{if $feature_help eq 'y'}</a>{/if}
+        		:</td>
+        <td><input type="checkbox" name="feature_modulecontrols"
+            {if $feature_modulecontrols eq 'y'}checked="checked"{/if}/></td>
+
+        <td>&nbsp;</td>
+
+{* add next option to 2nd column here *}
+        <td class="form"><td>
+        <td></td>
+
+      </tr>
+
+
+{* ---------- Content features ------------ *}
+
+
+      <tr>
 
         <td class="heading" colspan=5 
             align="center">{tr}Content Features{/tr}</td>
+
       </tr><tr>
         <td class="form">
 	        	{if $feature_help eq 'y'}<a href="http://tikiwiki.org/tiki-index.php?page=Hotwords" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Hotwords{/tr}">{/if}
