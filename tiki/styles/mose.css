@@ -1,5 +1,5 @@
 /* 
-$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.13 2003-08-25 04:03:19 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/styles/mose.css,v 1.14 2003-09-05 20:01:42 mose Exp $
 2003 - created and maintained by mose@feu.org
 */
 
@@ -14,20 +14,6 @@ body {
 
 table {
 }
-/* 
-GENERAL LAYOUT EXPLANATION
-
-The tiki application is enclosed as a whole in 
-tiki-main tiki-main contains three divs: tiki-top,
-tiki-mid and tiki-botthat will be used for the header, 
-application and footer.
-
-tiki-mid contains a 3-column table, the columns are 
-called (ids) leftcolumn, centercolumn and rightcolumn
-
-Finally centercolumn contains tiki-center where the main 
-area of the application is displayed.
-*/
 
 /*
 GENERAL LAYOUT 
@@ -529,12 +515,12 @@ The table
 */
 table.listgallery, table.creategalform, TABLE.normal, table.gallerylisting, table.bloglist, table.editblogform, table.editfgalform,
 	table.listfgal, table.listfiles, table.listarticles, table.forumstable, table.forumformtable, table.viewthread {
-	border-color:    #5A4A39;
-	border-style:   solid;
-	border-width:   1px;
+	border: 1px solid #5A4A39;
+	width: 100%;
 }
 
 TABLE.normalnoborder {
+	width: 100%;
 }
 
 /* 
@@ -616,6 +602,7 @@ form is displayed in a table with the following style
 table.findtable {
 	margin-bottom:    20px;
 	padding-bottom:   10px;
+	width: 100%;
 }
 
 td.findtable {
