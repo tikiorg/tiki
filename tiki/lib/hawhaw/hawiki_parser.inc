@@ -1,7 +1,7 @@
 <?php
 
 // HAWIKI parser for TikiWiki
-// Last modified: 17. October 2003
+// Last modified: 26. October 2003
 
 // token definitions
 define("HAWIKI_TOKEN_NEWLINE",    1);
@@ -264,13 +264,14 @@ function HAWIKI_parser(&$input, $isFirstColumn)
     return($po);
   }
 
-  if (preg_match("/^\{img (.*?)\}/", $input, $matches))
+  if (preg_match("/^\{img ((.|[\r\n])*?)\}/", $input, $matches))
   {
     // image
     $po["text"] = $matches[1];
     $input = substr($input, strlen($po["text"]) + 6);
 
     $po["text"] = trim($po["text"]); // strip leading and tailing whitespace
+    $po["text"] = ereg_replace("[\r\n]", " ", $po["text"]);
     $po["text"] = ereg_replace(" +", " ", $po["text"]);
     $img_arr = explode(" ", $po["text"]);
 
