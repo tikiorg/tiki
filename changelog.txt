@@ -1,6 +1,6 @@
 Tikiwiki Changelog
 ------------------
-$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.138 2003-11-28 04:30:29 mose Exp $
+$Header: /cvsroot/tikiwiki/tiki/changelog.txt,v 1.139 2003-12-03 05:58:43 markusvk Exp $
 
 All developers are invited to add relevant changes in that file as they
 apply them to the CVS source. You can optionnaly indicate an identifer
@@ -17,7 +17,7 @@ Please wrap your lines to 80 characters and indent them with spaces only.
 
 Version 1.8 -Polaris-
 <http://tikiwiki.org/ReleaseProcess18>
-
+* [FIX] Reoccured problem with email_isPublic not honoured
 * [NEW] Module to display pages where last comments added
 * [MOD] added optionnal numebr of entries displaye in module titles
 * [MOD] navigation buttons added to structures
@@ -84,7 +84,6 @@ Version 1.8 -Polaris-
   generate a webhelp static version with search capabilities that can be 
   distributed as a standalone version of the selected tiki pages.
 * [NEW] Added 2 prefs cookie_domain and cookie_path for remember me cookie
-* [MOD] Modules for anonymous-only can now be hidden for registered users
 * [MOD] An alternative module-switch_lang2
 * [MOD] Allow article creators to edit their articles even if they don't have
   the p_edit_article permission. Default behavior is unchanged, must be turned

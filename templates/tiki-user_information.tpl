@@ -9,7 +9,9 @@
   <table>
   <tr><td class="form">{tr}Name{/tr}:</td><td>{$userinfo.login}</td></tr>
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
+{if $email_isPublic neq 'n'}  
   <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
+{/if}  
   <tr><td class="form">{tr}Country{/tr}:</td><td><img alt="flag" src="img/flags/{$country}.gif" /> {$country}</td></tr>
   <tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>
   <tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>

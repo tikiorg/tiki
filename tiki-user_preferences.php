@@ -1,6 +1,6 @@
 <?php
 
-// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.36 2003-11-17 15:44:29 mose Exp $
+// $Header: /cvsroot/tikiwiki/tiki/tiki-user_preferences.php,v 1.37 2003-12-03 05:58:43 markusvk Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -310,7 +310,7 @@ $smarty->assign_by_ref('userbreadCrumb', $userbreadCrumb);
 $homePage = $tikilib->get_user_preference($userwatch, 'homePage', '');
 $smarty->assign_by_ref('homePage', $homePage);
 $smarty->assign('email_isPublic', $tikilib->get_user_preference($userwatch, 'email is public', 'n'));
-$scramblingMethods = array("no", "strtr", "unicode", "x");
+$scramblingMethods = array("n", "strtr", "unicode", "x"); // email_isPublic utilizes 'n'
 $smarty->assign_by_ref('scramblingMethods', $scramblingMethods);
 $scramblingEmails = array(tra("no"), scrambleEmail($userinfo['email'], 'strtr'), scrambleEmail($userinfo['email'], 'unicode')."-".tra("unicode"), scrambleEmail($userinfo['email'], 'x'));
 $smarty->assign_by_ref('scramblingEmails', $scramblingEmails);
