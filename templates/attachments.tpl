@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.18 2004-03-01 18:42:36 damosoft Exp $ *}
+{* $Header: /cvsroot/tikiwiki/tiki/templates/attachments.tpl,v 1.19 2004-03-01 18:45:02 damosoft Exp $ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -57,8 +57,8 @@ onclick="return confirmTheLink(this,'{tr}Are you sure you want to delete this at
 <form enctype="multipart/form-data" action="tiki-index.php?page={$page|escape:"url"}" method="post">
 {if $page_ref_id}<input type="hidden" name="page_ref_id" value="{$page_ref_id}" />{/if}
 <table class="normal">
-<tr>
- <td class="formcolor">
+<tr class="formcolor">
+ <td>
    <label for="attach-upload">{tr}Upload file{/tr}:</label><input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
                         <input size="16 " name="userfile1" type="file" id="attach-upload" />
    <label for="attach-comment">{tr}comment{/tr}:    </label><input type="text" name="attach_comment" maxlength="250" id="attach-comment" />
