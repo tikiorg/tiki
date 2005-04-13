@@ -11,9 +11,7 @@
 
 <tr class="formrow">
 <td>description</td>
-{if $tiki_p_cc_admin eq 'y'}
 <td>from account</td>	
-{/if}
 <td>to account</td>	
 <td align=right>amount</td>
 {if !$currency}
