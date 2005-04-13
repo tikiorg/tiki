@@ -5,7 +5,6 @@ require_once ('lib/cc/cclib.php');
 if (!isset($_REQUEST['page'])) { $_REQUEST['page'] = ''; }
 $page = $_REQUEST['page'];
 
-if (!isset($_SESSION['viewrange'])) { $_SESSION['viewrange'] = 'reg'; }
 if (isset($_REQUEST['all'])) { 
 	$_SESSION['viewrange'] = 'all'; 
 } elseif (isset($_REQUEST['local'])) {
@@ -15,16 +14,6 @@ if (isset($_REQUEST['all'])) {
 } elseif (isset($_REQUEST['reg'])) { 
 	$_SESSION['viewrange'] = 'reg'; 
 }
-
-if (!isset($_SESSION['localview'])) { $_SESSION['localview'] = 'n'; }
-if (isset($_REQUEST['local'])) {
-	if ($_REQUEST['local'] == 'y') {
-		$_SESSION['localview'] = 'y';
-	} else {
-		$_SESSION['localview'] = 'n';
-	}
-}
-
 
 $mid = "cc/index.tpl";
 $view = '';
@@ -190,11 +179,7 @@ if ($user) {
 							$smarty->assign('msg',"Currency ". $_REQUEST['cc_id'] ." created.");
 							$ccuser = $cclib->user_infos($user);
 						}
-						if ($_SESSION['localview'] == 'y') {
-							$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,'',$owner,'y',false,false,'');
-						} else {
-							$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,'',$owner,'y',false,false,'*');
-						}
+						$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,'',$owner,'y');
 						$smarty->assign('thelist', $thelist['data']);
 						$mid = "cc/currencies.tpl";
 						$view = 'my';
@@ -231,17 +216,9 @@ if ($user) {
 				$view = 'my';
 			} else {
 				if ($tiki_p_cc_admin == 'y' and $_SESSION['viewrange'] == 'all') {
-					if ($_SESSION['localview'] == 'y') {
-						$thelist = $cclib->get_currencies(true,0,-1,$sort_mode);
-					} else {
-						$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,'',false,false,false,'*');
-					}
+					$thelist = $cclib->get_currencies(true,0,-1,$sort_mode,'',false,false,false,"%");
 				} else {
-					if ($_SESSION['localview'] == 'y') {
-						$thelist = $cclib->get_currencies(false,0,-1,$sort_mode);
-					} else {
-						$thelist = $cclib->get_currencies(false,0,-1,$sort_mode,'',false,false,false,'*');
-					}
+					$thelist = $cclib->get_currencies(false,0,-1,$sort_mode);
 				}
 				$view = '';
 			}
@@ -251,7 +228,6 @@ if ($user) {
 	}
 }
 
-$smarty->assign('local', $_SESSION['localview']);
 $smarty->assign('view', $view);
 $smarty->assign('page', $page);
 $smarty->assign('mid', $mid);

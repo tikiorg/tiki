@@ -14,7 +14,7 @@ class CcLib extends UsersLib {
 	function CcLib($dbTiki) { 
 		$this->db = $dbTiki;
 		$this->date = date("U");
-		$this->logfile = "temp/cc.log.php";
+		$this->logfile = "mods/features/cc/cc.log.php";
 		$this->initlog();
 	}
 
@@ -52,7 +52,7 @@ class CcLib extends UsersLib {
 			$mid[] = "`cc_id`=?";
 			$bindvars[] = $cc;
 		}
-		if ($app) {
+		if ($approved) {
 			$mid[] = "`approved`=?";
 			$bindvars[] = $app;
 		}
@@ -110,46 +110,48 @@ class CcLib extends UsersLib {
 		return $retval;
 	}
 
-	function get_currencies($all=false,$offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false,$app=false,$reg=false,$cpun='') {
+	function get_currencies($all=false,$offset=0,$max=-1,$sort_mode='cc_name_asc',$find='',$owner=false,$app=false,$reg=false) {
 		$bindvars = $mid = array();
-		$query = "select cc.* from `cc_cc` as cc left join `cc_ledger` as ccl on ccl.`cc_id`=cc.`id` ";
-		$query_cant = "select count(*) from `cc_cc` as cc left join `cc_ledger` as ccl on ccl.`cc_id`=cc.`id` ";
 		if ($reg) {
-			$mid[] = "ccl.`acct_id`=?";
+			$query = "select *,count(*) as population from `cc_ledger` as ccl left join `cc_cc` as cc on ccl.`cc_id`=cc.`id` left join `cc_ledger` as cclc on cc.`id`=cclc.`cc_id` ";
+			$query.= " where ccl.`acct_id`=? group by cclc.`cc_id` order by ";
+			$query.= $this->convert_sortmode($sort_mode);
+			$query_cant = "select count(*) from `cc_ledger` as ccl  where ccl.`acct_id`=?";
 			$bindvars[] = $reg;
-		}
-		if ($cpun != '*') {
-			$mid[] = "cc.`cpun`=?";
-			$bindvars[] = $cpun;
-		}
-		if ($find) {
-			$mid[] = "cc.`cc_name`=?";
-			$bindvars[] = '%'. $find .'%';
-		}
-		if ($owner) {
-			$mid[] = "cc.`owner_id`=?";
-			$bindvars[] = $owner;
-		}
-		if (!$all) {
-			$mid[] = "cc.`listed`=?";
-			$bindvars[] = 'y';
-		}
-		if ($app) {
-			$mid[] = "ccl.`approved`=?";
-			$bindvars[] = 'y';
-		}
-		$order = " order by cc.".$this->convert_sortmode($sort_mode);
-		if (count($mid)) {
-			$mid = " where ". implode(' and ',$mid);
+			$result = $this->query($query.$order,$bindvars,$max,$offset);	
+			$cant = $this->getOne($query_cant,$bindvars);
 		} else {
-			$mid = '';
+			$query = 'select cc.*,count(*) as population from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
+			$query_cant = 'select count(*) from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
+			if ($find) {
+				$mid[] = "cc.`cc_name`=?";
+				$bindvars[] = '%'. $find .'%';
+			}
+			if ($owner) {
+				$mid[] = "cc.`owner_id`=?";
+				$bindvars[] = $owner;
+			}
+			if (!$all) {
+				$mid[] = "cc.`listed`=?";
+				$bindvars[] = 'y';
+			}
+			if ($app) {
+				$mid[] = "ccl.`approved`=?";
+				$bindvars[] = 'y';
+			}
+			$order = " group by cc_id order by ";
+			$order.= $this->convert_sortmode($sort_mode);
+			if (count($mid)) {
+				$mid = " where ". implode(' and ',$mid);
+			} else {
+				$mid = '';
+			}
+			$result = $this->query($query.$mid.$order,$bindvars,$max,$offset);	
+			$cant = $this->getOne($query_cant.$mid,$bindvars);
 		}
-		$result = $this->query($query.$mid.$order,$bindvars,$max,$offset);	
-		$cant = $this->getOne($query_cant.$mid,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$res['population'] = $this->getOne('select count(*) from `cc_ledger` where `cc_id`=?',array($res['id']));
-			$ret["{$res['id']}...{$res['cpun']}"] = $res;
+			$ret["{$res['id']}"] = $res;
 		}
 		$retval = array();
 		$retval['data'] = $ret;
@@ -161,7 +163,7 @@ class CcLib extends UsersLib {
 		return $this->getOne('select count(*) from `cc_cc` where `id`=? and `cpun`=?',array($id,$cpun));
 	}
 
-	function replace_currency($owner,$id,$name,$description,$approval='n',$listed='y',$seq=false,$cpun='') {
+	function replace_currency($owner,$id,$name,$description,$approval='n',$listed='y',$seq='',$cpun='') {
 		global $user;
 		if ($seq) {
 			$query = "update `cc_cc` set `cc_name`=?,`cc_description`=?,`owner_id`=?,`requires_approval`=?,`listed`=?,`cpun`=? where `seq`=?";
@@ -212,7 +214,7 @@ class CcLib extends UsersLib {
 		$result = $this->query($query,$bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret["{$res['cc_id']}...{$res['cpun']}"] = $res;
+			$ret["{$res['cc_id']}"] = $res;
 		}
 		return $ret;
 	}
@@ -301,41 +303,33 @@ class CcLib extends UsersLib {
 		}
 	}
 
+	function decsv($str) {
+		$ar = split('","',substr($str,1,-1));
+	}
+
 	function list_providers($url,$refresh=false) {
 		global $cc_cpun;
-		$now = time();
 		if ($refresh) {
-			if (!checkdnsrr($url,'A')) {
+			if (!checkdnsrr($url)) {
 				$this->msg = sprintf(tra('DNS check failed for %s'),$url);
 			} else {
 				$fp = @ fsockopen($url, 80, $errno, $errstr, 30);	
 				if (!$fp) {
 					$this->msg = sprintf(tra('Request failed for %s'),$url)."<br />".$errstr;
 				} else {
-					$req = "GET /ccsp.txt HTTP/1.1\r\nHost: $url\r\nConnection: Close\r\n\r\n";
+					$req = "GET /ccsp.txt HTTP/1.1\r\rHost: $url\r\nConnection: Close\r\n";
 					fwrite($fp,$req);
-					$zyva = false;
 					while (!feof($fp)) {
-						$line = trim(fgets($fp,1024));
-						if ($line == '') { 
-							$zyva = true; 
-							continue;
-						} 
-						if ($zyva) {
-							$pr = split(',',$line);
-							if ($pr[0] != $cc_cpun and count($pr) == 3) {
-								$pr[3] = $now;
-								$pr[4] = 'y';
-								$pr[2] = preg_replace(array('/:/','/\//'),array('@','.'),$pr[2]);
-								$prov["{$pr[0]}"] = $pr;
-							}
-						} else {
-							$headers[] = $line;
+						$pr[] = split(',',fgets($fp,1024));
+						if ($pr[0] != $cc_cpun and count($pr) == 3) {
+							$pr[3] = time();
+							$pr[4] = 'y';
+							$data[2] = preg_replace(array('/:/','/\//'),array('@','.'),$data[2]);
+							$prov["{$pr[0]}"] = $pr;
 						}
 					}
 					fclose($fp);
-					$allp = $prov;
-					$result = $this->query('select `cpun`,`url`,`email`,`lastupdate`,`status` from `cc_providers`',array());
+					$result = $this->query('select `cpun`,`email`,`url`,`lastupdate`,`status` from `cc_providers`',array());
 					while ($res = $result->fetchRow()) {
 						if (isset($prov["{$res['cpun']}"])) {
 							$dr = $prov["{$res['cpun']}"];
@@ -348,50 +342,34 @@ class CcLib extends UsersLib {
 						}
 					}
 					foreach ($prov as $proo) {
-						if (count($proo)) {
-							$query = "insert into `cc_providers`(`cpun`,`url`,`email`,`lastupdate`,`status`) values (?,?,?,?,?)";
-							$this->query($query,$proo);
+						if (count($prov)) {
+							$query = "insert into `cc_providers`(`cpun`,`email`,`url`,`lastupdate`,`status`) values (?,?,?,?,?)";
+							$this->query($query,$prov);
 						}
 					}
-					foreach ($allp as $p) {
-						$zyva = $fp = false;
-						$headers = array();
-						$url = $p[1];
-						if (!checkdnsrr($url,'A')) {
-							$this->msg = sprintf(tra('DNS check failed for %s'),$url);
-						} else {
-							$fp = @ fsockopen($url, 80, $errno, $errstr, 30);
-							if (!$fp) {
-								$this->msg = sprintf(tra('Request failed for %s'),$url)."<br />".$errstr;
-							} else {
-								$req = "GET /ccsp.php HTTP/1.1\r\nHost: $url\r\nConnection: Close\r\n\r\n";
-								fwrite($fp,$req);
-								while (!feof($fp)) {
-									$line = trim(fgets($fp,1024));
-									if ($line == '') {
-										$zyva = true;
-										continue;
-									}
-									if ($zyva) {
-										$a = split('","',substr($line,1,-1));
-										if (count($a) == 5) {
-											$this->replace_currency($a[0],$a[1],$a[2],stripslashes($a[3]),$a[4],'y',false,$p[0]);
-										}
-									} else {
-										$headers[] = $line;
-									}
-								}
-								fclose($fp);
+					$allp = array();
+					foreach ($prov as $p) {
+						$fp = @ fsockopen($p[1], 80, $errno, $errstr, 30);
+						if ($fp) {
+							$req = "GET /ccsp.php HTTP/1.1\r\rHost: ".$p[1]."\r\nConnection: Close\r\n";
+							fwrite($fp,$req);
+							while (!feof($fp)) {
+								$a = split('","',substr(fgets($fp,1025),1,-1));
+								$this->replace_currency($a[0],$a[1],$a[2],stripslashes($a[3]),$a[4],'y',false,$p[0]);
 							}
+							fclose($fp);
 						}
 					}
 				}
 			}
+			if (count($allp)) {
+				foreach ($allp as $url=>$data) {
+					$data[2] = preg_replace(array('/:/','/\//'),array('@','.'),$data[2]);
+				}
+			}
 		}
 		$result = $this->query('select `cpun`,`email`,`url`,`lastupdate`,`status` from `cc_providers`',array());
-		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$res['cc'] = $this->getOne('select count(*) from `cc_cc` where `cpun`=?',array($res['cpun']));
 			$ret[] = $res;
 		}
 		return $ret;

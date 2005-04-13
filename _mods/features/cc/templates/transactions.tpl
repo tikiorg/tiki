@@ -42,7 +42,9 @@ $userid}&amp;user={$userid}{/if}{if $ccid}&amp;cc={$ccid}{/if}">{tr}date{/tr}</a
 {/if}
 <td align="right">{$thelist[i].balance}</td>
 <td align="right">
+{if $tiki_p_cc_admin eq 'y'}
 <a href="" title="{tr}Revert Transaction{/tr}"><img src="img/cc/cancel_transaction.png" width="20" height="12" border="0" alt="{tr}Revert Transaction{/tr}" /></a>
+{/if}
 </td>
 </tr>
 {sectionelse}

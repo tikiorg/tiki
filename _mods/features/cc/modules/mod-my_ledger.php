@@ -12,7 +12,7 @@ if (!is_object($cclib)) {
 	include "lib/cc/cclib.php";
 }
 if ($user) {
-	$myinfo = $cclib->user_infos($user);
+	$myinfo = $cclib->user_infos($user,'y');
 }
 $smarty->assign('myinfo', $myinfo['registered_cc']);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');

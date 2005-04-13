@@ -53,6 +53,7 @@
 </tr><tr>
 <td><input type='submit' value='confirm' /></td>
 {else}
+<input type="hidden" name="tr_type" value="record" />
 <td><input name='tr_type' type='submit' value='record' /></td>
 {/if}
 </tr>
