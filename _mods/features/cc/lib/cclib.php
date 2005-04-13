@@ -52,7 +52,7 @@ class CcLib extends UsersLib {
 			$mid[] = "`cc_id`=?";
 			$bindvars[] = $cc;
 		}
-		if ($approved) {
+		if ($app) {
 			$mid[] = "`approved`=?";
 			$bindvars[] = $app;
 		}
