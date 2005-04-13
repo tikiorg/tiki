@@ -118,7 +118,7 @@ class CcLib extends UsersLib {
 			$query.= $this->convert_sortmode($sort_mode);
 			$query_cant = "select count(*) from `cc_ledger` as ccl  where ccl.`acct_id`=?";
 			$bindvars[] = $reg;
-			$result = $this->query($query.$order,$bindvars,$max,$offset);	
+			$result = $this->query($query,$bindvars,$max,$offset);	
 			$cant = $this->getOne($query_cant,$bindvars);
 		} else {
 			$query = 'select cc.*,count(*) as population from `cc_cc` as cc left join `cc_ledger` as ccl on cc.`id`=ccl.`cc_id`';
