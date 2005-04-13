@@ -2,10 +2,10 @@ contributor:
 $Author: mose $
 
 revision:
-1.3.7
+1.3.8
 
 lastmodif:
-$Date: 2005-03-21 15:41:51 $
+$Date: 2005-04-13 09:18:56 $
 
 files: 
 features/cc/cc.php cc.php
@@ -33,7 +33,7 @@ features/cc/img/unregister_c.png img/cc/unregister_c.png
 sql-install:
 create table if not exists cc_cc ( seq int not null auto_increment, id varchar(255) not null, cc_name varchar(255) not null, cc_description text, owner_id varchar(255), cpun varchar(255) default '' not null,requires_approval char(1) not null, listed char(1) not null default 'n', primary key seq (seq), index ( id(16),cpun(16) ), index ( cc_name(6) ));
 create table if not exists cc_ledger ( seq int not null primary key auto_increment, acct_id varchar(255) null, l_cpun varchar(255) default '' not null, cc_id varchar(255) not null, balance int not null, tr_total int not null, tr_count int not null, last_tr_date int(11), approved char(1), index ( acct_id ), index ( cc_id ), index ( last_tr_date));
-create table if not exists cc_transaction ( seq int not null primary key auto_increment, tr_date int(11) not null, acct_id varchar(255) not null, cpun varchar(255) not null, cc_id varchar(255) not null, amount int not null, item varchar(255), type varchar(5), balance int not null, index (tr_date), index ( acct_id ));
+create table if not exists cc_transaction ( seq int not null primary key auto_increment, tr_date int(11) not null, acct_id varchar(255) not null, cpun varchar(255) not null, other_id varchar(255), other_cpun varchar(255), cc_id varchar(255) not null, amount int not null, item varchar(255), type varchar(5), balance int not null, index (tr_date), index ( acct_id ));
 create table if not exists cc_providers ( cpun varchar(255) not null default '', email varchar(255), url varchar(255), lastupdate int(8), status char(1) not null default 'c', primary key cpun (cpun));
 create table if not exists cc_users ( userid int(11), login varchar(255), cpun varchar(255) not null default '', email varchar(255), primary key who (login(40),cpun));
 INSERT IGNORE INTO tiki_preferences(name,value) VALUES ('feature_cc','n');
@@ -54,11 +54,13 @@ INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm
 INSERT IGNORE INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','List Transactions','cc.php?page=transactions&all=1',1480,'','tiki_p_cc_admin','');
 
 sql-upgrade:
+: 1.3.8
+ALTER TABLE `cc_transaction` ADD `other_id` VARCHAR( 255 );
+ALTER TABLE `cc_transaction` ADD `other_cpun` VARCHAR( 255 );
 : 1.3.7
 create table if not exists cc_providers ( cpun varchar(255) not null default '', email varchar(255), url varchar(255), lastupdate int(8), status char(1) not null default 'c', primary key cpun (cpun));
 create table if not exists cc_users ( userid int(11), login varchar(255), cpun varchar(255) not null default '', email varchar(255), primary key who (login(40),cpun));
 ALTER TABLE `cc_transaction` CHANGE `other_domain` `cpun` VARCHAR( 255 ) NOT NULL ;
-ALTER TABLE `cc_transaction` DROP `other_id` ;
 ALTER TABLE `cc_cc` ADD `cpun` VARCHAR( 255 ) NOT NULL AFTER `owner_id` ;
 ALTER TABLE `cc_cc` DROP `id_2` ;
 ALTER TABLE `cc_cc` DROP `id` ;
@@ -107,6 +109,7 @@ Description:
 Multi-currencies management system
 
 Changelog:
+1.3.8 fixed other_cpun things
 1.3.7 fixed sorting and the all=1 thing, and more usability development
 1.3.6 transaction reversion by registry owner, ledger sorting, headings, layouts
 1.3.5 layout changes, prevent self credit transaction
