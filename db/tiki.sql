@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-04-05 16:57:21 $
+# $Date: 2005-04-14 12:59:30 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -615,6 +615,7 @@ DROP TABLE IF EXISTS tiki_calendar_items;
 CREATE TABLE tiki_calendar_items (
   calitemId int(14) NOT NULL auto_increment,
   calendarId int(14) NOT NULL default '0',
+  nlId int( 12 ) NOT NULL default '0',
   start int(14) NOT NULL default '0',
   end int(14) NOT NULL default '0',
   locationId int(14) default NULL,
@@ -686,6 +687,7 @@ CREATE TABLE tiki_calendars (
   customlanguages enum('n','y') NOT NULL default 'n',
   custompriorities enum('n','y') NOT NULL default 'n',
   customparticipants enum('n','y') NOT NULL default 'n',
+  customsubscription enum('n','y') NOT NULL default 'n',
   customevents enum('n','y') default 'n' NOT NULL,
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
@@ -2016,7 +2018,8 @@ CREATE TABLE tiki_menu_options (
   section varchar(255) default NULL,
   perm varchar(255) default NULL,
   groupname varchar(255) default NULL,
-  PRIMARY KEY  (optionId)
+  PRIMARY KEY  (optionId),
+  UNIQUE KEY (menuId,type,name,url,position,section,perm,groupname)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Home','tiki-index.php',10,'','','');
