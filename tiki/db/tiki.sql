@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-04-14 15:00:49 $
+# $Date: 2005-04-15 14:23:41 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -2018,8 +2018,7 @@ CREATE TABLE tiki_menu_options (
   section varchar(255) default NULL,
   perm varchar(255) default NULL,
   groupname varchar(255) default NULL,
-  PRIMARY KEY  (optionId),
-  UNIQUE KEY (menuId,type,name,url,position,section,perm,groupname)
+  PRIMARY KEY  (optionId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Home','tiki-index.php',10,'','','');
