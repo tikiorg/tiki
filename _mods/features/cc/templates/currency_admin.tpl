@@ -27,7 +27,7 @@
 <th>{tr}Balance{/tr}</th>
 <th>{tr}Amount of transactions{/tr}</th>
 <th>{tr}Number of transactions{/tr}</th>
-<th>{tr}Last transastion{/tr}</th>
+<th>{tr}Last transaction{/tr}</th>
 <th>{tr}Approved?{/tr}</th>
 <th>{tr}Actions{/tr}</th>
 </tr>
