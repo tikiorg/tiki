@@ -1,4 +1,4 @@
-// ** I18N
+// ** -*-codinf:utf-8 -*-
 Calendar._DN = new Array
 ("Dimanche",
  "Lundi",
@@ -22,14 +22,13 @@ Calendar._MN = new Array
  "Novembre",
  "Décembre");
 Calendar._SDN = new Array
-("Lun",
+("Dim",
+ "Lun",
  "Mar",
  "Mer",
  "Jeu",
- "Thu",
  "Ven",
- "Sam",
- "Dim");
+ "Sam");
 Calendar._SMN = new Array
 ("Jan",
  "Fev",
@@ -74,13 +73,15 @@ Calendar._TT["NEXT_YEAR"] = "Année suiv. (maintenir pour menu)";
 Calendar._TT["SEL_DATE"] = "Choisir une date";
 Calendar._TT["DRAG_TO_MOVE"] = "Déplacer";
 Calendar._TT["PART_TODAY"] = " (Aujourd'hui)";
-Calendar._TT["MON_FIRST"] = "Commencer par lundi";
-Calendar._TT["SUN_FIRST"] = "Commencer par dimanche";
+Calendar._TT["DAY_FIRST"] = "Commencer par %s";
+Calendar._TT["WEEKEND"] = "6,0";
 Calendar._TT["CLOSE"] = "Fermer";
 Calendar._TT["TODAY"] = "Aujourd'hui";
+Calendar._TT["TIME_PART"] = "Cliquez avec majuscule ou glissez pour changer de valeur.";
 
 // date formats
 Calendar._TT["DEF_DATE_FORMAT"] = "%d-%m-%y";
 Calendar._TT["TT_DATE_FORMAT"] = " %A %e %B %Y";
 
 Calendar._TT["WK"] = "sem";
+Calendar._TT["TIME"] = "Heure:";
