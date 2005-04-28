@@ -1,5 +1,5 @@
 # $Rev$
-# $Date: 2005-04-15 14:23:41 $
+# $Date: 2005-04-28 18:27:57 $
 # $Author: sylvieg $
 # $Name: not supported by cvs2svn $
 # phpMyAdmin MySQL-Dump
@@ -1427,6 +1427,8 @@ CREATE TABLE tiki_forums (
   moderator_group varchar(200) default NULL,
   approval_type varchar(20) default NULL,
   outbound_address varchar(250) default NULL,
+  outbound_mails_for_inbound_mails char(1) default NULL,
+  outbound_mails_reply_link char(1) default NULL,
   outbound_from varchar(250) default NULL,
   inbound_pop_server varchar(250) default NULL,
   inbound_pop_port int(4) default NULL,
@@ -1601,6 +1603,7 @@ DROP TABLE IF EXISTS tiki_history;
 CREATE TABLE tiki_history (
   pageName varchar(160) NOT NULL default '',
   version int(8) NOT NULL default '0',
+  version_minor int(8) NOT NULL default '0',
   lastModif int(14) default NULL,
   description varchar(200) default NULL,
   user varchar(200) default NULL,
@@ -2026,7 +2029,7 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Contact us','tiki-contact.php',20,'feature_contact','','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Games','tiki-games.php',30,'feature_games','tiki_p_play_games','');
+INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','(debug)','javascript:toggle("debugconsole")',40,'feature_debug_console','tiki_p_admin','');
 
@@ -2074,9 +2077,6 @@ INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupn
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Projects','tiki-list_projects.php','260','feature_projects','tiki_p_project_view','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','New Project','tiki-project_register.php','262','feature_projects','tiki_p_project_new','');
 
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Homework','tiki-hw_student_assignments.php','280','feature_homework','tiki_p_hw_student','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Assignments','tiki-hw_teacher_assignments.php','282','feature_homework','tiki_p_hw_student','');
-INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Last Changes','tiki-hw_teacher_assignments.php','284','feature_homework','tiki_p_hw_student','');
 
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_view_image_gallery','');
 INSERT INTO tiki_menu_options (menuId,type,name,url,position,section,perm,groupname) VALUES (42,'o','Galleries','tiki-galleries.php',305,'feature_galleries','tiki_p_view_image_gallery','');
@@ -2457,6 +2457,7 @@ CREATE TABLE tiki_pages (
   page_size int(10) unsigned default '0',
   lang varchar(16) default NULL,
   lockedby varchar(200) default NULL,
+  is_html tinyint(1) default '0',
   PRIMARY KEY  (page_id),
   UNIQUE KEY pageName (pageName),
   KEY data (data(255)),
@@ -2522,14 +2523,11 @@ DROP TABLE IF EXISTS tiki_polls;
 CREATE TABLE tiki_polls (
   pollId int(8) NOT NULL auto_increment,
   title varchar(200) default NULL,
-  description text,
   votes int(8) default NULL,
   active char(1) default NULL,
   publishDate int(14) default NULL,
-  releaseDate int(14) default NULL,
   PRIMARY KEY  (pollId),
-	KEY pubdate (publishDate),
-  KEY reldate (releaseDate),
+  KEY pubdate (publishDate),
   KEY active (active)		
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -2582,45 +2580,6 @@ CREATE TABLE tiki_programmed_content (
   data text,
   PRIMARY KEY  (pId)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table for tiki_projects
-# aka TikiForge
-# Damian lives here
-#
-DROP TABLE IF EXISTS tiki_projects;
-CREATE TABLE tiki_projects (
-  projectId int(10) unsigned NOT NULL auto_increment,
-  active char(1) NOT NULL default 'n',
-  projectName varchar(200) NOT NULL default '',
-  projectFriendlyName varchar(200) NOT NULL default '',
-  projectDescription text NOT NULL,
-  Created int(14) default NULL,
-  lastModif int(14) default NULL,
-  CreatedBy varchar(100) default NULL,
-  PRIMARY KEY  (projectId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS tiki_projects_objects;
-CREATE TABLE tiki_projects_objects (
-  prjobjId int(10) unsigned NOT NULL auto_increment,
-  projectId int(10) NOT NULL,
-  objectType varchar(20) NOT NULL,
-  objectId int(11) NOT NULL,
-  url varchar(250) NULL,
-  PRIMARY KEY (prjobjId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-DROP TABLE IF EXISTS tiki_projects_preferences;
-CREATE TABLE tiki_projects_preferences (
-  preferenceId int(10) unsigned NOT NULL auto_increment,
-  projectId int(10) NOT NULL default '0',
-  name varchar(40) NOT NULL,
-  value varchar(250) default NULL,
-  PRIMARY KEY (preferenceId)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
-  
 
 #
 # Table structure for table tiki_quiz_question_options
@@ -3761,6 +3720,10 @@ CREATE TABLE tiki_user_tasks (
   public_for_group varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
   rights_by_creator char(1) DEFAULT NULL,            -- null the user can delete the task, 
   created integer(14) NOT NULL,                      -- date of the creation
+  status char(1) default NULL,
+  priority int(2) default NULL,
+  completed int(14) default NULL,
+  `percentage` int(4) default NULL,
   PRIMARY KEY (taskId),
   UNIQUE(creator, created)
 ) TYPE=MyISAM AUTO_INCREMENT=1;
@@ -3989,7 +3952,6 @@ CREATE TABLE users_groups (
   groupName varchar(255) NOT NULL default '',
   groupDesc varchar(255) default NULL,
   groupHome varchar(255),
-  groupHomeLocalized char(1) default 'n',
   usersTrackerId int(11),
   groupTrackerId int(11),
   usersFieldId int(11),
@@ -4116,10 +4078,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_read', 'Can read forums', 'basic', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forum_vote', 'Can vote comments in forums', 'registered', 'forums');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_forums_report', 'Can report msgs to moderator', 'registered', 'forums');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_admin','Can adminsiter homework permissions, add and delete students','admin','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_grader','Can grade homework assignments','editors','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_student','Can do homework assignments','registered','homework');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_hw_teacher','Can create new homework assignments, see student names and grade assignments','editors','homework');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_list_users', 'Can list registered users', 'registered', 'community');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_live_support', 'Can use live support system', 'basic', 'support');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_live_support_admin', 'Admin live support system', 'admin', 'support');
@@ -4274,7 +4232,7 @@ CREATE TABLE users_users (
   avatarData longblob,
   avatarLibName varchar(200) default NULL,
   avatarType char(1) default NULL,
-  score int(4) NOT NULL default 0,
+  score int(11) NOT NULL default 0,
   PRIMARY KEY  (userId),
   KEY score (score)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -4782,101 +4740,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('center text', '::text::', 'images/ed_align_center.gif', 'newsletters');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text', '~~#FF0000:text~~', 'images/fontfamily.gif', 'newsletters');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image', '{img src= width= height= align= desc= link= }', 'images/ed_image.gif', 'newsletters');
-
-#
-# Homework tables start
-#
-# Created Feb 22, 2004
-# Revised May 04, 2004
-#
-
-DROP TABLE IF EXISTS hw_actionlog;
-DROP TABLE IF EXISTS tiki_hw_actionlog;
-CREATE TABLE tiki_hw_actionlog (
-  action varchar(255) NOT NULL default '',
-  lastModif int(14) NOT NULL default '0',
-  pageId int(14) default NULL,
-  user varchar(200) default NULL,
-  ip varchar(15) default NULL,
-  comment varchar(200) default NULL,
-  PRIMARY KEY  (lastModif)
-) TYPE=MyISAM;
-
-DROP TABLE IF EXISTS hw_assignments;
-DROP TABLE IF EXISTS tiki_hw_assignments;
-CREATE TABLE tiki_hw_assignments (
-  assignmentId int(8) NOT NULL auto_increment,
-  title varchar(80) default NULL,
-  teacherName varchar(40) NOT NULL default '',
-  created int(14) NOT NULL default '0',
-  dueDate int(14) default NULL,
-  modified int(14) NOT NULL default '0',
-  heading text,
-  body text,
-  deleted tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (assignmentId),
-  KEY dueDate (dueDate)
-) TYPE=MyISAM;
-
-DROP TABLE IF EXISTS hw_grading_queue;
-DROP TABLE IF EXISTS tiki_hw_grading_queue;
-CREATE TABLE tiki_hw_grading_queue (
-  id int(14) NOT NULL auto_increment,
-  status int(4) default NULL,
-  submissionDate int(14) default NULL,
-  userLogin varchar(40) NOT NULL default '',
-  userIp varchar(15) default NULL,
-  pageId int(14) default NULL,
-  pageDate int(14) default NULL,
-  pageVersion int(14) default NULL,
-  assignmentId int(14) default NULL,
-  PRIMARY KEY  (id)
-) TYPE=MyISAM;
-
-DROP TABLE IF EXISTS hw_history;
-DROP TABLE IF EXISTS tiki_hw_history;
-CREATE TABLE tiki_hw_history (
-  id int(14) NOT NULL default '0',
-  version int(8) NOT NULL default '0',
-  lastModif int(14) NOT NULL default '0',
-  user varchar(200) NOT NULL default '',
-  ip varchar(15) NOT NULL default '',
-  comment varchar(200) default NULL,
-  data text,
-  PRIMARY KEY  (id,version)
-) TYPE=MyISAM;
-
-DROP TABLE IF EXISTS hw_pages;
-DROP TABLE IF EXISTS tiki_hw_pages;
-CREATE TABLE tiki_hw_pages (
-  id int(14) NOT NULL auto_increment,
-  assignmentId int(14) NOT NULL default '0',
-  studentName varchar(200) NOT NULL default '',
-  data text,
-  description varchar(200) default NULL,
-  lastModif int(14) default NULL,
-  user varchar(200) default NULL,
-  comment varchar(200) default NULL,
-  version int(8) NOT NULL default '0',
-  ip varchar(15) default NULL,
-  flag char(1) default NULL,
-  points int(8) default NULL,
-  votes int(8) default NULL,
-  cache text,
-  wiki_cache int(10) default '0',
-  cache_timestamp int(14) default NULL,
-  page_size int(10) unsigned default '0',
-  lockUser varchar(200) default NULL,
-  lockExpires int(14) default '0',
-  PRIMARY KEY  (studentName,assignmentId),
-  KEY id (id),
-  KEY assignmentId (assignmentId),
-  KEY studentName (studentName)
-) TYPE=MyISAM;
-
-#
-# Homework tables end
-#
 
 #translated objects table
 DROP TABLE IF EXISTS tiki_translated_objects;
