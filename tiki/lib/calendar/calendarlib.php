@@ -733,6 +733,33 @@ class CalendarLib extends TikiLib {
 		
 		return $ret;
 	}
+
+	function upcoming_events($maxrows = -1, $calendarId = 0, $maxDays = -1) {
+		$cond = '';
+		$bindvars = array();
+		if($calendarId > 0){
+			$cond = $cond." and `calendarId` = ? ";
+			$bindvars = $bindvars + array($calendarId);
+		}
+		if($maxDays > 0)
+		{
+			$maxSeconds = ($maxDays * 24 * 60 * 60);
+			$cond = $cond." and `start` < (unix_timestamp(now()) + ?)";
+			$bindvars = $bindvars + array($maxSeconds);
+		}
+		$query = "select `start`, `name`, `calitemId`, `calendarId`, `user`, `lastModif` from `tiki_calendar_items` where 1=1 ".$cond." order by ".$this->convert_sortmode('start_desc');
+		
+		$result = $this->query($query,$bindvars,$maxrows,0);
+			
+		$ret = array();
+			
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+			
+		return $ret;
+	}
+
 }
 
 $calendarlib = new CalendarLib($dbTiki);
